@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "paul-robeson",
+  "seedRound": 0,
+  "qid": "Q273233",
+  "displayName": "Paul Robeson",
+  "identity": "Singer and lawyer · United States · 1898–1976",
+  "title": "Paul Robeson's birth chart",
+  "metaDescription": "Paul Robeson's chart, computed from a sourced birth date: Sun at 19.9° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 19.9° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.85",
+        "decan:aries:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 19.9° Aries: the second decan, whose classical sub-ruler is the Sun. A fire sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:9.2°",
+        "personal:Venus:Taurus:3.0°",
+        "personal:Mars:Pisces:15.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 9.2° Taurus, Venus was at 3.0° Taurus, Mars was at 15.2° Pisces. Read together: a mind that trusts the measured and the checked; taste for the substantial and the lasting; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:sextile:0.33",
+        "aspect:Jupiter:Uranus:sextile:0.43",
+        "aspect:Saturn:Pluto:opposition:1.09"
+      ],
+      "text": "Start where the chart is tightest — the Sun sextile Neptune, 0.3° of separation. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Jupiter sextile Uranus at 0.4°, and Saturn opposition Pluto at 1.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Saturn-Pluto:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Saturn opposes Pluto while both square Mars. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:domicile"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. The Sun in Aries at 19.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Taurus at 3.0° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-air3-earth2-water1",
+        "modalities:mutable5-cardinal2-fixed2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 3 in fire, 3 in air, 2 in earth, 1 in water by element, 5 mutable, 2 cardinal, 2 fixed by modality. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Jupiter, Saturn and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 14.6° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-9/",
+    "label": "Everyone born on April 9"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:19.85",
+    "decan:aries:second",
+    "personal:Mercury:Taurus:9.2°",
+    "personal:Venus:Taurus:3.0°",
+    "personal:Mars:Pisces:15.2°",
+    "aspect:Sun:Neptune:sextile:0.33",
+    "aspect:Jupiter:Uranus:sextile:0.43",
+    "aspect:Saturn:Pluto:opposition:1.09",
+    "figure:t-square:Saturn-Pluto:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:domicile",
+    "elements:fire3-air3-earth2-water1",
+    "modalities:mutable5-cardinal2-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 441,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

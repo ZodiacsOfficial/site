@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "irene-joliot-curie",
+  "seedRound": 0,
+  "qid": "Q7504",
+  "displayName": "Irène Joliot-Curie",
+  "identity": "Physicist and politician · France · 1897–1956",
+  "title": "Irène Joliot-Curie's birth chart",
+  "metaDescription": "Irène Joliot-Curie's chart, computed from a sourced birth date: Sun at 19.9° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.6° separates the Sun and Jupiter from an exact conjunction; at that range identity and expansion read as one mechanism. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct.",
+  "ledeFact": "aspect:Sun:Jupiter:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.95",
+        "decan:virgo:second"
+      ],
+      "text": "The Sun's position resolves to 19.9° Virgo — deep enough in the second decan (10°–20°) that Saturn, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Libra:7.9°",
+        "personal:Venus:Leo:13.1°",
+        "personal:Mars:Libra:11.6°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Libra (7.9°), Venus in Leo (13.1°), Mars in Libra (11.6°): thought that travels by comparison, attraction declared rather than implied, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:conjunction:0.11",
+        "aspect:Sun:Jupiter:conjunction:0.58",
+        "aspect:Venus:Mars:sextile:1.57"
+      ],
+      "text": "Saturn and Uranus hold the closest angle here — a conjunction, 0.1° wide. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, the Sun conjunction Jupiter at 0.6°, and Venus sextile Mars at 1.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Read against the old dignities, two placements stand out. Mars in Libra at 11.6° is in detriment — the planet opposite its home, working against the grain; Jupiter in Virgo at 20.5° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth2-fire2-water2",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 4, earth 2, fire 2, water 2, and mutable 4, cardinal 3, fixed 3 across the modes. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. Mercury was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:12.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 12.6° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 6.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-12/",
+    "label": "Everyone born on September 12"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:conjunction",
+    "sun-degree:19.95",
+    "decan:virgo:second",
+    "personal:Mercury:Libra:7.9°",
+    "personal:Venus:Leo:13.1°",
+    "personal:Mars:Libra:11.6°",
+    "aspect:Saturn:Uranus:conjunction:0.11",
+    "aspect:Sun:Jupiter:conjunction:0.58",
+    "aspect:Venus:Mars:sextile:1.57",
+    "figure:none",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:air4-earth2-fire2-water2",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:aries",
+    "moon-band:12.6"
+  ],
+  "measurements": {
+    "originalWords": 395,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

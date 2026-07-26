@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "thomas-sankara",
+  "seedRound": 0,
+  "qid": "Q202155",
+  "displayName": "Thomas Sankara",
+  "identity": "Politician · Burkina Faso · 1949–1987",
+  "title": "Thomas Sankara's birth chart",
+  "metaDescription": "Thomas Sankara's chart, computed from a sourced birth date: Sun at 29.3° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. The cardinal signs begin things; a chart weighted there treats every stall as a starting gun.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.30",
+        "decan:sagittarius:third"
+      ],
+      "text": "At the noon reference the Sun sits 29.3° into Sagittarius — the third decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:15.3°",
+        "personal:Venus:Aquarius:11.7°",
+        "personal:Mars:Virgo:28.1°"
+      ],
+      "text": "Mercury holds 15.3° Capricorn, Venus holds 11.7° Aquarius, Mars holds 28.1° Virgo — in the old shorthand, thought with its feet on the ground; attraction that begins as conversation; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:sextile:0.84",
+        "aspect:Sun:Mars:square:1.23",
+        "aspect:Mercury:Neptune:square:1.83"
+      ],
+      "text": "The day's firmest angle joins Neptune and Pluto — a sextile holding at 0.8°. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, the Sun square Mars at 1.2°, and Mercury square Neptune at 1.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Sun-Uranus:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Uranus while both square Mars. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. The Moon in Capricorn at 21.8° is in detriment — the planet opposite its home, working against the grain. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-fire2-water1",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: earth 4, air 3, fire 2, water 1 across the elements, and cardinal 4, mutable 3, fixed 3 across the modalities. Uranus and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:13.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 21.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-21/",
+    "label": "Everyone born on December 21"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:29.30",
+    "decan:sagittarius:third",
+    "personal:Mercury:Capricorn:15.3°",
+    "personal:Venus:Aquarius:11.7°",
+    "personal:Mars:Virgo:28.1°",
+    "aspect:Neptune:Pluto:sextile:0.84",
+    "aspect:Sun:Mars:square:1.23",
+    "aspect:Mercury:Neptune:square:1.83",
+    "figure:t-square:Sun-Uranus:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "elements:earth4-air3-fire2-water1",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:capricorn",
+    "moon-band:13.8"
+  ],
+  "measurements": {
+    "originalWords": 380,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "willem-de-kooning",
+ "qid": "Q132305",
+ "displayName": "Willem de Kooning",
+ "wikidataLabel": "Willem de Kooning",
+ "wikidataDescription": "Dutch-American abstract expressionist artist (1904–1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q132305",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520642702
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Willem de Kooning",
+   "articleUrl": "https://en.wikipedia.org/wiki/Willem_de_Kooning",
+   "pageId": 459853,
+   "revisionId": 1365904955,
+   "revisionTimestamp": "2026-07-25T02:52:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-04-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-04-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-04-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-03-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34370",
+  "label": "Rotterdam",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34370",
+  "country": {
+   "entity": "Q55",
+   "label": "Netherlands"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34370",
+   "sourceEntityLabel": "Rotterdam",
+   "latitude": 51.92,
+   "longitude": 4.48,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q288728",
+   "label": "painter and varnisher"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Willem de Kooning in his studio.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Willem%20de%20Kooning%20in%20his%20studio.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Willem_de_Kooning_in_his_studio.jpg",
+  "width": 1024,
+  "height": 789,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Antony di Gesu, photographer",
+  "credit": "Willem de Kooning in His Studio, Smithsonian Institution Archives. Local Number SIA2011-2241.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

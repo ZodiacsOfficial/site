@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dorothy-day",
+ "qid": "Q150281",
+ "displayName": "Dorothy Day",
+ "wikidataLabel": "Dorothy Day",
+ "wikidataDescription": "American journalist, social activist, and Catholic convert (1897-1980)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q150281",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521311930
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dorothy Day",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dorothy_Day",
+   "pageId": 264094,
+   "revisionId": 1365634127,
+   "revisionTimestamp": "2026-07-23T15:10:09Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1897-11-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-11-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-11-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1980-11-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q828553",
+  "label": "Brooklyn Heights",
+  "entityUrl": "https://www.wikidata.org/wiki/Q828553",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q828553",
+   "sourceEntityLabel": "Brooklyn Heights",
+   "latitude": 40.697055555556,
+   "longitude": -73.996444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q8359428",
+   "label": "social activist"
+  },
+  {
+   "entity": "Q1607826",
+   "label": "editor"
+  },
+  {
+   "entity": "Q15627169",
+   "label": "trade unionist"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  },
+  {
+   "entity": "Q16611574",
+   "label": "social reformer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dorothy Day, 1916 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dorothy%20Day%2C%201916%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dorothy_Day,_1916_(cropped).jpg",
+  "width": 778,
+  "height": 1099,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown photographer",
+  "credit": "http://www.corbisimages.com/stock-photo/rights-managed/BE064360/dorothy-day?popup=1",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

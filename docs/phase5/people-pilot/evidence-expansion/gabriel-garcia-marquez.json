@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gabriel-garcia-marquez",
+ "qid": "Q5878",
+ "displayName": "Gabriel García Márquez",
+ "wikidataLabel": null,
+ "wikidataDescription": "Colombian writer and Nobel laureate (1927–2014)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5878",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522567631
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gabriel García Márquez",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gabriel_Garc%C3%ADa_M%C3%A1rquez",
+   "pageId": 27827075,
+   "revisionId": 1358964892,
+   "revisionTimestamp": "2026-06-12T03:56:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1927-03-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1927-03-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1927-03-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2014-04-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q624492",
+  "label": "Aracataca",
+  "entityUrl": "https://www.wikidata.org/wiki/Q624492",
+  "country": {
+   "entity": "Q739",
+   "label": "Colombia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q624492",
+   "sourceEntityLabel": "Aracataca",
+   "latitude": 10.591111111111,
+   "longitude": -74.185,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2516866",
+   "label": "publisher"
+  },
+  {
+   "entity": "Q1209498",
+   "label": "poet lawyer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q73306227",
+   "label": "television writer"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gabriel Garcia Marquez.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gabriel%20Garcia%20Marquez.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gabriel_Garcia_Marquez.jpg",
+  "width": 427,
+  "height": 640,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "Jose Lara",
+  "credit": "Flickr: Gabriel Garcia Marquez (on malvenko.net: [1])",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

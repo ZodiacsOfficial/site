@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "zora-neale-hurston",
+ "qid": "Q220480",
+ "displayName": "Zora Neale Hurston",
+ "wikidataLabel": "Zora Neale Hurston",
+ "wikidataDescription": "African American folklorist, novelist, short story writer, and Civic Rights advocate (1891–1960)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q220480",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2499545054
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Zora Neale Hurston",
+   "articleUrl": "https://en.wikipedia.org/wiki/Zora_Neale_Hurston",
+   "pageId": 34452,
+   "revisionId": 1365639002,
+   "revisionTimestamp": "2026-07-23T15:48:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1891-01-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1891-01-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1891-01-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1960-01-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q68131",
+  "label": "Notasulga",
+  "entityUrl": "https://www.wikidata.org/wiki/Q68131",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q68131",
+   "sourceEntityLabel": "Notasulga",
+   "latitude": 32.560821,
+   "longitude": -85.667631,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q3075052",
+   "label": "folklorist"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hurston, Zora Neale 4 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hurston%2C%20Zora%20Neale%204%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hurston,_Zora_Neale_4_(cropped).jpg",
+  "width": 2463,
+  "height": 3569,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "https://collections.library.yale.edu/catalog/2018787",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alberto-santos-dumont",
+ "qid": "Q313211",
+ "displayName": "Alberto Santos-Dumont",
+ "wikidataLabel": "Alberto Santos-Dumont",
+ "wikidataDescription": "Brazilian aviation pioneer (1873-1932)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q313211",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515859819
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alberto Santos-Dumont",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alberto_Santos-Dumont",
+   "pageId": 152687,
+   "revisionId": 1364855464,
+   "revisionTimestamp": "2026-07-18T22:51:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1873-07-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1873-07-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1873-07-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1932-07-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1754760",
+  "label": "Santos Dumont",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1754760",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1754760",
+   "sourceEntityLabel": "Santos Dumont",
+   "latitude": -21.456666666667,
+   "longitude": -43.5525,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q728425",
+   "label": "balloonist"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alberto Santos Dumont - 1-13675-0000-0000, Acervo do Museu Paulista da USP.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alberto%20Santos%20Dumont%20-%201-13675-0000-0000%2C%20Acervo%20do%20Museu%20Paulista%20da%20USP.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alberto_Santos_Dumont_-_1-13675-0000-0000,_Acervo_do_Museu_Paulista_da_USP.jpg",
+  "width": 2916,
+  "height": 4134,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "José Rosael/Hélio Nobre/Museu Paulista da USP",
+  "credit": "Museu Paulista",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alexander-fleming",
+ "qid": "Q37064",
+ "displayName": "Alexander Fleming",
+ "wikidataLabel": "Alexander Fleming",
+ "wikidataDescription": "Scottish biologist, pharmacologist, botanist, and Nobel laureate (1881–1955)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37064",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521793946
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alexander Fleming",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alexander_Fleming",
+   "pageId": 1937,
+   "revisionId": 1364094538,
+   "revisionTimestamp": "2026-07-14T13:09:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1881-08-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1881-08-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1881-08-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1955-03-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q56619307",
+  "label": "Lochfield",
+  "entityUrl": "https://www.wikidata.org/wiki/Q56619307",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q56619307",
+   "sourceEntityLabel": "Lochfield",
+   "latitude": 55.647233,
+   "longitude": -4.2537544,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q15816836",
+   "label": "bacteriologist"
+  },
+  {
+   "entity": "Q2114605",
+   "label": "pharmacologist"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q774306",
+   "label": "surgeon"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Synthetic Production of Penicillin TR1468.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Synthetic%20Production%20of%20Penicillin%20TR1468.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Synthetic_Production_of_Penicillin_TR1468.jpg",
+  "width": 3493,
+  "height": 4961,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Official photographer",
+  "credit": "http://media.iwm.org.uk/iwm/mediaLib//32/media-32192/large.jpg This photograph TR 1468 comes from the collections of the Imperial War Museums.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

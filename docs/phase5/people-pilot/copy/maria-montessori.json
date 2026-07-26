@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "maria-montessori",
+  "seedRound": 0,
+  "qid": "Q131117",
+  "displayName": "Maria Montessori",
+  "identity": "Physician and pedagogue · Italy · 1870–1952",
+  "title": "Maria Montessori's birth chart",
+  "metaDescription": "Maria Montessori's chart, computed from a sourced birth date: Sun at 7.8° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.2° separates Mars and Uranus from an exact conjunction; at that range drive and disruption read as one mechanism. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Mars:Uranus:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.81",
+        "decan:virgo:first"
+      ],
+      "text": "The Sun's position resolves to 7.8° Virgo — deep enough in the first decan (0°–10°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Libra:3.5°",
+        "personal:Venus:Leo:12.9°",
+        "personal:Mars:Cancer:24.7°"
+      ],
+      "text": "The personal planets sit Mercury at 3.5° Libra, Venus at 12.9° Leo, Mars at 24.7° Cancer. Mercury in a air sign reads as thought that travels by comparison; Venus in a fire sign reads as attraction declared rather than implied; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:conjunction:0.2",
+        "aspect:Saturn:Neptune:trine:0.46",
+        "aspect:Jupiter:Saturn:opposition:1.45"
+      ],
+      "text": "Closest first: Mars to Uranus, a conjunction with 0.2° of slack. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Saturn trine Neptune at 0.5°, and Jupiter opposition Saturn at 1.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Moon in Scorpio at 9.7° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 24.7° is in fall; Jupiter in Gemini at 23.4° is in detriment — the planet opposite its home, working against the grain. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-fire3-earth2-air2",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 3 in water, 3 in fire, 2 in earth, 2 in air by element, 4 cardinal, 3 mutable, 3 fixed by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 9.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-31/",
+    "label": "Everyone born on August 31"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:conjunction",
+    "sun-degree:7.81",
+    "decan:virgo:first",
+    "personal:Mercury:Libra:3.5°",
+    "personal:Venus:Leo:12.9°",
+    "personal:Mars:Cancer:24.7°",
+    "aspect:Mars:Uranus:conjunction:0.2",
+    "aspect:Saturn:Neptune:trine:0.46",
+    "aspect:Jupiter:Saturn:opposition:1.45",
+    "figure:unaspected:Sun",
+    "dignity:Moon:fall",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:detriment",
+    "elements:water3-fire3-earth2-air2",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:scorpio",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 411,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

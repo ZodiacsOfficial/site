@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yu-gwan-sun",
+ "qid": "Q490020",
+ "displayName": "Yu Gwan-sun",
+ "wikidataLabel": "Yu Gwansun",
+ "wikidataDescription": "Korean independence activist (1902-1920)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q490020",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2503183167
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yu Gwan-sun",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yu_Gwan-sun",
+   "pageId": 4588462,
+   "revisionId": 1361378478,
+   "revisionTimestamp": "2026-06-27T15:53:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1902-12-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-12-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-12-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1920-09-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q42146",
+  "label": "Cheonan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q42146",
+  "country": {
+   "entity": "Q884",
+   "label": "South Korea"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q42146",
+   "sourceEntityLabel": "Cheonan",
+   "latitude": 36.81,
+   "longitude": 127.1475,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ryu Gwan-sun.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ryu%20Gwan-sun.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ryu_Gwan-sun.jpg",
+  "width": 970,
+  "height": 1339,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "인물카드.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

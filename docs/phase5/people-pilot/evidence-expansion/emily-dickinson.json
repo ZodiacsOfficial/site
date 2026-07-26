@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "emily-dickinson",
+ "qid": "Q4441",
+ "displayName": "Emily Dickinson",
+ "wikidataLabel": "Emily Dickinson",
+ "wikidataDescription": "American poet (1830-1886)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4441",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521124867
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Emily Dickinson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Emily_Dickinson",
+   "pageId": 159275,
+   "revisionId": 1364878694,
+   "revisionTimestamp": "2026-07-19T01:36:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1830-12-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1830-12-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1830-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1830-12-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1886-05-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49164",
+  "label": "Amherst",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49164",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49164",
+   "sourceEntityLabel": "Amherst",
+   "latitude": 42.366667,
+   "longitude": -72.516667,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q758780",
+   "label": "gardener"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Emily Dickinson daguerreotype (Restored, cropped, blown up, sepia).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Emily%20Dickinson%20daguerreotype%20(Restored%2C%20cropped%2C%20blown%20up%2C%20sepia).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Emily_Dickinson_daguerreotype_(Restored,_cropped,_blown_up,_sepia).jpg",
+  "width": 352,
+  "height": 432,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This file was derived from: Emily Dickinson daguerreotype (Restored and cropped).jpg:",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

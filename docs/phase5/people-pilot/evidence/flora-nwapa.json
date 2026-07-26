@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "flora-nwapa",
+ "qid": "Q5460344",
+ "displayName": "Flora Nwapa",
+ "wikidataLabel": "Flora Nwapa",
+ "wikidataDescription": "Nigerian writer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5460344",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515546440
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Flora Nwapa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Flora_Nwapa",
+   "pageId": 7788166,
+   "revisionId": 1344969882,
+   "revisionTimestamp": "2026-03-23T15:55:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-01-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-01-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-01-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-10-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3510973",
+  "label": "Oguta",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3510973",
+  "country": {
+   "entity": "Q1033",
+   "label": "Nigeria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3510973",
+   "sourceEntityLabel": "Oguta",
+   "latitude": 5.71167,
+   "longitude": 6.80944,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Flora Nwapa.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Flora%20Nwapa.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flora_Nwapa.jpg",
+  "width": 2048,
+  "height": 2048,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "ThePortraitLady",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

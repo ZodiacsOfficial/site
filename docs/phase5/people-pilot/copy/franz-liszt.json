@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "franz-liszt",
+  "seedRound": 0,
+  "qid": "Q41309",
+  "displayName": "Franz Liszt",
+  "identity": "Pianist and writer · Austria · 1811–1886",
+  "title": "Franz Liszt's birth chart",
+  "metaDescription": "Franz Liszt's chart, computed from a sourced birth date: Sun at 28.1° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a sextile to Uranus at 0.6° — close enough to weld drive to disruption. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.",
+  "ledeFact": "aspect:Mars:Uranus:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:28.15",
+        "decan:libra:third"
+      ],
+      "text": "At the noon reference the Sun sits 28.1° into Libra — the third decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Libra:11.6°",
+        "personal:Venus:Scorpio:0.8°",
+        "personal:Mars:Capricorn:17.3°"
+      ],
+      "text": "Mercury holds 11.6° Libra, Venus holds 0.8° Scorpio, Mars holds 17.3° Capricorn — in the old shorthand, thought that travels by comparison; attraction that works by atmosphere; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:sextile:0.57",
+        "aspect:Mars:Pluto:sextile:0.86",
+        "aspect:Uranus:Pluto:trine:1.43"
+      ],
+      "text": "Mars and Uranus hold the closest angle here — a sextile, 0.6° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mars sextile Pluto at 0.9°, and Uranus trine Pluto at 1.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Libra at 28.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Scorpio at 0.8° is in detriment — the planet opposite its home, working against the grain; Mars in Capricorn at 17.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Cancer at 6.3° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-fire2-earth1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 water, 2 air, 2 fire, 1 earth by element and 4 cardinal, 3 mutable, 2 fixed by mode. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Pluto was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 13.2° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-22/",
+    "label": "Everyone born on October 22"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:sextile",
+    "sun-degree:28.15",
+    "decan:libra:third",
+    "personal:Mercury:Libra:11.6°",
+    "personal:Venus:Scorpio:0.8°",
+    "personal:Mars:Capricorn:17.3°",
+    "aspect:Mars:Uranus:sextile:0.57",
+    "aspect:Mars:Pluto:sextile:0.86",
+    "aspect:Uranus:Pluto:trine:1.43",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:exaltation",
+    "elements:water4-air2-fire2-earth1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 423,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

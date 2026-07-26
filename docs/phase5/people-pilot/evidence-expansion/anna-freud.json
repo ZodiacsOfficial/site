@@ -1,0 +1,114 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "anna-freud",
+ "qid": "Q78485",
+ "displayName": "Anna Freud",
+ "wikidataLabel": "Anna Freud",
+ "wikidataDescription": "austrian-British psychoanalyst (1895–1982)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q78485",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521509173
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Anna Freud",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anna_Freud",
+   "pageId": 206773,
+   "revisionId": 1362819132,
+   "revisionTimestamp": "2026-07-06T11:28:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1895-12-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-12-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1896-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1895-12-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1982-10-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3410028",
+   "label": "psychoanalyst"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Anna Freud 1957.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Anna%20Freud%201957.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Anna_Freud_1957.jpg",
+  "width": 1011,
+  "height": 1348,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Unknown author",
+  "credit": "[1] Dutch National Archives, The Hague, Fotocollectie Algemeen Nederlands Persbureau (ANEFO), 1945-1989 bekijk toegang 2.24.01.04 Bestanddeelnummer 923-9360",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

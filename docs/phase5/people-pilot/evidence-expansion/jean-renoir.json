@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jean-renoir",
+ "qid": "Q50713",
+ "displayName": "Jean Renoir",
+ "wikidataLabel": "Jean Renoir",
+ "wikidataDescription": "French film director and screenwriter (1894–1979)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q50713",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518479360
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jean Renoir",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jean_Renoir",
+   "pageId": 105329,
+   "revisionId": 1362507593,
+   "revisionTimestamp": "2026-07-04T12:09:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1894-09-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1894-09-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1894-09-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1979-02-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q200126",
+  "label": "18th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q200126",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q200126",
+   "sourceEntityLabel": "18th arrondissement of Paris",
+   "latitude": 48.89215,
+   "longitude": 2.3444472222222,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:JeanRenoir-StudioHarcourt-1955.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:JeanRenoir-StudioHarcourt-1955.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:JeanRenoir-StudioHarcourt-1955.png",
+  "width": 442,
+  "height": 600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Studio Harcourt",
+  "credit": "https://pop.culture.gouv.fr/notice/memoire/APU246745VM",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

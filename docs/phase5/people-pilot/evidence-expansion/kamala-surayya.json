@@ -1,0 +1,99 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kamala-surayya",
+ "qid": "Q594565",
+ "displayName": "Kamala Surayya",
+ "wikidataLabel": "Kamala Surayya",
+ "wikidataDescription": "Indian author and poet (1934–2009)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q594565",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2495309526
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kamala Surayya",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kamala_Surayya",
+   "pageId": 11867790,
+   "revisionId": 1364919493,
+   "revisionTimestamp": "2026-07-19T07:59:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1934-03-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-03-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1934-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-05-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7260476",
+  "label": "Punnayurkulam",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7260476",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7260476",
+   "sourceEntityLabel": "Punnayurkulam",
+   "latitude": 10.66666667,
+   "longitude": 75.98333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": null
+}

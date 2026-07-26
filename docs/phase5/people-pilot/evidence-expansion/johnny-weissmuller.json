@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "johnny-weissmuller",
+ "qid": "Q151284",
+ "displayName": "Johnny Weissmuller",
+ "wikidataLabel": "Johnny Weissmuller",
+ "wikidataDescription": "American swimmer, water polo player, and actor (1904–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q151284",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517398047
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Johnny Weissmuller",
+   "articleUrl": "https://en.wikipedia.org/wiki/Johnny_Weissmuller",
+   "pageId": 16558,
+   "revisionId": 1363376877,
+   "revisionTimestamp": "2026-07-09T20:36:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-06-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-06-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-06-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-01-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q747872",
+  "label": "Freidorf",
+  "entityUrl": "https://www.wikidata.org/wiki/Q747872",
+  "country": {
+   "entity": "Q203493",
+   "label": "Kingdom of Romania"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q747872",
+   "sourceEntityLabel": "Freidorf",
+   "latitude": 45.728333333333,
+   "longitude": 21.181111111111,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q10843402",
+   "label": "swimmer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q17524364",
+   "label": "water polo player"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Johny Weissmuller-publicity.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Johny%20Weissmuller-publicity.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Johny_Weissmuller-publicity.JPG",
+  "width": 967,
+  "height": 1249,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "MGM studio",
+  "credit": "eBay",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

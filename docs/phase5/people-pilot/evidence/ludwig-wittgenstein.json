@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ludwig-wittgenstein",
+ "qid": "Q9391",
+ "displayName": "Ludwig Wittgenstein",
+ "wikidataLabel": "Ludwig Wittgenstein",
+ "wikidataDescription": "Austrian philosopher and logician (1889–1951)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9391",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522274887
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ludwig Wittgenstein",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ludwig_Wittgenstein",
+   "pageId": 17741,
+   "revisionId": 1366055168,
+   "revisionTimestamp": "2026-07-26T01:02:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1889-04-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1889-04-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1889-04-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1951-04-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1981987",
+  "label": "Neuwaldegg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1981987",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1981987",
+   "sourceEntityLabel": "Neuwaldegg",
+   "latitude": 48.2378,
+   "longitude": 16.2861,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q18930236",
+   "label": "philosopher of language"
+  },
+  {
+   "entity": "Q17391659",
+   "label": "architectural theoretician"
+  },
+  {
+   "entity": "Q14565331",
+   "label": "logician"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q3606216",
+   "label": "aphorist"
+  },
+  {
+   "entity": "Q15632482",
+   "label": "epistemologist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ludwig Wittgenstein.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ludwig%20Wittgenstein.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ludwig_Wittgenstein.jpg",
+  "width": 4984,
+  "height": 7286,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Moritz Nähr",
+  "credit": "Austrian National Library",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

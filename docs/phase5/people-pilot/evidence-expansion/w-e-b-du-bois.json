@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "w-e-b-du-bois",
+ "qid": "Q158060",
+ "displayName": "W. E. B. Du Bois",
+ "wikidataLabel": "W. E. B. Du Bois",
+ "wikidataDescription": "American sociologist and activist (1868–1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q158060",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522292388
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "W. E. B. Du Bois",
+   "articleUrl": "https://en.wikipedia.org/wiki/W._E._B._Du_Bois",
+   "pageId": 89988,
+   "revisionId": 1364972769,
+   "revisionTimestamp": "2026-07-19T16:04:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1868-02-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1868-02-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1868-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1868-02-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-08-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1144518",
+  "label": "Great Barrington",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1144518",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1144518",
+   "sourceEntityLabel": "Great Barrington",
+   "latitude": 42.1958,
+   "longitude": -73.3625,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q7019111",
+   "label": "social worker"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:W.E.B. Du Bois by James E. Purdy, 1907 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:W.E.B.%20Du%20Bois%20by%20James%20E.%20Purdy%2C%201907%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:W.E.B._Du_Bois_by_James_E._Purdy,_1907_(cropped).jpg",
+  "width": 2863,
+  "height": 4101,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "James E. Purdy / Adam Cuerden",
+  "credit": "National Portrait Gallery",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

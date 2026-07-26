@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "georges-bizet",
+ "qid": "Q56158",
+ "displayName": "Georges Bizet",
+ "wikidataLabel": "Georges Bizet",
+ "wikidataDescription": "French composer (1838–1875)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q56158",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518519687
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Georges Bizet",
+   "articleUrl": "https://en.wikipedia.org/wiki/Georges_Bizet",
+   "pageId": 67955,
+   "revisionId": 1356363974,
+   "revisionTimestamp": "2026-05-27T08:47:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1838-10-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1838-10-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1838-10-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1875-06-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2378296",
+  "label": "Rue Louise-Émilie-de-La-Tour-d'Auvergne",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2378296",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2378296",
+   "sourceEntityLabel": "Rue Louise-Émilie-de-La-Tour-d'Auvergne",
+   "latitude": 48.8794,
+   "longitude": 2.34245,
+   "precision": 0.01,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Georges bizet.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Georges%20bizet.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Georges_bizet.jpg",
+  "width": 1182,
+  "height": 1632,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Étienne Carjat",
+  "credit": "http://www.metronimo.com/fr/portraits/show.php?start=0&file=bizet3.jpg&album=7",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

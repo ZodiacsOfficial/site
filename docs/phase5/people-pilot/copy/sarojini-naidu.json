@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "sarojini-naidu",
+  "seedRound": 0,
+  "qid": "Q250165",
+  "displayName": "Sarojini Naidu",
+  "identity": "Poet and politician · India · 1879–1949",
+  "title": "Sarojini Naidu's birth chart",
+  "metaDescription": "Sarojini Naidu's chart, computed from a sourced birth date: Sun at 24.2° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a square: the Sun and Pluto within 0.3°, identity wired to depth. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower.",
+  "ledeFact": "aspect:Sun:Pluto:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.23",
+        "decan:aquarius:third"
+      ],
+      "text": "The Sun sits at 24.2° Aquarius — the third decan, 20°–30°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Aquarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:10.1°",
+        "personal:Venus:Pisces:10.8°",
+        "personal:Mars:Capricorn:5.8°"
+      ],
+      "text": "The personal planets sit Mercury at 10.1° Aquarius, Venus at 10.8° Pisces, Mars at 5.8° Capricorn. Mercury in a air sign reads as a mind at home in argument and pattern; Venus in a water sign reads as taste tuned to mood and undertow; Mars in a earth sign reads as drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:square:0.28",
+        "aspect:Mars:Neptune:trine:1.39",
+        "aspect:Mercury:Neptune:square:2.85"
+      ],
+      "text": "The Sun and Pluto hold the closest angle here — a square, 0.3° wide. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mars trine Neptune at 1.4°, and Mercury square Neptune at 2.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Mars-Uranus-Neptune",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars, Uranus, Neptune close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Moon:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The classical table has five entries for this chart. The Sun in Aquarius at 24.2° is in detriment — the planet opposite its home, working against the grain; the Moon in Scorpio at 17.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 10.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Capricorn at 5.8° is in exaltation; Saturn in Aries at 0.8° is in fall. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-water2-fire1",
+        "modalities:fixed6-mutable2-cardinal2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in earth, 3 in air, 2 in water, 1 in fire by element, 6 fixed, 2 mutable, 2 cardinal by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Uranus was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:14.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 17.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-13/",
+    "label": "Everyone born on February 13"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:square",
+    "sun-degree:24.23",
+    "decan:aquarius:third",
+    "personal:Mercury:Aquarius:10.1°",
+    "personal:Venus:Pisces:10.8°",
+    "personal:Mars:Capricorn:5.8°",
+    "aspect:Sun:Pluto:square:0.28",
+    "aspect:Mars:Neptune:trine:1.39",
+    "aspect:Mercury:Neptune:square:2.85",
+    "figure:grand-trine:Mars-Uranus-Neptune",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Moon:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:fall",
+    "elements:earth4-air3-water2-fire1",
+    "modalities:fixed6-mutable2-cardinal2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:scorpio",
+    "moon-band:14.2"
+  ],
+  "measurements": {
+    "originalWords": 491,
+    "substantiveStatements": 22,
+    "blocks": 7
+  }
+}

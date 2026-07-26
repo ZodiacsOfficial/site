@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kishore-kumar",
+ "qid": "Q471542",
+ "displayName": "Kishore Kumar",
+ "wikidataLabel": "Kishore Kumar",
+ "wikidataDescription": "Indian singer and actor (1929–1987)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q471542",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517885753
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kishore Kumar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kishore_Kumar",
+   "pageId": 334547,
+   "revisionId": 1362565459,
+   "revisionTimestamp": "2026-07-04T20:33:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-08-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-08-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-08-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-10-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1648551",
+  "label": "Khandwa",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1648551",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1648551",
+   "sourceEntityLabel": "Khandwa",
+   "latitude": 21.83,
+   "longitude": 76.33,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q21234378",
+   "label": "yodeler"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kishore Kumar 2016 postcard of India (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kishore%20Kumar%202016%20postcard%20of%20India%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kishore_Kumar_2016_postcard_of_India_(cropped).jpg",
+  "width": 513,
+  "height": 643,
+  "licenseShortName": "GODL-India",
+  "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+  "artist": "India Post, Government of India",
+  "credit": "[1] [2]",
+  "usageTerms": "Government Open Data License – India",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "antonio-carlos-jobim",
+ "qid": "Q200131",
+ "displayName": "Antônio Carlos Jobim",
+ "wikidataLabel": "Antônio Carlos Jobim",
+ "wikidataDescription": "Brazilian songwriter, composer, arranger, singer, and pianist/guitarist (1927–1994)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q200131",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522816691
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Antônio Carlos Jobim",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ant%C3%B4nio_Carlos_Jobim",
+   "pageId": 297412,
+   "revisionId": 1366107288,
+   "revisionTimestamp": "2026-07-26T08:51:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1927-01-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1927-01-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1927-01-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1994-12-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8678",
+  "label": "Rio de Janeiro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8678",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q8678",
+   "sourceEntityLabel": "Rio de Janeiro",
+   "latitude": -22.91111111111111,
+   "longitude": -43.205555555555556,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q6168364",
+   "label": "jazz guitarist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q1643514",
+   "label": "music arranger"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  }
+ ],
+ "portrait": {
+  "file": "File:Antônio Carlos Jobim (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ant%C3%B4nio%20Carlos%20Jobim%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ant%C3%B4nio_Carlos_Jobim_(cropped).jpg",
+  "width": 1580,
+  "height": 1936,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "UnknownUnknown ; Restoration by User:PerfectSoundWhatever",
+  "credit": "This file was derived from: Correio da Manhã AN 422.jpg:",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

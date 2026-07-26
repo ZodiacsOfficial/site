@@ -1,0 +1,119 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alban-berg",
+ "qid": "Q78475",
+ "displayName": "Alban Berg",
+ "wikidataLabel": "Alban Berg",
+ "wikidataDescription": "Austrian composer (1885–1935)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q78475",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517492060
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alban Berg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alban_Berg",
+   "pageId": 2406,
+   "revisionId": 1352227229,
+   "revisionTimestamp": "2026-05-02T22:45:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1885-02-09T00:00:00Z|proleptic-gregorian",
+   "+1885-11-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1885-02-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1885-11-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1885-02-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1935-12-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alban Berg (1885–1935) ~1930 © Max Fenichel (1885–1942).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alban%20Berg%20(1885%E2%80%931935)%20~1930%20%C2%A9%20Max%20Fenichel%20(1885%E2%80%931942).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alban_Berg_(1885%E2%80%931935)_~1930_%C2%A9_Max_Fenichel_(1885%E2%80%931942).jpg",
+  "width": 1035,
+  "height": 1567,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Max Fenichel",
+  "credit": "Programmzeitschrift der RAVAG „Radio Wien“ 3 October 1930, S. 7 ( http://anno.onb.ac.at/cgi-content/anno?aid=raw&datum=19301003&seite=9&zoom=33 )",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

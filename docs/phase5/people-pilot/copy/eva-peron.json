@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "eva-peron",
+  "seedRound": 0,
+  "qid": "Q40933",
+  "displayName": "Eva Perón",
+  "identity": "Politician and stage actor · Argentina · 1919–1952",
+  "title": "Eva Perón's birth chart",
+  "metaDescription": "Eva Perón's chart, computed from a sourced birth date: Sun at 16.0° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mars sit 0.5° from an exact conjunction — near enough that the tradition reads identity and drive as a single working part. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all.",
+  "ledeFact": "aspect:Sun:Mars:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.04",
+        "decan:taurus:second"
+      ],
+      "text": "The Sun's exact place is 16.0° Taurus. That falls in the second decan, 10°–20°, sub-ruled by Mercury in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:19.7°",
+        "personal:Venus:Gemini:24.1°",
+        "personal:Mars:Taurus:16.6°"
+      ],
+      "text": "For the fast movers, Mercury was at 19.7° Aries, Venus was at 24.1° Gemini, Mars was at 16.6° Taurus. Read together: a mind that decides at speaking speed; taste led by wit and proportion; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:conjunction:0.5",
+        "aspect:Mercury:Saturn:trine:1.86",
+        "aspect:Venus:Saturn:sextile:2.54"
+      ],
+      "text": "The Sun to Mars is the closest call of the day, a conjunction within 0.5°. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Mercury trine Saturn at 1.9°, and Venus sextile Saturn at 2.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Neptune"
+      ],
+      "text": "Neptune stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has three entries for this chart. Mars in Taurus at 16.6° is in detriment — the planet opposite its home, working against the grain; Jupiter in Cancer at 12.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Leo at 21.5° is in detriment. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-earth2-air1",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 3 in fire, 3 in water, 2 in earth, 1 in air by element, 4 fixed, 3 cardinal, 2 mutable by modality. Fire leads with ignition: the first move made early, and certainty arriving ahead of the evidence. Not one planet was retrograde, so the whole chart reads in direct motion."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:leo:virgo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Leo into Virgo during that day at the birthplace, travelling 12.7° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-7/",
+    "label": "Everyone born on May 7"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:conjunction",
+    "sun-degree:16.04",
+    "decan:taurus:second",
+    "personal:Mercury:Aries:19.7°",
+    "personal:Venus:Gemini:24.1°",
+    "personal:Mars:Taurus:16.6°",
+    "aspect:Sun:Mars:conjunction:0.5",
+    "aspect:Mercury:Saturn:trine:1.86",
+    "aspect:Venus:Saturn:sextile:2.54",
+    "figure:unaspected:Neptune",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:fire3-water3-earth2-air1",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:leo:virgo"
+  ],
+  "measurements": {
+    "originalWords": 414,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

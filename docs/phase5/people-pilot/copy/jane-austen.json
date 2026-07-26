@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jane-austen",
+  "seedRound": 0,
+  "qid": "Q36322",
+  "displayName": "Jane Austen",
+  "identity": "Writer · United Kingdom · 1775–1817",
+  "title": "Jane Austen's birth chart",
+  "metaDescription": "Jane Austen's chart, computed from a sourced birth date: Sun at 24.4° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Saturn sit 0.4° from an exact square — near enough that the tradition reads drive and structure as a single working part. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards.",
+  "ledeFact": "aspect:Mars:Saturn:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.45",
+        "decan:sagittarius:third"
+      ],
+      "text": "The Sun's exact place is 24.4° Sagittarius. That falls in the third decan, 20°–30°, sub-ruled by the Sun in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:5.5°",
+        "personal:Venus:Scorpio:9.1°",
+        "personal:Mars:Capricorn:19.2°"
+      ],
+      "text": "Closer in, Mercury stands at 5.5° Sagittarius; Venus stands at 9.1° Scorpio; Mars stands at 19.2° Capricorn. The tradition reads a mind that decides at speaking speed from Mercury, taste tuned to mood and undertow from Venus, drive that grinds rather than flares from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:square:0.39",
+        "aspect:Sun:Neptune:square:0.43",
+        "aspect:Neptune:Pluto:trine:0.47"
+      ],
+      "text": "Mars to Saturn is the closest call of the day, a square within 0.4°. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun square Neptune at 0.4°, and Neptune trine Pluto at 0.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Of the seven planets the classical scheme judges, five sit in a sign it has an opinion about. Mercury in Sagittarius at 5.5° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 9.1° is in detriment; Mars in Capricorn at 19.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Gemini at 15.6° is in detriment; Saturn in Libra at 19.6° is in exaltation. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-fire2-water1",
+        "modalities:mutable5-cardinal4-fixed1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: air 4, earth 3, fire 2, water 1 across the elements, and mutable 5, cardinal 4, fixed 1 across the modalities. Jupiter and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:12.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 12.2° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 8.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-16/",
+    "label": "Everyone born on December 16"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Saturn:square",
+    "sun-degree:24.45",
+    "decan:sagittarius:third",
+    "personal:Mercury:Sagittarius:5.5°",
+    "personal:Venus:Scorpio:9.1°",
+    "personal:Mars:Capricorn:19.2°",
+    "aspect:Mars:Saturn:square:0.39",
+    "aspect:Sun:Neptune:square:0.43",
+    "aspect:Neptune:Pluto:trine:0.47",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:exaltation",
+    "elements:air4-earth3-fire2-water1",
+    "modalities:mutable5-cardinal4-fixed1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:libra",
+    "moon-band:12.2"
+  ],
+  "measurements": {
+    "originalWords": 437,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

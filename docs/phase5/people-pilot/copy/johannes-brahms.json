@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "johannes-brahms",
+  "seedRound": 0,
+  "qid": "Q7294",
+  "displayName": "Johannes Brahms",
+  "identity": "Composer · Germany · 1833–1897",
+  "title": "Johannes Brahms's birth chart",
+  "metaDescription": "Johannes Brahms's chart, computed from a sourced birth date: Sun at 16.6° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates the Sun and Mars from an exact sextile; at that range identity and drive read as one mechanism. A sixth of the circle is close enough for cooperation and far enough that it stays optional.",
+  "ledeFact": "aspect:Sun:Mars:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.61",
+        "decan:taurus:second"
+      ],
+      "text": "The Sun's position resolves to 16.6° Taurus — deep enough in the second decan (10°–20°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:22.1°",
+        "personal:Venus:Gemini:1.8°",
+        "personal:Mars:Cancer:16.7°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (22.1°), Venus in Gemini (1.8°), Mars in Cancer (16.7°): thought that arrives already in motion, attraction that begins as conversation, effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:sextile:0.12",
+        "aspect:Mercury:Uranus:sextile:0.29",
+        "aspect:Mercury:Jupiter:conjunction:1.9"
+      ],
+      "text": "Start where the chart is tightest — the Sun sextile Mars, 0.1° of separation. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mercury sextile Uranus at 0.3°, and Mercury conjunction Jupiter at 1.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:fall"
+      ],
+      "text": "Read against the old dignities, one placement stands out. Mars in Cancer at 16.7° is in fall — the tradition’s uphill placement, strength earned rather than given. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-fire3-air2-water1",
+        "modalities:cardinal5-fixed2-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 earth, 3 fire, 2 air, 1 water by element and 5 cardinal, 2 fixed, 2 mutable by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Venus, Saturn and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.6° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-7/",
+    "label": "Everyone born on May 7"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:sextile",
+    "sun-degree:16.61",
+    "decan:taurus:second",
+    "personal:Mercury:Aries:22.1°",
+    "personal:Venus:Gemini:1.8°",
+    "personal:Mars:Cancer:16.7°",
+    "aspect:Sun:Mars:sextile:0.12",
+    "aspect:Mercury:Uranus:sextile:0.29",
+    "aspect:Mercury:Jupiter:conjunction:1.9",
+    "figure:unaspected:Moon",
+    "dignity:Mars:fall",
+    "elements:earth3-fire3-air2-water1",
+    "modalities:cardinal5-fixed2-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 350,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "david-bowie",
+ "qid": "Q5383",
+ "displayName": "David Bowie",
+ "wikidataLabel": "David Bowie",
+ "wikidataDescription": "English musician and actor (1947–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5383",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522103319
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "David Bowie",
+   "articleUrl": "https://en.wikipedia.org/wiki/David_Bowie",
+   "pageId": 8786,
+   "revisionId": 1365555743,
+   "revisionTimestamp": "2026-07-23T03:51:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1947-01-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1947-01-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1947-01-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-01-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q146690",
+  "label": "Brixton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q146690",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q146690",
+   "sourceEntityLabel": "Brixton",
+   "latitude": 51.4575,
+   "longitude": -0.1175,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q12800682",
+   "label": "saxophonist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q674067",
+   "label": "mime artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:David-Bowie Chicago 2002-08-08 photoby Adam-Bielawski-cropped.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:David-Bowie%20Chicago%202002-08-08%20photoby%20Adam-Bielawski-cropped.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:David-Bowie_Chicago_2002-08-08_photoby_Adam-Bielawski-cropped.jpg",
+  "width": 342,
+  "height": 400,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Adam Bielawski",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

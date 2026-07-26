@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "muhammad-iqbal",
+ "qid": "Q484141",
+ "displayName": "Muhammad Iqbal",
+ "wikidataLabel": "Muhammad Iqbal",
+ "wikidataDescription": "British-Indian Islamic philosopher, poet and politician (1877-1938)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q484141",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518708656
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Muhammad Iqbal",
+   "articleUrl": "https://en.wikipedia.org/wiki/Muhammad_Iqbal",
+   "pageId": 34348533,
+   "revisionId": 1366126308,
+   "revisionTimestamp": "2026-07-26T12:20:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1877-11-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1877-11-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1873-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1877-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1938-04-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q643883",
+  "label": "Sialkot",
+  "entityUrl": "https://www.wikidata.org/wiki/Q643883",
+  "country": {
+   "entity": "Q843",
+   "label": "Pakistan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q643883",
+   "sourceEntityLabel": "Sialkot",
+   "latitude": 32.5,
+   "longitude": 74.533333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Iqbal 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Iqbal%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Iqbal_2.jpg",
+  "width": 800,
+  "height": 1035,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Amrita Sher-Gil",
+  "credit": "Reproduced in Tony Halliday, ed. (1992) Insight Guides: Pakistan. Published by Apa Publications (HK) Ltd.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

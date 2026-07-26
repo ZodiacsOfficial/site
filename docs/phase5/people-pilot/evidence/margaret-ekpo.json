@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "margaret-ekpo",
+ "qid": "Q1894824",
+ "displayName": "Margaret Ekpo",
+ "wikidataLabel": "Margaret Ekpo",
+ "wikidataDescription": "Nigerian politician (1914-2006)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1894824",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521520795
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Margaret Ekpo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Margaret_Ekpo",
+   "pageId": 11962247,
+   "revisionId": 1350059178,
+   "revisionTimestamp": "2026-04-20T02:18:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-07-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-07-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-07-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2006-09-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q739676",
+  "label": "Cross River State",
+  "entityUrl": "https://www.wikidata.org/wiki/Q739676",
+  "country": {
+   "entity": "Q1033",
+   "label": "Nigeria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q739676",
+   "sourceEntityLabel": "Cross River State",
+   "latitude": 5.75,
+   "longitude": 8.5,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Margaret ekpo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Margaret%20ekpo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Margaret_ekpo.jpg",
+  "width": 663,
+  "height": 842,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Fduriez",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

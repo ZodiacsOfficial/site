@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "charles-eames",
+ "qid": "Q170411",
+ "displayName": "Charles Eames",
+ "wikidataLabel": "Charles Eames",
+ "wikidataDescription": "American designer (1907-1978)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q170411",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517300514
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Charles Eames",
+   "articleUrl": "https://en.wikipedia.org/wiki/Charles_Eames",
+   "pageId": 12897797,
+   "revisionId": 1350925030,
+   "revisionTimestamp": "2026-04-24T21:23:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1907-06-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1907-06-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1907-06-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1978-08-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q38022",
+  "label": "St. Louis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q38022",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q38022",
+   "sourceEntityLabel": "St. Louis",
+   "latitude": 38.62638888888889,
+   "longitude": -90.19944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q1414443",
+   "label": "filmmaker"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q2962070",
+   "label": "production designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Charles Eames in Arts & Architecture, January 1945 (page 41 crop).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Charles%20Eames%20in%20Arts%20%26%20Architecture%2C%20January%201945%20(page%2041%20crop).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Charles_Eames_in_Arts_%26_Architecture,_January_1945_(page_41_crop).jpg",
+  "width": 1776,
+  "height": 2296,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Herbert Matter [1]",
+  "credit": "http://www.artsandarchitecture.com/issues http://www.artsandarchitecture.com/issues/pdf01/1945_01.pdf",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

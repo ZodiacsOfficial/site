@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "knute-rockne",
+ "qid": "Q1770885",
+ "displayName": "Knute Rockne",
+ "wikidataLabel": "Knute Rockne",
+ "wikidataDescription": "American football player and coach (1888–1931)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1770885",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521747392
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Knute Rockne",
+   "articleUrl": "https://en.wikipedia.org/wiki/Knute_Rockne",
+   "pageId": 17195,
+   "revisionId": 1361038932,
+   "revisionTimestamp": "2026-06-25T06:44:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1888-03-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1888-03-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1888-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1888-03-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1931-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q109031",
+  "label": "Voss Municipality",
+  "entityUrl": "https://www.wikidata.org/wiki/Q109031",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q109031",
+   "sourceEntityLabel": "Voss Municipality",
+   "latitude": 60.7025,
+   "longitude": 6.423056,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3246315",
+   "label": "head coach"
+  },
+  {
+   "entity": "Q19204627",
+   "label": "American football player"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2736",
+   "label": "association football"
+  },
+  {
+   "entity": "Q41583",
+   "label": "coach"
+  }
+ ],
+ "portrait": {
+  "file": "File:Knute rockne portrait 1921.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Knute%20rockne%20portrait%201921.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Knute_rockne_portrait_1921.jpg",
+  "width": 676,
+  "height": 900,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Restored from this file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

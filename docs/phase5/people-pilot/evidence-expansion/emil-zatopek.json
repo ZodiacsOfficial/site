@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "emil-zatopek",
+ "qid": "Q52589",
+ "displayName": "Emil Zátopek",
+ "wikidataLabel": "Emil Zátopek",
+ "wikidataDescription": "Czech long-distance runner (1922-2000)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q52589",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521412423
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Emil Zátopek",
+   "articleUrl": "https://en.wikipedia.org/wiki/Emil_Z%C3%A1topek",
+   "pageId": 483294,
+   "revisionId": 1364242009,
+   "revisionTimestamp": "2026-07-15T11:15:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-09-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-09-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-09-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2000-11-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q849439",
+  "label": "Kopřivnice",
+  "entityUrl": "https://www.wikidata.org/wiki/Q849439",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q849439",
+   "sourceEntityLabel": "Kopřivnice",
+   "latitude": 49.599461028116,
+   "longitude": 18.144833283338,
+   "precision": 0.0013860172380502,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11513337",
+   "label": "athletics competitor"
+  },
+  {
+   "entity": "Q829064",
+   "label": "career soldier"
+  },
+  {
+   "entity": "Q12803959",
+   "label": "runner"
+  },
+  {
+   "entity": "Q58825429",
+   "label": "Olympic competitor"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fotothek df roe-neg 0006305 003 Emil Zátopek-2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fotothek%20df%20roe-neg%200006305%20003%20Emil%20Z%C3%A1topek-2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fotothek_df_roe-neg_0006305_003_Emil_Z%C3%A1topek-2.jpg",
+  "width": 319,
+  "height": 445,
+  "licenseShortName": "CC BY-SA 3.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "artist": "Fotothek_df_roe-neg_0006305_003_Emil_Zátopek.jpg: Roger Rössing derivative work: MachoCarioca",
+  "credit": "This file was derived from: Fotothek df roe-neg 0006305 003 Emil Zátopek.jpg:",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "lal-bahadur-shastri",
+  "seedRound": 0,
+  "qid": "Q244689",
+  "displayName": "Lal Bahadur Shastri",
+  "identity": "Politician · India · 1904–1966",
+  "title": "Lal Bahadur Shastri's birth chart",
+  "metaDescription": "Lal Bahadur Shastri's chart, computed from a sourced birth date: Sun at 8.6° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a square to Neptune at 0.5° — close enough to weld identity to imagination. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower.",
+  "ledeFact": "aspect:Sun:Neptune:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.63",
+        "decan:libra:first"
+      ],
+      "text": "At the noon reference the Sun sits 8.6° into Libra — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Virgo:20.8°",
+        "personal:Venus:Scorpio:1.7°",
+        "personal:Mars:Virgo:0.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 20.8° Virgo, Venus was at 1.7° Scorpio, Mars was at 0.4° Virgo. Read together: thought with its feet on the ground; attraction that works by atmosphere; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:square:0.47",
+        "aspect:Mercury:Pluto:square:0.92",
+        "aspect:Jupiter:Uranus:trine:1.07"
+      ],
+      "text": "The Sun and Neptune hold the closest angle here — a square, 0.5° wide. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Mercury square Pluto at 0.9°, and Jupiter trine Uranus at 1.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Mars-Jupiter-Uranus",
+        "figure:t-square:Uranus-Pluto:apex-Mercury"
+      ],
+      "text": "Mars, Jupiter, Uranus close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Uranus opposes Pluto while both square Mercury. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Sun in Libra at 8.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 20.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Scorpio at 1.7° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 14.6° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth2-water2-fire2",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements air 3, earth 2, water 2, fire 2; modalities mutable 4, cardinal 3, fixed 2. Jupiter, Saturn and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 13.4° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-2/",
+    "label": "Everyone born on October 2"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:square",
+    "sun-degree:8.63",
+    "decan:libra:first",
+    "personal:Mercury:Virgo:20.8°",
+    "personal:Venus:Scorpio:1.7°",
+    "personal:Mars:Virgo:0.4°",
+    "aspect:Sun:Neptune:square:0.47",
+    "aspect:Mercury:Pluto:square:0.92",
+    "aspect:Jupiter:Uranus:trine:1.07",
+    "figure:grand-trine:Mars-Jupiter-Uranus",
+    "figure:t-square:Uranus-Pluto:apex-Mercury",
+    "dignity:Sun:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:domicile",
+    "elements:air3-earth2-water2-fire2",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 449,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

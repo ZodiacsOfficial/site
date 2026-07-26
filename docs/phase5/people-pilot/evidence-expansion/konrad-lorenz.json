@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "konrad-lorenz",
+ "qid": "Q78496",
+ "displayName": "Konrad Lorenz",
+ "wikidataLabel": "Konrad Lorenz",
+ "wikidataDescription": "Austrian zoologist, winner of the Nobel Prize in Physiology or Medicine in 1973 (1903–1989)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q78496",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519614376
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Konrad Lorenz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Konrad_Lorenz",
+   "pageId": 17077,
+   "revisionId": 1365592796,
+   "revisionTimestamp": "2026-07-23T09:53:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-11-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-11-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-11-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1989-02-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16831721",
+   "label": "ethologist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Konrad Lorenz.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Konrad%20Lorenz.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Konrad_Lorenz.JPG",
+  "width": 507,
+  "height": 557,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Max Planck Gesellschaft (Eurobas)",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

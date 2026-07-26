@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "faiz-ahmad-faiz",
+ "qid": "Q381296",
+ "displayName": "Faiz Ahmad Faiz",
+ "wikidataLabel": "Faiz Ahmad Faiz",
+ "wikidataDescription": "Pakistani Urdu poet and author (1911–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q381296",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520321708
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Faiz Ahmad Faiz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Faiz_Ahmad_Faiz",
+   "pageId": 517675,
+   "revisionId": 1365434531,
+   "revisionTimestamp": "2026-07-22T11:26:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-02-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-02-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-02-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-11-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q643883",
+  "label": "Sialkot",
+  "entityUrl": "https://www.wikidata.org/wiki/Q643883",
+  "country": {
+   "entity": "Q843",
+   "label": "Pakistan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q643883",
+   "sourceEntityLabel": "Sialkot",
+   "latitude": 32.5,
+   "longitude": 74.533333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Faiz Ahmed Faiz (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Faiz%20Ahmed%20Faiz%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Faiz_Ahmed_Faiz_(cropped).jpg",
+  "width": 888,
+  "height": 1249,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "BpldxbCrop by Titodutta",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

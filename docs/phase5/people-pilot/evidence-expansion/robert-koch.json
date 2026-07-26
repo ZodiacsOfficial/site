@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "robert-koch",
+ "qid": "Q37193",
+ "displayName": "Robert Koch",
+ "wikidataLabel": "Robert Koch",
+ "wikidataDescription": "German physician, bacteriologist (1843–1910)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37193",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521148273
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Robert Koch",
+   "articleUrl": "https://en.wikipedia.org/wiki/Robert_Koch",
+   "pageId": 13722,
+   "revisionId": 1364980616,
+   "revisionTimestamp": "2026-07-19T17:04:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1843-12-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1843-12-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1843-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1910-05-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q15377091",
+  "label": "Clausthal",
+  "entityUrl": "https://www.wikidata.org/wiki/Q15377091",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q15377091",
+   "sourceEntityLabel": "Clausthal",
+   "latitude": 51.80361111,
+   "longitude": 10.33305556,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q4002666",
+   "label": "military physician"
+  },
+  {
+   "entity": "Q15816836",
+   "label": "bacteriologist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  }
+ ],
+ "portrait": {
+  "file": "File:Robert Koch.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Robert%20Koch.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Robert_Koch.jpg",
+  "width": 2519,
+  "height": 3124,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Wilhelm Fechner",
+  "credit": "http://www.mic.ki.se/West.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

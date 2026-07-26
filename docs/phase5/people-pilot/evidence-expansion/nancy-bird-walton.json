@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nancy-bird-walton",
+ "qid": "Q6962560",
+ "displayName": "Nancy Bird Walton",
+ "wikidataLabel": "Nancy Bird Walton",
+ "wikidataDescription": "Australian aviator (1915-2009)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "oceania",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q6962560",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522356605
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nancy Bird Walton",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nancy_Bird_Walton",
+   "pageId": 1174075,
+   "revisionId": 1360672237,
+   "revisionTimestamp": "2026-06-22T22:31:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-10-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-10-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-10-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-01-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11297483",
+  "label": "Kew",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11297483",
+  "country": {
+   "entity": "Q408",
+   "label": "Australia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11297483",
+   "sourceEntityLabel": "Kew",
+   "latitude": -31.631666666666668,
+   "longitude": 152.7177778,
+   "precision": 0.000278,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nancy Bird Walton - Russell Roberts.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nancy%20Bird%20Walton%20-%20Russell%20Roberts.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nancy_Bird_Walton_-_Russell_Roberts.jpg",
+  "width": 3630,
+  "height": 5196,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Russell Roberts (1904–1999)",
+  "credit": "National Library of Australia",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

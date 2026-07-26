@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "pablo-casals",
+ "qid": "Q208537",
+ "displayName": "Pablo Casals",
+ "wikidataLabel": "Pau Casals",
+ "wikidataDescription": "Spanish cellist, conductor and composer (1876–1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q208537",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518313261
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Pablo Casals",
+   "articleUrl": "https://en.wikipedia.org/wiki/Pablo_Casals",
+   "pageId": 49073,
+   "revisionId": 1361249897,
+   "revisionTimestamp": "2026-06-26T18:00:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1876-12-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1876-12-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1876-12-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-10-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q929759",
+  "label": "El Vendrell",
+  "entityUrl": "https://www.wikidata.org/wiki/Q929759",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q929759",
+   "sourceEntityLabel": "El Vendrell",
+   "latitude": 41.220077,
+   "longitude": 1.534846,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q13219637",
+   "label": "cellist"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q462390",
+   "label": "docent"
+  }
+ ],
+ "portrait": {
+  "file": "File:Pablocasals (cropped 3x4).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Pablocasals%20(cropped%203x4).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Pablocasals_(cropped_3x4).jpg",
+  "width": 720,
+  "height": 960,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bain News Service",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ggbain.23448.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

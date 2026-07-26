@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "cecilia-payne-gaposchkin",
+ "qid": "Q234909",
+ "displayName": "Cecilia Payne-Gaposchkin",
+ "wikidataLabel": "Cecilia Helena Payne Gaposchkin",
+ "wikidataDescription": "British-born American astronomer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234909",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517549147
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Cecilia Payne-Gaposchkin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Cecilia_Payne-Gaposchkin",
+   "pageId": 476366,
+   "revisionId": 1361673732,
+   "revisionTimestamp": "2026-06-29T12:05:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1900-05-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1900-05-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1900-05-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1979-12-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2569184",
+  "label": "Wendover",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2569184",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2569184",
+   "sourceEntityLabel": "Wendover",
+   "latitude": 51.7675,
+   "longitude": -0.745,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cecilia Helena Payne-Gaposchkin (1900-1979) - Science Service.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cecilia%20Helena%20Payne-Gaposchkin%20(1900-1979)%20-%20Science%20Service.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cecilia_Helena_Payne-Gaposchkin_(1900-1979)_-_Science_Service.jpg",
+  "width": 2837,
+  "height": 2187,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Smithsonian Institution/Science Service, restored by Adam Cuerden",
+  "credit": "Air and Space Museum online gallery",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

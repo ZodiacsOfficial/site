@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "silvina-ocampo",
+ "qid": "Q442829",
+ "displayName": "Silvina Ocampo",
+ "wikidataLabel": "Silvina Ocampo",
+ "wikidataDescription": "Argentine writer (1903–1993)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q442829",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2503709486
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Silvina Ocampo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Silvina_Ocampo",
+   "pageId": 1014716,
+   "revisionId": 1339333524,
+   "revisionTimestamp": "2026-02-20T00:45:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-07-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-07-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-07-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-12-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1486",
+  "label": "Buenos Aires",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1486",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1486",
+   "sourceEntityLabel": "Buenos Aires",
+   "latitude": -34.599722222222,
+   "longitude": -58.381944444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Silvina-tomado-por-Bioy-Casares-en-Posadas-1959.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Silvina-tomado-por-Bioy-Casares-en-Posadas-1959.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Silvina-tomado-por-Bioy-Casares-en-Posadas-1959.jpg",
+  "width": 450,
+  "height": 600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Versión digitalizada de una foto publicada en la revista Pájaro de fuego nro 18 agosto 1979.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

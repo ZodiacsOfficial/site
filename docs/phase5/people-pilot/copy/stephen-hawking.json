@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "stephen-hawking",
+  "seedRound": 0,
+  "qid": "Q17714",
+  "displayName": "Stephen Hawking",
+  "identity": "Theoretical physicist and pedagogue · United Kingdom · 1942–2018",
+  "title": "Stephen Hawking's birth chart",
+  "metaDescription": "Stephen Hawking's chart, computed from a sourced birth date: Sun at 17.6° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a square: Mercury and Mars within 0.3°, thinking wired to drive. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen.",
+  "ledeFact": "aspect:Mercury:Mars:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.55",
+        "decan:capricorn:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 17.6° Capricorn: the second decan, whose classical sub-ruler is Venus. A earth sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:28.1°",
+        "personal:Venus:Aquarius:20.8°",
+        "personal:Mars:Aries:28.3°"
+      ],
+      "text": "The personal planets sit Mercury at 28.1° Capricorn, Venus at 20.8° Aquarius, Mars at 28.3° Aries. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a air sign reads as taste led by wit and proportion; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:square:0.27",
+        "aspect:Venus:Saturn:square:1.07",
+        "aspect:Mercury:Uranus:trine:1.4"
+      ],
+      "text": "Start where the chart is tightest — Mercury square Mars, 0.3° of separation. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Venus square Saturn at 1.1°, and Mercury trine Uranus at 1.4° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Mercury-Uranus-Neptune",
+        "figure:t-square:Mercury-Pluto:apex-Mars"
+      ],
+      "text": "Mercury, Uranus, Neptune close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. Mercury opposes Pluto while both square Mars. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Mars in Aries at 28.3° is in domicile — the planet in its own sign, running on home rules; Jupiter in Gemini at 12.7° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air2-fire2",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:5"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives earth 5, air 2, fire 2, and fixed 4, cardinal 3, mutable 2 across the modes. An earth emphasis reads as patience with material reality — slow hands, durable results. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 13.3° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-8/",
+    "label": "Everyone born on January 8"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Mars:square",
+    "sun-degree:17.55",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:28.1°",
+    "personal:Venus:Aquarius:20.8°",
+    "personal:Mars:Aries:28.3°",
+    "aspect:Mercury:Mars:square:0.27",
+    "aspect:Venus:Saturn:square:1.07",
+    "aspect:Mercury:Uranus:trine:1.4",
+    "figure:grand-trine:Mercury-Uranus-Neptune",
+    "figure:t-square:Mercury-Pluto:apex-Mars",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "elements:earth5-air2-fire2",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:5",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 462,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

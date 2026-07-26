@@ -1,0 +1,123 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dorothea-lange",
+ "qid": "Q230673",
+ "displayName": "Dorothea Lange",
+ "wikidataLabel": "Dorothea Lange",
+ "wikidataDescription": "American photojournalist (1895-1965)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q230673",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519388895
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dorothea Lange",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dorothea_Lange",
+   "pageId": 152817,
+   "revisionId": 1362613155,
+   "revisionTimestamp": "2026-07-05T03:48:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1895-05-25T00:00:00Z|proleptic-gregorian",
+   "+1895-05-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-05-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   },
+   {
+    "time": "+1895-05-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1895-05-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1965-10-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q138578",
+  "label": "Hoboken",
+  "entityUrl": "https://www.wikidata.org/wiki/Q138578",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q138578",
+   "sourceEntityLabel": "Hoboken",
+   "latitude": 40.745,
+   "longitude": -74.0325,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q957729",
+   "label": "photojournalist"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q11814411",
+   "label": "documentarian"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dorothea Lange 1936 portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dorothea%20Lange%201936%20portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dorothea_Lange_1936_portrait.jpg",
+  "width": 1088,
+  "height": 1424,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Dorothea_Lange_1936.jpg: Dorothea_Lange ??? derivative work: Svajcr (talk)",
+  "credit": "Dorothea_Lange_1936.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

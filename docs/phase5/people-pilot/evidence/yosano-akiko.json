@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yosano-akiko",
+ "qid": "Q464104",
+ "displayName": "Yosano Akiko",
+ "wikidataLabel": "Akiko Yosano",
+ "wikidataDescription": "Japanese tanka poet (1878–1942)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q464104",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521473420
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yosano Akiko",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yosano_Akiko",
+   "pageId": 344532,
+   "revisionId": 1363102446,
+   "revisionTimestamp": "2026-07-08T01:53:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1878-12-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1878-12-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1878-12-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1942-05-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q193428",
+  "label": "Sakai",
+  "entityUrl": "https://www.wikidata.org/wiki/Q193428",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q193428",
+   "sourceEntityLabel": "Sakai",
+   "latitude": 34.57333333333333,
+   "longitude": 135.483,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q11122954",
+   "label": "waka poet"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:YOSANO Akiko.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:YOSANO%20Akiko.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:YOSANO_Akiko.jpg",
+  "width": 810,
+  "height": 1101,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image is available from the website of the National Diet Library",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

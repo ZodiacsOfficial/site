@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "georg-wilhelm-friedrich-hegel",
+ "qid": "Q9235",
+ "displayName": "Georg Wilhelm Friedrich Hegel",
+ "wikidataLabel": "Georg Wilhelm Friedrich Hegel",
+ "wikidataDescription": "German philosopher and theologian (1770–1831)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9235",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522980283
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Georg Wilhelm Friedrich Hegel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Georg_Wilhelm_Friedrich_Hegel",
+   "pageId": 12598,
+   "revisionId": 1366164359,
+   "revisionTimestamp": "2026-07-26T17:43:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1770-08-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1770-08-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1770-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1770-08-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1831-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1022",
+  "label": "Stuttgart",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1022",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1022",
+   "sourceEntityLabel": "Stuttgart",
+   "latitude": 48.7775,
+   "longitude": 9.18,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q24265174",
+   "label": "philosophy historian"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q23760244",
+   "label": "philosopher of law"
+  },
+  {
+   "entity": "Q14565331",
+   "label": "logician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jakob Schlesinger - Hegel 1831.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jakob%20Schlesinger%20-%20Hegel%201831.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jakob_Schlesinger_-_Hegel_1831.jpg",
+  "width": 1654,
+  "height": 2085,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Jakob Schlesinger",
+  "credit": "https://recherche.smb.museum/detail/963803 (Alte Nationalgalerie)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

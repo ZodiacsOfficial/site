@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "medgar-evers",
+ "qid": "Q717985",
+ "displayName": "Medgar Evers",
+ "wikidataLabel": "Medgar Evers",
+ "wikidataDescription": "African-American civil rights activist (1925-1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q717985",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2513549853
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Medgar Evers",
+   "articleUrl": "https://en.wikipedia.org/wiki/Medgar_Evers",
+   "pageId": 175544,
+   "revisionId": 1365054117,
+   "revisionTimestamp": "2026-07-20T00:38:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-07-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-07-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-06-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2303135",
+  "label": "Decatur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2303135",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2303135",
+   "sourceEntityLabel": "Decatur",
+   "latitude": 32.4394,
+   "longitude": -89.1119,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  }
+ ],
+ "portrait": {
+  "file": "File:Medgar Evers press photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Medgar%20Evers%20press%20photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Medgar_Evers_press_photo.jpg",
+  "width": 1544,
+  "height": 1984,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown; distributed by AP",
+  "credit": "Immediate Fresno Bee ClippingWorthpoint Archived",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

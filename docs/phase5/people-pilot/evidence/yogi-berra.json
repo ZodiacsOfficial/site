@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yogi-berra",
+ "qid": "Q367566",
+ "displayName": "Yogi Berra",
+ "wikidataLabel": "Yogi Berra",
+ "wikidataDescription": "American baseball player, manager, and coach (1925–2015)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q367566",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517641504
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yogi Berra",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yogi_Berra",
+   "pageId": 43088,
+   "revisionId": 1363210929,
+   "revisionTimestamp": "2026-07-08T19:13:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-05-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-05-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-05-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2015-09-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q38022",
+  "label": "St. Louis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q38022",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q38022",
+   "sourceEntityLabel": "St. Louis",
+   "latitude": 38.62638888888889,
+   "longitude": -90.19944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:1953 Bowman Yogi Berra (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:1953%20Bowman%20Yogi%20Berra%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:1953_Bowman_Yogi_Berra_(cropped).jpg",
+  "width": 1088,
+  "height": 1693,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bowman Gum",
+  "credit": "Heritage Auctions",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

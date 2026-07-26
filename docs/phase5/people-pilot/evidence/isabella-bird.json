@@ -1,0 +1,134 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "isabella-bird",
+ "qid": "Q288210",
+ "displayName": "Isabella Bird",
+ "wikidataLabel": "Isabella Bird",
+ "wikidataDescription": "British traveler, writer, photographer and naturalist (1831–1904)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q288210",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517647640
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Isabella Bird",
+   "articleUrl": "https://en.wikipedia.org/wiki/Isabella_Bird",
+   "pageId": 880265,
+   "revisionId": 1357875537,
+   "revisionTimestamp": "2026-06-05T05:25:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1831-10-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1831-10-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1831-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1831-10-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1904-10-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2569056",
+  "label": "Boroughbridge",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2569056",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2569056",
+   "sourceEntityLabel": "Boroughbridge",
+   "latitude": 54.095,
+   "longitude": -1.398,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q901402",
+   "label": "geographer"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q12356615",
+   "label": "traveler"
+  },
+  {
+   "entity": "Q2083925",
+   "label": "botanical collector"
+  },
+  {
+   "entity": "Q219477",
+   "label": "missionary"
+  }
+ ],
+ "portrait": {
+  "file": "File:Isabella Bird portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Isabella%20Bird%20portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Isabella_Bird_portrait.jpg",
+  "width": 1270,
+  "height": 1270,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "G.P. Putnam's Sons",
+  "credit": "This image is available from the New York Public Library's Digital Library under the digital ID 826842: digitalgallery.nypl.org → digitalcollections.nypl.org",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

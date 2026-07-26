@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sun-yat-sen",
+ "qid": "Q8573",
+ "displayName": "Sun Yat-sen",
+ "wikidataLabel": "Sun Yat-sen",
+ "wikidataDescription": "Chinese politician, physician, and revolutionary (1866–1925)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8573",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522754203
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sun Yat-sen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sun_Yat-sen",
+   "pageId": 88483,
+   "revisionId": 1365311146,
+   "revisionTimestamp": "2026-07-21T16:30:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1956-11-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1956-11-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1956-11-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2025-03-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q15180",
+  "label": "Soviet Union",
+  "entityUrl": "https://www.wikidata.org/wiki/Q15180",
+  "country": {
+   "entity": "Q15180",
+   "label": "Soviet Union"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q15180",
+   "sourceEntityLabel": "Soviet Union",
+   "latitude": 65,
+   "longitude": 90,
+   "precision": 1,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  }
+ ],
+ "portrait": {
+  "file": "File:孙中山肖像.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:%E5%AD%99%E4%B8%AD%E5%B1%B1%E8%82%96%E5%83%8F.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:%E5%AD%99%E4%B8%AD%E5%B1%B1%E8%82%96%E5%83%8F.jpg",
+  "width": 1467,
+  "height": 1925,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "上海波尔照相馆",
+  "credit": "孙中山纪念馆 http://cyc7.cycnet.com:8091/leaders/szs/content.jsp?id=6936&s_code=1103",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

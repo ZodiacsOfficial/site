@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "federico-garcia-lorca",
+ "qid": "Q41408",
+ "displayName": "Federico García Lorca",
+ "wikidataLabel": "Federico García Lorca",
+ "wikidataDescription": "Spanish poet, dramatist and prose writer (1898–1936)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41408",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517538071
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Federico García Lorca",
+   "articleUrl": "https://en.wikipedia.org/wiki/Federico_Garc%C3%ADa_Lorca",
+   "pageId": 100031,
+   "revisionId": 1365476286,
+   "revisionTimestamp": "2026-07-22T18:00:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-06-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-06-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-06-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1936-08-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q574513",
+  "label": "Fuente Vaqueros",
+  "entityUrl": "https://www.wikidata.org/wiki/Q574513",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q574513",
+   "sourceEntityLabel": "Fuente Vaqueros",
+   "latitude": 37.219444444444,
+   "longitude": -3.7830555555556,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3387717",
+   "label": "theatre director"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q1776724",
+   "label": "theatre manager"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Federico García Lorca. Huerta de San Vicente, Granada.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Federico%20Garc%C3%ADa%20Lorca.%20Huerta%20de%20San%20Vicente%2C%20Granada.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Federico_Garc%C3%ADa_Lorca._Huerta_de_San_Vicente,_Granada.jpg",
+  "width": 521,
+  "height": 651,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "https://www.museoreinasofia.es/coleccion/obra/federico-garcia-lorca-huerta-san-vicente-granada",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

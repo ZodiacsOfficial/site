@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "naguib-mahfouz",
+ "qid": "Q7176",
+ "displayName": "Naguib Mahfouz",
+ "wikidataLabel": "Naguib Mahfouz",
+ "wikidataDescription": "Egyptian writer (1911–2006)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7176",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522870568
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Naguib Mahfouz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Naguib_Mahfouz",
+   "pageId": 21995,
+   "revisionId": 1359723270,
+   "revisionTimestamp": "2026-06-16T20:55:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-12-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-12-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2006-08-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q12185628",
+  "label": "Al-Jamāliyah",
+  "entityUrl": "https://www.wikidata.org/wiki/Q12185628",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q12185628",
+   "sourceEntityLabel": "Al-Jamāliyah",
+   "latitude": 30.05105,
+   "longitude": 31.26486,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q58968",
+   "label": "intellectual"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q876864",
+   "label": "editing staff"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nagib Mahfouz.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nagib%20Mahfouz.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nagib_Mahfouz.jpg",
+  "width": 285,
+  "height": 400,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The original uploader was Producer at Arabic Wikipedia.",
+  "credit": "Transferred from ar.wikipedia to Commons.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

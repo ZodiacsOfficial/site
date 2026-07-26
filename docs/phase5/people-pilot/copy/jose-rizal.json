@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jose-rizal",
+  "seedRound": 0,
+  "qid": "Q1500",
+  "displayName": "José Rizal",
+  "identity": "Writer and painter · Philippines · 1861–1896",
+  "title": "José Rizal's birth chart",
+  "metaDescription": "José Rizal's chart, computed from a sourced birth date: Sun at 27.8° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, cardinal leads with four. The cardinal signs begin things; a chart weighted there treats every stall as a starting gun.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.79",
+        "decan:gemini:third"
+      ],
+      "text": "27.8° of Gemini is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Cancer:22.3°",
+        "personal:Venus:Cancer:8.2°",
+        "personal:Mars:Cancer:20.0°"
+      ],
+      "text": "Mercury holds 22.3° Cancer, Venus holds 8.2° Cancer, Mars holds 20.0° Cancer — in the old shorthand, thought steeped in tone and memory; attraction that works by atmosphere; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:sextile:1.8",
+        "aspect:Mercury:Mars:conjunction:2.32",
+        "aspect:Sun:Neptune:square:3.79"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Pluto: 1.8° from an exact sextile. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mercury conjunction Mars at 2.3°, and the Sun square Neptune at 3.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Jupiter makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Mars:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. The Moon in Scorpio at 11.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 20.0° is in fall. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-fire2-earth2",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:0"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in water, 2 in air, 2 in fire, 2 in earth by element, 4 cardinal, 3 mutable, 3 fixed by modality. Not one planet was retrograde, so the whole chart reads in direct motion."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:14.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.6° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 11.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-19/",
+    "label": "Everyone born on June 19"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:27.79",
+    "decan:gemini:third",
+    "personal:Mercury:Cancer:22.3°",
+    "personal:Venus:Cancer:8.2°",
+    "personal:Mars:Cancer:20.0°",
+    "aspect:Venus:Pluto:sextile:1.8",
+    "aspect:Mercury:Mars:conjunction:2.32",
+    "aspect:Sun:Neptune:square:3.79",
+    "figure:unaspected:Jupiter",
+    "dignity:Moon:fall",
+    "dignity:Mars:fall",
+    "elements:water4-air2-fire2-earth2",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:0",
+    "moon-sign:scorpio",
+    "moon-band:14.6"
+  ],
+  "measurements": {
+    "originalWords": 351,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

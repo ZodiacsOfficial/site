@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sandra-day-o-connor",
+ "qid": "Q11132",
+ "displayName": "Sandra Day O'Connor",
+ "wikidataLabel": "Sandra Day O'Connor",
+ "wikidataDescription": "American lawyer and jurist (1930–2023)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q11132",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517792511
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sandra Day O'Connor",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sandra_Day_O'Connor",
+   "pageId": 42640,
+   "revisionId": 1363644999,
+   "revisionTimestamp": "2026-07-11T12:44:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1930-03-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1930-03-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1930-03-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2023-12-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q16562",
+  "label": "El Paso",
+  "entityUrl": "https://www.wikidata.org/wiki/Q16562",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q16562",
+   "sourceEntityLabel": "El Paso",
+   "latitude": 31.759166666667,
+   "longitude": -106.48861111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16533",
+   "label": "judge"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sandra Day O'Connor crop.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sandra%20Day%20O'Connor%20crop.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sandra_Day_O%27Connor_crop.jpg",
+  "width": 437,
+  "height": 567,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Library of Congress (Transferred by Sven Manguard,",
+  "credit": "http://www.womenshistorymonth.gov/images/profiles/feature_sandradayoconner.jpg and http://www.womenshistorymonth.gov/profiles/sandradayoconnor.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": "personality"
+ }
+}

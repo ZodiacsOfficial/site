@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "m-f-husain",
+ "qid": "Q558522",
+ "displayName": "M. F. Husain",
+ "wikidataLabel": "M. F. Husain",
+ "wikidataDescription": "Indian artist (1915–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q558522",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521416082
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "M. F. Husain",
+   "articleUrl": "https://en.wikipedia.org/wiki/M._F._Husain",
+   "pageId": 1280630,
+   "revisionId": 1362160663,
+   "revisionTimestamp": "2026-07-02T07:22:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-09-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-09-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-09-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-06-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1779418",
+  "label": "Pandharpur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1779418",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1779418",
+   "sourceEntityLabel": "Pandharpur",
+   "latitude": 17.67,
+   "longitude": 75.33,
+   "precision": 0.094279588288233,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Husain with Rammanohar (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Husain%20with%20Rammanohar%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Husain_with_Rammanohar_(cropped).jpg",
+  "width": 1012,
+  "height": 1519,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Abrsinha",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

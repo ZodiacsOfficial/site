@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "franz-kafka",
+ "qid": "Q905",
+ "displayName": "Franz Kafka",
+ "wikidataLabel": "Franz Kafka",
+ "wikidataDescription": "Bohemian writer from Prague (1883–1924)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q905",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522755513
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Franz Kafka",
+   "articleUrl": "https://en.wikipedia.org/wiki/Franz_Kafka",
+   "pageId": 10858,
+   "revisionId": 1365053677,
+   "revisionTimestamp": "2026-07-20T00:34:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-07-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-07-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-07-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1924-06-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1085",
+  "label": "Prague",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1085",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1085",
+   "sourceEntityLabel": "Prague",
+   "latitude": 50.0875,
+   "longitude": 14.421388888888888,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q3064032",
+   "label": "fabulist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q3606216",
+   "label": "aphorist"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q1209498",
+   "label": "poet lawyer"
+  },
+  {
+   "entity": "Q691167",
+   "label": "claims adjuster"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Franz Kafka, 1923.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Franz%20Kafka%2C%201923.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Franz_Kafka,_1923.jpg",
+  "width": 1992,
+  "height": 2656,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown photographer",
+  "credit": "Franz Kafka: Pictures of a Life by Klaus Wagenbach (1984), p. 209 and Kafka Bildarchiv. Photographer not identified. Exhibition Kafka: Making of an Icon, Morgan Library & Museum (PDF, page 25) Kafka: The Years of Insight by Reiner Stach (2013), fig. 70. Details about the photograph.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

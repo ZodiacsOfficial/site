@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mother-teresa",
+ "qid": "Q30547",
+ "displayName": "Mother Teresa",
+ "wikidataLabel": "Mother Teresa",
+ "wikidataDescription": "Albanian-Indian Catholic nun and missionary (1910–1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q30547",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520552567
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mother Teresa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mother_Teresa",
+   "pageId": 347105,
+   "revisionId": 1363555590,
+   "revisionTimestamp": "2026-07-10T23:30:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-08-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-08-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-08-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-09-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q384",
+  "label": "Skopje",
+  "entityUrl": "https://www.wikidata.org/wiki/Q384",
+  "country": {
+   "entity": "Q221",
+   "label": "North Macedonia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q384",
+   "sourceEntityLabel": "Skopje",
+   "latitude": 41.99611111111111,
+   "longitude": 21.431666666666665,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q55631411",
+   "label": "religious sister"
+  },
+  {
+   "entity": "Q219477",
+   "label": "missionary"
+  },
+  {
+   "entity": "Q191808",
+   "label": "nun"
+  },
+  {
+   "entity": "Q2450226",
+   "label": "founder of Catholic religious community"
+  },
+  {
+   "entity": "Q28146366",
+   "label": "Christian nun"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:MotherTeresa 090.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:MotherTeresa%20090.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:MotherTeresa_090.jpg",
+  "width": 576,
+  "height": 768,
+  "licenseShortName": "CC BY-SA 2.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en",
+  "artist": "Túrelio",
+  "credit": "own work (digitized on Kodak-PhotoCD (16 Base) from 35 mm photographic film)",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

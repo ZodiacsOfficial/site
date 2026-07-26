@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "florence-griffith-joyner",
+ "qid": "Q31082",
+ "displayName": "Florence Griffith Joyner",
+ "wikidataLabel": "Florence Griffith Joyner",
+ "wikidataDescription": "American track and field athlete (1959-1998)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q31082",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518254038
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Florence Griffith Joyner",
+   "articleUrl": "https://en.wikipedia.org/wiki/Florence_Griffith_Joyner",
+   "pageId": 72650,
+   "revisionId": 1364831579,
+   "revisionTimestamp": "2026-07-18T19:44:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1959-12-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1959-12-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1959-12-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1998-09-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q65",
+  "label": "Los Angeles",
+  "entityUrl": "https://www.wikidata.org/wiki/Q65",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q65",
+   "sourceEntityLabel": "Los Angeles",
+   "latitude": 34.05223,
+   "longitude": -118.24368,
+   "precision": 0.10842311330607,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4009406",
+   "label": "sprinter"
+  },
+  {
+   "entity": "Q11513337",
+   "label": "athletics competitor"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Florence Griffith Joyner2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Florence%20Griffith%20Joyner2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Florence_Griffith_Joyner2.jpg",
+  "width": 1116,
+  "height": 1461,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "All the photographs are in the public domain and may be credited \"Courtesy Ronald Reagan Library.",
+  "credit": "Original photo",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

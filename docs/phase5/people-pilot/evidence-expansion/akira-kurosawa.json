@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "akira-kurosawa",
+ "qid": "Q8006",
+ "displayName": "Akira Kurosawa",
+ "wikidataLabel": "Akira Kurosawa",
+ "wikidataDescription": "Japanese filmmaker (1910–1998)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8006",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522814172
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Akira Kurosawa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Akira_Kurosawa",
+   "pageId": 872,
+   "revisionId": 1363791281,
+   "revisionTimestamp": "2026-07-12T13:12:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-03-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-03-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-03-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1998-09-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11432209",
+  "label": "Ōi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11432209",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11432209",
+   "sourceEntityLabel": "Ōi",
+   "latitude": 35.60191666666667,
+   "longitude": 139.73655555555555,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Akirakurosawa-onthesetof7samurai-1953-page88.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Akirakurosawa-onthesetof7samurai-1953-page88.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Akirakurosawa-onthesetof7samurai-1953-page88.jpg",
+  "width": 1615,
+  "height": 2705,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "映画の友 (Eiga no tomo)",
+  "credit": "Scan from the original work",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

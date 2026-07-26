@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "giorgos-seferis",
+  "seedRound": 0,
+  "qid": "Q165823",
+  "displayName": "Giorgos Seferis",
+  "identity": "Poet · Turkey · 1900–1971",
+  "title": "Giorgos Seferis's birth chart",
+  "metaDescription": "Giorgos Seferis's chart, computed from a sourced birth date: Sun at 22.4° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a square to Jupiter at 0.7° — close enough to weld drive to expansion. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected.",
+  "ledeFact": "aspect:Mars:Jupiter:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.39",
+        "decan:pisces:third"
+      ],
+      "text": "At the noon reference the Sun sits 22.4° into Pisces — the third decan, which the old scheme hands to Mars. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:8.8°",
+        "personal:Venus:Taurus:3.1°",
+        "personal:Mars:Pisces:9.8°"
+      ],
+      "text": "Closer in, Mercury stands at 8.8° Aries; Venus stands at 3.1° Taurus; Mars stands at 9.8° Pisces. The tradition reads thought that arrives already in motion from Mercury, attraction that grows by reliability from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Jupiter:square:0.7",
+        "aspect:Venus:Saturn:trine:1.1",
+        "aspect:Mercury:Jupiter:trine:1.7"
+      ],
+      "text": "The day's firmest angle joins Mars and Jupiter — a square holding at 0.7°. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Venus trine Saturn at 1.1°, and Mercury trine Jupiter at 1.7° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Jupiter-Pluto:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Pluto while both square Mars. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Venus in Taurus at 3.1° is in domicile — the planet in its own sign, running on home rules; Jupiter in Sagittarius at 10.5° is in domicile; Saturn in Capricorn at 4.2° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water2-earth2-air2",
+        "modalities:mutable6-fixed2-cardinal2",
+        "settled-signs:10",
+        "retrograde:0"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 fire, 2 water, 2 earth, 2 air by element and 6 mutable, 2 fixed, 2 cardinal by mode. All ten bodies ran direct that day — a chart with no apparent reversals anywhere in it."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 20.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-13/",
+    "label": "Everyone born on March 13"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Jupiter:square",
+    "sun-degree:22.39",
+    "decan:pisces:third",
+    "personal:Mercury:Aries:8.8°",
+    "personal:Venus:Taurus:3.1°",
+    "personal:Mars:Pisces:9.8°",
+    "aspect:Mars:Jupiter:square:0.7",
+    "aspect:Venus:Saturn:trine:1.1",
+    "aspect:Mercury:Jupiter:trine:1.7",
+    "figure:t-square:Jupiter-Pluto:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire4-water2-earth2-air2",
+    "modalities:mutable6-fixed2-cardinal2",
+    "settled-signs:10",
+    "retrograde:0",
+    "moon-sign:leo",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 409,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

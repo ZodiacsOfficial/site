@@ -1,0 +1,135 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "naz-m-hikmet",
+ "qid": "Q184906",
+ "displayName": "Nâzım Hikmet",
+ "wikidataLabel": "Nâzım Hikmet",
+ "wikidataDescription": "Turkish communist poet, playwright and novelist (1902–1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q184906",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516633529
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nâzım Hikmet",
+   "articleUrl": "https://en.wikipedia.org/wiki/N%C3%A2z%C4%B1m_Hikmet",
+   "pageId": 471660,
+   "revisionId": 1363548139,
+   "revisionTimestamp": "2026-07-10T22:26:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1902-01-15T00:00:00Z|proleptic-gregorian",
+   "+1901-11-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-01-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1901-11-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-01-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-06-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q17151",
+  "label": "Thessaloniki",
+  "entityUrl": "https://www.wikidata.org/wiki/Q17151",
+  "country": {
+   "entity": "Q41",
+   "label": "Greece"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q17151",
+   "sourceEntityLabel": "Thessaloniki",
+   "latitude": 40.640277777777776,
+   "longitude": 22.935555555555556,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nâzım Hikmet, Berlin 1956 (1).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:N%C3%A2z%C4%B1m%20Hikmet%2C%20Berlin%201956%20(1).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:N%C3%A2z%C4%B1m_Hikmet,_Berlin_1956_(1).jpg",
+  "width": 1600,
+  "height": 2263,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Hans-Joachim Koch",
+  "credit": "https://www.deutschefotothek.de/documents/obj/90080184",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

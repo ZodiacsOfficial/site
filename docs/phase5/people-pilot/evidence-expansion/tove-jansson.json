@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "tove-jansson",
+ "qid": "Q102071",
+ "displayName": "Tove Jansson",
+ "wikidataLabel": "Tove Jansson",
+ "wikidataDescription": "Finnish children's writer and illustrator (1914–2001)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q102071",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522177611
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Tove Jansson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Tove_Jansson",
+   "pageId": 49274,
+   "revisionId": 1365412767,
+   "revisionTimestamp": "2026-07-22T07:03:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-08-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-08-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-08-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2001-06-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q25411",
+  "label": "Helsingborg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q25411",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q25411",
+   "sourceEntityLabel": "Helsingborg",
+   "latitude": 56.042411686174,
+   "longitude": 12.720996359515,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q1114448",
+   "label": "cartoonist"
+  },
+  {
+   "entity": "Q3658608",
+   "label": "caricaturist"
+  },
+  {
+   "entity": "Q107212688",
+   "label": "exlibrist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q3374326",
+   "label": "muralist"
+  },
+  {
+   "entity": "Q11606860",
+   "label": "picture book writer"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Tove Jansson 1956b.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Tove%20Jansson%201956b.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Tove_Jansson_1956b.jpg",
+  "width": 184,
+  "height": 253,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Tove_Jansson_1956.jpg: Reino Loppinen derivative work: Bff",
+  "credit": "File:Tove_Jansson_1956.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

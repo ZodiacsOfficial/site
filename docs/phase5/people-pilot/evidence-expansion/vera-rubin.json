@@ -1,0 +1,114 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "vera-rubin",
+ "qid": "Q234888",
+ "displayName": "Vera Rubin",
+ "wikidataLabel": "Vera Rubin",
+ "wikidataDescription": "American astronomer and physicist (1928-2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234888",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518977086
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Vera Rubin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Vera_Rubin",
+   "pageId": 472972,
+   "revisionId": 1365472740,
+   "revisionTimestamp": "2026-07-22T17:27:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1928-07-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-07-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1928-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-07-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-12-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1345",
+  "label": "Philadelphia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1345",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1345",
+   "sourceEntityLabel": "Philadelphia",
+   "latitude": 39.952777777778,
+   "longitude": -75.163611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Vera Rubin with antique globes.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Vera%20Rubin%20with%20antique%20globes.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Vera_Rubin_with_antique_globes.jpg",
+  "width": 1760,
+  "height": 2901,
+  "licenseShortName": "Attribution",
+  "licenseUrl": null,
+  "artist": "Photograph by Mark Godfrey, courtesy of AIP Emilio Segrè Visual Archives, Gift of Vera Rubin",
+  "credit": "https://repository.aip.org/node/111858",
+  "usageTerms": null,
+  "attributionRequired": null,
+  "restrictions": ""
+ }
+}

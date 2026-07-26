@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edmund-hillary",
+ "qid": "Q33817",
+ "displayName": "Edmund Hillary",
+ "wikidataLabel": "Edmund Hillary",
+ "wikidataDescription": "New Zealand mountaineer and philanthropist (1919–2008)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q33817",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522066777
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edmund Hillary",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edmund_Hillary",
+   "pageId": 73572,
+   "revisionId": 1364839677,
+   "revisionTimestamp": "2026-07-18T20:45:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1919-07-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1919-07-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-07-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2008-01-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q37100",
+  "label": "Auckland",
+  "entityUrl": "https://www.wikidata.org/wiki/Q37100",
+  "country": {
+   "entity": "Q664",
+   "label": "New Zealand"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q37100",
+   "sourceEntityLabel": "Auckland",
+   "latitude": -36.84916666666667,
+   "longitude": 174.76527777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q12362622",
+   "label": "philanthropist"
+  },
+  {
+   "entity": "Q852389",
+   "label": "beekeeper"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q9149093",
+   "label": "mountaineer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Edmund Hillary, c. 1953, autograph removed.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Edmund%20Hillary%2C%20c.%201953%2C%20autograph%20removed.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Edmund_Hillary,_c._1953,_autograph_removed.jpg",
+  "width": 4300,
+  "height": 5458,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photographer unidentified. Retouched by TimofKingsland.",
+  "credit": "Pascoe, John Dobree, 1908-1972. Edmund Percival Hillary. Ref: 1/2-020196-F. Alexander Turnbull Library, Wellington, New Zealand. http://beta.natlib.govt.nz/records/22676310",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

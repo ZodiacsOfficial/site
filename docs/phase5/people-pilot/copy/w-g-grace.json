@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "w-g-grace",
+  "seedRound": 0,
+  "qid": "Q616068",
+  "displayName": "W. G. Grace",
+  "identity": "Cricketer and physician · United Kingdom · 1848–1915",
+  "title": "W. G. Grace's birth chart",
+  "metaDescription": "W. G. Grace's chart, computed from a sourced birth date: Sun at 25.9° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a square to Pluto at 0.1° — close enough to weld thinking to depth. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected.",
+  "ledeFact": "aspect:Mercury:Pluto:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.90",
+        "decan:cancer:third"
+      ],
+      "text": "25.9° of Cancer is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Cancer:27.8°",
+        "personal:Venus:Cancer:24.7°",
+        "personal:Mars:Leo:25.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 27.8° Cancer, Venus was at 24.7° Cancer, Mars was at 25.4° Leo. Read together: thought steeped in tone and memory; attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Pluto:square:0.09",
+        "aspect:Venus:Saturn:trine:0.52",
+        "aspect:Sun:Saturn:trine:0.71"
+      ],
+      "text": "Mercury to Pluto is the closest call of the day, a square within 0.1°. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Venus trine Saturn at 0.5°, and the Sun trine Saturn at 0.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "The dignity table has nothing to say about this chart. All seven classical planets sit in signs it treats as neutral, so the reading rests entirely on placement and angle."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire4-air1",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 5, fire 4, air 1; modalities cardinal 5, fixed 3, mutable 2. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mercury, Saturn and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:13.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.4° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 21.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-18/",
+    "label": "Everyone born on July 18"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Pluto:square",
+    "sun-degree:25.90",
+    "decan:cancer:third",
+    "personal:Mercury:Cancer:27.8°",
+    "personal:Venus:Cancer:24.7°",
+    "personal:Mars:Leo:25.4°",
+    "aspect:Mercury:Pluto:square:0.09",
+    "aspect:Venus:Saturn:trine:0.52",
+    "aspect:Sun:Saturn:trine:0.71",
+    "figure:none",
+    "dignity:none",
+    "elements:water5-fire4-air1",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aquarius",
+    "moon-band:13.4"
+  ],
+  "measurements": {
+    "originalWords": 381,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "miguel-de-unamuno",
+  "seedRound": 0,
+  "qid": "Q185085",
+  "displayName": "Miguel de Unamuno",
+  "identity": "Poet and university teacher · Spain · 1864–1936",
+  "title": "Miguel de Unamuno's birth chart",
+  "metaDescription": "Miguel de Unamuno's chart, computed from a sourced birth date: Sun at 6.6° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: the Sun and Neptune within 0.3°, identity wired to imagination. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach.",
+  "ledeFact": "aspect:Sun:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.59",
+        "decan:libra:first"
+      ],
+      "text": "The Sun sits at 6.6° Libra — the first decan, 0°–10°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Libra and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Virgo:26.3°",
+        "personal:Venus:Libra:26.3°",
+        "personal:Mars:Gemini:14.9°"
+      ],
+      "text": "The personal planets sit Mercury at 26.3° Virgo, Venus at 26.3° Libra, Mars at 14.9° Gemini. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a air sign reads as taste led by wit and proportion; Mars in a air sign reads as drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:opposition:0.35",
+        "aspect:Mercury:Jupiter:sextile:0.86",
+        "aspect:Mercury:Uranus:square:3.15"
+      ],
+      "text": "The day's firmest angle joins the Sun and Neptune — a opposition holding at 0.3°. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, Mercury sextile Jupiter at 0.9°, and Mercury square Uranus at 3.1° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Sun in Libra at 6.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 26.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 26.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 19.3° is in exaltation. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-earth3-water1-fire1",
+        "modalities:cardinal4-mutable4-fixed2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 air, 3 earth, 1 water, 1 fire; by modality, 4 cardinal, 4 mutable, 2 fixed. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Mercury, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 20.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-29/",
+    "label": "Everyone born on September 29"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:opposition",
+    "sun-degree:6.59",
+    "decan:libra:first",
+    "personal:Mercury:Virgo:26.3°",
+    "personal:Venus:Libra:26.3°",
+    "personal:Mars:Gemini:14.9°",
+    "aspect:Sun:Neptune:opposition:0.35",
+    "aspect:Mercury:Jupiter:sextile:0.86",
+    "aspect:Mercury:Uranus:square:3.15",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:air5-earth3-water1-fire1",
+    "modalities:cardinal4-mutable4-fixed2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:virgo",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 459,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

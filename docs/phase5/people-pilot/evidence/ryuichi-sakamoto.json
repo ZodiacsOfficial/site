@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ryuichi-sakamoto",
+ "qid": "Q345494",
+ "displayName": "Ryuichi Sakamoto",
+ "wikidataLabel": "Ryuichi Sakamoto",
+ "wikidataDescription": "Japanese composer (1952–2023)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q345494",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519931323
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ryuichi Sakamoto",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ryuichi_Sakamoto",
+   "pageId": 26272,
+   "revisionId": 1363668962,
+   "revisionTimestamp": "2026-07-11T16:02:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1952-01-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1952-01-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1952-01-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2023-03-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q234087",
+  "label": "Nakano",
+  "entityUrl": "https://www.wikidata.org/wiki/Q234087",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q234087",
+   "sourceEntityLabel": "Nakano",
+   "latitude": 35.707277777777776,
+   "longitude": 139.66375,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q1643514",
+   "label": "music arranger"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q1075651",
+   "label": "keyboardist"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q13235160",
+   "label": "manufacturer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:RyuichiSakamotoJI4.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:RyuichiSakamotoJI4.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:RyuichiSakamotoJI4.jpg",
+  "width": 3772,
+  "height": 2537,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Joi Ito",
+  "credit": "originally posted to Flickr as Ryuichi Sakamoto",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "juana-de-ibarbourou",
+ "qid": "Q237914",
+ "displayName": "Juana de Ibarbourou",
+ "wikidataLabel": "Juana de Ibarbourou",
+ "wikidataDescription": "Uruguayan writer (1892–1979)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q237914",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517707600
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Juana de Ibarbourou",
+   "articleUrl": "https://en.wikipedia.org/wiki/Juana_de_Ibarbourou",
+   "pageId": 1570937,
+   "revisionId": 1353823789,
+   "revisionTimestamp": "2026-05-12T15:57:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1892-03-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1892-03-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1892-03-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1979-07-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q738250",
+  "label": "Melo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q738250",
+  "country": {
+   "entity": "Q77",
+   "label": "Uruguay"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q738250",
+   "sourceEntityLabel": "Melo",
+   "latitude": -32.36811111111111,
+   "longitude": -54.169713888888886,
+   "precision": 0.000277778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Juana de Ibarbourou from Estampas de la Biblia (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Juana%20de%20Ibarbourou%20from%20Estampas%20de%20la%20Biblia%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Juana_de_Ibarbourou_from_Estampas_de_la_Biblia_(cropped).jpg",
+  "width": 225,
+  "height": 332,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Elena Bazterrica",
+  "credit": "Estampas de la Biblia by Juana de Ibarbourou (1934)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

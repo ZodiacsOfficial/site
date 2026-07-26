@@ -4,13 +4,13 @@ import { resolve } from 'node:path';
 import peopleData from '../src/data/people.json';
 
 describe('Phase 5 People pilot contract', () => {
-  it('contains exactly 20 distinct records with the conservative 18/2 release boundary', () => {
-    expect(peopleData.people).toHaveLength(20);
-    expect(new Set(peopleData.people.map((person) => person.slug)).size).toBe(20);
-    expect(new Set(peopleData.people.map((person) => person.qid)).size).toBe(20);
+  it('contains exactly 500 distinct records with the policy-driven release boundary', () => {
+    expect(peopleData.people).toHaveLength(500);
+    expect(new Set(peopleData.people.map((person) => person.slug)).size).toBe(peopleData.people.length);
+    expect(new Set(peopleData.people.map((person) => person.qid)).size).toBe(peopleData.people.length);
     const indexable = peopleData.people.filter((person) => person.indexEligibility.eligible);
     const protectedLiving = peopleData.people.filter((person) => !person.indexEligibility.eligible);
-    expect(indexable).toHaveLength(18);
+    expect(indexable).toHaveLength(peopleData.people.filter((person) => !person.living).length);
     expect(indexable.every((person) => !person.living && person.indexEligibility.blockedBy.length === 0)).toBe(true);
     expect(protectedLiving.map((person) => person.slug).sort()).toEqual([
       'rigoberta-menchu',

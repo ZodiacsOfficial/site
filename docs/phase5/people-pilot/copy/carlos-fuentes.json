@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "carlos-fuentes",
+  "seedRound": 0,
+  "qid": "Q154691",
+  "displayName": "Carlos Fuentes",
+  "identity": "Writer and diplomat · Panama · 1928–2012",
+  "title": "Carlos Fuentes's birth chart",
+  "metaDescription": "Carlos Fuentes's chart, computed from a sourced birth date: Sun at 19.1° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Pluto sit 0.8° from an exact trine — near enough that the tradition reads identity and depth as a single working part. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted.",
+  "ledeFact": "aspect:Sun:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.07",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun's exact place is 19.1° Scorpio. That falls in the second decan, 10°–20°, sub-ruled by Jupiter in the classical scheme — a water sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Venus:Sagittarius:23.2°",
+        "personal:Mars:Cancer:9.3°"
+      ],
+      "text": "Day to day the chart speaks through Venus in Sagittarius (23.2°), Mars in Cancer (9.3°): taste that runs toward the vivid and the immediate, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:trine:0.79",
+        "aspect:Mercury:Neptune:sextile:0.86",
+        "aspect:Jupiter:Neptune:trine:2.29"
+      ],
+      "text": "The Sun and Pluto hold the closest angle here — a trine, 0.8° wide. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mercury sextile Neptune at 0.9°, and Jupiter trine Neptune at 2.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Mars:fall"
+      ],
+      "text": "The classical table has two entries for this chart. The Moon in Scorpio at 11.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 9.3° is in fall. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-earth2",
+        "modalities:fixed3-mutable3-cardinal3",
+        "settled-signs:9",
+        "retrograde:3",
+        "sign-uncertain:Mercury:libra:scorpio"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in water, 3 in fire, 2 in earth by element, 3 fixed, 3 mutable, 3 cardinal by modality. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Mercury crossed from Libra into Scorpio during that day, so its sign is left open. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Jupiter, Uranus and Pluto were retrograde. Mars changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-11/",
+    "label": "Everyone born on November 11"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:trine",
+    "sun-degree:19.07",
+    "decan:scorpio:second",
+    "personal:Venus:Sagittarius:23.2°",
+    "personal:Mars:Cancer:9.3°",
+    "aspect:Sun:Pluto:trine:0.79",
+    "aspect:Mercury:Neptune:sextile:0.86",
+    "aspect:Jupiter:Neptune:trine:2.29",
+    "figure:unaspected:Moon",
+    "dignity:Moon:fall",
+    "dignity:Mars:fall",
+    "elements:water4-fire3-earth2",
+    "modalities:fixed3-mutable3-cardinal3",
+    "settled-signs:9",
+    "retrograde:3",
+    "sign-uncertain:Mercury:libra:scorpio",
+    "moon-sign:scorpio",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 421,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

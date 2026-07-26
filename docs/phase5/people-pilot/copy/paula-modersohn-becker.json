@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "paula-modersohn-becker",
+  "seedRound": 0,
+  "qid": "Q234370",
+  "displayName": "Paula Modersohn-Becker",
+  "identity": "Painter · Germany · 1876–1907",
+  "title": "Paula Modersohn-Becker's birth chart",
+  "metaDescription": "Paula Modersohn-Becker's chart, computed from a sourced birth date: Sun at 19.1° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a sextile to Pluto at 0.3° — close enough to weld taste to depth. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not.",
+  "ledeFact": "aspect:Venus:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.09",
+        "decan:aquarius:second"
+      ],
+      "text": "At the noon reference the Sun sits 19.1° into Aquarius — the second decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:28.6°",
+        "personal:Venus:Pisces:22.0°",
+        "personal:Mars:Aries:16.3°"
+      ],
+      "text": "The personal planets sit Mercury at 28.6° Aquarius, Venus at 22.0° Pisces, Mars at 16.3° Aries. Mercury in a air sign reads as thought that travels by comparison; Venus in a water sign reads as attraction that works by atmosphere; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:sextile:0.3",
+        "aspect:Mercury:Saturn:conjunction:1.16",
+        "aspect:Mercury:Jupiter:square:1.19"
+      ],
+      "text": "Venus and Pluto hold the closest angle here — a sextile, 0.3° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mercury conjunction Saturn at 1.2°, and Mercury square Jupiter at 1.2° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Sun-Uranus:apex-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Uranus while both square Pluto. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Aquarius at 19.1° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 22.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Aries at 16.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 27.4° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water2-fire2-earth2",
+        "modalities:fixed7-mutable1-cardinal1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 3 in air, 2 in water, 2 in fire, 2 in earth by element, 7 fixed, 1 mutable, 1 cardinal by modality. Mercury and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 14.7° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-8/",
+    "label": "Everyone born on February 8"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:sextile",
+    "sun-degree:19.09",
+    "decan:aquarius:second",
+    "personal:Mercury:Aquarius:28.6°",
+    "personal:Venus:Pisces:22.0°",
+    "personal:Mars:Aries:16.3°",
+    "aspect:Venus:Pluto:sextile:0.3",
+    "aspect:Mercury:Saturn:conjunction:1.16",
+    "aspect:Mercury:Jupiter:square:1.19",
+    "figure:t-square:Sun-Uranus:apex-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air3-water2-fire2-earth2",
+    "modalities:fixed7-mutable1-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 458,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

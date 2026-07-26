@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "stanis-aw-lem",
+ "qid": "Q6530",
+ "displayName": "Stanisław Lem",
+ "wikidataLabel": "Stanisław Lem",
+ "wikidataDescription": "Polish science fiction author, philosopher and futurologist, studied medical doctor (1921–2006)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q6530",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521227478
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Stanisław Lem",
+   "articleUrl": "https://en.wikipedia.org/wiki/Stanis%C5%82aw_Lem",
+   "pageId": 26790,
+   "revisionId": 1357889341,
+   "revisionTimestamp": "2026-06-05T07:54:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1921-09-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1921-09-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1921-09-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2006-03-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q36036",
+  "label": "Lviv",
+  "entityUrl": "https://www.wikidata.org/wiki/Q36036",
+  "country": {
+   "entity": "Q212",
+   "label": "Ukraine"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q36036",
+   "sourceEntityLabel": "Lviv",
+   "latitude": 49.8425,
+   "longitude": 24.032222222222224,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q9334029",
+   "label": "satirist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q846430",
+   "label": "futurist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q1650915",
+   "label": "researcher"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:St Lem resize.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:St%20Lem%20resize.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:St_Lem_resize.jpg",
+  "width": 1012,
+  "height": 1296,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "artist": "Courtesy of Lem's secretary, Wojciech Zemek. Resize and digital processing by Masur.",
+  "credit": "Stanislaw Lem 2.jpg",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

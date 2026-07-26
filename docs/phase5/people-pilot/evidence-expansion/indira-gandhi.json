@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "indira-gandhi",
+ "qid": "Q1149",
+ "displayName": "Indira Gandhi",
+ "wikidataLabel": "Indira Gandhi",
+ "wikidataDescription": "Prime Minister of India (1966-1977; 1980-1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1149",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517820857
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Indira Gandhi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Indira_Gandhi",
+   "pageId": 15179,
+   "revisionId": 1366154710,
+   "revisionTimestamp": "2026-07-26T16:26:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-11-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-11-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-11-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-10-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q162442",
+  "label": "Prayagraj",
+  "entityUrl": "https://www.wikidata.org/wiki/Q162442",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q162442",
+   "sourceEntityLabel": "Prayagraj",
+   "latitude": 25.45,
+   "longitude": 81.85,
+   "precision": 0.01,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Face detail, Premier Indira Gandhi (Congrespartij), Bestanddeelnr 929-0811 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Face%20detail%2C%20Premier%20Indira%20Gandhi%20(Congrespartij)%2C%20Bestanddeelnr%20929-0811%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Face_detail,_Premier_Indira_Gandhi_(Congrespartij),_Bestanddeelnr_929-0811_(cropped).jpg",
+  "width": 1499,
+  "height": 2140,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Anefo",
+  "credit": "http://proxy.handle.net/10648/ac97ef5a-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

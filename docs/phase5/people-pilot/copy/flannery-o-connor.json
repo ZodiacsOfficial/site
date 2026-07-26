@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "flannery-o-connor",
+  "seedRound": 0,
+  "qid": "Q234579",
+  "displayName": "Flannery O'Connor",
+  "identity": "Writer · United States · 1925–1964",
+  "title": "Flannery O'Connor's birth chart",
+  "metaDescription": "Flannery O'Connor's chart, computed from a sourced birth date: Sun at 4.5° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 4.5° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.54",
+        "decan:aries:first"
+      ],
+      "text": "The Sun sits at 4.5° Aries — the first decan, 0°–10°, which the tradition sub-rules by Mars. Degrees matter more than the sign label here: two people born a fortnight apart share Aries and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:22.0°",
+        "personal:Venus:Pisces:27.0°",
+        "personal:Mars:Gemini:1.1°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (22.0°), Venus in Pisces (27.0°), Mars in Gemini (1.1°): a mind that decides at speaking speed, taste tuned to mood and undertow, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Neptune:trine:1.89",
+        "aspect:Saturn:Pluto:trine:2.09",
+        "aspect:Mercury:Jupiter:square:2.65"
+      ],
+      "text": "The day's firmest angle joins Mercury and Neptune — a trine holding at 1.9°. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Saturn trine Pluto at 2.1°, and Mercury square Jupiter at 2.6° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Aries at 4.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Pisces at 27.0° is in exaltation; Jupiter in Capricorn at 19.4° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water4-air1-earth1",
+        "modalities:cardinal5-mutable3-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: fire 4, water 4, air 1, earth 1 across the elements, and cardinal 5, mutable 3, fixed 2 across the modalities. Saturn and Neptune were retrograde. Pluto changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:13.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 13.4° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 18.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-25/",
+    "label": "Everyone born on March 25"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:4.54",
+    "decan:aries:first",
+    "personal:Mercury:Aries:22.0°",
+    "personal:Venus:Pisces:27.0°",
+    "personal:Mars:Gemini:1.1°",
+    "aspect:Mercury:Neptune:trine:1.89",
+    "aspect:Saturn:Pluto:trine:2.09",
+    "aspect:Mercury:Jupiter:square:2.65",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:fall",
+    "elements:fire4-water4-air1-earth1",
+    "modalities:cardinal5-mutable3-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aries",
+    "moon-band:13.4"
+  ],
+  "measurements": {
+    "originalWords": 401,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "claude-levi-strauss",
+ "qid": "Q128126",
+ "displayName": "Claude Lévi-Strauss",
+ "wikidataLabel": "Claude Lévi-Strauss",
+ "wikidataDescription": "French anthropologist and ethnologist (1908–2009)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q128126",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522814686
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Claude Lévi-Strauss",
+   "articleUrl": "https://en.wikipedia.org/wiki/Claude_L%C3%A9vi-Strauss",
+   "pageId": 19544151,
+   "revisionId": 1361412957,
+   "revisionTimestamp": "2026-06-27T20:00:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-11-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-11-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-11-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-10-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q239",
+  "label": "Brussels",
+  "entityUrl": "https://www.wikidata.org/wiki/Q239",
+  "country": {
+   "entity": "Q31",
+   "label": "Belgium"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q239",
+   "sourceEntityLabel": "Brussels",
+   "latitude": 50.846666666666664,
+   "longitude": 4.351666666666667,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q24387326",
+   "label": "mythographer"
+  },
+  {
+   "entity": "Q1371378",
+   "label": "ethnologist"
+  },
+  {
+   "entity": "Q1650915",
+   "label": "researcher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Levi-strauss 260 (cropped2).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Levi-strauss%20260%20(cropped2).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Levi-strauss_260_(cropped2).jpg",
+  "width": 1605,
+  "height": 2005,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "UNESCO/Michel Ravassard",
+  "credit": "Transferred from en.wikipedia",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

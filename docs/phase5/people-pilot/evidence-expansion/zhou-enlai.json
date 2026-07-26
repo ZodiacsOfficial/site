@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "zhou-enlai",
+ "qid": "Q17410",
+ "displayName": "Zhou Enlai",
+ "wikidataLabel": "Zhou Enlai",
+ "wikidataDescription": "1st Premier of the People's Republic of China",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q17410",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517773991
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Zhou Enlai",
+   "articleUrl": "https://en.wikipedia.org/wiki/Zhou_Enlai",
+   "pageId": 50444,
+   "revisionId": 1365985985,
+   "revisionTimestamp": "2026-07-25T15:54:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-03-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-03-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-03-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-01-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q973193",
+  "label": "Huai'an District",
+  "entityUrl": "https://www.wikidata.org/wiki/Q973193",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q973193",
+   "sourceEntityLabel": "Huai'an District",
+   "latitude": 33.50532,
+   "longitude": 119.13993,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q83307",
+   "label": "minister"
+  },
+  {
+   "entity": "Q7330070",
+   "label": "foreign minister"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:國共內戰時期周恩來.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:%E5%9C%8B%E5%85%B1%E5%85%A7%E6%88%B0%E6%99%82%E6%9C%9F%E5%91%A8%E6%81%A9%E4%BE%86.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:%E5%9C%8B%E5%85%B1%E5%85%A7%E6%88%B0%E6%99%82%E6%9C%9F%E5%91%A8%E6%81%A9%E4%BE%86.jpg",
+  "width": 500,
+  "height": 708,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://news.china.com/history/all/11025807/20120305/17071039.html [ dead link ]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

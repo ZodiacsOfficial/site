@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "har-gobind-khorana",
+ "qid": "Q107462",
+ "displayName": "Har Gobind Khorana",
+ "wikidataLabel": "Har Gobind Khorana",
+ "wikidataDescription": "Indian-American molecular biologist (1922-2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q107462",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521731842
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Har Gobind Khorana",
+   "articleUrl": "https://en.wikipedia.org/wiki/Har_Gobind_Khorana",
+   "pageId": 422558,
+   "revisionId": 1364237172,
+   "revisionTimestamp": "2026-07-15T10:27:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-01-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-01-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-01-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3523886",
+  "label": "Raipur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3523886",
+  "country": {
+   "entity": "Q843",
+   "label": "Pakistan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3523886",
+   "sourceEntityLabel": "Raipur",
+   "latitude": 30.85305556,
+   "longitude": 73.35027778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3126128",
+   "label": "geneticist"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Har Gobind Khorana.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Har%20Gobind%20Khorana.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Har_Gobind_Khorana.jpg",
+  "width": 400,
+  "height": 563,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://history.nih.gov/exhibits/nirenberg/HS7_nobel.htm",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

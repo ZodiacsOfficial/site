@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "dalida",
+  "seedRound": 0,
+  "qid": "Q539171",
+  "displayName": "Dalida",
+  "identity": "Film actor and singer · Egypt · 1933–1987",
+  "title": "Dalida's birth chart",
+  "metaDescription": "Dalida's chart, computed from a sourced birth date: Sun at 26.9° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Count only what the day settles, and earth still carries six of the nine placements whose signs are settled. An earth emphasis reads as patience with material reality — slow hands, durable results.",
+  "ledeFact": "element:earth:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.87",
+        "decan:capricorn:third"
+      ],
+      "text": "The Sun's exact place is 26.9° Capricorn. That falls in the third decan, 20°–30°, sub-ruled by Mercury in the classical scheme — a earth sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:13.4°",
+        "personal:Venus:Capricorn:3.8°",
+        "personal:Mars:Virgo:20.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 13.4° Capricorn, Venus was at 3.8° Capricorn, Mars was at 20.2° Virgo. Read together: a mind that trusts the measured and the checked; taste for the substantial and the lasting; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:sextile:0.87",
+        "aspect:Mars:Pluto:sextile:2.06",
+        "aspect:Uranus:Pluto:square:2.65"
+      ],
+      "text": "Closest first: Jupiter to Pluto, a sextile with 0.9° of slack. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mars sextile Pluto at 2.1°, and Uranus square Pluto at 2.6° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Sun-Pluto:apex-Uranus"
+      ],
+      "text": "The Sun opposes Pluto while both square Uranus. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Jupiter in Virgo at 23.1° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 5.9° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth6-air1-fire1-water1",
+        "modalities:cardinal5-mutable3-fixed1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 6 earth, 1 air, 1 fire, 1 water; by modality, 5 cardinal, 3 mutable, 1 fixed. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Jupiter, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 13.5° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-17/",
+    "label": "Everyone born on January 17"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "element:earth:6",
+    "sun-degree:26.87",
+    "decan:capricorn:third",
+    "personal:Mercury:Capricorn:13.4°",
+    "personal:Venus:Capricorn:3.8°",
+    "personal:Mars:Virgo:20.2°",
+    "aspect:Jupiter:Pluto:sextile:0.87",
+    "aspect:Mars:Pluto:sextile:2.06",
+    "aspect:Uranus:Pluto:square:2.65",
+    "figure:t-square:Sun-Pluto:apex-Uranus",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth6-air1-fire1-water1",
+    "modalities:cardinal5-mutable3-fixed1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 391,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

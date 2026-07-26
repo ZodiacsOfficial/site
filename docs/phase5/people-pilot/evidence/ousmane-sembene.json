@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ousmane-sembene",
+ "qid": "Q314966",
+ "displayName": "Ousmane Sembène",
+ "wikidataLabel": "Ousmane Sembène",
+ "wikidataDescription": "Senegalese film director, producer, screenwriter, actor, and author (1923–2007)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q314966",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518478946
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ousmane Sembène",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ousmane_Semb%C3%A8ne",
+   "pageId": 1182061,
+   "revisionId": 1343355533,
+   "revisionTimestamp": "2026-03-13T19:43:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1923-01-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-01-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1923-01-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2007-06-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q202776",
+  "label": "Ziguinchor",
+  "entityUrl": "https://www.wikidata.org/wiki/Q202776",
+  "country": {
+   "entity": "Q1041",
+   "label": "Senegal"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q202776",
+   "sourceEntityLabel": "Ziguinchor",
+   "latitude": 12.58611111111111,
+   "longitude": -16.27075,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1537445",
+   "label": "stevedore"
+  },
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ousmane Sembène (1987) by Guenter Prust.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ousmane%20Semb%C3%A8ne%20(1987)%20by%20Guenter%20Prust.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ousmane_Semb%C3%A8ne_(1987)_by_Guenter_Prust.jpg",
+  "width": 201,
+  "height": 250,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "Günter Prust",
+  "credit": "http://www.foto-prust.de",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

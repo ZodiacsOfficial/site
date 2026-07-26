@@ -1,0 +1,3185 @@
+{
+ "schema": "zodiacs.phase5.selection.v1",
+ "target": 480,
+ "selected": [
+  {
+   "slug": "marie-curie",
+   "disciplines": [
+    "physicist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "alan-turing",
+   "disciplines": [
+    "computer scientist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "andy-warhol",
+   "disciplines": [
+    "film director",
+    "painter"
+   ]
+  },
+  {
+   "slug": "aretha-franklin",
+   "disciplines": [
+    "singer",
+    "activist"
+   ]
+  },
+  {
+   "slug": "louis-armstrong",
+   "disciplines": [
+    "actor",
+    "trumpeter"
+   ]
+  },
+  {
+   "slug": "billie-holiday",
+   "disciplines": [
+    "actor",
+    "songwriter"
+   ]
+  },
+  {
+   "slug": "duke-ellington",
+   "disciplines": [
+    "pianist",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "charlie-chaplin",
+   "disciplines": [
+    "film director",
+    "composer"
+   ]
+  },
+  {
+   "slug": "pablo-picasso",
+   "disciplines": [
+    "painter",
+    "costume designer"
+   ]
+  },
+  {
+   "slug": "claude-monet",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "wolfgang-amadeus-mozart",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "charles-darwin",
+   "disciplines": [
+    "geologist",
+    "explorer"
+   ]
+  },
+  {
+   "slug": "louis-pasteur",
+   "disciplines": [
+    "chemist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "florence-nightingale",
+   "disciplines": [
+    "nurse",
+    "writer"
+   ]
+  },
+  {
+   "slug": "stephen-hawking",
+   "disciplines": [
+    "theoretical physicist",
+    "pedagogue"
+   ]
+  },
+  {
+   "slug": "martin-luther-king-jr",
+   "disciplines": [
+    "civil rights advocate",
+    "writer"
+   ]
+  },
+  {
+   "slug": "rosa-parks",
+   "disciplines": [
+    "autobiographer",
+    "human rights defender"
+   ]
+  },
+  {
+   "slug": "nelson-mandela",
+   "disciplines": [
+    "politician",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "maya-angelou",
+   "disciplines": [
+    "politician",
+    "comedian"
+   ]
+  },
+  {
+   "slug": "toni-morrison",
+   "disciplines": [
+    "writer",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "sigmund-freud",
+   "disciplines": [
+    "psychoanalyst",
+    "essayist"
+   ]
+  },
+  {
+   "slug": "marilyn-monroe",
+   "disciplines": [
+    "film actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "elvis-presley",
+   "disciplines": [
+    "film actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "john-lennon",
+   "disciplines": [
+    "writer",
+    "actor"
+   ]
+  },
+  {
+   "slug": "bob-marley",
+   "disciplines": [
+    "singer-songwriter"
+   ]
+  },
+  {
+   "slug": "jane-austen",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "charles-dickens",
+   "disciplines": [
+    "writer",
+    "botanist"
+   ]
+  },
+  {
+   "slug": "mark-twain",
+   "disciplines": [
+    "journalist",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "victor-hugo",
+   "disciplines": [
+    "politician",
+    "playwright"
+   ]
+  },
+  {
+   "slug": "gabriel-garcia-marquez",
+   "disciplines": [
+    "novelist"
+   ]
+  },
+  {
+   "slug": "pablo-neruda",
+   "disciplines": [
+    "poet",
+    "diplomat"
+   ]
+  },
+  {
+   "slug": "george-orwell",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "bertrand-russell",
+   "disciplines": [
+    "mathematician",
+    "essayist"
+   ]
+  },
+  {
+   "slug": "babe-ruth",
+   "disciplines": [
+    "baseball player"
+   ]
+  },
+  {
+   "slug": "edith-piaf",
+   "disciplines": [
+    "singer",
+    "actor"
+   ]
+  },
+  {
+   "slug": "akira-kurosawa",
+   "disciplines": [
+    "film director",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "satyajit-ray",
+   "disciplines": [
+    "film director",
+    "writer"
+   ]
+  },
+  {
+   "slug": "tarsila-do-amaral",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "alfonsina-storni",
+   "disciplines": [
+    "diarist",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "celia-cruz",
+   "disciplines": [
+    "singer",
+    "actor"
+   ]
+  },
+  {
+   "slug": "chabuca-granda",
+   "disciplines": [
+    "singer",
+    "poet"
+   ]
+  },
+  {
+   "slug": "luis-barragan",
+   "disciplines": [
+    "architect"
+   ]
+  },
+  {
+   "slug": "dolores-del-rio",
+   "disciplines": [
+    "actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "diego-maradona",
+   "disciplines": [
+    "association football player",
+    "actor"
+   ]
+  },
+  {
+   "slug": "lina-bo-bardi",
+   "disciplines": [
+    "architect",
+    "draftsperson"
+   ]
+  },
+  {
+   "slug": "learie-constantine",
+   "disciplines": [
+    "cricketer",
+    "diplomat"
+   ]
+  },
+  {
+   "slug": "juana-de-ibarbourou",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "italo-calvino",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "machado-de-assis",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "kalpana-chawla",
+   "disciplines": [
+    "astronaut"
+   ]
+  },
+  {
+   "slug": "cantinflas",
+   "disciplines": [
+    "comedian",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "indira-gandhi",
+   "disciplines": [
+    "politician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "oscar-niemeyer",
+   "disciplines": [
+    "architect",
+    "designer"
+   ]
+  },
+  {
+   "slug": "nargis",
+   "disciplines": [
+    "film actor",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "rufino-tamayo",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "smita-patil",
+   "disciplines": [
+    "film actor"
+   ]
+  },
+  {
+   "slug": "frantz-fanon",
+   "disciplines": [
+    "writer",
+    "psychiatrist"
+   ]
+  },
+  {
+   "slug": "fatima-jinnah",
+   "disciplines": [
+    "politician",
+    "biographer"
+   ]
+  },
+  {
+   "slug": "garrincha",
+   "disciplines": [
+    "association football player"
+   ]
+  },
+  {
+   "slug": "hanae-mori",
+   "disciplines": [
+    "fashion designer"
+   ]
+  },
+  {
+   "slug": "raj-kapoor",
+   "disciplines": [
+    "film producer",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "consuelo-velazquez",
+   "disciplines": [
+    "composer",
+    "lyricist"
+   ]
+  },
+  {
+   "slug": "lin-huiyin",
+   "disciplines": [
+    "architect",
+    "poet"
+   ]
+  },
+  {
+   "slug": "jose-de-san-martin",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "lal-bahadur-shastri",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "issey-miyake",
+   "disciplines": [
+    "fashion designer"
+   ]
+  },
+  {
+   "slug": "meena-kumari",
+   "disciplines": [
+    "actor",
+    "poet"
+   ]
+  },
+  {
+   "slug": "ayrton-senna",
+   "disciplines": [
+    "Formula One driver",
+    "philanthropist"
+   ]
+  },
+  {
+   "slug": "junko-tabei",
+   "disciplines": [
+    "explorer",
+    "mountaineer"
+   ]
+  },
+  {
+   "slug": "paramahansa-yogananda",
+   "disciplines": [
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "elis-regina",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "ritwik-ghatak",
+   "disciplines": [
+    "film director",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "setsuko-hara",
+   "disciplines": [
+    "actor"
+   ]
+  },
+  {
+   "slug": "jose-clemente-orozco",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "anita-mui",
+   "disciplines": [
+    "actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "alberto-santos-dumont",
+   "disciplines": [
+    "inventor"
+   ]
+  },
+  {
+   "slug": "madhubala",
+   "disciplines": [
+    "film actor"
+   ]
+  },
+  {
+   "slug": "fukuzawa-yukichi",
+   "disciplines": [
+    "translator",
+    "pedagogue"
+   ]
+  },
+  {
+   "slug": "eva-peron",
+   "disciplines": [
+    "politician",
+    "stage actor"
+   ]
+  },
+  {
+   "slug": "sri-aurobindo",
+   "disciplines": [
+    "poet",
+    "politician"
+   ]
+  },
+  {
+   "slug": "kenzo-tange",
+   "disciplines": [
+    "architect",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "cecilia-meireles",
+   "disciplines": [
+    "journalist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "s-h-raza",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "yu-gwan-sun",
+   "disciplines": [
+    "political activist"
+   ]
+  },
+  {
+   "slug": "fernando-botero",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "lata-mangeshkar",
+   "disciplines": [
+    "singer",
+    "film actor"
+   ]
+  },
+  {
+   "slug": "carlos-chagas",
+   "disciplines": [
+    "bacteriologist"
+   ]
+  },
+  {
+   "slug": "xiao-hong",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "ranjitsinhji",
+   "disciplines": [
+    "cricketer"
+   ]
+  },
+  {
+   "slug": "irma-stern",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "swami-vivekananda",
+   "disciplines": [
+    "philosopher",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "maria-felix",
+   "disciplines": [
+    "film actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "hideki-yukawa",
+   "disciplines": [
+    "physicist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "ellen-kuzwayo",
+   "disciplines": [
+    "politician",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "frank-worrell",
+   "disciplines": [
+    "cricketer"
+   ]
+  },
+  {
+   "slug": "qiu-jin",
+   "disciplines": [
+    "writer",
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "jagadish-chandra-bose",
+   "disciplines": [
+    "botanist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "toshiro-mifune",
+   "disciplines": [
+    "actor"
+   ]
+  },
+  {
+   "slug": "miriam-makeba",
+   "disciplines": [
+    "singer",
+    "actor"
+   ]
+  },
+  {
+   "slug": "candido-portinari",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "sridevi",
+   "disciplines": [
+    "film actor"
+   ]
+  },
+  {
+   "slug": "yasunari-kawabata",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "albertina-sisulu",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "raja-ravi-varma",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "nise-da-silveira",
+   "disciplines": [
+    "psychologist",
+    "artist"
+   ]
+  },
+  {
+   "slug": "jacques-derrida",
+   "disciplines": [
+    "philosopher",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "xiang-jingyu",
+   "disciplines": [
+    "politician",
+    "journalist"
+   ]
+  },
+  {
+   "slug": "bernardo-houssay",
+   "disciplines": [
+    "physician"
+   ]
+  },
+  {
+   "slug": "sarojini-naidu",
+   "disciplines": [
+    "poet",
+    "politician"
+   ]
+  },
+  {
+   "slug": "tsuguharu-foujita",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "funmilayo-ransome-kuti",
+   "disciplines": [
+    "teacher"
+   ]
+  },
+  {
+   "slug": "heitor-villa-lobos",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "amrita-pritam",
+   "disciplines": [
+    "politician",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "hibari-misora",
+   "disciplines": [
+    "actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "ousmane-sembene",
+   "disciplines": [
+    "film director",
+    "playwright"
+   ]
+  },
+  {
+   "slug": "c-v-raman",
+   "disciplines": [
+    "physicist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "bernardo-o-higgins",
+   "disciplines": [
+    "politician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "bessie-head",
+   "disciplines": [
+    "novelist",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "qian-xuesen",
+   "disciplines": [
+    "engineer",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "kamala-surayya",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "peter-tosh",
+   "disciplines": [
+    "guitarist"
+   ]
+  },
+  {
+   "slug": "rosario-castellanos",
+   "disciplines": [
+    "poet",
+    "diplomat"
+   ]
+  },
+  {
+   "slug": "zhou-enlai",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "margaret-ekpo",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "abdus-salam",
+   "disciplines": [
+    "university teacher",
+    "theoretical physicist"
+   ]
+  },
+  {
+   "slug": "brenda-fassie",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "david-alfaro-siqueiros",
+   "disciplines": [
+    "painter",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "misuzu-kaneko",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "subrahmanyan-chandrasekhar",
+   "disciplines": [
+    "mathematician",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "cesaria-evora",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "xu-beihong",
+   "disciplines": [
+    "painter",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "clarice-lispector",
+   "disciplines": [
+    "screenwriter",
+    "painter"
+   ]
+  },
+  {
+   "slug": "homi-j-bhabha",
+   "disciplines": [
+    "nuclear physicist"
+   ]
+  },
+  {
+   "slug": "eusebio",
+   "disciplines": [
+    "association football player"
+   ]
+  },
+  {
+   "slug": "bertha-lutz",
+   "disciplines": [
+    "zoologist",
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "muhammad-ali-jinnah",
+   "disciplines": [
+    "lawyer"
+   ]
+  },
+  {
+   "slug": "yosano-akiko",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "maryam-mirzakhani",
+   "disciplines": [
+    "mathematician",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "ben-enwonwu",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "getulio-vargas",
+   "disciplines": [
+    "lawyer"
+   ]
+  },
+  {
+   "slug": "machiko-hasegawa",
+   "disciplines": [
+    "writer",
+    "illustrator"
+   ]
+  },
+  {
+   "slug": "nusrat-fateh-ali-khan",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "faten-hamama",
+   "disciplines": [
+    "actor",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "amilcar-cabral",
+   "disciplines": [
+    "politician",
+    "engineer"
+   ]
+  },
+  {
+   "slug": "mercedes-sosa",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "sun-yat-sen",
+   "disciplines": [
+    "politician",
+    "physician"
+   ]
+  },
+  {
+   "slug": "parvin-e-tesami",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "mulk-raj-anand",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "luis-federico-leloir",
+   "disciplines": [
+    "physician",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "flora-nwapa",
+   "disciplines": [
+    "novelist"
+   ]
+  },
+  {
+   "slug": "lu-xun",
+   "disciplines": [
+    "essayist"
+   ]
+  },
+  {
+   "slug": "halide-edib-ad-var",
+   "disciplines": [
+    "politician",
+    "novelist"
+   ]
+  },
+  {
+   "slug": "premchand",
+   "disciplines": [
+    "novelist"
+   ]
+  },
+  {
+   "slug": "mariama-ba",
+   "disciplines": [
+    "writer",
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "simon-bolivar",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "soong-ching-ling",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "muhammad-iqbal",
+   "disciplines": [
+    "philosopher",
+    "politician"
+   ]
+  },
+  {
+   "slug": "judith-wright",
+   "disciplines": [
+    "poet",
+    "human rights defender"
+   ]
+  },
+  {
+   "slug": "mahmoud-darwish",
+   "disciplines": [
+    "poet",
+    "songwriter"
+   ]
+  },
+  {
+   "slug": "teresa-carreno",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "desmond-tutu",
+   "disciplines": [
+    "human rights defender"
+   ]
+  },
+  {
+   "slug": "teresa-teng",
+   "disciplines": [
+    "singer",
+    "actor"
+   ]
+  },
+  {
+   "slug": "r-k-narayan",
+   "disciplines": [
+    "writer",
+    "politician"
+   ]
+  },
+  {
+   "slug": "kartini",
+   "disciplines": [
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "freddie-mercury",
+   "disciplines": [
+    "singer-songwriter",
+    "painter"
+   ]
+  },
+  {
+   "slug": "whina-cooper",
+   "disciplines": [
+    "teacher",
+    "historian"
+   ]
+  },
+  {
+   "slug": "ghassan-kanafani",
+   "disciplines": [
+    "politician",
+    "novelist"
+   ]
+  },
+  {
+   "slug": "leslie-cheung",
+   "disciplines": [
+    "singer",
+    "film director"
+   ]
+  },
+  {
+   "slug": "delmira-agustini",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "bhimsen-joshi",
+   "disciplines": [
+    "actor",
+    "composer"
+   ]
+  },
+  {
+   "slug": "buchi-emecheta",
+   "disciplines": [
+    "writer",
+    "sociologist"
+   ]
+  },
+  {
+   "slug": "henry-lawson",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "doria-shafik",
+   "disciplines": [
+    "translator",
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "ryuichi-sakamoto",
+   "disciplines": [
+    "actor",
+    "composer"
+   ]
+  },
+  {
+   "slug": "silvina-ocampo",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "jose-rizal",
+   "disciplines": [
+    "writer",
+    "painter"
+   ]
+  },
+  {
+   "slug": "dalida",
+   "disciplines": [
+    "film actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "julius-nyerere",
+   "disciplines": [
+    "politician",
+    "translator"
+   ]
+  },
+  {
+   "slug": "katherine-mansfield",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "carlos-fuentes",
+   "disciplines": [
+    "writer",
+    "diplomat"
+   ]
+  },
+  {
+   "slug": "lao-she",
+   "disciplines": [
+    "writer",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "marguerite-duras",
+   "disciplines": [
+    "writer",
+    "film director"
+   ]
+  },
+  {
+   "slug": "kwame-nkrumah",
+   "disciplines": [
+    "politician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "oodgeroo-noonuccal",
+   "disciplines": [
+    "poet",
+    "human rights defender"
+   ]
+  },
+  {
+   "slug": "muhammad-abduh",
+   "disciplines": [
+    "judge",
+    "writer"
+   ]
+  },
+  {
+   "slug": "violeta-parra",
+   "disciplines": [
+    "singer-songwriter",
+    "poet"
+   ]
+  },
+  {
+   "slug": "natsume-soseki",
+   "disciplines": [
+    "writer",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "nadine-gordimer",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "chairil-anwar",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "julia-de-burgos",
+   "disciplines": [
+    "poet",
+    "political activist"
+   ]
+  },
+  {
+   "slug": "david-unaipon",
+   "disciplines": [
+    "inventor",
+    "writer"
+   ]
+  },
+  {
+   "slug": "may-ziadeh",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "steve-biko",
+   "disciplines": [
+    "civil rights advocate",
+    "writer"
+   ]
+  },
+  {
+   "slug": "nellie-bly",
+   "disciplines": [
+    "writer",
+    "inventor"
+   ]
+  },
+  {
+   "slug": "carlos-p-romulo",
+   "disciplines": [
+    "diplomat",
+    "journalist"
+   ]
+  },
+  {
+   "slug": "fanny-blankers-koen",
+   "disciplines": [
+    "sprinter"
+   ]
+  },
+  {
+   "slug": "kahlil-gibran",
+   "disciplines": [
+    "writer",
+    "painter"
+   ]
+  },
+  {
+   "slug": "thomas-sankara",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "g-e-m-anscombe",
+   "disciplines": [
+    "philosopher",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "ruben-dario",
+   "disciplines": [
+    "poet",
+    "diplomat"
+   ]
+  },
+  {
+   "slug": "maria-zambrano",
+   "disciplines": [
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "banjo-paterson",
+   "disciplines": [
+    "poet",
+    "lawyer"
+   ]
+  },
+  {
+   "slug": "diane-arbus",
+   "disciplines": [
+    "photographer"
+   ]
+  },
+  {
+   "slug": "madeleine-vionnet",
+   "disciplines": [
+    "fashion designer"
+   ]
+  },
+  {
+   "slug": "yuri-gagarin",
+   "disciplines": [
+    "astronaut"
+   ]
+  },
+  {
+   "slug": "walter-gropius",
+   "disciplines": [
+    "architect",
+    "pedagogue"
+   ]
+  },
+  {
+   "slug": "gertrude-bell",
+   "disciplines": [
+    "explorer",
+    "archaeologist"
+   ]
+  },
+  {
+   "slug": "sally-ride",
+   "disciplines": [
+    "physicist",
+    "astronaut"
+   ]
+  },
+  {
+   "slug": "fred-perry",
+   "disciplines": [
+    "tennis player",
+    "fashion designer"
+   ]
+  },
+  {
+   "slug": "arthur-schopenhauer",
+   "disciplines": [
+    "university teacher",
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "coco-chanel",
+   "disciplines": [
+    "fashion designer"
+   ]
+  },
+  {
+   "slug": "albert-camus",
+   "disciplines": [
+    "writer",
+    "association football player"
+   ]
+  },
+  {
+   "slug": "elsa-schiaparelli",
+   "disciplines": [
+    "fashion designer"
+   ]
+  },
+  {
+   "slug": "antoni-gaudi",
+   "disciplines": [
+    "architect",
+    "designer"
+   ]
+  },
+  {
+   "slug": "charles-eames",
+   "disciplines": [
+    "designer",
+    "architect"
+   ]
+  },
+  {
+   "slug": "sonja-henie",
+   "disciplines": [
+    "actor",
+    "figure skater"
+   ]
+  },
+  {
+   "slug": "immanuel-kant",
+   "disciplines": [
+    "philosopher",
+    "anthropologist"
+   ]
+  },
+  {
+   "slug": "gabriele-munter",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "jose-marti",
+   "disciplines": [
+    "poet",
+    "politician"
+   ]
+  },
+  {
+   "slug": "agnes-varda",
+   "disciplines": [
+    "photographer",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "karl-lagerfeld",
+   "disciplines": [
+    "fashion designer",
+    "photographer"
+   ]
+  },
+  {
+   "slug": "amelia-earhart",
+   "disciplines": [
+    "journalist",
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "jean-luc-godard",
+   "disciplines": [
+    "film director",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "wilma-rudolph",
+   "disciplines": [
+    "sprinter"
+   ]
+  },
+  {
+   "slug": "audrey-hepburn",
+   "disciplines": [
+    "stage actor",
+    "philanthropist"
+   ]
+  },
+  {
+   "slug": "niki-lauda",
+   "disciplines": [
+    "Formula One driver"
+   ]
+  },
+  {
+   "slug": "rene-descartes",
+   "disciplines": [
+    "philosopher",
+    "mathematician"
+   ]
+  },
+  {
+   "slug": "isabella-bird",
+   "disciplines": [
+    "explorer",
+    "writer"
+   ]
+  },
+  {
+   "slug": "u-thant",
+   "disciplines": [
+    "politician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "eileen-gray",
+   "disciplines": [
+    "architect",
+    "designer"
+   ]
+  },
+  {
+   "slug": "althea-gibson",
+   "disciplines": [
+    "tennis player",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "blaise-pascal",
+   "disciplines": [
+    "mathematician",
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "bruce-lee",
+   "disciplines": [
+    "film director",
+    "writer"
+   ]
+  },
+  {
+   "slug": "jean-jacques-rousseau",
+   "disciplines": [
+    "philosopher",
+    "pedagogue"
+   ]
+  },
+  {
+   "slug": "bette-davis",
+   "disciplines": [
+    "autobiographer",
+    "stage actor"
+   ]
+  },
+  {
+   "slug": "johan-cruyff",
+   "disciplines": [
+    "association football player"
+   ]
+  },
+  {
+   "slug": "rosa-bonheur",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "fridtjof-nansen",
+   "disciplines": [
+    "zoologist",
+    "polar explorer"
+   ]
+  },
+  {
+   "slug": "florence-knoll",
+   "disciplines": [
+    "architect",
+    "interior designer"
+   ]
+  },
+  {
+   "slug": "luchino-visconti",
+   "disciplines": [
+    "film director",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "ray-eames",
+   "disciplines": [
+    "film director",
+    "designer"
+   ]
+  },
+  {
+   "slug": "matthew-henson",
+   "disciplines": [
+    "explorer",
+    "writer"
+   ]
+  },
+  {
+   "slug": "ingrid-bergman",
+   "disciplines": [
+    "autobiographer",
+    "stage actor"
+   ]
+  },
+  {
+   "slug": "john-stuart-mill",
+   "disciplines": [
+    "philosopher",
+    "economist"
+   ]
+  },
+  {
+   "slug": "mary-pickford",
+   "disciplines": [
+    "film producer",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "w-g-grace",
+   "disciplines": [
+    "cricketer",
+    "physician"
+   ]
+  },
+  {
+   "slug": "caroline-herschel",
+   "disciplines": [
+    "astronomer",
+    "singer"
+   ]
+  },
+  {
+   "slug": "federico-fellini",
+   "disciplines": [
+    "film director",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "thor-heyerdahl",
+   "disciplines": [
+    "explorer",
+    "anthropologist"
+   ]
+  },
+  {
+   "slug": "florence-griffith-joyner",
+   "disciplines": [
+    "sprinter"
+   ]
+  },
+  {
+   "slug": "georg-wilhelm-friedrich-hegel",
+   "disciplines": [
+    "philosopher",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "dorothy-dandridge",
+   "disciplines": [
+    "television actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "george-best",
+   "disciplines": [
+    "association football player"
+   ]
+  },
+  {
+   "slug": "katharine-hepburn",
+   "disciplines": [
+    "film actor",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "seve-ballesteros",
+   "disciplines": [
+    "golfer"
+   ]
+  },
+  {
+   "slug": "artemisia-gentileschi",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "walter-payton",
+   "disciplines": [
+    "American football player"
+   ]
+  },
+  {
+   "slug": "lynn-margulis",
+   "disciplines": [
+    "university teacher",
+    "botanist"
+   ]
+  },
+  {
+   "slug": "denis-diderot",
+   "disciplines": [
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "grace-kelly",
+   "disciplines": [
+    "film actor",
+    "musician"
+   ]
+  },
+  {
+   "slug": "friedrich-engels",
+   "disciplines": [
+    "economist",
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "berenice-abbott",
+   "disciplines": [
+    "photographer",
+    "inventor"
+   ]
+  },
+  {
+   "slug": "karl-marx",
+   "disciplines": [
+    "economist",
+    "journalist"
+   ]
+  },
+  {
+   "slug": "hattie-mcdaniel",
+   "disciplines": [
+    "actor",
+    "singer-songwriter"
+   ]
+  },
+  {
+   "slug": "jean-beliveau",
+   "disciplines": [
+    "ice hockey player"
+   ]
+  },
+  {
+   "slug": "montesquieu",
+   "disciplines": [
+    "philosopher",
+    "sociologist"
+   ]
+  },
+  {
+   "slug": "elisabeth-vigee-le-brun",
+   "disciplines": [
+    "painter",
+    "writer"
+   ]
+  },
+  {
+   "slug": "wilt-chamberlain",
+   "disciplines": [
+    "basketball player",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "elizabeth-barrett-browning",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "edith-stein",
+   "disciplines": [
+    "translator",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "marlene-dietrich",
+   "disciplines": [
+    "film actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "dante-gabriel-rossetti",
+   "disciplines": [
+    "poet",
+    "illustrator"
+   ]
+  },
+  {
+   "slug": "roland-barthes",
+   "disciplines": [
+    "philosopher",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "alexander-graham-bell",
+   "disciplines": [
+    "physicist"
+   ]
+  },
+  {
+   "slug": "josephine-baker",
+   "disciplines": [
+    "singer",
+    "film actor"
+   ]
+  },
+  {
+   "slug": "edgar-degas",
+   "disciplines": [
+    "painter",
+    "poet"
+   ]
+  },
+  {
+   "slug": "annie-jump-cannon",
+   "disciplines": [
+    "astronomer",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "francisco-goya",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "irene-joliot-curie",
+   "disciplines": [
+    "physicist",
+    "politician"
+   ]
+  },
+  {
+   "slug": "henri-cartier-bresson",
+   "disciplines": [
+    "photographer",
+    "journalist"
+   ]
+  },
+  {
+   "slug": "ernest-shackleton",
+   "disciplines": [
+    "explorer"
+   ]
+  },
+  {
+   "slug": "harriet-taylor-mill",
+   "disciplines": [
+    "philosopher",
+    "economist"
+   ]
+  },
+  {
+   "slug": "willie-mays",
+   "disciplines": [
+    "baseball player"
+   ]
+  },
+  {
+   "slug": "barbara-mcclintock",
+   "disciplines": [
+    "botanist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "berthe-morisot",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "amedeo-avogadro",
+   "disciplines": [
+    "physicist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "hilma-af-klint",
+   "disciplines": [
+    "artist"
+   ]
+  },
+  {
+   "slug": "antoine-lavoisier",
+   "disciplines": [
+    "chemist",
+    "lawyer"
+   ]
+  },
+  {
+   "slug": "james-van-der-zee",
+   "disciplines": [
+    "photographer"
+   ]
+  },
+  {
+   "slug": "helen-frankenthaler",
+   "disciplines": [
+    "printmaker"
+   ]
+  },
+  {
+   "slug": "b-f-skinner",
+   "disciplines": [
+    "psychologist",
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "anne-sullivan",
+   "disciplines": [
+    "teacher"
+   ]
+  },
+  {
+   "slug": "bobby-charlton",
+   "disciplines": [
+    "association football player",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "bessie-coleman",
+   "disciplines": [
+    "human rights defender"
+   ]
+  },
+  {
+   "slug": "ludwig-wittgenstein",
+   "disciplines": [
+    "mathematician",
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "alma-mahler",
+   "disciplines": [
+    "composer",
+    "painter"
+   ]
+  },
+  {
+   "slug": "alessandro-manzoni",
+   "disciplines": [
+    "writer",
+    "politician"
+   ]
+  },
+  {
+   "slug": "ali-farka-toure",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "anne-bronte",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "antonio-machado",
+   "disciplines": [
+    "poet",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "bessie-smith",
+   "disciplines": [
+    "musician"
+   ]
+  },
+  {
+   "slug": "bruno-schulz",
+   "disciplines": [
+    "writer",
+    "painter"
+   ]
+  },
+  {
+   "slug": "christina-rossetti",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "edvard-grieg",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "amy-winehouse",
+   "disciplines": [
+    "singer-songwriter"
+   ]
+  },
+  {
+   "slug": "yogi-berra",
+   "disciplines": [
+    "baseball player"
+   ]
+  },
+  {
+   "slug": "astrid-lindgren",
+   "disciplines": [
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "alfred-north-whitehead",
+   "disciplines": [
+    "philosopher",
+    "mathematician"
+   ]
+  },
+  {
+   "slug": "cecile-chaminade",
+   "disciplines": [
+    "pianist"
+   ]
+  },
+  {
+   "slug": "friedrich-nietzsche",
+   "disciplines": [
+    "philosopher",
+    "composer"
+   ]
+  },
+  {
+   "slug": "clara-haskil",
+   "disciplines": [
+    "pianist"
+   ]
+  },
+  {
+   "slug": "antonio-vivaldi",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "dorothea-lange",
+   "disciplines": [
+    "journalist",
+    "photojournalist"
+   ]
+  },
+  {
+   "slug": "booker-t-washington",
+   "disciplines": [
+    "writer",
+    "pedagogue"
+   ]
+  },
+  {
+   "slug": "eca-de-queiroz",
+   "disciplines": [
+    "journalist",
+    "diplomat"
+   ]
+  },
+  {
+   "slug": "emmeline-pankhurst",
+   "disciplines": [
+    "suffragette",
+    "writer"
+   ]
+  },
+  {
+   "slug": "s-ren-kierkegaard",
+   "disciplines": [
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "audre-lorde",
+   "disciplines": [
+    "poet",
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "anton-bruckner",
+   "disciplines": [
+    "composer",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "dian-fossey",
+   "disciplines": [
+    "anthropologist",
+    "writer"
+   ]
+  },
+  {
+   "slug": "arthur-rimbaud",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "dorothy-day",
+   "disciplines": [
+    "journalist",
+    "trade unionist"
+   ]
+  },
+  {
+   "slug": "charles-baudelaire",
+   "disciplines": [
+    "poet",
+    "draftsperson"
+   ]
+  },
+  {
+   "slug": "elsa-morante",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "edward-elgar",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "george-sand",
+   "disciplines": [
+    "writer",
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "gaetano-donizetti",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "karen-carpenter",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "alfred-adler",
+   "disciplines": [
+    "psychiatrist"
+   ]
+  },
+  {
+   "slug": "cecilia-payne-gaposchkin",
+   "disciplines": [
+    "astronomer",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "antonin-dvorak",
+   "disciplines": [
+    "conductor",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "camille-saint-saens",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "elizabeth-cady-stanton",
+   "disciplines": [
+    "writer",
+    "actor"
+   ]
+  },
+  {
+   "slug": "claude-debussy",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "flannery-o-connor",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "david-bowie",
+   "disciplines": [
+    "painter",
+    "singer-songwriter"
+   ]
+  },
+  {
+   "slug": "harriet-beecher-stowe",
+   "disciplines": [
+    "novelist"
+   ]
+  },
+  {
+   "slug": "franz-kafka",
+   "disciplines": [
+    "novelist",
+    "lawyer"
+   ]
+  },
+  {
+   "slug": "joan-didion",
+   "disciplines": [
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "gioachino-rossini",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "charlotte-bronte",
+   "disciplines": [
+    "poet",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "arnold-schoenberg",
+   "disciplines": [
+    "painter",
+    "writer"
+   ]
+  },
+  {
+   "slug": "colette",
+   "disciplines": [
+    "novelist",
+    "actor"
+   ]
+  },
+  {
+   "slug": "charles-lyell",
+   "disciplines": [
+    "geologist",
+    "lawyer"
+   ]
+  },
+  {
+   "slug": "eleanor-roosevelt",
+   "disciplines": [
+    "diplomat",
+    "writer"
+   ]
+  },
+  {
+   "slug": "edgar-allan-poe",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "helen-b-taussig",
+   "disciplines": [
+    "physician"
+   ]
+  },
+  {
+   "slug": "emile-zola",
+   "disciplines": [
+    "novelist",
+    "photographer"
+   ]
+  },
+  {
+   "slug": "erwin-schrodinger",
+   "disciplines": [
+    "physicist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "kathe-kollwitz",
+   "disciplines": [
+    "printmaker",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "hector-berlioz",
+   "disciplines": [
+    "conductor",
+    "writer"
+   ]
+  },
+  {
+   "slug": "edith-clarke",
+   "disciplines": [
+    "engineer",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "heinrich-hertz",
+   "disciplines": [
+    "physicist",
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "ethel-smyth",
+   "disciplines": [
+    "composer",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "enrico-fermi",
+   "disciplines": [
+    "physicist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "george-eliot",
+   "disciplines": [
+    "novelist"
+   ]
+  },
+  {
+   "slug": "fernando-pessoa",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "jane-addams",
+   "disciplines": [
+    "journalist",
+    "women's rights activist"
+   ]
+  },
+  {
+   "slug": "giacomo-leopardi",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "janis-joplin",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "guy-de-maupassant",
+   "disciplines": [
+    "short story writer"
+   ]
+  },
+  {
+   "slug": "karen-blixen",
+   "disciplines": [
+    "writer",
+    "painter"
+   ]
+  },
+  {
+   "slug": "humphry-davy",
+   "disciplines": [
+    "chemist",
+    "photographer"
+   ]
+  },
+  {
+   "slug": "elizabeth-bishop",
+   "disciplines": [
+    "poet",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "pierre-auguste-renoir",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "carl-friedrich-gauss",
+   "disciplines": [
+    "mathematician",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "grazia-deledda",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "evariste-galois",
+   "disciplines": [
+    "mathematician",
+    "revolutionary"
+   ]
+  },
+  {
+   "slug": "jean-bartik",
+   "disciplines": [
+    "mathematician"
+   ]
+  },
+  {
+   "slug": "gregor-mendel",
+   "disciplines": [
+    "biologist"
+   ]
+  },
+  {
+   "slug": "judy-garland",
+   "disciplines": [
+    "television actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "hans-christian-andersen",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "louisa-may-alcott",
+   "disciplines": [
+    "writer",
+    "nurse"
+   ]
+  },
+  {
+   "slug": "johann-wolfgang-von-goethe",
+   "disciplines": [
+    "botanist",
+    "politician"
+   ]
+  },
+  {
+   "slug": "elizabeth-blackwell",
+   "disciplines": [
+    "physician",
+    "essayist"
+   ]
+  },
+  {
+   "slug": "piet-mondrian",
+   "disciplines": [
+    "painter",
+    "furniture designer"
+   ]
+  },
+  {
+   "slug": "kathleen-kenyon",
+   "disciplines": [
+    "archaeologist"
+   ]
+  },
+  {
+   "slug": "edward-jenner",
+   "disciplines": [
+    "physician"
+   ]
+  },
+  {
+   "slug": "leonora-carrington",
+   "disciplines": [
+    "painter",
+    "novelist"
+   ]
+  },
+  {
+   "slug": "franz-liszt",
+   "disciplines": [
+    "pianist",
+    "writer"
+   ]
+  },
+  {
+   "slug": "frederick-banting",
+   "disciplines": [
+    "physician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "lucy-maud-montgomery",
+   "disciplines": [
+    "writer",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "ignaz-semmelweis",
+   "disciplines": [
+    "physician",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "maria-montessori",
+   "disciplines": [
+    "physician",
+    "pedagogue"
+   ]
+  },
+  {
+   "slug": "james-clerk-maxwell",
+   "disciplines": [
+    "physicist",
+    "photographer"
+   ]
+  },
+  {
+   "slug": "gertrude-b-elion",
+   "disciplines": [
+    "biochemist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "ralph-ellison",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "louise-bourgeois",
+   "disciplines": [
+    "sculptor"
+   ]
+  },
+  {
+   "slug": "erik-satie",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "mahalia-jackson",
+   "disciplines": [
+    "musician"
+   ]
+  },
+  {
+   "slug": "george-gershwin",
+   "disciplines": [
+    "composer",
+    "painter"
+   ]
+  },
+  {
+   "slug": "margaret-mead",
+   "disciplines": [
+    "anthropologist",
+    "writer"
+   ]
+  },
+  {
+   "slug": "john-constable",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "maria-goeppert-mayer",
+   "disciplines": [
+    "physicist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "joseph-haydn",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "mary-oliver",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "samuel-barber",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "august-strindberg",
+   "disciplines": [
+    "playwright",
+    "photographer"
+   ]
+  },
+  {
+   "slug": "lucretia-mott",
+   "disciplines": [
+    "women's rights activist",
+    "writer"
+   ]
+  },
+  {
+   "slug": "friedrich-schiller",
+   "disciplines": [
+    "poet",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "ma-rainey",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "jim-morrison",
+   "disciplines": [
+    "singer-songwriter",
+    "lyricist"
+   ]
+  },
+  {
+   "slug": "mary-jackson",
+   "disciplines": [
+    "mathematician"
+   ]
+  },
+  {
+   "slug": "leos-janacek",
+   "disciplines": [
+    "composer",
+    "pedagogue"
+   ]
+  },
+  {
+   "slug": "mary-shelley",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "luciano-pavarotti",
+   "disciplines": [
+    "opera singer",
+    "film actor"
+   ]
+  },
+  {
+   "slug": "millicent-fawcett",
+   "disciplines": [
+    "politician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "w-e-b-du-bois",
+   "disciplines": [
+    "historian",
+    "sociologist"
+   ]
+  },
+  {
+   "slug": "maria-callas",
+   "disciplines": [
+    "opera singer",
+    "actor"
+   ]
+  },
+  {
+   "slug": "franz-schubert",
+   "disciplines": [
+    "composer",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "mary-wollstonecraft",
+   "disciplines": [
+    "translator",
+    "feminist"
+   ]
+  },
+  {
+   "slug": "georges-bizet",
+   "disciplines": [
+    "conductor"
+   ]
+  },
+  {
+   "slug": "nadia-boulanger",
+   "disciplines": [
+    "pianist",
+    "pedagogue"
+   ]
+  },
+  {
+   "slug": "henri-matisse",
+   "disciplines": [
+    "painter",
+    "designer"
+   ]
+  },
+  {
+   "slug": "joseph-lister",
+   "disciplines": [
+    "surgeon",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "natalia-ginzburg",
+   "disciplines": [
+    "writer",
+    "politician"
+   ]
+  },
+  {
+   "slug": "miguel-de-unamuno",
+   "disciplines": [
+    "poet",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "ruth-benedict",
+   "disciplines": [
+    "anthropologist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "gabriel-faure",
+   "disciplines": [
+    "university teacher",
+    "composer"
+   ]
+  },
+  {
+   "slug": "octavia-hill",
+   "disciplines": [
+    "social reformer",
+    "writer"
+   ]
+  },
+  {
+   "slug": "jules-verne",
+   "disciplines": [
+    "novelist"
+   ]
+  },
+  {
+   "slug": "patsy-cline",
+   "disciplines": [
+    "singer"
+   ]
+  },
+  {
+   "slug": "karel-capek",
+   "disciplines": [
+    "translator",
+    "photographer"
+   ]
+  },
+  {
+   "slug": "selena",
+   "disciplines": [
+    "singer",
+    "actor"
+   ]
+  },
+  {
+   "slug": "konrad-lorenz",
+   "disciplines": [
+    "ethologist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "virginia-apgar",
+   "disciplines": [
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "marcel-proust",
+   "disciplines": [
+    "novelist"
+   ]
+  },
+  {
+   "slug": "paula-modersohn-becker",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "henri-poincare",
+   "disciplines": [
+    "mathematician",
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "selma-lagerlof",
+   "disciplines": [
+    "novelist",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "michael-faraday",
+   "disciplines": [
+    "physicist",
+    "writer"
+   ]
+  },
+  {
+   "slug": "ngugi-wa-thiong-o",
+   "disciplines": [
+    "playwright",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "sophie-germain",
+   "disciplines": [
+    "mathematician",
+    "philosopher"
+   ]
+  },
+  {
+   "slug": "prince",
+   "disciplines": [
+    "film actor",
+    "singer"
+   ]
+  },
+  {
+   "slug": "tina-turner",
+   "disciplines": [
+    "singer",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "rembrandt",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "sylvia-plath",
+   "disciplines": [
+    "poet",
+    "draftsperson"
+   ]
+  },
+  {
+   "slug": "honore-de-balzac",
+   "disciplines": [
+    "novelist"
+   ]
+  },
+  {
+   "slug": "wis-awa-szymborska",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "paul-robeson",
+   "disciplines": [
+    "singer",
+    "lawyer"
+   ]
+  },
+  {
+   "slug": "thomas-mann",
+   "disciplines": [
+    "novelist",
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "william-blake",
+   "disciplines": [
+    "painter",
+    "poet"
+   ]
+  },
+  {
+   "slug": "william-wilberforce",
+   "disciplines": [
+    "politician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "j-m-w-turner",
+   "disciplines": [
+    "painter"
+   ]
+  },
+  {
+   "slug": "paul-verlaine",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "joan-miro",
+   "disciplines": [
+    "painter",
+    "designer"
+   ]
+  },
+  {
+   "slug": "sandor-marai",
+   "disciplines": [
+    "journalist"
+   ]
+  },
+  {
+   "slug": "johannes-brahms",
+   "disciplines": [
+    "composer"
+   ]
+  },
+  {
+   "slug": "keith-haring",
+   "disciplines": [
+    "painter",
+    "writer"
+   ]
+  },
+  {
+   "slug": "sheikh-mujibur-rahman",
+   "disciplines": [
+    "politician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "subhas-chandra-bose",
+   "disciplines": [
+    "politician",
+    "writer"
+   ]
+  },
+  {
+   "slug": "jawaharlal-nehru",
+   "disciplines": [
+    "writer",
+    "politician"
+   ]
+  },
+  {
+   "slug": "ba-jin",
+   "disciplines": [
+    "writer",
+    "politician"
+   ]
+  },
+  {
+   "slug": "saadat-hasan-manto",
+   "disciplines": [
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "hideyo-noguchi",
+   "disciplines": [
+    "physician"
+   ]
+  },
+  {
+   "slug": "roberto-clemente",
+   "disciplines": [
+    "baseball player"
+   ]
+  },
+  {
+   "slug": "edmund-hillary",
+   "disciplines": [
+    "explorer",
+    "autobiographer"
+   ]
+  },
+  {
+   "slug": "giorgos-seferis",
+   "disciplines": [
+    "poet"
+   ]
+  },
+  {
+   "slug": "alfred-hitchcock",
+   "disciplines": [
+    "film director",
+    "writer"
+   ]
+  },
+  {
+   "slug": "neil-armstrong",
+   "disciplines": [
+    "university teacher"
+   ]
+  },
+  {
+   "slug": "sadegh-hedayat",
+   "disciplines": [
+    "writer"
+   ]
+  },
+  {
+   "slug": "sukarno",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "alexander-fleming",
+   "disciplines": [
+    "bacteriologist"
+   ]
+  },
+  {
+   "slug": "buster-keaton",
+   "disciplines": [
+    "comedian",
+    "writer"
+   ]
+  },
+  {
+   "slug": "le-corbusier",
+   "disciplines": [
+    "architect",
+    "painter"
+   ]
+  },
+  {
+   "slug": "michelangelo-antonioni",
+   "disciplines": [
+    "film director",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "george-bernard-shaw",
+   "disciplines": [
+    "politician",
+    "playwright"
+   ]
+  },
+  {
+   "slug": "alvar-aalto",
+   "disciplines": [
+    "architect",
+    "designer"
+   ]
+  },
+  {
+   "slug": "vittorio-de-sica",
+   "disciplines": [
+    "film director",
+    "screenwriter"
+   ]
+  },
+  {
+   "slug": "haile-selassie",
+   "disciplines": [
+    "politician"
+   ]
+  },
+  {
+   "slug": "knute-rockne",
+   "disciplines": [
+    "American football player",
+    "writer"
+   ]
+  },
+  {
+   "slug": "herman-melville",
+   "disciplines": [
+    "teacher",
+    "poet"
+   ]
+  },
+  {
+   "slug": "roald-amundsen",
+   "disciplines": [
+    "explorer",
+    "writer"
+   ]
+  },
+  {
+   "slug": "bedrich-smetana",
+   "disciplines": [
+    "composer",
+    "teacher"
+   ]
+  },
+  {
+   "slug": "carl-sandburg",
+   "disciplines": [
+    "poet",
+    "trade unionist"
+   ]
+  },
+  {
+   "slug": "emil-zatopek",
+   "disciplines": [
+    "athlete"
+   ]
+  },
+  {
+   "slug": "arthur-miller",
+   "disciplines": [
+    "playwright"
+   ]
+  },
+  {
+   "slug": "dinu-lipatti",
+   "disciplines": [
+    "pianist"
+   ]
+  },
+  {
+   "slug": "jean-michel-basquiat",
+   "disciplines": [
+    "painter",
+    "composer"
+   ]
+  },
+  {
+   "slug": "paul-newman",
+   "disciplines": [
+    "television actor",
+    "racing automobile driver"
+   ]
+  }
+ ]
+}

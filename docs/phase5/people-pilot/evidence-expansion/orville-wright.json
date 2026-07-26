@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "orville-wright",
+ "qid": "Q494455",
+ "displayName": "Orville Wright",
+ "wikidataLabel": "Orville Wright",
+ "wikidataDescription": "American aviation pioneer (1871–1948)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q494455",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510688508
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Wright brothers",
+   "articleUrl": "https://en.wikipedia.org/wiki/Wright_brothers",
+   "pageId": 58410,
+   "revisionId": 1363216710,
+   "revisionTimestamp": "2026-07-08T19:55:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1871-08-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1871-08-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1871-08-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1948-01-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34739",
+  "label": "Dayton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34739",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34739",
+   "sourceEntityLabel": "Dayton",
+   "latitude": 39.766666666667,
+   "longitude": -84.2,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Orville Wright 1905-crop.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Orville%20Wright%201905-crop.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Orville_Wright_1905-crop.jpg",
+  "width": 3582,
+  "height": 4477,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Orville Wright and Wilbur Wright (credited as photographers) [1], [2]",
+  "credit": "Library of Congress",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

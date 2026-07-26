@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "luciano-pavarotti",
+ "qid": "Q37615",
+ "displayName": "Luciano Pavarotti",
+ "wikidataLabel": null,
+ "wikidataDescription": "Italian operatic tenor (1935–2007)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37615",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518469489
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Luciano Pavarotti",
+   "articleUrl": "https://en.wikipedia.org/wiki/Luciano_Pavarotti",
+   "pageId": 227696,
+   "revisionId": 1362093898,
+   "revisionTimestamp": "2026-07-01T22:02:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1935-10-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1935-10-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1935-10-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2007-09-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q279",
+  "label": "Modena",
+  "entityUrl": "https://www.wikidata.org/wiki/Q279",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q279",
+   "sourceEntityLabel": "Modena",
+   "latitude": 44.64582,
+   "longitude": 10.92572,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Luciano Pavarotti 2004.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Luciano%20Pavarotti%202004.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Luciano_Pavarotti_2004.jpg",
+  "width": 1029,
+  "height": 1470,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA",
+  "credit": "Flickr",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,115 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "amedeo-avogadro",
+ "qid": "Q43476",
+ "displayName": "Amedeo Avogadro",
+ "wikidataLabel": "Amedeo Avogadro",
+ "wikidataDescription": "Italian scientist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q43476",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518163612
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Amedeo Avogadro",
+   "articleUrl": "https://en.wikipedia.org/wiki/Amedeo_Avogadro",
+   "pageId": 42009,
+   "revisionId": 1356312847,
+   "revisionTimestamp": "2026-05-27T00:59:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1776-08-09T00:00:00Z|proleptic-gregorian",
+   "+1776-06-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1776-08-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1776-06-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1776-08-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1856-07-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q495",
+  "label": "Turin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q495",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q495",
+   "sourceEntityLabel": "Turin",
+   "latitude": 45.079166666666666,
+   "longitude": 7.676111111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Amadeo Avogadro.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Amadeo%20Avogadro.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Amadeo_Avogadro.png",
+  "width": 510,
+  "height": 616,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The original uploader was Anton at German Wikipedia.",
+  "credit": "Transferred from de.wikipedia to Commons by Septembermorgen using CommonsHelper.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

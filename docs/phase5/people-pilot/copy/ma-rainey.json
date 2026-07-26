@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ma-rainey",
+  "seedRound": 0,
+  "qid": "Q239533",
+  "displayName": "Ma Rainey",
+  "identity": "Singer · United States · 1886–1939",
+  "title": "Ma Rainey's birth chart",
+  "metaDescription": "Ma Rainey's chart, computed from a sourced birth date: Sun at 6.3° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mars sit 0.1° from an exact trine — near enough that the tradition reads identity and drive as a single working part. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted.",
+  "ledeFact": "aspect:Sun:Mars:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.35",
+        "decan:taurus:first"
+      ],
+      "text": "Taurus, but precisely: 6.3°, first decan, 0°–10°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:13.3°",
+        "personal:Venus:Pisces:20.3°",
+        "personal:Mars:Virgo:6.5°"
+      ],
+      "text": "Mercury holds 13.3° Aries, Venus holds 20.3° Pisces, Mars holds 6.5° Virgo — in the old shorthand, a mind that decides at speaking speed; taste tuned to mood and undertow; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:trine:0.11",
+        "aspect:Saturn:Uranus:square:0.39",
+        "aspect:Sun:Saturn:sextile:2.32"
+      ],
+      "text": "The Sun and Mars hold the closest angle here — a trine, 0.1° wide. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Saturn square Uranus at 0.4°, and the Sun sextile Saturn at 2.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. Venus in Pisces at 20.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Virgo at 27.1° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 4.0° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-water2-fire1",
+        "modalities:mutable4-fixed3-cardinal3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives earth 4, air 3, water 2, fire 1, and mutable 4, fixed 3, cardinal 3 across the modes. Jupiter and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 11.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-26/",
+    "label": "Everyone born on April 26"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:trine",
+    "sun-degree:6.35",
+    "decan:taurus:first",
+    "personal:Mercury:Aries:13.3°",
+    "personal:Venus:Pisces:20.3°",
+    "personal:Mars:Virgo:6.5°",
+    "aspect:Sun:Mars:trine:0.11",
+    "aspect:Saturn:Uranus:square:0.39",
+    "aspect:Sun:Saturn:sextile:2.32",
+    "figure:unaspected:Moon",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:earth4-air3-water2-fire1",
+    "modalities:mutable4-fixed3-cardinal3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aquarius",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 397,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

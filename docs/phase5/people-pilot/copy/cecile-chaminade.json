@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "cecile-chaminade",
+  "seedRound": 0,
+  "qid": "Q236438",
+  "displayName": "Cécile Chaminade",
+  "identity": "Pianist · France · 1857–1944",
+  "title": "Cécile Chaminade's birth chart",
+  "metaDescription": "Cécile Chaminade's chart, computed from a sourced birth date: Sun at 15.8° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 15.8° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.81",
+        "decan:leo:second"
+      ],
+      "text": "The Sun's position resolves to 15.8° Leo — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Cancer:1.3°",
+        "personal:Mars:Cancer:27.8°"
+      ],
+      "text": "The personal planets sit Venus at 1.3° Cancer, Mars at 27.8° Cancer. Venus in a water sign reads as attraction that works by atmosphere; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:trine:0.62",
+        "aspect:Mercury:Venus:sextile:0.63",
+        "aspect:Sun:Jupiter:square:1.02"
+      ],
+      "text": "Saturn and Neptune hold the closest angle here — a trine, 0.6° wide. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mercury sextile Venus at 0.6°, and the Sun square Jupiter at 1.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mars:fall",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Sun in Leo at 15.8° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 27.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Cancer at 21.6° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-earth3-fire1",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:2",
+        "sign-uncertain:Mercury:leo:virgo"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 5 water, 3 earth, 1 fire by element and 4 fixed, 3 cardinal, 2 mutable by mode. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Mercury crossed from Leo into Virgo during that day, so its sign is left open. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:13.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 20.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-8/",
+    "label": "Everyone born on August 8"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:15.81",
+    "decan:leo:second",
+    "personal:Venus:Cancer:1.3°",
+    "personal:Mars:Cancer:27.8°",
+    "aspect:Saturn:Neptune:trine:0.62",
+    "aspect:Mercury:Venus:sextile:0.63",
+    "aspect:Sun:Jupiter:square:1.02",
+    "figure:none",
+    "dignity:Sun:domicile",
+    "dignity:Mars:fall",
+    "dignity:Saturn:detriment",
+    "elements:water5-earth3-fire1",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:2",
+    "sign-uncertain:Mercury:leo:virgo",
+    "moon-sign:pisces",
+    "moon-band:13.8"
+  ],
+  "measurements": {
+    "originalWords": 446,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

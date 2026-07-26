@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "frantz-fanon",
+ "qid": "Q193670",
+ "displayName": "Frantz Fanon",
+ "wikidataLabel": "Frantz Fanon",
+ "wikidataDescription": "French West Indian psychiatrist and philosopher (1925–1961)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q193670",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520830176
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Frantz Fanon",
+   "articleUrl": "https://en.wikipedia.org/wiki/Frantz_Fanon",
+   "pageId": 95185,
+   "revisionId": 1359463270,
+   "revisionTimestamp": "2026-06-15T12:27:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-07-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-07-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-07-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1961-12-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q81621",
+  "label": "Fort-de-France",
+  "entityUrl": "https://www.wikidata.org/wiki/Q81621",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q81621",
+   "sourceEntityLabel": "Fort-de-France",
+   "latitude": 14.6,
+   "longitude": -61.06666666666667,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q211346",
+   "label": "psychiatrist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Photograph of Frantz Fanon from Black Skin White Masks (1967) dust jacket.webp",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Photograph%20of%20Frantz%20Fanon%20from%20Black%20Skin%20White%20Masks%20(1967)%20dust%20jacket.webp",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Photograph_of_Frantz_Fanon_from_Black_Skin_White_Masks_(1967)_dust_jacket.webp",
+  "width": 1400,
+  "height": 1945,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://africainside.net/16-01-25993-Le-film-Frantz-Fanon-dAbdenour-Zahzah-remporte-le-Prix-Special-du-Jury-au-Festival-de-Louxor6461787908.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

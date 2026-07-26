@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "johan-cruyff",
+  "seedRound": 0,
+  "qid": "Q17163",
+  "displayName": "Johan Cruyff",
+  "identity": "Association football player · Netherlands · 1947–2016",
+  "title": "Johan Cruyff's birth chart",
+  "metaDescription": "Johan Cruyff's chart, computed from a sourced birth date: Sun at 4.4° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a trine to Pluto at 0.5° — close enough to weld drive to depth. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Mars:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.40",
+        "decan:taurus:first"
+      ],
+      "text": "At the noon reference the Sun sits 4.4° into Taurus — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:14.2°",
+        "personal:Mars:Aries:10.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 14.2° Aries, Mars was at 10.4° Aries. Read together: thought that arrives already in motion; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:trine:0.53",
+        "aspect:Mars:Neptune:opposition:1.68",
+        "aspect:Venus:Saturn:trine:1.98"
+      ],
+      "text": "The day's firmest angle joins Mars and Pluto — a trine holding at 0.5°. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mars opposition Neptune at 1.7°, and Venus trine Saturn at 2.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Uranus"
+      ],
+      "text": "Uranus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, two placements stand out. Mars in Aries at 10.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Leo at 2.4° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air2-earth1-water1",
+        "modalities:fixed4-cardinal3-mutable1",
+        "settled-signs:8",
+        "retrograde:2",
+        "sign-uncertain:Venus:pisces:aries"
+      ],
+      "text": "Among the 8 placements whose signs hold for the whole day, the elements divide 4 fire, 2 air, 1 earth, 1 water; by modality, 4 fixed, 3 cardinal, 1 mutable. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Venus crossed from Pisces into Aries during that day, so its sign is left open. Jupiter and Neptune were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 14.4° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-25/",
+    "label": "Everyone born on April 25"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:trine",
+    "sun-degree:4.40",
+    "decan:taurus:first",
+    "personal:Mercury:Aries:14.2°",
+    "personal:Mars:Aries:10.4°",
+    "aspect:Mars:Pluto:trine:0.53",
+    "aspect:Mars:Neptune:opposition:1.68",
+    "aspect:Venus:Saturn:trine:1.98",
+    "figure:unaspected:Uranus",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:detriment",
+    "elements:fire4-air2-earth1-water1",
+    "modalities:fixed4-cardinal3-mutable1",
+    "settled-signs:8",
+    "retrograde:2",
+    "sign-uncertain:Venus:pisces:aries",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 369,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

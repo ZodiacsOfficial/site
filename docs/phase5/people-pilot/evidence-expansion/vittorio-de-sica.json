@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "vittorio-de-sica",
+ "qid": "Q53004",
+ "displayName": "Vittorio De Sica",
+ "wikidataLabel": "Vittorio De Sica",
+ "wikidataDescription": "Italian film director (1901-1974)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q53004",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517970733
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Vittorio De Sica",
+   "articleUrl": "https://en.wikipedia.org/wiki/Vittorio_De_Sica",
+   "pageId": 32428,
+   "revisionId": 1364734809,
+   "revisionTimestamp": "2026-07-18T05:42:38Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1901-07-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-07-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-07-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1974-11-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q117382",
+  "label": "Sora",
+  "entityUrl": "https://www.wikidata.org/wiki/Q117382",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q117382",
+   "sourceEntityLabel": "Sora",
+   "latitude": 41.716666666667,
+   "longitude": 13.616666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q1053574",
+   "label": "executive producer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Vittorio De Sica - portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Vittorio%20De%20Sica%20-%20portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Vittorio_De_Sica_-_portrait.jpg",
+  "width": 2025,
+  "height": 2525,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Harry Pot for Anefo",
+  "credit": "http://proxy.handle.net/10648/a9febc88-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

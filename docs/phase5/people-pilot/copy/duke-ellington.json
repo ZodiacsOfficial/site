@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "duke-ellington",
+  "seedRound": 0,
+  "qid": "Q4030",
+  "displayName": "Duke Ellington",
+  "identity": "Pianist and autobiographer · United States · 1899–1974",
+  "title": "Duke Ellington's birth chart",
+  "metaDescription": "Duke Ellington's chart, computed from a sourced birth date: Sun at 9.1° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Count only what the day settles, and fire still carries five of the nine placements whose signs are settled. A fire-weighted chart runs hot at the start line — initiative is its native language.",
+  "ledeFact": "element:fire:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.14",
+        "decan:taurus:first"
+      ],
+      "text": "At noon on that date the Sun stood at 9.1° Taurus, inside the first decan (0°–10°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:16.3°",
+        "personal:Venus:Aries:3.2°",
+        "personal:Mars:Leo:6.0°"
+      ],
+      "text": "Mercury holds 16.3° Aries, Venus holds 3.2° Aries, Mars holds 6.0° Leo — in the old shorthand, thought that arrives already in motion; attraction declared rather than implied; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:opposition:0.23",
+        "aspect:Mars:Jupiter:square:1.11",
+        "aspect:Mars:Uranus:trine:1.18"
+      ],
+      "text": "Saturn and Neptune hold the closest angle here — a opposition, 0.2° wide. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Mars square Jupiter at 1.1°, and Mars trine Uranus at 1.2° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Venus-Mars-Uranus",
+        "figure:t-square:Sun-Jupiter:apex-Mars"
+      ],
+      "text": "Venus, Mars, Uranus close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. The Sun opposes Jupiter while both square Mars. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks one placement here. Venus in Aries at 3.2° is in detriment — the planet opposite its home, working against the grain. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-air2-earth1-water1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 5 in fire, 2 in air, 1 in earth, 1 in water by element, 4 mutable, 3 fixed, 2 cardinal by modality. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Jupiter, Saturn and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 14.1° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-29/",
+    "label": "Everyone born on April 29"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "element:fire:5",
+    "sun-degree:9.14",
+    "decan:taurus:first",
+    "personal:Mercury:Aries:16.3°",
+    "personal:Venus:Aries:3.2°",
+    "personal:Mars:Leo:6.0°",
+    "aspect:Saturn:Neptune:opposition:0.23",
+    "aspect:Mars:Jupiter:square:1.11",
+    "aspect:Mars:Uranus:trine:1.18",
+    "figure:grand-trine:Venus-Mars-Uranus",
+    "figure:t-square:Sun-Jupiter:apex-Mars",
+    "dignity:Venus:detriment",
+    "elements:fire5-air2-earth1-water1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 437,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

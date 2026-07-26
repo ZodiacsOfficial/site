@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "franz-beckenbauer",
+ "qid": "Q4457",
+ "displayName": "Franz Beckenbauer",
+ "wikidataLabel": "Franz Beckenbauer",
+ "wikidataDescription": "German sports official and association football player (1945–2024)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4457",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522565496
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Franz Beckenbauer",
+   "articleUrl": "https://en.wikipedia.org/wiki/Franz_Beckenbauer",
+   "pageId": 152680,
+   "revisionId": 1365840301,
+   "revisionTimestamp": "2026-07-24T19:07:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1945-09-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1945-09-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1945-09-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2024-01-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2111134",
+  "label": "Richard-Wagner-Straße 19 (München)",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2111134",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2111134",
+   "sourceEntityLabel": "Richard-Wagner-Straße 19 (München)",
+   "latitude": 48.1483,
+   "longitude": 11.5636,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q628099",
+   "label": "association football coach"
+  },
+  {
+   "entity": "Q27503001",
+   "label": "professional athlete"
+  },
+  {
+   "entity": "Q1328323",
+   "label": "functionary"
+  },
+  {
+   "entity": "Q41583",
+   "label": "coach"
+  },
+  {
+   "entity": "Q26481809",
+   "label": "sports executive"
+  },
+  {
+   "entity": "Q11313148",
+   "label": "sports journalist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Franz Beckenbauer (1975).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Franz%20Beckenbauer%20(1975).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Franz_Beckenbauer_(1975).jpg",
+  "width": 707,
+  "height": 967,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Panini Group",
+  "credit": "'Calciatori 1975 - 1976', Panini figurina n°619",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

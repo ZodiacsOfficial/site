@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jackie-robinson",
+ "qid": "Q221048",
+ "displayName": "Jackie Robinson",
+ "wikidataLabel": "Jackie Robinson",
+ "wikidataDescription": "American baseball player (1919–1972)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q221048",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512680153
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jackie Robinson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jackie_Robinson",
+   "pageId": 16193,
+   "revisionId": 1366154609,
+   "revisionTimestamp": "2026-07-26T16:25:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1919-01-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1919-01-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-01-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1972-10-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2087855",
+  "label": "Cairo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2087855",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2087855",
+   "sourceEntityLabel": "Cairo",
+   "latitude": 30.8833,
+   "longitude": -84.2167,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  },
+  {
+   "entity": "Q5137571",
+   "label": "basketball coach"
+  },
+  {
+   "entity": "Q11513337",
+   "label": "athletics competitor"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q42178",
+   "label": "vice president"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jackie Robinson, NPG 97 135.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jackie%20Robinson%2C%20NPG%2097%20135.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jackie_Robinson,_NPG_97_135.jpg",
+  "width": 3386,
+  "height": 4361,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Harry Warnecke / Frank Livia / Robert F. Cranston / William Klein",
+  "credit": "National Portrait Gallery, Smithsonian Institution",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,111 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "iris-murdoch",
+ "qid": "Q217495",
+ "displayName": "Iris Murdoch",
+ "wikidataLabel": "Iris Murdoch",
+ "wikidataDescription": "Irish-born British writer and philosopher (1919–1999)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q217495",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518314198
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Iris Murdoch",
+   "articleUrl": "https://en.wikipedia.org/wiki/Iris_Murdoch",
+   "pageId": 60315,
+   "revisionId": 1364265520,
+   "revisionTimestamp": "2026-07-15T15:01:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1919-07-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1919-07-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-07-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1999-02-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1761",
+  "label": "Dublin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1761",
+  "country": {
+   "entity": "Q27",
+   "label": "Ireland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1761",
+   "sourceEntityLabel": "Dublin",
+   "latitude": 53.34972222222222,
+   "longitude": -6.260277777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": null
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "kalpana-chawla",
+  "seedRound": 0,
+  "qid": "Q237879",
+  "displayName": "Kalpana Chawla",
+  "identity": "Astronaut · India · 1962–2003",
+  "title": "Kalpana Chawla's birth chart",
+  "metaDescription": "Kalpana Chawla's chart, computed from a sourced birth date: Sun at 26.2° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: Venus and Saturn within 0.0°, taste wired to structure. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Venus:Saturn:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.19",
+        "decan:pisces:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 26.2° Pisces: the third decan, whose classical sub-ruler is Mars. A water sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:2.5°",
+        "personal:Venus:Aries:8.1°",
+        "personal:Mars:Pisces:3.9°"
+      ],
+      "text": "For the fast movers, Mercury was at 2.5° Pisces, Venus was at 8.1° Aries, Mars was at 3.9° Pisces. Read together: a mind that absorbs before it argues; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:sextile:0.04",
+        "aspect:Jupiter:Uranus:opposition:0.73",
+        "aspect:Mercury:Mars:conjunction:1.34"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Saturn: 0.0° from an exact sextile. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Jupiter opposition Uranus at 0.7°, and Mercury conjunction Mars at 1.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Moon-Saturn:apex-Neptune",
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Moon opposes Saturn while both square Neptune. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Sun stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. Mercury in Pisces at 2.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 8.1° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 8.1° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air2-earth1",
+        "modalities:fixed5-mutable4-cardinal1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 water, 3 fire, 2 air, 1 earth by element and 5 fixed, 4 mutable, 1 cardinal by mode. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 12.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-17/",
+    "label": "Everyone born on March 17"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Saturn:sextile",
+    "sun-degree:26.19",
+    "decan:pisces:third",
+    "personal:Mercury:Pisces:2.5°",
+    "personal:Venus:Aries:8.1°",
+    "personal:Mars:Pisces:3.9°",
+    "aspect:Venus:Saturn:sextile:0.04",
+    "aspect:Jupiter:Uranus:opposition:0.73",
+    "aspect:Mercury:Mars:conjunction:1.34",
+    "figure:t-square:Moon-Saturn:apex-Neptune",
+    "figure:unaspected:Sun",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:domicile",
+    "elements:water4-fire3-air2-earth1",
+    "modalities:fixed5-mutable4-cardinal1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:leo",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 446,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

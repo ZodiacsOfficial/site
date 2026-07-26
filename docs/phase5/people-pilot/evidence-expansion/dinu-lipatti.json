@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dinu-lipatti",
+ "qid": "Q322080",
+ "displayName": "Dinu Lipatti",
+ "wikidataLabel": "Dinu Lipatti",
+ "wikidataDescription": "Romanian pianist and composer (1917–1950)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q322080",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518186623
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dinu Lipatti",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dinu_Lipatti",
+   "pageId": 312781,
+   "revisionId": 1350801771,
+   "revisionTimestamp": "2026-04-24T03:23:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-03-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-03-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-03-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1950-12-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q19660",
+  "label": "Bucharest",
+  "entityUrl": "https://www.wikidata.org/wiki/Q19660",
+  "country": {
+   "entity": "Q218",
+   "label": "Romania"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q19660",
+   "sourceEntityLabel": "Bucharest",
+   "latitude": 44.41336111111111,
+   "longitude": 26.09777777777778,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q1643514",
+   "label": "music arranger"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dinu Lipatti.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dinu%20Lipatti.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dinu_Lipatti.jpg",
+  "width": 400,
+  "height": 563,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "artist": "Germaine Martin (see: Bibliothèque nationale de France [1])",
+  "credit": "http://www.lipatti-haskil-foundation.com/04f-lipatti.php",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "raj-kapoor",
+ "qid": "Q55407",
+ "displayName": "Raj Kapoor",
+ "wikidataLabel": "Raj Kapoor",
+ "wikidataDescription": "Indian film actor, producer and director",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q55407",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521430698
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Raj Kapoor",
+   "articleUrl": "https://en.wikipedia.org/wiki/Raj_Kapoor",
+   "pageId": 380483,
+   "revisionId": 1365410179,
+   "revisionTimestamp": "2026-07-22T06:25:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1924-12-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1924-12-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1924-12-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1988-06-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1113311",
+  "label": "Peshawar",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1113311",
+  "country": {
+   "entity": "Q843",
+   "label": "Pakistan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1113311",
+   "sourceEntityLabel": "Peshawar",
+   "latitude": 34.01444444444444,
+   "longitude": 71.5675,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Raj Kapoor 1950.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Raj%20Kapoor%201950.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Raj_Kapoor_1950.jpg",
+  "width": 244,
+  "height": 325,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Artem Abd",
+  "credit": "https://www.flickr.com/photos/194971825@N02/52219808516/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

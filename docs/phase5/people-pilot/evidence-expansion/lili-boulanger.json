@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lili-boulanger",
+ "qid": "Q230412",
+ "displayName": "Lili Boulanger",
+ "wikidataLabel": "Lili Boulanger",
+ "wikidataDescription": "French composer (1893–1918)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q230412",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517529365
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lili Boulanger",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lili_Boulanger",
+   "pageId": 501483,
+   "revisionId": 1360750902,
+   "revisionTimestamp": "2026-06-23T10:35:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1893-08-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1893-08-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1893-08-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1918-03-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q90",
+  "label": "Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q90",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q90",
+   "sourceEntityLabel": "Paris",
+   "latitude": 48.85666666666667,
+   "longitude": 2.352222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Lili Boulanger 1.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Lili%20Boulanger%201.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Lili_Boulanger_1.jpg",
+  "width": 232,
+  "height": 341,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unidentified photographer",
+  "credit": "http://www.cs.princeton.edu/~ken/lili.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

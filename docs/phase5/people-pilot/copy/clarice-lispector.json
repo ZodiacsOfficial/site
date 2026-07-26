@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "clarice-lispector",
+  "seedRound": 0,
+  "qid": "Q235955",
+  "displayName": "Clarice Lispector",
+  "identity": "Screenwriter and painter · Ukraine · 1920–1977",
+  "title": "Clarice Lispector's birth chart",
+  "metaDescription": "Clarice Lispector's chart, computed from a sourced birth date: Sun at 18.1° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a square: the Sun and Jupiter within 0.1°, identity wired to expansion. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower.",
+  "ledeFact": "aspect:Sun:Jupiter:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.07",
+        "decan:sagittarius:second"
+      ],
+      "text": "The Sun sits at 18.1° Sagittarius — the second decan, 10°–20°, which the tradition sub-rules by Mars. Degrees matter more than the sign label here: two people born a fortnight apart share Sagittarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:28.9°",
+        "personal:Venus:Capricorn:27.5°",
+        "personal:Mars:Aquarius:9.9°"
+      ],
+      "text": "For the fast movers, Mercury was at 28.9° Scorpio, Venus was at 27.5° Capricorn, Mars was at 9.9° Aquarius. Read together: a mind that absorbs before it argues; taste for the substantial and the lasting; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:square:0.09",
+        "aspect:Mercury:Venus:sextile:1.45",
+        "aspect:Mercury:Uranus:square:3.15"
+      ],
+      "text": "The Sun to Jupiter is the closest call of the day, a square within 0.1°. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Mercury sextile Venus at 1.4°, and Mercury square Uranus at 3.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The classical table has one entry for this chart. Jupiter in Virgo at 18.0° is in detriment — the planet opposite its home, working against the grain. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-earth3-air1",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 3 fire, 3 water, 3 earth, 1 air; by modality, 5 mutable, 3 fixed, 2 cardinal. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 18.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-10/",
+    "label": "Everyone born on December 10"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:square",
+    "sun-degree:18.07",
+    "decan:sagittarius:second",
+    "personal:Mercury:Scorpio:28.9°",
+    "personal:Venus:Capricorn:27.5°",
+    "personal:Mars:Aquarius:9.9°",
+    "aspect:Sun:Jupiter:square:0.09",
+    "aspect:Mercury:Venus:sextile:1.45",
+    "aspect:Mercury:Uranus:square:3.15",
+    "figure:none",
+    "dignity:Jupiter:detriment",
+    "elements:fire3-water3-earth3-air1",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:sagittarius",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 393,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

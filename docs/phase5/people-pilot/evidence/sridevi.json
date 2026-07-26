@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sridevi",
+ "qid": "Q270691",
+ "displayName": "Sridevi",
+ "wikidataLabel": "Sridevi",
+ "wikidataDescription": "Indian actress (1963–2018)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q270691",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522125927
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sridevi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sridevi",
+   "pageId": 1938728,
+   "revisionId": 1365597467,
+   "revisionTimestamp": "2026-07-23T10:39:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1963-08-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1963-08-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1963-08-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2018-02-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2061870",
+  "label": "Sivakasi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2061870",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2061870",
+   "sourceEntityLabel": "Sivakasi",
+   "latitude": 9.45,
+   "longitude": 77.8,
+   "precision": 0.1,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q13235160",
+   "label": "manufacturer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sridevi.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sridevi.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sridevi.jpg",
+  "width": 585,
+  "height": 779,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "Bollywood Hungama",
+  "credit": "Bollywood Hungama",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "joseph-lister",
+  "seedRound": 0,
+  "qid": "Q155768",
+  "displayName": "Joseph Lister",
+  "identity": "Surgeon and university teacher · United Kingdom · 1827–1912",
+  "title": "Joseph Lister's birth chart",
+  "metaDescription": "Joseph Lister's chart, computed from a sourced birth date: Sun at 14.9° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 14.9° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.94",
+        "decan:aries:second"
+      ],
+      "text": "The Sun's exact place is 14.9° Aries. That falls in the second decan, 10°–20°, sub-ruled by the Sun in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:15.5°",
+        "personal:Venus:Pisces:0.8°",
+        "personal:Mars:Taurus:12.8°"
+      ],
+      "text": "Closer in, Mercury stands at 15.5° Aries; Venus stands at 0.8° Pisces; Mars stands at 12.8° Taurus. The tradition reads a mind that decides at speaking speed from Mercury, taste tuned to mood and undertow from Venus, drive that grinds rather than flares from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:trine:0.49",
+        "aspect:Sun:Mercury:conjunction:0.52",
+        "aspect:Mercury:Neptune:square:0.69"
+      ],
+      "text": "Start where the chart is tightest — Venus trine Saturn, 0.5° of separation. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun conjunction Mercury at 0.5°, and Mercury square Neptune at 0.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Sun in Aries at 14.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Pisces at 0.8° is in exaltation; Mars in Taurus at 12.8° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 0.3° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth3-water2-air1",
+        "modalities:cardinal7-mutable1-fixed1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 fire, 3 earth, 2 water, 1 air by element and 7 cardinal, 1 mutable, 1 fixed by mode. Mercury and Jupiter were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 12.2° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-5/",
+    "label": "Everyone born on April 5"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:14.94",
+    "decan:aries:second",
+    "personal:Mercury:Aries:15.5°",
+    "personal:Venus:Pisces:0.8°",
+    "personal:Mars:Taurus:12.8°",
+    "aspect:Venus:Saturn:trine:0.49",
+    "aspect:Sun:Mercury:conjunction:0.52",
+    "aspect:Mercury:Neptune:square:0.69",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:detriment",
+    "elements:fire3-earth3-water2-air1",
+    "modalities:cardinal7-mutable1-fixed1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 415,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

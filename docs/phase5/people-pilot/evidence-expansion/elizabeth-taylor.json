@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elizabeth-taylor",
+ "qid": "Q34851",
+ "displayName": "Elizabeth Taylor",
+ "wikidataLabel": "Elizabeth Taylor",
+ "wikidataDescription": "British-American actress (1932–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q34851",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519405268
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elizabeth Taylor",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elizabeth_Taylor",
+   "pageId": 42357,
+   "revisionId": 1366114027,
+   "revisionTimestamp": "2026-07-26T10:08:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-02-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-02-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-02-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-03-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q150195",
+  "label": "Hampstead Garden Suburb",
+  "entityUrl": "https://www.wikidata.org/wiki/Q150195",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q150195",
+   "sourceEntityLabel": "Hampstead Garden Suburb",
+   "latitude": 51.583,
+   "longitude": -0.185,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q12362622",
+   "label": "philanthropist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  },
+  {
+   "entity": "Q96034777",
+   "label": "HIV/AIDS activist"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elizabeth Taylor with Kennedy award.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elizabeth%20Taylor%20with%20Kennedy%20award.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elizabeth_Taylor_with_Kennedy_award.jpg",
+  "width": 1057,
+  "height": 1595,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "Kingkongphoto & www.celebrity-photos.com from Laurel Maryland, USA",
+  "credit": "Elizabeth Taylor",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

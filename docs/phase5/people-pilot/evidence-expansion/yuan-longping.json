@@ -1,0 +1,133 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yuan-longping",
+ "qid": "Q3141326",
+ "displayName": "Yuan Longping",
+ "wikidataLabel": "Yuan Longping",
+ "wikidataDescription": "Chinese biologist (1930-2021)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3141326",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521354727
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yuan Longping",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yuan_Longping",
+   "pageId": 1178453,
+   "revisionId": 1361411660,
+   "revisionTimestamp": "2026-06-27T19:54:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 4,
+  "distinctDayPrecisionValues": [
+   "+1929-08-13T00:00:00Z|proleptic-gregorian",
+   "+1930-09-01T00:00:00Z|proleptic-gregorian",
+   "+1930-09-07T00:00:00Z|proleptic-gregorian",
+   "+1929-07-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-08-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1930-09-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1930-09-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1929-07-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1930-09-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2021-05-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7161058",
+  "label": "Peking Union Medical College Hospital",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7161058",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7161058",
+   "sourceEntityLabel": "Peking Union Medical College Hospital",
+   "latitude": 39.91128,
+   "longitude": 116.40953,
+   "precision": 0.0000277778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q1781198",
+   "label": "agronomist"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Yuan Longping at news conference (cropped).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Yuan%20Longping%20at%20news%20conference%20(cropped).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Yuan_Longping_at_news_conference_(cropped).png",
+  "width": 538,
+  "height": 717,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "China News Service",
+  "credit": "YouTube: https://www.youtube.com/watch?v=qsY6qWxCtV4 – View/save archived versions on archive.org 0:35",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

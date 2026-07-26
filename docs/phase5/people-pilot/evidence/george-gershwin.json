@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "george-gershwin",
+ "qid": "Q123829",
+ "displayName": "George Gershwin",
+ "wikidataLabel": "George Gershwin",
+ "wikidataDescription": "American composer and pianist (1898–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q123829",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522004583
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "George Gershwin",
+   "articleUrl": "https://en.wikipedia.org/wiki/George_Gershwin",
+   "pageId": 13066,
+   "revisionId": 1360440781,
+   "revisionTimestamp": "2026-06-21T14:22:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-09-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-09-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-09-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-07-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18419",
+  "label": "Brooklyn",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18419",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 3,
+  "coordinates": {
+   "sourceEntity": "Q18419",
+   "sourceEntityLabel": "Brooklyn",
+   "latitude": 40.65083333333333,
+   "longitude": -73.94972222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q61947380",
+   "label": "jazz pianist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  }
+ ],
+ "portrait": {
+  "file": "File:George Gershwin 1937.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:George%20Gershwin%201937.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:George_Gershwin_1937.jpg",
+  "width": 317,
+  "height": 398,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID van.5a52009.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

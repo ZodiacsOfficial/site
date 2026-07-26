@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "max-ernst",
+ "qid": "Q154842",
+ "displayName": "Max Ernst",
+ "wikidataLabel": "Max Ernst",
+ "wikidataDescription": "German artist (1891–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q154842",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521031668
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Max Ernst",
+   "articleUrl": "https://en.wikipedia.org/wiki/Max_Ernst",
+   "pageId": 42649,
+   "revisionId": 1366163669,
+   "revisionTimestamp": "2026-07-26T17:37:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1891-04-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1891-04-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1891-04-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-04-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7036",
+  "label": "Brühl",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7036",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7036",
+   "sourceEntityLabel": "Brühl",
+   "latitude": 50.833333333333,
+   "longitude": 6.9,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q22343478",
+   "label": "collagist"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q2519376",
+   "label": "jewelry designer"
+  },
+  {
+   "entity": "Q329439",
+   "label": "engraver"
+  },
+  {
+   "entity": "Q211346",
+   "label": "psychiatrist"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Max Ernst 1968.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Max%20Ernst%201968.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Max_Ernst_1968.jpg",
+  "width": 1506,
+  "height": 2004,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Unknown author",
+  "credit": "[1] Dutch National Archives, The Hague, Fotocollectie Algemeen Nederlands Persbureau (ANEFO), 1945-1989 bekijk toegang 2.24.01.04 Bestanddeelnummer 928-4975]",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

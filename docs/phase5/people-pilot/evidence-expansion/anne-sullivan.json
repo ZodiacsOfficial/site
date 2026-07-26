@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "anne-sullivan",
+ "qid": "Q239135",
+ "displayName": "Anne Sullivan",
+ "wikidataLabel": "Anne Sullivan",
+ "wikidataDescription": "American teacher (1866–1936)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q239135",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517585755
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Anne Sullivan",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anne_Sullivan",
+   "pageId": 227417,
+   "revisionId": 1361571744,
+   "revisionTimestamp": "2026-06-28T20:15:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1866-04-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1866-04-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1866-04-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1936-10-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5441236",
+  "label": "Feeding Hills",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5441236",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5441236",
+   "sourceEntityLabel": "Feeding Hills",
+   "latitude": 42.068138888889,
+   "longitude": -72.6787,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:AnneSullivanMacy.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:AnneSullivanMacy.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:AnneSullivanMacy.jpg",
+  "width": 201,
+  "height": 268,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unknown; User Hans Dunkelberg der Jüngere on de.wikipedia",
+  "credit": "http://www.perkins.org/museum/images/sectionimages/large/AnneSullivanAl_sm.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

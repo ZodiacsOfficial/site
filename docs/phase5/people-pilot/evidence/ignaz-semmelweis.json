@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ignaz-semmelweis",
+ "qid": "Q59736",
+ "displayName": "Ignaz Semmelweis",
+ "wikidataLabel": "Ignaz Semmelweis",
+ "wikidataDescription": "Hungarian physician, early pioneer of antiseptic procedures (1818–1865)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q59736",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518810154
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ignaz Semmelweis",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ignaz_Semmelweis",
+   "pageId": 75319,
+   "revisionId": 1364656242,
+   "revisionTimestamp": "2026-07-17T19:43:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1818-07-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1818-07-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1818-07-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1865-08-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1075342",
+  "label": "Tabán",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1075342",
+  "country": {
+   "entity": "Q28",
+   "label": "Hungary"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1075342",
+   "sourceEntityLabel": "Tabán",
+   "latitude": 47.491666666667,
+   "longitude": 19.038611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q2640827",
+   "label": "gynecologist"
+  },
+  {
+   "entity": "Q13638192",
+   "label": "obstetrician"
+  },
+  {
+   "entity": "Q651566",
+   "label": "hygienist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Borsos & Doctor Semmelweis Ignác cropped.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Borsos%20%26%20Doctor%20Semmelweis%20Ign%C3%A1c%20cropped.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Borsos_%26_Doctor_Semmelweis_Ign%C3%A1c_cropped.jpg",
+  "width": 1658,
+  "height": 1722,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "József Borsos / Albert Doctor",
+  "credit": "Ágnes Szemerédi: A fényképészet úttörői, OSZK blog, 2022 [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,95 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "diane-arbus",
+ "qid": "Q234608",
+ "displayName": "Diane Arbus",
+ "wikidataLabel": "Diane Arbus",
+ "wikidataDescription": "American photographer (1923–1971)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234608",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519391465
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Diane Arbus",
+   "articleUrl": "https://en.wikipedia.org/wiki/Diane_Arbus",
+   "pageId": 162730,
+   "revisionId": 1358798934,
+   "revisionTimestamp": "2026-06-11T01:28:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1923-03-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-03-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1923-03-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1971-07-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q19698265",
+   "label": "fashion photographer"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": null
+}

@@ -1,0 +1,110 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "xu-beihong",
+ "qid": "Q714152",
+ "displayName": "Xu Beihong",
+ "wikidataLabel": "Xu Beihong",
+ "wikidataDescription": "Chinese painter (1895–1953)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q714152",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516106159
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Xu Beihong",
+   "articleUrl": "https://en.wikipedia.org/wiki/Xu_Beihong",
+   "pageId": 975516,
+   "revisionId": 1361621275,
+   "revisionTimestamp": "2026-06-29T02:45:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1895-07-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-07-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1895-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1895-07-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1953-09-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1015788",
+  "label": "Yixing",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1015788",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1015788",
+   "sourceEntityLabel": "Yixing",
+   "latitude": 31.369722222222,
+   "longitude": 119.82388888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:XuBeihong.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:XuBeihong.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:XuBeihong.jpg",
+  "width": 763,
+  "height": 945,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -10,7 +10,7 @@ import { LEGACY_URLS } from '../lib/legacy/urls';
 import { DEFAULT_LOCALE, LOCALE_META, alternatePathEntries, alternatePaths } from '../lib/i18n';
 import { CHINESE_ZODIAC_PATHS } from '../lib/programmatic-paths';
 import { registryAuraSitemapEntry } from '../lib/registry-aura-entry.mjs';
-import { INDEXABLE_PEOPLE } from '../lib/people';
+import { INDEXABLE_PEOPLE, PEOPLE_DIRECTORY_INDEXABLE } from '../lib/people';
 import { SIGNS } from '../lib/signs';
 import daily from '../data/daily.json';
 import horoscopeProgram from '../data/horoscope-program.json';
@@ -190,6 +190,11 @@ export const GET: APIRoute = async () => {
       priority: 0.64,
       lastmod: event.lastModified,
     })),
+    ...(PEOPLE_DIRECTORY_INDEXABLE ? [{
+      loc: '/people/',
+      priority: 0.7,
+      lastmod: INDEXABLE_PEOPLE.map((person) => person.reviewedAtUtc.slice(0, 10)).sort().at(-1),
+    }] : []),
     ...INDEXABLE_PEOPLE.map((person) => ({
       loc: `/people/${person.slug}/`,
       priority: 0.58,

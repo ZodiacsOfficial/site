@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "carlos-p-romulo",
+  "seedRound": 0,
+  "qid": "Q737664",
+  "displayName": "Carlos P. Romulo",
+  "identity": "Diplomat and journalist · Philippines · 1899–1985",
+  "title": "Carlos P. Romulo's birth chart",
+  "metaDescription": "Carlos P. Romulo's chart, computed from a sourced birth date: Sun at 23.8° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Fire dominates the certain ground here, taking four of the eight placements whose signs are settled. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill.",
+  "ledeFact": "element:fire:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.82",
+        "decan:capricorn:third"
+      ],
+      "text": "At the noon reference the Sun sits 23.8° into Capricorn — the third decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Venus:Sagittarius:10.9°",
+        "personal:Mars:Leo:0.7°"
+      ],
+      "text": "For the fast movers, Venus was at 10.9° Sagittarius, Mars was at 0.7° Leo. Read together: attraction declared rather than implied; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:opposition:3.16",
+        "aspect:Saturn:Neptune:opposition:3.48",
+        "aspect:Venus:Uranus:conjunction:4.28"
+      ],
+      "text": "Closest first: Venus to Pluto, a opposition with 3.2° of slack. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Saturn opposition Neptune at 3.5°, and Venus conjunction Uranus at 4.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "The dignity table has nothing to say about this chart. All seven classical planets sit in signs it treats as neutral, so the reading rests entirely on placement and angle."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air2-earth1-water1",
+        "modalities:mutable5-fixed2-cardinal1",
+        "settled-signs:8",
+        "retrograde:3",
+        "sign-uncertain:Mercury:sagittarius:capricorn"
+      ],
+      "text": "Counting only the 8 placements whose signs hold for the whole day, the chart runs 4 fire, 2 air, 1 earth, 1 water by element and 5 mutable, 2 fixed, 1 cardinal by modality. Fire leads with ignition: the first move made early, and certainty arriving ahead of the evidence. Mercury crossed from Sagittarius into Capricorn during that day, so its sign is left open. Mars, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 14.9° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-14/",
+    "label": "Everyone born on January 14"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "element:fire:4",
+    "sun-degree:23.82",
+    "decan:capricorn:third",
+    "personal:Venus:Sagittarius:10.9°",
+    "personal:Mars:Leo:0.7°",
+    "aspect:Venus:Pluto:opposition:3.16",
+    "aspect:Saturn:Neptune:opposition:3.48",
+    "aspect:Venus:Uranus:conjunction:4.28",
+    "figure:unaspected:Moon",
+    "dignity:none",
+    "elements:fire4-air2-earth1-water1",
+    "modalities:mutable5-fixed2-cardinal1",
+    "settled-signs:8",
+    "retrograde:3",
+    "sign-uncertain:Mercury:sagittarius:capricorn",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 355,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

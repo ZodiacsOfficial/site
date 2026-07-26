@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "antonin-dvorak",
+  "seedRound": 0,
+  "qid": "Q7298",
+  "displayName": "Antonín Dvořák",
+  "identity": "Conductor and teacher · Czech Republic · 1841–1904",
+  "title": "Antonín Dvořák's birth chart",
+  "metaDescription": "Antonín Dvořák's chart, computed from a sourced birth date: Sun at 15.6° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a conjunction: the Sun and Mercury within 1.0°, identity wired to thinking. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding.",
+  "ledeFact": "aspect:Sun:Mercury:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.58",
+        "decan:virgo:second"
+      ],
+      "text": "The Sun sits at 15.6° Virgo — the second decan, 10°–20°, which the tradition sub-rules by Saturn. Degrees matter more than the sign label here: two people born a fortnight apart share Virgo and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:14.6°",
+        "personal:Venus:Leo:4.8°",
+        "personal:Mars:Sagittarius:1.1°"
+      ],
+      "text": "The personal planets sit Mercury at 14.6° Virgo, Venus at 4.8° Leo, Mars at 1.1° Sagittarius. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mercury:conjunction:0.99",
+        "aspect:Mercury:Jupiter:square:2.98",
+        "aspect:Jupiter:Neptune:sextile:3.26"
+      ],
+      "text": "The day's firmest angle joins the Sun and Mercury — a conjunction holding at 1.0°. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Mercury square Jupiter at 3.0°, and Jupiter sextile Neptune at 3.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Moon-Jupiter:apex-Mercury"
+      ],
+      "text": "The Moon opposes Jupiter while both square Mercury. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The classical table has two entries for this chart. Mercury in Virgo at 14.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Sagittarius at 11.6° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth2-air2-water1",
+        "modalities:mutable7-fixed2-cardinal1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 fire, 2 earth, 2 air, 1 water by element and 7 mutable, 2 fixed, 1 cardinal by mode. Fire leads with ignition: the first move made early, and certainty arriving ahead of the evidence. Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:13.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 13.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-8/",
+    "label": "Everyone born on September 8"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mercury:conjunction",
+    "sun-degree:15.58",
+    "decan:virgo:second",
+    "personal:Mercury:Virgo:14.6°",
+    "personal:Venus:Leo:4.8°",
+    "personal:Mars:Sagittarius:1.1°",
+    "aspect:Sun:Mercury:conjunction:0.99",
+    "aspect:Mercury:Jupiter:square:2.98",
+    "aspect:Jupiter:Neptune:sextile:3.26",
+    "figure:t-square:Moon-Jupiter:apex-Mercury",
+    "dignity:Mercury:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:fire5-earth2-air2-water1",
+    "modalities:mutable7-fixed2-cardinal1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:gemini",
+    "moon-band:13.8"
+  ],
+  "measurements": {
+    "originalWords": 426,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

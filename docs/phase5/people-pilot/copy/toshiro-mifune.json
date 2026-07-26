@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "toshiro-mifune",
+  "seedRound": 0,
+  "qid": "Q37001",
+  "displayName": "Toshiro Mifune",
+  "identity": "Actor · People's Republic of China · 1920–1997",
+  "title": "Toshiro Mifune's birth chart",
+  "metaDescription": "Toshiro Mifune's chart, computed from a sourced birth date: Sun at 11.1° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 11.1° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.13",
+        "decan:aries:second"
+      ],
+      "text": "The Sun's exact place is 11.1° Aries. That falls in the second decan, 10°–20°, sub-ruled by the Sun in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:21.8°",
+        "personal:Venus:Pisces:16.6°",
+        "personal:Mars:Scorpio:7.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 21.8° Pisces, Venus was at 16.6° Pisces, Mars was at 7.3° Scorpio. Read together: a mind that absorbs before it argues; taste tuned to mood and undertow; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Pluto:sextile:0.2",
+        "aspect:Jupiter:Neptune:conjunction:0.72",
+        "aspect:Mars:Jupiter:square:0.86"
+      ],
+      "text": "Saturn and Pluto hold the closest angle here — a sextile, 0.2° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Jupiter conjunction Neptune at 0.7°, and Mars square Jupiter at 0.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Mars-Uranus-Pluto"
+      ],
+      "text": "Mars, Uranus, Pluto close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The classical table has four entries for this chart. The Sun in Aries at 11.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Pisces at 21.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 16.6° is in exaltation; Mars in Scorpio at 7.3° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire3-earth2",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 5, fire 3, earth 2, and mutable 5, fixed 3, cardinal 2 across the modes. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Mercury, Mars, Jupiter, Saturn and Neptune were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:13.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 13.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-1/",
+    "label": "Everyone born on April 1"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:11.13",
+    "decan:aries:second",
+    "personal:Mercury:Pisces:21.8°",
+    "personal:Venus:Pisces:16.6°",
+    "personal:Mars:Scorpio:7.3°",
+    "aspect:Saturn:Pluto:sextile:0.2",
+    "aspect:Jupiter:Neptune:conjunction:0.72",
+    "aspect:Mars:Jupiter:square:0.86",
+    "figure:grand-trine:Mars-Uranus-Pluto",
+    "dignity:Sun:exaltation",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:domicile",
+    "elements:water5-fire3-earth2",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:virgo",
+    "moon-band:13.3"
+  ],
+  "measurements": {
+    "originalWords": 437,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

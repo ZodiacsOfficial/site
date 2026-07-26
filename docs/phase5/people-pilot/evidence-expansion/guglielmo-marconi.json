@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "guglielmo-marconi",
+ "qid": "Q36488",
+ "displayName": "Guglielmo Marconi",
+ "wikidataLabel": "Guglielmo Marconi",
+ "wikidataDescription": "Italian inventor and radio pioneer (1874-1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q36488",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520879464
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Guglielmo Marconi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Guglielmo_Marconi",
+   "pageId": 12104,
+   "revisionId": 1365858726,
+   "revisionTimestamp": "2026-07-24T21:19:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1874-04-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1874-04-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1874-04-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-07-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1891",
+  "label": "Bologna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1891",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1891",
+   "sourceEntityLabel": "Bologna",
+   "latitude": 44.493888888889,
+   "longitude": 11.342777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Guglielmo Marconi.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Guglielmo%20Marconi.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Guglielmo_Marconi.jpg",
+  "width": 987,
+  "height": 1314,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Pach Brothers",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3a40043.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

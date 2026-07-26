@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "carlos-p-romulo",
+ "qid": "Q737664",
+ "displayName": "Carlos P. Romulo",
+ "wikidataLabel": "Carlos P. Romulo",
+ "wikidataDescription": "Filipino politician and diplomat (1899-1985)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q737664",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520439350
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Carlos P. Romulo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Carlos_P._Romulo",
+   "pageId": 647820,
+   "revisionId": 1364082768,
+   "revisionTimestamp": "2026-07-14T11:04:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-01-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-01-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-01-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1985-12-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q56424",
+  "label": "Camiling",
+  "entityUrl": "https://www.wikidata.org/wiki/Q56424",
+  "country": {
+   "entity": "Q928",
+   "label": "Philippines"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q56424",
+   "sourceEntityLabel": "Camiling",
+   "latitude": 15.686666666666667,
+   "longitude": 120.41305555555556,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Carlos P. Romulo (1949 UN photo).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Carlos%20P.%20Romulo%20(1949%20UN%20photo).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Carlos_P._Romulo_(1949_UN_photo).jpg",
+  "width": 1090,
+  "height": 1368,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "United Nations",
+  "credit": "Sigedon Books and Antiques, Archive",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

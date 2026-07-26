@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "paul-robeson",
+ "qid": "Q273233",
+ "displayName": "Paul Robeson",
+ "wikidataLabel": "Paul Robeson",
+ "wikidataDescription": "American singer, actor, and political activist (1898–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q273233",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518316597
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Paul Robeson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Paul_Robeson",
+   "pageId": 23229,
+   "revisionId": 1362973360,
+   "revisionTimestamp": "2026-07-07T08:10:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-04-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-04-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-04-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-01-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q138518",
+  "label": "Princeton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q138518",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q138518",
+   "sourceEntityLabel": "Princeton",
+   "latitude": 40.352222222222,
+   "longitude": -74.656944444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q3665646",
+   "label": "basketball player"
+  },
+  {
+   "entity": "Q19204627",
+   "label": "American football player"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Paul Robeson 1942 crop.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Paul%20Robeson%201942%20crop.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Paul_Robeson_1942_crop.jpg",
+  "width": 9300,
+  "height": 11591,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Gordon Parks, Office of War Information; cropped by Beyond My Ken (talk) 07:13, 3 February 2011 (UTC)",
+  "credit": "Library of Congress Prints and Photographs Division, Farm Security Administration - Office of War Information Photograph Collection. http://hdl.loc.gov/loc.pnp/fsa.8b14812",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": "personality"
+ }
+}

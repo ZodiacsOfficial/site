@@ -1,0 +1,151 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "joseph-priestley",
+ "qid": "Q159636",
+ "displayName": "Joseph Priestley",
+ "wikidataLabel": "Joseph Priestley",
+ "wikidataDescription": "English chemist, theologian, educator, and political theorist (1733–1804)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q159636",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522295404
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Joseph Priestley",
+   "articleUrl": "https://en.wikipedia.org/wiki/Joseph_Priestley",
+   "pageId": 40176,
+   "revisionId": 1365137835,
+   "revisionTimestamp": "2026-07-20T13:48:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1733-03-13T00:00:00Z|proleptic-julian",
+   "+1733-03-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1733-03-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-julian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1733-03-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1733-03-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-julian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1804-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q865872",
+  "label": "Birstall",
+  "entityUrl": "https://www.wikidata.org/wiki/Q865872",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q865872",
+   "sourceEntityLabel": "Birstall",
+   "latitude": 53.7343,
+   "longitude": -1.66092,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1234713",
+   "label": "theologian"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q974144",
+   "label": "educator"
+  },
+  {
+   "entity": "Q15994177",
+   "label": "political theorist"
+  },
+  {
+   "entity": "Q1225491",
+   "label": "dilettante"
+  },
+  {
+   "entity": "Q182436",
+   "label": "librarian"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q16063546",
+   "label": "historian of science"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Priestley.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Priestley.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Priestley.jpg",
+  "width": 905,
+  "height": 1099,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ellen Sharples",
+  "credit": "Scan of a print.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

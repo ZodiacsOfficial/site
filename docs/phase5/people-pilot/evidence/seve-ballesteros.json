@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "seve-ballesteros",
+ "qid": "Q272190",
+ "displayName": "Seve Ballesteros",
+ "wikidataLabel": "Seve Ballesteros",
+ "wikidataDescription": "Spanish professional golfer (1957–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q272190",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522635933
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Seve Ballesteros",
+   "articleUrl": "https://en.wikipedia.org/wiki/Seve_Ballesteros",
+   "pageId": 740993,
+   "revisionId": 1364810429,
+   "revisionTimestamp": "2026-07-18T17:13:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1957-04-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1957-04-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1957-04-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-05-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3754560",
+  "label": "Pedreña",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3754560",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3754560",
+   "sourceEntityLabel": "Pedreña",
+   "latitude": 43.443611111111,
+   "longitude": -3.7680555555556,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11303721",
+   "label": "golfer"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  },
+  {
+   "entity": "Q490253",
+   "label": "professional golfer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Seve Ballesteros by Joe Austen.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Seve%20Ballesteros%20by%20Joe%20Austen.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Seve_Ballesteros_by_Joe_Austen.JPG",
+  "width": 608,
+  "height": 897,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Joe Austen; The original uploader was Vitalhike at English Wikipedia..",
+  "credit": "http://www.thegalleryofchampions.com/honorees Transferred from en.wikipedia to Commons.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "roald-amundsen",
+  "seedRound": 0,
+  "qid": "Q926",
+  "displayName": "Roald Amundsen",
+  "identity": "Explorer and writer · Norway · 1872–1928",
+  "title": "Roald Amundsen's birth chart",
+  "metaDescription": "Roald Amundsen's chart, computed from a sourced birth date: Sun at 24.1° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a conjunction to Venus at 0.1° — close enough to weld identity to taste. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct.",
+  "ledeFact": "aspect:Sun:Venus:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.14",
+        "decan:cancer:third"
+      ],
+      "text": "At the noon reference the Sun sits 24.1° into Cancer — the third decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:15.3°",
+        "personal:Venus:Cancer:24.2°",
+        "personal:Mars:Cancer:8.1°"
+      ],
+      "text": "Closer in, Mercury stands at 15.3° Leo; Venus stands at 24.2° Cancer; Mars stands at 8.1° Cancer. The tradition reads thought that arrives already in motion from Mercury, attraction that works by atmosphere from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Venus:conjunction:0.06",
+        "aspect:Venus:Neptune:square:2.09",
+        "aspect:Sun:Neptune:square:2.14"
+      ],
+      "text": "Start where the chart is tightest — the Sun conjunction Venus, 0.1° of separation. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Venus square Neptune at 2.1°, and the Sun square Neptune at 2.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Mars in Cancer at 8.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Capricorn at 17.5° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth2",
+        "modalities:cardinal5-fixed4",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 fire, 3 water, 2 earth by element and 5 cardinal, 4 fixed by modality. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Saturn was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 14.0° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-16/",
+    "label": "Everyone born on July 16"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Venus:conjunction",
+    "sun-degree:24.14",
+    "decan:cancer:third",
+    "personal:Mercury:Leo:15.3°",
+    "personal:Venus:Cancer:24.2°",
+    "personal:Mars:Cancer:8.1°",
+    "aspect:Sun:Venus:conjunction:0.06",
+    "aspect:Venus:Neptune:square:2.09",
+    "aspect:Sun:Neptune:square:2.14",
+    "figure:unaspected:Moon",
+    "dignity:Mars:fall",
+    "dignity:Saturn:domicile",
+    "elements:fire4-water3-earth2",
+    "modalities:cardinal5-fixed4",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 435,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

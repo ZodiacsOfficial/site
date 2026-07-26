@@ -128,15 +128,15 @@ const jsonLd = [
       </div>
       <noscript><style>.people-search-slot{display:none}</style></noscript>
 
-      <p class="people-count people-count--default">20 people. All birth times unknown.</p>
+      <p class="people-count people-count--default">{PEOPLE.length} people. All birth times unknown.</p>
       {SIGNS.map((sign) => (
         <p class:list={['people-count', 'people-count--filter', `people-count--sign-${sign.slug}`]}>
-          {signCounts.get(sign.slug)} of 20 people · {sign.name}
+          {signCounts.get(sign.slug)} of {PEOPLE.length} people · {sign.name}
         </p>
       ))}
       {disciplines.map((discipline) => (
         <p class:list={['people-count', 'people-count--filter', `people-count--discipline-${discipline.slug}`]}>
-          {discipline.count} of 20 people · {discipline.name}
+          {discipline.count} of {PEOPLE.length} people · {discipline.name}
         </p>
       ))}
       <p class="people-count people-count--js" aria-live="polite" data-people-count></p>

@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "john-coltrane",
+ "qid": "Q7346",
+ "displayName": "John Coltrane",
+ "wikidataLabel": "John Coltrane",
+ "wikidataDescription": "American jazz saxophonist (1926–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7346",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518470135
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "John Coltrane",
+   "articleUrl": "https://en.wikipedia.org/wiki/John_Coltrane",
+   "pageId": 53536,
+   "revisionId": 1365969890,
+   "revisionTimestamp": "2026-07-25T13:36:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1926-09-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1926-09-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1926-09-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-07-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1885566",
+  "label": "Hamlet",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1885566",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1885566",
+   "sourceEntityLabel": "Hamlet",
+   "latitude": 34.8881,
+   "longitude": -79.7061,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q12800682",
+   "label": "saxophonist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q64355059",
+   "label": "jazz saxophonist"
+  },
+  {
+   "entity": "Q116938279",
+   "label": "jazz composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:John Coltrane 1963 cropped ver2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:John%20Coltrane%201963%20cropped%20ver2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:John_Coltrane_1963_cropped_ver2.jpg",
+  "width": 1400,
+  "height": 1865,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Gelderen, Hugo van / Anefo",
+  "credit": "[1] Dutch National Archives, The Hague, Fotocollectie Algemeen Nederlands Persbureau (ANeFo), 1945-1989, Nummer toegang 2.24.01.05 Bestanddeelnummer 915-6748",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

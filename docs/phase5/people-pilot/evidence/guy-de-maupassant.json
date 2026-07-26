@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "guy-de-maupassant",
+ "qid": "Q9327",
+ "displayName": "Guy de Maupassant",
+ "wikidataLabel": "Guy de Maupassant",
+ "wikidataDescription": "French writer (1850-1893)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9327",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522040789
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Guy de Maupassant",
+   "articleUrl": "https://en.wikipedia.org/wiki/Guy_de_Maupassant",
+   "pageId": 12274,
+   "revisionId": 1365817617,
+   "revisionTimestamp": "2026-07-24T16:03:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1850-08-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1850-08-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1850-08-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1893-07-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q629137",
+  "label": "Tourville-sur-Arques",
+  "entityUrl": "https://www.wikidata.org/wiki/Q629137",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q629137",
+   "sourceEntityLabel": "Tourville-sur-Arques",
+   "latitude": 49.858333333333,
+   "longitude": 1.1013888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Maupassant par Nadar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Maupassant%20par%20Nadar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Maupassant_par_Nadar.jpg",
+  "width": 2404,
+  "height": 3385,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nadar",
+  "credit": "This file comes from Gallica Digital Library and is available under the digital ID btv1b53155773n/f1",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

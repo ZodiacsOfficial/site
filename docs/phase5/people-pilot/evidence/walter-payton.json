@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "walter-payton",
+ "qid": "Q963117",
+ "displayName": "Walter Payton",
+ "wikidataLabel": "Walter Payton",
+ "wikidataDescription": "American football running back, Pro Football Hall of Famer (1954-1999)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q963117",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2508768897
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Walter Payton",
+   "articleUrl": "https://en.wikipedia.org/wiki/Walter_Payton",
+   "pageId": 5069759,
+   "revisionId": 1363346641,
+   "revisionTimestamp": "2026-07-09T17:04:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1954-07-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1954-07-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1954-07-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1999-11-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2076280",
+  "label": "Columbia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2076280",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2076280",
+   "sourceEntityLabel": "Columbia",
+   "latitude": 31.2567,
+   "longitude": -89.8289,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q19204627",
+   "label": "American football player"
+  }
+ ],
+ "portrait": {
+  "file": "File:1986 Jeno's Pizza - 12 - Walter Payton (Walter Payton crop).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:1986%20Jeno's%20Pizza%20-%2012%20-%20Walter%20Payton%20(Walter%20Payton%20crop).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:1986_Jeno%27s_Pizza_-_12_-_Walter_Payton_(Walter_Payton_crop).jpg",
+  "width": 338,
+  "height": 249,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Jeno's",
+  "credit": "\"1986 Jeno's Pizza - #12 Walter Payton\". Jeno's. 1986.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "kwame-nkrumah",
+  "seedRound": 0,
+  "qid": "Q8620",
+  "displayName": "Kwame Nkrumah",
+  "identity": "Politician and writer · Ghana · 1909–1972",
+  "title": "Kwame Nkrumah's birth chart",
+  "metaDescription": "Kwame Nkrumah's chart, computed from a sourced birth date: Sun at 27.9° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "1.0° separates the Sun and Pluto from an exact square; at that range identity and depth read as one mechanism. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen.",
+  "ledeFact": "aspect:Sun:Pluto:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.86",
+        "decan:virgo:third"
+      ],
+      "text": "At noon on that date the Sun stood at 27.9° Virgo, inside the third decan (20°–30°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Libra:23.9°",
+        "personal:Venus:Scorpio:5.4°",
+        "personal:Mars:Aries:1.6°"
+      ],
+      "text": "The personal planets sit Mercury at 23.9° Libra, Venus at 5.4° Scorpio, Mars at 1.6° Aries. Mercury in a air sign reads as thought that travels by comparison; Venus in a water sign reads as attraction that works by atmosphere; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:square:0.97",
+        "aspect:Jupiter:Pluto:square:1.28",
+        "aspect:Uranus:Neptune:opposition:1.94"
+      ],
+      "text": "The Sun and Pluto hold the closest angle here — a square, 1.0° wide. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Jupiter square Pluto at 1.3°, and Uranus opposition Neptune at 1.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Sun-Mars:apex-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Mars while both square Pluto. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, four placements stand out. Venus in Scorpio at 5.4° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 1.6° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 25.6° is in detriment; Saturn in Aries at 21.4° is in fall — the tradition’s uphill placement, strength earned rather than given. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-fire3-air2-water2",
+        "modalities:cardinal5-mutable4-fixed1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 3 in earth, 3 in fire, 2 in air, 2 in water by element, 5 cardinal, 4 mutable, 1 fixed by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Mars, Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:12.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-21/",
+    "label": "Everyone born on September 21"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:square",
+    "sun-degree:27.86",
+    "decan:virgo:third",
+    "personal:Mercury:Libra:23.9°",
+    "personal:Venus:Scorpio:5.4°",
+    "personal:Mars:Aries:1.6°",
+    "aspect:Sun:Pluto:square:0.97",
+    "aspect:Jupiter:Pluto:square:1.28",
+    "aspect:Uranus:Neptune:opposition:1.94",
+    "figure:t-square:Sun-Mars:apex-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:fall",
+    "elements:earth3-fire3-air2-water2",
+    "modalities:cardinal5-mutable4-fixed1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:sagittarius",
+    "moon-band:12.4"
+  ],
+  "measurements": {
+    "originalWords": 483,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

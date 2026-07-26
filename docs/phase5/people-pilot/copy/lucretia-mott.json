@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "lucretia-mott",
+  "seedRound": 0,
+  "qid": "Q267107",
+  "displayName": "Lucretia Mott",
+  "identity": "Women's rights activist and writer · United States · 1793–1880",
+  "title": "Lucretia Mott's birth chart",
+  "metaDescription": "Lucretia Mott's chart, computed from a sourced birth date: Sun at 13.9° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Six of the ten placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. The fixed signs hold what the cardinal signs start; a chart weighted there finishes its sentences.",
+  "ledeFact": "modality:fixed:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.90",
+        "decan:capricorn:second"
+      ],
+      "text": "13.9° of Capricorn is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:8.8°",
+        "personal:Venus:Aquarius:20.5°",
+        "personal:Mars:Aquarius:14.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 8.8° Capricorn, Venus was at 20.5° Aquarius, Mars was at 14.2° Aquarius. Read together: thought with its feet on the ground; attraction that begins as conversation; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:opposition:1.12",
+        "aspect:Jupiter:Uranus:square:1.44",
+        "aspect:Venus:Pluto:conjunction:1.54"
+      ],
+      "text": "The day's firmest angle joins Uranus and Pluto — a opposition holding at 1.1°. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Jupiter square Uranus at 1.4°, and Venus conjunction Pluto at 1.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Venus-Uranus:apex-Jupiter",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Venus opposes Uranus while both square Jupiter. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, one placement stands out. Saturn in Aries at 25.4° is in fall — the tradition’s uphill placement, strength earned rather than given. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air3-water2-fire2",
+        "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: earth 3, air 3, water 2, fire 2 across the elements, and fixed 6, cardinal 3, mutable 1 across the modalities. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Mercury and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:12.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 23.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-3/",
+    "label": "Everyone born on January 3"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:6",
+    "sun-degree:13.90",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:8.8°",
+    "personal:Venus:Aquarius:20.5°",
+    "personal:Mars:Aquarius:14.2°",
+    "aspect:Uranus:Pluto:opposition:1.12",
+    "aspect:Jupiter:Uranus:square:1.44",
+    "aspect:Venus:Pluto:conjunction:1.54",
+    "figure:t-square:Venus-Uranus:apex-Jupiter",
+    "figure:unaspected:Moon",
+    "dignity:Saturn:fall",
+    "elements:earth3-air3-water2-fire2",
+    "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:virgo",
+    "moon-band:12.1"
+  ],
+  "measurements": {
+    "originalWords": 415,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

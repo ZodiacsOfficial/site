@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "judy-garland",
+ "qid": "Q11637",
+ "displayName": "Judy Garland",
+ "wikidataLabel": "Judy Garland",
+ "wikidataDescription": "American actress, singer, dancer and vaudevillian (1922–1969)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q11637",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518652619
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Judy Garland",
+   "articleUrl": "https://en.wikipedia.org/wiki/Judy_Garland",
+   "pageId": 58719,
+   "revisionId": 1365895551,
+   "revisionTimestamp": "2026-07-25T01:46:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-06-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-06-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-06-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1969-06-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q958781",
+  "label": "Grand Rapids",
+  "entityUrl": "https://www.wikidata.org/wiki/Q958781",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q958781",
+   "sourceEntityLabel": "Grand Rapids",
+   "latitude": 47.237222222222,
+   "longitude": -93.530277777778,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2405480",
+   "label": "voice actor"
+  },
+  {
+   "entity": "Q2722764",
+   "label": "radio personality"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Judy Garland The Harvey Girls MGM Publicity still.jpeg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Judy%20Garland%20The%20Harvey%20Girls%20MGM%20Publicity%20still.jpeg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Judy_Garland_The_Harvey_Girls_MGM_Publicity_still.jpeg",
+  "width": 1000,
+  "height": 1248,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Eric Carpenter (1909-1976) for Metro-Goldwyn-Mayer.",
+  "credit": "Dr. Macro",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

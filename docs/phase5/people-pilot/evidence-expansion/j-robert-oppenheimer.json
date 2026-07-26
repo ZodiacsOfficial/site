@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "j-robert-oppenheimer",
+ "qid": "Q132537",
+ "displayName": "J. Robert Oppenheimer",
+ "wikidataLabel": "Robert Oppenheimer",
+ "wikidataDescription": "American theoretical physicist (1904–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q132537",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520814866
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "J. Robert Oppenheimer",
+   "articleUrl": "https://en.wikipedia.org/wiki/J._Robert_Oppenheimer",
+   "pageId": 39034,
+   "revisionId": 1365508968,
+   "revisionTimestamp": "2026-07-22T22:24:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-04-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-04-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-04-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-02-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11299",
+  "label": "Manhattan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11299",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q11299",
+   "sourceEntityLabel": "Manhattan",
+   "latitude": 40.728333333333,
+   "longitude": -73.994166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q121867593",
+   "label": "science administrator"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Oppenheimer (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Oppenheimer%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Oppenheimer_(cropped).jpg",
+  "width": 1698,
+  "height": 2471,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://catalog.archives.gov/id/558579",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

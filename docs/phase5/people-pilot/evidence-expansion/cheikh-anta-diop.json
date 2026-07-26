@@ -1,0 +1,151 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "cheikh-anta-diop",
+ "qid": "Q521729",
+ "displayName": "Cheikh Anta Diop",
+ "wikidataLabel": "Cheikh Anta Diop",
+ "wikidataDescription": "Senegalese politician, essayist (1923–1986)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q521729",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522305742
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Cheikh Anta Diop",
+   "articleUrl": "https://en.wikipedia.org/wiki/Cheikh_Anta_Diop",
+   "pageId": 1981069,
+   "revisionId": 1365589795,
+   "revisionTimestamp": "2026-07-23T09:09:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1923-12-29T00:00:00Z|proleptic-gregorian",
+   "+1933-12-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-12-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1933-12-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1923-12-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1986-02-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3524610",
+  "label": "Thieytou",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3524610",
+  "country": {
+   "entity": "Q1041",
+   "label": "Senegal"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q3524610",
+   "sourceEntityLabel": "Thieytou",
+   "latitude": 14.93333333,
+   "longitude": -16.41666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1350189",
+   "label": "Egyptologist"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18931911",
+   "label": "theorist"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cheikh Anta Diop, late 1940s.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cheikh%20Anta%20Diop%2C%20late%201940s.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cheikh_Anta_Diop,_late_1940s.jpg",
+  "width": 241,
+  "height": 383,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.cheikhantadiop.net/panorama%20vie%20pensee%20et%20oeuvre%20de%20Cheikh%20Anta%20Diop.pdf",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

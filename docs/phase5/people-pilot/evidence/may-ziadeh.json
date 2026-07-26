@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "may-ziadeh",
+ "qid": "Q2919042",
+ "displayName": "May Ziadeh",
+ "wikidataLabel": "May Ziadeh",
+ "wikidataDescription": "Lebanese-Palestinian writer (1886-1941)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2919042",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512674623
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "May Ziadeh",
+   "articleUrl": "https://en.wikipedia.org/wiki/May_Ziadeh",
+   "pageId": 5869747,
+   "revisionId": 1365439709,
+   "revisionTimestamp": "2026-07-22T12:22:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1886-02-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1886-02-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1886-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1886-02-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-10-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q430776",
+  "label": "Nazareth",
+  "entityUrl": "https://www.wikidata.org/wiki/Q430776",
+  "country": {
+   "entity": "Q801",
+   "label": "Israel"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q430776",
+   "sourceEntityLabel": "Nazareth",
+   "latitude": 32.702102777778,
+   "longitude": 35.29785,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3068305",
+   "label": "salonnière"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  }
+ ],
+ "portrait": {
+  "file": "File:May Ziadeh.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:May%20Ziadeh.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:May_Ziadeh.jpg",
+  "width": 450,
+  "height": 651,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Undetermined",
+  "credit": "Moved From ar.wiki, Original Source: here",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

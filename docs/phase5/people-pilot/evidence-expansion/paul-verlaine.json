@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "paul-verlaine",
+ "qid": "Q755",
+ "displayName": "Paul Verlaine",
+ "wikidataLabel": "Paul Verlaine",
+ "wikidataDescription": "French poet (1844-1896)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q755",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517820987
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Paul Verlaine",
+   "articleUrl": "https://en.wikipedia.org/wiki/Paul_Verlaine",
+   "pageId": 155265,
+   "revisionId": 1353910979,
+   "revisionTimestamp": "2026-05-13T03:32:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1844-03-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1844-03-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1844-03-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1896-01-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q22690",
+  "label": "Metz",
+  "entityUrl": "https://www.wikidata.org/wiki/Q22690",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q22690",
+   "sourceEntityLabel": "Metz",
+   "latitude": 49.119722222222,
+   "longitude": 6.1769444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Paul Verlaine.jpeg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Paul%20Verlaine.jpeg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Paul_Verlaine.jpeg",
+  "width": 1381,
+  "height": 1843,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Otto Wegener",
+  "credit": "NYPL Digital Library",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

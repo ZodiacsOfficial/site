@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edwin-hubble",
+ "qid": "Q43027",
+ "displayName": "Edwin Hubble",
+ "wikidataLabel": "Edwin Hubble",
+ "wikidataDescription": "American astronomer (1889–1953)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q43027",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517476501
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edwin Hubble",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edwin_Hubble",
+   "pageId": 10489,
+   "revisionId": 1365424065,
+   "revisionTimestamp": "2026-07-22T09:18:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1889-11-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1889-11-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1889-11-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1953-09-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q963309",
+  "label": "Marshfield",
+  "entityUrl": "https://www.wikidata.org/wiki/Q963309",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q963309",
+   "sourceEntityLabel": "Marshfield",
+   "latitude": 37.33944,
+   "longitude": -92.90722,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  },
+  {
+   "entity": "Q2998308",
+   "label": "cosmologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Studio portrait photograph of Edwin Powell Hubble (cropped).JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Studio%20portrait%20photograph%20of%20Edwin%20Powell%20Hubble%20(cropped).JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Studio_portrait_photograph_of_Edwin_Powell_Hubble_(cropped).JPG",
+  "width": 846,
+  "height": 1068,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Johan Hagemeyer",
+  "credit": "http://hdl.huntington.org/cdm/ref/collection/p15150coll2/id/129",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

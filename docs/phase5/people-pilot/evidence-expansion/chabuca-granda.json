@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "chabuca-granda",
+ "qid": "Q2605806",
+ "displayName": "Chabuca Granda",
+ "wikidataLabel": "Chabuca Granda",
+ "wikidataDescription": "Peruvian recording artist; composer and singer (1920–1983)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2605806",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518865309
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Chabuca Granda",
+   "articleUrl": "https://en.wikipedia.org/wiki/Chabuca_Granda",
+   "pageId": 5134116,
+   "revisionId": 1361849103,
+   "revisionTimestamp": "2026-06-30T12:58:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-09-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-09-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-09-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-03-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q98842781",
+  "label": "Cotabambas Auraria",
+  "entityUrl": "https://www.wikidata.org/wiki/Q98842781",
+  "country": {
+   "entity": "Q419",
+   "label": "Peru"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3321937",
+   "sourceEntityLabel": "Progreso District",
+   "latitude": -14.072,
+   "longitude": -72.483,
+   "precision": 0.00002777777777778,
+   "escalationSteps": 1
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  }
+ ],
+ "portrait": {
+  "file": "File:ChabucaCantando.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:ChabucaCantando.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:ChabucaCantando.jpg",
+  "width": 777,
+  "height": 715,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Archivo El Comercio",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

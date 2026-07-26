@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "santiago-ramon-y-cajal",
+ "qid": "Q150526",
+ "displayName": "Santiago Ramón y Cajal",
+ "wikidataLabel": "Santiago Ramón y Cajal",
+ "wikidataDescription": "Spanish scientist (1852-1934)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q150526",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522855751
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Santiago Ramón y Cajal",
+   "articleUrl": "https://en.wikipedia.org/wiki/Santiago_Ram%C3%B3n_y_Cajal",
+   "pageId": 256599,
+   "revisionId": 1362308544,
+   "revisionTimestamp": "2026-07-03T02:51:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1852-05-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1852-05-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1852-05-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1934-10-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q984872",
+  "label": "Petilla de Aragón",
+  "entityUrl": "https://www.wikidata.org/wiki/Q984872",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q984872",
+   "sourceEntityLabel": "Petilla de Aragón",
+   "latitude": 42.44359023888889,
+   "longitude": -1.119496338888889,
+   "precision": 1e-8,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q783906",
+   "label": "neurologist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q3368718",
+   "label": "pathologist"
+  },
+  {
+   "entity": "Q10872101",
+   "label": "anatomist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q1650915",
+   "label": "researcher"
+  },
+  {
+   "entity": "Q2552072",
+   "label": "histologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cajal-mi.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cajal-mi.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cajal-mi.jpg",
+  "width": 234,
+  "height": 330,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

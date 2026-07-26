@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "freya-stark",
+ "qid": "Q292480",
+ "displayName": "Freya Stark",
+ "wikidataLabel": "Freya Madeline Stark",
+ "wikidataDescription": "British travel writer (1893-1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q292480",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517661966
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Freya Stark",
+   "articleUrl": "https://en.wikipedia.org/wiki/Freya_Stark",
+   "pageId": 483964,
+   "revisionId": 1352150639,
+   "revisionTimestamp": "2026-05-02T11:08:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1893-01-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1893-01-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1893-01-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-05-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q90",
+  "label": "Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q90",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q90",
+   "sourceEntityLabel": "Paris",
+   "latitude": 48.85666666666667,
+   "longitude": 2.352222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q9149093",
+   "label": "mountaineer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dame Freya Madeline Stark (1923).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dame%20Freya%20Madeline%20Stark%20(1923).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dame_Freya_Madeline_Stark_(1923).jpg",
+  "width": 1375,
+  "height": 1536,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Herbert Arnould Olivier",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

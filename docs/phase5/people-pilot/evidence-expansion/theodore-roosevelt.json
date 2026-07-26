@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "theodore-roosevelt",
+ "qid": "Q33866",
+ "displayName": "Theodore Roosevelt",
+ "wikidataLabel": "Theodore Roosevelt",
+ "wikidataDescription": "26th President of the United States from 1901 to 1909 (1858–1919)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q33866",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522581615
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Theodore Roosevelt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Theodore_Roosevelt",
+   "pageId": 30535,
+   "revisionId": 1364890215,
+   "revisionTimestamp": "2026-07-19T02:51:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1858-10-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-10-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-10-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1919-01-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11299",
+  "label": "Manhattan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11299",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 3,
+  "coordinates": {
+   "sourceEntity": "Q11299",
+   "sourceEntityLabel": "Manhattan",
+   "latitude": 40.728333333333,
+   "longitude": -73.994166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1524582",
+   "label": "rancher"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q372436",
+   "label": "statesperson"
+  },
+  {
+   "entity": "Q16060693",
+   "label": "conservationist"
+  },
+  {
+   "entity": "Q1225716",
+   "label": "ornithologist"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Theodore Roosevelt by the Pach Bros.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Theodore%20Roosevelt%20by%20the%20Pach%20Bros.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Theodore_Roosevelt_by_the_Pach_Bros.jpg",
+  "width": 3067,
+  "height": 3659,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Adam Cuerden",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ppmsca.35645.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

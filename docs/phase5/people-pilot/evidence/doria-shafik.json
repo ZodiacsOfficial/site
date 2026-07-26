@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "doria-shafik",
+ "qid": "Q4120224",
+ "displayName": "Doria Shafik",
+ "wikidataLabel": "Doria Shafik",
+ "wikidataDescription": "Egyptian activist (1908–1975)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "mena",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4120224",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2476437964
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Doria Shafik",
+   "articleUrl": "https://en.wikipedia.org/wiki/Doria_Shafik",
+   "pageId": 18834442,
+   "revisionId": 1362787260,
+   "revisionTimestamp": "2026-07-06T05:03:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-12-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-12-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-12-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1975-09-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q271771",
+  "label": "Tanta",
+  "entityUrl": "https://www.wikidata.org/wiki/Q271771",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q271771",
+   "sourceEntityLabel": "Tanta",
+   "latitude": 30.783333333333,
+   "longitude": 31,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q1607826",
+   "label": "editor"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Doria Shafik.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Doria%20Shafik.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Doria_Shafik.jpg",
+  "width": 180,
+  "height": 245,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Al-Ahram Weekly",
+  "credit": "Al-Ahram Weekly",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

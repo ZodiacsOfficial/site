@@ -1,0 +1,124 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "camille-saint-saens",
+  "seedRound": 1,
+  "qid": "Q150445",
+  "displayName": "Camille Saint-Saëns",
+  "identity": "Composer · France · 1835–1921",
+  "title": "Camille Saint-Saëns's birth chart",
+  "metaDescription": "Camille Saint-Saëns's chart, computed from a sourced birth date: Sun at 15.5° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 16.4° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.47",
+        "decan:libra:second"
+      ],
+      "text": "15.5° of Libra is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:9.2°",
+        "personal:Venus:Libra:16.6°",
+        "personal:Mars:Scorpio:5.9°"
+      ],
+      "text": "The personal planets sit Mercury at 9.2° Scorpio, Venus at 16.6° Libra, Mars at 5.9° Scorpio. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a air sign reads as attraction that begins as conversation; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:square:0.55",
+        "aspect:Jupiter:Pluto:square:1.11",
+        "aspect:Sun:Venus:conjunction:1.16"
+      ],
+      "text": "The Sun and Jupiter hold the closest angle here — a square, 0.6° wide. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Jupiter square Pluto at 1.1°, and the Sun conjunction Venus at 1.2° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Sun-Pluto:apex-Jupiter",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Pluto while both square Jupiter. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks six placements here. The Sun in Libra at 15.5° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Taurus at 16.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 16.6° is in domicile — the planet in its own sign, running on home rules; Mars in Scorpio at 5.9° is in domicile; Jupiter in Cancer at 14.9° is in exaltation; Saturn in Libra at 24.8° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-water3-earth1-fire1",
+        "modalities:cardinal5-fixed5",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 5 air, 3 water, 1 earth, 1 fire by element and 5 cardinal, 5 fixed by modality. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 16.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-9/",
+    "label": "Everyone born on October 9"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:15.47",
+    "decan:libra:second",
+    "personal:Mercury:Scorpio:9.2°",
+    "personal:Venus:Libra:16.6°",
+    "personal:Mars:Scorpio:5.9°",
+    "aspect:Sun:Jupiter:square:0.55",
+    "aspect:Jupiter:Pluto:square:1.11",
+    "aspect:Sun:Venus:conjunction:1.16",
+    "figure:t-square:Sun-Pluto:apex-Jupiter",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Moon:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:exaltation",
+    "elements:air5-water3-earth1-fire1",
+    "modalities:cardinal5-fixed5",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:taurus",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 490,
+    "substantiveStatements": 22,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bernardo-o-higgins",
+ "qid": "Q28930",
+ "displayName": "Bernardo O'Higgins",
+ "wikidataLabel": "Bernardo O'Higgins",
+ "wikidataDescription": "Chilean independence leader (1778–1842)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q28930",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521000216
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bernardo O'Higgins",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bernardo_O'Higgins",
+   "pageId": 303199,
+   "revisionId": 1362990740,
+   "revisionTimestamp": "2026-07-07T12:14:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1778-08-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1778-08-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1778-08-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1842-10-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3774",
+  "label": "Chillán",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3774",
+  "country": {
+   "entity": "Q298",
+   "label": "Chile"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3774",
+   "sourceEntityLabel": "Chillán",
+   "latitude": -36.6067,
+   "longitude": -72.1033,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ohiggins.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ohiggins.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ohiggins.jpg",
+  "width": 852,
+  "height": 1087,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "José Gil de Castro",
+  "credit": "Instituto Geográfico Militar de Chile",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

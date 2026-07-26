@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gerty-cori",
+ "qid": "Q204733",
+ "displayName": "Gerty Cori",
+ "wikidataLabel": "Gerty Cori",
+ "wikidataDescription": "Austro-Hungarian-American biochemist (1896–1957)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q204733",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517475593
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gerty Cori",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gerty_Cori",
+   "pageId": 252442,
+   "revisionId": 1363958840,
+   "revisionTimestamp": "2026-07-13T15:33:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1896-08-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1896-08-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1896-08-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1957-10-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1085",
+  "label": "Prague",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1085",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1085",
+   "sourceEntityLabel": "Prague",
+   "latitude": 50.0875,
+   "longitude": 14.421388888888888,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2919046",
+   "label": "biochemist"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q2055046",
+   "label": "physiologist"
+  },
+  {
+   "entity": "Q1650915",
+   "label": "researcher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gerty Theresa Cori.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gerty%20Theresa%20Cori.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gerty_Theresa_Cori.jpg",
+  "width": 992,
+  "height": 1488,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "National Library of Medicine, Images from the History of Medicine, B05353",
+  "credit": "http://en.wikipedia.org, https://www.nlm.nih.gov/changingthefaceofmedicine/gallery/photo_69_3.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "cantinflas",
+ "qid": "Q195371",
+ "displayName": "Cantinflas",
+ "wikidataLabel": "Cantinflas",
+ "wikidataDescription": "Mexican comic film actor, producer, and screenwriter (1911–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q195371",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520019766
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Cantinflas",
+   "articleUrl": "https://en.wikipedia.org/wiki/Cantinflas",
+   "pageId": 151514,
+   "revisionId": 1365778462,
+   "revisionTimestamp": "2026-07-24T10:41:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-08-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-08-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-08-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-04-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1489",
+  "label": "Mexico City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1489",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1489",
+   "sourceEntityLabel": "Mexico City",
+   "latitude": 19.353773,
+   "longitude": -99.13589,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q245068",
+   "label": "comedian"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2405480",
+   "label": "voice actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cantinflas en 1967 (cropped).webp",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cantinflas%20en%201967%20(cropped).webp",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cantinflas_en_1967_(cropped).webp",
+  "width": 545,
+  "height": 722,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Press photo",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

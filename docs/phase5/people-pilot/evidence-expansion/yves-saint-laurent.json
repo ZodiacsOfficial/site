@@ -1,0 +1,52 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yves-saint-laurent",
+ "qid": "Q343334",
+ "displayName": "Yves Saint Laurent",
+ "wikidataLabel": "Yves Saint Laurent",
+ "wikidataDescription": "Wikimedia disambiguation page",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q343334",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518057016
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yves Saint Laurent",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yves_Saint_Laurent",
+   "pageId": 474348,
+   "revisionId": 1214386205,
+   "revisionTimestamp": "2024-03-18T17:07:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 0,
+  "distinctDayPrecisionValues": [],
+  "allValues": [],
+  "time": null,
+  "precision": null,
+  "calendarModel": null,
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": null,
+ "living": true,
+ "birthPlace": null,
+ "occupations": [],
+ "portrait": null
+}

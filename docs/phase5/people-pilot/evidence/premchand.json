@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "premchand",
+ "qid": "Q174152",
+ "displayName": "Premchand",
+ "wikidataLabel": "Premchand",
+ "wikidataDescription": "Indian writer of Hindi and Urdu fiction (1880–1936); pioneer of social realism in Hindustani literature",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q174152",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2514414294
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Premchand",
+   "articleUrl": "https://en.wikipedia.org/wiki/Premchand",
+   "pageId": 591670,
+   "revisionId": 1365331107,
+   "revisionTimestamp": "2026-07-21T19:03:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1880-07-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1880-07-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1880-07-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1936-10-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q79980",
+  "label": "Varanasi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q79980",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q79980",
+   "sourceEntityLabel": "Varanasi",
+   "latitude": 25.318888888889,
+   "longitude": 83.012777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1607826",
+   "label": "editor"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Prem chand.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Prem%20chand.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Prem_chand.jpg",
+  "width": 194,
+  "height": 259,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Ankur8563",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

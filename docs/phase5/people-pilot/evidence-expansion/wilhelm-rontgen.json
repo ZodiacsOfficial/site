@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "wilhelm-rontgen",
+ "qid": "Q35149",
+ "displayName": "Wilhelm Röntgen",
+ "wikidataLabel": "Wilhelm Röntgen",
+ "wikidataDescription": "German physicist (1845–1923)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q35149",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520061764
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Wilhelm Röntgen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Wilhelm_R%C3%B6ntgen",
+   "pageId": 61325,
+   "revisionId": 1358692749,
+   "revisionTimestamp": "2026-06-10T09:32:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1845-03-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1845-03-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1845-03-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1923-02-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q486577",
+  "label": "Lennep",
+  "entityUrl": "https://www.wikidata.org/wiki/Q486577",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q486577",
+   "sourceEntityLabel": "Lennep",
+   "latitude": 51.192591666667,
+   "longitude": 7.2570916666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Wilhelm Conrad Röntgen (1888-1900), 88374 p.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Wilhelm%20Conrad%20R%C3%B6ntgen%20(1888-1900)%2C%2088374%20p.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Wilhelm_Conrad_R%C3%B6ntgen_(1888-1900),_88374_p.jpg",
+  "width": 4222,
+  "height": 5435,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Erwin Hanfstaengl",
+  "credit": "https://global.museum-digital.org/singleimage?imagenr=2399678",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

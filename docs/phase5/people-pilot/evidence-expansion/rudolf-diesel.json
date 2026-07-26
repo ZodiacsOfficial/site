@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rudolf-diesel",
+ "qid": "Q12674",
+ "displayName": "Rudolf Diesel",
+ "wikidataLabel": "Rudolf Diesel",
+ "wikidataDescription": "German inventor and mechanical engineer (1858–1913)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q12674",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520333674
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rudolf Diesel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rudolf_Diesel",
+   "pageId": 26035,
+   "revisionId": 1362496792,
+   "revisionTimestamp": "2026-07-04T09:47:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1858-03-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-03-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-03-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1913-09-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q90",
+  "label": "Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q90",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q90",
+   "sourceEntityLabel": "Paris",
+   "latitude": 48.85666666666667,
+   "longitude": 2.352222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q860918",
+   "label": "Esperantist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rudolf Diesel2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rudolf%20Diesel2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rudolf_Diesel2.jpg",
+  "width": 538,
+  "height": 717,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.volvotrucks.com/trucks/macedonia-market/mk-mk/newsmedia/pressreleases/pages/press_article.aspx?pubid=6920",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

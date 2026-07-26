@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mickey-mantle",
+ "qid": "Q345004",
+ "displayName": "Mickey Mantle",
+ "wikidataLabel": "Mickey Mantle",
+ "wikidataDescription": "American baseball player (1931–1995)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q345004",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2508470550
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mickey Mantle",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mickey_Mantle",
+   "pageId": 63665,
+   "revisionId": 1362904587,
+   "revisionTimestamp": "2026-07-06T22:53:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-10-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-10-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-10-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-08-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2018560",
+  "label": "Spavinaw",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2018560",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2018560",
+   "sourceEntityLabel": "Spavinaw",
+   "latitude": 36.3925,
+   "longitude": -95.048611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:1954 Bowman Mickey Mantle.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:1954%20Bowman%20Mickey%20Mantle.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:1954_Bowman_Mickey_Mantle.jpg",
+  "width": 1396,
+  "height": 2082,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bowman",
+  "credit": "Heritage Auctions",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

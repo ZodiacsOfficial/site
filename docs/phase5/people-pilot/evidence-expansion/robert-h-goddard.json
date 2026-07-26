@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "robert-h-goddard",
+ "qid": "Q182546",
+ "displayName": "Robert H. Goddard",
+ "wikidataLabel": "Robert H. Goddard",
+ "wikidataDescription": "American physicist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q182546",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515847721
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Robert H. Goddard",
+   "articleUrl": "https://en.wikipedia.org/wiki/Robert_H._Goddard",
+   "pageId": 210597,
+   "revisionId": 1364279371,
+   "revisionTimestamp": "2026-07-15T16:48:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1882-10-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-10-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-10-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1945-08-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49179",
+  "label": "Worcester",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49179",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49179",
+   "sourceEntityLabel": "Worcester",
+   "latitude": 42.271388888889,
+   "longitude": -71.798888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10497074",
+   "label": "military flight engineer"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dr. Robert H. Goddard - GPN-2002-000131.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dr.%20Robert%20H.%20Goddard%20-%20GPN-2002-000131.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dr._Robert_H._Goddard_-_GPN-2002-000131.jpg",
+  "width": 2154,
+  "height": 2824,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "NASA",
+  "credit": "Great Images in NASA Description",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

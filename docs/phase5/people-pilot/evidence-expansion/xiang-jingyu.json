@@ -1,0 +1,110 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "xiang-jingyu",
+ "qid": "Q463096",
+ "displayName": "Xiang Jingyu",
+ "wikidataLabel": "Xiang Jingyu",
+ "wikidataDescription": "Chinese politician (1895-1928)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "easia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q463096",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517845079
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Xiang Jingyu",
+   "articleUrl": "https://en.wikipedia.org/wiki/Xiang_Jingyu",
+   "pageId": 32147288,
+   "revisionId": 1363792527,
+   "revisionTimestamp": "2026-07-12T13:25:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1895-09-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1895-09-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1895-09-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1928-05-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1338905",
+  "label": "Xupu County",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1338905",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1338905",
+   "sourceEntityLabel": "Xupu County",
+   "latitude": 27.90669,
+   "longitude": 110.5893,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:向警予.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:%E5%90%91%E8%AD%A6%E4%BA%88.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:%E5%90%91%E8%AD%A6%E4%BA%88.jpg",
+  "width": 358,
+  "height": 450,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The original uploader was Juansheng at Chinese Wikipedia.",
+  "credit": "Transferred from zh.wikipedia to Commons.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

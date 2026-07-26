@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lin-huiyin",
+ "qid": "Q467140",
+ "displayName": "Lin Huiyin",
+ "wikidataLabel": "Lin Huiyin",
+ "wikidataDescription": "Chinese architect and writer (1904-1955)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "easia",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q467140",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516259675
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lin Huiyin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lin_Huiyin",
+   "pageId": 4371614,
+   "revisionId": 1363267487,
+   "revisionTimestamp": "2026-07-09T02:45:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-06-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-06-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-06-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1955-04-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q4970",
+  "label": "Hangzhou",
+  "entityUrl": "https://www.wikidata.org/wiki/Q4970",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q4970",
+   "sourceEntityLabel": "Hangzhou",
+   "latitude": 30.25,
+   "longitude": 120.1675,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  }
+ ],
+ "portrait": {
+  "file": "File:Lin Huiyin 10.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Lin%20Huiyin%2010.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Lin_Huiyin_10.jpg",
+  "width": 656,
+  "height": 900,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://news.qq.com/a/20060829/001540_5.htm",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

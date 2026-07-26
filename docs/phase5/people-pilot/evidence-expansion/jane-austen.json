@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jane-austen",
+ "qid": "Q36322",
+ "displayName": "Jane Austen",
+ "wikidataLabel": "Jane Austen",
+ "wikidataDescription": "English novelist (1775–1817)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q36322",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522859992
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jane Austen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jane_Austen",
+   "pageId": 15782,
+   "revisionId": 1365630000,
+   "revisionTimestamp": "2026-07-23T14:46:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1775-12-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1775-12-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1775-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1775-12-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1817-07-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1231836",
+  "label": "Steventon",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1231836",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1231836",
+   "sourceEntityLabel": "Steventon",
+   "latitude": 51.230278,
+   "longitude": -1.218889,
+   "precision": 1e-05,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q140197632",
+   "label": "satirical novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:CassandraAusten-JaneAusten(c.1810) hires.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:CassandraAusten-JaneAusten(c.1810)%20hires.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:CassandraAusten-JaneAusten(c.1810)_hires.jpg",
+  "width": 2400,
+  "height": 3096,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Cassandra Austen",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

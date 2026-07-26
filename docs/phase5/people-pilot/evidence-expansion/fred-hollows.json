@@ -1,0 +1,91 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fred-hollows",
+ "qid": "Q3086860",
+ "displayName": "Fred Hollows",
+ "wikidataLabel": "Fred Hollows",
+ "wikidataDescription": "New Zealand–Australian ophthalmologist (1929-1993)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "oceania",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3086860",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2478656802
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fred Hollows",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fred_Hollows",
+   "pageId": 451436,
+   "revisionId": 1365727714,
+   "revisionTimestamp": "2026-07-24T02:35:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-04-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-04-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-04-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-02-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q133073",
+  "label": "Dunedin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q133073",
+  "country": {
+   "entity": "Q664",
+   "label": "New Zealand"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q133073",
+   "sourceEntityLabel": "Dunedin",
+   "latitude": -45.87416666666667,
+   "longitude": 170.5036111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q12013238",
+   "label": "ophthalmologist"
+  },
+  {
+   "entity": "Q774306",
+   "label": "surgeon"
+  }
+ ],
+ "portrait": null
+}

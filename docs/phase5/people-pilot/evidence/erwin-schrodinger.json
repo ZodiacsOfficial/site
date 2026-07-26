@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "erwin-schrodinger",
+ "qid": "Q9130",
+ "displayName": "Erwin Schrödinger",
+ "wikidataLabel": "Erwin Schrödinger",
+ "wikidataDescription": "Austrian physicist (1887–1961)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9130",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522340078
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Erwin Schrödinger",
+   "articleUrl": "https://en.wikipedia.org/wiki/Erwin_Schr%C3%B6dinger",
+   "pageId": 9942,
+   "revisionId": 1363974777,
+   "revisionTimestamp": "2026-07-13T17:44:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1887-08-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1887-08-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1887-08-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1961-01-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Erwin Schrödinger - Narodowe Archiwum Cyfrowe (1-E-939).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Erwin%20Schr%C3%B6dinger%20-%20Narodowe%20Archiwum%20Cyfrowe%20(1-E-939).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Erwin_Schr%C3%B6dinger_-_Narodowe_Archiwum_Cyfrowe_(1-E-939).jpg",
+  "width": 2534,
+  "height": 3500,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Narodowe Archiwum Cyfrowe - Sygnatura 1-E-939 (Original picture)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

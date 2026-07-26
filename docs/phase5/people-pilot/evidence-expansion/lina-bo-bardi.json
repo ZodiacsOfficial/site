@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lina-bo-bardi",
+ "qid": "Q272400",
+ "displayName": "Lina Bo Bardi",
+ "wikidataLabel": "Lina Bo Bardi",
+ "wikidataDescription": "Italo-Brazilian architect (1914-1992)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q272400",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521472944
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lina Bo Bardi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lina_Bo_Bardi",
+   "pageId": 650199,
+   "revisionId": 1361351524,
+   "revisionTimestamp": "2026-06-27T11:25:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-12-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-12-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1992-03-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q220",
+  "label": "Rome",
+  "entityUrl": "https://www.wikidata.org/wiki/Q220",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q220",
+   "sourceEntityLabel": "Rome",
+   "latitude": 41.893055555556,
+   "longitude": 12.482777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q780596",
+   "label": "exhibition curator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2707485",
+   "label": "scenographer"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Lina Bo Bardi.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Lina%20Bo%20Bardi.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Lina_Bo_Bardi.jpg",
+  "width": 400,
+  "height": 600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://www1.folha.uol.com.br/ilustrada/2022/03/lina-bo-bardi-morta-ha-30-anos-ainda-tem-seu-impacto-no-brasil-de-hoje.shtml",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

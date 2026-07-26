@@ -1,0 +1,145 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "le-corbusier",
+ "qid": "Q4724",
+ "displayName": "Le Corbusier",
+ "wikidataLabel": "Le Corbusier",
+ "wikidataDescription": "Swiss-French architect, designer, urbanist, and writer (1886–1965)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4724",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522857661
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Le Corbusier",
+   "articleUrl": "https://en.wikipedia.org/wiki/Le_Corbusier",
+   "pageId": 17900,
+   "revisionId": 1366100514,
+   "revisionTimestamp": "2026-07-26T07:19:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1887-10-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1887-10-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1887-10-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1965-08-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q140600977",
+  "label": "La Chaux-de-Fonds",
+  "entityUrl": "https://www.wikidata.org/wiki/Q140600977",
+  "country": {
+   "entity": "Q39",
+   "label": "Switzerland"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q140600977",
+   "sourceEntityLabel": "Q140600977",
+   "latitude": 47.101954,
+   "longitude": 6.826565,
+   "precision": 1e-06,
+   "escalationSteps": 0
+  },
+  "labelNote": "birthplace entity is the birth house (Q140600977, no English label); label taken from its parent municipality Q68124"
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q131062",
+   "label": "urban planner"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q10694573",
+   "label": "textile artist"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q11455387",
+   "label": "furniture designer"
+  },
+  {
+   "entity": "Q56236186",
+   "label": "carpets designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Le Corbusier (1964).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Le%20Corbusier%20(1964).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Le_Corbusier_(1964).jpg",
+  "width": 1400,
+  "height": 1400,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Joop van Bilsen for Anefo",
+  "credit": "http://proxy.handle.net/10648/aa7b03b0-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

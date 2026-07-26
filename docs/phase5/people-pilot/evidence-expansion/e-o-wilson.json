@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "e-o-wilson",
+ "qid": "Q211029",
+ "displayName": "E. O. Wilson",
+ "wikidataLabel": "Edward O. Wilson",
+ "wikidataDescription": "American biologist, naturalist, and writer (1929–2021)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q211029",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515852879
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "E. O. Wilson",
+   "articleUrl": "https://en.wikipedia.org/wiki/E._O._Wilson",
+   "pageId": 10313,
+   "revisionId": 1358766840,
+   "revisionTimestamp": "2026-06-10T20:35:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-06-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-06-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-06-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2021-12-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q79867",
+  "label": "Birmingham",
+  "entityUrl": "https://www.wikidata.org/wiki/Q79867",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q79867",
+   "sourceEntityLabel": "Birmingham",
+   "latitude": 33.5175,
+   "longitude": -86.80944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3055126",
+   "label": "entomologist"
+  },
+  {
+   "entity": "Q19356916",
+   "label": "sociobiologist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q16831721",
+   "label": "ethologist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q16063497",
+   "label": "evolutionary biologist"
+  },
+  {
+   "entity": "Q3745071",
+   "label": "science writer"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q15839134",
+   "label": "ecologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Edward O. Wilson, 2003 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Edward%20O.%20Wilson%2C%202003%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Edward_O._Wilson,_2003_(cropped).jpg",
+  "width": 420,
+  "height": 594,
+  "licenseShortName": "CC BY 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.5",
+  "artist": "Jim Harrison",
+  "credit": "PLoS",
+  "usageTerms": "Creative Commons Attribution 2.5",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

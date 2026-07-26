@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "gabriele-munter",
+  "seedRound": 1,
+  "qid": "Q463978",
+  "displayName": "Gabriele Münter",
+  "identity": "Painter · Germany · 1877–1962",
+  "title": "Gabriele Münter's birth chart",
+  "metaDescription": "Gabriele Münter's chart, computed from a sourced birth date: Sun at 1.0° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 9.9° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:0.97",
+        "decan:pisces:first"
+      ],
+      "text": "The Sun sits at 1.0° Pisces — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Pisces and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:4.3°",
+        "personal:Venus:Aquarius:11.6°",
+        "personal:Mars:Sagittarius:23.4°"
+      ],
+      "text": "Mercury holds 4.3° Aquarius, Venus holds 11.6° Aquarius, Mars holds 23.4° Sagittarius — in the old shorthand, a mind at home in argument and pattern; taste led by wit and proportion; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:square:0.34",
+        "aspect:Mars:Uranus:trine:1.07",
+        "aspect:Mercury:Neptune:square:1.42"
+      ],
+      "text": "The day's firmest angle joins Uranus and Pluto — a square holding at 0.3°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Mars trine Uranus at 1.1°, and Mercury square Neptune at 1.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The classical table has two entries for this chart. The Moon in Taurus at 9.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Sagittarius at 28.5° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-fire3-water2-air2",
+        "modalities:fixed6-mutable4",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 3 earth, 3 fire, 2 water, 2 air; by modality, 6 fixed, 4 mutable. An earth emphasis reads as patience with material reality — slow hands, durable results. Uranus was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:13.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 9.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-19/",
+    "label": "Everyone born on February 19"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:0.97",
+    "decan:pisces:first",
+    "personal:Mercury:Aquarius:4.3°",
+    "personal:Venus:Aquarius:11.6°",
+    "personal:Mars:Sagittarius:23.4°",
+    "aspect:Uranus:Pluto:square:0.34",
+    "aspect:Mars:Uranus:trine:1.07",
+    "aspect:Mercury:Neptune:square:1.42",
+    "figure:none",
+    "dignity:Moon:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:earth3-fire3-water2-air2",
+    "modalities:fixed6-mutable4",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:taurus",
+    "moon-band:13.0"
+  ],
+  "measurements": {
+    "originalWords": 399,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

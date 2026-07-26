@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alfred-north-whitehead",
+ "qid": "Q183372",
+ "displayName": "Alfred North Whitehead",
+ "wikidataLabel": "Alfred North Whitehead",
+ "wikidataDescription": "English mathematician and philosopher (1861–1947)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q183372",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522970411
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alfred North Whitehead",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alfred_North_Whitehead",
+   "pageId": 43395,
+   "revisionId": 1361815510,
+   "revisionTimestamp": "2026-06-30T07:29:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1861-02-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1861-02-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1861-02-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1947-12-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q736439",
+  "label": "Ramsgate",
+  "entityUrl": "https://www.wikidata.org/wiki/Q736439",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q736439",
+   "sourceEntityLabel": "Ramsgate",
+   "latitude": 51.343911111111,
+   "longitude": 1.4040305555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q1234713",
+   "label": "theologian"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q14565331",
+   "label": "logician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:ANWhitehead.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:ANWhitehead.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:ANWhitehead.jpg",
+  "width": 390,
+  "height": 522,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unknown",
+  "credit": "Splendour Of The Heavens by Hutchinsons, 1923, p. 675",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

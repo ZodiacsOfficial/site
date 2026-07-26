@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "g-e-m-anscombe",
+ "qid": "Q229646",
+ "displayName": "G. E. M. Anscombe",
+ "wikidataLabel": "G. E. M. Anscombe",
+ "wikidataDescription": "British analytic philosopher",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q229646",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517528357
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "G. E. M. Anscombe",
+   "articleUrl": "https://en.wikipedia.org/wiki/G._E._M._Anscombe",
+   "pageId": 593083,
+   "revisionId": 1364213404,
+   "revisionTimestamp": "2026-07-15T05:11:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1919-03-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1919-03-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-03-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2001-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q133315",
+  "label": "Limerick",
+  "entityUrl": "https://www.wikidata.org/wiki/Q133315",
+  "country": {
+   "entity": "Q27",
+   "label": "Ireland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q133315",
+   "sourceEntityLabel": "Limerick",
+   "latitude": 52.6653,
+   "longitude": -8.6238,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1234713",
+   "label": "theologian"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q18930236",
+   "label": "philosopher of language"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elisabeth Anscombe.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elisabeth%20Anscombe.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elisabeth_Anscombe.jpg",
+  "width": 1445,
+  "height": 1444,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Albarluque",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

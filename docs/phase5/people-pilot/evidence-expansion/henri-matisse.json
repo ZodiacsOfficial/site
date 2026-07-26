@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "henri-matisse",
+ "qid": "Q5589",
+ "displayName": "Henri Matisse",
+ "wikidataLabel": "Henri Matisse",
+ "wikidataDescription": "French artist (1869-1954)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5589",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522595903
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Henri Matisse",
+   "articleUrl": "https://en.wikipedia.org/wiki/Henri_Matisse",
+   "pageId": 60203,
+   "revisionId": 1365606910,
+   "revisionTimestamp": "2026-07-23T12:04:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1869-12-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1869-12-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1869-12-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1954-11-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q329103",
+  "label": "Le Cateau-Cambrésis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q329103",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q329103",
+   "sourceEntityLabel": "Le Cateau-Cambrésis",
+   "latitude": 50.105277777778,
+   "longitude": 3.5411111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q7541856",
+   "label": "ceramicist"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q18431816",
+   "label": "glass painter"
+  },
+  {
+   "entity": "Q17391638",
+   "label": "art theorist"
+  },
+  {
+   "entity": "Q1020606",
+   "label": "stage painter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Portrait of Henri Matisse 1933 May 20.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Portrait%20of%20Henri%20Matisse%201933%20May%2020.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Henri_Matisse_1933_May_20.jpg",
+  "width": 707,
+  "height": 925,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "LOC",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

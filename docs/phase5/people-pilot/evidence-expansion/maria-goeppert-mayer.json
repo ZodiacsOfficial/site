@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maria-goeppert-mayer",
+ "qid": "Q57100",
+ "displayName": "Maria Goeppert Mayer",
+ "wikidataLabel": "Maria Göppert Mayer",
+ "wikidataDescription": "German-born American theoretical physicist (1906-1972)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q57100",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516771312
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Maria Goeppert Mayer",
+   "articleUrl": "https://en.wikipedia.org/wiki/Maria_Goeppert_Mayer",
+   "pageId": 140526,
+   "revisionId": 1355157418,
+   "revisionTimestamp": "2026-05-20T06:15:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1906-06-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-06-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1906-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-06-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1972-02-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q588",
+  "label": "Katowice",
+  "entityUrl": "https://www.wikidata.org/wiki/Q588",
+  "country": {
+   "entity": "Q36",
+   "label": "Poland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q588",
+   "sourceEntityLabel": "Katowice",
+   "latitude": 50.25,
+   "longitude": 19,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Maria Goeppert-Mayer.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Maria%20Goeppert-Mayer.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Maria_Goeppert-Mayer.jpg",
+  "width": 280,
+  "height": 396,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nobel foundation",
+  "credit": "http://nobelprize.org/nobel_prizes/physics/laureates/1963/mayer-autobio.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

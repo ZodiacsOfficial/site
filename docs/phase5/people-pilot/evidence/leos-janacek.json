@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "leos-janacek",
+ "qid": "Q184933",
+ "displayName": "Leoš Janáček",
+ "wikidataLabel": "Leoš Janáček",
+ "wikidataDescription": "Czech composer (1854–1928)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q184933",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520956690
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Leoš Janáček",
+   "articleUrl": "https://en.wikipedia.org/wiki/Leo%C5%A1_Jan%C3%A1%C4%8Dek",
+   "pageId": 132809,
+   "revisionId": 1366133070,
+   "revisionTimestamp": "2026-07-26T13:21:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1854-07-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1854-07-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1854-07-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1928-08-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q603161",
+  "label": "Hukvaldy",
+  "entityUrl": "https://www.wikidata.org/wiki/Q603161",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q603161",
+   "sourceEntityLabel": "Hukvaldy",
+   "latitude": 49.623796181581,
+   "longitude": 18.221922135184,
+   "precision": 0.0013867093932865,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q3075052",
+   "label": "folklorist"
+  },
+  {
+   "entity": "Q1350157",
+   "label": "music critic"
+  },
+  {
+   "entity": "Q16031530",
+   "label": "music theorist"
+  },
+  {
+   "entity": "Q876864",
+   "label": "editing staff"
+  },
+  {
+   "entity": "Q1076502",
+   "label": "choir director"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Leoš Janáček.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Leo%C5%A1%20Jan%C3%A1%C4%8Dek.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Leo%C5%A1_Jan%C3%A1%C4%8Dek.jpg",
+  "width": 625,
+  "height": 815,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "https://ndk.cz/view/uuid:9d452470-905f-11dd-9c34-000d606f5dc6?page=uuid:a8426d20-cbba-11e6-b22f-5ef3fc9ae867",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

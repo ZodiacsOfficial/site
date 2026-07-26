@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "wallace-stevens",
+ "qid": "Q166835",
+ "displayName": "Wallace Stevens",
+ "wikidataLabel": "Wallace Stevens",
+ "wikidataDescription": "American poet (1879–1955)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q166835",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517991938
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Wallace Stevens",
+   "articleUrl": "https://en.wikipedia.org/wiki/Wallace_Stevens",
+   "pageId": 103216,
+   "revisionId": 1365733876,
+   "revisionTimestamp": "2026-07-24T03:27:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1879-10-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1879-10-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1879-10-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1955-08-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q237896",
+  "label": "Reading",
+  "entityUrl": "https://www.wikidata.org/wiki/Q237896",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q237896",
+   "sourceEntityLabel": "Reading",
+   "latitude": 40.341666666667,
+   "longitude": -75.926111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q1209498",
+   "label": "poet lawyer"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Wallace Stevens, 1948.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Wallace%20Stevens%2C%201948.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Wallace_Stevens,_1948.jpg",
+  "width": 1135,
+  "height": 1456,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photograph by Sylvia Salmi.",
+  "credit": "Scan of the portrait sourced from the article \"Wallace Stevens Documentary At Twain House\" (June 17, 2016) at the Hartford Courant (direct link to jpg). Cropped from the original to match what is seen on the cover of Collected Poems. Lightly retouched by uploader to adjust exposure and to remove smudges, scratches, etc. The upload history includes the portrait as it appears …",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

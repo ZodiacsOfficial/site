@@ -1,0 +1,7498 @@
+[
+ {
+  "slug": "marie-curie",
+  "enwiki": "Marie Curie",
+  "displayName": "Marie Curie",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "louis-pasteur",
+  "enwiki": "Louis Pasteur",
+  "displayName": "Louis Pasteur",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "charles-darwin",
+  "enwiki": "Charles Darwin",
+  "displayName": "Charles Darwin",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "gregor-mendel",
+  "enwiki": "Gregor Mendel",
+  "displayName": "Gregor Mendel",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "alexander-fleming",
+  "enwiki": "Alexander Fleming",
+  "displayName": "Alexander Fleming",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "niels-bohr",
+  "enwiki": "Niels Bohr",
+  "displayName": "Niels Bohr",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "max-planck",
+  "enwiki": "Max Planck",
+  "displayName": "Max Planck",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "werner-heisenberg",
+  "enwiki": "Werner Heisenberg",
+  "displayName": "Werner Heisenberg",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "erwin-schrodinger",
+  "enwiki": "Erwin Schrödinger",
+  "displayName": "Erwin Schrödinger",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "enrico-fermi",
+  "enwiki": "Enrico Fermi",
+  "displayName": "Enrico Fermi",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "richard-feynman",
+  "enwiki": "Richard Feynman",
+  "displayName": "Richard Feynman",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "j-robert-oppenheimer",
+  "enwiki": "J. Robert Oppenheimer",
+  "displayName": "J. Robert Oppenheimer",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "lise-meitner",
+  "enwiki": "Lise Meitner",
+  "displayName": "Lise Meitner",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "emmy-noether",
+  "enwiki": "Emmy Noether",
+  "displayName": "Emmy Noether",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "barbara-mcclintock",
+  "enwiki": "Barbara McClintock",
+  "displayName": "Barbara McClintock",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "rachel-carson",
+  "enwiki": "Rachel Carson",
+  "displayName": "Rachel Carson",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "dorothy-hodgkin",
+  "enwiki": "Dorothy Hodgkin",
+  "displayName": "Dorothy Hodgkin",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "gerty-cori",
+  "enwiki": "Gerty Cori",
+  "displayName": "Gerty Cori",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "rita-levi-montalcini",
+  "enwiki": "Rita Levi-Montalcini",
+  "displayName": "Rita Levi-Montalcini",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "irene-joliot-curie",
+  "enwiki": "Irène Joliot-Curie",
+  "displayName": "Irène Joliot-Curie",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "maria-goeppert-mayer",
+  "enwiki": "Maria Goeppert Mayer",
+  "displayName": "Maria Goeppert Mayer",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "har-gobind-khorana",
+  "enwiki": "Har Gobind Khorana",
+  "displayName": "Har Gobind Khorana",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "c-v-raman",
+  "enwiki": "C. V. Raman",
+  "displayName": "C. V. Raman",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "homi-j-bhabha",
+  "enwiki": "Homi J. Bhabha",
+  "displayName": "Homi J. Bhabha",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "satyendra-nath-bose",
+  "enwiki": "Satyendra Nath Bose",
+  "displayName": "Satyendra Nath Bose",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "meghnad-saha",
+  "enwiki": "Meghnad Saha",
+  "displayName": "Meghnad Saha",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "jagadish-chandra-bose",
+  "enwiki": "Jagadish Chandra Bose",
+  "displayName": "Jagadish Chandra Bose",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "salim-ali",
+  "enwiki": "Sálim Ali",
+  "displayName": "Sálim Ali",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "abdus-salam",
+  "enwiki": "Abdus Salam",
+  "displayName": "Abdus Salam",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "hideki-yukawa",
+  "enwiki": "Hideki Yukawa",
+  "displayName": "Hideki Yukawa",
+  "region": "easia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "hideyo-noguchi",
+  "enwiki": "Hideyo Noguchi",
+  "displayName": "Hideyo Noguchi",
+  "region": "easia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "qian-xuesen",
+  "enwiki": "Qian Xuesen",
+  "displayName": "Qian Xuesen",
+  "region": "easia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "yuan-longping",
+  "enwiki": "Yuan Longping",
+  "displayName": "Yuan Longping",
+  "region": "easia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "percy-lavon-julian",
+  "enwiki": "Percy Lavon Julian",
+  "displayName": "Percy Lavon Julian",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "charles-r-drew",
+  "enwiki": "Charles R. Drew",
+  "displayName": "Charles R. Drew",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "daniel-hale-williams",
+  "enwiki": "Daniel Hale Williams",
+  "displayName": "Daniel Hale Williams",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "ernest-everett-just",
+  "enwiki": "Ernest Everett Just",
+  "displayName": "Ernest Everett Just",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "david-blackwell",
+  "enwiki": "David Blackwell",
+  "displayName": "David Blackwell",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "norbert-wiener",
+  "enwiki": "Norbert Wiener",
+  "displayName": "Norbert Wiener",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "john-von-neumann",
+  "enwiki": "John von Neumann",
+  "displayName": "John von Neumann",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "alan-turing",
+  "enwiki": "Alan Turing",
+  "displayName": "Alan Turing",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "kurt-godel",
+  "enwiki": "Kurt Gödel",
+  "displayName": "Kurt Gödel",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "david-hilbert",
+  "enwiki": "David Hilbert",
+  "displayName": "David Hilbert",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "henri-poincare",
+  "enwiki": "Henri Poincaré",
+  "displayName": "Henri Poincaré",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "evariste-galois",
+  "enwiki": "Évariste Galois",
+  "displayName": "Évariste Galois",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "sophie-germain",
+  "enwiki": "Sophie Germain",
+  "displayName": "Sophie Germain",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "paul-erdos",
+  "enwiki": "Paul Erdős",
+  "displayName": "Paul Erdős",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "john-forbes-nash-jr",
+  "enwiki": "John Forbes Nash Jr.",
+  "displayName": "John Forbes Nash Jr.",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "maryam-mirzakhani",
+  "enwiki": "Maryam Mirzakhani",
+  "displayName": "Maryam Mirzakhani",
+  "region": "mena",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "grace-hopper",
+  "enwiki": "Grace Hopper",
+  "displayName": "Grace Hopper",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "jean-bartik",
+  "enwiki": "Jean Bartik",
+  "displayName": "Jean Bartik",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "edith-clarke",
+  "enwiki": "Edith Clarke",
+  "displayName": "Edith Clarke",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "mary-jackson",
+  "enwiki": "Mary Jackson (engineer)",
+  "displayName": "Mary Jackson",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "dorothy-vaughan",
+  "enwiki": "Dorothy Vaughan",
+  "displayName": "Dorothy Vaughan",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "annie-easley",
+  "enwiki": "Annie Easley",
+  "displayName": "Annie Easley",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "alexander-von-humboldt",
+  "enwiki": "Alexander von Humboldt",
+  "displayName": "Alexander von Humboldt",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "carl-friedrich-gauss",
+  "enwiki": "Carl Friedrich Gauss",
+  "displayName": "Carl Friedrich Gauss",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "michael-faraday",
+  "enwiki": "Michael Faraday",
+  "displayName": "Michael Faraday",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "james-clerk-maxwell",
+  "enwiki": "James Clerk Maxwell",
+  "displayName": "James Clerk Maxwell",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "ernest-rutherford",
+  "enwiki": "Ernest Rutherford",
+  "displayName": "Ernest Rutherford",
+  "region": "oceania",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "j-j-thomson",
+  "enwiki": "J. J. Thomson",
+  "displayName": "J. J. Thomson",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "paul-dirac",
+  "enwiki": "Paul Dirac",
+  "displayName": "Paul Dirac",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "wolfgang-pauli",
+  "enwiki": "Wolfgang Pauli",
+  "displayName": "Wolfgang Pauli",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "max-born",
+  "enwiki": "Max Born",
+  "displayName": "Max Born",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "hans-bethe",
+  "enwiki": "Hans Bethe",
+  "displayName": "Hans Bethe",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "murray-gell-mann",
+  "enwiki": "Murray Gell-Mann",
+  "displayName": "Murray Gell-Mann",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "steven-weinberg",
+  "enwiki": "Steven Weinberg",
+  "displayName": "Steven Weinberg",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "stephen-hawking",
+  "enwiki": "Stephen Hawking",
+  "displayName": "Stephen Hawking",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "vera-rubin",
+  "enwiki": "Vera Rubin",
+  "displayName": "Vera Rubin",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "cecilia-payne-gaposchkin",
+  "enwiki": "Cecilia Payne-Gaposchkin",
+  "displayName": "Cecilia Payne-Gaposchkin",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "annie-jump-cannon",
+  "enwiki": "Annie Jump Cannon",
+  "displayName": "Annie Jump Cannon",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "henrietta-swan-leavitt",
+  "enwiki": "Henrietta Swan Leavitt",
+  "displayName": "Henrietta Swan Leavitt",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "williamina-fleming",
+  "enwiki": "Williamina Fleming",
+  "displayName": "Williamina Fleming",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "caroline-herschel",
+  "enwiki": "Caroline Herschel",
+  "displayName": "Caroline Herschel",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "maria-mitchell",
+  "enwiki": "Maria Mitchell",
+  "displayName": "Maria Mitchell",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "edwin-hubble",
+  "enwiki": "Edwin Hubble",
+  "displayName": "Edwin Hubble",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "carl-sagan",
+  "enwiki": "Carl Sagan",
+  "displayName": "Carl Sagan",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "clyde-tombaugh",
+  "enwiki": "Clyde Tombaugh",
+  "displayName": "Clyde Tombaugh",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "subrahmanyan-chandrasekhar",
+  "enwiki": "Subrahmanyan Chandrasekhar",
+  "displayName": "Subrahmanyan Chandrasekhar",
+  "region": "sasia",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "georges-lemaitre",
+  "enwiki": "Georges Lemaître",
+  "displayName": "Georges Lemaître",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "arthur-eddington",
+  "enwiki": "Arthur Eddington",
+  "displayName": "Arthur Eddington",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "fred-hoyle",
+  "enwiki": "Fred Hoyle",
+  "displayName": "Fred Hoyle",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "linus-pauling",
+  "enwiki": "Linus Pauling",
+  "displayName": "Linus Pauling",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "glenn-t-seaborg",
+  "enwiki": "Glenn T. Seaborg",
+  "displayName": "Glenn T. Seaborg",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "antoine-lavoisier",
+  "enwiki": "Antoine Lavoisier",
+  "displayName": "Antoine Lavoisier",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "humphry-davy",
+  "enwiki": "Humphry Davy",
+  "displayName": "Humphry Davy",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "joseph-priestley",
+  "enwiki": "Joseph Priestley",
+  "displayName": "Joseph Priestley",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "amedeo-avogadro",
+  "enwiki": "Amedeo Avogadro",
+  "displayName": "Amedeo Avogadro",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "robert-koch",
+  "enwiki": "Robert Koch",
+  "displayName": "Robert Koch",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "joseph-lister",
+  "enwiki": "Joseph Lister",
+  "displayName": "Joseph Lister",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "edward-jenner",
+  "enwiki": "Edward Jenner",
+  "displayName": "Edward Jenner",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "ignaz-semmelweis",
+  "enwiki": "Ignaz Semmelweis",
+  "displayName": "Ignaz Semmelweis",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "elizabeth-blackwell",
+  "enwiki": "Elizabeth Blackwell",
+  "displayName": "Elizabeth Blackwell",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "florence-nightingale",
+  "enwiki": "Florence Nightingale",
+  "displayName": "Florence Nightingale",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "virginia-apgar",
+  "enwiki": "Virginia Apgar",
+  "displayName": "Virginia Apgar",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "helen-b-taussig",
+  "enwiki": "Helen B. Taussig",
+  "displayName": "Helen B. Taussig",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "gertrude-b-elion",
+  "enwiki": "Gertrude B. Elion",
+  "displayName": "Gertrude B. Elion",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "rosalyn-sussman-yalow",
+  "enwiki": "Rosalyn Sussman Yalow",
+  "displayName": "Rosalyn Sussman Yalow",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "jonas-salk",
+  "enwiki": "Jonas Salk",
+  "displayName": "Jonas Salk",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "albert-sabin",
+  "enwiki": "Albert Sabin",
+  "displayName": "Albert Sabin",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "frederick-banting",
+  "enwiki": "Frederick Banting",
+  "displayName": "Frederick Banting",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "wilder-penfield",
+  "enwiki": "Wilder Penfield",
+  "displayName": "Wilder Penfield",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "santiago-ramon-y-cajal",
+  "enwiki": "Santiago Ramón y Cajal",
+  "displayName": "Santiago Ramón y Cajal",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "bernardo-houssay",
+  "enwiki": "Bernardo Houssay",
+  "displayName": "Bernardo Houssay",
+  "region": "latam",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "cesar-milstein",
+  "enwiki": "César Milstein",
+  "displayName": "César Milstein",
+  "region": "latam",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "luis-federico-leloir",
+  "enwiki": "Luis Federico Leloir",
+  "displayName": "Luis Federico Leloir",
+  "region": "latam",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "carlos-chagas",
+  "enwiki": "Carlos Chagas",
+  "displayName": "Carlos Chagas",
+  "region": "latam",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "oswaldo-cruz",
+  "enwiki": "Oswaldo Cruz",
+  "displayName": "Oswaldo Cruz",
+  "region": "latam",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "norman-borlaug",
+  "enwiki": "Norman Borlaug",
+  "displayName": "Norman Borlaug",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "e-o-wilson",
+  "enwiki": "E. O. Wilson",
+  "displayName": "E. O. Wilson",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "lynn-margulis",
+  "enwiki": "Lynn Margulis",
+  "displayName": "Lynn Margulis",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "stephen-jay-gould",
+  "enwiki": "Stephen Jay Gould",
+  "displayName": "Stephen Jay Gould",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "dian-fossey",
+  "enwiki": "Dian Fossey",
+  "displayName": "Dian Fossey",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "konrad-lorenz",
+  "enwiki": "Konrad Lorenz",
+  "displayName": "Konrad Lorenz",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "karl-von-frisch",
+  "enwiki": "Karl von Frisch",
+  "displayName": "Karl von Frisch",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "nikolaas-tinbergen",
+  "enwiki": "Nikolaas Tinbergen",
+  "displayName": "Nikolaas Tinbergen",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "sigmund-freud",
+  "enwiki": "Sigmund Freud",
+  "displayName": "Sigmund Freud",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "carl-jung",
+  "enwiki": "Carl Jung",
+  "displayName": "Carl Jung",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "alfred-adler",
+  "enwiki": "Alfred Adler",
+  "displayName": "Alfred Adler",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "jean-piaget",
+  "enwiki": "Jean Piaget",
+  "displayName": "Jean Piaget",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "b-f-skinner",
+  "enwiki": "B. F. Skinner",
+  "displayName": "B. F. Skinner",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "william-james",
+  "enwiki": "William James",
+  "displayName": "William James",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "maria-montessori",
+  "enwiki": "Maria Montessori",
+  "displayName": "Maria Montessori",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "anna-freud",
+  "enwiki": "Anna Freud",
+  "displayName": "Anna Freud",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "karen-horney",
+  "enwiki": "Karen Horney",
+  "displayName": "Karen Horney",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "melanie-klein",
+  "enwiki": "Melanie Klein",
+  "displayName": "Melanie Klein",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "margaret-mead",
+  "enwiki": "Margaret Mead",
+  "displayName": "Margaret Mead",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "ruth-benedict",
+  "enwiki": "Ruth Benedict",
+  "displayName": "Ruth Benedict",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "claude-levi-strauss",
+  "enwiki": "Claude Lévi-Strauss",
+  "displayName": "Claude Lévi-Strauss",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "franz-boas",
+  "enwiki": "Franz Boas",
+  "displayName": "Franz Boas",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "mary-leakey",
+  "enwiki": "Mary Leakey",
+  "displayName": "Mary Leakey",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "louis-leakey",
+  "enwiki": "Louis Leakey",
+  "displayName": "Louis Leakey",
+  "region": "africa",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "kathleen-kenyon",
+  "enwiki": "Kathleen Kenyon",
+  "displayName": "Kathleen Kenyon",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "mary-anning",
+  "enwiki": "Mary Anning",
+  "displayName": "Mary Anning",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "inge-lehmann",
+  "enwiki": "Inge Lehmann",
+  "displayName": "Inge Lehmann",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "marie-tharp",
+  "enwiki": "Marie Tharp",
+  "displayName": "Marie Tharp",
+  "region": "namerica",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "alfred-wegener",
+  "enwiki": "Alfred Wegener",
+  "displayName": "Alfred Wegener",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "charles-lyell",
+  "enwiki": "Charles Lyell",
+  "displayName": "Charles Lyell",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "wilhelm-rontgen",
+  "enwiki": "Wilhelm Röntgen",
+  "displayName": "Wilhelm Röntgen",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "heinrich-hertz",
+  "enwiki": "Heinrich Hertz",
+  "displayName": "Heinrich Hertz",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "guglielmo-marconi",
+  "enwiki": "Guglielmo Marconi",
+  "displayName": "Guglielmo Marconi",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "thomas-edison",
+  "enwiki": "Thomas Edison",
+  "displayName": "Thomas Edison",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "alexander-graham-bell",
+  "enwiki": "Alexander Graham Bell",
+  "displayName": "Alexander Graham Bell",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "rudolf-diesel",
+  "enwiki": "Rudolf Diesel",
+  "displayName": "Rudolf Diesel",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "karl-benz",
+  "enwiki": "Karl Benz",
+  "displayName": "Karl Benz",
+  "region": "europe",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "henry-ford",
+  "enwiki": "Henry Ford",
+  "displayName": "Henry Ford",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "orville-wright",
+  "enwiki": "Orville Wright",
+  "displayName": "Orville Wright",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "alberto-santos-dumont",
+  "enwiki": "Alberto Santos-Dumont",
+  "displayName": "Alberto Santos-Dumont",
+  "region": "latam",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "amelia-earhart",
+  "enwiki": "Amelia Earhart",
+  "displayName": "Amelia Earhart",
+  "region": "namerica",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "bessie-coleman",
+  "enwiki": "Bessie Coleman",
+  "displayName": "Bessie Coleman",
+  "region": "namerica",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "amy-johnson",
+  "enwiki": "Amy Johnson",
+  "displayName": "Amy Johnson",
+  "region": "europe",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "yuri-gagarin",
+  "enwiki": "Yuri Gagarin",
+  "displayName": "Yuri Gagarin",
+  "region": "europe",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "kalpana-chawla",
+  "enwiki": "Kalpana Chawla",
+  "displayName": "Kalpana Chawla",
+  "region": "sasia",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "sally-ride",
+  "enwiki": "Sally Ride",
+  "displayName": "Sally Ride",
+  "region": "namerica",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "neil-armstrong",
+  "enwiki": "Neil Armstrong",
+  "displayName": "Neil Armstrong",
+  "region": "namerica",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "john-glenn",
+  "enwiki": "John Glenn",
+  "displayName": "John Glenn",
+  "region": "namerica",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "robert-h-goddard",
+  "enwiki": "Robert H. Goddard",
+  "displayName": "Robert H. Goddard",
+  "region": "namerica",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "jane-austen",
+  "enwiki": "Jane Austen",
+  "displayName": "Jane Austen",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "charlotte-bronte",
+  "enwiki": "Charlotte Brontë",
+  "displayName": "Charlotte Brontë",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "anne-bronte",
+  "enwiki": "Anne Brontë",
+  "displayName": "Anne Brontë",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "george-eliot",
+  "enwiki": "George Eliot",
+  "displayName": "George Eliot",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "elizabeth-barrett-browning",
+  "enwiki": "Elizabeth Barrett Browning",
+  "displayName": "Elizabeth Barrett Browning",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "christina-rossetti",
+  "enwiki": "Christina Rossetti",
+  "displayName": "Christina Rossetti",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "mary-shelley",
+  "enwiki": "Mary Shelley",
+  "displayName": "Mary Shelley",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "mary-wollstonecraft",
+  "enwiki": "Mary Wollstonecraft",
+  "displayName": "Mary Wollstonecraft",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "charles-dickens",
+  "enwiki": "Charles Dickens",
+  "displayName": "Charles Dickens",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "thomas-hardy",
+  "enwiki": "Thomas Hardy",
+  "displayName": "Thomas Hardy",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "oscar-wilde",
+  "enwiki": "Oscar Wilde",
+  "displayName": "Oscar Wilde",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "george-bernard-shaw",
+  "enwiki": "George Bernard Shaw",
+  "displayName": "George Bernard Shaw",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "w-b-yeats",
+  "enwiki": "W. B. Yeats",
+  "displayName": "W. B. Yeats",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "james-joyce",
+  "enwiki": "James Joyce",
+  "displayName": "James Joyce",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "samuel-beckett",
+  "enwiki": "Samuel Beckett",
+  "displayName": "Samuel Beckett",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "seamus-heaney",
+  "enwiki": "Seamus Heaney",
+  "displayName": "Seamus Heaney",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "dylan-thomas",
+  "enwiki": "Dylan Thomas",
+  "displayName": "Dylan Thomas",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "t-s-eliot",
+  "enwiki": "T. S. Eliot",
+  "displayName": "T. S. Eliot",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "sylvia-plath",
+  "enwiki": "Sylvia Plath",
+  "displayName": "Sylvia Plath",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "anne-sexton",
+  "enwiki": "Anne Sexton",
+  "displayName": "Anne Sexton",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "emily-dickinson",
+  "enwiki": "Emily Dickinson",
+  "displayName": "Emily Dickinson",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "mark-twain",
+  "enwiki": "Mark Twain",
+  "displayName": "Mark Twain",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "herman-melville",
+  "enwiki": "Herman Melville",
+  "displayName": "Herman Melville",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "nathaniel-hawthorne",
+  "enwiki": "Nathaniel Hawthorne",
+  "displayName": "Nathaniel Hawthorne",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "edgar-allan-poe",
+  "enwiki": "Edgar Allan Poe",
+  "displayName": "Edgar Allan Poe",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "louisa-may-alcott",
+  "enwiki": "Louisa May Alcott",
+  "displayName": "Louisa May Alcott",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "harriet-beecher-stowe",
+  "enwiki": "Harriet Beecher Stowe",
+  "displayName": "Harriet Beecher Stowe",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "edith-wharton",
+  "enwiki": "Edith Wharton",
+  "displayName": "Edith Wharton",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "willa-cather",
+  "enwiki": "Willa Cather",
+  "displayName": "Willa Cather",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "f-scott-fitzgerald",
+  "enwiki": "F. Scott Fitzgerald",
+  "displayName": "F. Scott Fitzgerald",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ernest-hemingway",
+  "enwiki": "Ernest Hemingway",
+  "displayName": "Ernest Hemingway",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "william-faulkner",
+  "enwiki": "William Faulkner",
+  "displayName": "William Faulkner",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "john-steinbeck",
+  "enwiki": "John Steinbeck",
+  "displayName": "John Steinbeck",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "toni-morrison",
+  "enwiki": "Toni Morrison",
+  "displayName": "Toni Morrison",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "maya-angelou",
+  "enwiki": "Maya Angelou",
+  "displayName": "Maya Angelou",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "james-baldwin",
+  "enwiki": "James Baldwin",
+  "displayName": "James Baldwin",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "langston-hughes",
+  "enwiki": "Langston Hughes",
+  "displayName": "Langston Hughes",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "zora-neale-hurston",
+  "enwiki": "Zora Neale Hurston",
+  "displayName": "Zora Neale Hurston",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "richard-wright",
+  "enwiki": "Richard Wright (author)",
+  "displayName": "Richard Wright",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ralph-ellison",
+  "enwiki": "Ralph Ellison",
+  "displayName": "Ralph Ellison",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "gwendolyn-brooks",
+  "enwiki": "Gwendolyn Brooks",
+  "displayName": "Gwendolyn Brooks",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "audre-lorde",
+  "enwiki": "Audre Lorde",
+  "displayName": "Audre Lorde",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "octavia-e-butler",
+  "enwiki": "Octavia E. Butler",
+  "displayName": "Octavia E. Butler",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "ursula-k-le-guin",
+  "enwiki": "Ursula K. Le Guin",
+  "displayName": "Ursula K. Le Guin",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "flannery-o-connor",
+  "enwiki": "Flannery O'Connor",
+  "displayName": "Flannery O'Connor",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "harper-lee",
+  "enwiki": "Harper Lee",
+  "displayName": "Harper Lee",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "truman-capote",
+  "enwiki": "Truman Capote",
+  "displayName": "Truman Capote",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "tennessee-williams",
+  "enwiki": "Tennessee Williams",
+  "displayName": "Tennessee Williams",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "arthur-miller",
+  "enwiki": "Arthur Miller",
+  "displayName": "Arthur Miller",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "eugene-o-neill",
+  "enwiki": "Eugene O'Neill",
+  "displayName": "Eugene O'Neill",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "kurt-vonnegut",
+  "enwiki": "Kurt Vonnegut",
+  "displayName": "Kurt Vonnegut",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "joan-didion",
+  "enwiki": "Joan Didion",
+  "displayName": "Joan Didion",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "bell-hooks",
+  "enwiki": "bell hooks",
+  "displayName": "bell hooks",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "adrienne-rich",
+  "enwiki": "Adrienne Rich",
+  "displayName": "Adrienne Rich",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "mary-oliver",
+  "enwiki": "Mary Oliver",
+  "displayName": "Mary Oliver",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "robert-frost",
+  "enwiki": "Robert Frost",
+  "displayName": "Robert Frost",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "carl-sandburg",
+  "enwiki": "Carl Sandburg",
+  "displayName": "Carl Sandburg",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "wallace-stevens",
+  "enwiki": "Wallace Stevens",
+  "displayName": "Wallace Stevens",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "e-e-cummings",
+  "enwiki": "E. E. Cummings",
+  "displayName": "E. E. Cummings",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "marianne-moore",
+  "enwiki": "Marianne Moore",
+  "displayName": "Marianne Moore",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "elizabeth-bishop",
+  "enwiki": "Elizabeth Bishop",
+  "displayName": "Elizabeth Bishop",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "victor-hugo",
+  "enwiki": "Victor Hugo",
+  "displayName": "Victor Hugo",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "emile-zola",
+  "enwiki": "Émile Zola",
+  "displayName": "Émile Zola",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "gustave-flaubert",
+  "enwiki": "Gustave Flaubert",
+  "displayName": "Gustave Flaubert",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "marcel-proust",
+  "enwiki": "Marcel Proust",
+  "displayName": "Marcel Proust",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "albert-camus",
+  "enwiki": "Albert Camus",
+  "displayName": "Albert Camus",
+  "region": "africa",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "jean-paul-sartre",
+  "enwiki": "Jean-Paul Sartre",
+  "displayName": "Jean-Paul Sartre",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "colette",
+  "enwiki": "Colette",
+  "displayName": "Colette",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "george-sand",
+  "enwiki": "George Sand",
+  "displayName": "George Sand",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "marguerite-duras",
+  "enwiki": "Marguerite Duras",
+  "displayName": "Marguerite Duras",
+  "region": "seasia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "marguerite-yourcenar",
+  "enwiki": "Marguerite Yourcenar",
+  "displayName": "Marguerite Yourcenar",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "charles-baudelaire",
+  "enwiki": "Charles Baudelaire",
+  "displayName": "Charles Baudelaire",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "arthur-rimbaud",
+  "enwiki": "Arthur Rimbaud",
+  "displayName": "Arthur Rimbaud",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "paul-verlaine",
+  "enwiki": "Paul Verlaine",
+  "displayName": "Paul Verlaine",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "guy-de-maupassant",
+  "enwiki": "Guy de Maupassant",
+  "displayName": "Guy de Maupassant",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "honore-de-balzac",
+  "enwiki": "Honoré de Balzac",
+  "displayName": "Honoré de Balzac",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "alexandre-dumas",
+  "enwiki": "Alexandre Dumas",
+  "displayName": "Alexandre Dumas",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "jules-verne",
+  "enwiki": "Jules Verne",
+  "displayName": "Jules Verne",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "antoine-de-saint-exupery",
+  "enwiki": "Antoine de Saint-Exupéry",
+  "displayName": "Antoine de Saint-Exupéry",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "johann-wolfgang-von-goethe",
+  "enwiki": "Johann Wolfgang von Goethe",
+  "displayName": "Johann Wolfgang von Goethe",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "friedrich-schiller",
+  "enwiki": "Friedrich Schiller",
+  "displayName": "Friedrich Schiller",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "heinrich-heine",
+  "enwiki": "Heinrich Heine",
+  "displayName": "Heinrich Heine",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "thomas-mann",
+  "enwiki": "Thomas Mann",
+  "displayName": "Thomas Mann",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "hermann-hesse",
+  "enwiki": "Hermann Hesse",
+  "displayName": "Hermann Hesse",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "franz-kafka",
+  "enwiki": "Franz Kafka",
+  "displayName": "Franz Kafka",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "rainer-maria-rilke",
+  "enwiki": "Rainer Maria Rilke",
+  "displayName": "Rainer Maria Rilke",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "bertolt-brecht",
+  "enwiki": "Bertolt Brecht",
+  "displayName": "Bertolt Brecht",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "hannah-arendt",
+  "enwiki": "Hannah Arendt",
+  "displayName": "Hannah Arendt",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "f"
+ },
+ {
+  "slug": "federico-garcia-lorca",
+  "enwiki": "Federico García Lorca",
+  "displayName": "Federico García Lorca",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "antonio-machado",
+  "enwiki": "Antonio Machado",
+  "displayName": "Antonio Machado",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "miguel-de-unamuno",
+  "enwiki": "Miguel de Unamuno",
+  "displayName": "Miguel de Unamuno",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "pablo-neruda",
+  "enwiki": "Pablo Neruda",
+  "displayName": "Pablo Neruda",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "gabriela-mistral",
+  "enwiki": "Gabriela Mistral",
+  "displayName": "Gabriela Mistral",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "gabriel-garcia-marquez",
+  "enwiki": "Gabriel García Márquez",
+  "displayName": "Gabriel García Márquez",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "jorge-luis-borges",
+  "enwiki": "Jorge Luis Borges",
+  "displayName": "Jorge Luis Borges",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "julio-cortazar",
+  "enwiki": "Julio Cortázar",
+  "displayName": "Julio Cortázar",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "octavio-paz",
+  "enwiki": "Octavio Paz",
+  "displayName": "Octavio Paz",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "carlos-fuentes",
+  "enwiki": "Carlos Fuentes",
+  "displayName": "Carlos Fuentes",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "juan-rulfo",
+  "enwiki": "Juan Rulfo",
+  "displayName": "Juan Rulfo",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "machado-de-assis",
+  "enwiki": "Machado de Assis",
+  "displayName": "Machado de Assis",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "clarice-lispector",
+  "enwiki": "Clarice Lispector",
+  "displayName": "Clarice Lispector",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "jorge-amado",
+  "enwiki": "Jorge Amado",
+  "displayName": "Jorge Amado",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "cecilia-meireles",
+  "enwiki": "Cecília Meireles",
+  "displayName": "Cecília Meireles",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "ruben-dario",
+  "enwiki": "Rubén Darío",
+  "displayName": "Rubén Darío",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "jose-marti",
+  "enwiki": "José Martí",
+  "displayName": "José Martí",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "alfonsina-storni",
+  "enwiki": "Alfonsina Storni",
+  "displayName": "Alfonsina Storni",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "juana-de-ibarbourou",
+  "enwiki": "Juana de Ibarbourou",
+  "displayName": "Juana de Ibarbourou",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "chinua-achebe",
+  "enwiki": "Chinua Achebe",
+  "displayName": "Chinua Achebe",
+  "region": "africa",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ngugi-wa-thiong-o",
+  "enwiki": "Ngũgĩ wa Thiong'o",
+  "displayName": "Ngũgĩ wa Thiong'o",
+  "region": "africa",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "flora-nwapa",
+  "enwiki": "Flora Nwapa",
+  "displayName": "Flora Nwapa",
+  "region": "africa",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "buchi-emecheta",
+  "enwiki": "Buchi Emecheta",
+  "displayName": "Buchi Emecheta",
+  "region": "africa",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "mariama-ba",
+  "enwiki": "Mariama Bâ",
+  "displayName": "Mariama Bâ",
+  "region": "africa",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "leopold-sedar-senghor",
+  "enwiki": "Léopold Sédar Senghor",
+  "displayName": "Léopold Sédar Senghor",
+  "region": "africa",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "aime-cesaire",
+  "enwiki": "Aimé Césaire",
+  "displayName": "Aimé Césaire",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "frantz-fanon",
+  "enwiki": "Frantz Fanon",
+  "displayName": "Frantz Fanon",
+  "region": "latam",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "naguib-mahfouz",
+  "enwiki": "Naguib Mahfouz",
+  "displayName": "Naguib Mahfouz",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "taha-hussein",
+  "enwiki": "Taha Hussein",
+  "displayName": "Taha Hussein",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "tayeb-salih",
+  "enwiki": "Tayeb Salih",
+  "displayName": "Tayeb Salih",
+  "region": "africa",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "nizar-qabbani",
+  "enwiki": "Nizar Qabbani",
+  "displayName": "Nizar Qabbani",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "mahmoud-darwish",
+  "enwiki": "Mahmoud Darwish",
+  "displayName": "Mahmoud Darwish",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "kahlil-gibran",
+  "enwiki": "Kahlil Gibran",
+  "displayName": "Kahlil Gibran",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ghassan-kanafani",
+  "enwiki": "Ghassan Kanafani",
+  "displayName": "Ghassan Kanafani",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "forough-farrokhzad",
+  "enwiki": "Forough Farrokhzad",
+  "displayName": "Forough Farrokhzad",
+  "region": "mena",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "sadegh-hedayat",
+  "enwiki": "Sadegh Hedayat",
+  "displayName": "Sadegh Hedayat",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "yasar-kemal",
+  "enwiki": "Yaşar Kemal",
+  "displayName": "Yaşar Kemal",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "naz-m-hikmet",
+  "enwiki": "Nâzım Hikmet",
+  "displayName": "Nâzım Hikmet",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "halide-edib-ad-var",
+  "enwiki": "Halide Edib Adıvar",
+  "displayName": "Halide Edib Adıvar",
+  "region": "mena",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "sarojini-naidu",
+  "enwiki": "Sarojini Naidu",
+  "displayName": "Sarojini Naidu",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "premchand",
+  "enwiki": "Premchand",
+  "displayName": "Premchand",
+  "region": "sasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "muhammad-iqbal",
+  "enwiki": "Muhammad Iqbal",
+  "displayName": "Muhammad Iqbal",
+  "region": "sasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "faiz-ahmad-faiz",
+  "enwiki": "Faiz Ahmad Faiz",
+  "displayName": "Faiz Ahmad Faiz",
+  "region": "sasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "saadat-hasan-manto",
+  "enwiki": "Saadat Hasan Manto",
+  "displayName": "Saadat Hasan Manto",
+  "region": "sasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ismat-chughtai",
+  "enwiki": "Ismat Chughtai",
+  "displayName": "Ismat Chughtai",
+  "region": "sasia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "amrita-pritam",
+  "enwiki": "Amrita Pritam",
+  "displayName": "Amrita Pritam",
+  "region": "sasia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "mahasweta-devi",
+  "enwiki": "Mahasweta Devi",
+  "displayName": "Mahasweta Devi",
+  "region": "sasia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "r-k-narayan",
+  "enwiki": "R. K. Narayan",
+  "displayName": "R. K. Narayan",
+  "region": "sasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "mulk-raj-anand",
+  "enwiki": "Mulk Raj Anand",
+  "displayName": "Mulk Raj Anand",
+  "region": "sasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "kamala-surayya",
+  "enwiki": "Kamala Surayya",
+  "displayName": "Kamala Surayya",
+  "region": "sasia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "lu-xun",
+  "enwiki": "Lu Xun",
+  "displayName": "Lu Xun",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "lao-she",
+  "enwiki": "Lao She",
+  "displayName": "Lao She",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ba-jin",
+  "enwiki": "Ba Jin",
+  "displayName": "Ba Jin",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "eileen-chang",
+  "enwiki": "Eileen Chang",
+  "displayName": "Eileen Chang",
+  "region": "easia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "xiao-hong",
+  "enwiki": "Xiao Hong",
+  "displayName": "Xiao Hong",
+  "region": "easia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "qiu-jin",
+  "enwiki": "Qiu Jin",
+  "displayName": "Qiu Jin",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "natsume-soseki",
+  "enwiki": "Natsume Sōseki",
+  "displayName": "Natsume Sōseki",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "yasunari-kawabata",
+  "enwiki": "Yasunari Kawabata",
+  "displayName": "Yasunari Kawabata",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "osamu-dazai",
+  "enwiki": "Osamu Dazai",
+  "displayName": "Osamu Dazai",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ryunosuke-akutagawa",
+  "enwiki": "Ryūnosuke Akutagawa",
+  "displayName": "Ryūnosuke Akutagawa",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ichiyo-higuchi",
+  "enwiki": "Ichiyō Higuchi",
+  "displayName": "Ichiyō Higuchi",
+  "region": "easia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "yi-sang",
+  "enwiki": "Yi Sang",
+  "displayName": "Yi Sang",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "kim-sowol",
+  "enwiki": "Kim Sowol",
+  "displayName": "Kim Sowol",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "han-yong-un",
+  "enwiki": "Han Yong-un",
+  "displayName": "Han Yong-un",
+  "region": "easia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "pramoedya-ananta-toer",
+  "enwiki": "Pramoedya Ananta Toer",
+  "displayName": "Pramoedya Ananta Toer",
+  "region": "seasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "jose-rizal",
+  "enwiki": "José Rizal",
+  "displayName": "José Rizal",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "nick-joaquin",
+  "enwiki": "Nick Joaquin",
+  "displayName": "Nick Joaquin",
+  "region": "seasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "patrick-white",
+  "enwiki": "Patrick White",
+  "displayName": "Patrick White",
+  "region": "oceania",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "henry-lawson",
+  "enwiki": "Henry Lawson",
+  "displayName": "Henry Lawson",
+  "region": "oceania",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "banjo-paterson",
+  "enwiki": "Banjo Paterson",
+  "displayName": "Banjo Paterson",
+  "region": "oceania",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "judith-wright",
+  "enwiki": "Judith Wright",
+  "displayName": "Judith Wright",
+  "region": "oceania",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "oodgeroo-noonuccal",
+  "enwiki": "Oodgeroo Noonuccal",
+  "displayName": "Oodgeroo Noonuccal",
+  "region": "oceania",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "katherine-mansfield",
+  "enwiki": "Katherine Mansfield",
+  "displayName": "Katherine Mansfield",
+  "region": "oceania",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "janet-frame",
+  "enwiki": "Janet Frame",
+  "displayName": "Janet Frame",
+  "region": "oceania",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "margaret-laurence",
+  "enwiki": "Margaret Laurence",
+  "displayName": "Margaret Laurence",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "gabrielle-roy",
+  "enwiki": "Gabrielle Roy",
+  "displayName": "Gabrielle Roy",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "lucy-maud-montgomery",
+  "enwiki": "Lucy Maud Montgomery",
+  "displayName": "Lucy Maud Montgomery",
+  "region": "namerica",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "robertson-davies",
+  "enwiki": "Robertson Davies",
+  "displayName": "Robertson Davies",
+  "region": "namerica",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "halldor-laxness",
+  "enwiki": "Halldór Laxness",
+  "displayName": "Halldór Laxness",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "sigrid-undset",
+  "enwiki": "Sigrid Undset",
+  "displayName": "Sigrid Undset",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "henrik-ibsen",
+  "enwiki": "Henrik Ibsen",
+  "displayName": "Henrik Ibsen",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "august-strindberg",
+  "enwiki": "August Strindberg",
+  "displayName": "August Strindberg",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "selma-lagerlof",
+  "enwiki": "Selma Lagerlöf",
+  "displayName": "Selma Lagerlöf",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "astrid-lindgren",
+  "enwiki": "Astrid Lindgren",
+  "displayName": "Astrid Lindgren",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "tove-jansson",
+  "enwiki": "Tove Jansson",
+  "displayName": "Tove Jansson",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "hans-christian-andersen",
+  "enwiki": "Hans Christian Andersen",
+  "displayName": "Hans Christian Andersen",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "karen-blixen",
+  "enwiki": "Karen Blixen",
+  "displayName": "Karen Blixen",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "czes-aw-mi-osz",
+  "enwiki": "Czesław Miłosz",
+  "displayName": "Czesław Miłosz",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "wis-awa-szymborska",
+  "enwiki": "Wisława Szymborska",
+  "displayName": "Wisława Szymborska",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "bruno-schulz",
+  "enwiki": "Bruno Schulz",
+  "displayName": "Bruno Schulz",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "stanis-aw-lem",
+  "enwiki": "Stanisław Lem",
+  "displayName": "Stanisław Lem",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "bohumil-hrabal",
+  "enwiki": "Bohumil Hrabal",
+  "displayName": "Bohumil Hrabal",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "karel-capek",
+  "enwiki": "Karel Čapek",
+  "displayName": "Karel Čapek",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "milan-kundera",
+  "enwiki": "Milan Kundera",
+  "displayName": "Milan Kundera",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "imre-kertesz",
+  "enwiki": "Imre Kertész",
+  "displayName": "Imre Kertész",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "sandor-marai",
+  "enwiki": "Sándor Márai",
+  "displayName": "Sándor Márai",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "nikos-kazantzakis",
+  "enwiki": "Nikos Kazantzakis",
+  "displayName": "Nikos Kazantzakis",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "constantine-p-cavafy",
+  "enwiki": "Constantine P. Cavafy",
+  "displayName": "Constantine P. Cavafy",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "giorgos-seferis",
+  "enwiki": "Giorgos Seferis",
+  "displayName": "Giorgos Seferis",
+  "region": "mena",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "odysseas-elytis",
+  "enwiki": "Odysseas Elytis",
+  "displayName": "Odysseas Elytis",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "jose-saramago",
+  "enwiki": "José Saramago",
+  "displayName": "José Saramago",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "fernando-pessoa",
+  "enwiki": "Fernando Pessoa",
+  "displayName": "Fernando Pessoa",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "eca-de-queiroz",
+  "enwiki": "Eça de Queiroz",
+  "displayName": "Eça de Queiroz",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "italo-calvino",
+  "enwiki": "Italo Calvino",
+  "displayName": "Italo Calvino",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "umberto-eco",
+  "enwiki": "Umberto Eco",
+  "displayName": "Umberto Eco",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "primo-levi",
+  "enwiki": "Primo Levi",
+  "displayName": "Primo Levi",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "elsa-morante",
+  "enwiki": "Elsa Morante",
+  "displayName": "Elsa Morante",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "natalia-ginzburg",
+  "enwiki": "Natalia Ginzburg",
+  "displayName": "Natalia Ginzburg",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "grazia-deledda",
+  "enwiki": "Grazia Deledda",
+  "displayName": "Grazia Deledda",
+  "region": "europe",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "luigi-pirandello",
+  "enwiki": "Luigi Pirandello",
+  "displayName": "Luigi Pirandello",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "giacomo-leopardi",
+  "enwiki": "Giacomo Leopardi",
+  "displayName": "Giacomo Leopardi",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "alessandro-manzoni",
+  "enwiki": "Alessandro Manzoni",
+  "displayName": "Alessandro Manzoni",
+  "region": "europe",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "wolfgang-amadeus-mozart",
+  "enwiki": "Wolfgang Amadeus Mozart",
+  "displayName": "Wolfgang Amadeus Mozart",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "joseph-haydn",
+  "enwiki": "Joseph Haydn",
+  "displayName": "Joseph Haydn",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "franz-schubert",
+  "enwiki": "Franz Schubert",
+  "displayName": "Franz Schubert",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "felix-mendelssohn",
+  "enwiki": "Felix Mendelssohn",
+  "displayName": "Felix Mendelssohn",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "fanny-mendelssohn",
+  "enwiki": "Fanny Mendelssohn",
+  "displayName": "Fanny Mendelssohn",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "robert-schumann",
+  "enwiki": "Robert Schumann",
+  "displayName": "Robert Schumann",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "johannes-brahms",
+  "enwiki": "Johannes Brahms",
+  "displayName": "Johannes Brahms",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "franz-liszt",
+  "enwiki": "Franz Liszt",
+  "displayName": "Franz Liszt",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "frederic-chopin",
+  "enwiki": "Frédéric Chopin",
+  "displayName": "Frédéric Chopin",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "antonin-dvorak",
+  "enwiki": "Antonín Dvořák",
+  "displayName": "Antonín Dvořák",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "bedrich-smetana",
+  "enwiki": "Bedřich Smetana",
+  "displayName": "Bedřich Smetana",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "leos-janacek",
+  "enwiki": "Leoš Janáček",
+  "displayName": "Leoš Janáček",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "gustav-mahler",
+  "enwiki": "Gustav Mahler",
+  "displayName": "Gustav Mahler",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "alma-mahler",
+  "enwiki": "Alma Mahler",
+  "displayName": "Alma Mahler",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "anton-bruckner",
+  "enwiki": "Anton Bruckner",
+  "displayName": "Anton Bruckner",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "edvard-grieg",
+  "enwiki": "Edvard Grieg",
+  "displayName": "Edvard Grieg",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "jean-sibelius",
+  "enwiki": "Jean Sibelius",
+  "displayName": "Jean Sibelius",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "carl-nielsen",
+  "enwiki": "Carl Nielsen",
+  "displayName": "Carl Nielsen",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "claude-debussy",
+  "enwiki": "Claude Debussy",
+  "displayName": "Claude Debussy",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "maurice-ravel",
+  "enwiki": "Maurice Ravel",
+  "displayName": "Maurice Ravel",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "gabriel-faure",
+  "enwiki": "Gabriel Fauré",
+  "displayName": "Gabriel Fauré",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "camille-saint-saens",
+  "enwiki": "Camille Saint-Saëns",
+  "displayName": "Camille Saint-Saëns",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "georges-bizet",
+  "enwiki": "Georges Bizet",
+  "displayName": "Georges Bizet",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "hector-berlioz",
+  "enwiki": "Hector Berlioz",
+  "displayName": "Hector Berlioz",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "erik-satie",
+  "enwiki": "Erik Satie",
+  "displayName": "Erik Satie",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "nadia-boulanger",
+  "enwiki": "Nadia Boulanger",
+  "displayName": "Nadia Boulanger",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "lili-boulanger",
+  "enwiki": "Lili Boulanger",
+  "displayName": "Lili Boulanger",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "cecile-chaminade",
+  "enwiki": "Cécile Chaminade",
+  "displayName": "Cécile Chaminade",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "giuseppe-verdi",
+  "enwiki": "Giuseppe Verdi",
+  "displayName": "Giuseppe Verdi",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "giacomo-puccini",
+  "enwiki": "Giacomo Puccini",
+  "displayName": "Giacomo Puccini",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "gioachino-rossini",
+  "enwiki": "Gioachino Rossini",
+  "displayName": "Gioachino Rossini",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "gaetano-donizetti",
+  "enwiki": "Gaetano Donizetti",
+  "displayName": "Gaetano Donizetti",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "antonio-vivaldi",
+  "enwiki": "Antonio Vivaldi",
+  "displayName": "Antonio Vivaldi",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "manuel-de-falla",
+  "enwiki": "Manuel de Falla",
+  "displayName": "Manuel de Falla",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "isaac-albeniz",
+  "enwiki": "Isaac Albéniz",
+  "displayName": "Isaac Albéniz",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "enrique-granados",
+  "enwiki": "Enrique Granados",
+  "displayName": "Enrique Granados",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "heitor-villa-lobos",
+  "enwiki": "Heitor Villa-Lobos",
+  "displayName": "Heitor Villa-Lobos",
+  "region": "latam",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "alberto-ginastera",
+  "enwiki": "Alberto Ginastera",
+  "displayName": "Alberto Ginastera",
+  "region": "latam",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "astor-piazzolla",
+  "enwiki": "Astor Piazzolla",
+  "displayName": "Astor Piazzolla",
+  "region": "latam",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "agustin-lara",
+  "enwiki": "Agustín Lara",
+  "displayName": "Agustín Lara",
+  "region": "latam",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "consuelo-velazquez",
+  "enwiki": "Consuelo Velázquez",
+  "displayName": "Consuelo Velázquez",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "chavela-vargas",
+  "enwiki": "Chavela Vargas",
+  "displayName": "Chavela Vargas",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "mercedes-sosa",
+  "enwiki": "Mercedes Sosa",
+  "displayName": "Mercedes Sosa",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "violeta-parra",
+  "enwiki": "Violeta Parra",
+  "displayName": "Violeta Parra",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "victor-jara",
+  "enwiki": "Víctor Jara",
+  "displayName": "Víctor Jara",
+  "region": "latam",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "antonio-carlos-jobim",
+  "enwiki": "Antônio Carlos Jobim",
+  "displayName": "Antônio Carlos Jobim",
+  "region": "latam",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "elis-regina",
+  "enwiki": "Elis Regina",
+  "displayName": "Elis Regina",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "clara-nunes",
+  "enwiki": "Clara Nunes",
+  "displayName": "Clara Nunes",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "duke-ellington",
+  "enwiki": "Duke Ellington",
+  "displayName": "Duke Ellington",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "louis-armstrong",
+  "enwiki": "Louis Armstrong",
+  "displayName": "Louis Armstrong",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "billie-holiday",
+  "enwiki": "Billie Holiday",
+  "displayName": "Billie Holiday",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "sarah-vaughan",
+  "enwiki": "Sarah Vaughan",
+  "displayName": "Sarah Vaughan",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "nina-simone",
+  "enwiki": "Nina Simone",
+  "displayName": "Nina Simone",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "miles-davis",
+  "enwiki": "Miles Davis",
+  "displayName": "Miles Davis",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "john-coltrane",
+  "enwiki": "John Coltrane",
+  "displayName": "John Coltrane",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "charlie-parker",
+  "enwiki": "Charlie Parker",
+  "displayName": "Charlie Parker",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "thelonious-monk",
+  "enwiki": "Thelonious Monk",
+  "displayName": "Thelonious Monk",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "dizzy-gillespie",
+  "enwiki": "Dizzy Gillespie",
+  "displayName": "Dizzy Gillespie",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "count-basie",
+  "enwiki": "Count Basie",
+  "displayName": "Count Basie",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "bessie-smith",
+  "enwiki": "Bessie Smith",
+  "displayName": "Bessie Smith",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "ma-rainey",
+  "enwiki": "Ma Rainey",
+  "displayName": "Ma Rainey",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "mahalia-jackson",
+  "enwiki": "Mahalia Jackson",
+  "displayName": "Mahalia Jackson",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "marian-anderson",
+  "enwiki": "Marian Anderson",
+  "displayName": "Marian Anderson",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "paul-robeson",
+  "enwiki": "Paul Robeson",
+  "displayName": "Paul Robeson",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "w-c-handy",
+  "enwiki": "W. C. Handy",
+  "displayName": "W. C. Handy",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "george-gershwin",
+  "enwiki": "George Gershwin",
+  "displayName": "George Gershwin",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "ira-gershwin",
+  "enwiki": "Ira Gershwin",
+  "displayName": "Ira Gershwin",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "cole-porter",
+  "enwiki": "Cole Porter",
+  "displayName": "Cole Porter",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "leonard-bernstein",
+  "enwiki": "Leonard Bernstein",
+  "displayName": "Leonard Bernstein",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "aaron-copland",
+  "enwiki": "Aaron Copland",
+  "displayName": "Aaron Copland",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "samuel-barber",
+  "enwiki": "Samuel Barber",
+  "displayName": "Samuel Barber",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "bela-bartok",
+  "enwiki": "Béla Bartók",
+  "displayName": "Béla Bartók",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "zoltan-kodaly",
+  "enwiki": "Zoltán Kodály",
+  "displayName": "Zoltán Kodály",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "arnold-schoenberg",
+  "enwiki": "Arnold Schoenberg",
+  "displayName": "Arnold Schoenberg",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "alban-berg",
+  "enwiki": "Alban Berg",
+  "displayName": "Alban Berg",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "anton-webern",
+  "enwiki": "Anton Webern",
+  "displayName": "Anton Webern",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "kurt-weill",
+  "enwiki": "Kurt Weill",
+  "displayName": "Kurt Weill",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "benjamin-britten",
+  "enwiki": "Benjamin Britten",
+  "displayName": "Benjamin Britten",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "ralph-vaughan-williams",
+  "enwiki": "Ralph Vaughan Williams",
+  "displayName": "Ralph Vaughan Williams",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "gustav-holst",
+  "enwiki": "Gustav Holst",
+  "displayName": "Gustav Holst",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "edward-elgar",
+  "enwiki": "Edward Elgar",
+  "displayName": "Edward Elgar",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "ethel-smyth",
+  "enwiki": "Ethel Smyth",
+  "displayName": "Ethel Smyth",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "elvis-presley",
+  "enwiki": "Elvis Presley",
+  "displayName": "Elvis Presley",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "johnny-cash",
+  "enwiki": "Johnny Cash",
+  "displayName": "Johnny Cash",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "hank-williams",
+  "enwiki": "Hank Williams",
+  "displayName": "Hank Williams",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "patsy-cline",
+  "enwiki": "Patsy Cline",
+  "displayName": "Patsy Cline",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "aretha-franklin",
+  "enwiki": "Aretha Franklin",
+  "displayName": "Aretha Franklin",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "otis-redding",
+  "enwiki": "Otis Redding",
+  "displayName": "Otis Redding",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "sam-cooke",
+  "enwiki": "Sam Cooke",
+  "displayName": "Sam Cooke",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "marvin-gaye",
+  "enwiki": "Marvin Gaye",
+  "displayName": "Marvin Gaye",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "whitney-houston",
+  "enwiki": "Whitney Houston",
+  "displayName": "Whitney Houston",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "prince",
+  "enwiki": "Prince (musician)",
+  "displayName": "Prince",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "david-bowie",
+  "enwiki": "David Bowie",
+  "displayName": "David Bowie",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "freddie-mercury",
+  "enwiki": "Freddie Mercury",
+  "displayName": "Freddie Mercury",
+  "region": "africa",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "john-lennon",
+  "enwiki": "John Lennon",
+  "displayName": "John Lennon",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "george-harrison",
+  "enwiki": "George Harrison",
+  "displayName": "George Harrison",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "janis-joplin",
+  "enwiki": "Janis Joplin",
+  "displayName": "Janis Joplin",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "jimi-hendrix",
+  "enwiki": "Jimi Hendrix",
+  "displayName": "Jimi Hendrix",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "jim-morrison",
+  "enwiki": "Jim Morrison",
+  "displayName": "Jim Morrison",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "bob-marley",
+  "enwiki": "Bob Marley",
+  "displayName": "Bob Marley",
+  "region": "latam",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "peter-tosh",
+  "enwiki": "Peter Tosh",
+  "displayName": "Peter Tosh",
+  "region": "latam",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "celia-cruz",
+  "enwiki": "Celia Cruz",
+  "displayName": "Celia Cruz",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "tito-puente",
+  "enwiki": "Tito Puente",
+  "displayName": "Tito Puente",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "selena",
+  "enwiki": "Selena",
+  "displayName": "Selena",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "ravi-shankar",
+  "enwiki": "Ravi Shankar",
+  "displayName": "Ravi Shankar",
+  "region": "sasia",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "nusrat-fateh-ali-khan",
+  "enwiki": "Nusrat Fateh Ali Khan",
+  "displayName": "Nusrat Fateh Ali Khan",
+  "region": "sasia",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "lata-mangeshkar",
+  "enwiki": "Lata Mangeshkar",
+  "displayName": "Lata Mangeshkar",
+  "region": "sasia",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "kishore-kumar",
+  "enwiki": "Kishore Kumar",
+  "displayName": "Kishore Kumar",
+  "region": "sasia",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "m-s-subbulakshmi",
+  "enwiki": "M. S. Subbulakshmi",
+  "displayName": "M. S. Subbulakshmi",
+  "region": "sasia",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "bhimsen-joshi",
+  "enwiki": "Bhimsen Joshi",
+  "displayName": "Bhimsen Joshi",
+  "region": "sasia",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "teresa-teng",
+  "enwiki": "Teresa Teng",
+  "displayName": "Teresa Teng",
+  "region": "easia",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "leslie-cheung",
+  "enwiki": "Leslie Cheung",
+  "displayName": "Leslie Cheung",
+  "region": "easia",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "anita-mui",
+  "enwiki": "Anita Mui",
+  "displayName": "Anita Mui",
+  "region": "easia",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "hibari-misora",
+  "enwiki": "Hibari Misora",
+  "displayName": "Hibari Misora",
+  "region": "easia",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "ryuichi-sakamoto",
+  "enwiki": "Ryuichi Sakamoto",
+  "displayName": "Ryuichi Sakamoto",
+  "region": "easia",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "toru-takemitsu",
+  "enwiki": "Tōru Takemitsu",
+  "displayName": "Tōru Takemitsu",
+  "region": "easia",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "isang-yun",
+  "enwiki": "Isang Yun",
+  "displayName": "Isang Yun",
+  "region": "easia",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "miriam-makeba",
+  "enwiki": "Miriam Makeba",
+  "displayName": "Miriam Makeba",
+  "region": "africa",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "fela-kuti",
+  "enwiki": "Fela Kuti",
+  "displayName": "Fela Kuti",
+  "region": "africa",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "ali-farka-toure",
+  "enwiki": "Ali Farka Touré",
+  "displayName": "Ali Farka Touré",
+  "region": "africa",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "cesaria-evora",
+  "enwiki": "Cesária Évora",
+  "displayName": "Cesária Évora",
+  "region": "africa",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "edith-piaf",
+  "enwiki": "Édith Piaf",
+  "displayName": "Édith Piaf",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "jacques-brel",
+  "enwiki": "Jacques Brel",
+  "displayName": "Jacques Brel",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "georges-brassens",
+  "enwiki": "Georges Brassens",
+  "displayName": "Georges Brassens",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "serge-gainsbourg",
+  "enwiki": "Serge Gainsbourg",
+  "displayName": "Serge Gainsbourg",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "charles-aznavour",
+  "enwiki": "Charles Aznavour",
+  "displayName": "Charles Aznavour",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "dalida",
+  "enwiki": "Dalida",
+  "displayName": "Dalida",
+  "region": "mena",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "maria-callas",
+  "enwiki": "Maria Callas",
+  "displayName": "Maria Callas",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "luciano-pavarotti",
+  "enwiki": "Luciano Pavarotti",
+  "displayName": "Luciano Pavarotti",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "enrico-caruso",
+  "enwiki": "Enrico Caruso",
+  "displayName": "Enrico Caruso",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "renata-tebaldi",
+  "enwiki": "Renata Tebaldi",
+  "displayName": "Renata Tebaldi",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "birgit-nilsson",
+  "enwiki": "Birgit Nilsson",
+  "displayName": "Birgit Nilsson",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "kirsten-flagstad",
+  "enwiki": "Kirsten Flagstad",
+  "displayName": "Kirsten Flagstad",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "jussi-bjorling",
+  "enwiki": "Jussi Björling",
+  "displayName": "Jussi Björling",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "glenn-gould",
+  "enwiki": "Glenn Gould",
+  "displayName": "Glenn Gould",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "clara-haskil",
+  "enwiki": "Clara Haskil",
+  "displayName": "Clara Haskil",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "dinu-lipatti",
+  "enwiki": "Dinu Lipatti",
+  "displayName": "Dinu Lipatti",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "jacqueline-du-pre",
+  "enwiki": "Jacqueline du Pré",
+  "displayName": "Jacqueline du Pré",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "yehudi-menuhin",
+  "enwiki": "Yehudi Menuhin",
+  "displayName": "Yehudi Menuhin",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "pablo-casals",
+  "enwiki": "Pablo Casals",
+  "displayName": "Pablo Casals",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "andres-segovia",
+  "enwiki": "Andrés Segovia",
+  "displayName": "Andrés Segovia",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "django-reinhardt",
+  "enwiki": "Django Reinhardt",
+  "displayName": "Django Reinhardt",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "stephane-grappelli",
+  "enwiki": "Stéphane Grappelli",
+  "displayName": "Stéphane Grappelli",
+  "region": "europe",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "peggy-lee",
+  "enwiki": "Peggy Lee",
+  "displayName": "Peggy Lee",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "judy-garland",
+  "enwiki": "Judy Garland",
+  "displayName": "Judy Garland",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "frank-sinatra",
+  "enwiki": "Frank Sinatra",
+  "displayName": "Frank Sinatra",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "dean-martin",
+  "enwiki": "Dean Martin",
+  "displayName": "Dean Martin",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "nat-king-cole",
+  "enwiki": "Nat King Cole",
+  "displayName": "Nat King Cole",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "bing-crosby",
+  "enwiki": "Bing Crosby",
+  "displayName": "Bing Crosby",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "karen-carpenter",
+  "enwiki": "Karen Carpenter",
+  "displayName": "Karen Carpenter",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "amy-winehouse",
+  "enwiki": "Amy Winehouse",
+  "displayName": "Amy Winehouse",
+  "region": "europe",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "tina-turner",
+  "enwiki": "Tina Turner",
+  "displayName": "Tina Turner",
+  "region": "namerica",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "harry-belafonte",
+  "enwiki": "Harry Belafonte",
+  "displayName": "Harry Belafonte",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "sidney-bechet",
+  "enwiki": "Sidney Bechet",
+  "displayName": "Sidney Bechet",
+  "region": "namerica",
+  "field": "music",
+  "g": "m"
+ },
+ {
+  "slug": "josephine-baker",
+  "enwiki": "Josephine Baker",
+  "displayName": "Josephine Baker",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "claude-monet",
+  "enwiki": "Claude Monet",
+  "displayName": "Claude Monet",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "edouard-manet",
+  "enwiki": "Édouard Manet",
+  "displayName": "Édouard Manet",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "edgar-degas",
+  "enwiki": "Edgar Degas",
+  "displayName": "Edgar Degas",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "pierre-auguste-renoir",
+  "enwiki": "Pierre-Auguste Renoir",
+  "displayName": "Pierre-Auguste Renoir",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "paul-cezanne",
+  "enwiki": "Paul Cézanne",
+  "displayName": "Paul Cézanne",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "paul-gauguin",
+  "enwiki": "Paul Gauguin",
+  "displayName": "Paul Gauguin",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "georges-seurat",
+  "enwiki": "Georges Seurat",
+  "displayName": "Georges Seurat",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "henri-de-toulouse-lautrec",
+  "enwiki": "Henri de Toulouse-Lautrec",
+  "displayName": "Henri de Toulouse-Lautrec",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "henri-matisse",
+  "enwiki": "Henri Matisse",
+  "displayName": "Henri Matisse",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "pablo-picasso",
+  "enwiki": "Pablo Picasso",
+  "displayName": "Pablo Picasso",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "georges-braque",
+  "enwiki": "Georges Braque",
+  "displayName": "Georges Braque",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "piet-mondrian",
+  "enwiki": "Piet Mondrian",
+  "displayName": "Piet Mondrian",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "gustav-klimt",
+  "enwiki": "Gustav Klimt",
+  "displayName": "Gustav Klimt",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "egon-schiele",
+  "enwiki": "Egon Schiele",
+  "displayName": "Egon Schiele",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "edvard-munch",
+  "enwiki": "Edvard Munch",
+  "displayName": "Edvard Munch",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "kathe-kollwitz",
+  "enwiki": "Käthe Kollwitz",
+  "displayName": "Käthe Kollwitz",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "paula-modersohn-becker",
+  "enwiki": "Paula Modersohn-Becker",
+  "displayName": "Paula Modersohn-Becker",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "gabriele-munter",
+  "enwiki": "Gabriele Münter",
+  "displayName": "Gabriele Münter",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "hannah-hoch",
+  "enwiki": "Hannah Höch",
+  "displayName": "Hannah Höch",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "hilma-af-klint",
+  "enwiki": "Hilma af Klint",
+  "displayName": "Hilma af Klint",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "berthe-morisot",
+  "enwiki": "Berthe Morisot",
+  "displayName": "Berthe Morisot",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "mary-cassatt",
+  "enwiki": "Mary Cassatt",
+  "displayName": "Mary Cassatt",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "rosa-bonheur",
+  "enwiki": "Rosa Bonheur",
+  "displayName": "Rosa Bonheur",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "elisabeth-vigee-le-brun",
+  "enwiki": "Élisabeth Vigée Le Brun",
+  "displayName": "Élisabeth Vigée Le Brun",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "artemisia-gentileschi",
+  "enwiki": "Artemisia Gentileschi",
+  "displayName": "Artemisia Gentileschi",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "rembrandt",
+  "enwiki": "Rembrandt",
+  "displayName": "Rembrandt",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "francisco-goya",
+  "enwiki": "Francisco Goya",
+  "displayName": "Francisco Goya",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "j-m-w-turner",
+  "enwiki": "J. M. W. Turner",
+  "displayName": "J. M. W. Turner",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "john-constable",
+  "enwiki": "John Constable",
+  "displayName": "John Constable",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "william-blake",
+  "enwiki": "William Blake",
+  "displayName": "William Blake",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "dante-gabriel-rossetti",
+  "enwiki": "Dante Gabriel Rossetti",
+  "displayName": "Dante Gabriel Rossetti",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "georgia-o-keeffe",
+  "enwiki": "Georgia O'Keeffe",
+  "displayName": "Georgia O'Keeffe",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "edward-hopper",
+  "enwiki": "Edward Hopper",
+  "displayName": "Edward Hopper",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "jackson-pollock",
+  "enwiki": "Jackson Pollock",
+  "displayName": "Jackson Pollock",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "lee-krasner",
+  "enwiki": "Lee Krasner",
+  "displayName": "Lee Krasner",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "willem-de-kooning",
+  "enwiki": "Willem de Kooning",
+  "displayName": "Willem de Kooning",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "helen-frankenthaler",
+  "enwiki": "Helen Frankenthaler",
+  "displayName": "Helen Frankenthaler",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "joan-mitchell",
+  "enwiki": "Joan Mitchell",
+  "displayName": "Joan Mitchell",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "agnes-martin",
+  "enwiki": "Agnes Martin",
+  "displayName": "Agnes Martin",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "louise-bourgeois",
+  "enwiki": "Louise Bourgeois",
+  "displayName": "Louise Bourgeois",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "alexander-calder",
+  "enwiki": "Alexander Calder",
+  "displayName": "Alexander Calder",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "andy-warhol",
+  "enwiki": "Andy Warhol",
+  "displayName": "Andy Warhol",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "jean-michel-basquiat",
+  "enwiki": "Jean-Michel Basquiat",
+  "displayName": "Jean-Michel Basquiat",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "keith-haring",
+  "enwiki": "Keith Haring",
+  "displayName": "Keith Haring",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "roy-lichtenstein",
+  "enwiki": "Roy Lichtenstein",
+  "displayName": "Roy Lichtenstein",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "robert-rauschenberg",
+  "enwiki": "Robert Rauschenberg",
+  "displayName": "Robert Rauschenberg",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "marcel-duchamp",
+  "enwiki": "Marcel Duchamp",
+  "displayName": "Marcel Duchamp",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "man-ray",
+  "enwiki": "Man Ray",
+  "displayName": "Man Ray",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "salvador-dali",
+  "enwiki": "Salvador Dalí",
+  "displayName": "Salvador Dalí",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "joan-miro",
+  "enwiki": "Joan Miró",
+  "displayName": "Joan Miró",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "rene-magritte",
+  "enwiki": "René Magritte",
+  "displayName": "René Magritte",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "max-ernst",
+  "enwiki": "Max Ernst",
+  "displayName": "Max Ernst",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "leonora-carrington",
+  "enwiki": "Leonora Carrington",
+  "displayName": "Leonora Carrington",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "remedios-varo",
+  "enwiki": "Remedios Varo",
+  "displayName": "Remedios Varo",
+  "region": "europe",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "diego-rivera",
+  "enwiki": "Diego Rivera",
+  "displayName": "Diego Rivera",
+  "region": "latam",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "jose-clemente-orozco",
+  "enwiki": "José Clemente Orozco",
+  "displayName": "José Clemente Orozco",
+  "region": "latam",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "david-alfaro-siqueiros",
+  "enwiki": "David Alfaro Siqueiros",
+  "displayName": "David Alfaro Siqueiros",
+  "region": "latam",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "rufino-tamayo",
+  "enwiki": "Rufino Tamayo",
+  "displayName": "Rufino Tamayo",
+  "region": "latam",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "tarsila-do-amaral",
+  "enwiki": "Tarsila do Amaral",
+  "displayName": "Tarsila do Amaral",
+  "region": "latam",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "candido-portinari",
+  "enwiki": "Candido Portinari",
+  "displayName": "Candido Portinari",
+  "region": "latam",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "wifredo-lam",
+  "enwiki": "Wifredo Lam",
+  "displayName": "Wifredo Lam",
+  "region": "latam",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "fernando-botero",
+  "enwiki": "Fernando Botero",
+  "displayName": "Fernando Botero",
+  "region": "latam",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "amrita-sher-gil",
+  "enwiki": "Amrita Sher-Gil",
+  "displayName": "Amrita Sher-Gil",
+  "region": "sasia",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "raja-ravi-varma",
+  "enwiki": "Raja Ravi Varma",
+  "displayName": "Raja Ravi Varma",
+  "region": "sasia",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "nandalal-bose",
+  "enwiki": "Nandalal Bose",
+  "displayName": "Nandalal Bose",
+  "region": "sasia",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "m-f-husain",
+  "enwiki": "M. F. Husain",
+  "displayName": "M. F. Husain",
+  "region": "sasia",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "s-h-raza",
+  "enwiki": "S. H. Raza",
+  "displayName": "S. H. Raza",
+  "region": "sasia",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "tyeb-mehta",
+  "enwiki": "Tyeb Mehta",
+  "displayName": "Tyeb Mehta",
+  "region": "sasia",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "xu-beihong",
+  "enwiki": "Xu Beihong",
+  "displayName": "Xu Beihong",
+  "region": "easia",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "zhang-daqian",
+  "enwiki": "Zhang Daqian",
+  "displayName": "Zhang Daqian",
+  "region": "easia",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "tsuguharu-foujita",
+  "enwiki": "Tsuguharu Foujita",
+  "displayName": "Tsuguharu Foujita",
+  "region": "easia",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "isamu-noguchi",
+  "enwiki": "Isamu Noguchi",
+  "displayName": "Isamu Noguchi",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "ben-enwonwu",
+  "enwiki": "Ben Enwonwu",
+  "displayName": "Ben Enwonwu",
+  "region": "africa",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "gerard-sekoto",
+  "enwiki": "Gerard Sekoto",
+  "displayName": "Gerard Sekoto",
+  "region": "africa",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "irma-stern",
+  "enwiki": "Irma Stern",
+  "displayName": "Irma Stern",
+  "region": "africa",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "ansel-adams",
+  "enwiki": "Ansel Adams",
+  "displayName": "Ansel Adams",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "dorothea-lange",
+  "enwiki": "Dorothea Lange",
+  "displayName": "Dorothea Lange",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "diane-arbus",
+  "enwiki": "Diane Arbus",
+  "displayName": "Diane Arbus",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "robert-capa",
+  "enwiki": "Robert Capa",
+  "displayName": "Robert Capa",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "henri-cartier-bresson",
+  "enwiki": "Henri Cartier-Bresson",
+  "displayName": "Henri Cartier-Bresson",
+  "region": "europe",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "vivian-maier",
+  "enwiki": "Vivian Maier",
+  "displayName": "Vivian Maier",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "gordon-parks",
+  "enwiki": "Gordon Parks",
+  "displayName": "Gordon Parks",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "james-van-der-zee",
+  "enwiki": "James Van Der Zee",
+  "displayName": "James Van Der Zee",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "berenice-abbott",
+  "enwiki": "Berenice Abbott",
+  "displayName": "Berenice Abbott",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "margaret-bourke-white",
+  "enwiki": "Margaret Bourke-White",
+  "displayName": "Margaret Bourke-White",
+  "region": "namerica",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "walker-evans",
+  "enwiki": "Walker Evans",
+  "displayName": "Walker Evans",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "w-eugene-smith",
+  "enwiki": "W. Eugene Smith",
+  "displayName": "W. Eugene Smith",
+  "region": "namerica",
+  "field": "art",
+  "g": "m"
+ },
+ {
+  "slug": "frank-lloyd-wright",
+  "enwiki": "Frank Lloyd Wright",
+  "displayName": "Frank Lloyd Wright",
+  "region": "namerica",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "le-corbusier",
+  "enwiki": "Le Corbusier",
+  "displayName": "Le Corbusier",
+  "region": "europe",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "ludwig-mies-van-der-rohe",
+  "enwiki": "Ludwig Mies van der Rohe",
+  "displayName": "Ludwig Mies van der Rohe",
+  "region": "europe",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "walter-gropius",
+  "enwiki": "Walter Gropius",
+  "displayName": "Walter Gropius",
+  "region": "europe",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "alvar-aalto",
+  "enwiki": "Alvar Aalto",
+  "displayName": "Alvar Aalto",
+  "region": "europe",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "eero-saarinen",
+  "enwiki": "Eero Saarinen",
+  "displayName": "Eero Saarinen",
+  "region": "europe",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "antoni-gaudi",
+  "enwiki": "Antoni Gaudí",
+  "displayName": "Antoni Gaudí",
+  "region": "europe",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "oscar-niemeyer",
+  "enwiki": "Oscar Niemeyer",
+  "displayName": "Oscar Niemeyer",
+  "region": "latam",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "lina-bo-bardi",
+  "enwiki": "Lina Bo Bardi",
+  "displayName": "Lina Bo Bardi",
+  "region": "latam",
+  "field": "architecture",
+  "g": "f"
+ },
+ {
+  "slug": "luis-barragan",
+  "enwiki": "Luis Barragán",
+  "displayName": "Luis Barragán",
+  "region": "latam",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "kenzo-tange",
+  "enwiki": "Kenzō Tange",
+  "displayName": "Kenzō Tange",
+  "region": "easia",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "eileen-gray",
+  "enwiki": "Eileen Gray",
+  "displayName": "Eileen Gray",
+  "region": "europe",
+  "field": "architecture",
+  "g": "f"
+ },
+ {
+  "slug": "charlotte-perriand",
+  "enwiki": "Charlotte Perriand",
+  "displayName": "Charlotte Perriand",
+  "region": "europe",
+  "field": "architecture",
+  "g": "f"
+ },
+ {
+  "slug": "ray-eames",
+  "enwiki": "Ray Eames",
+  "displayName": "Ray Eames",
+  "region": "namerica",
+  "field": "architecture",
+  "g": "f"
+ },
+ {
+  "slug": "charles-eames",
+  "enwiki": "Charles Eames",
+  "displayName": "Charles Eames",
+  "region": "namerica",
+  "field": "architecture",
+  "g": "m"
+ },
+ {
+  "slug": "florence-knoll",
+  "enwiki": "Florence Knoll",
+  "displayName": "Florence Knoll",
+  "region": "namerica",
+  "field": "architecture",
+  "g": "f"
+ },
+ {
+  "slug": "coco-chanel",
+  "enwiki": "Coco Chanel",
+  "displayName": "Coco Chanel",
+  "region": "europe",
+  "field": "design",
+  "g": "f"
+ },
+ {
+  "slug": "cristobal-balenciaga",
+  "enwiki": "Cristóbal Balenciaga",
+  "displayName": "Cristóbal Balenciaga",
+  "region": "europe",
+  "field": "design",
+  "g": "m"
+ },
+ {
+  "slug": "christian-dior",
+  "enwiki": "Christian Dior",
+  "displayName": "Christian Dior",
+  "region": "europe",
+  "field": "design",
+  "g": "m"
+ },
+ {
+  "slug": "yves-saint-laurent",
+  "enwiki": "Yves Saint Laurent",
+  "displayName": "Yves Saint Laurent",
+  "region": "africa",
+  "field": "design",
+  "g": "m"
+ },
+ {
+  "slug": "elsa-schiaparelli",
+  "enwiki": "Elsa Schiaparelli",
+  "displayName": "Elsa Schiaparelli",
+  "region": "europe",
+  "field": "design",
+  "g": "f"
+ },
+ {
+  "slug": "madeleine-vionnet",
+  "enwiki": "Madeleine Vionnet",
+  "displayName": "Madeleine Vionnet",
+  "region": "europe",
+  "field": "design",
+  "g": "f"
+ },
+ {
+  "slug": "alexander-mcqueen",
+  "enwiki": "Alexander McQueen",
+  "displayName": "Alexander McQueen",
+  "region": "europe",
+  "field": "design",
+  "g": "m"
+ },
+ {
+  "slug": "issey-miyake",
+  "enwiki": "Issey Miyake",
+  "displayName": "Issey Miyake",
+  "region": "easia",
+  "field": "design",
+  "g": "m"
+ },
+ {
+  "slug": "hanae-mori",
+  "enwiki": "Hanae Mori",
+  "displayName": "Hanae Mori",
+  "region": "easia",
+  "field": "design",
+  "g": "f"
+ },
+ {
+  "slug": "karl-lagerfeld",
+  "enwiki": "Karl Lagerfeld",
+  "displayName": "Karl Lagerfeld",
+  "region": "europe",
+  "field": "design",
+  "g": "m"
+ },
+ {
+  "slug": "vivienne-westwood",
+  "enwiki": "Vivienne Westwood",
+  "displayName": "Vivienne Westwood",
+  "region": "europe",
+  "field": "design",
+  "g": "f"
+ },
+ {
+  "slug": "mary-quant",
+  "enwiki": "Mary Quant",
+  "displayName": "Mary Quant",
+  "region": "europe",
+  "field": "design",
+  "g": "f"
+ },
+ {
+  "slug": "alfred-hitchcock",
+  "enwiki": "Alfred Hitchcock",
+  "displayName": "Alfred Hitchcock",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "orson-welles",
+  "enwiki": "Orson Welles",
+  "displayName": "Orson Welles",
+  "region": "namerica",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "stanley-kubrick",
+  "enwiki": "Stanley Kubrick",
+  "displayName": "Stanley Kubrick",
+  "region": "namerica",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "akira-kurosawa",
+  "enwiki": "Akira Kurosawa",
+  "displayName": "Akira Kurosawa",
+  "region": "easia",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "yasujiro-ozu",
+  "enwiki": "Yasujirō Ozu",
+  "displayName": "Yasujirō Ozu",
+  "region": "easia",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "kenji-mizoguchi",
+  "enwiki": "Kenji Mizoguchi",
+  "displayName": "Kenji Mizoguchi",
+  "region": "easia",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "satyajit-ray",
+  "enwiki": "Satyajit Ray",
+  "displayName": "Satyajit Ray",
+  "region": "sasia",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "ritwik-ghatak",
+  "enwiki": "Ritwik Ghatak",
+  "displayName": "Ritwik Ghatak",
+  "region": "sasia",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "guru-dutt",
+  "enwiki": "Guru Dutt",
+  "displayName": "Guru Dutt",
+  "region": "sasia",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "raj-kapoor",
+  "enwiki": "Raj Kapoor",
+  "displayName": "Raj Kapoor",
+  "region": "sasia",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "nargis",
+  "enwiki": "Nargis",
+  "displayName": "Nargis",
+  "region": "sasia",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "madhubala",
+  "enwiki": "Madhubala",
+  "displayName": "Madhubala",
+  "region": "sasia",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "meena-kumari",
+  "enwiki": "Meena Kumari",
+  "displayName": "Meena Kumari",
+  "region": "sasia",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "smita-patil",
+  "enwiki": "Smita Patil",
+  "displayName": "Smita Patil",
+  "region": "sasia",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "sridevi",
+  "enwiki": "Sridevi",
+  "displayName": "Sridevi",
+  "region": "sasia",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "ingmar-bergman",
+  "enwiki": "Ingmar Bergman",
+  "displayName": "Ingmar Bergman",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "federico-fellini",
+  "enwiki": "Federico Fellini",
+  "displayName": "Federico Fellini",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "michelangelo-antonioni",
+  "enwiki": "Michelangelo Antonioni",
+  "displayName": "Michelangelo Antonioni",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "vittorio-de-sica",
+  "enwiki": "Vittorio De Sica",
+  "displayName": "Vittorio De Sica",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "luchino-visconti",
+  "enwiki": "Luchino Visconti",
+  "displayName": "Luchino Visconti",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "anna-magnani",
+  "enwiki": "Anna Magnani",
+  "displayName": "Anna Magnani",
+  "region": "europe",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "marcello-mastroianni",
+  "enwiki": "Marcello Mastroianni",
+  "displayName": "Marcello Mastroianni",
+  "region": "europe",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "francois-truffaut",
+  "enwiki": "François Truffaut",
+  "displayName": "François Truffaut",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "jean-luc-godard",
+  "enwiki": "Jean-Luc Godard",
+  "displayName": "Jean-Luc Godard",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "agnes-varda",
+  "enwiki": "Agnès Varda",
+  "displayName": "Agnès Varda",
+  "region": "europe",
+  "field": "film",
+  "g": "f"
+ },
+ {
+  "slug": "alain-resnais",
+  "enwiki": "Alain Resnais",
+  "displayName": "Alain Resnais",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "jean-renoir",
+  "enwiki": "Jean Renoir",
+  "displayName": "Jean Renoir",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "luis-bunuel",
+  "enwiki": "Luis Buñuel",
+  "displayName": "Luis Buñuel",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "charlie-chaplin",
+  "enwiki": "Charlie Chaplin",
+  "displayName": "Charlie Chaplin",
+  "region": "europe",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "buster-keaton",
+  "enwiki": "Buster Keaton",
+  "displayName": "Buster Keaton",
+  "region": "namerica",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "mary-pickford",
+  "enwiki": "Mary Pickford",
+  "displayName": "Mary Pickford",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "greta-garbo",
+  "enwiki": "Greta Garbo",
+  "displayName": "Greta Garbo",
+  "region": "europe",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "marlene-dietrich",
+  "enwiki": "Marlene Dietrich",
+  "displayName": "Marlene Dietrich",
+  "region": "europe",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "ingrid-bergman",
+  "enwiki": "Ingrid Bergman",
+  "displayName": "Ingrid Bergman",
+  "region": "europe",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "audrey-hepburn",
+  "enwiki": "Audrey Hepburn",
+  "displayName": "Audrey Hepburn",
+  "region": "europe",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "katharine-hepburn",
+  "enwiki": "Katharine Hepburn",
+  "displayName": "Katharine Hepburn",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "bette-davis",
+  "enwiki": "Bette Davis",
+  "displayName": "Bette Davis",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "grace-kelly",
+  "enwiki": "Grace Kelly",
+  "displayName": "Grace Kelly",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "marilyn-monroe",
+  "enwiki": "Marilyn Monroe",
+  "displayName": "Marilyn Monroe",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "james-dean",
+  "enwiki": "James Dean",
+  "displayName": "James Dean",
+  "region": "namerica",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "marlon-brando",
+  "enwiki": "Marlon Brando",
+  "displayName": "Marlon Brando",
+  "region": "namerica",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "sidney-poitier",
+  "enwiki": "Sidney Poitier",
+  "displayName": "Sidney Poitier",
+  "region": "namerica",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "paul-newman",
+  "enwiki": "Paul Newman",
+  "displayName": "Paul Newman",
+  "region": "namerica",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "elizabeth-taylor",
+  "enwiki": "Elizabeth Taylor",
+  "displayName": "Elizabeth Taylor",
+  "region": "europe",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "rita-hayworth",
+  "enwiki": "Rita Hayworth",
+  "displayName": "Rita Hayworth",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "dorothy-dandridge",
+  "enwiki": "Dorothy Dandridge",
+  "displayName": "Dorothy Dandridge",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "hattie-mcdaniel",
+  "enwiki": "Hattie McDaniel",
+  "displayName": "Hattie McDaniel",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "anna-may-wong",
+  "enwiki": "Anna May Wong",
+  "displayName": "Anna May Wong",
+  "region": "namerica",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "bruce-lee",
+  "enwiki": "Bruce Lee",
+  "displayName": "Bruce Lee",
+  "region": "namerica",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "toshiro-mifune",
+  "enwiki": "Toshiro Mifune",
+  "displayName": "Toshiro Mifune",
+  "region": "easia",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "setsuko-hara",
+  "enwiki": "Setsuko Hara",
+  "displayName": "Setsuko Hara",
+  "region": "easia",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "oscar-micheaux",
+  "enwiki": "Oscar Micheaux",
+  "displayName": "Oscar Micheaux",
+  "region": "namerica",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "ousmane-sembene",
+  "enwiki": "Ousmane Sembène",
+  "displayName": "Ousmane Sembène",
+  "region": "africa",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "djibril-diop-mambety",
+  "enwiki": "Djibril Diop Mambéty",
+  "displayName": "Djibril Diop Mambéty",
+  "region": "africa",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "youssef-chahine",
+  "enwiki": "Youssef Chahine",
+  "displayName": "Youssef Chahine",
+  "region": "mena",
+  "field": "film",
+  "g": "m"
+ },
+ {
+  "slug": "faten-hamama",
+  "enwiki": "Faten Hamama",
+  "displayName": "Faten Hamama",
+  "region": "mena",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "omar-sharif",
+  "enwiki": "Omar Sharif",
+  "displayName": "Omar Sharif",
+  "region": "mena",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "cantinflas",
+  "enwiki": "Cantinflas",
+  "displayName": "Cantinflas",
+  "region": "latam",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "dolores-del-rio",
+  "enwiki": "Dolores del Río",
+  "displayName": "Dolores del Río",
+  "region": "latam",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "maria-felix",
+  "enwiki": "María Félix",
+  "displayName": "María Félix",
+  "region": "latam",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "pedro-infante",
+  "enwiki": "Pedro Infante",
+  "displayName": "Pedro Infante",
+  "region": "latam",
+  "field": "performing",
+  "g": "m"
+ },
+ {
+  "slug": "abraham-lincoln",
+  "enwiki": "Abraham Lincoln",
+  "displayName": "Abraham Lincoln",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "susan-b-anthony",
+  "enwiki": "Susan B. Anthony",
+  "displayName": "Susan B. Anthony",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "elizabeth-cady-stanton",
+  "enwiki": "Elizabeth Cady Stanton",
+  "displayName": "Elizabeth Cady Stanton",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "lucretia-mott",
+  "enwiki": "Lucretia Mott",
+  "displayName": "Lucretia Mott",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "w-e-b-du-bois",
+  "enwiki": "W. E. B. Du Bois",
+  "displayName": "W. E. B. Du Bois",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "booker-t-washington",
+  "enwiki": "Booker T. Washington",
+  "displayName": "Booker T. Washington",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "mary-mcleod-bethune",
+  "enwiki": "Mary McLeod Bethune",
+  "displayName": "Mary McLeod Bethune",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "rosa-parks",
+  "enwiki": "Rosa Parks",
+  "displayName": "Rosa Parks",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "martin-luther-king-jr",
+  "enwiki": "Martin Luther King Jr.",
+  "displayName": "Martin Luther King Jr.",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "malcolm-x",
+  "enwiki": "Malcolm X",
+  "displayName": "Malcolm X",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "medgar-evers",
+  "enwiki": "Medgar Evers",
+  "displayName": "Medgar Evers",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "fannie-lou-hamer",
+  "enwiki": "Fannie Lou Hamer",
+  "displayName": "Fannie Lou Hamer",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "ella-baker",
+  "enwiki": "Ella Baker",
+  "displayName": "Ella Baker",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "shirley-chisholm",
+  "enwiki": "Shirley Chisholm",
+  "displayName": "Shirley Chisholm",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "thurgood-marshall",
+  "enwiki": "Thurgood Marshall",
+  "displayName": "Thurgood Marshall",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "ruth-bader-ginsburg",
+  "enwiki": "Ruth Bader Ginsburg",
+  "displayName": "Ruth Bader Ginsburg",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "sandra-day-o-connor",
+  "enwiki": "Sandra Day O'Connor",
+  "displayName": "Sandra Day O'Connor",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "eleanor-roosevelt",
+  "enwiki": "Eleanor Roosevelt",
+  "displayName": "Eleanor Roosevelt",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "franklin-d-roosevelt",
+  "enwiki": "Franklin D. Roosevelt",
+  "displayName": "Franklin D. Roosevelt",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "theodore-roosevelt",
+  "enwiki": "Theodore Roosevelt",
+  "displayName": "Theodore Roosevelt",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "winston-churchill",
+  "enwiki": "Winston Churchill",
+  "displayName": "Winston Churchill",
+  "region": "europe",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "clement-attlee",
+  "enwiki": "Clement Attlee",
+  "displayName": "Clement Attlee",
+  "region": "europe",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "emmeline-pankhurst",
+  "enwiki": "Emmeline Pankhurst",
+  "displayName": "Emmeline Pankhurst",
+  "region": "europe",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "millicent-fawcett",
+  "enwiki": "Millicent Fawcett",
+  "displayName": "Millicent Fawcett",
+  "region": "europe",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "mary-seacole",
+  "enwiki": "Mary Seacole",
+  "displayName": "Mary Seacole",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "octavia-hill",
+  "enwiki": "Octavia Hill",
+  "displayName": "Octavia Hill",
+  "region": "europe",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "william-wilberforce",
+  "enwiki": "William Wilberforce",
+  "displayName": "William Wilberforce",
+  "region": "europe",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "jawaharlal-nehru",
+  "enwiki": "Jawaharlal Nehru",
+  "displayName": "Jawaharlal Nehru",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "vallabhbhai-patel",
+  "enwiki": "Vallabhbhai Patel",
+  "displayName": "Vallabhbhai Patel",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "subhas-chandra-bose",
+  "enwiki": "Subhas Chandra Bose",
+  "displayName": "Subhas Chandra Bose",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "b-r-ambedkar",
+  "enwiki": "B. R. Ambedkar",
+  "displayName": "B. R. Ambedkar",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "indira-gandhi",
+  "enwiki": "Indira Gandhi",
+  "displayName": "Indira Gandhi",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "lal-bahadur-shastri",
+  "enwiki": "Lal Bahadur Shastri",
+  "displayName": "Lal Bahadur Shastri",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "muhammad-ali-jinnah",
+  "enwiki": "Muhammad Ali Jinnah",
+  "displayName": "Muhammad Ali Jinnah",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "fatima-jinnah",
+  "enwiki": "Fatima Jinnah",
+  "displayName": "Fatima Jinnah",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "benazir-bhutto",
+  "enwiki": "Benazir Bhutto",
+  "displayName": "Benazir Bhutto",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "sheikh-mujibur-rahman",
+  "enwiki": "Sheikh Mujibur Rahman",
+  "displayName": "Sheikh Mujibur Rahman",
+  "region": "sasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "sukarno",
+  "enwiki": "Sukarno",
+  "displayName": "Sukarno",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "mohammad-hatta",
+  "enwiki": "Mohammad Hatta",
+  "displayName": "Mohammad Hatta",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "kartini",
+  "enwiki": "Kartini",
+  "displayName": "Kartini",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "corazon-aquino",
+  "enwiki": "Corazon Aquino",
+  "displayName": "Corazon Aquino",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "sun-yat-sen",
+  "enwiki": "Sun Yat-sen",
+  "displayName": "Sun Yat-sen",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "soong-ching-ling",
+  "enwiki": "Soong Ching-ling",
+  "displayName": "Soong Ching-ling",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "zhou-enlai",
+  "enwiki": "Zhou Enlai",
+  "displayName": "Zhou Enlai",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "deng-xiaoping",
+  "enwiki": "Deng Xiaoping",
+  "displayName": "Deng Xiaoping",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "yu-gwan-sun",
+  "enwiki": "Yu Gwan-sun",
+  "displayName": "Yu Gwan-sun",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "kim-koo",
+  "enwiki": "Kim Koo",
+  "displayName": "Kim Koo",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "kwame-nkrumah",
+  "enwiki": "Kwame Nkrumah",
+  "displayName": "Kwame Nkrumah",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "julius-nyerere",
+  "enwiki": "Julius Nyerere",
+  "displayName": "Julius Nyerere",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "nelson-mandela",
+  "enwiki": "Nelson Mandela",
+  "displayName": "Nelson Mandela",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "winnie-madikizela-mandela",
+  "enwiki": "Winnie Madikizela-Mandela",
+  "displayName": "Winnie Madikizela-Mandela",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "desmond-tutu",
+  "enwiki": "Desmond Tutu",
+  "displayName": "Desmond Tutu",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "steve-biko",
+  "enwiki": "Steve Biko",
+  "displayName": "Steve Biko",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "patrice-lumumba",
+  "enwiki": "Patrice Lumumba",
+  "displayName": "Patrice Lumumba",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "thomas-sankara",
+  "enwiki": "Thomas Sankara",
+  "displayName": "Thomas Sankara",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "amilcar-cabral",
+  "enwiki": "Amílcar Cabral",
+  "displayName": "Amílcar Cabral",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "haile-selassie",
+  "enwiki": "Haile Selassie",
+  "displayName": "Haile Selassie",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "funmilayo-ransome-kuti",
+  "enwiki": "Funmilayo Ransome-Kuti",
+  "displayName": "Funmilayo Ransome-Kuti",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "simon-bolivar",
+  "enwiki": "Simón Bolívar",
+  "displayName": "Simón Bolívar",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "jose-de-san-martin",
+  "enwiki": "José de San Martín",
+  "displayName": "José de San Martín",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "bernardo-o-higgins",
+  "enwiki": "Bernardo O'Higgins",
+  "displayName": "Bernardo O'Higgins",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "benito-juarez",
+  "enwiki": "Benito Juárez",
+  "displayName": "Benito Juárez",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "emiliano-zapata",
+  "enwiki": "Emiliano Zapata",
+  "displayName": "Emiliano Zapata",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "eva-peron",
+  "enwiki": "Eva Perón",
+  "displayName": "Eva Perón",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "salvador-allende",
+  "enwiki": "Salvador Allende",
+  "displayName": "Salvador Allende",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "getulio-vargas",
+  "enwiki": "Getúlio Vargas",
+  "displayName": "Getúlio Vargas",
+  "region": "latam",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "rene-descartes",
+  "enwiki": "René Descartes",
+  "displayName": "René Descartes",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "blaise-pascal",
+  "enwiki": "Blaise Pascal",
+  "displayName": "Blaise Pascal",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "voltaire",
+  "enwiki": "Voltaire",
+  "displayName": "Voltaire",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "jean-jacques-rousseau",
+  "enwiki": "Jean-Jacques Rousseau",
+  "displayName": "Jean-Jacques Rousseau",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "denis-diderot",
+  "enwiki": "Denis Diderot",
+  "displayName": "Denis Diderot",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "montesquieu",
+  "enwiki": "Montesquieu",
+  "displayName": "Montesquieu",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "immanuel-kant",
+  "enwiki": "Immanuel Kant",
+  "displayName": "Immanuel Kant",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "georg-wilhelm-friedrich-hegel",
+  "enwiki": "Georg Wilhelm Friedrich Hegel",
+  "displayName": "Georg Wilhelm Friedrich Hegel",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "arthur-schopenhauer",
+  "enwiki": "Arthur Schopenhauer",
+  "displayName": "Arthur Schopenhauer",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "friedrich-nietzsche",
+  "enwiki": "Friedrich Nietzsche",
+  "displayName": "Friedrich Nietzsche",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "s-ren-kierkegaard",
+  "enwiki": "Søren Kierkegaard",
+  "displayName": "Søren Kierkegaard",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "karl-marx",
+  "enwiki": "Karl Marx",
+  "displayName": "Karl Marx",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "friedrich-engels",
+  "enwiki": "Friedrich Engels",
+  "displayName": "Friedrich Engels",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "john-stuart-mill",
+  "enwiki": "John Stuart Mill",
+  "displayName": "John Stuart Mill",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "harriet-taylor-mill",
+  "enwiki": "Harriet Taylor Mill",
+  "displayName": "Harriet Taylor Mill",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "f"
+ },
+ {
+  "slug": "jeremy-bentham",
+  "enwiki": "Jeremy Bentham",
+  "displayName": "Jeremy Bentham",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "ludwig-wittgenstein",
+  "enwiki": "Ludwig Wittgenstein",
+  "displayName": "Ludwig Wittgenstein",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "bertrand-russell",
+  "enwiki": "Bertrand Russell",
+  "displayName": "Bertrand Russell",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "alfred-north-whitehead",
+  "enwiki": "Alfred North Whitehead",
+  "displayName": "Alfred North Whitehead",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "g-e-m-anscombe",
+  "enwiki": "G. E. M. Anscombe",
+  "displayName": "G. E. M. Anscombe",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "f"
+ },
+ {
+  "slug": "simone-weil",
+  "enwiki": "Simone Weil",
+  "displayName": "Simone Weil",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "f"
+ },
+ {
+  "slug": "edith-stein",
+  "enwiki": "Edith Stein",
+  "displayName": "Edith Stein",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "f"
+ },
+ {
+  "slug": "iris-murdoch",
+  "enwiki": "Iris Murdoch",
+  "displayName": "Iris Murdoch",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "f"
+ },
+ {
+  "slug": "michel-foucault",
+  "enwiki": "Michel Foucault",
+  "displayName": "Michel Foucault",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "jacques-derrida",
+  "enwiki": "Jacques Derrida",
+  "displayName": "Jacques Derrida",
+  "region": "africa",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "gilles-deleuze",
+  "enwiki": "Gilles Deleuze",
+  "displayName": "Gilles Deleuze",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "roland-barthes",
+  "enwiki": "Roland Barthes",
+  "displayName": "Roland Barthes",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "maurice-merleau-ponty",
+  "enwiki": "Maurice Merleau-Ponty",
+  "displayName": "Maurice Merleau-Ponty",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "antonio-gramsci",
+  "enwiki": "Antonio Gramsci",
+  "displayName": "Antonio Gramsci",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "benedetto-croce",
+  "enwiki": "Benedetto Croce",
+  "displayName": "Benedetto Croce",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "jose-ortega-y-gasset",
+  "enwiki": "José Ortega y Gasset",
+  "displayName": "José Ortega y Gasset",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "maria-zambrano",
+  "enwiki": "María Zambrano",
+  "displayName": "María Zambrano",
+  "region": "europe",
+  "field": "philosophy",
+  "g": "f"
+ },
+ {
+  "slug": "clara-zetkin",
+  "enwiki": "Clara Zetkin",
+  "displayName": "Clara Zetkin",
+  "region": "europe",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "helen-keller",
+  "enwiki": "Helen Keller",
+  "displayName": "Helen Keller",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "anne-sullivan",
+  "enwiki": "Anne Sullivan",
+  "displayName": "Anne Sullivan",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "jane-addams",
+  "enwiki": "Jane Addams",
+  "displayName": "Jane Addams",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "dorothy-day",
+  "enwiki": "Dorothy Day",
+  "displayName": "Dorothy Day",
+  "region": "namerica",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "mother-teresa",
+  "enwiki": "Mother Teresa",
+  "displayName": "Mother Teresa",
+  "region": "europe",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "swami-vivekananda",
+  "enwiki": "Swami Vivekananda",
+  "displayName": "Swami Vivekananda",
+  "region": "sasia",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "sri-aurobindo",
+  "enwiki": "Sri Aurobindo",
+  "displayName": "Sri Aurobindo",
+  "region": "sasia",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "ramana-maharshi",
+  "enwiki": "Ramana Maharshi",
+  "displayName": "Ramana Maharshi",
+  "region": "sasia",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "paramahansa-yogananda",
+  "enwiki": "Paramahansa Yogananda",
+  "displayName": "Paramahansa Yogananda",
+  "region": "sasia",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "thich-nhat-hanh",
+  "enwiki": "Thich Nhat Hanh",
+  "displayName": "Thich Nhat Hanh",
+  "region": "seasia",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "d-t-suzuki",
+  "enwiki": "D. T. Suzuki",
+  "displayName": "D. T. Suzuki",
+  "region": "easia",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "kitaro-nishida",
+  "enwiki": "Kitaro Nishida",
+  "displayName": "Kitaro Nishida",
+  "region": "easia",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "fukuzawa-yukichi",
+  "enwiki": "Fukuzawa Yukichi",
+  "displayName": "Fukuzawa Yukichi",
+  "region": "easia",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "muhammad-abduh",
+  "enwiki": "Muhammad Abduh",
+  "displayName": "Muhammad Abduh",
+  "region": "mena",
+  "field": "philosophy",
+  "g": "m"
+ },
+ {
+  "slug": "ernest-shackleton",
+  "enwiki": "Ernest Shackleton",
+  "displayName": "Ernest Shackleton",
+  "region": "europe",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "roald-amundsen",
+  "enwiki": "Roald Amundsen",
+  "displayName": "Roald Amundsen",
+  "region": "europe",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "fridtjof-nansen",
+  "enwiki": "Fridtjof Nansen",
+  "displayName": "Fridtjof Nansen",
+  "region": "europe",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "robert-falcon-scott",
+  "enwiki": "Robert Falcon Scott",
+  "displayName": "Robert Falcon Scott",
+  "region": "europe",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "matthew-henson",
+  "enwiki": "Matthew Henson",
+  "displayName": "Matthew Henson",
+  "region": "namerica",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "edmund-hillary",
+  "enwiki": "Edmund Hillary",
+  "displayName": "Edmund Hillary",
+  "region": "oceania",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "jacques-cousteau",
+  "enwiki": "Jacques Cousteau",
+  "displayName": "Jacques Cousteau",
+  "region": "europe",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "thor-heyerdahl",
+  "enwiki": "Thor Heyerdahl",
+  "displayName": "Thor Heyerdahl",
+  "region": "europe",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "nellie-bly",
+  "enwiki": "Nellie Bly",
+  "displayName": "Nellie Bly",
+  "region": "namerica",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "freya-stark",
+  "enwiki": "Freya Stark",
+  "displayName": "Freya Stark",
+  "region": "europe",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "isabella-bird",
+  "enwiki": "Isabella Bird",
+  "displayName": "Isabella Bird",
+  "region": "europe",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "alexandra-david-neel",
+  "enwiki": "Alexandra David-Néel",
+  "displayName": "Alexandra David-Néel",
+  "region": "europe",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "junko-tabei",
+  "enwiki": "Junko Tabei",
+  "displayName": "Junko Tabei",
+  "region": "easia",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "gertrude-bell",
+  "enwiki": "Gertrude Bell",
+  "displayName": "Gertrude Bell",
+  "region": "europe",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "steve-irwin",
+  "enwiki": "Steve Irwin",
+  "displayName": "Steve Irwin",
+  "region": "oceania",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "jane-goodall",
+  "enwiki": "Jane Goodall",
+  "displayName": "Jane Goodall",
+  "region": "europe",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "babe-ruth",
+  "enwiki": "Babe Ruth",
+  "displayName": "Babe Ruth",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "lou-gehrig",
+  "enwiki": "Lou Gehrig",
+  "displayName": "Lou Gehrig",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "jackie-robinson",
+  "enwiki": "Jackie Robinson",
+  "displayName": "Jackie Robinson",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "roberto-clemente",
+  "enwiki": "Roberto Clemente",
+  "displayName": "Roberto Clemente",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "josh-gibson",
+  "enwiki": "Josh Gibson",
+  "displayName": "Josh Gibson",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "babe-didrikson-zaharias",
+  "enwiki": "Babe Didrikson Zaharias",
+  "displayName": "Babe Didrikson Zaharias",
+  "region": "namerica",
+  "field": "sport",
+  "g": "f"
+ },
+ {
+  "slug": "wilma-rudolph",
+  "enwiki": "Wilma Rudolph",
+  "displayName": "Wilma Rudolph",
+  "region": "namerica",
+  "field": "sport",
+  "g": "f"
+ },
+ {
+  "slug": "jesse-owens",
+  "enwiki": "Jesse Owens",
+  "displayName": "Jesse Owens",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "florence-griffith-joyner",
+  "enwiki": "Florence Griffith Joyner",
+  "displayName": "Florence Griffith Joyner",
+  "region": "namerica",
+  "field": "sport",
+  "g": "f"
+ },
+ {
+  "slug": "muhammad-ali",
+  "enwiki": "Muhammad Ali",
+  "displayName": "Muhammad Ali",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "joe-louis",
+  "enwiki": "Joe Louis",
+  "displayName": "Joe Louis",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "rocky-marciano",
+  "enwiki": "Rocky Marciano",
+  "displayName": "Rocky Marciano",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "sugar-ray-robinson",
+  "enwiki": "Sugar Ray Robinson",
+  "displayName": "Sugar Ray Robinson",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "arthur-ashe",
+  "enwiki": "Arthur Ashe",
+  "displayName": "Arthur Ashe",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "althea-gibson",
+  "enwiki": "Althea Gibson",
+  "displayName": "Althea Gibson",
+  "region": "namerica",
+  "field": "sport",
+  "g": "f"
+ },
+ {
+  "slug": "suzanne-lenglen",
+  "enwiki": "Suzanne Lenglen",
+  "displayName": "Suzanne Lenglen",
+  "region": "europe",
+  "field": "sport",
+  "g": "f"
+ },
+ {
+  "slug": "fred-perry",
+  "enwiki": "Fred Perry",
+  "displayName": "Fred Perry",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "rene-lacoste",
+  "enwiki": "René Lacoste",
+  "displayName": "René Lacoste",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "diego-maradona",
+  "enwiki": "Diego Maradona",
+  "displayName": "Diego Maradona",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "johan-cruyff",
+  "enwiki": "Johan Cruyff",
+  "displayName": "Johan Cruyff",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "franz-beckenbauer",
+  "enwiki": "Franz Beckenbauer",
+  "displayName": "Franz Beckenbauer",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "alfredo-di-stefano",
+  "enwiki": "Alfredo Di Stéfano",
+  "displayName": "Alfredo Di Stéfano",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "ferenc-puskas",
+  "enwiki": "Ferenc Puskás",
+  "displayName": "Ferenc Puskás",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "lev-yashin",
+  "enwiki": "Lev Yashin",
+  "displayName": "Lev Yashin",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "garrincha",
+  "enwiki": "Garrincha",
+  "displayName": "Garrincha",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "socrates",
+  "enwiki": "Sócrates",
+  "displayName": "Sócrates",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "george-best",
+  "enwiki": "George Best",
+  "displayName": "George Best",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "bobby-charlton",
+  "enwiki": "Bobby Charlton",
+  "displayName": "Bobby Charlton",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "eusebio",
+  "enwiki": "Eusébio",
+  "displayName": "Eusébio",
+  "region": "africa",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "ayrton-senna",
+  "enwiki": "Ayrton Senna",
+  "displayName": "Ayrton Senna",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "juan-manuel-fangio",
+  "enwiki": "Juan Manuel Fangio",
+  "displayName": "Juan Manuel Fangio",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "niki-lauda",
+  "enwiki": "Niki Lauda",
+  "displayName": "Niki Lauda",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "james-hunt",
+  "enwiki": "James Hunt",
+  "displayName": "James Hunt",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "donald-bradman",
+  "enwiki": "Donald Bradman",
+  "displayName": "Donald Bradman",
+  "region": "oceania",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "w-g-grace",
+  "enwiki": "W. G. Grace",
+  "displayName": "W. G. Grace",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "ranjitsinhji",
+  "enwiki": "Ranjitsinhji",
+  "displayName": "Ranjitsinhji",
+  "region": "sasia",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "learie-constantine",
+  "enwiki": "Learie Constantine",
+  "displayName": "Learie Constantine",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "frank-worrell",
+  "enwiki": "Frank Worrell",
+  "displayName": "Frank Worrell",
+  "region": "latam",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "emil-zatopek",
+  "enwiki": "Emil Zátopek",
+  "displayName": "Emil Zátopek",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "paavo-nurmi",
+  "enwiki": "Paavo Nurmi",
+  "displayName": "Paavo Nurmi",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "abebe-bikila",
+  "enwiki": "Abebe Bikila",
+  "displayName": "Abebe Bikila",
+  "region": "africa",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "fanny-blankers-koen",
+  "enwiki": "Fanny Blankers-Koen",
+  "displayName": "Fanny Blankers-Koen",
+  "region": "europe",
+  "field": "sport",
+  "g": "f"
+ },
+ {
+  "slug": "johnny-weissmuller",
+  "enwiki": "Johnny Weissmuller",
+  "displayName": "Johnny Weissmuller",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "duke-kahanamoku",
+  "enwiki": "Duke Kahanamoku",
+  "displayName": "Duke Kahanamoku",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "sonja-henie",
+  "enwiki": "Sonja Henie",
+  "displayName": "Sonja Henie",
+  "region": "europe",
+  "field": "sport",
+  "g": "f"
+ },
+ {
+  "slug": "kobe-bryant",
+  "enwiki": "Kobe Bryant",
+  "displayName": "Kobe Bryant",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "wilt-chamberlain",
+  "enwiki": "Wilt Chamberlain",
+  "displayName": "Wilt Chamberlain",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "bill-russell",
+  "enwiki": "Bill Russell",
+  "displayName": "Bill Russell",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "pete-maravich",
+  "enwiki": "Pete Maravich",
+  "displayName": "Pete Maravich",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "hank-aaron",
+  "enwiki": "Hank Aaron",
+  "displayName": "Hank Aaron",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "willie-mays",
+  "enwiki": "Willie Mays",
+  "displayName": "Willie Mays",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "yogi-berra",
+  "enwiki": "Yogi Berra",
+  "displayName": "Yogi Berra",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "mickey-mantle",
+  "enwiki": "Mickey Mantle",
+  "displayName": "Mickey Mantle",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "ted-williams",
+  "enwiki": "Ted Williams",
+  "displayName": "Ted Williams",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "joe-dimaggio",
+  "enwiki": "Joe DiMaggio",
+  "displayName": "Joe DiMaggio",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "gordie-howe",
+  "enwiki": "Gordie Howe",
+  "displayName": "Gordie Howe",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "maurice-richard",
+  "enwiki": "Maurice Richard",
+  "displayName": "Maurice Richard",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "jean-beliveau",
+  "enwiki": "Jean Béliveau",
+  "displayName": "Jean Béliveau",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "walter-payton",
+  "enwiki": "Walter Payton",
+  "displayName": "Walter Payton",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "vince-lombardi",
+  "enwiki": "Vince Lombardi",
+  "displayName": "Vince Lombardi",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "knute-rockne",
+  "enwiki": "Knute Rockne",
+  "displayName": "Knute Rockne",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "seve-ballesteros",
+  "enwiki": "Seve Ballesteros",
+  "displayName": "Seve Ballesteros",
+  "region": "europe",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "bobby-jones",
+  "enwiki": "Bobby Jones (golfer)",
+  "displayName": "Bobby Jones",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "ben-hogan",
+  "enwiki": "Ben Hogan",
+  "displayName": "Ben Hogan",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "sam-snead",
+  "enwiki": "Sam Snead",
+  "displayName": "Sam Snead",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "walter-hagen",
+  "enwiki": "Walter Hagen",
+  "displayName": "Walter Hagen",
+  "region": "namerica",
+  "field": "sport",
+  "g": "m"
+ },
+ {
+  "slug": "gertrude-ederle",
+  "enwiki": "Gertrude Ederle",
+  "displayName": "Gertrude Ederle",
+  "region": "namerica",
+  "field": "sport",
+  "g": "f"
+ },
+ {
+  "slug": "chairil-anwar",
+  "enwiki": "Chairil Anwar",
+  "displayName": "Chairil Anwar",
+  "region": "seasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "carlos-p-romulo",
+  "enwiki": "Carlos P. Romulo",
+  "displayName": "Carlos P. Romulo",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "u-thant",
+  "enwiki": "U Thant",
+  "displayName": "U Thant",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "aung-san",
+  "enwiki": "Aung San",
+  "displayName": "Aung San",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "xuan-dieu",
+  "enwiki": "Xuân Diệu",
+  "displayName": "Xuân Diệu",
+  "region": "seasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "han-mac-tu",
+  "enwiki": "Hàn Mặc Tử",
+  "displayName": "Hàn Mặc Tử",
+  "region": "seasia",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "kukrit-pramoj",
+  "enwiki": "Kukrit Pramoj",
+  "displayName": "Kukrit Pramoj",
+  "region": "seasia",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "huda-sha-arawi",
+  "enwiki": "Huda Sha'arawi",
+  "displayName": "Huda Sha'arawi",
+  "region": "mena",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "may-ziadeh",
+  "enwiki": "May Ziadeh",
+  "displayName": "May Ziadeh",
+  "region": "mena",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "doria-shafik",
+  "enwiki": "Doria Shafik",
+  "displayName": "Doria Shafik",
+  "region": "mena",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "tahia-carioca",
+  "enwiki": "Tahia Carioca",
+  "displayName": "Tahia Carioca",
+  "region": "mena",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "souad-hosny",
+  "enwiki": "Souad Hosny",
+  "displayName": "Souad Hosny",
+  "region": "mena",
+  "field": "performing",
+  "g": "f"
+ },
+ {
+  "slug": "parvin-e-tesami",
+  "enwiki": "Parvin E'tesami",
+  "displayName": "Parvin E'tesami",
+  "region": "mena",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "ellen-kuzwayo",
+  "enwiki": "Ellen Kuzwayo",
+  "displayName": "Ellen Kuzwayo",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "brenda-fassie",
+  "enwiki": "Brenda Fassie",
+  "displayName": "Brenda Fassie",
+  "region": "africa",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "oliver-tambo",
+  "enwiki": "Oliver Tambo",
+  "displayName": "Oliver Tambo",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "walter-sisulu",
+  "enwiki": "Walter Sisulu",
+  "displayName": "Walter Sisulu",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "albertina-sisulu",
+  "enwiki": "Albertina Sisulu",
+  "displayName": "Albertina Sisulu",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "margaret-ekpo",
+  "enwiki": "Margaret Ekpo",
+  "displayName": "Margaret Ekpo",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "cheikh-anta-diop",
+  "enwiki": "Cheikh Anta Diop",
+  "displayName": "Cheikh Anta Diop",
+  "region": "africa",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "mongo-beti",
+  "enwiki": "Mongo Beti",
+  "displayName": "Mongo Beti",
+  "region": "africa",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "camara-laye",
+  "enwiki": "Camara Laye",
+  "displayName": "Camara Laye",
+  "region": "africa",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ken-saro-wiwa",
+  "enwiki": "Ken Saro-Wiwa",
+  "displayName": "Ken Saro-Wiwa",
+  "region": "africa",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "bessie-head",
+  "enwiki": "Bessie Head",
+  "displayName": "Bessie Head",
+  "region": "africa",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "nadine-gordimer",
+  "enwiki": "Nadine Gordimer",
+  "displayName": "Nadine Gordimer",
+  "region": "africa",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "leon-gontran-damas",
+  "enwiki": "Léon-Gontran Damas",
+  "displayName": "Léon-Gontran Damas",
+  "region": "latam",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "ding-ling",
+  "enwiki": "Ding Ling",
+  "displayName": "Ding Ling",
+  "region": "easia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "yosano-akiko",
+  "enwiki": "Yosano Akiko",
+  "displayName": "Yosano Akiko",
+  "region": "easia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "raicho-hiratsuka",
+  "enwiki": "Raichō Hiratsuka",
+  "displayName": "Raichō Hiratsuka",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "na-hye-sok",
+  "enwiki": "Na Hye-sok",
+  "displayName": "Na Hye-sok",
+  "region": "easia",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "lin-huiyin",
+  "enwiki": "Lin Huiyin",
+  "displayName": "Lin Huiyin",
+  "region": "easia",
+  "field": "architecture",
+  "g": "f"
+ },
+ {
+  "slug": "xiang-jingyu",
+  "enwiki": "Xiang Jingyu",
+  "displayName": "Xiang Jingyu",
+  "region": "easia",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "misuzu-kaneko",
+  "enwiki": "Misuzu Kaneko",
+  "displayName": "Misuzu Kaneko",
+  "region": "easia",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "machiko-hasegawa",
+  "enwiki": "Machiko Hasegawa",
+  "displayName": "Machiko Hasegawa",
+  "region": "easia",
+  "field": "art",
+  "g": "f"
+ },
+ {
+  "slug": "fred-hollows",
+  "enwiki": "Fred Hollows",
+  "displayName": "Fred Hollows",
+  "region": "oceania",
+  "field": "science",
+  "g": "m"
+ },
+ {
+  "slug": "charles-kingsford-smith",
+  "enwiki": "Charles Kingsford Smith",
+  "displayName": "Charles Kingsford Smith",
+  "region": "oceania",
+  "field": "explore",
+  "g": "m"
+ },
+ {
+  "slug": "nancy-bird-walton",
+  "enwiki": "Nancy Bird Walton",
+  "displayName": "Nancy Bird Walton",
+  "region": "oceania",
+  "field": "explore",
+  "g": "f"
+ },
+ {
+  "slug": "whina-cooper",
+  "enwiki": "Whina Cooper",
+  "displayName": "Whina Cooper",
+  "region": "oceania",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "te-puea-herangi",
+  "enwiki": "Te Puea Herangi",
+  "displayName": "Te Puea Herangi",
+  "region": "oceania",
+  "field": "publiclife",
+  "g": "f"
+ },
+ {
+  "slug": "apirana-ngata",
+  "enwiki": "Apirana Ngata",
+  "displayName": "Apirana Ngata",
+  "region": "oceania",
+  "field": "publiclife",
+  "g": "m"
+ },
+ {
+  "slug": "david-unaipon",
+  "enwiki": "David Unaipon",
+  "displayName": "David Unaipon",
+  "region": "oceania",
+  "field": "writing",
+  "g": "m"
+ },
+ {
+  "slug": "chabuca-granda",
+  "enwiki": "Chabuca Granda",
+  "displayName": "Chabuca Granda",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "maria-grever",
+  "enwiki": "María Grever",
+  "displayName": "María Grever",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "teresa-carreno",
+  "enwiki": "Teresa Carreño",
+  "displayName": "Teresa Carreño",
+  "region": "latam",
+  "field": "music",
+  "g": "f"
+ },
+ {
+  "slug": "elena-garro",
+  "enwiki": "Elena Garro",
+  "displayName": "Elena Garro",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "rosario-castellanos",
+  "enwiki": "Rosario Castellanos",
+  "displayName": "Rosario Castellanos",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "victoria-ocampo",
+  "enwiki": "Victoria Ocampo",
+  "displayName": "Victoria Ocampo",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "silvina-ocampo",
+  "enwiki": "Silvina Ocampo",
+  "displayName": "Silvina Ocampo",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "delmira-agustini",
+  "enwiki": "Delmira Agustini",
+  "displayName": "Delmira Agustini",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "nise-da-silveira",
+  "enwiki": "Nise da Silveira",
+  "displayName": "Nise da Silveira",
+  "region": "latam",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "bertha-lutz",
+  "enwiki": "Bertha Lutz",
+  "displayName": "Bertha Lutz",
+  "region": "latam",
+  "field": "science",
+  "g": "f"
+ },
+ {
+  "slug": "julia-de-burgos",
+  "enwiki": "Julia de Burgos",
+  "displayName": "Julia de Burgos",
+  "region": "latam",
+  "field": "writing",
+  "g": "f"
+ },
+ {
+  "slug": "george-orwell",
+  "enwiki": "George Orwell",
+  "displayName": "George Orwell",
+  "region": "sasia",
+  "field": "writing",
+  "g": "m"
+ }
+]

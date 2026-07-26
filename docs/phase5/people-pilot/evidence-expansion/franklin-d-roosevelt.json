@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "franklin-d-roosevelt",
+ "qid": "Q8007",
+ "displayName": "Franklin D. Roosevelt",
+ "wikidataLabel": "Franklin Delano Roosevelt",
+ "wikidataDescription": "president of the United States from 1933 to 1945 (1882–1945)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8007",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522568597
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Franklin D. Roosevelt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Franklin_D._Roosevelt",
+   "pageId": 10979,
+   "revisionId": 1366046399,
+   "revisionTimestamp": "2026-07-25T23:48:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1882-01-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-01-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-01-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1945-04-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q988554",
+  "label": "Hyde Park",
+  "entityUrl": "https://www.wikidata.org/wiki/Q988554",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q988554",
+   "sourceEntityLabel": "Hyde Park",
+   "latitude": 41.78472222222222,
+   "longitude": -73.93333333333334,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q372436",
+   "label": "statesperson"
+  },
+  {
+   "entity": "Q11303721",
+   "label": "golfer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1475726",
+   "label": "philatelist"
+  },
+  {
+   "entity": "Q132050",
+   "label": "governor"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q736559",
+   "label": "secretary of state"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:FDR 1944 Color Portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:FDR%201944%20Color%20Portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:FDR_1944_Color_Portrait.jpg",
+  "width": 2754,
+  "height": 3969,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Leon Perskie",
+  "credit": "CT 09-109(1)",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

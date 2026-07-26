@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "patrice-lumumba",
+ "qid": "Q161672",
+ "displayName": "Patrice Lumumba",
+ "wikidataLabel": "Patrice Lumumba",
+ "wikidataDescription": "Congolese politician and independence leader (1925–1961)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q161672",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522680268
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Patrice Lumumba",
+   "articleUrl": "https://en.wikipedia.org/wiki/Patrice_Lumumba",
+   "pageId": 49240,
+   "revisionId": 1366165386,
+   "revisionTimestamp": "2026-07-26T17:51:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-07-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-07-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1961-01-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3193903",
+  "label": "Katakokombe",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3193903",
+  "country": {
+   "entity": "Q974",
+   "label": "Democratic Republic of the Congo"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3193903",
+   "sourceEntityLabel": "Katakokombe",
+   "latitude": -3.4,
+   "longitude": 24.42,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q4479442",
+   "label": "founder"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:PatriceLumumba1960.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:PatriceLumumba1960.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:PatriceLumumba1960.jpg",
+  "width": 1014,
+  "height": 1352,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Harry Pot for Anefo )",
+  "credit": "Cropped from GaHetNa (Nationaal Archief NL) 910-9740",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "anita-mui",
+ "qid": "Q232621",
+ "displayName": "Anita Mui",
+ "wikidataLabel": "Anita Mui",
+ "wikidataDescription": "Hong Kong singer and actress (1963–2003)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q232621",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520054040
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Anita Mui",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anita_Mui",
+   "pageId": 321520,
+   "revisionId": 1365936243,
+   "revisionTimestamp": "2026-07-25T08:32:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1963-10-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1963-10-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1963-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-12-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1207691",
+  "label": "Mong Kok",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1207691",
+  "country": {
+   "entity": "Q8646",
+   "label": "Hong Kong"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1207691",
+   "sourceEntityLabel": "Mong Kok",
+   "latitude": 22.3225,
+   "longitude": 114.17055555556,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Avenue of Stars, Anita Mui (Ank Kumar) 03.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Avenue%20of%20Stars%2C%20Anita%20Mui%20(Ank%20Kumar)%2003.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Avenue_of_Stars,_Anita_Mui_(Ank_Kumar)_03.jpg",
+  "width": 4000,
+  "height": 6000,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Ank Kumar",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

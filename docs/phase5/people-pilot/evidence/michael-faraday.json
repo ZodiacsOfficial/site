@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "michael-faraday",
+ "qid": "Q8750",
+ "displayName": "Michael Faraday",
+ "wikidataLabel": "Michael Faraday",
+ "wikidataDescription": "British scientist (1791–1867)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8750",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518629639
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Michael Faraday",
+   "articleUrl": "https://en.wikipedia.org/wiki/Michael_Faraday",
+   "pageId": 19727,
+   "revisionId": 1366069530,
+   "revisionTimestamp": "2026-07-26T02:49:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1791-09-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1791-09-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1791-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1791-09-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1867-08-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q15030884",
+  "label": "Newington Butts",
+  "entityUrl": "https://www.wikidata.org/wiki/Q15030884",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q15030884",
+   "sourceEntityLabel": "Newington Butts",
+   "latitude": 51.49277778,
+   "longitude": -0.10111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:M Faraday Th Phillips oil 1842.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:M%20Faraday%20Th%20Phillips%20oil%201842.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:M_Faraday_Th_Phillips_oil_1842.jpg",
+  "width": 1110,
+  "height": 1437,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Thomas Phillips",
+  "credit": "Thomas Phillips, 1842",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

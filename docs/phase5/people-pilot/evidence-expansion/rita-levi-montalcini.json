@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rita-levi-montalcini",
+ "qid": "Q185007",
+ "displayName": "Rita Levi-Montalcini",
+ "wikidataLabel": "Rita Levi-Montalcini",
+ "wikidataDescription": "Italian neurologist (1909–2012)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q185007",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520196237
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rita Levi-Montalcini",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rita_Levi-Montalcini",
+   "pageId": 708064,
+   "revisionId": 1365502569,
+   "revisionTimestamp": "2026-07-22T21:30:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1909-04-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-04-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-04-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2012-12-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q495",
+  "label": "Turin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q495",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q495",
+   "sourceEntityLabel": "Turin",
+   "latitude": 45.079166666666666,
+   "longitude": 7.676111111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q783906",
+   "label": "neurologist"
+  },
+  {
+   "entity": "Q6337803",
+   "label": "neuroscientist"
+  },
+  {
+   "entity": "Q2919046",
+   "label": "biochemist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  },
+  {
+   "entity": "Q20739288",
+   "label": "neurobiologist"
+  },
+  {
+   "entity": "Q462390",
+   "label": "docent"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rita Levi-Montalcini (1986).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rita%20Levi-Montalcini%20(1986).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rita_Levi-Montalcini_(1986).png",
+  "width": 2517,
+  "height": 3796,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Kurt Hagblom, Firma Hagblom-Foto, restored by Adam Cuerden",
+  "credit": "University Library, Lund UniversityURL: https://www.alvin-portal.org/alvin/imageViewer.jsf?dsId=ATTACHMENT-0001&pid=alvin-record%3A240038&dswid=5683",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "joe-louis",
+ "qid": "Q273206",
+ "displayName": "Joe Louis",
+ "wikidataLabel": "Joe Louis",
+ "wikidataDescription": "American boxer (1914-1981)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q273206",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517615217
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Joe Louis",
+   "articleUrl": "https://en.wikipedia.org/wiki/Joe_Louis",
+   "pageId": 147863,
+   "revisionId": 1362928432,
+   "revisionTimestamp": "2026-07-07T01:16:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-05-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-05-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-05-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1981-04-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q79492",
+  "label": "LaFayette",
+  "entityUrl": "https://www.wikidata.org/wiki/Q79492",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q79492",
+   "sourceEntityLabel": "LaFayette",
+   "latitude": 32.898572,
+   "longitude": -85.400784,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11338576",
+   "label": "boxer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q13474373",
+   "label": "professional wrestler"
+  },
+  {
+   "entity": "Q202648",
+   "label": "referee"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Joe Louis 1937 headshot by the Associated Press.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Joe%20Louis%201937%20headshot%20by%20the%20Associated%20Press.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Joe_Louis_1937_headshot_by_the_Associated_Press.jpg",
+  "width": 432,
+  "height": 560,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Associated Press",
+  "credit": "Wirephoto copy",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

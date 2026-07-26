@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "learie-constantine",
+  "seedRound": 0,
+  "qid": "Q3228666",
+  "displayName": "Learie Constantine",
+  "identity": "Cricketer and diplomat · Trinidad and Tobago · 1901–1971",
+  "title": "Learie Constantine's birth chart",
+  "metaDescription": "Learie Constantine's chart, computed from a sourced birth date: Sun at 27.9° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Cardinal signs carry four of the nine placements whose signs are settled — the broadest certain weighting in the chart. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.95",
+        "decan:virgo:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 27.9° Virgo: the third decan, whose classical sub-ruler is Venus. A earth sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Libra:16.5°",
+        "personal:Venus:Scorpio:5.0°",
+        "personal:Mars:Scorpio:14.0°"
+      ],
+      "text": "Closer in, Mercury stands at 16.5° Libra; Venus stands at 5.0° Scorpio; Mars stands at 14.0° Scorpio. The tradition reads a mind at home in argument and pattern from Mercury, taste tuned to mood and undertow from Venus, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:sextile:1.03",
+        "aspect:Mercury:Pluto:trine:2.18",
+        "aspect:Jupiter:Neptune:opposition:2.52"
+      ],
+      "text": "Venus and Jupiter hold the closest angle here — a sextile, 1.0° wide. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mercury trine Pluto at 2.2°, and Jupiter opposition Neptune at 2.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Jupiter-Neptune:apex-Sun",
+        "figure:unaspected:Mars"
+      ],
+      "text": "Jupiter opposes Neptune while both square the Sun. The t-square is the figure the old texts trusted for output: friction with a fixed address. Mars stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has four entries for this chart. Venus in Scorpio at 5.0° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 14.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 4.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Capricorn at 9.8° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-water3-air2-fire1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 earth, 3 water, 2 air, 1 fire by element and 4 cardinal, 3 mutable, 2 fixed by mode. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Pluto was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.3° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-21/",
+    "label": "Everyone born on September 21"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:27.95",
+    "decan:virgo:third",
+    "personal:Mercury:Libra:16.5°",
+    "personal:Venus:Scorpio:5.0°",
+    "personal:Mars:Scorpio:14.0°",
+    "aspect:Venus:Jupiter:sextile:1.03",
+    "aspect:Mercury:Pluto:trine:2.18",
+    "aspect:Jupiter:Neptune:opposition:2.52",
+    "figure:t-square:Jupiter-Neptune:apex-Sun",
+    "figure:unaspected:Mars",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:earth3-water3-air2-fire1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 450,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

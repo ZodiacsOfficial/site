@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "elsa-morante",
+  "seedRound": 0,
+  "qid": "Q275979",
+  "displayName": "Elsa Morante",
+  "identity": "Writer · Italy · 1912–1985",
+  "title": "Elsa Morante's birth chart",
+  "metaDescription": "Elsa Morante's chart, computed from a sourced birth date: Sun at 25.1° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 25.1° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.10",
+        "decan:leo:third"
+      ],
+      "text": "At the noon reference the Sun sits 25.1° into Leo — the third decan, which the old scheme hands to Mars. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Virgo:2.3°",
+        "personal:Venus:Virgo:7.1°",
+        "personal:Mars:Virgo:20.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 2.3° Virgo, Venus was at 7.1° Virgo, Mars was at 20.2° Virgo. Read together: thought with its feet on the ground; attraction that grows by reliability; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:square:1.08",
+        "aspect:Venus:Jupiter:square:1.13",
+        "aspect:Mercury:Pluto:sextile:2.55"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury at right angles from Saturn, 1.1° off exact. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Venus square Jupiter at 1.1°, and Mercury sextile Pluto at 2.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Jupiter-Saturn:apex-Mercury",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Saturn while both square Mercury. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Moon:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:fall",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Read against the old dignities, five placements stand out. The Sun in Leo at 25.1° is in domicile — the planet in its own sign, running on home rules; the Moon in Scorpio at 10.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 2.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Virgo at 7.1° is in fall; Jupiter in Sagittarius at 5.9° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air3-fire2-water2",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 3 earth, 3 air, 2 fire, 2 water by element and 6 mutable, 3 fixed, 1 cardinal by modality. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Mercury and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:13.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 10.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-18/",
+    "label": "Everyone born on August 18"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:25.10",
+    "decan:leo:third",
+    "personal:Mercury:Virgo:2.3°",
+    "personal:Venus:Virgo:7.1°",
+    "personal:Mars:Virgo:20.2°",
+    "aspect:Mercury:Saturn:square:1.08",
+    "aspect:Venus:Jupiter:square:1.13",
+    "aspect:Mercury:Pluto:sextile:2.55",
+    "figure:t-square:Jupiter-Saturn:apex-Mercury",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Moon:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:fall",
+    "dignity:Jupiter:domicile",
+    "elements:earth3-air3-fire2-water2",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:scorpio",
+    "moon-band:13.1"
+  ],
+  "measurements": {
+    "originalWords": 449,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

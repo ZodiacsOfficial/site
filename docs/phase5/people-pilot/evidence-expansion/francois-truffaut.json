@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "francois-truffaut",
+ "qid": "Q53002",
+ "displayName": "François Truffaut",
+ "wikidataLabel": "François Truffaut",
+ "wikidataDescription": "French film director (1932–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q53002",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522125946
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "François Truffaut",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fran%C3%A7ois_Truffaut",
+   "pageId": 10770,
+   "revisionId": 1365468758,
+   "revisionTimestamp": "2026-07-22T16:50:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-02-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-02-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-10-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q197297",
+  "label": "17th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q197297",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q197297",
+   "sourceEntityLabel": "17th arrondissement of Paris",
+   "latitude": 48.882244444444,
+   "longitude": 2.3078388888889,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q4220892",
+   "label": "film critic"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:François Truffaut (1965).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fran%C3%A7ois%20Truffaut%20(1965).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fran%C3%A7ois_Truffaut_(1965).jpg",
+  "width": 1487,
+  "height": 1983,
+  "licenseShortName": "CC BY-SA 3.0 nl",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/nl/deed.en",
+  "artist": "Jack de Nijs for Anefo",
+  "credit": "Nationaal Archief",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 nl",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "louis-pasteur",
+ "qid": "Q529",
+ "displayName": "Louis Pasteur",
+ "wikidataLabel": "Louis Pasteur",
+ "wikidataDescription": "French chemist and microbiologist (1822-1895)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q529",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521151199
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Louis Pasteur",
+   "articleUrl": "https://en.wikipedia.org/wiki/Louis_Pasteur",
+   "pageId": 17740,
+   "revisionId": 1365577878,
+   "revisionTimestamp": "2026-07-23T06:56:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1822-12-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1822-12-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1822-12-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1895-09-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q205586",
+  "label": "Dole",
+  "entityUrl": "https://www.wikidata.org/wiki/Q205586",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q205586",
+   "sourceEntityLabel": "Dole",
+   "latitude": 47.092222222222,
+   "longitude": 5.4897222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3779582",
+   "label": "microbiologist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q2919046",
+   "label": "biochemist"
+  },
+  {
+   "entity": "Q1781198",
+   "label": "agronomist"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q2180411",
+   "label": "portrait painter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Louis Pasteur (1822 - 1895), microbiologist and chemist Wellcome V0026980.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Louis%20Pasteur%20(1822%20-%201895)%2C%20microbiologist%20and%20chemist%20Wellcome%20V0026980.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Louis_Pasteur_(1822_-_1895),_microbiologist_and_chemist_Wellcome_V0026980.jpg",
+  "width": 2230,
+  "height": 3143,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Paul Nadar",
+  "credit": "https://wellcomeimages.org/indexplus/obf_images/d8/c6/67f06fb28c3d4605eefbe9bee6b1.jpg Gallery: https://wellcomeimages.org/indexplus/image/V0026980.html Wellcome Collection gallery (2018-03-31): https://wellcomecollection.org/works/jykdbamz CC-BY-4.0",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

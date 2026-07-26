@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "elizabeth-cady-stanton",
+  "seedRound": 0,
+  "qid": "Q465335",
+  "displayName": "Elizabeth Cady Stanton",
+  "identity": "Writer and actor · United States · 1815–1902",
+  "title": "Elizabeth Cady Stanton's birth chart",
+  "metaDescription": "Elizabeth Cady Stanton's chart, computed from a sourced birth date: Sun at 19.5° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Fixed signs carry three of the nine placements whose signs are settled — the broadest certain weighting in the chart. The fixed signs hold what the cardinal signs start; a chart weighted there finishes its sentences.",
+  "ledeFact": "modality:fixed:3",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.48",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun's position resolves to 19.5° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:18.1°",
+        "personal:Venus:Libra:12.9°",
+        "personal:Mars:Aries:17.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Scorpio (18.1°), Venus in Libra (12.9°), Mars in Aries (17.5°): thought steeped in tone and memory, attraction that begins as conversation, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:sextile:0.46",
+        "aspect:Mars:Neptune:trine:1.04",
+        "aspect:Sun:Mercury:conjunction:1.38"
+      ],
+      "text": "Closest first: Saturn to Uranus, a sextile with 0.5° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mars trine Neptune at 1.0°, and the Sun conjunction Mercury at 1.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Venus in Libra at 12.9° is in domicile — the planet in its own sign, running on home rules; Mars in Aries at 17.5° is in domicile; Saturn in Aquarius at 6.6° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-fire3",
+        "modalities:fixed3-cardinal3-mutable3",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 water, 3 air, 3 fire; by modality, 3 fixed, 3 cardinal, 3 mutable. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mercury, Mars and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 12.2° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-12/",
+    "label": "Everyone born on November 12"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:3",
+    "sun-degree:19.48",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:18.1°",
+    "personal:Venus:Libra:12.9°",
+    "personal:Mars:Aries:17.5°",
+    "aspect:Saturn:Uranus:sextile:0.46",
+    "aspect:Mars:Neptune:trine:1.04",
+    "aspect:Sun:Mercury:conjunction:1.38",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:water3-air3-fire3",
+    "modalities:fixed3-cardinal3-mutable3",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 379,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

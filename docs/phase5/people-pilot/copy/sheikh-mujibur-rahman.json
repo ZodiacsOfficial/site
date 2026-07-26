@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "sheikh-mujibur-rahman",
+  "seedRound": 0,
+  "qid": "Q191375",
+  "displayName": "Sheikh Mujibur Rahman",
+  "identity": "Politician and writer · Bangladesh · 1920–1975",
+  "title": "Sheikh Mujibur Rahman's birth chart",
+  "metaDescription": "Sheikh Mujibur Rahman's chart, computed from a sourced birth date: Sun at 26.4° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a square: Mars and Neptune within 0.0°, drive wired to imagination. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen.",
+  "ledeFact": "aspect:Mars:Neptune:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.36",
+        "decan:pisces:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 26.4° Pisces: the third decan, whose classical sub-ruler is Mars. A water sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:2.0°",
+        "personal:Venus:Aquarius:28.3°",
+        "personal:Mars:Scorpio:9.1°"
+      ],
+      "text": "For the fast movers, Mercury was at 2.0° Aries, Venus was at 28.3° Aquarius, Mars was at 9.1° Scorpio. Read together: a mind that decides at speaking speed; taste led by wit and proportion; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:square:0.03",
+        "aspect:Jupiter:Neptune:conjunction:0.44",
+        "aspect:Mars:Jupiter:square:0.47"
+      ],
+      "text": "The tightest geometry in the chart puts Mars at right angles from Neptune, 0.0° off exact. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Jupiter conjunction Neptune at 0.4°, and Mars square Jupiter at 0.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Mars-Uranus-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars, Uranus, Pluto close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile"
+      ],
+      "text": "One planet here sits in a sign the classical scheme scores. Mars in Scorpio at 9.1° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air2-earth1",
+        "modalities:fixed5-mutable3-cardinal2",
+        "settled-signs:10",
+        "retrograde:6"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 4, fire 3, air 2, earth 1, and fixed 5, mutable 3, cardinal 2 across the modes. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Mercury, Mars, Jupiter, Saturn, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:12.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 16.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-17/",
+    "label": "Everyone born on March 17"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Neptune:square",
+    "sun-degree:26.36",
+    "decan:pisces:third",
+    "personal:Mercury:Aries:2.0°",
+    "personal:Venus:Aquarius:28.3°",
+    "personal:Mars:Scorpio:9.1°",
+    "aspect:Mars:Neptune:square:0.03",
+    "aspect:Jupiter:Neptune:conjunction:0.44",
+    "aspect:Mars:Jupiter:square:0.47",
+    "figure:grand-trine:Mars-Uranus-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Mars:domicile",
+    "elements:water4-fire3-air2-earth1",
+    "modalities:fixed5-mutable3-cardinal2",
+    "settled-signs:10",
+    "retrograde:6",
+    "moon-sign:aquarius",
+    "moon-band:12.8"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

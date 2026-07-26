@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "paul-verlaine",
+  "seedRound": 0,
+  "qid": "Q755",
+  "displayName": "Paul Verlaine",
+  "identity": "Poet · France · 1844–1896",
+  "title": "Paul Verlaine's birth chart",
+  "metaDescription": "Paul Verlaine's chart, computed from a sourced birth date: Sun at 9.9° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Aries — the Sun, Mercury, Uranus and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aries:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.89",
+        "decan:aries:first"
+      ],
+      "text": "Aries, but precisely: 9.9°, first decan, 0°–10°, under Mars in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:1.1°",
+        "personal:Venus:Taurus:20.6°",
+        "personal:Mars:Taurus:18.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (1.1°), Venus in Taurus (20.6°), Mars in Taurus (18.3°): a mind that decides at speaking speed, taste for the substantial and the lasting, drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:sextile:0.74",
+        "aspect:Mars:Jupiter:sextile:0.93",
+        "aspect:Mercury:Uranus:conjunction:1.54"
+      ],
+      "text": "Nothing in the geometry sits closer than Neptune and Pluto: 0.7° from an exact sextile. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mars sextile Jupiter at 0.9°, and Mercury conjunction Uranus at 1.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has five entries for this chart. The Sun in Aries at 9.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Taurus at 20.6° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 18.3° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 17.4° is in domicile; Saturn in Aquarius at 5.5° is in domicile. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth2-air2-water1",
+        "modalities:fixed5-cardinal4-mutable1",
+        "settled-signs:10",
+        "retrograde:0"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 fire, 2 earth, 2 air, 1 water; by modality, 5 fixed, 4 cardinal, 1 mutable. All ten bodies ran direct that day — a chart with no apparent reversals anywhere in it."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:13.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-30/",
+    "label": "Everyone born on March 30"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:aries:4",
+    "sun-degree:9.89",
+    "decan:aries:first",
+    "personal:Mercury:Aries:1.1°",
+    "personal:Venus:Taurus:20.6°",
+    "personal:Mars:Taurus:18.3°",
+    "aspect:Neptune:Pluto:sextile:0.74",
+    "aspect:Mars:Jupiter:sextile:0.93",
+    "aspect:Mercury:Uranus:conjunction:1.54",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire5-earth2-air2-water1",
+    "modalities:fixed5-cardinal4-mutable1",
+    "settled-signs:10",
+    "retrograde:0",
+    "moon-sign:leo",
+    "moon-band:13.6"
+  ],
+  "measurements": {
+    "originalWords": 400,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

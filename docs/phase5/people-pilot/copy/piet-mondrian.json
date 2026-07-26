@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "piet-mondrian",
+  "seedRound": 0,
+  "qid": "Q151803",
+  "displayName": "Piet Mondrian",
+  "identity": "Painter and furniture designer · Netherlands · 1872–1944",
+  "title": "Piet Mondrian's birth chart",
+  "metaDescription": "Piet Mondrian's chart, computed from a sourced birth date: Sun at 17.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Pluto sit 0.9° from an exact sextile — near enough that the tradition reads identity and depth as a single working part. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Sun:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.25",
+        "decan:pisces:second"
+      ],
+      "text": "Pisces, but precisely: 17.3°, second decan, 10°–20°, under the Moon in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:14.1°",
+        "personal:Venus:Aquarius:13.9°",
+        "personal:Mars:Aries:4.2°"
+      ],
+      "text": "The personal planets sit Mercury at 14.1° Pisces, Venus at 13.9° Aquarius, Mars at 4.2° Aries. Mercury in a water sign reads as a mind that absorbs before it argues; Venus in a air sign reads as taste led by wit and proportion; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Pluto:trine:0.88",
+        "aspect:Sun:Pluto:sextile:0.89",
+        "aspect:Jupiter:Saturn:opposition:0.95"
+      ],
+      "text": "Saturn to Pluto is the closest call of the day, a trine within 0.9°. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, the Sun sextile Pluto at 0.9°, and Jupiter opposition Saturn at 0.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Jupiter-Saturn:apex-Neptune",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Saturn while both square Neptune. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Mercury in Pisces at 14.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Aries at 4.2° is in domicile — the planet in its own sign, running on home rules; Jupiter in Cancer at 20.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Capricorn at 19.0° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-fire2-earth2",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 4, air 2, fire 2, earth 2; modalities cardinal 5, fixed 3, mutable 2. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Jupiter and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:14.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 14.6° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 19.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-7/",
+    "label": "Everyone born on March 7"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:sextile",
+    "sun-degree:17.25",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:14.1°",
+    "personal:Venus:Aquarius:13.9°",
+    "personal:Mars:Aries:4.2°",
+    "aspect:Saturn:Pluto:trine:0.88",
+    "aspect:Sun:Pluto:sextile:0.89",
+    "aspect:Jupiter:Saturn:opposition:0.95",
+    "figure:t-square:Jupiter-Saturn:apex-Neptune",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:fall",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:water4-air2-fire2-earth2",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aquarius",
+    "moon-band:14.6"
+  ],
+  "measurements": {
+    "originalWords": 479,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

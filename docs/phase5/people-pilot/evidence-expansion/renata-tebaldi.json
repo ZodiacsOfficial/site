@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "renata-tebaldi",
+ "qid": "Q229179",
+ "displayName": "Renata Tebaldi",
+ "wikidataLabel": "Renata Tebaldi",
+ "wikidataDescription": "Italian opera singer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q229179",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518314723
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Renata Tebaldi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Renata_Tebaldi",
+   "pageId": 377647,
+   "revisionId": 1339616059,
+   "revisionTimestamp": "2026-02-21T12:26:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-02-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-02-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-02-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-12-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q13134",
+  "label": "Pesaro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q13134",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q13134",
+   "sourceEntityLabel": "Pesaro",
+   "latitude": 43.91015,
+   "longitude": 12.9133,
+   "precision": 0.00000277777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Photo Portrait of the soprano Renata Tebaldi 1956 - Touring Club Italiano 11 5563.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Photo%20Portrait%20of%20the%20soprano%20Renata%20Tebaldi%201956%20-%20Touring%20Club%20Italiano%2011%205563.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Photo_Portrait_of_the_soprano_Renata_Tebaldi_1956_-_Touring_Club_Italiano_11_5563.jpg",
+  "width": 2803,
+  "height": 3807,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Unknown author",
+  "credit": "Touring Club Italiano",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

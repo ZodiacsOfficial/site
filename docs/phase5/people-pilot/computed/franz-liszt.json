@@ -1,0 +1,287 @@
+{
+  "schema": "zodiacs.phase5.computed.v1",
+  "slug": "franz-liszt",
+  "qid": "Q41309",
+  "displayName": "Franz Liszt",
+  "calendarModel": "proleptic-gregorian",
+  "storedDate": "1811-10-22",
+  "gregorianDate": "1811-10-22",
+  "displayedDate": "1811-10-22",
+  "birthdayCrossLinkKey": "1811-10-22",
+  "timeQuality": "unknown",
+  "computation": {
+    "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+    "timeZone": "Europe/Vienna",
+    "civilTime": "12:00",
+    "utcInstant": "1811-10-22T10:54:39.000Z",
+    "utcOffsetMinutesAtBirth": 65.35,
+    "civilDayStartUtc": "1811-10-21T22:54:39.000Z",
+    "civilDayEndUtc": "1811-10-22T22:54:39.000Z",
+    "latitude": 47.566111111111,
+    "longitude": 16.531388888889,
+    "coordinateEscalationSteps": 0,
+    "coordinateSourceEntity": "Q660821",
+    "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "anglesComputed": false,
+    "housesComputed": false,
+    "sectComputed": false
+  },
+  "sun": {
+    "sign": "libra",
+    "signName": "Libra",
+    "degree": 28.15
+  },
+  "moon": {
+    "sign": "sagittarius",
+    "signName": "Sagittarius",
+    "degree": 25.86,
+    "uncertain": true,
+    "signAtCivilDayStart": "sagittarius",
+    "signAtCivilDayEnd": "capricorn"
+  },
+  "cusp": {
+    "ambiguous": false,
+    "boundaryUtc": null,
+    "degreesInsideAtWindowStart": 27.7008,
+    "degreesToNextBoundaryAtWindowEnd": 1.3025
+  },
+  "unknownTimeErrorBandDegrees": {
+    "Sun": 0.997,
+    "Moon": 13.159,
+    "Mercury": 1.452,
+    "Venus": 1.253,
+    "Mars": 0.706,
+    "Jupiter": 0.009,
+    "Saturn": 0.084,
+    "Uranus": 0.059,
+    "Neptune": 0.03,
+    "Pluto": 0.014
+  },
+  "signUncertainTransitions": [
+    {
+      "body": "Moon",
+      "signAtCivilDayStart": "sagittarius",
+      "signAtCivilDayEnd": "capricorn"
+    }
+  ],
+  "placements": [
+    {
+      "body": "Sun",
+      "sign": "libra",
+      "signName": "Libra",
+      "degree": 28.15,
+      "retrograde": false,
+      "speedPerDay": 0.9967,
+      "dignity": "fall",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Moon",
+      "sign": "sagittarius",
+      "signName": "Sagittarius",
+      "degree": 25.86,
+      "retrograde": false,
+      "speedPerDay": 13.1627,
+      "dignity": null,
+      "stableAcrossDay": false,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mercury",
+      "sign": "libra",
+      "signName": "Libra",
+      "degree": 11.55,
+      "retrograde": false,
+      "speedPerDay": 1.4536,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Venus",
+      "sign": "scorpio",
+      "signName": "Scorpio",
+      "degree": 0.8,
+      "retrograde": false,
+      "speedPerDay": 1.2527,
+      "dignity": "detriment",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mars",
+      "sign": "capricorn",
+      "signName": "Capricorn",
+      "degree": 17.31,
+      "retrograde": false,
+      "speedPerDay": 0.7065,
+      "dignity": "exaltation",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Jupiter",
+      "sign": "cancer",
+      "signName": "Cancer",
+      "degree": 6.26,
+      "retrograde": false,
+      "speedPerDay": 0.0094,
+      "dignity": "exaltation",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Saturn",
+      "sign": "sagittarius",
+      "signName": "Sagittarius",
+      "degree": 22.62,
+      "retrograde": false,
+      "speedPerDay": 0.0839,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Uranus",
+      "sign": "scorpio",
+      "signName": "Scorpio",
+      "degree": 17.88,
+      "retrograde": false,
+      "speedPerDay": 0.0595,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Neptune",
+      "sign": "sagittarius",
+      "signName": "Sagittarius",
+      "degree": 9.44,
+      "retrograde": false,
+      "speedPerDay": 0.0301,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Pluto",
+      "sign": "pisces",
+      "signName": "Pisces",
+      "degree": 16.45,
+      "retrograde": true,
+      "speedPerDay": -0.0143,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    }
+  ],
+  "aspectsStableAcrossCivilDay": [
+    {
+      "a": "Mars",
+      "b": "Uranus",
+      "type": "sextile",
+      "orb": 0.57,
+      "applying": true
+    },
+    {
+      "a": "Mars",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 0.86,
+      "applying": false
+    },
+    {
+      "a": "Uranus",
+      "b": "Pluto",
+      "type": "trine",
+      "orb": 1.43,
+      "applying": false
+    },
+    {
+      "a": "Mercury",
+      "b": "Neptune",
+      "type": "sextile",
+      "orb": 2.12,
+      "applying": false
+    },
+    {
+      "a": "Sun",
+      "b": "Venus",
+      "type": "conjunction",
+      "orb": 2.65,
+      "applying": false
+    },
+    {
+      "a": "Moon",
+      "b": "Saturn",
+      "type": "conjunction",
+      "orb": 3.24,
+      "applying": false
+    },
+    {
+      "a": "Mercury",
+      "b": "Jupiter",
+      "type": "square",
+      "orb": 5.3,
+      "applying": false
+    },
+    {
+      "a": "Venus",
+      "b": "Jupiter",
+      "type": "trine",
+      "orb": 5.45,
+      "applying": true
+    },
+    {
+      "a": "Mercury",
+      "b": "Mars",
+      "type": "square",
+      "orb": 5.75,
+      "applying": true
+    },
+    {
+      "a": "Saturn",
+      "b": "Pluto",
+      "type": "square",
+      "orb": 6.17,
+      "applying": false
+    }
+  ],
+  "aspectsAtNoonOnly": [
+    {
+      "a": "Sun",
+      "b": "Moon",
+      "type": "sextile",
+      "orb": 2.29,
+      "applying": true
+    },
+    {
+      "a": "Moon",
+      "b": "Venus",
+      "type": "sextile",
+      "orb": 4.94,
+      "applying": true
+    }
+  ],
+  "patterns": {
+    "settledBodyCount": 9,
+    "stelliums": [],
+    "elements": {
+      "air": 2,
+      "water": 4,
+      "earth": 1,
+      "fire": 2
+    },
+    "modalities": {
+      "cardinal": 4,
+      "fixed": 2,
+      "mutable": 3
+    },
+    "retrograde": [
+      "Pluto"
+    ],
+    "directionUncertain": []
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "charles-baudelaire",
+  "seedRound": 0,
+  "qid": "Q501",
+  "displayName": "Charles Baudelaire",
+  "identity": "Poet and draftsperson · France · 1821–1867",
+  "title": "Charles Baudelaire's birth chart",
+  "metaDescription": "Charles Baudelaire's chart, computed from a sourced birth date: Sun at 19.3° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Aries — the Sun, Venus, Jupiter and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aries:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.30",
+        "decan:aries:second"
+      ],
+      "text": "The Sun sits at 19.3° Aries — the second decan, 10°–20°, which the tradition sub-rules by the Sun. Degrees matter more than the sign label here: two people born a fortnight apart share Aries and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:27.4°",
+        "personal:Venus:Aries:7.8°"
+      ],
+      "text": "The personal planets sit Mercury at 27.4° Pisces, Venus at 7.8° Aries. Mercury in a water sign reads as a mind that absorbs before it argues; Venus in a fire sign reads as taste that runs toward the vivid and the immediate."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:conjunction:0.06",
+        "aspect:Mercury:Pluto:conjunction:1.37",
+        "aspect:Mars:Pluto:conjunction:1.42"
+      ],
+      "text": "Uranus to Neptune is the closest call of the day, a conjunction within 0.1°. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Mercury conjunction Pluto at 1.4°, and Mars conjunction Pluto at 1.4° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Moon:domicile",
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, five sit in a sign it has an opinion about. The Sun in Aries at 19.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Cancer at 20.5° is in domicile — the planet in its own sign, running on home rules; Mercury in Pisces at 27.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 7.8° is in detriment — the planet opposite its home, working against the grain; Saturn in Aries at 16.9° is in fall. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth2",
+        "modalities:cardinal7-mutable2",
+        "settled-signs:9",
+        "retrograde:2",
+        "sign-uncertain:Mars:pisces:aries"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 fire, 3 water, 2 earth by element and 7 cardinal, 2 mutable by mode. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Mars crossed from Pisces into Aries during that day, so its sign is left open. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 20.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-9/",
+    "label": "Everyone born on April 9"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:aries:4",
+    "sun-degree:19.30",
+    "decan:aries:second",
+    "personal:Mercury:Pisces:27.4°",
+    "personal:Venus:Aries:7.8°",
+    "aspect:Uranus:Neptune:conjunction:0.06",
+    "aspect:Mercury:Pluto:conjunction:1.37",
+    "aspect:Mars:Pluto:conjunction:1.42",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:fall",
+    "elements:fire4-water3-earth2",
+    "modalities:cardinal7-mutable2",
+    "settled-signs:9",
+    "retrograde:2",
+    "sign-uncertain:Mars:pisces:aries",
+    "moon-sign:cancer",
+    "moon-band:12.8"
+  ],
+  "measurements": {
+    "originalWords": 503,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

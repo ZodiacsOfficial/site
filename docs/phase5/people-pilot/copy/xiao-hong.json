@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "xiao-hong",
+  "seedRound": 0,
+  "qid": "Q464825",
+  "displayName": "Xiao Hong",
+  "identity": "Poet · People's Republic of China · 1911–1942",
+  "title": "Xiao Hong's birth chart",
+  "metaDescription": "Xiao Hong's chart, computed from a sourced birth date: Sun at 9.6° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a sextile to Uranus at 0.3° — close enough to weld drive to disruption. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.",
+  "ledeFact": "aspect:Mars:Uranus:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.55",
+        "decan:gemini:first"
+      ],
+      "text": "At the noon reference the Sun sits 9.6° into Gemini — the first decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:15.3°",
+        "personal:Venus:Cancer:21.6°",
+        "personal:Mars:Pisces:28.7°"
+      ],
+      "text": "For the fast movers, Mercury was at 15.3° Taurus, Venus was at 21.6° Cancer, Mars was at 28.7° Pisces. Read together: thought with its feet on the ground; attraction that works by atmosphere; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:sextile:0.32",
+        "aspect:Mercury:Saturn:conjunction:1.68",
+        "aspect:Mars:Pluto:square:1.74"
+      ],
+      "text": "Closest first: Mars to Uranus, a sextile with 0.3° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mercury conjunction Saturn at 1.7°, and Mars square Pluto at 1.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "None of the seven classical planets falls in a sign the old scheme marks as strong or stretched. Worth saying plainly rather than leaving out: there is no ready-made verdict from the dignity table here, and the chart’s weight sits in its angles instead."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth3-air2",
+        "modalities:mutable3-fixed3-cardinal3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 water, 3 earth, 2 air by element and 3 mutable, 3 fixed, 3 cardinal by mode. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Jupiter and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 14.4° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-1/",
+    "label": "Everyone born on June 1"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:sextile",
+    "sun-degree:9.55",
+    "decan:gemini:first",
+    "personal:Mercury:Taurus:15.3°",
+    "personal:Venus:Cancer:21.6°",
+    "personal:Mars:Pisces:28.7°",
+    "aspect:Mars:Uranus:sextile:0.32",
+    "aspect:Mercury:Saturn:conjunction:1.68",
+    "aspect:Mars:Pluto:square:1.74",
+    "figure:unaspected:Sun",
+    "dignity:none",
+    "elements:water4-earth3-air2",
+    "modalities:mutable3-fixed3-cardinal3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 364,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

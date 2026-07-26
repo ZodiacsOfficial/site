@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "louise-bourgeois",
+  "seedRound": 0,
+  "qid": "Q159409",
+  "displayName": "Louise Bourgeois",
+  "identity": "Sculptor · France · 1911–2010",
+  "title": "Louise Bourgeois's birth chart",
+  "metaDescription": "Louise Bourgeois's chart, computed from a sourced birth date: Sun at 2.6° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mercury sit 0.4° from an exact conjunction — near enough that the tradition reads identity and thinking as a single working part. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Sun:Mercury:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.60",
+        "decan:capricorn:first"
+      ],
+      "text": "The Sun's exact place is 2.6° Capricorn. That falls in the first decan, 0°–10°, sub-ruled by Saturn in the classical scheme — a earth sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Capricorn:3.0°",
+        "personal:Venus:Scorpio:18.1°",
+        "personal:Mars:Taurus:24.4°"
+      ],
+      "text": "Mercury holds 3.0° Capricorn, Venus holds 18.1° Scorpio, Mars holds 24.4° Taurus — in the old shorthand, a mind that trusts the measured and the checked; taste tuned to mood and undertow; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mercury:conjunction:0.37",
+        "aspect:Mars:Neptune:sextile:1.48",
+        "aspect:Mars:Uranus:trine:3.47"
+      ],
+      "text": "Nothing in the geometry sits closer than the Sun and Mercury: 0.4° from an exact conjunction. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Mars sextile Neptune at 1.5°, and Mars trine Uranus at 3.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Jupiter stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Venus in Scorpio at 18.1° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 24.4° is in detriment; Jupiter in Sagittarius at 3.2° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-water2-fire1-air1",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:5"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: earth 5, water 2, fire 1, air 1 across the elements, and cardinal 4, fixed 3, mutable 2 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Mercury, Mars, Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 12.0° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-25/",
+    "label": "Everyone born on December 25"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mercury:conjunction",
+    "sun-degree:2.60",
+    "decan:capricorn:first",
+    "personal:Mercury:Capricorn:3.0°",
+    "personal:Venus:Scorpio:18.1°",
+    "personal:Mars:Taurus:24.4°",
+    "aspect:Sun:Mercury:conjunction:0.37",
+    "aspect:Mars:Neptune:sextile:1.48",
+    "aspect:Mars:Uranus:trine:3.47",
+    "figure:unaspected:Jupiter",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:earth5-water2-fire1-air1",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:5",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

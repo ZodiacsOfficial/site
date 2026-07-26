@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "gabriel-faure",
+  "seedRound": 0,
+  "qid": "Q104919",
+  "displayName": "Gabriel Fauré",
+  "identity": "University teacher and composer · France · 1845–1924",
+  "title": "Gabriel Fauré's birth chart",
+  "metaDescription": "Gabriel Fauré's chart, computed from a sourced birth date: Sun at 21.6° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.5° separates Mars and Uranus from an exact sextile; at that range drive and disruption read as one mechanism. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Mars:Uranus:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.57",
+        "decan:taurus:third"
+      ],
+      "text": "At noon on that date the Sun stood at 21.6° Taurus, inside the third decan (20°–30°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:15.9°",
+        "personal:Venus:Taurus:20.6°",
+        "personal:Mars:Aquarius:8.2°"
+      ],
+      "text": "Mercury holds 15.9° Taurus, Venus holds 20.6° Taurus, Mars holds 8.2° Aquarius — in the old shorthand, thought with its feet on the ground; attraction that grows by reliability; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Neptune:sextile:0.46",
+        "aspect:Mars:Uranus:sextile:0.48",
+        "aspect:Sun:Venus:conjunction:1.02"
+      ],
+      "text": "Closest first: Jupiter to Neptune, a sextile with 0.5° of slack. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mars sextile Uranus at 0.5°, and the Sun conjunction Venus at 1.0° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Taurus at 20.6° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 18.7° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air3-fire3",
+        "modalities:fixed6-cardinal3",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 3, air 3, fire 3; modalities fixed 6, cardinal 3. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Mercury was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 11.9° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-12/",
+    "label": "Everyone born on May 12"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:sextile",
+    "sun-degree:21.57",
+    "decan:taurus:third",
+    "personal:Mercury:Taurus:15.9°",
+    "personal:Venus:Taurus:20.6°",
+    "personal:Mars:Aquarius:8.2°",
+    "aspect:Jupiter:Neptune:sextile:0.46",
+    "aspect:Mars:Uranus:sextile:0.48",
+    "aspect:Sun:Venus:conjunction:1.02",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:domicile",
+    "elements:earth3-air3-fire3",
+    "modalities:fixed6-cardinal3",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 418,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

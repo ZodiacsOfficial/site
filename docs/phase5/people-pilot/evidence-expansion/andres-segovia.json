@@ -1,0 +1,127 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "andres-segovia",
+ "qid": "Q192529",
+ "displayName": "Andrés Segovia",
+ "wikidataLabel": "Andrés Segovia",
+ "wikidataDescription": "Spanish guitarist (1893–1987)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q192529",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518312460
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Andrés Segovia",
+   "articleUrl": "https://en.wikipedia.org/wiki/Andr%C3%A9s_Segovia",
+   "pageId": 71932,
+   "revisionId": 1364722635,
+   "revisionTimestamp": "2026-07-18T03:56:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1893-02-21T00:00:00Z|proleptic-gregorian",
+   "+1890-02-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1893-02-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1890-02-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1893-02-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-06-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q281272",
+  "label": "Linares",
+  "entityUrl": "https://www.wikidata.org/wiki/Q281272",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q281272",
+   "sourceEntityLabel": "Linares",
+   "latitude": 38.1,
+   "longitude": -3.633333,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q24067349",
+   "label": "classical guitarist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Andrés Segovia (1963) by Erling Mandelmann.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Andr%C3%A9s%20Segovia%20(1963)%20by%20Erling%20Mandelmann.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Andr%C3%A9s_Segovia_(1963)_by_Erling_Mandelmann.jpg",
+  "width": 205,
+  "height": 300,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Erling Mandelmann",
+  "credit": "photo©ErlingMandelmann.ch",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "junko-tabei",
+  "seedRound": 0,
+  "qid": "Q234491",
+  "displayName": "Junko Tabei",
+  "identity": "Explorer and mountaineer · Japan · 1939–2016",
+  "title": "Junko Tabei's birth chart",
+  "metaDescription": "Junko Tabei's chart, computed from a sourced birth date: Sun at 28.2° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: Venus and Pluto within 0.1°, taste wired to depth. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not.",
+  "ledeFact": "aspect:Venus:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:28.21",
+        "decan:virgo:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 28.2° Virgo: the third decan, whose classical sub-ruler is Venus. A earth sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:27.8°",
+        "personal:Venus:Libra:2.6°",
+        "personal:Mars:Capricorn:29.3°"
+      ],
+      "text": "Mercury holds 27.8° Virgo, Venus holds 2.6° Libra, Mars holds 29.3° Capricorn — in the old shorthand, a mind that trusts the measured and the checked; taste led by wit and proportion; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:sextile:0.07",
+        "aspect:Sun:Mercury:conjunction:0.39",
+        "aspect:Mars:Saturn:square:0.69"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Pluto: 0.1° from an exact sextile. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, the Sun conjunction Mercury at 0.4°, and Mars square Saturn at 0.7° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mars-Pluto:apex-Saturn",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars opposes Pluto while both square Saturn. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:exaltation"
+      ],
+      "text": "The classical table has four entries for this chart. The Moon in Capricorn at 17.3° is in detriment — the planet opposite its home, working against the grain; Mercury in Virgo at 27.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 2.6° is in domicile — the planet in its own sign, running on home rules; Mars in Capricorn at 29.3° is in exaltation. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth6-fire2-air1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:3",
+        "sign-uncertain:Saturn:taurus:aries"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 6 earth, 2 fire, 1 air by element and 4 cardinal, 3 mutable, 2 fixed by mode. An earth emphasis reads as patience with material reality — slow hands, durable results. Saturn crossed from Taurus into Aries during that day, so its sign is left open. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Jupiter, Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 17.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-22/",
+    "label": "Everyone born on September 22"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:sextile",
+    "sun-degree:28.21",
+    "decan:virgo:third",
+    "personal:Mercury:Virgo:27.8°",
+    "personal:Venus:Libra:2.6°",
+    "personal:Mars:Capricorn:29.3°",
+    "aspect:Venus:Pluto:sextile:0.07",
+    "aspect:Sun:Mercury:conjunction:0.39",
+    "aspect:Mars:Saturn:square:0.69",
+    "figure:t-square:Mars-Pluto:apex-Saturn",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:exaltation",
+    "elements:earth6-fire2-air1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "sign-uncertain:Saturn:taurus:aries",
+    "moon-sign:capricorn",
+    "moon-band:12.1"
+  ],
+  "measurements": {
+    "originalWords": 479,
+    "substantiveStatements": 22,
+    "blocks": 7
+  }
+}

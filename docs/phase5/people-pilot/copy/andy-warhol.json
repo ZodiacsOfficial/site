@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "andy-warhol",
+  "seedRound": 0,
+  "qid": "Q5603",
+  "displayName": "Andy Warhol",
+  "identity": "Film director and painter · United States · 1928–1987",
+  "title": "Andy Warhol's birth chart",
+  "metaDescription": "Andy Warhol's chart, computed from a sourced birth date: Sun at 13.9° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Leo — the Sun, Mercury, Venus and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:leo:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.90",
+        "decan:leo:second"
+      ],
+      "text": "At noon on that date the Sun stood at 13.9° Leo, inside the second decan (10°–20°), whose traditional sub-ruler is Jupiter. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:3.6°",
+        "personal:Venus:Leo:23.9°",
+        "personal:Mars:Taurus:28.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 3.6° Leo, Venus was at 23.9° Leo, Mars was at 28.4° Taurus. Read together: thought that arrives already in motion; attraction declared rather than implied; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:square:0.04",
+        "aspect:Sun:Saturn:trine:1.32",
+        "aspect:Mercury:Uranus:trine:3.54"
+      ],
+      "text": "Start where the chart is tightest — Mars square Neptune, 0.0° of separation. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, the Sun trine Saturn at 1.3°, and Mercury trine Uranus at 3.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Saturn-Uranus"
+      ],
+      "text": "the Sun, Saturn, Uranus close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mars:detriment"
+      ],
+      "text": "Read against the old dignities, two placements stand out. The Sun in Leo at 13.9° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 28.4° is in detriment — the planet opposite its home, working against the grain. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire7-earth2-water1",
+        "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 7 fire, 2 earth, 1 water by element and 6 fixed, 3 cardinal, 1 mutable by modality. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Saturn and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 17.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-6/",
+    "label": "Everyone born on August 6"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "stellium:leo:4",
+    "sun-degree:13.90",
+    "decan:leo:second",
+    "personal:Mercury:Leo:3.6°",
+    "personal:Venus:Leo:23.9°",
+    "personal:Mars:Taurus:28.4°",
+    "aspect:Mars:Neptune:square:0.04",
+    "aspect:Sun:Saturn:trine:1.32",
+    "aspect:Mercury:Uranus:trine:3.54",
+    "figure:grand-trine:Sun-Saturn-Uranus",
+    "dignity:Sun:domicile",
+    "dignity:Mars:detriment",
+    "elements:fire7-earth2-water1",
+    "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aries",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 411,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

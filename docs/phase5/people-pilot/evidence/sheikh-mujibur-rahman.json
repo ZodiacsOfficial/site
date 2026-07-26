@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sheikh-mujibur-rahman",
+ "qid": "Q191375",
+ "displayName": "Sheikh Mujibur Rahman",
+ "wikidataLabel": "Sheikh Mujibur Rahman",
+ "wikidataDescription": "President of the Provisional Government of Bangladesh and the 2nd Prime Minister and first President of Bangladesh",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q191375",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515849737
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sheikh Mujibur Rahman",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sheikh_Mujibur_Rahman",
+   "pageId": 246089,
+   "revisionId": 1364255779,
+   "revisionTimestamp": "2026-07-15T13:35:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-03-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-03-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-03-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1975-08-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2397239",
+  "label": "Tungipara Upazila",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2397239",
+  "country": {
+   "entity": "Q902",
+   "label": "Bangladesh"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2397239",
+   "sourceEntityLabel": "Tungipara Upazila",
+   "latitude": 22.9,
+   "longitude": 89.8833,
+   "precision": 0.0097517316133319,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sheikh Mujibur Rahman portrait (PID-h0066).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sheikh%20Mujibur%20Rahman%20portrait%20(PID-h0066).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sheikh_Mujibur_Rahman_portrait_(PID-h0066).jpg",
+  "width": 5080,
+  "height": 6096,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Prime Minister's Office of Bangladesh",
+  "credit": "pressinform.gov.bd (archive)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

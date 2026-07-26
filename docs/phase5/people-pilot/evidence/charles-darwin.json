@@ -1,0 +1,141 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "charles-darwin",
+ "qid": "Q1035",
+ "displayName": "Charles Darwin",
+ "wikidataLabel": null,
+ "wikidataDescription": "English naturalist and biologist (1809–1882)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1035",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522560759
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Charles Darwin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Charles_Darwin",
+   "pageId": 8145410,
+   "revisionId": 1362274010,
+   "revisionTimestamp": "2026-07-02T22:28:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1809-02-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1809-02-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1809-02-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1882-04-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2412935",
+  "label": "Shrewsbury",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2412935",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2412935",
+   "sourceEntityLabel": "Q2412935",
+   "latitude": 52.7128,
+   "longitude": -2.76334,
+   "precision": 1e-06,
+   "escalationSteps": 0
+  },
+  "labelNote": "birthplace entity is the birth house The Mount (Q2412935, no English label); label taken from its parent town Q201970"
+ },
+ "occupations": [
+  {
+   "entity": "Q520549",
+   "label": "geologist"
+  },
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q16831721",
+   "label": "ethologist"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q2083925",
+   "label": "botanical collector"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Charles Darwin portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Charles%20Darwin%20portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Charles_Darwin_portrait.jpg",
+  "width": 630,
+  "height": 885,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Herbert Rose Barraud",
+  "credit": "https://www.taringa.net/+info/charles-darwin-argentina-fue-y-sera-una_136c2o",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

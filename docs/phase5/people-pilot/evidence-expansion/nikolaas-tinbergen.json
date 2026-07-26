@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nikolaas-tinbergen",
+ "qid": "Q153890",
+ "displayName": "Nikolaas Tinbergen",
+ "wikidataLabel": "Niko Tinbergen",
+ "wikidataDescription": "Dutch Zoologist, ethologist (1907-1988)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q153890",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515843153
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nikolaas Tinbergen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nikolaas_Tinbergen",
+   "pageId": 188094,
+   "revisionId": 1361412244,
+   "revisionTimestamp": "2026-06-27T19:56:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1907-04-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1907-04-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1907-04-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1988-12-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q36600",
+  "label": "The Hague",
+  "entityUrl": "https://www.wikidata.org/wiki/Q36600",
+  "country": {
+   "entity": "Q55",
+   "label": "Netherlands"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q36600",
+   "sourceEntityLabel": "The Hague",
+   "latitude": 52.08,
+   "longitude": 4.31,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q1225716",
+   "label": "ornithologist"
+  },
+  {
+   "entity": "Q16831721",
+   "label": "ethologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nikolaas Tinbergen 1978.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nikolaas%20Tinbergen%201978.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nikolaas_Tinbergen_1978.jpg",
+  "width": 470,
+  "height": 559,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "artist": "Lorenz_and_Tinbergen2.jpg: Max Planck Gesellschaft derivative work: Materialscientist",
+  "credit": "This file was derived from: Lorenz and Tinbergen2.jpg:",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

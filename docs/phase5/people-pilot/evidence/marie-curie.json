@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marie-curie",
+ "qid": "Q7186",
+ "displayName": "Marie Curie",
+ "wikidataLabel": "Marie Curie",
+ "wikidataDescription": "Polish-French physicist and chemist (1867–1934)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7186",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522887324
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marie Curie",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marie_Curie",
+   "pageId": 20408,
+   "revisionId": 1365052544,
+   "revisionTimestamp": "2026-07-20T00:24:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1867-11-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1867-11-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1867-11-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1934-07-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q270",
+  "label": "Warsaw",
+  "entityUrl": "https://www.wikidata.org/wiki/Q270",
+  "country": {
+   "entity": "Q36",
+   "label": "Poland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q270",
+   "sourceEntityLabel": "Warsaw",
+   "latitude": 52.23,
+   "longitude": 21.011111111111113,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marie Curie (1900) (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marie%20Curie%20(1900)%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marie_Curie_(1900)_(cropped).jpg",
+  "width": 335,
+  "height": 491,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://jasminkellner.com/wp-content/uploads/2015/03/Marie-Curie.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

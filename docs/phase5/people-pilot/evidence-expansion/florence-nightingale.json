@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "florence-nightingale",
+ "qid": "Q37103",
+ "displayName": "Florence Nightingale",
+ "wikidataLabel": "Florence Nightingale",
+ "wikidataDescription": "English social reformer, statistician, and founder of modern nursing (1820–1910)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37103",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519329548
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Florence Nightingale",
+   "articleUrl": "https://en.wikipedia.org/wiki/Florence_Nightingale",
+   "pageId": 100127,
+   "revisionId": 1358730807,
+   "revisionTimestamp": "2026-06-10T15:56:21Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1820-05-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1820-05-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1820-05-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1910-08-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2044",
+  "label": "Florence",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2044",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2044",
+   "sourceEntityLabel": "Florence",
+   "latitude": 43.771388888889,
+   "longitude": 11.254166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q186360",
+   "label": "nurse"
+  },
+  {
+   "entity": "Q2732142",
+   "label": "statistician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Florence Nightingale (H Hering NPG x82368).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Florence%20Nightingale%20(H%20Hering%20NPG%20x82368).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Florence_Nightingale_(H_Hering_NPG_x82368).jpg",
+  "width": 1105,
+  "height": 1536,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Henry Hering (1814-1893)",
+  "credit": "NPG x82368 from National Portrait Gallery, London",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

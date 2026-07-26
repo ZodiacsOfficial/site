@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "antonio-vivaldi",
+ "qid": "Q1340",
+ "displayName": "Antonio Vivaldi",
+ "wikidataLabel": "Antonio Vivaldi",
+ "wikidataDescription": "Italian composer and violinist (1678-1741)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1340",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522566252
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Antonio Vivaldi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Antonio_Vivaldi",
+   "pageId": 1425,
+   "revisionId": 1365115549,
+   "revisionTimestamp": "2026-07-20T10:00:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1678-03-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1678-03-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1678-03-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1741-07-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q641",
+  "label": "Venice",
+  "entityUrl": "https://www.wikidata.org/wiki/Q641",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q641",
+   "sourceEntityLabel": "Venice",
+   "latitude": 45.439722222222,
+   "longitude": 12.331944444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q21680731",
+   "label": "opera composer"
+  },
+  {
+   "entity": "Q1469535",
+   "label": "Latin Catholic priest"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  },
+  {
+   "entity": "Q215793",
+   "label": "chapelmaster"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q1776724",
+   "label": "theatre manager"
+  },
+  {
+   "entity": "Q1198887",
+   "label": "music director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Onbekend - Antonio Vivaldi - Bologna Museo Internationale e biblioteca della musica di bologna 28-04-2012 9-21-050.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Onbekend%20-%20Antonio%20Vivaldi%20-%20Bologna%20Museo%20Internationale%20e%20biblioteca%20della%20musica%20di%20bologna%2028-04-2012%209-21-050.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Onbekend_-_Antonio_Vivaldi_-_Bologna_Museo_Internationale_e_biblioteca_della_musica_di_bologna_28-04-2012_9-21-050.jpg",
+  "width": 2048,
+  "height": 2719,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "picture taken and uploaded by Paul Hermans",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

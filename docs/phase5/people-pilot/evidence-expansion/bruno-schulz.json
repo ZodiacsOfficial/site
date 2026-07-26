@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bruno-schulz",
+ "qid": "Q148886",
+ "displayName": "Bruno Schulz",
+ "wikidataLabel": "Bruno Schulz",
+ "wikidataDescription": "Jewish novelist and painter (1892-1942)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q148886",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521308943
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bruno Schulz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bruno_Schulz",
+   "pageId": 397340,
+   "revisionId": 1365726135,
+   "revisionTimestamp": "2026-07-24T02:24:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1892-07-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1892-07-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1892-07-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1942-11-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q158821",
+  "label": "Drohobych",
+  "entityUrl": "https://www.wikidata.org/wiki/Q158821",
+  "country": {
+   "entity": "Q212",
+   "label": "Ukraine"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q158821",
+   "sourceEntityLabel": "Drohobych",
+   "latitude": 49.35,
+   "longitude": 23.5,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bruno Schulz.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bruno%20Schulz.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bruno_Schulz.jpg",
+  "width": 384,
+  "height": 589,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "File:Bruno Schulz, portrait.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

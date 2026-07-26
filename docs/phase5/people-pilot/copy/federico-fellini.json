@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "federico-fellini",
+  "seedRound": 0,
+  "qid": "Q7371",
+  "displayName": "Federico Fellini",
+  "identity": "Film director and screenwriter · Italy · 1920–1993",
+  "title": "Federico Fellini's birth chart",
+  "metaDescription": "Federico Fellini's chart, computed from a sourced birth date: Sun at 29.1° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. Cardinal weight opens doors — the chart of first movers and season starters.",
+  "ledeFact": "modality:cardinal:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.11",
+        "decan:capricorn:third"
+      ],
+      "text": "The Sun sits at 29.1° Capricorn — the third decan, 20°–30°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Capricorn and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:18.6°",
+        "personal:Venus:Sagittarius:19.1°",
+        "personal:Mars:Libra:25.4°"
+      ],
+      "text": "Mercury holds 18.6° Capricorn, Venus holds 19.1° Sagittarius, Mars holds 25.4° Libra — in the old shorthand, a mind that trusts the measured and the checked; taste that runs toward the vivid and the immediate; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:square:3.68",
+        "aspect:Venus:Jupiter:trine:4.17",
+        "aspect:Mars:Uranus:trine:4.46"
+      ],
+      "text": "The Sun to Mars is the closest call of the day, a square within 3.7°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Venus trine Jupiter at 4.2°, and Mars trine Uranus at 4.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Saturn"
+      ],
+      "text": "Saturn stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Mars:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. The Moon in Capricorn at 20.4° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 25.4° is in detriment. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire3-air2-water1",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in earth, 3 in fire, 2 in air, 1 in water by element, 5 cardinal, 3 fixed, 2 mutable by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Jupiter, Saturn, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-20/",
+    "label": "Everyone born on January 20"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:5",
+    "sun-degree:29.11",
+    "decan:capricorn:third",
+    "personal:Mercury:Capricorn:18.6°",
+    "personal:Venus:Sagittarius:19.1°",
+    "personal:Mars:Libra:25.4°",
+    "aspect:Sun:Mars:square:3.68",
+    "aspect:Venus:Jupiter:trine:4.17",
+    "aspect:Mars:Uranus:trine:4.46",
+    "figure:unaspected:Saturn",
+    "dignity:Moon:detriment",
+    "dignity:Mars:detriment",
+    "elements:earth4-fire3-air2-water1",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:capricorn",
+    "moon-band:12.3"
+  ],
+  "measurements": {
+    "originalWords": 429,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "nise-da-silveira",
+  "seedRound": 0,
+  "qid": "Q9050242",
+  "displayName": "Nise da Silveira",
+  "identity": "Psychologist and artist · Brazil · 1905–1999",
+  "title": "Nise da Silveira's birth chart",
+  "metaDescription": "Nise da Silveira's chart, computed from a sourced birth date: Sun at 26.3° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Jupiter sit 0.1° from an exact sextile — near enough that the tradition reads identity and expansion as a single working part. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.",
+  "ledeFact": "aspect:Sun:Jupiter:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.26",
+        "decan:aquarius:third"
+      ],
+      "text": "Aquarius, but precisely: 26.3°, third decan, 20°–30°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:9.6°",
+        "personal:Venus:Aries:12.9°",
+        "personal:Mars:Scorpio:14.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aquarius (9.6°), Venus in Aries (12.9°), Mars in Scorpio (14.8°): a mind at home in argument and pattern, taste that runs toward the vivid and the immediate, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:sextile:0.1",
+        "aspect:Jupiter:Saturn:sextile:2.36",
+        "aspect:Sun:Saturn:conjunction:2.46"
+      ],
+      "text": "The Sun to Jupiter is the closest call of the day, a sextile within 0.1°. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Jupiter sextile Saturn at 2.4°, and the Sun conjunction Saturn at 2.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has four entries for this chart. The Sun in Aquarius at 26.3° is in detriment — the planet opposite its home, working against the grain; Venus in Aries at 12.9° is in detriment; Mars in Scorpio at 14.8° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 23.8° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire2-water2-earth1",
+        "modalities:fixed4-cardinal4-mutable1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in air, 2 in fire, 2 in water, 1 in earth by element, 4 fixed, 4 cardinal, 1 mutable by modality. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 13.4° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-15/",
+    "label": "Everyone born on February 15"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:sextile",
+    "sun-degree:26.26",
+    "decan:aquarius:third",
+    "personal:Mercury:Aquarius:9.6°",
+    "personal:Venus:Aries:12.9°",
+    "personal:Mars:Scorpio:14.8°",
+    "aspect:Sun:Jupiter:sextile:0.1",
+    "aspect:Jupiter:Saturn:sextile:2.36",
+    "aspect:Sun:Saturn:conjunction:2.46",
+    "figure:none",
+    "dignity:Sun:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air4-fire2-water2-earth1",
+    "modalities:fixed4-cardinal4-mutable1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 413,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "saadat-hasan-manto",
+ "qid": "Q156501",
+ "displayName": "Saadat Hasan Manto",
+ "wikidataLabel": "Saadat Hasan Manto",
+ "wikidataDescription": "Indo-Pakistani novelist, playwright and writer (1912-1955)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q156501",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515843683
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Saadat Hasan Manto",
+   "articleUrl": "https://en.wikipedia.org/wiki/Saadat_Hasan_Manto",
+   "pageId": 675167,
+   "revisionId": 1360566836,
+   "revisionTimestamp": "2026-06-22T08:36:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-05-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-05-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-05-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1955-01-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2545261",
+  "label": "Samrala",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2545261",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2545261",
+   "sourceEntityLabel": "Samrala",
+   "latitude": 30.84,
+   "longitude": 76.19,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Saadat Hasan Manto.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Saadat%20Hasan%20Manto.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Saadat_Hasan_Manto.jpg",
+  "width": 760,
+  "height": 1012,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Saadat Hasan Manto: 'He anticipated where Pakistan would go'",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

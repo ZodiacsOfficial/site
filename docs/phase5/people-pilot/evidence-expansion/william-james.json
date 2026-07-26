@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "william-james",
+ "qid": "Q125249",
+ "displayName": "William James",
+ "wikidataLabel": "William James",
+ "wikidataDescription": "American philosopher, psychologist, and pragmatist (1842–1910)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q125249",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519852660
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "William James",
+   "articleUrl": "https://en.wikipedia.org/wiki/William_James",
+   "pageId": 90682,
+   "revisionId": 1365034034,
+   "revisionTimestamp": "2026-07-19T21:59:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1842-01-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1842-01-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1842-01-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1910-08-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q14706163",
+  "label": "Astor House",
+  "entityUrl": "https://www.wikidata.org/wiki/Q14706163",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q14706163",
+   "sourceEntityLabel": "Astor House",
+   "latitude": 40.711873,
+   "longitude": -74.008753,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:William James by Alice M. Boughton, c. 1907, platinum print, from the National Portrait Gallery - NPG-NPG 87 37James-000001 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:William%20James%20by%20Alice%20M.%20Boughton%2C%20c.%201907%2C%20platinum%20print%2C%20from%20the%20National%20Portrait%20Gallery%20-%20NPG-NPG%2087%2037James-000001%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:William_James_by_Alice_M._Boughton,_c._1907,_platinum_print,_from_the_National_Portrait_Gallery_-_NPG-NPG_87_37James-000001_(cropped).jpg",
+  "width": 4711,
+  "height": 6245,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Alice Boughton",
+  "credit": "National Portrait Gallery",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

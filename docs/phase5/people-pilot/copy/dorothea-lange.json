@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "dorothea-lange",
+  "seedRound": 0,
+  "qid": "Q230673",
+  "displayName": "Dorothea Lange",
+  "identity": "Journalist and photojournalist · United States · 1895–1965",
+  "title": "Dorothea Lange's birth chart",
+  "metaDescription": "Dorothea Lange's chart, computed from a sourced birth date: Sun at 5.2° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Gemini — the Sun, Mercury, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:gemini:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.15",
+        "decan:gemini:first"
+      ],
+      "text": "At the noon reference the Sun sits 5.2° into Gemini — the first decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Gemini:26.3°",
+        "personal:Venus:Cancer:15.6°",
+        "personal:Mars:Cancer:20.9°"
+      ],
+      "text": "Mercury holds 26.3° Gemini, Venus holds 15.6° Cancer, Mars holds 20.9° Cancer — in the old shorthand, thought that travels by comparison; attraction that works by atmosphere; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:trine:1.55",
+        "aspect:Mars:Uranus:trine:3.67",
+        "aspect:Neptune:Pluto:conjunction:3.99"
+      ],
+      "text": "Venus to Uranus is the closest call of the day, a trine within 1.6°. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mars trine Uranus at 3.7°, and Neptune conjunction Pluto at 4.0° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Mercury in Gemini at 26.3° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 20.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 8.2° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air4",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 5 water, 4 air by element and 4 mutable, 3 cardinal, 2 fixed by mode. No settled placement falls in fire or earth — an absence the tradition treats as information, not as a defect. Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 14.1° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-26/",
+    "label": "Everyone born on May 26"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "stellium:gemini:4",
+    "sun-degree:5.15",
+    "decan:gemini:first",
+    "personal:Mercury:Gemini:26.3°",
+    "personal:Venus:Cancer:15.6°",
+    "personal:Mars:Cancer:20.9°",
+    "aspect:Venus:Uranus:trine:1.55",
+    "aspect:Mars:Uranus:trine:3.67",
+    "aspect:Neptune:Pluto:conjunction:3.99",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:domicile",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:exaltation",
+    "elements:water5-air4",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 416,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

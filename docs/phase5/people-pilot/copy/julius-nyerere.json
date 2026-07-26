@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "julius-nyerere",
+  "seedRound": 0,
+  "qid": "Q186525",
+  "displayName": "Julius Nyerere",
+  "identity": "Politician and translator · Tanzania · 1922–1999",
+  "title": "Julius Nyerere's birth chart",
+  "metaDescription": "Julius Nyerere's chart, computed from a sourced birth date: Sun at 22.7° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 22.7° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.67",
+        "decan:aries:third"
+      ],
+      "text": "The Sun's exact place is 22.7° Aries. That falls in the third decan, 20°–30°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:10.8°",
+        "personal:Venus:Taurus:8.3°",
+        "personal:Mars:Sagittarius:21.9°"
+      ],
+      "text": "Mercury holds 10.8° Aries, Venus holds 8.3° Taurus, Mars holds 21.9° Sagittarius — in the old shorthand, a mind that decides at speaking speed; taste for the substantial and the lasting; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:sextile:0.28",
+        "aspect:Jupiter:Neptune:sextile:0.33",
+        "aspect:Sun:Mars:trine:0.81"
+      ],
+      "text": "The tightest geometry in the chart puts Venus a sixth of the circle apart from Pluto, 0.3° off exact. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Jupiter sextile Neptune at 0.3°, and the Sun trine Mars at 0.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Jupiter:apex-Pluto"
+      ],
+      "text": "Mercury opposes Jupiter while both square Pluto. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Moon:fall",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The classical table has four entries for this chart. The Sun in Aries at 22.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Scorpio at 13.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Taurus at 8.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 2.8° is in exaltation. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-air2-earth1",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 2 air, 1 earth; by modality, 5 cardinal, 3 fixed, 2 mutable. Jupiter, Saturn and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:14.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-13/",
+    "label": "Everyone born on April 13"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:22.67",
+    "decan:aries:third",
+    "personal:Mercury:Aries:10.8°",
+    "personal:Venus:Taurus:8.3°",
+    "personal:Mars:Sagittarius:21.9°",
+    "aspect:Venus:Pluto:sextile:0.28",
+    "aspect:Jupiter:Neptune:sextile:0.33",
+    "aspect:Sun:Mars:trine:0.81",
+    "figure:t-square:Mercury-Jupiter:apex-Pluto",
+    "dignity:Sun:exaltation",
+    "dignity:Moon:fall",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:fire4-water3-air2-earth1",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:scorpio",
+    "moon-band:14.4"
+  ],
+  "measurements": {
+    "originalWords": 404,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

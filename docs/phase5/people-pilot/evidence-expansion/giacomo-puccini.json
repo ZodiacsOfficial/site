@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "giacomo-puccini",
+ "qid": "Q7311",
+ "displayName": "Giacomo Puccini",
+ "wikidataLabel": "Giacomo Puccini",
+ "wikidataDescription": "Italian opera composer (1858–1924)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7311",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520924596
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Giacomo Puccini",
+   "articleUrl": "https://en.wikipedia.org/wiki/Giacomo_Puccini",
+   "pageId": 12750,
+   "revisionId": 1361520008,
+   "revisionTimestamp": "2026-06-28T12:34:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1858-12-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-12-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-12-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1924-11-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q13373",
+  "label": "Lucca",
+  "entityUrl": "https://www.wikidata.org/wiki/Q13373",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q13373",
+   "sourceEntityLabel": "Lucca",
+   "latitude": 43.85,
+   "longitude": 10.516666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q21680731",
+   "label": "opera composer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  }
+ ],
+ "portrait": {
+  "file": "File:GiacomoPuccini.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:GiacomoPuccini.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:GiacomoPuccini.jpg",
+  "width": 516,
+  "height": 800,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Unknown source",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

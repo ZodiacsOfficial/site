@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "flora-nwapa",
+  "seedRound": 0,
+  "qid": "Q5460344",
+  "displayName": "Flora Nwapa",
+  "identity": "Novelist · Nigeria · 1931–1993",
+  "title": "Flora Nwapa's birth chart",
+  "metaDescription": "Flora Nwapa's chart, computed from a sourced birth date: Sun at 22.3° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.7° separates Mars and Uranus from an exact trine; at that range drive and disruption read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Mars:Uranus:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.31",
+        "decan:capricorn:third"
+      ],
+      "text": "At noon on that date the Sun stood at 22.3° Capricorn, inside the third decan (20°–30°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:7.1°",
+        "personal:Venus:Sagittarius:7.2°",
+        "personal:Mars:Leo:12.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (7.1°), Venus in Sagittarius (7.2°), Mars in Leo (12.3°): thought with its feet on the ground, attraction declared rather than implied, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:opposition:0.62",
+        "aspect:Mars:Uranus:trine:0.67",
+        "aspect:Mercury:Neptune:trine:1.62"
+      ],
+      "text": "Closest first: Jupiter to Saturn, a opposition with 0.6° of slack. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Mars trine Uranus at 0.7°, and Mercury trine Neptune at 1.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Venus-Mars-Uranus",
+        "figure:t-square:Mercury-Jupiter:apex-Uranus"
+      ],
+      "text": "Venus, Mars, Uranus close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Mercury opposes Jupiter while both square Uranus. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Moon in Scorpio at 20.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 14.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Capricorn at 15.2° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-water3-fire3",
+        "modalities:cardinal6-fixed2-mutable2",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 earth, 3 water, 3 fire by element and 6 cardinal, 2 fixed, 2 mutable by mode. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Mercury, Mars, Jupiter, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 20.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-13/",
+    "label": "Everyone born on January 13"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:trine",
+    "sun-degree:22.31",
+    "decan:capricorn:third",
+    "personal:Mercury:Capricorn:7.1°",
+    "personal:Venus:Sagittarius:7.2°",
+    "personal:Mars:Leo:12.3°",
+    "aspect:Jupiter:Saturn:opposition:0.62",
+    "aspect:Mars:Uranus:trine:0.67",
+    "aspect:Mercury:Neptune:trine:1.62",
+    "figure:grand-trine:Venus-Mars-Uranus",
+    "figure:t-square:Mercury-Jupiter:apex-Uranus",
+    "dignity:Moon:fall",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:earth4-water3-fire3",
+    "modalities:cardinal6-fixed2-mutable2",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:scorpio",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 454,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

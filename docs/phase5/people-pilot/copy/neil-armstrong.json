@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "neil-armstrong",
+  "seedRound": 0,
+  "qid": "Q1615",
+  "displayName": "Neil Armstrong",
+  "identity": "University teacher · United States · 1930–2012",
+  "title": "Neil Armstrong's birth chart",
+  "metaDescription": "Neil Armstrong's chart, computed from a sourced birth date: Sun at 12.5° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 12.5° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.49",
+        "decan:leo:second"
+      ],
+      "text": "The Sun's position resolves to 12.5° Leo — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:2.5°",
+        "personal:Venus:Virgo:25.1°",
+        "personal:Mars:Gemini:15.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 2.5° Virgo, Venus was at 25.1° Virgo, Mars was at 15.2° Gemini. Read together: thought with its feet on the ground; attraction that grows by reliability; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Neptune:conjunction:0.01",
+        "aspect:Mars:Uranus:sextile:0.12",
+        "aspect:Jupiter:Saturn:opposition:2.55"
+      ],
+      "text": "Start where the chart is tightest — Mercury conjunction Neptune, 0.0° of separation. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Mars sextile Uranus at 0.1°, and Jupiter opposition Saturn at 2.5° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Venus"
+      ],
+      "text": "Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:fall",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks five placements here. The Sun in Leo at 12.5° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 2.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Virgo at 25.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 8.8° is in exaltation; Saturn in Capricorn at 6.2° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire2-water2-air1",
+        "modalities:mutable4-cardinal4-fixed1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 earth, 2 fire, 2 water, 1 air by element and 4 mutable, 4 cardinal, 1 fixed by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Saturn and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.2° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-5/",
+    "label": "Everyone born on August 5"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:12.49",
+    "decan:leo:second",
+    "personal:Mercury:Virgo:2.5°",
+    "personal:Venus:Virgo:25.1°",
+    "personal:Mars:Gemini:15.2°",
+    "aspect:Mercury:Neptune:conjunction:0.01",
+    "aspect:Mars:Uranus:sextile:0.12",
+    "aspect:Jupiter:Saturn:opposition:2.55",
+    "figure:unaspected:Venus",
+    "dignity:Sun:domicile",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:fall",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:earth4-fire2-water2-air1",
+    "modalities:mutable4-cardinal4-fixed1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

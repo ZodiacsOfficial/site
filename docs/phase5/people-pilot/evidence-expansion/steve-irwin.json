@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "steve-irwin",
+ "qid": "Q126513",
+ "displayName": "Steve Irwin",
+ "wikidataLabel": "Steve Irwin",
+ "wikidataDescription": "Australian zookeeper, conservationist and TV personality (1962-2006)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q126513",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518459118
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Steve Irwin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Steve_Irwin",
+   "pageId": 6873934,
+   "revisionId": 1362635136,
+   "revisionTimestamp": "2026-07-05T08:12:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1962-02-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1962-02-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1962-02-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2006-09-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7898645",
+  "label": "Upper Ferntree Gully",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7898645",
+  "country": {
+   "entity": "Q408",
+   "label": "Australia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7898645",
+   "sourceEntityLabel": "Upper Ferntree Gully",
+   "latitude": -37.895,
+   "longitude": 145.31,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q947873",
+   "label": "television presenter"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3578589",
+   "label": "environmentalist"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q16271064",
+   "label": "herpetologist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Steve Irwin.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Steve%20Irwin.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Steve_Irwin.jpg",
+  "width": 970,
+  "height": 815,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Richard Giles, aka User rich115 on Flickr",
+  "credit": "https://www.flickr.com/photos/richardgiles/78439513/",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

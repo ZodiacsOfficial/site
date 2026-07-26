@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "thor-heyerdahl",
+  "seedRound": 0,
+  "qid": "Q133622",
+  "displayName": "Thor Heyerdahl",
+  "identity": "Explorer and anthropologist · Norway · 1914–2002",
+  "title": "Thor Heyerdahl's birth chart",
+  "metaDescription": "Thor Heyerdahl's chart, computed from a sourced birth date: Sun at 12.3° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 6.4° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.34",
+        "decan:libra:second"
+      ],
+      "text": "12.3° of Libra is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Scorpio:5.6°",
+        "personal:Venus:Scorpio:27.2°",
+        "personal:Mars:Scorpio:4.8°"
+      ],
+      "text": "Closer in, Mercury stands at 5.6° Scorpio; Venus stands at 27.2° Scorpio; Mars stands at 4.8° Scorpio. The tradition reads thought steeped in tone and memory from Mercury, attraction that works by atmosphere from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Pluto:conjunction:0.03",
+        "aspect:Sun:Jupiter:trine:0.12",
+        "aspect:Mercury:Mars:conjunction:0.81"
+      ],
+      "text": "Saturn to Pluto is the closest call of the day, a conjunction within 0.0°. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, the Sun trine Jupiter at 0.1°, and Mercury conjunction Mars at 0.8° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Moon-Mercury:apex-Uranus"
+      ],
+      "text": "The Moon opposes Mercury while both square Uranus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks five placements here. The Sun in Libra at 12.3° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Taurus at 6.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Scorpio at 27.2° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 4.8° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 2.3° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air3-earth1-fire1",
+        "modalities:fixed7-cardinal3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 5 water, 3 air, 1 earth, 1 fire by element and 7 fixed, 3 cardinal by modality. Jupiter, Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 6.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-6/",
+    "label": "Everyone born on October 6"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:12.34",
+    "decan:libra:second",
+    "personal:Mercury:Scorpio:5.6°",
+    "personal:Venus:Scorpio:27.2°",
+    "personal:Mars:Scorpio:4.8°",
+    "aspect:Saturn:Pluto:conjunction:0.03",
+    "aspect:Sun:Jupiter:trine:0.12",
+    "aspect:Mercury:Mars:conjunction:0.81",
+    "figure:t-square:Moon-Mercury:apex-Uranus",
+    "dignity:Sun:fall",
+    "dignity:Moon:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:detriment",
+    "elements:water5-air3-earth1-fire1",
+    "modalities:fixed7-cardinal3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:taurus",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 427,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

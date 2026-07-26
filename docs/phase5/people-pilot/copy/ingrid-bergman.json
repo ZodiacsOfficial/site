@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ingrid-bergman",
+  "seedRound": 0,
+  "qid": "Q43247",
+  "displayName": "Ingrid Bergman",
+  "identity": "Autobiographer and stage actor · Sweden · 1915–1982",
+  "title": "Ingrid Bergman's birth chart",
+  "metaDescription": "Ingrid Bergman's chart, computed from a sourced birth date: Sun at 5.0° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, mutable leads with four. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.02",
+        "decan:virgo:first"
+      ],
+      "text": "The Sun's position resolves to 5.0° Virgo — deep enough in the first decan (0°–10°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:18.7°",
+        "personal:Venus:Virgo:1.1°",
+        "personal:Mars:Cancer:6.5°"
+      ],
+      "text": "Closer in, Mercury stands at 18.7° Virgo; Venus stands at 1.1° Virgo; Mars stands at 6.5° Cancer. The tradition reads thought with its feet on the ground from Mercury, attraction that grows by reliability from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:sextile:1.45",
+        "aspect:Sun:Pluto:sextile:1.94",
+        "aspect:Venus:Pluto:sextile:1.95"
+      ],
+      "text": "Start where the chart is tightest — the Sun sextile Mars, 1.4° of separation. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, the Sun sextile Pluto at 1.9°, and Venus sextile Pluto at 1.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Mercury"
+      ],
+      "text": "Mercury makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:fall",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. Mercury in Virgo at 18.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Virgo at 1.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 6.5° is in fall; Jupiter in Pisces at 25.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 13.3° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth3-air1-fire1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: water 4, earth 3, air 1, fire 1 across the elements, and mutable 4, cardinal 3, fixed 2 across the modalities. Jupiter and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 12.4° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-29/",
+    "label": "Everyone born on August 29"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:5.02",
+    "decan:virgo:first",
+    "personal:Mercury:Virgo:18.7°",
+    "personal:Venus:Virgo:1.1°",
+    "personal:Mars:Cancer:6.5°",
+    "aspect:Sun:Mars:sextile:1.45",
+    "aspect:Sun:Pluto:sextile:1.94",
+    "aspect:Venus:Pluto:sextile:1.95",
+    "figure:unaspected:Mercury",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:fall",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:detriment",
+    "elements:water4-earth3-air1-fire1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 421,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

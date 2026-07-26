@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "alvar-aalto",
+  "seedRound": 0,
+  "qid": "Q82840",
+  "displayName": "Alvar Aalto",
+  "identity": "Architect and designer · Finland · 1898–1976",
+  "title": "Alvar Aalto's birth chart",
+  "metaDescription": "Alvar Aalto's chart, computed from a sourced birth date: Sun at 14.7° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 7.1° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.67",
+        "decan:aquarius:second"
+      ],
+      "text": "At the noon reference the Sun sits 14.7° into Aquarius — the second decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:20.1°",
+        "personal:Venus:Aquarius:11.6°",
+        "personal:Mars:Capricorn:24.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 20.1° Capricorn, Venus was at 11.6° Aquarius, Mars was at 24.5° Capricorn. Read together: thought with its feet on the ground; attraction that begins as conversation; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:sextile:0.41",
+        "aspect:Venus:Saturn:sextile:1.09",
+        "aspect:Venus:Pluto:trine:1.18"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Saturn — a sextile holding at 0.4°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Venus sextile Saturn at 1.1°, and Venus trine Pluto at 1.2° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Sun-Jupiter-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "the Sun, Jupiter, Pluto close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Moon:domicile",
+        "dignity:Mars:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Aquarius at 14.7° is in detriment — the planet opposite its home, working against the grain; the Moon in Cancer at 7.1° is in domicile — the planet in its own sign, running on home rules; Mars in Capricorn at 24.5° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-earth2-fire2-water1",
+        "modalities:cardinal4-mutable4-fixed2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 air, 2 earth, 2 fire, 1 water by element and 4 cardinal, 4 mutable, 2 fixed by mode. Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 7.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-3/",
+    "label": "Everyone born on February 3"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:14.67",
+    "decan:aquarius:second",
+    "personal:Mercury:Capricorn:20.1°",
+    "personal:Venus:Aquarius:11.6°",
+    "personal:Mars:Capricorn:24.5°",
+    "aspect:Jupiter:Saturn:sextile:0.41",
+    "aspect:Venus:Saturn:sextile:1.09",
+    "aspect:Venus:Pluto:trine:1.18",
+    "figure:grand-trine:Sun-Jupiter-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Moon:domicile",
+    "dignity:Mars:exaltation",
+    "elements:air5-earth2-fire2-water1",
+    "modalities:cardinal4-mutable4-fixed2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:cancer",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 432,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

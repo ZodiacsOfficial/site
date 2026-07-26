@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "james-dean",
+ "qid": "Q83359",
+ "displayName": "James Dean",
+ "wikidataLabel": "James Dean",
+ "wikidataDescription": "American actor (1931–1955)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q83359",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518377526
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "James Dean",
+   "articleUrl": "https://en.wikipedia.org/wiki/James_Dean",
+   "pageId": 18622157,
+   "revisionId": 1365722458,
+   "revisionTimestamp": "2026-07-24T02:00:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-02-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-02-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-02-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1955-09-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q286068",
+  "label": "Marion",
+  "entityUrl": "https://www.wikidata.org/wiki/Q286068",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q286068",
+   "sourceEntityLabel": "Marion",
+   "latitude": 40.5492,
+   "longitude": -85.6647,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10349745",
+   "label": "racing automobile driver"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:James Dean in Rebel Without a Cause.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:James%20Dean%20in%20Rebel%20Without%20a%20Cause.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:James_Dean_in_Rebel_Without_a_Cause.jpg",
+  "width": 600,
+  "height": 739,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "In-house publicity still",
+  "credit": "Warner Bros. publicity still for for the film Rebel Without a Cause",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

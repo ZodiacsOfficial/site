@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jean-luc-godard",
+  "seedRound": 0,
+  "qid": "Q53001",
+  "displayName": "Jean-Luc Godard",
+  "identity": "Film director and screenwriter · France · 1930–2022",
+  "title": "Jean-Luc Godard's birth chart",
+  "metaDescription": "Jean-Luc Godard's chart, computed from a sourced birth date: Sun at 10.6° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 9.3° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.61",
+        "decan:sagittarius:second"
+      ],
+      "text": "The Sun's exact place is 10.6° Sagittarius. That falls in the second decan, 10°–20°, sub-ruled by Mars in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:25.0°",
+        "personal:Venus:Scorpio:24.0°",
+        "personal:Mars:Leo:15.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (25.0°), Venus in Scorpio (24.0°), Mars in Leo (15.4°): a mind that decides at speaking speed, taste tuned to mood and undertow, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Uranus:trine:0.97",
+        "aspect:Jupiter:Pluto:conjunction:1.09",
+        "aspect:Saturn:Uranus:square:1.13"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a third of the circle apart from Uranus, 1.0° off exact. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Jupiter conjunction Pluto at 1.1°, and Saturn square Uranus at 1.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Sun-Mars-Uranus",
+        "figure:unaspected:Mercury"
+      ],
+      "text": "the Sun, Mars, Uranus close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Mercury stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Mercury:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has five entries for this chart. The Moon in Taurus at 9.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Sagittarius at 25.0° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 24.0° is in detriment; Jupiter in Cancer at 19.5° is in exaltation; Saturn in Capricorn at 10.4° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth3-water3",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in fire, 3 in earth, 3 in water by element, 4 cardinal, 3 mutable, 3 fixed by modality. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Venus, Jupiter, Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:12.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 12.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 9.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-3/",
+    "label": "Everyone born on December 3"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:10.61",
+    "decan:sagittarius:second",
+    "personal:Mercury:Sagittarius:25.0°",
+    "personal:Venus:Scorpio:24.0°",
+    "personal:Mars:Leo:15.4°",
+    "aspect:Sun:Uranus:trine:0.97",
+    "aspect:Jupiter:Pluto:conjunction:1.09",
+    "aspect:Saturn:Uranus:square:1.13",
+    "figure:grand-trine:Sun-Mars-Uranus",
+    "figure:unaspected:Mercury",
+    "dignity:Moon:exaltation",
+    "dignity:Mercury:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:fire4-earth3-water3",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:taurus",
+    "moon-band:12.9"
+  ],
+  "measurements": {
+    "originalWords": 489,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,125 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "arthur-miller",
+ "qid": "Q80596",
+ "displayName": "Arthur Miller",
+ "wikidataLabel": "Arthur Miller",
+ "wikidataDescription": "American playwright and essayist (1915–2005)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q80596",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518478262
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Arthur Miller",
+   "articleUrl": "https://en.wikipedia.org/wiki/Arthur_Miller",
+   "pageId": 2310,
+   "revisionId": 1365107577,
+   "revisionTimestamp": "2026-07-20T08:18:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-10-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-10-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-10-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-02-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q189074",
+  "label": "Harlem",
+  "entityUrl": "https://www.wikidata.org/wiki/Q189074",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q189074",
+   "sourceEntityLabel": "Q189074",
+   "latitude": 40.809033333333,
+   "longitude": -73.948372222222,
+   "precision": null,
+   "escalationSteps": 0
+  },
+  "labelNote": "English label absent on Q189074; the language-neutral (mul) label is used"
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Arthur Miller by Wolfgang Fischer-01.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Arthur%20Miller%20by%20Wolfgang%20Fischer-01.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Arthur_Miller_by_Wolfgang_Fischer-01.jpg",
+  "width": 2535,
+  "height": 3230,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Wolfgang Fischer",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jorge-luis-borges",
+ "qid": "Q909",
+ "displayName": "Jorge Luis Borges",
+ "wikidataLabel": "Jorge Luis Borges",
+ "wikidataDescription": "Argentine writer, essayist, poet and translator (1899–1986)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q909",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522916976
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jorge Luis Borges",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jorge_Luis_Borges",
+   "pageId": 15781,
+   "revisionId": 1364898047,
+   "revisionTimestamp": "2026-07-19T03:57:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-08-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-08-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-08-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1986-06-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1486",
+  "label": "Buenos Aires",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1486",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1486",
+   "sourceEntityLabel": "Buenos Aires",
+   "latitude": -34.599722222222,
+   "longitude": -58.381944444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q182436",
+   "label": "librarian"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q755070",
+   "label": "narrator"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jorge Luis Borges 1951, by Grete Stern (full).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jorge%20Luis%20Borges%201951%2C%20by%20Grete%20Stern%20(full).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jorge_Luis_Borges_1951,_by_Grete_Stern_(full).jpg",
+  "width": 2400,
+  "height": 3221,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Grete Stern",
+  "credit": "https://www.atlasobscura.com/articles/from-bauhaus-to-buenos-aires",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

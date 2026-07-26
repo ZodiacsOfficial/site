@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "murray-gell-mann",
+ "qid": "Q172840",
+ "displayName": "Murray Gell-Mann",
+ "wikidataLabel": "Murray Gell-Mann",
+ "wikidataDescription": "American physicist (1929–2019)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q172840",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522525100
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Murray Gell-Mann",
+   "articleUrl": "https://en.wikipedia.org/wiki/Murray_Gell-Mann",
+   "pageId": 20476,
+   "revisionId": 1362235164,
+   "revisionTimestamp": "2026-07-02T17:54:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-09-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-09-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-09-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2019-05-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11253",
+  "label": "Lower Manhattan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11253",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11253",
+   "sourceEntityLabel": "Lower Manhattan",
+   "latitude": 40.7075,
+   "longitude": -74.01194444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Murray Gell-Mann - World Economic Forum Annual Meeting 2012.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Murray%20Gell-Mann%20-%20World%20Economic%20Forum%20Annual%20Meeting%202012.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Murray_Gell-Mann_-_World_Economic_Forum_Annual_Meeting_2012.jpg",
+  "width": 2478,
+  "height": 3898,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "World Economic Forum",
+  "credit": "Flickr: Murray Gell-Mann - World Economic Forum Annual Meeting 2012",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

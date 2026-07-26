@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bessie-coleman",
+  "seedRound": 0,
+  "qid": "Q254376",
+  "displayName": "Bessie Coleman",
+  "identity": "Human rights defender · United States · 1892–1926",
+  "title": "Bessie Coleman's birth chart",
+  "metaDescription": "Bessie Coleman's chart, computed from a sourced birth date: Sun at 6.3° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Neptune sit 0.1° from an exact trine — near enough that the tradition reads identity and imagination as a single working part. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Sun:Neptune:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.30",
+        "decan:aquarius:first"
+      ],
+      "text": "Aquarius, but precisely: 6.3°, first decan, 0°–10°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:13.0°",
+        "personal:Venus:Pisces:7.6°",
+        "personal:Mars:Sagittarius:1.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (13.0°), Venus in Pisces (7.6°), Mars in Sagittarius (1.2°): a mind that trusts the measured and the checked, taste tuned to mood and undertow, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:trine:0.06",
+        "aspect:Sun:Uranus:square:0.31",
+        "aspect:Neptune:Pluto:conjunction:0.62"
+      ],
+      "text": "Start where the chart is tightest — the Sun trine Neptune, 0.1° of separation. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun square Uranus at 0.3°, and Neptune conjunction Pluto at 0.6° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Saturn-Neptune",
+        "figure:t-square:Mars-Neptune:apex-Venus"
+      ],
+      "text": "the Sun, Saturn, Neptune close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Mars opposes Neptune while both square Venus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. The Sun in Aquarius at 6.3° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 7.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 18.4° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-earth2-fire1",
+        "modalities:mutable6-fixed2-cardinal1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 3, water 3, earth 2, fire 1, and mutable 6, fixed 2, cardinal 1 across the modes. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Saturn, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 13.2° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-26/",
+    "label": "Everyone born on January 26"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:trine",
+    "sun-degree:6.30",
+    "decan:aquarius:first",
+    "personal:Mercury:Capricorn:13.0°",
+    "personal:Venus:Pisces:7.6°",
+    "personal:Mars:Sagittarius:1.2°",
+    "aspect:Sun:Neptune:trine:0.06",
+    "aspect:Sun:Uranus:square:0.31",
+    "aspect:Neptune:Pluto:conjunction:0.62",
+    "figure:grand-trine:Sun-Saturn-Neptune",
+    "figure:t-square:Mars-Neptune:apex-Venus",
+    "dignity:Sun:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:air3-water3-earth2-fire1",
+    "modalities:mutable6-fixed2-cardinal1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 446,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

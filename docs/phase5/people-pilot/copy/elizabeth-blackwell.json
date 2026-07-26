@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "elizabeth-blackwell",
+  "seedRound": 0,
+  "qid": "Q234572",
+  "displayName": "Elizabeth Blackwell",
+  "identity": "Physician and essayist · United Kingdom · 1821–1910",
+  "title": "Elizabeth Blackwell's birth chart",
+  "metaDescription": "Elizabeth Blackwell's chart, computed from a sourced birth date: Sun at 14.4° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates Mercury and Saturn from an exact sextile; at that range thinking and structure read as one mechanism. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Mercury:Saturn:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.41",
+        "decan:aquarius:second"
+      ],
+      "text": "The Sun's position resolves to 14.4° Aquarius — deep enough in the second decan (10°–20°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:9.3°",
+        "personal:Venus:Capricorn:17.3°",
+        "personal:Mars:Aquarius:9.1°"
+      ],
+      "text": "Mercury holds 9.3° Aquarius, Venus holds 17.3° Capricorn, Mars holds 9.1° Aquarius — in the old shorthand, thought that travels by comparison; attraction that grows by reliability; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:sextile:0.1",
+        "aspect:Mercury:Mars:conjunction:0.2",
+        "aspect:Mars:Saturn:sextile:0.3"
+      ],
+      "text": "Closest first: Mercury to Saturn, a sextile with 0.1° of slack. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mercury conjunction Mars at 0.2°, and Mars sextile Saturn at 0.3° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Aquarius at 14.4° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 24.2° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 9.4° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth3-water2-fire1",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 3, earth 3, water 2, fire 1, and cardinal 4, fixed 3, mutable 2 across the modes. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Every body was moving forward that day — no apparent reversals anywhere in the chart."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 14.7° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-3/",
+    "label": "Everyone born on February 3"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Saturn:sextile",
+    "sun-degree:14.41",
+    "decan:aquarius:second",
+    "personal:Mercury:Aquarius:9.3°",
+    "personal:Venus:Capricorn:17.3°",
+    "personal:Mars:Aquarius:9.1°",
+    "aspect:Mercury:Saturn:sextile:0.1",
+    "aspect:Mercury:Mars:conjunction:0.2",
+    "aspect:Mars:Saturn:sextile:0.3",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:fall",
+    "elements:air3-earth3-water2-fire1",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 394,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

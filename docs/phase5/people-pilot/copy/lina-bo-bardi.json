@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "lina-bo-bardi",
+  "seedRound": 0,
+  "qid": "Q272400",
+  "displayName": "Lina Bo Bardi",
+  "identity": "Architect and draftsperson · Italy · 1914–1992",
+  "title": "Lina Bo Bardi's birth chart",
+  "metaDescription": "Lina Bo Bardi's chart, computed from a sourced birth date: Sun at 12.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 12.7° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.48",
+        "decan:sagittarius:second"
+      ],
+      "text": "The Sun's exact place is 12.5° Sagittarius. That falls in the second decan, 10°–20°, sub-ruled by Mars in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:26.0°",
+        "personal:Venus:Sagittarius:0.3°",
+        "personal:Mars:Sagittarius:17.5°"
+      ],
+      "text": "Mercury holds 26.0° Scorpio, Venus holds 0.3° Sagittarius, Mars holds 17.5° Sagittarius — in the old shorthand, a mind that absorbs before it argues; taste that runs toward the vivid and the immediate; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:trine:0.07",
+        "aspect:Mars:Jupiter:sextile:0.09",
+        "aspect:Saturn:Pluto:conjunction:1.41"
+      ],
+      "text": "Start where the chart is tightest — Venus trine Neptune, 0.1° of separation. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mars sextile Jupiter at 0.1°, and Saturn conjunction Pluto at 1.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. The Moon in Cancer at 12.7° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 0.1° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water4-air2",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 fire, 4 water, 2 air; by modality, 4 fixed, 3 mutable, 3 cardinal. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Venus, Saturn, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 12.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-5/",
+    "label": "Everyone born on December 5"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:12.48",
+    "decan:sagittarius:second",
+    "personal:Mercury:Scorpio:26.0°",
+    "personal:Venus:Sagittarius:0.3°",
+    "personal:Mars:Sagittarius:17.5°",
+    "aspect:Venus:Neptune:trine:0.07",
+    "aspect:Mars:Jupiter:sextile:0.09",
+    "aspect:Saturn:Pluto:conjunction:1.41",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Saturn:detriment",
+    "elements:fire4-water4-air2",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:cancer",
+    "moon-band:12.4"
+  ],
+  "measurements": {
+    "originalWords": 391,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

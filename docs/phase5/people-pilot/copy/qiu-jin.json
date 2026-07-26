@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "qiu-jin",
+  "seedRound": 0,
+  "qid": "Q465324",
+  "displayName": "Qiu Jin",
+  "identity": "Writer and women's rights activist · People's Republic of China · 1875–1907",
+  "title": "Qiu Jin's birth chart",
+  "metaDescription": "Qiu Jin's chart, computed from a sourced birth date: Sun at 15.4° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Fixed signs carry eight of the nine placements whose signs are settled — the broadest certain weighting in the chart. The fixed signs hold what the cardinal signs start; a chart weighted there finishes its sentences.",
+  "ledeFact": "modality:fixed:8",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.36",
+        "decan:scorpio:second"
+      ],
+      "text": "Scorpio, but precisely: 15.4°, second decan, 10°–20°, under Jupiter in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Libra:29.4°",
+        "personal:Venus:Scorpio:27.1°",
+        "personal:Mars:Aquarius:10.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Libra (29.4°), Venus in Scorpio (27.1°), Mars in Aquarius (10.3°): a mind at home in argument and pattern, taste tuned to mood and undertow, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:opposition:0.25",
+        "aspect:Mercury:Neptune:opposition:1.91",
+        "aspect:Sun:Jupiter:conjunction:2.53"
+      ],
+      "text": "The tightest geometry in the chart puts Saturn directly across the wheel from Uranus, 0.3° off exact. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Mercury opposition Neptune at 1.9°, and the Sun conjunction Jupiter at 2.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Saturn-Uranus:apex-Sun",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Saturn opposes Uranus while both square the Sun. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has two entries for this chart. Venus in Scorpio at 27.1° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 19.6° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-earth2-fire1",
+        "modalities:fixed8-cardinal1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 water, 3 air, 2 earth, 1 fire by element and 8 fixed, 1 cardinal by modality. Water reads the room before the room speaks — atmosphere first, analysis later. Neptune and Pluto were retrograde. Mercury changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 13.1° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-8/",
+    "label": "Everyone born on November 8"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:8",
+    "sun-degree:15.36",
+    "decan:scorpio:second",
+    "personal:Mercury:Libra:29.4°",
+    "personal:Venus:Scorpio:27.1°",
+    "personal:Mars:Aquarius:10.3°",
+    "aspect:Saturn:Uranus:opposition:0.25",
+    "aspect:Mercury:Neptune:opposition:1.91",
+    "aspect:Sun:Jupiter:conjunction:2.53",
+    "figure:t-square:Saturn-Uranus:apex-Sun",
+    "figure:unaspected:Moon",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:domicile",
+    "elements:water3-air3-earth2-fire1",
+    "modalities:fixed8-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 423,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

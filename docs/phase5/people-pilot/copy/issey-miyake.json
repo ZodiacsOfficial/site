@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "issey-miyake",
+  "seedRound": 0,
+  "qid": "Q469027",
+  "displayName": "Issey Miyake",
+  "identity": "Fashion designer · Japan · 1938–2022",
+  "title": "Issey Miyake's birth chart",
+  "metaDescription": "Issey Miyake's chart, computed from a sourced birth date: Sun at 1.3° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled stand in Taurus — the Sun, Mercury, Venus, Mars and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.33",
+        "decan:taurus:first"
+      ],
+      "text": "At the noon reference the Sun sits 1.3° into Taurus — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:1.0°",
+        "personal:Venus:Taurus:20.4°",
+        "personal:Mars:Taurus:28.9°"
+      ],
+      "text": "The personal planets sit Mercury at 1.0° Taurus, Venus at 20.4° Taurus, Mars at 28.9° Taurus. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a earth sign reads as attraction that grows by reliability; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mercury:conjunction:0.32",
+        "aspect:Mars:Pluto:sextile:0.98",
+        "aspect:Venus:Neptune:trine:1.63"
+      ],
+      "text": "The Sun and Mercury hold the closest angle here — a conjunction, 0.3° wide. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Mars sextile Pluto at 1.0°, and Venus trine Neptune at 1.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Capricorn at 23.4° is in detriment — the planet opposite its home, working against the grain; Venus in Taurus at 20.4° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 28.9° is in detriment; Saturn in Aries at 10.9° is in fall — the tradition’s uphill placement, strength earned rather than given. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth7-air1-fire1-water1",
+        "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives earth 7, air 1, fire 1, water 1, and fixed 6, cardinal 3, mutable 1 across the modes. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Mercury and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 23.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-22/",
+    "label": "Everyone born on April 22"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:5",
+    "sun-degree:1.33",
+    "decan:taurus:first",
+    "personal:Mercury:Taurus:1.0°",
+    "personal:Venus:Taurus:20.4°",
+    "personal:Mars:Taurus:28.9°",
+    "aspect:Sun:Mercury:conjunction:0.32",
+    "aspect:Mars:Pluto:sextile:0.98",
+    "aspect:Venus:Neptune:trine:1.63",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:fall",
+    "elements:earth7-air1-fire1-water1",
+    "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:capricorn",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 460,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

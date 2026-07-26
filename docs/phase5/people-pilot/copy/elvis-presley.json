@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "elvis-presley",
+  "seedRound": 0,
+  "qid": "Q303",
+  "displayName": "Elvis Presley",
+  "identity": "Film actor and singer · United States · 1935–1977",
+  "title": "Elvis Presley's birth chart",
+  "metaDescription": "Elvis Presley's chart, computed from a sourced birth date: Sun at 17.6° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a sextile to Jupiter at 0.6° — close enough to weld identity to expansion. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not.",
+  "ledeFact": "aspect:Sun:Jupiter:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.55",
+        "decan:capricorn:second"
+      ],
+      "text": "At the noon reference the Sun sits 17.6° into Capricorn — the second decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:22.8°",
+        "personal:Mars:Libra:13.0°"
+      ],
+      "text": "The personal planets sit Mercury at 22.8° Capricorn, Mars at 13.0° Libra. Mercury in a earth sign reads as thought with its feet on the ground; Mars in a air sign reads as effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:sextile:0.57",
+        "aspect:Saturn:Uranus:sextile:1.73",
+        "aspect:Venus:Uranus:square:2.25"
+      ],
+      "text": "Start where the chart is tightest — the Sun sextile Jupiter, 0.6° of separation. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Saturn sextile Uranus at 1.7°, and Venus square Uranus at 2.3° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Pluto:apex-Uranus",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mercury opposes Pluto while both square Uranus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mars in Libra at 13.0° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 25.8° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air2-water2-fire1",
+        "modalities:cardinal5-fixed2-mutable1",
+        "settled-signs:8",
+        "retrograde:2",
+        "sign-uncertain:Venus:capricorn:aquarius"
+      ],
+      "text": "Balance, counted honestly across the 8 placements whose signs hold for the whole day: elements earth 3, air 2, water 2, fire 1; modalities cardinal 5, fixed 2, mutable 1. Venus crossed from Capricorn into Aquarius during that day, so its sign is left open. Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 14.7° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-8/",
+    "label": "Everyone born on January 8"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:sextile",
+    "sun-degree:17.55",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:22.8°",
+    "personal:Mars:Libra:13.0°",
+    "aspect:Sun:Jupiter:sextile:0.57",
+    "aspect:Saturn:Uranus:sextile:1.73",
+    "aspect:Venus:Uranus:square:2.25",
+    "figure:t-square:Mercury-Pluto:apex-Uranus",
+    "figure:unaspected:Moon",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth3-air2-water2-fire1",
+    "modalities:cardinal5-fixed2-mutable1",
+    "settled-signs:8",
+    "retrograde:2",
+    "sign-uncertain:Venus:capricorn:aquarius",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

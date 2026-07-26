@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "arthur-rimbaud",
+  "seedRound": 0,
+  "qid": "Q493",
+  "displayName": "Arthur Rimbaud",
+  "identity": "Poet · France · 1854–1891",
+  "title": "Arthur Rimbaud's birth chart",
+  "metaDescription": "Arthur Rimbaud's chart, computed from a sourced birth date: Sun at 26.8° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: Mercury and Jupiter within 0.7°, thinking wired to expansion. A sixth of the circle is close enough for cooperation and far enough that it stays optional.",
+  "ledeFact": "aspect:Mercury:Jupiter:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.78",
+        "decan:libra:third"
+      ],
+      "text": "The Sun sits at 26.8° Libra — the third decan, 20°–30°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Libra and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:19.1°",
+        "personal:Venus:Libra:13.4°",
+        "personal:Mars:Sagittarius:7.0°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Scorpio (19.1°), Venus in Libra (13.4°), Mars in Sagittarius (7.0°): a mind that absorbs before it argues, taste led by wit and proportion, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Jupiter:sextile:0.69",
+        "aspect:Uranus:Neptune:sextile:1.88",
+        "aspect:Saturn:Neptune:square:1.93"
+      ],
+      "text": "Closest first: Mercury to Jupiter, a sextile with 0.7° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Uranus sextile Neptune at 1.9°, and Saturn square Neptune at 1.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. The Sun in Libra at 26.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Libra at 13.4° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 19.8° is in fall. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-water2-fire1",
+        "modalities:cardinal4-fixed3-mutable3",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 4, earth 3, water 2, fire 1, and cardinal 4, fixed 3, mutable 3 across the modes. Saturn, Uranus, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:13.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 9.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-20/",
+    "label": "Everyone born on October 20"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Jupiter:sextile",
+    "sun-degree:26.78",
+    "decan:libra:third",
+    "personal:Mercury:Scorpio:19.1°",
+    "personal:Venus:Libra:13.4°",
+    "personal:Mars:Sagittarius:7.0°",
+    "aspect:Mercury:Jupiter:sextile:0.69",
+    "aspect:Uranus:Neptune:sextile:1.88",
+    "aspect:Saturn:Neptune:square:1.93",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:fall",
+    "elements:air4-earth3-water2-fire1",
+    "modalities:cardinal4-fixed3-mutable3",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:libra",
+    "moon-band:13.1"
+  ],
+  "measurements": {
+    "originalWords": 414,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

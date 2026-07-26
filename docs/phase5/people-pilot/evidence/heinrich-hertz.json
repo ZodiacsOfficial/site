@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "heinrich-hertz",
+ "qid": "Q41257",
+ "displayName": "Heinrich Hertz",
+ "wikidataLabel": "Heinrich Hertz",
+ "wikidataDescription": "German physicist (1857–1894)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41257",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520074717
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Heinrich Hertz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Heinrich_Hertz",
+   "pageId": 13445,
+   "revisionId": 1363492144,
+   "revisionTimestamp": "2026-07-10T15:06:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1857-02-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1857-02-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1857-02-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1894-01-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1055",
+  "label": "Hamburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1055",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1055",
+   "sourceEntityLabel": "Hamburg",
+   "latitude": 53.55,
+   "longitude": 10,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:HEINRICH HERTZ.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:HEINRICH%20HERTZ.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:HEINRICH_HERTZ.JPG",
+  "width": 3952,
+  "height": 5168,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Robert Krewaldt, Kaiserplatz 16, Bonn",
+  "credit": "Cabinetphotograph, Kabinettfotografie",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

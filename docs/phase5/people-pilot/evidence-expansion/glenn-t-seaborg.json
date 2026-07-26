@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "glenn-t-seaborg",
+ "qid": "Q48973",
+ "displayName": "Glenn T. Seaborg",
+ "wikidataLabel": "Glenn Theodore Seaborg",
+ "wikidataDescription": "American chemist (1912–1999)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q48973",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515834399
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Glenn T. Seaborg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Glenn_T._Seaborg",
+   "pageId": 13120,
+   "revisionId": 1352261177,
+   "revisionTimestamp": "2026-05-03T03:50:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-04-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-04-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-04-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1999-02-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2432500",
+  "label": "Ishpeming",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2432500",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2432500",
+   "sourceEntityLabel": "Ishpeming",
+   "latitude": 46.488611111111,
+   "longitude": -87.6675,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Glenn Seaborg - 1964.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Glenn%20Seaborg%20-%201964.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Glenn_Seaborg_-_1964.jpg",
+  "width": 2378,
+  "height": 2949,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Atomic Energy Commission. (1946 - 01/19/1975)",
+  "credit": "NAIL Control Number: NWDNS-326-COM-12 NARA (enter \"Glenn Seaborg\" in search form under Digital Copies tab)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

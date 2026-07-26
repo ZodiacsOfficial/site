@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "steven-weinberg",
+ "qid": "Q179282",
+ "displayName": "Steven Weinberg",
+ "wikidataLabel": "Steven Weinberg",
+ "wikidataDescription": "American theoretical physicist (1933-2021)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q179282",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521101836
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Steven Weinberg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Steven_Weinberg",
+   "pageId": 205859,
+   "revisionId": 1346066562,
+   "revisionTimestamp": "2026-03-29T19:20:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1933-05-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1933-05-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1933-05-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2021-07-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q2998308",
+   "label": "cosmologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Steven Weinberg 2010.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Steven%20Weinberg%202010.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Steven_Weinberg_2010.jpg",
+  "width": 629,
+  "height": 787,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Larry D. Moore",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": "personality"
+ }
+}

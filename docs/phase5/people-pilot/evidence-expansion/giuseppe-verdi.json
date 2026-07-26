@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "giuseppe-verdi",
+ "qid": "Q7317",
+ "displayName": "Giuseppe Verdi",
+ "wikidataLabel": "Giuseppe Verdi",
+ "wikidataDescription": "Italian opera composer (1813–1901)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7317",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522007629
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Giuseppe Verdi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Giuseppe_Verdi",
+   "pageId": 12958,
+   "revisionId": 1364714738,
+   "revisionTimestamp": "2026-07-18T02:49:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1813-04-10T00:00:00Z|proleptic-gregorian",
+   "+1813-10-10T00:00:00Z|proleptic-gregorian",
+   "+1813-10-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1813-04-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   },
+   {
+    "time": "+1813-10-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1813-10-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1813-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1901-01-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1810148",
+  "label": "Le Roncole",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1810148",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1810148",
+   "sourceEntityLabel": "Le Roncole",
+   "latitude": 44.952222222222,
+   "longitude": 10.072083333333,
+   "precision": 0.000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Giuseppi Verdi by Ferdinand Mulnier c1870.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Giuseppi%20Verdi%20by%20Ferdinand%20Mulnier%20c1870.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Giuseppi_Verdi_by_Ferdinand_Mulnier_c1870.jpg",
+  "width": 1154,
+  "height": 1615,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ferdinand Mulnier",
+  "credit": "Bonhams: lot number 271 (sales 13394, London, 3 October 2005)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

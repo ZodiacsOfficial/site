@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "audre-lorde",
+ "qid": "Q463319",
+ "displayName": "Audre Lorde",
+ "wikidataLabel": "Audre Lorde",
+ "wikidataDescription": "American writer and feminist activist (1934–1992)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q463319",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517845946
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Audre Lorde",
+   "articleUrl": "https://en.wikipedia.org/wiki/Audre_Lorde",
+   "pageId": 210542,
+   "revisionId": 1365532102,
+   "revisionTimestamp": "2026-07-23T01:22:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1934-02-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-02-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1934-02-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1992-11-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q182436",
+   "label": "librarian"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Audre Lorde.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Audre%20Lorde.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Audre_Lorde.jpg",
+  "width": 993,
+  "height": 1489,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "K. Kendall",
+  "credit": "originally posted to Flickr as Audre Lorde",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

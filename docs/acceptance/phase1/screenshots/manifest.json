@@ -6,27 +6,27 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-07-26T15:09:05.279Z",
+  "capturedAt": "2026-07-26T20:14:33.782Z",
   "browser": "Chromium 149.0.7827.55",
   "dailyDate": "2026-07-26",
   "publicationCanonicalSha256": "bb9796666191975ec2eec860e8149ea9986c7f2fcfa13e0d60e6cfe3197adca8",
-  "templateSourceSha256": "d3b6c382fa4cc40ff7362e069b34ff18810966b5543e9a3b28ecc437c626395a",
+  "templateSourceSha256": "bda2728553a1d1784a0544cf2ab7860f4f5e18b1221eca90d8ea1d1fb8eefa61",
   "renderPayloadSha256": {
     "daily": "0e7aaa13760d7378a3aa66ef10a78d0c6034c4829e46b5f96768a161d6017b07",
     "dailyPublication": "82c9261656c7bb1c0a1487584258baf893aed9ef4f5ba4f1bedd69db224d8f78",
-    "dailyPublicationManifest": "a0fc3225110391ee3a38632c6d0f8697a074fb3afccec657b05d3814c10c99e7",
+    "dailyPublicationManifest": "b87d18bb73668ebe1d74bb3e957d021147fbf4213f9acf20d679ef3a27cb5f7f",
     "horoscopeProgram": "b279f9cdb03c94147146706f09de3ba3f5c5775dececdc47d941c6eac12d4469"
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-07-26T15:07:39.054Z",
-    "templateSourceSha256": "d3b6c382fa4cc40ff7362e069b34ff18810966b5543e9a3b28ecc437c626395a",
+    "builtAt": "2026-07-26T19:48:11.734Z",
+    "templateSourceSha256": "bda2728553a1d1784a0544cf2ab7860f4f5e18b1221eca90d8ea1d1fb8eefa61",
     "dailyDate": "2026-07-26",
     "publicationCanonicalSha256": "bb9796666191975ec2eec860e8149ea9986c7f2fcfa13e0d60e6cfe3197adca8",
     "renderPayloadSha256": {
       "daily": "0e7aaa13760d7378a3aa66ef10a78d0c6034c4829e46b5f96768a161d6017b07",
       "dailyPublication": "82c9261656c7bb1c0a1487584258baf893aed9ef4f5ba4f1bedd69db224d8f78",
-      "dailyPublicationManifest": "a0fc3225110391ee3a38632c6d0f8697a074fb3afccec657b05d3814c10c99e7",
+      "dailyPublicationManifest": "b87d18bb73668ebe1d74bb3e957d021147fbf4213f9acf20d679ef3a27cb5f7f",
       "horoscopeProgram": "b279f9cdb03c94147146706f09de3ba3f5c5775dececdc47d941c6eac12d4469"
     }
   },
@@ -272,7 +272,7 @@
         "file": "monthly-360.png",
         "width": 360,
         "height": 4248,
-        "sha256": "8047b1b8f97ec0c4cfb3382bc946955da1fadb74863a27e969925c401af53e72"
+        "sha256": "cef4098befaacc9ec08987c04a3882e51ee322b46b3cca309cf0c7abf682211b"
       },
       "layout": {
         "clientWidth": 360,

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "akira-kurosawa",
+  "seedRound": 0,
+  "qid": "Q8006",
+  "displayName": "Akira Kurosawa",
+  "identity": "Film director and screenwriter · Japan · 1910–1998",
+  "title": "Akira Kurosawa's birth chart",
+  "metaDescription": "Akira Kurosawa's chart, computed from a sourced birth date: Sun at 1.6° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 1.6° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.61",
+        "decan:aries:first"
+      ],
+      "text": "At the noon reference the Sun sits 1.6° into Aries — the first decan, which the old scheme hands to Mars. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:18.6°",
+        "personal:Venus:Aquarius:20.8°",
+        "personal:Mars:Gemini:5.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 18.6° Pisces, Venus was at 20.8° Aquarius, Mars was at 5.4° Gemini. Read together: thought steeped in tone and memory; attraction that begins as conversation; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:square:1.51",
+        "aspect:Saturn:Pluto:sextile:1.77",
+        "aspect:Mercury:Neptune:trine:2.09"
+      ],
+      "text": "The tightest geometry in the chart puts Saturn at right angles from Uranus, 1.5° off exact. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Saturn sextile Pluto at 1.8°, and Mercury trine Neptune at 2.1° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Mercury:fall",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Sun in Aries at 1.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Pisces at 18.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aries at 23.1° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire2-water2-earth1",
+        "modalities:cardinal5-mutable3-fixed1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements air 4, fire 2, water 2, earth 1; modalities cardinal 5, mutable 3, fixed 1. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Jupiter and Neptune were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:leo:virgo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Leo into Virgo during that day at the birthplace, travelling 12.4° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-23/",
+    "label": "Everyone born on March 23"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:1.61",
+    "decan:aries:first",
+    "personal:Mercury:Pisces:18.6°",
+    "personal:Venus:Aquarius:20.8°",
+    "personal:Mars:Gemini:5.4°",
+    "aspect:Saturn:Uranus:square:1.51",
+    "aspect:Saturn:Pluto:sextile:1.77",
+    "aspect:Mercury:Neptune:trine:2.09",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Mercury:fall",
+    "dignity:Saturn:fall",
+    "elements:air4-fire2-water2-earth1",
+    "modalities:cardinal5-mutable3-fixed1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:leo:virgo"
+  ],
+  "measurements": {
+    "originalWords": 417,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

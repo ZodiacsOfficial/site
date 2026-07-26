@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "chairil-anwar",
+ "qid": "Q559017",
+ "displayName": "Chairil Anwar",
+ "wikidataLabel": "Chairil Anwar",
+ "wikidataDescription": "Indonesian poet (1922–1949)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "seasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q559017",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518751976
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Chairil Anwar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Chairil_Anwar",
+   "pageId": 354943,
+   "revisionId": 1312682460,
+   "revisionTimestamp": "2025-09-22T01:48:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-07-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-07-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-07-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1949-04-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5972",
+  "label": "Medan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5972",
+  "country": {
+   "entity": "Q252",
+   "label": "Indonesia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5972",
+   "sourceEntityLabel": "Medan",
+   "latitude": 3.589444444444444,
+   "longitude": 98.67388888888888,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Chairil Anwar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Chairil%20Anwar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Chairil_Anwar.jpg",
+  "width": 504,
+  "height": 666,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ministry of Information, Republic of Indonesia",
+  "credit": "Basic Information on Indonesia, Ministry of Information",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

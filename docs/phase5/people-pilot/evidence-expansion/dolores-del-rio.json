@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dolores-del-rio",
+ "qid": "Q124057",
+ "displayName": "Dolores del Río",
+ "wikidataLabel": "Dolores del Río",
+ "wikidataDescription": "Mexican actress (1904–1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q124057",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510419302
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dolores del Río",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dolores_del_R%C3%ADo",
+   "pageId": 564424,
+   "revisionId": 1364540266,
+   "revisionTimestamp": "2026-07-17T03:31:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-08-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-08-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-08-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-04-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q112813",
+  "label": "Victoria de Durango",
+  "entityUrl": "https://www.wikidata.org/wiki/Q112813",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q112813",
+   "sourceEntityLabel": "Victoria de Durango",
+   "latitude": 24.022777777778,
+   "longitude": -104.65444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dolores del Río.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dolores%20del%20R%C3%ADo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dolores_del_R%C3%ADo.jpg",
+  "width": 340,
+  "height": 453,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "RKO Pictures",
+  "credit": "Pinterest",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

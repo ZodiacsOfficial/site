@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "colette",
+ "qid": "Q218679",
+ "displayName": "Colette",
+ "wikidataLabel": "Colette",
+ "wikidataDescription": "French novelist (1873–1954)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q218679",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522904669
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Colette",
+   "articleUrl": "https://en.wikipedia.org/wiki/Colette",
+   "pageId": 6928,
+   "revisionId": 1361423917,
+   "revisionTimestamp": "2026-06-27T21:07:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1873-01-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1873-01-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1873-01-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1954-08-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1141101",
+  "label": "Saint-Sauveur-en-Puisaye",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1141101",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1141101",
+   "sourceEntityLabel": "Saint-Sauveur-en-Puisaye",
+   "latitude": 47.618333333333,
+   "longitude": 3.1972222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q623386",
+   "label": "ghostwriter"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15214752",
+   "label": "cabaret performer"
+  },
+  {
+   "entity": "Q17337766",
+   "label": "theatre critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Colette - photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Colette%20-%20photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Colette_-_photo.jpg",
+  "width": 2552,
+  "height": 3424,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Henri Manuel",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

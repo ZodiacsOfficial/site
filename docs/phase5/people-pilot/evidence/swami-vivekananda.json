@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "swami-vivekananda",
+ "qid": "Q47478",
+ "displayName": "Swami Vivekananda",
+ "wikidataLabel": "Swami Vivekananda",
+ "wikidataDescription": "Indian Hindu monk and philosopher (1863–1902)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q47478",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522812260
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Swami Vivekananda",
+   "articleUrl": "https://en.wikipedia.org/wiki/Swami_Vivekananda",
+   "pageId": 45660,
+   "revisionId": 1363782641,
+   "revisionTimestamp": "2026-07-12T11:37:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1863-01-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1863-01-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1863-01-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1902-07-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7288812",
+  "label": "Swami Vivekananda's Ancestral House & Cultural Centre",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7288812",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q7288812",
+   "sourceEntityLabel": "Swami Vivekananda's Ancestral House & Cultural Centre",
+   "latitude": 22.58633333,
+   "longitude": 88.36736111,
+   "precision": 0.00002777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q733786",
+   "label": "monk"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q64711780",
+   "label": "spiritual leader"
+  },
+  {
+   "entity": "Q12859263",
+   "label": "orator"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Swami Vivekananda 1893 Scanned Image.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Swami%20Vivekananda%201893%20Scanned%20Image.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Swami_Vivekananda_1893_Scanned_Image.jpg",
+  "width": 1312,
+  "height": 1910,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Thomas Harrison",
+  "credit": "Scanned from photograph, the photograph is available in most of the Ramakrishna Mission store or photo gallery and has been used in different books. A similar photograph can be found at Śaṅkara (2005) Acenā ajānā Bibekānanda (6. saṃskaraṇa. ed.), Kalakātā: Sahityam, pp. 126 ISBN: 8172670346.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

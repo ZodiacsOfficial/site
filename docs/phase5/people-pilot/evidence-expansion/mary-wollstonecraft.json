@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mary-wollstonecraft",
+ "qid": "Q101638",
+ "displayName": "Mary Wollstonecraft",
+ "wikidataLabel": "Mary Wollstonecraft",
+ "wikidataDescription": "English writer and intellectual (1759–1797)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q101638",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518352127
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mary Wollstonecraft",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mary_Wollstonecraft",
+   "pageId": 19834,
+   "revisionId": 1361610486,
+   "revisionTimestamp": "2026-06-29T01:16:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1759-04-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1759-04-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1759-04-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1797-09-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q123219",
+  "label": "Spitalfields",
+  "entityUrl": "https://www.wikidata.org/wiki/Q123219",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q123219",
+   "sourceEntityLabel": "Spitalfields",
+   "latitude": 51.5166,
+   "longitude": -0.075,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1540278",
+   "label": "governess"
+  },
+  {
+   "entity": "Q11293375",
+   "label": "proprietor"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mary Wollstonecraft by John Opie (c. 1797).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mary%20Wollstonecraft%20by%20John%20Opie%20(c.%201797).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mary_Wollstonecraft_by_John_Opie_(c._1797).jpg",
+  "width": 1020,
+  "height": 1244,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "John Opie",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

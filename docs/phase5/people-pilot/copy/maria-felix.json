@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "maria-felix",
+  "seedRound": 0,
+  "qid": "Q465189",
+  "displayName": "María Félix",
+  "identity": "Film actor and singer · Mexico · 1914–2002",
+  "title": "María Félix's birth chart",
+  "metaDescription": "María Félix's chart, computed from a sourced birth date: Sun at 13.5° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mercury and Pluto sit 0.0° from an exact sextile — near enough that the tradition reads thinking and depth as a single working part. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Mercury:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.47",
+        "decan:taurus:second"
+      ],
+      "text": "Taurus, but precisely: 13.5°, second decan, 10°–20°, under Mercury in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Gemini:3.9°",
+        "personal:Mars:Leo:1.5°"
+      ],
+      "text": "The personal planets sit Venus at 3.9° Gemini, Mars at 1.5° Leo. Venus in a air sign reads as taste led by wit and proportion; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Pluto:sextile:0",
+        "aspect:Mercury:Mars:square:1.91",
+        "aspect:Sun:Uranus:square:1.92"
+      ],
+      "text": "Nothing in the geometry sits closer than Mercury and Pluto: 0.0° from an exact sextile. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mercury square Mars at 1.9°, and the Sun square Uranus at 1.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "None of the seven classical planets falls in a sign the old scheme marks as strong or stretched. Worth saying plainly rather than leaving out: there is no ready-made verdict from the dignity table here, and the chart’s weight sits in its angles instead."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-earth1-fire1-water1",
+        "modalities:fixed4-mutable3-cardinal1",
+        "settled-signs:8",
+        "retrograde:0",
+        "sign-uncertain:Mercury:aries:taurus"
+      ],
+      "text": "Of the 8 placements whose signs hold for the whole day: 5 in air, 1 in earth, 1 in fire, 1 in water by element, 4 fixed, 3 mutable, 1 cardinal by modality. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. Mercury crossed from Aries into Taurus during that day, so its sign is left open. Nothing here ran retrograde — all ten in direct motion that day."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:leo:virgo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Leo into Virgo during that day at the birthplace, travelling 14.0° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-4/",
+    "label": "Everyone born on May 4"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Pluto:sextile",
+    "sun-degree:13.47",
+    "decan:taurus:second",
+    "personal:Venus:Gemini:3.9°",
+    "personal:Mars:Leo:1.5°",
+    "aspect:Mercury:Pluto:sextile:0",
+    "aspect:Mercury:Mars:square:1.91",
+    "aspect:Sun:Uranus:square:1.92",
+    "figure:none",
+    "dignity:none",
+    "elements:air5-earth1-fire1-water1",
+    "modalities:fixed4-mutable3-cardinal1",
+    "settled-signs:8",
+    "retrograde:0",
+    "sign-uncertain:Mercury:aries:taurus",
+    "moon-uncertain:leo:virgo"
+  ],
+  "measurements": {
+    "originalWords": 378,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

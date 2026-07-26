@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "candido-portinari",
+ "qid": "Q319532",
+ "displayName": "Candido Portinari",
+ "wikidataLabel": "Candido Portinari",
+ "wikidataDescription": "Brazilian painter (1903–1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q319532",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520694414
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Candido Portinari",
+   "articleUrl": "https://en.wikipedia.org/wiki/Candido_Portinari",
+   "pageId": 430593,
+   "revisionId": 1365306504,
+   "revisionTimestamp": "2026-07-21T15:51:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-12-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-12-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-12-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q924792",
+  "label": "Brodowski",
+  "entityUrl": "https://www.wikidata.org/wiki/Q924792",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q924792",
+   "sourceEntityLabel": "Brodowski",
+   "latitude": -20.990833333333,
+   "longitude": -47.658888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cândido Portinari (1962).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:C%C3%A2ndido%20Portinari%20(1962).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:C%C3%A2ndido_Portinari_(1962).jpg",
+  "width": 667,
+  "height": 890,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown",
+  "credit": "Arquivo Nacional",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

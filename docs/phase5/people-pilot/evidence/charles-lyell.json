@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "charles-lyell",
+ "qid": "Q5333",
+ "displayName": "Charles Lyell",
+ "wikidataLabel": "Charles Lyell",
+ "wikidataDescription": "British geologist (1797–1875)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5333",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519822724
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Charles Lyell",
+   "articleUrl": "https://en.wikipedia.org/wiki/Charles_Lyell",
+   "pageId": 7472,
+   "revisionId": 1365087342,
+   "revisionTimestamp": "2026-07-20T04:59:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1797-11-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1797-11-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1797-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1875-02-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q202177",
+  "label": "Angus",
+  "entityUrl": "https://www.wikidata.org/wiki/Q202177",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q202177",
+   "sourceEntityLabel": "Angus",
+   "latitude": 56.666666666667,
+   "longitude": -2.9166666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q520549",
+   "label": "geologist"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q1662561",
+   "label": "paleontologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  }
+ ],
+ "portrait": {
+  "file": "File:PSM V01 D242 and V20 D610 Charles Lyell.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:PSM%20V01%20D242%20and%20V20%20D610%20Charles%20Lyell.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:PSM_V01_D242_and_V20_D610_Charles_Lyell.jpg",
+  "width": 1737,
+  "height": 2086,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Popular Science Monthly Volume 1",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

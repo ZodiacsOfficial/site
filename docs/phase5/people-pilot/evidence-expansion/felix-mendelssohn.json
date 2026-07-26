@@ -1,0 +1,142 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "felix-mendelssohn",
+ "qid": "Q46096",
+ "displayName": "Felix Mendelssohn",
+ "wikidataLabel": "Felix Mendelssohn",
+ "wikidataDescription": "German composer, pianist, organist and conductor of Jewish descent (1809-1847)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q46096",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522260719
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Felix Mendelssohn",
+   "articleUrl": "https://en.wikipedia.org/wiki/Felix_Mendelssohn",
+   "pageId": 76370,
+   "revisionId": 1365654087,
+   "revisionTimestamp": "2026-07-23T17:41:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1809-02-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1809-02-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1809-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1809-02-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1847-11-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1055",
+  "label": "Hamburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1055",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1055",
+   "sourceEntityLabel": "Hamburg",
+   "latitude": 53.55,
+   "longitude": 10,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Felix Mendelssohn Bartholdy by Eduard Magnus (1833).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Felix%20Mendelssohn%20Bartholdy%20by%20Eduard%20Magnus%20(1833).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Felix_Mendelssohn_Bartholdy_by_Eduard_Magnus_(1833).jpg",
+  "width": 1399,
+  "height": 1803,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Eduard Magnus",
+  "credit": "Berlin State Library",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

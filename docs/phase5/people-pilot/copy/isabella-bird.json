@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "isabella-bird",
+  "seedRound": 0,
+  "qid": "Q288210",
+  "displayName": "Isabella Bird",
+  "identity": "Explorer and writer · United Kingdom · 1831–1904",
+  "title": "Isabella Bird's birth chart",
+  "metaDescription": "Isabella Bird's chart, computed from a sourced birth date: Sun at 21.4° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Libra — the Sun, Mercury, Venus and Mars. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:libra:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.39",
+        "decan:libra:third"
+      ],
+      "text": "The Sun sits at 21.4° Libra — the third decan, 20°–30°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Libra and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:3.9°",
+        "personal:Venus:Libra:10.4°",
+        "personal:Mars:Libra:14.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Libra (3.9°), Venus in Libra (10.4°), Mars in Libra (14.4°): a mind at home in argument and pattern, taste led by wit and proportion, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:trine:0.17",
+        "aspect:Sun:Neptune:square:0.86",
+        "aspect:Venus:Pluto:opposition:1"
+      ],
+      "text": "The tightest geometry in the chart puts Venus a third of the circle apart from Uranus, 0.2° off exact. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, the Sun square Neptune at 0.9°, and Venus opposition Pluto at 1.0° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Saturn"
+      ],
+      "text": "Saturn stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Libra at 21.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Libra at 10.4° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 14.4° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air7-earth2-fire1",
+        "modalities:cardinal6-fixed3-mutable1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 7 air, 2 earth, 1 fire by element and 6 cardinal, 3 fixed, 1 mutable by modality. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Venus, Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:12.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 8.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-15/",
+    "label": "Everyone born on October 15"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "stellium:libra:4",
+    "sun-degree:21.39",
+    "decan:libra:third",
+    "personal:Mercury:Libra:3.9°",
+    "personal:Venus:Libra:10.4°",
+    "personal:Mars:Libra:14.4°",
+    "aspect:Venus:Uranus:trine:0.17",
+    "aspect:Sun:Neptune:square:0.86",
+    "aspect:Venus:Pluto:opposition:1",
+    "figure:unaspected:Saturn",
+    "dignity:Sun:fall",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "elements:air7-earth2-fire1",
+    "modalities:cardinal6-fixed3-mutable1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aquarius",
+    "moon-band:12.3"
+  ],
+  "measurements": {
+    "originalWords": 470,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

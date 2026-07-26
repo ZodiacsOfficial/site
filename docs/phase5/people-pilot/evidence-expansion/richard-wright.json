@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "richard-wright",
+ "qid": "Q319820",
+ "displayName": "Richard Wright",
+ "wikidataLabel": "Richard Wright",
+ "wikidataDescription": "American novelist and poet (1908–1960)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q319820",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515860647
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Richard Wright (author)",
+   "articleUrl": "https://en.wikipedia.org/wiki/Richard_Wright_(author)",
+   "pageId": 43153,
+   "revisionId": 1365603430,
+   "revisionTimestamp": "2026-07-23T11:35:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-09-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-09-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-09-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1960-11-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q944044",
+  "label": "Natchez",
+  "entityUrl": "https://www.wikidata.org/wiki/Q944044",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q944044",
+   "sourceEntityLabel": "Natchez",
+   "latitude": 31.560416666666665,
+   "longitude": -91.40316666666666,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:Richard Wright.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Richard%20Wright.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Richard_Wright.jpg",
+  "width": 1216,
+  "height": 1536,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "Van Vechten Collection at Library of Congress",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

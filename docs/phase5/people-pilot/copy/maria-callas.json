@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "maria-callas",
+  "seedRound": 0,
+  "qid": "Q128297",
+  "displayName": "Maria Callas",
+  "identity": "Opera singer and actor · United States · 1923–1977",
+  "title": "Maria Callas's birth chart",
+  "metaDescription": "Maria Callas's chart, computed from a sourced birth date: Sun at 9.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a conjunction: Mars and Saturn within 0.7°, drive wired to structure. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all.",
+  "ledeFact": "aspect:Mars:Saturn:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.50",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun sits at 9.5° Sagittarius — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Sagittarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:18.7°",
+        "personal:Mars:Libra:29.1°"
+      ],
+      "text": "Mercury holds 18.7° Sagittarius, Mars holds 29.1° Libra — in the old shorthand, a mind that decides at speaking speed; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:conjunction:0.74",
+        "aspect:Venus:Mars:sextile:1.45",
+        "aspect:Mercury:Neptune:trine:1.64"
+      ],
+      "text": "The day's firmest angle joins Mars and Saturn — a conjunction holding at 0.7°. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Venus sextile Mars at 1.4°, and Mercury trine Neptune at 1.6° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. Mercury in Sagittarius at 18.7° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 29.1° is in detriment; Jupiter in Sagittarius at 1.8° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 28.4° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air2-water2",
+        "modalities:mutable4-cardinal3-fixed1",
+        "settled-signs:8",
+        "retrograde:2",
+        "sign-uncertain:Venus:sagittarius:capricorn"
+      ],
+      "text": "The honest balance sheet uses the 8 placements whose signs hold for the whole day: fire 4, air 2, water 2 across the elements, and mutable 4, cardinal 3, fixed 1 across the modalities. Venus crossed from Sagittarius into Capricorn during that day, so its sign is left open. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 13.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-2/",
+    "label": "Everyone born on December 2"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Saturn:conjunction",
+    "sun-degree:9.50",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:18.7°",
+    "personal:Mars:Libra:29.1°",
+    "aspect:Mars:Saturn:conjunction:0.74",
+    "aspect:Venus:Mars:sextile:1.45",
+    "aspect:Mercury:Neptune:trine:1.64",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:fire4-air2-water2",
+    "modalities:mutable4-cardinal3-fixed1",
+    "settled-signs:8",
+    "retrograde:2",
+    "sign-uncertain:Venus:sagittarius:capricorn",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 448,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

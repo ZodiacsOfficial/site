@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maria-grever",
+ "qid": "Q1645018",
+ "displayName": "María Grever",
+ "wikidataLabel": "María Grever",
+ "wikidataDescription": "Mexican-American musician, songwriter, conductor",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1645018",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512249299
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "María Grever",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mar%C3%ADa_Grever",
+   "pageId": 18867260,
+   "revisionId": 1354323738,
+   "revisionTimestamp": "2026-05-15T18:23:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1885-09-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1885-09-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1885-09-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1951-12-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q189128",
+  "label": "León de Los Aldama",
+  "entityUrl": "https://www.wikidata.org/wiki/Q189128",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q189128",
+   "sourceEntityLabel": "León de Los Aldama",
+   "latitude": 21.121944444444445,
+   "longitude": -101.68333333333334,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  }
+ ],
+ "portrait": {
+  "file": "File:Maria-Grever-composing-music.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Maria-Grever-composing-music.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Maria-Grever-composing-music.jpg",
+  "width": 478,
+  "height": 324,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown, most likely a publicity photo taken by Paramount Pictures or 20th-Century Fox Studios, whom she worked for as a film composer from 1920 until her death in 1951.",
+  "credit": "http://alchetron.com/Maria-Grever-1266680-W#-",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

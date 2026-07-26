@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "edward-jenner",
+  "seedRound": 0,
+  "qid": "Q40852",
+  "displayName": "Edward Jenner",
+  "identity": "Physician · United Kingdom · 1749–1823",
+  "title": "Edward Jenner's birth chart",
+  "metaDescription": "Edward Jenner's chart, computed from a sourced birth date: Sun at 26.6° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Fixed signs carry five of the ten placements whose signs are settled — the broadest certain weighting in the chart. The fixed signs hold what the cardinal signs start; a chart weighted there finishes its sentences.",
+  "ledeFact": "modality:fixed:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.60",
+        "decan:taurus:third"
+      ],
+      "text": "At the noon reference the Sun sits 26.6° into Taurus — the third decan, which the old scheme hands to Saturn. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:18.8°",
+        "personal:Venus:Taurus:19.8°",
+        "personal:Mars:Capricorn:10.2°"
+      ],
+      "text": "Closer in, Mercury stands at 18.8° Taurus; Venus stands at 19.8° Taurus; Mars stands at 10.2° Capricorn. The tradition reads thought with its feet on the ground from Mercury, attraction that grows by reliability from Venus, effort banked steadily until it tells from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Neptune:trine:0.22",
+        "aspect:Mercury:Venus:conjunction:1",
+        "aspect:Venus:Uranus:square:1.57"
+      ],
+      "text": "Jupiter and Neptune hold the closest angle here — a trine, 0.2° wide. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mercury conjunction Venus at 1.0°, and Venus square Uranus at 1.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Jupiter-Saturn-Neptune",
+        "figure:t-square:Mercury-Saturn:apex-Uranus"
+      ],
+      "text": "Jupiter, Saturn, Neptune close a triangle of trines. The closed triangle is the scheme’s picture of flow — and its warning that flow, unspent, stays private. Mercury opposes Saturn while both square Uranus. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Venus in Taurus at 19.8° is in domicile — the planet in its own sign, running on home rules; Mars in Capricorn at 10.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 22.9° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-water3-air2-fire1",
+        "modalities:fixed5-mutable3-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in earth, 3 in water, 2 in air, 1 in fire by element, 5 fixed, 3 mutable, 2 cardinal by modality. Saturn and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 9.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-17/",
+    "label": "Everyone born on May 17"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:5",
+    "sun-degree:26.60",
+    "decan:taurus:third",
+    "personal:Mercury:Taurus:18.8°",
+    "personal:Venus:Taurus:19.8°",
+    "personal:Mars:Capricorn:10.2°",
+    "aspect:Jupiter:Neptune:trine:0.22",
+    "aspect:Mercury:Venus:conjunction:1",
+    "aspect:Venus:Uranus:square:1.57",
+    "figure:grand-trine:Jupiter-Saturn-Neptune",
+    "figure:t-square:Mercury-Saturn:apex-Uranus",
+    "dignity:Venus:domicile",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:earth4-water3-air2-fire1",
+    "modalities:fixed5-mutable3-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:gemini",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

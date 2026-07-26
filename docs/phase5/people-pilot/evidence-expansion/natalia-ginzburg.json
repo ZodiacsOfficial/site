@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "natalia-ginzburg",
+ "qid": "Q275985",
+ "displayName": "Natalia Ginzburg",
+ "wikidataLabel": "Natalia Ginzburg",
+ "wikidataDescription": "Italian writer (1916–1991)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q275985",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517627019
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Natalia Ginzburg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Natalia_Ginzburg",
+   "pageId": 2679662,
+   "revisionId": 1364609422,
+   "revisionTimestamp": "2026-07-17T14:34:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1916-07-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1916-07-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1916-07-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1991-10-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2656",
+  "label": "Palermo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2656",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2656",
+   "sourceEntityLabel": "Palermo",
+   "latitude": 38.115658055555556,
+   "longitude": 13.361261944444445,
+   "precision": 2.7777777777777776e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q19839393",
+   "label": "preface author"
+  }
+ ],
+ "portrait": {
+  "file": "File:Natalia Ginzburg 1956.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Natalia%20Ginzburg%201956.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Natalia_Ginzburg_1956.jpg",
+  "width": 1228,
+  "height": 1776,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://www.letteratour.it/tesine/raccontare-per-lasciare-andare-ginzburg-magrelli-boniardi.asp",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

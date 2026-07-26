@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "honore-de-balzac",
+  "seedRound": 0,
+  "qid": "Q9711",
+  "displayName": "Honoré de Balzac",
+  "identity": "Novelist · France · 1799–1850",
+  "title": "Honoré de Balzac's birth chart",
+  "metaDescription": "Honoré de Balzac's chart, computed from a sourced birth date: Sun at 29.4° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Venus and Pluto sit 0.0° from an exact trine — near enough that the tradition reads taste and depth as a single working part. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Venus:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.37",
+        "decan:taurus:third"
+      ],
+      "text": "The Sun's exact place is 29.4° Taurus. That falls in the third decan, 20°–30°, sub-ruled by Saturn in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:11.9°",
+        "personal:Venus:Cancer:3.1°",
+        "personal:Mars:Cancer:8.0°"
+      ],
+      "text": "For the fast movers, Mercury was at 11.9° Taurus, Venus was at 3.1° Cancer, Mars was at 8.0° Cancer. Read together: a mind that trusts the measured and the checked; taste tuned to mood and undertow; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:trine:0",
+        "aspect:Mercury:Neptune:opposition:1.4",
+        "aspect:Jupiter:Pluto:square:3.41"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Pluto: 0.0° from an exact trine. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Mercury opposition Neptune at 1.4°, and Jupiter square Pluto at 3.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:fall",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. Mars in Cancer at 8.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Gemini at 6.6° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 22.4° is in detriment. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-earth3-fire1-air1",
+        "modalities:mutable4-fixed3-cardinal3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 water, 3 earth, 1 fire, 1 air; by modality, 4 mutable, 3 fixed, 3 cardinal. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Uranus and Neptune were retrograde. Mercury changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 15.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-20/",
+    "label": "Everyone born on May 20"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:trine",
+    "sun-degree:29.37",
+    "decan:taurus:third",
+    "personal:Mercury:Taurus:11.9°",
+    "personal:Venus:Cancer:3.1°",
+    "personal:Mars:Cancer:8.0°",
+    "aspect:Venus:Pluto:trine:0",
+    "aspect:Mercury:Neptune:opposition:1.4",
+    "aspect:Jupiter:Pluto:square:3.41",
+    "figure:unaspected:Moon",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:water5-earth3-fire1-air1",
+    "modalities:mutable4-fixed3-cardinal3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:sagittarius",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 408,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

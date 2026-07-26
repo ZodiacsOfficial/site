@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elis-regina",
+ "qid": "Q465877",
+ "displayName": "Elis Regina",
+ "wikidataLabel": "Elis Regina",
+ "wikidataDescription": "Brazilian singer of popular and jazz music (1945–1982)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q465877",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517860343
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elis Regina",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elis_Regina",
+   "pageId": 336375,
+   "revisionId": 1353294965,
+   "revisionTimestamp": "2026-05-09T12:10:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1945-03-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1945-03-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1945-03-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1982-01-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q40269",
+  "label": "Porto Alegre",
+  "entityUrl": "https://www.wikidata.org/wiki/Q40269",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q40269",
+   "sourceEntityLabel": "Porto Alegre",
+   "latitude": -30.032777777778,
+   "longitude": -51.23,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elis Regina 1965.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elis%20Regina%201965.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elis_Regina_1965.jpg",
+  "width": 400,
+  "height": 600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Obra fornecida em domínio público",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

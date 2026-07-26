@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kenji-mizoguchi",
+ "qid": "Q55401",
+ "displayName": "Kenji Mizoguchi",
+ "wikidataLabel": "Kenji Mizoguchi",
+ "wikidataDescription": "Japanese film director and screenwriter (1898-1956)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q55401",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522885549
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kenji Mizoguchi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kenji_Mizoguchi",
+   "pageId": 660937,
+   "revisionId": 1357315016,
+   "revisionTimestamp": "2026-06-01T23:18:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-05-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-05-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-05-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1956-08-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1490",
+  "label": "Tokyo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1490",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1490",
+   "sourceEntityLabel": "Tokyo",
+   "latitude": 35.68944444444445,
+   "longitude": 139.69166666666666,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kenji Mizoguchi 3.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kenji%20Mizoguchi%203.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kenji_Mizoguchi_3.jpg",
+  "width": 1280,
+  "height": 1519,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://mubi.com/es/cast/kenji-mizoguchi",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

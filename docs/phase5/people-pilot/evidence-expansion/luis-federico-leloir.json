@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "luis-federico-leloir",
+ "qid": "Q233985",
+ "displayName": "Luis Federico Leloir",
+ "wikidataLabel": "Luis Federico Leloir",
+ "wikidataDescription": "Argentine biochemist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q233985",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515855014
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Luis Federico Leloir",
+   "articleUrl": "https://en.wikipedia.org/wiki/Luis_Federico_Leloir",
+   "pageId": 392727,
+   "revisionId": 1365417077,
+   "revisionTimestamp": "2026-07-22T07:44:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-09-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-09-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-09-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-12-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q194420",
+  "label": "16th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q194420",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q194420",
+   "sourceEntityLabel": "16th arrondissement of Paris",
+   "latitude": 48.863611111111,
+   "longitude": 2.2764888888889,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q2919046",
+   "label": "biochemist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Luis Federico Leloir - young.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Luis%20Federico%20Leloir%20-%20young.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Luis_Federico_Leloir_-_young.jpg",
+  "width": 702,
+  "height": 890,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

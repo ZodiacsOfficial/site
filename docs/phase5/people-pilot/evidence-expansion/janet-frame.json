@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "janet-frame",
+ "qid": "Q241215",
+ "displayName": "Janet Frame",
+ "wikidataLabel": "Janet Frame",
+ "wikidataDescription": "New Zealand author (1924–2004)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q241215",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518654719
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Janet Frame",
+   "articleUrl": "https://en.wikipedia.org/wiki/Janet_Frame",
+   "pageId": 168194,
+   "revisionId": 1354132430,
+   "revisionTimestamp": "2026-05-14T14:26:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1924-08-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1924-08-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1924-08-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-01-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q133073",
+  "label": "Dunedin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q133073",
+  "country": {
+   "entity": "Q664",
+   "label": "New Zealand"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q133073",
+   "sourceEntityLabel": "Dunedin",
+   "latitude": -45.87416666666667,
+   "longitude": 170.5036111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Janet Frame 1993 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Janet%20Frame%201993%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Janet_Frame_1993_(cropped).jpg",
+  "width": 320,
+  "height": 470,
+  "licenseShortName": "CC BY 3.0 nz",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0/nz/deed.en",
+  "artist": "Unknown photographer",
+  "credit": "Massey University Library (10th Jun 2021). MU, 1 November 1993, page 1. In Website Massey University Library. Retrieved 5th Dec 2021 23:41",
+  "usageTerms": "Creative Commons Attribution 3.0 nz",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

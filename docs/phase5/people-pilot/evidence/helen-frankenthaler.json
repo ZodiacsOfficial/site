@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "helen-frankenthaler",
+ "qid": "Q235281",
+ "displayName": "Helen Frankenthaler",
+ "wikidataLabel": "Helen Frankenthaler",
+ "wikidataDescription": "American painter (1928–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q235281",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517551964
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Helen Frankenthaler",
+   "articleUrl": "https://en.wikipedia.org/wiki/Helen_Frankenthaler",
+   "pageId": 238326,
+   "revisionId": 1360014718,
+   "revisionTimestamp": "2026-06-18T18:17:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1928-12-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-12-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1928-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1928-12-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-12-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11299",
+  "label": "Manhattan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11299",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q11299",
+   "sourceEntityLabel": "Manhattan",
+   "latitude": 40.728333333333,
+   "longitude": -73.994166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:2001 National Medal of Arts Recipient Helen Frankenthaler (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:2001%20National%20Medal%20of%20Arts%20Recipient%20Helen%20Frankenthaler%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:2001_National_Medal_of_Arts_Recipient_Helen_Frankenthaler_(cropped).jpg",
+  "width": 301,
+  "height": 531,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Series: Photographs Related to the George W. Bush Administration, 1/20/2001 - 1/20/2009 Collection: Records of the White House Photo Office (George W. Bush Administration), 1/20/2001 - 1/20/2009",
+  "credit": "https://catalog.archives.gov/id/7431392",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

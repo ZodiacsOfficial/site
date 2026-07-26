@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ignaz-semmelweis",
+  "seedRound": 0,
+  "qid": "Q59736",
+  "displayName": "Ignaz Semmelweis",
+  "identity": "Physician and university teacher · Hungary · 1818–1865",
+  "title": "Ignaz Semmelweis's birth chart",
+  "metaDescription": "Ignaz Semmelweis's chart, computed from a sourced birth date: Sun at 8.9° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Neptune sit 0.7° from an exact trine — near enough that the tradition reads drive and imagination as a single working part. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Mars:Neptune:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.91",
+        "decan:cancer:first"
+      ],
+      "text": "The Sun's exact place is 8.9° Cancer. That falls in the first decan, 0°–10°, sub-ruled by the Moon in the classical scheme — a water sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Gemini:21.9°",
+        "personal:Venus:Leo:7.4°",
+        "personal:Mars:Leo:24.0°"
+      ],
+      "text": "Closer in, Mercury stands at 21.9° Gemini; Venus stands at 7.4° Leo; Mars stands at 24.0° Leo. The tradition reads a mind at home in argument and pattern from Mercury, taste that runs toward the vivid and the immediate from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:trine:0.69",
+        "aspect:Saturn:Uranus:square:0.92",
+        "aspect:Sun:Jupiter:opposition:0.94"
+      ],
+      "text": "The day's firmest angle joins Mars and Neptune — a trine holding at 0.7°. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Saturn square Uranus at 0.9°, and the Sun opposition Jupiter at 0.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Uranus:apex-Saturn",
+        "figure:unaspected:Venus"
+      ],
+      "text": "Mercury opposes Uranus while both square Saturn. The t-square is the figure the old texts trusted for output: friction with a fixed address. Venus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Mercury in Gemini at 21.9° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 8.0° is in fall — the tradition’s uphill placement, strength earned rather than given. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-air2-earth1",
+        "modalities:mutable6-cardinal2-fixed2",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 2 air, 1 earth; by modality, 6 mutable, 2 cardinal, 2 fixed. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 15.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-1/",
+    "label": "Everyone born on July 1"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Neptune:trine",
+    "sun-degree:8.91",
+    "decan:cancer:first",
+    "personal:Mercury:Gemini:21.9°",
+    "personal:Venus:Leo:7.4°",
+    "personal:Mars:Leo:24.0°",
+    "aspect:Mars:Neptune:trine:0.69",
+    "aspect:Saturn:Uranus:square:0.92",
+    "aspect:Sun:Jupiter:opposition:0.94",
+    "figure:t-square:Mercury-Uranus:apex-Saturn",
+    "figure:unaspected:Venus",
+    "dignity:Mercury:domicile",
+    "dignity:Jupiter:fall",
+    "elements:fire4-water3-air2-earth1",
+    "modalities:mutable6-cardinal2-fixed2",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:gemini",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 418,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

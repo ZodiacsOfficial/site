@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "helen-b-taussig",
+ "qid": "Q271531",
+ "displayName": "Helen B. Taussig",
+ "wikidataLabel": "Helen B. Taussig",
+ "wikidataDescription": "Jewish-American cardiologist (1898-1986)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q271531",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519976707
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Helen B. Taussig",
+   "articleUrl": "https://en.wikipedia.org/wiki/Helen_B._Taussig",
+   "pageId": 1266115,
+   "revisionId": 1345402373,
+   "revisionTimestamp": "2026-03-25T22:39:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-05-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-05-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-05-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1986-05-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49111",
+  "label": "Cambridge",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49111",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49111",
+   "sourceEntityLabel": "Cambridge",
+   "latitude": 42.375,
+   "longitude": -71.106111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3264451",
+   "label": "cardiologist"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Helen B. Taussig ©Lynn Gilbert.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Helen%20B.%20Taussig%20%C2%A9Lynn%20Gilbert.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Helen_B._Taussig_%C2%A9Lynn_Gilbert.jpg",
+  "width": 1440,
+  "height": 2124,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Lynn Gilbert",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

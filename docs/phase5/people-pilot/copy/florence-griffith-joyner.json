@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "florence-griffith-joyner",
+  "seedRound": 0,
+  "qid": "Q31082",
+  "displayName": "Florence Griffith Joyner",
+  "identity": "Sprinter · United States · 1959–1998",
+  "title": "Florence Griffith Joyner's birth chart",
+  "metaDescription": "Florence Griffith Joyner's chart, computed from a sourced birth date: Sun at 29.2° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Sagittarius — the Sun, Mercury, Mars and Jupiter. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:sagittarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.21",
+        "decan:sagittarius:third"
+      ],
+      "text": "At noon on that date the Sun stood at 29.2° Sagittarius, inside the third decan (20°–30°), whose traditional sub-ruler is the Sun. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:10.3°",
+        "personal:Venus:Scorpio:16.3°",
+        "personal:Mars:Sagittarius:12.9°"
+      ],
+      "text": "Mercury holds 10.3° Sagittarius, Venus holds 16.3° Scorpio, Mars holds 12.9° Sagittarius — in the old shorthand, thought that arrives already in motion; attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:sextile:0.19",
+        "aspect:Saturn:Pluto:trine:2.13",
+        "aspect:Neptune:Pluto:sextile:2.32"
+      ],
+      "text": "The tightest geometry in the chart puts Saturn a sixth of the circle apart from Neptune, 0.2° off exact. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Saturn trine Pluto at 2.1°, and Neptune sextile Pluto at 2.3° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Mercury in Sagittarius at 10.3° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 16.3° is in detriment; Jupiter in Sagittarius at 16.5° is in domicile — the planet in its own sign, running on home rules; Saturn in Capricorn at 8.3° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth3-water2",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements fire 5, earth 3, water 2; modalities mutable 6, fixed 3, cardinal 1. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:12.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 13.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-21/",
+    "label": "Everyone born on December 21"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:sagittarius:4",
+    "sun-degree:29.21",
+    "decan:sagittarius:third",
+    "personal:Mercury:Sagittarius:10.3°",
+    "personal:Venus:Scorpio:16.3°",
+    "personal:Mars:Sagittarius:12.9°",
+    "aspect:Saturn:Neptune:sextile:0.19",
+    "aspect:Saturn:Pluto:trine:2.13",
+    "aspect:Neptune:Pluto:sextile:2.32",
+    "figure:none",
+    "dignity:Mercury:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire5-earth3-water2",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:virgo",
+    "moon-band:12.8"
+  ],
+  "measurements": {
+    "originalWords": 444,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

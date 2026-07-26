@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "gabriel-garcia-marquez",
+  "seedRound": 0,
+  "qid": "Q5878",
+  "displayName": "Gabriel García Márquez",
+  "identity": "Novelist · Colombia · 1927–2014",
+  "title": "Gabriel García Márquez's birth chart",
+  "metaDescription": "Gabriel García Márquez's chart, computed from a sourced birth date: Sun at 15.1° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Pisces — the Sun, Mercury, Jupiter and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:pisces:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.13",
+        "decan:pisces:second"
+      ],
+      "text": "At noon on that date the Sun stood at 15.1° Pisces, inside the second decan (10°–20°), whose traditional sub-ruler is the Moon. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:27.1°",
+        "personal:Venus:Aries:10.1°",
+        "personal:Mars:Gemini:6.7°"
+      ],
+      "text": "The personal planets sit Mercury at 27.1° Pisces, Venus at 10.1° Aries, Mars at 6.7° Gemini. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a fire sign reads as attraction declared rather than implied; Mars in a air sign reads as effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:opposition:0.88",
+        "aspect:Sun:Pluto:trine:1.26",
+        "aspect:Mercury:Uranus:conjunction:1.5"
+      ],
+      "text": "Mars and Saturn hold the closest angle here — a opposition, 0.9° wide. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, the Sun trine Pluto at 1.3°, and Mercury conjunction Uranus at 1.5° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mars-Saturn:apex-Jupiter",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars opposes Saturn while both square Jupiter. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Mercury in Pisces at 27.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 10.1° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 11.1° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire3-air1",
+        "modalities:mutable6-cardinal2-fixed1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 5 water, 3 fire, 1 air by element and 6 mutable, 2 cardinal, 1 fixed by modality. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mercury, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 14.8° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-6/",
+    "label": "Everyone born on March 6"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "stellium:pisces:4",
+    "sun-degree:15.13",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:27.1°",
+    "personal:Venus:Aries:10.1°",
+    "personal:Mars:Gemini:6.7°",
+    "aspect:Mars:Saturn:opposition:0.88",
+    "aspect:Sun:Pluto:trine:1.26",
+    "aspect:Mercury:Uranus:conjunction:1.5",
+    "figure:t-square:Mars-Saturn:apex-Jupiter",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:water5-fire3-air1",
+    "modalities:mutable6-cardinal2-fixed1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 492,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

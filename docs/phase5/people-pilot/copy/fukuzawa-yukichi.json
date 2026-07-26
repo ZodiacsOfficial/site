@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "fukuzawa-yukichi",
+  "seedRound": 0,
+  "qid": "Q355447",
+  "displayName": "Fukuzawa Yukichi",
+  "identity": "Translator and pedagogue · Japan · 1835–1901",
+  "title": "Fukuzawa Yukichi's birth chart",
+  "metaDescription": "Fukuzawa Yukichi's chart, computed from a sourced birth date: Sun at 19.2° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: Mercury and Mars within 0.7°, thinking wired to drive. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Mercury:Mars:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.21",
+        "decan:capricorn:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 19.2° Capricorn: the second decan, whose classical sub-ruler is Venus. A earth sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Capricorn:9.4°",
+        "personal:Venus:Sagittarius:21.8°",
+        "personal:Mars:Cancer:8.7°"
+      ],
+      "text": "Mercury holds 9.4° Capricorn, Venus holds 21.8° Sagittarius, Mars holds 8.7° Cancer — in the old shorthand, a mind that trusts the measured and the checked; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:opposition:0.71",
+        "aspect:Venus:Saturn:sextile:0.93",
+        "aspect:Jupiter:Neptune:trine:1.28"
+      ],
+      "text": "Mercury and Mars hold the closest angle here — a opposition, 0.7° wide. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, Venus sextile Saturn at 0.9°, and Jupiter trine Neptune at 1.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Mercury-Mars:apex-Pluto"
+      ],
+      "text": "Mercury opposes Mars while both square Pluto. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:fall",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The classical table has three entries for this chart. Mars in Cancer at 8.7° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Gemini at 2.1° is in detriment — the planet opposite its home, working against the grain; Saturn in Libra at 22.7° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth2-fire2-water1",
+        "modalities:cardinal5-mutable2-fixed2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 air, 2 earth, 2 fire, 1 water by element and 5 cardinal, 2 mutable, 2 fixed by mode. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Venus, Mars and Jupiter were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 12.0° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-10/",
+    "label": "Everyone born on January 10"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Mars:opposition",
+    "sun-degree:19.21",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:9.4°",
+    "personal:Venus:Sagittarius:21.8°",
+    "personal:Mars:Cancer:8.7°",
+    "aspect:Mercury:Mars:opposition:0.71",
+    "aspect:Venus:Saturn:sextile:0.93",
+    "aspect:Jupiter:Neptune:trine:1.28",
+    "figure:t-square:Mercury-Mars:apex-Pluto",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:exaltation",
+    "elements:air4-earth2-fire2-water1",
+    "modalities:cardinal5-mutable2-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 414,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "john-constable",
+ "qid": "Q159297",
+ "displayName": "John Constable",
+ "wikidataLabel": "John Constable",
+ "wikidataDescription": "English painter (1776-1837)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q159297",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522290669
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "John Constable",
+   "articleUrl": "https://en.wikipedia.org/wiki/John_Constable",
+   "pageId": 113565,
+   "revisionId": 1364711696,
+   "revisionTimestamp": "2026-07-18T02:27:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1776-06-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1776-06-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1776-06-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1837-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2185491",
+  "label": "East Bergholt",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2185491",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2185491",
+   "sourceEntityLabel": "East Bergholt",
+   "latitude": 51.9759,
+   "longitude": 1.0167611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q21600439",
+   "label": "landscape painter"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:John Constable by Daniel Gardner, 1796.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:John%20Constable%20by%20Daniel%20Gardner%2C%201796.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:John_Constable_by_Daniel_Gardner,_1796.JPG",
+  "width": 2056,
+  "height": 3088,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Stephencdickson",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "parvin-e-tesami",
+  "seedRound": 0,
+  "qid": "Q271254",
+  "displayName": "Parvin E'tesami",
+  "identity": "Poet · Iran · 1907–1941",
+  "title": "Parvin E'tesami's birth chart",
+  "metaDescription": "Parvin E'tesami's chart, computed from a sourced birth date: Sun at 24.6° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a opposition to Pluto at 0.0° — close enough to weld drive to depth. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach.",
+  "ledeFact": "aspect:Mars:Pluto:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.62",
+        "decan:pisces:third"
+      ],
+      "text": "24.6° of Pisces is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:28.3°",
+        "personal:Venus:Aquarius:10.7°",
+        "personal:Mars:Sagittarius:21.7°"
+      ],
+      "text": "Closer in, Mercury stands at 28.3° Pisces; Venus stands at 10.7° Aquarius; Mars stands at 21.7° Sagittarius. The tradition reads thought steeped in tone and memory from Mercury, attraction that begins as conversation from Venus, effort spent in bursts and openings from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:opposition:0.01",
+        "aspect:Uranus:Neptune:opposition:2.41",
+        "aspect:Sun:Pluto:square:2.86"
+      ],
+      "text": "Mars to Pluto is the closest call of the day, a opposition within 0.0°. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Uranus opposition Neptune at 2.4°, and the Sun square Pluto at 2.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mars-Pluto:apex-Sun",
+        "figure:unaspected:Venus"
+      ],
+      "text": "Mars opposes Pluto while both square the Sun. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Mercury in Pisces at 28.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 1.6° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire2-air2-earth1",
+        "modalities:mutable5-cardinal4-fixed1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: water 5, fire 2, air 2, earth 1 across the elements, and mutable 5, cardinal 4, fixed 1 across the modalities. Mercury and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:13.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-16/",
+    "label": "Everyone born on March 16"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:opposition",
+    "sun-degree:24.62",
+    "decan:pisces:third",
+    "personal:Mercury:Pisces:28.3°",
+    "personal:Venus:Aquarius:10.7°",
+    "personal:Mars:Sagittarius:21.7°",
+    "aspect:Mars:Pluto:opposition:0.01",
+    "aspect:Uranus:Neptune:opposition:2.41",
+    "aspect:Sun:Pluto:square:2.86",
+    "figure:t-square:Mars-Pluto:apex-Sun",
+    "figure:unaspected:Venus",
+    "dignity:Mercury:fall",
+    "dignity:Jupiter:exaltation",
+    "elements:water5-fire2-air2-earth1",
+    "modalities:mutable5-cardinal4-fixed1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aries",
+    "moon-band:13.0"
+  ],
+  "measurements": {
+    "originalWords": 422,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,134 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gabriel-faure",
+ "qid": "Q104919",
+ "displayName": "Gabriel Fauré",
+ "wikidataLabel": "Gabriel Fauré",
+ "wikidataDescription": "French composer, organist, pianist and teacher (1845–1924)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q104919",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519533168
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gabriel Fauré",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gabriel_Faur%C3%A9",
+   "pageId": 73087,
+   "revisionId": 1365609243,
+   "revisionTimestamp": "2026-07-23T12:20:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1845-05-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1845-05-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1845-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1845-05-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1924-11-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q209834",
+  "label": "Pamiers",
+  "entityUrl": "https://www.wikidata.org/wiki/Q209834",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q209834",
+   "sourceEntityLabel": "Pamiers",
+   "latitude": 43.116388888889,
+   "longitude": 1.6108333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q215793",
+   "label": "chapelmaster"
+  }
+ ],
+ "portrait": {
+  "file": "File:FauréPirou1905.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Faur%C3%A9Pirou1905.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Faur%C3%A9Pirou1905.jpg",
+  "width": 2346,
+  "height": 3261,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Eugène Pirou",
+  "credit": "https://gallica.bnf.fr/ark:/12148/btv1b8417702r",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

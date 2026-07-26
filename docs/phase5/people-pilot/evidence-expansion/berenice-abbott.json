@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "berenice-abbott",
+ "qid": "Q231861",
+ "displayName": "Berenice Abbott",
+ "wikidataLabel": "Berenice Abbott",
+ "wikidataDescription": "American photographer (1898-1991)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q231861",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517535520
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Berenice Abbott",
+   "articleUrl": "https://en.wikipedia.org/wiki/Berenice_Abbott",
+   "pageId": 499400,
+   "revisionId": 1365920521,
+   "revisionTimestamp": "2026-07-25T05:24:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-07-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-07-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-07-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1991-12-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q40325",
+  "label": "Springfield",
+  "entityUrl": "https://www.wikidata.org/wiki/Q40325",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q40325",
+   "sourceEntityLabel": "Springfield",
+   "latitude": 39.926944444444,
+   "longitude": -83.804166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q3381574",
+   "label": "architectural photographer"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Berenice Abbott.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Berenice%20Abbott.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Berenice_Abbott.jpg",
+  "width": 726,
+  "height": 1000,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://www.nyclgbtsites.org/site/berenice-abbott-elizabeth-mccausland-residence-studio/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

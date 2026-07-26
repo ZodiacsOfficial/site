@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sonja-henie",
+ "qid": "Q204205",
+ "displayName": "Sonja Henie",
+ "wikidataLabel": "Sonja Henie",
+ "wikidataDescription": "Norwegian figure skater and actress (1912–1969)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q204205",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519280944
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sonja Henie",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sonja_Henie",
+   "pageId": 29491,
+   "revisionId": 1363196738,
+   "revisionTimestamp": "2026-07-08T17:35:54Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-04-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-04-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-04-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1969-10-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q585",
+  "label": "Oslo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q585",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q585",
+   "sourceEntityLabel": "Oslo",
+   "latitude": 59.913333333333334,
+   "longitude": 10.738888888888889,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q13219587",
+   "label": "figure skater"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sonja Henie 1942.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sonja%20Henie%201942.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sonja_Henie_1942.jpg",
+  "width": 1501,
+  "height": 1920,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Toronto Star",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

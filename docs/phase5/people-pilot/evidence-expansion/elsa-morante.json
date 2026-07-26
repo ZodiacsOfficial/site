@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elsa-morante",
+ "qid": "Q275979",
+ "displayName": "Elsa Morante",
+ "wikidataLabel": "Elsa Morante",
+ "wikidataDescription": "Italian novelist (1912–1985)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q275979",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521473154
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elsa Morante",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elsa_Morante",
+   "pageId": 896548,
+   "revisionId": 1330623705,
+   "revisionTimestamp": "2026-01-01T15:26:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-08-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-08-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-08-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1985-11-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q220",
+  "label": "Rome",
+  "entityUrl": "https://www.wikidata.org/wiki/Q220",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q220",
+   "sourceEntityLabel": "Rome",
+   "latitude": 41.893055555556,
+   "longitude": 12.482777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elsa morante gatti.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elsa%20morante%20gatti.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elsa_morante_gatti.jpg",
+  "width": 1396,
+  "height": 1600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown photographer",
+  "credit": "http://www.romecentral.com/en/elsa-morante-il-misterioso-fascino-di-una-donna-fuori-moda/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

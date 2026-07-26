@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "nadia-boulanger",
+  "seedRound": 0,
+  "qid": "Q140619",
+  "displayName": "Nadia Boulanger",
+  "identity": "Pianist and pedagogue · France · 1887–1979",
+  "title": "Nadia Boulanger's birth chart",
+  "metaDescription": "Nadia Boulanger's chart, computed from a sourced birth date: Sun at 23.3° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.27",
+        "decan:virgo:third"
+      ],
+      "text": "Virgo, but precisely: 23.3°, third decan, 20°–30°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:28.2°",
+        "personal:Venus:Libra:1.4°",
+        "personal:Mars:Leo:12.9°"
+      ],
+      "text": "Closer in, Mercury stands at 28.2° Virgo; Venus stands at 1.4° Libra; Mars stands at 12.9° Leo. The tradition reads a mind that trusts the measured and the checked from Mercury, taste led by wit and proportion from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:sextile:1.23",
+        "aspect:Venus:Neptune:trine:1.37",
+        "aspect:Venus:Saturn:sextile:1.78"
+      ],
+      "text": "Nothing in the geometry sits closer than Mars and Uranus: 1.2° from an exact sextile. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Venus trine Neptune at 1.4°, and Venus sextile Saturn at 1.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Virgo at 28.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 1.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Leo at 3.2° is in detriment — the planet opposite its home, working against the grain. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-fire2-water1",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 4, earth 3, fire 2, water 1, and mutable 5, fixed 3, cardinal 2 across the modes. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Venus, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:14.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 14.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 7.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-16/",
+    "label": "Everyone born on September 16"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:5",
+    "sun-degree:23.27",
+    "decan:virgo:third",
+    "personal:Mercury:Virgo:28.2°",
+    "personal:Venus:Libra:1.4°",
+    "personal:Mars:Leo:12.9°",
+    "aspect:Mars:Uranus:sextile:1.23",
+    "aspect:Venus:Neptune:trine:1.37",
+    "aspect:Venus:Saturn:sextile:1.78",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:detriment",
+    "elements:air4-earth3-fire2-water1",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:virgo",
+    "moon-band:14.9"
+  ],
+  "measurements": {
+    "originalWords": 446,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

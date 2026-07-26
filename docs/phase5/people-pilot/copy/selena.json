@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "selena",
+  "seedRound": 0,
+  "qid": "Q23543",
+  "displayName": "Selena",
+  "identity": "Singer and actor · United States · 1971–1995",
+  "title": "Selena's birth chart",
+  "metaDescription": "Selena's chart, computed from a sourced birth date: Sun at 26.1° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 26.1° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.09",
+        "decan:aries:third"
+      ],
+      "text": "At the noon reference the Sun sits 26.1° into Aries — the third decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:1.4°",
+        "personal:Venus:Pisces:21.7°",
+        "personal:Mars:Capricorn:20.7°"
+      ],
+      "text": "Closer in, Mercury stands at 1.4° Taurus; Venus stands at 21.7° Pisces; Mars stands at 20.7° Capricorn. The tradition reads thought with its feet on the ground from Mercury, attraction that works by atmosphere from Venus, effort banked steadily until it tells from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:sextile:0.34",
+        "aspect:Venus:Mars:sextile:0.97",
+        "aspect:Mars:Saturn:trine:1.31"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Saturn: 0.3° from an exact sextile. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Venus sextile Mars at 1.0°, and Mars trine Saturn at 1.3° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Aries at 26.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Pisces at 21.7° is in exaltation; Mars in Capricorn at 20.7° is in exaltation; Jupiter in Sagittarius at 5.5° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire3-water1-air1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:5"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 earth, 3 fire, 1 water, 1 air; by modality, 4 mutable, 3 cardinal, 2 fixed. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Mercury, Jupiter, Uranus, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 13.1° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-16/",
+    "label": "Everyone born on April 16"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:26.09",
+    "decan:aries:third",
+    "personal:Mercury:Taurus:1.4°",
+    "personal:Venus:Pisces:21.7°",
+    "personal:Mars:Capricorn:20.7°",
+    "aspect:Venus:Saturn:sextile:0.34",
+    "aspect:Venus:Mars:sextile:0.97",
+    "aspect:Mars:Saturn:trine:1.31",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:earth4-fire3-water1-air1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:5",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 412,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

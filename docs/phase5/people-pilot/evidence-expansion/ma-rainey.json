@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ma-rainey",
+ "qid": "Q239533",
+ "displayName": "Ma Rainey",
+ "wikidataLabel": "Ma Rainey",
+ "wikidataDescription": "American blues singer (1886–1939)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q239533",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515783071
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ma Rainey",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ma_Rainey",
+   "pageId": 164583,
+   "revisionId": 1362735029,
+   "revisionTimestamp": "2026-07-05T21:52:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1886-04-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1886-04-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1886-04-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1939-12-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q239870",
+  "label": "Columbus",
+  "entityUrl": "https://www.wikidata.org/wiki/Q239870",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q239870",
+   "sourceEntityLabel": "Columbus",
+   "latitude": 32.492222222222,
+   "longitude": -84.940277777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2914170",
+   "label": "street artist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q90125788",
+   "label": "blues singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:MaRainey.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:MaRainey.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:MaRainey.jpg",
+  "width": 1114,
+  "height": 1751,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://www.nytimes.com/2019/06/12/obituaries/ma-rainey-overlooked.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

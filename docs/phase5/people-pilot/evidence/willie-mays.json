@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "willie-mays",
+ "qid": "Q561852",
+ "displayName": "Willie Mays",
+ "wikidataLabel": "Willie Mays",
+ "wikidataDescription": "American baseball player (1931–2024)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q561852",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519303899
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Willie Mays",
+   "articleUrl": "https://en.wikipedia.org/wiki/Willie_Mays",
+   "pageId": 62512,
+   "revisionId": 1364594467,
+   "revisionTimestamp": "2026-07-17T12:12:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-05-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-05-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-05-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2024-06-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q107535361",
+  "label": "Westfield",
+  "entityUrl": "https://www.wikidata.org/wiki/Q107535361",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q107535361",
+   "sourceEntityLabel": "Westfield",
+   "latitude": 33.4846,
+   "longitude": -86.9405,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Willie Mays cropped.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Willie%20Mays%20cropped.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Willie_Mays_cropped.jpg",
+  "width": 636,
+  "height": 848,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "New York World-Telegram and the Sun staff photographer, William C. Greene",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

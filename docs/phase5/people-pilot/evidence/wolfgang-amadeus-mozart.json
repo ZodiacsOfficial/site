@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "wolfgang-amadeus-mozart",
+ "qid": "Q254",
+ "displayName": "Wolfgang Amadeus Mozart",
+ "wikidataLabel": "Wolfgang Amadeus Mozart",
+ "wikidataDescription": "Austrian composer of the Classical period (1756-1791)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q254",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522267263
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Wolfgang Amadeus Mozart",
+   "articleUrl": "https://en.wikipedia.org/wiki/Wolfgang_Amadeus_Mozart",
+   "pageId": 33163,
+   "revisionId": 1365739432,
+   "revisionTimestamp": "2026-07-24T04:21:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1756-01-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1756-01-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1756-01-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1791-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34713",
+  "label": "Salzburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34713",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34713",
+   "sourceEntityLabel": "Salzburg",
+   "latitude": 47.8,
+   "longitude": 13.045,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Wolfgang-amadeus-mozart 1.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Wolfgang-amadeus-mozart%201.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Wolfgang-amadeus-mozart_1.jpg",
+  "width": 2996,
+  "height": 3840,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Barbara Krafft",
+  "credit": "Deutsch, Otto Erich (1965) Mozart: A Documentary Biography. Stanford: Stanford University Press.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

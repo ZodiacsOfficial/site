@@ -1,0 +1,157 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jeremy-bentham",
+ "qid": "Q60887",
+ "displayName": "Jeremy Bentham",
+ "wikidataLabel": "Jeremy Bentham",
+ "wikidataDescription": "British philosopher, jurist, and social reformer (1748–1832)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q60887",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519624935
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jeremy Bentham",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jeremy_Bentham",
+   "pageId": 46038,
+   "revisionId": 1365667315,
+   "revisionTimestamp": "2026-07-23T19:23:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1749-02-15T00:00:00Z|proleptic-gregorian",
+   "+1748-02-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1749-02-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1748-02-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1748-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1748-02-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1832-06-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5913262",
+  "label": "Houndsditch",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5913262",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q5913262",
+   "sourceEntityLabel": "Houndsditch",
+   "latitude": 51.5153,
+   "longitude": -0.0787,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q215536",
+   "label": "merchant"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q1238570",
+   "label": "political scientist"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q11966252",
+   "label": "animal rights advocate"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q763779",
+   "label": "Protestant reformer"
+  },
+  {
+   "entity": "Q15994177",
+   "label": "political theorist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jeremy Bentham by Henry William Pickersgill detail.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jeremy%20Bentham%20by%20Henry%20William%20Pickersgill%20detail.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jeremy_Bentham_by_Henry_William_Pickersgill_detail.jpg",
+  "width": 536,
+  "height": 728,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Henry William Pickersgill",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

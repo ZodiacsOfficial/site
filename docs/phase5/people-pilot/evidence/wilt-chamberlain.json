@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "wilt-chamberlain",
+ "qid": "Q182455",
+ "displayName": "Wilt Chamberlain",
+ "wikidataLabel": null,
+ "wikidataDescription": "American basketball player (1936–1999)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q182455",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520771973
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Wilt Chamberlain",
+   "articleUrl": "https://en.wikipedia.org/wiki/Wilt_Chamberlain",
+   "pageId": 255645,
+   "revisionId": 1364425773,
+   "revisionTimestamp": "2026-07-16T12:51:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1936-08-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1936-08-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1936-08-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1999-10-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1345",
+  "label": "Philadelphia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1345",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1345",
+   "sourceEntityLabel": "Philadelphia",
+   "latitude": 39.952777777778,
+   "longitude": -75.163611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3665646",
+   "label": "basketball player"
+  },
+  {
+   "entity": "Q5137571",
+   "label": "basketball coach"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q15117302",
+   "label": "volleyball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Wilt Chamberlain3.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Wilt%20Chamberlain3.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Wilt_Chamberlain3.jpg",
+  "width": 2170,
+  "height": 2744,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Wilt_Chamberlain2.jpg: Fred Palumbo, World Telegram staff photographer derivative work: JoeJohnson2 (talk)",
+  "credit": "Wilt_Chamberlain2.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ichiyo-higuchi",
+ "qid": "Q237948",
+ "displayName": "Ichiyō Higuchi",
+ "wikidataLabel": "Ichiyō Higuchi",
+ "wikidataDescription": "Japanese writer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q237948",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517571305
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ichiyō Higuchi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ichiy%C5%8D_Higuchi",
+   "pageId": 186576,
+   "revisionId": 1361838677,
+   "revisionTimestamp": "2026-06-30T11:23:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1872-05-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1872-05-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1872-05-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1896-11-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7473516",
+  "label": "Tokyo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7473516",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7473516",
+   "sourceEntityLabel": "Tokyo",
+   "latitude": 35.683889,
+   "longitude": 139.774444,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11122954",
+   "label": "waka poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Higuchi Ichiyou.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Higuchi%20Ichiyou.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Higuchi_Ichiyou.png",
+  "width": 800,
+  "height": 1088,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image is available from the website of the National Diet Library",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

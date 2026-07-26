@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "julius-nyerere",
+ "qid": "Q186525",
+ "displayName": "Julius Nyerere",
+ "wikidataLabel": "Julius Nyerere",
+ "wikidataDescription": "Tanzanian politician and writer, first Prime Minister and President of Tanzania (1922–1999)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q186525",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519460528
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Julius Nyerere",
+   "articleUrl": "https://en.wikipedia.org/wiki/Julius_Nyerere",
+   "pageId": 358637,
+   "revisionId": 1365750869,
+   "revisionTimestamp": "2026-07-24T06:30:32Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-04-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-04-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-04-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1999-10-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q4833509",
+  "label": "Butiama",
+  "entityUrl": "https://www.wikidata.org/wiki/Q4833509",
+  "country": {
+   "entity": "Q924",
+   "label": "Tanzania"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q4833509",
+   "sourceEntityLabel": "Butiama",
+   "latitude": -1.76666667,
+   "longitude": 33.96666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q974144",
+   "label": "educator"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:President Nyerere van Tanzania, koppen, Bestanddeelnr 928-2879 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:President%20Nyerere%20van%20Tanzania%2C%20koppen%2C%20Bestanddeelnr%20928-2879%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:President_Nyerere_van_Tanzania,_koppen,_Bestanddeelnr_928-2879_(cropped).jpg",
+  "width": 2323,
+  "height": 3412,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Rob Mieremet / Anefo",
+  "credit": "http://proxy.handle.net/10648/ac77c414-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

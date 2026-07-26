@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "wilma-rudolph",
+ "qid": "Q31083",
+ "displayName": "Wilma Rudolph",
+ "wikidataLabel": "Wilma Rudolph",
+ "wikidataDescription": "American athlete (1940–1994)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q31083",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516854479
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Wilma Rudolph",
+   "articleUrl": "https://en.wikipedia.org/wiki/Wilma_Rudolph",
+   "pageId": 34095,
+   "revisionId": 1365359618,
+   "revisionTimestamp": "2026-07-21T22:34:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1940-06-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1940-06-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1940-06-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1994-11-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q328941",
+  "label": "Clarksville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q328941",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q328941",
+   "sourceEntityLabel": "Clarksville",
+   "latitude": 36.5297222,
+   "longitude": -87.3594444,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4009406",
+   "label": "sprinter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Wilma Rudolph (1960).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Wilma%20Rudolph%20(1960).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Wilma_Rudolph_(1960).jpg",
+  "width": 560,
+  "height": 747,
+  "licenseShortName": "CC BY-SA 3.0 nl",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/nl/deed.en",
+  "artist": "Henk Lindeboom / Anefo",
+  "credit": "Nationaal Archief",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 nl",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

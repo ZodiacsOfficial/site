@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "willa-cather",
+ "qid": "Q229480",
+ "displayName": "Willa Cather",
+ "wikidataLabel": "Willa Cather",
+ "wikidataDescription": "American writer (1873–1947)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q229480",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517448335
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Willa Cather",
+   "articleUrl": "https://en.wikipedia.org/wiki/Willa_Cather",
+   "pageId": 164156,
+   "revisionId": 1364405797,
+   "revisionTimestamp": "2026-07-16T09:11:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1873-12-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1873-12-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1873-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1873-12-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1947-04-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3477974",
+  "label": "Gore",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3477974",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3477974",
+   "sourceEntityLabel": "Gore",
+   "latitude": 39.2639,
+   "longitude": -78.3319,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q123853167",
+   "label": "magazine writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Willa Cather ca. 1912 wearing necklace from Sarah Orne Jewett (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Willa%20Cather%20ca.%201912%20wearing%20necklace%20from%20Sarah%20Orne%20Jewett%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Willa_Cather_ca._1912_wearing_necklace_from_Sarah_Orne_Jewett_(cropped).jpg",
+  "width": 301,
+  "height": 384,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photographer: Aime Dupont Studio, New York",
+  "credit": "Willa Cather Pioneer Memorial and Educational Foundation",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

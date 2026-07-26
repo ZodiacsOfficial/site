@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mark-twain",
+ "qid": "Q7245",
+ "displayName": "Mark Twain",
+ "wikidataLabel": "Mark Twain",
+ "wikidataDescription": "American author and humorist (1835–1910)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7245",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520553515
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mark Twain",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mark_Twain",
+   "pageId": 154450,
+   "revisionId": 1364533412,
+   "revisionTimestamp": "2026-07-17T02:50:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1835-11-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1835-11-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1835-11-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1910-04-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q537803",
+  "label": "Florida",
+  "entityUrl": "https://www.wikidata.org/wiki/Q537803",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q537803",
+   "sourceEntityLabel": "Florida",
+   "latitude": 39.49169444444444,
+   "longitude": -91.79025,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q12406482",
+   "label": "humorist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q3606216",
+   "label": "aphorist"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:MarkTwain.LOC.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:MarkTwain.LOC.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:MarkTwain.LOC.jpg",
+  "width": 4261,
+  "height": 5282,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3a08820.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

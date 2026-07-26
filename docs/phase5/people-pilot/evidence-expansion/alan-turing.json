@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alan-turing",
+ "qid": "Q7251",
+ "displayName": "Alan Turing",
+ "wikidataLabel": "Alan Turing",
+ "wikidataDescription": "English computer scientist (1912–1954)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7251",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519546913
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alan Turing",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alan_Turing",
+   "pageId": 1208,
+   "revisionId": 1365876567,
+   "revisionTimestamp": "2026-07-24T23:38:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-06-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-06-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-06-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1954-06-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q122744",
+  "label": "Maida Vale",
+  "entityUrl": "https://www.wikidata.org/wiki/Q122744",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q122744",
+   "sourceEntityLabel": "Maida Vale",
+   "latitude": 51.5274,
+   "longitude": -0.1899,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82594",
+   "label": "computer scientist"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q15442776",
+   "label": "cryptographer"
+  },
+  {
+   "entity": "Q14565331",
+   "label": "logician"
+  },
+  {
+   "entity": "Q2732142",
+   "label": "statistician"
+  },
+  {
+   "entity": "Q13382460",
+   "label": "marathon runner"
+  },
+  {
+   "entity": "Q15976092",
+   "label": "artificial intelligence researcher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alan Turing (1951) (crop).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alan%20Turing%20(1951)%20(crop).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alan_Turing_(1951)_(crop).jpg",
+  "width": 712,
+  "height": 949,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Elliott & Fry",
+  "credit": "https://www.computerhistory.org/timeline/1949/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

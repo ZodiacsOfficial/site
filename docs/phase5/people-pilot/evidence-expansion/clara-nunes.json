@@ -1,0 +1,115 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "clara-nunes",
+ "qid": "Q447984",
+ "displayName": "Clara Nunes",
+ "wikidataLabel": "Clara Nunes",
+ "wikidataDescription": "Brazilian recording artist, singer (1943–1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q447984",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518867116
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Clara Nunes",
+   "articleUrl": "https://en.wikipedia.org/wiki/Clara_Nunes",
+   "pageId": 8009364,
+   "revisionId": 1360720666,
+   "revisionTimestamp": "2026-06-23T04:56:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1943-08-12T00:00:00Z|proleptic-gregorian",
+   "+1942-08-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1943-08-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1942-08-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1942-08-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-04-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1792016",
+  "label": "Caetanópolis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1792016",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1792016",
+   "sourceEntityLabel": "Caetanópolis",
+   "latitude": -19.295,
+   "longitude": -44.418888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Clara Nunes no Zicartola (cropped).tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Clara%20Nunes%20no%20Zicartola%20(cropped).tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Clara_Nunes_no_Zicartola_(cropped).tif",
+  "width": 780,
+  "height": 1040,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown",
+  "credit": "Arquivo Nacional",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

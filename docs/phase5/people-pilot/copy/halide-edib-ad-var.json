@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "halide-edib-ad-var",
+  "seedRound": 0,
+  "qid": "Q234289",
+  "displayName": "Halide Edib Adıvar",
+  "identity": "Politician and novelist · Turkey · 1884–1964",
+  "title": "Halide Edib Adıvar's birth chart",
+  "metaDescription": "Halide Edib Adıvar's chart, computed from a sourced birth date: Sun at 20.8° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Count only what the day settles, and earth still carries five of the ten placements whose signs are settled. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up.",
+  "ledeFact": "element:earth:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:20.82",
+        "decan:gemini:third"
+      ],
+      "text": "20.8° of Gemini is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:27.9°",
+        "personal:Venus:Cancer:26.7°",
+        "personal:Mars:Virgo:3.4°"
+      ],
+      "text": "Closer in, Mercury stands at 27.9° Taurus; Venus stands at 26.7° Cancer; Mars stands at 3.4° Virgo. The tradition reads thought with its feet on the ground from Mercury, attraction that works by atmosphere from Venus, effort banked steadily until it tells from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Venus:sextile:1.11",
+        "aspect:Uranus:Neptune:trine:2.15",
+        "aspect:Mars:Pluto:square:2.28"
+      ],
+      "text": "Closest first: Mercury to Venus, a sextile with 1.1° of slack. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Uranus trine Neptune at 2.1°, and Mars square Pluto at 2.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks one placement here. The Moon in Capricorn at 19.6° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air3-water1-fire1",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:0"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 earth, 3 air, 1 water, 1 fire by element and 5 mutable, 3 fixed, 2 cardinal by mode. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. The day carried no retrograde motion at all; everything moved forward as seen from here."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 19.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-11/",
+    "label": "Everyone born on June 11"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "element:earth:5",
+    "sun-degree:20.82",
+    "decan:gemini:third",
+    "personal:Mercury:Taurus:27.9°",
+    "personal:Venus:Cancer:26.7°",
+    "personal:Mars:Virgo:3.4°",
+    "aspect:Mercury:Venus:sextile:1.11",
+    "aspect:Uranus:Neptune:trine:2.15",
+    "aspect:Mars:Pluto:square:2.28",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "elements:earth5-air3-water1-fire1",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:0",
+    "moon-sign:capricorn",
+    "moon-band:12.2"
+  ],
+  "measurements": {
+    "originalWords": 367,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

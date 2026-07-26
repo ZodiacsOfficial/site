@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "freddie-mercury",
+  "seedRound": 0,
+  "qid": "Q15869",
+  "displayName": "Freddie Mercury",
+  "identity": "Singer-songwriter and painter · Tanzania · 1946–1991",
+  "title": "Freddie Mercury's birth chart",
+  "metaDescription": "Freddie Mercury's chart, computed from a sourced birth date: Sun at 12.2° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Libra — Venus, Mars, Jupiter and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:libra:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.19",
+        "decan:virgo:second"
+      ],
+      "text": "Virgo, but precisely: 12.2°, second decan, 10°–20°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:3.2°",
+        "personal:Venus:Libra:28.4°",
+        "personal:Mars:Libra:17.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Virgo (3.2°), Venus in Libra (28.4°), Mars in Libra (17.2°): a mind that trusts the measured and the checked, taste led by wit and proportion, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:conjunction:2.29",
+        "aspect:Saturn:Neptune:sextile:3.29",
+        "aspect:Mars:Uranus:trine:4.41"
+      ],
+      "text": "Venus and Jupiter hold the closest angle here — a conjunction, 2.3° wide. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Saturn sextile Neptune at 3.3°, and Mars trine Uranus at 4.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Pluto"
+      ],
+      "text": "Pluto stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Mercury in Virgo at 3.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 28.4° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 17.2° is in detriment — the planet opposite its home, working against the grain; Saturn in Leo at 4.1° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-earth2-fire2",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: air 5, earth 2, fire 2 across the elements, and cardinal 4, mutable 3, fixed 2 across the modalities. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 11.9° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-5/",
+    "label": "Everyone born on September 5"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "stellium:libra:4",
+    "sun-degree:12.19",
+    "decan:virgo:second",
+    "personal:Mercury:Virgo:3.2°",
+    "personal:Venus:Libra:28.4°",
+    "personal:Mars:Libra:17.2°",
+    "aspect:Venus:Jupiter:conjunction:2.29",
+    "aspect:Saturn:Neptune:sextile:3.29",
+    "aspect:Mars:Uranus:trine:4.41",
+    "figure:unaspected:Pluto",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:detriment",
+    "elements:air5-earth2-fire2",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 416,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

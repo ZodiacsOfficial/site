@@ -1,0 +1,97 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "djibril-diop-mambety",
+ "qid": "Q1232197",
+ "displayName": "Djibril Diop Mambéty",
+ "wikidataLabel": "Djibril Diop Mambéty",
+ "wikidataDescription": "Senegalese film director (1945–1998)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1232197",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517977340
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Djibril Diop Mambéty",
+   "articleUrl": "https://en.wikipedia.org/wiki/Djibril_Diop_Mamb%C3%A9ty",
+   "pageId": 5661591,
+   "revisionId": 1341573535,
+   "revisionTimestamp": "2026-03-03T23:06:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [],
+  "allValues": [
+   {
+    "time": "+1945-01-01T00:00:00Z",
+    "precision": 10,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1945-01-01T00:00:00Z",
+  "precision": "month",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1998-07-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2066372",
+  "label": "Dakar Department",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2066372",
+  "country": {
+   "entity": "Q1041",
+   "label": "Senegal"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2066372",
+   "sourceEntityLabel": "Dakar Department",
+   "latitude": 14.7,
+   "longitude": -17.45,
+   "precision": 0.016666666666666666,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": null
+}

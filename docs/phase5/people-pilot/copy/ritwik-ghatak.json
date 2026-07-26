@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ritwik-ghatak",
+  "seedRound": 0,
+  "qid": "Q55404",
+  "displayName": "Ritwik Ghatak",
+  "identity": "Film director and screenwriter · Bangladesh · 1925–1976",
+  "title": "Ritwik Ghatak's birth chart",
+  "metaDescription": "Ritwik Ghatak's chart, computed from a sourced birth date: Sun at 11.3° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Neptune sit 0.8° from an exact sextile — near enough that the tradition reads drive and imagination as a single working part. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Mars:Neptune:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.31",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun's exact place is 11.3° Scorpio. That falls in the second decan, 10°–20°, sub-ruled by Jupiter in the classical scheme — a water sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:27.8°",
+        "personal:Venus:Sagittarius:27.0°",
+        "personal:Mars:Libra:23.8°"
+      ],
+      "text": "The personal planets sit Mercury at 27.8° Scorpio, Venus at 27.0° Sagittarius, Mars at 23.8° Libra. Mercury in a water sign reads as a mind that absorbs before it argues; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a air sign reads as drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:sextile:0.83",
+        "aspect:Jupiter:Saturn:sextile:0.99",
+        "aspect:Saturn:Pluto:trine:1.66"
+      ],
+      "text": "Mars to Neptune is the closest call of the day, a sextile within 0.8°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Jupiter sextile Saturn at 1.0°, and Saturn trine Pluto at 1.7° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Moon-Venus:apex-Uranus"
+      ],
+      "text": "The Moon opposes Venus while both square Uranus. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mars in Libra at 23.8° is in detriment — the planet opposite its home, working against the grain; Jupiter in Capricorn at 17.3° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air2-fire2-earth1",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 water, 2 air, 2 fire, 1 earth by element and 4 fixed, 3 mutable, 3 cardinal by mode. Uranus and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:12.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 23.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-4/",
+    "label": "Everyone born on November 4"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Neptune:sextile",
+    "sun-degree:11.31",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:27.8°",
+    "personal:Venus:Sagittarius:27.0°",
+    "personal:Mars:Libra:23.8°",
+    "aspect:Mars:Neptune:sextile:0.83",
+    "aspect:Jupiter:Saturn:sextile:0.99",
+    "aspect:Saturn:Pluto:trine:1.66",
+    "figure:t-square:Moon-Venus:apex-Uranus",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:fall",
+    "elements:water5-air2-fire2-earth1",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:gemini",
+    "moon-band:12.4"
+  ],
+  "measurements": {
+    "originalWords": 402,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

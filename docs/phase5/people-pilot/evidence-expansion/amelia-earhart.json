@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "amelia-earhart",
+ "qid": "Q3355",
+ "displayName": "Amelia Earhart",
+ "wikidataLabel": "Amelia Earhart",
+ "wikidataDescription": "American aviation pioneer and author (1897–1939)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3355",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522434202
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Amelia Earhart",
+   "articleUrl": "https://en.wikipedia.org/wiki/Amelia_Earhart",
+   "pageId": 85234,
+   "revisionId": 1365611830,
+   "revisionTimestamp": "2026-07-23T12:36:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1897-07-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-07-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-07-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1939-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q753949",
+  "label": "Atchison",
+  "entityUrl": "https://www.wikidata.org/wiki/Q753949",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q753949",
+   "sourceEntityLabel": "Atchison",
+   "latitude": 39.5625,
+   "longitude": -95.1283,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q11774156",
+   "label": "memoirist"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q124153083",
+   "label": "aviation writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Amelia Earhart 1935.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Amelia%20Earhart%201935.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Amelia_Earhart_1935.jpg",
+  "width": 560,
+  "height": 701,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "NBC Photo-NBC Radio",
+  "credit": "eBay front back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

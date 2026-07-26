@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ranjitsinhji",
+ "qid": "Q2757835",
+ "displayName": "Ranjitsinhji",
+ "wikidataLabel": "Ranjitsinhji",
+ "wikidataDescription": "Indian cricket player. (1872-1933)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2757835",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518685677
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ranjitsinhji",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ranjitsinhji",
+   "pageId": 834220,
+   "revisionId": 1363374437,
+   "revisionTimestamp": "2026-07-09T20:15:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1872-09-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1872-09-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1872-09-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1933-04-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q130282325",
+  "label": "Sadodar",
+  "entityUrl": "https://www.wikidata.org/wiki/Q130282325",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1061",
+   "sourceEntityLabel": "Gujarat",
+   "latitude": 23.22,
+   "longitude": 69.655,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 1
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q12299841",
+   "label": "cricketer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ranjitsinhji c1908.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ranjitsinhji%20c1908.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ranjitsinhji_c1908.jpg",
+  "width": 658,
+  "height": 1024,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

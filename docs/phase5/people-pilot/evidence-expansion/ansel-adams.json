@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ansel-adams",
+ "qid": "Q60809",
+ "displayName": "Ansel Adams",
+ "wikidataLabel": "Ansel Adams",
+ "wikidataDescription": "American photographer and environmentalist (1902–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q60809",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521412273
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ansel Adams",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ansel_Adams",
+   "pageId": 84317,
+   "revisionId": 1364533054,
+   "revisionTimestamp": "2026-07-17T02:48:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1902-02-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-02-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-02-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-04-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q62",
+  "label": "San Francisco",
+  "entityUrl": "https://www.wikidata.org/wiki/Q62",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q62",
+   "sourceEntityLabel": "San Francisco",
+   "latitude": 37.775,
+   "longitude": -122.41944444444445,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q9149093",
+   "label": "mountaineer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q3578589",
+   "label": "environmentalist"
+  },
+  {
+   "entity": "Q130430898",
+   "label": "documentary photographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ansel Adams and camera.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ansel%20Adams%20and%20camera.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ansel_Adams_and_camera.jpg",
+  "width": 3003,
+  "height": 3799,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "J. Malcolm Greany",
+  "credit": "Unknown sourceUnknown source See Ansel Adams. Yosemite National Park. U.S. National Park Service. Retrieved on February 28, 2019.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": "personality"
+ }
+}

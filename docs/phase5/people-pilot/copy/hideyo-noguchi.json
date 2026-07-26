@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "hideyo-noguchi",
+  "seedRound": 0,
+  "qid": "Q356114",
+  "displayName": "Hideyo Noguchi",
+  "identity": "Physician · Japan · 1876–1928",
+  "title": "Hideyo Noguchi's birth chart",
+  "metaDescription": "Hideyo Noguchi's chart, computed from a sourced birth date: Sun at 17.1° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a opposition to Neptune at 0.9° — close enough to weld thinking to imagination. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Mercury:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.08",
+        "decan:scorpio:second"
+      ],
+      "text": "17.1° of Scorpio is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:2.6°",
+        "personal:Venus:Libra:5.8°",
+        "personal:Mars:Libra:16.8°"
+      ],
+      "text": "For the fast movers, Mercury was at 2.6° Scorpio, Venus was at 5.8° Libra, Mars was at 16.8° Libra. Read together: thought steeped in tone and memory; attraction that begins as conversation; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:square:0.81",
+        "aspect:Mercury:Neptune:opposition:0.91",
+        "aspect:Mercury:Saturn:trine:1.22"
+      ],
+      "text": "Start where the chart is tightest — Uranus square Pluto, 0.8° of separation. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Mercury opposition Neptune at 0.9°, and Mercury trine Saturn at 1.2° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Sun-Pluto:apex-Uranus",
+        "figure:unaspected:Mars"
+      ],
+      "text": "The Sun opposes Pluto while both square Uranus. The t-square is the figure the old texts trusted for output: friction with a fixed address. Mars makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Venus in Libra at 5.8° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 16.8° is in detriment — the planet opposite its home, working against the grain; Jupiter in Sagittarius at 7.2° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-fire3-air2-earth2",
+        "modalities:fixed6-cardinal2-mutable2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 3 water, 3 fire, 2 air, 2 earth; by modality, 6 fixed, 2 cardinal, 2 mutable. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-9/",
+    "label": "Everyone born on November 9"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Neptune:opposition",
+    "sun-degree:17.08",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:2.6°",
+    "personal:Venus:Libra:5.8°",
+    "personal:Mars:Libra:16.8°",
+    "aspect:Uranus:Pluto:square:0.81",
+    "aspect:Mercury:Neptune:opposition:0.91",
+    "aspect:Mercury:Saturn:trine:1.22",
+    "figure:t-square:Sun-Pluto:apex-Uranus",
+    "figure:unaspected:Mars",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:water3-fire3-air2-earth2",
+    "modalities:fixed6-cardinal2-mutable2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:leo",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

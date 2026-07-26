@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ken-saro-wiwa",
+ "qid": "Q316292",
+ "displayName": "Ken Saro-Wiwa",
+ "wikidataLabel": "Ken Saro-Wiwa",
+ "wikidataDescription": "Nigerian social rights activist (1941–1995)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q316292",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2507277641
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ken Saro-Wiwa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ken_Saro-Wiwa",
+   "pageId": 330970,
+   "revisionId": 1365236952,
+   "revisionTimestamp": "2026-07-21T03:47:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1941-10-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1941-10-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1941-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-11-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q4945102",
+  "label": "Bori",
+  "entityUrl": "https://www.wikidata.org/wiki/Q4945102",
+  "country": {
+   "entity": "Q1033",
+   "label": "Nigeria"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q4945102",
+   "sourceEntityLabel": "Bori",
+   "latitude": 4.676288888888889,
+   "longitude": 7.365188888888889,
+   "precision": 0.000002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q3578589",
+   "label": "environmentalist"
+  },
+  {
+   "entity": "Q578109",
+   "label": "television producer"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ken Saro-Wisa close-up (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ken%20Saro-Wisa%20close-up%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ken_Saro-Wisa_close-up_(cropped).jpg",
+  "width": 65,
+  "height": 99,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "African Studies Centre Leiden",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elizabeth-blackwell",
+ "qid": "Q234572",
+ "displayName": "Elizabeth Blackwell",
+ "wikidataLabel": "Elizabeth Blackwell",
+ "wikidataDescription": "American physician, abolitionist, women's rights activist (1821-1910)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234572",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520604327
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elizabeth Blackwell",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elizabeth_Blackwell",
+   "pageId": 2024825,
+   "revisionId": 1365141407,
+   "revisionTimestamp": "2026-07-20T14:22:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1821-02-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1821-02-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1821-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1821-02-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1910-05-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q23154",
+  "label": "Bristol",
+  "entityUrl": "https://www.wikidata.org/wiki/Q23154",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q23154",
+   "sourceEntityLabel": "Bristol",
+   "latitude": 51.45361111111111,
+   "longitude": -2.5975,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q18533509",
+   "label": "medical author"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elizabeth Blackwell NLM 02.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elizabeth%20Blackwell%20NLM%2002.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elizabeth_Blackwell_NLM_02.jpg",
+  "width": 2244,
+  "height": 2903,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown artist",
+  "credit": "National Library of Medicine",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

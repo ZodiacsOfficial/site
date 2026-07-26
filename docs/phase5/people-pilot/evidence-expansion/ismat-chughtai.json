@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ismat-chughtai",
+ "qid": "Q3080325",
+ "displayName": "Ismat Chughtai",
+ "wikidataLabel": "Ismat Chughtai",
+ "wikidataDescription": "Indian writer (1911-1991)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3080325",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515928085
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ismat Chughtai",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ismat_Chughtai",
+   "pageId": 982880,
+   "revisionId": 1358832484,
+   "revisionTimestamp": "2026-06-11T06:52:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 5,
+  "distinctDayPrecisionValues": [
+   "+1911-08-21T00:00:00Z|proleptic-gregorian",
+   "+1915-08-15T00:00:00Z|proleptic-gregorian",
+   "+1911-08-15T00:00:00Z|proleptic-gregorian",
+   "+1915-08-21T00:00:00Z|proleptic-gregorian",
+   "+1925-08-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-08-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1915-08-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1911-08-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1915-08-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1925-08-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-08-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1991-10-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q798839",
+  "label": "Budaun",
+  "entityUrl": "https://www.wikidata.org/wiki/Q798839",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q798839",
+   "sourceEntityLabel": "Budaun",
+   "latitude": 28.05,
+   "longitude": 79.12,
+   "precision": 0.01,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ismat Chughtai.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ismat%20Chughtai.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ismat_Chughtai.jpg",
+  "width": 791,
+  "height": 954,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Remembering Ismat Chughtai–II",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

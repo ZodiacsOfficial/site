@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "dante-gabriel-rossetti",
+  "seedRound": 0,
+  "qid": "Q186748",
+  "displayName": "Dante Gabriel Rossetti",
+  "identity": "Poet and illustrator · United Kingdom · 1828–1882",
+  "title": "Dante Gabriel Rossetti's birth chart",
+  "metaDescription": "Dante Gabriel Rossetti's chart, computed from a sourced birth date: Sun at 21.7° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a square: Venus and Pluto within 0.1°, taste wired to depth. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected.",
+  "ledeFact": "aspect:Venus:Pluto:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.68",
+        "decan:taurus:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 21.7° Taurus: the third decan, whose classical sub-ruler is Saturn. A earth sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:8.9°",
+        "personal:Venus:Cancer:6.9°",
+        "personal:Mars:Capricorn:12.8°"
+      ],
+      "text": "For the fast movers, Mercury was at 8.9° Taurus, Venus was at 6.9° Cancer, Mars was at 12.8° Capricorn. Read together: a mind that trusts the measured and the checked; taste tuned to mood and undertow; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:square:0.09",
+        "aspect:Mercury:Jupiter:opposition:0.97",
+        "aspect:Venus:Jupiter:trine:1.09"
+      ],
+      "text": "The day's firmest angle joins Venus and Pluto — a square holding at 0.1°. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mercury opposition Jupiter at 1.0°, and Venus trine Jupiter at 1.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Venus-Mars:apex-Pluto"
+      ],
+      "text": "Venus opposes Mars while both square Pluto. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mars in Capricorn at 12.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Cancer at 16.2° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-water3-air1-fire1",
+        "modalities:cardinal5-fixed4",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: earth 4, water 3, air 1, fire 1 across the elements, and cardinal 5, fixed 4 across the modalities. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Jupiter, Uranus and Neptune were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 13.1° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-12/",
+    "label": "Everyone born on May 12"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:square",
+    "sun-degree:21.68",
+    "decan:taurus:third",
+    "personal:Mercury:Taurus:8.9°",
+    "personal:Venus:Cancer:6.9°",
+    "personal:Mars:Capricorn:12.8°",
+    "aspect:Venus:Pluto:square:0.09",
+    "aspect:Mercury:Jupiter:opposition:0.97",
+    "aspect:Venus:Jupiter:trine:1.09",
+    "figure:t-square:Venus-Mars:apex-Pluto",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:earth4-water3-air1-fire1",
+    "modalities:cardinal5-fixed4",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 400,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

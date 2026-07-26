@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "antonin-dvorak",
+ "qid": "Q7298",
+ "displayName": "Antonín Dvořák",
+ "wikidataLabel": "Antonín Dvořák",
+ "wikidataDescription": "Czech composer (1841–1904)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7298",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516543293
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Antonín Dvořák",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anton%C3%ADn_Dvo%C5%99%C3%A1k",
+   "pageId": 76572,
+   "revisionId": 1365853697,
+   "revisionTimestamp": "2026-07-24T20:47:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1841-09-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1841-09-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1841-09-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1904-05-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1021621",
+  "label": "Nelahozeves",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1021621",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1021621",
+   "sourceEntityLabel": "Nelahozeves",
+   "latitude": 50.261558136958,
+   "longitude": 14.298891773244,
+   "precision": 0.0014051899239217,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  },
+  {
+   "entity": "Q899758",
+   "label": "violist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q214970",
+   "label": "virtuoso"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dvorak.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dvorak.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dvorak.jpg",
+  "width": 2100,
+  "height": 2600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This file comes from Gallica Digital Library and is available under the digital ID btv1b8417521d",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

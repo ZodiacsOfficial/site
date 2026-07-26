@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lal-bahadur-shastri",
+ "qid": "Q244689",
+ "displayName": "Lal Bahadur Shastri",
+ "wikidataLabel": "Lal Bahadur Shastri",
+ "wikidataDescription": "Prime Minister of India (1964-1966)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q244689",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517605325
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lal Bahadur Shastri",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lal_Bahadur_Shastri",
+   "pageId": 137109,
+   "revisionId": 1364942527,
+   "revisionTimestamp": "2026-07-19T12:22:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-10-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-10-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-10-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1966-01-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q967663",
+  "label": "Pandit Deen Dayal Upadhyaya Nagar",
+  "entityUrl": "https://www.wikidata.org/wiki/Q967663",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q967663",
+   "sourceEntityLabel": "Pandit Deen Dayal Upadhyaya Nagar",
+   "latitude": 25.3,
+   "longitude": 83.12,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Lal Bahadur Shastri (from stamp).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Lal%20Bahadur%20Shastri%20(from%20stamp).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Lal_Bahadur_Shastri_(from_stamp).jpg",
+  "width": 552,
+  "height": 679,
+  "licenseShortName": "GODL-India",
+  "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+  "artist": "India Post, Government of India",
+  "credit": "[1] [2]",
+  "usageTerms": "Government Open Data License – India",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

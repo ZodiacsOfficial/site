@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "setsuko-hara",
+ "qid": "Q236129",
+ "displayName": "Setsuko Hara",
+ "wikidataLabel": "Setsuko Hara",
+ "wikidataDescription": "Japanese actress (1920–2015)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q236129",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520913085
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Setsuko Hara",
+   "articleUrl": "https://en.wikipedia.org/wiki/Setsuko_Hara",
+   "pageId": 1416783,
+   "revisionId": 1359843589,
+   "revisionTimestamp": "2026-06-17T15:38:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-06-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-06-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-06-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2015-09-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q38283",
+  "label": "Yokohama",
+  "entityUrl": "https://www.wikidata.org/wiki/Q38283",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q38283",
+   "sourceEntityLabel": "Yokohama",
+   "latitude": 35.45033333333333,
+   "longitude": 139.63422222222223,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Setsuko Hara in Tokyo Story (1953).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Setsuko%20Hara%20in%20Tokyo%20Story%20(1953).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Setsuko_Hara_in_Tokyo_Story_(1953).jpg",
+  "width": 1772,
+  "height": 1305,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Shōchiku",
+  "credit": "Shōchiku",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

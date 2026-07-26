@@ -1,0 +1,135 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "diego-rivera",
+ "qid": "Q171128",
+ "displayName": "Diego Rivera",
+ "wikidataLabel": "Diego Rivera",
+ "wikidataDescription": "Mexican muralist (1886–1957)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q171128",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521031763
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Diego Rivera",
+   "articleUrl": "https://en.wikipedia.org/wiki/Diego_Rivera",
+   "pageId": 103362,
+   "revisionId": 1365836092,
+   "revisionTimestamp": "2026-07-24T18:25:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1886-12-08T00:00:00Z|proleptic-gregorian",
+   "+1886-12-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1886-12-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1886-12-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1886-12-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1957-11-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q61306",
+  "label": "Guanajuato",
+  "entityUrl": "https://www.wikidata.org/wiki/Q61306",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 3,
+  "coordinates": {
+   "sourceEntity": "Q61306",
+   "sourceEntityLabel": "Guanajuato",
+   "latitude": 21.017777777778,
+   "longitude": -101.25666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3374326",
+   "label": "muralist"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q10373653",
+   "label": "watercolorist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Diego Rivera - Google Art Project (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Diego%20Rivera%20-%20Google%20Art%20Project%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Diego_Rivera_-_Google_Art_Project_(cropped).jpg",
+  "width": 1833,
+  "height": 2551,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "WAGzJzfgxBY74w at Google Cultural Institute maximum zoom level",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

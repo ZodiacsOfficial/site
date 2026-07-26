@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "imre-kertesz",
+ "qid": "Q47755",
+ "displayName": "Imre Kertész",
+ "wikidataLabel": "Imre Kertész",
+ "wikidataDescription": "Hungarian author (1929–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q47755",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516772667
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Imre Kertész",
+   "articleUrl": "https://en.wikipedia.org/wiki/Imre_Kert%C3%A9sz",
+   "pageId": 105311,
+   "revisionId": 1357123117,
+   "revisionTimestamp": "2026-05-31T21:48:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-11-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-11-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1781",
+  "label": "Budapest",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1781",
+  "country": {
+   "entity": "Q28",
+   "label": "Hungary"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1781",
+   "sourceEntityLabel": "Budapest",
+   "latitude": 47.498333333333,
+   "longitude": 19.040833333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:Oliver Mark - Imre Kertész, Berlin 2005.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Oliver%20Mark%20-%20Imre%20Kert%C3%A9sz%2C%20Berlin%202005.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Oliver_Mark_-_Imre_Kert%C3%A9sz,_Berlin_2005.jpg",
+  "width": 1991,
+  "height": 2400,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": null,
+  "credit": "Oliver Mark",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

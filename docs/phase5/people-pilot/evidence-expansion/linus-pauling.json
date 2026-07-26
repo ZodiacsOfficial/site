@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "linus-pauling",
+ "qid": "Q48983",
+ "displayName": "Linus Pauling",
+ "wikidataLabel": "Linus Pauling",
+ "wikidataDescription": "American scientist (1901–1994)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q48983",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521417844
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Linus Pauling",
+   "articleUrl": "https://en.wikipedia.org/wiki/Linus_Pauling",
+   "pageId": 37342,
+   "revisionId": 1364282513,
+   "revisionTimestamp": "2026-07-15T17:10:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1901-02-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-02-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-02-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1994-08-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6106",
+  "label": "Portland",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6106",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6106",
+   "sourceEntityLabel": "Portland",
+   "latitude": 45.515,
+   "longitude": -122.67916666666666,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q860918",
+   "label": "Esperantist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q2919046",
+   "label": "biochemist"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q15142825",
+   "label": "crystallographer"
+  },
+  {
+   "entity": "Q14906342",
+   "label": "biophysicist"
+  },
+  {
+   "entity": "Q2823717",
+   "label": "activist shareholder"
+  }
+ ],
+ "portrait": {
+  "file": "File:Linus Pauling 1962.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Linus%20Pauling%201962.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Linus_Pauling_1962.jpg",
+  "width": 992,
+  "height": 1488,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nobel Foundation",
+  "credit": "http://nobelprize.org/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

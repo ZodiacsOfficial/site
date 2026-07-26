@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jean-sibelius",
+ "qid": "Q45682",
+ "displayName": "Jean Sibelius",
+ "wikidataLabel": "Jean Sibelius",
+ "wikidataDescription": "Finnish composer (1865–1957)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q45682",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521945437
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jean Sibelius",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jean_Sibelius",
+   "pageId": 49644,
+   "revisionId": 1365795030,
+   "revisionTimestamp": "2026-07-24T12:55:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1865-12-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1865-12-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1865-12-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1957-09-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q202158",
+  "label": "Hämeenlinna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q202158",
+  "country": {
+   "entity": "Q33",
+   "label": "Finland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q202158",
+   "sourceEntityLabel": "Hämeenlinna",
+   "latitude": 60.99444444444445,
+   "longitude": 24.466666666666665,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jean Sibelius in 1890 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jean%20Sibelius%20in%201890%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jean_Sibelius_in_1890_(cropped).jpg",
+  "width": 683,
+  "height": 994,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Paul Heckscher",
+  "credit": "http://oppiminen.yle.fi/sites/oppiminen.yle.fi/files/images/sibelius_paul-heckscher.jpg YLE/Finnish National Broadcaster",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

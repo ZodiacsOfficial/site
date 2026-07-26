@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "nusrat-fateh-ali-khan",
+  "seedRound": 0,
+  "qid": "Q299073",
+  "displayName": "Nusrat Fateh Ali Khan",
+  "identity": "Singer · Pakistan · 1948–1997",
+  "title": "Nusrat Fateh Ali Khan's birth chart",
+  "metaDescription": "Nusrat Fateh Ali Khan's chart, computed from a sourced birth date: Sun at 19.8° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "1.0° separates Mercury and Saturn from an exact sextile; at that range thinking and structure read as one mechanism. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not.",
+  "ledeFact": "aspect:Mercury:Saturn:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.83",
+        "decan:libra:second"
+      ],
+      "text": "The Sun's position resolves to 19.8° Libra — deep enough in the second decan (10°–20°) that Saturn, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:3.6°",
+        "personal:Venus:Virgo:7.7°",
+        "personal:Mars:Scorpio:27.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 3.6° Scorpio, Venus was at 7.7° Virgo, Mars was at 27.2° Scorpio. Read together: thought steeped in tone and memory; attraction that grows by reliability; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:sextile:0.98",
+        "aspect:Saturn:Uranus:sextile:2.1",
+        "aspect:Mercury:Uranus:trine:3.08"
+      ],
+      "text": "The day's firmest angle joins Mercury and Saturn — a sextile holding at 1.0°. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Saturn sextile Uranus at 2.1°, and Mercury trine Uranus at 3.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:fall",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Read against the old dignities, four placements stand out. The Sun in Libra at 19.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Virgo at 7.7° is in fall; Mars in Scorpio at 27.2° is in domicile — the planet in its own sign, running on home rules; Jupiter in Sagittarius at 23.9° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air2-earth2-fire2",
+        "modalities:cardinal3-fixed3-mutable3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements water 3, air 2, earth 2, fire 2; modalities cardinal 3, fixed 3, mutable 3. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Mercury and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 11.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-13/",
+    "label": "Everyone born on October 13"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Saturn:sextile",
+    "sun-degree:19.83",
+    "decan:libra:second",
+    "personal:Mercury:Scorpio:3.6°",
+    "personal:Venus:Virgo:7.7°",
+    "personal:Mars:Scorpio:27.2°",
+    "aspect:Mercury:Saturn:sextile:0.98",
+    "aspect:Saturn:Uranus:sextile:2.1",
+    "aspect:Mercury:Uranus:trine:3.08",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Venus:fall",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:domicile",
+    "elements:water3-air2-earth2-fire2",
+    "modalities:cardinal3-fixed3-mutable3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 388,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

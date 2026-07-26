@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "luis-federico-leloir",
+  "seedRound": 0,
+  "qid": "Q233985",
+  "displayName": "Luis Federico Leloir",
+  "identity": "Physician and university teacher · France · 1906–1987",
+  "title": "Luis Federico Leloir's birth chart",
+  "metaDescription": "Luis Federico Leloir's chart, computed from a sourced birth date: Sun at 13.0° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Neptune sit 0.8° from an exact sextile — near enough that the tradition reads identity and imagination as a single working part. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Sun:Neptune:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.96",
+        "decan:virgo:second"
+      ],
+      "text": "Virgo, but precisely: 13.0°, second decan, 10°–20°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:27.6°",
+        "personal:Venus:Libra:28.8°",
+        "personal:Mars:Leo:26.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Leo (27.6°), Venus in Libra (28.8°), Mars in Leo (26.2°): a mind that decides at speaking speed, taste led by wit and proportion, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:trine:0.68",
+        "aspect:Sun:Neptune:sextile:0.75",
+        "aspect:Mercury:Venus:sextile:1.19"
+      ],
+      "text": "Saturn to Neptune is the closest call of the day, a trine within 0.7°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, the Sun sextile Neptune at 0.8°, and Mercury sextile Venus at 1.2° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Venus in Libra at 28.8° is in domicile — the planet in its own sign, running on home rules; Jupiter in Cancer at 6.8° is in exaltation — the tradition’s honoured-guest placement, working at its best. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-earth2-fire2-air2",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 3 in water, 2 in earth, 2 in fire, 2 in air by element, 4 cardinal, 3 mutable, 2 fixed by modality. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. Saturn and Uranus were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 12.4° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-6/",
+    "label": "Everyone born on September 6"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:sextile",
+    "sun-degree:12.96",
+    "decan:virgo:second",
+    "personal:Mercury:Leo:27.6°",
+    "personal:Venus:Libra:28.8°",
+    "personal:Mars:Leo:26.2°",
+    "aspect:Saturn:Neptune:trine:0.68",
+    "aspect:Sun:Neptune:sextile:0.75",
+    "aspect:Mercury:Venus:sextile:1.19",
+    "figure:none",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:exaltation",
+    "elements:water3-earth2-fire2-air2",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 412,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

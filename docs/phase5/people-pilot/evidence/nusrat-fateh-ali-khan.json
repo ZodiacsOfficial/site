@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nusrat-fateh-ali-khan",
+ "qid": "Q299073",
+ "displayName": "Nusrat Fateh Ali Khan",
+ "wikidataLabel": "Nusrat Fateh Ali Khan",
+ "wikidataDescription": "Pakistani musician, primarily a singer of qawwali (1948-1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q299073",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517676238
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nusrat Fateh Ali Khan",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nusrat_Fateh_Ali_Khan",
+   "pageId": 95410,
+   "revisionId": 1365600675,
+   "revisionTimestamp": "2026-07-23T11:11:54Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1948-10-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1948-10-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1948-10-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-08-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q173985",
+  "label": "Faisalabad",
+  "entityUrl": "https://www.wikidata.org/wiki/Q173985",
+  "country": {
+   "entity": "Q843",
+   "label": "Pakistan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q173985",
+   "sourceEntityLabel": "Faisalabad",
+   "latitude": 31.418,
+   "longitude": 73.079,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q42417432",
+   "label": "storyteller"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nusrat Fateh Ali Khan.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nusrat%20Fateh%20Ali%20Khan.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nusrat_Fateh_Ali_Khan.jpg",
+  "width": 2208,
+  "height": 3344,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Attersaab",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

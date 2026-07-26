@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "hibari-misora",
+  "seedRound": 0,
+  "qid": "Q147811",
+  "displayName": "Hibari Misora",
+  "identity": "Actor and singer · Japan · 1937–1989",
+  "title": "Hibari Misora's birth chart",
+  "metaDescription": "Hibari Misora's chart, computed from a sourced birth date: Sun at 7.3° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a trine: Mercury and Neptune within 0.0°, thinking wired to imagination. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Mercury:Neptune:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.32",
+        "decan:gemini:first"
+      ],
+      "text": "The Sun sits at 7.3° Gemini — the first decan, 0°–10°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Gemini and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:16.2°",
+        "personal:Venus:Aries:26.0°",
+        "personal:Mars:Scorpio:25.1°"
+      ],
+      "text": "For the fast movers, Mercury was at 16.2° Taurus, Venus was at 26.0° Aries, Mars was at 25.1° Scorpio. Read together: a mind that trusts the measured and the checked; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Neptune:trine:0",
+        "aspect:Jupiter:Pluto:opposition:0.03",
+        "aspect:Venus:Pluto:square:1.02"
+      ],
+      "text": "Start where the chart is tightest — Mercury trine Neptune, 0.0° of separation. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Jupiter opposition Pluto at 0.0°, and Venus square Pluto at 1.0° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Jupiter-Pluto:apex-Venus",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Pluto while both square Venus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, five sit in a sign it has an opinion about. The Moon in Capricorn at 19.1° is in detriment — the planet opposite its home, working against the grain; Venus in Aries at 26.0° is in detriment; Mars in Scorpio at 25.1° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 27.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aries at 3.2° is in fall. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire2-water2-air1",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 earth, 2 fire, 2 water, 1 air; by modality, 5 cardinal, 3 fixed, 2 mutable. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Mars and Jupiter were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.2° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 19.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-29/",
+    "label": "Everyone born on May 29"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Neptune:trine",
+    "sun-degree:7.32",
+    "decan:gemini:first",
+    "personal:Mercury:Taurus:16.2°",
+    "personal:Venus:Aries:26.0°",
+    "personal:Mars:Scorpio:25.1°",
+    "aspect:Mercury:Neptune:trine:0",
+    "aspect:Jupiter:Pluto:opposition:0.03",
+    "aspect:Venus:Pluto:square:1.02",
+    "figure:t-square:Jupiter-Pluto:apex-Venus",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:fall",
+    "elements:earth5-fire2-water2-air1",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:capricorn",
+    "moon-band:12.2"
+  ],
+  "measurements": {
+    "originalWords": 488,
+    "substantiveStatements": 22,
+    "blocks": 7
+  }
+}

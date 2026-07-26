@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "katharine-hepburn",
+ "qid": "Q56016",
+ "displayName": "Katharine Hepburn",
+ "wikidataLabel": "Katharine Hepburn",
+ "wikidataDescription": "American actress (1907–2003)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q56016",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518479885
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Katharine Hepburn",
+   "articleUrl": "https://en.wikipedia.org/wiki/Katharine_Hepburn",
+   "pageId": 43337,
+   "revisionId": 1358990900,
+   "revisionTimestamp": "2026-06-12T09:58:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1907-05-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1907-05-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1907-05-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-06-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q33486",
+  "label": "Hartford",
+  "entityUrl": "https://www.wikidata.org/wiki/Q33486",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q33486",
+   "sourceEntityLabel": "Hartford",
+   "latitude": 41.763333333333,
+   "longitude": -72.685,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Katharine Hepburn publicity photograph.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Katharine%20Hepburn%20publicity%20photograph.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Katharine_Hepburn_publicity_photograph.jpg",
+  "width": 2095,
+  "height": 2776,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Metro-Goldwyn-Mayer Studios; Restored by Adam Cuerden",
+  "credit": "[1]alt source: [2]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

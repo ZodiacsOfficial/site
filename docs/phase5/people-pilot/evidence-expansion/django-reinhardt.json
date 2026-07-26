@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "django-reinhardt",
+ "qid": "Q44122",
+ "displayName": "Django Reinhardt",
+ "wikidataLabel": "Django Reinhardt",
+ "wikidataDescription": "Romani-Belgian /French jazz musician (1910–1953)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q44122",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520716794
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Django Reinhardt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Django_Reinhardt",
+   "pageId": 9039,
+   "revisionId": 1363079912,
+   "revisionTimestamp": "2026-07-07T22:36:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-01-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-01-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-01-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1953-05-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q607182",
+  "label": "Pont-à-Celles",
+  "entityUrl": "https://www.wikidata.org/wiki/Q607182",
+  "country": {
+   "entity": "Q31",
+   "label": "Belgium"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q607182",
+   "sourceEntityLabel": "Pont-à-Celles",
+   "latitude": 50.51,
+   "longitude": 4.363333333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q9648008",
+   "label": "banjoist"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q6168364",
+   "label": "jazz guitarist"
+  }
+ ],
+ "portrait": {
+  "file": "File:DjangoReinhardt-1939-Harcourt.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:DjangoReinhardt-1939-Harcourt.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:DjangoReinhardt-1939-Harcourt.png",
+  "width": 448,
+  "height": 643,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Studio Harcourt",
+  "credit": "https://www.photo.rmn.fr/archive/07-535761-2C6NU0JB148R.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

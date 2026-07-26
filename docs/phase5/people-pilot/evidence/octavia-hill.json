@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "octavia-hill",
+ "qid": "Q437462",
+ "displayName": "Octavia Hill",
+ "wikidataLabel": "Octavia Hill",
+ "wikidataDescription": "English social reformer (1838-1912)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q437462",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510679258
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Octavia Hill",
+   "articleUrl": "https://en.wikipedia.org/wiki/Octavia_Hill",
+   "pageId": 1001880,
+   "revisionId": 1363651444,
+   "revisionTimestamp": "2026-07-11T13:40:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1838-12-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1838-12-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1838-12-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1912-08-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1012031",
+  "label": "Wisbech",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1012031",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1012031",
+   "sourceEntityLabel": "Wisbech",
+   "latitude": 52.664161111111,
+   "longitude": 0.16031111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16611574",
+   "label": "social reformer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sargent - Octavia Hill.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sargent%20-%20Octavia%20Hill.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sargent_-_Octavia_Hill.jpg",
+  "width": 399,
+  "height": 500,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "John Singer Sargent",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

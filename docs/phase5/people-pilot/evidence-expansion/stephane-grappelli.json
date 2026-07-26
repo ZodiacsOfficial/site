@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "stephane-grappelli",
+ "qid": "Q206244",
+ "displayName": "Stéphane Grappelli",
+ "wikidataLabel": "Stéphane Grappelli",
+ "wikidataDescription": "French jazz violinist (1908–1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q206244",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518220770
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Stéphane Grappelli",
+   "articleUrl": "https://en.wikipedia.org/wiki/St%C3%A9phane_Grappelli",
+   "pageId": 147149,
+   "revisionId": 1357686516,
+   "revisionTimestamp": "2026-06-04T02:02:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-01-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-01-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-01-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-12-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q90",
+  "label": "Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q90",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q90",
+   "sourceEntityLabel": "Paris",
+   "latitude": 48.85666666666667,
+   "longitude": 2.352222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2914170",
+   "label": "street artist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Stephane Grappelli Allan Warren.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Stephane%20Grappelli%20Allan%20Warren.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Stephane_Grappelli_Allan_Warren.jpg",
+  "width": 4414,
+  "height": 4496,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Allan warren",
+  "credit": "Own workwww.allanwarren.com",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

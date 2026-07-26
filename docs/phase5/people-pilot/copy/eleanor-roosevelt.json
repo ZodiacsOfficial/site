@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "eleanor-roosevelt",
+  "seedRound": 0,
+  "qid": "Q83396",
+  "displayName": "Eleanor Roosevelt",
+  "identity": "Diplomat and writer · United States · 1884–1962",
+  "title": "Eleanor Roosevelt's birth chart",
+  "metaDescription": "Eleanor Roosevelt's chart, computed from a sourced birth date: Sun at 18.8° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 20.1° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.78",
+        "decan:libra:second"
+      ],
+      "text": "At noon on that date the Sun stood at 18.8° Libra, inside the second decan (10°–20°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Libra:2.9°",
+        "personal:Venus:Virgo:3.9°",
+        "personal:Mars:Scorpio:19.8°"
+      ],
+      "text": "Mercury holds 2.9° Libra, Venus holds 3.9° Virgo, Mars holds 19.8° Scorpio — in the old shorthand, thought that travels by comparison; attraction that grows by reliability; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Pluto:trine:1",
+        "aspect:Venus:Pluto:square:1.97",
+        "aspect:Uranus:Pluto:trine:2.07"
+      ],
+      "text": "Nothing in the geometry sits closer than Mercury and Pluto: 1.0° from an exact trine. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Venus square Pluto at 2.0°, and Uranus trine Pluto at 2.1° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:domicile",
+        "dignity:Venus:fall",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Libra at 18.8° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Cancer at 20.1° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 3.9° is in fall; Mars in Scorpio at 19.8° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-water2-fire1",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: air 4, earth 3, water 2, fire 1 across the elements, and mutable 4, cardinal 3, fixed 3 across the modalities. Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:14.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 14.0° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 20.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-11/",
+    "label": "Everyone born on October 11"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:18.78",
+    "decan:libra:second",
+    "personal:Mercury:Libra:2.9°",
+    "personal:Venus:Virgo:3.9°",
+    "personal:Mars:Scorpio:19.8°",
+    "aspect:Mercury:Pluto:trine:1",
+    "aspect:Venus:Pluto:square:1.97",
+    "aspect:Uranus:Pluto:trine:2.07",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Moon:domicile",
+    "dignity:Venus:fall",
+    "dignity:Mars:domicile",
+    "elements:air4-earth3-water2-fire1",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:cancer",
+    "moon-band:14.0"
+  ],
+  "measurements": {
+    "originalWords": 435,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

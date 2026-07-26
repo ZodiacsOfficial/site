@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "qian-xuesen",
+  "seedRound": 0,
+  "qid": "Q333500",
+  "displayName": "Qian Xuesen",
+  "identity": "Engineer and university teacher · People's Republic of China · 1911–2009",
+  "title": "Qian Xuesen's birth chart",
+  "metaDescription": "Qian Xuesen's chart, computed from a sourced birth date: Sun at 18.0° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a trine to Uranus at 0.5° — close enough to weld drive to disruption. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Mars:Uranus:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.00",
+        "decan:sagittarius:second"
+      ],
+      "text": "18.0° of Sagittarius is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:8.5°",
+        "personal:Venus:Scorpio:1.9°",
+        "personal:Mars:Taurus:26.6°"
+      ],
+      "text": "The personal planets sit Mercury at 8.5° Capricorn, Venus at 1.9° Scorpio, Mars at 26.6° Taurus. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a water sign reads as attraction that works by atmosphere; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:trine:0.51",
+        "aspect:Jupiter:Uranus:sextile:3",
+        "aspect:Mars:Neptune:sextile:3.35"
+      ],
+      "text": "The tightest geometry in the chart puts Mars a third of the circle apart from Uranus, 0.5° off exact. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Jupiter sextile Uranus at 3.0°, and Mars sextile Neptune at 3.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Venus in Scorpio at 1.9° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 26.6° is in detriment; Jupiter in Sagittarius at 0.1° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire2-water2-air1",
+        "modalities:mutable3-cardinal3-fixed3",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 earth, 2 fire, 2 water, 1 air; by modality, 3 mutable, 3 cardinal, 3 fixed. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Mars, Saturn, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:leo:virgo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Leo into Virgo during that day at the birthplace, travelling 14.1° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-11/",
+    "label": "Everyone born on December 11"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:trine",
+    "sun-degree:18.00",
+    "decan:sagittarius:second",
+    "personal:Mercury:Capricorn:8.5°",
+    "personal:Venus:Scorpio:1.9°",
+    "personal:Mars:Taurus:26.6°",
+    "aspect:Mars:Uranus:trine:0.51",
+    "aspect:Jupiter:Uranus:sextile:3",
+    "aspect:Mars:Neptune:sextile:3.35",
+    "figure:unaspected:Sun",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:earth4-fire2-water2-air1",
+    "modalities:mutable3-cardinal3-fixed3",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:leo:virgo"
+  ],
+  "measurements": {
+    "originalWords": 418,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

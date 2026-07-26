@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "indira-gandhi",
+  "seedRound": 0,
+  "qid": "Q1149",
+  "displayName": "Indira Gandhi",
+  "identity": "Politician and writer · India · 1917–1984",
+  "title": "Indira Gandhi's birth chart",
+  "metaDescription": "Indira Gandhi's chart, computed from a sourced birth date: Sun at 26.4° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. The fixed signs are the scheme’s ballast — mid-season, fully committed, expensive to turn.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.37",
+        "decan:scorpio:third"
+      ],
+      "text": "Scorpio, but precisely: 26.4°, third decan, 20°–30°, under the Moon in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:5.2°",
+        "personal:Venus:Capricorn:13.2°",
+        "personal:Mars:Virgo:8.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (5.2°), Venus in Capricorn (13.2°), Mars in Virgo (8.8°): a mind that decides at speaking speed, taste for the substantial and the lasting, drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Neptune:sextile:0.69",
+        "aspect:Mars:Jupiter:square:1.08",
+        "aspect:Mercury:Neptune:trine:1.86"
+      ],
+      "text": "The tightest geometry in the chart puts Jupiter a sixth of the circle apart from Neptune, 0.7° off exact. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Mars square Jupiter at 1.1°, and Mercury trine Neptune at 1.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Jupiter:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mercury opposes Jupiter while both square Mars. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Mercury:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. The Moon in Capricorn at 21.9° is in detriment — the planet opposite its home, working against the grain; Mercury in Sagittarius at 5.2° is in detriment; Jupiter in Gemini at 7.8° is in detriment; Saturn in Leo at 14.5° is in detriment. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-fire3-water2-air2",
+        "modalities:fixed4-cardinal3-mutable3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 3 earth, 3 fire, 2 water, 2 air by element and 4 fixed, 3 cardinal, 3 mutable by mode. Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:13.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 13.7° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 21.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-19/",
+    "label": "Everyone born on November 19"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:26.37",
+    "decan:scorpio:third",
+    "personal:Mercury:Sagittarius:5.2°",
+    "personal:Venus:Capricorn:13.2°",
+    "personal:Mars:Virgo:8.8°",
+    "aspect:Jupiter:Neptune:sextile:0.69",
+    "aspect:Mars:Jupiter:square:1.08",
+    "aspect:Mercury:Neptune:trine:1.86",
+    "figure:t-square:Mercury-Jupiter:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Mercury:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:earth3-fire3-water2-air2",
+    "modalities:fixed4-cardinal3-mutable3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:capricorn",
+    "moon-band:13.7"
+  ],
+  "measurements": {
+    "originalWords": 423,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

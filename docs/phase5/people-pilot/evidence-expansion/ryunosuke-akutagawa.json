@@ -1,0 +1,138 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ryunosuke-akutagawa",
+ "qid": "Q186326",
+ "displayName": "Ryūnosuke Akutagawa",
+ "wikidataLabel": "Ryūnosuke Akutagawa",
+ "wikidataDescription": "Japanese writer (1892–1927)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q186326",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522885448
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ryūnosuke Akutagawa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ry%C5%ABnosuke_Akutagawa",
+   "pageId": 186538,
+   "revisionId": 1362784698,
+   "revisionTimestamp": "2026-07-06T04:38:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1892-03-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1892-03-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1892-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1892-03-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1927-07-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7473516",
+  "label": "Tokyo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7473516",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7473516",
+   "sourceEntityLabel": "Tokyo",
+   "latitude": 35.683889,
+   "longitude": 139.774444,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q140197632",
+   "label": "satirical novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Akutagawa Ryunosuke photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Akutagawa%20Ryunosuke%20photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Akutagawa_Ryunosuke_photo.jpg",
+  "width": 1136,
+  "height": 1560,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "堀辰雄・葛巻義敏・芥川比呂志 編集『芥川龍之介作品集第6巻』",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

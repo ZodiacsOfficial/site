@@ -1,0 +1,147 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "taha-hussein",
+ "qid": "Q328765",
+ "displayName": "Taha Hussein",
+ "wikidataLabel": "Taha Hussein",
+ "wikidataDescription": "Egyptian writer and literary critic (1889–1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q328765",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2504575597
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Taha Hussein",
+   "articleUrl": "https://en.wikipedia.org/wiki/Taha_Hussein",
+   "pageId": 1683918,
+   "revisionId": 1366070933,
+   "revisionTimestamp": "2026-07-26T03:03:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1889-11-14T00:00:00Z|proleptic-gregorian",
+   "+1889-11-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1889-11-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1889-11-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1889-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-10-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q30675",
+  "label": "Minya Governorate",
+  "entityUrl": "https://www.wikidata.org/wiki/Q30675",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q30675",
+   "sourceEntityLabel": "Minya Governorate",
+   "latitude": 28.11,
+   "longitude": 30.11,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q17167049",
+   "label": "literary scholar"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q13570226",
+   "label": "literary historian"
+  },
+  {
+   "entity": "Q1569495",
+   "label": "lecturer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:TahaHussein.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:TahaHussein.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:TahaHussein.jpg",
+  "width": 233,
+  "height": 300,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Original uploader was Zerida at en.wikipedia (Original text: Zerida)",
+  "credit": "Transferred from en.wikipedia to Commons. (Original text: Ahram)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

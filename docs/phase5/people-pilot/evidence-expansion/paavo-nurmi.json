@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "paavo-nurmi",
+ "qid": "Q101942",
+ "displayName": "Paavo Nurmi",
+ "wikidataLabel": "Paavo Nurmi",
+ "wikidataDescription": "Finnish middle and long distance runner (1897–1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q101942",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522512053
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Paavo Nurmi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Paavo_Nurmi",
+   "pageId": 25071,
+   "revisionId": 1362670717,
+   "revisionTimestamp": "2026-07-05T14:45:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1897-06-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-06-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-06-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-10-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q38511",
+  "label": "Turku",
+  "entityUrl": "https://www.wikidata.org/wiki/Q38511",
+  "country": {
+   "entity": "Q33",
+   "label": "Finland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q38511",
+   "sourceEntityLabel": "Turku",
+   "latitude": 60.45166666666667,
+   "longitude": 22.266944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4439155",
+   "label": "long-distance runner"
+  },
+  {
+   "entity": "Q13382460",
+   "label": "marathon runner"
+  },
+  {
+   "entity": "Q11513337",
+   "label": "athletics competitor"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Paavo Nurmi (Antwerp 1920).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Paavo%20Nurmi%20(Antwerp%201920).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Paavo_Nurmi_(Antwerp_1920).jpg",
+  "width": 324,
+  "height": 506,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown authorUnknown author (Suomen Urheilumuseo)",
+  "credit": "[1] [2]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

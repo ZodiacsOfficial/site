@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jose-de-san-martin",
+  "seedRound": 0,
+  "qid": "Q134160",
+  "displayName": "José de San Martín",
+  "identity": "Politician · Argentina · 1778–1850",
+  "title": "José de San Martín's birth chart",
+  "metaDescription": "José de San Martín's chart, computed from a sourced birth date: Sun at 7.2° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a sextile to Pluto at 0.8° — close enough to weld drive to depth. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Mars:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.22",
+        "decan:pisces:first"
+      ],
+      "text": "At the noon reference the Sun sits 7.2° into Pisces — the first decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:10.2°",
+        "personal:Mars:Aries:1.7°"
+      ],
+      "text": "The personal planets sit Mercury at 10.2° Aquarius, Mars at 1.7° Aries. Mercury in a air sign reads as thought that travels by comparison; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:sextile:0.79",
+        "aspect:Mercury:Uranus:trine:1.12",
+        "aspect:Neptune:Pluto:trine:2.41"
+      ],
+      "text": "Mars and Pluto hold the closest angle here — a sextile, 0.8° wide. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mercury trine Uranus at 1.1°, and Neptune trine Pluto at 2.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile"
+      ],
+      "text": "Read against the old dignities, one placement stands out. Mars in Aries at 1.7° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water2-fire2-earth1",
+        "modalities:fixed5-mutable3-cardinal1",
+        "settled-signs:9",
+        "retrograde:3",
+        "sign-uncertain:Venus:aquarius:pisces"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 air, 2 water, 2 fire, 1 earth; by modality, 5 fixed, 3 mutable, 1 cardinal. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Venus crossed from Aquarius into Pisces during that day, so its sign is left open. Jupiter, Saturn and Neptune were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:13.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 17.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-25/",
+    "label": "Everyone born on February 25"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:sextile",
+    "sun-degree:7.22",
+    "decan:pisces:first",
+    "personal:Mercury:Aquarius:10.2°",
+    "personal:Mars:Aries:1.7°",
+    "aspect:Mars:Pluto:sextile:0.79",
+    "aspect:Mercury:Uranus:trine:1.12",
+    "aspect:Neptune:Pluto:trine:2.41",
+    "figure:none",
+    "dignity:Mars:domicile",
+    "elements:air4-water2-fire2-earth1",
+    "modalities:fixed5-mutable3-cardinal1",
+    "settled-signs:9",
+    "retrograde:3",
+    "sign-uncertain:Venus:aquarius:pisces",
+    "moon-sign:aquarius",
+    "moon-band:13.3"
+  ],
+  "measurements": {
+    "originalWords": 389,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

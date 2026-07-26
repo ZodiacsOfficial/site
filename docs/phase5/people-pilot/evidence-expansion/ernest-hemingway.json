@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ernest-hemingway",
+ "qid": "Q23434",
+ "displayName": "Ernest Hemingway",
+ "wikidataLabel": "Ernest Hemingway",
+ "wikidataDescription": "American author and journalist (1899–1961)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q23434",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522122199
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ernest Hemingway",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ernest_Hemingway",
+   "pageId": 9428,
+   "revisionId": 1362792446,
+   "revisionTimestamp": "2026-07-06T06:07:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-07-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-07-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-07-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1961-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q331397",
+  "label": "Oak Park",
+  "entityUrl": "https://www.wikidata.org/wiki/Q331397",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q331397",
+   "sourceEntityLabel": "Oak Park",
+   "latitude": 41.888333333333335,
+   "longitude": -87.78944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q164236",
+   "label": "war correspondent"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q42909",
+   "label": "reporter"
+  }
+ ],
+ "portrait": {
+  "file": "File:ErnestHemingway.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:ErnestHemingway.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:ErnestHemingway.jpg",
+  "width": 1500,
+  "height": 1873,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Lloyd Arnold",
+  "credit": "http://www.phoodie.info/2013/07/19/from-the-desk-of-ernest-hemingway-this-weekend-cuba-libre-celebrates-my-birthday/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

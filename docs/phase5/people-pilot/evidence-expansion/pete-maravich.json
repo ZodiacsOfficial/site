@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "pete-maravich",
+ "qid": "Q316183",
+ "displayName": "Pete Maravich",
+ "wikidataLabel": "Pete Maravich",
+ "wikidataDescription": "American basketball player",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q316183",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2508467128
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Pete Maravich",
+   "articleUrl": "https://en.wikipedia.org/wiki/Pete_Maravich",
+   "pageId": 154726,
+   "revisionId": 1365485582,
+   "revisionTimestamp": "2026-07-22T19:26:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1947-06-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1947-06-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1947-06-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1988-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q599716",
+  "label": "Aliquippa",
+  "entityUrl": "https://www.wikidata.org/wiki/Q599716",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q599716",
+   "sourceEntityLabel": "Aliquippa",
+   "latitude": 40.615,
+   "longitude": -80.263055555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3665646",
+   "label": "basketball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Pete Maravich 1977.jpeg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Pete%20Maravich%201977.jpeg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Pete_Maravich_1977.jpeg",
+  "width": 1056,
+  "height": 1698,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Robert Kingsbury",
+  "credit": "The Sporting News Archives",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

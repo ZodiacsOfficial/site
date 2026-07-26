@@ -1,0 +1,80 @@
+{
+ "schema": "zodiacs.phase5.selection-report.v1",
+ "process": "Deterministic greedy selection over the screened pool against published balance targets, with a 730-day minimum same-sign birth-date gap so near-twin charts cannot enter. Gender and region are weighted selection criteria, never page labels; the g field exists only in this research file.",
+ "pool": {
+  "screenedAccepted": 850,
+  "mappable": 848,
+  "unmapped": 2
+ },
+ "achieved": {
+  "total": 500,
+  "signs": {
+   "aquarius": 43,
+   "aries": 42,
+   "cancer": 43,
+   "capricorn": 41,
+   "gemini": 41,
+   "leo": 39,
+   "libra": 41,
+   "pisces": 41,
+   "sagittarius": 41,
+   "scorpio": 42,
+   "taurus": 45,
+   "virgo": 41
+  },
+  "regions": {
+   "africa": 29,
+   "easia": 34,
+   "europe": 197,
+   "latam": 55,
+   "mena": 13,
+   "namerica": 98,
+   "oceania": 8,
+   "sasia": 39,
+   "seasia": 7
+  },
+  "fields": {
+   "architecture": 13,
+   "art": 45,
+   "design": 6,
+   "explore": 16,
+   "film": 14,
+   "music": 76,
+   "performing": 24,
+   "philosophy": 28,
+   "publiclife": 52,
+   "science": 64,
+   "sport": 28,
+   "writing": 114
+  },
+  "women": 216,
+  "womenShare": 0.432,
+  "sameSignGapDays": {
+   "standard": 730,
+   "relaxedTo365For": 31
+  },
+  "eraSpread": {
+   "earliest": 1593,
+   "latest": 1983,
+   "before1850": 104,
+   "from1850to1899": 145,
+   "from1900to1949": 209,
+   "from1950on": 22
+  }
+ },
+ "unmappedSkipped": [
+  {
+   "slug": "charles-kingsford-smith",
+   "occupations": [
+    "aircraft pilot",
+    "Flieger"
+   ]
+  },
+  {
+   "slug": "nancy-bird-walton",
+   "occupations": [
+    "aircraft pilot"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "margaret-mead",
+  "seedRound": 0,
+  "qid": "Q180099",
+  "displayName": "Margaret Mead",
+  "identity": "Anthropologist and writer · United States · 1901–1978",
+  "title": "Margaret Mead's birth chart",
+  "metaDescription": "Margaret Mead's chart, computed from a sourced birth date: Sun at 24.1° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Jupiter sit 0.6° from an exact conjunction — near enough that the tradition reads drive and expansion as a single working part. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Mars:Jupiter:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.08",
+        "decan:sagittarius:third"
+      ],
+      "text": "The Sun's exact place is 24.1° Sagittarius. That falls in the third decan, 20°–30°, sub-ruled by the Sun in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:14.9°",
+        "personal:Venus:Aquarius:10.8°",
+        "personal:Mars:Capricorn:17.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (14.9°), Venus in Aquarius (10.8°), Mars in Capricorn (17.3°): a mind that decides at speaking speed, taste led by wit and proportion, drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:opposition:0.04",
+        "aspect:Mars:Jupiter:conjunction:0.61",
+        "aspect:Mars:Saturn:conjunction:1.35"
+      ],
+      "text": "Start where the chart is tightest — Uranus opposition Pluto, 0.0° of separation. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Mars conjunction Jupiter at 0.6°, and Mars conjunction Saturn at 1.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Mercury in Sagittarius at 14.9° is in detriment — the planet opposite its home, working against the grain; Mars in Capricorn at 17.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Capricorn at 17.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Capricorn at 15.9° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth3-air2-water1",
+        "modalities:mutable4-cardinal4-fixed1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: fire 3, earth 3, air 2, water 1 across the elements, and mutable 4, cardinal 4, fixed 1 across the modalities. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 13.0° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-16/",
+    "label": "Everyone born on December 16"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Jupiter:conjunction",
+    "sun-degree:24.08",
+    "decan:sagittarius:third",
+    "personal:Mercury:Sagittarius:14.9°",
+    "personal:Venus:Aquarius:10.8°",
+    "personal:Mars:Capricorn:17.3°",
+    "aspect:Uranus:Pluto:opposition:0.04",
+    "aspect:Mars:Jupiter:conjunction:0.61",
+    "aspect:Mars:Saturn:conjunction:1.35",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:fire3-earth3-air2-water1",
+    "modalities:mutable4-cardinal4-fixed1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 458,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "emile-zola",
+ "qid": "Q504",
+ "displayName": "Émile Zola",
+ "wikidataLabel": "Émile Zola",
+ "wikidataDescription": "French novelist, journalist, playwright, and poet (1840–1902)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q504",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521268580
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Émile Zola",
+   "articleUrl": "https://en.wikipedia.org/wiki/%C3%89mile_Zola",
+   "pageId": 44980,
+   "revisionId": 1364518708,
+   "revisionTimestamp": "2026-07-17T01:18:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1840-04-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1840-04-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1840-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1840-04-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1902-09-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3449906",
+  "label": "rue Saint-Joseph",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3449906",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q3449906",
+   "sourceEntityLabel": "rue Saint-Joseph",
+   "latitude": 48.8685,
+   "longitude": 2.34444,
+   "precision": 0.01,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q15973695",
+   "label": "political reporter"
+  },
+  {
+   "entity": "Q4164507",
+   "label": "art critic"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q17337766",
+   "label": "theatre critic"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Emile Zola 1902.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Emile%20Zola%201902.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Emile_Zola_1902.jpg",
+  "width": 1402,
+  "height": 1941,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Émile Zola",
+  "credit": "Scan personnel d'une image que je possède.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

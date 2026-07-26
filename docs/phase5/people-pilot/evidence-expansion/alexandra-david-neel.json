@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alexandra-david-neel",
+ "qid": "Q230456",
+ "displayName": "Alexandra David-Néel",
+ "wikidataLabel": "Alexandra David-Néel",
+ "wikidataDescription": "French explorer, spiritualist, Buddhist, Taoist, anarchist and writer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q230456",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517529621
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alexandra David-Néel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alexandra_David-N%C3%A9el",
+   "pageId": 183906,
+   "revisionId": 1366152749,
+   "revisionTimestamp": "2026-07-26T16:12:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1868-10-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1868-10-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1868-10-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1969-09-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18102",
+  "label": "Saint-Mandé",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18102",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18102",
+   "sourceEntityLabel": "Saint-Mandé",
+   "latitude": 48.841388888889,
+   "longitude": 2.4177777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  },
+  {
+   "entity": "Q12359071",
+   "label": "anarchist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q1731155",
+   "label": "orientalist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alexandra David-Néel, also know as Louise Eugenie Alexandrine Marie David 19th century (cropped).gif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alexandra%20David-N%C3%A9el%2C%20also%20know%20as%20Louise%20Eugenie%20Alexandrine%20Marie%20David%2019th%20century%20(cropped).gif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alexandra_David-N%C3%A9el,_also_know_as_Louise_Eugenie_Alexandrine_Marie_David_19th_century_(cropped).gif",
+  "width": 201,
+  "height": 278,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

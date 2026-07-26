@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "maria-zambrano",
+  "seedRound": 2,
+  "qid": "Q235134",
+  "displayName": "María Zambrano",
+  "identity": "Philosopher · Spain · 1904–1991",
+  "title": "María Zambrano's birth chart",
+  "metaDescription": "María Zambrano's chart, computed from a sourced birth date: Sun at 1.9° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 22.8° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.92",
+        "decan:taurus:first"
+      ],
+      "text": "At noon on that date the Sun stood at 1.9° Taurus, inside the first decan (0°–10°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:21.9°",
+        "personal:Venus:Aries:11.5°",
+        "personal:Mars:Taurus:11.6°"
+      ],
+      "text": "Closer in, Mercury stands at 21.9° Taurus; Venus stands at 11.5° Aries; Mars stands at 11.6° Taurus. The tradition reads thought with its feet on the ground from Mercury, attraction declared rather than implied from Venus, effort banked steadily until it tells from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Pluto:trine:0.64",
+        "aspect:Venus:Jupiter:conjunction:1.09",
+        "aspect:Sun:Neptune:sextile:1.63"
+      ],
+      "text": "Closest first: Saturn to Pluto, a trine with 0.6° of slack. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Venus conjunction Jupiter at 1.1°, and the Sun sextile Neptune at 1.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Cancer at 22.8° is in domicile — the planet in its own sign, running on home rules; Venus in Aries at 11.5° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 11.6° is in detriment; Saturn in Aquarius at 19.8° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-fire3-water2-air2",
+        "modalities:fixed4-cardinal4-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 3 in earth, 3 in fire, 2 in water, 2 in air by element, 4 fixed, 4 cardinal, 2 mutable by modality. An earth emphasis reads as patience with material reality — slow hands, durable results. Uranus was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-22/",
+    "label": "Everyone born on April 22"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:1.92",
+    "decan:taurus:first",
+    "personal:Mercury:Taurus:21.9°",
+    "personal:Venus:Aries:11.5°",
+    "personal:Mars:Taurus:11.6°",
+    "aspect:Saturn:Pluto:trine:0.64",
+    "aspect:Venus:Jupiter:conjunction:1.09",
+    "aspect:Sun:Neptune:sextile:1.63",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth3-fire3-water2-air2",
+    "modalities:fixed4-cardinal4-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:cancer",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 438,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

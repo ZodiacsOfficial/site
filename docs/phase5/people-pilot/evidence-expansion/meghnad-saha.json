@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "meghnad-saha",
+ "qid": "Q377898",
+ "displayName": "Meghnad Saha",
+ "wikidataLabel": "Meghnad Saha",
+ "wikidataDescription": "Bengali Astrophysicist (1893–1956)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q377898",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517677608
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Meghnad Saha",
+   "articleUrl": "https://en.wikipedia.org/wiki/Meghnad_Saha",
+   "pageId": 839078,
+   "revisionId": 1366126285,
+   "revisionTimestamp": "2026-07-26T12:19:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1893-10-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1893-10-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1893-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1893-10-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1956-02-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1354",
+  "label": "Dhaka",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1354",
+  "country": {
+   "entity": "Q902",
+   "label": "Bangladesh"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1354",
+   "sourceEntityLabel": "Dhaka",
+   "latitude": 23.72888888888889,
+   "longitude": 90.39444444444445,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dr-Meghnad-Saha.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dr-Meghnad-Saha.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dr-Meghnad-Saha.jpg",
+  "width": 444,
+  "height": 640,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.rkmstudentshome.org/our-inspirations/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

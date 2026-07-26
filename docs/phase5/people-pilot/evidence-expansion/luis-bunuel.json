@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "luis-bunuel",
+ "qid": "Q51545",
+ "displayName": "Luis Buñuel",
+ "wikidataLabel": "Luis Buñuel",
+ "wikidataDescription": "Spanish-Mexican filmmaker (1900–1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q51545",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522800754
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Luis Buñuel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Luis_Bu%C3%B1uel",
+   "pageId": 169033,
+   "revisionId": 1365683399,
+   "revisionTimestamp": "2026-07-23T21:13:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1900-02-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1900-02-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1900-02-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-07-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q737161",
+  "label": "Calanda",
+  "entityUrl": "https://www.wikidata.org/wiki/Q737161",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q737161",
+   "sourceEntityLabel": "Calanda",
+   "latitude": 40.9394642,
+   "longitude": -0.2315612,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Luis Buñuel.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Luis%20Bu%C3%B1uel.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Luis_Bu%C3%B1uel.JPG",
+  "width": 577,
+  "height": 905,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Revista Gente y la actualidad, Año 3, número 130, Enero de 1968, Buenos Aires",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

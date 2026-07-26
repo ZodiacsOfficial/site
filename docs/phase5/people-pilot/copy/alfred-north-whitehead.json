@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "alfred-north-whitehead",
+  "seedRound": 0,
+  "qid": "Q183372",
+  "displayName": "Alfred North Whitehead",
+  "identity": "Philosopher and mathematician · United Kingdom · 1861–1947",
+  "title": "Alfred North Whitehead's birth chart",
+  "metaDescription": "Alfred North Whitehead's chart, computed from a sourced birth date: Sun at 26.9° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.7° separates Mercury and Uranus from an exact square; at that range thinking and disruption read as one mechanism. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Mercury:Uranus:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.85",
+        "decan:aquarius:third"
+      ],
+      "text": "The Sun's position resolves to 26.9° Aquarius — deep enough in the third decan (20°–30°) that Venus, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:8.7°",
+        "personal:Venus:Aquarius:5.4°",
+        "personal:Mars:Aries:28.5°"
+      ],
+      "text": "Mercury holds 8.7° Pisces, Venus holds 5.4° Aquarius, Mars holds 28.5° Aries — in the old shorthand, thought steeped in tone and memory; attraction that begins as conversation; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Uranus:square:0.73",
+        "aspect:Saturn:Pluto:trine:0.77",
+        "aspect:Mercury:Pluto:sextile:1.08"
+      ],
+      "text": "Mercury and Uranus hold the closest angle here — a square, 0.7° wide. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Saturn trine Pluto at 0.8°, and Mercury sextile Pluto at 1.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Saturn:apex-Uranus",
+        "figure:unaspected:Neptune"
+      ],
+      "text": "Mercury opposes Saturn while both square Uranus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. Neptune makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mercury:fall",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Aquarius at 26.9° is in detriment — the planet opposite its home, working against the grain; Mercury in Pisces at 8.7° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Aries at 28.5° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water2-fire2-earth2",
+        "modalities:fixed4-mutable4-cardinal1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 3, water 2, fire 2, earth 2, and fixed 4, mutable 4, cardinal 1 across the modes. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Jupiter and Saturn were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 11.9° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-15/",
+    "label": "Everyone born on February 15"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Uranus:square",
+    "sun-degree:26.85",
+    "decan:aquarius:third",
+    "personal:Mercury:Pisces:8.7°",
+    "personal:Venus:Aquarius:5.4°",
+    "personal:Mars:Aries:28.5°",
+    "aspect:Mercury:Uranus:square:0.73",
+    "aspect:Saturn:Pluto:trine:0.77",
+    "aspect:Mercury:Pluto:sextile:1.08",
+    "figure:t-square:Mercury-Saturn:apex-Uranus",
+    "figure:unaspected:Neptune",
+    "dignity:Sun:detriment",
+    "dignity:Mercury:fall",
+    "dignity:Mars:domicile",
+    "elements:air3-water2-fire2-earth2",
+    "modalities:fixed4-mutable4-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 446,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

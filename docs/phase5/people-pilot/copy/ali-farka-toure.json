@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ali-farka-toure",
+  "seedRound": 0,
+  "qid": "Q334947",
+  "displayName": "Ali Farka Touré",
+  "identity": "Singer · Mali · 1939–2006",
+  "title": "Ali Farka Touré's birth chart",
+  "metaDescription": "Ali Farka Touré's chart, computed from a sourced birth date: Sun at 7.2° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a trine to Jupiter at 0.9° — close enough to weld thinking to expansion. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Mercury:Jupiter:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.16",
+        "decan:scorpio:first"
+      ],
+      "text": "At the noon reference the Sun sits 7.2° into Scorpio — the first decan, which the old scheme hands to Mars. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Scorpio:29.0°",
+        "personal:Venus:Scorpio:21.7°",
+        "personal:Mars:Aquarius:18.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Scorpio (29.0°), Venus in Scorpio (21.7°), Mars in Aquarius (18.3°): thought steeped in tone and memory, attraction that works by atmosphere, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Jupiter:trine:0.88",
+        "aspect:Venus:Uranus:opposition:1.22",
+        "aspect:Mars:Uranus:square:2.15"
+      ],
+      "text": "Mercury to Jupiter is the closest call of the day, a trine within 0.9°. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Venus opposition Uranus at 1.2°, and Mars square Uranus at 2.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Mercury-Jupiter-Pluto",
+        "figure:t-square:Venus-Uranus:apex-Mars"
+      ],
+      "text": "Mercury, Jupiter, Pluto close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Venus opposes Uranus while both square Mars. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Venus in Scorpio at 21.7° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 29.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 27.1° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-fire2-earth2",
+        "modalities:fixed6-mutable3-cardinal1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 water, 2 air, 2 fire, 2 earth by element and 6 fixed, 3 mutable, 1 cardinal by modality. Water reads the room before the room speaks — atmosphere first, analysis later. Jupiter, Saturn and Uranus were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:13.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 15.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-31/",
+    "label": "Everyone born on October 31"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Jupiter:trine",
+    "sun-degree:7.16",
+    "decan:scorpio:first",
+    "personal:Mercury:Scorpio:29.0°",
+    "personal:Venus:Scorpio:21.7°",
+    "personal:Mars:Aquarius:18.3°",
+    "aspect:Mercury:Jupiter:trine:0.88",
+    "aspect:Venus:Uranus:opposition:1.22",
+    "aspect:Mars:Uranus:square:2.15",
+    "figure:grand-trine:Mercury-Jupiter-Pluto",
+    "figure:t-square:Venus-Uranus:apex-Mars",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:fall",
+    "elements:water4-air2-fire2-earth2",
+    "modalities:fixed6-mutable3-cardinal1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:gemini",
+    "moon-band:13.3"
+  ],
+  "measurements": {
+    "originalWords": 440,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

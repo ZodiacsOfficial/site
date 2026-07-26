@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "xuan-dieu",
+ "qid": "Q1036300",
+ "displayName": "Xuân Diệu",
+ "wikidataLabel": "Xuan Dieu",
+ "wikidataDescription": "Vietnamese poet (1916-1985)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "seasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1036300",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520324871
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Xuân Diệu",
+   "articleUrl": "https://en.wikipedia.org/wiki/Xu%C3%A2n_Di%E1%BB%87u",
+   "pageId": 4416915,
+   "revisionId": 1362110481,
+   "revisionTimestamp": "2026-07-02T00:28:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1916-02-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1916-02-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1916-02-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1985-12-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q36693",
+  "label": "Bình Định",
+  "entityUrl": "https://www.wikidata.org/wiki/Q36693",
+  "country": {
+   "entity": "Q881",
+   "label": "Vietnam"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q36693",
+   "sourceEntityLabel": "Bình Định",
+   "latitude": 14.166666666667,
+   "longitude": 109,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Xuandieupoet.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Xuandieupoet.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Xuandieupoet.jpg",
+  "width": 299,
+  "height": 417,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://suckhoedoisong.vn/xuan-dieu-voi-am-nhac-dan-toc-n114940.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

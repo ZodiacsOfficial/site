@@ -1,0 +1,87 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "brenda-fassie",
+ "qid": "Q186840",
+ "displayName": "Brenda Fassie",
+ "wikidataLabel": "Brenda Fassie",
+ "wikidataDescription": "South African pop singer (1964-2004)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q186840",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518079094
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Brenda Fassie",
+   "articleUrl": "https://en.wikipedia.org/wiki/Brenda_Fassie",
+   "pageId": 653148,
+   "revisionId": 1362404040,
+   "revisionTimestamp": "2026-07-03T19:11:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1964-11-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1964-11-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1964-11-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-05-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q127067",
+  "label": "Langa",
+  "entityUrl": "https://www.wikidata.org/wiki/Q127067",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q127067",
+   "sourceEntityLabel": "Langa",
+   "latitude": -33.946725,
+   "longitude": 18.531275,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": null
+}

@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "subhas-chandra-bose",
+ "qid": "Q2153",
+ "displayName": "Subhas Chandra Bose",
+ "wikidataLabel": "Subhas Chandra Bose",
+ "wikidataDescription": "Indian nationalist leader (1897-1945)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2153",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517813974
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Subhas Chandra Bose",
+   "articleUrl": "https://en.wikipedia.org/wiki/Subhas_Chandra_Bose",
+   "pageId": 204281,
+   "revisionId": 1365988026,
+   "revisionTimestamp": "2026-07-25T16:10:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1897-01-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-01-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-01-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1945-08-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q207324",
+  "label": "Cuttack",
+  "entityUrl": "https://www.wikidata.org/wiki/Q207324",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q207324",
+   "sourceEntityLabel": "Cuttack",
+   "latitude": 20.45,
+   "longitude": 85.866666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q30242234",
+   "label": "freedom fighter"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1397808",
+   "label": "resistance fighter"
+  },
+  {
+   "entity": "Q20069267",
+   "label": "political leader"
+  }
+ ],
+ "portrait": {
+  "file": "File:Subhas Chandra Bose NRB.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Subhas%20Chandra%20Bose%20NRB.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Subhas_Chandra_Bose_NRB.jpg",
+  "width": 1135,
+  "height": 1513,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown (Netaji Research Bureau, Calcutta)",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

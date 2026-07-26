@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "franz-liszt",
+ "qid": "Q41309",
+ "displayName": "Franz Liszt",
+ "wikidataLabel": "Franz Liszt",
+ "wikidataDescription": "Hungarian romantic composer and virtuoso pianist (1811-1886)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41309",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522261165
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Franz Liszt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Franz_Liszt",
+   "pageId": 67379,
+   "revisionId": 1365164967,
+   "revisionTimestamp": "2026-07-20T17:52:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1811-10-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1811-10-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1811-10-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1886-07-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q660821",
+  "label": "Raiding",
+  "entityUrl": "https://www.wikidata.org/wiki/Q660821",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q660821",
+   "sourceEntityLabel": "Raiding",
+   "latitude": 47.566111111111,
+   "longitude": 16.531388888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q214970",
+   "label": "virtuoso"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q250867",
+   "label": "Catholic priest"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:FLisztFXD.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:FLisztFXD.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:FLisztFXD.jpg",
+  "width": 2333,
+  "height": 3343,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Franz Hanfstaengl",
+  "credit": "This file was derived from: FLiszt.jpg:",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

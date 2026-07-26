@@ -1,0 +1,156 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "denis-diderot",
+ "qid": "Q448",
+ "displayName": "Denis Diderot",
+ "wikidataLabel": "Denis Diderot",
+ "wikidataDescription": "French Enlightenment philosopher writer and encyclopædist (1713–1784)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q448",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522267795
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Denis Diderot",
+   "articleUrl": "https://en.wikipedia.org/wiki/Denis_Diderot",
+   "pageId": 8199,
+   "revisionId": 1358122174,
+   "revisionTimestamp": "2026-06-06T18:30:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1713-10-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1713-10-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1713-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   },
+   {
+    "time": "+1713-10-00T00:00:00Z",
+    "precision": 10,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1713-10-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1784-07-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q203293",
+  "label": "Langres",
+  "entityUrl": "https://www.wikidata.org/wiki/Q203293",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q203293",
+   "sourceEntityLabel": "Langres",
+   "latitude": 47.8625,
+   "longitude": 5.3330555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q744738",
+   "label": "encyclopédistes"
+  },
+  {
+   "entity": "Q4164507",
+   "label": "art critic"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q3589290",
+   "label": "correspondent"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q1238570",
+   "label": "political scientist"
+  },
+  {
+   "entity": "Q14972848",
+   "label": "lexicographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Denis Diderot - Alix - Vanloo.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Denis%20Diderot%20-%20Alix%20-%20Vanloo.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Denis_Diderot_-_Alix_-_Vanloo.png",
+  "width": 2000,
+  "height": 2400,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Pierre-Michel Alix",
+  "credit": "Aquatinta von Pierre-Marie Alix nach Lou-Michel Vanloo",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

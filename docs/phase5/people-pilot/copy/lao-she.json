@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "lao-she",
+  "seedRound": 0,
+  "qid": "Q315167",
+  "displayName": "Lao She",
+  "identity": "Writer and university teacher · People's Republic of China · 1899–1966",
+  "title": "Lao She's birth chart",
+  "metaDescription": "Lao She's chart, computed from a sourced birth date: Sun at 14.2° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a trine: the Sun and Pluto within 0.3°, identity wired to depth. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted.",
+  "ledeFact": "aspect:Sun:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.15",
+        "decan:aquarius:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 14.2° Aquarius: the second decan, whose classical sub-ruler is Mercury. A air sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:27.4°",
+        "personal:Venus:Sagittarius:27.6°",
+        "personal:Mars:Cancer:23.2°"
+      ],
+      "text": "The personal planets sit Mercury at 27.4° Capricorn, Venus at 27.6° Sagittarius, Mars at 23.2° Cancer. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:trine:0.34",
+        "aspect:Saturn:Neptune:opposition:1.18",
+        "aspect:Mercury:Mars:opposition:4.27"
+      ],
+      "text": "The Sun to Pluto is the closest call of the day, a trine within 0.3°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Saturn opposition Neptune at 1.2°, and Mercury opposition Mars at 4.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Moon:fall",
+        "dignity:Mars:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. The Sun in Aquarius at 14.2° is in detriment — the planet opposite its home, working against the grain; the Moon in Scorpio at 7.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 23.2° is in fall. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-fire3-earth1",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 3 air, 3 water, 3 fire, 1 earth by element and 5 mutable, 3 fixed, 2 cardinal by mode. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Mars, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 7.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-3/",
+    "label": "Everyone born on February 3"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:trine",
+    "sun-degree:14.15",
+    "decan:aquarius:second",
+    "personal:Mercury:Capricorn:27.4°",
+    "personal:Venus:Sagittarius:27.6°",
+    "personal:Mars:Cancer:23.2°",
+    "aspect:Sun:Pluto:trine:0.34",
+    "aspect:Saturn:Neptune:opposition:1.18",
+    "aspect:Mercury:Mars:opposition:4.27",
+    "figure:none",
+    "dignity:Sun:detriment",
+    "dignity:Moon:fall",
+    "dignity:Mars:fall",
+    "elements:air3-water3-fire3-earth1",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:scorpio",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 437,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "simone-weil",
+ "qid": "Q157309",
+ "displayName": "Simone Weil",
+ "wikidataLabel": "Simone Weil",
+ "wikidataDescription": "French philosopher, writer, and social activist (1909–1943)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q157309",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522615308
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Simone Weil",
+   "articleUrl": "https://en.wikipedia.org/wiki/Simone_Weil",
+   "pageId": 179955,
+   "revisionId": 1365370200,
+   "revisionTimestamp": "2026-07-22T00:01:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1909-02-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-02-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-02-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1943-08-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q90",
+  "label": "Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q90",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q90",
+   "sourceEntityLabel": "Paris",
+   "latitude": 48.85666666666667,
+   "longitude": 2.352222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q5758653",
+   "label": "secondary school teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q15627169",
+   "label": "trade unionist"
+  },
+  {
+   "entity": "Q23833535",
+   "label": "French resistance fighter"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Simone Weil 1943.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Simone%20Weil%201943.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Simone_Weil_1943.jpg",
+  "width": 768,
+  "height": 855,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown",
+  "credit": "Original publication: France Combattante ID Immediate source: Rozelle-Stone, A. Rebecca (23 January 2024) (in English) Simone Weil: A Very Short Introduction, Oxford University Press, pp. 18 ISBN: 978-0-19-266257-6.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

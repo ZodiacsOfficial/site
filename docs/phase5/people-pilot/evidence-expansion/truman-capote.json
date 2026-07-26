@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "truman-capote",
+ "qid": "Q134180",
+ "displayName": "Truman Capote",
+ "wikidataLabel": "Truman Capote",
+ "wikidataDescription": "American writer (1924-1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q134180",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522795037
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Truman Capote",
+   "articleUrl": "https://en.wikipedia.org/wiki/Truman_Capote",
+   "pageId": 155736,
+   "revisionId": 1363454988,
+   "revisionTimestamp": "2026-07-10T07:56:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1924-09-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1924-09-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1924-09-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-08-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34404",
+  "label": "New Orleans",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34404",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34404",
+   "sourceEntityLabel": "New Orleans",
+   "latitude": 29.976111111111113,
+   "longitude": -90.07833333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Truman Capote by Jack Mitchell.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Truman%20Capote%20by%20Jack%20Mitchell.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Truman_Capote_by_Jack_Mitchell.jpg",
+  "width": 415,
+  "height": 600,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Jack Mitchell",
+  "credit": "User:X4n6",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "christina-rossetti",
+ "qid": "Q236596",
+ "displayName": "Christina Rossetti",
+ "wikidataLabel": "Christina Rossetti",
+ "wikidataDescription": "English poet (1830–1894)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q236596",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520709094
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Christina Rossetti",
+   "articleUrl": "https://en.wikipedia.org/wiki/Christina_Rossetti",
+   "pageId": 149883,
+   "revisionId": 1360951472,
+   "revisionTimestamp": "2026-06-24T17:59:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1830-12-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1830-12-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1830-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1894-12-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q84",
+  "label": "London",
+  "entityUrl": "https://www.wikidata.org/wiki/Q84",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q84",
+   "sourceEntityLabel": "London",
+   "latitude": 51.507222222222,
+   "longitude": -0.1275,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q13424456",
+   "label": "hymnwriter"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Christina Rossetti 4.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Christina%20Rossetti%204.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Christina_Rossetti_4.jpg",
+  "width": 494,
+  "height": 600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Dante Gabriel Rossetti",
+  "credit": "3. Bridgeman Art Library: Object 17666402. artnet1. theotherpages.org",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

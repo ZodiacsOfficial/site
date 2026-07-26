@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "robertson-davies",
+ "qid": "Q545375",
+ "displayName": "Robertson Davies",
+ "wikidataLabel": "Robertson Davies",
+ "wikidataDescription": "Canadian novelist (1913-1995)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q545375",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520234505
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Robertson Davies",
+   "articleUrl": "https://en.wikipedia.org/wiki/Robertson_Davies",
+   "pageId": 25757,
+   "revisionId": 1365716750,
+   "revisionTimestamp": "2026-07-24T01:19:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-08-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-08-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-08-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-12-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7709974",
+  "label": "Thamesville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7709974",
+  "country": {
+   "entity": "Q16",
+   "label": "Canada"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7709974",
+   "sourceEntityLabel": "Thamesville",
+   "latitude": 42.551666666667,
+   "longitude": -81.977222222222,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q42909",
+   "label": "reporter"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q2516866",
+   "label": "publisher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Robertson Davies (Canadian author and journalist).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Robertson%20Davies%20(Canadian%20author%20and%20journalist).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Robertson_Davies_(Canadian_author_and_journalist).jpg",
+  "width": 3207,
+  "height": 4423,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Gotfryd, Bernard, photographer",
+  "credit": "https://www.loc.gov/pictures/item/2020737442/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

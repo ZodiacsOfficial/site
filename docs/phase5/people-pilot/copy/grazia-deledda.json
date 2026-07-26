@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "grazia-deledda",
+  "seedRound": 0,
+  "qid": "Q7728",
+  "displayName": "Grazia Deledda",
+  "identity": "Writer · Italy · 1871–1936",
+  "title": "Grazia Deledda's birth chart",
+  "metaDescription": "Grazia Deledda's chart, computed from a sourced birth date: Sun at 3.9° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a square to Saturn at 0.3° — close enough to weld identity to structure. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Sun:Saturn:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.89",
+        "decan:libra:first"
+      ],
+      "text": "At the noon reference the Sun sits 3.9° into Libra — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:18.5°",
+        "personal:Venus:Libra:2.3°"
+      ],
+      "text": "The personal planets sit Mercury at 18.5° Virgo, Venus at 2.3° Libra. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a air sign reads as attraction that begins as conversation."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:square:0.3",
+        "aspect:Mars:Uranus:trine:0.36",
+        "aspect:Mercury:Pluto:trine:1.18"
+      ],
+      "text": "Nothing in the geometry sits closer than the Sun and Saturn: 0.3° from an exact square. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Mars trine Uranus at 0.4°, and Mercury trine Pluto at 1.2° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, five placements stand out. The Sun in Libra at 3.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 18.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 2.3° is in domicile — the planet in its own sign, running on home rules; Jupiter in Cancer at 26.1° is in exaltation; Saturn in Capricorn at 3.6° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air2-water2-fire2",
+        "modalities:cardinal5-mutable2-fixed2",
+        "settled-signs:9",
+        "retrograde:3",
+        "sign-uncertain:Mars:scorpio:sagittarius"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 3, air 2, water 2, fire 2; modalities cardinal 5, mutable 2, fixed 2. An earth emphasis reads as patience with material reality — slow hands, durable results. Mars crossed from Scorpio into Sagittarius during that day, so its sign is left open. Venus, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:13.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 13.5° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-27/",
+    "label": "Everyone born on September 27"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Saturn:square",
+    "sun-degree:3.89",
+    "decan:libra:first",
+    "personal:Mercury:Virgo:18.5°",
+    "personal:Venus:Libra:2.3°",
+    "aspect:Sun:Saturn:square:0.3",
+    "aspect:Mars:Uranus:trine:0.36",
+    "aspect:Mercury:Pluto:trine:1.18",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:earth3-air2-water2-fire2",
+    "modalities:cardinal5-mutable2-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "sign-uncertain:Mars:scorpio:sagittarius",
+    "moon-sign:pisces",
+    "moon-band:13.5"
+  ],
+  "measurements": {
+    "originalWords": 439,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

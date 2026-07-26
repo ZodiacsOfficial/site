@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "amy-winehouse",
+ "qid": "Q15897",
+ "displayName": "Amy Winehouse",
+ "wikidataLabel": "Amy Winehouse",
+ "wikidataDescription": "British singer-songwriter (1983–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q15897",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520029726
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Amy Winehouse",
+   "articleUrl": "https://en.wikipedia.org/wiki/Amy_Winehouse",
+   "pageId": 939583,
+   "revisionId": 1365991953,
+   "revisionTimestamp": "2026-07-25T16:42:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1983-09-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1983-09-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1983-09-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-07-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5087127",
+  "label": "Chase Farm Hospital",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5087127",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 3,
+  "coordinates": {
+   "sourceEntity": "Q5087127",
+   "sourceEntityLabel": "Chase Farm Hospital",
+   "latitude": 51.667,
+   "longitude": -0.103,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q6168364",
+   "label": "jazz guitarist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Amy Winehouse -Virgin Festival, Pimlico, Baltimore, Maryland-4August2007.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Amy%20Winehouse%20-Virgin%20Festival%2C%20Pimlico%2C%20Baltimore%2C%20Maryland-4August2007.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Amy_Winehouse_-Virgin_Festival,_Pimlico,_Baltimore,_Maryland-4August2007.jpg",
+  "width": 1794,
+  "height": 2945,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Gregory Gebhardt from Laguna Beach, CA, USA",
+  "credit": "Gregory Gebhardt",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

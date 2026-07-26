@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "arthur-schopenhauer",
+ "qid": "Q38193",
+ "displayName": "Arthur Schopenhauer",
+ "wikidataLabel": "Arthur Schopenhauer",
+ "wikidataDescription": "German philosopher (1788-1860)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q38193",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521208086
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Arthur Schopenhauer",
+   "articleUrl": "https://en.wikipedia.org/wiki/Arthur_Schopenhauer",
+   "pageId": 700,
+   "revisionId": 1365944705,
+   "revisionTimestamp": "2026-07-25T10:02:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1788-02-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1788-02-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1788-02-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1860-09-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1792",
+  "label": "Gdańsk",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1792",
+  "country": {
+   "entity": "Q36",
+   "label": "Poland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1792",
+   "sourceEntityLabel": "Gdańsk",
+   "latitude": 54.3482907,
+   "longitude": 18.6540233,
+   "precision": 1e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Arthur Schopenhauer by J Schäfer, 1859b.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Arthur%20Schopenhauer%20by%20J%20Sch%C3%A4fer%2C%201859b.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Arthur_Schopenhauer_by_J_Sch%C3%A4fer,_1859b.jpg",
+  "width": 1997,
+  "height": 2552,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Johann Schäfer",
+  "credit": "Frankfurt am Main University Library",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

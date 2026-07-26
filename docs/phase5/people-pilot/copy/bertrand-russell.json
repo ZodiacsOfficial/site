@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bertrand-russell",
+  "seedRound": 0,
+  "qid": "Q33760",
+  "displayName": "Bertrand Russell",
+  "identity": "Mathematician and essayist · United Kingdom · 1872–1970",
+  "title": "Bertrand Russell's birth chart",
+  "metaDescription": "Bertrand Russell's chart, computed from a sourced birth date: Sun at 27.8° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the nine placements whose signs are settled stand in Taurus — the Sun, Mercury, Venus, Mars and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.80",
+        "decan:taurus:third"
+      ],
+      "text": "The Sun's exact place is 27.8° Taurus. That falls in the third decan, 20°–30°, sub-ruled by Saturn in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:3.2°",
+        "personal:Venus:Taurus:11.9°",
+        "personal:Mars:Taurus:27.6°"
+      ],
+      "text": "For the fast movers, Mercury was at 3.2° Taurus, Venus was at 11.9° Taurus, Mars was at 27.6° Taurus. Read together: a mind that trusts the measured and the checked; taste for the substantial and the lasting; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Uranus:sextile:0.17",
+        "aspect:Sun:Mars:conjunction:0.21",
+        "aspect:Mars:Uranus:sextile:0.38"
+      ],
+      "text": "The Sun and Uranus hold the closest angle here — a sextile, 0.2° wide. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, the Sun conjunction Mars at 0.2°, and Mars sextile Uranus at 0.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Jupiter-Saturn:apex-Neptune",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Saturn while both square Neptune. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Venus in Taurus at 11.9° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 27.6° is in detriment — the planet opposite its home, working against the grain; Jupiter in Cancer at 25.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Capricorn at 21.0° is in domicile. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth6-water2-fire1",
+        "modalities:fixed5-cardinal4",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 6 in earth, 2 in water, 1 in fire by element, 5 fixed, 4 cardinal by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Saturn was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 13.0° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-18/",
+    "label": "Everyone born on May 18"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:5",
+    "sun-degree:27.80",
+    "decan:taurus:third",
+    "personal:Mercury:Taurus:3.2°",
+    "personal:Venus:Taurus:11.9°",
+    "personal:Mars:Taurus:27.6°",
+    "aspect:Sun:Uranus:sextile:0.17",
+    "aspect:Sun:Mars:conjunction:0.21",
+    "aspect:Mars:Uranus:sextile:0.38",
+    "figure:t-square:Jupiter-Saturn:apex-Neptune",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:earth6-water2-fire1",
+    "modalities:fixed5-cardinal4",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 486,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

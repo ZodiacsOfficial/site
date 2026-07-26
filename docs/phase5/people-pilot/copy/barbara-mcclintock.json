@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "barbara-mcclintock",
+  "seedRound": 0,
+  "qid": "Q199654",
+  "displayName": "Barbara McClintock",
+  "identity": "Botanist and university teacher · United States · 1902–1992",
+  "title": "Barbara McClintock's birth chart",
+  "metaDescription": "Barbara McClintock's chart, computed from a sourced birth date: Sun at 24.6° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. The mutable signs hand one season to the next; a chart weighted there is built for transitions.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.58",
+        "decan:gemini:third"
+      ],
+      "text": "Gemini, but precisely: 24.6°, third decan, 20°–30°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:5.1°",
+        "personal:Venus:Taurus:14.4°",
+        "personal:Mars:Gemini:6.5°"
+      ],
+      "text": "Closer in, Mercury stands at 5.1° Cancer; Venus stands at 14.4° Taurus; Mars stands at 6.5° Gemini. The tradition reads a mind that absorbs before it argues from Mercury, taste for the substantial and the lasting from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:opposition:0.74",
+        "aspect:Jupiter:Pluto:trine:1.25",
+        "aspect:Jupiter:Uranus:sextile:1.99"
+      ],
+      "text": "The tightest geometry in the chart puts Uranus directly across the wheel from Pluto, 0.7° off exact. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Jupiter trine Pluto at 1.3°, and Jupiter sextile Uranus at 2.0° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Mars"
+      ],
+      "text": "Mars stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. The Moon in Scorpio at 6.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Taurus at 14.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Capricorn at 26.6° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-earth2-fire1",
+        "modalities:mutable4-fixed3-cardinal3",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 air, 3 water, 2 earth, 1 fire by element and 4 mutable, 3 fixed, 3 cardinal by mode. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Mercury, Jupiter, Saturn and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 6.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-16/",
+    "label": "Everyone born on June 16"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:24.58",
+    "decan:gemini:third",
+    "personal:Mercury:Cancer:5.1°",
+    "personal:Venus:Taurus:14.4°",
+    "personal:Mars:Gemini:6.5°",
+    "aspect:Uranus:Pluto:opposition:0.74",
+    "aspect:Jupiter:Pluto:trine:1.25",
+    "aspect:Jupiter:Uranus:sextile:1.99",
+    "figure:unaspected:Mars",
+    "dignity:Moon:fall",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air4-water3-earth2-fire1",
+    "modalities:mutable4-fixed3-cardinal3",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:scorpio",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 428,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

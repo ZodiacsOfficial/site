@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ding-ling",
+ "qid": "Q255500",
+ "displayName": "Ding Ling",
+ "wikidataLabel": "Ding Ling",
+ "wikidataDescription": "Chinese writer (1904-1986)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q255500",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518294035
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ding Ling",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ding_Ling",
+   "pageId": 705181,
+   "revisionId": 1364571238,
+   "revisionTimestamp": "2026-07-17T07:38:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-10-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-10-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-10-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1986-03-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1338719",
+  "label": "Linli County",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1338719",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1338719",
+   "sourceEntityLabel": "Linli County",
+   "latitude": 29.44453,
+   "longitude": 111.64244,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ding Ling.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ding%20Ling.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ding_Ling.jpg",
+  "width": 640,
+  "height": 1029,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://zh.wikipedia.org/wiki/File:Ding_Ling.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

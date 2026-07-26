@@ -1,0 +1,131 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yasar-kemal",
+ "qid": "Q327142",
+ "displayName": "Yaşar Kemal",
+ "wikidataLabel": "Yaşar Kemal",
+ "wikidataDescription": "Kurdish writer and human rights activist (1923–2015)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q327142",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2507805895
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yaşar Kemal",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ya%C5%9Far_Kemal",
+   "pageId": 1264568,
+   "revisionId": 1363500904,
+   "revisionTimestamp": "2026-07-10T16:16:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1923-10-06T00:00:00Z|proleptic-gregorian",
+   "+1922-10-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-10-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1922-10-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1923-10-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2015-02-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1559300",
+  "label": "Gökçedam",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1559300",
+  "country": {
+   "entity": "Q43",
+   "label": "Turkey"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1559300",
+   "sourceEntityLabel": "Gökçedam",
+   "latitude": 37.19027778,
+   "longitude": 36.09194444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Yılmaz Büyükerşen wax Museum (Yaşar Kemal).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Y%C4%B1lmaz%20B%C3%BCy%C3%BCker%C5%9Fen%20wax%20Museum%20(Ya%C5%9Far%20Kemal).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Y%C4%B1lmaz_B%C3%BCy%C3%BCker%C5%9Fen_wax_Museum_(Ya%C5%9Far_Kemal).jpg",
+  "width": 3264,
+  "height": 2448,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Nedim Ardoğa",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

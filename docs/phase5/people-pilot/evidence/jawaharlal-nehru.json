@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jawaharlal-nehru",
+ "qid": "Q1047",
+ "displayName": "Jawaharlal Nehru",
+ "wikidataLabel": "Jawaharlal Nehru",
+ "wikidataDescription": "Prime Minister of India from 1947 to 1964",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1047",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522275308
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jawaharlal Nehru",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jawaharlal_Nehru",
+   "pageId": 16243,
+   "revisionId": 1365473162,
+   "revisionTimestamp": "2026-07-22T17:31:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1889-11-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1889-11-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1889-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-05-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q162442",
+  "label": "Prayagraj",
+  "entityUrl": "https://www.wikidata.org/wiki/Q162442",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q162442",
+   "sourceEntityLabel": "Prayagraj",
+   "latitude": 25.45,
+   "longitude": 81.85,
+   "precision": 0.01,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q808967",
+   "label": "barrister"
+  },
+  {
+   "entity": "Q15627169",
+   "label": "trade unionist"
+  },
+  {
+   "entity": "Q30242234",
+   "label": "freedom fighter"
+  },
+  {
+   "entity": "Q2285706",
+   "label": "head of government"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jawaharlal Nehru, circa 1925.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jawaharlal%20Nehru%2C%20circa%201925.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jawaharlal_Nehru,_circa_1925.jpg",
+  "width": 2036,
+  "height": 2867,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Keystone View Company/FPG",
+  "credit": "https://media.gettyimages.com/id/120816518/photo/indian-statesman-jawaharlal-nehru-circa-1925-nehru-became-indias-first-prime-minister-in-1947.jpg?s=612x612&w=0&k=20&c=rRH36piH-nXkDn8M9afguZZCxEvHbz1mlWiamTw6Qxo=",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

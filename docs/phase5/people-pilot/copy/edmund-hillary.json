@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "edmund-hillary",
+  "seedRound": 2,
+  "qid": "Q33817",
+  "displayName": "Edmund Hillary",
+  "identity": "Explorer and autobiographer · New Zealand · 1919–2008",
+  "title": "Edmund Hillary's birth chart",
+  "metaDescription": "Edmund Hillary's chart, computed from a sourced birth date: Sun at 26.3° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Cancer — the Sun, Mars, Jupiter and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:cancer:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.25",
+        "decan:cancer:third"
+      ],
+      "text": "26.3° of Cancer is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:23.0°",
+        "personal:Venus:Virgo:10.8°",
+        "personal:Mars:Cancer:7.6°"
+      ],
+      "text": "Mercury holds 23.0° Leo, Venus holds 10.8° Virgo, Mars holds 7.6° Cancer — in the old shorthand, thought that arrives already in motion; attraction that grows by reliability; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:conjunction:0.78",
+        "aspect:Mars:Pluto:conjunction:0.92",
+        "aspect:Venus:Mars:sextile:3.19"
+      ],
+      "text": "Closest first: the Sun to Jupiter, a conjunction with 0.8° of slack. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Mars conjunction Pluto at 0.9°, and Venus sextile Mars at 3.2° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, four placements stand out. Venus in Virgo at 10.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 7.6° is in fall; Jupiter in Cancer at 27.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Leo at 27.1° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire4-earth1",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 5, fire 4, earth 1, and cardinal 5, fixed 3, mutable 2 across the modes. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:14.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 14.0° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 20.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-20/",
+    "label": "Everyone born on July 20"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "stellium:cancer:4",
+    "sun-degree:26.25",
+    "decan:cancer:third",
+    "personal:Mercury:Leo:23.0°",
+    "personal:Venus:Virgo:10.8°",
+    "personal:Mars:Cancer:7.6°",
+    "aspect:Sun:Jupiter:conjunction:0.78",
+    "aspect:Mars:Pluto:conjunction:0.92",
+    "aspect:Venus:Mars:sextile:3.19",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:water5-fire4-earth1",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:aries",
+    "moon-band:14.0"
+  ],
+  "measurements": {
+    "originalWords": 429,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

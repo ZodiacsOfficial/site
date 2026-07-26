@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "qian-xuesen",
+ "qid": "Q333500",
+ "displayName": "Qian Xuesen",
+ "wikidataLabel": "Qian Xuesen",
+ "wikidataDescription": "Chinese rocket scientist (1911-2009)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q333500",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518892106
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Qian Xuesen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Qian_Xuesen",
+   "pageId": 343445,
+   "revisionId": 1364493150,
+   "revisionTimestamp": "2026-07-16T22:07:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-12-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-12-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-10-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11359590",
+  "label": "Shanghai County",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11359590",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11359590",
+   "sourceEntityLabel": "Shanghai County",
+   "latitude": 31.120833333333334,
+   "longitude": 121.36999999999999,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q17394262",
+   "label": "astronautical engineer"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q133270798",
+   "label": "Q133270798"
+  }
+ ],
+ "portrait": {
+  "file": "File:Tsien Hsue-shen.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Tsien%20Hsue-shen.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Tsien_Hsue-shen.jpg",
+  "width": 1146,
+  "height": 1000,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.hlhl.org.cn/big5/findnews/shownews.asp?newsid=71 Transferred from zh.wikipedia to Commons by Shizhao using CommonsHelper.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

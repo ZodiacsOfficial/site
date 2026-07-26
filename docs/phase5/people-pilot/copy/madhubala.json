@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "madhubala",
+  "seedRound": 0,
+  "qid": "Q36881",
+  "displayName": "Madhubala",
+  "identity": "Film actor · India · 1933–1969",
+  "title": "Madhubala's birth chart",
+  "metaDescription": "Madhubala's chart, computed from a sourced birth date: Sun at 25.1° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a conjunction: Venus and Saturn within 0.7°, taste wired to structure. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other.",
+  "ledeFact": "aspect:Venus:Saturn:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.13",
+        "decan:aquarius:third"
+      ],
+      "text": "The Sun sits at 25.1° Aquarius — the third decan, 20°–30°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Aquarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Aquarius:8.5°",
+        "personal:Mars:Virgo:16.5°"
+      ],
+      "text": "The personal planets sit Venus at 8.5° Aquarius, Mars at 16.5° Virgo. Venus in a air sign reads as taste led by wit and proportion; Mars in a earth sign reads as drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:sextile:0.54",
+        "aspect:Venus:Saturn:conjunction:0.72",
+        "aspect:Uranus:Pluto:square:1.32"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Pluto — a sextile holding at 0.5°. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Venus conjunction Saturn at 0.7°, and Uranus square Pluto at 1.3° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. The Sun in Aquarius at 25.1° is in detriment — the planet opposite its home, working against the grain; Jupiter in Virgo at 21.2° is in detriment; Saturn in Aquarius at 9.3° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-fire1-water1",
+        "modalities:fixed3-cardinal3-mutable3",
+        "settled-signs:9",
+        "retrograde:4",
+        "sign-uncertain:Mercury:aquarius:pisces"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: air 4, earth 3, fire 1, water 1 across the elements, and fixed 3, cardinal 3, mutable 3 across the modalities. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Mercury crossed from Aquarius into Pisces during that day, so its sign is left open. Mars, Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 11.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-14/",
+    "label": "Everyone born on February 14"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Saturn:conjunction",
+    "sun-degree:25.13",
+    "decan:aquarius:third",
+    "personal:Venus:Aquarius:8.5°",
+    "personal:Mars:Virgo:16.5°",
+    "aspect:Jupiter:Pluto:sextile:0.54",
+    "aspect:Venus:Saturn:conjunction:0.72",
+    "aspect:Uranus:Pluto:square:1.32",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:domicile",
+    "elements:air4-earth3-fire1-water1",
+    "modalities:fixed3-cardinal3-mutable3",
+    "settled-signs:9",
+    "retrograde:4",
+    "sign-uncertain:Mercury:aquarius:pisces",
+    "moon-sign:libra",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 440,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,123 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gabrielle-roy",
+ "qid": "Q294999",
+ "displayName": "Gabrielle Roy",
+ "wikidataLabel": "Gabrielle Roy",
+ "wikidataDescription": "French Canadian fiction writer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q294999",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522974763
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gabrielle Roy",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gabrielle_Roy",
+   "pageId": 62073,
+   "revisionId": 1356828360,
+   "revisionTimestamp": "2026-05-30T02:12:38Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1909-03-22T00:00:00Z|proleptic-gregorian",
+   "+1909-03-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-03-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1909-03-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-03-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-07-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1004192",
+  "label": "Saint Boniface",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1004192",
+  "country": {
+   "entity": "Q16",
+   "label": "Canada"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1004192",
+   "sourceEntityLabel": "Saint Boniface",
+   "latitude": 49.9,
+   "longitude": -97.1,
+   "precision": 0.0000277778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gabrielle Roy, vers 1935.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gabrielle%20Roy%2C%20vers%201935.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gabrielle_Roy,_vers_1935.jpg",
+  "width": 1070,
+  "height": 1310,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Bibliothèque et Archives nationales du Québec",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "frantz-fanon",
+  "seedRound": 0,
+  "qid": "Q193670",
+  "displayName": "Frantz Fanon",
+  "identity": "Writer and psychiatrist · France · 1925–1961",
+  "title": "Frantz Fanon's birth chart",
+  "metaDescription": "Frantz Fanon's chart, computed from a sourced birth date: Sun at 27.4° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Leo — Mercury, Venus, Mars and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:leo:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.38",
+        "decan:cancer:third"
+      ],
+      "text": "The Sun's position resolves to 27.4° Cancer — deep enough in the third decan (20°–30°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:23.2°",
+        "personal:Venus:Leo:20.8°",
+        "personal:Mars:Leo:15.3°"
+      ],
+      "text": "The personal planets sit Mercury at 23.2° Leo, Venus at 20.8° Leo, Mars at 15.3° Leo. Mercury in a fire sign reads as thought that arrives already in motion; Venus in a fire sign reads as attraction declared rather than implied; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:conjunction:0.57",
+        "aspect:Mercury:Neptune:conjunction:1.78",
+        "aspect:Sun:Uranus:trine:2.06"
+      ],
+      "text": "Venus to Neptune is the closest call of the day, a conjunction within 0.6°. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Mercury conjunction Neptune at 1.8°, and the Sun trine Uranus at 2.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. Jupiter in Capricorn at 16.3° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire4-earth1",
+        "modalities:fixed5-cardinal3-mutable1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in water, 4 in fire, 1 in earth by element, 5 fixed, 3 cardinal, 1 mutable by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Jupiter and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 11.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-20/",
+    "label": "Everyone born on July 20"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "stellium:leo:4",
+    "sun-degree:27.38",
+    "decan:cancer:third",
+    "personal:Mercury:Leo:23.2°",
+    "personal:Venus:Leo:20.8°",
+    "personal:Mars:Leo:15.3°",
+    "aspect:Venus:Neptune:conjunction:0.57",
+    "aspect:Mercury:Neptune:conjunction:1.78",
+    "aspect:Sun:Uranus:trine:2.06",
+    "figure:none",
+    "dignity:Jupiter:fall",
+    "elements:water4-fire4-earth1",
+    "modalities:fixed5-cardinal3-mutable1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 426,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

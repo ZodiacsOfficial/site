@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "stephen-jay-gould",
+ "qid": "Q180619",
+ "displayName": "Stephen Jay Gould",
+ "wikidataLabel": "Stephen Jay Gould",
+ "wikidataDescription": "American biologist and historian of science (1941–2002)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q180619",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517009504
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Stephen Jay Gould",
+   "articleUrl": "https://en.wikipedia.org/wiki/Stephen_Jay_Gould",
+   "pageId": 27875,
+   "revisionId": 1365902394,
+   "revisionTimestamp": "2026-07-25T02:34:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1941-09-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1941-09-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1941-09-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2002-05-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18424",
+  "label": "Queens",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18424",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18424",
+   "sourceEntityLabel": "Queens",
+   "latitude": 40.71361111111111,
+   "longitude": -73.82805555555555,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16063497",
+   "label": "evolutionary biologist"
+  },
+  {
+   "entity": "Q1662561",
+   "label": "paleontologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q2405480",
+   "label": "voice actor"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q520549",
+   "label": "geologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Stephen Jay Gould.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Stephen%20Jay%20Gould.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Stephen_Jay_Gould.jpg",
+  "width": 415,
+  "height": 564,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Lawrence Lipke",
+  "credit": "Back flap of dust jacket of The Panda's Thumb by Stephen Jay Gould, first edition",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

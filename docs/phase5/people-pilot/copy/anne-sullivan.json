@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "anne-sullivan",
+  "seedRound": 0,
+  "qid": "Q239135",
+  "displayName": "Anne Sullivan",
+  "identity": "Teacher · United States · 1866–1936",
+  "title": "Anne Sullivan's birth chart",
+  "metaDescription": "Anne Sullivan's chart, computed from a sourced birth date: Sun at 14.7° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Aries — the Sun, Mercury, Venus and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aries:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.69",
+        "decan:aries:second"
+      ],
+      "text": "Aries, but precisely: 14.7°, second decan, 10°–20°, under the Sun in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:28.6°",
+        "personal:Venus:Aries:24.1°",
+        "personal:Mars:Pisces:7.3°"
+      ],
+      "text": "The personal planets sit Mercury at 28.6° Aries, Venus at 24.1° Aries, Mars at 7.3° Pisces. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Jupiter:square:0.48",
+        "aspect:Mercury:Uranus:sextile:1.53",
+        "aspect:Saturn:Pluto:opposition:2.23"
+      ],
+      "text": "Mercury and Jupiter hold the closest angle here — a square, 0.5° wide. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Mercury sextile Uranus at 1.5°, and Saturn opposition Pluto at 2.2° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. The Sun in Aries at 14.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Aries at 24.1° is in detriment — the planet opposite its home, working against the grain; Jupiter in Capricorn at 29.1° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth2",
+        "modalities:cardinal6-fixed2-mutable1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 fire, 3 water, 2 earth by element and 6 cardinal, 2 fixed, 1 mutable by mode. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Mercury and Saturn were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 11.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-4/",
+    "label": "Everyone born on April 4"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:aries:4",
+    "sun-degree:14.69",
+    "decan:aries:second",
+    "personal:Mercury:Aries:28.6°",
+    "personal:Venus:Aries:24.1°",
+    "personal:Mars:Pisces:7.3°",
+    "aspect:Mercury:Jupiter:square:0.48",
+    "aspect:Mercury:Uranus:sextile:1.53",
+    "aspect:Saturn:Pluto:opposition:2.23",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:fall",
+    "elements:fire4-water3-earth2",
+    "modalities:cardinal6-fixed2-mutable1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 455,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

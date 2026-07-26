@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "edith-clarke",
+  "seedRound": 0,
+  "qid": "Q21826",
+  "displayName": "Edith Clarke",
+  "identity": "Engineer and university teacher · United States · 1883–1959",
+  "title": "Edith Clarke's birth chart",
+  "metaDescription": "Edith Clarke's chart, computed from a sourced birth date: Sun at 21.7° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Jupiter sit 0.3° from an exact trine — near enough that the tradition reads identity and expansion as a single working part. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Sun:Jupiter:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.66",
+        "decan:aquarius:third"
+      ],
+      "text": "Aquarius, but precisely: 21.7°, third decan, 20°–30°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:11.5°",
+        "personal:Venus:Capricorn:5.0°",
+        "personal:Mars:Aquarius:6.0°"
+      ],
+      "text": "The personal planets sit Mercury at 11.5° Aquarius, Venus at 5.0° Capricorn, Mars at 6.0° Aquarius. Mercury in a air sign reads as a mind at home in argument and pattern; Venus in a earth sign reads as taste for the substantial and the lasting; Mars in a air sign reads as drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:trine:0.27",
+        "aspect:Jupiter:Uranus:square:1.13",
+        "aspect:Sun:Saturn:square:1.99"
+      ],
+      "text": "The Sun to Jupiter is the closest call of the day, a trine within 0.3°. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Jupiter square Uranus at 1.1°, and the Sun square Saturn at 2.0° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The classical table has two entries for this chart. The Sun in Aquarius at 21.7° is in detriment — the planet opposite its home, working against the grain; Jupiter in Gemini at 21.4° is in detriment. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air4",
+        "modalities:fixed6-mutable2-cardinal1",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 5 earth, 4 air by element and 6 fixed, 2 mutable, 1 cardinal by modality. No settled placement falls in fire or water — an absence the tradition treats as information, not as a defect. Mercury, Jupiter, Uranus and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 14.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-10/",
+    "label": "Everyone born on February 10"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:trine",
+    "sun-degree:21.66",
+    "decan:aquarius:third",
+    "personal:Mercury:Aquarius:11.5°",
+    "personal:Venus:Capricorn:5.0°",
+    "personal:Mars:Aquarius:6.0°",
+    "aspect:Sun:Jupiter:trine:0.27",
+    "aspect:Jupiter:Uranus:square:1.13",
+    "aspect:Sun:Saturn:square:1.99",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:earth5-air4",
+    "modalities:fixed6-mutable2-cardinal1",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

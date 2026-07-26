@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "louis-pasteur",
+  "seedRound": 0,
+  "qid": "Q529",
+  "displayName": "Louis Pasteur",
+  "identity": "Chemist and university teacher · France · 1822–1895",
+  "title": "Louis Pasteur's birth chart",
+  "metaDescription": "Louis Pasteur's chart, computed from a sourced birth date: Sun at 5.2° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Six of the nine placements whose signs are settled stand in Capricorn — the Sun, Mercury, Venus, Mars, Uranus and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:capricorn:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.24",
+        "decan:capricorn:first"
+      ],
+      "text": "Capricorn, but precisely: 5.2°, first decan, 0°–10°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Capricorn:1.4°",
+        "personal:Venus:Capricorn:6.1°",
+        "personal:Mars:Capricorn:24.8°"
+      ],
+      "text": "The personal planets sit Mercury at 1.4° Capricorn, Venus at 6.1° Capricorn, Mars at 24.8° Capricorn. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a earth sign reads as taste for the substantial and the lasting; Mars in a earth sign reads as drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:conjunction:0.27",
+        "aspect:Sun:Venus:conjunction:0.88",
+        "aspect:Venus:Neptune:conjunction:1.15"
+      ],
+      "text": "Closest first: the Sun to Neptune, a conjunction with 0.3° of slack. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, the Sun conjunction Venus at 0.9°, and Venus conjunction Neptune at 1.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation"
+      ],
+      "text": "One planet here sits in a sign the classical scheme scores. Mars in Capricorn at 24.8° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth8-water1",
+        "modalities:cardinal6-fixed2-mutable1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 8, water 1; modalities cardinal 6, fixed 2, mutable 1. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in fire or air — an absence the tradition treats as information, not as a defect. Jupiter and Saturn were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 15.3° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-27/",
+    "label": "Everyone born on December 27"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "stellium:capricorn:6",
+    "sun-degree:5.24",
+    "decan:capricorn:first",
+    "personal:Mercury:Capricorn:1.4°",
+    "personal:Venus:Capricorn:6.1°",
+    "personal:Mars:Capricorn:24.8°",
+    "aspect:Sun:Neptune:conjunction:0.27",
+    "aspect:Sun:Venus:conjunction:0.88",
+    "aspect:Venus:Neptune:conjunction:1.15",
+    "figure:unaspected:Moon",
+    "dignity:Mars:exaltation",
+    "elements:earth8-water1",
+    "modalities:cardinal6-fixed2-mutable1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 417,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

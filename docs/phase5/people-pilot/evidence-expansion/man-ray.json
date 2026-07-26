@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "man-ray",
+ "qid": "Q46139",
+ "displayName": "Man Ray",
+ "wikidataLabel": "Man Ray",
+ "wikidataDescription": "American and French visual artist (1890–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q46139",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518221649
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Man Ray",
+   "articleUrl": "https://en.wikipedia.org/wiki/Man_Ray",
+   "pageId": 62038,
+   "revisionId": 1364555555,
+   "revisionTimestamp": "2026-07-17T05:03:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1890-08-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1890-08-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1890-08-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-11-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1345",
+  "label": "Philadelphia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1345",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1345",
+   "sourceEntityLabel": "Philadelphia",
+   "latitude": 39.952777777778,
+   "longitude": -75.163611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q222344",
+   "label": "cinematographer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q22343478",
+   "label": "collagist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q2519376",
+   "label": "jewelry designer"
+  },
+  {
+   "entity": "Q1414443",
+   "label": "filmmaker"
+  }
+ ],
+ "portrait": {
+  "file": "File:Man Ray Salvador Dali (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Man%20Ray%20Salvador%20Dali%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Man_Ray_Salvador_Dali_(cropped).jpg",
+  "width": 508,
+  "height": 786,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Van Vechten, Carl, 1880-1964, photographer",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3a42853.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

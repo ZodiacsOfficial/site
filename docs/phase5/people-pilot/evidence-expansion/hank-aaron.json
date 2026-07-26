@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hank-aaron",
+ "qid": "Q215777",
+ "displayName": "Hank Aaron",
+ "wikidataLabel": "Hank Aaron",
+ "wikidataDescription": "American baseball player (1934–2021)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q215777",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2508865360
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hank Aaron",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hank_Aaron",
+   "pageId": 14321,
+   "revisionId": 1366014082,
+   "revisionTimestamp": "2026-07-25T19:44:09Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1934-02-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-02-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1934-02-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2021-01-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q79875",
+  "label": "Mobile",
+  "entityUrl": "https://www.wikidata.org/wiki/Q79875",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q79875",
+   "sourceEntityLabel": "Mobile",
+   "latitude": 30.727669444444,
+   "longitude": -88.052672222222,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hank Aaron 1974.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hank%20Aaron%201974.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hank_Aaron_1974.jpg",
+  "width": 364,
+  "height": 440,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Texas Rangers via tradingcarddb.com",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "astrid-lindgren",
+  "seedRound": 0,
+  "qid": "Q55767",
+  "displayName": "Astrid Lindgren",
+  "identity": "Screenwriter · Sweden · 1907–2002",
+  "title": "Astrid Lindgren's birth chart",
+  "metaDescription": "Astrid Lindgren's chart, computed from a sourced birth date: Sun at 20.9° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mercury sit 0.1° from an exact conjunction — near enough that the tradition reads identity and thinking as a single working part. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all.",
+  "ledeFact": "aspect:Sun:Mercury:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:20.93",
+        "decan:scorpio:third"
+      ],
+      "text": "Scorpio, but precisely: 20.9°, third decan, 20°–30°, under the Moon in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Scorpio:21.1°",
+        "personal:Venus:Sagittarius:6.5°",
+        "personal:Mars:Aquarius:20.0°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Scorpio (21.1°), Venus in Sagittarius (6.5°), Mars in Aquarius (20.0°): a mind that absorbs before it argues, taste that runs toward the vivid and the immediate, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mercury:conjunction:0.14",
+        "aspect:Sun:Saturn:trine:0.14",
+        "aspect:Mercury:Saturn:trine:0.28"
+      ],
+      "text": "The day's firmest angle joins the Sun and Mercury — a conjunction holding at 0.1°. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, the Sun trine Saturn at 0.1°, and Mercury trine Saturn at 0.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Saturn-Neptune",
+        "figure:unaspected:Moon"
+      ],
+      "text": "the Sun, Saturn, Neptune close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "The dignity table has nothing to say about this chart. All seven classical planets sit in signs it treats as neutral, so the reading rests entirely on placement and angle."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire2-air2-earth1",
+        "modalities:fixed4-mutable4-cardinal2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 5 in water, 2 in fire, 2 in air, 1 in earth by element, 4 fixed, 4 mutable, 2 cardinal by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Mercury, Saturn, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:13.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 13.7° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 13.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-14/",
+    "label": "Everyone born on November 14"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mercury:conjunction",
+    "sun-degree:20.93",
+    "decan:scorpio:third",
+    "personal:Mercury:Scorpio:21.1°",
+    "personal:Venus:Sagittarius:6.5°",
+    "personal:Mars:Aquarius:20.0°",
+    "aspect:Sun:Mercury:conjunction:0.14",
+    "aspect:Sun:Saturn:trine:0.14",
+    "aspect:Mercury:Saturn:trine:0.28",
+    "figure:grand-trine:Sun-Saturn-Neptune",
+    "figure:unaspected:Moon",
+    "dignity:none",
+    "elements:water5-fire2-air2-earth1",
+    "modalities:fixed4-mutable4-cardinal2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:pisces",
+    "moon-band:13.7"
+  ],
+  "measurements": {
+    "originalWords": 415,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

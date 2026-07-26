@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "tina-turner",
+  "seedRound": 0,
+  "qid": "Q131814",
+  "displayName": "Tina Turner",
+  "identity": "Singer and autobiographer · United States · 1939–2023",
+  "title": "Tina Turner's birth chart",
+  "metaDescription": "Tina Turner's chart, computed from a sourced birth date: Sun at 3.6° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Pluto sit 0.8° from an exact trine — near enough that the tradition reads identity and depth as a single working part. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Sun:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.58",
+        "decan:sagittarius:first"
+      ],
+      "text": "Sagittarius, but precisely: 3.6°, first decan, 0°–10°, under Jupiter in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:8.2°",
+        "personal:Venus:Sagittarius:24.4°",
+        "personal:Mars:Pisces:4.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (8.2°), Venus in Sagittarius (24.4°), Mars in Pisces (4.5°): a mind that decides at speaking speed, taste that runs toward the vivid and the immediate, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:trine:0.78",
+        "aspect:Venus:Neptune:square:0.78",
+        "aspect:Venus:Saturn:trine:0.83"
+      ],
+      "text": "Closest first: the Sun to Pluto, a trine with 0.8° of slack. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Venus square Neptune at 0.8°, and Venus trine Saturn at 0.8° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Jupiter-Pluto",
+        "figure:t-square:Jupiter-Neptune:apex-Venus"
+      ],
+      "text": "the Sun, Jupiter, Pluto close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Jupiter opposes Neptune while both square Venus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Sagittarius at 8.2° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 28.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 25.3° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-water2-earth2",
+        "modalities:mutable6-fixed2-cardinal1",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 5 fire, 2 water, 2 earth by element and 6 mutable, 2 fixed, 1 cardinal by modality. Fire leads with ignition: the first move made early, and certainty arriving ahead of the evidence. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Mercury, Saturn, Uranus and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 13.3° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-26/",
+    "label": "Everyone born on November 26"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:trine",
+    "sun-degree:3.58",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:8.2°",
+    "personal:Venus:Sagittarius:24.4°",
+    "personal:Mars:Pisces:4.5°",
+    "aspect:Sun:Pluto:trine:0.78",
+    "aspect:Venus:Neptune:square:0.78",
+    "aspect:Venus:Saturn:trine:0.83",
+    "figure:grand-trine:Sun-Jupiter-Pluto",
+    "figure:t-square:Jupiter-Neptune:apex-Venus",
+    "dignity:Mercury:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:fall",
+    "elements:fire5-water2-earth2",
+    "modalities:mutable6-fixed2-cardinal1",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 472,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

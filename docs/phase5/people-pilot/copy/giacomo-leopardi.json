@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "giacomo-leopardi",
+  "seedRound": 0,
+  "qid": "Q172599",
+  "displayName": "Giacomo Leopardi",
+  "identity": "Writer · Italy · 1798–1837",
+  "title": "Giacomo Leopardi's birth chart",
+  "metaDescription": "Giacomo Leopardi's chart, computed from a sourced birth date: Sun at 7.8° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.3° separates the Sun and Mars from an exact trine; at that range identity and drive read as one mechanism. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Sun:Mars:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.82",
+        "decan:cancer:first"
+      ],
+      "text": "The Sun's position resolves to 7.8° Cancer — deep enough in the first decan (0°–10°) that the Moon, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:17.5°",
+        "personal:Venus:Taurus:25.1°",
+        "personal:Mars:Pisces:7.5°"
+      ],
+      "text": "The personal planets sit Mercury at 17.5° Gemini, Venus at 25.1° Taurus, Mars at 7.5° Pisces. Mercury in a air sign reads as thought that travels by comparison; Venus in a earth sign reads as attraction that grows by reliability; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:trine:0.31",
+        "aspect:Saturn:Uranus:sextile:0.57",
+        "aspect:Sun:Neptune:trine:2.42"
+      ],
+      "text": "Start where the chart is tightest — the Sun trine Mars, 0.3° of separation. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Saturn sextile Uranus at 0.6°, and the Sun trine Neptune at 2.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Sun-Mars-Neptune",
+        "figure:unaspected:Moon"
+      ],
+      "text": "the Sun, Mars, Neptune close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Mercury:domicile",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Capricorn at 22.2° is in detriment — the planet opposite its home, working against the grain; Mercury in Gemini at 17.5° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 25.1° is in domicile; Saturn in Cancer at 14.7° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-earth4-air1",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 water, 4 earth, 1 air by element and 4 mutable, 3 cardinal, 3 fixed by mode. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.5° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-29/",
+    "label": "Everyone born on June 29"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:trine",
+    "sun-degree:7.82",
+    "decan:cancer:first",
+    "personal:Mercury:Gemini:17.5°",
+    "personal:Venus:Taurus:25.1°",
+    "personal:Mars:Pisces:7.5°",
+    "aspect:Sun:Mars:trine:0.31",
+    "aspect:Saturn:Uranus:sextile:0.57",
+    "aspect:Sun:Neptune:trine:2.42",
+    "figure:grand-trine:Sun-Mars-Neptune",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Mercury:domicile",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:detriment",
+    "elements:water5-earth4-air1",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:capricorn",
+    "moon-band:12.5"
+  ],
+  "measurements": {
+    "originalWords": 473,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

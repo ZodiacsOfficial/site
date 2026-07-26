@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "junko-tabei",
+ "qid": "Q234491",
+ "displayName": "Junko Tabei",
+ "wikidataLabel": "Junko Tabei",
+ "wikidataDescription": "Japanese mountain climber (1939-2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234491",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517547153
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Junko Tabei",
+   "articleUrl": "https://en.wikipedia.org/wiki/Junko_Tabei",
+   "pageId": 451996,
+   "revisionId": 1362953021,
+   "revisionTimestamp": "2026-07-07T04:12:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1939-09-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1939-09-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1939-09-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-10-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1348269",
+  "label": "Miharu",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1348269",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1348269",
+   "sourceEntityLabel": "Miharu",
+   "latitude": 37.440555555555555,
+   "longitude": 140.49322222222222,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q9149093",
+   "label": "mountaineer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Junko Tabei, Jaapani alpinist 85.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Junko%20Tabei%2C%20Jaapani%20alpinist%2085.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Junko_Tabei,_Jaapani_alpinist_85.jpg",
+  "width": 1415,
+  "height": 1174,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Jaan Künnap",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

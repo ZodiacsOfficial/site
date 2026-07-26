@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sally-ride",
+ "qid": "Q49285",
+ "displayName": "Sally Ride",
+ "wikidataLabel": "Sally Ride",
+ "wikidataDescription": "American astronaut and physicist (1951–2012)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q49285",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520569097
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sally Ride",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sally_Ride",
+   "pageId": 94289,
+   "revisionId": 1365691685,
+   "revisionTimestamp": "2026-07-23T22:15:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1951-05-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1951-05-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1951-05-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2012-07-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q65",
+  "label": "Los Angeles",
+  "entityUrl": "https://www.wikidata.org/wiki/Q65",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q65",
+   "sourceEntityLabel": "Los Angeles",
+   "latitude": 34.05223,
+   "longitude": -118.24368,
+   "precision": 0.10842311330607,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q11631",
+   "label": "astronaut"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sally Ride (1984).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sally%20Ride%20(1984).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sally_Ride_(1984).jpg",
+  "width": 2790,
+  "height": 3487,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "NASA; retouched by Coffeeandcrumbs",
+  "credit": "Description page (direct image link)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

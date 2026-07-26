@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jim-morrison",
+  "seedRound": 0,
+  "qid": "Q44301",
+  "displayName": "Jim Morrison",
+  "identity": "Singer-songwriter and lyricist · United States · 1943–1971",
+  "title": "Jim Morrison's birth chart",
+  "metaDescription": "Jim Morrison's chart, computed from a sourced birth date: Sun at 15.7° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 9.3° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.70",
+        "decan:sagittarius:second"
+      ],
+      "text": "At the noon reference the Sun sits 15.7° into Sagittarius — the second decan, which the old scheme hands to Mars. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:0.9°",
+        "personal:Mars:Gemini:11.7°"
+      ],
+      "text": "The personal planets sit Mercury at 0.9° Capricorn, Mars at 11.7° Gemini. Mercury in a earth sign reads as thought with its feet on the ground; Mars in a air sign reads as effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Venus:sextile:0.5",
+        "aspect:Uranus:Pluto:sextile:2.12",
+        "aspect:Uranus:Neptune:trine:2.44"
+      ],
+      "text": "Closest first: Mercury to Venus, a sextile with 0.5° of slack. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Uranus sextile Pluto at 2.1°, and Uranus trine Neptune at 2.4° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. The Moon in Taurus at 9.3° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire3-earth2",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:4",
+        "sign-uncertain:Venus:libra:scorpio"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 4, fire 3, earth 2, and mutable 4, fixed 3, cardinal 2 across the modes. Venus crossed from Libra into Scorpio during that day, so its sign is left open. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Mars, Saturn, Uranus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:13.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.4° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 9.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-8/",
+    "label": "Everyone born on December 8"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:15.70",
+    "decan:sagittarius:second",
+    "personal:Mercury:Capricorn:0.9°",
+    "personal:Mars:Gemini:11.7°",
+    "aspect:Mercury:Venus:sextile:0.5",
+    "aspect:Uranus:Pluto:sextile:2.12",
+    "aspect:Uranus:Neptune:trine:2.44",
+    "figure:none",
+    "dignity:Moon:exaltation",
+    "elements:air4-fire3-earth2",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:4",
+    "sign-uncertain:Venus:libra:scorpio",
+    "moon-sign:taurus",
+    "moon-band:13.4"
+  ],
+  "measurements": {
+    "originalWords": 408,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

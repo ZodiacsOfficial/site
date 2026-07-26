@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hank-williams",
+ "qid": "Q206181",
+ "displayName": "Hank Williams",
+ "wikidataLabel": "Hank Williams",
+ "wikidataDescription": "American singer-songwriter (1923–1953)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q206181",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518741750
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hank Williams",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hank_Williams",
+   "pageId": 163416,
+   "revisionId": 1364521007,
+   "revisionTimestamp": "2026-07-17T01:36:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1923-09-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-09-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1923-09-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1953-01-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1274884",
+  "label": "Mount Olive",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1274884",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1274884",
+   "sourceEntityLabel": "Mount Olive",
+   "latitude": 33.684191,
+   "longitude": -86.875139,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q2914170",
+   "label": "street artist"
+  },
+  {
+   "entity": "Q66763670",
+   "label": "country musician"
+  },
+  {
+   "entity": "Q21234378",
+   "label": "yodeler"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hank Williams Promotional Photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hank%20Williams%20Promotional%20Photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hank_Williams_Promotional_Photo.jpg",
+  "width": 1570,
+  "height": 2048,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "WSM radio",
+  "credit": "The New York Times archived link",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

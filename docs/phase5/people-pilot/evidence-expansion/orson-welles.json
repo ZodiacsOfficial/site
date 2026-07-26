@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "orson-welles",
+ "qid": "Q24829",
+ "displayName": "Orson Welles",
+ "wikidataLabel": "Orson Welles",
+ "wikidataDescription": "American actor and filmmaker (1915–1985)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q24829",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522868119
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Orson Welles",
+   "articleUrl": "https://en.wikipedia.org/wiki/Orson_Welles",
+   "pageId": 22196,
+   "revisionId": 1365242736,
+   "revisionTimestamp": "2026-07-21T04:32:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-05-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-05-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-05-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1985-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q462161",
+  "label": "Kenosha",
+  "entityUrl": "https://www.wikidata.org/wiki/Q462161",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q462161",
+   "sourceEntityLabel": "Kenosha",
+   "latitude": 42.582222222222,
+   "longitude": -87.845555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q15855449",
+   "label": "magician"
+  },
+  {
+   "entity": "Q948329",
+   "label": "character actor"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q2722764",
+   "label": "radio personality"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q1759246",
+   "label": "theatrical producer"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q2405480",
+   "label": "voice actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Orson Welles 1937 cr3-4.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Orson%20Welles%201937%20cr3-4.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Orson_Welles_1937_cr3-4.jpg",
+  "width": 2664,
+  "height": 3552,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID van.5a52776.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

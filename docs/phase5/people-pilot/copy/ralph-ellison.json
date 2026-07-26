@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ralph-ellison",
+  "seedRound": 1,
+  "qid": "Q299965",
+  "displayName": "Ralph Ellison",
+  "identity": "Writer · United States · 1914–1994",
+  "title": "Ralph Ellison's birth chart",
+  "metaDescription": "Ralph Ellison's chart, computed from a sourced birth date: Sun at 10.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a trine to Neptune at 1.0° — close enough to weld thinking to imagination. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Mercury:Neptune:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.33",
+        "decan:pisces:second"
+      ],
+      "text": "10.3° of Pisces is the Sun's exact seat — second decan, 10°–20°, sub-ruled by the Moon in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:24.8°",
+        "personal:Venus:Pisces:14.7°",
+        "personal:Mars:Cancer:7.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Pisces (24.8°), Venus in Pisces (14.7°), Mars in Cancer (7.3°): thought steeped in tone and memory, attraction that works by atmosphere, effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:conjunction:0.4",
+        "aspect:Mercury:Neptune:trine:0.99",
+        "aspect:Sun:Saturn:square:1.19"
+      ],
+      "text": "Closest first: Jupiter to Uranus, a conjunction with 0.4° of slack. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Mercury trine Neptune at 1.0°, and the Sun square Saturn at 1.2° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Mercury in Pisces at 24.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 14.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Cancer at 7.3° is in fall. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air4",
+        "modalities:mutable5-cardinal2-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: water 5, air 4 across the elements, and mutable 5, cardinal 2, fixed 2 across the modalities. No settled placement falls in fire or earth — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde. Mercury changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 11.8° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-1/",
+    "label": "Everyone born on March 1"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Neptune:trine",
+    "sun-degree:10.33",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:24.8°",
+    "personal:Venus:Pisces:14.7°",
+    "personal:Mars:Cancer:7.3°",
+    "aspect:Jupiter:Uranus:conjunction:0.4",
+    "aspect:Mercury:Neptune:trine:0.99",
+    "aspect:Sun:Saturn:square:1.19",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:fall",
+    "elements:water5-air4",
+    "modalities:mutable5-cardinal2-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 398,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

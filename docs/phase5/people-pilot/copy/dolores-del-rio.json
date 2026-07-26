@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "dolores-del-rio",
+  "seedRound": 0,
+  "qid": "Q124057",
+  "displayName": "Dolores del Río",
+  "identity": "Actor and singer · Mexico · 1904–1983",
+  "title": "Dolores del Río's birth chart",
+  "metaDescription": "Dolores del Río's chart, computed from a sourced birth date: Sun at 10.9° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 10.9° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.95",
+        "decan:leo:second"
+      ],
+      "text": "Leo, but precisely: 10.9°, second decan, 10°–20°, under Jupiter in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:3.4°",
+        "personal:Venus:Leo:18.3°",
+        "personal:Mars:Cancer:22.6°"
+      ],
+      "text": "For the fast movers, Mercury was at 3.4° Virgo, Venus was at 18.3° Leo, Mars was at 22.6° Cancer. Read together: a mind that trusts the measured and the checked; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:opposition:0.09",
+        "aspect:Venus:Pluto:sextile:3.04",
+        "aspect:Saturn:Pluto:trine:3.13"
+      ],
+      "text": "Start where the chart is tightest — Venus opposition Saturn, 0.1° of separation. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Venus sextile Pluto at 3.0°, and Saturn trine Pluto at 3.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Mars"
+      ],
+      "text": "Mars stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mercury:exaltation",
+        "dignity:Mars:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Sun in Leo at 10.9° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 3.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Cancer at 22.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aquarius at 18.2° is in domicile. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water2-air2-earth1",
+        "modalities:fixed3-mutable3-cardinal3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives fire 4, water 2, air 2, earth 1, and fixed 3, mutable 3, cardinal 3 across the modes. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Saturn and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 12.2° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-3/",
+    "label": "Everyone born on August 3"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:10.95",
+    "decan:leo:second",
+    "personal:Mercury:Virgo:3.4°",
+    "personal:Venus:Leo:18.3°",
+    "personal:Mars:Cancer:22.6°",
+    "aspect:Venus:Saturn:opposition:0.09",
+    "aspect:Venus:Pluto:sextile:3.04",
+    "aspect:Saturn:Pluto:trine:3.13",
+    "figure:unaspected:Mars",
+    "dignity:Sun:domicile",
+    "dignity:Mercury:exaltation",
+    "dignity:Mars:fall",
+    "dignity:Saturn:domicile",
+    "elements:fire4-water2-air2-earth1",
+    "modalities:fixed3-mutable3-cardinal3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 444,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

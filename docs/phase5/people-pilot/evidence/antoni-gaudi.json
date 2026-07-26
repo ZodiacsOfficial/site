@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "antoni-gaudi",
+ "qid": "Q25328",
+ "displayName": "Antoni Gaudí",
+ "wikidataLabel": "Antoni Gaudí",
+ "wikidataDescription": "Catalan architect (1852–1926)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q25328",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516834052
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Antoni Gaudí",
+   "articleUrl": "https://en.wikipedia.org/wiki/Antoni_Gaud%C3%AD",
+   "pageId": 31566384,
+   "revisionId": 1363837386,
+   "revisionTimestamp": "2026-07-12T19:53:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1852-06-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1852-06-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1852-06-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1926-06-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q487096",
+  "label": "Reus",
+  "entityUrl": "https://www.wikidata.org/wiki/Q487096",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q487096",
+   "sourceEntityLabel": "Reus",
+   "latitude": 41.15487,
+   "longitude": 1.10871,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q683754",
+   "label": "drafter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gaudí (1878).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gaud%C3%AD%20(1878).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gaud%C3%AD_(1878).jpg",
+  "width": 1080,
+  "height": 1375,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Pau Audouard Deglaire",
+  "credit": "AA.VV., Gaudí 2002. Misceŀlània, Ed. Planeta, Barcelona (2002), ISBN 84-9708-093-9",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

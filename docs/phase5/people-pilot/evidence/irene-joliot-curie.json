@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "irene-joliot-curie",
+ "qid": "Q7504",
+ "displayName": "Irène Joliot-Curie",
+ "wikidataLabel": "Irène Joliot-Curie",
+ "wikidataDescription": "French chemist and physicist (1897–1956)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7504",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522909306
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Irène Joliot-Curie",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ir%C3%A8ne_Joliot-Curie",
+   "pageId": 62070,
+   "revisionId": 1365590176,
+   "revisionTimestamp": "2026-07-23T09:15:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1897-09-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-09-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-09-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1956-03-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q175129",
+  "label": "13th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q175129",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q175129",
+   "sourceEntityLabel": "13th arrondissement of Paris",
+   "latitude": 48.832222222222,
+   "longitude": 2.3555555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q1650915",
+   "label": "researcher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Joliot-curie.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Joliot-curie.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Joliot-curie.jpg",
+  "width": 992,
+  "height": 1488,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nobel Foundation",
+  "credit": "https://nobelprize.org/nobel_prizes/chemistry/laureates/1935/joliot-curie-bio.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

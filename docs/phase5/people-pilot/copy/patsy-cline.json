@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "patsy-cline",
+  "seedRound": 0,
+  "qid": "Q273080",
+  "displayName": "Patsy Cline",
+  "identity": "Singer · United States · 1932–1963",
+  "title": "Patsy Cline's birth chart",
+  "metaDescription": "Patsy Cline's chart, computed from a sourced birth date: Sun at 15.8° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a square: Mars and Uranus within 0.2°, drive wired to disruption. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Mars:Uranus:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.77",
+        "decan:virgo:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 15.8° Virgo: the second decan, whose classical sub-ruler is Saturn. A earth sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Leo:29.0°",
+        "personal:Mars:Cancer:22.5°"
+      ],
+      "text": "Closer in, Mercury stands at 29.0° Leo; Mars stands at 22.5° Cancer. The tradition reads a mind that decides at speaking speed from Mercury, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:square:0.22",
+        "aspect:Uranus:Pluto:square:0.29",
+        "aspect:Mars:Pluto:conjunction:0.51"
+      ],
+      "text": "Nothing in the geometry sits closer than Mars and Uranus: 0.2° from an exact square. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Uranus square Pluto at 0.3°, and Mars conjunction Pluto at 0.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Mars-Saturn:apex-Uranus"
+      ],
+      "text": "Mars opposes Saturn while both square Uranus. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:fall",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has three entries for this chart. Mars in Cancer at 22.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Virgo at 6.2° is in detriment — the planet opposite its home, working against the grain; Saturn in Capricorn at 28.6° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire2-water2",
+        "modalities:cardinal4-mutable3-fixed1",
+        "settled-signs:8",
+        "retrograde:2",
+        "sign-uncertain:Venus:cancer:leo"
+      ],
+      "text": "Of the 8 placements whose signs hold for the whole day: 4 in earth, 2 in fire, 2 in water by element, 4 cardinal, 3 mutable, 1 fixed by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Venus crossed from Cancer into Leo during that day, so its sign is left open. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Saturn and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 13.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-8/",
+    "label": "Everyone born on September 8"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:square",
+    "sun-degree:15.77",
+    "decan:virgo:second",
+    "personal:Mercury:Leo:29.0°",
+    "personal:Mars:Cancer:22.5°",
+    "aspect:Mars:Uranus:square:0.22",
+    "aspect:Uranus:Pluto:square:0.29",
+    "aspect:Mars:Pluto:conjunction:0.51",
+    "figure:t-square:Mars-Saturn:apex-Uranus",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth4-fire2-water2",
+    "modalities:cardinal4-mutable3-fixed1",
+    "settled-signs:8",
+    "retrograde:2",
+    "sign-uncertain:Venus:cancer:leo",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

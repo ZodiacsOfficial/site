@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ella-baker",
+ "qid": "Q468884",
+ "displayName": "Ella Baker",
+ "wikidataLabel": "Ella Josephine Baker",
+ "wikidataDescription": "African-American civil rights and human rights activist (1903–1986)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q468884",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517874888
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ella Baker",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ella_Baker",
+   "pageId": 716161,
+   "revisionId": 1351397494,
+   "revisionTimestamp": "2026-04-27T18:04:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-12-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-12-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-12-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1986-12-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49231",
+  "label": null,
+  "entityUrl": "https://www.wikidata.org/wiki/Q49231",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49231",
+   "sourceEntityLabel": "Q49231",
+   "latitude": 36.846944444444446,
+   "longitude": -76.28527777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q662729",
+   "label": "public figure"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ella Baker (1903-1986) circa 1944.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ella%20Baker%20(1903-1986)%20circa%201944.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ella_Baker_(1903-1986)_circa_1944.png",
+  "width": 349,
+  "height": 450,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "https://www.britannica.com/biography/Ella-Baker",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

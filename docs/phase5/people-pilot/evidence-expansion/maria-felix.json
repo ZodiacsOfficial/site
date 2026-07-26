@@ -1,0 +1,123 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maria-felix",
+ "qid": "Q465189",
+ "displayName": "María Félix",
+ "wikidataLabel": null,
+ "wikidataDescription": "Mexican actress (1914-2002)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q465189",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518079373
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "María Félix",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mar%C3%ADa_F%C3%A9lix",
+   "pageId": 49640,
+   "revisionId": 1350881475,
+   "revisionTimestamp": "2026-04-24T16:05:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1914-04-08T00:00:00Z|proleptic-gregorian",
+   "+1914-05-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-04-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   },
+   {
+    "time": "+1914-05-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-05-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2002-04-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q250531",
+  "label": "Álamos",
+  "entityUrl": "https://www.wikidata.org/wiki/Q250531",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q250531",
+   "sourceEntityLabel": "Álamos",
+   "latitude": 27.024166666666666,
+   "longitude": -108.935,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q4610556",
+   "label": "model"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:María Félix 1947 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mar%C3%ADa%20F%C3%A9lix%201947%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mar%C3%ADa_F%C3%A9lix_1947_(cropped).jpg",
+  "width": 638,
+  "height": 478,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown (Mondadori Publishers)",
+  "credit": "http://www.gettyimages.co.uk/detail/news-photo/mexican-actress-maria-f%C3%A9lix-wearing-a-lace-bodice-in-the-news-photo/186170693",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

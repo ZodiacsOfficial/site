@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "enrique-granados",
+ "qid": "Q294225",
+ "displayName": "Enrique Granados",
+ "wikidataLabel": "Enrique Granados",
+ "wikidataDescription": "Spanish pianist and composer (1867–1916)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q294225",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518191453
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Enrique Granados",
+   "articleUrl": "https://en.wikipedia.org/wiki/Enrique_Granados",
+   "pageId": 556449,
+   "revisionId": 1353917910,
+   "revisionTimestamp": "2026-05-13T04:37:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1867-07-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1867-07-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1867-07-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1916-03-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q15090",
+  "label": "Lleida",
+  "entityUrl": "https://www.wikidata.org/wiki/Q15090",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q15090",
+   "sourceEntityLabel": "Lleida",
+   "latitude": 41.616666666667,
+   "longitude": 0.63333333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Enric Granados - Ilustració Catalana.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Enric%20Granados%20-%20Ilustraci%C3%B3%20Catalana.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Enric_Granados_-_Ilustraci%C3%B3_Catalana.jpg",
+  "width": 499,
+  "height": 624,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Desconegut",
+  "credit": "https://hemerotecadigital.bne.es/hd/es/viewer?id=79325e2b-458a-40fc-ad8f-1048ace88dd9",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

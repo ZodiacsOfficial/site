@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "katherine-mansfield",
+ "qid": "Q270632",
+ "displayName": "Katherine Mansfield",
+ "wikidataLabel": "Katherine Mansfield",
+ "wikidataDescription": "New Zealand author (1888–1923)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q270632",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517601778
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Katherine Mansfield",
+   "articleUrl": "https://en.wikipedia.org/wiki/Katherine_Mansfield",
+   "pageId": 162903,
+   "revisionId": 1364937884,
+   "revisionTimestamp": "2026-07-19T11:38:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1888-10-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1888-10-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1888-10-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1923-01-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q23661",
+  "label": "Wellington",
+  "entityUrl": "https://www.wikidata.org/wiki/Q23661",
+  "country": {
+   "entity": "Q664",
+   "label": "New Zealand"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q23661",
+   "sourceEntityLabel": "Wellington",
+   "latitude": -41.288888888889,
+   "longitude": 174.77722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Katherine Mansfield (no signature).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Katherine%20Mansfield%20(no%20signature).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Katherine_Mansfield_(no_signature).jpg",
+  "width": 550,
+  "height": 880,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Original: UnknownUnknown Derivative work: Carnby",
+  "credit": "This file was derived from: Katherinemansfield.jpg:",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

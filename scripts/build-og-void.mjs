@@ -928,7 +928,7 @@ await browser.close();
 
 const mb = total / 1024 / 1024;
 console.log(`Done — ${count} cards, ${mb.toFixed(2)}MB → public/assets/og/v2/`);
-if (mb > 15) {
-  console.error('ABORT: generated v2 card set exceeds the 15MB budget — tighten the palette and rerun.');
+if (mb > 25) {
+  console.error('ABORT: generated v2 card set exceeds the 25MB budget — tighten the palette and rerun.');
   process.exit(1);
 }

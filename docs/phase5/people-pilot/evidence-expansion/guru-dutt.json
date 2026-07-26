@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "guru-dutt",
+ "qid": "Q149136",
+ "displayName": "Guru Dutt",
+ "wikidataLabel": "Guru Dutt",
+ "wikidataDescription": "Indian film director, producer, choreographer and actor (1925–1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q149136",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2514103372
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Guru Dutt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Guru_Dutt",
+   "pageId": 2081776,
+   "revisionId": 1363327518,
+   "revisionTimestamp": "2026-07-09T14:26:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-07-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-07-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-07-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1355",
+  "label": "Bengaluru",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1355",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1355",
+   "sourceEntityLabel": "Bengaluru",
+   "latitude": 12.9791198,
+   "longitude": 77.5912997,
+   "precision": 1e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q2490358",
+   "label": "choreographer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Guru Dutt crop.jpeg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Guru%20Dutt%20crop.jpeg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Guru_Dutt_crop.jpeg",
+  "width": 140,
+  "height": 175,
+  "licenseShortName": "GODL-India",
+  "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+  "artist": "Post of India",
+  "credit": "https://colnect.com/en/stamps/stamp/158537-Guru_Dutt-Theatre_Cinema-India",
+  "usageTerms": "Government Open Data License – India",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

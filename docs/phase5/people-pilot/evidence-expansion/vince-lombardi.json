@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "vince-lombardi",
+ "qid": "Q553321",
+ "displayName": "Vince Lombardi",
+ "wikidataLabel": "Vince Lombardi",
+ "wikidataDescription": "American football player, coach, and executive (1913-1970)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q553321",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518393954
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Vince Lombardi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Vince_Lombardi",
+   "pageId": 32641,
+   "revisionId": 1365147341,
+   "revisionTimestamp": "2026-07-20T15:17:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-06-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-06-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-06-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1970-09-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18419",
+  "label": "Brooklyn",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18419",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18419",
+   "sourceEntityLabel": "Brooklyn",
+   "latitude": 40.65083333333333,
+   "longitude": -73.94972222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q19204627",
+   "label": "American football player"
+  },
+  {
+   "entity": "Q42331263",
+   "label": "American football coach"
+  }
+ ],
+ "portrait": {
+  "file": "File:Vince Lombardi (1913-1970) in 1964.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Vince%20Lombardi%20(1913-1970)%20in%201964.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Vince_Lombardi_(1913-1970)_in_1964.jpg",
+  "width": 447,
+  "height": 1096,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://www.ebay.com/itm/165633577087",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

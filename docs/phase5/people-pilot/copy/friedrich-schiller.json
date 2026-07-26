@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "friedrich-schiller",
+  "seedRound": 0,
+  "qid": "Q22670",
+  "displayName": "Friedrich Schiller",
+  "identity": "Poet and university teacher · Germany · 1759–1805",
+  "title": "Friedrich Schiller's birth chart",
+  "metaDescription": "Friedrich Schiller's chart, computed from a sourced birth date: Sun at 17.8° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: the Sun and Jupiter within 0.6°, identity wired to expansion. A sixth of the circle is close enough for cooperation and far enough that it stays optional.",
+  "ledeFact": "aspect:Sun:Jupiter:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.80",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun sits at 17.8° Scorpio — the second decan, 10°–20°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Scorpio and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:20.8°",
+        "personal:Venus:Libra:29.6°",
+        "personal:Mars:Virgo:1.8°"
+      ],
+      "text": "For the fast movers, Mercury was at 20.8° Scorpio, Venus was at 29.6° Libra, Mars was at 1.8° Virgo. Read together: a mind that absorbs before it argues; taste led by wit and proportion; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:sextile:0.57",
+        "aspect:Mercury:Neptune:square:1.08",
+        "aspect:Sun:Neptune:square:1.94"
+      ],
+      "text": "The day's firmest angle joins the Sun and Jupiter — a sextile holding at 0.6°. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mercury square Neptune at 1.1°, and the Sun square Neptune at 1.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The classical table has two entries for this chart. Venus in Libra at 29.6° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 18.4° is in fall — the tradition’s uphill placement, strength earned rather than given. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth2-fire2-air1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements water 4, earth 2, fire 2, air 1; modalities mutable 4, fixed 3, cardinal 2. Venus, Saturn and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 13.1° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-10/",
+    "label": "Everyone born on November 10"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:sextile",
+    "sun-degree:17.80",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:20.8°",
+    "personal:Venus:Libra:29.6°",
+    "personal:Mars:Virgo:1.8°",
+    "aspect:Sun:Jupiter:sextile:0.57",
+    "aspect:Mercury:Neptune:square:1.08",
+    "aspect:Sun:Neptune:square:1.94",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:fall",
+    "elements:water4-earth2-fire2-air1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 385,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

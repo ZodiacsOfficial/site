@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "antonio-vivaldi",
+  "seedRound": 0,
+  "qid": "Q1340",
+  "displayName": "Antonio Vivaldi",
+  "identity": "Composer · Italy · 1678–1741",
+  "title": "Antonio Vivaldi's birth chart",
+  "metaDescription": "Antonio Vivaldi's chart, computed from a sourced birth date: Sun at 14.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, mutable leads with three. Mutable signs end their seasons, and a mutable-heavy chart is read as one built for adaptation and hand-off rather than for standing still.",
+  "ledeFact": "modality:mutable:3",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.28",
+        "decan:pisces:second"
+      ],
+      "text": "The Sun's position resolves to 14.3° Pisces — deep enough in the second decan (10°–20°) that the Moon, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aquarius:25.6°",
+        "personal:Venus:Aries:27.9°",
+        "personal:Mars:Aquarius:24.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aquarius (25.6°), Venus in Aries (27.9°), Mars in Aquarius (24.2°): thought that travels by comparison, attraction declared rather than implied, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:conjunction:1.42",
+        "aspect:Jupiter:Pluto:trine:2.21",
+        "aspect:Mercury:Venus:sextile:2.3"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury in the same degree of the zodiac from Mars, 1.4° off exact. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Jupiter trine Pluto at 2.2°, and Mercury sextile Venus at 2.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Aries at 27.9° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 11.3° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-fire2",
+        "modalities:mutable3-fixed3-cardinal3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements air 4, water 3, fire 2; modalities mutable 3, fixed 3, cardinal 3. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mercury and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 11.8° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-4/",
+    "label": "Everyone born on March 4"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:3",
+    "sun-degree:14.28",
+    "decan:pisces:second",
+    "personal:Mercury:Aquarius:25.6°",
+    "personal:Venus:Aries:27.9°",
+    "personal:Mars:Aquarius:24.2°",
+    "aspect:Mercury:Mars:conjunction:1.42",
+    "aspect:Jupiter:Pluto:trine:2.21",
+    "aspect:Mercury:Venus:sextile:2.3",
+    "figure:none",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:air4-water3-fire2",
+    "modalities:mutable3-fixed3-cardinal3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 402,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "e-e-cummings",
+ "qid": "Q298703",
+ "displayName": "E. E. Cummings",
+ "wikidataLabel": "E. E. Cummings",
+ "wikidataDescription": "American author (1894–1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q298703",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517676059
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "E. E. Cummings",
+   "articleUrl": "https://en.wikipedia.org/wiki/E._E._Cummings",
+   "pageId": 9591,
+   "revisionId": 1364371598,
+   "revisionTimestamp": "2026-07-16T04:10:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1894-10-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1894-10-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1894-10-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-09-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49111",
+  "label": "Cambridge",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49111",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49111",
+   "sourceEntityLabel": "Cambridge",
+   "latitude": 42.375,
+   "longitude": -71.106111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:E. E. Cummings NYWTS.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:E.%20E.%20Cummings%20NYWTS.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:E._E._Cummings_NYWTS.jpg",
+  "width": 1014,
+  "height": 1750,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "New York World-Telegram and the Sun staff photographer: Albertin, Walter, photographer.",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c13649.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "duke-ellington",
+ "qid": "Q4030",
+ "displayName": "Duke Ellington",
+ "wikidataLabel": "Duke Ellington",
+ "wikidataDescription": "American jazz pianist and composer (1899–1974)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4030",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520454347
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Duke Ellington",
+   "articleUrl": "https://en.wikipedia.org/wiki/Duke_Ellington",
+   "pageId": 41536,
+   "revisionId": 1362926928,
+   "revisionTimestamp": "2026-07-07T01:07:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-04-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-04-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-04-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1974-05-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q61",
+  "label": "Washington, D.C.",
+  "entityUrl": "https://www.wikidata.org/wiki/Q61",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q61",
+   "sourceEntityLabel": "Washington, D.C.",
+   "latitude": 38.895,
+   "longitude": -77.036666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q1643514",
+   "label": "music arranger"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q64741705",
+   "label": "jazz arranger"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Duke Ellington - publicity.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Duke%20Ellington%20-%20publicity.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Duke_Ellington_-_publicity.JPG",
+  "width": 1049,
+  "height": 1279,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "eBay",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

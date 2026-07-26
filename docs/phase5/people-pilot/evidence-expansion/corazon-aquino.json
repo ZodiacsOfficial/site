@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "corazon-aquino",
+ "qid": "Q1480",
+ "displayName": "Corazon Aquino",
+ "wikidataLabel": "Corazon Aquino",
+ "wikidataDescription": "President of the Philippines from 1986 to 1992",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1480",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517819870
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Corazon Aquino",
+   "articleUrl": "https://en.wikipedia.org/wiki/Corazon_Aquino",
+   "pageId": 279605,
+   "revisionId": 1365136873,
+   "revisionTimestamp": "2026-07-20T13:39:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1933-01-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1933-01-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1933-01-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-08-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q56457",
+  "label": "Paniqui",
+  "entityUrl": "https://www.wikidata.org/wiki/Q56457",
+  "country": {
+   "entity": "Q928",
+   "label": "Philippines"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q56457",
+   "sourceEntityLabel": "Paniqui",
+   "latitude": 15.668055555555556,
+   "longitude": 120.57888888888888,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  }
+ ],
+ "portrait": {
+  "file": "File:Corazon Aquino 1986.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Corazon%20Aquino%201986.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Corazon_Aquino_1986.jpg",
+  "width": 894,
+  "height": 1192,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Airman Gerald B. Johnson",
+  "credit": "This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

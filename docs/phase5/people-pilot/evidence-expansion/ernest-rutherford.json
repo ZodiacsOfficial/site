@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ernest-rutherford",
+ "qid": "Q9123",
+ "displayName": "Ernest Rutherford",
+ "wikidataLabel": "Ernest Rutherford",
+ "wikidataDescription": "New Zealand physicist (1871–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9123",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522915458
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ernest Rutherford",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ernest_Rutherford",
+   "pageId": 9603,
+   "revisionId": 1361411894,
+   "revisionTimestamp": "2026-06-27T19:55:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1871-08-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1871-08-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1871-08-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-10-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q65430768",
+  "label": "Spring Grove",
+  "entityUrl": "https://www.wikidata.org/wiki/Q65430768",
+  "country": {
+   "entity": "Q664",
+   "label": "New Zealand"
+  },
+  "claimCount": 3,
+  "coordinates": {
+   "sourceEntity": "Q65430768",
+   "sourceEntityLabel": "Spring Grove",
+   "latitude": -41.388,
+   "longitude": 173.079,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ernest Rutherford LOC.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ernest%20Rutherford%20LOC.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ernest_Rutherford_LOC.jpg",
+  "width": 3190,
+  "height": 4279,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "George Grantham Bain Collection (Library of Congress)",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ggbain.36570.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

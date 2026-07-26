@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "josephine-baker",
+ "qid": "Q151972",
+ "displayName": "Josephine Baker",
+ "wikidataLabel": "Josephine Baker",
+ "wikidataDescription": "American-born French dancer, singer and actress (1906–1975)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q151972",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517399662
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Josephine Baker",
+   "articleUrl": "https://en.wikipedia.org/wiki/Josephine_Baker",
+   "pageId": 255083,
+   "revisionId": 1365529017,
+   "revisionTimestamp": "2026-07-23T01:02:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-06-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-06-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-06-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1975-04-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q38022",
+  "label": "St. Louis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q38022",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q38022",
+   "sourceEntityLabel": "St. Louis",
+   "latitude": 38.62638888888889,
+   "longitude": -90.19944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q3178518",
+   "label": "vedette"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2914170",
+   "label": "street artist"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q4610556",
+   "label": "model"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q5121444",
+   "label": "intelligence officer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  }
+ ],
+ "portrait": {
+  "file": "File:Baker Harcourt 1940 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Baker%20Harcourt%201940%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Baker_Harcourt_1940_2.jpg",
+  "width": 540,
+  "height": 756,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Studio Harcourt",
+  "credit": "RMN",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

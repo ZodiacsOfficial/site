@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "peggy-lee",
+ "qid": "Q229139",
+ "displayName": "Peggy Lee",
+ "wikidataLabel": "Peggy Lee",
+ "wikidataDescription": "American singer (1920–2002)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q229139",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517448959
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Peggy Lee",
+   "articleUrl": "https://en.wikipedia.org/wiki/Peggy_Lee",
+   "pageId": 25147,
+   "revisionId": 1364618173,
+   "revisionTimestamp": "2026-07-17T15:40:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-05-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-05-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-05-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2002-01-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1052658",
+  "label": "Jamestown",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1052658",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1052658",
+   "sourceEntityLabel": "Jamestown",
+   "latitude": 46.910555555555554,
+   "longitude": -98.70844444444444,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q2722764",
+   "label": "radio personality"
+  },
+  {
+   "entity": "Q2405480",
+   "label": "voice actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q66314404",
+   "label": "jazz singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Peggy Lee 1950.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Peggy%20Lee%201950.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Peggy_Lee_1950.JPG",
+  "width": 719,
+  "height": 884,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "General Artists Corporation (management)",
+  "credit": "eBay item photo front photo back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

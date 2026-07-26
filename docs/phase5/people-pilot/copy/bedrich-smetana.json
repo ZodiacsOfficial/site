@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bedrich-smetana",
+  "seedRound": 0,
+  "qid": "Q48173",
+  "displayName": "Bedřich Smetana",
+  "identity": "Composer and teacher · Czech Republic · 1824–1884",
+  "title": "Bedřich Smetana's birth chart",
+  "metaDescription": "Bedřich Smetana's chart, computed from a sourced birth date: Sun at 11.9° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, cardinal leads with five. The cardinal signs begin things; a chart weighted there treats every stall as a starting gun.",
+  "ledeFact": "modality:cardinal:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.87",
+        "decan:pisces:second"
+      ],
+      "text": "The Sun's exact place is 11.9° Pisces. That falls in the second decan, 10°–20°, sub-ruled by the Moon in the classical scheme — a water sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:15.0°",
+        "personal:Venus:Aquarius:4.4°",
+        "personal:Mars:Libra:11.7°"
+      ],
+      "text": "Closer in, Mercury stands at 15.0° Aquarius; Venus stands at 4.4° Aquarius; Mars stands at 11.7° Libra. The tradition reads a mind at home in argument and pattern from Mercury, taste led by wit and proportion from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:square:0.03",
+        "aspect:Mars:Neptune:square:2.53",
+        "aspect:Sun:Neptune:sextile:2.67"
+      ],
+      "text": "Jupiter and Pluto hold the closest angle here — a square, 0.0° wide. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Mars square Neptune at 2.5°, and the Sun sextile Neptune at 2.7° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mars in Libra at 11.7° is in detriment — the planet opposite its home, working against the grain; Jupiter in Cancer at 1.1° is in exaltation — the tradition’s honoured-guest placement, working at its best. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth3-water2-fire1",
+        "modalities:cardinal5-fixed3-mutable1",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 3, earth 3, water 2, fire 1, and cardinal 5, fixed 3, mutable 1 across the modes. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Mars was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 12.3° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-2/",
+    "label": "Everyone born on March 2"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:5",
+    "sun-degree:11.87",
+    "decan:pisces:second",
+    "personal:Mercury:Aquarius:15.0°",
+    "personal:Venus:Aquarius:4.4°",
+    "personal:Mars:Libra:11.7°",
+    "aspect:Jupiter:Pluto:square:0.03",
+    "aspect:Mars:Neptune:square:2.53",
+    "aspect:Sun:Neptune:sextile:2.67",
+    "figure:none",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:exaltation",
+    "elements:air3-earth3-water2-fire1",
+    "modalities:cardinal5-fixed3-mutable1",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 429,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

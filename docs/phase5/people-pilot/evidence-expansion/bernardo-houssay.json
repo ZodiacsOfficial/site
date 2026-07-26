@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bernardo-houssay",
+ "qid": "Q237160",
+ "displayName": "Bernardo Houssay",
+ "wikidataLabel": "Bernardo Houssay",
+ "wikidataDescription": "Argentine physician (1887–1971)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q237160",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2501628535
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bernardo Houssay",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bernardo_Houssay",
+   "pageId": 252453,
+   "revisionId": 1364429144,
+   "revisionTimestamp": "2026-07-16T13:22:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1887-04-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1887-04-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1887-04-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1971-09-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1486",
+  "label": "Buenos Aires",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1486",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1486",
+   "sourceEntityLabel": "Buenos Aires",
+   "latitude": -34.599722222222,
+   "longitude": -58.381944444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q105186",
+   "label": "pharmacist"
+  },
+  {
+   "entity": "Q3055126",
+   "label": "entomologist"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bernado Houssay.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bernado%20Houssay.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bernado_Houssay.JPG",
+  "width": 199,
+  "height": 305,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unknow (uploader Claudio Elias)",
+  "credit": "http://www.houssay.org.ar/ Houssay's page",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

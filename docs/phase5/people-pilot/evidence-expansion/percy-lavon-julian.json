@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "percy-lavon-julian",
+ "qid": "Q705852",
+ "displayName": "Percy Lavon Julian",
+ "wikidataLabel": "Percy Lavon Julian",
+ "wikidataDescription": "African-American chemist (1899-1975)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q705852",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2514135967
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Percy Lavon Julian",
+   "articleUrl": "https://en.wikipedia.org/wiki/Percy_Lavon_Julian",
+   "pageId": 430881,
+   "revisionId": 1354255914,
+   "revisionTimestamp": "2026-05-15T07:40:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-04-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-04-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-04-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1975-04-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q29364",
+  "label": "Montgomery",
+  "entityUrl": "https://www.wikidata.org/wiki/Q29364",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q29364",
+   "sourceEntityLabel": "Montgomery",
+   "latitude": 32.3675,
+   "longitude": -86.3,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Percy Lavon Julian (1899-1975) portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Percy%20Lavon%20Julian%20(1899-1975)%20portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Percy_Lavon_Julian_(1899-1975)_portrait.jpg",
+  "width": 430,
+  "height": 630,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "https://www.invent.org/inductees/percy-lavon-julian",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

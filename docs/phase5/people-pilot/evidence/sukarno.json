@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sukarno",
+ "qid": "Q76127",
+ "displayName": "Sukarno",
+ "wikidataLabel": "Sukarno",
+ "wikidataDescription": "1st President of Indonesia (1901—1970)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q76127",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518088758
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sukarno",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sukarno",
+   "pageId": 217512,
+   "revisionId": 1363773950,
+   "revisionTimestamp": "2026-07-12T09:48:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1901-06-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-06-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-06-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1970-06-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11462",
+  "label": "Surabaya",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11462",
+  "country": {
+   "entity": "Q252",
+   "label": "Indonesia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11462",
+   "sourceEntityLabel": "Surabaya",
+   "latitude": -7.246283611111111,
+   "longitude": 112.73776722222222,
+   "precision": 2.7777777777777776e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Presiden Sukarno.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Presiden%20Sukarno.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Presiden_Sukarno.jpg",
+  "width": 3156,
+  "height": 4557,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Onbekend/Anonymous",
+  "credit": "KITLV 2691",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

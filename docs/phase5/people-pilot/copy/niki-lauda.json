@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "niki-lauda",
+  "seedRound": 0,
+  "qid": "Q78489",
+  "displayName": "Niki Lauda",
+  "identity": "Formula One driver · Austria · 1949–2019",
+  "title": "Niki Lauda's birth chart",
+  "metaDescription": "Niki Lauda's chart, computed from a sourced birth date: Sun at 3.5° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: the Sun and Saturn within 0.8°, identity wired to structure. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine.",
+  "ledeFact": "aspect:Sun:Saturn:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.51",
+        "decan:pisces:first"
+      ],
+      "text": "The Sun sits at 3.5° Pisces — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Pisces and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:7.4°",
+        "personal:Venus:Aquarius:20.1°",
+        "personal:Mars:Pisces:8.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 7.4° Aquarius, Venus was at 20.1° Aquarius, Mars was at 8.5° Pisces. Read together: a mind at home in argument and pattern; taste led by wit and proportion; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:sextile:0.15",
+        "aspect:Sun:Saturn:opposition:0.77",
+        "aspect:Sun:Mars:conjunction:4.95"
+      ],
+      "text": "The tightest geometry in the chart puts Neptune a sixth of the circle apart from Pluto, 0.1° off exact. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, the Sun opposition Saturn at 0.8°, and the Sun conjunction Mars at 5.0° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Jupiter stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, one sits in a sign it has an opinion about. Jupiter in Capricorn at 22.0° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water2-earth2-fire1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 air, 2 water, 2 earth, 1 fire by element and 4 mutable, 3 fixed, 2 cardinal by modality. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Saturn, Uranus, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.7° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-22/",
+    "label": "Everyone born on February 22"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Saturn:opposition",
+    "sun-degree:3.51",
+    "decan:pisces:first",
+    "personal:Mercury:Aquarius:7.4°",
+    "personal:Venus:Aquarius:20.1°",
+    "personal:Mars:Pisces:8.5°",
+    "aspect:Neptune:Pluto:sextile:0.15",
+    "aspect:Sun:Saturn:opposition:0.77",
+    "aspect:Sun:Mars:conjunction:4.95",
+    "figure:unaspected:Jupiter",
+    "dignity:Jupiter:fall",
+    "elements:air4-water2-earth2-fire1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 398,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

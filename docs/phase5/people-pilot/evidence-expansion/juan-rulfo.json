@@ -1,0 +1,123 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "juan-rulfo",
+ "qid": "Q200661",
+ "displayName": "Juan Rulfo",
+ "wikidataLabel": "Juan Rulfo",
+ "wikidataDescription": "Mexican writer (1917–1986)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q200661",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515851355
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Juan Rulfo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Juan_Rulfo",
+   "pageId": 251728,
+   "revisionId": 1349748844,
+   "revisionTimestamp": "2026-04-18T19:29:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1917-05-16T00:00:00Z|proleptic-gregorian",
+   "+1918-05-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-05-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1918-05-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-05-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1986-01-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3311403",
+  "label": "Sayula Municipality",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3311403",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3311403",
+   "sourceEntityLabel": "Sayula Municipality",
+   "latitude": 19.85,
+   "longitude": -103.6,
+   "precision": 0.016666666666666666,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rulfo por Lyon.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rulfo%20por%20Lyon.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rulfo_por_Lyon.jpg",
+  "width": 724,
+  "height": 1008,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

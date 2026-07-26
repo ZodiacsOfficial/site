@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bob-marley",
+ "qid": "Q409",
+ "displayName": "Bob Marley",
+ "wikidataLabel": "Bob Marley",
+ "wikidataDescription": "Jamaican reggae musician (1945–1981)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q409",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520549043
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bob Marley",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bob_Marley",
+   "pageId": 8239846,
+   "revisionId": 1365949227,
+   "revisionTimestamp": "2026-07-25T10:42:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1945-02-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1945-02-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1945-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1981-05-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1799655",
+  "label": "Nine Mile",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1799655",
+  "country": {
+   "entity": "Q766",
+   "label": "Jamaica"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1799655",
+   "sourceEntityLabel": "Nine Mile",
+   "latitude": 18.2978,
+   "longitude": -77.2781,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bob Marley 1976 press photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bob%20Marley%201976%20press%20photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bob_Marley_1976_press_photo.jpg",
+  "width": 655,
+  "height": 862,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Dennis Morris; Distributed by Island Records",
+  "credit": "Worthpoint Archived",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

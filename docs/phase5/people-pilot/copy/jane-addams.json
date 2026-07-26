@@ -1,0 +1,101 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jane-addams",
+  "seedRound": 0,
+  "qid": "Q180989",
+  "displayName": "Jane Addams",
+  "identity": "Journalist and women's rights activist · United States · 1860–1935",
+  "title": "Jane Addams's birth chart",
+  "metaDescription": "Jane Addams's chart, computed from a sourced birth date: Sun at 14.3° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mercury and Saturn sit 0.7° from an exact conjunction — near enough that the tradition reads thinking and structure as a single working part. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other.",
+  "ledeFact": "aspect:Mercury:Saturn:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.30",
+        "decan:virgo:second"
+      ],
+      "text": "Virgo, but precisely: 14.3°, second decan, 10°–20°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:conjunction:0.69",
+        "aspect:Venus:Neptune:trine:1.91",
+        "aspect:Sun:Uranus:square:2.33"
+      ],
+      "text": "Mercury to Saturn is the closest call of the day, a conjunction within 0.7°. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Venus trine Neptune at 1.9°, and the Sun square Uranus at 2.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation"
+      ],
+      "text": "One planet here sits in a sign the classical scheme scores. Mars in Capricorn at 21.8° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire1-air1-water1",
+        "modalities:mutable4-fixed2-cardinal1",
+        "settled-signs:7",
+        "retrograde:2",
+        "sign-uncertain:Mercury:leo:virgo",
+        "sign-uncertain:Venus:cancer:leo"
+      ],
+      "text": "Among the 7 placements whose signs hold for the whole day, the elements divide 4 earth, 1 fire, 1 air, 1 water; by modality, 4 mutable, 2 fixed, 1 cardinal. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Mercury crossed from Leo into Virgo during that day, so its sign is left open. Venus crossed from Cancer into Leo during that day, so its sign is left open. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 12.3° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-6/",
+    "label": "Everyone born on September 6"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Saturn:conjunction",
+    "sun-degree:14.30",
+    "decan:virgo:second",
+    "aspect:Mercury:Saturn:conjunction:0.69",
+    "aspect:Venus:Neptune:trine:1.91",
+    "aspect:Sun:Uranus:square:2.33",
+    "figure:unaspected:Moon",
+    "dignity:Mars:exaltation",
+    "elements:earth4-fire1-air1-water1",
+    "modalities:mutable4-fixed2-cardinal1",
+    "settled-signs:7",
+    "retrograde:2",
+    "sign-uncertain:Mercury:leo:virgo",
+    "sign-uncertain:Venus:cancer:leo",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 376,
+    "substantiveStatements": 15,
+    "blocks": 6
+  }
+}

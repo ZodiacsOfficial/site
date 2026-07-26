@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "robert-frost",
+ "qid": "Q168728",
+ "displayName": "Robert Frost",
+ "wikidataLabel": "Robert Frost",
+ "wikidataDescription": "American poet (1874–1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q168728",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522504998
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Robert Frost",
+   "articleUrl": "https://en.wikipedia.org/wiki/Robert_Frost",
+   "pageId": 25951,
+   "revisionId": 1365690246,
+   "revisionTimestamp": "2026-07-23T22:02:38Z"
+  }
+ },
+ "birth": {
+  "claimCount": 4,
+  "distinctDayPrecisionValues": [
+   "+1874-03-26T00:00:00Z|proleptic-gregorian",
+   "+1874-03-24T00:00:00Z|proleptic-gregorian",
+   "+1874-03-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1874-03-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1874-03-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1874-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1874-03-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1874-03-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-01-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q62",
+  "label": "San Francisco",
+  "entityUrl": "https://www.wikidata.org/wiki/Q62",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q62",
+   "sourceEntityLabel": "San Francisco",
+   "latitude": 37.775,
+   "longitude": -122.41944444444445,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:Robert Frost NYWTS.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Robert%20Frost%20NYWTS.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Robert_Frost_NYWTS.jpg",
+  "width": 2177,
+  "height": 2837,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Fred Palumbo, World Telegram staff photographer",
+  "credit": "Library of Congress. New York World-Telegram & Sun Collection. http://hdl.loc.gov/loc.pnp/cph.3c20742",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

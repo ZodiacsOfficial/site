@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "james-clerk-maxwell",
+  "seedRound": 0,
+  "qid": "Q9095",
+  "displayName": "James Clerk Maxwell",
+  "identity": "Physicist and photographer · United Kingdom · 1831–1879",
+  "title": "James Clerk Maxwell's birth chart",
+  "metaDescription": "James Clerk Maxwell's chart, computed from a sourced birth date: Sun at 21.7° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a trine: the Sun and Jupiter within 0.7°, identity wired to expansion. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Sun:Jupiter:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.67",
+        "decan:gemini:third"
+      ],
+      "text": "The Sun sits at 21.7° Gemini — the third decan, 20°–30°, which the tradition sub-rules by Saturn. Degrees matter more than the sign label here: two people born a fortnight apart share Gemini and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:1.2°",
+        "personal:Venus:Leo:2.1°",
+        "personal:Mars:Cancer:25.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Gemini (1.2°), Venus in Leo (2.1°), Mars in Cancer (25.5°): a mind at home in argument and pattern, taste that runs toward the vivid and the immediate, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:trine:0.66",
+        "aspect:Mercury:Venus:sextile:0.86",
+        "aspect:Mars:Neptune:opposition:1.06"
+      ],
+      "text": "The day's firmest angle joins the Sun and Jupiter — a trine holding at 0.7°. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mercury sextile Venus at 0.9°, and Mars opposition Neptune at 1.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Mars:fall",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Gemini at 1.2° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 25.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Leo at 26.8° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire3-water1-earth1",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 air, 3 fire, 1 water, 1 earth by element and 4 fixed, 3 cardinal, 2 mutable by modality. Jupiter, Uranus and Neptune were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 14.2° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-13/",
+    "label": "Everyone born on June 13"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:trine",
+    "sun-degree:21.67",
+    "decan:gemini:third",
+    "personal:Mercury:Gemini:1.2°",
+    "personal:Venus:Leo:2.1°",
+    "personal:Mars:Cancer:25.5°",
+    "aspect:Sun:Jupiter:trine:0.66",
+    "aspect:Mercury:Venus:sextile:0.86",
+    "aspect:Mars:Neptune:opposition:1.06",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:domicile",
+    "dignity:Mars:fall",
+    "dignity:Saturn:detriment",
+    "elements:air4-fire3-water1-earth1",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 416,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

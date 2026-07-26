@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "charles-eames",
+  "seedRound": 0,
+  "qid": "Q170411",
+  "displayName": "Charles Eames",
+  "identity": "Designer and architect · United States · 1907–1978",
+  "title": "Charles Eames's birth chart",
+  "metaDescription": "Charles Eames's chart, computed from a sourced birth date: Sun at 25.4° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a opposition to Mars at 0.5° — close enough to weld thinking to drive. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Mercury:Mars:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.37",
+        "decan:gemini:third"
+      ],
+      "text": "25.4° of Gemini is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Cancer:18.5°",
+        "personal:Venus:Gemini:1.4°",
+        "personal:Mars:Capricorn:17.9°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Cancer (18.5°), Venus in Gemini (1.4°), Mars in Capricorn (17.9°): thought steeped in tone and memory, attraction that begins as conversation, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:opposition:0.34",
+        "aspect:Mercury:Mars:opposition:0.54",
+        "aspect:Mars:Jupiter:opposition:1.65"
+      ],
+      "text": "The day's firmest angle joins Uranus and Neptune — a opposition holding at 0.3°. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, Mercury opposition Mars at 0.5°, and Mars opposition Jupiter at 1.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Mars in Capricorn at 17.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Cancer at 16.3° is in exaltation. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air3-earth3",
+        "modalities:mutable5-cardinal5",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 4, air 3, earth 3; modalities mutable 5, cardinal 5. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Mars and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:12.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 9.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-17/",
+    "label": "Everyone born on June 17"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Mars:opposition",
+    "sun-degree:25.37",
+    "decan:gemini:third",
+    "personal:Mercury:Cancer:18.5°",
+    "personal:Venus:Gemini:1.4°",
+    "personal:Mars:Capricorn:17.9°",
+    "aspect:Uranus:Neptune:opposition:0.34",
+    "aspect:Mercury:Mars:opposition:0.54",
+    "aspect:Mars:Jupiter:opposition:1.65",
+    "figure:unaspected:Moon",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:exaltation",
+    "elements:water4-air3-earth3",
+    "modalities:mutable5-cardinal5",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:virgo",
+    "moon-band:12.4"
+  ],
+  "measurements": {
+    "originalWords": 395,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

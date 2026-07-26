@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "yogi-berra",
+  "seedRound": 0,
+  "qid": "Q367566",
+  "displayName": "Yogi Berra",
+  "identity": "Baseball player · United States · 1925–2015",
+  "title": "Yogi Berra's birth chart",
+  "metaDescription": "Yogi Berra's chart, computed from a sourced birth date: Sun at 21.4° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Cardinal signs carry five of the ten placements whose signs are settled — the broadest certain weighting in the chart. The four cardinal signs sit at the solstices and equinoxes — the scheme’s ignition points, and this chart is weighted to them.",
+  "ledeFact": "modality:cardinal:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.43",
+        "decan:taurus:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 21.4° Taurus: the third decan, whose classical sub-ruler is Saturn. A earth sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:26.2°",
+        "personal:Venus:Taurus:26.4°",
+        "personal:Mars:Cancer:1.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (26.2°), Venus in Taurus (26.4°), Mars in Cancer (1.8°): a mind that decides at speaking speed, taste for the substantial and the lasting, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:trine:1.08",
+        "aspect:Sun:Neptune:square:1.6",
+        "aspect:Saturn:Pluto:trine:1.64"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a third of the circle apart from Jupiter, 1.1° off exact. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, the Sun square Neptune at 1.6°, and Saturn trine Pluto at 1.6° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Venus:domicile",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The classical table has four entries for this chart. The Moon in Capricorn at 17.9° is in detriment — the planet opposite its home, working against the grain; Venus in Taurus at 26.4° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 1.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 22.5° is in fall. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-water4-fire2",
+        "modalities:cardinal5-fixed4-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 earth, 4 water, 2 fire by element and 5 cardinal, 4 fixed, 1 mutable by mode. An earth emphasis reads as patience with material reality — slow hands, durable results. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Jupiter and Saturn were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 17.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-12/",
+    "label": "Everyone born on May 12"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:5",
+    "sun-degree:21.43",
+    "decan:taurus:third",
+    "personal:Mercury:Aries:26.2°",
+    "personal:Venus:Taurus:26.4°",
+    "personal:Mars:Cancer:1.8°",
+    "aspect:Sun:Jupiter:trine:1.08",
+    "aspect:Sun:Neptune:square:1.6",
+    "aspect:Saturn:Pluto:trine:1.64",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Venus:domicile",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:fall",
+    "elements:earth4-water4-fire2",
+    "modalities:cardinal5-fixed4-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:capricorn",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 440,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

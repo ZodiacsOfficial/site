@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "kartini",
+  "seedRound": 0,
+  "qid": "Q1373764",
+  "displayName": "Kartini",
+  "identity": "Women's rights activist · Indonesia · 1879–1904",
+  "title": "Kartini's birth chart",
+  "metaDescription": "Kartini's chart, computed from a sourced birth date: Sun at 0.7° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a sextile to Mars at 0.1° — close enough to weld thinking to drive. A sixth of the circle is close enough for cooperation and far enough that it stays optional.",
+  "ledeFact": "aspect:Mercury:Mars:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:0.71",
+        "decan:taurus:first"
+      ],
+      "text": "At the noon reference the Sun sits 0.7° into Taurus — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:24.4°",
+        "personal:Venus:Gemini:2.9°",
+        "personal:Mars:Aquarius:24.6°"
+      ],
+      "text": "Mercury holds 24.4° Aries, Venus holds 2.9° Gemini, Mars holds 24.6° Aquarius — in the old shorthand, thought that arrives already in motion; attraction that begins as conversation; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:sextile:0.15",
+        "aspect:Sun:Uranus:trine:0.5",
+        "aspect:Mars:Pluto:square:0.79"
+      ],
+      "text": "Closest first: Mercury to Mars, a sextile with 0.1° of slack. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, the Sun trine Uranus at 0.5°, and Mars square Pluto at 0.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Jupiter-Uranus:apex-Venus",
+        "figure:unaspected:Saturn"
+      ],
+      "text": "Jupiter opposes Uranus while both square Venus. The t-square is the figure the old texts trusted for output: friction with a fixed address. Saturn makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Jupiter in Pisces at 5.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 8.8° is in fall — the tradition’s uphill placement, strength earned rather than given. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire2-air2-water1",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in earth, 2 in fire, 2 in air, 1 in water by element, 4 fixed, 3 mutable, 2 cardinal by modality. Mercury and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 11.9° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-21/",
+    "label": "Everyone born on April 21"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Mars:sextile",
+    "sun-degree:0.71",
+    "decan:taurus:first",
+    "personal:Mercury:Aries:24.4°",
+    "personal:Venus:Gemini:2.9°",
+    "personal:Mars:Aquarius:24.6°",
+    "aspect:Mercury:Mars:sextile:0.15",
+    "aspect:Sun:Uranus:trine:0.5",
+    "aspect:Mars:Pluto:square:0.79",
+    "figure:t-square:Jupiter-Uranus:apex-Venus",
+    "figure:unaspected:Saturn",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:fall",
+    "elements:earth4-fire2-air2-water1",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 404,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

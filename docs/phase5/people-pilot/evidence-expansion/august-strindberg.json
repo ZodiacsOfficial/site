@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "august-strindberg",
+ "qid": "Q7724",
+ "displayName": "August Strindberg",
+ "wikidataLabel": null,
+ "wikidataDescription": "Swedish writer and painter (1849–1912)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7724",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520223111
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "August Strindberg",
+   "articleUrl": "https://en.wikipedia.org/wiki/August_Strindberg",
+   "pageId": 49645,
+   "revisionId": 1365152508,
+   "revisionTimestamp": "2026-07-20T16:00:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1849-01-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1849-01-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1849-01-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1912-05-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1754",
+  "label": "Stockholm",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1754",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1754",
+   "sourceEntityLabel": "Stockholm",
+   "latitude": 59.329444444444,
+   "longitude": 18.068611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:August Strindberg (Björkman 1912).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:August%20Strindberg%20(Bj%C3%B6rkman%201912).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:August_Strindberg_(Bj%C3%B6rkman_1912).jpg",
+  "width": 1310,
+  "height": 1820,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "possibly by Herman Anderson (1856−?)",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

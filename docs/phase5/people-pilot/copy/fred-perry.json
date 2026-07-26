@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "fred-perry",
+  "seedRound": 2,
+  "qid": "Q312639",
+  "displayName": "Fred Perry",
+  "identity": "Tennis player and fashion designer · United Kingdom · 1909–1995",
+  "title": "Fred Perry's birth chart",
+  "metaDescription": "Fred Perry's chart, computed from a sourced birth date: Sun at 26.9° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 12.5° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.88",
+        "decan:taurus:third"
+      ],
+      "text": "Taurus, but precisely: 26.9°, third decan, 20°–30°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Gemini:19.0°",
+        "personal:Venus:Gemini:2.1°",
+        "personal:Mars:Aquarius:25.3°"
+      ],
+      "text": "Mercury holds 19.0° Gemini, Venus holds 2.1° Gemini, Mars holds 25.3° Aquarius — in the old shorthand, a mind at home in argument and pattern; taste led by wit and proportion; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:sextile:0.53",
+        "aspect:Mars:Pluto:trine:0.65",
+        "aspect:Sun:Mars:square:1.58"
+      ],
+      "text": "Mercury and Saturn hold the closest angle here — a sextile, 0.5° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mars trine Pluto at 0.7°, and the Sun square Mars at 1.6° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Uranus-Neptune:apex-Saturn",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Uranus opposes Neptune while both square Saturn. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Mercury:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. The Moon in Taurus at 12.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Gemini at 19.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 5.0° is in detriment — the planet opposite its home, working against the grain; Saturn in Aries at 18.4° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air4-fire1-water1",
+        "modalities:mutable4-fixed3-cardinal3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 earth, 4 air, 1 fire, 1 water by element and 4 mutable, 3 fixed, 3 cardinal by modality. Uranus was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 12.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-18/",
+    "label": "Everyone born on May 18"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:26.88",
+    "decan:taurus:third",
+    "personal:Mercury:Gemini:19.0°",
+    "personal:Venus:Gemini:2.1°",
+    "personal:Mars:Aquarius:25.3°",
+    "aspect:Mercury:Saturn:sextile:0.53",
+    "aspect:Mars:Pluto:trine:0.65",
+    "aspect:Sun:Mars:square:1.58",
+    "figure:t-square:Uranus-Neptune:apex-Saturn",
+    "figure:unaspected:Moon",
+    "dignity:Moon:exaltation",
+    "dignity:Mercury:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:fall",
+    "elements:earth4-air4-fire1-water1",
+    "modalities:mutable4-fixed3-cardinal3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:taurus",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 446,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

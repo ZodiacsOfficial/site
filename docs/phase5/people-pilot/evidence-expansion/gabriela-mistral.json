@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gabriela-mistral",
+ "qid": "Q80871",
+ "displayName": "Gabriela Mistral",
+ "wikidataLabel": "Gabriela Mistral",
+ "wikidataDescription": "Chilean poet, diplomat and educator (1889–1957)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q80871",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515837392
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gabriela Mistral",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gabriela_Mistral",
+   "pageId": 171952,
+   "revisionId": 1363409459,
+   "revisionTimestamp": "2026-07-10T00:54:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1889-04-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1889-04-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1889-04-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1957-01-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q201007",
+  "label": "Vicuña",
+  "entityUrl": "https://www.wikidata.org/wiki/Q201007",
+  "country": {
+   "entity": "Q298",
+   "label": "Chile"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q201007",
+   "sourceEntityLabel": "Vicuña",
+   "latitude": -30.016666666667,
+   "longitude": -70.7,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gabriela Mistral 1945.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gabriela%20Mistral%201945.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gabriela_Mistral_1945.jpg",
+  "width": 280,
+  "height": 396,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Anna Riwkin-Brick",
+  "credit": "http://nobelprize.org/nobel_prizes/literature/laureates/1945/mistral-bio.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

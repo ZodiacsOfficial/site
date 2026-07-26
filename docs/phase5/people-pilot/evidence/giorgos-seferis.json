@@ -1,0 +1,119 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "giorgos-seferis",
+ "qid": "Q165823",
+ "displayName": "Giorgos Seferis",
+ "wikidataLabel": "Giorgos Seferis",
+ "wikidataDescription": "Greek poet and diplomat (1900-1971)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q165823",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518575509
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Giorgos Seferis",
+   "articleUrl": "https://en.wikipedia.org/wiki/Giorgos_Seferis",
+   "pageId": 155038,
+   "revisionId": 1358980293,
+   "revisionTimestamp": "2026-06-12T07:29:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1900-03-13T00:00:00Z|proleptic-gregorian",
+   "+1900-02-29T00:00:00Z|proleptic-julian"
+  ],
+  "allValues": [
+   {
+    "time": "+1900-03-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1900-02-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-julian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1900-03-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1971-09-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q996670",
+  "label": "Urla",
+  "entityUrl": "https://www.wikidata.org/wiki/Q996670",
+  "country": {
+   "entity": "Q43",
+   "label": "Turkey"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q996670",
+   "sourceEntityLabel": "Urla",
+   "latitude": 38.322222222222,
+   "longitude": 26.764722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q121998",
+   "label": "ambassador"
+  }
+ ],
+ "portrait": {
+  "file": "File:Giorgos Seferis 1963.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Giorgos%20Seferis%201963.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Giorgos_Seferis_1963.jpg",
+  "width": 280,
+  "height": 396,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nobel Foundation",
+  "credit": "http://nobelprize.org/nobel_prizes/literature/laureates/1963/seferis-bio.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nick-joaquin",
+ "qid": "Q1977234",
+ "displayName": "Nick Joaquin",
+ "wikidataLabel": "Nick Joaquin",
+ "wikidataDescription": "Filipino writer (1917–2004)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "seasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1977234",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2504743694
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nick Joaquin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nick_Joaquin",
+   "pageId": 1753869,
+   "revisionId": 1359430046,
+   "revisionTimestamp": "2026-06-15T06:48:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-05-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-05-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-05-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-04-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1461",
+  "label": "Manila",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1461",
+  "country": {
+   "entity": "Q928",
+   "label": "Philippines"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1461",
+   "sourceEntityLabel": "Manila",
+   "latitude": 14.595833333333333,
+   "longitude": 120.97722222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nick Joaquin 2010 stamp of the Philippines.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nick%20Joaquin%202010%20stamp%20of%20the%20Philippines.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nick_Joaquin_2010_stamp_of_the_Philippines.jpg",
+  "width": 472,
+  "height": 354,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Philippine Postal Corporation",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

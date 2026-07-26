@@ -1,0 +1,110 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "eileen-gray",
+ "qid": "Q438129",
+ "displayName": "Eileen Gray",
+ "wikidataLabel": "Eileen Gray",
+ "wikidataDescription": "Irish architect and designer (1878-1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q438129",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521473718
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Eileen Gray",
+   "articleUrl": "https://en.wikipedia.org/wiki/Eileen_Gray",
+   "pageId": 609895,
+   "revisionId": 1363020590,
+   "revisionTimestamp": "2026-07-07T16:05:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1878-08-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1878-08-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1879-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1878-08-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-10-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q987759",
+  "label": "Enniscorthy",
+  "entityUrl": "https://www.wikidata.org/wiki/Q987759",
+  "country": {
+   "entity": "Q27",
+   "label": "Ireland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q987759",
+   "sourceEntityLabel": "Enniscorthy",
+   "latitude": 52.502064,
+   "longitude": -6.565876,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Eileen Gray.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Eileen%20Gray.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Eileen_Gray.jpg",
+  "width": 625,
+  "height": 442,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://en.wikipedia.org/wiki/File:Eileen_gray.JPG",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

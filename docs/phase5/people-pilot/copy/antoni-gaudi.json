@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "antoni-gaudi",
+  "seedRound": 0,
+  "qid": "Q25328",
+  "displayName": "Antoni Gaudí",
+  "identity": "Architect and designer · Spain · 1852–1926",
+  "title": "Antoni Gaudí's birth chart",
+  "metaDescription": "Antoni Gaudí's chart, computed from a sourced birth date: Sun at 4.0° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a trine to Uranus at 0.1° — close enough to weld drive to disruption. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Mars:Uranus:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.00",
+        "decan:cancer:first"
+      ],
+      "text": "At the noon reference the Sun sits 4.0° into Cancer — the first decan, which the old scheme hands to the Moon. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Venus:Leo:6.5°",
+        "personal:Mars:Virgo:7.6°"
+      ],
+      "text": "Day to day the chart speaks through Venus in Leo (6.5°), Mars in Virgo (7.6°): attraction declared rather than implied, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:trine:0.07",
+        "aspect:Jupiter:Saturn:opposition:0.78",
+        "aspect:Venus:Uranus:square:1"
+      ],
+      "text": "Nothing in the geometry sits closer than Mars and Uranus: 0.1° from an exact trine. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Jupiter opposition Saturn at 0.8°, and Venus square Uranus at 1.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "The dignity table has nothing to say about this chart. All seven classical planets sit in signs it treats as neutral, so the reading rests entirely on placement and angle."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-water3-air1-fire1",
+        "modalities:fixed5-cardinal2-mutable2",
+        "settled-signs:9",
+        "retrograde:2",
+        "sign-uncertain:Mercury:gemini:cancer"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 4, water 3, air 1, fire 1; modalities fixed 5, cardinal 2, mutable 2. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Mercury crossed from Gemini into Cancer during that day, so its sign is left open. Jupiter and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:14.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 14.3° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 12.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-25/",
+    "label": "Everyone born on June 25"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:trine",
+    "sun-degree:4.00",
+    "decan:cancer:first",
+    "personal:Venus:Leo:6.5°",
+    "personal:Mars:Virgo:7.6°",
+    "aspect:Mars:Uranus:trine:0.07",
+    "aspect:Jupiter:Saturn:opposition:0.78",
+    "aspect:Venus:Uranus:square:1",
+    "figure:unaspected:Moon",
+    "dignity:none",
+    "elements:earth4-water3-air1-fire1",
+    "modalities:fixed5-cardinal2-mutable2",
+    "settled-signs:9",
+    "retrograde:2",
+    "sign-uncertain:Mercury:gemini:cancer",
+    "moon-sign:libra",
+    "moon-band:14.3"
+  ],
+  "measurements": {
+    "originalWords": 368,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

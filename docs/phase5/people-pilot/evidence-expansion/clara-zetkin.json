@@ -1,0 +1,139 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "clara-zetkin",
+ "qid": "Q75823",
+ "displayName": "Clara Zetkin",
+ "wikidataLabel": "Clara Zetkin",
+ "wikidataDescription": "Communist activist, and advocate for women's rights (1857–1933)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q75823",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516974708
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Clara Zetkin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Clara_Zetkin",
+   "pageId": 1424386,
+   "revisionId": 1359119063,
+   "revisionTimestamp": "2026-06-13T05:54:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1857-07-05T00:00:00Z|proleptic-gregorian",
+   "+1857-06-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1857-07-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1857-06-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1857-07-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1933-06-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q70981",
+  "label": "Königshain-Wiederau",
+  "entityUrl": "https://www.wikidata.org/wiki/Q70981",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q70981",
+   "sourceEntityLabel": "Königshain-Wiederau",
+   "latitude": 50.970833333333,
+   "longitude": 12.8625,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q322170",
+   "label": "suffragette"
+  },
+  {
+   "entity": "Q1607826",
+   "label": "editor"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  }
+ ],
+ "portrait": {
+  "file": "File:C Zetkin 1.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:C%20Zetkin%201.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:C_Zetkin_1.jpg",
+  "width": 456,
+  "height": 604,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.wdr.de/themen/kultur/literatur/boell/boell_90_geburtstag/infobox/data/boell/akg_zetkin_400h.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "karel-capek",
+ "qid": "Q155855",
+ "displayName": "Karel Čapek",
+ "wikidataLabel": "Karel Čapek",
+ "wikidataDescription": "Czech writer (1890–1938)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q155855",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518465834
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Karel Čapek",
+   "articleUrl": "https://en.wikipedia.org/wiki/Karel_%C4%8Capek",
+   "pageId": 43469,
+   "revisionId": 1361232868,
+   "revisionTimestamp": "2026-06-26T15:43:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1890-01-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1890-01-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1890-01-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1938-12-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1818270",
+  "label": "Malé Svatoňovice",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1818270",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1818270",
+   "sourceEntityLabel": "Malé Svatoňovice",
+   "latitude": 50.53398249656,
+   "longitude": 16.049873588969,
+   "precision": 0.0014132888267073,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Karel Čapek podepisuje první výtisky Povětroně, Pestrý týden 27.1.1934.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Karel%20%C4%8Capek%20podepisuje%20prvn%C3%AD%20v%C3%BDtisky%20Pov%C4%9Btron%C4%9B%2C%20Pestr%C3%BD%20t%C3%BDden%2027.1.1934.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Karel_%C4%8Capek_podepisuje_prvn%C3%AD_v%C3%BDtisky_Pov%C4%9Btron%C4%9B,_Pestr%C3%BD_t%C3%BDden_27.1.1934.jpg",
+  "width": 1200,
+  "height": 1563,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "National Library of the Czech Republic",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

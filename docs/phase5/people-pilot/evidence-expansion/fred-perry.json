@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fred-perry",
+ "qid": "Q312639",
+ "displayName": "Fred Perry",
+ "wikidataLabel": "Fred Perry",
+ "wikidataDescription": "English tennis player",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q312639",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518464557
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fred Perry",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fred_Perry",
+   "pageId": 292225,
+   "revisionId": 1366168095,
+   "revisionTimestamp": "2026-07-26T18:08:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1909-05-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-05-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-05-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-02-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18655",
+  "label": "Stockport",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18655",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18655",
+   "sourceEntityLabel": "Stockport",
+   "latitude": 53.408333333333,
+   "longitude": -2.1494444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10833314",
+   "label": "tennis player"
+  },
+  {
+   "entity": "Q11313148",
+   "label": "sports journalist"
+  },
+  {
+   "entity": "Q13382519",
+   "label": "table tennis player"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  },
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fred Perry 01.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fred%20Perry%2001.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fred_Perry_01.jpg",
+  "width": 1857,
+  "height": 2385,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown - Distributed by AFP and ACME Newspictures",
+  "credit": "https://www.newspapers.com/newspage/1229796862",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

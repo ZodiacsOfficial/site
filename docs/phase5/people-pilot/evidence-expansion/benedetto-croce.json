@@ -1,0 +1,133 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "benedetto-croce",
+ "qid": "Q192348",
+ "displayName": "Benedetto Croce",
+ "wikidataLabel": "Benedetto Croce",
+ "wikidataDescription": "Italian philosopher (1866-1952)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q192348",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515916008
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Benedetto Croce",
+   "articleUrl": "https://en.wikipedia.org/wiki/Benedetto_Croce",
+   "pageId": 740634,
+   "revisionId": 1365513522,
+   "revisionTimestamp": "2026-07-22T23:07:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1866-02-25T00:00:00Z|proleptic-gregorian",
+   "+1866-02-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1866-02-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1866-02-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1866-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1866-02-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1952-11-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q50121",
+  "label": "Pescasseroli",
+  "entityUrl": "https://www.wikidata.org/wiki/Q50121",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q50121",
+   "sourceEntityLabel": "Pescasseroli",
+   "latitude": 41.805,
+   "longitude": 13.789722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1792450",
+   "label": "art historian"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  }
+ ],
+ "portrait": {
+  "file": "File:Benedetto Croce 01.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Benedetto%20Croce%2001.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Benedetto_Croce_01.jpg",
+  "width": 602,
+  "height": 800,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Mario Nunes Vais",
+  "credit": "Collezione del Fondo Nunes Vais: ICCD - Raccolte Fotografiche: 'https://fotografia.cultura.gov.it/iccd/item/E098700",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

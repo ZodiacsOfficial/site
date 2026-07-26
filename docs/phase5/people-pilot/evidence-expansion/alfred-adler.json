@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alfred-adler",
+ "qid": "Q152393",
+ "displayName": "Alfred Adler",
+ "wikidataLabel": "Alfred Adler",
+ "wikidataDescription": "Austrian psychotherapist (1870–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q152393",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520024706
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alfred Adler",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alfred_Adler",
+   "pageId": 81590,
+   "revisionId": 1364601485,
+   "revisionTimestamp": "2026-07-17T13:23:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1870-02-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1870-02-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1870-02-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-05-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2174345",
+  "label": "Rudolfsheim",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2174345",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2174345",
+   "sourceEntityLabel": "Rudolfsheim",
+   "latitude": 48.1903,
+   "longitude": 16.3289,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q211346",
+   "label": "psychiatrist"
+  },
+  {
+   "entity": "Q1900167",
+   "label": "psychotherapist"
+  },
+  {
+   "entity": "Q12013238",
+   "label": "ophthalmologist"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:AlfredAdler.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:AlfredAdler.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:AlfredAdler.jpg",
+  "width": 244,
+  "height": 350,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Isidoricaaa7",
+  "credit": "https://www.sciencephoto.com/media/223110/view/alfred-adler-austrian-psychiatrist",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

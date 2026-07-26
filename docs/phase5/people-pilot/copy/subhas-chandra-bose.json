@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "subhas-chandra-bose",
+  "seedRound": 0,
+  "qid": "Q2153",
+  "displayName": "Subhas Chandra Bose",
+  "identity": "Politician and writer · India · 1897–1945",
+  "title": "Subhas Chandra Bose's birth chart",
+  "metaDescription": "Subhas Chandra Bose's chart, computed from a sourced birth date: Sun at 3.6° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates Mars and Pluto from an exact conjunction; at that range drive and depth read as one mechanism. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Mars:Pluto:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.58",
+        "decan:aquarius:first"
+      ],
+      "text": "At noon on that date the Sun stood at 3.6° Aquarius, inside the first decan (0°–10°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:2.0°",
+        "personal:Venus:Pisces:18.8°",
+        "personal:Mars:Gemini:11.9°"
+      ],
+      "text": "For the fast movers, Mercury was at 2.0° Aquarius, Venus was at 18.8° Pisces, Mars was at 11.9° Gemini. Read together: thought that travels by comparison; attraction that works by atmosphere; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:conjunction:0.06",
+        "aspect:Saturn:Uranus:conjunction:0.71",
+        "aspect:Venus:Neptune:square:0.94"
+      ],
+      "text": "The tightest geometry in the chart puts Mars in the same degree of the zodiac from Pluto, 0.1° off exact. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Saturn conjunction Uranus at 0.7°, and Venus square Neptune at 0.9° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Sun in Aquarius at 3.6° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 18.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Virgo at 8.9° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-water3-earth1",
+        "modalities:mutable5-fixed4",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 5 air, 3 water, 1 earth by element and 5 mutable, 4 fixed by modality. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Mercury, Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 14.1° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-23/",
+    "label": "Everyone born on January 23"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:conjunction",
+    "sun-degree:3.58",
+    "decan:aquarius:first",
+    "personal:Mercury:Aquarius:2.0°",
+    "personal:Venus:Pisces:18.8°",
+    "personal:Mars:Gemini:11.9°",
+    "aspect:Mars:Pluto:conjunction:0.06",
+    "aspect:Saturn:Uranus:conjunction:0.71",
+    "aspect:Venus:Neptune:square:0.94",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:detriment",
+    "elements:air5-water3-earth1",
+    "modalities:mutable5-fixed4",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 436,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

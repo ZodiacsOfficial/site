@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "henri-poincare",
+  "seedRound": 0,
+  "qid": "Q81082",
+  "displayName": "Henri Poincaré",
+  "identity": "Mathematician and philosopher · France · 1854–1912",
+  "title": "Henri Poincaré's birth chart",
+  "metaDescription": "Henri Poincaré's chart, computed from a sourced birth date: Sun at 8.8° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the nine placements whose signs are settled fall in earth signs — at least half of what the unknown hour leaves certain. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on.",
+  "ledeFact": "element:earth:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.81",
+        "decan:taurus:first"
+      ],
+      "text": "At the noon reference the Sun sits 8.8° into Taurus — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:13.3°",
+        "personal:Venus:Pisces:23.2°",
+        "personal:Mars:Virgo:0.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (13.3°), Venus in Pisces (23.2°), Mars in Virgo (0.4°): thought that arrives already in motion, attraction that works by atmosphere, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:square:1.38",
+        "aspect:Mars:Pluto:trine:2.03",
+        "aspect:Uranus:Neptune:sextile:2.97"
+      ],
+      "text": "Mars and Saturn hold the closest angle here — a square, 1.4° wide. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Mars trine Pluto at 2.0°, and Uranus sextile Neptune at 3.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Mercury"
+      ],
+      "text": "Mercury makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Pisces at 23.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Capricorn at 27.1° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-water2-fire1-air1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 5, water 2, fire 1, air 1; modalities mutable 4, fixed 3, cardinal 2. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Every body was moving forward that day — no apparent reversals anywhere in the chart."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 12.1° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-29/",
+    "label": "Everyone born on April 29"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "element:earth:5",
+    "sun-degree:8.81",
+    "decan:taurus:first",
+    "personal:Mercury:Aries:13.3°",
+    "personal:Venus:Pisces:23.2°",
+    "personal:Mars:Virgo:0.4°",
+    "aspect:Mars:Saturn:square:1.38",
+    "aspect:Mars:Pluto:trine:2.03",
+    "aspect:Uranus:Neptune:sextile:2.97",
+    "figure:unaspected:Mercury",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:fall",
+    "elements:earth5-water2-fire1-air1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 386,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

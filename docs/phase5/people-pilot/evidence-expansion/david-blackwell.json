@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "david-blackwell",
+ "qid": "Q525037",
+ "displayName": "David Blackwell",
+ "wikidataLabel": "David Blackwell",
+ "wikidataDescription": "American mathematician (1919–2010)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q525037",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519030949
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "David Blackwell",
+   "articleUrl": "https://en.wikipedia.org/wiki/David_Blackwell",
+   "pageId": 2202900,
+   "revisionId": 1360144826,
+   "revisionTimestamp": "2026-06-19T14:43:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1919-04-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1919-04-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-04-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2010-07-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q575126",
+  "label": "Centralia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q575126",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q575126",
+   "sourceEntityLabel": "Centralia",
+   "latitude": 38.525277777778,
+   "longitude": -89.1325,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q2732142",
+   "label": "statistician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:David Blackwell 1999 (re-scanned, cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:David%20Blackwell%201999%20(re-scanned%2C%20cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:David_Blackwell_1999_(re-scanned,_cropped).jpg",
+  "width": 791,
+  "height": 981,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "George Bergman",
+  "credit": "Scanned via Epson Perfection V370; see also https://opc.mfo.de/detail?photo_id=9294",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

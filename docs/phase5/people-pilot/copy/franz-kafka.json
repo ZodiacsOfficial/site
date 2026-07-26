@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "franz-kafka",
+  "seedRound": 0,
+  "qid": "Q905",
+  "displayName": "Franz Kafka",
+  "identity": "Novelist and lawyer · Czech Republic · 1883–1924",
+  "title": "Franz Kafka's birth chart",
+  "metaDescription": "Franz Kafka's chart, computed from a sourced birth date: Sun at 11.1° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Gemini — Mercury, Venus, Saturn and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:gemini:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.12",
+        "decan:cancer:second"
+      ],
+      "text": "11.1° of Cancer is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Gemini:19.7°",
+        "personal:Venus:Gemini:19.8°",
+        "personal:Mars:Taurus:25.0°"
+      ],
+      "text": "Mercury holds 19.7° Gemini, Venus holds 19.8° Gemini, Mars holds 25.0° Taurus — in the old shorthand, thought that travels by comparison; attraction that begins as conversation; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Venus:conjunction:0.03",
+        "aspect:Venus:Uranus:square:0.05",
+        "aspect:Mercury:Uranus:square:0.08"
+      ],
+      "text": "Mercury and Venus hold the closest angle here — a conjunction, 0.0° wide. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Venus square Uranus at 0.1°, and Mercury square Uranus at 0.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Mercury in Gemini at 19.7° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 25.0° is in detriment — the planet opposite its home, working against the grain; Jupiter in Cancer at 12.7° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-water2",
+        "modalities:mutable5-cardinal2-fixed2",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 air, 3 earth, 2 water by element and 5 mutable, 2 cardinal, 2 fixed by mode. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. The day carried no retrograde motion at all; everything moved forward as seen from here."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 14.1° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-3/",
+    "label": "Everyone born on July 3"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "stellium:gemini:4",
+    "sun-degree:11.12",
+    "decan:cancer:second",
+    "personal:Mercury:Gemini:19.7°",
+    "personal:Venus:Gemini:19.8°",
+    "personal:Mars:Taurus:25.0°",
+    "aspect:Mercury:Venus:conjunction:0.03",
+    "aspect:Venus:Uranus:square:0.05",
+    "aspect:Mercury:Uranus:square:0.08",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:exaltation",
+    "elements:air4-earth3-water2",
+    "modalities:mutable5-cardinal2-fixed2",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 429,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

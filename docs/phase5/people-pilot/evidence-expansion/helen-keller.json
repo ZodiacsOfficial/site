@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "helen-keller",
+ "qid": "Q38203",
+ "displayName": "Helen Keller",
+ "wikidataLabel": "Helen Keller",
+ "wikidataDescription": "American deafblind author, political activist, lecturer, scholar (1880-1968)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q38203",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518322500
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Helen Keller",
+   "articleUrl": "https://en.wikipedia.org/wiki/Helen_Keller",
+   "pageId": 14254,
+   "revisionId": 1364328953,
+   "revisionTimestamp": "2026-07-15T23:21:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1880-06-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1880-06-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1880-06-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1968-06-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6099845",
+  "label": "Ivy Green",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6099845",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 3,
+  "coordinates": {
+   "sourceEntity": "Q6099845",
+   "sourceEntityLabel": "Ivy Green",
+   "latitude": 34.739444,
+   "longitude": -87.706667,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q12859263",
+   "label": "orator"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  },
+  {
+   "entity": "Q15627169",
+   "label": "trade unionist"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q322170",
+   "label": "suffragette"
+  },
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Helen Keller circa 1920 - restored.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Helen%20Keller%20circa%201920%20-%20restored.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Helen_Keller_circa_1920_-_restored.jpg",
+  "width": 3041,
+  "height": 3892,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Los Angeles Times; restored by User:Rhododendrites",
+  "credit": "Los Angeles Times photographic archive, UCLA Library",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

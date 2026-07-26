@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "coco-chanel",
+  "seedRound": 0,
+  "qid": "Q45661",
+  "displayName": "Coco Chanel",
+  "identity": "Fashion designer · France · 1883–1971",
+  "title": "Coco Chanel's birth chart",
+  "metaDescription": "Coco Chanel's chart, computed from a sourced birth date: Sun at 26.1° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 26.1° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.12",
+        "decan:leo:third"
+      ],
+      "text": "At noon on that date the Sun stood at 26.1° Leo, inside the third decan (20°–30°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Virgo:14.6°",
+        "personal:Venus:Leo:17.3°",
+        "personal:Mars:Gemini:27.0°"
+      ],
+      "text": "Closer in, Mercury stands at 14.6° Virgo; Venus stands at 17.3° Leo; Mars stands at 27.0° Gemini. The tradition reads thought with its feet on the ground from Mercury, attraction declared rather than implied from Venus, effort aimed through strategy and words from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:sextile:0.89",
+        "aspect:Uranus:Neptune:trine:0.91",
+        "aspect:Jupiter:Uranus:sextile:1.02"
+      ],
+      "text": "The Sun and Mars hold the closest angle here — a sextile, 0.9° wide. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Uranus trine Neptune at 0.9°, and Jupiter sextile Uranus at 1.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mercury:exaltation",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Sun in Leo at 26.1° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 14.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Cancer at 23.0° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air3-fire2-water2",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:0"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 3 earth, 3 air, 2 fire, 2 water; by modality, 6 mutable, 3 fixed, 1 cardinal. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Not one planet was retrograde, so the whole chart reads in direct motion."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 9.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-19/",
+    "label": "Everyone born on August 19"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:26.12",
+    "decan:leo:third",
+    "personal:Mercury:Virgo:14.6°",
+    "personal:Venus:Leo:17.3°",
+    "personal:Mars:Gemini:27.0°",
+    "aspect:Sun:Mars:sextile:0.89",
+    "aspect:Uranus:Neptune:trine:0.91",
+    "aspect:Jupiter:Uranus:sextile:1.02",
+    "figure:none",
+    "dignity:Sun:domicile",
+    "dignity:Mercury:exaltation",
+    "dignity:Jupiter:exaltation",
+    "elements:earth3-air3-fire2-water2",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:0",
+    "moon-sign:pisces",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 406,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "yu-gwan-sun",
+  "seedRound": 0,
+  "qid": "Q490020",
+  "displayName": "Yu Gwan-sun",
+  "identity": "Political activist · South Korea · 1902–1920",
+  "title": "Yu Gwan-sun's birth chart",
+  "metaDescription": "Yu Gwan-sun's chart, computed from a sourced birth date: Sun at 24.3° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Sagittarius — the Sun, Mercury, Venus and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:sagittarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.27",
+        "decan:sagittarius:third"
+      ],
+      "text": "The Sun sits at 24.3° Sagittarius — the third decan, 20°–30°, which the tradition sub-rules by the Sun. Degrees matter more than the sign label here: two people born a fortnight apart share Sagittarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:26.9°",
+        "personal:Venus:Sagittarius:28.6°",
+        "personal:Mars:Virgo:28.6°"
+      ],
+      "text": "The personal planets sit Mercury at 26.9° Sagittarius, Venus at 28.6° Sagittarius, Mars at 28.6° Virgo. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a earth sign reads as drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Mars:square:0",
+        "aspect:Mercury:Mars:square:1.77",
+        "aspect:Mercury:Venus:conjunction:1.77"
+      ],
+      "text": "Venus to Mars is the closest call of the day, a square within 0.0°. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Mercury square Mars at 1.8°, and Mercury conjunction Venus at 1.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Sun-Neptune:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Neptune while both square Mars. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mercury in Sagittarius at 26.9° is in detriment — the planet opposite its home, working against the grain; Saturn in Capricorn at 26.1° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth2-air2-water1",
+        "modalities:mutable6-cardinal2-fixed1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 fire, 2 earth, 2 air, 1 water by element and 6 mutable, 2 cardinal, 1 fixed by mode. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 15.1° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-17/",
+    "label": "Everyone born on December 17"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:sagittarius:4",
+    "sun-degree:24.27",
+    "decan:sagittarius:third",
+    "personal:Mercury:Sagittarius:26.9°",
+    "personal:Venus:Sagittarius:28.6°",
+    "personal:Mars:Virgo:28.6°",
+    "aspect:Venus:Mars:square:0",
+    "aspect:Mercury:Mars:square:1.77",
+    "aspect:Mercury:Venus:conjunction:1.77",
+    "figure:t-square:Sun-Neptune:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Saturn:domicile",
+    "elements:fire4-earth2-air2-water1",
+    "modalities:mutable6-cardinal2-fixed1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 486,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "seamus-heaney",
+ "qid": "Q93356",
+ "displayName": "Seamus Heaney",
+ "wikidataLabel": "Seamus Heaney",
+ "wikidataDescription": "Irish poet, playwright, translator, lecturer (1939–2013)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q93356",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518346166
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Seamus Heaney",
+   "articleUrl": "https://en.wikipedia.org/wiki/Seamus_Heaney",
+   "pageId": 50920,
+   "revisionId": 1353787188,
+   "revisionTimestamp": "2026-05-12T10:51:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1939-04-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1939-04-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1939-04-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2013-08-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q853324",
+  "label": "Castledawson",
+  "entityUrl": "https://www.wikidata.org/wiki/Q853324",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q853324",
+   "sourceEntityLabel": "Castledawson",
+   "latitude": 54.778,
+   "longitude": -6.556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  }
+ ],
+ "portrait": {
+  "file": "File:Seamus Heaney (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Seamus%20Heaney%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Seamus_Heaney_(cropped).jpg",
+  "width": 942,
+  "height": 1248,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Sean O'Connor, cropped by Sabahrat",
+  "credit": "File:Seamus Heaney.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

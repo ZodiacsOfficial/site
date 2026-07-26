@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kirsten-flagstad",
+ "qid": "Q234380",
+ "displayName": "Kirsten Flagstad",
+ "wikidataLabel": "Kirsten Flagstad",
+ "wikidataDescription": "Norwegian opera singer (1895-1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234380",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521965458
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kirsten Flagstad",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kirsten_Flagstad",
+   "pageId": 896375,
+   "revisionId": 1345238056,
+   "revisionTimestamp": "2026-03-25T02:24:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1895-07-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-07-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1895-07-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-12-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q104400",
+  "label": "Hamar Municipality",
+  "entityUrl": "https://www.wikidata.org/wiki/Q104400",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q104400",
+   "sourceEntityLabel": "Hamar Municipality",
+   "latitude": 60.79451,
+   "longitude": 11.0783,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Portrett av Kirsten Flagstad, ca 1940-45 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Portrett%20av%20Kirsten%20Flagstad%2C%20ca%201940-45%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Portrett_av_Kirsten_Flagstad,_ca_1940-45_(cropped).jpg",
+  "width": 3074,
+  "height": 4346,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Nasjonalbiblioteket",
+  "credit": "Flickr: Portrett av Kirsten Flagstad, ca 1940-45",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

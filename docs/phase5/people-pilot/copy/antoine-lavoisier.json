@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "antoine-lavoisier",
+  "seedRound": 0,
+  "qid": "Q39607",
+  "displayName": "Antoine Lavoisier",
+  "identity": "Chemist and lawyer · France · 1743–1794",
+  "title": "Antoine Lavoisier's birth chart",
+  "metaDescription": "Antoine Lavoisier's chart, computed from a sourced birth date: Sun at 2.7° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Uranus sit 0.9° from an exact square — near enough that the tradition reads drive and disruption as a single working part. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards.",
+  "ledeFact": "aspect:Mars:Uranus:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.72",
+        "decan:virgo:first"
+      ],
+      "text": "The Sun's exact place is 2.7° Virgo. That falls in the first decan, 0°–10°, sub-ruled by Mercury in the classical scheme — a earth sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Libra:18.8°",
+        "personal:Mars:Libra:24.6°"
+      ],
+      "text": "Day to day the chart speaks through Venus in Libra (18.8°), Mars in Libra (24.6°): taste led by wit and proportion, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:trine:0.5",
+        "aspect:Mars:Uranus:square:0.88",
+        "aspect:Sun:Mercury:conjunction:2.22"
+      ],
+      "text": "Neptune and Pluto hold the closest angle here — a trine, 0.5° wide. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mars square Uranus at 0.9°, and the Sun conjunction Mercury at 2.2° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The classical table has three entries for this chart. Venus in Libra at 18.8° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 24.6° is in detriment — the planet opposite its home, working against the grain; Jupiter in Virgo at 19.8° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air2-water2",
+        "modalities:cardinal4-mutable3-fixed1",
+        "settled-signs:8",
+        "retrograde:1",
+        "sign-uncertain:Mercury:leo:virgo"
+      ],
+      "text": "The honest balance sheet uses the 8 placements whose signs hold for the whole day: earth 4, air 2, water 2 across the elements, and cardinal 4, mutable 3, fixed 1 across the modalities. Mercury crossed from Leo into Virgo during that day, so its sign is left open. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Uranus was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 12.1° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-26/",
+    "label": "Everyone born on August 26"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:square",
+    "sun-degree:2.72",
+    "decan:virgo:first",
+    "personal:Venus:Libra:18.8°",
+    "personal:Mars:Libra:24.6°",
+    "aspect:Neptune:Pluto:trine:0.5",
+    "aspect:Mars:Uranus:square:0.88",
+    "aspect:Sun:Mercury:conjunction:2.22",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:earth4-air2-water2",
+    "modalities:cardinal4-mutable3-fixed1",
+    "settled-signs:8",
+    "retrograde:1",
+    "sign-uncertain:Mercury:leo:virgo",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

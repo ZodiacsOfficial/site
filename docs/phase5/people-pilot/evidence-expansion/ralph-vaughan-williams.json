@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ralph-vaughan-williams",
+ "qid": "Q207947",
+ "displayName": "Ralph Vaughan Williams",
+ "wikidataLabel": "Ralph Vaughan Williams",
+ "wikidataDescription": "English composer (1872-1958)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q207947",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519965721
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ralph Vaughan Williams",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ralph_Vaughan_Williams",
+   "pageId": 79448,
+   "revisionId": 1359140877,
+   "revisionTimestamp": "2026-06-13T10:37:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1872-10-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1872-10-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1872-10-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1958-08-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q777662",
+  "label": "Down Ampney",
+  "entityUrl": "https://www.wikidata.org/wiki/Q777662",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q777662",
+   "sourceEntityLabel": "Down Ampney",
+   "latitude": 51.6667,
+   "longitude": -1.85,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q2490358",
+   "label": "choreographer"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q2675537",
+   "label": "music teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ralph Vaughan Williams 1913.jpeg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ralph%20Vaughan%20Williams%201913.jpeg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ralph_Vaughan_Williams_1913.jpeg",
+  "width": 256,
+  "height": 366,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "James Bacon and Sons, Leeds",
+  "credit": "\"Dr. R. Vaughan Williams\", The Musical Herald, 781, p. 100",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

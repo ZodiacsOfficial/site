@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "abdus-salam",
+ "qid": "Q28189",
+ "displayName": "Abdus Salam",
+ "wikidataLabel": "Abdus Salam",
+ "wikidataDescription": "theoretical physicist, and Nobel Prize in Physics recipient",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q28189",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516843809
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Abdus Salam",
+   "articleUrl": "https://en.wikipedia.org/wiki/Abdus_Salam",
+   "pageId": 304427,
+   "revisionId": 1365790817,
+   "revisionTimestamp": "2026-07-24T12:22:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1926-01-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1926-01-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1926-01-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1996-11-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1026616",
+  "label": "Jhang",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1026616",
+  "country": {
+   "entity": "Q843",
+   "label": "Pakistan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1026616",
+   "sourceEntityLabel": "Jhang",
+   "latitude": 31.268055555556,
+   "longitude": 72.318055555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Abdus Salam 1987 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Abdus%20Salam%201987%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Abdus_Salam_1987_(cropped).jpg",
+  "width": 1383,
+  "height": 1711,
+  "licenseShortName": "CC BY-SA 3.0 nl",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/nl/deed.en",
+  "artist": "Molendijk, Bart / Anefo",
+  "credit": "[1] Dutch National Archives, The Hague, Fotocollectie Algemeen Nederlands Persbureau (ANeFo), 1945-1989, Nummer toegang 2.24.01.05 Bestanddeelnummer 933-9976",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 nl",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

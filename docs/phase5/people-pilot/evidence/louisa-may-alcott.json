@@ -1,0 +1,134 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "louisa-may-alcott",
+ "qid": "Q185696",
+ "displayName": "Louisa May Alcott",
+ "wikidataLabel": "Louisa May Alcott",
+ "wikidataDescription": "American novelist (1832–1888)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q185696",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518678529
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Louisa May Alcott",
+   "articleUrl": "https://en.wikipedia.org/wiki/Louisa_May_Alcott",
+   "pageId": 18002,
+   "revisionId": 1366047685,
+   "revisionTimestamp": "2026-07-26T00:01:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1832-11-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1832-11-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1832-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1832-11-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1888-03-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q279890",
+  "label": "Germantown",
+  "entityUrl": "https://www.wikidata.org/wiki/Q279890",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q279890",
+   "sourceEntityLabel": "Germantown",
+   "latitude": 40.043611111111,
+   "longitude": -75.181944444444,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q186360",
+   "label": "nurse"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q54128",
+   "label": "domestic worker"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Louisa May Alcott, c. 1870 - Warren's Portraits, Boston.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Louisa%20May%20Alcott%2C%20c.%201870%20-%20Warren's%20Portraits%2C%20Boston.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Louisa_May_Alcott,_c._1870_-_Warren%27s_Portraits,_Boston.jpg",
+  "width": 1815,
+  "height": 2956,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Adam Cuerden",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ppmsca.53264.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

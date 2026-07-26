@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "raja-ravi-varma",
+  "seedRound": 1,
+  "qid": "Q333453",
+  "displayName": "Raja Ravi Varma",
+  "identity": "Painter · India · 1848–1906",
+  "title": "Raja Ravi Varma's birth chart",
+  "metaDescription": "Raja Ravi Varma's chart, computed from a sourced birth date: Sun at 9.0° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Aries — Mercury, Venus, Uranus and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aries:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.02",
+        "decan:taurus:first"
+      ],
+      "text": "The Sun's exact place is 9.0° Taurus. That falls in the first decan, 0°–10°, sub-ruled by Venus in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:18.8°",
+        "personal:Venus:Aries:16.4°",
+        "personal:Mars:Cancer:6.6°"
+      ],
+      "text": "Mercury holds 18.8° Aries, Venus holds 16.4° Aries, Mars holds 6.6° Cancer — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Uranus:conjunction:0.63",
+        "aspect:Venus:Jupiter:square:1.64",
+        "aspect:Mercury:Venus:conjunction:2.36"
+      ],
+      "text": "Closest first: Mercury to Uranus, a conjunction with 0.6° of slack. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Venus square Jupiter at 1.6°, and Mercury conjunction Venus at 2.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Venus in Aries at 16.4° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 6.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 14.8° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire4-earth1",
+        "modalities:cardinal6-mutable3-fixed1",
+        "settled-signs:10",
+        "retrograde:0"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 5 in water, 4 in fire, 1 in earth by element, 6 cardinal, 3 mutable, 1 fixed by modality. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. No settled placement falls in air — an absence the tradition treats as information, not as a defect. The day carried no retrograde motion at all; everything moved forward as seen from here."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:14.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 12.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-29/",
+    "label": "Everyone born on April 29"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "stellium:aries:4",
+    "sun-degree:9.02",
+    "decan:taurus:first",
+    "personal:Mercury:Aries:18.8°",
+    "personal:Venus:Aries:16.4°",
+    "personal:Mars:Cancer:6.6°",
+    "aspect:Mercury:Uranus:conjunction:0.63",
+    "aspect:Venus:Jupiter:square:1.64",
+    "aspect:Mercury:Venus:conjunction:2.36",
+    "figure:unaspected:Moon",
+    "dignity:Venus:detriment",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:exaltation",
+    "elements:water5-fire4-earth1",
+    "modalities:cardinal6-mutable3-fixed1",
+    "settled-signs:10",
+    "retrograde:0",
+    "moon-sign:pisces",
+    "moon-band:14.2"
+  ],
+  "measurements": {
+    "originalWords": 436,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

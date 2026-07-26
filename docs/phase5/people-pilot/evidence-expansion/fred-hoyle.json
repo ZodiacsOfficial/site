@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fred-hoyle",
+ "qid": "Q183397",
+ "displayName": "Fred Hoyle",
+ "wikidataLabel": "Fred Hoyle",
+ "wikidataDescription": "British astronomer (1915–2001)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q183397",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515015469
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fred Hoyle",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fred_Hoyle",
+   "pageId": 11001,
+   "revisionId": 1363479601,
+   "revisionTimestamp": "2026-07-10T13:12:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-06-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-06-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-06-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2001-08-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q863832",
+  "label": "Bingley",
+  "entityUrl": "https://www.wikidata.org/wiki/Q863832",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q863832",
+   "sourceEntityLabel": "Bingley",
+   "latitude": 53.846,
+   "longitude": -1.836,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  },
+  {
+   "entity": "Q1650915",
+   "label": "researcher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fred Hoyle 1967.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fred%20Hoyle%201967.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fred_Hoyle_1967.jpg",
+  "width": 2386,
+  "height": 3007,
+  "licenseShortName": "Attribution",
+  "licenseUrl": null,
+  "artist": "AIP Emilio Segrè Visual Archives, Clayton Collection",
+  "credit": "https://repository.aip.org/hoyle-sloan-laboratory",
+  "usageTerms": null,
+  "attributionRequired": null,
+  "restrictions": ""
+ }
+}

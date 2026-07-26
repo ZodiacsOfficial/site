@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alma-mahler",
+ "qid": "Q156898",
+ "displayName": "Alma Mahler",
+ "wikidataLabel": "Alma Mahler",
+ "wikidataDescription": "Austrian composer, art collector, author, editor, and socialite (1879-1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q156898",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517817598
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alma Mahler",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alma_Mahler",
+   "pageId": 203794,
+   "revisionId": 1363671242,
+   "revisionTimestamp": "2026-07-11T16:19:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1879-08-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1879-08-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1879-08-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q4610556",
+   "label": "model"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alma Mahler 1899a.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alma%20Mahler%201899a.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alma_Mahler_1899a.jpg",
+  "width": 266,
+  "height": 368,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Alma_Mahler_1899.jpg: Unknown authorUnknown author derivative work: Fewskulchor (talk)",
+  "credit": "Alma_Mahler_1899.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

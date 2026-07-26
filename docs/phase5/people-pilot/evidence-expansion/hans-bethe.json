@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hans-bethe",
+ "qid": "Q155794",
+ "displayName": "Hans Bethe",
+ "wikidataLabel": "Hans Bethe",
+ "wikidataDescription": "German-American nuclear physicist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q155794",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517765275
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hans Bethe",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hans_Bethe",
+   "pageId": 185853,
+   "revisionId": 1364855353,
+   "revisionTimestamp": "2026-07-18T22:50:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-07-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-07-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-03-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6602",
+  "label": "Strasbourg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6602",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6602",
+   "sourceEntityLabel": "Strasbourg",
+   "latitude": 48.573333333333,
+   "longitude": 7.7522222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hans Bethe.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hans%20Bethe.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hans_Bethe.jpg",
+  "width": 730,
+  "height": 913,
+  "licenseShortName": "Attribution",
+  "licenseUrl": null,
+  "artist": "Los Alamos National Laboratory",
+  "credit": "Los Alamos National Laboratory",
+  "usageTerms": null,
+  "attributionRequired": null,
+  "restrictions": ""
+ }
+}

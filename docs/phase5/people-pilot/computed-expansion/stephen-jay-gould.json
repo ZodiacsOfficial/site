@@ -1,0 +1,276 @@
+{
+  "schema": "zodiacs.phase5.computed.v1",
+  "slug": "stephen-jay-gould",
+  "qid": "Q180619",
+  "displayName": "Stephen Jay Gould",
+  "calendarModel": "proleptic-gregorian",
+  "storedDate": "1941-09-10",
+  "gregorianDate": "1941-09-10",
+  "displayedDate": "1941-09-10",
+  "birthdayCrossLinkKey": "1941-09-10",
+  "timeQuality": "unknown",
+  "computation": {
+    "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+    "timeZone": "America/New_York",
+    "civilTime": "12:00",
+    "utcInstant": "1941-09-10T16:00:00.000Z",
+    "utcOffsetMinutesAtBirth": -240,
+    "civilDayStartUtc": "1941-09-10T04:00:00.000Z",
+    "civilDayEndUtc": "1941-09-11T04:00:00.000Z",
+    "latitude": 40.71361111111111,
+    "longitude": -73.82805555555555,
+    "coordinateEscalationSteps": 0,
+    "coordinateSourceEntity": "Q18424",
+    "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "anglesComputed": false,
+    "housesComputed": false,
+    "sectComputed": false
+  },
+  "sun": {
+    "sign": "virgo",
+    "signName": "Virgo",
+    "degree": 17.53
+  },
+  "moon": {
+    "sign": "taurus",
+    "signName": "Taurus",
+    "degree": 13.15,
+    "uncertain": false,
+    "signAtCivilDayStart": "taurus",
+    "signAtCivilDayEnd": "taurus"
+  },
+  "cusp": {
+    "ambiguous": false,
+    "boundaryUtc": null,
+    "degreesInsideAtWindowStart": 16.886,
+    "degreesToNextBoundaryAtWindowEnd": 12.1419
+  },
+  "unknownTimeErrorBandDegrees": {
+    "Sun": 0.972,
+    "Moon": 11.883,
+    "Mercury": 1.545,
+    "Venus": 1.187,
+    "Mars": 0.057,
+    "Jupiter": 0.092,
+    "Saturn": 0,
+    "Uranus": 0.004,
+    "Neptune": 0.037,
+    "Pluto": 0.022
+  },
+  "signUncertainTransitions": [],
+  "placements": [
+    {
+      "body": "Sun",
+      "sign": "virgo",
+      "signName": "Virgo",
+      "degree": 17.53,
+      "retrograde": false,
+      "speedPerDay": 0.9722,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Moon",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 13.15,
+      "retrograde": false,
+      "speedPerDay": 11.8786,
+      "dignity": "exaltation",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mercury",
+      "sign": "libra",
+      "signName": "Libra",
+      "degree": 5.79,
+      "retrograde": false,
+      "speedPerDay": 1.5442,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Venus",
+      "sign": "libra",
+      "signName": "Libra",
+      "degree": 24.67,
+      "retrograde": false,
+      "speedPerDay": 1.1869,
+      "dignity": "domicile",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mars",
+      "sign": "aries",
+      "signName": "Aries",
+      "degree": 23.61,
+      "retrograde": true,
+      "speedPerDay": -0.0568,
+      "dignity": "domicile",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Jupiter",
+      "sign": "gemini",
+      "signName": "Gemini",
+      "degree": 20.03,
+      "retrograde": false,
+      "speedPerDay": 0.0924,
+      "dignity": "detriment",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Saturn",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 28.55,
+      "retrograde": false,
+      "speedPerDay": 0.0001,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": false
+    },
+    {
+      "body": "Uranus",
+      "sign": "gemini",
+      "signName": "Gemini",
+      "degree": 0.34,
+      "retrograde": true,
+      "speedPerDay": -0.0041,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Neptune",
+      "sign": "virgo",
+      "signName": "Virgo",
+      "degree": 27.06,
+      "retrograde": false,
+      "speedPerDay": 0.0367,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Pluto",
+      "sign": "leo",
+      "signName": "Leo",
+      "degree": 5.11,
+      "retrograde": false,
+      "speedPerDay": 0.0222,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    }
+  ],
+  "aspectsStableAcrossCivilDay": [
+    {
+      "a": "Mercury",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 0.69,
+      "applying": false
+    },
+    {
+      "a": "Venus",
+      "b": "Mars",
+      "type": "opposition",
+      "orb": 1.05,
+      "applying": false
+    },
+    {
+      "a": "Saturn",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 1.5,
+      "applying": true
+    },
+    {
+      "a": "Saturn",
+      "b": "Uranus",
+      "type": "conjunction",
+      "orb": 1.79,
+      "applying": true
+    },
+    {
+      "a": "Sun",
+      "b": "Jupiter",
+      "type": "square",
+      "orb": 2.5,
+      "applying": true
+    },
+    {
+      "a": "Uranus",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 3.29,
+      "applying": true
+    },
+    {
+      "a": "Mars",
+      "b": "Jupiter",
+      "type": "sextile",
+      "orb": 3.58,
+      "applying": true
+    },
+    {
+      "a": "Venus",
+      "b": "Jupiter",
+      "type": "trine",
+      "orb": 4.64,
+      "applying": false
+    },
+    {
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 5.45,
+      "applying": false
+    },
+    {
+      "a": "Sun",
+      "b": "Neptune",
+      "type": "conjunction",
+      "orb": 9.52,
+      "applying": true
+    }
+  ],
+  "aspectsAtNoonOnly": [
+    {
+      "a": "Sun",
+      "b": "Moon",
+      "type": "trine",
+      "orb": 4.38,
+      "applying": true
+    }
+  ],
+  "patterns": {
+    "settledBodyCount": 10,
+    "stelliums": [],
+    "elements": {
+      "earth": 4,
+      "air": 4,
+      "fire": 2
+    },
+    "modalities": {
+      "mutable": 4,
+      "fixed": 3,
+      "cardinal": 3
+    },
+    "retrograde": [
+      "Mars",
+      "Uranus"
+    ],
+    "directionUncertain": [
+      "Saturn"
+    ]
+  }
+}

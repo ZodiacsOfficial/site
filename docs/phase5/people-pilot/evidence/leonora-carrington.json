@@ -1,0 +1,111 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "leonora-carrington",
+ "qid": "Q233207",
+ "displayName": "Leonora Carrington",
+ "wikidataLabel": "Leonora Carrington",
+ "wikidataDescription": "British-born Mexican artist, painter and novelist (1917–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q233207",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2514870832
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Leonora Carrington",
+   "articleUrl": "https://en.wikipedia.org/wiki/Leonora_Carrington",
+   "pageId": 3133772,
+   "revisionId": 1366116105,
+   "revisionTimestamp": "2026-07-26T10:31:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-04-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-04-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-04-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-05-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3243751",
+  "label": "Clayton-le-Woods",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3243751",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3243751",
+   "sourceEntityLabel": "Clayton-le-Woods",
+   "latitude": 53.697116666667,
+   "longitude": -2.6603083333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q2707485",
+   "label": "scenographer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": null
+}

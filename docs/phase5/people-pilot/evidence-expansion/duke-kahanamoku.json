@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "duke-kahanamoku",
+ "qid": "Q123688",
+ "displayName": "Duke Kahanamoku",
+ "wikidataLabel": "Duke Kahanamoku",
+ "wikidataDescription": "American swimmer, surfer and actor (1890-1968)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q123688",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512987234
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Duke Kahanamoku",
+   "articleUrl": "https://en.wikipedia.org/wiki/Duke_Kahanamoku",
+   "pageId": 9118,
+   "revisionId": 1364675567,
+   "revisionTimestamp": "2026-07-17T22:16:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1890-08-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1890-08-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1890-08-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1968-01-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18094",
+  "label": "Honolulu",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18094",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18094",
+   "sourceEntityLabel": "Honolulu",
+   "latitude": 21.30472222222222,
+   "longitude": -157.85722222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10843402",
+   "label": "swimmer"
+  },
+  {
+   "entity": "Q13561328",
+   "label": "surfer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q17524364",
+   "label": "water polo player"
+  },
+  {
+   "entity": "Q578478",
+   "label": "sheriff"
+  }
+ ],
+ "portrait": {
+  "file": "File:Duke Kahanamoku 1920c.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Duke%20Kahanamoku%201920c.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Duke_Kahanamoku_1920c.jpg",
+  "width": 764,
+  "height": 1024,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.gettyimages.co.uk/detail/news-photo/the-famous-hawaiian-swimmer-duke-kahanamoku-who-single-news-photo/3267788",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

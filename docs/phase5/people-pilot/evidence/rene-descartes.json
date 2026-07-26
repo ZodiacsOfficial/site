@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rene-descartes",
+ "qid": "Q9191",
+ "displayName": "René Descartes",
+ "wikidataLabel": "René Descartes",
+ "wikidataDescription": "French philosopher, mathematician, and scientist (1596–1650)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9191",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522332601
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "René Descartes",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ren%C3%A9_Descartes",
+   "pageId": 25525,
+   "revisionId": 1365137426,
+   "revisionTimestamp": "2026-07-20T13:44:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1596-03-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1596-03-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1596-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1596-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1650-02-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q320299",
+  "label": "Descartes",
+  "entityUrl": "https://www.wikidata.org/wiki/Q320299",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q320299",
+   "sourceEntityLabel": "Descartes",
+   "latitude": 46.973611111111,
+   "longitude": 0.69777777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q16031530",
+   "label": "music theorist"
+  },
+  {
+   "entity": "Q3589290",
+   "label": "correspondent"
+  },
+  {
+   "entity": "Q30134437",
+   "label": "mechanical automaton engineer"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q270141",
+   "label": "polymath"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Frans Hals - Portret van René Descartes.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Frans%20Hals%20-%20Portret%20van%20Ren%C3%A9%20Descartes.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Frans_Hals_-_Portret_van_Ren%C3%A9_Descartes.jpg",
+  "width": 817,
+  "height": 1000,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "After Frans Hals",
+  "credit": "André Hatala [e.a.] (1997) De eeuw van Rembrandt, Bruxelles: Crédit communal de Belgique, ISBN 2-908388-32-4.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

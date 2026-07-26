@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "georges-seurat",
+ "qid": "Q34013",
+ "displayName": "Georges Seurat",
+ "wikidataLabel": "Georges Seurat",
+ "wikidataDescription": "French painter (1859-1891)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q34013",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521439092
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Georges Seurat",
+   "articleUrl": "https://en.wikipedia.org/wiki/Georges_Seurat",
+   "pageId": 62031,
+   "revisionId": 1364955570,
+   "revisionTimestamp": "2026-07-19T13:51:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1859-12-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1859-12-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1859-12-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1891-03-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2845756",
+  "label": "former 5th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2845756",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2845756",
+   "sourceEntityLabel": "former 5th arrondissement of Paris",
+   "latitude": 48.87197,
+   "longitude": 2.357461,
+   "precision": 0.00000277777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Georges Seurat 1888 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Georges%20Seurat%201888%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Georges_Seurat_1888_(cropped).jpg",
+  "width": 1116,
+  "height": 1644,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unidentified photographer",
+  "credit": "Seurat by Cousturier, Lucie, archive.org",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

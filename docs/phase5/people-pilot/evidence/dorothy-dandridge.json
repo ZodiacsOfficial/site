@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dorothy-dandridge",
+ "qid": "Q229251",
+ "displayName": "Dorothy Dandridge",
+ "wikidataLabel": "Dorothy Dandridge",
+ "wikidataDescription": "American actress and singer (1922–1965)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q229251",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517447980
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dorothy Dandridge",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dorothy_Dandridge",
+   "pageId": 187645,
+   "revisionId": 1362881477,
+   "revisionTimestamp": "2026-07-06T20:15:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-11-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-11-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1965-09-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q37320",
+  "label": "Cleveland",
+  "entityUrl": "https://www.wikidata.org/wiki/Q37320",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q37320",
+   "sourceEntityLabel": "Cleveland",
+   "latitude": 41.49916666666667,
+   "longitude": -81.69472222222223,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dorothy Dandridge Cain's Hundred 1962.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dorothy%20Dandridge%20Cain's%20Hundred%201962.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dorothy_Dandridge_Cain%27s_Hundred_1962.jpg",
+  "width": 1168,
+  "height": 1475,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "MGM Television",
+  "credit": "eBay front back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

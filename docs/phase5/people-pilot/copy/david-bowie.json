@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "david-bowie",
+  "seedRound": 0,
+  "qid": "Q5383",
+  "displayName": "David Bowie",
+  "identity": "Painter and singer-songwriter · United Kingdom · 1947–2016",
+  "title": "David Bowie's birth chart",
+  "metaDescription": "David Bowie's chart, computed from a sourced birth date: Sun at 17.4° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mars sit 0.6° from an exact conjunction — near enough that the tradition reads identity and drive as a single working part. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other.",
+  "ledeFact": "aspect:Sun:Mars:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.37",
+        "decan:capricorn:second"
+      ],
+      "text": "The Sun's exact place is 17.4° Capricorn. That falls in the second decan, 10°–20°, sub-ruled by Venus in the classical scheme — a earth sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:8.4°",
+        "personal:Venus:Sagittarius:2.3°",
+        "personal:Mars:Capricorn:16.8°"
+      ],
+      "text": "Mercury holds 8.4° Capricorn, Venus holds 2.3° Sagittarius, Mars holds 16.8° Capricorn — in the old shorthand, a mind that trusts the measured and the checked; taste that runs toward the vivid and the immediate; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:conjunction:0.55",
+        "aspect:Neptune:Pluto:sextile:1.94",
+        "aspect:Mercury:Neptune:square:2.42"
+      ],
+      "text": "The Sun and Mars hold the closest angle here — a conjunction, 0.6° wide. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Neptune sextile Pluto at 1.9°, and Mercury square Neptune at 2.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Uranus"
+      ],
+      "text": "Uranus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has two entries for this chart. Mars in Capricorn at 16.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Leo at 6.8° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-fire3-air2-water1",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 earth, 3 fire, 2 air, 1 water by element and 4 cardinal, 3 fixed, 2 mutable by modality. An earth emphasis reads as patience with material reality — slow hands, durable results. Saturn, Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 15.0° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-8/",
+    "label": "Everyone born on January 8"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:conjunction",
+    "sun-degree:17.37",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:8.4°",
+    "personal:Venus:Sagittarius:2.3°",
+    "personal:Mars:Capricorn:16.8°",
+    "aspect:Sun:Mars:conjunction:0.55",
+    "aspect:Neptune:Pluto:sextile:1.94",
+    "aspect:Mercury:Neptune:square:2.42",
+    "figure:unaspected:Uranus",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:earth3-fire3-air2-water1",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 410,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

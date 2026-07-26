@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gregor-mendel",
+ "qid": "Q37970",
+ "displayName": "Gregor Mendel",
+ "wikidataLabel": "Gregor Mendel",
+ "wikidataDescription": "Moravian scientist and Augustinian friar (1822–1884)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37970",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521290954
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gregor Mendel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gregor_Mendel",
+   "pageId": 12562,
+   "revisionId": 1363546656,
+   "revisionTimestamp": "2026-07-10T22:13:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1822-07-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1822-07-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1822-07-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1884-01-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2711986",
+  "label": "Hynčice",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2711986",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2711986",
+   "sourceEntityLabel": "Hynčice",
+   "latitude": 49.618888888889,
+   "longitude": 17.835277777778,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q3126128",
+   "label": "geneticist"
+  },
+  {
+   "entity": "Q852389",
+   "label": "beekeeper"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q250867",
+   "label": "Catholic priest"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  },
+  {
+   "entity": "Q2083925",
+   "label": "botanical collector"
+  },
+  {
+   "entity": "Q548320",
+   "label": "friar"
+  },
+  {
+   "entity": "Q98833890",
+   "label": "Catholic theologian"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gregor Mendel 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gregor%20Mendel%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gregor_Mendel_2.jpg",
+  "width": 1000,
+  "height": 1357,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://0.tqn.com/d/biology/1/0/l/e/3244238.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

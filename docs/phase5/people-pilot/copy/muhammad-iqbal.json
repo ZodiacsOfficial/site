@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "muhammad-iqbal",
+  "seedRound": 0,
+  "qid": "Q484141",
+  "displayName": "Muhammad Iqbal",
+  "identity": "Philosopher and politician · Pakistan · 1877–1938",
+  "title": "Muhammad Iqbal's birth chart",
+  "metaDescription": "Muhammad Iqbal's chart, computed from a sourced birth date: Sun at 17.0° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a trine to Saturn at 0.8° — close enough to weld thinking to structure. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Mercury:Saturn:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.04",
+        "decan:scorpio:second"
+      ],
+      "text": "At the noon reference the Sun sits 17.0° into Scorpio — the second decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:14.4°",
+        "personal:Venus:Capricorn:1.7°",
+        "personal:Mars:Pisces:15.6°"
+      ],
+      "text": "The personal planets sit Mercury at 14.4° Scorpio, Venus at 1.7° Capricorn, Mars at 15.6° Pisces. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a earth sign reads as attraction that grows by reliability; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:trine:0.75",
+        "aspect:Venus:Jupiter:conjunction:0.88",
+        "aspect:Mercury:Mars:trine:1.23"
+      ],
+      "text": "The day's firmest angle joins Mercury and Saturn — a trine holding at 0.8°. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Venus conjunction Jupiter at 0.9°, and Mercury trine Mars at 1.2° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Venus-Uranus-Neptune"
+      ],
+      "text": "Venus, Uranus, Neptune close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks one placement here. Jupiter in Capricorn at 2.6° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth4-fire1",
+        "modalities:fixed5-cardinal2-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in water, 4 in earth, 1 in fire by element, 5 fixed, 2 cardinal, 2 mutable by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Saturn, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.7° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-9/",
+    "label": "Everyone born on November 9"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Saturn:trine",
+    "sun-degree:17.04",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:14.4°",
+    "personal:Venus:Capricorn:1.7°",
+    "personal:Mars:Pisces:15.6°",
+    "aspect:Mercury:Saturn:trine:0.75",
+    "aspect:Venus:Jupiter:conjunction:0.88",
+    "aspect:Mercury:Mars:trine:1.23",
+    "figure:grand-trine:Venus-Uranus-Neptune",
+    "dignity:Jupiter:fall",
+    "elements:water4-earth4-fire1",
+    "modalities:fixed5-cardinal2-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 407,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

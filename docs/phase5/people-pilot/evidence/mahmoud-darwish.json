@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mahmoud-darwish",
+ "qid": "Q207720",
+ "displayName": "Mahmoud Darwish",
+ "wikidataLabel": "Mahmoud Darwish",
+ "wikidataDescription": "The national Palestinian poet, and author (1941–2008)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q207720",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516634258
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mahmoud Darwish",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mahmoud_Darwish",
+   "pageId": 1548362,
+   "revisionId": 1365685773,
+   "revisionTimestamp": "2026-07-23T21:27:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1941-03-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1941-03-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1941-03-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2008-08-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2914542",
+  "label": "Al-Birwa",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2914542",
+  "country": {
+   "entity": "Q193714",
+   "label": "Mandatory Palestine"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2914542",
+   "sourceEntityLabel": "Al-Birwa",
+   "latitude": 32.905175,
+   "longitude": 35.18016389,
+   "precision": 0.00000277777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1155838",
+   "label": "correspondent"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q1237928",
+   "label": "poet laureate"
+  },
+  {
+   "entity": "Q2100278",
+   "label": "panel discussion"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Arafat Darwish Habash (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Arafat%20Darwish%20Habash%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Arafat_Darwish_Habash_(cropped).jpg",
+  "width": 216,
+  "height": 264,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Syrian photographer working for the Syrian News Agency (SANA)",
+  "credit": "Al Sabah",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

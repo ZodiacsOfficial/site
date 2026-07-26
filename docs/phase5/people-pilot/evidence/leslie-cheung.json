@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "leslie-cheung",
+ "qid": "Q313596",
+ "displayName": "Leslie Cheung",
+ "wikidataLabel": "Leslie Cheung",
+ "wikidataDescription": "Hong Kong singer and actor (1956–2003)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q313596",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520668684
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Leslie Cheung",
+   "articleUrl": "https://en.wikipedia.org/wiki/Leslie_Cheung",
+   "pageId": 204766,
+   "revisionId": 1365925515,
+   "revisionTimestamp": "2026-07-25T06:31:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1956-09-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1956-09-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1956-09-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-04-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1054923",
+  "label": "British Hong Kong",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1054923",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1054923",
+   "sourceEntityLabel": "British Hong Kong",
+   "latitude": 22.28006825390999,
+   "longitude": 114.16032722949979,
+   "precision": 1e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Leslie Cheung at Madame Tussaud's Hong Kong - Flickr - skinnylawyer.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Leslie%20Cheung%20at%20Madame%20Tussaud's%20Hong%20Kong%20-%20Flickr%20-%20skinnylawyer.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Leslie_Cheung_at_Madame_Tussaud%27s_Hong_Kong_-_Flickr_-_skinnylawyer.jpg",
+  "width": 600,
+  "height": 800,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "skinnylawyer from Los Angeles, California, USA",
+  "credit": "Leslie Cheung at Madame Tussaud's Hong Kong",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

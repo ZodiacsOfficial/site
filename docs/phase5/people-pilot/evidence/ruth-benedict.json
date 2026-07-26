@@ -1,0 +1,143 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ruth-benedict",
+ "qid": "Q228822",
+ "displayName": "Ruth Benedict",
+ "wikidataLabel": "Ruth Benedict",
+ "wikidataDescription": "American anthropologist and folklorologist (1887-1948)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q228822",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517447484
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ruth Benedict",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ruth_Benedict",
+   "pageId": 26542,
+   "revisionId": 1364845871,
+   "revisionTimestamp": "2026-07-18T21:29:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1887-06-05T00:00:00Z|proleptic-gregorian",
+   "+1887-07-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1887-06-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1887-07-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1887-06-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1948-09-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q3075052",
+   "label": "folklorist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q3400985",
+   "label": "academic"
+  },
+  {
+   "entity": "Q182436",
+   "label": "librarian"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1371378",
+   "label": "ethnologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ruth Benedict.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ruth%20Benedict.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ruth_Benedict.jpg",
+  "width": 2108,
+  "height": 2636,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "World Telegram staff photographer",
+  "credit": "Library of Congress. New York World-Telegram & Sun Collection. http://hdl.loc.gov/loc.pnp/cph.3c14649",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

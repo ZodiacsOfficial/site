@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "clyde-tombaugh",
+ "qid": "Q190232",
+ "displayName": "Clyde Tombaugh",
+ "wikidataLabel": "Clyde Tombaugh",
+ "wikidataDescription": "American astronomer (1906–1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q190232",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519148520
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Clyde Tombaugh",
+   "articleUrl": "https://en.wikipedia.org/wiki/Clyde_Tombaugh",
+   "pageId": 6663,
+   "revisionId": 1360707612,
+   "revisionTimestamp": "2026-06-23T02:59:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-02-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-02-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-02-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-01-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q577816",
+  "label": "Streator",
+  "entityUrl": "https://www.wikidata.org/wiki/Q577816",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q577816",
+   "sourceEntityLabel": "Streator",
+   "latitude": 41.120833333333,
+   "longitude": -88.835277777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Clyde Tombaugh image.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Clyde%20Tombaugh%20image.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Clyde_Tombaugh_image.jpg",
+  "width": 169,
+  "height": 237,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "File:Clyde_W._Tombaugh.jpeg, and http://starchild.gsfc.nasa.gov/docs/StarChild/questions/question16.html [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

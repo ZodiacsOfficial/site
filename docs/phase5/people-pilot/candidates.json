@@ -272,5 +272,5104 @@
     "displayName": "Umm Kulthum",
     "role": "screening",
     "note": "Screened to test the conflicting-evidence rule"
+  },
+  {
+    "slug": "carlos-fuentes",
+    "enwiki": "Carlos Fuentes",
+    "displayName": "Carlos Fuentes",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "writer",
+      "diplomat"
+    ]
+  },
+  {
+    "slug": "jose-clemente-orozco",
+    "enwiki": "José Clemente Orozco",
+    "displayName": "José Clemente Orozco",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "jose-de-san-martin",
+    "enwiki": "José de San Martín",
+    "displayName": "José de San Martín",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "alberto-santos-dumont",
+    "enwiki": "Alberto Santos-Dumont",
+    "displayName": "Alberto Santos-Dumont",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · science",
+    "disciplines": [
+      "inventor"
+    ]
+  },
+  {
+    "slug": "ayrton-senna",
+    "enwiki": "Ayrton Senna",
+    "displayName": "Ayrton Senna",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · sport",
+    "disciplines": [
+      "Formula One driver",
+      "philanthropist"
+    ]
+  },
+  {
+    "slug": "cantinflas",
+    "enwiki": "Cantinflas",
+    "displayName": "Cantinflas",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · performing",
+    "disciplines": [
+      "comedian",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "lina-bo-bardi",
+    "enwiki": "Lina Bo Bardi",
+    "displayName": "Lina Bo Bardi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · architecture",
+    "disciplines": [
+      "architect",
+      "draftsperson"
+    ]
+  },
+  {
+    "slug": "alfonsina-storni",
+    "enwiki": "Alfonsina Storni",
+    "displayName": "Alfonsina Storni",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "diarist",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "candido-portinari",
+    "enwiki": "Candido Portinari",
+    "displayName": "Candido Portinari",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "diego-maradona",
+    "enwiki": "Diego Maradona",
+    "displayName": "Diego Maradona",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · sport",
+    "disciplines": [
+      "association football player",
+      "actor"
+    ]
+  },
+  {
+    "slug": "satyajit-ray",
+    "enwiki": "Satyajit Ray",
+    "displayName": "Satyajit Ray",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · film",
+    "disciplines": [
+      "film director",
+      "writer"
+    ]
+  },
+  {
+    "slug": "bob-marley",
+    "enwiki": "Bob Marley",
+    "displayName": "Bob Marley",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "singer-songwriter"
+    ]
+  },
+  {
+    "slug": "frantz-fanon",
+    "enwiki": "Frantz Fanon",
+    "displayName": "Frantz Fanon",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · philosophy",
+    "disciplines": [
+      "writer",
+      "psychiatrist"
+    ]
+  },
+  {
+    "slug": "kalpana-chawla",
+    "enwiki": "Kalpana Chawla",
+    "displayName": "Kalpana Chawla",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · explore",
+    "disciplines": [
+      "astronaut"
+    ]
+  },
+  {
+    "slug": "bernardo-o-higgins",
+    "enwiki": "Bernardo O'Higgins",
+    "displayName": "Bernardo O'Higgins",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · publiclife",
+    "disciplines": [
+      "politician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "madhubala",
+    "enwiki": "Madhubala",
+    "displayName": "Madhubala",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · performing",
+    "disciplines": [
+      "film actor"
+    ]
+  },
+  {
+    "slug": "oscar-niemeyer",
+    "enwiki": "Oscar Niemeyer",
+    "displayName": "Oscar Niemeyer",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · architecture",
+    "disciplines": [
+      "architect",
+      "designer"
+    ]
+  },
+  {
+    "slug": "paramahansa-yogananda",
+    "enwiki": "Paramahansa Yogananda",
+    "displayName": "Paramahansa Yogananda",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · philosophy",
+    "disciplines": [
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "bernardo-houssay",
+    "enwiki": "Bernardo Houssay",
+    "displayName": "Bernardo Houssay",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · science",
+    "disciplines": [
+      "physician"
+    ]
+  },
+  {
+    "slug": "eva-peron",
+    "enwiki": "Eva Perón",
+    "displayName": "Eva Perón",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · publiclife",
+    "disciplines": [
+      "politician",
+      "stage actor"
+    ]
+  },
+  {
+    "slug": "ritwik-ghatak",
+    "enwiki": "Ritwik Ghatak",
+    "displayName": "Ritwik Ghatak",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · film",
+    "disciplines": [
+      "film director",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "junko-tabei",
+    "enwiki": "Junko Tabei",
+    "displayName": "Junko Tabei",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · explore",
+    "disciplines": [
+      "explorer",
+      "mountaineer"
+    ]
+  },
+  {
+    "slug": "nargis",
+    "enwiki": "Nargis",
+    "displayName": "Nargis",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · performing",
+    "disciplines": [
+      "film actor",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "celia-cruz",
+    "enwiki": "Celia Cruz",
+    "displayName": "Celia Cruz",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "singer",
+      "actor"
+    ]
+  },
+  {
+    "slug": "hanae-mori",
+    "enwiki": "Hanae Mori",
+    "displayName": "Hanae Mori",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · design",
+    "disciplines": [
+      "fashion designer"
+    ]
+  },
+  {
+    "slug": "issey-miyake",
+    "enwiki": "Issey Miyake",
+    "displayName": "Issey Miyake",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · design",
+    "disciplines": [
+      "fashion designer"
+    ]
+  },
+  {
+    "slug": "luis-barragan",
+    "enwiki": "Luis Barragán",
+    "displayName": "Luis Barragán",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · architecture",
+    "disciplines": [
+      "architect"
+    ]
+  },
+  {
+    "slug": "raj-kapoor",
+    "enwiki": "Raj Kapoor",
+    "displayName": "Raj Kapoor",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · film",
+    "disciplines": [
+      "film producer",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "sri-aurobindo",
+    "enwiki": "Sri Aurobindo",
+    "displayName": "Sri Aurobindo",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · philosophy",
+    "disciplines": [
+      "poet",
+      "politician"
+    ]
+  },
+  {
+    "slug": "akira-kurosawa",
+    "enwiki": "Akira Kurosawa",
+    "displayName": "Akira Kurosawa",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · film",
+    "disciplines": [
+      "film director",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "cecilia-meireles",
+    "enwiki": "Cecília Meireles",
+    "displayName": "Cecília Meireles",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "journalist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "kenzo-tange",
+    "enwiki": "Kenzō Tange",
+    "displayName": "Kenzō Tange",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · architecture",
+    "disciplines": [
+      "architect",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "smita-patil",
+    "enwiki": "Smita Patil",
+    "displayName": "Smita Patil",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · performing",
+    "disciplines": [
+      "film actor"
+    ]
+  },
+  {
+    "slug": "machado-de-assis",
+    "enwiki": "Machado de Assis",
+    "displayName": "Machado de Assis",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "fatima-jinnah",
+    "enwiki": "Fatima Jinnah",
+    "displayName": "Fatima Jinnah",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · publiclife",
+    "disciplines": [
+      "politician",
+      "biographer"
+    ]
+  },
+  {
+    "slug": "carlos-chagas",
+    "enwiki": "Carlos Chagas",
+    "displayName": "Carlos Chagas",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · science",
+    "disciplines": [
+      "bacteriologist"
+    ]
+  },
+  {
+    "slug": "anita-mui",
+    "enwiki": "Anita Mui",
+    "displayName": "Anita Mui",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · music",
+    "disciplines": [
+      "actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "david-alfaro-siqueiros",
+    "enwiki": "David Alfaro Siqueiros",
+    "displayName": "David Alfaro Siqueiros",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · art",
+    "disciplines": [
+      "painter",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "indira-gandhi",
+    "enwiki": "Indira Gandhi",
+    "displayName": "Indira Gandhi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · publiclife",
+    "disciplines": [
+      "politician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "hideki-yukawa",
+    "enwiki": "Hideki Yukawa",
+    "displayName": "Hideki Yukawa",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · science",
+    "disciplines": [
+      "physicist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "maria-felix",
+    "enwiki": "María Félix",
+    "displayName": "María Félix",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · performing",
+    "disciplines": [
+      "film actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "ranjitsinhji",
+    "enwiki": "Ranjitsinhji",
+    "displayName": "Ranjitsinhji",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · sport",
+    "disciplines": [
+      "cricketer"
+    ]
+  },
+  {
+    "slug": "tsuguharu-foujita",
+    "enwiki": "Tsuguharu Foujita",
+    "displayName": "Tsuguharu Foujita",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "qiu-jin",
+    "enwiki": "Qiu Jin",
+    "displayName": "Qiu Jin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · publiclife",
+    "disciplines": [
+      "writer",
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "cesaria-evora",
+    "enwiki": "Cesária Évora",
+    "displayName": "Cesária Évora",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "fukuzawa-yukichi",
+    "enwiki": "Fukuzawa Yukichi",
+    "displayName": "Fukuzawa Yukichi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · philosophy",
+    "disciplines": [
+      "translator",
+      "pedagogue"
+    ]
+  },
+  {
+    "slug": "clarice-lispector",
+    "enwiki": "Clarice Lispector",
+    "displayName": "Clarice Lispector",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "screenwriter",
+      "painter"
+    ]
+  },
+  {
+    "slug": "elis-regina",
+    "enwiki": "Elis Regina",
+    "displayName": "Elis Regina",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "kamala-surayya",
+    "enwiki": "Kamala Surayya",
+    "displayName": "Kamala Surayya",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "setsuko-hara",
+    "enwiki": "Setsuko Hara",
+    "displayName": "Setsuko Hara",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · performing",
+    "disciplines": [
+      "actor"
+    ]
+  },
+  {
+    "slug": "jacques-derrida",
+    "enwiki": "Jacques Derrida",
+    "displayName": "Jacques Derrida",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · philosophy",
+    "disciplines": [
+      "philosopher",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "frank-worrell",
+    "enwiki": "Frank Worrell",
+    "displayName": "Frank Worrell",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · sport",
+    "disciplines": [
+      "cricketer"
+    ]
+  },
+  {
+    "slug": "swami-vivekananda",
+    "enwiki": "Swami Vivekananda",
+    "displayName": "Swami Vivekananda",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · philosophy",
+    "disciplines": [
+      "philosopher",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "funmilayo-ransome-kuti",
+    "enwiki": "Funmilayo Ransome-Kuti",
+    "displayName": "Funmilayo Ransome-Kuti",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "teacher"
+    ]
+  },
+  {
+    "slug": "learie-constantine",
+    "enwiki": "Learie Constantine",
+    "displayName": "Learie Constantine",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · sport",
+    "disciplines": [
+      "cricketer",
+      "diplomat"
+    ]
+  },
+  {
+    "slug": "sarojini-naidu",
+    "enwiki": "Sarojini Naidu",
+    "displayName": "Sarojini Naidu",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · publiclife",
+    "disciplines": [
+      "poet",
+      "politician"
+    ]
+  },
+  {
+    "slug": "hibari-misora",
+    "enwiki": "Hibari Misora",
+    "displayName": "Hibari Misora",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · music",
+    "disciplines": [
+      "actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "miriam-makeba",
+    "enwiki": "Miriam Makeba",
+    "displayName": "Miriam Makeba",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · music",
+    "disciplines": [
+      "singer",
+      "actor"
+    ]
+  },
+  {
+    "slug": "raja-ravi-varma",
+    "enwiki": "Raja Ravi Varma",
+    "displayName": "Raja Ravi Varma",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "dolores-del-rio",
+    "enwiki": "Dolores del Río",
+    "displayName": "Dolores del Río",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · performing",
+    "disciplines": [
+      "actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "eusebio",
+    "enwiki": "Eusébio",
+    "displayName": "Eusébio",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · sport",
+    "disciplines": [
+      "association football player"
+    ]
+  },
+  {
+    "slug": "tarsila-do-amaral",
+    "enwiki": "Tarsila do Amaral",
+    "displayName": "Tarsila do Amaral",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "qian-xuesen",
+    "enwiki": "Qian Xuesen",
+    "displayName": "Qian Xuesen",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · science",
+    "disciplines": [
+      "engineer",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "desmond-tutu",
+    "enwiki": "Desmond Tutu",
+    "displayName": "Desmond Tutu",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "human rights defender"
+    ]
+  },
+  {
+    "slug": "xiao-hong",
+    "enwiki": "Xiao Hong",
+    "displayName": "Xiao Hong",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "c-v-raman",
+    "enwiki": "C. V. Raman",
+    "displayName": "C. V. Raman",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · science",
+    "disciplines": [
+      "physicist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "soong-ching-ling",
+    "enwiki": "Soong Ching-ling",
+    "displayName": "Soong Ching-ling",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "ben-enwonwu",
+    "enwiki": "Ben Enwonwu",
+    "displayName": "Ben Enwonwu",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "lata-mangeshkar",
+    "enwiki": "Lata Mangeshkar",
+    "displayName": "Lata Mangeshkar",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · music",
+    "disciplines": [
+      "singer",
+      "film actor"
+    ]
+  },
+  {
+    "slug": "fernando-botero",
+    "enwiki": "Fernando Botero",
+    "displayName": "Fernando Botero",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "gabriel-garcia-marquez",
+    "enwiki": "Gabriel García Márquez",
+    "displayName": "Gabriel García Márquez",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "novelist"
+    ]
+  },
+  {
+    "slug": "buchi-emecheta",
+    "enwiki": "Buchi Emecheta",
+    "displayName": "Buchi Emecheta",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · writing",
+    "disciplines": [
+      "writer",
+      "sociologist"
+    ]
+  },
+  {
+    "slug": "saadat-hasan-manto",
+    "enwiki": "Saadat Hasan Manto",
+    "displayName": "Saadat Hasan Manto",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · writing",
+    "disciplines": [
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "teresa-teng",
+    "enwiki": "Teresa Teng",
+    "displayName": "Teresa Teng",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · music",
+    "disciplines": [
+      "singer",
+      "actor"
+    ]
+  },
+  {
+    "slug": "flora-nwapa",
+    "enwiki": "Flora Nwapa",
+    "displayName": "Flora Nwapa",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · writing",
+    "disciplines": [
+      "novelist"
+    ]
+  },
+  {
+    "slug": "yasunari-kawabata",
+    "enwiki": "Yasunari Kawabata",
+    "displayName": "Yasunari Kawabata",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "sridevi",
+    "enwiki": "Sridevi",
+    "displayName": "Sridevi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · performing",
+    "disciplines": [
+      "film actor"
+    ]
+  },
+  {
+    "slug": "amilcar-cabral",
+    "enwiki": "Amílcar Cabral",
+    "displayName": "Amílcar Cabral",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician",
+      "engineer"
+    ]
+  },
+  {
+    "slug": "faten-hamama",
+    "enwiki": "Faten Hamama",
+    "displayName": "Faten Hamama",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · performing",
+    "disciplines": [
+      "actor",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "heitor-villa-lobos",
+    "enwiki": "Heitor Villa-Lobos",
+    "displayName": "Heitor Villa-Lobos",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "maryam-mirzakhani",
+    "enwiki": "Maryam Mirzakhani",
+    "displayName": "Maryam Mirzakhani",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · science",
+    "disciplines": [
+      "mathematician",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "garrincha",
+    "enwiki": "Garrincha",
+    "displayName": "Garrincha",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · sport",
+    "disciplines": [
+      "association football player"
+    ]
+  },
+  {
+    "slug": "julius-nyerere",
+    "enwiki": "Julius Nyerere",
+    "displayName": "Julius Nyerere",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician",
+      "translator"
+    ]
+  },
+  {
+    "slug": "mercedes-sosa",
+    "enwiki": "Mercedes Sosa",
+    "displayName": "Mercedes Sosa",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "jagadish-chandra-bose",
+    "enwiki": "Jagadish Chandra Bose",
+    "displayName": "Jagadish Chandra Bose",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · science",
+    "disciplines": [
+      "botanist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "halide-edib-ad-var",
+    "enwiki": "Halide Edib Adıvar",
+    "displayName": "Halide Edib Adıvar",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · writing",
+    "disciplines": [
+      "politician",
+      "novelist"
+    ]
+  },
+  {
+    "slug": "zhou-enlai",
+    "enwiki": "Zhou Enlai",
+    "displayName": "Zhou Enlai",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "katherine-mansfield",
+    "enwiki": "Katherine Mansfield",
+    "displayName": "Katherine Mansfield",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · oceania · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "roberto-clemente",
+    "enwiki": "Roberto Clemente",
+    "displayName": "Roberto Clemente",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · sport",
+    "disciplines": [
+      "baseball player"
+    ]
+  },
+  {
+    "slug": "dalida",
+    "enwiki": "Dalida",
+    "displayName": "Dalida",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · music",
+    "disciplines": [
+      "film actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "xu-beihong",
+    "enwiki": "Xu Beihong",
+    "displayName": "Xu Beihong",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · art",
+    "disciplines": [
+      "painter",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "steve-biko",
+    "enwiki": "Steve Biko",
+    "displayName": "Steve Biko",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "civil rights advocate",
+      "writer"
+    ]
+  },
+  {
+    "slug": "judith-wright",
+    "enwiki": "Judith Wright",
+    "displayName": "Judith Wright",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · oceania · writing",
+    "disciplines": [
+      "poet",
+      "human rights defender"
+    ]
+  },
+  {
+    "slug": "kartini",
+    "enwiki": "Kartini",
+    "displayName": "Kartini",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · seasia · publiclife",
+    "disciplines": [
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "homi-j-bhabha",
+    "enwiki": "Homi J. Bhabha",
+    "displayName": "Homi J. Bhabha",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · science",
+    "disciplines": [
+      "nuclear physicist"
+    ]
+  },
+  {
+    "slug": "jose-marti",
+    "enwiki": "José Martí",
+    "displayName": "José Martí",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "poet",
+      "politician"
+    ]
+  },
+  {
+    "slug": "getulio-vargas",
+    "enwiki": "Getúlio Vargas",
+    "displayName": "Getúlio Vargas",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · publiclife",
+    "disciplines": [
+      "lawyer"
+    ]
+  },
+  {
+    "slug": "sun-yat-sen",
+    "enwiki": "Sun Yat-sen",
+    "displayName": "Sun Yat-sen",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · publiclife",
+    "disciplines": [
+      "politician",
+      "physician"
+    ]
+  },
+  {
+    "slug": "muhammad-abduh",
+    "enwiki": "Muhammad Abduh",
+    "displayName": "Muhammad Abduh",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · philosophy",
+    "disciplines": [
+      "judge",
+      "writer"
+    ]
+  },
+  {
+    "slug": "subrahmanyan-chandrasekhar",
+    "enwiki": "Subrahmanyan Chandrasekhar",
+    "displayName": "Subrahmanyan Chandrasekhar",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · science",
+    "disciplines": [
+      "mathematician",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "nelson-mandela",
+    "enwiki": "Nelson Mandela",
+    "displayName": "Nelson Mandela",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "oodgeroo-noonuccal",
+    "enwiki": "Oodgeroo Noonuccal",
+    "displayName": "Oodgeroo Noonuccal",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · oceania · writing",
+    "disciplines": [
+      "poet",
+      "human rights defender"
+    ]
+  },
+  {
+    "slug": "ryuichi-sakamoto",
+    "enwiki": "Ryuichi Sakamoto",
+    "displayName": "Ryuichi Sakamoto",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · music",
+    "disciplines": [
+      "actor",
+      "composer"
+    ]
+  },
+  {
+    "slug": "giorgos-seferis",
+    "enwiki": "Giorgos Seferis",
+    "displayName": "Giorgos Seferis",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "henry-lawson",
+    "enwiki": "Henry Lawson",
+    "displayName": "Henry Lawson",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · oceania · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "bhimsen-joshi",
+    "enwiki": "Bhimsen Joshi",
+    "displayName": "Bhimsen Joshi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · music",
+    "disciplines": [
+      "actor",
+      "composer"
+    ]
+  },
+  {
+    "slug": "ali-farka-toure",
+    "enwiki": "Ali Farka Touré",
+    "displayName": "Ali Farka Touré",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "thomas-sankara",
+    "enwiki": "Thomas Sankara",
+    "displayName": "Thomas Sankara",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "lao-she",
+    "enwiki": "Lao She",
+    "displayName": "Lao She",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · writing",
+    "disciplines": [
+      "writer",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "mahmoud-darwish",
+    "enwiki": "Mahmoud Darwish",
+    "displayName": "Mahmoud Darwish",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · writing",
+    "disciplines": [
+      "poet",
+      "songwriter"
+    ]
+  },
+  {
+    "slug": "edmund-hillary",
+    "enwiki": "Edmund Hillary",
+    "displayName": "Edmund Hillary",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · oceania · explore",
+    "disciplines": [
+      "explorer",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "jose-rizal",
+    "enwiki": "José Rizal",
+    "displayName": "José Rizal",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · seasia · publiclife",
+    "disciplines": [
+      "writer",
+      "painter"
+    ]
+  },
+  {
+    "slug": "nusrat-fateh-ali-khan",
+    "enwiki": "Nusrat Fateh Ali Khan",
+    "displayName": "Nusrat Fateh Ali Khan",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "nellie-bly",
+    "enwiki": "Nellie Bly",
+    "displayName": "Nellie Bly",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · explore",
+    "disciplines": [
+      "writer",
+      "inventor"
+    ]
+  },
+  {
+    "slug": "haile-selassie",
+    "enwiki": "Haile Selassie",
+    "displayName": "Haile Selassie",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "ghassan-kanafani",
+    "enwiki": "Ghassan Kanafani",
+    "displayName": "Ghassan Kanafani",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · writing",
+    "disciplines": [
+      "politician",
+      "novelist"
+    ]
+  },
+  {
+    "slug": "maria-zambrano",
+    "enwiki": "María Zambrano",
+    "displayName": "María Zambrano",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "peter-tosh",
+    "enwiki": "Peter Tosh",
+    "displayName": "Peter Tosh",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "guitarist"
+    ]
+  },
+  {
+    "slug": "jawaharlal-nehru",
+    "enwiki": "Jawaharlal Nehru",
+    "displayName": "Jawaharlal Nehru",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · publiclife",
+    "disciplines": [
+      "writer",
+      "politician"
+    ]
+  },
+  {
+    "slug": "kahlil-gibran",
+    "enwiki": "Kahlil Gibran",
+    "displayName": "Kahlil Gibran",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · writing",
+    "disciplines": [
+      "writer",
+      "painter"
+    ]
+  },
+  {
+    "slug": "natsume-soseki",
+    "enwiki": "Natsume Sōseki",
+    "displayName": "Natsume Sōseki",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · writing",
+    "disciplines": [
+      "writer",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "madeleine-vionnet",
+    "enwiki": "Madeleine Vionnet",
+    "displayName": "Madeleine Vionnet",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · design",
+    "disciplines": [
+      "fashion designer"
+    ]
+  },
+  {
+    "slug": "fanny-blankers-koen",
+    "enwiki": "Fanny Blankers-Koen",
+    "displayName": "Fanny Blankers-Koen",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "sprinter"
+    ]
+  },
+  {
+    "slug": "freddie-mercury",
+    "enwiki": "Freddie Mercury",
+    "displayName": "Freddie Mercury",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · music",
+    "disciplines": [
+      "singer-songwriter",
+      "painter"
+    ]
+  },
+  {
+    "slug": "coco-chanel",
+    "enwiki": "Coco Chanel",
+    "displayName": "Coco Chanel",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · design",
+    "disciplines": [
+      "fashion designer"
+    ]
+  },
+  {
+    "slug": "ray-eames",
+    "enwiki": "Ray Eames",
+    "displayName": "Ray Eames",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · architecture",
+    "disciplines": [
+      "film director",
+      "designer"
+    ]
+  },
+  {
+    "slug": "bessie-coleman",
+    "enwiki": "Bessie Coleman",
+    "displayName": "Bessie Coleman",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · explore",
+    "disciplines": [
+      "human rights defender"
+    ]
+  },
+  {
+    "slug": "edith-stein",
+    "enwiki": "Edith Stein",
+    "displayName": "Edith Stein",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "translator",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "g-e-m-anscombe",
+    "enwiki": "G. E. M. Anscombe",
+    "displayName": "G. E. M. Anscombe",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "audrey-hepburn",
+    "enwiki": "Audrey Hepburn",
+    "displayName": "Audrey Hepburn",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · performing",
+    "disciplines": [
+      "stage actor",
+      "philanthropist"
+    ]
+  },
+  {
+    "slug": "marlene-dietrich",
+    "enwiki": "Marlene Dietrich",
+    "displayName": "Marlene Dietrich",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · performing",
+    "disciplines": [
+      "film actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "elsa-schiaparelli",
+    "enwiki": "Elsa Schiaparelli",
+    "displayName": "Elsa Schiaparelli",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · design",
+    "disciplines": [
+      "fashion designer"
+    ]
+  },
+  {
+    "slug": "eileen-gray",
+    "enwiki": "Eileen Gray",
+    "displayName": "Eileen Gray",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · architecture",
+    "disciplines": [
+      "architect",
+      "designer"
+    ]
+  },
+  {
+    "slug": "agnes-varda",
+    "enwiki": "Agnès Varda",
+    "displayName": "Agnès Varda",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · film",
+    "disciplines": [
+      "photographer",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "gertrude-bell",
+    "enwiki": "Gertrude Bell",
+    "displayName": "Gertrude Bell",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · explore",
+    "disciplines": [
+      "explorer",
+      "archaeologist"
+    ]
+  },
+  {
+    "slug": "florence-griffith-joyner",
+    "enwiki": "Florence Griffith Joyner",
+    "displayName": "Florence Griffith Joyner",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "sprinter"
+    ]
+  },
+  {
+    "slug": "dorothy-dandridge",
+    "enwiki": "Dorothy Dandridge",
+    "displayName": "Dorothy Dandridge",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "television actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "berthe-morisot",
+    "enwiki": "Berthe Morisot",
+    "displayName": "Berthe Morisot",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "katharine-hepburn",
+    "enwiki": "Katharine Hepburn",
+    "displayName": "Katharine Hepburn",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "film actor",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "amelia-earhart",
+    "enwiki": "Amelia Earhart",
+    "displayName": "Amelia Earhart",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · explore",
+    "disciplines": [
+      "journalist",
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "harriet-taylor-mill",
+    "enwiki": "Harriet Taylor Mill",
+    "displayName": "Harriet Taylor Mill",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "economist"
+    ]
+  },
+  {
+    "slug": "sally-ride",
+    "enwiki": "Sally Ride",
+    "displayName": "Sally Ride",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · explore",
+    "disciplines": [
+      "physicist",
+      "astronaut"
+    ]
+  },
+  {
+    "slug": "althea-gibson",
+    "enwiki": "Althea Gibson",
+    "displayName": "Althea Gibson",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "tennis player",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "muhammad-ali-jinnah",
+    "enwiki": "Muhammad Ali Jinnah",
+    "displayName": "Muhammad Ali Jinnah",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · publiclife",
+    "disciplines": [
+      "lawyer"
+    ]
+  },
+  {
+    "slug": "isabella-bird",
+    "enwiki": "Isabella Bird",
+    "displayName": "Isabella Bird",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · explore",
+    "disciplines": [
+      "explorer",
+      "writer"
+    ]
+  },
+  {
+    "slug": "albert-camus",
+    "enwiki": "Albert Camus",
+    "displayName": "Albert Camus",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · writing",
+    "disciplines": [
+      "writer",
+      "association football player"
+    ]
+  },
+  {
+    "slug": "diane-arbus",
+    "enwiki": "Diane Arbus",
+    "displayName": "Diane Arbus",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · art",
+    "disciplines": [
+      "photographer"
+    ]
+  },
+  {
+    "slug": "walter-gropius",
+    "enwiki": "Walter Gropius",
+    "displayName": "Walter Gropius",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · architecture",
+    "disciplines": [
+      "architect",
+      "pedagogue"
+    ]
+  },
+  {
+    "slug": "federico-fellini",
+    "enwiki": "Federico Fellini",
+    "displayName": "Federico Fellini",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · film",
+    "disciplines": [
+      "film director",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "wilma-rudolph",
+    "enwiki": "Wilma Rudolph",
+    "displayName": "Wilma Rudolph",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "sprinter"
+    ]
+  },
+  {
+    "slug": "karl-lagerfeld",
+    "enwiki": "Karl Lagerfeld",
+    "displayName": "Karl Lagerfeld",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · design",
+    "disciplines": [
+      "fashion designer",
+      "photographer"
+    ]
+  },
+  {
+    "slug": "grace-kelly",
+    "enwiki": "Grace Kelly",
+    "displayName": "Grace Kelly",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "film actor",
+      "musician"
+    ]
+  },
+  {
+    "slug": "charles-eames",
+    "enwiki": "Charles Eames",
+    "displayName": "Charles Eames",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · architecture",
+    "disciplines": [
+      "designer",
+      "architect"
+    ]
+  },
+  {
+    "slug": "annie-jump-cannon",
+    "enwiki": "Annie Jump Cannon",
+    "displayName": "Annie Jump Cannon",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "astronomer",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "louise-bourgeois",
+    "enwiki": "Louise Bourgeois",
+    "displayName": "Louise Bourgeois",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "sculptor"
+    ]
+  },
+  {
+    "slug": "hattie-mcdaniel",
+    "enwiki": "Hattie McDaniel",
+    "displayName": "Hattie McDaniel",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "actor",
+      "singer-songwriter"
+    ]
+  },
+  {
+    "slug": "antoni-gaudi",
+    "enwiki": "Antoni Gaudí",
+    "displayName": "Antoni Gaudí",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · architecture",
+    "disciplines": [
+      "architect",
+      "designer"
+    ]
+  },
+  {
+    "slug": "caroline-herschel",
+    "enwiki": "Caroline Herschel",
+    "displayName": "Caroline Herschel",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "astronomer",
+      "singer"
+    ]
+  },
+  {
+    "slug": "le-corbusier",
+    "enwiki": "Le Corbusier",
+    "displayName": "Le Corbusier",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · architecture",
+    "disciplines": [
+      "architect",
+      "painter"
+    ]
+  },
+  {
+    "slug": "elisabeth-vigee-le-brun",
+    "enwiki": "Élisabeth Vigée Le Brun",
+    "displayName": "Élisabeth Vigée Le Brun",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter",
+      "writer"
+    ]
+  },
+  {
+    "slug": "jean-luc-godard",
+    "enwiki": "Jean-Luc Godard",
+    "displayName": "Jean-Luc Godard",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · film",
+    "disciplines": [
+      "film director",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "cecilia-payne-gaposchkin",
+    "enwiki": "Cecilia Payne-Gaposchkin",
+    "displayName": "Cecilia Payne-Gaposchkin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "astronomer",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "alvar-aalto",
+    "enwiki": "Alvar Aalto",
+    "displayName": "Alvar Aalto",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · architecture",
+    "disciplines": [
+      "architect",
+      "designer"
+    ]
+  },
+  {
+    "slug": "mary-pickford",
+    "enwiki": "Mary Pickford",
+    "displayName": "Mary Pickford",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "film producer",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "fridtjof-nansen",
+    "enwiki": "Fridtjof Nansen",
+    "displayName": "Fridtjof Nansen",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · explore",
+    "disciplines": [
+      "zoologist",
+      "polar explorer"
+    ]
+  },
+  {
+    "slug": "artemisia-gentileschi",
+    "enwiki": "Artemisia Gentileschi",
+    "displayName": "Artemisia Gentileschi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "alfred-hitchcock",
+    "enwiki": "Alfred Hitchcock",
+    "displayName": "Alfred Hitchcock",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · film",
+    "disciplines": [
+      "film director",
+      "writer"
+    ]
+  },
+  {
+    "slug": "dian-fossey",
+    "enwiki": "Dian Fossey",
+    "displayName": "Dian Fossey",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "anthropologist",
+      "writer"
+    ]
+  },
+  {
+    "slug": "yuri-gagarin",
+    "enwiki": "Yuri Gagarin",
+    "displayName": "Yuri Gagarin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · explore",
+    "disciplines": [
+      "astronaut"
+    ]
+  },
+  {
+    "slug": "luchino-visconti",
+    "enwiki": "Luchino Visconti",
+    "displayName": "Luchino Visconti",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · film",
+    "disciplines": [
+      "film director",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "josephine-baker",
+    "enwiki": "Josephine Baker",
+    "displayName": "Josephine Baker",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "singer",
+      "film actor"
+    ]
+  },
+  {
+    "slug": "berenice-abbott",
+    "enwiki": "Berenice Abbott",
+    "displayName": "Berenice Abbott",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · art",
+    "disciplines": [
+      "photographer",
+      "inventor"
+    ]
+  },
+  {
+    "slug": "ernest-shackleton",
+    "enwiki": "Ernest Shackleton",
+    "displayName": "Ernest Shackleton",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · explore",
+    "disciplines": [
+      "explorer"
+    ]
+  },
+  {
+    "slug": "arthur-schopenhauer",
+    "enwiki": "Arthur Schopenhauer",
+    "displayName": "Arthur Schopenhauer",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "university teacher",
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "helen-frankenthaler",
+    "enwiki": "Helen Frankenthaler",
+    "displayName": "Helen Frankenthaler",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · art",
+    "disciplines": [
+      "printmaker"
+    ]
+  },
+  {
+    "slug": "matthew-henson",
+    "enwiki": "Matthew Henson",
+    "displayName": "Matthew Henson",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · explore",
+    "disciplines": [
+      "explorer",
+      "writer"
+    ]
+  },
+  {
+    "slug": "hilma-af-klint",
+    "enwiki": "Hilma af Klint",
+    "displayName": "Hilma af Klint",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "artist"
+    ]
+  },
+  {
+    "slug": "montesquieu",
+    "enwiki": "Montesquieu",
+    "displayName": "Montesquieu",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "sociologist"
+    ]
+  },
+  {
+    "slug": "alfred-north-whitehead",
+    "enwiki": "Alfred North Whitehead",
+    "displayName": "Alfred North Whitehead",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "mathematician"
+    ]
+  },
+  {
+    "slug": "florence-nightingale",
+    "enwiki": "Florence Nightingale",
+    "displayName": "Florence Nightingale",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "nurse",
+      "writer"
+    ]
+  },
+  {
+    "slug": "gabriele-munter",
+    "enwiki": "Gabriele Münter",
+    "displayName": "Gabriele Münter",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "neil-armstrong",
+    "enwiki": "Neil Armstrong",
+    "displayName": "Neil Armstrong",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · explore",
+    "disciplines": [
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "anne-bronte",
+    "enwiki": "Anne Brontë",
+    "displayName": "Anne Brontë",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "friedrich-engels",
+    "enwiki": "Friedrich Engels",
+    "displayName": "Friedrich Engels",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "economist",
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "marilyn-monroe",
+    "enwiki": "Marilyn Monroe",
+    "displayName": "Marilyn Monroe",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "film actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "thor-heyerdahl",
+    "enwiki": "Thor Heyerdahl",
+    "displayName": "Thor Heyerdahl",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · explore",
+    "disciplines": [
+      "explorer",
+      "anthropologist"
+    ]
+  },
+  {
+    "slug": "alma-mahler",
+    "enwiki": "Alma Mahler",
+    "displayName": "Alma Mahler",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer",
+      "painter"
+    ]
+  },
+  {
+    "slug": "astrid-lindgren",
+    "enwiki": "Astrid Lindgren",
+    "displayName": "Astrid Lindgren",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "cecile-chaminade",
+    "enwiki": "Cécile Chaminade",
+    "displayName": "Cécile Chaminade",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "pianist"
+    ]
+  },
+  {
+    "slug": "amy-winehouse",
+    "enwiki": "Amy Winehouse",
+    "displayName": "Amy Winehouse",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "singer-songwriter"
+    ]
+  },
+  {
+    "slug": "anne-sullivan",
+    "enwiki": "Anne Sullivan",
+    "displayName": "Anne Sullivan",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "teacher"
+    ]
+  },
+  {
+    "slug": "denis-diderot",
+    "enwiki": "Denis Diderot",
+    "displayName": "Denis Diderot",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "audre-lorde",
+    "enwiki": "Audre Lorde",
+    "displayName": "Audre Lorde",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "poet",
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "christina-rossetti",
+    "enwiki": "Christina Rossetti",
+    "displayName": "Christina Rossetti",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "roland-barthes",
+    "enwiki": "Roland Barthes",
+    "displayName": "Roland Barthes",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "clara-haskil",
+    "enwiki": "Clara Haskil",
+    "displayName": "Clara Haskil",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "pianist"
+    ]
+  },
+  {
+    "slug": "roald-amundsen",
+    "enwiki": "Roald Amundsen",
+    "displayName": "Roald Amundsen",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · explore",
+    "disciplines": [
+      "explorer",
+      "writer"
+    ]
+  },
+  {
+    "slug": "barbara-mcclintock",
+    "enwiki": "Barbara McClintock",
+    "displayName": "Barbara McClintock",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "botanist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "bessie-smith",
+    "enwiki": "Bessie Smith",
+    "displayName": "Bessie Smith",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "musician"
+    ]
+  },
+  {
+    "slug": "friedrich-nietzsche",
+    "enwiki": "Friedrich Nietzsche",
+    "displayName": "Friedrich Nietzsche",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "composer"
+    ]
+  },
+  {
+    "slug": "charlotte-bronte",
+    "enwiki": "Charlotte Brontë",
+    "displayName": "Charlotte Brontë",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "dorothy-day",
+    "enwiki": "Dorothy Day",
+    "displayName": "Dorothy Day",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "journalist",
+      "trade unionist"
+    ]
+  },
+  {
+    "slug": "knute-rockne",
+    "enwiki": "Knute Rockne",
+    "displayName": "Knute Rockne",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "American football player",
+      "writer"
+    ]
+  },
+  {
+    "slug": "janis-joplin",
+    "enwiki": "Janis Joplin",
+    "displayName": "Janis Joplin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "billie-holiday",
+    "enwiki": "Billie Holiday",
+    "displayName": "Billie Holiday",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "actor",
+      "songwriter"
+    ]
+  },
+  {
+    "slug": "georg-wilhelm-friedrich-hegel",
+    "enwiki": "Georg Wilhelm Friedrich Hegel",
+    "displayName": "Georg Wilhelm Friedrich Hegel",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "michelangelo-antonioni",
+    "enwiki": "Michelangelo Antonioni",
+    "displayName": "Michelangelo Antonioni",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · film",
+    "disciplines": [
+      "film director",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "colette",
+    "enwiki": "Colette",
+    "displayName": "Colette",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist",
+      "actor"
+    ]
+  },
+  {
+    "slug": "immanuel-kant",
+    "enwiki": "Immanuel Kant",
+    "displayName": "Immanuel Kant",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "anthropologist"
+    ]
+  },
+  {
+    "slug": "elizabeth-barrett-browning",
+    "enwiki": "Elizabeth Barrett Browning",
+    "displayName": "Elizabeth Barrett Browning",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "vittorio-de-sica",
+    "enwiki": "Vittorio De Sica",
+    "displayName": "Vittorio De Sica",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · film",
+    "disciplines": [
+      "film director",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "elizabeth-cady-stanton",
+    "enwiki": "Elizabeth Cady Stanton",
+    "displayName": "Elizabeth Cady Stanton",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "writer",
+      "actor"
+    ]
+  },
+  {
+    "slug": "elsa-morante",
+    "enwiki": "Elsa Morante",
+    "displayName": "Elsa Morante",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "dorothea-lange",
+    "enwiki": "Dorothea Lange",
+    "displayName": "Dorothea Lange",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · art",
+    "disciplines": [
+      "journalist",
+      "photojournalist"
+    ]
+  },
+  {
+    "slug": "jean-jacques-rousseau",
+    "enwiki": "Jean-Jacques Rousseau",
+    "displayName": "Jean-Jacques Rousseau",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "pedagogue"
+    ]
+  },
+  {
+    "slug": "edith-clarke",
+    "enwiki": "Edith Clarke",
+    "displayName": "Edith Clarke",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "engineer",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "john-stuart-mill",
+    "enwiki": "John Stuart Mill",
+    "displayName": "John Stuart Mill",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "economist"
+    ]
+  },
+  {
+    "slug": "eleanor-roosevelt",
+    "enwiki": "Eleanor Roosevelt",
+    "displayName": "Eleanor Roosevelt",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "diplomat",
+      "writer"
+    ]
+  },
+  {
+    "slug": "bruce-lee",
+    "enwiki": "Bruce Lee",
+    "displayName": "Bruce Lee",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "film director",
+      "writer"
+    ]
+  },
+  {
+    "slug": "emil-zatopek",
+    "enwiki": "Emil Zátopek",
+    "displayName": "Emil Zátopek",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "athlete"
+    ]
+  },
+  {
+    "slug": "george-eliot",
+    "enwiki": "George Eliot",
+    "displayName": "George Eliot",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist"
+    ]
+  },
+  {
+    "slug": "jean-bartik",
+    "enwiki": "Jean Bartik",
+    "displayName": "Jean Bartik",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "mathematician"
+    ]
+  },
+  {
+    "slug": "blaise-pascal",
+    "enwiki": "Blaise Pascal",
+    "displayName": "Blaise Pascal",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "mathematician",
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "emmeline-pankhurst",
+    "enwiki": "Emmeline Pankhurst",
+    "displayName": "Emmeline Pankhurst",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · publiclife",
+    "disciplines": [
+      "suffragette",
+      "writer"
+    ]
+  },
+  {
+    "slug": "alessandro-manzoni",
+    "enwiki": "Alessandro Manzoni",
+    "displayName": "Alessandro Manzoni",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer",
+      "politician"
+    ]
+  },
+  {
+    "slug": "flannery-o-connor",
+    "enwiki": "Flannery O'Connor",
+    "displayName": "Flannery O'Connor",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "alexander-fleming",
+    "enwiki": "Alexander Fleming",
+    "displayName": "Alexander Fleming",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "bacteriologist"
+    ]
+  },
+  {
+    "slug": "kathleen-kenyon",
+    "enwiki": "Kathleen Kenyon",
+    "displayName": "Kathleen Kenyon",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "archaeologist"
+    ]
+  },
+  {
+    "slug": "alexander-graham-bell",
+    "enwiki": "Alexander Graham Bell",
+    "displayName": "Alexander Graham Bell",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist"
+    ]
+  },
+  {
+    "slug": "grazia-deledda",
+    "enwiki": "Grazia Deledda",
+    "displayName": "Grazia Deledda",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "amedeo-avogadro",
+    "enwiki": "Amedeo Avogadro",
+    "displayName": "Amedeo Avogadro",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "george-sand",
+    "enwiki": "George Sand",
+    "displayName": "George Sand",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer",
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "antoine-lavoisier",
+    "enwiki": "Antoine Lavoisier",
+    "displayName": "Antoine Lavoisier",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "chemist",
+      "lawyer"
+    ]
+  },
+  {
+    "slug": "harriet-beecher-stowe",
+    "enwiki": "Harriet Beecher Stowe",
+    "displayName": "Harriet Beecher Stowe",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "novelist"
+    ]
+  },
+  {
+    "slug": "lucretia-mott",
+    "enwiki": "Lucretia Mott",
+    "displayName": "Lucretia Mott",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "women's rights activist",
+      "writer"
+    ]
+  },
+  {
+    "slug": "alfred-adler",
+    "enwiki": "Alfred Adler",
+    "displayName": "Alfred Adler",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "psychiatrist"
+    ]
+  },
+  {
+    "slug": "helen-b-taussig",
+    "enwiki": "Helen B. Taussig",
+    "displayName": "Helen B. Taussig",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "physician"
+    ]
+  },
+  {
+    "slug": "anton-bruckner",
+    "enwiki": "Anton Bruckner",
+    "displayName": "Anton Bruckner",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "antonio-vivaldi",
+    "enwiki": "Antonio Vivaldi",
+    "displayName": "Antonio Vivaldi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "jane-austen",
+    "enwiki": "Jane Austen",
+    "displayName": "Jane Austen",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "arthur-rimbaud",
+    "enwiki": "Arthur Rimbaud",
+    "displayName": "Arthur Rimbaud",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "carl-sandburg",
+    "enwiki": "Carl Sandburg",
+    "displayName": "Carl Sandburg",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "poet",
+      "trade unionist"
+    ]
+  },
+  {
+    "slug": "elizabeth-blackwell",
+    "enwiki": "Elizabeth Blackwell",
+    "displayName": "Elizabeth Blackwell",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physician",
+      "essayist"
+    ]
+  },
+  {
+    "slug": "irene-joliot-curie",
+    "enwiki": "Irène Joliot-Curie",
+    "displayName": "Irène Joliot-Curie",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "politician"
+    ]
+  },
+  {
+    "slug": "antonio-machado",
+    "enwiki": "Antonio Machado",
+    "displayName": "Antonio Machado",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "joan-didion",
+    "enwiki": "Joan Didion",
+    "displayName": "Joan Didion",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "b-f-skinner",
+    "enwiki": "B. F. Skinner",
+    "displayName": "B. F. Skinner",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "psychologist",
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "judy-garland",
+    "enwiki": "Judy Garland",
+    "displayName": "Judy Garland",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "television actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "karen-blixen",
+    "enwiki": "Karen Blixen",
+    "displayName": "Karen Blixen",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer",
+      "painter"
+    ]
+  },
+  {
+    "slug": "carl-friedrich-gauss",
+    "enwiki": "Carl Friedrich Gauss",
+    "displayName": "Carl Friedrich Gauss",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "mathematician",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "gertrude-b-elion",
+    "enwiki": "Gertrude B. Elion",
+    "displayName": "Gertrude B. Elion",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "biochemist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "antonin-dvorak",
+    "enwiki": "Antonín Dvořák",
+    "displayName": "Antonín Dvořák",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "conductor",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "bedrich-smetana",
+    "enwiki": "Bedřich Smetana",
+    "displayName": "Bedřich Smetana",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "booker-t-washington",
+    "enwiki": "Booker T. Washington",
+    "displayName": "Booker T. Washington",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "writer",
+      "pedagogue"
+    ]
+  },
+  {
+    "slug": "camille-saint-saens",
+    "enwiki": "Camille Saint-Saëns",
+    "displayName": "Camille Saint-Saëns",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "louisa-may-alcott",
+    "enwiki": "Louisa May Alcott",
+    "displayName": "Louisa May Alcott",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "writer",
+      "nurse"
+    ]
+  },
+  {
+    "slug": "ma-rainey",
+    "enwiki": "Ma Rainey",
+    "displayName": "Ma Rainey",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "charles-lyell",
+    "enwiki": "Charles Lyell",
+    "displayName": "Charles Lyell",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "geologist",
+      "lawyer"
+    ]
+  },
+  {
+    "slug": "arnold-schoenberg",
+    "enwiki": "Arnold Schoenberg",
+    "displayName": "Arnold Schoenberg",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "painter",
+      "writer"
+    ]
+  },
+  {
+    "slug": "bruno-schulz",
+    "enwiki": "Bruno Schulz",
+    "displayName": "Bruno Schulz",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer",
+      "painter"
+    ]
+  },
+  {
+    "slug": "karen-carpenter",
+    "enwiki": "Karen Carpenter",
+    "displayName": "Karen Carpenter",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "lucy-maud-montgomery",
+    "enwiki": "Lucy Maud Montgomery",
+    "displayName": "Lucy Maud Montgomery",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "writer",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "dante-gabriel-rossetti",
+    "enwiki": "Dante Gabriel Rossetti",
+    "displayName": "Dante Gabriel Rossetti",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "poet",
+      "illustrator"
+    ]
+  },
+  {
+    "slug": "david-bowie",
+    "enwiki": "David Bowie",
+    "displayName": "David Bowie",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "painter",
+      "singer-songwriter"
+    ]
+  },
+  {
+    "slug": "jane-addams",
+    "enwiki": "Jane Addams",
+    "displayName": "Jane Addams",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "journalist",
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "august-strindberg",
+    "enwiki": "August Strindberg",
+    "displayName": "August Strindberg",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "playwright",
+      "photographer"
+    ]
+  },
+  {
+    "slug": "kathe-kollwitz",
+    "enwiki": "Käthe Kollwitz",
+    "displayName": "Käthe Kollwitz",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "printmaker",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "charles-baudelaire",
+    "enwiki": "Charles Baudelaire",
+    "displayName": "Charles Baudelaire",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet",
+      "draftsperson"
+    ]
+  },
+  {
+    "slug": "lynn-margulis",
+    "enwiki": "Lynn Margulis",
+    "displayName": "Lynn Margulis",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "university teacher",
+      "botanist"
+    ]
+  },
+  {
+    "slug": "claude-debussy",
+    "enwiki": "Claude Debussy",
+    "displayName": "Claude Debussy",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "edgar-allan-poe",
+    "enwiki": "Edgar Allan Poe",
+    "displayName": "Edgar Allan Poe",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "banjo-paterson",
+    "enwiki": "Banjo Paterson",
+    "displayName": "Banjo Paterson",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · oceania · writing",
+    "disciplines": [
+      "poet",
+      "lawyer"
+    ]
+  },
+  {
+    "slug": "claude-monet",
+    "enwiki": "Claude Monet",
+    "displayName": "Claude Monet",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "mary-jackson",
+    "enwiki": "Mary Jackson (engineer)",
+    "displayName": "Mary Jackson",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "mathematician"
+    ]
+  },
+  {
+    "slug": "dinu-lipatti",
+    "enwiki": "Dinu Lipatti",
+    "displayName": "Dinu Lipatti",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "pianist"
+    ]
+  },
+  {
+    "slug": "mary-wollstonecraft",
+    "enwiki": "Mary Wollstonecraft",
+    "displayName": "Mary Wollstonecraft",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "translator",
+      "feminist"
+    ]
+  },
+  {
+    "slug": "elvis-presley",
+    "enwiki": "Elvis Presley",
+    "displayName": "Elvis Presley",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "film actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "maria-callas",
+    "enwiki": "Maria Callas",
+    "displayName": "Maria Callas",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "opera singer",
+      "actor"
+    ]
+  },
+  {
+    "slug": "maria-montessori",
+    "enwiki": "Maria Montessori",
+    "displayName": "Maria Montessori",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physician",
+      "pedagogue"
+    ]
+  },
+  {
+    "slug": "maya-angelou",
+    "enwiki": "Maya Angelou",
+    "displayName": "Maya Angelou",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "politician",
+      "comedian"
+    ]
+  },
+  {
+    "slug": "enrico-fermi",
+    "enwiki": "Enrico Fermi",
+    "displayName": "Enrico Fermi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "henri-matisse",
+    "enwiki": "Henri Matisse",
+    "displayName": "Henri Matisse",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter",
+      "designer"
+    ]
+  },
+  {
+    "slug": "maria-goeppert-mayer",
+    "enwiki": "Maria Goeppert Mayer",
+    "displayName": "Maria Goeppert Mayer",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "eca-de-queiroz",
+    "enwiki": "Eça de Queiroz",
+    "displayName": "Eça de Queiroz",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "journalist",
+      "diplomat"
+    ]
+  },
+  {
+    "slug": "italo-calvino",
+    "enwiki": "Italo Calvino",
+    "displayName": "Italo Calvino",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "lal-bahadur-shastri",
+    "enwiki": "Lal Bahadur Shastri",
+    "displayName": "Lal Bahadur Shastri",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "kwame-nkrumah",
+    "enwiki": "Kwame Nkrumah",
+    "displayName": "Kwame Nkrumah",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "lu-xun",
+    "enwiki": "Lu Xun",
+    "displayName": "Lu Xun",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · writing",
+    "disciplines": [
+      "essayist"
+    ]
+  },
+  {
+    "slug": "leslie-cheung",
+    "enwiki": "Leslie Cheung",
+    "displayName": "Leslie Cheung",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · music",
+    "disciplines": [
+      "singer",
+      "film director"
+    ]
+  },
+  {
+    "slug": "simon-bolivar",
+    "enwiki": "Simón Bolívar",
+    "displayName": "Simón Bolívar",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "subhas-chandra-bose",
+    "enwiki": "Subhas Chandra Bose",
+    "displayName": "Subhas Chandra Bose",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · publiclife",
+    "disciplines": [
+      "politician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "pablo-neruda",
+    "enwiki": "Pablo Neruda",
+    "displayName": "Pablo Neruda",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "poet",
+      "diplomat"
+    ]
+  },
+  {
+    "slug": "muhammad-iqbal",
+    "enwiki": "Muhammad Iqbal",
+    "displayName": "Muhammad Iqbal",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · writing",
+    "disciplines": [
+      "philosopher",
+      "politician"
+    ]
+  },
+  {
+    "slug": "r-k-narayan",
+    "enwiki": "R. K. Narayan",
+    "displayName": "R. K. Narayan",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · writing",
+    "disciplines": [
+      "writer",
+      "politician"
+    ]
+  },
+  {
+    "slug": "ngugi-wa-thiong-o",
+    "enwiki": "Ngũgĩ wa Thiong'o",
+    "displayName": "Ngũgĩ wa Thiong'o",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · writing",
+    "disciplines": [
+      "playwright",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "ruben-dario",
+    "enwiki": "Rubén Darío",
+    "displayName": "Rubén Darío",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "poet",
+      "diplomat"
+    ]
+  },
+  {
+    "slug": "sadegh-hedayat",
+    "enwiki": "Sadegh Hedayat",
+    "displayName": "Sadegh Hedayat",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "rosa-bonheur",
+    "enwiki": "Rosa Bonheur",
+    "displayName": "Rosa Bonheur",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "sophie-germain",
+    "enwiki": "Sophie Germain",
+    "displayName": "Sophie Germain",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "mathematician",
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "octavia-hill",
+    "enwiki": "Octavia Hill",
+    "displayName": "Octavia Hill",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · publiclife",
+    "disciplines": [
+      "social reformer",
+      "writer"
+    ]
+  },
+  {
+    "slug": "george-best",
+    "enwiki": "George Best",
+    "displayName": "George Best",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "association football player"
+    ]
+  },
+  {
+    "slug": "walter-payton",
+    "enwiki": "Walter Payton",
+    "displayName": "Walter Payton",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "American football player"
+    ]
+  },
+  {
+    "slug": "tina-turner",
+    "enwiki": "Tina Turner",
+    "displayName": "Tina Turner",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "wilt-chamberlain",
+    "enwiki": "Wilt Chamberlain",
+    "displayName": "Wilt Chamberlain",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "basketball player",
+      "screenwriter"
+    ]
+  },
+  {
+    "slug": "william-blake",
+    "enwiki": "William Blake",
+    "displayName": "William Blake",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter",
+      "poet"
+    ]
+  },
+  {
+    "slug": "ruth-benedict",
+    "enwiki": "Ruth Benedict",
+    "displayName": "Ruth Benedict",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "anthropologist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "johan-cruyff",
+    "enwiki": "Johan Cruyff",
+    "displayName": "Johan Cruyff",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "association football player"
+    ]
+  },
+  {
+    "slug": "seve-ballesteros",
+    "enwiki": "Seve Ballesteros",
+    "displayName": "Seve Ballesteros",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "golfer"
+    ]
+  },
+  {
+    "slug": "henri-cartier-bresson",
+    "enwiki": "Henri Cartier-Bresson",
+    "displayName": "Henri Cartier-Bresson",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "photographer",
+      "journalist"
+    ]
+  },
+  {
+    "slug": "jean-beliveau",
+    "enwiki": "Jean Béliveau",
+    "displayName": "Jean Béliveau",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "ice hockey player"
+    ]
+  },
+  {
+    "slug": "john-constable",
+    "enwiki": "John Constable",
+    "displayName": "John Constable",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "pierre-auguste-renoir",
+    "enwiki": "Pierre-Auguste Renoir",
+    "displayName": "Pierre-Auguste Renoir",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "rene-descartes",
+    "enwiki": "René Descartes",
+    "displayName": "René Descartes",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher",
+      "mathematician"
+    ]
+  },
+  {
+    "slug": "w-g-grace",
+    "enwiki": "W. G. Grace",
+    "displayName": "W. G. Grace",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "cricketer",
+      "physician"
+    ]
+  },
+  {
+    "slug": "piet-mondrian",
+    "enwiki": "Piet Mondrian",
+    "displayName": "Piet Mondrian",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter",
+      "furniture designer"
+    ]
+  },
+  {
+    "slug": "mary-oliver",
+    "enwiki": "Mary Oliver",
+    "displayName": "Mary Oliver",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "natalia-ginzburg",
+    "enwiki": "Natalia Ginzburg",
+    "displayName": "Natalia Ginzburg",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer",
+      "politician"
+    ]
+  },
+  {
+    "slug": "selena",
+    "enwiki": "Selena",
+    "displayName": "Selena",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer",
+      "actor"
+    ]
+  },
+  {
+    "slug": "mary-shelley",
+    "enwiki": "Mary Shelley",
+    "displayName": "Mary Shelley",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "millicent-fawcett",
+    "enwiki": "Millicent Fawcett",
+    "displayName": "Millicent Fawcett",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · publiclife",
+    "disciplines": [
+      "politician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "selma-lagerlof",
+    "enwiki": "Selma Lagerlöf",
+    "displayName": "Selma Lagerlöf",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "charles-dickens",
+    "enwiki": "Charles Dickens",
+    "displayName": "Charles Dickens",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer",
+      "botanist"
+    ]
+  },
+  {
+    "slug": "edgar-degas",
+    "enwiki": "Edgar Degas",
+    "displayName": "Edgar Degas",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter",
+      "poet"
+    ]
+  },
+  {
+    "slug": "gaetano-donizetti",
+    "enwiki": "Gaetano Donizetti",
+    "displayName": "Gaetano Donizetti",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "guy-de-maupassant",
+    "enwiki": "Guy de Maupassant",
+    "displayName": "Guy de Maupassant",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "short story writer"
+    ]
+  },
+  {
+    "slug": "karl-marx",
+    "enwiki": "Karl Marx",
+    "displayName": "Karl Marx",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "economist",
+      "journalist"
+    ]
+  },
+  {
+    "slug": "edward-elgar",
+    "enwiki": "Edward Elgar",
+    "displayName": "Edward Elgar",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "emile-zola",
+    "enwiki": "Émile Zola",
+    "displayName": "Émile Zola",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist",
+      "photographer"
+    ]
+  },
+  {
+    "slug": "franz-kafka",
+    "enwiki": "Franz Kafka",
+    "displayName": "Franz Kafka",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist",
+      "lawyer"
+    ]
+  },
+  {
+    "slug": "franz-schubert",
+    "enwiki": "Franz Schubert",
+    "displayName": "Franz Schubert",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "hector-berlioz",
+    "enwiki": "Hector Berlioz",
+    "displayName": "Hector Berlioz",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "conductor",
+      "writer"
+    ]
+  },
+  {
+    "slug": "s-ren-kierkegaard",
+    "enwiki": "Søren Kierkegaard",
+    "displayName": "Søren Kierkegaard",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "evariste-galois",
+    "enwiki": "Évariste Galois",
+    "displayName": "Évariste Galois",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "mathematician",
+      "revolutionary"
+    ]
+  },
+  {
+    "slug": "francisco-goya",
+    "enwiki": "Francisco Goya",
+    "displayName": "Francisco Goya",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "franz-liszt",
+    "enwiki": "Franz Liszt",
+    "displayName": "Franz Liszt",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "pianist",
+      "writer"
+    ]
+  },
+  {
+    "slug": "giacomo-leopardi",
+    "enwiki": "Giacomo Leopardi",
+    "displayName": "Giacomo Leopardi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "humphry-davy",
+    "enwiki": "Humphry Davy",
+    "displayName": "Humphry Davy",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "chemist",
+      "photographer"
+    ]
+  },
+  {
+    "slug": "james-clerk-maxwell",
+    "enwiki": "James Clerk Maxwell",
+    "displayName": "James Clerk Maxwell",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "photographer"
+    ]
+  },
+  {
+    "slug": "jules-verne",
+    "enwiki": "Jules Verne",
+    "displayName": "Jules Verne",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist"
+    ]
+  },
+  {
+    "slug": "karel-capek",
+    "enwiki": "Karel Čapek",
+    "displayName": "Karel Čapek",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "translator",
+      "photographer"
+    ]
+  },
+  {
+    "slug": "frederick-banting",
+    "enwiki": "Frederick Banting",
+    "displayName": "Frederick Banting",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "physician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "george-gershwin",
+    "enwiki": "George Gershwin",
+    "displayName": "George Gershwin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "composer",
+      "painter"
+    ]
+  },
+  {
+    "slug": "gioachino-rossini",
+    "enwiki": "Gioachino Rossini",
+    "displayName": "Gioachino Rossini",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "gregor-mendel",
+    "enwiki": "Gregor Mendel",
+    "displayName": "Gregor Mendel",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "biologist"
+    ]
+  },
+  {
+    "slug": "hans-christian-andersen",
+    "enwiki": "Hans Christian Andersen",
+    "displayName": "Hans Christian Andersen",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "jim-morrison",
+    "enwiki": "Jim Morrison",
+    "displayName": "Jim Morrison",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer-songwriter",
+      "lyricist"
+    ]
+  },
+  {
+    "slug": "louis-pasteur",
+    "enwiki": "Louis Pasteur",
+    "displayName": "Louis Pasteur",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "chemist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "prince",
+    "enwiki": "Prince (musician)",
+    "displayName": "Prince",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "film actor",
+      "singer"
+    ]
+  },
+  {
+    "slug": "friedrich-schiller",
+    "enwiki": "Friedrich Schiller",
+    "displayName": "Friedrich Schiller",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "heinrich-hertz",
+    "enwiki": "Heinrich Hertz",
+    "displayName": "Heinrich Hertz",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "ignaz-semmelweis",
+    "enwiki": "Ignaz Semmelweis",
+    "displayName": "Ignaz Semmelweis",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physician",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "joseph-haydn",
+    "enwiki": "Joseph Haydn",
+    "displayName": "Joseph Haydn",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "luciano-pavarotti",
+    "enwiki": "Luciano Pavarotti",
+    "displayName": "Luciano Pavarotti",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "opera singer",
+      "film actor"
+    ]
+  },
+  {
+    "slug": "mark-twain",
+    "enwiki": "Mark Twain",
+    "displayName": "Mark Twain",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "journalist",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "thomas-mann",
+    "enwiki": "Thomas Mann",
+    "displayName": "Thomas Mann",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "wolfgang-amadeus-mozart",
+    "enwiki": "Wolfgang Amadeus Mozart",
+    "displayName": "Wolfgang Amadeus Mozart",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "edward-jenner",
+    "enwiki": "Edward Jenner",
+    "displayName": "Edward Jenner",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physician"
+    ]
+  },
+  {
+    "slug": "georges-bizet",
+    "enwiki": "Georges Bizet",
+    "displayName": "Georges Bizet",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "conductor"
+    ]
+  },
+  {
+    "slug": "james-van-der-zee",
+    "enwiki": "James Van Der Zee",
+    "displayName": "James Van Der Zee",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · art",
+    "disciplines": [
+      "photographer"
+    ]
+  },
+  {
+    "slug": "johann-wolfgang-von-goethe",
+    "enwiki": "Johann Wolfgang von Goethe",
+    "displayName": "Johann Wolfgang von Goethe",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "botanist",
+      "politician"
+    ]
+  },
+  {
+    "slug": "joseph-lister",
+    "enwiki": "Joseph Lister",
+    "displayName": "Joseph Lister",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "surgeon",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "miguel-de-unamuno",
+    "enwiki": "Miguel de Unamuno",
+    "displayName": "Miguel de Unamuno",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "ralph-ellison",
+    "enwiki": "Ralph Ellison",
+    "displayName": "Ralph Ellison",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "erik-satie",
+    "enwiki": "Erik Satie",
+    "displayName": "Erik Satie",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "konrad-lorenz",
+    "enwiki": "Konrad Lorenz",
+    "displayName": "Konrad Lorenz",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "ethologist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "leos-janacek",
+    "enwiki": "Leoš Janáček",
+    "displayName": "Leoš Janáček",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer",
+      "pedagogue"
+    ]
+  },
+  {
+    "slug": "michael-faraday",
+    "enwiki": "Michael Faraday",
+    "displayName": "Michael Faraday",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "writer"
+    ]
+  },
+  {
+    "slug": "samuel-barber",
+    "enwiki": "Samuel Barber",
+    "displayName": "Samuel Barber",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "gabriel-faure",
+    "enwiki": "Gabriel Fauré",
+    "displayName": "Gabriel Fauré",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "university teacher",
+      "composer"
+    ]
+  },
+  {
+    "slug": "marcel-proust",
+    "enwiki": "Marcel Proust",
+    "displayName": "Marcel Proust",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist"
+    ]
+  },
+  {
+    "slug": "paul-robeson",
+    "enwiki": "Paul Robeson",
+    "displayName": "Paul Robeson",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer",
+      "lawyer"
+    ]
+  },
+  {
+    "slug": "victor-hugo",
+    "enwiki": "Victor Hugo",
+    "displayName": "Victor Hugo",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "politician",
+      "playwright"
+    ]
+  },
+  {
+    "slug": "william-wilberforce",
+    "enwiki": "William Wilberforce",
+    "displayName": "William Wilberforce",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · publiclife",
+    "disciplines": [
+      "politician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "paul-verlaine",
+    "enwiki": "Paul Verlaine",
+    "displayName": "Paul Verlaine",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "rembrandt",
+    "enwiki": "Rembrandt",
+    "displayName": "Rembrandt",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "w-e-b-du-bois",
+    "enwiki": "W. E. B. Du Bois",
+    "displayName": "W. E. B. Du Bois",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "historian",
+      "sociologist"
+    ]
+  },
+  {
+    "slug": "henri-poincare",
+    "enwiki": "Henri Poincaré",
+    "displayName": "Henri Poincaré",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "mathematician",
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "sandor-marai",
+    "enwiki": "Sándor Márai",
+    "displayName": "Sándor Márai",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "journalist"
+    ]
+  },
+  {
+    "slug": "honore-de-balzac",
+    "enwiki": "Honoré de Balzac",
+    "displayName": "Honoré de Balzac",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "novelist"
+    ]
+  },
+  {
+    "slug": "j-m-w-turner",
+    "enwiki": "J. M. W. Turner",
+    "displayName": "J. M. W. Turner",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "joan-miro",
+    "enwiki": "Joan Miró",
+    "displayName": "Joan Miró",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter",
+      "designer"
+    ]
+  },
+  {
+    "slug": "johannes-brahms",
+    "enwiki": "Johannes Brahms",
+    "displayName": "Johannes Brahms",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "keith-haring",
+    "enwiki": "Keith Haring",
+    "displayName": "Keith Haring",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · art",
+    "disciplines": [
+      "painter",
+      "writer"
+    ]
+  },
+  {
+    "slug": "nadia-boulanger",
+    "enwiki": "Nadia Boulanger",
+    "displayName": "Nadia Boulanger",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "pianist",
+      "pedagogue"
+    ]
+  },
+  {
+    "slug": "paula-modersohn-becker",
+    "enwiki": "Paula Modersohn-Becker",
+    "displayName": "Paula Modersohn-Becker",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "patsy-cline",
+    "enwiki": "Patsy Cline",
+    "displayName": "Patsy Cline",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "sylvia-plath",
+    "enwiki": "Sylvia Plath",
+    "displayName": "Sylvia Plath",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "poet",
+      "draftsperson"
+    ]
+  },
+  {
+    "slug": "wis-awa-szymborska",
+    "enwiki": "Wisława Szymborska",
+    "displayName": "Wisława Szymborska",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "george-bernard-shaw",
+    "enwiki": "George Bernard Shaw",
+    "displayName": "George Bernard Shaw",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "politician",
+      "playwright"
+    ]
+  },
+  {
+    "slug": "niki-lauda",
+    "enwiki": "Niki Lauda",
+    "displayName": "Niki Lauda",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "Formula One driver"
+    ]
+  },
+  {
+    "slug": "herman-melville",
+    "enwiki": "Herman Melville",
+    "displayName": "Herman Melville",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "teacher",
+      "poet"
+    ]
+  },
+  {
+    "slug": "jean-michel-basquiat",
+    "enwiki": "Jean-Michel Basquiat",
+    "displayName": "Jean-Michel Basquiat",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · art",
+    "disciplines": [
+      "painter",
+      "composer"
+    ]
+  },
+  {
+    "slug": "louis-armstrong",
+    "enwiki": "Louis Armstrong",
+    "displayName": "Louis Armstrong",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "actor",
+      "trumpeter"
+    ]
+  },
+  {
+    "slug": "lin-huiyin",
+    "enwiki": "Lin Huiyin",
+    "displayName": "Lin Huiyin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · architecture",
+    "disciplines": [
+      "architect",
+      "poet"
+    ]
+  },
+  {
+    "slug": "amrita-pritam",
+    "enwiki": "Amrita Pritam",
+    "displayName": "Amrita Pritam",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · writing",
+    "disciplines": [
+      "politician",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "bertha-lutz",
+    "enwiki": "Bertha Lutz",
+    "displayName": "Bertha Lutz",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · science",
+    "disciplines": [
+      "zoologist",
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "machiko-hasegawa",
+    "enwiki": "Machiko Hasegawa",
+    "displayName": "Machiko Hasegawa",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · art",
+    "disciplines": [
+      "writer",
+      "illustrator"
+    ]
+  },
+  {
+    "slug": "ousmane-sembene",
+    "enwiki": "Ousmane Sembène",
+    "displayName": "Ousmane Sembène",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · film",
+    "disciplines": [
+      "film director",
+      "playwright"
+    ]
+  },
+  {
+    "slug": "ba-jin",
+    "enwiki": "Ba Jin",
+    "displayName": "Ba Jin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · writing",
+    "disciplines": [
+      "writer",
+      "politician"
+    ]
+  },
+  {
+    "slug": "albertina-sisulu",
+    "enwiki": "Albertina Sisulu",
+    "displayName": "Albertina Sisulu",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "nise-da-silveira",
+    "enwiki": "Nise da Silveira",
+    "displayName": "Nise da Silveira",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · science",
+    "disciplines": [
+      "psychologist",
+      "artist"
+    ]
+  },
+  {
+    "slug": "misuzu-kaneko",
+    "enwiki": "Misuzu Kaneko",
+    "displayName": "Misuzu Kaneko",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "yu-gwan-sun",
+    "enwiki": "Yu Gwan-sun",
+    "displayName": "Yu Gwan-sun",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · publiclife",
+    "disciplines": [
+      "political activist"
+    ]
+  },
+  {
+    "slug": "ellen-kuzwayo",
+    "enwiki": "Ellen Kuzwayo",
+    "displayName": "Ellen Kuzwayo",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "brenda-fassie",
+    "enwiki": "Brenda Fassie",
+    "displayName": "Brenda Fassie",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · music",
+    "disciplines": [
+      "singer"
+    ]
+  },
+  {
+    "slug": "rosario-castellanos",
+    "enwiki": "Rosario Castellanos",
+    "displayName": "Rosario Castellanos",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "poet",
+      "diplomat"
+    ]
+  },
+  {
+    "slug": "parvin-e-tesami",
+    "enwiki": "Parvin E'tesami",
+    "displayName": "Parvin E'tesami",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "teresa-carreno",
+    "enwiki": "Teresa Carreño",
+    "displayName": "Teresa Carreño",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "doria-shafik",
+    "enwiki": "Doria Shafik",
+    "displayName": "Doria Shafik",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · publiclife",
+    "disciplines": [
+      "translator",
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "yosano-akiko",
+    "enwiki": "Yosano Akiko",
+    "displayName": "Yosano Akiko",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "bessie-head",
+    "enwiki": "Bessie Head",
+    "displayName": "Bessie Head",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · writing",
+    "disciplines": [
+      "novelist",
+      "teacher"
+    ]
+  },
+  {
+    "slug": "whina-cooper",
+    "enwiki": "Whina Cooper",
+    "displayName": "Whina Cooper",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · oceania · publiclife",
+    "disciplines": [
+      "teacher",
+      "historian"
+    ]
+  },
+  {
+    "slug": "premchand",
+    "enwiki": "Premchand",
+    "displayName": "Premchand",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · writing",
+    "disciplines": [
+      "novelist"
+    ]
+  },
+  {
+    "slug": "xiang-jingyu",
+    "enwiki": "Xiang Jingyu",
+    "displayName": "Xiang Jingyu",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · publiclife",
+    "disciplines": [
+      "politician",
+      "journalist"
+    ]
+  },
+  {
+    "slug": "margaret-ekpo",
+    "enwiki": "Margaret Ekpo",
+    "displayName": "Margaret Ekpo",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "delmira-agustini",
+    "enwiki": "Delmira Agustini",
+    "displayName": "Delmira Agustini",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "marguerite-duras",
+    "enwiki": "Marguerite Duras",
+    "displayName": "Marguerite Duras",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · seasia · writing",
+    "disciplines": [
+      "writer",
+      "film director"
+    ]
+  },
+  {
+    "slug": "may-ziadeh",
+    "enwiki": "May Ziadeh",
+    "displayName": "May Ziadeh",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · mena · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "carlos-p-romulo",
+    "enwiki": "Carlos P. Romulo",
+    "displayName": "Carlos P. Romulo",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · seasia · publiclife",
+    "disciplines": [
+      "diplomat",
+      "journalist"
+    ]
+  },
+  {
+    "slug": "nadine-gordimer",
+    "enwiki": "Nadine Gordimer",
+    "displayName": "Nadine Gordimer",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "silvina-ocampo",
+    "enwiki": "Silvina Ocampo",
+    "displayName": "Silvina Ocampo",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "chairil-anwar",
+    "enwiki": "Chairil Anwar",
+    "displayName": "Chairil Anwar",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · seasia · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "chabuca-granda",
+    "enwiki": "Chabuca Granda",
+    "displayName": "Chabuca Granda",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "singer",
+      "poet"
+    ]
+  },
+  {
+    "slug": "david-unaipon",
+    "enwiki": "David Unaipon",
+    "displayName": "David Unaipon",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · oceania · writing",
+    "disciplines": [
+      "inventor",
+      "writer"
+    ]
+  },
+  {
+    "slug": "u-thant",
+    "enwiki": "U Thant",
+    "displayName": "U Thant",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · seasia · publiclife",
+    "disciplines": [
+      "politician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "florence-knoll",
+    "enwiki": "Florence Knoll",
+    "displayName": "Florence Knoll",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · architecture",
+    "disciplines": [
+      "architect",
+      "interior designer"
+    ]
+  },
+  {
+    "slug": "bette-davis",
+    "enwiki": "Bette Davis",
+    "displayName": "Bette Davis",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "autobiographer",
+      "stage actor"
+    ]
+  },
+  {
+    "slug": "fred-perry",
+    "enwiki": "Fred Perry",
+    "displayName": "Fred Perry",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "tennis player",
+      "fashion designer"
+    ]
+  },
+  {
+    "slug": "ludwig-wittgenstein",
+    "enwiki": "Ludwig Wittgenstein",
+    "displayName": "Ludwig Wittgenstein",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "mathematician",
+      "philosopher"
+    ]
+  },
+  {
+    "slug": "yogi-berra",
+    "enwiki": "Yogi Berra",
+    "displayName": "Yogi Berra",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "baseball player"
+    ]
+  },
+  {
+    "slug": "edvard-grieg",
+    "enwiki": "Edvard Grieg",
+    "displayName": "Edvard Grieg",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer"
+    ]
+  },
+  {
+    "slug": "erwin-schrodinger",
+    "enwiki": "Erwin Schrödinger",
+    "displayName": "Erwin Schrödinger",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "elizabeth-bishop",
+    "enwiki": "Elizabeth Bishop",
+    "displayName": "Elizabeth Bishop",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "poet",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "ethel-smyth",
+    "enwiki": "Ethel Smyth",
+    "displayName": "Ethel Smyth",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "composer",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "fernando-pessoa",
+    "enwiki": "Fernando Pessoa",
+    "displayName": "Fernando Pessoa",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · writing",
+    "disciplines": [
+      "poet"
+    ]
+  },
+  {
+    "slug": "mahalia-jackson",
+    "enwiki": "Mahalia Jackson",
+    "displayName": "Mahalia Jackson",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "musician"
+    ]
+  },
+  {
+    "slug": "margaret-mead",
+    "enwiki": "Margaret Mead",
+    "displayName": "Margaret Mead",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "anthropologist",
+      "writer"
+    ]
+  },
+  {
+    "slug": "marie-curie",
+    "enwiki": "Marie Curie",
+    "displayName": "Marie Curie",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "physicist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "alan-turing",
+    "enwiki": "Alan Turing",
+    "displayName": "Alan Turing",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "computer scientist",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "andy-warhol",
+    "enwiki": "Andy Warhol",
+    "displayName": "Andy Warhol",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · art",
+    "disciplines": [
+      "film director",
+      "painter"
+    ]
+  },
+  {
+    "slug": "aretha-franklin",
+    "enwiki": "Aretha Franklin",
+    "displayName": "Aretha Franklin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "singer",
+      "activist"
+    ]
+  },
+  {
+    "slug": "duke-ellington",
+    "enwiki": "Duke Ellington",
+    "displayName": "Duke Ellington",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · music",
+    "disciplines": [
+      "pianist",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "charlie-chaplin",
+    "enwiki": "Charlie Chaplin",
+    "displayName": "Charlie Chaplin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · film",
+    "disciplines": [
+      "film director",
+      "composer"
+    ]
+  },
+  {
+    "slug": "pablo-picasso",
+    "enwiki": "Pablo Picasso",
+    "displayName": "Pablo Picasso",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter",
+      "costume designer"
+    ]
+  },
+  {
+    "slug": "charles-darwin",
+    "enwiki": "Charles Darwin",
+    "displayName": "Charles Darwin",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "geologist",
+      "explorer"
+    ]
+  },
+  {
+    "slug": "stephen-hawking",
+    "enwiki": "Stephen Hawking",
+    "displayName": "Stephen Hawking",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "theoretical physicist",
+      "pedagogue"
+    ]
+  },
+  {
+    "slug": "martin-luther-king-jr",
+    "enwiki": "Martin Luther King Jr.",
+    "displayName": "Martin Luther King Jr.",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "civil rights advocate",
+      "writer"
+    ]
+  },
+  {
+    "slug": "rosa-parks",
+    "enwiki": "Rosa Parks",
+    "displayName": "Rosa Parks",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · publiclife",
+    "disciplines": [
+      "autobiographer",
+      "human rights defender"
+    ]
+  },
+  {
+    "slug": "toni-morrison",
+    "enwiki": "Toni Morrison",
+    "displayName": "Toni Morrison",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "writer",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "sigmund-freud",
+    "enwiki": "Sigmund Freud",
+    "displayName": "Sigmund Freud",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · science",
+    "disciplines": [
+      "psychoanalyst",
+      "essayist"
+    ]
+  },
+  {
+    "slug": "john-lennon",
+    "enwiki": "John Lennon",
+    "displayName": "John Lennon",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "writer",
+      "actor"
+    ]
+  },
+  {
+    "slug": "george-orwell",
+    "enwiki": "George Orwell",
+    "displayName": "George Orwell",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "bertrand-russell",
+    "enwiki": "Bertrand Russell",
+    "displayName": "Bertrand Russell",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · philosophy",
+    "disciplines": [
+      "mathematician",
+      "essayist"
+    ]
+  },
+  {
+    "slug": "babe-ruth",
+    "enwiki": "Babe Ruth",
+    "displayName": "Babe Ruth",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "baseball player"
+    ]
+  },
+  {
+    "slug": "edith-piaf",
+    "enwiki": "Édith Piaf",
+    "displayName": "Édith Piaf",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · music",
+    "disciplines": [
+      "singer",
+      "actor"
+    ]
+  },
+  {
+    "slug": "juana-de-ibarbourou",
+    "enwiki": "Juana de Ibarbourou",
+    "displayName": "Juana de Ibarbourou",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "rufino-tamayo",
+    "enwiki": "Rufino Tamayo",
+    "displayName": "Rufino Tamayo",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "consuelo-velazquez",
+    "enwiki": "Consuelo Velázquez",
+    "displayName": "Consuelo Velázquez",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "composer",
+      "lyricist"
+    ]
+  },
+  {
+    "slug": "meena-kumari",
+    "enwiki": "Meena Kumari",
+    "displayName": "Meena Kumari",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · performing",
+    "disciplines": [
+      "actor",
+      "poet"
+    ]
+  },
+  {
+    "slug": "s-h-raza",
+    "enwiki": "S. H. Raza",
+    "displayName": "S. H. Raza",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "irma-stern",
+    "enwiki": "Irma Stern",
+    "displayName": "Irma Stern",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · art",
+    "disciplines": [
+      "painter"
+    ]
+  },
+  {
+    "slug": "toshiro-mifune",
+    "enwiki": "Toshiro Mifune",
+    "displayName": "Toshiro Mifune",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · performing",
+    "disciplines": [
+      "actor"
+    ]
+  },
+  {
+    "slug": "abdus-salam",
+    "enwiki": "Abdus Salam",
+    "displayName": "Abdus Salam",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · science",
+    "disciplines": [
+      "university teacher",
+      "theoretical physicist"
+    ]
+  },
+  {
+    "slug": "mulk-raj-anand",
+    "enwiki": "Mulk Raj Anand",
+    "displayName": "Mulk Raj Anand",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · writing",
+    "disciplines": [
+      "writer"
+    ]
+  },
+  {
+    "slug": "luis-federico-leloir",
+    "enwiki": "Luis Federico Leloir",
+    "displayName": "Luis Federico Leloir",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · science",
+    "disciplines": [
+      "physician",
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "mariama-ba",
+    "enwiki": "Mariama Bâ",
+    "displayName": "Mariama Bâ",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · africa · writing",
+    "disciplines": [
+      "writer",
+      "women's rights activist"
+    ]
+  },
+  {
+    "slug": "violeta-parra",
+    "enwiki": "Violeta Parra",
+    "displayName": "Violeta Parra",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · music",
+    "disciplines": [
+      "singer-songwriter",
+      "poet"
+    ]
+  },
+  {
+    "slug": "julia-de-burgos",
+    "enwiki": "Julia de Burgos",
+    "displayName": "Julia de Burgos",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · latam · writing",
+    "disciplines": [
+      "poet",
+      "political activist"
+    ]
+  },
+  {
+    "slug": "sonja-henie",
+    "enwiki": "Sonja Henie",
+    "displayName": "Sonja Henie",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "actor",
+      "figure skater"
+    ]
+  },
+  {
+    "slug": "ingrid-bergman",
+    "enwiki": "Ingrid Bergman",
+    "displayName": "Ingrid Bergman",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · performing",
+    "disciplines": [
+      "autobiographer",
+      "stage actor"
+    ]
+  },
+  {
+    "slug": "willie-mays",
+    "enwiki": "Willie Mays",
+    "displayName": "Willie Mays",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · sport",
+    "disciplines": [
+      "baseball player"
+    ]
+  },
+  {
+    "slug": "bobby-charlton",
+    "enwiki": "Bobby Charlton",
+    "displayName": "Bobby Charlton",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · sport",
+    "disciplines": [
+      "association football player",
+      "autobiographer"
+    ]
+  },
+  {
+    "slug": "leonora-carrington",
+    "enwiki": "Leonora Carrington",
+    "displayName": "Leonora Carrington",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · europe · art",
+    "disciplines": [
+      "painter",
+      "novelist"
+    ]
+  },
+  {
+    "slug": "virginia-apgar",
+    "enwiki": "Virginia Apgar",
+    "displayName": "Virginia Apgar",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · science",
+    "disciplines": [
+      "university teacher"
+    ]
+  },
+  {
+    "slug": "sheikh-mujibur-rahman",
+    "enwiki": "Sheikh Mujibur Rahman",
+    "displayName": "Sheikh Mujibur Rahman",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · sasia · publiclife",
+    "disciplines": [
+      "politician",
+      "writer"
+    ]
+  },
+  {
+    "slug": "hideyo-noguchi",
+    "enwiki": "Hideyo Noguchi",
+    "displayName": "Hideyo Noguchi",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · easia · science",
+    "disciplines": [
+      "physician"
+    ]
+  },
+  {
+    "slug": "sukarno",
+    "enwiki": "Sukarno",
+    "displayName": "Sukarno",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · seasia · publiclife",
+    "disciplines": [
+      "politician"
+    ]
+  },
+  {
+    "slug": "buster-keaton",
+    "enwiki": "Buster Keaton",
+    "displayName": "Buster Keaton",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · film",
+    "disciplines": [
+      "comedian",
+      "writer"
+    ]
+  },
+  {
+    "slug": "arthur-miller",
+    "enwiki": "Arthur Miller",
+    "displayName": "Arthur Miller",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · writing",
+    "disciplines": [
+      "playwright"
+    ]
+  },
+  {
+    "slug": "paul-newman",
+    "enwiki": "Paul Newman",
+    "displayName": "Paul Newman",
+    "role": "pilot",
+    "note": "Phase 5 completion expansion · namerica · performing",
+    "disciplines": [
+      "television actor",
+      "racing automobile driver"
+    ]
   }
 ]

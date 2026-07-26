@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "henrik-ibsen",
+ "qid": "Q36661",
+ "displayName": "Henrik Ibsen",
+ "wikidataLabel": "Henrik Ibsen",
+ "wikidataDescription": "Norwegian playwright and theatre director (1828–1906)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q36661",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518679118
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Henrik Ibsen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Henrik_Ibsen",
+   "pageId": 14236,
+   "revisionId": 1365487854,
+   "revisionTimestamp": "2026-07-22T19:47:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1828-03-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1828-03-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1828-03-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1906-05-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q12003312",
+  "label": "Stockmanngården",
+  "entityUrl": "https://www.wikidata.org/wiki/Q12003312",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2272",
+   "sourceEntityLabel": "Skien",
+   "latitude": 59.208061111111114,
+   "longitude": 9.552780555555556,
+   "precision": 0.1,
+   "escalationSteps": 1
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Henrik Ibsen by Gustav Borgen NFB-19778.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Henrik%20Ibsen%20by%20Gustav%20Borgen%20NFB-19778.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Henrik_Ibsen_by_Gustav_Borgen_NFB-19778.jpg",
+  "width": 2350,
+  "height": 2814,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Gustav Borgen",
+  "credit": "Gustav Borgen",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

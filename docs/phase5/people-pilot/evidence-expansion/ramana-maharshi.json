@@ -1,0 +1,115 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ramana-maharshi",
+ "qid": "Q288441",
+ "displayName": "Ramana Maharshi",
+ "wikidataLabel": "Ramana Maharshi",
+ "wikidataDescription": "Indian spiritual teacher (1879–1950)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q288441",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518708405
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ramana Maharshi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ramana_Maharshi",
+   "pageId": 301483,
+   "revisionId": 1363839801,
+   "revisionTimestamp": "2026-07-12T20:13:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1879-12-30T00:00:00Z|proleptic-gregorian",
+   "+1879-12-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1879-12-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1879-12-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1879-12-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1950-04-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7809318",
+  "label": "Tiruchuli Assembly constituency",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7809318",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7809318",
+   "sourceEntityLabel": "Tiruchuli Assembly constituency",
+   "latitude": 9.53,
+   "longitude": 78.2,
+   "precision": 0.01,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2901587",
+   "label": "yogi"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sri Ramana Maharshi - Portrait - G. G Welling - 1948.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sri%20Ramana%20Maharshi%20-%20Portrait%20-%20G.%20G%20Welling%20-%201948.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sri_Ramana_Maharshi_-_Portrait_-_G._G_Welling_-_1948.jpg",
+  "width": 676,
+  "height": 1000,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "G. G. Welling",
+  "credit": "http://www.luminous-lint.com/app/image/382537481911238063240/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

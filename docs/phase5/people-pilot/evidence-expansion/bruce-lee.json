@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bruce-lee",
+ "qid": "Q16397",
+ "displayName": "Bruce Lee",
+ "wikidataLabel": "Bruce Lee",
+ "wikidataDescription": "Hong Kong–American martial artist and actor (1940–1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q16397",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522517521
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bruce Lee",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bruce_Lee",
+   "pageId": 37313,
+   "revisionId": 1365168034,
+   "revisionTimestamp": "2026-07-20T18:19:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1940-11-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1940-11-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1940-11-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-07-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7413971",
+  "label": "San Francisco Chinese Hospital",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7413971",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7413971",
+   "sourceEntityLabel": "San Francisco Chinese Hospital",
+   "latitude": 37.79556,
+   "longitude": -122.4092,
+   "precision": 0.01136816547092,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q11124885",
+   "label": "martial artist"
+  },
+  {
+   "entity": "Q465501",
+   "label": "stunt performer"
+  },
+  {
+   "entity": "Q2833480",
+   "label": "stunt coordinator"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bruce Lee 1973 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bruce%20Lee%201973%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bruce_Lee_1973_(cropped).jpg",
+  "width": 380,
+  "height": 475,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "National General Pictures",
+  "credit": "eBay front back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

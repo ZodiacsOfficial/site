@@ -1,0 +1,134 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nina-simone",
+ "qid": "Q174957",
+ "displayName": "Nina Simone",
+ "wikidataLabel": "Nina Simone",
+ "wikidataDescription": "American singer, songwriter and pianist and civil rights activist (1933–2003)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q174957",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517218931
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nina Simone",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nina_Simone",
+   "pageId": 214233,
+   "revisionId": 1365698847,
+   "revisionTimestamp": "2026-07-23T23:11:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1933-02-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1933-02-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1933-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1933-02-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-04-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2029202",
+  "label": "Tryon",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2029202",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2029202",
+   "sourceEntityLabel": "Tryon",
+   "latitude": 35.208888888889,
+   "longitude": -82.238888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q61947380",
+   "label": "jazz pianist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nina Simone 1965 - restoration1.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nina%20Simone%201965%20-%20restoration1.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nina_Simone_1965_-_restoration1.jpg",
+  "width": 1932,
+  "height": 2420,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Ron Kroon for Anefo Restored by Bammesk",
+  "credit": "This file was derived from: Portret van de Amerikaanse zangeres Nina Simone die met kerst op televisie zal v, Bestanddeelnr 918-5601 - restoration.jpg Original by: National Archives of the Netherlands, https://www.nationaalarchief.nl/onderzoeken/fotocollectie/aad229e2-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

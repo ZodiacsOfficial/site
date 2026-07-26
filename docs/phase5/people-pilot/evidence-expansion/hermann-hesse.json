@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hermann-hesse",
+ "qid": "Q25973",
+ "displayName": "Hermann Hesse",
+ "wikidataLabel": "Hermann Hesse",
+ "wikidataDescription": "Nobel Prize winning German-Swiss poet, novelist and painter (1877–1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q25973",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518456213
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hermann Hesse",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hermann_Hesse",
+   "pageId": 13578,
+   "revisionId": 1365234640,
+   "revisionTimestamp": "2026-07-21T03:31:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1877-07-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1877-07-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1877-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1877-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-08-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q487921",
+  "label": "Calw",
+  "entityUrl": "https://www.wikidata.org/wiki/Q487921",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q487921",
+   "sourceEntityLabel": "Calw",
+   "latitude": 48.714444444444,
+   "longitude": 8.7375,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6673651",
+   "label": "literary scholar"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1397808",
+   "label": "resistance fighter"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q115784320",
+   "label": "Nobel Prize winner"
+  },
+  {
+   "entity": "Q998550",
+   "label": "bookseller"
+  },
+  {
+   "entity": "Q16003550",
+   "label": "pacifist"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hermann Hesse 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hermann%20Hesse%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hermann_Hesse_2.jpg",
+  "width": 2530,
+  "height": 3024,
+  "licenseShortName": "CC BY-SA 3.0 nl",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/nl/deed.en",
+  "artist": "Unknown author",
+  "credit": "[1] [2] Dutch National Archives, The Hague, Fotocollectie Algemeen Nederlands Persbureau (ANEFO), 1945-1989",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 nl",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

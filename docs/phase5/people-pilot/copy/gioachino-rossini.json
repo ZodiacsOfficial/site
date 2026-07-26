@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "gioachino-rossini",
+  "seedRound": 0,
+  "qid": "Q9726",
+  "displayName": "Gioachino Rossini",
+  "identity": "Composer · Italy · 1792–1868",
+  "title": "Gioachino Rossini's birth chart",
+  "metaDescription": "Gioachino Rossini's chart, computed from a sourced birth date: Sun at 10.6° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Venus and Jupiter sit 0.1° from an exact square — near enough that the tradition reads taste and expansion as a single working part. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected.",
+  "ledeFact": "aspect:Venus:Jupiter:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.63",
+        "decan:pisces:second"
+      ],
+      "text": "The Sun's exact place is 10.6° Pisces. That falls in the second decan, 10°–20°, sub-ruled by the Moon in the classical scheme — a water sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:19.5°",
+        "personal:Venus:Aquarius:1.1°",
+        "personal:Mars:Libra:1.8°"
+      ],
+      "text": "The personal planets sit Mercury at 19.5° Aquarius, Venus at 1.1° Aquarius, Mars at 1.8° Libra. Mercury in a air sign reads as a mind at home in argument and pattern; Venus in a air sign reads as taste led by wit and proportion; Mars in a air sign reads as drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:square:0.07",
+        "aspect:Venus:Mars:trine:0.74",
+        "aspect:Saturn:Uranus:trine:0.87"
+      ],
+      "text": "Venus and Jupiter hold the closest angle here — a square, 0.1° wide. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Venus trine Mars at 0.7°, and Saturn trine Uranus at 0.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mars in Libra at 1.8° is in detriment — the planet opposite its home, working against the grain; Saturn in Aries at 16.8° is in fall — the tradition’s uphill placement, strength earned rather than given. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-water2-fire2",
+        "modalities:fixed5-cardinal3-mutable2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 6 air, 2 water, 2 fire; by modality, 5 fixed, 3 cardinal, 2 mutable. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mars, Jupiter, Uranus and Neptune were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 6.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-29/",
+    "label": "Everyone born on February 29"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Jupiter:square",
+    "sun-degree:10.63",
+    "decan:pisces:second",
+    "personal:Mercury:Aquarius:19.5°",
+    "personal:Venus:Aquarius:1.1°",
+    "personal:Mars:Libra:1.8°",
+    "aspect:Venus:Jupiter:square:0.07",
+    "aspect:Venus:Mars:trine:0.74",
+    "aspect:Saturn:Uranus:trine:0.87",
+    "figure:unaspected:Sun",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:fall",
+    "elements:air6-water2-fire2",
+    "modalities:fixed5-cardinal3-mutable2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:gemini",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 454,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

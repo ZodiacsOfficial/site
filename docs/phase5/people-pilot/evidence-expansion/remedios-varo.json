@@ -1,0 +1,99 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "remedios-varo",
+ "qid": "Q235275",
+ "displayName": "Remedios Varo",
+ "wikidataLabel": "Remedios Varo",
+ "wikidataDescription": "Spanish painter (1908–1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q235275",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522024483
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Remedios Varo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Remedios_Varo",
+   "pageId": 765621,
+   "revisionId": 1356222904,
+   "revisionTimestamp": "2026-05-26T12:34:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-12-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-12-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-12-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-10-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q13027",
+  "label": "Anglès",
+  "entityUrl": "https://www.wikidata.org/wiki/Q13027",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q13027",
+   "sourceEntityLabel": "Anglès",
+   "latitude": 41.957374,
+   "longitude": 2.640016,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": null
+}

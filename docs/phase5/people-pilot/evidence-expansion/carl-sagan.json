@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "carl-sagan",
+ "qid": "Q410",
+ "displayName": "Carl Sagan",
+ "wikidataLabel": "Carl Sagan",
+ "wikidataDescription": "American astrophysicist, cosmologist and author (1934–1996)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q410",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520759727
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Carl Sagan",
+   "articleUrl": "https://en.wikipedia.org/wiki/Carl_Sagan",
+   "pageId": 6824,
+   "revisionId": 1365270319,
+   "revisionTimestamp": "2026-07-21T09:41:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1934-11-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-11-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1934-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1996-12-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18419",
+  "label": "Brooklyn",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18419",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18419",
+   "sourceEntityLabel": "Brooklyn",
+   "latitude": 40.65083333333333,
+   "longitude": -73.94972222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2998308",
+   "label": "cosmologist"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q16742203",
+   "label": "planetary scientist"
+  },
+  {
+   "entity": "Q15143181",
+   "label": "space scientist"
+  },
+  {
+   "entity": "Q15143191",
+   "label": "science communicator"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q3745071",
+   "label": "science writer"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Carl Sagan Planetary Society.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Carl%20Sagan%20Planetary%20Society.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Carl_Sagan_Planetary_Society.JPG",
+  "width": 328,
+  "height": 448,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "NASA/JPL",
+  "credit": "Image:Planetary society.jpg http://technology.jpl.nasa.gov/gallery/index.cfm?page=imageDetail&ItemID=43&catId=9 http://www2.jpl.nasa.gov/technology/images_videos/iv_pages/P22626ac.html also here",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

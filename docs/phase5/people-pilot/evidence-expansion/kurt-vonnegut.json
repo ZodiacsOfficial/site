@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kurt-vonnegut",
+ "qid": "Q49074",
+ "displayName": "Kurt Vonnegut",
+ "wikidataLabel": "Kurt Vonnegut",
+ "wikidataDescription": "American author (1922–2007)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q49074",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518673228
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kurt Vonnegut",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kurt_Vonnegut",
+   "pageId": 16861,
+   "revisionId": 1364282793,
+   "revisionTimestamp": "2026-07-15T17:12:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-11-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-11-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-11-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2007-04-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6346",
+  "label": "Indianapolis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6346",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6346",
+   "sourceEntityLabel": "Indianapolis",
+   "latitude": 39.768611111111,
+   "longitude": -86.158055555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q3659898",
+   "label": "public relations officer"
+  },
+  {
+   "entity": "Q12859263",
+   "label": "orator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kurt Vonnegut by Bernard Gotfryd (1965).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kurt%20Vonnegut%20by%20Bernard%20Gotfryd%20(1965).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kurt_Vonnegut_by_Bernard_Gotfryd_(1965).jpg",
+  "width": 3243,
+  "height": 4815,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bernard Gotfryd / Adam Cuerden",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID gtfy.04376.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

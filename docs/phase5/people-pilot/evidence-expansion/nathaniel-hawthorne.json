@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nathaniel-hawthorne",
+ "qid": "Q69339",
+ "displayName": "Nathaniel Hawthorne",
+ "wikidataLabel": "Nathaniel Hawthorne",
+ "wikidataDescription": "American author (1804–1864)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q69339",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517834980
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nathaniel Hawthorne",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nathaniel_Hawthorne",
+   "pageId": 21787,
+   "revisionId": 1366093798,
+   "revisionTimestamp": "2026-07-26T06:23:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1804-07-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1804-07-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1804-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1804-07-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1864-05-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q54140",
+  "label": "Salem",
+  "entityUrl": "https://www.wikidata.org/wiki/Q54140",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q54140",
+   "sourceEntityLabel": "Salem",
+   "latitude": 42.516845,
+   "longitude": -70.898503,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q207978",
+   "label": "consul"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nathaniel Hawthorne - NARA - 530280cr.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nathaniel%20Hawthorne%20-%20NARA%20-%20530280cr.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nathaniel_Hawthorne_-_NARA_-_530280cr.jpg",
+  "width": 1251,
+  "height": 1668,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Mathew Benjamin Brady",
+  "credit": "U.S. National Archives and Records Administration",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "halldor-laxness",
+ "qid": "Q80321",
+ "displayName": "Halldór Laxness",
+ "wikidataLabel": "Halldór Laxness",
+ "wikidataDescription": "Icelandic author (1902-1998)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q80321",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522911602
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Halldór Laxness",
+   "articleUrl": "https://en.wikipedia.org/wiki/Halld%C3%B3r_Laxness",
+   "pageId": 13896,
+   "revisionId": 1355972847,
+   "revisionTimestamp": "2026-05-25T00:51:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1902-04-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-04-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-04-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1998-02-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1764",
+  "label": "Reykjavík",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1764",
+  "country": {
+   "entity": "Q189",
+   "label": "Iceland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1764",
+   "sourceEntityLabel": "Reykjavík",
+   "latitude": 64.1475,
+   "longitude": -21.935,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Halldór Kiljan Laxness 1955.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Halld%C3%B3r%20Kiljan%20Laxness%201955.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Halld%C3%B3r_Kiljan_Laxness_1955.jpg",
+  "width": 280,
+  "height": 396,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nobel Foundation",
+  "credit": "http://nobelprize.org/nobel_prizes/literature/laureates/1955/laxness-bio.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

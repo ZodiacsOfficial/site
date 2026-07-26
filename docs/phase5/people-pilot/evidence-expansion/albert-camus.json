@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "albert-camus",
+ "qid": "Q34670",
+ "displayName": "Albert Camus",
+ "wikidataLabel": "Albert Camus",
+ "wikidataDescription": "French philosopher, author, and journalist (1913–1960)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q34670",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515917691
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Albert Camus",
+   "articleUrl": "https://en.wikipedia.org/wiki/Albert_Camus",
+   "pageId": 983,
+   "revisionId": 1365114264,
+   "revisionTimestamp": "2026-07-20T09:40:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-11-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-11-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-11-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1960-01-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1924629",
+  "label": "Dréan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1924629",
+  "country": {
+   "entity": "Q262",
+   "label": "Algeria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1924629",
+   "sourceEntityLabel": "Dréan",
+   "latitude": 36.68333,
+   "longitude": 7.75,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q23833535",
+   "label": "French resistance fighter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Albert Camus, gagnant de prix Nobel, portrait en buste, posé au bureau, faisant face à gauche, cigarette de tabagisme.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Albert%20Camus%2C%20gagnant%20de%20prix%20Nobel%2C%20portrait%20en%20buste%2C%20pos%C3%A9%20au%20bureau%2C%20faisant%20face%20%C3%A0%20gauche%2C%20cigarette%20de%20tabagisme.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Albert_Camus,_gagnant_de_prix_Nobel,_portrait_en_buste,_pos%C3%A9_au_bureau,_faisant_face_%C3%A0_gauche,_cigarette_de_tabagisme.jpg",
+  "width": 719,
+  "height": 863,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photograph by United Press International",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c08028.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

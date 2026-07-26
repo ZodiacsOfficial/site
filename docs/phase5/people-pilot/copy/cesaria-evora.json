@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "cesaria-evora",
+  "seedRound": 0,
+  "qid": "Q103759",
+  "displayName": "Cesária Évora",
+  "identity": "Singer · Cape Verde · 1941–2011",
+  "title": "Cesária Évora's birth chart",
+  "metaDescription": "Cesária Évora's chart, computed from a sourced birth date: Sun at 3.9° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mutable signs carry five of the ten placements whose signs are settled — the broadest certain weighting in the chart. Mutable signs end their seasons, and a mutable-heavy chart is read as one built for adaptation and hand-off rather than for standing still.",
+  "ledeFact": "modality:mutable:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.89",
+        "decan:virgo:first"
+      ],
+      "text": "3.9° of Virgo is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Mercury in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:12.1°",
+        "personal:Venus:Libra:7.9°",
+        "personal:Mars:Aries:23.0°"
+      ],
+      "text": "The personal planets sit Mercury at 12.1° Virgo, Venus at 7.9° Libra, Mars at 23.0° Aries. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a air sign reads as attraction that begins as conversation; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:trine:1.82",
+        "aspect:Saturn:Uranus:conjunction:1.95",
+        "aspect:Venus:Pluto:sextile:3.1"
+      ],
+      "text": "Saturn to Neptune is the closest call of the day, a trine within 1.8°. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Saturn conjunction Uranus at 1.9°, and Venus sextile Pluto at 3.1° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Moon in Scorpio at 7.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 12.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 7.9° is in domicile — the planet in its own sign, running on home rules; Mars in Aries at 23.0° is in domicile; Jupiter in Gemini at 18.5° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-fire2-water1",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:0"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 earth, 3 air, 2 fire, 1 water by element and 5 mutable, 3 fixed, 2 cardinal by mode. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Every body was moving forward that day — no apparent reversals anywhere in the chart."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:14.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.3° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 7.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-27/",
+    "label": "Everyone born on August 27"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:5",
+    "sun-degree:3.89",
+    "decan:virgo:first",
+    "personal:Mercury:Virgo:12.1°",
+    "personal:Venus:Libra:7.9°",
+    "personal:Mars:Aries:23.0°",
+    "aspect:Saturn:Neptune:trine:1.82",
+    "aspect:Saturn:Uranus:conjunction:1.95",
+    "aspect:Venus:Pluto:sextile:3.1",
+    "figure:unaspected:Moon",
+    "dignity:Moon:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "elements:earth4-air3-fire2-water1",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:0",
+    "moon-sign:scorpio",
+    "moon-band:14.3"
+  ],
+  "measurements": {
+    "originalWords": 468,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

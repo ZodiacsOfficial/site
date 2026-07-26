@@ -26,8 +26,9 @@ const routes = [
   { name: 'event-retrograde', path: '/mercury-retrograde/2026-06-29/' },
   { name: 'event-ingress', path: '/events/saturn-enters-aries-2026-02-14/' },
   { name: 'event-aspect', path: '/events/jupiter-trine-saturn-2026-08-31/' },
-  { name: 'people-directory', path: '/people/', intentionalNoindex: true },
+  { name: 'people-directory', path: '/people/' },
   { name: 'people-profile', path: '/people/ada-lovelace/' },
+  { name: 'people-profile-new', path: '/people/marie-curie/' },
   { name: 'people-living-profile', path: '/people/serena-williams/', intentionalNoindex: true },
   // R2 makes the reviewed Russian core public. Gate each distinct Russian
   // template family instead of assuming the English scores transfer across

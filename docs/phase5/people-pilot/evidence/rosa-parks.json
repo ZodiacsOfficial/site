@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rosa-parks",
+ "qid": "Q41921",
+ "displayName": "Rosa Parks",
+ "wikidataLabel": "Rosa Parks",
+ "wikidataDescription": "civil rights activist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41921",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521539605
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rosa Parks",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rosa_Parks",
+   "pageId": 26458,
+   "revisionId": 1356971273,
+   "revisionTimestamp": "2026-05-31T00:22:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-02-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-02-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-02-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-10-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q79718",
+  "label": "Tuskegee",
+  "entityUrl": "https://www.wikidata.org/wiki/Q79718",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q79718",
+   "sourceEntityLabel": "Tuskegee",
+   "latitude": 32.431506,
+   "longitude": -85.706781,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q662729",
+   "label": "public figure"
+  },
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rosa Parks 1997.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rosa%20Parks%201997.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rosa_Parks_1997.jpg",
+  "width": 793,
+  "height": 1125,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "John Mathew Smith & www.celebrity-photos.com from Laurel Maryland, USA",
+  "credit": "ROSA PARKS",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bessie-coleman",
+ "qid": "Q254376",
+ "displayName": "Bessie Coleman",
+ "wikidataLabel": "Bessie Coleman",
+ "wikidataDescription": "American aviator (1892–1926)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q254376",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518976754
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bessie Coleman",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bessie_Coleman",
+   "pageId": 273081,
+   "revisionId": 1362928108,
+   "revisionTimestamp": "2026-07-07T01:15:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1892-01-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1892-01-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1892-01-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1926-04-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q756137",
+  "label": "Atlanta",
+  "entityUrl": "https://www.wikidata.org/wiki/Q756137",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q756137",
+   "sourceEntityLabel": "Atlanta",
+   "latitude": 33.1183,
+   "longitude": -94.1667,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q28604408",
+   "label": "stunt pilot"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bessie Coleman in 1923.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bessie%20Coleman%20in%201923.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bessie_Coleman_in_1923.jpg",
+  "width": 2374,
+  "height": 3101,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown",
+  "credit": "Immediate source: \"The first black woman aviator had to leave the U.S. in order to achieve her dreams\". Timeline.com. March 19, 2018.Original source: George Rinhart/Corbis via Getty Images",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

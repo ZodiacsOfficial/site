@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bobby-charlton",
+  "seedRound": 0,
+  "qid": "Q171583",
+  "displayName": "Bobby Charlton",
+  "identity": "Association football player and autobiographer · United Kingdom · 1937–2023",
+  "title": "Bobby Charlton's birth chart",
+  "metaDescription": "Bobby Charlton's chart, computed from a sourced birth date: Sun at 17.8° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates Venus and Neptune from an exact conjunction; at that range taste and imagination read as one mechanism. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Venus:Neptune:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.75",
+        "decan:libra:second"
+      ],
+      "text": "The Sun's position resolves to 17.8° Libra — deep enough in the second decan (10°–20°) that Saturn, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:5.1°",
+        "personal:Venus:Virgo:19.9°",
+        "personal:Mars:Capricorn:7.6°"
+      ],
+      "text": "The personal planets sit Mercury at 5.1° Libra, Venus at 19.9° Virgo, Mars at 7.6° Capricorn. Mercury in a air sign reads as thought that travels by comparison; Venus in a earth sign reads as attraction that grows by reliability; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:conjunction:0.15",
+        "aspect:Saturn:Pluto:trine:0.42",
+        "aspect:Sun:Jupiter:square:0.92"
+      ],
+      "text": "Venus to Neptune is the closest call of the day, a conjunction within 0.1°. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Saturn trine Pluto at 0.4°, and the Sun square Jupiter at 0.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:fall",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Sun in Libra at 17.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Virgo at 19.9° is in fall; Mars in Capricorn at 7.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Capricorn at 18.7° is in fall; Saturn in Aries at 0.5° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air2-fire2",
+        "modalities:cardinal5-mutable2-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 5 earth, 2 air, 2 fire; by modality, 5 cardinal, 2 mutable, 2 fixed. An earth emphasis reads as patience with material reality — slow hands, durable results. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 11.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-11/",
+    "label": "Everyone born on October 11"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:conjunction",
+    "sun-degree:17.75",
+    "decan:libra:second",
+    "personal:Mercury:Libra:5.1°",
+    "personal:Venus:Virgo:19.9°",
+    "personal:Mars:Capricorn:7.6°",
+    "aspect:Venus:Neptune:conjunction:0.15",
+    "aspect:Saturn:Pluto:trine:0.42",
+    "aspect:Sun:Jupiter:square:0.92",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Venus:fall",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:fall",
+    "elements:earth5-air2-fire2",
+    "modalities:cardinal5-mutable2-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 449,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

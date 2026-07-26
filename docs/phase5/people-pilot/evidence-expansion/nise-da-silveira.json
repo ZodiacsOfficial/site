@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nise-da-silveira",
+ "qid": "Q9050242",
+ "displayName": "Nise da Silveira",
+ "wikidataLabel": "Nise da Silveira",
+ "wikidataDescription": "Brazilian psychiatrist (1905-1999)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9050242",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522616939
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nise da Silveira",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nise_da_Silveira",
+   "pageId": 2786479,
+   "revisionId": 1341030247,
+   "revisionTimestamp": "2026-03-01T01:53:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1905-02-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1905-02-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1905-02-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1999-10-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q168888",
+  "label": "Maceió",
+  "entityUrl": "https://www.wikidata.org/wiki/Q168888",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q168888",
+   "sourceEntityLabel": "Maceió",
+   "latitude": -9.6658333333333,
+   "longitude": -35.735,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q211346",
+   "label": "psychiatrist"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q551835",
+   "label": "physician writer"
+  },
+  {
+   "entity": "Q3410028",
+   "label": "psychoanalyst"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nise da Silveira.tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nise%20da%20Silveira.tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nise_da_Silveira.tif",
+  "width": 1985,
+  "height": 2825,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Arquivo Nacional",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

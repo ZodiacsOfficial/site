@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "natsume-soseki",
+ "qid": "Q180903",
+ "displayName": "Natsume Sōseki",
+ "wikidataLabel": "Natsume Sōseki",
+ "wikidataDescription": "Japanese novelist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q180903",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517363397
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Natsume Sōseki",
+   "articleUrl": "https://en.wikipedia.org/wiki/Natsume_S%C5%8Dseki",
+   "pageId": 187688,
+   "revisionId": 1364790897,
+   "revisionTimestamp": "2026-07-18T15:29:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1867-02-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1867-02-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1867-02-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1916-12-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11419038",
+  "label": "Kikuichō",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11419038",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11419038",
+   "sourceEntityLabel": "Kikuichō",
+   "latitude": 35.704169444444446,
+   "longitude": 139.7224138888889,
+   "precision": 0.000002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q755070",
+   "label": "narrator"
+  },
+  {
+   "entity": "Q140197632",
+   "label": "satirical novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Natsume Soseki photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Natsume%20Soseki%20photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Natsume_Soseki_photo.jpg",
+  "width": 1378,
+  "height": 1881,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ogawa Kazumasa",
+  "credit": "1. Jiten [1], 2. The Japan Times article, The University Art Museum, Tokyo University of the Arts [2]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

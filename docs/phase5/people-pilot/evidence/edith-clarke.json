@@ -1,0 +1,103 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edith-clarke",
+ "qid": "Q21826",
+ "displayName": "Edith Clarke",
+ "wikidataLabel": "Edith Clarke",
+ "wikidataDescription": "American electrical engineer (1884–1959)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q21826",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517755180
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edith Clarke",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edith_Clarke",
+   "pageId": 5619624,
+   "revisionId": 1360304380,
+   "revisionTimestamp": "2026-06-20T16:11:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-02-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-02-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-02-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1959-10-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5092",
+  "label": "Baltimore",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5092",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5092",
+   "sourceEntityLabel": "Baltimore",
+   "latitude": 39.286388888889,
+   "longitude": -76.615,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1326886",
+   "label": "electrical engineer"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": null
+}

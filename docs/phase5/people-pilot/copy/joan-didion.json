@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "joan-didion",
+  "seedRound": 0,
+  "qid": "Q267691",
+  "displayName": "Joan Didion",
+  "identity": "Screenwriter · United States · 1934–2021",
+  "title": "Joan Didion's birth chart",
+  "metaDescription": "Joan Didion's chart, computed from a sourced birth date: Sun at 13.0° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the eight placements whose signs are settled, mutable leads with four. Mutable signs end their seasons, and a mutable-heavy chart is read as one built for adaptation and hand-off rather than for standing still.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.01",
+        "decan:sagittarius:second"
+      ],
+      "text": "At noon on that date the Sun stood at 13.0° Sagittarius, inside the second decan (10°–20°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Sagittarius:17.1°",
+        "personal:Mars:Virgo:27.2°"
+      ],
+      "text": "Venus holds 17.1° Sagittarius, Mars holds 27.2° Virgo — in the old shorthand, attraction declared rather than implied; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:sextile:1.4",
+        "aspect:Sun:Neptune:square:1.53",
+        "aspect:Uranus:Pluto:square:2.14"
+      ],
+      "text": "The day's firmest angle joins Mars and Pluto — a sextile holding at 1.4°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, the Sun square Neptune at 1.5°, and Uranus square Pluto at 2.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Saturn"
+      ],
+      "text": "Saturn makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks one placement here. Saturn in Aquarius at 22.9° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth2-water2-air1",
+        "modalities:mutable4-fixed2-cardinal2",
+        "settled-signs:8",
+        "retrograde:2",
+        "sign-uncertain:Mercury:scorpio:sagittarius"
+      ],
+      "text": "The honest balance sheet uses the 8 placements whose signs hold for the whole day: fire 3, earth 2, water 2, air 1 across the elements, and mutable 4, fixed 2, cardinal 2 across the modalities. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. Mercury crossed from Scorpio into Sagittarius during that day, so its sign is left open. Uranus and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 14.1° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-5/",
+    "label": "Everyone born on December 5"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:13.01",
+    "decan:sagittarius:second",
+    "personal:Venus:Sagittarius:17.1°",
+    "personal:Mars:Virgo:27.2°",
+    "aspect:Mars:Pluto:sextile:1.4",
+    "aspect:Sun:Neptune:square:1.53",
+    "aspect:Uranus:Pluto:square:2.14",
+    "figure:unaspected:Saturn",
+    "dignity:Saturn:domicile",
+    "elements:fire3-earth2-water2-air1",
+    "modalities:mutable4-fixed2-cardinal2",
+    "settled-signs:8",
+    "retrograde:2",
+    "sign-uncertain:Mercury:scorpio:sagittarius",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 407,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

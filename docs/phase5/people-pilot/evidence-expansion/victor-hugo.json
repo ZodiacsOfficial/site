@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "victor-hugo",
+ "qid": "Q535",
+ "displayName": "Victor Hugo",
+ "wikidataLabel": null,
+ "wikidataDescription": "French novelist, poet, dramatist and politician (1802–1885)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q535",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522120951
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Victor Hugo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Victor_Hugo",
+   "pageId": 42146,
+   "revisionId": 1366016534,
+   "revisionTimestamp": "2026-07-25T20:02:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1802-02-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1802-02-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1802-02-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1885-05-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q37776",
+  "label": "Besançon",
+  "entityUrl": "https://www.wikidata.org/wiki/Q37776",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q37776",
+   "sourceEntityLabel": "Besançon",
+   "latitude": 47.242222222222,
+   "longitude": 6.0213888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q11774156",
+   "label": "memoirist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1792450",
+   "label": "art historian"
+  }
+ ],
+ "portrait": {
+  "file": "File:Victor Hugo by Étienne Carjat 1876 - full.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Victor%20Hugo%20by%20%C3%89tienne%20Carjat%201876%20-%20full.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Victor_Hugo_by_%C3%89tienne_Carjat_1876_-_full.jpg",
+  "width": 2140,
+  "height": 2632,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Étienne Carjat",
+  "credit": "Bibliothèque nationale de France",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

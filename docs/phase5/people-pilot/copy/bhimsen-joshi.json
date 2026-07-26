@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bhimsen-joshi",
+  "seedRound": 0,
+  "qid": "Q121077",
+  "displayName": "Bhimsen Joshi",
+  "identity": "Actor and composer · India · 1922–2011",
+  "title": "Bhimsen Joshi's birth chart",
+  "metaDescription": "Bhimsen Joshi's chart, computed from a sourced birth date: Sun at 14.7° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a opposition to Neptune at 0.1° — close enough to weld identity to imagination. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach.",
+  "ledeFact": "aspect:Sun:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.68",
+        "decan:aquarius:second"
+      ],
+      "text": "At the noon reference the Sun sits 14.7° into Aquarius — the second decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:1.1°",
+        "personal:Venus:Aquarius:13.5°",
+        "personal:Mars:Scorpio:22.5°"
+      ],
+      "text": "Mercury holds 1.1° Pisces, Venus holds 13.5° Aquarius, Mars holds 22.5° Scorpio — in the old shorthand, thought steeped in tone and memory; attraction that begins as conversation; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:opposition:0.09",
+        "aspect:Uranus:Pluto:trine:0.14",
+        "aspect:Saturn:Pluto:square:1.02"
+      ],
+      "text": "The Sun to Neptune is the closest call of the day, a opposition within 0.1°. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Uranus trine Pluto at 0.1°, and Saturn square Pluto at 1.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mercury:fall",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Sun in Aquarius at 14.7° is in detriment — the planet opposite its home, working against the grain; Mercury in Pisces at 1.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Scorpio at 22.5° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 7.3° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water4-fire1",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 air, 4 water, 1 fire by element and 4 fixed, 3 cardinal, 2 mutable by mode. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 12.3° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-4/",
+    "label": "Everyone born on February 4"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:opposition",
+    "sun-degree:14.68",
+    "decan:aquarius:second",
+    "personal:Mercury:Pisces:1.1°",
+    "personal:Venus:Aquarius:13.5°",
+    "personal:Mars:Scorpio:22.5°",
+    "aspect:Sun:Neptune:opposition:0.09",
+    "aspect:Uranus:Pluto:trine:0.14",
+    "aspect:Saturn:Pluto:square:1.02",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Mercury:fall",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:air4-water4-fire1",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 449,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

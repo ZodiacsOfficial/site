@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "yosano-akiko",
+  "seedRound": 0,
+  "qid": "Q464104",
+  "displayName": "Yosano Akiko",
+  "identity": "Poet · Japan · 1878–1942",
+  "title": "Yosano Akiko's birth chart",
+  "metaDescription": "Yosano Akiko's chart, computed from a sourced birth date: Sun at 14.9° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 14.1° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.91",
+        "decan:sagittarius:second"
+      ],
+      "text": "The Sun's exact place is 14.9° Sagittarius. That falls in the second decan, 10°–20°, sub-ruled by Mars in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:5.6°",
+        "personal:Venus:Sagittarius:15.2°",
+        "personal:Mars:Scorpio:18.1°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (5.6°), Venus in Sagittarius (15.2°), Mars in Scorpio (18.1°): a mind that trusts the measured and the checked, taste that runs toward the vivid and the immediate, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Venus:conjunction:0.33",
+        "aspect:Saturn:Pluto:sextile:1.05",
+        "aspect:Mercury:Uranus:trine:1.34"
+      ],
+      "text": "The Sun to Venus is the closest call of the day, a conjunction within 0.3°. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Saturn sextile Pluto at 1.1°, and Mercury trine Uranus at 1.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Mercury-Uranus-Neptune"
+      ],
+      "text": "Mercury, Uranus, Neptune close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The classical table has two entries for this chart. The Moon in Taurus at 14.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Scorpio at 18.1° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire2-water2-air1",
+        "modalities:fixed5-mutable4-cardinal1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives earth 5, fire 2, water 2, air 1, and fixed 5, mutable 4, cardinal 1 across the modes. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:12.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 14.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-7/",
+    "label": "Everyone born on December 7"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:14.91",
+    "decan:sagittarius:second",
+    "personal:Mercury:Capricorn:5.6°",
+    "personal:Venus:Sagittarius:15.2°",
+    "personal:Mars:Scorpio:18.1°",
+    "aspect:Sun:Venus:conjunction:0.33",
+    "aspect:Saturn:Pluto:sextile:1.05",
+    "aspect:Mercury:Uranus:trine:1.34",
+    "figure:grand-trine:Mercury-Uranus-Neptune",
+    "dignity:Moon:exaltation",
+    "dignity:Mars:domicile",
+    "elements:earth5-fire2-water2-air1",
+    "modalities:fixed5-mutable4-cardinal1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:taurus",
+    "moon-band:12.1"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

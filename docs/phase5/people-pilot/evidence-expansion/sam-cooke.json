@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sam-cooke",
+ "qid": "Q295919",
+ "displayName": "Sam Cooke",
+ "wikidataLabel": "Sam Cooke",
+ "wikidataDescription": "American singer and songwriter (1931–1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q295919",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522318916
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sam Cooke",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sam_Cooke",
+   "pageId": 147343,
+   "revisionId": 1365625578,
+   "revisionTimestamp": "2026-07-23T14:19:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-01-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-01-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-01-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q990145",
+  "label": "Clarksdale",
+  "entityUrl": "https://www.wikidata.org/wiki/Q990145",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q990145",
+   "sourceEntityLabel": "Clarksdale",
+   "latitude": 34.20063888888889,
+   "longitude": -90.57022222222223,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q105652947",
+   "label": "soul musician"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sam Cooke 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sam%20Cooke%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sam_Cooke_2.jpg",
+  "width": 891,
+  "height": 1660,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "RCA Victor Records",
+  "credit": "Billboard. Vol. 78, No. 15. page 21",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

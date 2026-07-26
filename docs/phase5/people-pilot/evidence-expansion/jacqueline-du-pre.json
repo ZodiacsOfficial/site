@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jacqueline-du-pre",
+ "qid": "Q228888",
+ "displayName": "Jacqueline du Pré",
+ "wikidataLabel": "Jacqueline du Pré",
+ "wikidataDescription": "British cellist (1945–1987)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q228888",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517447728
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jacqueline du Pré",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jacqueline_du_Pr%C3%A9",
+   "pageId": 207810,
+   "revisionId": 1365857769,
+   "revisionTimestamp": "2026-07-24T21:13:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1945-01-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1945-01-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1945-01-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-10-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34217",
+  "label": "Oxford",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34217",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34217",
+   "sourceEntityLabel": "Oxford",
+   "latitude": 51.751944444444,
+   "longitude": -1.2577777777778,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q13219637",
+   "label": "cellist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jaqueline dupre wedding portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jaqueline%20dupre%20wedding%20portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jaqueline_dupre_wedding_portrait.jpg",
+  "width": 1070,
+  "height": 1816,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Benno Rothenberg",
+  "credit": "This image is available from National Library of Israel under the digital ID: 997009158540205171",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

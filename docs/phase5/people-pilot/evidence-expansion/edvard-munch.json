@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edvard-munch",
+ "qid": "Q41406",
+ "displayName": "Edvard Munch",
+ "wikidataLabel": "Edvard Munch",
+ "wikidataDescription": "Norwegian painter (1863–1944)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41406",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516653684
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edvard Munch",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edvard_Munch",
+   "pageId": 9779,
+   "revisionId": 1364097088,
+   "revisionTimestamp": "2026-07-14T13:33:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1863-12-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1863-12-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1863-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1863-12-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1944-01-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1777599",
+  "label": "Ådalsbruk",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1777599",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1777599",
+   "sourceEntityLabel": "Ådalsbruk",
+   "latitude": 60.79314,
+   "longitude": 11.308204,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Edvard Munch 1933-2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Edvard%20Munch%201933-2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Edvard_Munch_1933-2.jpg",
+  "width": 2336,
+  "height": 3344,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Anders Beer Wilse",
+  "credit": "Nasjonalbiblioteket Tilvekstnummer: NF.WA 03293 Internnr: NBR9407:02356",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

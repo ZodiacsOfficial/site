@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mary-cassatt",
+ "qid": "Q173223",
+ "displayName": "Mary Cassatt",
+ "wikidataLabel": "Mary Cassatt",
+ "wikidataDescription": "American painter and printmaker (1844—1926)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q173223",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520407608
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mary Cassatt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mary_Cassatt",
+   "pageId": 20308,
+   "revisionId": 1363302864,
+   "revisionTimestamp": "2026-07-09T09:58:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1844-05-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1844-05-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1844-05-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1926-06-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1752800",
+  "label": "Allegheny",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1752800",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1752800",
+   "sourceEntityLabel": "Allegheny",
+   "latitude": 40.45,
+   "longitude": -80.02,
+   "precision": 0.01,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q10862983",
+   "label": "etcher"
+  }
+ ],
+ "portrait": {
+  "file": "File:1914 Mary Cassatt.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:1914%20Mary%20Cassatt.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:1914_Mary_Cassatt.jpg",
+  "width": 3864,
+  "height": 5152,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Own work",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

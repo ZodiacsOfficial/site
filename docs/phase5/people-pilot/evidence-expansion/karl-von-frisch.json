@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "karl-von-frisch",
+ "qid": "Q60060",
+ "displayName": "Karl von Frisch",
+ "wikidataLabel": "Karl von Frisch",
+ "wikidataDescription": "German-Austrian ethologist (1886-1982)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q60060",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516872745
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Karl von Frisch",
+   "articleUrl": "https://en.wikipedia.org/wiki/Karl_von_Frisch",
+   "pageId": 188103,
+   "revisionId": 1364098047,
+   "revisionTimestamp": "2026-07-14T13:42:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1886-11-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1886-11-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1886-11-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1982-06-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q852389",
+   "label": "beekeeper"
+  },
+  {
+   "entity": "Q16831721",
+   "label": "ethologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q3055126",
+   "label": "entomologist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Karl von Frisch - Atelier Veritas, c. 1926.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Karl%20von%20Frisch%20-%20Atelier%20Veritas%2C%20c.%201926.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Karl_von_Frisch_-_Atelier_Veritas,_c._1926.jpg",
+  "width": 689,
+  "height": 1091,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Stefanie Ludwig",
+  "credit": "Digporta (Seite nicht mehr online)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

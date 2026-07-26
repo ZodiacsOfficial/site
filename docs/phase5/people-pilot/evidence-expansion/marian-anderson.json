@@ -1,0 +1,113 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marian-anderson",
+ "qid": "Q231923",
+ "displayName": "Marian Anderson",
+ "wikidataLabel": "Marian Anderson",
+ "wikidataDescription": "African-American contralto (1897–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q231923",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518314847
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marian Anderson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marian_Anderson",
+   "pageId": 74940,
+   "revisionId": 1363489284,
+   "revisionTimestamp": "2026-07-10T14:42:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1897-02-21T00:00:00Z|proleptic-gregorian",
+   "+1897-02-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-02-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1902-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1897-02-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-02-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-04-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1345",
+  "label": "Philadelphia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1345",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1345",
+   "sourceEntityLabel": "Philadelphia",
+   "latitude": 39.952777777778,
+   "longitude": -75.163611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marian Anderson 1951.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marian%20Anderson%201951.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marian_Anderson_1951.JPG",
+  "width": 736,
+  "height": 879,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "S. Hurok-classical concert promoter",
+  "credit": "eBay item front back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

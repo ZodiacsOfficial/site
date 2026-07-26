@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ted-williams",
+ "qid": "Q172478",
+ "displayName": "Ted Williams",
+ "wikidataLabel": "Ted Williams",
+ "wikidataDescription": "American baseball player and fighter pilot",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q172478",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517442402
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ted Williams",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ted_Williams",
+   "pageId": 31496,
+   "revisionId": 1363224164,
+   "revisionTimestamp": "2026-07-08T20:54:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1918-08-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-08-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1918-08-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2002-07-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q16552",
+  "label": "San Diego",
+  "entityUrl": "https://www.wikidata.org/wiki/Q16552",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q16552",
+   "sourceEntityLabel": "San Diego",
+   "latitude": 32.715,
+   "longitude": -117.1625,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ted Williams (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ted%20Williams%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ted_Williams_(cropped).jpg",
+  "width": 1237,
+  "height": 1596,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://newsroom.ap.org/editorial-photos-videos/detail?itemid=d06c59d048e5da11af9f0014c2589dfb&mediatype=photo",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

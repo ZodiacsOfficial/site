@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kukrit-pramoj",
+ "qid": "Q959588",
+ "displayName": "Kukrit Pramoj",
+ "wikidataLabel": "Kukrit Pramoj",
+ "wikidataDescription": "Thai politician (1911-1995)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q959588",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521444310
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kukrit Pramoj",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kukrit_Pramoj",
+   "pageId": 857336,
+   "revisionId": 1363123502,
+   "revisionTimestamp": "2026-07-08T05:05:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-04-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-04-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-04-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-10-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q475556",
+  "label": "In Buri",
+  "entityUrl": "https://www.wikidata.org/wiki/Q475556",
+  "country": {
+   "entity": "Q869",
+   "label": "Thailand"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q475556",
+   "sourceEntityLabel": "In Buri",
+   "latitude": 15.007777777778,
+   "longitude": 100.32694444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q2285706",
+   "label": "head of government"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kukrit Pramoj 1974 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kukrit%20Pramoj%201974%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kukrit_Pramoj_1974_(cropped).jpg",
+  "width": 255,
+  "height": 383,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Norman Peagam",
+  "credit": "Kukrit Pramoj (prime minister)",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

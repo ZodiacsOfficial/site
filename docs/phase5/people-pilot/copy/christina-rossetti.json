@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "christina-rossetti",
+  "seedRound": 0,
+  "qid": "Q236596",
+  "displayName": "Christina Rossetti",
+  "identity": "Poet · United Kingdom · 1830–1894",
+  "title": "Christina Rossetti's birth chart",
+  "metaDescription": "Christina Rossetti's chart, computed from a sourced birth date: Sun at 12.9° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mercury sit 0.7° from an exact conjunction — near enough that the tradition reads identity and thinking as a single working part. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding.",
+  "ledeFact": "aspect:Sun:Mercury:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.91",
+        "decan:sagittarius:second"
+      ],
+      "text": "The Sun's exact place is 12.9° Sagittarius. That falls in the second decan, 10°–20°, sub-ruled by Mars in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:13.6°",
+        "personal:Venus:Sagittarius:9.1°",
+        "personal:Mars:Aries:3.0°"
+      ],
+      "text": "The personal planets sit Mercury at 13.6° Sagittarius, Venus at 9.1° Sagittarius, Mars at 3.0° Aries. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:sextile:0.08",
+        "aspect:Sun:Mercury:conjunction:0.74",
+        "aspect:Venus:Pluto:trine:1.49"
+      ],
+      "text": "Uranus and Pluto hold the closest angle here — a sextile, 0.1° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, the Sun conjunction Mercury at 0.7°, and Venus trine Pluto at 1.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Sagittarius at 13.6° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 3.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 19.3° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth3-air1",
+        "modalities:mutable4-cardinal4-fixed1",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives fire 5, earth 3, air 1, and mutable 4, cardinal 4, fixed 1 across the modes. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Pluto was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:leo:virgo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Leo into Virgo during that day at the birthplace, travelling 13.0° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-5/",
+    "label": "Everyone born on December 5"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mercury:conjunction",
+    "sun-degree:12.91",
+    "decan:sagittarius:second",
+    "personal:Mercury:Sagittarius:13.6°",
+    "personal:Venus:Sagittarius:9.1°",
+    "personal:Mars:Aries:3.0°",
+    "aspect:Uranus:Pluto:sextile:0.08",
+    "aspect:Sun:Mercury:conjunction:0.74",
+    "aspect:Venus:Pluto:trine:1.49",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "elements:fire5-earth3-air1",
+    "modalities:mutable4-cardinal4-fixed1",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:leo:virgo"
+  ],
+  "measurements": {
+    "originalWords": 449,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

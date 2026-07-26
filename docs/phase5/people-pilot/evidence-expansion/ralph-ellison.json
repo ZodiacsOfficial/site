@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ralph-ellison",
+ "qid": "Q299965",
+ "displayName": "Ralph Ellison",
+ "wikidataLabel": "Ralph Ellison",
+ "wikidataDescription": "American novelist, literary critic, scholar and writer (1914-1994)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q299965",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516888413
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ralph Ellison",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ralph_Ellison",
+   "pageId": 43149,
+   "revisionId": 1366009174,
+   "revisionTimestamp": "2026-07-25T19:08:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-03-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-03-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-03-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1994-04-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34863",
+  "label": "Oklahoma City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34863",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34863",
+   "sourceEntityLabel": "Oklahoma City",
+   "latitude": 35.48222222222222,
+   "longitude": -97.53527777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q1350157",
+   "label": "music critic"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q6430706",
+   "label": "critic"
+  },
+  {
+   "entity": "Q17167049",
+   "label": "literary scholar"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ralph Ellison photo portrait seated.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ralph%20Ellison%20photo%20portrait%20seated.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ralph_Ellison_photo_portrait_seated.jpg",
+  "width": 1920,
+  "height": 2158,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "United States Information Agency staff photographer",
+  "credit": "Stephen Winick (June 2, 2017). Ralph Ellison, Invisible Folklorist. Folklife Today. Library of Congress. https://blogs.loc.gov/folklife/files/2017/05/Ralph_Ellison_photo_portrait_seated.jpg The image is originally from NARA (reference number 306-PSA-61-8989).",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

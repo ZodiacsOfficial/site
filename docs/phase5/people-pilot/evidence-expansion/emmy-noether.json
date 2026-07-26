@@ -1,0 +1,114 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "emmy-noether",
+ "qid": "Q7099",
+ "displayName": "Emmy Noether",
+ "wikidataLabel": "Emmy Noether",
+ "wikidataDescription": "German Jewish mathematician (1882–1935)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7099",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521225783
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Emmy Noether",
+   "articleUrl": "https://en.wikipedia.org/wiki/Emmy_Noether",
+   "pageId": 149896,
+   "revisionId": 1365535013,
+   "revisionTimestamp": "2026-07-23T01:40:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1882-03-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-03-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1882-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-03-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1935-04-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3126",
+  "label": "Erlangen",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3126",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3126",
+   "sourceEntityLabel": "Erlangen",
+   "latitude": 49.5925,
+   "longitude": 11.005,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:EmmyNoether MFO3096.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:EmmyNoether%20MFO3096.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:EmmyNoether_MFO3096.jpg",
+  "width": 900,
+  "height": 862,
+  "licenseShortName": "CC BY-SA 2.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en",
+  "artist": "Konrad Jacobs, Erlangen",
+  "credit": "https://opc.mfo.de/detail?photo_id=3096 Revised version from http://www.gettyimages.co.uk/detail/news-photo/german-born-mathematician-amalie-emmy-noether-circa-1930-news-photo/72242778",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

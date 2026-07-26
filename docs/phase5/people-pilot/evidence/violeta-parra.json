@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "violeta-parra",
+ "qid": "Q230499",
+ "displayName": "Violeta Parra",
+ "wikidataLabel": "Violeta Parra",
+ "wikidataDescription": "Chilean musician and folklorist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q230499",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512871949
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Violeta Parra",
+   "articleUrl": "https://en.wikipedia.org/wiki/Violeta_Parra",
+   "pageId": 319049,
+   "revisionId": 1362786383,
+   "revisionTimestamp": "2026-07-06T04:54:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-10-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-10-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-10-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-02-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q56137",
+  "label": "San Carlos",
+  "entityUrl": "https://www.wikidata.org/wiki/Q56137",
+  "country": {
+   "entity": "Q298",
+   "label": "Chile"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q56137",
+   "sourceEntityLabel": "San Carlos",
+   "latitude": -36.416666666667,
+   "longitude": -71.966666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q1509440",
+   "label": "embroiderer"
+  },
+  {
+   "entity": "Q7541856",
+   "label": "ceramicist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q1371378",
+   "label": "ethnologist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q3243461",
+   "label": "collector"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Parra01f.PNG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Parra01f.PNG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Parra01f.PNG",
+  "width": 290,
+  "height": 374,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Revista Argentina \"Panorama\"",
+  "credit": "https://www.magicasruinas.com.ar/revdesto016.htm",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "karen-blixen",
+  "seedRound": 0,
+  "qid": "Q182804",
+  "displayName": "Karen Blixen",
+  "identity": "Writer and painter · Denmark · 1885–1962",
+  "title": "Karen Blixen's birth chart",
+  "metaDescription": "Karen Blixen's chart, computed from a sourced birth date: Sun at 27.6° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 27.6° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.59",
+        "decan:aries:third"
+      ],
+      "text": "At noon on that date the Sun stood at 27.6° Aries, inside the third decan (20°–30°), whose traditional sub-ruler is Jupiter. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:12.3°",
+        "personal:Venus:Aries:23.1°",
+        "personal:Mars:Aries:13.8°"
+      ],
+      "text": "Mercury holds 12.3° Taurus, Venus holds 23.1° Aries, Mars holds 13.8° Aries — in the old shorthand, thought with its feet on the ground; attraction declared rather than implied; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:trine:1.09",
+        "aspect:Sun:Jupiter:trine:1.72",
+        "aspect:Venus:Saturn:sextile:2.69"
+      ],
+      "text": "Uranus and Pluto hold the closest angle here — a trine, 1.1° wide. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, the Sun trine Jupiter at 1.7°, and Venus sextile Saturn at 2.7° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Aries at 27.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Aries at 23.1° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 13.8° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth3-air2",
+        "modalities:cardinal3-fixed3-mutable3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives fire 4, earth 3, air 2, and cardinal 3, fixed 3, mutable 3 across the modes. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Jupiter and Uranus were retrograde. Mercury changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 14.5° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-17/",
+    "label": "Everyone born on April 17"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:27.59",
+    "decan:aries:third",
+    "personal:Mercury:Taurus:12.3°",
+    "personal:Venus:Aries:23.1°",
+    "personal:Mars:Aries:13.8°",
+    "aspect:Uranus:Pluto:trine:1.09",
+    "aspect:Sun:Jupiter:trine:1.72",
+    "aspect:Venus:Saturn:sextile:2.69",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "elements:fire4-earth3-air2",
+    "modalities:cardinal3-fixed3-mutable3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 444,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

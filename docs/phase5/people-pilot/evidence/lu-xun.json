@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lu-xun",
+ "qid": "Q23114",
+ "displayName": "Lu Xun",
+ "wikidataLabel": "Lu Xun",
+ "wikidataDescription": "Chinese novelist and essayist (1881–1936)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q23114",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521439367
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lu Xun",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lu_Xun",
+   "pageId": 65861,
+   "revisionId": 1365140984,
+   "revisionTimestamp": "2026-07-20T14:19:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1881-09-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1881-09-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1881-09-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1936-10-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q42666",
+  "label": "Shaoxing",
+  "entityUrl": "https://www.wikidata.org/wiki/Q42666",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q42666",
+   "sourceEntityLabel": "Shaoxing",
+   "latitude": 30,
+   "longitude": 120.58333333333,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q860918",
+   "label": "Esperantist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q6430706",
+   "label": "critic"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:LuXun1930.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:LuXun1930.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:LuXun1930.jpg",
+  "width": 3134,
+  "height": 4183,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "The Legacy and Works of Lu Xun via Getty Images 515420792",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

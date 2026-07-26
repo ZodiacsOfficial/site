@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mongo-beti",
+ "qid": "Q248047",
+ "displayName": "Mongo Beti",
+ "wikidataLabel": "Mongo Beti",
+ "wikidataDescription": "Cameroonian writer",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q248047",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517681815
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mongo Beti",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mongo_Beti",
+   "pageId": 1547652,
+   "revisionId": 1364292914,
+   "revisionTimestamp": "2026-07-15T18:49:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-06-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-06-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-06-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2001-10-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2702755",
+  "label": "Mbalmayo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2702755",
+  "country": {
+   "entity": "Q1009",
+   "label": "Cameroon"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2702755",
+   "sourceEntityLabel": "Mbalmayo",
+   "latitude": 3.52,
+   "longitude": 11.512222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q998550",
+   "label": "bookseller"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mongo Beti.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mongo%20Beti.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mongo_Beti.jpg",
+  "width": 412,
+  "height": 541,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Stollama",
+  "credit": "Mongo Beti",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

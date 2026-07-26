@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "vivienne-westwood",
+ "qid": "Q158067",
+ "displayName": "Vivienne Westwood",
+ "wikidataLabel": "Vivienne Westwood",
+ "wikidataDescription": "British fashion designer (1941–2022)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q158067",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518455594
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Vivienne Westwood",
+   "articleUrl": "https://en.wikipedia.org/wiki/Vivienne_Westwood",
+   "pageId": 149006,
+   "revisionId": 1362624290,
+   "revisionTimestamp": "2026-07-05T05:48:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1941-04-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1941-04-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1941-04-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2022-12-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5881488",
+  "label": "Hollingworth",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5881488",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5881488",
+   "sourceEntityLabel": "Hollingworth",
+   "latitude": 53.4633,
+   "longitude": -1.99124,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q2519376",
+   "label": "jewelry designer"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Vivienne Westwood Life Ball 2011 a (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Vivienne%20Westwood%20Life%20Ball%202011%20a%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Vivienne_Westwood_Life_Ball_2011_a_(cropped).jpg",
+  "width": 1400,
+  "height": 1598,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Manfred Werner - Tsui",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": "personality"
+ }
+}

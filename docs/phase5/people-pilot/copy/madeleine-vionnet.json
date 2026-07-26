@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "madeleine-vionnet",
+  "seedRound": 0,
+  "qid": "Q266934",
+  "displayName": "Madeleine Vionnet",
+  "identity": "Fashion designer · France · 1876–1975",
+  "title": "Madeleine Vionnet's birth chart",
+  "metaDescription": "Madeleine Vionnet's chart, computed from a sourced birth date: Sun at 1.3° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 9.4° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.32",
+        "decan:cancer:first"
+      ],
+      "text": "The Sun's position resolves to 1.3° Cancer — deep enough in the first decan (0°–10°) that the Moon, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Gemini:22.0°",
+        "personal:Venus:Leo:0.4°",
+        "personal:Mars:Cancer:17.6°"
+      ],
+      "text": "Closer in, Mercury stands at 22.0° Gemini; Venus stands at 0.4° Leo; Mars stands at 17.6° Cancer. The tradition reads thought that travels by comparison from Mercury, attraction declared rather than implied from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:opposition:0.75",
+        "aspect:Saturn:Neptune:sextile:3.32",
+        "aspect:Sun:Neptune:sextile:3.42"
+      ],
+      "text": "Nothing in the geometry sits closer than Jupiter and Pluto: 0.8° from an exact opposition. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Saturn sextile Neptune at 3.3°, and the Sun sextile Neptune at 3.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Jupiter-Pluto:apex-Uranus",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Pluto while both square Uranus. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Mercury:domicile",
+        "dignity:Mars:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Moon in Cancer at 9.4° is in domicile — the planet in its own sign, running on home rules; Mercury in Gemini at 22.0° is in domicile; Mars in Cancer at 17.6° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire2-earth2-air1",
+        "modalities:fixed5-cardinal3-mutable2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 water, 2 fire, 2 earth, 1 air; by modality, 5 fixed, 3 cardinal, 2 mutable. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Mercury, Jupiter and Saturn were retrograde. Venus changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:15.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 15.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 9.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-22/",
+    "label": "Everyone born on June 22"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:1.32",
+    "decan:cancer:first",
+    "personal:Mercury:Gemini:22.0°",
+    "personal:Venus:Leo:0.4°",
+    "personal:Mars:Cancer:17.6°",
+    "aspect:Jupiter:Pluto:opposition:0.75",
+    "aspect:Saturn:Neptune:sextile:3.32",
+    "aspect:Sun:Neptune:sextile:3.42",
+    "figure:t-square:Jupiter-Pluto:apex-Uranus",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:domicile",
+    "dignity:Mars:fall",
+    "elements:water5-fire2-earth2-air1",
+    "modalities:fixed5-cardinal3-mutable2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:cancer",
+    "moon-band:15.3"
+  ],
+  "measurements": {
+    "originalWords": 432,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

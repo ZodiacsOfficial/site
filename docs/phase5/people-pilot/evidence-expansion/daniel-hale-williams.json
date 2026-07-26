@@ -1,0 +1,111 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "daniel-hale-williams",
+ "qid": "Q3014147",
+ "displayName": "Daniel Hale Williams",
+ "wikidataLabel": "Daniel Hale Williams",
+ "wikidataDescription": "African American cardiologist who performed the first documented, successful pericardium surgery in the world",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3014147",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518312901
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Daniel Hale Williams",
+   "articleUrl": "https://en.wikipedia.org/wiki/Daniel_Hale_Williams",
+   "pageId": 1515846,
+   "revisionId": 1366107664,
+   "revisionTimestamp": "2026-07-26T08:55:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1858-01-18T00:00:00Z|proleptic-gregorian",
+   "+1856-01-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-01-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1856-01-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-01-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1931-08-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1025781",
+  "label": "Hollidaysburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1025781",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1025781",
+   "sourceEntityLabel": "Hollidaysburg",
+   "latitude": 40.42729,
+   "longitude": -78.3889,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3264451",
+   "label": "cardiologist"
+  },
+  {
+   "entity": "Q774306",
+   "label": "surgeon"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fat embolism (6467719609).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fat%20embolism%20(6467719609).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fat_embolism_(6467719609).jpg",
+  "width": 1600,
+  "height": 1200,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "Yale Rosen from USA",
+  "credit": "Fat embolism Uploaded by CFCF",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "sadegh-hedayat",
+  "seedRound": 0,
+  "qid": "Q315017",
+  "displayName": "Sadegh Hedayat",
+  "identity": "Writer · Iran · 1903–1951",
+  "title": "Sadegh Hedayat's birth chart",
+  "metaDescription": "Sadegh Hedayat's chart, computed from a sourced birth date: Sun at 27.5° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Aquarius — the Sun, Mercury, Jupiter and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aquarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.52",
+        "decan:aquarius:third"
+      ],
+      "text": "Aquarius, but precisely: 27.5°, third decan, 20°–30°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:3.9°",
+        "personal:Venus:Pisces:16.6°",
+        "personal:Mars:Libra:16.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 3.9° Aquarius, Venus was at 16.6° Pisces, Mars was at 16.3° Libra. Read together: a mind at home in argument and pattern; taste tuned to mood and undertow; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:conjunction:0.55",
+        "aspect:Venus:Pluto:square:1.09",
+        "aspect:Mars:Pluto:trine:1.44"
+      ],
+      "text": "Nothing in the geometry sits closer than Mercury and Saturn: 0.6° from an exact conjunction. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Venus square Pluto at 1.1°, and Mars trine Pluto at 1.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has four entries for this chart. The Sun in Aquarius at 27.5° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 16.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Libra at 16.3° is in detriment; Saturn in Aquarius at 3.3° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-water2-fire1",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 6 air, 2 water, 1 fire; by modality, 4 fixed, 3 mutable, 2 cardinal. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 12.7° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-17/",
+    "label": "Everyone born on February 17"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:aquarius:4",
+    "sun-degree:27.52",
+    "decan:aquarius:third",
+    "personal:Mercury:Aquarius:3.9°",
+    "personal:Venus:Pisces:16.6°",
+    "personal:Mars:Libra:16.3°",
+    "aspect:Mercury:Saturn:conjunction:0.55",
+    "aspect:Venus:Pluto:square:1.09",
+    "aspect:Mars:Pluto:trine:1.44",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:domicile",
+    "elements:air6-water2-fire1",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 458,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

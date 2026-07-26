@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "clarice-lispector",
+ "qid": "Q235955",
+ "displayName": "Clarice Lispector",
+ "wikidataLabel": "Clarice Lispector",
+ "wikidataDescription": "Ukrainian-Brazilian writer, poet, and journalist (1920–1977)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q235955",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517553390
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Clarice Lispector",
+   "articleUrl": "https://en.wikipedia.org/wiki/Clarice_Lispector",
+   "pageId": 361827,
+   "revisionId": 1364590503,
+   "revisionTimestamp": "2026-07-17T11:41:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1920-12-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-12-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1925-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-12-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1977-12-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1721808",
+  "label": "Chechelnyk",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1721808",
+  "country": {
+   "entity": "Q212",
+   "label": "Ukraine"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1721808",
+   "sourceEntityLabel": "Chechelnyk",
+   "latitude": 48.212222222222,
+   "longitude": 29.362222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:(1920-1977) Clarice Lispector 6zxkp please credit(palette.fm) (cropped).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:(1920-1977)%20Clarice%20Lispector%206zxkp%20please%20credit(palette.fm)%20(cropped).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:(1920-1977)_Clarice_Lispector_6zxkp_please_credit(palette.fm)_(cropped).png",
+  "width": 259,
+  "height": 264,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Ishiai",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

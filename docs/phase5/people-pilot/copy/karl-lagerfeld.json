@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "karl-lagerfeld",
+  "seedRound": 0,
+  "qid": "Q76716",
+  "displayName": "Karl Lagerfeld",
+  "identity": "Fashion designer and photographer · Germany · 1933–2019",
+  "title": "Karl Lagerfeld's birth chart",
+  "metaDescription": "Karl Lagerfeld's chart, computed from a sourced birth date: Sun at 17.3° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: Mars and Neptune within 0.2°, drive wired to imagination. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not.",
+  "ledeFact": "aspect:Mars:Neptune:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.27",
+        "decan:virgo:second"
+      ],
+      "text": "The Sun sits at 17.3° Virgo — the second decan, 10°–20°, which the tradition sub-rules by Saturn. Degrees matter more than the sign label here: two people born a fortnight apart share Virgo and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:15.9°",
+        "personal:Venus:Libra:23.9°",
+        "personal:Mars:Scorpio:10.0°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Virgo (15.9°), Venus in Libra (23.9°), Mars in Scorpio (10.0°): a mind that trusts the measured and the checked, taste led by wit and proportion, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:sextile:0.24",
+        "aspect:Venus:Pluto:square:0.47",
+        "aspect:Mars:Saturn:square:0.68"
+      ],
+      "text": "Closest first: Mars to Neptune, a sextile with 0.2° of slack. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Venus square Pluto at 0.5°, and Mars square Saturn at 0.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Venus-Uranus:apex-Pluto"
+      ],
+      "text": "Venus opposes Uranus while both square Pluto. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Mercury in Virgo at 15.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 23.9° is in domicile — the planet in its own sign, running on home rules; Mars in Scorpio at 10.0° is in domicile; Saturn in Aquarius at 10.7° is in domicile. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air2-water2-fire1",
+        "modalities:mutable3-cardinal3-fixed2",
+        "settled-signs:8",
+        "retrograde:2",
+        "sign-uncertain:Jupiter:virgo:libra"
+      ],
+      "text": "The certain ground: 8 placements whose signs hold for the whole day, dividing 3 earth, 2 air, 2 water, 1 fire by element and 3 mutable, 3 cardinal, 2 fixed by mode. An earth emphasis reads as patience with material reality — slow hands, durable results. Jupiter crossed from Virgo into Libra during that day, so its sign is left open. Saturn and Uranus were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 12.0° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-10/",
+    "label": "Everyone born on September 10"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Neptune:sextile",
+    "sun-degree:17.27",
+    "decan:virgo:second",
+    "personal:Mercury:Virgo:15.9°",
+    "personal:Venus:Libra:23.9°",
+    "personal:Mars:Scorpio:10.0°",
+    "aspect:Mars:Neptune:sextile:0.24",
+    "aspect:Venus:Pluto:square:0.47",
+    "aspect:Mars:Saturn:square:0.68",
+    "figure:t-square:Venus-Uranus:apex-Pluto",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:earth3-air2-water2-fire1",
+    "modalities:mutable3-cardinal3-fixed2",
+    "settled-signs:8",
+    "retrograde:2",
+    "sign-uncertain:Jupiter:virgo:libra",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 442,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

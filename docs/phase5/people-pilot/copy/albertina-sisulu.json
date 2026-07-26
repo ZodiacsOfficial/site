@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "albertina-sisulu",
+  "seedRound": 0,
+  "qid": "Q467744",
+  "displayName": "Albertina Sisulu",
+  "identity": "Politician · South Africa · 1918–2011",
+  "title": "Albertina Sisulu's birth chart",
+  "metaDescription": "Albertina Sisulu's chart, computed from a sourced birth date: Sun at 27.2° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 18.7° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.20",
+        "decan:libra:third"
+      ],
+      "text": "At noon on that date the Sun stood at 27.2° Libra, inside the third decan (20°–30°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:1.2°",
+        "personal:Venus:Libra:18.7°",
+        "personal:Mars:Sagittarius:14.4°"
+      ],
+      "text": "Mercury holds 1.2° Scorpio, Venus holds 18.7° Libra, Mars holds 14.4° Sagittarius — in the old shorthand, thought steeped in tone and memory; attraction that begins as conversation; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:sextile:1.11",
+        "aspect:Saturn:Uranus:opposition:2.22",
+        "aspect:Venus:Jupiter:square:3.2"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a sixth of the circle apart from Saturn, 1.1° off exact. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Saturn opposition Uranus at 2.2°, and Venus square Jupiter at 3.2° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Sun in Libra at 27.2° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Taurus at 18.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 18.7° is in domicile — the planet in its own sign, running on home rules; Jupiter in Cancer at 15.5° is in exaltation; Saturn in Leo at 26.1° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-fire3-earth1",
+        "modalities:fixed5-cardinal4-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 3, water 3, fire 3, earth 1; modalities fixed 5, cardinal 4, mutable 1. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Uranus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:15.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 15.0° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 18.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-21/",
+    "label": "Everyone born on October 21"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:27.20",
+    "decan:libra:third",
+    "personal:Mercury:Scorpio:1.2°",
+    "personal:Venus:Libra:18.7°",
+    "personal:Mars:Sagittarius:14.4°",
+    "aspect:Sun:Saturn:sextile:1.11",
+    "aspect:Saturn:Uranus:opposition:2.22",
+    "aspect:Venus:Jupiter:square:3.2",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Moon:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:air3-water3-fire3-earth1",
+    "modalities:fixed5-cardinal4-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:taurus",
+    "moon-band:15.0"
+  ],
+  "measurements": {
+    "originalWords": 454,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "salvador-dali",
+ "qid": "Q5577",
+ "displayName": "Salvador Dalí",
+ "wikidataLabel": "Salvador Dalí",
+ "wikidataDescription": "Spanish artist (1904–1989)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5577",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522847125
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Salvador Dalí",
+   "articleUrl": "https://en.wikipedia.org/wiki/Salvador_Dal%C3%AD",
+   "pageId": 40112,
+   "revisionId": 1366129958,
+   "revisionTimestamp": "2026-07-26T12:54:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-05-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-05-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-05-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1989-01-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6839",
+  "label": "Figueres",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6839",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6839",
+   "sourceEntityLabel": "Figueres",
+   "latitude": 42.266666666667,
+   "longitude": 2.95,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2707485",
+   "label": "scenographer"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q2519376",
+   "label": "jewelry designer"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Salvador Dalí 1939.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Salvador%20Dal%C3%AD%201939.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Salvador_Dal%C3%AD_1939.jpg",
+  "width": 2885,
+  "height": 3706,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Van Vechten, Carl, 1880-1964.",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c16608.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

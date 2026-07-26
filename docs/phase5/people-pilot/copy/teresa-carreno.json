@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "teresa-carreno",
+  "seedRound": 0,
+  "qid": "Q241494",
+  "displayName": "Teresa Carreño",
+  "identity": "Composer · Venezuela · 1853–1917",
+  "title": "Teresa Carreño's birth chart",
+  "metaDescription": "Teresa Carreño's chart, computed from a sourced birth date: Sun at 0.8° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Pluto sit 0.1° from an exact trine — near enough that the tradition reads identity and depth as a single working part. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Sun:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:0.82",
+        "decan:capricorn:first"
+      ],
+      "text": "The Sun's exact place is 0.8° Capricorn. That falls in the first decan, 0°–10°, sub-ruled by Saturn in the classical scheme — a earth sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:8.8°",
+        "personal:Venus:Aquarius:18.0°",
+        "personal:Mars:Virgo:13.6°"
+      ],
+      "text": "Mercury holds 8.8° Sagittarius, Venus holds 18.0° Aquarius, Mars holds 13.6° Virgo — in the old shorthand, a mind that decides at speaking speed; taste led by wit and proportion; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:trine:0.06",
+        "aspect:Mercury:Neptune:square:2.35",
+        "aspect:Uranus:Neptune:sextile:2.36"
+      ],
+      "text": "The day's firmest angle joins the Sun and Pluto — a trine holding at 0.1°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mercury square Neptune at 2.4°, and Uranus sextile Neptune at 2.4° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mars-Neptune:apex-Mercury",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars opposes Neptune while both square Mercury. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The classical table has two entries for this chart. Mercury in Sagittarius at 8.8° is in detriment — the planet opposite its home, working against the grain; Jupiter in Capricorn at 4.7° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth7-fire1-air1-water1",
+        "modalities:mutable4-fixed4-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives earth 7, fire 1, air 1, water 1, and mutable 4, fixed 4, cardinal 2 across the modes. Saturn, Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:12.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 20.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-22/",
+    "label": "Everyone born on December 22"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:trine",
+    "sun-degree:0.82",
+    "decan:capricorn:first",
+    "personal:Mercury:Sagittarius:8.8°",
+    "personal:Venus:Aquarius:18.0°",
+    "personal:Mars:Virgo:13.6°",
+    "aspect:Sun:Pluto:trine:0.06",
+    "aspect:Mercury:Neptune:square:2.35",
+    "aspect:Uranus:Neptune:sextile:2.36",
+    "figure:t-square:Mars-Neptune:apex-Mercury",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Jupiter:fall",
+    "elements:earth7-fire1-air1-water1",
+    "modalities:mutable4-fixed4-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:virgo",
+    "moon-band:12.9"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "annie-jump-cannon",
+  "seedRound": 0,
+  "qid": "Q230650",
+  "displayName": "Annie Jump Cannon",
+  "identity": "Astronomer and university teacher · United States · 1863–1941",
+  "title": "Annie Jump Cannon's birth chart",
+  "metaDescription": "Annie Jump Cannon's chart, computed from a sourced birth date: Sun at 19.2° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. The fixed signs are the scheme’s ballast — mid-season, fully committed, expensive to turn.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.22",
+        "decan:sagittarius:second"
+      ],
+      "text": "At noon on that date the Sun stood at 19.2° Sagittarius, inside the second decan (10°–20°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:24.6°",
+        "personal:Venus:Scorpio:2.4°",
+        "personal:Mars:Scorpio:26.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 24.6° Sagittarius, Venus was at 2.4° Scorpio, Mars was at 26.3° Scorpio. Read together: thought that arrives already in motion; attraction that works by atmosphere; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Uranus:opposition:1.42",
+        "aspect:Sun:Saturn:sextile:3.02",
+        "aspect:Sun:Uranus:opposition:3.98"
+      ],
+      "text": "Closest first: Mercury to Uranus, a opposition with 1.4° of slack. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, the Sun sextile Saturn at 3.0°, and the Sun opposition Uranus at 4.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Read against the old dignities, four placements stand out. Mercury in Sagittarius at 24.6° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 2.4° is in detriment; Mars in Scorpio at 26.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 16.2° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-air2-earth1",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 fire, 3 water, 2 air, 1 earth by element and 4 fixed, 3 mutable, 2 cardinal by modality. A fire-weighted chart runs hot at the start line — initiative is its native language. Uranus, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 14.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-11/",
+    "label": "Everyone born on December 11"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:19.22",
+    "decan:sagittarius:second",
+    "personal:Mercury:Sagittarius:24.6°",
+    "personal:Venus:Scorpio:2.4°",
+    "personal:Mars:Scorpio:26.3°",
+    "aspect:Mercury:Uranus:opposition:1.42",
+    "aspect:Sun:Saturn:sextile:3.02",
+    "aspect:Sun:Uranus:opposition:3.98",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:fire3-water3-air2-earth1",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 426,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

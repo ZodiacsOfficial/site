@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "grace-kelly",
+ "qid": "Q3925",
+ "displayName": "Grace Kelly",
+ "wikidataLabel": "Grace Kelly",
+ "wikidataDescription": "American actress and Princess consort of Monaco (1929–1982)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3925",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520429039
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Grace Kelly",
+   "articleUrl": "https://en.wikipedia.org/wiki/Grace_Kelly",
+   "pageId": 42620,
+   "revisionId": 1364575146,
+   "revisionTimestamp": "2026-07-17T08:34:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1929-11-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-11-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1929-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-11-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1982-09-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1345",
+  "label": "Philadelphia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1345",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1345",
+   "sourceEntityLabel": "Philadelphia",
+   "latitude": 39.952777777778,
+   "longitude": -75.163611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q4610556",
+   "label": "model"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gracia van Monaco (1972).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gracia%20van%20Monaco%20(1972).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gracia_van_Monaco_(1972).jpg",
+  "width": 1539,
+  "height": 2052,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Hans Peters for Anefo",
+  "credit": "Derived from Nationaal Archief",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

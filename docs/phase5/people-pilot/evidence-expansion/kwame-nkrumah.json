@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kwame-nkrumah",
+ "qid": "Q8620",
+ "displayName": "Kwame Nkrumah",
+ "wikidataLabel": "Kwame Nkrumah",
+ "wikidataDescription": "Ghanaian politician (1909–1972)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8620",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522967114
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kwame Nkrumah",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kwame_Nkrumah",
+   "pageId": 17062,
+   "revisionId": 1365048744,
+   "revisionTimestamp": "2026-07-19T23:52:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1909-09-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-09-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-09-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1972-04-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1994408",
+  "label": "Nkroful",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1994408",
+  "country": {
+   "entity": "Q117",
+   "label": "Ghana"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1994408",
+   "sourceEntityLabel": "Nkroful",
+   "latitude": 4.9638888888889,
+   "longitude": -2.3222222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q1569495",
+   "label": "lecturer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q1234713",
+   "label": "theologian"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kwame Nkrumah on a Soviet stamp (80th anniversary of his birth) 1989 CPA 6101.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kwame%20Nkrumah%20on%20a%20Soviet%20stamp%20(80th%20anniversary%20of%20his%20birth)%201989%20CPA%206101.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kwame_Nkrumah_on_a_Soviet_stamp_(80th_anniversary_of_his_birth)_1989_CPA_6101.jpg",
+  "width": 681,
+  "height": 959,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "USSR Post",
+  "credit": "Newː Scanned 600 dpi by User Matsievsky from personal collection. Oldː Personal collection. Scanned and processed by Mariluna. 12 September 2007 (original upload date)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

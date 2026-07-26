@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "marguerite-duras",
+  "seedRound": 0,
+  "qid": "Q153248",
+  "displayName": "Marguerite Duras",
+  "identity": "Writer and film director · Nguyen dynasty · 1914–1996",
+  "title": "Marguerite Duras's birth chart",
+  "metaDescription": "Marguerite Duras's chart, computed from a sourced birth date: Sun at 13.6° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 13.6° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.59",
+        "decan:aries:second"
+      ],
+      "text": "The Sun's exact place is 13.6° Aries. That falls in the second decan, 10°–20°, sub-ruled by the Sun in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:16.1°",
+        "personal:Venus:Aries:26.3°",
+        "personal:Mars:Cancer:17.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Pisces (16.1°), Venus in Aries (26.3°), Mars in Cancer (17.5°): a mind that absorbs before it argues, taste that runs toward the vivid and the immediate, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:sextile:0.04",
+        "aspect:Venus:Neptune:square:0.87",
+        "aspect:Mercury:Mars:trine:1.45"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a sixth of the circle apart from Saturn, 0.0° off exact. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Venus square Neptune at 0.9°, and Mercury trine Mars at 1.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Moon:domicile",
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, five sit in a sign it has an opinion about. The Sun in Aries at 13.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Cancer at 18.3° is in domicile — the planet in its own sign, running on home rules; Mercury in Pisces at 16.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 26.3° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 17.5° is in fall. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air4-fire2",
+        "modalities:cardinal5-mutable3-fixed2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in water, 4 in air, 2 in fire by element, 5 cardinal, 3 mutable, 2 fixed by modality. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Neptune was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 18.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-4/",
+    "label": "Everyone born on April 4"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:13.59",
+    "decan:aries:second",
+    "personal:Mercury:Pisces:16.1°",
+    "personal:Venus:Aries:26.3°",
+    "personal:Mars:Cancer:17.5°",
+    "aspect:Sun:Saturn:sextile:0.04",
+    "aspect:Venus:Neptune:square:0.87",
+    "aspect:Mercury:Mars:trine:1.45",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:fall",
+    "elements:water4-air4-fire2",
+    "modalities:cardinal5-mutable3-fixed2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:cancer",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 477,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

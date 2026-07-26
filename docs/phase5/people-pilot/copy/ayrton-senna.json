@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ayrton-senna",
+  "seedRound": 0,
+  "qid": "Q10490",
+  "displayName": "Ayrton Senna",
+  "identity": "Formula One driver and philanthropist · Brazil · 1960–1994",
+  "title": "Ayrton Senna's birth chart",
+  "metaDescription": "Ayrton Senna's chart, computed from a sourced birth date: Sun at 1.0° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 1.0° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.00",
+        "decan:aries:first"
+      ],
+      "text": "Aries, but precisely: 1.0°, first decan, 0°–10°, under Mars in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:12.5°",
+        "personal:Venus:Pisces:6.8°",
+        "personal:Mars:Aquarius:21.0°"
+      ],
+      "text": "Mercury holds 12.5° Pisces, Venus holds 6.8° Pisces, Mars holds 21.0° Aquarius — in the old shorthand, a mind that absorbs before it argues; taste tuned to mood and undertow; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:square:1.28",
+        "aspect:Venus:Neptune:trine:1.87",
+        "aspect:Jupiter:Pluto:trine:1.98"
+      ],
+      "text": "Start where the chart is tightest — the Sun square Jupiter, 1.3° of separation. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Venus trine Neptune at 1.9°, and Jupiter trine Pluto at 2.0° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Moon:detriment",
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has six entries for this chart. The Sun in Aries at 1.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Capricorn at 18.8° is in detriment — the planet opposite its home, working against the grain; Mercury in Pisces at 12.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 6.8° is in exaltation; Jupiter in Capricorn at 2.3° is in fall; Saturn in Capricorn at 17.3° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-water3-fire2-air1",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives earth 4, water 3, fire 2, air 1, and cardinal 4, mutable 3, fixed 3 across the modes. An earth emphasis reads as patience with material reality — slow hands, durable results. Mercury, Uranus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:14.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 14.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 18.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-21/",
+    "label": "Everyone born on March 21"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:1.00",
+    "decan:aries:first",
+    "personal:Mercury:Pisces:12.5°",
+    "personal:Venus:Pisces:6.8°",
+    "personal:Mars:Aquarius:21.0°",
+    "aspect:Sun:Jupiter:square:1.28",
+    "aspect:Venus:Neptune:trine:1.87",
+    "aspect:Jupiter:Pluto:trine:1.98",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Moon:detriment",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:earth4-water3-fire2-air1",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:capricorn",
+    "moon-band:14.1"
+  ],
+  "measurements": {
+    "originalWords": 448,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

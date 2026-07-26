@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "gaetano-donizetti",
+  "seedRound": 0,
+  "qid": "Q101698",
+  "displayName": "Gaetano Donizetti",
+  "identity": "Composer · Italy · 1797–1848",
+  "title": "Gaetano Donizetti's birth chart",
+  "metaDescription": "Gaetano Donizetti's chart, computed from a sourced birth date: Sun at 7.8° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.7° separates Mars and Pluto from an exact trine; at that range drive and depth read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Mars:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.80",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun's position resolves to 7.8° Sagittarius — deep enough in the first decan (0°–10°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:4.5°",
+        "personal:Venus:Capricorn:22.1°",
+        "personal:Mars:Libra:29.0°"
+      ],
+      "text": "Closer in, Mercury stands at 4.5° Sagittarius; Venus stands at 22.1° Capricorn; Mars stands at 29.0° Libra. The tradition reads thought that arrives already in motion from Mercury, attraction that grows by reliability from Venus, effort aimed through strategy and words from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:trine:0.51",
+        "aspect:Mars:Pluto:trine:0.68",
+        "aspect:Jupiter:Saturn:square:0.99"
+      ],
+      "text": "The day's firmest angle joins Saturn and Neptune — a trine holding at 0.5°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mars trine Pluto at 0.7°, and Jupiter square Saturn at 1.0° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Mercury in Sagittarius at 4.5° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 29.0° is in detriment; Saturn in Cancer at 10.9° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth2-air2-water2",
+        "modalities:cardinal5-mutable3-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 fire, 2 earth, 2 air, 2 water by element and 5 cardinal, 3 mutable, 2 fixed by mode. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Jupiter and Saturn were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:12.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 12.5° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 9.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-29/",
+    "label": "Everyone born on November 29"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:trine",
+    "sun-degree:7.80",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:4.5°",
+    "personal:Venus:Capricorn:22.1°",
+    "personal:Mars:Libra:29.0°",
+    "aspect:Saturn:Neptune:trine:0.51",
+    "aspect:Mars:Pluto:trine:0.68",
+    "aspect:Jupiter:Saturn:square:0.99",
+    "figure:none",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:detriment",
+    "elements:fire4-earth2-air2-water2",
+    "modalities:cardinal5-mutable3-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aries",
+    "moon-band:12.5"
+  ],
+  "measurements": {
+    "originalWords": 389,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

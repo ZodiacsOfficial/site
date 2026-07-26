@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "artemisia-gentileschi",
+  "seedRound": 0,
+  "qid": "Q212657",
+  "displayName": "Artemisia Gentileschi",
+  "identity": "Painter · Italy · 1593–1653",
+  "title": "Artemisia Gentileschi's birth chart",
+  "metaDescription": "Artemisia Gentileschi's chart, computed from a sourced birth date: Sun at 16.0° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Cardinal signs carry five of the ten placements whose signs are settled — the broadest certain weighting in the chart. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.96",
+        "decan:cancer:second"
+      ],
+      "text": "The Sun sits at 16.0° Cancer — the second decan, 10°–20°, which the tradition sub-rules by Mars. Degrees matter more than the sign label here: two people born a fortnight apart share Cancer and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Gemini:25.8°",
+        "personal:Venus:Leo:8.1°",
+        "personal:Mars:Pisces:13.1°"
+      ],
+      "text": "The personal planets sit Mercury at 25.8° Gemini, Venus at 8.1° Leo, Mars at 13.1° Pisces. Mercury in a air sign reads as a mind at home in argument and pattern; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:square:0.29",
+        "aspect:Venus:Uranus:trine:1.2",
+        "aspect:Sun:Pluto:square:1.33"
+      ],
+      "text": "Jupiter to Pluto is the closest call of the day, a square within 0.3°. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Venus trine Uranus at 1.2°, and the Sun square Pluto at 1.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Sun-Jupiter:apex-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Jupiter while both square Pluto. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Mercury:domicile",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Moon in Scorpio at 20.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Gemini at 25.8° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 17.6° is in fall; Saturn in Cancer at 28.6° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire4-air1-earth1",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 water, 4 fire, 1 air, 1 earth by element and 5 cardinal, 3 fixed, 2 mutable by mode. Water reads the room before the room speaks — atmosphere first, analysis later. Venus and Jupiter were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:12.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 12.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 20.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-8/",
+    "label": "Everyone born on July 8"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:5",
+    "sun-degree:15.96",
+    "decan:cancer:second",
+    "personal:Mercury:Gemini:25.8°",
+    "personal:Venus:Leo:8.1°",
+    "personal:Mars:Pisces:13.1°",
+    "aspect:Jupiter:Pluto:square:0.29",
+    "aspect:Venus:Uranus:trine:1.2",
+    "aspect:Sun:Pluto:square:1.33",
+    "figure:t-square:Sun-Jupiter:apex-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Moon:fall",
+    "dignity:Mercury:domicile",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:detriment",
+    "elements:water4-fire4-air1-earth1",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:scorpio",
+    "moon-band:12.2"
+  ],
+  "measurements": {
+    "originalWords": 491,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

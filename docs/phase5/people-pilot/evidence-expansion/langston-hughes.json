@@ -1,0 +1,147 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "langston-hughes",
+ "qid": "Q188093",
+ "displayName": "Langston Hughes",
+ "wikidataLabel": "Langston Hughes",
+ "wikidataDescription": "American writer and social activist (1901–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q188093",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2513950032
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Langston Hughes",
+   "articleUrl": "https://en.wikipedia.org/wiki/Langston_Hughes",
+   "pageId": 21814770,
+   "revisionId": 1364645354,
+   "revisionTimestamp": "2026-07-17T18:18:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1902-02-01T00:00:00Z|proleptic-gregorian",
+   "+1901-02-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-02-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   },
+   {
+    "time": "+1901-02-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-02-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-05-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q317865",
+  "label": "Joplin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q317865",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q317865",
+   "sourceEntityLabel": "Joplin",
+   "latitude": 37.0842,
+   "longitude": -94.5131,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q1776724",
+   "label": "theatre manager"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Langston Hughes by Carl Van Vechten (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Langston%20Hughes%20by%20Carl%20Van%20Vechten%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Langston_Hughes_by_Carl_Van_Vechten_(cropped).jpg",
+  "width": 2897,
+  "height": 4713,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "https://collections.library.yale.edu/catalog/2018583",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

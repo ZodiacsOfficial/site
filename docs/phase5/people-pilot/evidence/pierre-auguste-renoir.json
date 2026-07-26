@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "pierre-auguste-renoir",
+ "qid": "Q39931",
+ "displayName": "Pierre-Auguste Renoir",
+ "wikidataLabel": "Pierre-Auguste Renoir",
+ "wikidataDescription": "French painter and sculptor (1841–1919)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q39931",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522907469
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Pierre-Auguste Renoir",
+   "articleUrl": "https://en.wikipedia.org/wiki/Pierre-Auguste_Renoir",
+   "pageId": 24546,
+   "revisionId": 1364958229,
+   "revisionTimestamp": "2026-07-19T14:05:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1841-02-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1841-02-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1841-02-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1919-12-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q45656",
+  "label": "Limoges",
+  "entityUrl": "https://www.wikidata.org/wiki/Q45656",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q45656",
+   "sourceEntityLabel": "Limoges",
+   "latitude": 45.834444444444,
+   "longitude": 1.2616666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q24056480",
+   "label": "porcelain painter"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q10373653",
+   "label": "watercolorist"
+  },
+  {
+   "entity": "Q1183704",
+   "label": "decorative painter"
+  },
+  {
+   "entity": "Q20857490",
+   "label": "pastellist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Pierre Auguste Renoir, uncropped image.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Pierre%20Auguste%20Renoir%2C%20uncropped%20image.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Pierre_Auguste_Renoir,_uncropped_image.jpg",
+  "width": 525,
+  "height": 650,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "UnknownUnknown Musée d'Orsay, Dist. RMN-Grand Palais / Patrice Schmidt",
+  "credit": "Réunion des musées nationaux",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "erik-satie",
+  "seedRound": 0,
+  "qid": "Q187192",
+  "displayName": "Erik Satie",
+  "identity": "Composer · France · 1866–1925",
+  "title": "Erik Satie's birth chart",
+  "metaDescription": "Erik Satie's chart, computed from a sourced birth date: Sun at 26.3° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.7° separates Mercury and Uranus from an exact sextile; at that range thinking and disruption read as one mechanism. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.",
+  "ledeFact": "aspect:Mercury:Uranus:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.30",
+        "decan:taurus:third"
+      ],
+      "text": "At noon on that date the Sun stood at 26.3° Taurus, inside the third decan (20°–30°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:1.1°",
+        "personal:Venus:Gemini:16.7°",
+        "personal:Mars:Aries:10.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Taurus (1.1°), Venus in Gemini (16.7°), Mars in Aries (10.3°): thought with its feet on the ground, attraction that begins as conversation, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Uranus:sextile:0.69",
+        "aspect:Mercury:Jupiter:square:1.1",
+        "aspect:Mars:Neptune:conjunction:1.62"
+      ],
+      "text": "Nothing in the geometry sits closer than Mercury and Uranus: 0.7° from an exact sextile. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mercury square Jupiter at 1.1°, and Mars conjunction Neptune at 1.6° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Saturn:apex-Jupiter",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mercury opposes Saturn while both square Jupiter. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks one placement here. Mars in Aries at 10.3° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air2-fire2-water2",
+        "modalities:fixed5-cardinal3-mutable1",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 earth, 2 air, 2 fire, 2 water; by modality, 5 fixed, 3 cardinal, 1 mutable. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Saturn was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 14.5° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-17/",
+    "label": "Everyone born on May 17"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Uranus:sextile",
+    "sun-degree:26.30",
+    "decan:taurus:third",
+    "personal:Mercury:Taurus:1.1°",
+    "personal:Venus:Gemini:16.7°",
+    "personal:Mars:Aries:10.3°",
+    "aspect:Mercury:Uranus:sextile:0.69",
+    "aspect:Mercury:Jupiter:square:1.1",
+    "aspect:Mars:Neptune:conjunction:1.62",
+    "figure:t-square:Mercury-Saturn:apex-Jupiter",
+    "figure:unaspected:Moon",
+    "dignity:Mars:domicile",
+    "elements:earth3-air2-fire2-water2",
+    "modalities:fixed5-cardinal3-mutable1",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 407,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

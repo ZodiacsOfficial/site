@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yi-sang",
+ "qid": "Q486028",
+ "displayName": "Yi Sang",
+ "wikidataLabel": "Yi Sang",
+ "wikidataDescription": "Korean writer (1910–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q486028",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2499213446
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yi Sang",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yi_Sang",
+   "pageId": 4907323,
+   "revisionId": 1362487785,
+   "revisionTimestamp": "2026-07-04T07:44:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-08-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-08-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-08-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-04-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q491066",
+  "label": "Jong-ro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q491066",
+  "country": {
+   "entity": "Q884",
+   "label": "South Korea"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q491066",
+   "sourceEntityLabel": "Jong-ro",
+   "latitude": 37.57295,
+   "longitude": 126.979358,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  }
+ ],
+ "portrait": {
+  "file": "File:Leesang.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Leesang.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Leesang.jpg",
+  "width": 150,
+  "height": 221,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

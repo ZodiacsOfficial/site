@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bertrand-russell",
+ "qid": "Q33760",
+ "displayName": "Bertrand Russell",
+ "wikidataLabel": "Bertrand Russell",
+ "wikidataDescription": "British philosopher and logician (1872–1970)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q33760",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521646758
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bertrand Russell",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bertrand_Russell",
+   "pageId": 4163,
+   "revisionId": 1365944337,
+   "revisionTimestamp": "2026-07-25T09:57:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1872-05-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1872-05-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1872-05-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1970-02-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3057926",
+  "label": "Trellech",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3057926",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3057926",
+   "sourceEntityLabel": "Trellech",
+   "latitude": 51.745061111111,
+   "longitude": -2.7256,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q15978337",
+   "label": "social critic"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q14565331",
+   "label": "logician"
+  },
+  {
+   "entity": "Q15632482",
+   "label": "epistemologist"
+  },
+  {
+   "entity": "Q18930236",
+   "label": "philosopher of language"
+  },
+  {
+   "entity": "Q16743941",
+   "label": "metaphysician"
+  },
+  {
+   "entity": "Q18930418",
+   "label": "analytic philosopher"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q16389557",
+   "label": "philosopher of science"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bertrand Russell photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bertrand%20Russell%20photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bertrand_Russell_photo.jpg",
+  "width": 800,
+  "height": 630,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bassano Ltd",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

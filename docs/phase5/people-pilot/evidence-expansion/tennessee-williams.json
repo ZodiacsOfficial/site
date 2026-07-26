@@ -1,0 +1,123 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "tennessee-williams",
+ "qid": "Q134262",
+ "displayName": "Tennessee Williams",
+ "wikidataLabel": "Tennessee Williams",
+ "wikidataDescription": "American playwright (1911–1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q134262",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520647359
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Tennessee Williams",
+   "articleUrl": "https://en.wikipedia.org/wiki/Tennessee_Williams",
+   "pageId": 44634,
+   "revisionId": 1365742872,
+   "revisionTimestamp": "2026-07-24T04:56:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1911-03-26T00:00:00Z|proleptic-gregorian",
+   "+1914-03-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-03-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1914-03-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1911-03-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-02-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q985648",
+  "label": "Columbus",
+  "entityUrl": "https://www.wikidata.org/wiki/Q985648",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q985648",
+   "sourceEntityLabel": "Columbus",
+   "latitude": 33.501666666667,
+   "longitude": -88.415,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Tennessee Williams NYWTS.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Tennessee%20Williams%20NYWTS.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Tennessee_Williams_NYWTS.jpg",
+  "width": 2046,
+  "height": 2310,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Orlando Fernandez, World Telegram staff photographer",
+  "credit": "Library of Congress. New York World-Telegram & Sun Collection. http://hdl.loc.gov/loc.pnp/cph.3c28957",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

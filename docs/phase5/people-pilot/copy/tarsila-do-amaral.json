@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "tarsila-do-amaral",
+  "seedRound": 0,
+  "qid": "Q466627",
+  "displayName": "Tarsila do Amaral",
+  "identity": "Painter · Brazil · 1886–1973",
+  "title": "Tarsila do Amaral's birth chart",
+  "metaDescription": "Tarsila do Amaral's chart, computed from a sourced birth date: Sun at 9.1° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, cardinal leads with four. The four cardinal signs sit at the solstices and equinoxes — the scheme’s ignition points, and this chart is weighted to them.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.06",
+        "decan:virgo:first"
+      ],
+      "text": "The Sun's exact place is 9.1° Virgo. That falls in the first decan, 0°–10°, sub-ruled by Mercury in the classical scheme — a earth sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Leo:21.0°",
+        "personal:Venus:Leo:15.6°",
+        "personal:Mars:Scorpio:6.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Leo (21.0°), Venus in Leo (15.6°), Mars in Scorpio (6.8°): a mind that decides at speaking speed, taste that runs toward the vivid and the immediate, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:conjunction:2",
+        "aspect:Uranus:Pluto:trine:2.22",
+        "aspect:Sun:Mars:sextile:2.31"
+      ],
+      "text": "Closest first: Jupiter to Uranus, a conjunction with 2.0° of slack. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Uranus trine Pluto at 2.2°, and the Sun sextile Mars at 2.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Mars in Scorpio at 6.8° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 19.1° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth2-fire2-water2",
+        "modalities:cardinal4-fixed4-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 4, earth 2, fire 2, water 2; modalities cardinal 4, fixed 4, mutable 2. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Neptune was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:14.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 22.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-1/",
+    "label": "Everyone born on September 1"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:9.06",
+    "decan:virgo:first",
+    "personal:Mercury:Leo:21.0°",
+    "personal:Venus:Leo:15.6°",
+    "personal:Mars:Scorpio:6.8°",
+    "aspect:Jupiter:Uranus:conjunction:2",
+    "aspect:Uranus:Pluto:trine:2.22",
+    "aspect:Sun:Mars:sextile:2.31",
+    "figure:unaspected:Moon",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:detriment",
+    "elements:air4-earth2-fire2-water2",
+    "modalities:cardinal4-fixed4-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:libra",
+    "moon-band:14.4"
+  ],
+  "measurements": {
+    "originalWords": 394,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "richard-feynman",
+ "qid": "Q39246",
+ "displayName": "Richard Feynman",
+ "wikidataLabel": null,
+ "wikidataDescription": "American theoretical physicist (1918–1988)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q39246",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519127042
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Richard Feynman",
+   "articleUrl": "https://en.wikipedia.org/wiki/Richard_Feynman",
+   "pageId": 25523,
+   "revisionId": 1362607254,
+   "revisionTimestamp": "2026-07-05T02:43:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1918-05-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-05-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1918-05-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1988-02-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q62460",
+  "label": "Far Rockaway",
+  "entityUrl": "https://www.wikidata.org/wiki/Q62460",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q62460",
+   "sourceEntityLabel": "Far Rockaway",
+   "latitude": 40.600919444444,
+   "longitude": -73.756972222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q16745601",
+   "label": "quantum physicist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q4351403",
+   "label": "percussionist"
+  },
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q15143191",
+   "label": "science communicator"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:RichardFeynman-PaineMansionWoods1984 copyrightTamikoThiel bw.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:RichardFeynman-PaineMansionWoods1984%20copyrightTamikoThiel%20bw.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:RichardFeynman-PaineMansionWoods1984_copyrightTamikoThiel_bw.jpg",
+  "width": 470,
+  "height": 541,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Copyright Tamiko Thiel 1984",
+  "credit": "communication from photographer",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

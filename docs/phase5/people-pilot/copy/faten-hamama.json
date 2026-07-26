@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "faten-hamama",
+  "seedRound": 0,
+  "qid": "Q2424957",
+  "displayName": "Faten Hamama",
+  "identity": "Actor and screenwriter · Egypt · 1931–2015",
+  "title": "Faten Hamama's birth chart",
+  "metaDescription": "Faten Hamama's chart, computed from a sourced birth date: Sun at 5.2° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Cardinal signs carry five of the ten placements whose signs are settled — the broadest certain weighting in the chart. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.15",
+        "decan:gemini:first"
+      ],
+      "text": "At noon on that date the Sun stood at 5.2° Gemini, inside the first decan (0°–10°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:10.4°",
+        "personal:Venus:Taurus:7.6°",
+        "personal:Mars:Leo:22.7°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Taurus (10.4°), Venus in Taurus (7.6°), Mars in Leo (22.7°): thought with its feet on the ground, attraction that grows by reliability, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:conjunction:0.05",
+        "aspect:Uranus:Pluto:square:1.26",
+        "aspect:Jupiter:Uranus:square:1.31"
+      ],
+      "text": "Closest first: Jupiter to Pluto, a conjunction with 0.1° of slack. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Uranus square Pluto at 1.3°, and Jupiter square Uranus at 1.3° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Jupiter-Saturn:apex-Uranus",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Saturn while both square Uranus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Venus in Taurus at 7.6° is in domicile — the planet in its own sign, running on home rules; Jupiter in Cancer at 19.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Capricorn at 22.8° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air2-fire2-water2",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 earth, 2 air, 2 fire, 2 water by element and 5 cardinal, 3 fixed, 2 mutable by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Saturn was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:14.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 14.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 9.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-27/",
+    "label": "Everyone born on May 27"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:5",
+    "sun-degree:5.15",
+    "decan:gemini:first",
+    "personal:Mercury:Taurus:10.4°",
+    "personal:Venus:Taurus:7.6°",
+    "personal:Mars:Leo:22.7°",
+    "aspect:Jupiter:Pluto:conjunction:0.05",
+    "aspect:Uranus:Pluto:square:1.26",
+    "aspect:Jupiter:Uranus:square:1.31",
+    "figure:t-square:Jupiter-Saturn:apex-Uranus",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:earth4-air2-fire2-water2",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:libra",
+    "moon-band:14.3"
+  ],
+  "measurements": {
+    "originalWords": 453,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

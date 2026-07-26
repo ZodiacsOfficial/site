@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "albertina-sisulu",
+ "qid": "Q467744",
+ "displayName": "Albertina Sisulu",
+ "wikidataLabel": "Albertina Nontsikelelo Sisulu",
+ "wikidataDescription": "South African anti–apartheid activist (1918-2011)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q467744",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522444190
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Albertina Sisulu",
+   "articleUrl": "https://en.wikipedia.org/wiki/Albertina_Sisulu",
+   "pageId": 224693,
+   "revisionId": 1365459190,
+   "revisionTimestamp": "2026-07-22T15:17:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1918-10-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-10-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1918-10-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-06-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7849847",
+  "label": "Tsomo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7849847",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q7849847",
+   "sourceEntityLabel": "Tsomo",
+   "latitude": -32.0333,
+   "longitude": 27.8,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q185196",
+   "label": "midwife"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q134284649",
+   "label": "anti-apartheid activist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Albertina Sisulu.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Albertina%20Sisulu.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Albertina_Sisulu.jpg",
+  "width": 670,
+  "height": 1024,
+  "licenseShortName": "CC BY-SA 2.5",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.5",
+  "artist": "Dawidl at English Wikipedia",
+  "credit": "Own work Transferred from en.wikipedia to Commons by Magnus Manske using CommonsHelper.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.5",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

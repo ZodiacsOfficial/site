@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "leopold-sedar-senghor",
+ "qid": "Q154545",
+ "displayName": "Léopold Sédar Senghor",
+ "wikidataLabel": "Léopold Sédar Senghor",
+ "wikidataDescription": "first president of Senegal, poet, and cultural theorist (1906–2001)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q154545",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522795761
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Léopold Sédar Senghor",
+   "articleUrl": "https://en.wikipedia.org/wiki/L%C3%A9opold_S%C3%A9dar_Senghor",
+   "pageId": 172067,
+   "revisionId": 1360705287,
+   "revisionTimestamp": "2026-06-23T02:42:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-10-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-10-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-10-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2001-12-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1340331",
+  "label": "Joal-Fadiouth",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1340331",
+  "country": {
+   "entity": "Q1041",
+   "label": "Senegal"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1340331",
+   "sourceEntityLabel": "Joal-Fadiouth",
+   "latitude": 14.153138888888888,
+   "longitude": -16.83163888888889,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q23833535",
+   "label": "French resistance fighter"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Léopold Sédar Senghor.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:L%C3%A9opold%20S%C3%A9dar%20Senghor.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:L%C3%A9opold_S%C3%A9dar_Senghor.jpg",
+  "width": 284,
+  "height": 348,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Bundesarchiv_B_145_Bild-F011981-0003,_Frankfurt-Main,_Staatspräsident_von_Senegal.jpg: Steiner, Egon derivative work: RoyFocker 12 (talk)",
+  "credit": "Bundesarchiv_B_145_Bild-F011981-0003,_Frankfurt-Main,_Staatspräsident_von_Senegal.jpg",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ousmane-sembene",
+  "seedRound": 0,
+  "qid": "Q314966",
+  "displayName": "Ousmane Sembène",
+  "identity": "Film director and playwright · Senegal · 1923–2007",
+  "title": "Ousmane Sembène's birth chart",
+  "metaDescription": "Ousmane Sembène's chart, computed from a sourced birth date: Sun at 10.1° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a opposition to Pluto at 0.1° — close enough to weld identity to depth. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine.",
+  "ledeFact": "aspect:Sun:Pluto:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.07",
+        "decan:capricorn:second"
+      ],
+      "text": "10.1° of Capricorn is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Capricorn:24.6°",
+        "personal:Venus:Scorpio:29.5°",
+        "personal:Mars:Pisces:15.4°"
+      ],
+      "text": "The personal planets sit Mercury at 24.6° Capricorn, Venus at 29.5° Scorpio, Mars at 15.4° Pisces. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a water sign reads as attraction that works by atmosphere; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:opposition:0.09",
+        "aspect:Uranus:Pluto:trine:0.28",
+        "aspect:Sun:Uranus:sextile:0.37"
+      ],
+      "text": "Start where the chart is tightest — the Sun opposition Pluto, 0.1° of separation. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Uranus trine Pluto at 0.3°, and the Sun sextile Uranus at 0.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Mars-Jupiter-Pluto",
+        "figure:unaspected:Venus"
+      ],
+      "text": "Mars, Jupiter, Pluto close a triangle of trines. The closed triangle is the scheme’s picture of flow — and its warning that flow, unspent, stays private. Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Venus in Scorpio at 29.5° is in detriment — the planet opposite its home, working against the grain; Saturn in Libra at 19.4° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-earth2-air2-fire1",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 5, earth 2, air 2, fire 1; modalities cardinal 4, mutable 3, fixed 3. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:13.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-1/",
+    "label": "Everyone born on January 1"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:opposition",
+    "sun-degree:10.07",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:24.6°",
+    "personal:Venus:Scorpio:29.5°",
+    "personal:Mars:Pisces:15.4°",
+    "aspect:Sun:Pluto:opposition:0.09",
+    "aspect:Uranus:Pluto:trine:0.28",
+    "aspect:Sun:Uranus:sextile:0.37",
+    "figure:grand-trine:Mars-Jupiter-Pluto",
+    "figure:unaspected:Venus",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:exaltation",
+    "elements:water5-earth2-air2-fire1",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:gemini",
+    "moon-band:13.1"
+  ],
+  "measurements": {
+    "originalWords": 446,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

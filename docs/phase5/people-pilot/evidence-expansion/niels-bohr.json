@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "niels-bohr",
+ "qid": "Q7085",
+ "displayName": "Niels Bohr",
+ "wikidataLabel": null,
+ "wikidataDescription": "Danish physicist (1885–1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7085",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515876558
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Niels Bohr",
+   "articleUrl": "https://en.wikipedia.org/wiki/Niels_Bohr",
+   "pageId": 21210,
+   "revisionId": 1363614255,
+   "revisionTimestamp": "2026-07-11T07:26:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1885-10-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1885-10-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1885-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1885-10-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-11-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1748",
+  "label": "Copenhagen",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1748",
+  "country": {
+   "entity": "Q35",
+   "label": "Denmark"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1748",
+   "sourceEntityLabel": "Copenhagen",
+   "latitude": 55.676111111111,
+   "longitude": 12.568888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q16389557",
+   "label": "philosopher of science"
+  },
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Niels Bohr.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Niels%20Bohr.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Niels_Bohr.jpg",
+  "width": 1456,
+  "height": 2048,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The American Institute of Physics credits the photo [1] to AB Lagrelius & Westphal, which is the Swedish company used by the Nobel Foundation for most photos of its book series Les Prix Nobel.",
+  "credit": "Niels Bohr's Nobel Prize biography, from 1922",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

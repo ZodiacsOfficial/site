@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bruno-schulz",
+  "seedRound": 0,
+  "qid": "Q148886",
+  "displayName": "Bruno Schulz",
+  "identity": "Writer and painter · Ukraine · 1892–1942",
+  "title": "Bruno Schulz's birth chart",
+  "metaDescription": "Bruno Schulz's chart, computed from a sourced birth date: Sun at 20.4° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. Fixed signs hold the middle of their seasons, and a fixed-heavy chart is read as one that consolidates and does not easily let go.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:20.44",
+        "decan:cancer:third"
+      ],
+      "text": "At noon on that date the Sun stood at 20.4° Cancer, inside the third decan (20°–30°), whose traditional sub-ruler is Jupiter. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Leo:11.8°",
+        "personal:Venus:Cancer:16.3°",
+        "personal:Mars:Aquarius:16.9°"
+      ],
+      "text": "Closer in, Mercury stands at 11.8° Leo; Venus stands at 16.3° Cancer; Mars stands at 16.9° Aquarius. The tradition reads thought that arrives already in motion from Mercury, attraction that works by atmosphere from Venus, effort aimed through strategy and words from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:conjunction:1.01",
+        "aspect:Mercury:Neptune:sextile:1.57",
+        "aspect:Mercury:Pluto:sextile:2.58"
+      ],
+      "text": "Nothing in the geometry sits closer than Neptune and Pluto: 1.0° from an exact conjunction. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Mercury sextile Neptune at 1.6°, and Mercury sextile Pluto at 2.6° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Saturn"
+      ],
+      "text": "Saturn makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "The dignity table has nothing to say about this chart. All seven classical planets sit in signs it treats as neutral, so the reading rests entirely on placement and angle."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-fire2-earth1",
+        "modalities:fixed4-cardinal3-mutable3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 air, 3 water, 2 fire, 1 earth by element and 4 fixed, 3 cardinal, 3 mutable by modality. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. Venus and Mars were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:13.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.7° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 19.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-12/",
+    "label": "Everyone born on July 12"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:20.44",
+    "decan:cancer:third",
+    "personal:Mercury:Leo:11.8°",
+    "personal:Venus:Cancer:16.3°",
+    "personal:Mars:Aquarius:16.9°",
+    "aspect:Neptune:Pluto:conjunction:1.01",
+    "aspect:Mercury:Neptune:sextile:1.57",
+    "aspect:Mercury:Pluto:sextile:2.58",
+    "figure:unaspected:Saturn",
+    "dignity:none",
+    "elements:air4-water3-fire2-earth1",
+    "modalities:fixed4-cardinal3-mutable3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aquarius",
+    "moon-band:13.7"
+  ],
+  "measurements": {
+    "originalWords": 395,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

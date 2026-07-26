@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "eca-de-queiroz",
+  "seedRound": 0,
+  "qid": "Q316327",
+  "displayName": "Eça de Queiroz",
+  "identity": "Journalist and diplomat · Portugal · 1845–1900",
+  "title": "Eça de Queiroz's birth chart",
+  "metaDescription": "Eça de Queiroz's chart, computed from a sourced birth date: Sun at 3.2° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, cardinal leads with four. The four cardinal signs sit at the solstices and equinoxes — the scheme’s ignition points, and this chart is weighted to them.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.16",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun's exact place is 3.2° Sagittarius. That falls in the first decan, 0°–10°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:19.3°",
+        "personal:Venus:Capricorn:18.7°",
+        "personal:Mars:Pisces:14.4°"
+      ],
+      "text": "Closer in, Mercury stands at 19.3° Sagittarius; Venus stands at 18.7° Capricorn; Mars stands at 14.4° Pisces. The tradition reads a mind that decides at speaking speed from Mercury, taste for the substantial and the lasting from Venus, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:sextile:0.01",
+        "aspect:Sun:Uranus:trine:3.32",
+        "aspect:Mercury:Pluto:trine:3.98"
+      ],
+      "text": "Neptune to Pluto is the closest call of the day, a sextile within 0.0°. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, the Sun trine Uranus at 3.3°, and Mercury trine Pluto at 4.0° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mercury in Sagittarius at 19.3° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 13.6° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air3-earth2-water1",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: fire 4, air 3, earth 2, water 1 across the elements, and cardinal 4, mutable 3, fixed 3 across the modalities. Jupiter, Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 11.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-25/",
+    "label": "Everyone born on November 25"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:3.16",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:19.3°",
+    "personal:Venus:Capricorn:18.7°",
+    "personal:Mars:Pisces:14.4°",
+    "aspect:Neptune:Pluto:sextile:0.01",
+    "aspect:Sun:Uranus:trine:3.32",
+    "aspect:Mercury:Pluto:trine:3.98",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Saturn:domicile",
+    "elements:fire4-air3-earth2-water1",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:libra",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 401,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

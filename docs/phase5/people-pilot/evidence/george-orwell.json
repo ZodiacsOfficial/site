@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "george-orwell",
+ "qid": "Q3335",
+ "displayName": "George Orwell",
+ "wikidataLabel": "George Orwell",
+ "wikidataDescription": "British writer and journalist (1903–1950)",
+ "retrievedAtUtc": "2026-07-26T19:37:54.582Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3335",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522565236
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "George Orwell",
+   "articleUrl": "https://en.wikipedia.org/wiki/George_Orwell",
+   "pageId": 11891,
+   "revisionId": 1363956141,
+   "revisionTimestamp": "2026-07-13T15:09:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-06-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-06-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-06-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1950-01-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1774606",
+  "label": "Motihari",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1774606",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1774606",
+   "sourceEntityLabel": "Motihari",
+   "latitude": 26.65,
+   "longitude": 84.916666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q164236",
+   "label": "war correspondent"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q998550",
+   "label": "bookseller"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q361593",
+   "label": "police officer"
+  }
+ ],
+ "portrait": {
+  "file": "File:George Orwell, c. 1940 (41928180381).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:George%20Orwell%2C%20c.%201940%20(41928180381).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:George_Orwell,_c._1940_(41928180381).jpg",
+  "width": 2620,
+  "height": 3782,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Cassowary Colorizations",
+  "credit": "George Orwell, c. 1940",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "amilcar-cabral",
+ "qid": "Q213416",
+ "displayName": "Amílcar Cabral",
+ "wikidataLabel": "Amílcar Cabral",
+ "wikidataDescription": "Guinea-Bissauan and Cape Verdean politician (1924-1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q213416",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520836996
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Amílcar Cabral",
+   "articleUrl": "https://en.wikipedia.org/wiki/Am%C3%ADlcar_Cabral",
+   "pageId": 664754,
+   "revisionId": 1365693840,
+   "revisionTimestamp": "2026-07-23T22:32:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1924-09-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1924-09-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1924-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1924-09-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-01-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q799788",
+  "label": "Bafatá",
+  "entityUrl": "https://www.wikidata.org/wiki/Q799788",
+  "country": {
+   "entity": "Q1007",
+   "label": "Guinea-Bissau"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q799788",
+   "sourceEntityLabel": "Bafatá",
+   "latitude": 12.171944444444,
+   "longitude": -14.6575,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q10272925",
+   "label": "agricultural engineer"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1781198",
+   "label": "agronomist"
+  },
+  {
+   "entity": "Q1238570",
+   "label": "political scientist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cabral 2.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cabral%202.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cabral_2.png",
+  "width": 1834,
+  "height": 1337,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "http://casacomum.org/cc/visualizador?pasta=05221.000.030",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

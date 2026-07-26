@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "william-faulkner",
+ "qid": "Q38392",
+ "displayName": "William Faulkner",
+ "wikidataLabel": "William Faulkner",
+ "wikidataDescription": "American writer (1897-1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q38392",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516203217
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "William Faulkner",
+   "articleUrl": "https://en.wikipedia.org/wiki/William_Faulkner",
+   "pageId": 33718,
+   "revisionId": 1364978728,
+   "revisionTimestamp": "2026-07-19T16:51:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1897-09-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-09-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-09-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-07-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1779875",
+  "label": "New Albany",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1779875",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1779875",
+   "sourceEntityLabel": "New Albany",
+   "latitude": 34.492222222222,
+   "longitude": -89.009444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Carl Van Vechten - William Faulkner (greyscale and cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Carl%20Van%20Vechten%20-%20William%20Faulkner%20(greyscale%20and%20cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Carl_Van_Vechten_-_William_Faulkner_(greyscale_and_cropped).jpg",
+  "width": 2507,
+  "height": 3212,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3f06403.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

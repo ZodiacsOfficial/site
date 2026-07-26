@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ruth-bader-ginsburg",
+ "qid": "Q11116",
+ "displayName": "Ruth Bader Ginsburg",
+ "wikidataLabel": "Ruth Bader Ginsburg",
+ "wikidataDescription": "American lawyer and jurist (1933–2020)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q11116",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518525206
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ruth Bader Ginsburg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ruth_Bader_Ginsburg",
+   "pageId": 185232,
+   "revisionId": 1365543718,
+   "revisionTimestamp": "2026-07-23T02:33:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1933-03-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1933-03-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1933-03-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2020-09-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18419",
+  "label": "Brooklyn",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18419",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18419",
+   "sourceEntityLabel": "Brooklyn",
+   "latitude": 40.65083333333333,
+   "longitude": -73.94972222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16533",
+   "label": "judge"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q32858800",
+   "label": "Member of the Constitutional Court of Austria"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ruth Bader Ginsburg official SCOTUS portrait (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ruth%20Bader%20Ginsburg%20official%20SCOTUS%20portrait%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ruth_Bader_Ginsburg_official_SCOTUS_portrait_(cropped).jpg",
+  "width": 1285,
+  "height": 1528,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Steve Petteway, Collection of the Supreme Court of the United States",
+  "credit": "Ruth Bader Ginsburg - The Oyez Project",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": "personality"
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alberto-ginastera",
+ "qid": "Q311389",
+ "displayName": "Alberto Ginastera",
+ "wikidataLabel": "Alberto Ginastera",
+ "wikidataDescription": "Argentine composer (1916-1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q311389",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517459088
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alberto Ginastera",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alberto_Ginastera",
+   "pageId": 590055,
+   "revisionId": 1350801857,
+   "revisionTimestamp": "2026-04-24T03:24:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1916-04-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1916-04-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1916-04-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-06-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1486",
+  "label": "Buenos Aires",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1486",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1486",
+   "sourceEntityLabel": "Buenos Aires",
+   "latitude": -34.599722222222,
+   "longitude": -58.381944444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fotografía del compositor argentino Alberto Ginastera.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fotograf%C3%ADa%20del%20compositor%20argentino%20Alberto%20Ginastera.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fotograf%C3%ADa_del_compositor_argentino_Alberto_Ginastera.jpg",
+  "width": 824,
+  "height": 1080,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Annemarie Heinrich",
+  "credit": "Annemarie Heinrich, Centro Editor de América Latina, Buenos Aires: 1982.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

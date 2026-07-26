@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "anita-mui",
+  "seedRound": 0,
+  "qid": "Q232621",
+  "displayName": "Anita Mui",
+  "identity": "Actor and singer · Hong Kong · 1963–2003",
+  "title": "Anita Mui's birth chart",
+  "metaDescription": "Anita Mui's chart, computed from a sourced birth date: Sun at 16.1° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 20.0° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.09",
+        "decan:libra:second"
+      ],
+      "text": "The Sun's exact place is 16.1° Libra. That falls in the second decan, 10°–20°, sub-ruled by Saturn in the classical scheme — a air sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Virgo:29.2°",
+        "personal:Venus:Libra:27.1°",
+        "personal:Mars:Scorpio:18.9°"
+      ],
+      "text": "The personal planets sit Mercury at 29.2° Virgo, Venus at 27.1° Libra, Mars at 18.9° Scorpio. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a air sign reads as taste led by wit and proportion; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:trine:0.48",
+        "aspect:Neptune:Pluto:sextile:1.24",
+        "aspect:Sun:Jupiter:opposition:1.87"
+      ],
+      "text": "Closest first: the Sun to Saturn, a trine with 0.5° of slack. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Neptune sextile Pluto at 1.2°, and the Sun opposition Jupiter at 1.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Mercury"
+      ],
+      "text": "Mercury stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:domicile",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has six entries for this chart. The Sun in Libra at 16.1° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Cancer at 20.0° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 29.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 27.1° is in domicile; Mars in Scorpio at 18.9° is in domicile; Saturn in Aquarius at 16.6° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-earth3-fire1",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 3, water 3, earth 3, fire 1, and cardinal 4, mutable 3, fixed 3 across the modes. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Jupiter and Saturn were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:13.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.5° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-10/",
+    "label": "Everyone born on October 10"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:16.09",
+    "decan:libra:second",
+    "personal:Mercury:Virgo:29.2°",
+    "personal:Venus:Libra:27.1°",
+    "personal:Mars:Scorpio:18.9°",
+    "aspect:Sun:Saturn:trine:0.48",
+    "aspect:Neptune:Pluto:sextile:1.24",
+    "aspect:Sun:Jupiter:opposition:1.87",
+    "figure:unaspected:Mercury",
+    "dignity:Sun:fall",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air3-water3-earth3-fire1",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:13.5"
+  ],
+  "measurements": {
+    "originalWords": 476,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

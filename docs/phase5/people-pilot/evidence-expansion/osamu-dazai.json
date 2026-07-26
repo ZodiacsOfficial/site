@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "osamu-dazai",
+ "qid": "Q317685",
+ "displayName": "Osamu Dazai",
+ "wikidataLabel": "Osamu Dazai",
+ "wikidataDescription": "Japanese author",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q317685",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522428051
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Osamu Dazai",
+   "articleUrl": "https://en.wikipedia.org/wiki/Osamu_Dazai",
+   "pageId": 186553,
+   "revisionId": 1366025933,
+   "revisionTimestamp": "2026-07-25T21:09:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1909-06-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-06-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-06-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1948-06-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6360296",
+  "label": "Kanagi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6360296",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6360296",
+   "sourceEntityLabel": "Kanagi",
+   "latitude": 40.90291666666667,
+   "longitude": 140.45641666666666,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Osamu Dazai.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Osamu%20Dazai.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Osamu_Dazai.jpg",
+  "width": 815,
+  "height": 1220,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Shigeru Tamura",
+  "credit": "https://images.wook.pt/getresourcesservlet/GetResource?9MWVLntzzwpNXgzKXB6M9/kjHmoOXOr6DOACXrGglOQ= 八雲書店『太宰治全集 第1巻 (晩年)』（1948年刊）",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

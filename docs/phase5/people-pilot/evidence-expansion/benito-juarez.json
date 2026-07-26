@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "benito-juarez",
+ "qid": "Q182276",
+ "displayName": "Benito Juárez",
+ "wikidataLabel": "Benito Juárez",
+ "wikidataDescription": "President of Mexico from 1858 to 1872",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q182276",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519950655
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Benito Juárez",
+   "articleUrl": "https://en.wikipedia.org/wiki/Benito_Ju%C3%A1rez",
+   "pageId": 103360,
+   "revisionId": 1365117990,
+   "revisionTimestamp": "2026-07-20T10:31:54Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1806-03-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1806-03-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1806-03-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1872-07-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q986436",
+  "label": "San Pablo Guelatao",
+  "entityUrl": "https://www.wikidata.org/wiki/Q986436",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q986436",
+   "sourceEntityLabel": "San Pablo Guelatao",
+   "latitude": 25.4475,
+   "longitude": -103.24222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q16533",
+   "label": "judge"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Benito Juarez (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Benito%20Juarez%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Benito_Juarez_(cropped).jpg",
+  "width": 634,
+  "height": 887,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "george-best",
+ "qid": "Q164521",
+ "displayName": "George Best",
+ "wikidataLabel": "George Best",
+ "wikidataDescription": "Northern Irish footballer (1946–2005)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q164521",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517987744
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "George Best",
+   "articleUrl": "https://en.wikipedia.org/wiki/George_Best",
+   "pageId": 426381,
+   "revisionId": 1363590208,
+   "revisionTimestamp": "2026-07-11T03:58:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1946-05-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1946-05-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1946-05-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-11-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10686",
+  "label": "Belfast",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10686",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q10686",
+   "sourceEntityLabel": "Belfast",
+   "latitude": 54.596666666666664,
+   "longitude": -5.93,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q2986228",
+   "label": "sports commentator"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:George Best (1976).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:George%20Best%20(1976).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:George_Best_(1976).jpg",
+  "width": 1745,
+  "height": 2200,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Hans Peters for Anefo",
+  "credit": "Nationaal Archief Fotocollectie Anefo 928-8290",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

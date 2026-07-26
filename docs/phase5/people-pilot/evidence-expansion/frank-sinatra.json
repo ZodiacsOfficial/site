@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "frank-sinatra",
+ "qid": "Q40912",
+ "displayName": "Frank Sinatra",
+ "wikidataLabel": "Frank Sinatra",
+ "wikidataDescription": "American singer and actor (1915–1998)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q40912",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518377888
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Frank Sinatra",
+   "articleUrl": "https://en.wikipedia.org/wiki/Frank_Sinatra",
+   "pageId": 11181,
+   "revisionId": 1365825216,
+   "revisionTimestamp": "2026-07-24T17:08:32Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-12-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-12-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-12-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1998-05-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q138578",
+  "label": "Hoboken",
+  "entityUrl": "https://www.wikidata.org/wiki/Q138578",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q138578",
+   "sourceEntityLabel": "Hoboken",
+   "latitude": 40.745,
+   "longitude": -74.0325,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q2405480",
+   "label": "voice actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Frank Sinatra (1957 studio portrait close-up).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Frank%20Sinatra%20(1957%20studio%20portrait%20close-up).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Frank_Sinatra_(1957_studio_portrait_close-up).jpg",
+  "width": 1212,
+  "height": 1595,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photograph by Capitol Records, per a credit found in the 1959 edition of the International Celebrity Register at page 696. No known source credits an individual photographer.",
+  "credit": "*Original source: DownBeat (November 28, 1957), page 15, appears to be the earliest publication. More of the photograph was shown in the 1959 publicity version. See \"other versions\" below. Immediate source: Scan via a tweet posted by The Hollywood Reporter on January 19, 2018. Cropped to include only the portions of the photograph disclosed by the \"keybook\" version. Retouche…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

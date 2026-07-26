@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "rosa-bonheur",
+  "seedRound": 0,
+  "qid": "Q241732",
+  "displayName": "Rosa Bonheur",
+  "identity": "Painter · France · 1822–1899",
+  "title": "Rosa Bonheur's birth chart",
+  "metaDescription": "Rosa Bonheur's chart, computed from a sourced birth date: Sun at 25.4° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Pisces — the Sun, Mercury, Venus and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:pisces:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.35",
+        "decan:pisces:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 25.4° Pisces: the third decan, whose classical sub-ruler is Mars. A water sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:10.2°",
+        "personal:Venus:Pisces:15.1°",
+        "personal:Mars:Leo:21.8°"
+      ],
+      "text": "Closer in, Mercury stands at 10.2° Pisces; Venus stands at 15.1° Pisces; Mars stands at 21.8° Leo. The tradition reads a mind that absorbs before it argues from Mercury, taste tuned to mood and undertow from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:conjunction:1.96",
+        "aspect:Mercury:Uranus:sextile:3.07",
+        "aspect:Jupiter:Neptune:trine:3.23"
+      ],
+      "text": "Nothing in the geometry sits closer than Uranus and Neptune: 2.0° from an exact conjunction. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Mercury sextile Uranus at 3.1°, and Jupiter trine Neptune at 3.2° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The classical table has three entries for this chart. Mercury in Pisces at 10.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 15.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aries at 25.5° is in fall. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth3-fire2",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in water, 3 in earth, 2 in fire by element, 4 mutable, 3 cardinal, 2 fixed by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Mercury, Venus and Mars were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.2° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-16/",
+    "label": "Everyone born on March 16"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "stellium:pisces:4",
+    "sun-degree:25.35",
+    "decan:pisces:third",
+    "personal:Mercury:Pisces:10.2°",
+    "personal:Venus:Pisces:15.1°",
+    "personal:Mars:Leo:21.8°",
+    "aspect:Uranus:Neptune:conjunction:1.96",
+    "aspect:Mercury:Uranus:sextile:3.07",
+    "aspect:Jupiter:Neptune:trine:3.23",
+    "figure:none",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Saturn:fall",
+    "elements:water4-earth3-fire2",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 448,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

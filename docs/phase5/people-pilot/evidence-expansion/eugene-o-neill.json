@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "eugene-o-neill",
+ "qid": "Q93157",
+ "displayName": "Eugene O'Neill",
+ "wikidataLabel": "Eugene O'Neill",
+ "wikidataDescription": "American playwright (1888–1953)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q93157",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518461897
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Eugene O'Neill",
+   "articleUrl": "https://en.wikipedia.org/wiki/Eugene_O'Neill",
+   "pageId": 67018,
+   "revisionId": 1365972640,
+   "revisionTimestamp": "2026-07-25T14:00:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1888-10-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1888-10-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1888-10-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1953-11-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Eugene O'Neill 1936.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Eugene%20O'Neill%201936.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Eugene_O%27Neill_1936.jpg",
+  "width": 280,
+  "height": 396,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nobel Foundation",
+  "credit": "http://nobelprize.org/nobel_prizes/literature/laureates/1936/oneill-autobio.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

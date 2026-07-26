@@ -1,0 +1,124 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "francisco-goya",
+  "seedRound": 0,
+  "qid": "Q5432",
+  "displayName": "Francisco Goya",
+  "identity": "Painter · Spain · 1746–1828",
+  "title": "Francisco Goya's birth chart",
+  "metaDescription": "Francisco Goya's chart, computed from a sourced birth date: Sun at 9.7° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Aries — the Sun, Mercury, Venus and Mars. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aries:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.65",
+        "decan:aries:first"
+      ],
+      "text": "The Sun sits at 9.7° Aries — the first decan, 0°–10°, which the tradition sub-rules by Mars. Degrees matter more than the sign label here: two people born a fortnight apart share Aries and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:12.7°",
+        "personal:Venus:Aries:8.8°",
+        "personal:Mars:Aries:22.8°"
+      ],
+      "text": "Mercury holds 12.7° Aries, Venus holds 8.8° Aries, Mars holds 22.8° Aries — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:sextile:0.25",
+        "aspect:Sun:Venus:conjunction:0.89",
+        "aspect:Sun:Uranus:sextile:1.14"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Uranus: 0.3° from an exact sextile. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, the Sun conjunction Venus at 0.9°, and the Sun sextile Uranus at 1.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Sun-Saturn:apex-Neptune",
+        "figure:unaspected:Mars"
+      ],
+      "text": "The Sun opposes Saturn while both square Neptune. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. Mars stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Moon:domicile",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Six planets here sit in a sign the classical scheme scores. The Sun in Aries at 9.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Cancer at 12.7° is in domicile — the planet in its own sign, running on home rules; Venus in Aries at 8.8° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 22.8° is in domicile; Jupiter in Sagittarius at 15.1° is in domicile; Saturn in Libra at 11.2° is in exaltation. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-water3-air2",
+        "modalities:cardinal7-fixed2-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 5 in fire, 3 in water, 2 in air by element, 7 cardinal, 2 fixed, 1 mutable by modality. A fire-weighted chart runs hot at the start line — initiative is its native language. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Saturn and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:13.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 12.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-30/",
+    "label": "Everyone born on March 30"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:aries:4",
+    "sun-degree:9.65",
+    "decan:aries:first",
+    "personal:Mercury:Aries:12.7°",
+    "personal:Venus:Aries:8.8°",
+    "personal:Mars:Aries:22.8°",
+    "aspect:Venus:Uranus:sextile:0.25",
+    "aspect:Sun:Venus:conjunction:0.89",
+    "aspect:Sun:Uranus:sextile:1.14",
+    "figure:t-square:Sun-Saturn:apex-Neptune",
+    "figure:unaspected:Mars",
+    "dignity:Sun:exaltation",
+    "dignity:Moon:domicile",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:fire5-water3-air2",
+    "modalities:cardinal7-fixed2-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:13.0"
+  ],
+  "measurements": {
+    "originalWords": 516,
+    "substantiveStatements": 23,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "fernando-pessoa",
+  "seedRound": 0,
+  "qid": "Q173481",
+  "displayName": "Fernando Pessoa",
+  "identity": "Poet · Portugal · 1888–1935",
+  "title": "Fernando Pessoa's birth chart",
+  "metaDescription": "Fernando Pessoa's chart, computed from a sourced birth date: Sun at 22.9° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Gemini — the Sun, Venus, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:gemini:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.86",
+        "decan:gemini:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 22.9° Gemini: the third decan, whose classical sub-ruler is Saturn. A air sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Cancer:17.2°",
+        "personal:Venus:Gemini:15.1°",
+        "personal:Mars:Libra:14.9°"
+      ],
+      "text": "Closer in, Mercury stands at 17.2° Cancer; Venus stands at 15.1° Gemini; Mars stands at 14.9° Libra. The tradition reads a mind that absorbs before it argues from Mercury, taste led by wit and proportion from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Mars:trine:0.22",
+        "aspect:Saturn:Pluto:sextile:0.85",
+        "aspect:Mars:Uranus:conjunction:1.74"
+      ],
+      "text": "Closest first: Venus to Mars, a trine with 0.2° of slack. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Saturn sextile Pluto at 0.8°, and Mars conjunction Uranus at 1.7° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has two entries for this chart. Mars in Libra at 14.9° is in detriment — the planet opposite its home, working against the grain; Saturn in Leo at 4.1° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-fire2-water2",
+        "modalities:mutable4-fixed3-cardinal3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 6 air, 2 fire, 2 water; by modality, 4 mutable, 3 fixed, 3 cardinal. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Jupiter and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:12.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 12.7° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 6.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-13/",
+    "label": "Everyone born on June 13"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "stellium:gemini:4",
+    "sun-degree:22.86",
+    "decan:gemini:third",
+    "personal:Mercury:Cancer:17.2°",
+    "personal:Venus:Gemini:15.1°",
+    "personal:Mars:Libra:14.9°",
+    "aspect:Venus:Mars:trine:0.22",
+    "aspect:Saturn:Pluto:sextile:0.85",
+    "aspect:Mars:Uranus:conjunction:1.74",
+    "figure:none",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:detriment",
+    "elements:air6-fire2-water2",
+    "modalities:mutable4-fixed3-cardinal3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:leo",
+    "moon-band:12.7"
+  ],
+  "measurements": {
+    "originalWords": 423,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

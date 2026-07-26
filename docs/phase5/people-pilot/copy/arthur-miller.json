@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "arthur-miller",
+  "seedRound": 0,
+  "qid": "Q80596",
+  "displayName": "Arthur Miller",
+  "identity": "Playwright · United States · 1915–2005",
+  "title": "Arthur Miller's birth chart",
+  "metaDescription": "Arthur Miller's chart, computed from a sourced birth date: Sun at 23.2° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates Venus and Neptune from an exact square; at that range taste and imagination read as one mechanism. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen.",
+  "ledeFact": "aspect:Venus:Neptune:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.24",
+        "decan:libra:third"
+      ],
+      "text": "The Sun's position resolves to 23.2° Libra — deep enough in the third decan (20°–30°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:3.7°",
+        "personal:Venus:Scorpio:2.5°",
+        "personal:Mars:Leo:5.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 3.7° Scorpio, Venus was at 2.5° Scorpio, Mars was at 5.3° Leo. Read together: thought steeped in tone and memory; attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:square:0.11",
+        "aspect:Mercury:Pluto:trine:0.42",
+        "aspect:Venus:Pluto:trine:0.83"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Neptune: 0.1° from an exact square. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Mercury trine Pluto at 0.4°, and Venus trine Pluto at 0.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, four placements stand out. The Sun in Libra at 23.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Scorpio at 2.5° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 19.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 16.4° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air3-fire2",
+        "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 5, air 3, fire 2; modalities fixed 6, cardinal 3, mutable 1. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mercury, Jupiter, Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:13.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.4° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 20.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-17/",
+    "label": "Everyone born on October 17"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:square",
+    "sun-degree:23.24",
+    "decan:libra:third",
+    "personal:Mercury:Scorpio:3.7°",
+    "personal:Venus:Scorpio:2.5°",
+    "personal:Mars:Leo:5.3°",
+    "aspect:Venus:Neptune:square:0.11",
+    "aspect:Mercury:Pluto:trine:0.42",
+    "aspect:Venus:Pluto:trine:0.83",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:detriment",
+    "elements:water5-air3-fire2",
+    "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:aquarius",
+    "moon-band:13.4"
+  ],
+  "measurements": {
+    "originalWords": 423,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

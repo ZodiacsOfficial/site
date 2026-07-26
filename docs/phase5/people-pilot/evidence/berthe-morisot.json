@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "berthe-morisot",
+ "qid": "Q105320",
+ "displayName": "Berthe Morisot",
+ "wikidataLabel": "Berthe Morisot",
+ "wikidataDescription": "French painter (1841-1895)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q105320",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517940023
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Berthe Morisot",
+   "articleUrl": "https://en.wikipedia.org/wiki/Berthe_Morisot",
+   "pageId": 4233,
+   "revisionId": 1355897938,
+   "revisionTimestamp": "2026-05-24T15:22:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1841-01-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1841-01-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1841-01-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1895-03-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q132404",
+  "label": "Bourges",
+  "entityUrl": "https://www.wikidata.org/wiki/Q132404",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q132404",
+   "sourceEntityLabel": "Bourges",
+   "latitude": 47.083611111111,
+   "longitude": 2.3955555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q329439",
+   "label": "engraver"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Morisot berthe photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Morisot%20berthe%20photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Morisot_berthe_photo.jpg",
+  "width": 564,
+  "height": 942,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.ibiblio.org/wm/paint/auth/morisot/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

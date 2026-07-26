@@ -1,0 +1,146 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rembrandt",
+ "qid": "Q5598",
+ "displayName": "Rembrandt",
+ "wikidataLabel": "Rembrandt",
+ "wikidataDescription": "Dutch painter and printmaker (1606–1669)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5598",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522266591
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rembrandt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rembrandt",
+   "pageId": 4254144,
+   "revisionId": 1366100866,
+   "revisionTimestamp": "2026-07-26T07:23:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1606-07-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1606-07-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1606-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1606-07-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1669-10-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q43631",
+  "label": "Leiden",
+  "entityUrl": "https://www.wikidata.org/wiki/Q43631",
+  "country": {
+   "entity": "Q55",
+   "label": "Netherlands"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q43631",
+   "sourceEntityLabel": "Leiden",
+   "latitude": 52.16,
+   "longitude": 4.49,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  },
+  {
+   "entity": "Q10862983",
+   "label": "etcher"
+  },
+  {
+   "entity": "Q3243461",
+   "label": "collector"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q435989",
+   "label": "old master"
+  },
+  {
+   "entity": "Q329439",
+   "label": "engraver"
+  },
+  {
+   "entity": "Q173950",
+   "label": "art dealer"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rembrandt van Rijn - Self-Portrait - Google Art Project.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rembrandt%20van%20Rijn%20-%20Self-Portrait%20-%20Google%20Art%20Project.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rembrandt_van_Rijn_-_Self-Portrait_-_Google_Art_Project.jpg",
+  "width": 12243,
+  "height": 15859,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Rembrandt",
+  "credit": "-gHQe8vbiHn2xw at Google Cultural Institute maximum zoom level",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

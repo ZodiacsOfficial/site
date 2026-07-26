@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maria-zambrano",
+ "qid": "Q235134",
+ "displayName": "María Zambrano",
+ "wikidataLabel": "María Zambrano",
+ "wikidataDescription": "Spanish philosopher (1904–1991)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q235134",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517551898
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "María Zambrano",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mar%C3%ADa_Zambrano",
+   "pageId": 8291938,
+   "revisionId": 1364535951,
+   "revisionTimestamp": "2026-07-17T03:02:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-04-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-04-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-04-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1991-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q492741",
+  "label": "Vélez-Málaga",
+  "entityUrl": "https://www.wikidata.org/wiki/Q492741",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q492741",
+   "sourceEntityLabel": "Vélez-Málaga",
+   "latitude": 36.7821366,
+   "longitude": -4.0992542,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:María-Zambrano-1-e1602071174321.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mar%C3%ADa-Zambrano-1-e1602071174321.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mar%C3%ADa-Zambrano-1-e1602071174321.png",
+  "width": 526,
+  "height": 695,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Fundación María Zambrano [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

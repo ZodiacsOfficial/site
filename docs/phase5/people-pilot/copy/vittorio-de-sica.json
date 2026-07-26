@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "vittorio-de-sica",
+  "seedRound": 0,
+  "qid": "Q53004",
+  "displayName": "Vittorio De Sica",
+  "identity": "Film director and screenwriter · Italy · 1901–1974",
+  "title": "Vittorio De Sica's birth chart",
+  "metaDescription": "Vittorio De Sica's chart, computed from a sourced birth date: Sun at 14.6° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, mutable leads with five. Mutable weight is read as flexibility, and the old texts are frank that its cost is scatter.",
+  "ledeFact": "modality:mutable:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.60",
+        "decan:cancer:second"
+      ],
+      "text": "The Sun's exact place is 14.6° Cancer. That falls in the second decan, 10°–20°, sub-ruled by Mars in the classical scheme — a water sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:24.0°",
+        "personal:Venus:Leo:2.7°",
+        "personal:Mars:Virgo:26.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Cancer (24.0°), Venus in Leo (2.7°), Mars in Virgo (26.4°): a mind that absorbs before it argues, taste that runs toward the vivid and the immediate, drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:opposition:1.62",
+        "aspect:Mercury:Mars:sextile:2.4",
+        "aspect:Mars:Neptune:square:3.13"
+      ],
+      "text": "Start where the chart is tightest — the Sun opposition Saturn, 1.6° of separation. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, Mercury sextile Mars at 2.4°, and Mars square Neptune at 3.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Jupiter in Capricorn at 7.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Capricorn at 13.0° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-earth3-fire2-air2",
+        "modalities:mutable5-cardinal4-fixed1",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: water 3, earth 3, fire 2, air 2 across the elements, and mutable 5, cardinal 4, fixed 1 across the modalities. Mercury, Jupiter, Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-7/",
+    "label": "Everyone born on July 7"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:5",
+    "sun-degree:14.60",
+    "decan:cancer:second",
+    "personal:Mercury:Cancer:24.0°",
+    "personal:Venus:Leo:2.7°",
+    "personal:Mars:Virgo:26.4°",
+    "aspect:Sun:Saturn:opposition:1.62",
+    "aspect:Mercury:Mars:sextile:2.4",
+    "aspect:Mars:Neptune:square:3.13",
+    "figure:unaspected:Moon",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:water3-earth3-fire2-air2",
+    "modalities:mutable5-cardinal4-fixed1",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:pisces",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 391,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

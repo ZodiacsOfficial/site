@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "harriet-beecher-stowe",
+ "qid": "Q102513",
+ "displayName": "Harriet Beecher Stowe",
+ "wikidataLabel": "Harriet Beecher Stowe",
+ "wikidataDescription": "American abolitionist and author (1811–1896)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q102513",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518911761
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Harriet Beecher Stowe",
+   "articleUrl": "https://en.wikipedia.org/wiki/Harriet_Beecher_Stowe",
+   "pageId": 164100,
+   "revisionId": 1365225911,
+   "revisionTimestamp": "2026-07-21T02:26:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1811-06-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1811-06-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1811-06-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1896-07-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q755403",
+  "label": "Litchfield",
+  "entityUrl": "https://www.wikidata.org/wiki/Q755403",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q755403",
+   "sourceEntityLabel": "Litchfield",
+   "latitude": 41.747222222222,
+   "longitude": -73.189722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q12526417",
+   "label": "abolitionist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q8359428",
+   "label": "social activist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Beecher-Stowe.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Beecher-Stowe.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Beecher-Stowe.jpg",
+  "width": 2028,
+  "height": 2898,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "not specified",
+  "credit": "This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

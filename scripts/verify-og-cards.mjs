@@ -180,7 +180,10 @@ try {
 
 const bundleBytes = await directoryBytes(out);
 const bundleMb = bundleBytes / 1024 / 1024;
-if (bundleMb > 15) failures.push(`v2 asset bundle: ${bundleMb.toFixed(2)}MB exceeds the 15MB budget`);
+/* Ceiling raised 15 → 25MB for the Phase 5 completion: 500 People cards
+   (~7.6MB) join the set. Documented in PLAN.md; no runtime cost — these
+   are request-time social assets, never page-bundle bytes. */
+if (bundleMb > 25) failures.push(`v2 asset bundle: ${bundleMb.toFixed(2)}MB exceeds the 25MB budget`);
 
 if (failures.length) {
   console.error(`verify-og-cards: ${failures.length} failure(s)`);

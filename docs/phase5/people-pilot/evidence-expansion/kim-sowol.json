@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kim-sowol",
+ "qid": "Q496828",
+ "displayName": "Kim Sowol",
+ "wikidataLabel": "Kim Sowol",
+ "wikidataDescription": "Korean poet (1902–1934)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q496828",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521411901
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kim Sowol",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kim_Sowol",
+   "pageId": 4807505,
+   "revisionId": 1362773638,
+   "revisionTimestamp": "2026-07-06T02:59:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1902-08-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-08-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-08-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1934-12-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q431845",
+  "label": "Kusong",
+  "entityUrl": "https://www.wikidata.org/wiki/Q431845",
+  "country": {
+   "entity": "Q423",
+   "label": "North Korea"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q431845",
+   "sourceEntityLabel": "Kusong",
+   "latitude": 39.97919,
+   "longitude": 125.25206,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kim Sowol.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kim%20Sowol.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kim_Sowol.jpg",
+  "width": 136,
+  "height": 196,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://article.joins.com/article/article.asp?Total_ID=2718870",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

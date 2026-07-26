@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "abdus-salam",
+  "seedRound": 0,
+  "qid": "Q28189",
+  "displayName": "Abdus Salam",
+  "identity": "University teacher and theoretical physicist · Pakistan · 1926–1996",
+  "title": "Abdus Salam's birth chart",
+  "metaDescription": "Abdus Salam's chart, computed from a sourced birth date: Sun at 8.6° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.4° separates Venus and Neptune from an exact opposition; at that range taste and imagination read as one mechanism. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Venus:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.61",
+        "decan:aquarius:first"
+      ],
+      "text": "At noon on that date the Sun stood at 8.6° Aquarius, inside the first decan (0°–10°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Capricorn:26.6°",
+        "personal:Venus:Aquarius:23.4°",
+        "personal:Mars:Sagittarius:22.4°"
+      ],
+      "text": "Closer in, Mercury stands at 26.6° Capricorn; Venus stands at 23.4° Aquarius; Mars stands at 22.4° Sagittarius. The tradition reads thought with its feet on the ground from Mercury, attraction that begins as conversation from Venus, effort spent in bursts and openings from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:opposition:0.41",
+        "aspect:Mars:Uranus:square:0.61",
+        "aspect:Venus:Mars:sextile:1.05"
+      ],
+      "text": "Start where the chart is tightest — Venus opposition Neptune, 0.4° of separation. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Mars square Uranus at 0.6°, and Venus sextile Mars at 1.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Venus-Neptune:apex-Saturn",
+        "figure:unaspected:Pluto"
+      ],
+      "text": "Venus opposes Neptune while both square Saturn. The t-square is the figure the old texts trusted for output: friction with a fixed address. Pluto makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. The Sun in Aquarius at 8.6° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-fire3-water3-earth1",
+        "modalities:fixed6-cardinal2-mutable2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 3, fire 3, water 3, earth 1; modalities fixed 6, cardinal 2, mutable 2. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Venus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 12.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-29/",
+    "label": "Everyone born on January 29"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:opposition",
+    "sun-degree:8.61",
+    "decan:aquarius:first",
+    "personal:Mercury:Capricorn:26.6°",
+    "personal:Venus:Aquarius:23.4°",
+    "personal:Mars:Sagittarius:22.4°",
+    "aspect:Venus:Neptune:opposition:0.41",
+    "aspect:Mars:Uranus:square:0.61",
+    "aspect:Venus:Mars:sextile:1.05",
+    "figure:t-square:Venus-Neptune:apex-Saturn",
+    "figure:unaspected:Pluto",
+    "dignity:Sun:detriment",
+    "elements:air3-fire3-water3-earth1",
+    "modalities:fixed6-cardinal2-mutable2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:leo",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

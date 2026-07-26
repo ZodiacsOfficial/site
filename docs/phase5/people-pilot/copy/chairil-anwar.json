@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "chairil-anwar",
+  "seedRound": 0,
+  "qid": "Q559017",
+  "displayName": "Chairil Anwar",
+  "identity": "Poet · Indonesia · 1922–1949",
+  "title": "Chairil Anwar's birth chart",
+  "metaDescription": "Chairil Anwar's chart, computed from a sourced birth date: Sun at 2.4° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 2.4° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.41",
+        "decan:leo:first"
+      ],
+      "text": "The Sun's position resolves to 2.4° Leo — deep enough in the first decan (0°–10°) that the Sun, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:19.2°",
+        "personal:Venus:Virgo:12.8°",
+        "personal:Mars:Sagittarius:11.7°"
+      ],
+      "text": "For the fast movers, Mercury was at 19.2° Cancer, Venus was at 12.8° Virgo, Mars was at 11.7° Sagittarius. Read together: thought steeped in tone and memory; attraction that grows by reliability; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:opposition:0.28",
+        "aspect:Sun:Saturn:sextile:0.62",
+        "aspect:Mars:Jupiter:sextile:0.76"
+      ],
+      "text": "Closest first: Venus to Uranus, a opposition with 0.3° of slack. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, the Sun sextile Saturn at 0.6°, and Mars sextile Jupiter at 0.8° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Venus-Uranus:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Venus opposes Uranus while both square Mars. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Venus:fall",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Sun in Leo at 2.4° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 12.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Libra at 3.0° is in exaltation — the tradition’s honoured-guest placement, working at its best. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-air2-earth1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 fire, 3 water, 2 air, 1 earth by element and 4 cardinal, 3 mutable, 2 fixed by modality. Uranus was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:leo:virgo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Leo into Virgo during that day at the birthplace, travelling 14.8° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-26/",
+    "label": "Everyone born on July 26"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:2.41",
+    "decan:leo:first",
+    "personal:Mercury:Cancer:19.2°",
+    "personal:Venus:Virgo:12.8°",
+    "personal:Mars:Sagittarius:11.7°",
+    "aspect:Venus:Uranus:opposition:0.28",
+    "aspect:Sun:Saturn:sextile:0.62",
+    "aspect:Mars:Jupiter:sextile:0.76",
+    "figure:t-square:Venus-Uranus:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Venus:fall",
+    "dignity:Saturn:exaltation",
+    "elements:fire3-water3-air2-earth1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:leo:virgo"
+  ],
+  "measurements": {
+    "originalWords": 405,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

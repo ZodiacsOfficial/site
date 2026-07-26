@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "madeleine-vionnet",
+ "qid": "Q266934",
+ "displayName": "Madeleine Vionnet",
+ "wikidataLabel": "Madeleine Vionnet",
+ "wikidataDescription": "French fashion designer (1876–1975)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q266934",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521153685
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Madeleine Vionnet",
+   "articleUrl": "https://en.wikipedia.org/wiki/Madeleine_Vionnet",
+   "pageId": 755073,
+   "revisionId": 1307595964,
+   "revisionTimestamp": "2025-08-24T15:22:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1876-06-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1876-06-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1876-06-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1975-03-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1167510",
+  "label": "Chilleurs-aux-Bois",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1167510",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1167510",
+   "sourceEntityLabel": "Chilleurs-aux-Bois",
+   "latitude": 48.072222222222,
+   "longitude": 2.1347222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:DUNAND Jules John - MADELEINE VIONNET.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:DUNAND%20Jules%20John%20-%20MADELEINE%20VIONNET.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:DUNAND_Jules_John_-_MADELEINE_VIONNET.jpg",
+  "width": 2317,
+  "height": 3543,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Berko gallery",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

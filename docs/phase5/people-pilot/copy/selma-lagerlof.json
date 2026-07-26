@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "selma-lagerlof",
+  "seedRound": 1,
+  "qid": "Q44519",
+  "displayName": "Selma Lagerlöf",
+  "identity": "Novelist and teacher · Sweden · 1858–1940",
+  "title": "Selma Lagerlöf's birth chart",
+  "metaDescription": "Selma Lagerlöf's chart, computed from a sourced birth date: Sun at 27.9° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 19.1° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.88",
+        "decan:scorpio:third"
+      ],
+      "text": "The Sun sits at 27.9° Scorpio — the third decan, 20°–30°, which the tradition sub-rules by the Moon. Degrees matter more than the sign label here: two people born a fortnight apart share Scorpio and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:9.9°",
+        "personal:Venus:Sagittarius:29.4°",
+        "personal:Mars:Aquarius:5.3°"
+      ],
+      "text": "Mercury holds 9.9° Sagittarius, Venus holds 29.4° Sagittarius, Mars holds 5.3° Aquarius — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:square:0.85",
+        "aspect:Mercury:Saturn:trine:2.45",
+        "aspect:Jupiter:Neptune:square:3.25"
+      ],
+      "text": "Mars to Pluto is the closest call of the day, a square within 0.8°. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mercury trine Saturn at 2.5°, and Jupiter square Neptune at 3.3° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mars-Saturn:apex-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars opposes Saturn while both square Pluto. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Mercury:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Moon in Taurus at 19.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Sagittarius at 9.9° is in detriment — the planet opposite its home, working against the grain; Jupiter in Gemini at 18.9° is in detriment; Saturn in Leo at 12.3° is in detriment. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-air3-water2-earth2",
+        "modalities:fixed5-mutable5",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 3 fire, 3 air, 2 water, 2 earth by element and 5 fixed, 5 mutable by mode. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Jupiter, Uranus, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:14.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 14.7° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 19.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-20/",
+    "label": "Everyone born on November 20"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:27.88",
+    "decan:scorpio:third",
+    "personal:Mercury:Sagittarius:9.9°",
+    "personal:Venus:Sagittarius:29.4°",
+    "personal:Mars:Aquarius:5.3°",
+    "aspect:Mars:Pluto:square:0.85",
+    "aspect:Mercury:Saturn:trine:2.45",
+    "aspect:Jupiter:Neptune:square:3.25",
+    "figure:t-square:Mars-Saturn:apex-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Moon:exaltation",
+    "dignity:Mercury:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:fire3-air3-water2-earth2",
+    "modalities:fixed5-mutable5",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:taurus",
+    "moon-band:14.7"
+  ],
+  "measurements": {
+    "originalWords": 471,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

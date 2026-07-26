@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jean-michel-basquiat",
+ "qid": "Q155407",
+ "displayName": "Jean-Michel Basquiat",
+ "wikidataLabel": "Jean-Michel Basquiat",
+ "wikidataDescription": "American artist (1960–1988)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q155407",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521834243
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jean-Michel Basquiat",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jean-Michel_Basquiat",
+   "pageId": 15916,
+   "revisionId": 1365849785,
+   "revisionTimestamp": "2026-07-24T20:21:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1960-12-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1960-12-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1960-12-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1988-08-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2607610",
+  "label": "Park Slope",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2607610",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2607610",
+   "sourceEntityLabel": "Park Slope",
+   "latitude": 40.672404,
+   "longitude": -73.977063,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q19890761",
+   "label": "artivist"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q15095148",
+   "label": "graffiti artist"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q18074503",
+   "label": "installation artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Basquiat.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Basquiat.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Basquiat.png",
+  "width": 1106,
+  "height": 1422,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "File:Jean-Michel_Basquiat_passport_(cropped).jpg#mw-jump-to-license",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kurt-weill",
+ "qid": "Q55004",
+ "displayName": "Kurt Weill",
+ "wikidataLabel": "Kurt Weill",
+ "wikidataDescription": "German composer (1900–1950)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q55004",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522005344
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kurt Weill",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kurt_Weill",
+   "pageId": 51097,
+   "revisionId": 1363918966,
+   "revisionTimestamp": "2026-07-13T08:17:38Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1900-03-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1900-03-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1900-03-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1950-04-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q487070",
+  "label": "Dessau",
+  "entityUrl": "https://www.wikidata.org/wiki/Q487070",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q487070",
+   "sourceEntityLabel": "Dessau",
+   "latitude": 51.834166666667,
+   "longitude": 12.246111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q215793",
+   "label": "chapelmaster"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bundesarchiv Bild 146-2005-0119, Kurt Weill.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bundesarchiv%20Bild%20146-2005-0119%2C%20Kurt%20Weill.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_146-2005-0119,_Kurt_Weill.jpg",
+  "width": 400,
+  "height": 600,
+  "licenseShortName": "CC BY-SA 3.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "artist": "Unknown",
+  "credit": "This image was provided to Wikimedia Commons by the German Federal Archive (Deutsches Bundesarchiv) as part of a cooperation project. The German Federal Archive guarantees an authentic representation only using the originals (negative and/or positive), resp. the digitalization of the originals as provided by the Digital Image Archive.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

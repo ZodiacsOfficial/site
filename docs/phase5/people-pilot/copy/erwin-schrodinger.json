@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "erwin-schrodinger",
+  "seedRound": 0,
+  "qid": "Q9130",
+  "displayName": "Erwin Schrödinger",
+  "identity": "Physicist and university teacher · Austria · 1887–1961",
+  "title": "Erwin Schrödinger's birth chart",
+  "metaDescription": "Erwin Schrödinger's chart, computed from a sourced birth date: Sun at 19.4° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 19.4° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.37",
+        "decan:leo:second"
+      ],
+      "text": "19.4° of Leo is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:1.9°",
+        "personal:Mars:Cancer:20.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Leo (1.9°), Mars in Cancer (20.5°): thought that arrives already in motion, effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:trine:0.25",
+        "aspect:Jupiter:Saturn:square:0.26",
+        "aspect:Saturn:Neptune:sextile:0.74"
+      ],
+      "text": "The day's firmest angle joins Venus and Neptune — a trine holding at 0.3°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Jupiter square Saturn at 0.3°, and Saturn sextile Neptune at 0.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mars:fall",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Leo at 19.4° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 20.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Cancer at 29.2° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-fire2-water2-earth1",
+        "modalities:cardinal4-fixed3-mutable1",
+        "settled-signs:8",
+        "retrograde:0",
+        "sign-uncertain:Venus:virgo:libra"
+      ],
+      "text": "Tallied where the signs are certain — 8 placements whose signs hold for the whole day — the chart gives air 3, fire 2, water 2, earth 1, and cardinal 4, fixed 3, mutable 1 across the modes. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. Venus crossed from Virgo into Libra during that day, so its sign is left open. Nothing was retrograde that day, which is less common than it sounds."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 12.3° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-12/",
+    "label": "Everyone born on August 12"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:19.37",
+    "decan:leo:second",
+    "personal:Mercury:Leo:1.9°",
+    "personal:Mars:Cancer:20.5°",
+    "aspect:Venus:Neptune:trine:0.25",
+    "aspect:Jupiter:Saturn:square:0.26",
+    "aspect:Saturn:Neptune:sextile:0.74",
+    "figure:unaspected:Sun",
+    "dignity:Sun:domicile",
+    "dignity:Mars:fall",
+    "dignity:Saturn:detriment",
+    "elements:air3-fire2-water2-earth1",
+    "modalities:cardinal4-fixed3-mutable1",
+    "settled-signs:8",
+    "retrograde:0",
+    "sign-uncertain:Venus:virgo:libra",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 415,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

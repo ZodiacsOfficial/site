@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "charles-lyell",
+  "seedRound": 0,
+  "qid": "Q5333",
+  "displayName": "Charles Lyell",
+  "identity": "Geologist and lawyer · United Kingdom · 1797–1875",
+  "title": "Charles Lyell's birth chart",
+  "metaDescription": "Charles Lyell's chart, computed from a sourced birth date: Sun at 22.7° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a conjunction: Mercury and Neptune within 0.1°, thinking wired to imagination. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Mercury:Neptune:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.66",
+        "decan:scorpio:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 22.7° Scorpio: the third decan, whose classical sub-ruler is the Moon. A water sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:10.8°",
+        "personal:Venus:Capricorn:4.5°",
+        "personal:Mars:Libra:19.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 10.8° Scorpio, Venus was at 4.5° Capricorn, Mars was at 19.3° Libra. Read together: a mind that absorbs before it argues; taste for the substantial and the lasting; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Neptune:conjunction:0.05",
+        "aspect:Saturn:Neptune:trine:0.78",
+        "aspect:Mercury:Saturn:trine:0.83"
+      ],
+      "text": "Mercury to Neptune is the closest call of the day, a conjunction within 0.1°. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Saturn trine Neptune at 0.8°, and Mercury trine Saturn at 0.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Venus-Saturn:apex-Jupiter",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Venus opposes Saturn while both square Jupiter. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Mars in Libra at 19.3° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 11.7° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth2-air2-fire1",
+        "modalities:fixed4-cardinal4-mutable1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 water, 2 earth, 2 air, 1 fire; by modality, 4 fixed, 4 cardinal, 1 mutable. Water reads the room before the room speaks — atmosphere first, analysis later. Jupiter and Saturn were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 14.0° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-14/",
+    "label": "Everyone born on November 14"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Neptune:conjunction",
+    "sun-degree:22.66",
+    "decan:scorpio:third",
+    "personal:Mercury:Scorpio:10.8°",
+    "personal:Venus:Capricorn:4.5°",
+    "personal:Mars:Libra:19.3°",
+    "aspect:Mercury:Neptune:conjunction:0.05",
+    "aspect:Saturn:Neptune:trine:0.78",
+    "aspect:Mercury:Saturn:trine:0.83",
+    "figure:t-square:Venus-Saturn:apex-Jupiter",
+    "figure:unaspected:Moon",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:detriment",
+    "elements:water4-earth2-air2-fire1",
+    "modalities:fixed4-cardinal4-mutable1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

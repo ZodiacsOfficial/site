@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "john-lennon",
+  "seedRound": 0,
+  "qid": "Q1203",
+  "displayName": "John Lennon",
+  "identity": "Writer and actor · United Kingdom · 1940–1980",
+  "title": "John Lennon's birth chart",
+  "metaDescription": "John Lennon's chart, computed from a sourced birth date: Sun at 16.0° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Count only what the day settles, and earth still carries five of the nine placements whose signs are settled. An earth emphasis reads as patience with material reality — slow hands, durable results.",
+  "ledeFact": "element:earth:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.00",
+        "decan:libra:second"
+      ],
+      "text": "At noon on that date the Sun stood at 16.0° Libra, inside the second decan (10°–20°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Scorpio:8.2°",
+        "personal:Venus:Virgo:2.9°",
+        "personal:Mars:Libra:2.5°"
+      ],
+      "text": "Mercury holds 8.2° Scorpio, Venus holds 2.9° Virgo, Mars holds 2.5° Libra — in the old shorthand, thought steeped in tone and memory; attraction that grows by reliability; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:trine:0.46",
+        "aspect:Jupiter:Saturn:conjunction:0.49",
+        "aspect:Mars:Pluto:sextile:1.7"
+      ],
+      "text": "Closest first: Uranus to Neptune, a trine with 0.5° of slack. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Jupiter conjunction Saturn at 0.5°, and Mars sextile Pluto at 1.7° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Libra at 16.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Virgo at 2.9° is in fall; Mars in Libra at 2.5° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air2-water1-fire1",
+        "modalities:fixed5-cardinal2-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 5 in earth, 2 in air, 1 in water, 1 in fire by element, 5 fixed, 2 cardinal, 2 mutable by modality. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Jupiter, Saturn and Uranus were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 12.6° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-9/",
+    "label": "Everyone born on October 9"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "element:earth:5",
+    "sun-degree:16.00",
+    "decan:libra:second",
+    "personal:Mercury:Scorpio:8.2°",
+    "personal:Venus:Virgo:2.9°",
+    "personal:Mars:Libra:2.5°",
+    "aspect:Uranus:Neptune:trine:0.46",
+    "aspect:Jupiter:Saturn:conjunction:0.49",
+    "aspect:Mars:Pluto:sextile:1.7",
+    "figure:unaspected:Sun",
+    "dignity:Sun:fall",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "elements:earth5-air2-water1-fire1",
+    "modalities:fixed5-cardinal2-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 408,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

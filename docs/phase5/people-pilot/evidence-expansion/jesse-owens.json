@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jesse-owens",
+ "qid": "Q52651",
+ "displayName": "Jesse Owens",
+ "wikidataLabel": "Jesse Owens",
+ "wikidataDescription": "American track and field athlete (1913–1980)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q52651",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516843736
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jesse Owens",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jesse_Owens",
+   "pageId": 46827,
+   "revisionId": 1366155668,
+   "revisionTimestamp": "2026-07-26T16:33:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-09-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-09-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-09-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1980-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3116386",
+  "label": "Oakville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3116386",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3116386",
+   "sourceEntityLabel": "Oakville",
+   "latitude": 34.445,
+   "longitude": -87.161,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4009406",
+   "label": "sprinter"
+  },
+  {
+   "entity": "Q11513337",
+   "label": "athletics competitor"
+  },
+  {
+   "entity": "Q13381428",
+   "label": "long jumper"
+  },
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  },
+  {
+   "entity": "Q4333889",
+   "label": "Olympic champion"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jesse Owens 1936.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jesse%20Owens%201936.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jesse_Owens_1936.jpg",
+  "width": 659,
+  "height": 905,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Acme News Photos",
+  "credit": "source front back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

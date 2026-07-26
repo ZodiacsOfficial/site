@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "rosario-castellanos",
+  "seedRound": 0,
+  "qid": "Q260862",
+  "displayName": "Rosario Castellanos",
+  "identity": "Poet and diplomat · Mexico · 1925–1974",
+  "title": "Rosario Castellanos's birth chart",
+  "metaDescription": "Rosario Castellanos's chart, computed from a sourced birth date: Sun at 4.0° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 8.9° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.02",
+        "decan:gemini:first"
+      ],
+      "text": "Gemini, but precisely: 4.0°, first decan, 0°–10°, under Mercury in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:10.5°",
+        "personal:Venus:Gemini:12.4°",
+        "personal:Mars:Cancer:10.1°"
+      ],
+      "text": "For the fast movers, Mercury was at 10.5° Taurus, Venus was at 12.4° Gemini, Mars was at 10.1° Cancer. Read together: a mind that trusts the measured and the checked; taste led by wit and proportion; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:sextile:0.46",
+        "aspect:Mars:Saturn:trine:0.76",
+        "aspect:Mercury:Saturn:opposition:1.22"
+      ],
+      "text": "The day's firmest angle joins Mercury and Mars — a sextile holding at 0.5°. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mars trine Saturn at 0.8°, and Mercury opposition Saturn at 1.2° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Neptune"
+      ],
+      "text": "Neptune stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The classical table has three entries for this chart. The Moon in Cancer at 8.9° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 10.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 22.2° is in fall. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air2-earth2-fire1",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 5 in water, 2 in air, 2 in earth, 1 in fire by element, 4 cardinal, 3 mutable, 3 fixed by modality. Jupiter and Saturn were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 8.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-25/",
+    "label": "Everyone born on May 25"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:4.02",
+    "decan:gemini:first",
+    "personal:Mercury:Taurus:10.5°",
+    "personal:Venus:Gemini:12.4°",
+    "personal:Mars:Cancer:10.1°",
+    "aspect:Mercury:Mars:sextile:0.46",
+    "aspect:Mars:Saturn:trine:0.76",
+    "aspect:Mercury:Saturn:opposition:1.22",
+    "figure:unaspected:Neptune",
+    "dignity:Moon:domicile",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:fall",
+    "elements:water5-air2-earth2-fire1",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 394,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

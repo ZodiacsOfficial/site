@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "subrahmanyan-chandrasekhar",
+ "qid": "Q148109",
+ "displayName": "Subrahmanyan Chandrasekhar",
+ "wikidataLabel": "Subrahmanyan Chandrasekhar",
+ "wikidataDescription": "Indian-American astrophysicist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q148109",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515842528
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Subrahmanyan Chandrasekhar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Subrahmanyan_Chandrasekhar",
+   "pageId": 145319,
+   "revisionId": 1365248967,
+   "revisionTimestamp": "2026-07-21T05:25:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-10-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-10-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-10-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-08-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11739",
+  "label": "Lahore",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11739",
+  "country": {
+   "entity": "Q843",
+   "label": "Pakistan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11739",
+   "sourceEntityLabel": "Lahore",
+   "latitude": 31.549722222222,
+   "longitude": 74.343611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Subrahmanyan Chandrasekhar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Subrahmanyan%20Chandrasekhar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Subrahmanyan_Chandrasekhar.jpg",
+  "width": 2600,
+  "height": 3859,
+  "licenseShortName": "Attribution",
+  "licenseUrl": null,
+  "artist": "AIP Emilio Segrè Visual Archives, Gift of Kameshwar Wali",
+  "credit": "https://repository.aip.org/portrait-chandrasekhar",
+  "usageTerms": null,
+  "attributionRequired": null,
+  "restrictions": ""
+ }
+}

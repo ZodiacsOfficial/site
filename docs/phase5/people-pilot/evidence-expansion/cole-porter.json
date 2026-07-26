@@ -1,0 +1,138 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "cole-porter",
+ "qid": "Q215120",
+ "displayName": "Cole Porter",
+ "wikidataLabel": "Cole Porter",
+ "wikidataDescription": "American composer and songwriter (1891–1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q215120",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518459944
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Cole Porter",
+   "articleUrl": "https://en.wikipedia.org/wiki/Cole_Porter",
+   "pageId": 53360,
+   "revisionId": 1365605668,
+   "revisionTimestamp": "2026-07-23T11:55:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1891-06-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1891-06-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1893-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1891-06-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-10-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q386657",
+  "label": "Peru",
+  "entityUrl": "https://www.wikidata.org/wiki/Q386657",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q386657",
+   "sourceEntityLabel": "Peru",
+   "latitude": 40.7578,
+   "longitude": -86.0678,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Coleporter.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Coleporter.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Coleporter.jpg",
+  "width": 1024,
+  "height": 1359,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unattributed, see link",
+  "credit": "http://lcweb2.loc.gov/diglib/ihas/loc.natlib.scdb.200033557/default.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

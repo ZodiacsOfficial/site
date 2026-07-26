@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "isaac-albeniz",
+ "qid": "Q185812",
+ "displayName": "Isaac Albéniz",
+ "wikidataLabel": "Isaac Albéniz",
+ "wikidataDescription": "Spanish composer (1860-1909)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q185812",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516951900
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Isaac Albéniz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Isaac_Alb%C3%A9niz",
+   "pageId": 15208,
+   "revisionId": 1356150195,
+   "revisionTimestamp": "2026-05-26T01:02:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 4,
+  "distinctDayPrecisionValues": [
+   "+1860-05-29T00:00:00Z|proleptic-gregorian",
+   "+1860-05-26T00:00:00Z|proleptic-gregorian",
+   "+1861-05-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1860-05-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1860-05-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1860-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1861-05-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1860-05-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1909-05-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6944",
+  "label": "Camprodon",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6944",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6944",
+   "sourceEntityLabel": "Camprodon",
+   "latitude": 42.311803,
+   "longitude": 2.364804,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q61996187",
+   "label": "classical pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q214970",
+   "label": "virtuoso"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Isaac Albéniz, de Napoleon.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Isaac%20Alb%C3%A9niz%2C%20de%20Napoleon.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Isaac_Alb%C3%A9niz,_de_Napoleon.jpg",
+  "width": 314,
+  "height": 423,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Napoleón",
+  "credit": "https://hemerotecadigital.bne.es/hd/es/viewer?id=14e60bf1-b580-423c-b4aa-6a7ef828e127",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

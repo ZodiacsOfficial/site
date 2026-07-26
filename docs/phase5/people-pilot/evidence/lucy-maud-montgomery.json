@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lucy-maud-montgomery",
+ "qid": "Q273034",
+ "displayName": "Lucy Maud Montgomery",
+ "wikidataLabel": "Lucy Maud Montgomery",
+ "wikidataDescription": "Canadian writer (1874–1942)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q273034",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521473687
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lucy Maud Montgomery",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lucy_Maud_Montgomery",
+   "pageId": 60730,
+   "revisionId": 1363619673,
+   "revisionTimestamp": "2026-07-11T08:24:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1874-11-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1874-11-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1874-11-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1942-04-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1978",
+  "label": "Prince Edward Island",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1978",
+  "country": {
+   "entity": "Q16",
+   "label": "Canada"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1978",
+   "sourceEntityLabel": "Prince Edward Island",
+   "latitude": 46.4,
+   "longitude": -63.2,
+   "precision": 0.016666666666666666,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q62083492",
+   "label": "young adult author"
+  }
+ ],
+ "portrait": {
+  "file": "File:LMM signed photo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:LMM%20signed%20photo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:LMM_signed_photo.jpg",
+  "width": 480,
+  "height": 614,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://collectionscanada.gc.ca/pam_archives/index.php?fuseaction=genitem.displayItem&lang=eng&rec_nbr=3192019&rec_nbr_list=3623452,3192019",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "oscar-niemeyer",
+ "qid": "Q134165",
+ "displayName": "Oscar Niemeyer",
+ "wikidataLabel": "Oscar Niemeyer",
+ "wikidataDescription": "Brazilian architect (1907–2012)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q134165",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517514820
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Oscar Niemeyer",
+   "articleUrl": "https://en.wikipedia.org/wiki/Oscar_Niemeyer",
+   "pageId": 48372,
+   "revisionId": 1365704150,
+   "revisionTimestamp": "2026-07-23T23:53:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1907-12-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1907-12-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1907-12-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2012-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8678",
+  "label": "Rio de Janeiro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8678",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q8678",
+   "sourceEntityLabel": "Rio de Janeiro",
+   "latitude": -22.91111111111111,
+   "longitude": -43.205555555555556,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q131062",
+   "label": "urban planner"
+  }
+ ],
+ "portrait": {
+  "file": "File:Oscar Niemeyer 1968b.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Oscar%20Niemeyer%201968b.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Oscar_Niemeyer_1968b.jpg",
+  "width": 686,
+  "height": 974,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown (Mondadori Publishers)",
+  "credit": "http://www.gettyimages.co.uk/detail/news-photo/brazilian-architect-oscar-niemeyer-posing-in-his-studio-news-photo/472142150",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

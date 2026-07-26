@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "suzanne-lenglen",
+ "qid": "Q232831",
+ "displayName": "Suzanne Lenglen",
+ "wikidataLabel": "Suzanne Lenglen",
+ "wikidataDescription": "French tennis player",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q232831",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517542264
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Suzanne Lenglen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Suzanne_Lenglen",
+   "pageId": 709340,
+   "revisionId": 1335743145,
+   "revisionTimestamp": "2026-01-30T23:41:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-05-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-05-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-05-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1938-07-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q194420",
+  "label": "16th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q194420",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q194420",
+   "sourceEntityLabel": "16th arrondissement of Paris",
+   "latitude": 48.863611111111,
+   "longitude": 2.2764888888889,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10833314",
+   "label": "tennis player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Suzanne Lenglen 02.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Suzanne%20Lenglen%2002.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Suzanne_Lenglen_02.jpg",
+  "width": 2615,
+  "height": 3487,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ggbain.32888.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

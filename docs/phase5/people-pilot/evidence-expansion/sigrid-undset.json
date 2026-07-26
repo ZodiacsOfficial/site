@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sigrid-undset",
+ "qid": "Q80889",
+ "displayName": "Sigrid Undset",
+ "wikidataLabel": "Sigrid Undset",
+ "wikidataDescription": "Norwegian writer (1882–1949)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q80889",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520795207
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sigrid Undset",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sigrid_Undset",
+   "pageId": 29236,
+   "revisionId": 1363184156,
+   "revisionTimestamp": "2026-07-08T16:01:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1882-05-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-05-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-05-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1949-06-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q204957",
+  "label": "Kalundborg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q204957",
+  "country": {
+   "entity": "Q35",
+   "label": "Denmark"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q204957",
+   "sourceEntityLabel": "Kalundborg",
+   "latitude": 55.681388888889,
+   "longitude": 11.085,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sigrid Undset 1928.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sigrid%20Undset%201928.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sigrid_Undset_1928.jpg",
+  "width": 280,
+  "height": 396,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Aage Remfeldt / Aage Rasmussen (1889-1983)",
+  "credit": "http://nobelprize.org/nobel_prizes/literature/laureates/1928/undset-autobio.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

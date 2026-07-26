@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "thomas-hardy",
+ "qid": "Q132805",
+ "displayName": "Thomas Hardy",
+ "wikidataLabel": "Thomas Hardy",
+ "wikidataDescription": "English novelist and poet (1840–1928)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q132805",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520643998
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Thomas Hardy",
+   "articleUrl": "https://en.wikipedia.org/wiki/Thomas_Hardy",
+   "pageId": 44743,
+   "revisionId": 1365847632,
+   "revisionTimestamp": "2026-07-24T20:07:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1840-06-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1840-06-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1840-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1840-06-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1928-01-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q503331",
+  "label": "Dorchester",
+  "entityUrl": "https://www.wikidata.org/wiki/Q503331",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q503331",
+   "sourceEntityLabel": "Dorchester",
+   "latitude": 50.710833333333,
+   "longitude": -2.4397222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Thomashardy restored.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Thomashardy%20restored.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Thomashardy_restored.jpg",
+  "width": 3663,
+  "height": 5316,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bain News Service, publisher",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ggbain.13585.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

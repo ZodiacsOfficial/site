@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "miriam-makeba",
+  "seedRound": 0,
+  "qid": "Q146256",
+  "displayName": "Miriam Makeba",
+  "identity": "Singer and actor · South Africa · 1932–2008",
+  "title": "Miriam Makeba's birth chart",
+  "metaDescription": "Miriam Makeba's chart, computed from a sourced birth date: Sun at 13.6° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: Mars and Neptune within 0.1°, drive wired to imagination. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Mars:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.63",
+        "decan:pisces:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 13.6° Pisces: the second decan, whose classical sub-ruler is the Moon. A water sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:19.5°",
+        "personal:Venus:Aries:24.6°",
+        "personal:Mars:Pisces:6.6°"
+      ],
+      "text": "For the fast movers, Mercury was at 19.5° Pisces, Venus was at 24.6° Aries, Mars was at 6.6° Pisces. Read together: a mind that absorbs before it argues; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:opposition:0.14",
+        "aspect:Mercury:Pluto:trine:0.61",
+        "aspect:Uranus:Pluto:square:2.77"
+      ],
+      "text": "Mars to Neptune is the closest call of the day, a opposition within 0.1°. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Mercury trine Pluto at 0.6°, and Uranus square Pluto at 2.8° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Pisces at 19.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 24.6° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 0.9° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air2-earth1",
+        "modalities:mutable4-fixed3-cardinal3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 water, 3 fire, 2 air, 1 earth by element and 4 mutable, 3 fixed, 3 cardinal by modality. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:12.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 12.6° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 10.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-4/",
+    "label": "Everyone born on March 4"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Neptune:opposition",
+    "sun-degree:13.63",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:19.5°",
+    "personal:Venus:Aries:24.6°",
+    "personal:Mars:Pisces:6.6°",
+    "aspect:Mars:Neptune:opposition:0.14",
+    "aspect:Mercury:Pluto:trine:0.61",
+    "aspect:Uranus:Pluto:square:2.77",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:domicile",
+    "elements:water4-fire3-air2-earth1",
+    "modalities:mutable4-fixed3-cardinal3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aquarius",
+    "moon-band:12.6"
+  ],
+  "measurements": {
+    "originalWords": 437,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "piet-mondrian",
+ "qid": "Q151803",
+ "displayName": "Piet Mondrian",
+ "wikidataLabel": "Piet Mondrian",
+ "wikidataDescription": "Dutch painter (1872–1944)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q151803",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522592718
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Piet Mondrian",
+   "articleUrl": "https://en.wikipedia.org/wiki/Piet_Mondrian",
+   "pageId": 4865795,
+   "revisionId": 1360762617,
+   "revisionTimestamp": "2026-06-23T12:44:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1872-03-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1872-03-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1872-03-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1944-02-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q33421377",
+  "label": "Amersfoort",
+  "entityUrl": "https://www.wikidata.org/wiki/Q33421377",
+  "country": {
+   "entity": "Q55",
+   "label": "Netherlands"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q33421377",
+   "sourceEntityLabel": "Amersfoort",
+   "latitude": 52.155,
+   "longitude": 5.3875,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q10862983",
+   "label": "etcher"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q11455387",
+   "label": "furniture designer"
+  },
+  {
+   "entity": "Q107212688",
+   "label": "exlibrist"
+  },
+  {
+   "entity": "Q10373653",
+   "label": "watercolorist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2133309",
+   "label": "interior designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Piet Mondriaan.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Piet%20Mondriaan.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Piet_Mondriaan.jpg",
+  "width": 618,
+  "height": 826,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "http://archiefdienst.exsilia.net/mondriaan/pagina.php?hid=6&pid=5 http://www.mondriantrust.com/chronology/ Transferred from nl.wikipedia to Commons by GijsvdL using CommonsHelper.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

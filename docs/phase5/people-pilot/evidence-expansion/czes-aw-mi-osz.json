@@ -1,0 +1,135 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "czes-aw-mi-osz",
+ "qid": "Q45970",
+ "displayName": "Czesław Miłosz",
+ "wikidataLabel": "Czesław Miłosz",
+ "wikidataDescription": "Polish-American poet and Nobel laureate (1911–2004)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q45970",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515297557
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Czesław Miłosz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Czes%C5%82aw_Mi%C5%82osz",
+   "pageId": 6542,
+   "revisionId": 1363324148,
+   "revisionTimestamp": "2026-07-09T14:00:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1911-06-30T00:00:00Z|proleptic-gregorian",
+   "+1911-11-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-06-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1911-11-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1911-06-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-08-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q391479",
+  "label": "Šeteniai",
+  "entityUrl": "https://www.wikidata.org/wiki/Q391479",
+  "country": {
+   "entity": "Q37",
+   "label": "Lithuania"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q391479",
+   "sourceEntityLabel": "Šeteniai",
+   "latitude": 55.394722222222,
+   "longitude": 24.032777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q13570226",
+   "label": "literary historian"
+  }
+ ],
+ "portrait": {
+  "file": "File:Czeslaw Milosz 3 ap.tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Czeslaw%20Milosz%203%20ap.tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Czeslaw_Milosz_3_ap.tif",
+  "width": 1654,
+  "height": 2524,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Artur Pawłowski",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

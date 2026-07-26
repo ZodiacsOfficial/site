@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "steve-biko",
+ "qid": "Q214473",
+ "displayName": "Steve Biko",
+ "wikidataLabel": "Steve Biko",
+ "wikidataDescription": "South African anti-apartheid activist (1946–1977)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q214473",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522817058
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Steve Biko",
+   "articleUrl": "https://en.wikipedia.org/wiki/Steve_Biko",
+   "pageId": 28320,
+   "revisionId": 1366037674,
+   "revisionTimestamp": "2026-07-25T22:34:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1946-12-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1946-12-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1946-12-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1977-09-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1016100",
+  "label": "Qonce",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1016100",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1016100",
+   "sourceEntityLabel": "Qonce",
+   "latitude": -32.883333333333,
+   "longitude": 27.4,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q15627169",
+   "label": "trade unionist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Steve Biko on Flyer for Steve Biko Memorial at the Carver Cultural Center.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Steve%20Biko%20on%20Flyer%20for%20Steve%20Biko%20Memorial%20at%20the%20Carver%20Cultural%20Center.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Steve_Biko_on_Flyer_for_Steve_Biko_Memorial_at_the_Carver_Cultural_Center.jpg",
+  "width": 1680,
+  "height": 2600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Cape Argus",
+  "credit": "https://texashistory.unt.edu/ark:/67531/metapth1261400 https://www.alamy.com/south-african-black-consciousness-leader-steve-biko-is-seen-in-1977-ap-photocape-argus-image526241015.html https://www.alamy.com/anti-apartheid-activist-stephen-biko-is-seen-in-this-undated-image-ap-photoargus-image526226470.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fela-kuti",
+ "qid": "Q313868",
+ "displayName": "Fela Kuti",
+ "wikidataLabel": "Fela Kuti",
+ "wikidataDescription": "Nigerian musician and activist (1938–1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q313868",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2498835124
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fela Kuti",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fela_Kuti",
+   "pageId": 316130,
+   "revisionId": 1366059003,
+   "revisionTimestamp": "2026-07-26T01:32:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1938-10-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1938-10-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1938-10-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-08-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q206484",
+  "label": "Abeokuta",
+  "entityUrl": "https://www.wikidata.org/wiki/Q206484",
+  "country": {
+   "entity": "Q1033",
+   "label": "Nigeria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q206484",
+   "sourceEntityLabel": "Abeokuta",
+   "latitude": 7.15,
+   "longitude": 3.35,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q12800682",
+   "label": "saxophonist"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fela Kuti record.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fela%20Kuti%20record.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fela_Kuti_record.jpg",
+  "width": 584,
+  "height": 598,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "His master’s voice record company.",
+  "credit": "Discogs website",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

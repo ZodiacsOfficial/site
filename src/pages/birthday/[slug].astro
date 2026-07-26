@@ -14,7 +14,7 @@ import {
 } from '../../lib/birthdays';
 import birthdays from '../../data/birthdays.json';
 import { EDITOR_AUTHOR } from '../../lib/editorial';
-import { peopleForBirthday } from '../../lib/people';
+import { BIRTHDAY_PEOPLE_VISIBLE, peopleForBirthday } from '../../lib/people';
 
 export async function getStaticPaths() {
   const entries = await getCollection('birthdays', (e) => !e.data.draft);
@@ -111,6 +111,8 @@ const prevSlug = birthdaySlug(prev.month, prev.day);
 const nextSlug = birthdaySlug(next.month, next.day);
 const linkSigns = sign ? [sign] : cusp ? [cusp.a, cusp.b] : [];
 const birthdayPeople = peopleForBirthday(`/birthday/${slug}/`);
+const birthdayPeopleVisible = birthdayPeople.slice(0, BIRTHDAY_PEOPLE_VISIBLE);
+const birthdayPeopleMore = birthdayPeople.slice(BIRTHDAY_PEOPLE_VISIBLE);
 
 const ogImage = `/assets/og/v2/sign/${heroSign!.slug}.png`;
 
@@ -311,8 +313,16 @@ const jsonLd = [
       <section class="bday-people reveal" aria-labelledby="bday-people-heading">
         <span class="bday-more__head" id="bday-people-heading">People born on this date</span>
         <div class="bday-people__grid">
-          {birthdayPeople.map((person) => <PeopleCard person={person} compact />)}
+          {birthdayPeopleVisible.map((person) => <PeopleCard person={person} compact />)}
         </div>
+        {birthdayPeopleMore.length > 0 && (
+          <details class="bday-people__more">
+            <summary>{birthdayPeopleMore.length} more born this day</summary>
+            <div class="bday-people__grid">
+              {birthdayPeopleMore.map((person) => <PeopleCard person={person} compact />)}
+            </div>
+          </details>
+        )}
       </section>
     )}
 
@@ -362,6 +372,9 @@ const jsonLd = [
   .bday__identity a { color: var(--text); text-decoration-color: var(--hair-2); }
 
   .bday-people { display: grid; gap: 12px; }
+  .bday-people__more { border: 1px solid var(--hair-1); border-radius: var(--r-md); padding: 2px 14px; }
+  .bday-people__more > summary { cursor: pointer; padding: 9px 0; color: var(--text-2); font-size: var(--text-sm); }
+  .bday-people__more > .bday-people__grid { padding: 4px 0 12px; }
   .bday-people__grid { display: grid; gap: 8px; }
   @media (min-width: 700px) {
     .bday-people__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }

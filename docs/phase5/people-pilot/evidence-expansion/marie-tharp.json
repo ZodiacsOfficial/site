@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marie-tharp",
+ "qid": "Q538786",
+ "displayName": "Marie Tharp",
+ "wikidataLabel": "Marie Tharp",
+ "wikidataDescription": "American oceanographer and cartographer (1920–2006)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q538786",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518336416
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marie Tharp",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marie_Tharp",
+   "pageId": 2265433,
+   "revisionId": 1365415253,
+   "revisionTimestamp": "2026-07-22T07:18:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-07-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-07-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-07-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2006-08-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1021681",
+  "label": "Ypsilanti",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1021681",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1021681",
+   "sourceEntityLabel": "Ypsilanti",
+   "latitude": 42.2428,
+   "longitude": -83.6183,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1734662",
+   "label": "cartographer"
+  },
+  {
+   "entity": "Q3546255",
+   "label": "oceanographer"
+  },
+  {
+   "entity": "Q520549",
+   "label": "geologist"
+  },
+  {
+   "entity": "Q294126",
+   "label": "surveyor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marie Tharp working with fathometer record (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marie%20Tharp%20working%20with%20fathometer%20record%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marie_Tharp_working_with_fathometer_record_(cropped).jpg",
+  "width": 304,
+  "height": 390,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Credit Line: AIP Emilio Segrè Visual Archives, Gift of Bill Woodward, USNS Kane Collection",
+  "credit": "https://repository.aip.org/islandora/object/nbla%3A300331",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

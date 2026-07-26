@@ -1,0 +1,142 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jagadish-chandra-bose",
+ "qid": "Q314267",
+ "displayName": "Jagadish Chandra Bose",
+ "wikidataLabel": "Jagadish Chandra Bose",
+ "wikidataDescription": "Bengali polymath, physicist, and biologist (1858–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q314267",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518708460
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jagadish Chandra Bose",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jagadish_Chandra_Bose",
+   "pageId": 288059,
+   "revisionId": 1364934265,
+   "revisionTimestamp": "2026-07-19T11:02:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1858-11-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-11-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1858-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-11-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-11-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3350679",
+  "label": "Bikrampur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3350679",
+  "country": {
+   "entity": "Q902",
+   "label": "Bangladesh"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3350679",
+   "sourceEntityLabel": "Bikrampur",
+   "latitude": 23.55,
+   "longitude": 90.55,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q3621491",
+   "label": "archaeologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q2055046",
+   "label": "physiologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:1920 Jagadish Chandra Bose.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:1920%20Jagadish%20Chandra%20Bose.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:1920_Jagadish_Chandra_Bose.jpg",
+  "width": 1254,
+  "height": 1671,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Georges Chevalier",
+  "credit": "https://collections.albert-kahn.hauts-de-seine.fr/document/proprit-d-albert-kahn-boulogne-france-jagadish-chandra-bose/617a7a44cf8b8968b33830eb?filtrerParThme%5B0%5D=Personnalit%C3%A9&filtrerParDomaine%5B0%5D=Images%20fixes&s=dateDePriseDeVue&so=desc&pos=1935&pgn=127",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

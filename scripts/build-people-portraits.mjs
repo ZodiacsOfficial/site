@@ -121,8 +121,20 @@ if (thumbnailsOnly) {
 }
 
 const portraitRecords = [];
+let previous = { portraits: [] };
+try { previous = JSON.parse(await readFile(manifestPath, 'utf8')); } catch {}
+const previousBySlug = Object.fromEntries(previous.portraits.map((entry) => [entry.slug, entry]));
+const sleep = (ms) => new Promise((resolveSleep) => { setTimeout(resolveSleep, ms); });
+const failures = [];
 
 for (const person of available) {
+  /* Released files stay byte-frozen; the fetch is resumable. */
+  const existingPath = resolve(root, `public/assets/people/${person.slug}.webp`);
+  const alreadyLocal = await readFile(existingPath).then(() => true).catch(() => false);
+  if (alreadyLocal && previousBySlug[person.slug]) {
+    portraitRecords.push(previousBySlug[person.slug]);
+    continue;
+  }
   const endpoint = new URL('https://commons.wikimedia.org/w/api.php');
   endpoint.search = new URLSearchParams({
     action: 'query',
@@ -133,23 +145,24 @@ for (const person of available) {
     iiurlwidth: '960',
     titles: person.portrait.file,
   }).toString();
+  await sleep(140);
   const response = await fetch(endpoint, {
     headers: {
       Accept: 'application/json',
       'User-Agent': 'Zodiacs.org Phase 5 portrait archive (admin@zodiacs.org)',
     },
   });
-  if (!response.ok) throw new Error(`${person.slug}: Commons API ${response.status}`);
+  if (!response.ok) { failures.push(`${person.slug}: Commons API ${response.status}`); continue; }
   const payload = await response.json();
   const imageInfo = payload.query?.pages?.[0]?.imageinfo?.[0];
   const sourceMediaUrl = imageInfo?.thumburl ?? imageInfo?.url;
   if (!sourceMediaUrl || new URL(sourceMediaUrl).hostname !== 'upload.wikimedia.org') {
-    throw new Error(`${person.slug}: Commons returned no trusted media URL`);
+    failures.push(`${person.slug}: no trusted media URL`); continue;
   }
   const media = await fetch(sourceMediaUrl, {
     headers: { 'User-Agent': 'Zodiacs.org Phase 5 portrait archive (admin@zodiacs.org)' },
   });
-  if (!media.ok) throw new Error(`${person.slug}: portrait download ${media.status}`);
+  if (!media.ok) { failures.push(`${person.slug}: download ${media.status}`); continue; }
   const input = Buffer.from(await media.arrayBuffer());
   const output = await sharp(input)
     .rotate()
@@ -184,6 +197,10 @@ for (const person of available) {
   console.log(`${person.slug}: ${metadata.width}x${metadata.height} · ${(output.length / 1024).toFixed(0)} KiB`);
 }
 
+if (failures.length > 0) {
+  console.error(`people-portraits: ${failures.length} fetch failures`);
+  for (const failure of failures) console.error(`  - ${failure}`);
+}
 await writeFile(manifestPath, `${JSON.stringify({
   schema: 'zodiacs.phase5.people-portraits.v1',
   source: 'Wikimedia Commons files reviewed in docs/phase5/people-pilot/manifest.json',

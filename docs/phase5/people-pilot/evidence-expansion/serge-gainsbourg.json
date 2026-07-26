@@ -1,0 +1,149 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "serge-gainsbourg",
+ "qid": "Q1698",
+ "displayName": "Serge Gainsbourg",
+ "wikidataLabel": "Serge Gainsbourg",
+ "wikidataDescription": "French singer, songwriter, composer, writer, actor and director (1928–1991)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1698",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522944641
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Serge Gainsbourg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Serge_Gainsbourg",
+   "pageId": 79505,
+   "revisionId": 1363160421,
+   "revisionTimestamp": "2026-07-08T12:35:21Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1928-04-02T00:00:00Z|proleptic-gregorian",
+   "+1928-02-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-04-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1928-02-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1928-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-04-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1991-03-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q230127",
+  "label": "4th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q230127",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q230127",
+   "sourceEntityLabel": "4th arrondissement of Paris",
+   "latitude": 48.855555555556,
+   "longitude": 2.3555555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q13391399",
+   "label": "chansonnier"
+  }
+ ],
+ "portrait": {
+  "file": "File:Serge Gainsbourg par Claude Truong-Ngoc 1981.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Serge%20Gainsbourg%20par%20Claude%20Truong-Ngoc%201981.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Serge_Gainsbourg_par_Claude_Truong-Ngoc_1981.jpg",
+  "width": 5622,
+  "height": 3661,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Claude TRUONG-NGOC",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

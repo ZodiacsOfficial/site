@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elena-garro",
+ "qid": "Q446437",
+ "displayName": "Elena Garro",
+ "wikidataLabel": "Elena Garro",
+ "wikidataDescription": "Mexican writer (1916–1998)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q446437",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2494934485
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elena Garro",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elena_Garro",
+   "pageId": 10264425,
+   "revisionId": 1365402628,
+   "revisionTimestamp": "2026-07-22T04:35:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1916-12-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1916-12-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1920-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1916-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1998-08-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q125293",
+  "label": "Heroica Puebla de Zaragoza",
+  "entityUrl": "https://www.wikidata.org/wiki/Q125293",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q125293",
+   "sourceEntityLabel": "Heroica Puebla de Zaragoza",
+   "latitude": 19.051388888889,
+   "longitude": -98.217777777778,
+   "precision": 0.000277778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elena Garro.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elena%20Garro.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elena_Garro.jpg",
+  "width": 1904,
+  "height": 2792,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "CITRU Documentación",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

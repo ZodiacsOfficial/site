@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "amrita-sher-gil",
+ "qid": "Q150312",
+ "displayName": "Amrita Sher-Gil",
+ "wikidataLabel": "Amrita Sher-Gil",
+ "wikidataDescription": "Hungarian-Indian painter (1913–1941)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q150312",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517392251
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Amrita Sher-Gil",
+   "articleUrl": "https://en.wikipedia.org/wiki/Amrita_Sher-Gil",
+   "pageId": 3657230,
+   "revisionId": 1361567175,
+   "revisionTimestamp": "2026-06-28T19:38:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-01-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-01-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-01-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1781",
+  "label": "Budapest",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1781",
+  "country": {
+   "entity": "Q28",
+   "label": "Hungary"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1781",
+   "sourceEntityLabel": "Budapest",
+   "latitude": 47.498333333333,
+   "longitude": 19.040833333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Amrita Sher-Gil 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Amrita%20Sher-Gil%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Amrita_Sher-Gil_2.jpg",
+  "width": 1692,
+  "height": 1788,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown authorUnknown author probably Umrao Singh Sher-Gil (1870–1954)",
+  "credit": "http://www.kieselbach.hu/muvesz/sher-gil_-amrita_1943",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

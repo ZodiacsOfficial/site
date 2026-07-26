@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bessie-head",
+  "seedRound": 0,
+  "qid": "Q455286",
+  "displayName": "Bessie Head",
+  "identity": "Novelist and teacher · South Africa · 1937–1986",
+  "title": "Bessie Head's birth chart",
+  "metaDescription": "Bessie Head's chart, computed from a sourced birth date: Sun at 13.9° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.6° separates Venus and Pluto from an exact sextile; at that range taste and depth read as one mechanism. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.",
+  "ledeFact": "aspect:Venus:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.90",
+        "decan:cancer:second"
+      ],
+      "text": "At noon on that date the Sun stood at 13.9° Cancer, inside the second decan (10°–20°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:11.4°",
+        "personal:Venus:Taurus:28.5°",
+        "personal:Mars:Scorpio:20.1°"
+      ],
+      "text": "For the fast movers, Mercury was at 11.4° Cancer, Venus was at 28.5° Taurus, Mars was at 20.1° Scorpio. Read together: thought steeped in tone and memory; attraction that grows by reliability; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:sextile:0.61",
+        "aspect:Sun:Uranus:sextile:0.99",
+        "aspect:Mercury:Uranus:sextile:1.5"
+      ],
+      "text": "The day's firmest angle joins Venus and Pluto — a sextile holding at 0.6°. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, the Sun sextile Uranus at 1.0°, and Mercury sextile Uranus at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, four placements stand out. Venus in Taurus at 28.5° is in domicile — the planet in its own sign, running on home rules; Mars in Scorpio at 20.1° is in domicile; Jupiter in Capricorn at 23.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aries at 5.0° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth4-air1-fire1",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in water, 4 in earth, 1 in air, 1 in fire by element, 5 cardinal, 3 fixed, 2 mutable by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Jupiter was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:14.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 14.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 19.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-6/",
+    "label": "Everyone born on July 6"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:sextile",
+    "sun-degree:13.90",
+    "decan:cancer:second",
+    "personal:Mercury:Cancer:11.4°",
+    "personal:Venus:Taurus:28.5°",
+    "personal:Mars:Scorpio:20.1°",
+    "aspect:Venus:Pluto:sextile:0.61",
+    "aspect:Sun:Uranus:sextile:0.99",
+    "aspect:Mercury:Uranus:sextile:1.5",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:fall",
+    "elements:water4-earth4-air1-fire1",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:gemini",
+    "moon-band:14.8"
+  ],
+  "measurements": {
+    "originalWords": 415,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

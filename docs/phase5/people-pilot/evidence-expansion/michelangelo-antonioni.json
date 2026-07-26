@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "michelangelo-antonioni",
+ "qid": "Q55433",
+ "displayName": "Michelangelo Antonioni",
+ "wikidataLabel": "Michelangelo Antonioni",
+ "wikidataDescription": "Italian film director and screenwriter (1912–2007)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q55433",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522105430
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Michelangelo Antonioni",
+   "articleUrl": "https://en.wikipedia.org/wiki/Michelangelo_Antonioni",
+   "pageId": 38939,
+   "revisionId": 1360147963,
+   "revisionTimestamp": "2026-06-19T15:06:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-09-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-09-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-09-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2007-07-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q13362",
+  "label": "Ferrara",
+  "entityUrl": "https://www.wikidata.org/wiki/Q13362",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q13362",
+   "sourceEntityLabel": "Ferrara",
+   "latitude": 44.839166666666664,
+   "longitude": 11.6175,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Michelangelo Antonioni portrait (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Michelangelo%20Antonioni%20portrait%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Michelangelo_Antonioni_portrait_(cropped).jpg",
+  "width": 3466,
+  "height": 3607,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bibliothèque nationale de France",
+  "credit": "This file comes from Gallica Digital Library and is available under the digital ID btv1b8538461p",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

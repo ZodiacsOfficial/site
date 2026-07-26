@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "natalia-ginzburg",
+  "seedRound": 0,
+  "qid": "Q275985",
+  "displayName": "Natalia Ginzburg",
+  "identity": "Writer and politician · Italy · 1916–1991",
+  "title": "Natalia Ginzburg's birth chart",
+  "metaDescription": "Natalia Ginzburg's chart, computed from a sourced birth date: Sun at 21.6° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled stand in Cancer — the Sun, Mercury, Venus, Saturn and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:cancer:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.60",
+        "decan:cancer:third"
+      ],
+      "text": "The Sun sits at 21.6° Cancer — the third decan, 20°–30°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Cancer and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Cancer:6.3°",
+        "personal:Venus:Cancer:5.6°",
+        "personal:Mars:Virgo:24.8°"
+      ],
+      "text": "Mercury holds 6.3° Cancer, Venus holds 5.6° Cancer, Mars holds 24.8° Virgo — in the old shorthand, a mind that absorbs before it argues; taste tuned to mood and undertow; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:sextile:0.63",
+        "aspect:Jupiter:Neptune:square:0.68",
+        "aspect:Mercury:Venus:conjunction:0.72"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Pluto — a sextile holding at 0.6°. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Jupiter square Neptune at 0.7°, and Mercury conjunction Venus at 0.7° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. The Moon in Capricorn at 10.5° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 20.3° is in detriment. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-earth3-air1-fire1",
+        "modalities:cardinal6-fixed3-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 5, earth 3, air 1, fire 1, and cardinal 6, fixed 3, mutable 1 across the modes. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. Venus and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:15.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 15.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 10.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-14/",
+    "label": "Everyone born on July 14"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "stellium:cancer:5",
+    "sun-degree:21.60",
+    "decan:cancer:third",
+    "personal:Mercury:Cancer:6.3°",
+    "personal:Venus:Cancer:5.6°",
+    "personal:Mars:Virgo:24.8°",
+    "aspect:Jupiter:Pluto:sextile:0.63",
+    "aspect:Jupiter:Neptune:square:0.68",
+    "aspect:Mercury:Venus:conjunction:0.72",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Saturn:detriment",
+    "elements:water5-earth3-air1-fire1",
+    "modalities:cardinal6-fixed3-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:capricorn",
+    "moon-band:15.2"
+  ],
+  "measurements": {
+    "originalWords": 418,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

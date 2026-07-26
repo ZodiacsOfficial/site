@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jose-saramago",
+ "qid": "Q37060",
+ "displayName": "José Saramago",
+ "wikidataLabel": "José Saramago",
+ "wikidataDescription": "Portuguese novelist (1922–2010)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37060",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520245710
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "José Saramago",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jos%C3%A9_Saramago",
+   "pageId": 48422,
+   "revisionId": 1360314213,
+   "revisionTimestamp": "2026-06-20T17:47:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-11-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-11-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-11-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2010-06-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q793814",
+  "label": "Azinhaga",
+  "entityUrl": "https://www.wikidata.org/wiki/Q793814",
+  "country": {
+   "entity": "Q45",
+   "label": "Portugal"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q793814",
+   "sourceEntityLabel": "Azinhaga",
+   "latitude": 39.349922222222,
+   "longitude": -8.5328166666667,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q3330547",
+   "label": "chronicler"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q487596",
+   "label": "dramaturge"
+  }
+ ],
+ "portrait": {
+  "file": "File:JSJoseSaramago.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:JSJoseSaramago.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:JSJoseSaramago.jpg",
+  "width": 320,
+  "height": 249,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Unknown author",
+  "credit": "http://www.casarosada.gov.ar/index.php?option=com_content&task=avisos&Itemid=999&Itemid=75",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

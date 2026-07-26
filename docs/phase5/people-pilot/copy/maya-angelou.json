@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "maya-angelou",
+  "seedRound": 0,
+  "qid": "Q19526",
+  "displayName": "Maya Angelou",
+  "identity": "Politician and comedian · United States · 1928–2014",
+  "title": "Maya Angelou's birth chart",
+  "metaDescription": "Maya Angelou's chart, computed from a sourced birth date: Sun at 14.7° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 14.7° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.72",
+        "decan:aries:second"
+      ],
+      "text": "At noon on that date the Sun stood at 14.7° Aries, inside the second decan (10°–20°), whose traditional sub-ruler is the Sun. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:20.3°",
+        "personal:Venus:Pisces:21.6°",
+        "personal:Mars:Aquarius:27.8°"
+      ],
+      "text": "For the fast movers, Mercury was at 20.3° Pisces, Venus was at 21.6° Pisces, Mars was at 27.8° Aquarius. Read together: thought steeped in tone and memory; attraction that works by atmosphere; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:square:0.27",
+        "aspect:Jupiter:Pluto:square:1.11",
+        "aspect:Mars:Neptune:opposition:1.14"
+      ],
+      "text": "Nothing in the geometry sits closer than the Sun and Pluto: 0.3° from an exact square. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Jupiter square Pluto at 1.1°, and Mars opposition Neptune at 1.1° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Aries at 14.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Pisces at 20.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 21.6° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-water3-air2",
+        "modalities:cardinal5-mutable3-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 fire, 3 water, 2 air; by modality, 5 cardinal, 3 mutable, 2 fixed. A fire-weighted chart runs hot at the start line — initiative is its native language. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Saturn and Neptune were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:12.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 10.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-4/",
+    "label": "Everyone born on April 4"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:14.72",
+    "decan:aries:second",
+    "personal:Mercury:Pisces:20.3°",
+    "personal:Venus:Pisces:21.6°",
+    "personal:Mars:Aquarius:27.8°",
+    "aspect:Sun:Pluto:square:0.27",
+    "aspect:Jupiter:Pluto:square:1.11",
+    "aspect:Mars:Neptune:opposition:1.14",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "elements:fire5-water3-air2",
+    "modalities:cardinal5-mutable3-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:libra",
+    "moon-band:12.1"
+  ],
+  "measurements": {
+    "originalWords": 429,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

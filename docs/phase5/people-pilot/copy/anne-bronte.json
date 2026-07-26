@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "anne-bronte",
+  "seedRound": 0,
+  "qid": "Q44520",
+  "displayName": "Anne Brontë",
+  "identity": "Poet · United Kingdom · 1820–1849",
+  "title": "Anne Brontë's birth chart",
+  "metaDescription": "Anne Brontë's chart, computed from a sourced birth date: Sun at 26.4° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: the Sun and Saturn within 0.2°, identity wired to structure. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Sun:Saturn:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.37",
+        "decan:capricorn:third"
+      ],
+      "text": "The Sun sits at 26.4° Capricorn — the third decan, 20°–30°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Capricorn and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:3.0°",
+        "personal:Venus:Aquarius:20.5°",
+        "personal:Mars:Cancer:25.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (3.0°), Venus in Aquarius (20.5°), Mars in Cancer (25.5°): a mind that trusts the measured and the checked, taste led by wit and proportion, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:sextile:0.21",
+        "aspect:Mars:Pluto:trine:0.25",
+        "aspect:Saturn:Uranus:square:0.36"
+      ],
+      "text": "The Sun to Saturn is the closest call of the day, a sextile within 0.2°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mars trine Pluto at 0.3°, and Saturn square Uranus at 0.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, one sits in a sign it has an opinion about. Mars in Cancer at 25.5° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-earth2-fire2",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 3 air, 3 water, 2 earth, 2 fire by element and 4 mutable, 3 cardinal, 3 fixed by mode. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Mars was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:15.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 15.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 21.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-17/",
+    "label": "Everyone born on January 17"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Saturn:sextile",
+    "sun-degree:26.37",
+    "decan:capricorn:third",
+    "personal:Mercury:Capricorn:3.0°",
+    "personal:Venus:Aquarius:20.5°",
+    "personal:Mars:Cancer:25.5°",
+    "aspect:Sun:Saturn:sextile:0.21",
+    "aspect:Mars:Pluto:trine:0.25",
+    "aspect:Saturn:Uranus:square:0.36",
+    "figure:none",
+    "dignity:Mars:fall",
+    "elements:air3-water3-earth2-fire2",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:aquarius",
+    "moon-band:15.1"
+  ],
+  "measurements": {
+    "originalWords": 394,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

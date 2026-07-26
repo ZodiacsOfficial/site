@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "amy-winehouse",
+  "seedRound": 0,
+  "qid": "Q15897",
+  "displayName": "Amy Winehouse",
+  "identity": "Singer-songwriter · United Kingdom · 1983–2011",
+  "title": "Amy Winehouse's birth chart",
+  "metaDescription": "Amy Winehouse's chart, computed from a sourced birth date: Sun at 21.1° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Count only what the day settles, and fire still carries five of the nine placements whose signs are settled. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens.",
+  "ledeFact": "element:fire:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.06",
+        "decan:virgo:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 21.1° Virgo: the third decan, whose classical sub-ruler is Venus. A earth sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:23.5°",
+        "personal:Venus:Leo:23.2°",
+        "personal:Mars:Leo:20.3°"
+      ],
+      "text": "The personal planets sit Mercury at 23.5° Virgo, Venus at 23.2° Leo, Mars at 20.3° Leo. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:conjunction:1.22",
+        "aspect:Neptune:Pluto:sextile:1.51",
+        "aspect:Sun:Mercury:conjunction:2.41"
+      ],
+      "text": "The tightest geometry in the chart puts Jupiter in the same degree of the zodiac from Uranus, 1.2° off exact. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Neptune sextile Pluto at 1.5°, and the Sun conjunction Mercury at 2.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mercury in Virgo at 23.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Sagittarius at 4.3° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth2-water1-air1",
+        "modalities:mutable5-fixed3-cardinal1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 5 fire, 2 earth, 1 water, 1 air by element and 5 mutable, 3 fixed, 1 cardinal by modality. A fire-weighted chart runs hot at the start line — initiative is its native language. Mercury and Venus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.3° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-14/",
+    "label": "Everyone born on September 14"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "element:fire:5",
+    "sun-degree:21.06",
+    "decan:virgo:third",
+    "personal:Mercury:Virgo:23.5°",
+    "personal:Venus:Leo:23.2°",
+    "personal:Mars:Leo:20.3°",
+    "aspect:Jupiter:Uranus:conjunction:1.22",
+    "aspect:Neptune:Pluto:sextile:1.51",
+    "aspect:Sun:Mercury:conjunction:2.41",
+    "figure:none",
+    "dignity:Mercury:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:fire5-earth2-water1-air1",
+    "modalities:mutable5-fixed3-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 421,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

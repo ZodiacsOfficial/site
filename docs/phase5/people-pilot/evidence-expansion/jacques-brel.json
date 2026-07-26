@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jacques-brel",
+ "qid": "Q1666",
+ "displayName": "Jacques Brel",
+ "wikidataLabel": "Jacques Brel",
+ "wikidataDescription": "Belgian singer (1929–1978)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1666",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518600866
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jacques Brel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jacques_Brel",
+   "pageId": 91751,
+   "revisionId": 1364854315,
+   "revisionTimestamp": "2026-07-18T22:41:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-04-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-04-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-04-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1978-10-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q12887",
+  "label": "Schaerbeek",
+  "entityUrl": "https://www.wikidata.org/wiki/Q12887",
+  "country": {
+   "entity": "Q31",
+   "label": "Belgium"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q12887",
+   "sourceEntityLabel": "Schaerbeek",
+   "latitude": 50.8675,
+   "longitude": 4.373611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q13391399",
+   "label": "chansonnier"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jacques Brel (1962).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jacques%20Brel%20(1962).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jacques_Brel_(1962).jpg",
+  "width": 1895,
+  "height": 1895,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Jack de Nijs for Anefo",
+  "credit": "Edited version of Nationaal Archief",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

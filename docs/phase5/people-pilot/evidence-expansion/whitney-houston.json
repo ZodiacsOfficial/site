@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "whitney-houston",
+ "qid": "Q34389",
+ "displayName": "Whitney Houston",
+ "wikidataLabel": "Whitney Houston",
+ "wikidataDescription": "American singer, actress, and film producer (1963–2012)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q34389",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522855377
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Whitney Houston",
+   "articleUrl": "https://en.wikipedia.org/wiki/Whitney_Houston",
+   "pageId": 34071,
+   "revisionId": 1365640537,
+   "revisionTimestamp": "2026-07-23T16:00:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1963-08-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1963-08-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1963-08-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2012-02-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q25395",
+  "label": "Newark",
+  "entityUrl": "https://www.wikidata.org/wiki/Q25395",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q25395",
+   "sourceEntityLabel": "Newark",
+   "latitude": 40.73555555555556,
+   "longitude": -74.17222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q4610556",
+   "label": "model"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Whitney Houston (cropped3).JPEG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Whitney%20Houston%20(cropped3).JPEG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Whitney_Houston_(cropped3).JPEG",
+  "width": 518,
+  "height": 736,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "PH2 Mark Kettenhofen",
+  "credit": "DefenseImagery",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

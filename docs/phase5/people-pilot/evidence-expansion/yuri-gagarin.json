@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yuri-gagarin",
+ "qid": "Q7327",
+ "displayName": "Yuri Gagarin",
+ "wikidataLabel": "Yuri Gagarin",
+ "wikidataDescription": "Soviet pilot and cosmonaut, first human in space (1934–1968)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7327",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522441484
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yuri Gagarin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yuri_Gagarin",
+   "pageId": 34226,
+   "revisionId": 1365661587,
+   "revisionTimestamp": "2026-07-23T18:41:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1934-03-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-03-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1934-03-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1968-03-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1010100",
+  "label": "Klushino",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1010100",
+  "country": {
+   "entity": "Q159",
+   "label": "Russia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1010100",
+   "sourceEntityLabel": "Klushino",
+   "latitude": 55.670555555556,
+   "longitude": 35.049722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q11631",
+   "label": "astronaut"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Yuri Gagarin portrait.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Yuri%20Gagarin%20portrait.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Yuri_Gagarin_portrait.png",
+  "width": 1466,
+  "height": 2118,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "В. Жихаренко / ТАСС Обработка: Roman Kubanskiy",
+  "credit": "Ю.А. Гагарин. Не позднее 1961 г.. Открытка с автографом. Главархив Москвы, ГБУ «ЦГА Москвы». Ф. Л-396. Оп. 1. Д. 1319. Л. 1 ([1]) Гагарин Ю. А., 1961 год. Опубликовано в: Вечерняя Москва. 12 апреля 1961, № 87 (11372) Ленинское знамя. 18 апреля 1961, № 47 (4561) Орехово-Зуевская правда. 15 апреля 1961, № 78 (10386)",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

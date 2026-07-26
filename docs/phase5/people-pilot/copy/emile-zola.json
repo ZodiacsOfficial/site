@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "emile-zola",
+  "seedRound": 0,
+  "qid": "Q504",
+  "displayName": "Émile Zola",
+  "identity": "Novelist and photographer · France · 1840–1902",
+  "title": "Émile Zola's birth chart",
+  "metaDescription": "Émile Zola's chart, computed from a sourced birth date: Sun at 12.8° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled stand in Aries — the Sun, the Moon, Mercury, Mars and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aries:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.81",
+        "decan:aries:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 12.8° Aries: the second decan, whose classical sub-ruler is the Sun. A fire sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:21.7°",
+        "personal:Venus:Pisces:13.2°",
+        "personal:Mars:Aries:20.3°"
+      ],
+      "text": "The personal planets sit Mercury at 21.7° Aries, Venus at 13.2° Pisces, Mars at 20.3° Aries. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a water sign reads as taste tuned to mood and undertow; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:trine:0",
+        "aspect:Jupiter:Uranus:trine:0.34",
+        "aspect:Mercury:Mars:conjunction:1.41"
+      ],
+      "text": "Start where the chart is tightest — Mercury trine Saturn, 0.0° of separation. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Jupiter trine Uranus at 0.3°, and Mercury conjunction Mars at 1.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:domicile"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Aries at 12.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Pisces at 13.2° is in exaltation; Mars in Aries at 20.3° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire6-water3-air1",
+        "modalities:cardinal5-mutable3-fixed2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements fire 6, water 3, air 1; modalities cardinal 5, mutable 3, fixed 2. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mercury, Jupiter and Saturn were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 10.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-2/",
+    "label": "Everyone born on April 2"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:aries:5",
+    "sun-degree:12.81",
+    "decan:aries:second",
+    "personal:Mercury:Aries:21.7°",
+    "personal:Venus:Pisces:13.2°",
+    "personal:Mars:Aries:20.3°",
+    "aspect:Mercury:Saturn:trine:0",
+    "aspect:Jupiter:Uranus:trine:0.34",
+    "aspect:Mercury:Mars:conjunction:1.41",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:domicile",
+    "elements:fire6-water3-air1",
+    "modalities:cardinal5-mutable3-fixed2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aries",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 436,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

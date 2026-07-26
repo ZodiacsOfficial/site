@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "muhammad-abduh",
+ "qid": "Q311826",
+ "displayName": "Muhammad Abduh",
+ "wikidataLabel": "Muhammad Abduh",
+ "wikidataDescription": "Egyptian Islamic jurist, religious scholar and liberal reformer (1849-1905)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q311826",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518987122
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Muhammad Abduh",
+   "articleUrl": "https://en.wikipedia.org/wiki/Muhammad_Abduh",
+   "pageId": 1149684,
+   "revisionId": 1359331840,
+   "revisionTimestamp": "2026-06-14T17:26:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1849-01-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1849-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1849-01-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1849-01-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1905-07-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5600888",
+  "label": "Shubra Khit",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5600888",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 4,
+  "coordinates": {
+   "sourceEntity": "Q5600888",
+   "sourceEntityLabel": "Shubra Khit",
+   "latitude": 31.0275,
+   "longitude": 30.71277778,
+   "precision": 0.00032357744468055,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q1234713",
+   "label": "theologian"
+  },
+  {
+   "entity": "Q16533",
+   "label": "judge"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q124634459",
+   "label": "journal editor"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q124634459",
+   "label": "journal editor"
+  },
+  {
+   "entity": "Q185992",
+   "label": "mufti"
+  }
+ ],
+ "portrait": {
+  "file": "File:Muhammad Abduh.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Muhammad%20Abduh.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Muhammad_Abduh.jpg",
+  "width": 414,
+  "height": 590,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The original uploader was Zerida at English Wikipedia.",
+  "credit": "Transferred from en.wikipedia to Commons.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

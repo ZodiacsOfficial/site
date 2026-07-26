@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "giacomo-leopardi",
+ "qid": "Q172599",
+ "displayName": "Giacomo Leopardi",
+ "wikidataLabel": "Giacomo Leopardi",
+ "wikidataDescription": "Italian noble, poet, philosopher, and writer (1798-1837)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q172599",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515941993
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Giacomo Leopardi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Giacomo_Leopardi",
+   "pageId": 45077,
+   "revisionId": 1363528479,
+   "revisionTimestamp": "2026-07-10T19:38:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1798-06-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1798-06-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1798-06-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1837-06-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q83362",
+  "label": "Recanati",
+  "entityUrl": "https://www.wikidata.org/wiki/Q83362",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q83362",
+   "sourceEntityLabel": "Recanati",
+   "latitude": 43.39855,
+   "longitude": 13.552530555556,
+   "precision": 0.00000277777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q13418253",
+   "label": "philologist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Giacomo Leopardi Morelli.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Giacomo%20Leopardi%20Morelli.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Giacomo_Leopardi_Morelli.jpg",
+  "width": 1161,
+  "height": 1550,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Domenico Morelli",
+  "credit": "photo-editing based on an ancient artwork.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

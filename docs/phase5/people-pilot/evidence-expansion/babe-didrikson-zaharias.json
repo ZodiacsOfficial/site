@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "babe-didrikson-zaharias",
+ "qid": "Q231983",
+ "displayName": "Babe Didrikson Zaharias",
+ "wikidataLabel": "Babe Didrikson Zaharias",
+ "wikidataDescription": "American golfer and athlete",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q231983",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517535102
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Babe Didrikson Zaharias",
+   "articleUrl": "https://en.wikipedia.org/wiki/Babe_Didrikson_Zaharias",
+   "pageId": 318477,
+   "revisionId": 1364137041,
+   "revisionTimestamp": "2026-07-14T19:00:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-06-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-06-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-06-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1956-09-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q45400",
+  "label": "Port Arthur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q45400",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q45400",
+   "sourceEntityLabel": "Port Arthur",
+   "latitude": 29.885,
+   "longitude": -93.94,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3665646",
+   "label": "basketball player"
+  },
+  {
+   "entity": "Q18510502",
+   "label": "javelin thrower"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q11303721",
+   "label": "golfer"
+  },
+  {
+   "entity": "Q10833314",
+   "label": "tennis player"
+  },
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  },
+  {
+   "entity": "Q10843402",
+   "label": "swimmer"
+  },
+  {
+   "entity": "Q16004431",
+   "label": "competitive diver"
+  },
+  {
+   "entity": "Q13382122",
+   "label": "high jumper"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mildred \"Babe\" Didrikson Zaharias, 1911-1956 (portrait) (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mildred%20%22Babe%22%20Didrikson%20Zaharias%2C%201911-1956%20(portrait)%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mildred_%22Babe%22_Didrikson_Zaharias,_1911-1956_(portrait)_(cropped).jpg",
+  "width": 959,
+  "height": 1261,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "World Wide Photos/ Archival by La Presse",
+  "credit": "This image is available from Bibliothèque et Archives nationales du Québec under the reference number 4011251",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "harriet-taylor-mill",
+ "qid": "Q240782",
+ "displayName": "Harriet Taylor Mill",
+ "wikidataLabel": "Harriet Taylor Mill",
+ "wikidataDescription": "British philosopher (1807–1858)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q240782",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517590913
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Harriet Taylor Mill",
+   "articleUrl": "https://en.wikipedia.org/wiki/Harriet_Taylor_Mill",
+   "pageId": 965591,
+   "revisionId": 1366157381,
+   "revisionTimestamp": "2026-07-26T16:46:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1807-10-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1807-10-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1807-10-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1858-11-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q84",
+  "label": "London",
+  "entityUrl": "https://www.wikidata.org/wiki/Q84",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q84",
+   "sourceEntityLabel": "London",
+   "latitude": 51.507222222222,
+   "longitude": -0.1275,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  },
+  {
+   "entity": "Q381353",
+   "label": "woman of letters"
+  }
+ ],
+ "portrait": {
+  "file": "File:Harriet Mill from NPG.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Harriet%20Mill%20from%20NPG.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Harriet_Mill_from_NPG.jpg",
+  "width": 2400,
+  "height": 2936,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "anonymous",
+  "credit": "Public domain works must be out of copyright in both the United States and in the source country of the work in order to be hosted on the Commons. If the work is not a U.S. work, the file must have an additional copyright tag indicating the copyright status in the source country.Note: This tag should not be used for sound recordings.PD-1923Public domain in the United States/…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

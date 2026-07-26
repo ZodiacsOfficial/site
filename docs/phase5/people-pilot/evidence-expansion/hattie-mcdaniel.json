@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hattie-mcdaniel",
+ "qid": "Q228904",
+ "displayName": "Hattie McDaniel",
+ "wikidataLabel": "Hattie McDaniel",
+ "wikidataDescription": "American actress (1893-1952)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q228904",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517446603
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hattie McDaniel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hattie_McDaniel",
+   "pageId": 92343,
+   "revisionId": 1365482751,
+   "revisionTimestamp": "2026-07-22T19:01:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1893-06-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1893-06-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1893-06-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1952-10-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49266",
+  "label": "Wichita",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49266",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49266",
+   "sourceEntityLabel": "Wichita",
+   "latitude": 37.688888888889,
+   "longitude": -97.336111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q245068",
+   "label": "comedian"
+  },
+  {
+   "entity": "Q13219244",
+   "label": "fundraiser"
+  },
+  {
+   "entity": "Q12362622",
+   "label": "philanthropist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Studio publicity Hattie McDaniel.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Studio%20publicity%20Hattie%20McDaniel.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Studio_publicity_Hattie_McDaniel.jpg",
+  "width": 502,
+  "height": 643,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://frame2interlace.wordpress.com/2011/06/19/the-first-hattie-mcdaniel-and-james-baskett/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

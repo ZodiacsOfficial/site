@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "samuel-barber",
+ "qid": "Q216870",
+ "displayName": "Samuel Barber",
+ "wikidataLabel": "Samuel Barber",
+ "wikidataDescription": "American composer (1910-1981)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q216870",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516544606
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Samuel Barber",
+   "articleUrl": "https://en.wikipedia.org/wiki/Samuel_Barber",
+   "pageId": 78910,
+   "revisionId": 1365893421,
+   "revisionTimestamp": "2026-07-25T01:33:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-03-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-03-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-03-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1981-01-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1010244",
+  "label": "West Chester",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1010244",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1010244",
+   "sourceEntityLabel": "West Chester",
+   "latitude": 39.9586,
+   "longitude": -75.605,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Samuel Barber.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Samuel%20Barber.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Samuel_Barber.jpg",
+  "width": 262,
+  "height": 366,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID van.5a51697.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

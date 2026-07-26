@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "thor-heyerdahl",
+ "qid": "Q133622",
+ "displayName": "Thor Heyerdahl",
+ "wikidataLabel": "Thor Heyerdahl",
+ "wikidataDescription": "Norwegian anthropologist and adventurer (1914-2002)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q133622",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520646095
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Thor Heyerdahl",
+   "articleUrl": "https://en.wikipedia.org/wiki/Thor_Heyerdahl",
+   "pageId": 37799,
+   "revisionId": 1362951721,
+   "revisionTimestamp": "2026-07-07T03:54:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1914-10-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-10-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1914-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-10-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2002-04-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q156125",
+  "label": "Larvik",
+  "entityUrl": "https://www.wikidata.org/wiki/Q156125",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q156125",
+   "sourceEntityLabel": "Larvik",
+   "latitude": 59.05328,
+   "longitude": 10.03517,
+   "precision": 0.17468768509339,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q3621491",
+   "label": "archaeologist"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3640160",
+   "label": "marine biologist"
+  },
+  {
+   "entity": "Q2873500",
+   "label": "adventurer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q45199",
+   "label": "sailor"
+  },
+  {
+   "entity": "Q12347522",
+   "label": "ethnographer"
+  },
+  {
+   "entity": "Q1937330",
+   "label": "world traveler"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:ThorHeyerdahl.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:ThorHeyerdahl.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:ThorHeyerdahl.jpg",
+  "width": 346,
+  "height": 501,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "uncredited",
+  "credit": "nasa.gov",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "marlene-dietrich",
+  "seedRound": 0,
+  "qid": "Q4612",
+  "displayName": "Marlene Dietrich",
+  "identity": "Film actor and singer · Germany · 1901–1992",
+  "title": "Marlene Dietrich's birth chart",
+  "metaDescription": "Marlene Dietrich's chart, computed from a sourced birth date: Sun at 5.0° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the nine placements whose signs are settled stand in Capricorn — the Sun, Mercury, Mars, Jupiter and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:capricorn:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.03",
+        "decan:capricorn:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 5.0° Capricorn: the first decan, whose classical sub-ruler is Saturn. A earth sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:1.7°",
+        "personal:Venus:Aquarius:20.1°",
+        "personal:Mars:Capricorn:25.7°"
+      ],
+      "text": "Closer in, Mercury stands at 1.7° Capricorn; Venus stands at 20.1° Aquarius; Mars stands at 25.7° Capricorn. The tradition reads a mind that trusts the measured and the checked from Mercury, taste led by wit and proportion from Venus, drive that grinds rather than flares from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:opposition:0.81",
+        "aspect:Mercury:Neptune:opposition:1.73",
+        "aspect:Venus:Uranus:sextile:1.94"
+      ],
+      "text": "Start where the chart is tightest — Uranus opposition Pluto, 0.8° of separation. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, Mercury opposition Neptune at 1.7°, and Venus sextile Uranus at 1.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mars in Capricorn at 25.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Capricorn at 20.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Capricorn at 17.2° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air3-fire1",
+        "modalities:cardinal5-mutable3-fixed1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 5 earth, 3 air, 1 fire by element and 5 cardinal, 3 mutable, 1 fixed by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 14.3° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-27/",
+    "label": "Everyone born on December 27"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "stellium:capricorn:5",
+    "sun-degree:5.03",
+    "decan:capricorn:first",
+    "personal:Mercury:Capricorn:1.7°",
+    "personal:Venus:Aquarius:20.1°",
+    "personal:Mars:Capricorn:25.7°",
+    "aspect:Uranus:Pluto:opposition:0.81",
+    "aspect:Mercury:Neptune:opposition:1.73",
+    "aspect:Venus:Uranus:sextile:1.94",
+    "figure:unaspected:Moon",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:earth5-air3-fire1",
+    "modalities:cardinal5-mutable3-fixed1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 455,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

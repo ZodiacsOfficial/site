@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maurice-richard",
+ "qid": "Q325138",
+ "displayName": "Maurice Richard",
+ "wikidataLabel": "Maurice Richard",
+ "wikidataDescription": "Canadian ice hockey player (1921–2000)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q325138",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2508004453
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Maurice Richard",
+   "articleUrl": "https://en.wikipedia.org/wiki/Maurice_Richard",
+   "pageId": 77270,
+   "revisionId": 1361501184,
+   "revisionTimestamp": "2026-06-28T09:30:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1921-08-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1921-08-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1921-08-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2000-05-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q340",
+  "label": "Montreal",
+  "entityUrl": "https://www.wikidata.org/wiki/Q340",
+  "country": {
+   "entity": "Q16",
+   "label": "Canada"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q340",
+   "sourceEntityLabel": "Montreal",
+   "latitude": 45.5033426,
+   "longitude": -73.5868411,
+   "precision": 1e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11774891",
+   "label": "ice hockey player"
+  },
+  {
+   "entity": "Q5137576",
+   "label": "ice hockey coach"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  },
+  {
+   "entity": "Q41583",
+   "label": "coach"
+  }
+ ],
+ "portrait": {
+  "file": "File:Maurice richard profile.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Maurice%20richard%20profile.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Maurice_richard_profile.jpg",
+  "width": 475,
+  "height": 642,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "National Archives of Canada, Thomas Patrick Gorman fonds",
+  "credit": "Library and Archives Canada does not allow free use of its copyrighted works. See Category:Images from Library and Archives Canada.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

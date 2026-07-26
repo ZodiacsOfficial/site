@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jose-marti",
+  "seedRound": 0,
+  "qid": "Q103285",
+  "displayName": "José Martí",
+  "identity": "Poet and politician · Cuba · 1853–1895",
+  "title": "José Martí's birth chart",
+  "metaDescription": "José Martí's chart, computed from a sourced birth date: Sun at 8.8° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a conjunction: the Sun and Mars within 0.5°, identity wired to drive. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding.",
+  "ledeFact": "aspect:Sun:Mars:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.79",
+        "decan:aquarius:first"
+      ],
+      "text": "The Sun sits at 8.8° Aquarius — the first decan, 0°–10°, which the tradition sub-rules by Saturn. Degrees matter more than the sign label here: two people born a fortnight apart share Aquarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Capricorn:20.1°",
+        "personal:Venus:Capricorn:12.6°",
+        "personal:Mars:Aquarius:8.3°"
+      ],
+      "text": "Closer in, Mercury stands at 20.1° Capricorn; Venus stands at 12.6° Capricorn; Mars stands at 8.3° Aquarius. The tradition reads a mind that trusts the measured and the checked from Mercury, taste for the substantial and the lasting from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:conjunction:0.45",
+        "aspect:Saturn:Neptune:sextile:1.28",
+        "aspect:Venus:Saturn:trine:1.35"
+      ],
+      "text": "The Sun and Mars hold the closest angle here — a conjunction, 0.5° wide. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Saturn sextile Neptune at 1.3°, and Venus trine Saturn at 1.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. The Sun in Aquarius at 8.8° is in detriment — the planet opposite its home, working against the grain; Jupiter in Sagittarius at 17.3° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air2-fire2-water1",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:0"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 earth, 2 air, 2 fire, 1 water; by modality, 4 fixed, 3 mutable, 3 cardinal. An earth emphasis reads as patience with material reality — slow hands, durable results. Not one planet was retrograde, so the whole chart reads in direct motion."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 22.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-28/",
+    "label": "Everyone born on January 28"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:conjunction",
+    "sun-degree:8.79",
+    "decan:aquarius:first",
+    "personal:Mercury:Capricorn:20.1°",
+    "personal:Venus:Capricorn:12.6°",
+    "personal:Mars:Aquarius:8.3°",
+    "aspect:Sun:Mars:conjunction:0.45",
+    "aspect:Saturn:Neptune:sextile:1.28",
+    "aspect:Venus:Saturn:trine:1.35",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:earth5-air2-fire2-water1",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:0",
+    "moon-sign:virgo",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 400,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}
