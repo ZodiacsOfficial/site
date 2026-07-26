@@ -20,11 +20,21 @@ No email has been sent. Phase 6 has not begun.
 
 The release remains blocked until `people@zodiacs.org` is proven to exist and
 to be monitored. A read-only Gmail search at 2026-07-26T06:01:21Z found no
-message to, delivered to, or mentioning that exact address. Absence of a
-message does not prove that the mailbox is unavailable, but it also cannot be
-used as positive evidence. Because the pilot contains pages about living
-people, no preview or production publication may occur before a genuine
-end-to-end receipt is confirmed.
+message to, delivered to, or mentioning that exact address. The owner then
+authorized exactly one end-to-end test:
+
+- Sent: 2026-07-26T12:10:35Z
+- Subject: `[Zodiacs Phase 5 mailbox test] 20260726T121020Z`
+- Receipt token: `PHASE5-PEOPLE-20260726T121020Z`
+- Gmail message/thread: `19f9e55936daad8e`
+- Provider state: accepted into `SENT`
+- Receipt state at 2026-07-26T12:12:48Z: absent from the monitored Inbox and
+  absent from all non-Sent mail; no delivery-failure notice present
+
+This proves that the single authorized message was sent, but it is not positive
+evidence that the destination is monitored. No retry was sent. Because the
+pilot contains pages about living people, no preview or production publication
+may occur before a genuine end-to-end receipt is confirmed.
 
 ## What was implemented
 
