@@ -18,6 +18,8 @@ const DAILY_LIMIT = 30;
  * turns worst-case spend into a fixed number.
  */
 const GLOBAL_DAILY_LIMIT = 3_000;
+/** A hung PostgREST must not hold the invocation for its full duration. */
+const QUOTA_TIMEOUT_MS = 5_000;
 const INSTANCE_LIMIT = 5;
 const INSTANCE_WINDOW_MS = 60_000;
 
@@ -267,9 +269,11 @@ async function bumpDailyQuota(
   supabaseUrl: string,
   serviceKey: string,
   visitorHash: string,
+  log: (message: string) => void = () => {},
 ): Promise<{ visitor: number; global: number } | null> {
-  try {
-    const response = await fetchImpl(`${supabaseUrl.replace(/\/+$/, '')}/rest/v1/rpc/assistant_quota_bump_v2`, {
+  const callBump = (routine: string) => fetchImpl(
+    `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/rpc/${routine}`,
+    {
       method: 'POST',
       headers: {
         apikey: serviceKey,
@@ -278,9 +282,27 @@ async function bumpDailyQuota(
         'Cache-Control': 'no-store',
       },
       body: JSON.stringify({ visitor_hash: visitorHash }),
-    });
-    if (!response.ok) return null;
-    return parseQuotaResult(await response.json());
+      signal: AbortSignal.timeout(QUOTA_TIMEOUT_MS),
+    },
+  );
+
+  try {
+    const response = await callBump('assistant_quota_bump_v2');
+    if (response.ok) return parseQuotaResult(await response.json());
+
+    // PostgREST answers 404 when a routine is absent from the schema cache:
+    // the database is behind this deployment. A migration that has not landed
+    // yet should cost the service-wide ceiling, not the whole assistant, so
+    // fall back to the per-visitor bump this replaced. The ceiling resumes on
+    // its own the moment the migration applies. Any other error still fails
+    // closed.
+    if (response.status !== 404) return null;
+    const legacy = await callBump('assistant_quota_bump');
+    if (!legacy.ok) return null;
+    const visitor = parseQuotaCount(await legacy.json());
+    if (visitor === null) return null;
+    log('assistant: assistant_quota_bump_v2 missing — per-visitor limit only until the migration applies');
+    return { visitor, global: 0 };
   } catch {
     return null;
   }
@@ -329,7 +351,7 @@ export function createAssistantHandler(overrides: Partial<HandlerDependencies> =
       return;
     }
 
-    const quota = await bumpDailyQuota(dependencies.fetch, supabaseUrl, serviceKey, visitorHash);
+    const quota = await bumpDailyQuota(dependencies.fetch, supabaseUrl, serviceKey, visitorHash, dependencies.log);
     if (quota === null) {
       sendJson(res, 503, { error: 'unavailable' });
       return;
