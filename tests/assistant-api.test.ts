@@ -308,6 +308,59 @@ describe('POST /api/assistant', () => {
     expect(modelCalls).toHaveLength(0);
   });
 
+  it('falls back to the v1 bump when the database has not caught up yet', async () => {
+    // The v2 routine is absent from PostgREST's schema cache (404/PGRST202)
+    // because the migration has not applied. The assistant must keep
+    // answering under the per-visitor limit rather than go dark.
+    const urls: string[] = [];
+    const logs: string[] = [];
+    const modelCalls: Array<Record<string, unknown>> = [];
+    const fetchImpl = (async (url: string | URL | Request) => {
+      const href = String(url);
+      urls.push(href);
+      if (href.endsWith('assistant_quota_bump_v2')) {
+        return new Response(JSON.stringify({ code: 'PGRST202' }), {
+          status: 404,
+          headers: { 'Content-Type': 'application/json' },
+        });
+      }
+      return new Response(JSON.stringify(7), { status: 200, headers: { 'Content-Type': 'application/json' } });
+    }) as typeof fetch;
+
+    const handler = createAssistantHandler(dependencies({ fetch: fetchImpl, modelCalls, logs }));
+    const res = new MockResponse();
+    await handler(request(), res);
+
+    expect(res.statusCode).toBe(200);
+    expect(modelCalls).toHaveLength(1);
+    expect(urls.at(-1)).toBe('https://example.supabase.co/rest/v1/rpc/assistant_quota_bump');
+    expect(logs.some((line) => line.includes('assistant_quota_bump_v2 missing'))).toBe(true);
+  });
+
+  it('still enforces the per-visitor limit while falling back', async () => {
+    const modelCalls: Array<Record<string, unknown>> = [];
+    const fetchImpl = (async (url: string | URL | Request) => (
+      String(url).endsWith('assistant_quota_bump_v2')
+        ? new Response('{}', { status: 404, headers: { 'Content-Type': 'application/json' } })
+        : new Response(JSON.stringify(31), { status: 200, headers: { 'Content-Type': 'application/json' } })
+    )) as typeof fetch;
+    const handler = createAssistantHandler(dependencies({ fetch: fetchImpl, modelCalls }));
+    const res = new MockResponse();
+    await handler(request(), res);
+    expect([res.statusCode, res.text]).toEqual([429, '{"error":"limit"}']);
+    expect(modelCalls).toHaveLength(0);
+  });
+
+  it('fails closed when the bump errors for any other reason', async () => {
+    const modelCalls: Array<Record<string, unknown>> = [];
+    const fetchImpl = (async () => new Response('nope', { status: 500 })) as typeof fetch;
+    const handler = createAssistantHandler(dependencies({ fetch: fetchImpl, modelCalls }));
+    const res = new MockResponse();
+    await handler(request(), res);
+    expect([res.statusCode, res.text]).toEqual([503, '{"error":"unavailable"}']);
+    expect(modelCalls).toHaveLength(0);
+  });
+
   it('rests the service when the day\'s global ceiling is spent, before calling Anthropic', async () => {
     const modelCalls: Array<Record<string, unknown>> = [];
     // Under this visitor's own limit, but the service is over its day budget.
