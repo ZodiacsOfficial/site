@@ -2,13 +2,12 @@
 
 Last updated: 2026-07-26
 
-Active phase: **Phase 5 completion candidate — the full People directory.
-The reviewed set grows from 20 to 500 people (498 deceased indexable, the two
-living profiles unchanged and protected), all 366 birthday pages carry their
-People links with progressive disclosure, and the directory becomes indexable
-under the owner's 2026-07-27 completion authorization. Living-person
-indexing remains excluded without a separate person-specific authorization.
-Phase 6 has not begun.**
+Active phase: **Phase 5 is complete and formally closed. The People
+directory carries 500 reviewed profiles — 498 deceased profiles and the
+directory publicly indexable under the owner's 2026-07-27 authorization,
+the two living profiles protected at every layer — and all 366 birthday
+pages carry their People links. Phase 6 (Ask Zodiacs) is now authorized
+and begins from the merged main. Phase 7 is not part of this program.**
 
 ## Authority and operating rule
 
@@ -191,8 +190,27 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 | 2. Event pages | Phase 1 complete | Hub and all 2026–2027 event pages live; 2026–2030 catalog tested; nearby-event cross-link proven; sitemap/schema/OG complete; each template passes Lighthouse ≥95 three times. |
 | 3. Habit layer | Phase 2 complete | Double opt-in and unsubscribe verified; three automated test-list sends; correct chart-tier test brief; installable offline-capable PWA; push separately gated; setup instructions reproducible. |
 | 4. Sharing loop | Phase 3 complete | A→B→conversion, expiry, and revocation proven; B makes no unconsented writes; share cards pixel-reviewed at 1×/2× mobile; share/download analytics pass. |
-| 5. People directory | Phase 4 complete | 500 people + 366 birthday pages live; schema/sitemap complete; 20 sampled charts verified; provenance and data-quality label on every person; no thin indexed pages. |
+| 5. People directory | Phase 4 complete | **DONE 2026-07-27** — 500 people + 366 birthday pages live; schema/sitemap complete; 20 sampled charts verified; provenance and data-quality label on every person; no thin indexed pages. |
 | 6. Ask Zodiacs | Phase 5 complete | Grounded chat behind flag; ≥90% internal-link sample; written red-team passes; rate limit and disclosure proven; static fallback useful. |
+
+## Phase 5 formal closure
+
+Phase 5 is **complete as of 2026-07-27**. Evidence:
+`docs/PHASE5-COMPLETION-CLOSEOUT.md`.
+
+- Completion PR `#169`, merge `0650c89c0706b24de4eb5ffcfe96b5faf63ea472`
+  at `2026-07-27T01:44:48Z`; post-merge Site Check run `30230522293`
+  passed all jobs.
+- Production deployment `dpl_5VcndSejYmhhWLLLRWwKRzoFV8iH` created
+  `2026-07-27T01:44:53Z`, Ready, aliased to `zodiacs.org`.
+- Live verification: directory and deceased profiles indexable; both
+  living profiles keep meta noindex, page X-Robots, and image
+  `noimageindex` protections; sitemap 498+1 rows with zero living;
+  search index 499 with zero living; birthday links with progressive
+  disclosure; Phase 1–4 routes intact.
+- IndexNow accepted 764 canonical URLs with HTTP 200.
+- Fresh review pass: no open P0/P1
+  (`docs/PHASE5-COMPLETION-REVIEW.md`).
 
 ## Phase 4 formal closure
 
