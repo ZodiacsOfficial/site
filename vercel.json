@@ -131,6 +131,11 @@
       "source": "/:path((?!api(?:/|$)|\\.well-known(?:/|$)|.*\\.[^/]+$).*[^/])",
       "destination": "/:path/",
       "permanent": true
+    },
+    {
+      "source": "/people/b-f-skinner/",
+      "destination": "/corrections/",
+      "permanent": true
     }
   ],
   "rewrites": [

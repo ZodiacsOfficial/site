@@ -49,12 +49,28 @@ if (personDirectories.length !== people.length + 1 || !personDirectories.include
   failures.push(`expected directory plus ${people.length} person directories, found ${personDirectories.length} entries`);
 }
 
-/* Living-person asset protection stays pinned in vercel.json. */
+/* Living-person asset protection stays pinned in vercel.json. Portraits are
+   binaries: this header is their only protection, so the gate checks the
+   header a rule actually sets rather than merely finding the slug somewhere
+   in a source pattern. */
 const vercel = JSON.parse(await readFile(resolve(root, 'vercel.json'), 'utf8'));
-const headerSources = (vercel.headers ?? []).map((header) => header.source).join(' ');
+const REQUIRED_ASSET_DIRECTIVES = ['noindex', 'noimageindex', 'noarchive'];
+const robotsRulesFor = (slug) => (vercel.headers ?? [])
+  .filter((rule) => typeof rule.source === 'string' && rule.source.includes(slug))
+  .flatMap((rule) => (rule.headers ?? [])
+    .filter((header) => String(header.key).toLowerCase() === 'x-robots-tag')
+    .map((header) => String(header.value).toLowerCase()));
+
 for (const person of people.filter((candidate) => !candidate.indexEligibility.eligible)) {
-  if (!headerSources.includes(person.slug)) {
-    failures.push(`${person.slug}: living-person image X-Robots protection missing from vercel.json`);
+  const values = robotsRulesFor(person.slug);
+  if (values.length === 0) {
+    failures.push(`${person.slug}: no vercel.json X-Robots-Tag rule names this living person`);
+    continue;
+  }
+  const missing = REQUIRED_ASSET_DIRECTIVES
+    .filter((directive) => !values.some((value) => value.includes(directive)));
+  if (missing.length > 0) {
+    failures.push(`${person.slug}: living-person X-Robots-Tag lacks ${missing.join(', ')}`);
   }
 }
 

@@ -261,7 +261,7 @@ const personSchema = z.object({
 
 const peoplePilotSchema = z.object({
   schema: z.literal('zodiacs.phase5.people.v1'),
-  status: z.literal('Phase 5C conservative public release — 18 indexable deceased records, 2 protected living records'),
+  status: z.literal('Phase 5 public release — 497 indexable deceased records, 2 protected living records, 1 withdrawn'),
   reviewedAtUtc: isoInstantSchema,
   sourceManifestSha256: z.string().regex(/^[a-f0-9]{64}$/u),
   sourceIndexPolicySha256: z.string().regex(/^[a-f0-9]{64}$/u),

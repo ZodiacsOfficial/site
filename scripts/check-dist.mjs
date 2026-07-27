@@ -42,6 +42,12 @@ import {
 const repo = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const root = resolve(repo, 'dist');
 const SITE_ORIGIN = 'https://zodiacs.org';
+/** Literal redirect sources from vercel.json — served URLs with no dist file. */
+const redirectSources = new Set(
+  (JSON.parse(await readFile(resolve(repo, 'vercel.json'), 'utf8')).redirects ?? [])
+    .map((rule) => rule.source)
+    .filter((source) => typeof source === 'string' && source.startsWith('/') && !/[:*(?]/.test(source)),
+);
 const failures = [];
 const fail = (msg) => { failures.push(msg); };
 let searchIndexCount = 0;
@@ -320,6 +326,11 @@ for (const file of files) {
     }
     if (!target) continue;
     if (!(await exists(target))) {
+      // A path the edge permanently redirects is a live URL, not a broken
+      // one: a withdrawn page still deserves to be named where it is
+      // discussed. Only exact literal sources count — patterns are not
+      // evaluated here.
+      if (redirectSources.has(value.split(/[?#]/)[0])) continue;
       fail(`${rel}: broken reference ${value}`);
       continue;
     }

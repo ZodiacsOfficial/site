@@ -161,12 +161,21 @@ function julianToGregorian(iso) {
 
 /**
  * The operative cusp test: does a solar ingress fall anywhere inside the
- * 24-hour UTC window of the accepted (Gregorian) birth date? Birthplace
- * longitude deliberately does not enter — the window is conservative.
+ * birthplace's civil day? The UTC day is NOT a superset of it — the local
+ * day is shifted by up to twelve hours either way — so a birth on an
+ * ingress day away from Greenwich can cross a sign boundary locally while
+ * the UTC window looks settled. Every other day-stability test in this
+ * file samples the civil day; this one must agree with them. With no zone
+ * resolvable the record is excluded anyway, so the UTC window is a safe
+ * fallback for the screening record.
  */
-function cuspCheck(gregorianIso) {
-  const start = new Date(`${gregorianIso}T00:00:00.000Z`);
-  const end = new Date(`${gregorianIso}T23:59:59.999Z`);
+function cuspCheck(gregorianIso, timeZone) {
+  const start = timeZone
+    ? civilToUtc(gregorianIso, '00:00', timeZone).utc
+    : new Date(`${gregorianIso}T00:00:00.000Z`);
+  const end = timeZone
+    ? civilToUtc(nextCivilDate(gregorianIso), '00:00', timeZone).utc
+    : new Date(`${gregorianIso}T23:59:59.999Z`);
   const startSign = Math.floor(norm(longitudeOf(Astronomy.Body.Sun, start)) / 30);
   const endSign = Math.floor(norm(longitudeOf(Astronomy.Body.Sun, end)) / 30);
   if (startSign === endSign) {
@@ -288,12 +297,6 @@ for (const candidate of candidates) {
     ? julianToGregorian(evidence.birth.time.slice(1, 11))
     : evidence.birth.time.slice(1, 11);
 
-  // 5. Cusp determinability.
-  const cusp = cuspCheck(gregorianDate);
-  if (cusp.ambiguous) {
-    reasons.push(`cusp-ambiguous: solar ingress ${cusp.fromSign}→${cusp.toSign} at ${cusp.boundaryUtc}`);
-  }
-
   let timeZone = zones[candidate.slug] ?? null;
   if (!timeZone && EXPANSION && evidence.birthPlace?.coordinates) {
     try {
@@ -301,6 +304,13 @@ for (const candidate of candidates) {
     } catch { timeZone = null; }
   }
   if (!timeZone && (EXPANSION || candidate.role === 'pilot')) reasons.push('no IANA zone resolvable for the birthplace');
+
+  // 5. Cusp determinability, measured on the birthplace's own civil day —
+  // which is why it waits for the zone above.
+  const cusp = cuspCheck(gregorianDate, timeZone);
+  if (cusp.ambiguous) {
+    reasons.push(`cusp-ambiguous: solar ingress ${cusp.fromSign}→${cusp.toSign} at ${cusp.boundaryUtc}`);
+  }
 
   if ((!EXPANSION && candidate.role !== 'pilot') || reasons.length > 0) {
     screening.push({
