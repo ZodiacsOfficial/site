@@ -43,8 +43,8 @@
   "cusp": {
     "ambiguous": false,
     "boundaryUtc": null,
-    "degreesInsideAtWindowStart": 14.8158,
-    "degreesToNextBoundaryAtWindowEnd": 14.179
+    "degreesInsideAtWindowStart": 15.04,
+    "degreesToNextBoundaryAtWindowEnd": 13.9547
   },
   "unknownTimeErrorBandDegrees": {
     "Sun": 1.005,
