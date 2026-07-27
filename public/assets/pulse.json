@@ -1,68 +1,12 @@
 {
-  "capturedAt": "2026-07-13",
+  "capturedAt": "2026-07-27",
   "wikipedia": {
     "rangeDays": 30,
-    "from": "20260613",
-    "to": "20260712",
-    "twelveAvgDay": 17199,
-    "lastDay": 16735,
+    "from": "20260627",
+    "to": "20260726",
+    "twelveAvgDay": 17088,
+    "lastDay": 18706,
     "series": [
-      {
-        "date": "20260613",
-        "views": 17674
-      },
-      {
-        "date": "20260614",
-        "views": 17905
-      },
-      {
-        "date": "20260615",
-        "views": 18028
-      },
-      {
-        "date": "20260616",
-        "views": 17799
-      },
-      {
-        "date": "20260617",
-        "views": 18057
-      },
-      {
-        "date": "20260618",
-        "views": 17151
-      },
-      {
-        "date": "20260619",
-        "views": 17221
-      },
-      {
-        "date": "20260620",
-        "views": 17560
-      },
-      {
-        "date": "20260621",
-        "views": 19640
-      },
-      {
-        "date": "20260622",
-        "views": 19336
-      },
-      {
-        "date": "20260623",
-        "views": 17391
-      },
-      {
-        "date": "20260624",
-        "views": 16559
-      },
-      {
-        "date": "20260625",
-        "views": 16243
-      },
-      {
-        "date": "20260626",
-        "views": 16936
-      },
       {
         "date": "20260627",
         "views": 15792
@@ -126,42 +70,98 @@
       {
         "date": "20260712",
         "views": 16735
+      },
+      {
+        "date": "20260713",
+        "views": 16838
+      },
+      {
+        "date": "20260714",
+        "views": 17076
+      },
+      {
+        "date": "20260715",
+        "views": 17618
+      },
+      {
+        "date": "20260716",
+        "views": 17562
+      },
+      {
+        "date": "20260717",
+        "views": 17184
+      },
+      {
+        "date": "20260718",
+        "views": 17222
+      },
+      {
+        "date": "20260719",
+        "views": 17033
+      },
+      {
+        "date": "20260720",
+        "views": 16141
+      },
+      {
+        "date": "20260721",
+        "views": 16648
+      },
+      {
+        "date": "20260722",
+        "views": 17995
+      },
+      {
+        "date": "20260723",
+        "views": 17075
+      },
+      {
+        "date": "20260724",
+        "views": 18294
+      },
+      {
+        "date": "20260725",
+        "views": 18797
+      },
+      {
+        "date": "20260726",
+        "views": 18706
       }
     ],
     "perSignAvgDay": {
-      "aries": 1333,
+      "aries": 1337,
       "taurus": 1618,
-      "gemini": 2755,
-      "cancer": 1366,
-      "leo": 1017,
-      "virgo": 1220,
-      "libra": 1066,
-      "scorpio": 1194,
-      "sagittarius": 2012,
-      "capricorn": 1421,
-      "aquarius": 1149,
-      "pisces": 1048
+      "gemini": 2378,
+      "cancer": 1346,
+      "leo": 1255,
+      "virgo": 1226,
+      "libra": 1079,
+      "scorpio": 1213,
+      "sagittarius": 1992,
+      "capricorn": 1413,
+      "aquarius": 1165,
+      "pisces": 1067
     },
     "comparisons": [
       {
         "label": "Dogecoin",
-        "avgDay": 340,
-        "multiple": 51
+        "avgDay": 295,
+        "multiple": 58
       },
       {
         "label": "Ethereum",
-        "avgDay": 693,
+        "avgDay": 686,
         "multiple": 25
       },
       {
         "label": "Solana",
-        "avgDay": 292,
-        "multiple": 59
+        "avgDay": 324,
+        "multiple": 53
       },
       {
         "label": "Shiba Inu",
-        "avgDay": 92,
-        "multiple": 187
+        "avgDay": 87,
+        "multiple": 196
       }
     ]
   },
@@ -659,7 +659,22 @@
       }
     ]
   },
-  "trendsSigns": null,
+  "trendsSigns": {
+    "capturedAt": "2026-07-27",
+    "anchor": "dogecoin",
+    "query": "{sign} horoscope",
+    "unit": "relative to \"dogecoin\" = 1",
+    "values": {
+      "leo": 0.31,
+      "virgo": 0.29,
+      "libra": 0.29,
+      "scorpio": 0.29,
+      "sagittarius": 0.23,
+      "capricorn": 0.23,
+      "aquarius": 0.26,
+      "pisces": 0.29
+    }
+  },
   "estimates": {
     "capturedAt": "2026-06",
     "by": "Editorial estimates from public cumulative hashtag and search-volume figures",
