@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "kenzo-tange",
+  "seedRound": 0,
+  "qid": "Q151794",
+  "displayName": "Kenzō Tange",
+  "identity": "Architect and university teacher · Japan · 1913–2005",
+  "title": "Kenzō Tange's birth chart",
+  "metaDescription": "Kenzō Tange's chart, computed from a sourced birth date: Sun at 11.0° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the eight placements whose signs are settled, mutable leads with three. Mutable signs end their seasons, and a mutable-heavy chart is read as one built for adaptation and hand-off rather than for standing still.",
+  "ledeFact": "modality:mutable:3",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.97",
+        "decan:virgo:second"
+      ],
+      "text": "The Sun sits at 11.0° Virgo — the second decan, 10°–20°, which the tradition sub-rules by Saturn. Degrees matter more than the sign label here: two people born a fortnight apart share Virgo and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Venus:Leo:3.2°",
+        "personal:Mars:Gemini:23.4°"
+      ],
+      "text": "Day to day the chart speaks through Venus in Leo (3.2°), Mars in Gemini (23.4°): taste that runs toward the vivid and the immediate, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:opposition:1.04",
+        "aspect:Mercury:Pluto:sextile:1.63",
+        "aspect:Sun:Jupiter:trine:2.96"
+      ],
+      "text": "The day's firmest angle joins Venus and Uranus — a opposition holding at 1.0°. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Mercury sextile Pluto at 1.6°, and the Sun trine Jupiter at 3.0° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, one sits in a sign it has an opinion about. Jupiter in Capricorn at 8.0° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth2-water2-fire1",
+        "modalities:mutable3-cardinal3-fixed2",
+        "settled-signs:8",
+        "retrograde:1",
+        "sign-uncertain:Mercury:leo:virgo"
+      ],
+      "text": "The certain ground: 8 placements whose signs hold for the whole day, dividing 3 air, 2 earth, 2 water, 1 fire by element and 3 mutable, 3 cardinal, 2 fixed by mode. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Mercury crossed from Leo into Virgo during that day, so its sign is left open. Uranus was retrograde. Jupiter changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 14.6° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-4/",
+    "label": "Everyone born on September 4"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:3",
+    "sun-degree:10.97",
+    "decan:virgo:second",
+    "personal:Venus:Leo:3.2°",
+    "personal:Mars:Gemini:23.4°",
+    "aspect:Venus:Uranus:opposition:1.04",
+    "aspect:Mercury:Pluto:sextile:1.63",
+    "aspect:Sun:Jupiter:trine:2.96",
+    "figure:none",
+    "dignity:Jupiter:fall",
+    "elements:air3-earth2-water2-fire1",
+    "modalities:mutable3-cardinal3-fixed2",
+    "settled-signs:8",
+    "retrograde:1",
+    "sign-uncertain:Mercury:leo:virgo",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 402,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "mary-shelley",
+  "seedRound": 0,
+  "qid": "Q47152",
+  "displayName": "Mary Shelley",
+  "identity": "Writer · United Kingdom · 1797–1851",
+  "title": "Mary Shelley's birth chart",
+  "metaDescription": "Mary Shelley's chart, computed from a sourced birth date: Sun at 7.5° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Virgo — the Sun, Mercury, Mars and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:virgo:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.50",
+        "decan:virgo:first"
+      ],
+      "text": "7.5° of Virgo is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Mercury in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:28.0°",
+        "personal:Venus:Libra:2.8°",
+        "personal:Mars:Virgo:0.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Virgo (28.0°), Venus in Libra (2.8°), Mars in Virgo (0.8°): thought with its feet on the ground, attraction that begins as conversation, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:sextile:0.9",
+        "aspect:Saturn:Neptune:trine:1.12",
+        "aspect:Mars:Pluto:opposition:1.57"
+      ],
+      "text": "The Sun and Neptune hold the closest angle here — a sextile, 0.9° wide. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Saturn trine Neptune at 1.1°, and Mars opposition Pluto at 1.6° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Mercury in Virgo at 28.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 2.8° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 9.5° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire2-air2-water2",
+        "modalities:mutable5-cardinal3-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 earth, 2 fire, 2 air, 2 water by element and 5 mutable, 3 cardinal, 2 fixed by mode. Jupiter and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:12.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 22.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-30/",
+    "label": "Everyone born on August 30"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "stellium:virgo:4",
+    "sun-degree:7.50",
+    "decan:virgo:first",
+    "personal:Mercury:Virgo:28.0°",
+    "personal:Venus:Libra:2.8°",
+    "personal:Mars:Virgo:0.8°",
+    "aspect:Sun:Neptune:sextile:0.9",
+    "aspect:Saturn:Neptune:trine:1.12",
+    "aspect:Mars:Pluto:opposition:1.57",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:detriment",
+    "elements:earth4-fire2-air2-water2",
+    "modalities:mutable5-cardinal3-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:sagittarius",
+    "moon-band:12.1"
+  ],
+  "measurements": {
+    "originalWords": 396,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

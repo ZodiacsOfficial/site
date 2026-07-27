@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jean-michel-basquiat",
+  "seedRound": 0,
+  "qid": "Q155407",
+  "displayName": "Jean-Michel Basquiat",
+  "identity": "Painter and composer · United States · 1960–1988",
+  "title": "Jean-Michel Basquiat's birth chart",
+  "metaDescription": "Jean-Michel Basquiat's chart, computed from a sourced birth date: Sun at 0.9° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a opposition to Jupiter at 0.1° — close enough to weld drive to expansion. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Mars:Jupiter:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:0.87",
+        "decan:capricorn:first"
+      ],
+      "text": "0.9° of Capricorn is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:22.8°",
+        "personal:Venus:Aquarius:14.6°",
+        "personal:Mars:Cancer:11.8°"
+      ],
+      "text": "Closer in, Mercury stands at 22.8° Sagittarius; Venus stands at 14.6° Aquarius; Mars stands at 11.8° Cancer. The tradition reads thought that arrives already in motion from Mercury, attraction that begins as conversation from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Jupiter:opposition:0.15",
+        "aspect:Mars:Neptune:trine:1.18",
+        "aspect:Jupiter:Neptune:sextile:1.33"
+      ],
+      "text": "Mars and Jupiter hold the closest angle here — a opposition, 0.1° wide. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, Mars trine Neptune at 1.2°, and Jupiter sextile Neptune at 1.3° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, four placements stand out. Mercury in Sagittarius at 22.8° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 11.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 11.9° is in fall; Saturn in Capricorn at 18.5° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire2-water2-air1",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in earth, 2 in fire, 2 in water, 1 in air by element, 4 cardinal, 3 fixed, 2 mutable by modality. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Mars, Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 14.3° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-22/",
+    "label": "Everyone born on December 22"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Jupiter:opposition",
+    "sun-degree:0.87",
+    "decan:capricorn:first",
+    "personal:Mercury:Sagittarius:22.8°",
+    "personal:Venus:Aquarius:14.6°",
+    "personal:Mars:Cancer:11.8°",
+    "aspect:Mars:Jupiter:opposition:0.15",
+    "aspect:Mars:Neptune:trine:1.18",
+    "aspect:Jupiter:Neptune:sextile:1.33",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:earth4-fire2-water2-air1",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 421,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

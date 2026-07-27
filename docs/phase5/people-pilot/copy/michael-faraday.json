@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "michael-faraday",
+  "seedRound": 0,
+  "qid": "Q8750",
+  "displayName": "Michael Faraday",
+  "identity": "Physicist and writer · United Kingdom · 1791–1867",
+  "title": "Michael Faraday's birth chart",
+  "metaDescription": "Michael Faraday's chart, computed from a sourced birth date: Sun at 29.4° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 22.1° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.38",
+        "decan:virgo:third"
+      ],
+      "text": "At noon on that date the Sun stood at 29.4° Virgo, inside the third decan (20°–30°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Libra:20.2°",
+        "personal:Venus:Scorpio:3.3°",
+        "personal:Mars:Leo:7.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Libra (20.2°), Venus in Scorpio (3.3°), Mars in Leo (7.5°): thought that travels by comparison, attraction that works by atmosphere, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Pluto:trine:0.02",
+        "aspect:Saturn:Uranus:trine:0.59",
+        "aspect:Mars:Jupiter:sextile:1.67"
+      ],
+      "text": "Mercury to Pluto is the closest call of the day, a trine within 0.0°. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Saturn trine Uranus at 0.6°, and Mars sextile Jupiter at 1.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Venus:detriment",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Moon in Cancer at 22.1° is in domicile — the planet in its own sign, running on home rules; Venus in Scorpio at 3.3° is in detriment — the planet opposite its home, working against the grain; Saturn in Aries at 16.7° is in fall — the tradition’s uphill placement, strength earned rather than given. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire3-water2-earth1",
+        "modalities:cardinal5-fixed4-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 4, fire 3, water 2, earth 1, and cardinal 5, fixed 4, mutable 1 across the modes. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Saturn and Pluto were retrograde. Mercury changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-22/",
+    "label": "Everyone born on September 22"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:29.38",
+    "decan:virgo:third",
+    "personal:Mercury:Libra:20.2°",
+    "personal:Venus:Scorpio:3.3°",
+    "personal:Mars:Leo:7.5°",
+    "aspect:Mercury:Pluto:trine:0.02",
+    "aspect:Saturn:Uranus:trine:0.59",
+    "aspect:Mars:Jupiter:sextile:1.67",
+    "figure:unaspected:Sun",
+    "dignity:Moon:domicile",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:fall",
+    "elements:air4-fire3-water2-earth1",
+    "modalities:cardinal5-fixed4-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:12.3"
+  ],
+  "measurements": {
+    "originalWords": 409,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

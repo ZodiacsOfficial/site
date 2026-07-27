@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "artemisia-gentileschi",
+ "qid": "Q212657",
+ "displayName": "Artemisia Gentileschi",
+ "wikidataLabel": "Artemisia Gentileschi",
+ "wikidataDescription": "Italian Baroque painter (1593-1651)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q212657",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518485135
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Artemisia Gentileschi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Artemisia_Gentileschi",
+   "pageId": 774547,
+   "revisionId": 1363826153,
+   "revisionTimestamp": "2026-07-12T18:14:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1593-07-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1593-07-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1593-07-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1653-01-01T00:00:00Z",
+  "precision": "year",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q220",
+  "label": "Rome",
+  "entityUrl": "https://www.wikidata.org/wiki/Q220",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q220",
+   "sourceEntityLabel": "Rome",
+   "latitude": 41.893055555556,
+   "longitude": 12.482777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Artemisia Gentileschi Selfportrait Martyr.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Artemisia%20Gentileschi%20Selfportrait%20Martyr.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Artemisia_Gentileschi_Selfportrait_Martyr.jpg",
+  "width": 800,
+  "height": 1073,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Artemisia Gentileschi",
+  "credit": "The Athenaeum: Home page – Source – Image",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

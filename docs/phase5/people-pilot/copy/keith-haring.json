@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "keith-haring",
+  "seedRound": 0,
+  "qid": "Q485635",
+  "displayName": "Keith Haring",
+  "identity": "Painter and writer · United States · 1958–1990",
+  "title": "Keith Haring's birth chart",
+  "metaDescription": "Keith Haring's chart, computed from a sourced birth date: Sun at 13.7° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. Fixed signs hold the middle of their seasons, and a fixed-heavy chart is read as one that consolidates and does not easily let go.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.68",
+        "decan:taurus:second"
+      ],
+      "text": "The Sun's exact place is 13.7° Taurus. That falls in the second decan, 10°–20°, sub-ruled by Mercury in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:20.8°",
+        "personal:Venus:Pisces:29.1°",
+        "personal:Mars:Pisces:5.6°"
+      ],
+      "text": "The personal planets sit Mercury at 20.8° Aries, Venus at 29.1° Pisces, Mars at 5.6° Pisces. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a water sign reads as taste tuned to mood and undertow; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:sextile:0.36",
+        "aspect:Mars:Neptune:trine:2.44",
+        "aspect:Neptune:Pluto:sextile:3.33"
+      ],
+      "text": "The tightest geometry in the chart puts Jupiter a sixth of the circle apart from Saturn, 0.4° off exact. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mars trine Neptune at 2.4°, and Neptune sextile Pluto at 3.3° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:exaltation"
+      ],
+      "text": "Of the seven planets the classical scheme judges, one sits in a sign it has an opinion about. Venus in Pisces at 29.1° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth1-air1",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 fire, 3 water, 1 earth, 1 air; by modality, 4 fixed, 3 mutable, 2 cardinal. Jupiter, Saturn, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 14.6° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-4/",
+    "label": "Everyone born on May 4"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:13.68",
+    "decan:taurus:second",
+    "personal:Mercury:Aries:20.8°",
+    "personal:Venus:Pisces:29.1°",
+    "personal:Mars:Pisces:5.6°",
+    "aspect:Jupiter:Saturn:sextile:0.36",
+    "aspect:Mars:Neptune:trine:2.44",
+    "aspect:Neptune:Pluto:sextile:3.33",
+    "figure:none",
+    "dignity:Venus:exaltation",
+    "elements:fire4-water3-earth1-air1",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 391,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

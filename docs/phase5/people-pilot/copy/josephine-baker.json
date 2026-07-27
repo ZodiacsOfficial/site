@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "josephine-baker",
+  "seedRound": 0,
+  "qid": "Q151972",
+  "displayName": "Josephine Baker",
+  "identity": "Singer and film actor · United States · 1906–1975",
+  "title": "Josephine Baker's birth chart",
+  "metaDescription": "Josephine Baker's chart, computed from a sourced birth date: Sun at 12.2° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the nine placements whose signs are settled stand in Gemini — the Sun, Mercury, Mars, Jupiter and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:gemini:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.22",
+        "decan:gemini:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 12.2° Gemini: the second decan, whose classical sub-ruler is Venus. A air sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:5.9°",
+        "personal:Venus:Cancer:9.7°",
+        "personal:Mars:Gemini:24.6°"
+      ],
+      "text": "Closer in, Mercury stands at 5.9° Gemini; Venus stands at 9.7° Cancer; Mars stands at 24.6° Gemini. The tradition reads a mind at home in argument and pattern from Mercury, taste tuned to mood and undertow from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:conjunction:0.59",
+        "aspect:Uranus:Neptune:opposition:1.58",
+        "aspect:Venus:Uranus:opposition:2.17"
+      ],
+      "text": "The day's firmest angle joins Venus and Neptune — a conjunction holding at 0.6°. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Uranus opposition Neptune at 1.6°, and Venus opposition Uranus at 2.2° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mercury in Gemini at 5.9° is in domicile — the planet in its own sign, running on home rules; Jupiter in Gemini at 17.2° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-water3-earth1",
+        "modalities:mutable6-cardinal3",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements air 5, water 3, earth 1; modalities mutable 6, cardinal 3. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Uranus was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 14.8° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-3/",
+    "label": "Everyone born on June 3"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "stellium:gemini:5",
+    "sun-degree:12.22",
+    "decan:gemini:second",
+    "personal:Mercury:Gemini:5.9°",
+    "personal:Venus:Cancer:9.7°",
+    "personal:Mars:Gemini:24.6°",
+    "aspect:Venus:Neptune:conjunction:0.59",
+    "aspect:Uranus:Neptune:opposition:1.58",
+    "aspect:Venus:Uranus:opposition:2.17",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:domicile",
+    "dignity:Jupiter:detriment",
+    "elements:air5-water3-earth1",
+    "modalities:mutable6-cardinal3",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 437,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

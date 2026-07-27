@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kahlil-gibran",
+ "qid": "Q47737",
+ "displayName": "Kahlil Gibran",
+ "wikidataLabel": "Kahlil Gibran",
+ "wikidataDescription": "Lebanese-American writer, poet, and painter (1883–1931)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q47737",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521415136
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kahlil Gibran",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kahlil_Gibran",
+   "pageId": 182080,
+   "revisionId": 1364072563,
+   "revisionTimestamp": "2026-07-14T08:54:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1883-01-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-01-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1883-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-01-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1931-04-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q181167",
+  "label": "Bsharri",
+  "entityUrl": "https://www.wikidata.org/wiki/Q181167",
+  "country": {
+   "entity": "Q822",
+   "label": "Lebanon"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q181167",
+   "sourceEntityLabel": "Bsharri",
+   "latitude": 34.251201,
+   "longitude": 36.012314,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kahlil Gibran 1913.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kahlil%20Gibran%201913.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kahlil_Gibran_1913.jpg",
+  "width": 274,
+  "height": 379,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.al-funun.org/al-funun/images/index.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

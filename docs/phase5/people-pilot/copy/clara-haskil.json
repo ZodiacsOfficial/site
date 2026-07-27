@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "clara-haskil",
+  "seedRound": 0,
+  "qid": "Q123463",
+  "displayName": "Clara Haskil",
+  "identity": "Pianist · Romania · 1895–1960",
+  "title": "Clara Haskil's birth chart",
+  "metaDescription": "Clara Haskil's chart, computed from a sourced birth date: Sun at 16.9° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Three of the nine placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. The cardinal signs begin things; a chart weighted there treats every stall as a starting gun.",
+  "ledeFact": "modality:cardinal:3",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.92",
+        "decan:capricorn:second"
+      ],
+      "text": "At the noon reference the Sun sits 16.9° into Capricorn — the second decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:15.3°",
+        "personal:Venus:Capricorn:26.0°",
+        "personal:Mars:Taurus:2.9°"
+      ],
+      "text": "The personal planets sit Mercury at 15.3° Capricorn, Venus at 26.0° Capricorn, Mars at 2.9° Taurus. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a earth sign reads as attraction that grows by reliability; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mercury:conjunction:1.66",
+        "aspect:Sun:Uranus:sextile:2.05",
+        "aspect:Mars:Saturn:opposition:3.14"
+      ],
+      "text": "Start where the chart is tightest — the Sun conjunction Mercury, 1.7° of separation. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, the Sun sextile Uranus at 2.0°, and Mars opposition Saturn at 3.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mars in Taurus at 2.9° is in detriment — the planet opposite its home, working against the grain; Jupiter in Gemini at 29.2° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-water2",
+        "modalities:cardinal3-fixed3-mutable3",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 earth, 3 air, 2 water by element and 3 cardinal, 3 fixed, 3 mutable by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 13.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-7/",
+    "label": "Everyone born on January 7"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:3",
+    "sun-degree:16.92",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:15.3°",
+    "personal:Venus:Capricorn:26.0°",
+    "personal:Mars:Taurus:2.9°",
+    "aspect:Sun:Mercury:conjunction:1.66",
+    "aspect:Sun:Uranus:sextile:2.05",
+    "aspect:Mars:Saturn:opposition:3.14",
+    "figure:none",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:earth4-air3-water2",
+    "modalities:cardinal3-fixed3-mutable3",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

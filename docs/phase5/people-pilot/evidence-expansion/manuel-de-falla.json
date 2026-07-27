@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "manuel-de-falla",
+ "qid": "Q193283",
+ "displayName": "Manuel de Falla",
+ "wikidataLabel": "Manuel de Falla",
+ "wikidataDescription": "Spanish composer (1876–1946)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q193283",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510549746
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Manuel de Falla",
+   "articleUrl": "https://en.wikipedia.org/wiki/Manuel_de_Falla",
+   "pageId": 390801,
+   "revisionId": 1358783183,
+   "revisionTimestamp": "2026-06-10T22:57:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1876-11-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1876-11-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1876-11-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1946-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q15682",
+  "label": "Cádiz",
+  "entityUrl": "https://www.wikidata.org/wiki/Q15682",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q15682",
+   "sourceEntityLabel": "Cádiz",
+   "latitude": 36.535,
+   "longitude": -6.2975,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Manuel de Falla con bastón (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Manuel%20de%20Falla%20con%20bast%C3%B3n%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Manuel_de_Falla_con_bast%C3%B3n_(cropped).jpg",
+  "width": 1161,
+  "height": 1549,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Archivo Manuel de Falla",
+  "credit": "ticket:2013012510007831 -> Archivo Manuel de Falla",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

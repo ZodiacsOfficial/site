@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jose-clemente-orozco",
+ "qid": "Q332041",
+ "displayName": "José Clemente Orozco",
+ "wikidataLabel": "José Clemente Orozco",
+ "wikidataDescription": "Mexican artist (1883–1949)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q332041",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521438731
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "José Clemente Orozco",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jos%C3%A9_Clemente_Orozco",
+   "pageId": 195840,
+   "revisionId": 1351681252,
+   "revisionTimestamp": "2026-04-29T13:30:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-11-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-11-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-11-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1949-09-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1094355",
+  "label": "Ciudad Guzmán",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1094355",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1094355",
+   "sourceEntityLabel": "Ciudad Guzmán",
+   "latitude": 19.704722222222223,
+   "longitude": -103.4625,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q3374326",
+   "label": "muralist"
+  }
+ ],
+ "portrait": {
+  "file": "File:José Clemente Orozco, c1930.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9%20Clemente%20Orozco%2C%20c1930.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9_Clemente_Orozco,_c1930.jpg",
+  "width": 3774,
+  "height": 4375,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Los Angeles Times",
+  "credit": "https://digital.library.ucla.edu/catalog/ark:/21198/zz0002pkgk",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

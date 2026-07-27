@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "isamu-noguchi",
+ "qid": "Q442628",
+ "displayName": "Isamu Noguchi",
+ "wikidataLabel": "Isamu Noguchi",
+ "wikidataDescription": "Japanese-American artist and landscape architect (1904–1988)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q442628",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521412676
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Isamu Noguchi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Isamu_Noguchi",
+   "pageId": 301708,
+   "revisionId": 1353604428,
+   "revisionTimestamp": "2026-05-11T07:13:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-11-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-11-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-11-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1988-12-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q65",
+  "label": "Los Angeles",
+  "entityUrl": "https://www.wikidata.org/wiki/Q65",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q65",
+   "sourceEntityLabel": "Los Angeles",
+   "latitude": 34.05223,
+   "longitude": -118.24368,
+   "precision": 0.10842311330607,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q2815948",
+   "label": "landscape architect"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11455387",
+   "label": "furniture designer"
+  },
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q2707485",
+   "label": "scenographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Isamu Noguchi.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Isamu%20Noguchi.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Isamu_Noguchi.jpg",
+  "width": 639,
+  "height": 642,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Jun Miki",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

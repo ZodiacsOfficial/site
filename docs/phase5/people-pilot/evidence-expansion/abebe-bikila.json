@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "abebe-bikila",
+ "qid": "Q52596",
+ "displayName": "Abebe Bikila",
+ "wikidataLabel": "Abebe Bikila",
+ "wikidataDescription": "Ethiopian double Olympic marathon champion",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q52596",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516844412
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Abebe Bikila",
+   "articleUrl": "https://en.wikipedia.org/wiki/Abebe_Bikila",
+   "pageId": 671288,
+   "revisionId": 1364323692,
+   "revisionTimestamp": "2026-07-15T22:42:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1932-08-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-08-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1932-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-08-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-10-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q971375",
+  "label": "Shewa",
+  "entityUrl": "https://www.wikidata.org/wiki/Q971375",
+  "country": {
+   "entity": "Q115",
+   "label": "Ethiopia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q971375",
+   "sourceEntityLabel": "Shewa",
+   "latitude": 9,
+   "longitude": 39,
+   "precision": 1,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q13382460",
+   "label": "marathon runner"
+  },
+  {
+   "entity": "Q4439155",
+   "label": "long-distance runner"
+  },
+  {
+   "entity": "Q11513337",
+   "label": "athletics competitor"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  },
+  {
+   "entity": "Q4333889",
+   "label": "Olympic champion"
+  }
+ ],
+ "portrait": {
+  "file": "File:Abebe Bikila 1968c.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Abebe%20Bikila%201968c.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Abebe_Bikila_1968c.jpg",
+  "width": 789,
+  "height": 972,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Jack de Nijs for Anefo",
+  "credit": "Nationaal Archief",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

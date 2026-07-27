@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nikos-kazantzakis",
+ "qid": "Q214622",
+ "displayName": "Nikos Kazantzakis",
+ "wikidataLabel": "Nikos Kazantzakis",
+ "wikidataDescription": "Greek writer, poet and philosopher (1883-1957)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q214622",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517767240
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nikos Kazantzakis",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nikos_Kazantzakis",
+   "pageId": 51418,
+   "revisionId": 1364184591,
+   "revisionTimestamp": "2026-07-15T01:13:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-02-18T00:00:00Z|proleptic-julian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-02-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-julian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-02-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-julian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1957-10-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q160544",
+  "label": "Heraklion",
+  "entityUrl": "https://www.wikidata.org/wiki/Q160544",
+  "country": {
+   "entity": "Q41",
+   "label": "Greece"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q160544",
+   "sourceEntityLabel": "Heraklion",
+   "latitude": 35.34027777777778,
+   "longitude": 25.134444444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q3589290",
+   "label": "correspondent"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nikos Kazantzakis.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nikos%20Kazantzakis.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nikos_Kazantzakis.jpg",
+  "width": 302,
+  "height": 398,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "Μουσείο N. Καζαντζάκη / Kazantzakis Museum",
+  "credit": "http://www.kazantzakis-museum.gr/icon-detail.php?block_id=http://147.52.130.130/content/images/00441.jpg&parent_block_id=2369",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

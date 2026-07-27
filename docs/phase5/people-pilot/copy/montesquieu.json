@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "montesquieu",
+  "seedRound": 0,
+  "qid": "Q15975",
+  "displayName": "Montesquieu",
+  "identity": "Philosopher and sociologist · France · 1689–1755",
+  "title": "Montesquieu's birth chart",
+  "metaDescription": "Montesquieu's chart, computed from a sourced birth date: Sun at 29.2° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Three of the nine placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. The four cardinal signs sit at the solstices and equinoxes — the scheme’s ignition points, and this chart is weighted to them.",
+  "ledeFact": "modality:cardinal:3",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.21",
+        "decan:capricorn:third"
+      ],
+      "text": "Capricorn, but precisely: 29.2°, third decan, 20°–30°, under Mercury in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Capricorn:10.9°",
+        "personal:Venus:Pisces:2.1°",
+        "personal:Mars:Sagittarius:12.6°"
+      ],
+      "text": "Closer in, Mercury stands at 10.9° Capricorn; Venus stands at 2.1° Pisces; Mars stands at 12.6° Sagittarius. The tradition reads a mind that trusts the measured and the checked from Mercury, taste tuned to mood and undertow from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:square:0.58",
+        "aspect:Mercury:Neptune:sextile:1.78",
+        "aspect:Saturn:Neptune:trine:2.66"
+      ],
+      "text": "Jupiter and Saturn hold the closest angle here — a square, 0.6° wide. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mercury sextile Neptune at 1.8°, and Saturn trine Neptune at 2.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:exaltation"
+      ],
+      "text": "The classical table has one entry for this chart. Venus in Pisces at 2.1° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth3-fire1-air1",
+        "modalities:cardinal3-mutable3-fixed3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 water, 3 earth, 1 fire, 1 air; by modality, 3 cardinal, 3 mutable, 3 fixed. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.6° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-18/",
+    "label": "Everyone born on January 18"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:3",
+    "sun-degree:29.21",
+    "decan:capricorn:third",
+    "personal:Mercury:Capricorn:10.9°",
+    "personal:Venus:Pisces:2.1°",
+    "personal:Mars:Sagittarius:12.6°",
+    "aspect:Jupiter:Saturn:square:0.58",
+    "aspect:Mercury:Neptune:sextile:1.78",
+    "aspect:Saturn:Neptune:trine:2.66",
+    "figure:unaspected:Moon",
+    "dignity:Venus:exaltation",
+    "elements:water4-earth3-fire1-air1",
+    "modalities:cardinal3-mutable3-fixed3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 394,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

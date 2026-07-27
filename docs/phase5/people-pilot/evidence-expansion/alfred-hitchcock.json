@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alfred-hitchcock",
+ "qid": "Q7374",
+ "displayName": "Alfred Hitchcock",
+ "wikidataLabel": "Alfred Hitchcock",
+ "wikidataDescription": "British filmmaker (1899–1980)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7374",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521797188
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alfred Hitchcock",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alfred_Hitchcock",
+   "pageId": 808,
+   "revisionId": 1365926614,
+   "revisionTimestamp": "2026-07-25T06:44:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-08-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-08-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-08-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1980-04-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1368969",
+  "label": "Leytonstone",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1368969",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1368969",
+   "sourceEntityLabel": "Leytonstone",
+   "latitude": 51.569,
+   "longitude": 0.01,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q578109",
+   "label": "television producer"
+  },
+  {
+   "entity": "Q2059704",
+   "label": "television director"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q222344",
+   "label": "cinematographer"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hitchcock, Alfred 02.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hitchcock%2C%20Alfred%2002.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hitchcock,_Alfred_02.jpg",
+  "width": 808,
+  "height": 973,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ante Brkan",
+  "credit": "Dr. Macro",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

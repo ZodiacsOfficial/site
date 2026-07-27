@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "robert-rauschenberg",
+ "qid": "Q164358",
+ "displayName": "Robert Rauschenberg",
+ "wikidataLabel": "Robert Rauschenberg",
+ "wikidataDescription": "American painter and graphic artist (1925–2008)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q164358",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522684025
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Robert Rauschenberg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Robert_Rauschenberg",
+   "pageId": 306181,
+   "revisionId": 1364830893,
+   "revisionTimestamp": "2026-07-18T19:39:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-10-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-10-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-10-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2008-05-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q45400",
+  "label": "Port Arthur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q45400",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q45400",
+   "sourceEntityLabel": "Port Arthur",
+   "latitude": 29.885,
+   "longitude": -93.94,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q2490358",
+   "label": "choreographer"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q10774753",
+   "label": "performance artist"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q22343478",
+   "label": "collagist"
+  },
+  {
+   "entity": "Q69319917",
+   "label": "assemblage artist"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q2519376",
+   "label": "jewelry designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Robert Rauschenberg 1999.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Robert%20Rauschenberg%201999.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Robert_Rauschenberg_1999.jpg",
+  "width": 283,
+  "height": 349,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Fvlcrvm",
+  "credit": "Photo File:Rauschenburg.jpg by Fvlcrvm; cropped to just show Rauschenberg.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "otis-redding",
+ "qid": "Q217839",
+ "displayName": "Otis Redding",
+ "wikidataLabel": "Otis Redding",
+ "wikidataDescription": "American singer and songwriter (1941–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q217839",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512333801
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Otis Redding",
+   "articleUrl": "https://en.wikipedia.org/wiki/Otis_Redding",
+   "pageId": 32817065,
+   "revisionId": 1359566326,
+   "revisionTimestamp": "2026-06-16T00:19:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1941-09-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1941-09-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1941-09-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-12-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1028058",
+  "label": "Dawson",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1028058",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1028058",
+   "sourceEntityLabel": "Dawson",
+   "latitude": 31.7739,
+   "longitude": -84.4408,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Otis Redding (2).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Otis%20Redding%20(2).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Otis_Redding_(2).png",
+  "width": 1308,
+  "height": 1002,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Volt Records",
+  "credit": "Billboard, page 7, 7 January 1967",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jose-rizal",
+ "qid": "Q1500",
+ "displayName": "José Rizal",
+ "wikidataLabel": "José Rizal",
+ "wikidataDescription": "Filipino nationalist, writer and polymath (1861–1896)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1500",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522193579
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "José Rizal",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jos%C3%A9_Rizal",
+   "pageId": 25084169,
+   "revisionId": 1364932818,
+   "revisionTimestamp": "2026-07-19T10:46:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1861-06-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1861-06-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1861-06-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1896-12-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q75978",
+  "label": "Calamba",
+  "entityUrl": "https://www.wikidata.org/wiki/Q75978",
+  "country": {
+   "entity": "Q928",
+   "label": "Philippines"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q75978",
+   "sourceEntityLabel": "Calamba",
+   "latitude": 14.216666666667,
+   "longitude": 121.16666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q12013238",
+   "label": "ophthalmologist"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q774306",
+   "label": "surgeon"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q270141",
+   "label": "polymath"
+  },
+  {
+   "entity": "Q16351788",
+   "label": "patriot"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jose Rizal full.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jose%20Rizal%20full.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jose_Rizal_full.jpg",
+  "width": 955,
+  "height": 1358,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unknown author",
+  "credit": "http://www.joserizal.ph/images/rizal.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

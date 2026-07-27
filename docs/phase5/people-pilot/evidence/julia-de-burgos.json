@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "julia-de-burgos",
+ "qid": "Q468516",
+ "displayName": "Julia de Burgos",
+ "wikidataLabel": "Julia de Burgos",
+ "wikidataDescription": "Puerto Rican poet (1914–1953)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q468516",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517874216
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Julia de Burgos",
+   "articleUrl": "https://en.wikipedia.org/wiki/Julia_de_Burgos",
+   "pageId": 299307,
+   "revisionId": 1357964076,
+   "revisionTimestamp": "2026-06-05T19:21:09Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-02-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-02-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-02-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1953-07-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q990293",
+  "label": "Carolina",
+  "entityUrl": "https://www.wikidata.org/wiki/Q990293",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q990293",
+   "sourceEntityLabel": "Carolina",
+   "latitude": 18.388888888889,
+   "longitude": -65.966666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q10509151",
+   "label": "primary school teacher"
+  },
+  {
+   "entity": "Q24702769",
+   "label": "radio journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Julia de Burgos Santo Domingo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Julia%20de%20Burgos%20Santo%20Domingo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Julia_de_Burgos_Santo_Domingo.jpg",
+  "width": 3096,
+  "height": 4128,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Ir2409",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

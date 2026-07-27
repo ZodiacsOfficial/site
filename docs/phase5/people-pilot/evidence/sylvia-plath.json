@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sylvia-plath",
+ "qid": "Q133054",
+ "displayName": "Sylvia Plath",
+ "wikidataLabel": "Sylvia Plath",
+ "wikidataDescription": "American poet and writer (1932–1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q133054",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520646042
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sylvia Plath",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sylvia_Plath",
+   "pageId": 28699,
+   "revisionId": 1365840707,
+   "revisionTimestamp": "2026-07-24T19:11:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-10-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-10-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-10-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-02-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q100",
+  "label": "Boston",
+  "entityUrl": "https://www.wikidata.org/wiki/Q100",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q100",
+   "sourceEntityLabel": "Boston",
+   "latitude": 42.360277777777775,
+   "longitude": -71.05777777777777,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sylvia Plath.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sylvia%20Plath.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sylvia_Plath.jpg",
+  "width": 288,
+  "height": 386,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Giovanni Giovannetti/Grazia Neri",
+  "credit": "https://www.flickr.com/photos/synaes/5110600085",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

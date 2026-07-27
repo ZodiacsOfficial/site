@@ -196,18 +196,53 @@ function cuspCheck(gregorianIso) {
   };
 }
 
-const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'));
-const zones = JSON.parse(await readFile(join(PILOT, 'timezones.json'), 'utf8'));
-await mkdir(join(PILOT, 'computed'), { recursive: true });
+/**
+ * PEOPLE_SET=expansion switches every input/output to the 500-person
+ * expansion set: candidates-expansion.json, evidence-expansion/,
+ * computed-expansion/, screening-expansion.json. Zones for the expansion
+ * come from coordinates via tz-lookup (the same modern-IANA-zone
+ * convention the reviewed timezones.json applied by hand), and each
+ * resolved zone is written into the record for review.
+ */
+const EXPANSION = process.env.PEOPLE_SET === 'expansion';
+const CANDIDATES_FILE = EXPANSION ? 'candidates-expansion.json' : 'candidates.json';
+const EVIDENCE_DIR = EXPANSION ? 'evidence-expansion' : 'evidence';
+const COMPUTED_DIR = EXPANSION ? 'computed-expansion' : 'computed';
+const SCREENING_FILE = EXPANSION ? 'screening-expansion.json' : 'screening.json';
+const candidates = JSON.parse(await readFile(join(PILOT, CANDIDATES_FILE), 'utf8'));
+const zones = EXPANSION ? {} : JSON.parse(await readFile(join(PILOT, 'timezones.json'), 'utf8'));
+let tzLookup = null;
+if (EXPANSION) {
+  /* Research-only dependency, deliberately outside the production
+     lockfile (the daily provenance record hashes package-lock.json).
+     Install ephemerally when running the expansion pipeline:
+       npm install --no-save tz-lookup@6.1.25 */
+  const { createRequire: createTzRequire } = await import('node:module');
+  try {
+    tzLookup = createTzRequire(import.meta.url)('tz-lookup');
+  } catch {
+    throw new Error('tz-lookup is required for PEOPLE_SET=expansion: npm install --no-save tz-lookup@6.1.25');
+  }
+}
+await mkdir(join(PILOT, COMPUTED_DIR), { recursive: true });
 
 const screening = [];
 for (const candidate of candidates) {
-  const files = await readdir(join(PILOT, 'evidence'));
+  const files = await readdir(join(PILOT, EVIDENCE_DIR));
   if (!files.includes(`${candidate.slug}.json`)) {
     screening.push({ slug: candidate.slug, verdict: 'excluded', reason: 'no-evidence-record' });
     continue;
   }
-  const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
+  const evidence = JSON.parse(await readFile(join(PILOT, EVIDENCE_DIR, `${candidate.slug}.json`), 'utf8'));
+  if (evidence.status === 'no-wikidata-entity') {
+    screening.push({ slug: candidate.slug, verdict: 'excluded', reasons: ['no-wikidata-entity'] });
+    continue;
+  }
+  if (EXPANSION && evidence.living !== false) {
+    screening.push({ slug: candidate.slug, qid: evidence.qid, displayName: evidence.displayName,
+      verdict: 'excluded', reasons: ['living or death unrecorded — the expansion admits deceased public figures only'] });
+    continue;
+  }
   const reasons = [];
 
   // 1. Day precision.
@@ -236,6 +271,19 @@ for (const candidate of candidates) {
     reasons.push(`coordinate escalation of ${coordinates.escalationSteps} steps exceeds the 1-step limit`);
   }
 
+  if (!evidence.birth.time) reasons.push('no birth-date claim');
+  const rawDate = evidence.birth.time ? evidence.birth.time.slice(1, 11) : null;
+  if (rawDate && !/^\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/u.test(rawDate)) {
+    reasons.push(`birth date is not a real calendar day (${rawDate})`);
+  }
+  if (reasons.length > 0) {
+    screening.push({
+      slug: candidate.slug, qid: evidence.qid, displayName: evidence.displayName,
+      role: candidate.role ?? 'pilot', verdict: 'excluded',
+      storedDate: rawDate, calendarModel: calendar, reasons,
+    });
+    continue;
+  }
   const gregorianDate = calendar === 'proleptic-julian'
     ? julianToGregorian(evidence.birth.time.slice(1, 11))
     : evidence.birth.time.slice(1, 11);
@@ -246,10 +294,15 @@ for (const candidate of candidates) {
     reasons.push(`cusp-ambiguous: solar ingress ${cusp.fromSign}→${cusp.toSign} at ${cusp.boundaryUtc}`);
   }
 
-  const timeZone = zones[candidate.slug] ?? null;
-  if (!timeZone && candidate.role === 'pilot') reasons.push('no reviewed IANA zone for the birthplace');
+  let timeZone = zones[candidate.slug] ?? null;
+  if (!timeZone && EXPANSION && evidence.birthPlace?.coordinates) {
+    try {
+      timeZone = tzLookup(evidence.birthPlace.coordinates.latitude, evidence.birthPlace.coordinates.longitude);
+    } catch { timeZone = null; }
+  }
+  if (!timeZone && (EXPANSION || candidate.role === 'pilot')) reasons.push('no IANA zone resolvable for the birthplace');
 
-  if (candidate.role !== 'pilot' || reasons.length > 0) {
+  if ((!EXPANSION && candidate.role !== 'pilot') || reasons.length > 0) {
     screening.push({
       slug: candidate.slug,
       qid: evidence.qid,
@@ -427,7 +480,7 @@ for (const candidate of candidates) {
   };
 
   await writeFile(
-    join(PILOT, 'computed', `${candidate.slug}.json`),
+    join(PILOT, COMPUTED_DIR, `${candidate.slug}.json`),
     `${JSON.stringify(record, null, 2)}\n`,
     'utf8',
   );
@@ -448,7 +501,7 @@ for (const candidate of candidates) {
 }
 
 await writeFile(
-  join(PILOT, 'screening.json'),
+  join(PILOT, SCREENING_FILE),
   `${JSON.stringify({
     schema: 'zodiacs.phase5.screening.v1',
     generatedFrom: 'docs/phase5/people-pilot/evidence + repository ephemeris',

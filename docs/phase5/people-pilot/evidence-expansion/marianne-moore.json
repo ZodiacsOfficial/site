@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marianne-moore",
+ "qid": "Q278495",
+ "displayName": "Marianne Moore",
+ "wikidataLabel": "Marianne Moore",
+ "wikidataDescription": "American poet (1887–1972)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q278495",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517634618
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marianne Moore",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marianne_Moore",
+   "pageId": 177707,
+   "revisionId": 1359056029,
+   "revisionTimestamp": "2026-06-12T19:57:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1887-11-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1887-11-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1887-11-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1972-02-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q963572",
+  "label": "Kirkwood",
+  "entityUrl": "https://www.wikidata.org/wiki/Q963572",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q963572",
+   "sourceEntityLabel": "Kirkwood",
+   "latitude": 38.580555555556,
+   "longitude": -90.414166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marianne Moore 1948 hires.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marianne%20Moore%201948%20hires.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marianne_Moore_1948_hires.jpg",
+  "width": 1202,
+  "height": 1536,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "Van Vechten Collection at Library of Congress",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

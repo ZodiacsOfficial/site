@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "fatima-jinnah",
+  "seedRound": 0,
+  "qid": "Q464947",
+  "displayName": "Fatima Jinnah",
+  "identity": "Politician and biographer · Pakistan · 1893–1967",
+  "title": "Fatima Jinnah's birth chart",
+  "metaDescription": "Fatima Jinnah's chart, computed from a sourced birth date: Sun at 8.3° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 8.3° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.26",
+        "decan:leo:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 8.3° Leo: the first decan, whose classical sub-ruler is the Sun. A fire sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:21.7°",
+        "personal:Venus:Virgo:2.4°",
+        "personal:Mars:Leo:19.7°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Leo (21.7°), Venus in Virgo (2.4°), Mars in Leo (19.7°): a mind that decides at speaking speed, taste for the substantial and the lasting, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:sextile:0.02",
+        "aspect:Sun:Uranus:square:1.52",
+        "aspect:Mercury:Mars:conjunction:1.97"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a sixth of the circle apart from Saturn, 0.0° off exact. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, the Sun square Uranus at 1.5°, and Mercury conjunction Mars at 2.0° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Venus:fall",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Leo at 8.3° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 2.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Libra at 8.3° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-air3-water2-earth2",
+        "modalities:fixed5-mutable4-cardinal1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: fire 3, air 3, water 2, earth 2 across the elements, and fixed 5, mutable 4, cardinal 1 across the modalities. Mercury was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:13.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 7.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-31/",
+    "label": "Everyone born on July 31"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:8.26",
+    "decan:leo:first",
+    "personal:Mercury:Leo:21.7°",
+    "personal:Venus:Virgo:2.4°",
+    "personal:Mars:Leo:19.7°",
+    "aspect:Sun:Saturn:sextile:0.02",
+    "aspect:Sun:Uranus:square:1.52",
+    "aspect:Mercury:Mars:conjunction:1.97",
+    "figure:none",
+    "dignity:Sun:domicile",
+    "dignity:Venus:fall",
+    "dignity:Saturn:exaltation",
+    "elements:fire3-air3-water2-earth2",
+    "modalities:fixed5-mutable4-cardinal1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:pisces",
+    "moon-band:13.0"
+  ],
+  "measurements": {
+    "originalWords": 407,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

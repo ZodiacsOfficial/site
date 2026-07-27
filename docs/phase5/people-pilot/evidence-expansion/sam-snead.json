@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sam-snead",
+ "qid": "Q945056",
+ "displayName": "Sam Snead",
+ "wikidataLabel": "Sam Snead",
+ "wikidataDescription": "American golfer (1912–2002)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q945056",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2507926102
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sam Snead",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sam_Snead",
+   "pageId": 53186,
+   "revisionId": 1356794211,
+   "revisionTimestamp": "2026-05-29T21:20:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-05-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-05-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-05-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2002-05-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3475263",
+  "label": "Hot Springs",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3475263",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3475263",
+   "sourceEntityLabel": "Hot Springs",
+   "latitude": 37.999444444444,
+   "longitude": -79.831666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11303721",
+   "label": "golfer"
+  },
+  {
+   "entity": "Q490253",
+   "label": "professional golfer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sam Snead 1967.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sam%20Snead%201967.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sam_Snead_1967.JPG",
+  "width": 684,
+  "height": 820,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "ABC Television",
+  "credit": "eBay item photo front photo back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

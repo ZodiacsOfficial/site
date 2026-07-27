@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "omar-sharif",
+ "qid": "Q170515",
+ "displayName": "Omar Sharif",
+ "wikidataLabel": "Omar Sharif",
+ "wikidataDescription": "Egyptian actor (1932–2015)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q170515",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522103781
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Omar Sharif",
+   "articleUrl": "https://en.wikipedia.org/wiki/Omar_Sharif",
+   "pageId": 189930,
+   "revisionId": 1361920376,
+   "revisionTimestamp": "2026-06-30T21:18:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-04-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-04-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-04-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2015-07-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q87",
+  "label": "Alexandria",
+  "entityUrl": "https://www.wikidata.org/wiki/Q87",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q87",
+   "sourceEntityLabel": "Alexandria",
+   "latitude": 31.1975,
+   "longitude": 29.8925,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q18437198",
+   "label": "bridge player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Omar Sharif 1963.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Omar%20Sharif%201963.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Omar_Sharif_1963.JPG",
+  "width": 771,
+  "height": 930,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photographer-Gene Weber, Seattle",
+  "credit": "eBay item photo front photo back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

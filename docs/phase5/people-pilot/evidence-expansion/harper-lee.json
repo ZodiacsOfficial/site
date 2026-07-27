@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "harper-lee",
+ "qid": "Q182658",
+ "displayName": "Harper Lee",
+ "wikidataLabel": "Harper Lee",
+ "wikidataDescription": "American novelist (1926–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q182658",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517506755
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Harper Lee",
+   "articleUrl": "https://en.wikipedia.org/wiki/Harper_Lee",
+   "pageId": 195086,
+   "revisionId": 1365785188,
+   "revisionTimestamp": "2026-07-24T11:36:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1926-04-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1926-04-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1926-04-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-02-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q79496",
+  "label": "Monroeville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q79496",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q79496",
+   "sourceEntityLabel": "Monroeville",
+   "latitude": 31.518075,
+   "longitude": -87.327543,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1209498",
+   "label": "poet lawyer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Harper Lee Medal (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Harper%20Lee%20Medal%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Harper_Lee_Medal_(cropped).jpg",
+  "width": 169,
+  "height": 244,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Eric Draper",
+  "credit": "White House photo by Eric Draper via [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

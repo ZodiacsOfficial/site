@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jules-verne",
+  "seedRound": 0,
+  "qid": "Q33977",
+  "displayName": "Jules Verne",
+  "identity": "Novelist · France · 1828–1905",
+  "title": "Jules Verne's birth chart",
+  "metaDescription": "Jules Verne's chart, computed from a sourced birth date: Sun at 18.8° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, fixed leads with four. The fixed signs are the scheme’s ballast — mid-season, fully committed, expensive to turn.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.76",
+        "decan:aquarius:second"
+      ],
+      "text": "At noon on that date the Sun stood at 18.8° Aquarius, inside the second decan (10°–20°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aquarius:22.7°",
+        "personal:Venus:Pisces:18.3°",
+        "personal:Mars:Sagittarius:0.5°"
+      ],
+      "text": "Closer in, Mercury stands at 22.7° Aquarius; Venus stands at 18.3° Pisces; Mars stands at 0.5° Sagittarius. The tradition reads thought that travels by comparison from Mercury, attraction that works by atmosphere from Venus, effort spent in bursts and openings from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:trine:0.7",
+        "aspect:Mars:Uranus:sextile:1.1",
+        "aspect:Venus:Neptune:sextile:1.27"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Saturn — a trine holding at 0.7°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mars sextile Uranus at 1.1°, and Venus sextile Neptune at 1.3° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Venus-Jupiter-Saturn"
+      ],
+      "text": "Venus, Jupiter, Saturn close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Moon:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Aquarius at 18.8° is in detriment — the planet opposite its home, working against the grain; the Moon in Scorpio at 14.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 18.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Cancer at 14.4° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-fire2-earth2",
+        "modalities:fixed4-cardinal4-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 4, air 2, fire 2, earth 2; modalities fixed 4, cardinal 4, mutable 2. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. Saturn was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:13.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 14.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-8/",
+    "label": "Everyone born on February 8"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:18.76",
+    "decan:aquarius:second",
+    "personal:Mercury:Aquarius:22.7°",
+    "personal:Venus:Pisces:18.3°",
+    "personal:Mars:Sagittarius:0.5°",
+    "aspect:Jupiter:Saturn:trine:0.7",
+    "aspect:Mars:Uranus:sextile:1.1",
+    "aspect:Venus:Neptune:sextile:1.27",
+    "figure:grand-trine:Venus-Jupiter-Saturn",
+    "dignity:Sun:detriment",
+    "dignity:Moon:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:water4-air2-fire2-earth2",
+    "modalities:fixed4-cardinal4-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:scorpio",
+    "moon-band:13.4"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

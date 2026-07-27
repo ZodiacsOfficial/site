@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dorothy-hodgkin",
+ "qid": "Q7487",
+ "displayName": "Dorothy Hodgkin",
+ "wikidataLabel": "Dorothy Hodgkin",
+ "wikidataDescription": "British chemist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7487",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522900637
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dorothy Hodgkin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dorothy_Hodgkin",
+   "pageId": 105825,
+   "revisionId": 1361411904,
+   "revisionTimestamp": "2026-06-27T19:55:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-05-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-05-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-05-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1994-07-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q85",
+  "label": "Cairo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q85",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q85",
+   "sourceEntityLabel": "Cairo",
+   "latitude": 30.044444444444444,
+   "longitude": 31.235833333333332,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q2919046",
+   "label": "biochemist"
+  },
+  {
+   "entity": "Q15142825",
+   "label": "crystallographer"
+  },
+  {
+   "entity": "Q14906342",
+   "label": "biophysicist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Professor Dorothy Hodgkin.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Professor%20Dorothy%20Hodgkin.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Professor_Dorothy_Hodgkin.jpg",
+  "width": 1030,
+  "height": 1580,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "University of Bristol",
+  "credit": "https://www.flickr.com/photos/bristoluniversity/45949493842/",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

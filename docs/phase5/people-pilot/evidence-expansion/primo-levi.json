@@ -1,0 +1,149 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "primo-levi",
+ "qid": "Q153670",
+ "displayName": "Primo Levi",
+ "wikidataLabel": "Primo Levi",
+ "wikidataDescription": "Italian chemist, partisan, Holocaust survivor, and writer (1919–1987)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q153670",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522077091
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Primo Levi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Primo_Levi",
+   "pageId": 39425,
+   "revisionId": 1365187435,
+   "revisionTimestamp": "2026-07-20T20:56:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1918-07-31T00:00:00Z|proleptic-gregorian",
+   "+1919-07-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-07-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1919-07-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1919-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-07-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-04-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q495",
+  "label": "Turin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q495",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q495",
+   "sourceEntityLabel": "Turin",
+   "latitude": 45.079166666666666,
+   "longitude": 7.676111111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Primo Levi.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Primo%20Levi.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Primo_Levi.jpg",
+  "width": 670,
+  "height": 1024,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown (Mondadori Publishers)",
+  "credit": "https://www.gettyimages.co.uk/detail/news-photo/primo-levi-italian-writer-partisan-and-chemist-news-photo/141551720",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

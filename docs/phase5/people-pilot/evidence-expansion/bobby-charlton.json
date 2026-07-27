@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bobby-charlton",
+ "qid": "Q171583",
+ "displayName": "Bobby Charlton",
+ "wikidataLabel": "Bobby Charlton",
+ "wikidataDescription": "English association football player and manager (1937–2023)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q171583",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518538671
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bobby Charlton",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bobby_Charlton",
+   "pageId": 4224,
+   "revisionId": 1365996210,
+   "revisionTimestamp": "2026-07-25T17:19:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1937-10-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1937-10-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1937-10-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2023-10-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q202348",
+  "label": "Ashington",
+  "entityUrl": "https://www.wikidata.org/wiki/Q202348",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q202348",
+   "sourceEntityLabel": "Ashington",
+   "latitude": 55.181,
+   "longitude": -1.568,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q628099",
+   "label": "association football coach"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q266569",
+   "label": "animator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bobby Charlton en 1966 160.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bobby%20Charlton%20en%201966%20160.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bobby_Charlton_en_1966_160.jpg",
+  "width": 489,
+  "height": 605,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Panini",
+  "credit": "FIGURINA CAMPIONI DELLO SPORT PANINI - SPORT INVERNALI RUSSELL",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

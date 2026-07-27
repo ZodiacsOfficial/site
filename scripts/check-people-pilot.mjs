@@ -14,9 +14,9 @@ const signIndex = [
   'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
 ];
 
-if (data.people.length !== 20) failures.push(`expected 20 records, found ${data.people.length}`);
-if (new Set(data.people.map((person) => person.slug)).size !== 20) failures.push('duplicate slug');
-if (new Set(data.people.map((person) => person.qid)).size !== 20) failures.push('duplicate QID');
+if (data.people.length !== 500) failures.push(`expected 500 records, found ${data.people.length}`);
+if (new Set(data.people.map((person) => person.slug)).size !== data.people.length) failures.push('duplicate slug');
+if (new Set(data.people.map((person) => person.qid)).size !== data.people.length) failures.push('duplicate QID');
 
 const birthdayFiles = new Set(
   (await readdir(resolve(root, 'src/content/birthdays')))

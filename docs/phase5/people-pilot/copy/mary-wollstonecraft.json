@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "mary-wollstonecraft",
+  "seedRound": 0,
+  "qid": "Q101638",
+  "displayName": "Mary Wollstonecraft",
+  "identity": "Translator and feminist · United Kingdom · 1759–1797",
+  "title": "Mary Wollstonecraft's birth chart",
+  "metaDescription": "Mary Wollstonecraft's chart, computed from a sourced birth date: Sun at 6.9° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 13.8° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.86",
+        "decan:taurus:first"
+      ],
+      "text": "The Sun's exact place is 6.9° Taurus. That falls in the first decan, 0°–10°, sub-ruled by Venus in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:27.2°",
+        "personal:Venus:Gemini:2.4°",
+        "personal:Mars:Aries:22.6°"
+      ],
+      "text": "Mercury holds 27.2° Taurus, Venus holds 2.4° Gemini, Mars holds 22.6° Aries — in the old shorthand, a mind that trusts the measured and the checked; taste led by wit and proportion; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Jupiter:square:0.43",
+        "aspect:Mercury:Uranus:sextile:2.09",
+        "aspect:Mars:Pluto:trine:2.38"
+      ],
+      "text": "Nothing in the geometry sits closer than Mars and Jupiter: 0.4° from an exact square. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Mercury sextile Uranus at 2.1°, and Mars trine Pluto at 2.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Taurus at 13.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Aries at 22.6° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 22.2° is in fall — the tradition’s uphill placement, strength earned rather than given. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire3-water2-air1",
+        "modalities:fixed4-mutable4-cardinal2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 earth, 3 fire, 2 water, 1 air; by modality, 4 fixed, 4 mutable, 2 cardinal. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Pluto was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:15.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 15.0° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 13.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-27/",
+    "label": "Everyone born on April 27"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:6.86",
+    "decan:taurus:first",
+    "personal:Mercury:Taurus:27.2°",
+    "personal:Venus:Gemini:2.4°",
+    "personal:Mars:Aries:22.6°",
+    "aspect:Mars:Jupiter:square:0.43",
+    "aspect:Mercury:Uranus:sextile:2.09",
+    "aspect:Mars:Pluto:trine:2.38",
+    "figure:unaspected:Sun",
+    "dignity:Moon:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "elements:earth4-fire3-water2-air1",
+    "modalities:fixed4-mutable4-cardinal2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:taurus",
+    "moon-band:15.0"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

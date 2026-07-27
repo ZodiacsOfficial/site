@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "diane-arbus",
+  "seedRound": 0,
+  "qid": "Q234608",
+  "displayName": "Diane Arbus",
+  "identity": "Photographer · United States · 1923–1971",
+  "title": "Diane Arbus's birth chart",
+  "metaDescription": "Diane Arbus's chart, computed from a sourced birth date: Sun at 23.1° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Count only what the day settles, and water still carries five of the ten placements whose signs are settled. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten.",
+  "ledeFact": "element:water:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.10",
+        "decan:pisces:third"
+      ],
+      "text": "Pisces, but precisely: 23.1°, third decan, 20°–30°, under Mars in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:2.5°",
+        "personal:Venus:Aquarius:9.7°",
+        "personal:Mars:Taurus:7.5°"
+      ],
+      "text": "Mercury holds 2.5° Pisces, Venus holds 9.7° Aquarius, Mars holds 7.5° Taurus — in the old shorthand, a mind that absorbs before it argues; taste led by wit and proportion; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:sextile:1.56",
+        "aspect:Venus:Mars:square:2.12",
+        "aspect:Saturn:Neptune:sextile:2.66"
+      ],
+      "text": "The day's firmest angle joins Mars and Pluto — a sextile holding at 1.6°. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Venus square Mars at 2.1°, and Saturn sextile Neptune at 2.7° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Pisces at 2.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Taurus at 7.5° is in detriment — the planet opposite its home, working against the grain; Saturn in Libra at 18.5° is in exaltation — the tradition’s honoured-guest placement, working at its best. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air3-earth1-fire1",
+        "modalities:fixed5-mutable3-cardinal2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 5, air 3, earth 1, fire 1; modalities fixed 5, mutable 3, cardinal 2. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. Jupiter, Saturn, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:12.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 21.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-14/",
+    "label": "Everyone born on March 14"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "element:water:5",
+    "sun-degree:23.10",
+    "decan:pisces:third",
+    "personal:Mercury:Pisces:2.5°",
+    "personal:Venus:Aquarius:9.7°",
+    "personal:Mars:Taurus:7.5°",
+    "aspect:Mars:Pluto:sextile:1.56",
+    "aspect:Venus:Mars:square:2.12",
+    "aspect:Saturn:Neptune:sextile:2.66",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:fall",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:exaltation",
+    "elements:water5-air3-earth1-fire1",
+    "modalities:fixed5-mutable3-cardinal2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:aquarius",
+    "moon-band:12.3"
+  ],
+  "measurements": {
+    "originalWords": 410,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

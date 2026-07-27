@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "aretha-franklin",
+ "qid": "Q125121",
+ "displayName": "Aretha Franklin",
+ "wikidataLabel": "Aretha Franklin",
+ "wikidataDescription": "American singer, songwriter, and pianist (1942–2018)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q125121",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522853655
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Aretha Franklin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Aretha_Franklin",
+   "pageId": 147367,
+   "revisionId": 1364035904,
+   "revisionTimestamp": "2026-07-14T02:54:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1942-03-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1942-03-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1942-03-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2018-08-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q16563",
+  "label": "Memphis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q16563",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q16563",
+   "sourceEntityLabel": "Memphis",
+   "latitude": 35.14611111111111,
+   "longitude": -90.05194444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q105652947",
+   "label": "soul musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Aretha Franklin 1968.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Aretha%20Franklin%201968.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Aretha_Franklin_1968.jpg",
+  "width": 1019,
+  "height": 1200,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Atlantic Records (Life time: Published before 1978 without a copyright notice)",
+  "credit": "Original publication: Billboard Magazine Immediate source: page 7",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

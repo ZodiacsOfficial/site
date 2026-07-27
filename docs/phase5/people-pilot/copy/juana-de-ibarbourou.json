@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "juana-de-ibarbourou",
+  "seedRound": 2,
+  "qid": "Q237914",
+  "displayName": "Juana de Ibarbourou",
+  "identity": "Writer · Uruguay · 1892–1979",
+  "title": "Juana de Ibarbourou's birth chart",
+  "metaDescription": "Juana de Ibarbourou's chart, computed from a sourced birth date: Sun at 18.6° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 23.2° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.57",
+        "decan:pisces:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 18.6° Pisces: the second decan, whose classical sub-ruler is the Moon. A water sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:20.8°",
+        "personal:Venus:Aries:28.2°",
+        "personal:Mars:Sagittarius:27.0°"
+      ],
+      "text": "Mercury holds 20.8° Pisces, Venus holds 28.2° Aries, Mars holds 27.0° Sagittarius — in the old shorthand, a mind that absorbs before it argues; taste that runs toward the vivid and the immediate; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:square:0.45",
+        "aspect:Neptune:Pluto:conjunction:0.54",
+        "aspect:Jupiter:Saturn:opposition:0.56"
+      ],
+      "text": "Mars to Saturn is the closest call of the day, a square within 0.5°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Neptune conjunction Pluto at 0.5°, and Jupiter opposition Saturn at 0.6° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Mercury-Saturn:apex-Mars",
+        "figure:unaspected:Uranus"
+      ],
+      "text": "Mercury opposes Saturn while both square Mars. The t-square is the figure the old texts trusted for output: friction with a fixed address. Uranus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The classical table has four entries for this chart. The Moon in Cancer at 23.2° is in domicile — the planet in its own sign, running on home rules; Mercury in Pisces at 20.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 28.2° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 28.0° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire2-air2-earth1",
+        "modalities:mutable7-cardinal2-fixed1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 5, fire 2, air 2, earth 1; modalities mutable 7, cardinal 2, fixed 1. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 23.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-8/",
+    "label": "Everyone born on March 8"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:18.57",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:20.8°",
+    "personal:Venus:Aries:28.2°",
+    "personal:Mars:Sagittarius:27.0°",
+    "aspect:Mars:Saturn:square:0.45",
+    "aspect:Neptune:Pluto:conjunction:0.54",
+    "aspect:Jupiter:Saturn:opposition:0.56",
+    "figure:t-square:Mercury-Saturn:apex-Mars",
+    "figure:unaspected:Uranus",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:water5-fire2-air2-earth1",
+    "modalities:mutable7-cardinal2-fixed1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:12.8"
+  ],
+  "measurements": {
+    "originalWords": 450,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

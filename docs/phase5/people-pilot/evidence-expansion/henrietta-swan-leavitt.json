@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "henrietta-swan-leavitt",
+ "qid": "Q110181",
+ "displayName": "Henrietta Swan Leavitt",
+ "wikidataLabel": "Henrietta Swan Leavitt",
+ "wikidataDescription": "American astronomer and human calculator (1868–1921)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q110181",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517418765
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Henrietta Swan Leavitt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Henrietta_Swan_Leavitt",
+   "pageId": 590787,
+   "revisionId": 1365867414,
+   "revisionTimestamp": "2026-07-24T22:22:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1868-07-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1868-07-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1868-07-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1921-12-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2427213",
+  "label": "Lancaster",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2427213",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2427213",
+   "sourceEntityLabel": "Lancaster",
+   "latitude": 42.455555555556,
+   "longitude": -71.673611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q11202952",
+   "label": "computer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Henrietta Swan Leavitt 1921.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Henrietta%20Swan%20Leavitt%201921.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Henrietta_Swan_Leavitt_1921.png",
+  "width": 179,
+  "height": 281,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "William Henry credited as photographer in the Woman Citizen issue where this photo appeared.",
+  "credit": "Virginia Roderick, ed. (June 4, 1921) The Woman's Journal, 6 (Public domain ed.), Woman Citizen Corporation, p. 2",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

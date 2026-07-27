@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "franz-schubert",
+ "qid": "Q7312",
+ "displayName": "Franz Schubert",
+ "wikidataLabel": "Franz Schubert",
+ "wikidataDescription": "Austrian composer (1797–1828)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7312",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522261169
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Franz Schubert",
+   "articleUrl": "https://en.wikipedia.org/wiki/Franz_Schubert",
+   "pageId": 44888,
+   "revisionId": 1365821368,
+   "revisionTimestamp": "2026-07-24T16:36:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1797-01-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1797-01-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1797-01-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1828-11-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q687026",
+  "label": "Himmelpfortgrund",
+  "entityUrl": "https://www.wikidata.org/wiki/Q687026",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q687026",
+   "sourceEntityLabel": "Himmelpfortgrund",
+   "latitude": 48.2269,
+   "longitude": 16.3517,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Franz Schubert by Wilhelm August Rieder 1875 larger version.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Franz%20Schubert%20by%20Wilhelm%20August%20Rieder%201875%20larger%20version.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Franz_Schubert_by_Wilhelm_August_Rieder_1875_larger_version.png",
+  "width": 583,
+  "height": 710,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Wilhelm August Rieder",
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

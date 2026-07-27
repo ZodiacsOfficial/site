@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "lucy-maud-montgomery",
+  "seedRound": 0,
+  "qid": "Q273034",
+  "displayName": "Lucy Maud Montgomery",
+  "identity": "Writer and teacher · Canada · 1874–1942",
+  "title": "Lucy Maud Montgomery's birth chart",
+  "metaDescription": "Lucy Maud Montgomery's chart, computed from a sourced birth date: Sun at 8.3° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. Fixed signs hold the middle of their seasons, and a fixed-heavy chart is read as one that consolidates and does not easily let go.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.34",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun's exact place is 8.3° Sagittarius. That falls in the first decan, 0°–10°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:18.1°",
+        "personal:Venus:Sagittarius:21.8°",
+        "personal:Mars:Libra:16.9°"
+      ],
+      "text": "Closer in, Mercury stands at 18.1° Scorpio; Venus stands at 21.8° Sagittarius; Mars stands at 16.9° Libra. The tradition reads a mind that absorbs before it argues from Mercury, taste that runs toward the vivid and the immediate from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:sextile:1.3",
+        "aspect:Mars:Uranus:sextile:1.7",
+        "aspect:Venus:Jupiter:sextile:1.93"
+      ],
+      "text": "The Sun and Saturn hold the closest angle here — a sextile, 1.3° wide. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mars sextile Uranus at 1.7°, and Venus sextile Jupiter at 1.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Mercury-Pluto:apex-Uranus"
+      ],
+      "text": "Mercury opposes Pluto while both square Uranus. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mars in Libra at 16.9° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 9.6° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air3-earth2-water1",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 fire, 3 air, 2 earth, 1 water by element and 4 fixed, 3 mutable, 3 cardinal by modality. Venus, Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:12.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 7.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-30/",
+    "label": "Everyone born on November 30"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:8.34",
+    "decan:sagittarius:first",
+    "personal:Mercury:Scorpio:18.1°",
+    "personal:Venus:Sagittarius:21.8°",
+    "personal:Mars:Libra:16.9°",
+    "aspect:Sun:Saturn:sextile:1.3",
+    "aspect:Mars:Uranus:sextile:1.7",
+    "aspect:Venus:Jupiter:sextile:1.93",
+    "figure:t-square:Mercury-Pluto:apex-Uranus",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:domicile",
+    "elements:fire4-air3-earth2-water1",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:virgo",
+    "moon-band:12.4"
+  ],
+  "measurements": {
+    "originalWords": 403,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

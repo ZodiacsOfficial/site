@@ -1,0 +1,135 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "italo-calvino",
+ "qid": "Q154756",
+ "displayName": "Italo Calvino",
+ "wikidataLabel": "Italo Calvino",
+ "wikidataDescription": "Italian journalist and writer (1923-1985)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q154756",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521831532
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Italo Calvino",
+   "articleUrl": "https://en.wikipedia.org/wiki/Italo_Calvino",
+   "pageId": 14937,
+   "revisionId": 1365172738,
+   "revisionTimestamp": "2026-07-20T19:00:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1923-10-15T00:00:00Z|proleptic-gregorian",
+   "+1923-01-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-10-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1923-01-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1923-10-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1985-09-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1747267",
+  "label": "Santiago de las Vegas",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1747267",
+  "country": {
+   "entity": "Q241",
+   "label": "Cuba"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1747267",
+   "sourceEntityLabel": "Santiago de las Vegas",
+   "latitude": 22.9775,
+   "longitude": -82.37805556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q2516852",
+   "label": "literary editor"
+  },
+  {
+   "entity": "Q6430706",
+   "label": "critic"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Italo-Calvino.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Italo-Calvino.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Italo-Calvino.jpg",
+  "width": 330,
+  "height": 438,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The original uploader was Varie11 at Italian Wikipedia.",
+  "credit": "Transferred from it.wikipedia.org/wiki/File:Italo-Calvino.jpg; transfer was stated to be made by User:Daehan.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

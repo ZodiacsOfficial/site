@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "fridtjof-nansen",
+  "seedRound": 0,
+  "qid": "Q72292",
+  "displayName": "Fridtjof Nansen",
+  "identity": "Zoologist and polar explorer · Norway · 1861–1930",
+  "title": "Fridtjof Nansen's birth chart",
+  "metaDescription": "Fridtjof Nansen's chart, computed from a sourced birth date: Sun at 17.1° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a opposition to Pluto at 0.5° — close enough to weld thinking to depth. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Mercury:Pluto:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.13",
+        "decan:libra:second"
+      ],
+      "text": "At the noon reference the Sun sits 17.1° into Libra — the second decan, which the old scheme hands to Saturn. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:9.3°",
+        "personal:Venus:Scorpio:25.9°",
+        "personal:Mars:Libra:2.2°"
+      ],
+      "text": "Mercury holds 9.3° Scorpio, Venus holds 25.9° Scorpio, Mars holds 2.2° Libra — in the old shorthand, thought steeped in tone and memory; attraction that works by atmosphere; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:square:0.01",
+        "aspect:Mercury:Pluto:opposition:0.52",
+        "aspect:Sun:Uranus:trine:0.93"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Uranus — a square holding at 0.0°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Mercury opposition Pluto at 0.5°, and the Sun trine Uranus at 0.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks five placements here. The Sun in Libra at 17.1° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Capricorn at 11.4° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 25.9° is in detriment; Mars in Libra at 2.2° is in detriment; Jupiter in Virgo at 16.2° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-water3",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 earth, 3 air, 3 water by element and 4 mutable, 3 cardinal, 3 fixed by modality. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Uranus, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:13.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-10/",
+    "label": "Everyone born on October 10"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Pluto:opposition",
+    "sun-degree:17.13",
+    "decan:libra:second",
+    "personal:Mercury:Scorpio:9.3°",
+    "personal:Venus:Scorpio:25.9°",
+    "personal:Mars:Libra:2.2°",
+    "aspect:Jupiter:Uranus:square:0.01",
+    "aspect:Mercury:Pluto:opposition:0.52",
+    "aspect:Sun:Uranus:trine:0.93",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Moon:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:earth4-air3-water3",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:capricorn",
+    "moon-band:13.6"
+  ],
+  "measurements": {
+    "originalWords": 445,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

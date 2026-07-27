@@ -1,0 +1,107 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bessie-head",
+ "qid": "Q455286",
+ "displayName": "Bessie Head",
+ "wikidataLabel": "Bessie Emery Head",
+ "wikidataDescription": "South African born Botswanan writer and teacher (1937–1986)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q455286",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2506426042
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bessie Head",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bessie_Head",
+   "pageId": 1739103,
+   "revisionId": 1362828294,
+   "revisionTimestamp": "2026-07-06T13:12:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1937-07-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1937-07-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1937-07-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1986-04-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q185591",
+  "label": "Pietermaritzburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q185591",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q185591",
+   "sourceEntityLabel": "Pietermaritzburg",
+   "latitude": -29.6009,
+   "longitude": 30.3796,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q42909",
+   "label": "reporter"
+  },
+  {
+   "entity": "Q58487031",
+   "label": "typist"
+  }
+ ],
+ "portrait": null
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "getulio-vargas",
+  "seedRound": 2,
+  "qid": "Q156844",
+  "displayName": "Getúlio Vargas",
+  "identity": "Lawyer · Brazil · 1882–1954",
+  "title": "Getúlio Vargas's birth chart",
+  "metaDescription": "Getúlio Vargas's chart, computed from a sourced birth date: Sun at 29.4° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Six of the ten placements whose signs are settled stand in Taurus — the Moon, Venus, Jupiter, Saturn, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.43",
+        "decan:aries:third"
+      ],
+      "text": "The Sun's exact place is 29.4° Aries. That falls in the third decan, 20°–30°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:16.0°",
+        "personal:Venus:Taurus:13.9°",
+        "personal:Mars:Cancer:20.4°"
+      ],
+      "text": "Mercury holds 16.0° Aries, Venus holds 13.9° Taurus, Mars holds 20.4° Cancer — in the old shorthand, a mind that decides at speaking speed; taste for the substantial and the lasting; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:conjunction:0.36",
+        "aspect:Uranus:Neptune:trine:0.74",
+        "aspect:Venus:Uranus:trine:0.99"
+      ],
+      "text": "Start where the chart is tightest — Venus conjunction Saturn, 0.4° of separation. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Uranus trine Neptune at 0.7°, and Venus trine Uranus at 1.0° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Moon:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:fall"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. The Sun in Aries at 29.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Taurus at 22.3° is in exaltation; Venus in Taurus at 13.9° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 20.4° is in fall — the tradition’s uphill placement, strength earned rather than given. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth7-fire2-water1",
+        "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: earth 7, fire 2, water 1 across the elements, and fixed 6, cardinal 3, mutable 1 across the modalities. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 22.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-19/",
+    "label": "Everyone born on April 19"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:6",
+    "sun-degree:29.43",
+    "decan:aries:third",
+    "personal:Mercury:Aries:16.0°",
+    "personal:Venus:Taurus:13.9°",
+    "personal:Mars:Cancer:20.4°",
+    "aspect:Venus:Saturn:conjunction:0.36",
+    "aspect:Uranus:Neptune:trine:0.74",
+    "aspect:Venus:Uranus:trine:0.99",
+    "figure:unaspected:Sun",
+    "dignity:Sun:exaltation",
+    "dignity:Moon:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:fall",
+    "elements:earth7-fire2-water1",
+    "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:taurus",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 462,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

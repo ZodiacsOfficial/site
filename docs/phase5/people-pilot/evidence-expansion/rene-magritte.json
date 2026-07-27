@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rene-magritte",
+ "qid": "Q7836",
+ "displayName": "René Magritte",
+ "wikidataLabel": "René Magritte",
+ "wikidataDescription": "Belgian surrealist (1898–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7836",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517885240
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "René Magritte",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ren%C3%A9_Magritte",
+   "pageId": 26034,
+   "revisionId": 1363615202,
+   "revisionTimestamp": "2026-07-11T07:36:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-11-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-11-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-11-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-08-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q667790",
+  "label": "Lessines",
+  "entityUrl": "https://www.wikidata.org/wiki/Q667790",
+  "country": {
+   "entity": "Q31",
+   "label": "Belgium"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q667790",
+   "sourceEntityLabel": "Lessines",
+   "latitude": 50.7117,
+   "longitude": 3.83,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q1414443",
+   "label": "filmmaker"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q22343478",
+   "label": "collagist"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:René Magritte in 1961.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ren%C3%A9%20Magritte%20in%201961.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ren%C3%A9_Magritte_in_1961.jpg",
+  "width": 1983,
+  "height": 2614,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Unknown authorUnknown author Restored by Giovanni Cardinali",
+  "credit": "https://www.parismuseescollections.paris.fr/fr/musee-carnavalet/oeuvres/portrait-en-buste-du-peintre-surrealiste-rene-magritte-1898-1967-le-18#infos-principales",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

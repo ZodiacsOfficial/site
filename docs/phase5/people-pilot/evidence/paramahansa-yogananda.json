@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "paramahansa-yogananda",
+ "qid": "Q312549",
+ "displayName": "Paramahansa Yogananda",
+ "wikidataLabel": "Paramahansa Yogananda",
+ "wikidataDescription": "Yogi, Kriya Yoga guru and founder of Self-Realization Fellowship (1893-1952)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q312549",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2511885549
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Paramahansa Yogananda",
+   "articleUrl": "https://en.wikipedia.org/wiki/Paramahansa_Yogananda",
+   "pageId": 143475,
+   "revisionId": 1364010745,
+   "revisionTimestamp": "2026-07-13T23:16:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1893-01-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1893-01-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1893-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1952-03-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5584396",
+  "label": "Gorakhpur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5584396",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5584396",
+   "sourceEntityLabel": "Gorakhpur",
+   "latitude": 26.761111111111113,
+   "longitude": 83.36666666666666,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2901587",
+   "label": "yogi"
+  },
+  {
+   "entity": "Q432386",
+   "label": "preacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Paramahansa Yogananda.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Paramahansa%20Yogananda.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Paramahansa_Yogananda.jpg",
+  "width": 208,
+  "height": 250,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Public Domain version of cover of Autobiography of a Yogi, see [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

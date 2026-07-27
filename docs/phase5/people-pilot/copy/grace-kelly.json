@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "grace-kelly",
+  "seedRound": 0,
+  "qid": "Q3925",
+  "displayName": "Grace Kelly",
+  "identity": "Film actor and musician · United States · 1929–1982",
+  "title": "Grace Kelly's birth chart",
+  "metaDescription": "Grace Kelly's chart, computed from a sourced birth date: Sun at 19.8° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.3° separates the Sun and Pluto from an exact trine; at that range identity and depth read as one mechanism. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Sun:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.84",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun's position resolves to 19.8° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:11.1°",
+        "personal:Venus:Libra:29.2°",
+        "personal:Mars:Scorpio:25.8°"
+      ],
+      "text": "The personal planets sit Mercury at 11.1° Scorpio, Venus at 29.2° Libra, Mars at 25.8° Scorpio. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a air sign reads as attraction that begins as conversation; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:trine:0.31",
+        "aspect:Venus:Saturn:sextile:1.06",
+        "aspect:Saturn:Neptune:trine:5.3"
+      ],
+      "text": "The Sun to Pluto is the closest call of the day, a trine within 0.3°. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Venus sextile Saturn at 1.1°, and Saturn trine Neptune at 5.3° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Jupiter makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Venus in Libra at 29.2° is in domicile — the planet in its own sign, running on home rules; Mars in Scorpio at 25.8° is in domicile; Jupiter in Gemini at 14.1° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-fire2-earth1",
+        "modalities:fixed3-cardinal3-mutable3",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 water, 2 air, 2 fire, 1 earth by element and 3 fixed, 3 cardinal, 3 mutable by mode. Jupiter, Uranus and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 12.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-12/",
+    "label": "Everyone born on November 12"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:trine",
+    "sun-degree:19.84",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:11.1°",
+    "personal:Venus:Libra:29.2°",
+    "personal:Mars:Scorpio:25.8°",
+    "aspect:Sun:Pluto:trine:0.31",
+    "aspect:Venus:Saturn:sextile:1.06",
+    "aspect:Saturn:Neptune:trine:5.3",
+    "figure:unaspected:Jupiter",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "elements:water4-air2-fire2-earth1",
+    "modalities:fixed3-cardinal3-mutable3",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 401,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

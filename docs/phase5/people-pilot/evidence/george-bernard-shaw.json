@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "george-bernard-shaw",
+ "qid": "Q19185",
+ "displayName": "George Bernard Shaw",
+ "wikidataLabel": "George Bernard Shaw",
+ "wikidataDescription": "Irish playwright, critic, and polemicist (1856–1950)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q19185",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522687301
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "George Bernard Shaw",
+   "articleUrl": "https://en.wikipedia.org/wiki/George_Bernard_Shaw",
+   "pageId": 12855,
+   "revisionId": 1366109245,
+   "revisionTimestamp": "2026-07-26T09:16:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1856-07-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1856-07-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1856-07-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1950-11-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1761",
+  "label": "Dublin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1761",
+  "country": {
+   "entity": "Q27",
+   "label": "Ireland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1761",
+   "sourceEntityLabel": "Dublin",
+   "latitude": 53.34972222222222,
+   "longitude": -6.260277777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1350157",
+   "label": "music critic"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q12718544",
+   "label": "socialist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:George Bernard Shaw 1936.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:George%20Bernard%20Shaw%201936.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:George_Bernard_Shaw_1936.jpg",
+  "width": 2225,
+  "height": 3072,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "[1] As of March 2016: http://proxy.handle.net/10648/6bee94e8-1ad9-102f-a76c-003048944028",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

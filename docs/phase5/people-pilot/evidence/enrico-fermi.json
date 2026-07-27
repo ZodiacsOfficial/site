@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "enrico-fermi",
+ "qid": "Q8753",
+ "displayName": "Enrico Fermi",
+ "wikidataLabel": "Enrico Fermi",
+ "wikidataDescription": "Italian–American physicist (1901–1954)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8753",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521017447
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Enrico Fermi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Enrico_Fermi",
+   "pageId": 10264,
+   "revisionId": 1363600421,
+   "revisionTimestamp": "2026-07-11T05:24:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1901-09-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-09-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-09-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1954-11-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q220",
+  "label": "Rome",
+  "entityUrl": "https://www.wikidata.org/wiki/Q220",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q220",
+   "sourceEntityLabel": "Rome",
+   "latitude": 41.893055555556,
+   "longitude": 12.482777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Enrico Fermi 1943-49.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Enrico%20Fermi%201943-49.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Enrico_Fermi_1943-49.jpg",
+  "width": 2368,
+  "height": 2927,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Department of Energy-Office of Public Affairs, restored by Yann",
+  "credit": "This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

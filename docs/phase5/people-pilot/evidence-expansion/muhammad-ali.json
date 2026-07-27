@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "muhammad-ali",
+ "qid": "Q36107",
+ "displayName": "Muhammad Ali",
+ "wikidataLabel": "Muhammad Ali",
+ "wikidataDescription": "American boxer (1942–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q36107",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519753965
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Muhammad Ali",
+   "articleUrl": "https://en.wikipedia.org/wiki/Muhammad_Ali",
+   "pageId": 63747,
+   "revisionId": 1364290636,
+   "revisionTimestamp": "2026-07-15T18:27:54Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1942-01-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1942-01-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1942-01-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-06-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q43668",
+  "label": "Louisville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q43668",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q43668",
+   "sourceEntityLabel": "Louisville",
+   "latitude": 38.25611111111111,
+   "longitude": -85.75138888888888,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11338576",
+   "label": "boxer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Muhammad Ali, gtfy.00140.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Muhammad%20Ali%2C%20gtfy.00140.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Muhammad_Ali,_gtfy.00140.jpg",
+  "width": 2996,
+  "height": 3672,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bernard Gotfryd",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID gtfy.00140.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

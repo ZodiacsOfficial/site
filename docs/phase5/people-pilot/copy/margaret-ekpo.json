@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "margaret-ekpo",
+  "seedRound": 0,
+  "qid": "Q1894824",
+  "displayName": "Margaret Ekpo",
+  "identity": "Politician · Nigeria · 1914–2006",
+  "title": "Margaret Ekpo's birth chart",
+  "metaDescription": "Margaret Ekpo's chart, computed from a sourced birth date: Sun at 3.6° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 3.6° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.57",
+        "decan:leo:first"
+      ],
+      "text": "The Sun sits at 3.6° Leo — the first decan, 0°–10°, which the tradition sub-rules by the Sun. Degrees matter more than the sign label here: two people born a fortnight apart share Leo and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Cancer:18.9°",
+        "personal:Venus:Virgo:13.8°",
+        "personal:Mars:Virgo:18.7°"
+      ],
+      "text": "For the fast movers, Mercury was at 18.9° Cancer, Venus was at 13.8° Virgo, Mars was at 18.7° Virgo. Read together: a mind that absorbs before it argues; taste for the substantial and the lasting; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:sextile:0.15",
+        "aspect:Saturn:Pluto:conjunction:4.27",
+        "aspect:Venus:Mars:conjunction:4.94"
+      ],
+      "text": "Mercury and Mars hold the closest angle here — a sextile, 0.1° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Saturn conjunction Pluto at 4.3°, and Venus conjunction Mars at 4.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Venus:fall"
+      ],
+      "text": "The classical table has two entries for this chart. The Sun in Leo at 3.6° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 13.8° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-earth2-fire1",
+        "modalities:fixed3-cardinal3-mutable3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 water, 3 air, 2 earth, 1 fire by element and 3 fixed, 3 cardinal, 3 mutable by mode. Water reads the room before the room speaks — atmosphere first, analysis later. Jupiter and Uranus were retrograde. Mercury changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 14.2° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-27/",
+    "label": "Everyone born on July 27"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:3.57",
+    "decan:leo:first",
+    "personal:Mercury:Cancer:18.9°",
+    "personal:Venus:Virgo:13.8°",
+    "personal:Mars:Virgo:18.7°",
+    "aspect:Mercury:Mars:sextile:0.15",
+    "aspect:Saturn:Pluto:conjunction:4.27",
+    "aspect:Venus:Mars:conjunction:4.94",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Venus:fall",
+    "elements:water3-air3-earth2-fire1",
+    "modalities:fixed3-cardinal3-mutable3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 410,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

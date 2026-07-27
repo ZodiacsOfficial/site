@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marvin-gaye",
+ "qid": "Q189758",
+ "displayName": "Marvin Gaye",
+ "wikidataLabel": "Marvin Gaye",
+ "wikidataDescription": "American R&B and soul singer (1939–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q189758",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522858794
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marvin Gaye",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marvin_Gaye",
+   "pageId": 147995,
+   "revisionId": 1365924544,
+   "revisionTimestamp": "2026-07-25T06:19:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1939-04-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1939-04-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1939-04-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-04-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q61",
+  "label": "Washington, D.C.",
+  "entityUrl": "https://www.wikidata.org/wiki/Q61",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q61",
+   "sourceEntityLabel": "Washington, D.C.",
+   "latitude": 38.895,
+   "longitude": -77.036666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q105652947",
+   "label": "soul musician"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marvin Gaye (1973 publicity photo).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marvin%20Gaye%20(1973%20publicity%20photo).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marvin_Gaye_(1973_publicity_photo).jpg",
+  "width": 1776,
+  "height": 2048,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photograph by Jim Britt, whose other (copyrighted) photos of Gaye from the same session—many of them in full color—can be seen at his website. Originally distributed by Motown Records.",
+  "credit": "Scan via NYTimes. Retouched by uploader.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

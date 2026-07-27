@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "dorothy-dandridge",
+  "seedRound": 0,
+  "qid": "Q229251",
+  "displayName": "Dorothy Dandridge",
+  "identity": "Television actor and singer · United States · 1922–1965",
+  "title": "Dorothy Dandridge's birth chart",
+  "metaDescription": "Dorothy Dandridge's chart, computed from a sourced birth date: Sun at 16.5° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 13.9° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.52",
+        "decan:scorpio:second"
+      ],
+      "text": "16.5° of Scorpio is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:1.2°",
+        "personal:Venus:Sagittarius:9.3°",
+        "personal:Mars:Aquarius:7.0°"
+      ],
+      "text": "Closer in, Mercury stands at 1.2° Scorpio; Venus stands at 9.3° Sagittarius; Mars stands at 7.0° Aquarius. The tradition reads thought steeped in tone and memory from Mercury, attraction declared rather than implied from Venus, effort aimed through strategy and words from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:square:0.4",
+        "aspect:Uranus:Pluto:trine:1.35",
+        "aspect:Sun:Neptune:square:1.63"
+      ],
+      "text": "The day's firmest angle joins Venus and Uranus — a square holding at 0.4°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Uranus trine Pluto at 1.4°, and the Sun square Neptune at 1.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Uranus-Pluto"
+      ],
+      "text": "the Sun, Uranus, Pluto close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. The Moon in Cancer at 13.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 15.0° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water6-fire2-air2",
+        "modalities:fixed5-cardinal3-mutable2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 6 water, 2 fire, 2 air; by modality, 5 fixed, 3 cardinal, 2 mutable. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Venus, Uranus and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:13.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.1° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 13.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-9/",
+    "label": "Everyone born on November 9"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:16.52",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:1.2°",
+    "personal:Venus:Sagittarius:9.3°",
+    "personal:Mars:Aquarius:7.0°",
+    "aspect:Venus:Uranus:square:0.4",
+    "aspect:Uranus:Pluto:trine:1.35",
+    "aspect:Sun:Neptune:square:1.63",
+    "figure:grand-trine:Sun-Uranus-Pluto",
+    "dignity:Moon:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:water6-fire2-air2",
+    "modalities:fixed5-cardinal3-mutable2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:cancer",
+    "moon-band:13.1"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,94 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "camara-laye",
+ "qid": "Q1371169",
+ "displayName": "Camara Laye",
+ "wikidataLabel": "Camara Laye",
+ "wikidataDescription": "Guinean writer (1928–1980)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1371169",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2504683533
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Camara Laye",
+   "articleUrl": "https://en.wikipedia.org/wiki/Camara_Laye",
+   "pageId": 3154387,
+   "revisionId": 1292333246,
+   "revisionTimestamp": "2025-05-26T12:44:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1928-01-01T00:00:00Z|proleptic-gregorian",
+   "+1924-01-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-01-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1924-01-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-01-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1980-02-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q731232",
+  "label": "Kouroussa",
+  "entityUrl": "https://www.wikidata.org/wiki/Q731232",
+  "country": {
+   "entity": "Q1006",
+   "label": "Guinea"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q731232",
+   "sourceEntityLabel": "Kouroussa",
+   "latitude": 10.65,
+   "longitude": -9.88333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": null
+}

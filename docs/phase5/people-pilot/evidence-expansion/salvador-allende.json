@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "salvador-allende",
+ "qid": "Q440",
+ "displayName": "Salvador Allende",
+ "wikidataLabel": "Salvador Allende",
+ "wikidataDescription": "28th president of Chile (1908–1973",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q440",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522583132
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Salvador Allende",
+   "articleUrl": "https://en.wikipedia.org/wiki/Salvador_Allende",
+   "pageId": 51487,
+   "revisionId": 1365934685,
+   "revisionTimestamp": "2026-07-25T08:13:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-06-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-06-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-06-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-09-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2887",
+  "label": "Santiago",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2887",
+  "country": {
+   "entity": "Q298",
+   "label": "Chile"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2887",
+   "sourceEntityLabel": "Santiago",
+   "latitude": -33.4375,
+   "longitude": -70.65,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q774306",
+   "label": "surgeon"
+  },
+  {
+   "entity": "Q466956",
+   "label": "President of Chile"
+  }
+ ],
+ "portrait": {
+  "file": "File:Salvador Allende, President of Chile, gtfy.00154.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Salvador%20Allende%2C%20President%20of%20Chile%2C%20gtfy.00154.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Salvador_Allende,_President_of_Chile,_gtfy.00154.jpg",
+  "width": 2992,
+  "height": 3760,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bernard Gotfryd",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID gtfy.00154.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "albert-sabin",
+ "qid": "Q164790",
+ "displayName": "Albert Sabin",
+ "wikidataLabel": "Albert B. Sabin",
+ "wikidataDescription": "Jewish-Polish-American physician and epidemiologist who developed oral polio vaccines (1906-1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q164790",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517988222
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Albert Sabin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Albert_Sabin",
+   "pageId": 891357,
+   "revisionId": 1363369179,
+   "revisionTimestamp": "2026-07-09T19:38:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-08-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-08-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-08-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-03-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q761",
+  "label": "Białystok",
+  "entityUrl": "https://www.wikidata.org/wiki/Q761",
+  "country": {
+   "entity": "Q36",
+   "label": "Poland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q761",
+   "sourceEntityLabel": "Białystok",
+   "latitude": 53.13235582177266,
+   "longitude": 23.168672448229557,
+   "precision": 1e-8,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q15634281",
+   "label": "virologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q3368718",
+   "label": "pathologist"
+  },
+  {
+   "entity": "Q12119633",
+   "label": "immunologist"
+  },
+  {
+   "entity": "Q12765408",
+   "label": "epidemiologist"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q117833108",
+   "label": "Specialist in microbiology, virology and infection epidemiology"
+  },
+  {
+   "entity": "Q3779582",
+   "label": "microbiologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Albert Sabin.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Albert%20Sabin.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Albert_Sabin.jpg",
+  "width": 261,
+  "height": 380,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Original uploader was Bobak at the English Wikipedia",
+  "credit": "Originally from the English Wikipedia; the description page is/was at Albert Sabin1.jpg.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

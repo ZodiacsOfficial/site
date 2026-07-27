@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "anton-webern",
+ "qid": "Q190933",
+ "displayName": "Anton Webern",
+ "wikidataLabel": "Anton Webern",
+ "wikidataDescription": "Austrian composer and conductor",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q190933",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515849669
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Anton Webern",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anton_Webern",
+   "pageId": 65676,
+   "revisionId": 1365949380,
+   "revisionTimestamp": "2026-07-25T10:43:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-12-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-12-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-12-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1945-09-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q1643514",
+   "label": "music arranger"
+  }
+ ],
+ "portrait": {
+  "file": "File:Anton Webern (1883–1945) 1927 © Georg Fayer (1891–1950) OeNB 10450290.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Anton%20Webern%20(1883%E2%80%931945)%201927%20%C2%A9%20Georg%20Fayer%20(1891%E2%80%931950)%20OeNB%2010450290.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Anton_Webern_(1883%E2%80%931945)_1927_%C2%A9_Georg_Fayer_(1891%E2%80%931950)_OeNB_10450290.png",
+  "width": 485,
+  "height": 669,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Georg Fayer",
+  "credit": "https://www.bildarchivaustria.at/Pages/ImageDetail.aspx?p_iBildID=10450290",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

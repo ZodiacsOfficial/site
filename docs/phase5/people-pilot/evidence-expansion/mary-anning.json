@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mary-anning",
+ "qid": "Q230491",
+ "displayName": "Mary Anning",
+ "wikidataLabel": "Mary Anning",
+ "wikidataDescription": "British fossil collector and palaeontologist (1799–1847)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q230491",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520742293
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mary Anning",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mary_Anning",
+   "pageId": 38334,
+   "revisionId": 1361674186,
+   "revisionTimestamp": "2026-06-29T12:09:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1799-05-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1799-05-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1800-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1799-05-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1847-03-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q82490",
+  "label": "Lyme Regis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q82490",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q82490",
+   "sourceEntityLabel": "Lyme Regis",
+   "latitude": 50.725,
+   "longitude": -2.935277777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1662561",
+   "label": "paleontologist"
+  },
+  {
+   "entity": "Q124744102",
+   "label": "trader of naturalia"
+  },
+  {
+   "entity": "Q18624170",
+   "label": "fossil collector"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mary Anning painting.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mary%20Anning%20painting.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mary_Anning_painting.jpg",
+  "width": 5633,
+  "height": 7283,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Credited to 'Mr. Grey' in Crispin Tickell's book 'Mary Anning of Lyme Regis' (1996)",
+  "credit": "Two versions side by side, Sedgwick Museum. Also see here. According to the Sedgwick Museum, there are two versions. The earlier version is by an unknown artist, dated before 1842 and is preserved in the Natural History Museum, London. The later version is a copy by B.J. M. Donne in 1847 or 1850, and is credited to the Geological Society, London. Also see here.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

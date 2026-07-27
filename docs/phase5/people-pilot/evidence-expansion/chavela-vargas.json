@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "chavela-vargas",
+ "qid": "Q236024",
+ "displayName": "Chavela Vargas",
+ "wikidataLabel": "Chavela Vargas",
+ "wikidataDescription": "Mexican singer (1919–2012)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q236024",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520472646
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Chavela Vargas",
+   "articleUrl": "https://en.wikipedia.org/wiki/Chavela_Vargas",
+   "pageId": 1543952,
+   "revisionId": 1365058138,
+   "revisionTimestamp": "2026-07-20T01:16:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1919-04-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1919-04-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-04-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2012-08-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3947380",
+  "label": "San Joaquín",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3947380",
+  "country": {
+   "entity": "Q800",
+   "label": "Costa Rica"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q3947380",
+   "sourceEntityLabel": "San Joaquín",
+   "latitude": 10.0059992,
+   "longitude": -84.1538838,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2914170",
+   "label": "street artist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Chavela Vargas (2009).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Chavela%20Vargas%20(2009).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Chavela_Vargas_(2009).jpg",
+  "width": 1167,
+  "height": 912,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "Raúl Serrano",
+  "credit": "Flickr: Chavela Vargas y La Banda de Tlayacapan.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

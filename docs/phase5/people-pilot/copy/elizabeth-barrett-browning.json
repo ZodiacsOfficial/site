@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "elizabeth-barrett-browning",
+  "seedRound": 0,
+  "qid": "Q228494",
+  "displayName": "Elizabeth Barrett Browning",
+  "identity": "Poet · United Kingdom · 1806–1861",
+  "title": "Elizabeth Barrett Browning's birth chart",
+  "metaDescription": "Elizabeth Barrett Browning's chart, computed from a sourced birth date: Sun at 15.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the nine placements whose signs are settled stand in Pisces — the Sun, Mercury, Venus, Mars and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:pisces:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.28",
+        "decan:pisces:second"
+      ],
+      "text": "The Sun's position resolves to 15.3° Pisces — deep enough in the second decan (10°–20°) that the Moon, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:7.5°",
+        "personal:Venus:Pisces:28.5°",
+        "personal:Mars:Pisces:9.5°"
+      ],
+      "text": "Mercury holds 7.5° Pisces, Venus holds 28.5° Pisces, Mars holds 9.5° Pisces — in the old shorthand, thought steeped in tone and memory; attraction that works by atmosphere; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:conjunction:1.04",
+        "aspect:Venus:Neptune:trine:1.79",
+        "aspect:Mercury:Mars:conjunction:2.03"
+      ],
+      "text": "Mars and Pluto hold the closest angle here — a conjunction, 1.0° wide. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Venus trine Neptune at 1.8°, and Mercury conjunction Mars at 2.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Mercury in Pisces at 7.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 28.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Capricorn at 4.5° is in fall; Saturn in Libra at 27.8° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air2-earth1-fire1",
+        "modalities:mutable6-cardinal3",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 5 water, 2 air, 1 earth, 1 fire by element and 6 mutable, 3 cardinal by mode. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Venus, Saturn, Uranus and Neptune were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 14.3° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-6/",
+    "label": "Everyone born on March 6"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "stellium:pisces:5",
+    "sun-degree:15.28",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:7.5°",
+    "personal:Venus:Pisces:28.5°",
+    "personal:Mars:Pisces:9.5°",
+    "aspect:Mars:Pluto:conjunction:1.04",
+    "aspect:Venus:Neptune:trine:1.79",
+    "aspect:Mercury:Mars:conjunction:2.03",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:exaltation",
+    "elements:water5-air2-earth1-fire1",
+    "modalities:mutable6-cardinal3",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 435,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

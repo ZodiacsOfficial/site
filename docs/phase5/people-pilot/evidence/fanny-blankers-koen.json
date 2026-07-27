@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fanny-blankers-koen",
+ "qid": "Q229046",
+ "displayName": "Fanny Blankers-Koen",
+ "wikidataLabel": "Fanny Blankers-Koen",
+ "wikidataDescription": "Dutch track and field athlete (1918–2004)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q229046",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517347455
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fanny Blankers-Koen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fanny_Blankers-Koen",
+   "pageId": 70661,
+   "revisionId": 1364582265,
+   "revisionTimestamp": "2026-07-17T10:10:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1918-04-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-04-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1918-04-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-01-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10027",
+  "label": "Baarn",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10027",
+  "country": {
+   "entity": "Q55",
+   "label": "Netherlands"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q10027",
+   "sourceEntityLabel": "Baarn",
+   "latitude": 52.2125,
+   "longitude": 5.2861,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4009406",
+   "label": "sprinter"
+  },
+  {
+   "entity": "Q11513337",
+   "label": "athletics competitor"
+  },
+  {
+   "entity": "Q13381428",
+   "label": "long jumper"
+  },
+  {
+   "entity": "Q13382122",
+   "label": "high jumper"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Olympische dag in Amsterdam. Fanny Blankers-Koen, Bestanddeelnr 903-4520.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Olympische%20dag%20in%20Amsterdam.%20Fanny%20Blankers-Koen%2C%20Bestanddeelnr%20903-4520.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Olympische_dag_in_Amsterdam._Fanny_Blankers-Koen,_Bestanddeelnr_903-4520.jpg",
+  "width": 2526,
+  "height": 2888,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Daan Noske / Anefo",
+  "credit": "http://proxy.handle.net/10648/a8c9daf0-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

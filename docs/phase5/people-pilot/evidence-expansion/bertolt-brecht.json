@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bertolt-brecht",
+ "qid": "Q38757",
+ "displayName": "Bertolt Brecht",
+ "wikidataLabel": "Bertolt Brecht",
+ "wikidataDescription": "German poet, playwright, and theatre director (1898–1956)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q38757",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522600156
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bertolt Brecht",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bertolt_Brecht",
+   "pageId": 24956001,
+   "revisionId": 1362067011,
+   "revisionTimestamp": "2026-07-01T19:08:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-02-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-02-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-02-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1956-08-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2749",
+  "label": "Augsburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2749",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2749",
+   "sourceEntityLabel": "Augsburg",
+   "latitude": 48.36888888888889,
+   "longitude": 10.897777777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3387717",
+   "label": "theatre director"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q39020112",
+   "label": "Theaterintendant"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bundesarchiv Bild 183-W0409-300, Bertolt Brecht.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bundesarchiv%20Bild%20183-W0409-300%2C%20Bertolt%20Brecht.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild_183-W0409-300,_Bertolt_Brecht.jpg",
+  "width": 548,
+  "height": 794,
+  "licenseShortName": "CC BY-SA 3.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "artist": "Kolbe, Jörg",
+  "credit": "This image was provided to Wikimedia Commons by the German Federal Archive (Deutsches Bundesarchiv) as part of a cooperation project. The German Federal Archive guarantees an authentic representation only using the originals (negative and/or positive), resp. the digitalization of the originals as provided by the Digital Image Archive.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

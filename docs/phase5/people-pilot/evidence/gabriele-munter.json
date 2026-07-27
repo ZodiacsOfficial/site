@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gabriele-munter",
+ "qid": "Q463978",
+ "displayName": "Gabriele Münter",
+ "wikidataLabel": "Gabriele Münter",
+ "wikidataDescription": "German painter (1877–1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q463978",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518779261
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gabriele Münter",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gabriele_M%C3%BCnter",
+   "pageId": 1692794,
+   "revisionId": 1346326975,
+   "revisionTimestamp": "2026-03-31T06:29:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1877-02-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1877-02-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1877-02-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-05-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q64",
+  "label": "Berlin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q64",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q64",
+   "sourceEntityLabel": "Berlin",
+   "latitude": 52.516666666667,
+   "longitude": 13.383333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Image-GabrieleMuenter.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Image-GabrieleMuenter.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Image-GabrieleMuenter.jpg",
+  "width": 140,
+  "height": 181,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.fembio.org/images/WF-gabriele-muenter.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

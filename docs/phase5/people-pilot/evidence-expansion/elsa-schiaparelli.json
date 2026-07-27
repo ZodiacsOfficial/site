@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elsa-schiaparelli",
+ "qid": "Q464023",
+ "displayName": "Elsa Schiaparelli",
+ "wikidataLabel": "Elsa Schiaparelli",
+ "wikidataDescription": "Italian fashion designer and couturier (1890–1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q464023",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517850684
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elsa Schiaparelli",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elsa_Schiaparelli",
+   "pageId": 734057,
+   "revisionId": 1365783190,
+   "revisionTimestamp": "2026-07-24T11:19:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1890-09-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1890-09-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1890-09-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-11-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2517648",
+  "label": "Palazzo Corsini",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2517648",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2517648",
+   "sourceEntityLabel": "Palazzo Corsini",
+   "latitude": 41.89333,
+   "longitude": 12.466925,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q2519376",
+   "label": "jewelry designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:\"Portrait d'Elsa Schiaparelli\" de J. Dunand (musée des arts décoratifs, Paris).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:%22Portrait%20d'Elsa%20Schiaparelli%22%20de%20J.%20Dunand%20(mus%C3%A9e%20des%20arts%20d%C3%A9coratifs%2C%20Paris).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:%22Portrait_d%27Elsa_Schiaparelli%22_de_J._Dunand_(mus%C3%A9e_des_arts_d%C3%A9coratifs,_Paris).jpg",
+  "width": 1000,
+  "height": 1562,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Jean Dunand",
+  "credit": "https://schiaparelli.com/blogs/schiaparelli-et-les-artistes/jean-dunand-portrait-d-elsa-schiaparelli",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

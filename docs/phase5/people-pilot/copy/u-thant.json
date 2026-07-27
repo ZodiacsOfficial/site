@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "u-thant",
+  "seedRound": 0,
+  "qid": "Q1264",
+  "displayName": "U Thant",
+  "identity": "Politician and writer · Myanmar · 1909–1974",
+  "title": "U Thant's birth chart",
+  "metaDescription": "U Thant's chart, computed from a sourced birth date: Sun at 1.6° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Cardinal signs carry four of the nine placements whose signs are settled — the broadest certain weighting in the chart. The cardinal signs begin things; a chart weighted there treats every stall as a starting gun.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.59",
+        "decan:aquarius:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 1.6° Aquarius: the first decan, whose classical sub-ruler is Saturn. A air sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aquarius:18.9°",
+        "personal:Venus:Capricorn:7.8°",
+        "personal:Mars:Sagittarius:8.0°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aquarius (18.9°), Venus in Capricorn (7.8°), Mars in Sagittarius (8.0°): a mind at home in argument and pattern, taste for the substantial and the lasting, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Neptune:sextile:1.58",
+        "aspect:Uranus:Neptune:opposition:2.55",
+        "aspect:Venus:Saturn:square:2.56"
+      ],
+      "text": "The tightest geometry in the chart puts Jupiter a sixth of the circle apart from Neptune, 1.6° off exact. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Uranus opposition Neptune at 2.5°, and Venus square Saturn at 2.6° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The classical table has three entries for this chart. The Sun in Aquarius at 1.6° is in detriment — the planet opposite its home, working against the grain; Jupiter in Virgo at 13.7° is in detriment; Saturn in Aries at 5.2° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth3-fire2-water1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 3, earth 3, fire 2, water 1, and cardinal 4, mutable 3, fixed 2 across the modes. Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 14.9° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-22/",
+    "label": "Everyone born on January 22"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:1.59",
+    "decan:aquarius:first",
+    "personal:Mercury:Aquarius:18.9°",
+    "personal:Venus:Capricorn:7.8°",
+    "personal:Mars:Sagittarius:8.0°",
+    "aspect:Jupiter:Neptune:sextile:1.58",
+    "aspect:Uranus:Neptune:opposition:2.55",
+    "aspect:Venus:Saturn:square:2.56",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:fall",
+    "elements:air3-earth3-fire2-water1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 402,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "w-eugene-smith",
+ "qid": "Q551491",
+ "displayName": "W. Eugene Smith",
+ "wikidataLabel": "W. Eugene Smith",
+ "wikidataDescription": "American photojournalist (1918–1978)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q551491",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521523606
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "W. Eugene Smith",
+   "articleUrl": "https://en.wikipedia.org/wiki/W._Eugene_Smith",
+   "pageId": 360361,
+   "revisionId": 1363428386,
+   "revisionTimestamp": "2026-07-10T03:20:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1918-12-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-12-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1918-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1918-12-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1978-10-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49266",
+  "label": "Wichita",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49266",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49266",
+   "sourceEntityLabel": "Wichita",
+   "latitude": 37.688888888889,
+   "longitude": -97.336111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q957729",
+   "label": "photojournalist"
+  },
+  {
+   "entity": "Q11496048",
+   "label": "war photographer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Consuelo Kanaga (American, 1894-1978). W. Eugene Smith and Aileen, 1974.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Consuelo%20Kanaga%20(American%2C%201894-1978).%20W.%20Eugene%20Smith%20and%20Aileen%2C%201974.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Consuelo_Kanaga_(American,_1894-1978)._W._Eugene_Smith_and_Aileen,_1974.jpg",
+  "width": 1218,
+  "height": 1536,
+  "licenseShortName": "No restrictions",
+  "licenseUrl": "//commons.wikimedia.org/wiki/File:Consuelo_Kanaga_(American,_1894-1978)._W._Eugene_Smith_and_Aileen,_1974.jpg",
+  "artist": "Consuelo Kanaga",
+  "credit": "Brooklyn Museum",
+  "usageTerms": "No known copyright restrictions",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

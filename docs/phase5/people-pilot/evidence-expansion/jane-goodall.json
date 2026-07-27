@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jane-goodall",
+ "qid": "Q184746",
+ "displayName": "Jane Goodall",
+ "wikidataLabel": "Jane Goodall",
+ "wikidataDescription": "English primatologist and anthropologist (1934–2025)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q184746",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522790322
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jane Goodall",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jane_Goodall",
+   "pageId": 45397,
+   "revisionId": 1365744130,
+   "revisionTimestamp": "2026-07-24T05:11:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1934-04-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-04-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1934-04-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2025-10-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q25610",
+  "label": "Hampstead",
+  "entityUrl": "https://www.wikidata.org/wiki/Q25610",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q25610",
+   "sourceEntityLabel": "Hampstead",
+   "latitude": 51.5541,
+   "longitude": -0.1744,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q16831721",
+   "label": "ethologist"
+  },
+  {
+   "entity": "Q16825962",
+   "label": "primatologist"
+  },
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Deputy Secretary Higginbottom Poses for a Photo With Dr. Jane Goodall and the State Department's Global Health Diplomacy Director Jordan in Washington (22365513310) (2) (cropped 2).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Deputy%20Secretary%20Higginbottom%20Poses%20for%20a%20Photo%20With%20Dr.%20Jane%20Goodall%20and%20the%20State%20Department's%20Global%20Health%20Diplomacy%20Director%20Jordan%20in%20Washington%20(22365513310)%20(2)%20(cropped%202).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Deputy_Secretary_Higginbottom_Poses_for_a_Photo_With_Dr._Jane_Goodall_and_the_State_Department%27s_Global_Health_Diplomacy_Director_Jordan_in_Washington_(22365513310)_(2)_(cropped_2).jpg",
+  "width": 807,
+  "height": 1081,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "U.S. Department of State from United States",
+  "credit": "Deputy Secretary Higginbottom Poses for a Photo With Dr. Jane Goodall and the State Department's Global Health Diplomacy Director Jordan in Washington",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

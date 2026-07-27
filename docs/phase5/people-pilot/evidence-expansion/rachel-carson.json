@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rachel-carson",
+ "qid": "Q100948",
+ "displayName": "Rachel Carson",
+ "wikidataLabel": "Rachel Carson",
+ "wikidataDescription": "American marine biologist and conservationist (1907–1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q100948",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522442508
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rachel Carson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rachel_Carson",
+   "pageId": 81274,
+   "revisionId": 1365610782,
+   "revisionTimestamp": "2026-07-23T12:31:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1907-05-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1907-05-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1907-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1907-05-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-04-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7279187",
+  "label": "Rachel Carson Homestead",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7279187",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7279187",
+   "sourceEntityLabel": "Rachel Carson Homestead",
+   "latitude": 40.546431,
+   "longitude": -79.783353,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3640160",
+   "label": "marine biologist"
+  },
+  {
+   "entity": "Q3578589",
+   "label": "environmentalist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q16060693",
+   "label": "conservationist"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q26102",
+   "label": "whistleblower"
+  },
+  {
+   "entity": "Q15839134",
+   "label": "ecologist"
+  },
+  {
+   "entity": "Q17433421",
+   "label": "science journalist"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rachel-Carson.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rachel-Carson.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rachel-Carson.jpg",
+  "width": 1117,
+  "height": 1414,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "U.S. Fish and Wildlife Service",
+  "credit": "This image originates from the National Digital Library of the United States Fish and Wildlife Service at this page This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.See Category:Images from the United States Fish and Wildlife Service. http://training.fws.gov/history/carson/carson.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

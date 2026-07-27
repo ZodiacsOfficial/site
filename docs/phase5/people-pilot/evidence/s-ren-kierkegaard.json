@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "s-ren-kierkegaard",
+ "qid": "Q6512",
+ "displayName": "Søren Kierkegaard",
+ "wikidataLabel": "Søren Kierkegaard",
+ "wikidataDescription": "Danish theologian, philosopher, poet and social critic (1813–1855)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q6512",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2523025174
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Søren Kierkegaard",
+   "articleUrl": "https://en.wikipedia.org/wiki/S%C3%B8ren_Kierkegaard",
+   "pageId": 27069,
+   "revisionId": 1365518285,
+   "revisionTimestamp": "2026-07-22T23:44:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1813-05-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1813-05-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1813-05-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1855-11-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1748",
+  "label": "Copenhagen",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1748",
+  "country": {
+   "entity": "Q35",
+   "label": "Denmark"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1748",
+   "sourceEntityLabel": "Copenhagen",
+   "latitude": 55.676111111111,
+   "longitude": 12.568888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1234713",
+   "label": "theologian"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Søren Kierkegaard (1813-1855) - (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:S%C3%B8ren%20Kierkegaard%20(1813-1855)%20-%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:S%C3%B8ren_Kierkegaard_(1813-1855)_-_(cropped).jpg",
+  "width": 564,
+  "height": 796,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "La Biblioteca Real de Dinamarca",
+  "credit": "https://www.flickr.com/photos/45270502@N06/9645352916/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

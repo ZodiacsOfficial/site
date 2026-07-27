@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dian-fossey",
+ "qid": "Q234224",
+ "displayName": "Dian Fossey",
+ "wikidataLabel": "Dian Fossey",
+ "wikidataDescription": "American zoologist, gorilla researcher (1932–1985)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234224",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517545373
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dian Fossey",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dian_Fossey",
+   "pageId": 168280,
+   "revisionId": 1365747872,
+   "revisionTimestamp": "2026-07-24T05:53:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-01-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-01-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-01-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1985-12-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q62",
+  "label": "San Francisco",
+  "entityUrl": "https://www.wikidata.org/wiki/Q62",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q62",
+   "sourceEntityLabel": "San Francisco",
+   "latitude": 37.775,
+   "longitude": -122.41944444444445,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q16825962",
+   "label": "primatologist"
+  },
+  {
+   "entity": "Q16831721",
+   "label": "ethologist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q3400985",
+   "label": "academic"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q15839134",
+   "label": "ecologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dian Fossey October 1968.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dian%20Fossey%20October%201968.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dian_Fossey_October_1968.jpg",
+  "width": 740,
+  "height": 860,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Tribune Publishing, no photographer credited",
+  "credit": "Redwood City Tribune",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

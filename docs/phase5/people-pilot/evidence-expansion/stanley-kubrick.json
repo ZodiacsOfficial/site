@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "stanley-kubrick",
+ "qid": "Q2001",
+ "displayName": "Stanley Kubrick",
+ "wikidataLabel": "Stanley Kubrick",
+ "wikidataDescription": "American filmmaker (1928–1999)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2001",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522439307
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Stanley Kubrick",
+   "articleUrl": "https://en.wikipedia.org/wiki/Stanley_Kubrick",
+   "pageId": 26683,
+   "revisionId": 1366005048,
+   "revisionTimestamp": "2026-07-25T18:32:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1928-07-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-07-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-07-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1999-03-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18426",
+  "label": "The Bronx",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18426",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q18426",
+   "sourceEntityLabel": "The Bronx",
+   "latitude": 40.846666666666664,
+   "longitude": -73.87333333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q222344",
+   "label": "cinematographer"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q1208175",
+   "label": "camera operator"
+  },
+  {
+   "entity": "Q1053574",
+   "label": "executive producer"
+  },
+  {
+   "entity": "Q2707485",
+   "label": "scenographer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Stanley Kubrick (1949 portrait by Phillip Harrington - cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Stanley%20Kubrick%20(1949%20portrait%20by%20Phillip%20Harrington%20-%20cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Stanley_Kubrick_(1949_portrait_by_Phillip_Harrington_-_cropped).jpg",
+  "width": 1426,
+  "height": 1140,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Phillip A. Harrington, an American photographer and staffer for Look magazine between 1949–1971",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

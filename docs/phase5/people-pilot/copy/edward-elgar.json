@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "edward-elgar",
+  "seedRound": 0,
+  "qid": "Q179631",
+  "displayName": "Edward Elgar",
+  "identity": "Composer · United Kingdom · 1857–1934",
+  "title": "Edward Elgar's birth chart",
+  "metaDescription": "Edward Elgar's chart, computed from a sourced birth date: Sun at 11.8° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Taurus — Venus, Jupiter, Uranus and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.83",
+        "decan:gemini:second"
+      ],
+      "text": "Gemini, but precisely: 11.8°, second decan, 10°–20°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Gemini:10.1°",
+        "personal:Venus:Taurus:11.5°",
+        "personal:Mars:Gemini:13.1°"
+      ],
+      "text": "Closer in, Mercury stands at 10.1° Gemini; Venus stands at 11.5° Taurus; Mars stands at 13.1° Gemini. The tradition reads a mind at home in argument and pattern from Mercury, taste for the substantial and the lasting from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:conjunction:1.3",
+        "aspect:Venus:Saturn:sextile:1.63",
+        "aspect:Sun:Mercury:conjunction:1.75"
+      ],
+      "text": "Closest first: the Sun to Mars, a conjunction with 1.3° of slack. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Venus sextile Saturn at 1.6°, and the Sun conjunction Mercury at 1.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. Mercury in Gemini at 10.1° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 11.5° is in domicile; Saturn in Cancer at 13.1° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth4-water2",
+        "modalities:mutable4-fixed4-cardinal2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 4, earth 4, water 2, and mutable 4, fixed 4, cardinal 2 across the modes. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Mercury was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 14.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-2/",
+    "label": "Everyone born on June 2"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:4",
+    "sun-degree:11.83",
+    "decan:gemini:second",
+    "personal:Mercury:Gemini:10.1°",
+    "personal:Venus:Taurus:11.5°",
+    "personal:Mars:Gemini:13.1°",
+    "aspect:Sun:Mars:conjunction:1.3",
+    "aspect:Venus:Saturn:sextile:1.63",
+    "aspect:Sun:Mercury:conjunction:1.75",
+    "figure:none",
+    "dignity:Mercury:domicile",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:detriment",
+    "elements:air4-earth4-water2",
+    "modalities:mutable4-fixed4-cardinal2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:libra",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 420,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

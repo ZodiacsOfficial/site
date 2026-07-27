@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "toni-morrison",
+ "qid": "Q72334",
+ "displayName": "Toni Morrison",
+ "wikidataLabel": "Toni Morrison",
+ "wikidataDescription": "African American novelist, essayist, and academic (1931–2019)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q72334",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518481456
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Toni Morrison",
+   "articleUrl": "https://en.wikipedia.org/wiki/Toni_Morrison",
+   "pageId": 43165,
+   "revisionId": 1365603444,
+   "revisionTimestamp": "2026-07-23T11:35:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-02-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-02-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-02-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2019-08-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q609698",
+  "label": "Lorain",
+  "entityUrl": "https://www.wikidata.org/wiki/Q609698",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q609698",
+   "sourceEntityLabel": "Lorain",
+   "latitude": 41.448333333333,
+   "longitude": -82.168888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q20856740",
+   "label": "audiobook narrator"
+  },
+  {
+   "entity": "Q876864",
+   "label": "editing staff"
+  },
+  {
+   "entity": "Q62083492",
+   "label": "young adult author"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Toni Morrison.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Toni%20Morrison.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Toni_Morrison.jpg",
+  "width": 1540,
+  "height": 2195,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "John Mathew Smith (celebrity-photos.com)",
+  "credit": "Flickr (archive)",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

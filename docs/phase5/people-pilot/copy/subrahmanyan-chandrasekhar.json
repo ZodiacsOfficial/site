@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "subrahmanyan-chandrasekhar",
+  "seedRound": 0,
+  "qid": "Q148109",
+  "displayName": "Subrahmanyan Chandrasekhar",
+  "identity": "Mathematician and university teacher · Pakistan · 1910–1995",
+  "title": "Subrahmanyan Chandrasekhar's birth chart",
+  "metaDescription": "Subrahmanyan Chandrasekhar's chart, computed from a sourced birth date: Sun at 25.0° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the nine placements whose signs are settled stand in Libra — the Sun, Mercury, Venus, Mars and Jupiter. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:libra:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.00",
+        "decan:libra:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 25.0° Libra: the third decan, whose classical sub-ruler is Mercury. A air sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Libra:9.5°",
+        "personal:Venus:Libra:15.4°",
+        "personal:Mars:Libra:17.8°"
+      ],
+      "text": "Closer in, Mercury stands at 9.5° Libra; Venus stands at 15.4° Libra; Mars stands at 17.8° Libra. The tradition reads a mind at home in argument and pattern from Mercury, taste led by wit and proportion from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:conjunction:0.06",
+        "aspect:Uranus:Neptune:opposition:0.17",
+        "aspect:Venus:Mars:conjunction:2.46"
+      ],
+      "text": "Closest first: the Sun to Jupiter, a conjunction with 0.1° of slack. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Uranus opposition Neptune at 0.2°, and Venus conjunction Mars at 2.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Uranus-Neptune:apex-Sun"
+      ],
+      "text": "Uranus opposes Neptune while both square the Sun. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Libra at 25.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Libra at 15.4° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 17.8° is in detriment — the planet opposite its home, working against the grain. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-earth2-water1",
+        "modalities:cardinal7-fixed1-mutable1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 6, earth 2, water 1, and cardinal 7, fixed 1, mutable 1 across the modes. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Saturn and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 15.1° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-19/",
+    "label": "Everyone born on October 19"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "stellium:libra:5",
+    "sun-degree:25.00",
+    "decan:libra:third",
+    "personal:Mercury:Libra:9.5°",
+    "personal:Venus:Libra:15.4°",
+    "personal:Mars:Libra:17.8°",
+    "aspect:Sun:Jupiter:conjunction:0.06",
+    "aspect:Uranus:Neptune:opposition:0.17",
+    "aspect:Venus:Mars:conjunction:2.46",
+    "figure:t-square:Uranus-Neptune:apex-Sun",
+    "dignity:Sun:fall",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "elements:air6-earth2-water1",
+    "modalities:cardinal7-fixed1-mutable1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 428,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

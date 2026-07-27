@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ingrid-bergman",
+ "qid": "Q43247",
+ "displayName": "Ingrid Bergman",
+ "wikidataLabel": "Ingrid Bergman",
+ "wikidataDescription": "Swedish actress (1915–1982)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q43247",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520374154
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ingrid Bergman",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ingrid_Bergman",
+   "pageId": 41562,
+   "revisionId": 1365944377,
+   "revisionTimestamp": "2026-07-25T09:58:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-08-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-08-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-08-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1982-08-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10519255",
+  "label": "Hedvig Eleonora parish",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10519255",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q10519255",
+   "sourceEntityLabel": "Hedvig Eleonora parish",
+   "latitude": 59.33560278,
+   "longitude": 18.08112778,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ingrid Bergman The Constant Wife 1975 (cropped).JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ingrid%20Bergman%20The%20Constant%20Wife%201975%20(cropped).JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ingrid_Bergman_The_Constant_Wife_1975_(cropped).JPG",
+  "width": 669,
+  "height": 799,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Arthur Cantor",
+  "credit": "eBay item front back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

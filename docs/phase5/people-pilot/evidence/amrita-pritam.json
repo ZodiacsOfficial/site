@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "amrita-pritam",
+ "qid": "Q1705018",
+ "displayName": "Amrita Pritam",
+ "wikidataLabel": "Amrita Pritam",
+ "wikidataDescription": "Indian novelist, poet, and essayist (in Hindi and Punjabi languages) (1919–2005)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1705018",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2509543975
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Amrita Pritam",
+   "articleUrl": "https://en.wikipedia.org/wiki/Amrita_Pritam",
+   "pageId": 1202209,
+   "revisionId": 1366022036,
+   "revisionTimestamp": "2026-07-25T20:42:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1919-08-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1919-08-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-08-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-10-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q243322",
+  "label": "Gujranwala",
+  "entityUrl": "https://www.wikidata.org/wiki/Q243322",
+  "country": {
+   "entity": "Q843",
+   "label": "Pakistan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q243322",
+   "sourceEntityLabel": "Gujranwala",
+   "latitude": 32.15,
+   "longitude": 74.183333333333,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Amrita Pritam (1919 – 2005) , in 1948.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Amrita%20Pritam%20(1919%20%E2%80%93%202005)%20%2C%20in%201948.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Amrita_Pritam_(1919_%E2%80%93_2005)_,_in_1948.jpg",
+  "width": 211,
+  "height": 306,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Amarjit Chandan Collection",
+  "credit": "http://theprg.co.uk/2008/08/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

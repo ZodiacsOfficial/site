@@ -1,0 +1,127 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "frederic-chopin",
+ "qid": "Q1268",
+ "displayName": "Frédéric Chopin",
+ "wikidataLabel": "Frédéric Chopin",
+ "wikidataDescription": "Polish composer and pianist (1810–1849)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1268",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522815526
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Frédéric Chopin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fr%C3%A9d%C3%A9ric_Chopin",
+   "pageId": 10823,
+   "revisionId": 1364513514,
+   "revisionTimestamp": "2026-07-17T00:50:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1810-02-22T00:00:00Z|proleptic-gregorian",
+   "+1810-03-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1810-02-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1810-03-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1810-03-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1849-10-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q393087",
+  "label": "Żelazowa Wola",
+  "entityUrl": "https://www.wikidata.org/wiki/Q393087",
+  "country": {
+   "entity": "Q36",
+   "label": "Poland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q393087",
+   "sourceEntityLabel": "Żelazowa Wola",
+   "latitude": 52.25,
+   "longitude": 20.316666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q17303149",
+   "label": "piano teacher"
+  },
+  {
+   "entity": "Q214970",
+   "label": "virtuoso"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  }
+ ],
+ "portrait": {
+  "file": "File:Frederic Chopin photo.jpeg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Frederic%20Chopin%20photo.jpeg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Frederic_Chopin_photo.jpeg",
+  "width": 1014,
+  "height": 1455,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Louis-Auguste Bisson",
+  "credit": "Ernst Burger: Frédéric Chopin. München 1990, S. 323",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

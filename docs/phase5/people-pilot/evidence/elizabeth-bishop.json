@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elizabeth-bishop",
+ "qid": "Q235946",
+ "displayName": "Elizabeth Bishop",
+ "wikidataLabel": "Elizabeth Bishop",
+ "wikidataDescription": "American poet (1911–1979)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q235946",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517554963
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elizabeth Bishop",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elizabeth_Bishop",
+   "pageId": 177362,
+   "revisionId": 1364022728,
+   "revisionTimestamp": "2026-07-14T01:12:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-02-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-02-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-02-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1979-10-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49179",
+  "label": "Worcester",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49179",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49179",
+   "sourceEntityLabel": "Worcester",
+   "latitude": 42.271388888889,
+   "longitude": -71.798888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elizabeth Bishop, 1934 yearbook portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elizabeth%20Bishop%2C%201934%20yearbook%20portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elizabeth_Bishop,_1934_yearbook_portrait.jpg",
+  "width": 863,
+  "height": 1024,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "The Nineteen Thirty Four Vassarion. 1934. Senior Class, Vassar College. Poughkeepsie, NY. Page 48.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "arnold-schoenberg",
+  "seedRound": 0,
+  "qid": "Q154770",
+  "displayName": "Arnold Schoenberg",
+  "identity": "Painter and writer · Austria · 1874–1951",
+  "title": "Arnold Schoenberg's birth chart",
+  "metaDescription": "Arnold Schoenberg's chart, computed from a sourced birth date: Sun at 20.4° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Six of the ten placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. Fixed weight is the scheme’s deep keel: slow to turn, near-impossible to capsize.",
+  "ledeFact": "modality:fixed:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:20.45",
+        "decan:virgo:third"
+      ],
+      "text": "The Sun's exact place is 20.4° Virgo. That falls in the third decan, 20°–30°, sub-ruled by Venus in the classical scheme — a earth sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:25.3°",
+        "personal:Venus:Scorpio:6.3°",
+        "personal:Mars:Leo:28.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Virgo (25.3°), Venus in Scorpio (6.3°), Mars in Leo (28.3°): a mind that trusts the measured and the checked, taste tuned to mood and undertow, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:trine:0.94",
+        "aspect:Venus:Saturn:square:2.05",
+        "aspect:Mars:Neptune:trine:2.15"
+      ],
+      "text": "Nothing in the geometry sits closer than Jupiter and Saturn: 0.9° from an exact trine. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Venus square Saturn at 2.0°, and Mars trine Neptune at 2.1° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. Mercury in Virgo at 25.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Scorpio at 6.3° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 8.3° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-fire2-water1",
+        "modalities:fixed6-mutable2-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 earth, 3 air, 2 fire, 1 water by element and 6 fixed, 2 mutable, 2 cardinal by modality. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Saturn, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 20.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-13/",
+    "label": "Everyone born on September 13"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:6",
+    "sun-degree:20.45",
+    "decan:virgo:third",
+    "personal:Mercury:Virgo:25.3°",
+    "personal:Venus:Scorpio:6.3°",
+    "personal:Mars:Leo:28.3°",
+    "aspect:Jupiter:Saturn:trine:0.94",
+    "aspect:Venus:Saturn:square:2.05",
+    "aspect:Mars:Neptune:trine:2.15",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth4-air3-fire2-water1",
+    "modalities:fixed6-mutable2-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:libra",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 425,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

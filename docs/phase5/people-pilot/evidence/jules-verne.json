@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jules-verne",
+ "qid": "Q33977",
+ "displayName": "Jules Verne",
+ "wikidataLabel": "Jules Verne",
+ "wikidataDescription": "French writer (1828–1905)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q33977",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522581853
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jules Verne",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jules_Verne",
+   "pageId": 15770,
+   "revisionId": 1361353063,
+   "revisionTimestamp": "2026-06-27T11:43:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1828-02-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1828-02-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1828-02-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1905-03-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q12191",
+  "label": "Nantes",
+  "entityUrl": "https://www.wikidata.org/wiki/Q12191",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q12191",
+   "sourceEntityLabel": "Nantes",
+   "latitude": 47.217222222222,
+   "longitude": -1.5538888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q860918",
+   "label": "Esperantist"
+  },
+  {
+   "entity": "Q846430",
+   "label": "futurist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Félix Nadar 1820-1910 portraits Jules Verne.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:F%C3%A9lix%20Nadar%201820-1910%20portraits%20Jules%20Verne.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:F%C3%A9lix_Nadar_1820-1910_portraits_Jules_Verne.jpg",
+  "width": 1506,
+  "height": 2107,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nadar",
+  "credit": "Self-scanned",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

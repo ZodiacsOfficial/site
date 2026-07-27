@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gerard-sekoto",
+ "qid": "Q3103960",
+ "displayName": "Gerard Sekoto",
+ "wikidataLabel": "Gerard Sekoto",
+ "wikidataDescription": "South African artist and musician (1913-1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3103960",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2505706914
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gerard Sekoto",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gerard_Sekoto",
+   "pageId": 1648630,
+   "revisionId": 1354066122,
+   "revisionTimestamp": "2026-05-14T02:53:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-12-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-12-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-12-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-03-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q894856",
+  "label": "Botshabelo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q894856",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q894856",
+   "sourceEntityLabel": "Botshabelo",
+   "latitude": -29.233055555556,
+   "longitude": 26.733055555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:HuddlestonMural.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:HuddlestonMural.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:HuddlestonMural.jpg",
+  "width": 2816,
+  "height": 2112,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Josef Langerman",
+  "credit": "Self-photographed",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

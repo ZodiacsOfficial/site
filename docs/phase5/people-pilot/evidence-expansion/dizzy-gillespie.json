@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dizzy-gillespie",
+ "qid": "Q49575",
+ "displayName": "Dizzy Gillespie",
+ "wikidataLabel": "Dizzy Gillespie",
+ "wikidataDescription": "American jazz trumpeter (1917–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q49575",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518470389
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dizzy Gillespie",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dizzy_Gillespie",
+   "pageId": 54403,
+   "revisionId": 1361382403,
+   "revisionTimestamp": "2026-06-27T16:25:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-10-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-10-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-10-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-01-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1070214",
+  "label": "Cheraw",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1070214",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1070214",
+   "sourceEntityLabel": "Cheraw",
+   "latitude": 34.696666666667,
+   "longitude": -79.895,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q12377274",
+   "label": "trumpeter"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Portrait of Dizzy Gillespie, Famous Door, New York, N.Y., ca. June 1946 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Portrait%20of%20Dizzy%20Gillespie%2C%20Famous%20Door%2C%20New%20York%2C%20N.Y.%2C%20ca.%20June%201946%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Dizzy_Gillespie,_Famous_Door,_New_York,_N.Y.,_ca._June_1946_(cropped).jpg",
+  "width": 3702,
+  "height": 4926,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "William P. Gottlieb",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID gottlieb.03261.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "edgar-degas",
+  "seedRound": 0,
+  "qid": "Q46373",
+  "displayName": "Edgar Degas",
+  "identity": "Painter and poet · France · 1834–1917",
+  "title": "Edgar Degas's birth chart",
+  "metaDescription": "Edgar Degas's chart, computed from a sourced birth date: Sun at 26.3° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Cardinal signs carry four of the nine placements whose signs are settled — the broadest certain weighting in the chart. The cardinal signs begin things; a chart weighted there treats every stall as a starting gun.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.25",
+        "decan:cancer:third"
+      ],
+      "text": "At the noon reference the Sun sits 26.3° into Cancer — the third decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:18.7°",
+        "personal:Mars:Taurus:22.1°"
+      ],
+      "text": "The personal planets sit Mercury at 18.7° Leo, Mars at 22.1° Taurus. Mercury in a fire sign reads as thought that arrives already in motion; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:trine:1.43",
+        "aspect:Mercury:Mars:square:3.39",
+        "aspect:Mars:Uranus:square:3.58"
+      ],
+      "text": "Start where the chart is tightest — Jupiter trine Saturn, 1.4° of separation. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mercury square Mars at 3.4°, and Mars square Uranus at 3.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Jupiter-Saturn-Neptune",
+        "figure:t-square:Mercury-Uranus:apex-Mars"
+      ],
+      "text": "Jupiter, Saturn, Neptune close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Mercury opposes Uranus while both square Mars. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Capricorn at 10.3° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 22.1° is in detriment; Jupiter in Gemini at 4.0° is in detriment; Saturn in Libra at 5.5° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth2-fire2-water1",
+        "modalities:cardinal4-fixed4-mutable1",
+        "settled-signs:9",
+        "retrograde:3",
+        "sign-uncertain:Venus:leo:virgo"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in air, 2 in earth, 2 in fire, 1 in water by element, 4 cardinal, 4 fixed, 1 mutable by modality. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Venus crossed from Leo into Virgo during that day, so its sign is left open. Uranus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:13.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 10.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-19/",
+    "label": "Everyone born on July 19"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:26.25",
+    "decan:cancer:third",
+    "personal:Mercury:Leo:18.7°",
+    "personal:Mars:Taurus:22.1°",
+    "aspect:Jupiter:Saturn:trine:1.43",
+    "aspect:Mercury:Mars:square:3.39",
+    "aspect:Mars:Uranus:square:3.58",
+    "figure:grand-trine:Jupiter-Saturn-Neptune",
+    "figure:t-square:Mercury-Uranus:apex-Mars",
+    "dignity:Moon:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:exaltation",
+    "elements:air4-earth2-fire2-water1",
+    "modalities:cardinal4-fixed4-mutable1",
+    "settled-signs:9",
+    "retrograde:3",
+    "sign-uncertain:Venus:leo:virgo",
+    "moon-sign:capricorn",
+    "moon-band:13.3"
+  ],
+  "measurements": {
+    "originalWords": 476,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

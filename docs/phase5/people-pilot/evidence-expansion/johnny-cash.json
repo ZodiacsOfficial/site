@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "johnny-cash",
+ "qid": "Q42775",
+ "displayName": "Johnny Cash",
+ "wikidataLabel": "Johnny Cash",
+ "wikidataDescription": "American country singer (1932–2003)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q42775",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522586908
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Johnny Cash",
+   "articleUrl": "https://en.wikipedia.org/wiki/Johnny_Cash",
+   "pageId": 11983070,
+   "revisionId": 1364639770,
+   "revisionTimestamp": "2026-07-17T17:34:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-02-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-02-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-02-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-09-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q79417",
+  "label": "Kingsland",
+  "entityUrl": "https://www.wikidata.org/wiki/Q79417",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q79417",
+   "sourceEntityLabel": "Kingsland",
+   "latitude": 33.861388888889,
+   "longitude": -92.294166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q66763670",
+   "label": "country musician"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  }
+ ],
+ "portrait": {
+  "file": "File:Johnny Cash \"The Johnny Cash Spring Special\" (1979 CBS press photo).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Johnny%20Cash%20%22The%20Johnny%20Cash%20Spring%20Special%22%20(1979%20CBS%20press%20photo).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Johnny_Cash_%22The_Johnny_Cash_Spring_Special%22_(1979_CBS_press_photo).jpg",
+  "width": 1140,
+  "height": 1488,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "CBS Television",
+  "credit": "eBay item 374214214867 – View/save archived versions on archive.org and megalodon.jp",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

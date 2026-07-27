@@ -1,0 +1,138 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "honore-de-balzac",
+ "qid": "Q9711",
+ "displayName": "Honoré de Balzac",
+ "wikidataLabel": "Honoré de Balzac",
+ "wikidataDescription": "French novelist and playwright (1799–1850)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9711",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522262238
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Honoré de Balzac",
+   "articleUrl": "https://en.wikipedia.org/wiki/Honor%C3%A9_de_Balzac",
+   "pageId": 42368,
+   "revisionId": 1364480068,
+   "revisionTimestamp": "2026-07-16T20:28:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1799-05-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1799-05-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1799-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1799-05-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1850-08-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q288",
+  "label": "Tours",
+  "entityUrl": "https://www.wikidata.org/wiki/Q288",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q288",
+   "sourceEntityLabel": "Tours",
+   "latitude": 47.392777777778,
+   "longitude": 0.68833333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q4164507",
+   "label": "art critic"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q487596",
+   "label": "dramaturge"
+  },
+  {
+   "entity": "Q2516866",
+   "label": "publisher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Honoré de Balzac (1842) detail.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Honor%C3%A9%20de%20Balzac%20(1842)%20detail.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Honor%C3%A9_de_Balzac_(1842)_detail.jpg",
+  "width": 550,
+  "height": 500,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Louis-Auguste Bisson",
+  "credit": "http://images.nzz.ch",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

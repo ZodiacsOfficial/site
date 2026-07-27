@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "raja-ravi-varma",
+ "qid": "Q333453",
+ "displayName": "Raja Ravi Varma",
+ "wikidataLabel": "Raja Ravi Varma",
+ "wikidataDescription": "Indian painter from Kerala (1848–1906)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q333453",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518050669
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Raja Ravi Varma",
+   "articleUrl": "https://en.wikipedia.org/wiki/Raja_Ravi_Varma",
+   "pageId": 910003,
+   "revisionId": 1360878493,
+   "revisionTimestamp": "2026-06-24T05:29:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1848-04-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1848-04-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1848-04-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1906-10-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3520329",
+  "label": "Kilimanoor",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3520329",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3520329",
+   "sourceEntityLabel": "Kilimanoor",
+   "latitude": 8.767,
+   "longitude": 76.88,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q2500638",
+   "label": "creator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ravivarma1b.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ravivarma1b.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ravivarma1b.jpg",
+  "width": 287,
+  "height": 387,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bhawani Ram",
+  "credit": "http://www.columbia.edu/itc/mealac/pritchett/00routesdata/bce_299_200/mahabharata/ravivarma/ravivarma.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

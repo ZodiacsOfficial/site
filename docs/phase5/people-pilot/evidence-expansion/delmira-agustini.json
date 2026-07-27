@@ -1,0 +1,110 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "delmira-agustini",
+ "qid": "Q239458",
+ "displayName": "Delmira Agustini",
+ "wikidataLabel": "Delmira Agustini",
+ "wikidataDescription": "Uruguayan modernist poet",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q239458",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517584809
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Delmira Agustini",
+   "articleUrl": "https://en.wikipedia.org/wiki/Delmira_Agustini",
+   "pageId": 2769722,
+   "revisionId": 1347539866,
+   "revisionTimestamp": "2026-04-07T09:05:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1886-10-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1886-10-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1423-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-julian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1886-10-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1914-07-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1335",
+  "label": "Montevideo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1335",
+  "country": {
+   "entity": "Q77",
+   "label": "Uruguay"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1335",
+   "sourceEntityLabel": "Montevideo",
+   "latitude": -34.90591666666667,
+   "longitude": -56.19131111111111,
+   "precision": 0.000277778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Delmira Agustini.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Delmira%20Agustini.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Delmira_Agustini.png",
+  "width": 571,
+  "height": 779,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://diadelasescritoras.bne.es/delmira-agustini/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

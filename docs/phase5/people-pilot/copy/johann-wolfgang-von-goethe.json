@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "johann-wolfgang-von-goethe",
+  "seedRound": 0,
+  "qid": "Q5879",
+  "displayName": "Johann Wolfgang von Goethe",
+  "identity": "Botanist and politician · Germany · 1749–1832",
+  "title": "Johann Wolfgang von Goethe's birth chart",
+  "metaDescription": "Johann Wolfgang von Goethe's chart, computed from a sourced birth date: Sun at 5.2° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: Venus and Neptune within 0.2°, taste wired to imagination. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.",
+  "ledeFact": "aspect:Venus:Neptune:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.16",
+        "decan:virgo:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 5.2° Virgo: the first decan, whose classical sub-ruler is Mercury. A earth sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:25.9°",
+        "personal:Venus:Virgo:26.4°",
+        "personal:Mars:Capricorn:3.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 25.9° Leo, Venus was at 26.4° Virgo, Mars was at 3.5° Capricorn. Read together: a mind that decides at speaking speed; taste for the substantial and the lasting; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:sextile:0.21",
+        "aspect:Venus:Jupiter:opposition:0.42",
+        "aspect:Jupiter:Neptune:trine:0.63"
+      ],
+      "text": "Start where the chart is tightest — Venus sextile Neptune, 0.2° of separation. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Venus opposition Jupiter at 0.4°, and Jupiter trine Neptune at 0.6° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Jupiter-Neptune-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter, Neptune, Pluto close a triangle of trines. The closed triangle is the scheme’s picture of flow — and its warning that flow, unspent, stays private. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Venus in Virgo at 26.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Capricorn at 3.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 26.0° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-earth3-fire1-air1",
+        "modalities:mutable4-fixed4-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 5, earth 3, fire 1, air 1, and mutable 4, fixed 4, cardinal 2 across the modes. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Jupiter and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:15.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 15.3° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 11.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-28/",
+    "label": "Everyone born on August 28"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:sextile",
+    "sun-degree:5.16",
+    "decan:virgo:first",
+    "personal:Mercury:Leo:25.9°",
+    "personal:Venus:Virgo:26.4°",
+    "personal:Mars:Capricorn:3.5°",
+    "aspect:Venus:Neptune:sextile:0.21",
+    "aspect:Venus:Jupiter:opposition:0.42",
+    "aspect:Jupiter:Neptune:trine:0.63",
+    "figure:grand-trine:Jupiter-Neptune-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:water5-earth3-fire1-air1",
+    "modalities:mutable4-fixed4-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:pisces",
+    "moon-band:15.3"
+  ],
+  "measurements": {
+    "originalWords": 445,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

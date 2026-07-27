@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "roald-amundsen",
+ "qid": "Q926",
+ "displayName": "Roald Amundsen",
+ "wikidataLabel": "Roald Amundsen",
+ "wikidataDescription": "Norwegian explorer; first person to reach the South Pole (1872–1928)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q926",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522900202
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Roald Amundsen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Roald_Amundsen",
+   "pageId": 26199,
+   "revisionId": 1361524561,
+   "revisionTimestamp": "2026-06-28T13:20:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1872-07-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1872-07-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1872-07-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1928-06-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q966777",
+  "label": "Borge Municipality",
+  "entityUrl": "https://www.wikidata.org/wiki/Q966777",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q966777",
+   "sourceEntityLabel": "Borge Municipality",
+   "latitude": 59.22777778,
+   "longitude": 11.04333333,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q45199",
+   "label": "sailor"
+  },
+  {
+   "entity": "Q1650915",
+   "label": "researcher"
+  },
+  {
+   "entity": "Q13382749",
+   "label": "polar explorer"
+  },
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q108114975",
+   "label": "naval aviator"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q901402",
+   "label": "geographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Amundsen in fur skins.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Amundsen%20in%20fur%20skins.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Amundsen_in_fur_skins.jpg",
+  "width": 2604,
+  "height": 3503,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "http://sunde.files.wordpress.com/2009/02/roald_amundsen_wearing_furskins.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

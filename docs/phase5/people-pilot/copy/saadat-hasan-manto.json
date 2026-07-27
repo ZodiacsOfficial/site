@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "saadat-hasan-manto",
+  "seedRound": 0,
+  "qid": "Q156501",
+  "displayName": "Saadat Hasan Manto",
+  "identity": "Screenwriter · India · 1912–1955",
+  "title": "Saadat Hasan Manto's birth chart",
+  "metaDescription": "Saadat Hasan Manto's chart, computed from a sourced birth date: Sun at 20.2° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a sextile to Mars at 0.1° — close enough to weld identity to drive. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not.",
+  "ledeFact": "aspect:Sun:Mars:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:20.18",
+        "decan:taurus:third"
+      ],
+      "text": "20.2° of Taurus is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:24.4°",
+        "personal:Venus:Taurus:5.1°",
+        "personal:Mars:Cancer:20.1°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (24.4°), Venus in Taurus (5.1°), Mars in Cancer (20.1°): thought that arrives already in motion, attraction that grows by reliability, effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:sextile:0.14",
+        "aspect:Sun:Neptune:sextile:1.24",
+        "aspect:Mars:Neptune:conjunction:1.37"
+      ],
+      "text": "The Sun and Mars hold the closest angle here — a sextile, 0.1° wide. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, the Sun sextile Neptune at 1.2°, and Mars conjunction Neptune at 1.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Venus in Taurus at 5.1° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 20.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Sagittarius at 13.1° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-water3-fire2-air2",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 3 in earth, 3 in water, 2 in fire, 2 in air by element, 4 fixed, 3 mutable, 3 cardinal by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. Jupiter and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:12.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 10.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-11/",
+    "label": "Everyone born on May 11"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:sextile",
+    "sun-degree:20.18",
+    "decan:taurus:third",
+    "personal:Mercury:Aries:24.4°",
+    "personal:Venus:Taurus:5.1°",
+    "personal:Mars:Cancer:20.1°",
+    "aspect:Sun:Mars:sextile:0.14",
+    "aspect:Sun:Neptune:sextile:1.24",
+    "aspect:Mars:Neptune:conjunction:1.37",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:domicile",
+    "elements:earth3-water3-fire2-air2",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:pisces",
+    "moon-band:12.3"
+  ],
+  "measurements": {
+    "originalWords": 411,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

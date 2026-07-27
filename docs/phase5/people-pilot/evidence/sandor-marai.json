@@ -1,0 +1,125 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sandor-marai",
+ "qid": "Q36951",
+ "displayName": "Sándor Márai",
+ "wikidataLabel": "Sándor Márai",
+ "wikidataDescription": "Hungarian writer (1900–1989)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q36951",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516868697
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sándor Márai",
+   "articleUrl": "https://en.wikipedia.org/wiki/S%C3%A1ndor_M%C3%A1rai",
+   "pageId": 627344,
+   "revisionId": 1362778605,
+   "revisionTimestamp": "2026-07-06T03:39:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1900-04-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1900-04-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1900-04-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1989-02-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q25409",
+  "label": "Košice",
+  "entityUrl": "https://www.wikidata.org/wiki/Q25409",
+  "country": {
+   "entity": "Q214",
+   "label": "Slovakia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q25409",
+   "sourceEntityLabel": "Q25409",
+   "latitude": 48.716666666667,
+   "longitude": 21.25,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  },
+  "labelNote": "English label absent on Q25409; the language-neutral (mul) label is used"
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sándor Márai.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:S%C3%A1ndor%20M%C3%A1rai.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:S%C3%A1ndor_M%C3%A1rai.png",
+  "width": 498,
+  "height": 597,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "public domain",
+  "credit": "public domain",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

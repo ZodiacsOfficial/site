@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ritwik-ghatak",
+ "qid": "Q55404",
+ "displayName": "Ritwik Ghatak",
+ "wikidataLabel": "Ritwik Ghatak",
+ "wikidataDescription": "Indian Bengali filmmaker and script writer (1925–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q55404",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521442721
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ritwik Ghatak",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ritwik_Ghatak",
+   "pageId": 1399746,
+   "revisionId": 1359628327,
+   "revisionTimestamp": "2026-06-16T08:57:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-11-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-11-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-11-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1354",
+  "label": "Dhaka",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1354",
+  "country": {
+   "entity": "Q902",
+   "label": "Bangladesh"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1354",
+   "sourceEntityLabel": "Dhaka",
+   "latitude": 23.72888888888889,
+   "longitude": 90.39444444444445,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ritwik Ghatak (Young age photo).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ritwik%20Ghatak%20(Young%20age%20photo).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ritwik_Ghatak_(Young_age_photo).png",
+  "width": 298,
+  "height": 446,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Scanned from a photograph!",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

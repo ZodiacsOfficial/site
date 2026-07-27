@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alain-resnais",
+ "qid": "Q218022",
+ "displayName": "Alain Resnais",
+ "wikidataLabel": "Alain Resnais",
+ "wikidataDescription": "French film director (1922-2014)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q218022",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521608896
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alain Resnais",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alain_Resnais",
+   "pageId": 89753,
+   "revisionId": 1357092566,
+   "revisionTimestamp": "2026-05-31T18:23:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-06-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-06-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-06-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2014-03-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6593",
+  "label": "Vannes",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6593",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6593",
+   "sourceEntityLabel": "Vannes",
+   "latitude": 47.655,
+   "longitude": -2.7616666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q222344",
+   "label": "cinematographer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Identite-AlainResnais-1959-Sacem.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Identite-AlainResnais-1959-Sacem.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Identite-AlainResnais-1959-Sacem.png",
+  "width": 1554,
+  "height": 1640,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Studio Harcourt",
+  "credit": "https://musee.sacem.fr/index.php/Detail/objects/59261",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "alexander-fleming",
+  "seedRound": 0,
+  "qid": "Q37064",
+  "displayName": "Alexander Fleming",
+  "identity": "Bacteriologist · United Kingdom · 1881–1955",
+  "title": "Alexander Fleming's birth chart",
+  "metaDescription": "Alexander Fleming's chart, computed from a sourced birth date: Sun at 14.1° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the eight placements whose signs are settled stand in Taurus — Jupiter, Saturn, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.10",
+        "decan:leo:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 14.1° Leo: the second decan, whose classical sub-ruler is Jupiter. A fire sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Cancer:25.1°",
+        "personal:Mars:Gemini:1.7°"
+      ],
+      "text": "For the fast movers, Mercury was at 25.1° Cancer, Mars was at 1.7° Gemini. Read together: a mind that absorbs before it argues; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:trine:0.12",
+        "aspect:Mercury:Jupiter:sextile:1.25",
+        "aspect:Sun:Saturn:square:1.95"
+      ],
+      "text": "Nothing in the geometry sits closer than Saturn and Uranus: 0.1° from an exact trine. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mercury sextile Jupiter at 1.3°, and the Sun square Saturn at 1.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile"
+      ],
+      "text": "The classical table has one entry for this chart. The Sun in Leo at 14.1° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire1-water1-air1",
+        "modalities:fixed5-mutable2-cardinal1",
+        "settled-signs:8",
+        "retrograde:0",
+        "sign-uncertain:Venus:gemini:cancer"
+      ],
+      "text": "Balance, counted honestly across the 8 placements whose signs hold for the whole day: elements earth 5, fire 1, water 1, air 1; modalities fixed 5, mutable 2, cardinal 1. Venus crossed from Gemini into Cancer during that day, so its sign is left open. Nothing was retrograde that day, which is less common than it sounds."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 14.5° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-6/",
+    "label": "Everyone born on August 6"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:4",
+    "sun-degree:14.10",
+    "decan:leo:second",
+    "personal:Mercury:Cancer:25.1°",
+    "personal:Mars:Gemini:1.7°",
+    "aspect:Saturn:Uranus:trine:0.12",
+    "aspect:Mercury:Jupiter:sextile:1.25",
+    "aspect:Sun:Saturn:square:1.95",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "elements:earth5-fire1-water1-air1",
+    "modalities:fixed5-mutable2-cardinal1",
+    "settled-signs:8",
+    "retrograde:0",
+    "sign-uncertain:Venus:gemini:cancer",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 379,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

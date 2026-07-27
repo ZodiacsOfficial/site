@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "franz-boas",
+ "qid": "Q76857",
+ "displayName": "Franz Boas",
+ "wikidataLabel": "Franz Boas",
+ "wikidataDescription": "German-American anthropologist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q76857",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517949669
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Franz Boas",
+   "articleUrl": "https://en.wikipedia.org/wiki/Franz_Boas",
+   "pageId": 11698,
+   "revisionId": 1365745563,
+   "revisionTimestamp": "2026-07-24T05:26:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1858-07-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-07-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-07-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1942-12-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3846",
+  "label": "Minden",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3846",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3846",
+   "sourceEntityLabel": "Minden",
+   "latitude": 52.288333333333334,
+   "longitude": 8.916666666666666,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q901402",
+   "label": "geographer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q674426",
+   "label": "curator"
+  },
+  {
+   "entity": "Q1792450",
+   "label": "art historian"
+  },
+  {
+   "entity": "Q12347522",
+   "label": "ethnographer"
+  },
+  {
+   "entity": "Q1371378",
+   "label": "ethnologist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:FranzBoas.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:FranzBoas.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:FranzBoas.jpg",
+  "width": 442,
+  "height": 554,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": "https://www.historymuseum.ca/cmc/exhibitions/tresors/barbeau/mb0588be.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

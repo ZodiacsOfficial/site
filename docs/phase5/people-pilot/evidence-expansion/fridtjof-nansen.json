@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fridtjof-nansen",
+ "qid": "Q72292",
+ "displayName": "Fridtjof Nansen",
+ "wikidataLabel": "Fridtjof Nansen",
+ "wikidataDescription": "Norwegian polar explorer and diplomat; Nobel Peace Prize laureate (1861-1930)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q72292",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517723972
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fridtjof Nansen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fridtjof_Nansen",
+   "pageId": 11820,
+   "revisionId": 1365695508,
+   "revisionTimestamp": "2026-07-23T22:44:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1861-10-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1861-10-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1861-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1930-05-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q606860",
+  "label": "Vestre Aker",
+  "entityUrl": "https://www.wikidata.org/wiki/Q606860",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q606860",
+   "sourceEntityLabel": "Vestre Aker",
+   "latitude": 59.95002,
+   "longitude": 10.67219,
+   "precision": 0.017939208253379,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q13382749",
+   "label": "polar explorer"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q10866633",
+   "label": "speed skater"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fridtjof Nansen LOC 03377u-3.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fridtjof%20Nansen%20LOC%2003377u-3.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fridtjof_Nansen_LOC_03377u-3.jpg",
+  "width": 3472,
+  "height": 4960,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Henry Van der Weyde",
+  "credit": "Fridtjof_Nansen_LOC_03377u.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

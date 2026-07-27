@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dorothy-vaughan",
+ "qid": "Q22915129",
+ "displayName": "Dorothy Vaughan",
+ "wikidataLabel": "Dorothy Vaughan",
+ "wikidataDescription": "African-American mathematician",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q22915129",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512830342
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dorothy Vaughan",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dorothy_Vaughan",
+   "pageId": 48583314,
+   "revisionId": 1360312986,
+   "revisionTimestamp": "2026-06-20T17:35:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-09-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-09-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-09-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2008-11-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q41819",
+  "label": "Kansas City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q41819",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q41819",
+   "sourceEntityLabel": "Kansas City",
+   "latitude": 39.05,
+   "longitude": -94.583333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82594",
+   "label": "computer scientist"
+  },
+  {
+   "entity": "Q5482740",
+   "label": "programmer"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dorothy Johnson Vaughan.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dorothy%20Johnson%20Vaughan.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dorothy_Johnson_Vaughan.jpg",
+  "width": 300,
+  "height": 366,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Curated by BlackPast.org https://www.blackpast.org/aah/vaughan-dorothy-johnson-1910-2008",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ingmar-bergman",
+ "qid": "Q7546",
+ "displayName": "Ingmar Bergman",
+ "wikidataLabel": "Ingmar Bergman",
+ "wikidataDescription": "Swedish director and screenwriter (1918–2007)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7546",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522009509
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ingmar Bergman",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ingmar_Bergman",
+   "pageId": 14626,
+   "revisionId": 1363948904,
+   "revisionTimestamp": "2026-07-13T14:06:21Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1918-07-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-07-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1918-07-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2007-07-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q25286",
+  "label": "Uppsala",
+  "entityUrl": "https://www.wikidata.org/wiki/Q25286",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q25286",
+   "sourceEntityLabel": "Uppsala",
+   "latitude": 59.849760548324,
+   "longitude": 17.638946597524,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3387717",
+   "label": "theatre director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q1776724",
+   "label": "theatre manager"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ingmar Bergman (1966).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ingmar%20Bergman%20(1966).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ingmar_Bergman_(1966).jpg",
+  "width": 786,
+  "height": 1050,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Joost Evers / Anefo",
+  "credit": "Nationaal Archief",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "john-forbes-nash-jr",
+ "qid": "Q128736",
+ "displayName": "John Forbes Nash Jr.",
+ "wikidataLabel": "John Forbes Nash",
+ "wikidataDescription": "American mathematician and economist (1928–2015)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q128736",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515840419
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "John Forbes Nash Jr.",
+   "articleUrl": "https://en.wikipedia.org/wiki/John_Forbes_Nash_Jr.",
+   "pageId": 102567,
+   "revisionId": 1364717516,
+   "revisionTimestamp": "2026-07-18T03:12:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1928-06-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-06-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-06-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2015-05-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q885991",
+  "label": "Bluefield",
+  "entityUrl": "https://www.wikidata.org/wiki/Q885991",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q885991",
+   "sourceEntityLabel": "Bluefield",
+   "latitude": 37.262222222222,
+   "longitude": -81.218611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:John Forbes Nash, Jr. by Peter Badge.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:John%20Forbes%20Nash%2C%20Jr.%20by%20Peter%20Badge.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:John_Forbes_Nash,_Jr._by_Peter_Badge.jpg",
+  "width": 567,
+  "height": 855,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Peter Badge / Typos1",
+  "credit": "submission by way of Jimmy Wales",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

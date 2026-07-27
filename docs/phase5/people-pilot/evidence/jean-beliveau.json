@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jean-beliveau",
+ "qid": "Q505479",
+ "displayName": "Jean Béliveau",
+ "wikidataLabel": "Jean Béliveau",
+ "wikidataDescription": "Canadian ice hockey player (1931–2014)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q505479",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2502307934
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jean Béliveau",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jean_B%C3%A9liveau",
+   "pageId": 344256,
+   "revisionId": 1364303352,
+   "revisionTimestamp": "2026-07-15T20:06:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-08-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-08-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-08-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2014-12-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q44012",
+  "label": "Trois-Rivières",
+  "entityUrl": "https://www.wikidata.org/wiki/Q44012",
+  "country": {
+   "entity": "Q16",
+   "label": "Canada"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q44012",
+   "sourceEntityLabel": "Trois-Rivières",
+   "latitude": 46.35,
+   "longitude": -72.55,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11774891",
+   "label": "ice hockey player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jean Béliveau 2009.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jean%20B%C3%A9liveau%202009.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jean_B%C3%A9liveau_2009.jpg",
+  "width": 461,
+  "height": 514,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "US Embassy Canada",
+  "credit": "Ambassador Jacobson Joins Enthusiastic Crowd for Canadiens Game",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

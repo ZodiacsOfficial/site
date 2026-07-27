@@ -1,0 +1,99 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "cristobal-balenciaga",
+ "qid": "Q381088",
+ "displayName": "Cristóbal Balenciaga",
+ "wikidataLabel": "Cristóbal Balenciaga",
+ "wikidataDescription": "Spanish fashion designer (1895-1972)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q381088",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521414560
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Cristóbal Balenciaga",
+   "articleUrl": "https://en.wikipedia.org/wiki/Crist%C3%B3bal_Balenciaga",
+   "pageId": 1067589,
+   "revisionId": 1365256338,
+   "revisionTimestamp": "2026-07-21T06:54:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1895-01-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-01-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1895-01-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1972-03-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q849330",
+  "label": "Getaria",
+  "entityUrl": "https://www.wikidata.org/wiki/Q849330",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q849330",
+   "sourceEntityLabel": "Getaria",
+   "latitude": 43.3044559,
+   "longitude": -2.2037374,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  },
+  {
+   "entity": "Q2034021",
+   "label": "dressmaker"
+  }
+ ],
+ "portrait": null
+}

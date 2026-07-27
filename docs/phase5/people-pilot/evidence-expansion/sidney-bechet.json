@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sidney-bechet",
+ "qid": "Q313519",
+ "displayName": "Sidney Bechet",
+ "wikidataLabel": "Sidney Bechet",
+ "wikidataDescription": "American jazz musician",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q313519",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516872355
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sidney Bechet",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sidney_Bechet",
+   "pageId": 97593,
+   "revisionId": 1360115676,
+   "revisionTimestamp": "2026-06-19T09:47:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1897-05-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-05-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-05-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1959-05-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34404",
+  "label": "New Orleans",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34404",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34404",
+   "sourceEntityLabel": "New Orleans",
+   "latitude": 29.976111111111113,
+   "longitude": -90.07833333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q118865",
+   "label": "clarinetist"
+  },
+  {
+   "entity": "Q12800682",
+   "label": "saxophonist"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  }
+ ],
+ "portrait": {
+  "file": "File:(Portrait of Sidney Bechet, New York, N.Y.(?), ca. July 1946) (LOC) (4888659740) (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:(Portrait%20of%20Sidney%20Bechet%2C%20New%20York%2C%20N.Y.(%3F)%2C%20ca.%20July%201946)%20(LOC)%20(4888659740)%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:(Portrait_of_Sidney_Bechet,_New_York,_N.Y.(%3F),_ca._July_1946)_(LOC)_(4888659740)_(cropped).jpg",
+  "width": 854,
+  "height": 1154,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The Library of Congress",
+  "credit": "[Portrait of Sidney Bechet, New York, N.Y.(?), ca. July 1946] (LOC)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

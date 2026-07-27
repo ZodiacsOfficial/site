@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "carl-friedrich-gauss",
+ "qid": "Q6722",
+ "displayName": "Carl Friedrich Gauss",
+ "wikidataLabel": "Carl Friedrich Gauss",
+ "wikidataDescription": "German mathematician and physicist (1777–1855)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q6722",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521153913
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Carl Friedrich Gauss",
+   "articleUrl": "https://en.wikipedia.org/wiki/Carl_Friedrich_Gauss",
+   "pageId": 6125,
+   "revisionId": 1365990608,
+   "revisionTimestamp": "2026-07-25T16:30:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1777-04-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1777-04-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1777-04-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1855-02-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2773",
+  "label": "Brunswick",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2773",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2773",
+   "sourceEntityLabel": "Brunswick",
+   "latitude": 52.269166666667,
+   "longitude": 10.521111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q12094958",
+   "label": "geophysicist"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q3745071",
+   "label": "science writer"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q294126",
+   "label": "surveyor"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q2732142",
+   "label": "statistician"
+  },
+  {
+   "entity": "Q116994205",
+   "label": "geodesist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Carl Friedrich Gauss.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Carl%20Friedrich%20Gauss.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Carl_Friedrich_Gauss.jpg",
+  "width": 917,
+  "height": 1180,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Gottlieb Biermann / After Christian Albrecht Jensen",
+  "credit": "Gauß-Gesellschaft Göttingen e.V. (Foto: A. Wittmann).",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

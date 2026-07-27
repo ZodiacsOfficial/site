@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marcel-duchamp",
+ "qid": "Q5912",
+ "displayName": "Marcel Duchamp",
+ "wikidataLabel": "Marcel Duchamp",
+ "wikidataDescription": "French painter, sculptor, and chess player (1887–1968)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5912",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519704446
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marcel Duchamp",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marcel_Duchamp",
+   "pageId": 42650,
+   "revisionId": 1366022227,
+   "revisionTimestamp": "2026-07-25T20:43:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1887-07-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1887-07-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1887-07-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1968-10-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q475617",
+  "label": "Blainville-Crevon",
+  "entityUrl": "https://www.wikidata.org/wiki/Q475617",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q475617",
+   "sourceEntityLabel": "Blainville-Crevon",
+   "latitude": 49.503333333333,
+   "longitude": 1.3008333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q10873124",
+   "label": "chess player"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q182436",
+   "label": "librarian"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marcel Duchamp 01.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marcel%20Duchamp%2001.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marcel_Duchamp_01.jpg",
+  "width": 519,
+  "height": 764,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3b10889.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

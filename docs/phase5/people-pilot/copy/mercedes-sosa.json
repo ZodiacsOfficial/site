@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "mercedes-sosa",
+  "seedRound": 0,
+  "qid": "Q216450",
+  "displayName": "Mercedes Sosa",
+  "identity": "Singer · Argentina · 1935–2009",
+  "title": "Mercedes Sosa's birth chart",
+  "metaDescription": "Mercedes Sosa's chart, computed from a sourced birth date: Sun at 16.5° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, mutable leads with four. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.51",
+        "decan:cancer:second"
+      ],
+      "text": "Cancer, but precisely: 16.5°, second decan, 10°–20°, under Mars in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:26.9°",
+        "personal:Venus:Virgo:1.6°",
+        "personal:Mars:Libra:19.9°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Gemini (26.9°), Venus in Virgo (1.6°), Mars in Libra (19.9°): a mind at home in argument and pattern, taste for the substantial and the lasting, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Neptune:sextile:1.06",
+        "aspect:Saturn:Neptune:opposition:2.41",
+        "aspect:Sun:Jupiter:trine:3.08"
+      ],
+      "text": "Nothing in the geometry sits closer than Jupiter and Neptune: 1.1° from an exact sextile. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Saturn opposition Neptune at 2.4°, and the Sun trine Jupiter at 3.1° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Jupiter-Saturn",
+        "figure:unaspected:Mercury"
+      ],
+      "text": "the Sun, Jupiter, Saturn close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Mercury stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Gemini at 26.9° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 1.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Libra at 19.9° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth3-air2",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: water 4, earth 3, air 2 across the elements, and mutable 4, cardinal 3, fixed 2 across the modalities. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Jupiter and Saturn were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 12.3° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-9/",
+    "label": "Everyone born on July 9"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:16.51",
+    "decan:cancer:second",
+    "personal:Mercury:Gemini:26.9°",
+    "personal:Venus:Virgo:1.6°",
+    "personal:Mars:Libra:19.9°",
+    "aspect:Jupiter:Neptune:sextile:1.06",
+    "aspect:Saturn:Neptune:opposition:2.41",
+    "aspect:Sun:Jupiter:trine:3.08",
+    "figure:grand-trine:Sun-Jupiter-Saturn",
+    "figure:unaspected:Mercury",
+    "dignity:Mercury:domicile",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "elements:water4-earth3-air2",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 462,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

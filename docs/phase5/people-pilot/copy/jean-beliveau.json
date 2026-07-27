@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jean-beliveau",
+  "seedRound": 0,
+  "qid": "Q505479",
+  "displayName": "Jean Béliveau",
+  "identity": "Ice hockey player · Canada · 1931–2014",
+  "title": "Jean Béliveau's birth chart",
+  "metaDescription": "Jean Béliveau's chart, computed from a sourced birth date: Sun at 7.3° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Virgo — the Sun, Mercury, Venus and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:virgo:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.27",
+        "decan:virgo:first"
+      ],
+      "text": "At the noon reference the Sun sits 7.3° into Virgo — the first decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:15.5°",
+        "personal:Venus:Virgo:5.2°",
+        "personal:Mars:Libra:19.0°"
+      ],
+      "text": "For the fast movers, Mercury was at 15.5° Virgo, Venus was at 5.2° Virgo, Mars was at 19.0° Libra. Read together: thought with its feet on the ground; attraction that grows by reliability; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:opposition:0.11",
+        "aspect:Venus:Neptune:conjunction:0.36",
+        "aspect:Mercury:Saturn:trine:1.47"
+      ],
+      "text": "Closest first: Mars to Uranus, a opposition with 0.1° of slack. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Venus conjunction Neptune at 0.4°, and Mercury trine Saturn at 1.5° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Moon-Mars:apex-Saturn",
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "The Moon opposes Mars while both square Saturn. The t-square is the figure the old texts trusted for output: friction with a fixed address. Jupiter makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. Mercury in Virgo at 15.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Virgo at 5.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Libra at 19.0° is in detriment — the planet opposite its home, working against the grain; Saturn in Capricorn at 17.0° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire3-air1-water1",
+        "modalities:cardinal5-mutable4-fixed1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: earth 5, fire 3, air 1, water 1 across the elements, and cardinal 5, mutable 4, fixed 1 across the modalities. Mercury, Saturn and Uranus were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 15.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-31/",
+    "label": "Everyone born on August 31"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "stellium:virgo:4",
+    "sun-degree:7.27",
+    "decan:virgo:first",
+    "personal:Mercury:Virgo:15.5°",
+    "personal:Venus:Virgo:5.2°",
+    "personal:Mars:Libra:19.0°",
+    "aspect:Mars:Uranus:opposition:0.11",
+    "aspect:Venus:Neptune:conjunction:0.36",
+    "aspect:Mercury:Saturn:trine:1.47",
+    "figure:t-square:Moon-Mars:apex-Saturn",
+    "figure:unaspected:Jupiter",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth5-fire3-air1-water1",
+    "modalities:cardinal5-mutable4-fixed1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aries",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 458,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

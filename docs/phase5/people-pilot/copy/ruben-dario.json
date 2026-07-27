@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ruben-dario",
+  "seedRound": 0,
+  "qid": "Q173767",
+  "displayName": "Rubén Darío",
+  "identity": "Poet and diplomat · Nicaragua · 1867–1916",
+  "title": "Rubén Darío's birth chart",
+  "metaDescription": "Rubén Darío's chart, computed from a sourced birth date: Sun at 28.2° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a trine to Pluto at 0.1° — close enough to weld thinking to depth. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Mercury:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:28.23",
+        "decan:capricorn:third"
+      ],
+      "text": "At the noon reference the Sun sits 28.2° into Capricorn — the third decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:13.2°",
+        "personal:Venus:Sagittarius:17.4°",
+        "personal:Mars:Cancer:17.3°"
+      ],
+      "text": "The personal planets sit Mercury at 13.2° Capricorn, Venus at 17.4° Sagittarius, Mars at 17.3° Cancer. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a fire sign reads as attraction declared rather than implied; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Pluto:trine:0.05",
+        "aspect:Jupiter:Neptune:sextile:0.44",
+        "aspect:Jupiter:Pluto:square:2.52"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury a third of the circle apart from Pluto, 0.1° off exact. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Jupiter sextile Neptune at 0.4°, and Jupiter square Pluto at 2.5° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. Mars in Cancer at 17.3° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-water3-fire2-air1",
+        "modalities:cardinal5-fixed3-mutable1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 3, water 3, fire 2, air 1; modalities cardinal 5, fixed 3, mutable 1. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Mars, Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 15.0° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-18/",
+    "label": "Everyone born on January 18"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Pluto:trine",
+    "sun-degree:28.23",
+    "decan:capricorn:third",
+    "personal:Mercury:Capricorn:13.2°",
+    "personal:Venus:Sagittarius:17.4°",
+    "personal:Mars:Cancer:17.3°",
+    "aspect:Mercury:Pluto:trine:0.05",
+    "aspect:Jupiter:Neptune:sextile:0.44",
+    "aspect:Jupiter:Pluto:square:2.52",
+    "figure:unaspected:Sun",
+    "dignity:Mars:fall",
+    "elements:earth3-water3-fire2-air1",
+    "modalities:cardinal5-fixed3-mutable1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 399,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

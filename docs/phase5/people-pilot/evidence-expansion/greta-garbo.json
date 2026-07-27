@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "greta-garbo",
+ "qid": "Q5443",
+ "displayName": "Greta Garbo",
+ "wikidataLabel": "Greta Garbo",
+ "wikidataDescription": "Swedish-American actress (1905–1990)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5443",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522008070
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Greta Garbo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Greta_Garbo",
+   "pageId": 63436,
+   "revisionId": 1365661057,
+   "revisionTimestamp": "2026-07-23T18:37:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1905-09-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1905-09-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1905-09-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1990-04-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3427889",
+  "label": "Katarina church parish",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3427889",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3427889",
+   "sourceEntityLabel": "Katarina church parish",
+   "latitude": 59.317047222222,
+   "longitude": 18.078058333333,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Garbo in Inspiration.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Garbo%20in%20Inspiration.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Garbo_in_Inspiration.jpg",
+  "width": 500,
+  "height": 668,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Metro-Goldwyn-Mayer (work for hire)",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

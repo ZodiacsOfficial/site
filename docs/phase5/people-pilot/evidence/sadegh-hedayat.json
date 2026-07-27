@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sadegh-hedayat",
+ "qid": "Q315017",
+ "displayName": "Sadegh Hedayat",
+ "wikidataLabel": "Sadegh Hedayat",
+ "wikidataDescription": "Iranian writer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q315017",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518451006
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sadegh Hedayat",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sadegh_Hedayat",
+   "pageId": 946425,
+   "revisionId": 1365944842,
+   "revisionTimestamp": "2026-07-25T10:04:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1903-02-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-02-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1902-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-02-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1951-04-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3616",
+  "label": "Tehran",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3616",
+  "country": {
+   "entity": "Q794",
+   "label": "Iran"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3616",
+   "sourceEntityLabel": "Tehran",
+   "latitude": 35.68888888888889,
+   "longitude": 51.389722222222225,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sadeq-Hedayat.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sadeq-Hedayat.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sadeq-Hedayat.jpg",
+  "width": 341,
+  "height": 425,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "A gallery of a site for Sadeq Hedayat. This picture had been published in his books too. [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mohammad-hatta",
+ "qid": "Q29050",
+ "displayName": "Mohammad Hatta",
+ "wikidataLabel": "Mohammad Hatta",
+ "wikidataDescription": "1st vice president of Indonesia from 1945 to 1956 (1902–1980)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q29050",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2502259641
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mohammad Hatta",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mohammad_Hatta",
+   "pageId": 907194,
+   "revisionId": 1365552055,
+   "revisionTimestamp": "2026-07-23T03:27:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1902-08-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-08-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-08-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1980-03-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7248",
+  "label": "Bukittinggi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7248",
+  "country": {
+   "entity": "Q252",
+   "label": "Indonesia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7248",
+   "sourceEntityLabel": "Bukittinggi",
+   "latitude": -0.30972222222222,
+   "longitude": 100.37527777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mohammad Hatta, Pekan Buku Indonesia 1954, p242.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mohammad%20Hatta%2C%20Pekan%20Buku%20Indonesia%201954%2C%20p242.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mohammad_Hatta,_Pekan_Buku_Indonesia_1954,_p242.jpg",
+  "width": 1304,
+  "height": 1915,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Uncredited, possibly employee(s) of Gunung Agung",
+  "credit": "Pekan Buku Indonesia 1954. 1954. Djakarta: Gunung Agung.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,119 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "tayeb-salih",
+ "qid": "Q561434",
+ "displayName": "Tayeb Salih",
+ "wikidataLabel": "al-Tayyib Salih",
+ "wikidataDescription": "Sudanese novelist and short story writer (1929–2009)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q561434",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521455664
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Tayeb Salih",
+   "articleUrl": "https://en.wikipedia.org/wiki/Tayeb_Salih",
+   "pageId": 514472,
+   "revisionId": 1357038332,
+   "revisionTimestamp": "2026-05-31T11:26:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1929-07-12T00:00:00Z|proleptic-gregorian",
+   "+1929-07-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-07-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1929-07-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-07-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-02-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1754253",
+  "label": "Al Dabbah",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1754253",
+  "country": {
+   "entity": "Q1049",
+   "label": "Sudan"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1754253",
+   "sourceEntityLabel": "Al Dabbah",
+   "latitude": 18.05023611,
+   "longitude": 30.94951667,
+   "precision": 0.00000277777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Tayeb saleh.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Tayeb%20saleh.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Tayeb_saleh.jpg",
+  "width": 300,
+  "height": 225,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Engfrompalestine",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

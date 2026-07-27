@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "italo-calvino",
+  "seedRound": 0,
+  "qid": "Q154756",
+  "displayName": "Italo Calvino",
+  "identity": "Writer · Cuba · 1923–1985",
+  "title": "Italo Calvino's birth chart",
+  "metaDescription": "Italo Calvino's chart, computed from a sourced birth date: Sun at 21.3° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Cardinal signs carry four of the nine placements whose signs are settled — the broadest certain weighting in the chart. Cardinal signs open the seasons, and a cardinal-heavy chart is read as one that starts things.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.33",
+        "decan:libra:third"
+      ],
+      "text": "The Sun's position resolves to 21.3° Libra — deep enough in the third decan (20°–30°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Libra:3.4°",
+        "personal:Venus:Scorpio:0.7°",
+        "personal:Mars:Virgo:28.4°"
+      ],
+      "text": "Closer in, Mercury stands at 3.4° Libra; Venus stands at 0.7° Scorpio; Mars stands at 28.4° Virgo. The tradition reads thought that travels by comparison from Mercury, attraction that works by atmosphere from Venus, effort banked steadily until it tells from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Neptune:square:1.35",
+        "aspect:Sun:Neptune:sextile:1.36",
+        "aspect:Sun:Saturn:conjunction:1.51"
+      ],
+      "text": "Jupiter and Neptune hold the closest angle here — a square, 1.4° wide. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun sextile Neptune at 1.4°, and the Sun conjunction Saturn at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:detriment",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Libra at 21.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Scorpio at 0.7° is in detriment — the planet opposite its home, working against the grain; Saturn in Libra at 22.8° is in exaltation — the tradition’s honoured-guest placement, working at its best. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air3-earth1-fire1",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: water 4, air 3, earth 1, fire 1 across the elements, and cardinal 4, fixed 3, mutable 2 across the modalities. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 13.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-15/",
+    "label": "Everyone born on October 15"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:21.33",
+    "decan:libra:third",
+    "personal:Mercury:Libra:3.4°",
+    "personal:Venus:Scorpio:0.7°",
+    "personal:Mars:Virgo:28.4°",
+    "aspect:Jupiter:Neptune:square:1.35",
+    "aspect:Sun:Neptune:sextile:1.36",
+    "aspect:Sun:Saturn:conjunction:1.51",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:exaltation",
+    "elements:water4-air3-earth1-fire1",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 414,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

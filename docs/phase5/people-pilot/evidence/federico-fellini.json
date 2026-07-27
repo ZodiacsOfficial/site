@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "federico-fellini",
+ "qid": "Q7371",
+ "displayName": "Federico Fellini",
+ "wikidataLabel": "Federico Fellini",
+ "wikidataDescription": "Italian filmmaker (1920–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7371",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522105386
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Federico Fellini",
+   "articleUrl": "https://en.wikipedia.org/wiki/Federico_Fellini",
+   "pageId": 11786,
+   "revisionId": 1365387659,
+   "revisionTimestamp": "2026-07-22T02:30:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-01-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-01-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-01-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-10-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q13369",
+  "label": "Rimini",
+  "entityUrl": "https://www.wikidata.org/wiki/Q13369",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q13369",
+   "sourceEntityLabel": "Rimini",
+   "latitude": 44.059444444444,
+   "longitude": 12.568333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q9334029",
+   "label": "satirist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Federico Fellini NYWTS 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Federico%20Fellini%20NYWTS%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Federico_Fellini_NYWTS_2.jpg",
+  "width": 2608,
+  "height": 2137,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Walter Albertin, World Telegram staff photographer",
+  "credit": "Library of Congress. New York World-Telegram & Sun Collection. http://hdl.loc.gov/loc.pnp/cph.3c21239",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

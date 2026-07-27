@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "juan-manuel-fangio",
+ "qid": "Q2069",
+ "displayName": "Juan Manuel Fangio",
+ "wikidataLabel": "Juan Manuel Fangio",
+ "wikidataDescription": "Argentine racing driver (1911–1995)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2069",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522283361
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Juan Manuel Fangio",
+   "articleUrl": "https://en.wikipedia.org/wiki/Juan_Manuel_Fangio",
+   "pageId": 48532,
+   "revisionId": 1364230610,
+   "revisionTimestamp": "2026-07-15T08:45:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-06-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-06-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-06-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-07-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2365352",
+  "label": "Balcarce",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2365352",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2365352",
+   "sourceEntityLabel": "Balcarce",
+   "latitude": -37.846412222222,
+   "longitude": -58.255625,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  },
+  {
+   "entity": "Q10841764",
+   "label": "Formula One driver"
+  },
+  {
+   "entity": "Q10349745",
+   "label": "racing automobile driver"
+  }
+ ],
+ "portrait": {
+  "file": "File:Juan Manuel Fangio (circa 1952).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Juan%20Manuel%20Fangio%20(circa%201952).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Juan_Manuel_Fangio_(circa_1952).jpg",
+  "width": 1038,
+  "height": 1547,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Museo Juan Manuel Fangio, reimpreso en \"La fotografía en la historia argentina\", Tomo I, Clarín, ISBN 950-782-643-2",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

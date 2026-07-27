@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "john-steinbeck",
+ "qid": "Q39212",
+ "displayName": "John Steinbeck",
+ "wikidataLabel": "John Steinbeck",
+ "wikidataDescription": "American writer (1902–1968)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q39212",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519350585
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "John Steinbeck",
+   "articleUrl": "https://en.wikipedia.org/wiki/John_Steinbeck",
+   "pageId": 15825,
+   "revisionId": 1364642775,
+   "revisionTimestamp": "2026-07-17T17:55:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1902-02-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-02-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-02-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1968-12-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q488125",
+  "label": "Salinas",
+  "entityUrl": "https://www.wikidata.org/wiki/Q488125",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q488125",
+   "sourceEntityLabel": "Salinas",
+   "latitude": 36.677777777778,
+   "longitude": -121.65555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q164236",
+   "label": "war correspondent"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:John Steinbeck 1939 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:John%20Steinbeck%201939%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:John_Steinbeck_1939_(cropped).jpg",
+  "width": 850,
+  "height": 1020,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "McFadden Publications, Inc.; no photographer credited; photo likely the work of Sonya Noskowiak, as Steinbeck is wearing the same clothes from her 1935 studio session that produced the work shown here: https://www.si.edu/object/npg_NPG.2006.74",
+  "credit": "Photoplay, November 1939 (page 22) Photograph is flipped horizontally for magazine publication",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

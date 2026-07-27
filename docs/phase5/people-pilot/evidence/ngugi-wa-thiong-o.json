@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ngugi-wa-thiong-o",
+ "qid": "Q302910",
+ "displayName": "Ngũgĩ wa Thiong'o",
+ "wikidataLabel": "Ngũgĩ wa Thiong'o",
+ "wikidataDescription": "Kenyan writer (1938–2025)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q302910",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517691340
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ngũgĩ wa Thiong'o",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ng%C5%A9g%C4%A9_wa_Thiong'o",
+   "pageId": 198401,
+   "revisionId": 1362837020,
+   "revisionTimestamp": "2026-07-06T14:26:09Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1938-01-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1938-01-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1938-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2025-05-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6358478",
+  "label": "Kamirithu",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6358478",
+  "country": {
+   "entity": "Q114",
+   "label": "Kenya"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6358478",
+   "sourceEntityLabel": "Kamirithu",
+   "latitude": -1.12,
+   "longitude": 36.63,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ngũgĩ wa Thiong'o 2019 (48139052733).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ng%C5%A9g%C4%A9%20wa%20Thiong'o%202019%20(48139052733).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ng%C5%A9g%C4%A9_wa_Thiong%27o_2019_(48139052733).jpg",
+  "width": 3600,
+  "height": 2400,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Library of Congress Life",
+  "credit": "20190509SM304.jpg",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "chinua-achebe",
+ "qid": "Q155845",
+ "displayName": "Chinua Achebe",
+ "wikidataLabel": "Chinua Achebe",
+ "wikidataDescription": "Nigerian novelist, poet, professor, and critic (1930-2013)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q155845",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519016459
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Chinua Achebe",
+   "articleUrl": "https://en.wikipedia.org/wiki/Chinua_Achebe",
+   "pageId": 262625,
+   "revisionId": 1362837143,
+   "revisionTimestamp": "2026-07-06T14:27:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1930-11-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1930-11-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1930-11-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2013-03-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7080027",
+  "label": "Ogidi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7080027",
+  "country": {
+   "entity": "Q1033",
+   "label": "Nigeria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7080027",
+   "sourceEntityLabel": "Ogidi",
+   "latitude": 6.15,
+   "longitude": 6.8666666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q140197632",
+   "label": "satirical novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Chinua Achebe, 1966 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Chinua%20Achebe%2C%201966%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Chinua_Achebe,_1966_(cropped).jpg",
+  "width": 661,
+  "height": 881,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carlo Bavagnoli",
+  "credit": "https://www.nytimes.com/2013/03/23/world/africa/chinua-achebe-nigerian-writer-dies-at-82.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

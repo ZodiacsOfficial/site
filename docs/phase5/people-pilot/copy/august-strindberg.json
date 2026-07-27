@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "august-strindberg",
+  "seedRound": 0,
+  "qid": "Q7724",
+  "displayName": "August Strindberg",
+  "identity": "Playwright and photographer · Sweden · 1849–1912",
+  "title": "August Strindberg's birth chart",
+  "metaDescription": "August Strindberg's chart, computed from a sourced birth date: Sun at 2.4° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. The four cardinal signs sit at the solstices and equinoxes — the scheme’s ignition points, and this chart is weighted to them.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.40",
+        "decan:aquarius:first"
+      ],
+      "text": "At noon on that date the Sun stood at 2.4° Aquarius, inside the first decan (0°–10°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:11.5°",
+        "personal:Venus:Pisces:15.3°",
+        "personal:Mars:Capricorn:2.3°"
+      ],
+      "text": "The personal planets sit Mercury at 11.5° Aquarius, Venus at 15.3° Pisces, Mars at 2.3° Capricorn. Mercury in a air sign reads as thought that travels by comparison; Venus in a water sign reads as attraction that works by atmosphere; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:trine:0.87",
+        "aspect:Mars:Neptune:sextile:1.12",
+        "aspect:Venus:Saturn:conjunction:6.36"
+      ],
+      "text": "Nothing in the geometry sits closer than Jupiter and Uranus: 0.9° from an exact trine. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mars sextile Neptune at 1.1°, and Venus conjunction Saturn at 6.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Moon:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Aquarius at 2.4° is in detriment — the planet opposite its home, working against the grain; the Moon in Capricorn at 10.0° is in detriment; Venus in Pisces at 15.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Capricorn at 2.3° is in exaltation. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-fire3-air2-earth2",
+        "modalities:cardinal4-fixed3-mutable3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 3 water, 3 fire, 2 air, 2 earth; by modality, 4 cardinal, 3 fixed, 3 mutable. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Jupiter was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 10.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-22/",
+    "label": "Everyone born on January 22"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:2.40",
+    "decan:aquarius:first",
+    "personal:Mercury:Aquarius:11.5°",
+    "personal:Venus:Pisces:15.3°",
+    "personal:Mars:Capricorn:2.3°",
+    "aspect:Jupiter:Uranus:trine:0.87",
+    "aspect:Mars:Neptune:sextile:1.12",
+    "aspect:Venus:Saturn:conjunction:6.36",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Moon:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:exaltation",
+    "elements:water3-fire3-air2-earth2",
+    "modalities:cardinal4-fixed3-mutable3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:capricorn",
+    "moon-band:12.3"
+  ],
+  "measurements": {
+    "originalWords": 449,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

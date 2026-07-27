@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "roland-barthes",
+  "seedRound": 0,
+  "qid": "Q179109",
+  "displayName": "Roland Barthes",
+  "identity": "Philosopher and university teacher · France · 1915–1980",
+  "title": "Roland Barthes's birth chart",
+  "metaDescription": "Roland Barthes's chart, computed from a sourced birth date: Sun at 19.0° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a trine to Jupiter at 0.4° — close enough to weld identity to expansion. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted.",
+  "ledeFact": "aspect:Sun:Jupiter:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.02",
+        "decan:scorpio:second"
+      ],
+      "text": "19.0° of Scorpio is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:1.2°",
+        "personal:Venus:Sagittarius:4.7°",
+        "personal:Mars:Leo:17.7°"
+      ],
+      "text": "For the fast movers, Mercury was at 1.2° Scorpio, Venus was at 4.7° Sagittarius, Mars was at 17.7° Leo. Read together: thought steeped in tone and memory; attraction declared rather than implied; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:trine:0.4",
+        "aspect:Sun:Mars:square:1.36",
+        "aspect:Mercury:Neptune:square:1.45"
+      ],
+      "text": "The Sun and Jupiter hold the closest angle here — a trine, 0.4° wide. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, the Sun square Mars at 1.4°, and Mercury square Neptune at 1.4° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Jupiter-Saturn",
+        "figure:t-square:Mars-Uranus:apex-Sun"
+      ],
+      "text": "the Sun, Jupiter, Saturn close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Mars opposes Uranus while both square the Sun. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Jupiter in Pisces at 18.6° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 16.3° is in detriment — the planet opposite its home, working against the grain. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire3-air1",
+        "modalities:fixed5-mutable2-cardinal2",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 5 in water, 3 in fire, 1 in air by element, 5 fixed, 2 mutable, 2 cardinal by modality. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 14.1° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-12/",
+    "label": "Everyone born on November 12"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:trine",
+    "sun-degree:19.02",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:1.2°",
+    "personal:Venus:Sagittarius:4.7°",
+    "personal:Mars:Leo:17.7°",
+    "aspect:Sun:Jupiter:trine:0.4",
+    "aspect:Sun:Mars:square:1.36",
+    "aspect:Mercury:Neptune:square:1.45",
+    "figure:grand-trine:Sun-Jupiter-Saturn",
+    "figure:t-square:Mars-Uranus:apex-Sun",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:detriment",
+    "elements:water5-fire3-air1",
+    "modalities:fixed5-mutable2-cardinal2",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 461,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "tsuguharu-foujita",
+  "seedRound": 0,
+  "qid": "Q261846",
+  "displayName": "Tsuguharu Foujita",
+  "identity": "Painter · Japan · 1886–1968",
+  "title": "Tsuguharu Foujita's birth chart",
+  "metaDescription": "Tsuguharu Foujita's chart, computed from a sourced birth date: Sun at 4.8° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Sagittarius — the Sun, the Moon, Mercury and Venus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:sagittarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.82",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun sits at 4.8° Sagittarius — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Sagittarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:18.4°",
+        "personal:Venus:Sagittarius:3.3°",
+        "personal:Mars:Capricorn:8.8°"
+      ],
+      "text": "Mercury holds 18.4° Sagittarius, Venus holds 3.3° Sagittarius, Mars holds 8.8° Capricorn — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:opposition:0.29",
+        "aspect:Sun:Venus:conjunction:1.49",
+        "aspect:Sun:Pluto:opposition:1.78"
+      ],
+      "text": "Venus and Pluto hold the closest angle here — a opposition, 0.3° wide. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, the Sun conjunction Venus at 1.5°, and the Sun opposition Pluto at 1.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has three entries for this chart. Mercury in Sagittarius at 18.4° is in detriment — the planet opposite its home, working against the grain; Mars in Capricorn at 8.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Cancer at 22.0° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air3-earth2-water1",
+        "modalities:mutable5-cardinal4-fixed1",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in fire, 3 in air, 2 in earth, 1 in water by element, 5 mutable, 4 cardinal, 1 fixed by modality. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Mercury, Saturn, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:13.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-27/",
+    "label": "Everyone born on November 27"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:sagittarius:4",
+    "sun-degree:4.82",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:18.4°",
+    "personal:Venus:Sagittarius:3.3°",
+    "personal:Mars:Capricorn:8.8°",
+    "aspect:Venus:Pluto:opposition:0.29",
+    "aspect:Sun:Venus:conjunction:1.49",
+    "aspect:Sun:Pluto:opposition:1.78",
+    "figure:none",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:fire4-air3-earth2-water1",
+    "modalities:mutable5-cardinal4-fixed1",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:sagittarius",
+    "moon-band:13.3"
+  ],
+  "measurements": {
+    "originalWords": 430,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

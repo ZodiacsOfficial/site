@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "homi-j-bhabha",
+ "qid": "Q325611",
+ "displayName": "Homi J. Bhabha",
+ "wikidataLabel": "Homi Jehangir Bhabha",
+ "wikidataDescription": "Indian nuclear physicist (1909–1966)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q325611",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2514300415
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Homi J. Bhabha",
+   "articleUrl": "https://en.wikipedia.org/wiki/Homi_J._Bhabha",
+   "pageId": 1245965,
+   "revisionId": 1365501360,
+   "revisionTimestamp": "2026-07-22T21:20:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1909-10-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-10-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-10-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1966-01-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1156",
+  "label": "Mumbai",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1156",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1156",
+   "sourceEntityLabel": "Mumbai",
+   "latitude": 19.075833333333332,
+   "longitude": 72.8775,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Homi Jehangir Bhabha.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Homi%20Jehangir%20Bhabha.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Homi_Jehangir_Bhabha.jpg",
+  "width": 288,
+  "height": 400,
+  "licenseShortName": "CC BY-SA 2.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en",
+  "artist": "Konrad Jacobs, Erlangen",
+  "credit": "Oberwolfach Photo Collection: https://opc.mfo.de/detail?photo_id=332",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

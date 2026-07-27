@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "kahlil-gibran",
+  "seedRound": 0,
+  "qid": "Q47737",
+  "displayName": "Kahlil Gibran",
+  "identity": "Writer and painter · Lebanon · 1883–1931",
+  "title": "Kahlil Gibran's birth chart",
+  "metaDescription": "Kahlil Gibran's chart, computed from a sourced birth date: Sun at 15.8° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a trine: the Sun and Neptune within 0.3°, identity wired to imagination. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Sun:Neptune:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.80",
+        "decan:capricorn:second"
+      ],
+      "text": "The Sun sits at 15.8° Capricorn — the second decan, 10°–20°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Capricorn and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:27.8°",
+        "personal:Venus:Sagittarius:8.9°",
+        "personal:Mars:Capricorn:8.8°"
+      ],
+      "text": "Closer in, Mercury stands at 27.8° Capricorn; Venus stands at 8.9° Sagittarius; Mars stands at 8.8° Capricorn. The tradition reads a mind that trusts the measured and the checked from Mercury, taste that runs toward the vivid and the immediate from Venus, drive that grinds rather than flares from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:trine:0.34",
+        "aspect:Jupiter:Uranus:square:0.55",
+        "aspect:Mercury:Pluto:trine:0.71"
+      ],
+      "text": "Start where the chart is tightest — the Sun trine Neptune, 0.3° of separation. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Jupiter square Uranus at 0.6°, and Mercury trine Pluto at 0.7° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Mercury-Uranus-Pluto"
+      ],
+      "text": "Mercury, Uranus, Pluto close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mars in Capricorn at 8.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Gemini at 23.9° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth7-fire2-air1",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives earth 7, fire 2, air 1, and mutable 4, cardinal 3, fixed 3 across the modes. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:12.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 10.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-6/",
+    "label": "Everyone born on January 6"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:trine",
+    "sun-degree:15.80",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:27.8°",
+    "personal:Venus:Sagittarius:8.9°",
+    "personal:Mars:Capricorn:8.8°",
+    "aspect:Sun:Neptune:trine:0.34",
+    "aspect:Jupiter:Uranus:square:0.55",
+    "aspect:Mercury:Pluto:trine:0.71",
+    "figure:grand-trine:Mercury-Uranus-Pluto",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:detriment",
+    "elements:earth7-fire2-air1",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:sagittarius",
+    "moon-band:12.9"
+  ],
+  "measurements": {
+    "originalWords": 447,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

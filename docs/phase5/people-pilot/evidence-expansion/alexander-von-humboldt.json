@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alexander-von-humboldt",
+ "qid": "Q6694",
+ "displayName": "Alexander von Humboldt",
+ "wikidataLabel": "Alexander von Humboldt",
+ "wikidataDescription": "Prussian geographer, naturalist and explorer (1769-1859)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q6694",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522257908
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alexander von Humboldt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alexander_von_Humboldt",
+   "pageId": 70631,
+   "revisionId": 1366133406,
+   "revisionTimestamp": "2026-07-26T13:24:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1769-09-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1769-09-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1769-09-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1859-05-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q64",
+  "label": "Berlin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q64",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q64",
+   "sourceEntityLabel": "Berlin",
+   "latitude": 52.516666666667,
+   "longitude": 13.383333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q520549",
+   "label": "geologist"
+  },
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q901402",
+   "label": "geographer"
+  },
+  {
+   "entity": "Q3546255",
+   "label": "oceanographer"
+  },
+  {
+   "entity": "Q7940086",
+   "label": "volcanologist"
+  },
+  {
+   "entity": "Q3579035",
+   "label": "travel writer"
+  },
+  {
+   "entity": "Q2310145",
+   "label": "meteorologist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q1113838",
+   "label": "climatologist"
+  },
+  {
+   "entity": "Q1371378",
+   "label": "ethnologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Stieler, Joseph Karl - Alexander von Humboldt - 1843.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Stieler%2C%20Joseph%20Karl%20-%20Alexander%20von%20Humboldt%20-%201843.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Stieler,_Joseph_Karl_-_Alexander_von_Humboldt_-_1843.jpg",
+  "width": 800,
+  "height": 986,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Joseph Karl Stieler",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "victor-jara",
+ "qid": "Q125133",
+ "displayName": "Víctor Jara",
+ "wikidataLabel": "Víctor Jara",
+ "wikidataDescription": "Chilean teacher, theatre director, poet, singer-songwriter, and political activist (1932-1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q125133",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517371054
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Víctor Jara",
+   "articleUrl": "https://en.wikipedia.org/wiki/V%C3%ADctor_Jara",
+   "pageId": 88401,
+   "revisionId": 1365588955,
+   "revisionTimestamp": "2026-07-23T08:57:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-09-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-09-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-09-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-09-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q187824",
+  "label": "San Ignacio",
+  "entityUrl": "https://www.wikidata.org/wiki/Q187824",
+  "country": {
+   "entity": "Q298",
+   "label": "Chile"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q187824",
+   "sourceEntityLabel": "San Ignacio",
+   "latitude": -36.799823305555556,
+   "longitude": -72.03035069444445,
+   "precision": 2.777777777777778e-8,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2707485",
+   "label": "scenographer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q8359428",
+   "label": "social activist"
+  },
+  {
+   "entity": "Q3387717",
+   "label": "theatre director"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Victor-Jara-in-Helsinki-1969 (cropped)2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Victor-Jara-in-Helsinki-1969%20(cropped)2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Victor-Jara-in-Helsinki-1969_(cropped)2.jpg",
+  "width": 634,
+  "height": 751,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Hannu Lindroos / Lehtikuva",
+  "credit": "Ketola, Eino: Suomen Metallityöväen Liitto 1961–1983, p. 406. (Helsinki 2007.)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

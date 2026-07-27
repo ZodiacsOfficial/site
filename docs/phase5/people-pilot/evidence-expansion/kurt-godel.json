@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kurt-godel",
+ "qid": "Q41390",
+ "displayName": "Kurt Gödel",
+ "wikidataLabel": "Kurt Gödel",
+ "wikidataDescription": "Austrian-American logician, mathematician, and philosopher of mathematics (1906–1978)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41390",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520832824
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kurt Gödel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kurt_G%C3%B6del",
+   "pageId": 16736,
+   "revisionId": 1366011254,
+   "revisionTimestamp": "2026-07-25T19:24:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-04-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-04-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-04-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1978-01-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q14960",
+  "label": "Brno",
+  "entityUrl": "https://www.wikidata.org/wiki/Q14960",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q14960",
+   "sourceEntityLabel": "Brno",
+   "latitude": 49.195277777778,
+   "longitude": 16.608333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q82594",
+   "label": "computer scientist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Young Kurt Gödel as a student in 1925.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Young%20Kurt%20G%C3%B6del%20as%20a%20student%20in%201925.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Young_Kurt_G%C3%B6del_as_a_student_in_1925.jpg",
+  "width": 674,
+  "height": 893,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Kurt Gödel Papers, the Shelby White and Leon Levy Achives Center, Institute for Advanced Study, Princeton, NJ",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

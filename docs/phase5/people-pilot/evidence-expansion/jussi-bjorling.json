@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jussi-bjorling",
+ "qid": "Q56157",
+ "displayName": "Jussi Björling",
+ "wikidataLabel": "Jussi Björling",
+ "wikidataDescription": "Swedish tenor (1911–1960)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q56157",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518327499
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jussi Björling",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jussi_Bj%C3%B6rling",
+   "pageId": 89345,
+   "revisionId": 1353993724,
+   "revisionTimestamp": "2026-05-13T16:51:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-02-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-02-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-02-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1960-09-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10681131",
+  "label": "Stora Tuna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10681131",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q10681131",
+   "sourceEntityLabel": "Stora Tuna",
+   "latitude": 60.451944444444,
+   "longitude": 15.475555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jussi Björling 1953.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jussi%20Bj%C3%B6rling%201953.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jussi_Bj%C3%B6rling_1953.jpg",
+  "width": 3213,
+  "height": 3981,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Scanpix/TT",
+  "credit": "Dalademokraten",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

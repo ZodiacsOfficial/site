@@ -1,0 +1,134 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lucretia-mott",
+ "qid": "Q267107",
+ "displayName": "Lucretia Mott",
+ "wikidataLabel": "Lucretia Mott",
+ "wikidataDescription": "American suffragist (1793–1880)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q267107",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517028650
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lucretia Mott",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lucretia_Mott",
+   "pageId": 25597820,
+   "revisionId": 1360497619,
+   "revisionTimestamp": "2026-06-21T20:58:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1793-01-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1793-01-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1793-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1793-01-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1880-11-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49149",
+  "label": "Nantucket",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49149",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49149",
+   "sourceEntityLabel": "Nantucket",
+   "latitude": 41.276756,
+   "longitude": -70.090889,
+   "precision": 2.778e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q12526417",
+   "label": "abolitionist"
+  },
+  {
+   "entity": "Q432386",
+   "label": "preacher"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Lucretia Mott, signed photo, by F. Gutekunst - Original (cropped).tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Lucretia%20Mott%2C%20signed%20photo%2C%20by%20F.%20Gutekunst%20-%20Original%20(cropped).tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Lucretia_Mott,_signed_photo,_by_F._Gutekunst_-_Original_(cropped).tif",
+  "width": 898,
+  "height": 1122,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Frederick Gutekunst",
+  "credit": "This image is available from the United States Library of Congress's Manuscript Division under the digital ID mnwp.275011.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

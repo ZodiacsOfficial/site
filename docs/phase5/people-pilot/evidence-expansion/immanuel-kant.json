@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "immanuel-kant",
+ "qid": "Q9312",
+ "displayName": "Immanuel Kant",
+ "wikidataLabel": "Immanuel Kant",
+ "wikidataDescription": "German philosopher (1724-1804)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9312",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522333072
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Immanuel Kant",
+   "articleUrl": "https://en.wikipedia.org/wiki/Immanuel_Kant",
+   "pageId": 14631,
+   "revisionId": 1362779413,
+   "revisionTimestamp": "2026-07-06T03:47:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1724-04-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1724-04-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1724-04-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1804-02-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q4120832",
+  "label": "Königsberg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q4120832",
+  "country": {
+   "entity": "Q38872",
+   "label": "Prussia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q4120832",
+   "sourceEntityLabel": "Königsberg",
+   "latitude": 54.71147222222222,
+   "longitude": 20.509305555555557,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q182436",
+   "label": "librarian"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q23760244",
+   "label": "philosopher of law"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q656823",
+   "label": "in-home tutor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Immanuel Kant - Gemaelde 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Immanuel%20Kant%20-%20Gemaelde%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Immanuel_Kant_-_Gemaelde_2.jpg",
+  "width": 940,
+  "height": 1640,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Becker",
+  "credit": "Self-scanned",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

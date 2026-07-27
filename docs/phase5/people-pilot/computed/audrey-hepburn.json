@@ -1,0 +1,262 @@
+{
+  "schema": "zodiacs.phase5.computed.v1",
+  "slug": "audrey-hepburn",
+  "qid": "Q42786",
+  "displayName": "Audrey Hepburn",
+  "calendarModel": "proleptic-gregorian",
+  "storedDate": "1929-05-04",
+  "gregorianDate": "1929-05-04",
+  "displayedDate": "1929-05-04",
+  "birthdayCrossLinkKey": "1929-05-04",
+  "timeQuality": "unknown",
+  "computation": {
+    "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+    "timeZone": "Europe/Brussels",
+    "civilTime": "12:00",
+    "utcInstant": "1929-05-04T11:00:00.000Z",
+    "utcOffsetMinutesAtBirth": 60,
+    "civilDayStartUtc": "1929-05-03T23:00:00.000Z",
+    "civilDayEndUtc": "1929-05-04T23:00:00.000Z",
+    "latitude": 50.83436,
+    "longitude": 4.361803,
+    "coordinateEscalationSteps": 0,
+    "coordinateSourceEntity": "Q80336784",
+    "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "anglesComputed": false,
+    "housesComputed": false,
+    "sectComputed": false
+  },
+  "sun": {
+    "sign": "taurus",
+    "signName": "Taurus",
+    "degree": 13.48
+  },
+  "moon": {
+    "sign": "pisces",
+    "signName": "Pisces",
+    "degree": 11.29,
+    "uncertain": false,
+    "signAtCivilDayStart": "pisces",
+    "signAtCivilDayEnd": "pisces"
+  },
+  "cusp": {
+    "ambiguous": false,
+    "boundaryUtc": null,
+    "degreesInsideAtWindowStart": 13.0354,
+    "degreesToNextBoundaryAtWindowEnd": 15.9956
+  },
+  "unknownTimeErrorBandDegrees": {
+    "Sun": 0.969,
+    "Moon": 12.981,
+    "Mercury": 1.708,
+    "Venus": 0.287,
+    "Mars": 0.53,
+    "Jupiter": 0.236,
+    "Saturn": 0.039,
+    "Uranus": 0.05,
+    "Neptune": 0.003,
+    "Pluto": 0.014
+  },
+  "signUncertainTransitions": [],
+  "placements": [
+    {
+      "body": "Sun",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 13.48,
+      "retrograde": false,
+      "speedPerDay": 0.969,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Moon",
+      "sign": "pisces",
+      "signName": "Pisces",
+      "degree": 11.29,
+      "retrograde": false,
+      "speedPerDay": 12.9879,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mercury",
+      "sign": "gemini",
+      "signName": "Gemini",
+      "degree": 0.96,
+      "retrograde": false,
+      "speedPerDay": 1.7067,
+      "dignity": "domicile",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Venus",
+      "sign": "aries",
+      "signName": "Aries",
+      "degree": 22.67,
+      "retrograde": true,
+      "speedPerDay": -0.2863,
+      "dignity": "detriment",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mars",
+      "sign": "cancer",
+      "signName": "Cancer",
+      "degree": 25.35,
+      "retrograde": false,
+      "speedPerDay": 0.5304,
+      "dignity": "fall",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Jupiter",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 20.84,
+      "retrograde": false,
+      "speedPerDay": 0.2363,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Saturn",
+      "sign": "capricorn",
+      "signName": "Capricorn",
+      "degree": 0.03,
+      "retrograde": true,
+      "speedPerDay": -0.0386,
+      "dignity": "domicile",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Uranus",
+      "sign": "aries",
+      "signName": "Aries",
+      "degree": 9.36,
+      "retrograde": false,
+      "speedPerDay": 0.0495,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Neptune",
+      "sign": "leo",
+      "signName": "Leo",
+      "degree": 28.6,
+      "retrograde": true,
+      "speedPerDay": -0.0031,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Pluto",
+      "sign": "cancer",
+      "signName": "Cancer",
+      "degree": 16.45,
+      "retrograde": false,
+      "speedPerDay": 0.0135,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    }
+  ],
+  "aspectsStableAcrossCivilDay": [
+    {
+      "a": "Saturn",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 1.43,
+      "applying": true
+    },
+    {
+      "a": "Mercury",
+      "b": "Neptune",
+      "type": "square",
+      "orb": 2.36,
+      "applying": false
+    },
+    {
+      "a": "Venus",
+      "b": "Mars",
+      "type": "square",
+      "orb": 2.68,
+      "applying": false
+    },
+    {
+      "a": "Sun",
+      "b": "Pluto",
+      "type": "sextile",
+      "orb": 2.97,
+      "applying": true
+    },
+    {
+      "a": "Venus",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 5.93,
+      "applying": false
+    },
+    {
+      "a": "Venus",
+      "b": "Pluto",
+      "type": "square",
+      "orb": 6.23,
+      "applying": true
+    },
+    {
+      "a": "Sun",
+      "b": "Jupiter",
+      "type": "conjunction",
+      "orb": 7.36,
+      "applying": true
+    }
+  ],
+  "aspectsAtNoonOnly": [
+    {
+      "a": "Sun",
+      "b": "Moon",
+      "type": "sextile",
+      "orb": 2.19,
+      "applying": true
+    },
+    {
+      "a": "Moon",
+      "b": "Pluto",
+      "type": "trine",
+      "orb": 5.15,
+      "applying": true
+    }
+  ],
+  "patterns": {
+    "settledBodyCount": 10,
+    "stelliums": [],
+    "elements": {
+      "earth": 3,
+      "water": 3,
+      "air": 1,
+      "fire": 3
+    },
+    "modalities": {
+      "fixed": 3,
+      "mutable": 2,
+      "cardinal": 5
+    },
+    "retrograde": [
+      "Venus",
+      "Saturn",
+      "Neptune"
+    ],
+    "directionUncertain": []
+  }
+}

@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "thomas-edison",
+ "qid": "Q8743",
+ "displayName": "Thomas Edison",
+ "wikidataLabel": "Thomas Edison",
+ "wikidataDescription": "American inventor and businessman (1847–1931)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8743",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522447253
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Thomas Edison",
+   "articleUrl": "https://en.wikipedia.org/wiki/Thomas_Edison",
+   "pageId": 29778,
+   "revisionId": 1366124674,
+   "revisionTimestamp": "2026-07-26T12:03:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1847-02-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1847-02-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1847-02-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1931-10-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1645063",
+  "label": "Milan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1645063",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1645063",
+   "sourceEntityLabel": "Milan",
+   "latitude": 41.29306,
+   "longitude": -82.60111,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Thomas Edison2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Thomas%20Edison2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Thomas_Edison2.jpg",
+  "width": 2888,
+  "height": 3696,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Louis Bachrach, Bachrach Studios, restored by Michel Vuijlsteke",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c05139.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

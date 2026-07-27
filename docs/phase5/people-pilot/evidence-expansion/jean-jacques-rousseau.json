@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jean-jacques-rousseau",
+ "qid": "Q6527",
+ "displayName": "Jean-Jacques Rousseau",
+ "wikidataLabel": "Jean-Jacques Rousseau",
+ "wikidataDescription": "Genevan philosopher, writer, and composer (1712-1778)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q6527",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522756075
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jean-Jacques Rousseau",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jean-Jacques_Rousseau",
+   "pageId": 15941,
+   "revisionId": 1364272815,
+   "revisionTimestamp": "2026-07-15T15:51:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1712-06-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1712-06-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1712-06-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1778-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q71",
+  "label": "Geneva",
+  "entityUrl": "https://www.wikidata.org/wiki/Q71",
+  "country": {
+   "entity": "Q39",
+   "label": "Switzerland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q71",
+   "sourceEntityLabel": "Geneva",
+   "latitude": 46.2,
+   "longitude": 6.15,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q744738",
+   "label": "encyclopédistes"
+  },
+  {
+   "entity": "Q3589290",
+   "label": "correspondent"
+  },
+  {
+   "entity": "Q1238570",
+   "label": "political scientist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jean-Jacques Rousseau (painted portrait).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jean-Jacques%20Rousseau%20(painted%20portrait).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jean-Jacques_Rousseau_(painted_portrait).jpg",
+  "width": 1448,
+  "height": 2016,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Maurice Quentin de La Tour",
+  "credit": "Unknown source",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

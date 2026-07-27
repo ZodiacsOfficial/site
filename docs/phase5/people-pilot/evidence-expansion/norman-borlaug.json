@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "norman-borlaug",
+ "qid": "Q154824",
+ "displayName": "Norman Borlaug",
+ "wikidataLabel": "Norman Borlaug",
+ "wikidataDescription": "American biologist (1914–2009)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q154824",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517842043
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Norman Borlaug",
+   "articleUrl": "https://en.wikipedia.org/wiki/Norman_Borlaug",
+   "pageId": 275564,
+   "revisionId": 1365833131,
+   "revisionTimestamp": "2026-07-24T18:05:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-03-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-03-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-03-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-09-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1914623",
+  "label": "Cresco",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1914623",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1914623",
+   "sourceEntityLabel": "Cresco",
+   "latitude": 43.374444444444,
+   "longitude": -92.115,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q3126128",
+   "label": "geneticist"
+  },
+  {
+   "entity": "Q1781198",
+   "label": "agronomist"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q16021386",
+   "label": "forestry engineer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Norman Borlaug.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Norman%20Borlaug.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Norman_Borlaug.jpg",
+  "width": 496,
+  "height": 423,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

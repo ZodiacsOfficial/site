@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jose-clemente-orozco",
+  "seedRound": 0,
+  "qid": "Q332041",
+  "displayName": "José Clemente Orozco",
+  "identity": "Painter · Mexico · 1883–1949",
+  "title": "José Clemente Orozco's birth chart",
+  "metaDescription": "José Clemente Orozco's chart, computed from a sourced birth date: Sun at 1.2° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.3° separates Venus and Mars from an exact trine; at that range taste and drive read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Venus:Mars:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.17",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun's position resolves to 1.2° Sagittarius — deep enough in the first decan (0°–10°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Venus:Sagittarius:17.4°",
+        "personal:Mars:Leo:17.1°"
+      ],
+      "text": "For the fast movers, Venus was at 17.4° Sagittarius, Mars was at 17.1° Leo. Read together: attraction declared rather than implied; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Mars:trine:0.31",
+        "aspect:Mercury:Pluto:opposition:0.46",
+        "aspect:Sun:Pluto:opposition:0.96"
+      ],
+      "text": "The day's firmest angle joins Venus and Mars — a trine holding at 0.3°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mercury opposition Pluto at 0.5°, and the Sun opposition Pluto at 1.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "No planet here is at home, exalted, in detriment, or in fall. That silence from the oldest layer of the scheme is itself a result, and it moves the weight of the reading onto the geometry."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air2-earth2",
+        "modalities:mutable5-fixed3",
+        "settled-signs:8",
+        "retrograde:4",
+        "sign-uncertain:Mercury:scorpio:sagittarius"
+      ],
+      "text": "The certain ground: 8 placements whose signs hold for the whole day, dividing 4 fire, 2 air, 2 earth by element and 5 mutable, 3 fixed by mode. Mercury crossed from Scorpio into Sagittarius during that day, so its sign is left open. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 12.0° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-23/",
+    "label": "Everyone born on November 23"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Mars:trine",
+    "sun-degree:1.17",
+    "decan:sagittarius:first",
+    "personal:Venus:Sagittarius:17.4°",
+    "personal:Mars:Leo:17.1°",
+    "aspect:Venus:Mars:trine:0.31",
+    "aspect:Mercury:Pluto:opposition:0.46",
+    "aspect:Sun:Pluto:opposition:0.96",
+    "figure:none",
+    "dignity:none",
+    "elements:fire4-air2-earth2",
+    "modalities:mutable5-fixed3",
+    "settled-signs:8",
+    "retrograde:4",
+    "sign-uncertain:Mercury:scorpio:sagittarius",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 385,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

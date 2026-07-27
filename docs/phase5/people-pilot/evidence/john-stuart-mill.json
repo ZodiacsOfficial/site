@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "john-stuart-mill",
+ "qid": "Q50020",
+ "displayName": "John Stuart Mill",
+ "wikidataLabel": "John Stuart Mill",
+ "wikidataDescription": "British philosopher and political economist (1806–1873)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q50020",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522597419
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "John Stuart Mill",
+   "articleUrl": "https://en.wikipedia.org/wiki/John_Stuart_Mill",
+   "pageId": 15626,
+   "revisionId": 1364424132,
+   "revisionTimestamp": "2026-07-16T12:32:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1806-05-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1806-05-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1806-05-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1873-05-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q205817",
+  "label": "London Borough of Islington",
+  "entityUrl": "https://www.wikidata.org/wiki/Q205817",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q205817",
+   "sourceEntityLabel": "London Borough of Islington",
+   "latitude": 51.541666666667,
+   "longitude": -0.10222222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q188958",
+   "label": "egalitarianism"
+  },
+  {
+   "entity": "Q738142",
+   "label": "clerk"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  },
+  {
+   "entity": "Q2083925",
+   "label": "botanical collector"
+  },
+  {
+   "entity": "Q1227195",
+   "label": "political economist"
+  },
+  {
+   "entity": "Q16611574",
+   "label": "social reformer"
+  }
+ ],
+ "portrait": {
+  "file": "File:John Stuart Mill by London Stereoscopic Company, c1870.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:John%20Stuart%20Mill%20by%20London%20Stereoscopic%20Company%2C%20c1870.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:John_Stuart_Mill_by_London_Stereoscopic_Company,_c1870.jpg",
+  "width": 1274,
+  "height": 1600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "London Stereoscopic Company",
+  "credit": "Hulton Archive",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

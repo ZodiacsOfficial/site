@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "garrincha",
+  "seedRound": 0,
+  "qid": "Q180642",
+  "displayName": "Garrincha",
+  "identity": "Association football player · Brazil · 1933–1983",
+  "title": "Garrincha's birth chart",
+  "metaDescription": "Garrincha's chart, computed from a sourced birth date: Sun at 4.8° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. Mutable signs end their seasons, and a mutable-heavy chart is read as one built for adaptation and hand-off rather than for standing still.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.75",
+        "decan:scorpio:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 4.8° Scorpio: the first decan, whose classical sub-ruler is Mars. A water sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:28.5°",
+        "personal:Venus:Sagittarius:19.9°",
+        "personal:Mars:Sagittarius:13.8°"
+      ],
+      "text": "Closer in, Mercury stands at 28.5° Scorpio; Venus stands at 19.9° Sagittarius; Mars stands at 13.8° Sagittarius. The tradition reads a mind that absorbs before it argues from Mercury, taste that runs toward the vivid and the immediate from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:square:0.28",
+        "aspect:Jupiter:Saturn:trine:0.48",
+        "aspect:Mars:Neptune:square:2.06"
+      ],
+      "text": "The day's firmest angle joins Uranus and Pluto — a square holding at 0.3°. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Jupiter trine Saturn at 0.5°, and Mars square Neptune at 2.1° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has one entry for this chart. Saturn in Aquarius at 9.9° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air2-earth1",
+        "modalities:mutable4-fixed3-cardinal3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in water, 3 in fire, 2 in air, 1 in earth by element, 4 mutable, 3 fixed, 3 cardinal by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Uranus and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:13.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 13.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 8.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-28/",
+    "label": "Everyone born on October 28"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:4.75",
+    "decan:scorpio:first",
+    "personal:Mercury:Scorpio:28.5°",
+    "personal:Venus:Sagittarius:19.9°",
+    "personal:Mars:Sagittarius:13.8°",
+    "aspect:Uranus:Pluto:square:0.28",
+    "aspect:Jupiter:Saturn:trine:0.48",
+    "aspect:Mars:Neptune:square:2.06",
+    "figure:none",
+    "dignity:Saturn:domicile",
+    "elements:water4-fire3-air2-earth1",
+    "modalities:mutable4-fixed3-cardinal3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:pisces",
+    "moon-band:13.3"
+  ],
+  "measurements": {
+    "originalWords": 384,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

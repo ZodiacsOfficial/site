@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jane-addams",
+ "qid": "Q180989",
+ "displayName": "Jane Addams",
+ "wikidataLabel": "Jane Addams",
+ "wikidataDescription": "American feminist social activist, reformer, social worker, sociologist, philosopher, and writer (1860–1935)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q180989",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521214127
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jane Addams",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jane_Addams",
+   "pageId": 152277,
+   "revisionId": 1362954756,
+   "revisionTimestamp": "2026-07-07T04:31:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1860-09-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1860-09-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1860-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1860-09-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1935-05-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2671185",
+  "label": "Cedarville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2671185",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2671185",
+   "sourceEntityLabel": "Cedarville",
+   "latitude": 42.375,
+   "longitude": -89.6339,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q16611574",
+   "label": "social reformer"
+  },
+  {
+   "entity": "Q15978337",
+   "label": "social critic"
+  },
+  {
+   "entity": "Q322170",
+   "label": "suffragette"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q15994177",
+   "label": "political theorist"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:ADDAMS, JANE 21664v (cropped2).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:ADDAMS%2C%20JANE%2021664v%20(cropped2).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:ADDAMS,_JANE_21664v_(cropped2).jpg",
+  "width": 1832,
+  "height": 2728,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Harris Ewing, publisher",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID hec.21664.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

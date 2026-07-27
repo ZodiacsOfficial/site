@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mary-jackson",
+ "qid": "Q27221300",
+ "displayName": "Mary Jackson",
+ "wikidataLabel": "Mary Jackson",
+ "wikidataDescription": "American mathematician and aerospace engineer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q27221300",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512835179
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mary Jackson (engineer)",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mary_Jackson_(engineer)",
+   "pageId": 51337689,
+   "revisionId": 1351402469,
+   "revisionTimestamp": "2026-04-27T18:39:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1921-04-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1921-04-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1921-04-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-02-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q342043",
+  "label": "Hampton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q342043",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q342043",
+   "sourceEntityLabel": "Hampton",
+   "latitude": 37.02638888888889,
+   "longitude": -76.34444444444445,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q10497074",
+   "label": "military flight engineer"
+  },
+  {
+   "entity": "Q82594",
+   "label": "computer scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mary Jackson with a model (medium close-up).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mary%20Jackson%20with%20a%20model%20(medium%20close-up).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mary_Jackson_with_a_model_(medium_close-up).jpg",
+  "width": 496,
+  "height": 744,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "NASA Langley Research Center",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

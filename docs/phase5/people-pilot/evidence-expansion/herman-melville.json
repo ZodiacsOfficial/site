@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "herman-melville",
+ "qid": "Q4985",
+ "displayName": "Herman Melville",
+ "wikidataLabel": "Herman Melville",
+ "wikidataDescription": "American writer and poet (1819–1891)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4985",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522041605
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Herman Melville",
+   "articleUrl": "https://en.wikipedia.org/wiki/Herman_Melville",
+   "pageId": 13623,
+   "revisionId": 1365878911,
+   "revisionTimestamp": "2026-07-24T23:58:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1819-08-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1819-08-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1819-08-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1891-09-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11299",
+  "label": "Manhattan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11299",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q11299",
+   "sourceEntityLabel": "Manhattan",
+   "latitude": 40.728333333333,
+   "longitude": -73.994166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q45199",
+   "label": "sailor"
+  },
+  {
+   "entity": "Q1569495",
+   "label": "lecturer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q10732476",
+   "label": "art collector"
+  },
+  {
+   "entity": "Q247797",
+   "label": "customs officer"
+  },
+  {
+   "entity": "Q707995",
+   "label": "seaman"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Herman Melville by Joseph O Eaton.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Herman%20Melville%20by%20Joseph%20O%20Eaton.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Herman_Melville_by_Joseph_O_Eaton.jpg",
+  "width": 1461,
+  "height": 1801,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Joseph Oriel Eaton",
+  "credit": "Houghton Library - Harvard University - Modern Books and Manuscripts",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

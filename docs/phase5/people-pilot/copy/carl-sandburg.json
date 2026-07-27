@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "carl-sandburg",
+  "seedRound": 0,
+  "qid": "Q193608",
+  "displayName": "Carl Sandburg",
+  "identity": "Poet and trade unionist · United States · 1878–1967",
+  "title": "Carl Sandburg's birth chart",
+  "metaDescription": "Carl Sandburg's chart, computed from a sourced birth date: Sun at 16.4° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Jupiter sit 0.1° from an exact square — near enough that the tradition reads drive and expansion as a single working part. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Mars:Jupiter:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.35",
+        "decan:capricorn:second"
+      ],
+      "text": "Capricorn, but precisely: 16.4°, second decan, 10°–20°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:25.7°",
+        "personal:Venus:Pisces:0.4°",
+        "personal:Mars:Aries:15.4°"
+      ],
+      "text": "Closer in, Mercury stands at 25.7° Capricorn; Venus stands at 0.4° Pisces; Mars stands at 15.4° Aries. The tradition reads a mind that trusts the measured and the checked from Mercury, taste tuned to mood and undertow from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Jupiter:square:0.06",
+        "aspect:Jupiter:Saturn:sextile:0.34",
+        "aspect:Sun:Saturn:sextile:0.55"
+      ],
+      "text": "Start where the chart is tightest — Mars square Jupiter, 0.1° of separation. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Jupiter sextile Saturn at 0.3°, and the Sun sextile Saturn at 0.6° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. Venus in Pisces at 0.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Aries at 15.4° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 15.5° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-water2-fire2-air1",
+        "modalities:cardinal4-fixed4-mutable2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: earth 5, water 2, fire 2, air 1 across the elements, and cardinal 4, fixed 4, mutable 2 across the modalities. Mercury, Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-6/",
+    "label": "Everyone born on January 6"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Jupiter:square",
+    "sun-degree:16.35",
+    "decan:capricorn:second",
+    "personal:Mercury:Capricorn:25.7°",
+    "personal:Venus:Pisces:0.4°",
+    "personal:Mars:Aries:15.4°",
+    "aspect:Mars:Jupiter:square:0.06",
+    "aspect:Jupiter:Saturn:sextile:0.34",
+    "aspect:Sun:Saturn:sextile:0.55",
+    "figure:unaspected:Moon",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "elements:earth5-water2-fire2-air1",
+    "modalities:cardinal4-fixed4-mutable2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:aquarius",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 415,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

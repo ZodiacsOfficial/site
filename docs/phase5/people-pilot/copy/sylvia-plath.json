@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "sylvia-plath",
+  "seedRound": 0,
+  "qid": "Q133054",
+  "displayName": "Sylvia Plath",
+  "identity": "Poet and draftsperson · United States · 1932–1963",
+  "title": "Sylvia Plath's birth chart",
+  "metaDescription": "Sylvia Plath's chart, computed from a sourced birth date: Sun at 4.1° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a sextile to Pluto at 0.1° — close enough to weld taste to depth. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Venus:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.07",
+        "decan:scorpio:first"
+      ],
+      "text": "4.1° of Scorpio is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:21.3°",
+        "personal:Venus:Virgo:23.5°",
+        "personal:Mars:Leo:21.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Scorpio (21.3°), Venus in Virgo (23.5°), Mars in Leo (21.2°): thought steeped in tone and memory, attraction that grows by reliability, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:sextile:0.09",
+        "aspect:Mercury:Mars:square:0.15",
+        "aspect:Mars:Uranus:trine:0.31"
+      ],
+      "text": "The tightest geometry in the chart puts Venus a sixth of the circle apart from Pluto, 0.1° off exact. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mercury square Mars at 0.1°, and Mars trine Uranus at 0.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Venus in Virgo at 23.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Virgo at 16.0° is in detriment — the planet opposite its home, working against the grain; Saturn in Capricorn at 28.6° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-water3-fire2",
+        "modalities:fixed3-mutable3-cardinal3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in earth, 3 in water, 2 in fire by element, 3 fixed, 3 mutable, 3 cardinal by modality. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 14.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-27/",
+    "label": "Everyone born on October 27"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:sextile",
+    "sun-degree:4.07",
+    "decan:scorpio:first",
+    "personal:Mercury:Scorpio:21.3°",
+    "personal:Venus:Virgo:23.5°",
+    "personal:Mars:Leo:21.2°",
+    "aspect:Venus:Pluto:sextile:0.09",
+    "aspect:Mercury:Mars:square:0.15",
+    "aspect:Mars:Uranus:trine:0.31",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth4-water3-fire2",
+    "modalities:fixed3-mutable3-cardinal3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

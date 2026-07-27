@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "wilder-penfield",
+ "qid": "Q711394",
+ "displayName": "Wilder Penfield",
+ "wikidataLabel": "Wilder Penfield",
+ "wikidataDescription": "Canadian neurosurgeon, college football player and coach (1891–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q711394",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520235706
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Wilder Penfield",
+   "articleUrl": "https://en.wikipedia.org/wiki/Wilder_Penfield",
+   "pageId": 400115,
+   "revisionId": 1361413281,
+   "revisionTimestamp": "2026-06-27T20:02:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1891-01-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1891-01-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1891-01-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-04-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q187805",
+  "label": "Spokane",
+  "entityUrl": "https://www.wikidata.org/wiki/Q187805",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q187805",
+   "sourceEntityLabel": "Spokane",
+   "latitude": 47.65719444444444,
+   "longitude": -117.4235,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q774306",
+   "label": "surgeon"
+  },
+  {
+   "entity": "Q6337803",
+   "label": "neuroscientist"
+  },
+  {
+   "entity": "Q9385011",
+   "label": "neurosurgeon"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q783906",
+   "label": "neurologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Wilder Penfield.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Wilder%20Penfield.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Wilder_Penfield.jpg",
+  "width": 236,
+  "height": 359,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": "Transferred from en.wikipedia to Commons. Transfer was stated to be made by User:YUL89YYZ.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

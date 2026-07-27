@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "thelonious-monk",
+ "qid": "Q109612",
+ "displayName": "Thelonious Monk",
+ "wikidataLabel": "Thelonious Monk",
+ "wikidataDescription": "American jazz pianist and composer (1917–1982)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q109612",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519335653
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Thelonious Monk",
+   "articleUrl": "https://en.wikipedia.org/wiki/Thelonious_Monk",
+   "pageId": 84250,
+   "revisionId": 1359779075,
+   "revisionTimestamp": "2026-06-17T04:12:32Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-10-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-10-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1982-02-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1021026",
+  "label": "Rocky Mount",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1021026",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1021026",
+   "sourceEntityLabel": "Rocky Mount",
+   "latitude": 35.954112,
+   "longitude": -77.805572,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Thelonious Monk, Minton's Playhouse, New York, N.Y., ca. Sept. 1947 (William P. Gottlieb 06191).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Thelonious%20Monk%2C%20Minton's%20Playhouse%2C%20New%20York%2C%20N.Y.%2C%20ca.%20Sept.%201947%20(William%20P.%20Gottlieb%2006191).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Thelonious_Monk,_Minton%27s_Playhouse,_New_York,_N.Y.,_ca._Sept._1947_(William_P._Gottlieb_06191).jpg",
+  "width": 4898,
+  "height": 5148,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "William P. Gottlieb / Adam Cuerden",
+  "credit": "This image is available from the United States Library of Congress's Music Division under the digital ID gottlieb.06191.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

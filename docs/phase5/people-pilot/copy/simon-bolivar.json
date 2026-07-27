@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "simon-bolivar",
+  "seedRound": 0,
+  "qid": "Q8605",
+  "displayName": "Simón Bolívar",
+  "identity": "Politician · Venezuela · 1783–1830",
+  "title": "Simón Bolívar's birth chart",
+  "metaDescription": "Simón Bolívar's chart, computed from a sourced birth date: Sun at 1.5° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 1.5° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.53",
+        "decan:leo:first"
+      ],
+      "text": "At noon on that date the Sun stood at 1.5° Leo, inside the first decan (0°–10°), whose traditional sub-ruler is the Sun. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:11.9°",
+        "personal:Venus:Virgo:16.3°",
+        "personal:Mars:Aries:6.8°"
+      ],
+      "text": "Closer in, Mercury stands at 11.9° Cancer; Venus stands at 16.3° Virgo; Mars stands at 6.8° Aries. The tradition reads thought steeped in tone and memory from Mercury, attraction that grows by reliability from Venus, effort spent in bursts and openings from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:square:0.19",
+        "aspect:Mars:Saturn:square:0.85",
+        "aspect:Mars:Neptune:opposition:1.04"
+      ],
+      "text": "Saturn to Neptune is the closest call of the day, a square within 0.2°. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Mars square Saturn at 0.8°, and Mars opposition Neptune at 1.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Saturn:apex-Mars",
+        "figure:unaspected:Venus"
+      ],
+      "text": "Mercury opposes Saturn while both square Mars. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Venus:fall",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Sun in Leo at 1.5° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 16.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Aries at 6.8° is in domicile; Jupiter in Capricorn at 27.0° is in fall; Saturn in Capricorn at 7.6° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth3-fire2-water2",
+        "modalities:cardinal6-fixed2-mutable2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 3, earth 3, fire 2, water 2; modalities cardinal 6, fixed 2, mutable 2. Jupiter, Saturn and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 10.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-24/",
+    "label": "Everyone born on July 24"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:1.53",
+    "decan:leo:first",
+    "personal:Mercury:Cancer:11.9°",
+    "personal:Venus:Virgo:16.3°",
+    "personal:Mars:Aries:6.8°",
+    "aspect:Saturn:Neptune:square:0.19",
+    "aspect:Mars:Saturn:square:0.85",
+    "aspect:Mars:Neptune:opposition:1.04",
+    "figure:t-square:Mercury-Saturn:apex-Mars",
+    "figure:unaspected:Venus",
+    "dignity:Sun:domicile",
+    "dignity:Venus:fall",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:air3-earth3-fire2-water2",
+    "modalities:cardinal6-fixed2-mutable2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:gemini",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 449,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

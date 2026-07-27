@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "leslie-cheung",
+  "seedRound": 0,
+  "qid": "Q313596",
+  "displayName": "Leslie Cheung",
+  "identity": "Singer and film director · United Kingdom · 1956–2003",
+  "title": "Leslie Cheung's birth chart",
+  "metaDescription": "Leslie Cheung's chart, computed from a sourced birth date: Sun at 19.3° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mutable signs carry four of the ten placements whose signs are settled — the broadest certain weighting in the chart. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.32",
+        "decan:virgo:second"
+      ],
+      "text": "The Sun sits at 19.3° Virgo — the second decan, 10°–20°, which the tradition sub-rules by Saturn. Degrees matter more than the sign label here: two people born a fortnight apart share Virgo and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Libra:12.1°",
+        "personal:Venus:Leo:3.8°",
+        "personal:Mars:Pisces:17.8°"
+      ],
+      "text": "For the fast movers, Mercury was at 12.1° Libra, Venus was at 3.8° Leo, Mars was at 17.8° Pisces. Read together: a mind at home in argument and pattern; taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:sextile:0.29",
+        "aspect:Saturn:Pluto:square:1.35",
+        "aspect:Sun:Mars:opposition:1.51"
+      ],
+      "text": "Neptune and Pluto hold the closest angle here — a sextile, 0.3° wide. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Saturn square Pluto at 1.4°, and the Sun opposition Mars at 1.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Mercury"
+      ],
+      "text": "Mercury stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The classical table has one entry for this chart. Jupiter in Virgo at 13.7° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth2-air2-water2",
+        "modalities:mutable4-fixed4-cardinal2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives fire 4, earth 2, air 2, water 2, and mutable 4, fixed 4, cardinal 2 across the modes. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Mars was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:12.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-12/",
+    "label": "Everyone born on September 12"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:19.32",
+    "decan:virgo:second",
+    "personal:Mercury:Libra:12.1°",
+    "personal:Venus:Leo:3.8°",
+    "personal:Mars:Pisces:17.8°",
+    "aspect:Neptune:Pluto:sextile:0.29",
+    "aspect:Saturn:Pluto:square:1.35",
+    "aspect:Sun:Mars:opposition:1.51",
+    "figure:unaspected:Mercury",
+    "dignity:Jupiter:detriment",
+    "elements:fire4-earth2-air2-water2",
+    "modalities:mutable4-fixed4-cardinal2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:sagittarius",
+    "moon-band:12.1"
+  ],
+  "measurements": {
+    "originalWords": 409,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

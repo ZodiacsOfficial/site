@@ -1,0 +1,254 @@
+{
+  "schema": "zodiacs.phase5.computed.v1",
+  "slug": "guy-de-maupassant",
+  "qid": "Q9327",
+  "displayName": "Guy de Maupassant",
+  "calendarModel": "proleptic-gregorian",
+  "storedDate": "1850-08-05",
+  "gregorianDate": "1850-08-05",
+  "displayedDate": "1850-08-05",
+  "birthdayCrossLinkKey": "1850-08-05",
+  "timeQuality": "unknown",
+  "computation": {
+    "convention": "noon civil time at the birthplace IANA zone, angles and houses omitted",
+    "timeZone": "Europe/Paris",
+    "civilTime": "12:00",
+    "utcInstant": "1850-08-05T11:50:39.000Z",
+    "utcOffsetMinutesAtBirth": 9.35,
+    "civilDayStartUtc": "1850-08-04T23:50:39.000Z",
+    "civilDayEndUtc": "1850-08-05T23:50:39.000Z",
+    "latitude": 49.858333333333,
+    "longitude": 1.1013888888889,
+    "coordinateEscalationSteps": 0,
+    "coordinateSourceEntity": "Q629137",
+    "ephemeris": "astronomy-engine via GeoVector + Rotation_EQJ_ECT (server-ephemeris.ts convention)",
+    "aspectTable": "@zodiacs/engine/internal/math",
+    "anglesComputed": false,
+    "housesComputed": false,
+    "sectComputed": false
+  },
+  "sun": {
+    "sign": "leo",
+    "signName": "Leo",
+    "degree": 12.63
+  },
+  "moon": {
+    "sign": "cancer",
+    "signName": "Cancer",
+    "degree": 8.65,
+    "uncertain": false,
+    "signAtCivilDayStart": "cancer",
+    "signAtCivilDayEnd": "cancer"
+  },
+  "cusp": {
+    "ambiguous": false,
+    "boundaryUtc": null,
+    "degreesInsideAtWindowStart": 12.1602,
+    "degreesToNextBoundaryAtWindowEnd": 16.8811
+  },
+  "unknownTimeErrorBandDegrees": {
+    "Sun": 0.959,
+    "Moon": 14.87,
+    "Mercury": 1.986,
+    "Venus": 1.166,
+    "Mars": 0.627,
+    "Jupiter": 0.188,
+    "Saturn": 0.005,
+    "Uranus": 0,
+    "Neptune": 0.024,
+    "Pluto": 0.002
+  },
+  "signUncertainTransitions": [],
+  "placements": [
+    {
+      "body": "Sun",
+      "sign": "leo",
+      "signName": "Leo",
+      "degree": 12.63,
+      "retrograde": false,
+      "speedPerDay": 0.9587,
+      "dignity": "domicile",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Moon",
+      "sign": "cancer",
+      "signName": "Cancer",
+      "degree": 8.65,
+      "retrograde": false,
+      "speedPerDay": 14.8803,
+      "dignity": "domicile",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mercury",
+      "sign": "leo",
+      "signName": "Leo",
+      "degree": 17.98,
+      "retrograde": false,
+      "speedPerDay": 1.9852,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Venus",
+      "sign": "virgo",
+      "signName": "Virgo",
+      "degree": 21.32,
+      "retrograde": false,
+      "speedPerDay": 1.1658,
+      "dignity": "fall",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Mars",
+      "sign": "virgo",
+      "signName": "Virgo",
+      "degree": 18.67,
+      "retrograde": false,
+      "speedPerDay": 0.6266,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Jupiter",
+      "sign": "virgo",
+      "signName": "Virgo",
+      "degree": 22.63,
+      "retrograde": false,
+      "speedPerDay": 0.1877,
+      "dignity": "detriment",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Saturn",
+      "sign": "aries",
+      "signName": "Aries",
+      "degree": 21,
+      "retrograde": true,
+      "speedPerDay": -0.0047,
+      "dignity": "fall",
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Uranus",
+      "sign": "taurus",
+      "signName": "Taurus",
+      "degree": 0.32,
+      "retrograde": false,
+      "speedPerDay": 0.0002,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": false
+    },
+    {
+      "body": "Neptune",
+      "sign": "pisces",
+      "signName": "Pisces",
+      "degree": 6.27,
+      "retrograde": true,
+      "speedPerDay": -0.0245,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    },
+    {
+      "body": "Pluto",
+      "sign": "aries",
+      "signName": "Aries",
+      "degree": 29.86,
+      "retrograde": true,
+      "speedPerDay": -0.002,
+      "dignity": null,
+      "stableAcrossDay": true,
+      "retrogradeStableAcrossDay": true
+    }
+  ],
+  "aspectsStableAcrossCivilDay": [
+    {
+      "a": "Uranus",
+      "b": "Pluto",
+      "type": "conjunction",
+      "orb": 0.46,
+      "applying": false
+    },
+    {
+      "a": "Venus",
+      "b": "Jupiter",
+      "type": "conjunction",
+      "orb": 1.3,
+      "applying": true
+    },
+    {
+      "a": "Venus",
+      "b": "Mars",
+      "type": "conjunction",
+      "orb": 2.66,
+      "applying": false
+    },
+    {
+      "a": "Mercury",
+      "b": "Saturn",
+      "type": "trine",
+      "orb": 3.01,
+      "applying": true
+    },
+    {
+      "a": "Mars",
+      "b": "Jupiter",
+      "type": "conjunction",
+      "orb": 3.96,
+      "applying": true
+    },
+    {
+      "a": "Sun",
+      "b": "Mercury",
+      "type": "conjunction",
+      "orb": 5.35,
+      "applying": false
+    }
+  ],
+  "aspectsAtNoonOnly": [
+    {
+      "a": "Moon",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 2.38,
+      "applying": false
+    }
+  ],
+  "patterns": {
+    "settledBodyCount": 10,
+    "stelliums": [
+      {
+        "sign": "virgo",
+        "count": 3
+      }
+    ],
+    "elements": {
+      "fire": 4,
+      "water": 2,
+      "earth": 4
+    },
+    "modalities": {
+      "fixed": 3,
+      "cardinal": 3,
+      "mutable": 4
+    },
+    "retrograde": [
+      "Saturn",
+      "Neptune",
+      "Pluto"
+    ],
+    "directionUncertain": [
+      "Uranus"
+    ]
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "henry-lawson",
+  "seedRound": 0,
+  "qid": "Q453577",
+  "displayName": "Henry Lawson",
+  "identity": "Writer · Australia · 1867–1922",
+  "title": "Henry Lawson's birth chart",
+  "metaDescription": "Henry Lawson's chart, computed from a sourced birth date: Sun at 25.4° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, fixed leads with four. Fixed weight is the scheme’s deep keel: slow to turn, near-impossible to capsize.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.37",
+        "decan:gemini:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 25.4° Gemini: the third decan, whose classical sub-ruler is Saturn. A air sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Cancer:13.2°",
+        "personal:Venus:Taurus:28.7°",
+        "personal:Mars:Leo:27.0°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Cancer (13.2°), Venus in Taurus (28.7°), Mars in Leo (27.0°): a mind that absorbs before it argues, taste for the substantial and the lasting, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:trine:0.37",
+        "aspect:Mercury:Neptune:square:1.64",
+        "aspect:Venus:Mars:square:1.65"
+      ],
+      "text": "Closest first: Jupiter to Uranus, a trine with 0.4° of slack. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Mercury square Neptune at 1.6°, and Venus square Mars at 1.6° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Venus in Taurus at 28.7° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 7.4° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-earth2-air1",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 water, 3 fire, 2 earth, 1 air by element and 4 fixed, 3 mutable, 3 cardinal by mode. Saturn was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 24.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-17/",
+    "label": "Everyone born on June 17"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:25.37",
+    "decan:gemini:third",
+    "personal:Mercury:Cancer:13.2°",
+    "personal:Venus:Taurus:28.7°",
+    "personal:Mars:Leo:27.0°",
+    "aspect:Jupiter:Uranus:trine:0.37",
+    "aspect:Mercury:Neptune:square:1.64",
+    "aspect:Venus:Mars:square:1.65",
+    "figure:none",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:domicile",
+    "elements:water4-fire3-earth2-air1",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:sagittarius",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 354,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

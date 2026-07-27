@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "oscar-niemeyer",
+  "seedRound": 0,
+  "qid": "Q134165",
+  "displayName": "Oscar Niemeyer",
+  "identity": "Architect and designer · Brazil · 1907–2012",
+  "title": "Oscar Niemeyer's birth chart",
+  "metaDescription": "Oscar Niemeyer's chart, computed from a sourced birth date: Sun at 22.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: Mars and Uranus within 0.3°, drive wired to disruption. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Mars:Uranus:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.50",
+        "decan:sagittarius:third"
+      ],
+      "text": "The Sun sits at 22.5° Sagittarius — the third decan, 20°–30°, which the tradition sub-rules by the Sun. Degrees matter more than the sign label here: two people born a fortnight apart share Sagittarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:6.4°",
+        "personal:Venus:Capricorn:15.4°",
+        "personal:Mars:Pisces:11.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 6.4° Sagittarius, Venus was at 15.4° Capricorn, Mars was at 11.4° Pisces. Read together: a mind that decides at speaking speed; taste for the substantial and the lasting; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:sextile:0.26",
+        "aspect:Sun:Pluto:opposition:1.31",
+        "aspect:Venus:Neptune:opposition:1.32"
+      ],
+      "text": "Closest first: Mars to Uranus, a sextile with 0.3° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, the Sun opposition Pluto at 1.3°, and Venus opposition Neptune at 1.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Sun-Pluto:apex-Saturn",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Pluto while both square Saturn. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment"
+      ],
+      "text": "The classical table has one entry for this chart. Mercury in Sagittarius at 6.4° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-earth2-air1",
+        "modalities:mutable5-cardinal3-fixed1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 fire, 3 water, 2 earth, 1 air; by modality, 5 mutable, 3 cardinal, 1 fixed. Jupiter, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 12.8° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-15/",
+    "label": "Everyone born on December 15"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:sextile",
+    "sun-degree:22.50",
+    "decan:sagittarius:third",
+    "personal:Mercury:Sagittarius:6.4°",
+    "personal:Venus:Capricorn:15.4°",
+    "personal:Mars:Pisces:11.4°",
+    "aspect:Mars:Uranus:sextile:0.26",
+    "aspect:Sun:Pluto:opposition:1.31",
+    "aspect:Venus:Neptune:opposition:1.32",
+    "figure:t-square:Sun-Pluto:apex-Saturn",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "elements:fire3-water3-earth2-air1",
+    "modalities:mutable5-cardinal3-fixed1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 392,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

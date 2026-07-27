@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "karen-blixen",
+ "qid": "Q182804",
+ "displayName": "Karen Blixen",
+ "wikidataLabel": "Karen Blixen",
+ "wikidataDescription": "Danish writer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q182804",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520669518
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Karen Blixen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Karen_Blixen",
+   "pageId": 65133,
+   "revisionId": 1364652278,
+   "revisionTimestamp": "2026-07-17T19:16:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1885-04-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1885-04-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1885-04-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-09-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1569018",
+  "label": "Rungstedlund",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1569018",
+  "country": {
+   "entity": "Q35",
+   "label": "Denmark"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1569018",
+   "sourceEntityLabel": "Rungstedlund",
+   "latitude": 55.8833,
+   "longitude": 12.5433,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Karen Blixen cropped from larger original (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Karen%20Blixen%20cropped%20from%20larger%20original%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Karen_Blixen_cropped_from_larger_original_(cropped).jpg",
+  "width": 536,
+  "height": 727,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "By SAS Scandinavian Airlines (http://images.flysas.com) [Public domain], via Wikimedia Commons",
+  "credit": "File:Karen Blixen.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

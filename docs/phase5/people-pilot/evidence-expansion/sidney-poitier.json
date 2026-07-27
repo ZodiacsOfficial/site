@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sidney-poitier",
+ "qid": "Q104049",
+ "displayName": "Sidney Poitier",
+ "wikidataLabel": "Sidney Poitier",
+ "wikidataDescription": "Bahamian and American actor and diplomat (1927–2022)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q104049",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518913523
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sidney Poitier",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sidney_Poitier",
+   "pageId": 46052,
+   "revisionId": 1365476721,
+   "revisionTimestamp": "2026-07-22T18:04:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1927-02-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1927-02-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1927-02-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2022-01-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8652",
+  "label": "Miami",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8652",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q8652",
+   "sourceEntityLabel": "Miami",
+   "latitude": 25.783333333333,
+   "longitude": -80.216666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3387717",
+   "label": "theatre director"
+  },
+  {
+   "entity": "Q578109",
+   "label": "television producer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sidney Poitier 1968.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sidney%20Poitier%201968.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sidney_Poitier_1968.jpg",
+  "width": 819,
+  "height": 999,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown photographer",
+  "credit": "https://www.ebay.com/itm/Sidney-Poitier-1968-For-Love-of-Ivy-Original-Vintage-Still-Photo-J6478/372650907328 A similar image was posted in the New York Amsterdam News of 23 April, 1966. Due to the low quality, I cannot confirm if it is the same image.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

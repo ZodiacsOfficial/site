@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ernest-shackleton",
+  "seedRound": 0,
+  "qid": "Q957543",
+  "displayName": "Ernest Shackleton",
+  "identity": "Explorer · Ireland · 1874–1922",
+  "title": "Ernest Shackleton's birth chart",
+  "metaDescription": "Ernest Shackleton's chart, computed from a sourced birth date: Sun at 26.7° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Aquarius — the Sun, the Moon, Venus and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aquarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.71",
+        "decan:aquarius:third"
+      ],
+      "text": "26.7° of Aquarius is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:6.2°",
+        "personal:Venus:Aquarius:24.7°",
+        "personal:Mars:Aries:4.7°"
+      ],
+      "text": "Closer in, Mercury stands at 6.2° Pisces; Venus stands at 24.7° Aquarius; Mars stands at 4.7° Aries. The tradition reads thought steeped in tone and memory from Mercury, attraction that begins as conversation from Venus, effort spent in bursts and openings from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:opposition:0.13",
+        "aspect:Sun:Neptune:sextile:0.47",
+        "aspect:Venus:Neptune:sextile:1.49"
+      ],
+      "text": "The day's firmest angle joins Saturn and Uranus — a opposition holding at 0.1°. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, the Sun sextile Neptune at 0.5°, and Venus sextile Neptune at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mercury:fall",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Sun in Aquarius at 26.7° is in detriment — the planet opposite its home, working against the grain; Mercury in Pisces at 6.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Aries at 4.7° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 7.6° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-fire3-water1-earth1",
+        "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 5, fire 3, water 1, earth 1; modalities fixed 6, cardinal 3, mutable 1. Jupiter and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:14.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 14.7° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 8.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-15/",
+    "label": "Everyone born on February 15"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:aquarius:4",
+    "sun-degree:26.71",
+    "decan:aquarius:third",
+    "personal:Mercury:Pisces:6.2°",
+    "personal:Venus:Aquarius:24.7°",
+    "personal:Mars:Aries:4.7°",
+    "aspect:Saturn:Uranus:opposition:0.13",
+    "aspect:Sun:Neptune:sextile:0.47",
+    "aspect:Venus:Neptune:sextile:1.49",
+    "figure:none",
+    "dignity:Sun:detriment",
+    "dignity:Mercury:fall",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air5-fire3-water1-earth1",
+    "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aquarius",
+    "moon-band:14.7"
+  ],
+  "measurements": {
+    "originalWords": 422,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

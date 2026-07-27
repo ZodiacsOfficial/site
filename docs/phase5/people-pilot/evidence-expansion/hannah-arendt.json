@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hannah-arendt",
+ "qid": "Q60025",
+ "displayName": "Hannah Arendt",
+ "wikidataLabel": "Hannah Arendt",
+ "wikidataDescription": "German-American political theorist and philosopher (1906–1975)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q60025",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522461368
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hannah Arendt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hannah_Arendt",
+   "pageId": 95184,
+   "revisionId": 1365852230,
+   "revisionTimestamp": "2026-07-24T20:38:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-10-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-10-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-10-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1975-12-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18023391",
+  "label": "Lindener Marktplatz 2, Hannover",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18023391",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 3,
+  "coordinates": {
+   "sourceEntity": "Q18023391",
+   "sourceEntityLabel": "Lindener Marktplatz 2, Hannover",
+   "latitude": 52.366777,
+   "longitude": 9.714939,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1238570",
+   "label": "political scientist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q15994177",
+   "label": "political theorist"
+  },
+  {
+   "entity": "Q1397808",
+   "label": "resistance fighter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hannah Arendt auf dem 1. Kulturkritikerkongress, Barbara Niggl Radloff, FM-2019-1-5-9-16 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hannah%20Arendt%20auf%20dem%201.%20Kulturkritikerkongress%2C%20Barbara%20Niggl%20Radloff%2C%20FM-2019-1-5-9-16%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hannah_Arendt_auf_dem_1._Kulturkritikerkongress,_Barbara_Niggl_Radloff,_FM-2019-1-5-9-16_(cropped).jpg",
+  "width": 1323,
+  "height": 1740,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Barbara Niggl Radloff",
+  "credit": "sammlungonline.muenchner-stadtmuseum.de",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

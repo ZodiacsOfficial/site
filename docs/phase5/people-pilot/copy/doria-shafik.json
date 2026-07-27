@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "doria-shafik",
+  "seedRound": 0,
+  "qid": "Q4120224",
+  "displayName": "Doria Shafik",
+  "identity": "Translator and women's rights activist · Egypt · 1908–1975",
+  "title": "Doria Shafik's birth chart",
+  "metaDescription": "Doria Shafik's chart, computed from a sourced birth date: Sun at 22.0° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.04",
+        "decan:sagittarius:third"
+      ],
+      "text": "At the noon reference the Sun sits 22.0° into Sagittarius — the third decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:16.6°",
+        "personal:Venus:Scorpio:19.6°",
+        "personal:Mars:Scorpio:12.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (16.6°), Venus in Scorpio (19.6°), Mars in Scorpio (12.3°): thought that arrives already in motion, attraction that works by atmosphere, effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:opposition:0.79",
+        "aspect:Jupiter:Uranus:trine:1.46",
+        "aspect:Mars:Jupiter:sextile:1.77"
+      ],
+      "text": "The day's firmest angle joins Uranus and Neptune — a opposition holding at 0.8°. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Jupiter trine Uranus at 1.5°, and Mars sextile Jupiter at 1.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, five placements stand out. Mercury in Sagittarius at 16.6° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 19.6° is in detriment; Mars in Scorpio at 12.3° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 14.1° is in detriment; Saturn in Aries at 3.4° is in fall — the tradition’s uphill placement, strength earned rather than given. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth3-water3-air1",
+        "modalities:mutable5-cardinal3-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: fire 3, earth 3, water 3, air 1 across the elements, and mutable 5, cardinal 3, fixed 2 across the modalities. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 6.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-14/",
+    "label": "Everyone born on December 14"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:5",
+    "sun-degree:22.04",
+    "decan:sagittarius:third",
+    "personal:Mercury:Sagittarius:16.6°",
+    "personal:Venus:Scorpio:19.6°",
+    "personal:Mars:Scorpio:12.3°",
+    "aspect:Uranus:Neptune:opposition:0.79",
+    "aspect:Jupiter:Uranus:trine:1.46",
+    "aspect:Mars:Jupiter:sextile:1.77",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:fall",
+    "elements:fire3-earth3-water3-air1",
+    "modalities:mutable5-cardinal3-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:virgo",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 426,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

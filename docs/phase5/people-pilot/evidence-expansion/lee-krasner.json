@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lee-krasner",
+ "qid": "Q237959",
+ "displayName": "Lee Krasner",
+ "wikidataLabel": "Lee Krasner",
+ "wikidataDescription": "American abstract expressionist painter (1908–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q237959",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517568327
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lee Krasner",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lee_Krasner",
+   "pageId": 584664,
+   "revisionId": 1365507448,
+   "revisionTimestamp": "2026-07-22T22:10:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-10-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-10-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-10-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-06-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18419",
+  "label": "Brooklyn",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18419",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18419",
+   "sourceEntityLabel": "Brooklyn",
+   "latitude": 40.65083333333333,
+   "longitude": -73.94972222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Lee Krasner, artist, cropped.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Lee%20Krasner%2C%20artist%2C%20cropped.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Lee_Krasner,_artist,_cropped.jpg",
+  "width": 2891,
+  "height": 4008,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Gotfryd, Bernard, photographer",
+  "credit": "Lee Krasner, artist",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "u-thant",
+ "qid": "Q1264",
+ "displayName": "U Thant",
+ "wikidataLabel": "U Thant",
+ "wikidataDescription": "UN Secretary-General from 1961 to 1971",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1264",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517818856
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "U Thant",
+   "articleUrl": "https://en.wikipedia.org/wiki/U_Thant",
+   "pageId": 326067,
+   "revisionId": 1365650138,
+   "revisionTimestamp": "2026-07-23T17:10:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1909-01-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-01-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-01-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1974-11-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7131647",
+  "label": "Pantanaw",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7131647",
+  "country": {
+   "entity": "Q836",
+   "label": "Myanmar"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7131647",
+   "sourceEntityLabel": "Pantanaw",
+   "latitude": 16.98333333,
+   "longitude": 95.46666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:U Thant (1963).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:U%20Thant%20(1963).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:U_Thant_(1963).jpg",
+  "width": 1013,
+  "height": 1353,
+  "licenseShortName": "CC BY-SA 3.0 nl",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/nl/deed.en",
+  "artist": "Jack de Nijs for Anefo / Anefo",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 nl",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

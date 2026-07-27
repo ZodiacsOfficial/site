@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ben-hogan",
+ "qid": "Q365626",
+ "displayName": "Ben Hogan",
+ "wikidataLabel": "Ben Hogan",
+ "wikidataDescription": "American golfer (1912–1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q365626",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522648602
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ben Hogan",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ben_Hogan",
+   "pageId": 262383,
+   "revisionId": 1364104432,
+   "revisionTimestamp": "2026-07-14T14:40:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-08-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-08-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-08-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-07-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q981525",
+  "label": "Stephenville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q981525",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q981525",
+   "sourceEntityLabel": "Stephenville",
+   "latitude": 32.2206958,
+   "longitude": -98.2022633,
+   "precision": 1e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11303721",
+   "label": "golfer"
+  },
+  {
+   "entity": "Q490253",
+   "label": "professional golfer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ben Hogan NYWTS.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ben%20Hogan%20NYWTS.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ben_Hogan_NYWTS.jpg",
+  "width": 3683,
+  "height": 2904,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Dick DeMarsico",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c15559.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "althea-gibson",
+  "seedRound": 0,
+  "qid": "Q53550",
+  "displayName": "Althea Gibson",
+  "identity": "Tennis player and autobiographer · United States · 1927–2003",
+  "title": "Althea Gibson's birth chart",
+  "metaDescription": "Althea Gibson's chart, computed from a sourced birth date: Sun at 1.4° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a square to Saturn at 0.1° — close enough to weld identity to structure. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen.",
+  "ledeFact": "aspect:Sun:Saturn:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.44",
+        "decan:virgo:first"
+      ],
+      "text": "At the noon reference the Sun sits 1.4° into Virgo — the first decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:23.5°",
+        "personal:Venus:Virgo:24.5°",
+        "personal:Mars:Virgo:19.8°"
+      ],
+      "text": "The personal planets sit Mercury at 23.5° Leo, Venus at 24.5° Virgo, Mars at 19.8° Virgo. Mercury in a fire sign reads as thought that arrives already in motion; Venus in a earth sign reads as attraction that grows by reliability; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:square:0.1",
+        "aspect:Jupiter:Saturn:trine:0.54",
+        "aspect:Jupiter:Uranus:conjunction:0.7"
+      ],
+      "text": "Start where the chart is tightest — the Sun square Saturn, 0.1° of separation. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Jupiter trine Saturn at 0.5°, and Jupiter conjunction Uranus at 0.7° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. Venus in Virgo at 24.5° is in fall — the tradition’s uphill placement, strength earned rather than given. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire6-earth3-water1",
+        "modalities:mutable4-fixed3-cardinal3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements fire 6, earth 3, water 1; modalities mutable 4, fixed 3, cardinal 3. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Venus, Jupiter and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:12.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 12.6° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 12.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-25/",
+    "label": "Everyone born on August 25"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Saturn:square",
+    "sun-degree:1.44",
+    "decan:virgo:first",
+    "personal:Mercury:Leo:23.5°",
+    "personal:Venus:Virgo:24.5°",
+    "personal:Mars:Virgo:19.8°",
+    "aspect:Sun:Saturn:square:0.1",
+    "aspect:Jupiter:Saturn:trine:0.54",
+    "aspect:Jupiter:Uranus:conjunction:0.7",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "elements:fire6-earth3-water1",
+    "modalities:mutable4-fixed3-cardinal3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:leo",
+    "moon-band:12.6"
+  ],
+  "measurements": {
+    "originalWords": 406,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

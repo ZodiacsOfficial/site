@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "james-hunt",
+ "qid": "Q140393",
+ "displayName": "James Hunt",
+ "wikidataLabel": null,
+ "wikidataDescription": "British racing driver (1947–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q140393",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519406379
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "James Hunt",
+   "articleUrl": "https://en.wikipedia.org/wiki/James_Hunt",
+   "pageId": 287740,
+   "revisionId": 1365762528,
+   "revisionTimestamp": "2026-07-24T07:53:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1947-08-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1947-08-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1947-08-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-06-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1885873",
+  "label": "Belmont",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1885873",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1885873",
+   "sourceEntityLabel": "Belmont",
+   "latitude": 51.343280555556,
+   "longitude": -0.20238888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10841764",
+   "label": "Formula One driver"
+  },
+  {
+   "entity": "Q10349745",
+   "label": "racing automobile driver"
+  },
+  {
+   "entity": "Q135301631",
+   "label": "broadcaster"
+  }
+ ],
+ "portrait": {
+  "file": "File:J. Hunt in 1977 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:J.%20Hunt%20in%201977%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:J._Hunt_in_1977_(cropped).jpg",
+  "width": 860,
+  "height": 1153,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Uploader's father, digitized and altered by Mr.choppers",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

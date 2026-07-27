@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "celia-cruz",
+ "qid": "Q474045",
+ "displayName": "Celia Cruz",
+ "wikidataLabel": "Celia Cruz",
+ "wikidataDescription": "Cuban singer (1925–2003)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q474045",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521839469
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Celia Cruz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Celia_Cruz",
+   "pageId": 166331,
+   "revisionId": 1362928779,
+   "revisionTimestamp": "2026-07-07T01:19:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-10-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-10-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-10-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-07-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1563",
+  "label": "Havana",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1563",
+  "country": {
+   "entity": "Q241",
+   "label": "Cuba"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1563",
+   "sourceEntityLabel": "Havana",
+   "latitude": 23.136666666667,
+   "longitude": -82.358888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Celia Cruz 1957 color.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Celia%20Cruz%201957%20color.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Celia_Cruz_1957_color.jpg",
+  "width": 906,
+  "height": 1108,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ibrahim Arce (Narcy Studios photographer), most likely",
+  "credit": "Original source: same photoshoot as File:Celia Cruz, 1957.jpg Immediate source: https://www.facebook.com/Ficheraz/photos/hoy-celebramos-100-a%C3%B1os-de-celia-cruz-sab%C3%ADas-que-antes-de-convertirse-en-la-rein/1129641649316998/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

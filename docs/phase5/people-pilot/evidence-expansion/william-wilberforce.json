@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "william-wilberforce",
+ "qid": "Q207672",
+ "displayName": "William Wilberforce",
+ "wikidataLabel": "William Wilberforce",
+ "wikidataDescription": "English politician and abolitionist (1759–1833)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q207672",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519324082
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "William Wilberforce",
+   "articleUrl": "https://en.wikipedia.org/wiki/William_Wilberforce",
+   "pageId": 50226,
+   "revisionId": 1365116588,
+   "revisionTimestamp": "2026-07-20T10:14:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1759-08-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1759-08-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1759-08-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1833-07-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8000088",
+  "label": "Wilberforce House",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8000088",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q8000088",
+   "sourceEntityLabel": "Wilberforce House",
+   "latitude": 53.7441,
+   "longitude": -0.328,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q12362622",
+   "label": "philanthropist"
+  },
+  {
+   "entity": "Q12526417",
+   "label": "abolitionist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:William wilberforce.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:William%20wilberforce.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:William_wilberforce.jpg",
+  "width": 650,
+  "height": 791,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Anton Hickel",
+  "credit": "originally uploaded to en.wikipedia by Agendum (talk · contribs) on 4 November 2007, 14:53 under the file name William wilberforce.jpg.(+/−)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

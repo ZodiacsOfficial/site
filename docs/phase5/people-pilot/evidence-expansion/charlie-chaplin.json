@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "charlie-chaplin",
+ "qid": "Q882",
+ "displayName": "Charlie Chaplin",
+ "wikidataLabel": "Charlie Chaplin",
+ "wikidataDescription": "English actor and filmmaker (1889–1977)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q882",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522762155
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Charlie Chaplin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Charlie_Chaplin",
+   "pageId": 5142,
+   "revisionId": 1363697909,
+   "revisionTimestamp": "2026-07-11T19:54:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1889-04-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1889-04-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1889-04-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1977-12-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1231883",
+  "label": "Walworth",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1231883",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1231883",
+   "sourceEntityLabel": "Walworth",
+   "latitude": 51.4898,
+   "longitude": -0.0905,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q245068",
+   "label": "comedian"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Charlie Chaplin portrait Getty 1739411952.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Charlie%20Chaplin%20portrait%20Getty%201739411952.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Charlie_Chaplin_portrait_Getty_1739411952.jpg",
+  "width": 2878,
+  "height": 4101,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Strauss-Peyton Studio",
+  "credit": "Original publication: Magazine Photoplay No. 3, 1922Immediate sources: this imagealso found at National Portrait Gallery",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

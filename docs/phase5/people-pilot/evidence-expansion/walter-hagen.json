@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "walter-hagen",
+ "qid": "Q949410",
+ "displayName": "Walter Hagen",
+ "wikidataLabel": "Walter Hagen",
+ "wikidataDescription": "American golfer (1892-1969)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q949410",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2508578712
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Walter Hagen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Walter_Hagen",
+   "pageId": 1507806,
+   "revisionId": 1365347755,
+   "revisionTimestamp": "2026-07-21T21:07:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1892-12-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1892-12-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1892-12-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1969-10-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49218",
+  "label": "Rochester",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49218",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49218",
+   "sourceEntityLabel": "Rochester",
+   "latitude": 43.165555555556,
+   "longitude": -77.611388888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11303721",
+   "label": "golfer"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  },
+  {
+   "entity": "Q490253",
+   "label": "professional golfer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Walter Hagen LCCN2014712556 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Walter%20Hagen%20LCCN2014712556%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Walter_Hagen_LCCN2014712556_(cropped).jpg",
+  "width": 2465,
+  "height": 3341,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bain News Service, publisher",
+  "credit": "Library of Congress Catalog: https://lccn.loc.gov/2014712556 Image download: https://cdn.loc.gov/service/pnp/ggbain/32400/32403v.jpg Original url: https://www.loc.gov/pictures/item/2014712556/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

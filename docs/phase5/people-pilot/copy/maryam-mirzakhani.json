@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "maryam-mirzakhani",
+  "seedRound": 0,
+  "qid": "Q1771279",
+  "displayName": "Maryam Mirzakhani",
+  "identity": "Mathematician and university teacher · Iran · 1977–2017",
+  "title": "Maryam Mirzakhani's birth chart",
+  "metaDescription": "Maryam Mirzakhani's chart, computed from a sourced birth date: Sun at 21.4° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a opposition to Pluto at 0.3° — close enough to weld taste to depth. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Venus:Pluto:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.45",
+        "decan:taurus:third"
+      ],
+      "text": "At the noon reference the Sun sits 21.4° into Taurus — the third decan, which the old scheme hands to Saturn. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:4.8°",
+        "personal:Venus:Aries:12.1°",
+        "personal:Mars:Aries:11.3°"
+      ],
+      "text": "Mercury holds 4.8° Taurus, Venus holds 12.1° Aries, Mars holds 11.3° Aries — in the old shorthand, thought with its feet on the ground; attraction declared rather than implied; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:opposition:0.32",
+        "aspect:Mars:Saturn:trine:0.46",
+        "aspect:Mars:Pluto:opposition:0.56"
+      ],
+      "text": "The tightest geometry in the chart puts Venus directly across the wheel from Pluto, 0.3° off exact. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Mars trine Saturn at 0.5°, and Mars opposition Pluto at 0.6° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Venus-Saturn-Neptune",
+        "figure:t-square:Mercury-Uranus:apex-Saturn"
+      ],
+      "text": "Venus, Saturn, Neptune close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. Mercury opposes Uranus while both square Saturn. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Venus in Aries at 12.1° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 11.3° is in domicile — the planet in its own sign, running on home rules; Jupiter in Gemini at 8.3° is in detriment; Saturn in Leo at 10.8° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth2-water2-air2",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 fire, 2 earth, 2 water, 2 air; by modality, 4 fixed, 3 mutable, 3 cardinal. Mercury, Uranus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:12.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 12.6° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 17.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-12/",
+    "label": "Everyone born on May 12"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:opposition",
+    "sun-degree:21.45",
+    "decan:taurus:third",
+    "personal:Mercury:Taurus:4.8°",
+    "personal:Venus:Aries:12.1°",
+    "personal:Mars:Aries:11.3°",
+    "aspect:Venus:Pluto:opposition:0.32",
+    "aspect:Mars:Saturn:trine:0.46",
+    "aspect:Mars:Pluto:opposition:0.56",
+    "figure:grand-trine:Venus-Saturn-Neptune",
+    "figure:t-square:Mercury-Uranus:apex-Saturn",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:fire4-earth2-water2-air2",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:pisces",
+    "moon-band:12.6"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

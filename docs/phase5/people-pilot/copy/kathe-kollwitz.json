@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "kathe-kollwitz",
+  "seedRound": 0,
+  "qid": "Q142472",
+  "displayName": "Käthe Kollwitz",
+  "identity": "Printmaker and autobiographer · Prussia · 1867–1945",
+  "title": "Käthe Kollwitz's birth chart",
+  "metaDescription": "Käthe Kollwitz's chart, computed from a sourced birth date: Sun at 15.8° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a sextile to Pluto at 0.1° — close enough to weld identity to depth. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Sun:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.75",
+        "decan:cancer:second"
+      ],
+      "text": "At the noon reference the Sun sits 15.8° into Cancer — the second decan, which the old scheme hands to Mars. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Leo:11.8°",
+        "personal:Venus:Gemini:24.5°",
+        "personal:Mars:Virgo:9.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 11.8° Leo, Venus was at 24.5° Gemini, Mars was at 9.4° Virgo. Read together: thought that arrives already in motion; attraction that begins as conversation; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:sextile:0.11",
+        "aspect:Mars:Uranus:sextile:0.39",
+        "aspect:Sun:Neptune:square:0.7"
+      ],
+      "text": "Closest first: the Sun to Pluto, a sextile with 0.1° of slack. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Mars sextile Uranus at 0.4°, and the Sun square Neptune at 0.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Saturn-Pluto:apex-Mercury",
+        "figure:unaspected:Venus"
+      ],
+      "text": "Saturn opposes Pluto while both square Mercury. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks one placement here. Jupiter in Pisces at 7.3° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-fire2-earth2",
+        "modalities:cardinal4-fixed3-mutable3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: water 4, air 2, fire 2, earth 2 across the elements, and cardinal 4, fixed 3, mutable 3 across the modalities. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Jupiter and Saturn were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:12.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 12.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-8/",
+    "label": "Everyone born on July 8"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:sextile",
+    "sun-degree:15.75",
+    "decan:cancer:second",
+    "personal:Mercury:Leo:11.8°",
+    "personal:Venus:Gemini:24.5°",
+    "personal:Mars:Virgo:9.4°",
+    "aspect:Sun:Pluto:sextile:0.11",
+    "aspect:Mars:Uranus:sextile:0.39",
+    "aspect:Sun:Neptune:square:0.7",
+    "figure:t-square:Saturn-Pluto:apex-Mercury",
+    "figure:unaspected:Venus",
+    "dignity:Jupiter:domicile",
+    "elements:water4-air2-fire2-earth2",
+    "modalities:cardinal4-fixed3-mutable3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:libra",
+    "moon-band:12.8"
+  ],
+  "measurements": {
+    "originalWords": 395,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

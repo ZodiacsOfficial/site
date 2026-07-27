@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "sophie-germain",
+  "seedRound": 0,
+  "qid": "Q7103",
+  "displayName": "Sophie Germain",
+  "identity": "Mathematician and philosopher · France · 1776–1831",
+  "title": "Sophie Germain's birth chart",
+  "metaDescription": "Sophie Germain's chart, computed from a sourced birth date: Sun at 12.3° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 12.3° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.32",
+        "decan:aries:second"
+      ],
+      "text": "At the noon reference the Sun sits 12.3° into Aries — the second decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:14.6°",
+        "personal:Venus:Pisces:8.3°",
+        "personal:Mars:Aries:13.0°"
+      ],
+      "text": "Closer in, Mercury stands at 14.6° Pisces; Venus stands at 8.3° Pisces; Mars stands at 13.0° Aries. The tradition reads thought steeped in tone and memory from Mercury, attraction that works by atmosphere from Venus, effort spent in bursts and openings from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:conjunction:0.7",
+        "aspect:Mercury:Jupiter:square:1.77",
+        "aspect:Jupiter:Saturn:trine:2.01"
+      ],
+      "text": "Nothing in the geometry sits closer than the Sun and Mars: 0.7° from an exact conjunction. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Mercury square Jupiter at 1.8°, and Jupiter trine Saturn at 2.0° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Read against the old dignities, six placements stand out. The Sun in Aries at 12.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Pisces at 14.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 8.3° is in exaltation; Mars in Aries at 13.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Gemini at 16.4° is in detriment — the planet opposite its home, working against the grain; Saturn in Libra at 18.4° is in exaltation. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-air3-fire2-water2",
+        "modalities:mutable6-cardinal4",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 3 earth, 3 air, 2 fire, 2 water by element and 6 mutable, 4 cardinal by modality. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. Saturn and Neptune were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-1/",
+    "label": "Everyone born on April 1"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:12.32",
+    "decan:aries:second",
+    "personal:Mercury:Pisces:14.6°",
+    "personal:Venus:Pisces:8.3°",
+    "personal:Mars:Aries:13.0°",
+    "aspect:Sun:Mars:conjunction:0.7",
+    "aspect:Mercury:Jupiter:square:1.77",
+    "aspect:Jupiter:Saturn:trine:2.01",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:exaltation",
+    "elements:earth3-air3-fire2-water2",
+    "modalities:mutable6-cardinal4",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:virgo",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 464,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "buchi-emecheta",
+ "qid": "Q461675",
+ "displayName": "Buchi Emecheta",
+ "wikidataLabel": "Buchi Emecheta",
+ "wikidataDescription": "Nigerian writer (1944–2017)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q461675",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520390460
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Buchi Emecheta",
+   "articleUrl": "https://en.wikipedia.org/wiki/Buchi_Emecheta",
+   "pageId": 530476,
+   "revisionId": 1349111355,
+   "revisionTimestamp": "2026-04-15T20:41:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1944-07-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1944-07-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1944-07-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2017-01-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8673",
+  "label": "Lagos",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8673",
+  "country": {
+   "entity": "Q1033",
+   "label": "Nigeria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q8673",
+   "sourceEntityLabel": "Lagos",
+   "latitude": 6.456111111111111,
+   "longitude": 3.3936111111111114,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q1607826",
+   "label": "editor"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:July21 Buchi Emecheta.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:July21%20Buchi%20Emecheta.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:July21_Buchi_Emecheta.png",
+  "width": 800,
+  "height": 240,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Victuallers",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

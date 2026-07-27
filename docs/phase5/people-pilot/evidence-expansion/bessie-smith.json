@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bessie-smith",
+ "qid": "Q93349",
+ "displayName": "Bessie Smith",
+ "wikidataLabel": "Bessie Smith",
+ "wikidataDescription": "American blues singer (1892–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q93349",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518344317
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bessie Smith",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bessie_Smith",
+   "pageId": 52116,
+   "revisionId": 1363074671,
+   "revisionTimestamp": "2026-07-07T21:53:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1894-04-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1894-04-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1894-04-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-09-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q186702",
+  "label": "Chattanooga",
+  "entityUrl": "https://www.wikidata.org/wiki/Q186702",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q186702",
+   "sourceEntityLabel": "Chattanooga",
+   "latitude": 35.045555555556,
+   "longitude": -85.267222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2914170",
+   "label": "street artist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  },
+  {
+   "entity": "Q674067",
+   "label": "mime artist"
+  },
+  {
+   "entity": "Q138858",
+   "label": "entertainer"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bessiesmith-2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bessiesmith-2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bessiesmith-2.jpg",
+  "width": 782,
+  "height": 996,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "LOC",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

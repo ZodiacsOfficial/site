@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ayrton-senna",
+ "qid": "Q10490",
+ "displayName": "Ayrton Senna",
+ "wikidataLabel": "Ayrton Senna",
+ "wikidataDescription": "Brazilian racing driver (1960-1994)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q10490",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2523017516
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ayrton Senna",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ayrton_Senna",
+   "pageId": 146638,
+   "revisionId": 1366046937,
+   "revisionTimestamp": "2026-07-25T23:54:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1960-03-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1960-03-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1960-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1960-03-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1994-05-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10327322",
+  "label": "maternity hospital of São Paulo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10327322",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q174",
+   "sourceEntityLabel": "São Paulo",
+   "latitude": -23.550394444444,
+   "longitude": -46.633947222222,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 1
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10841764",
+   "label": "Formula One driver"
+  },
+  {
+   "entity": "Q10349745",
+   "label": "racing automobile driver"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q12362622",
+   "label": "philanthropist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ayrton Senna Pesawat RC Cropped.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ayrton%20Senna%20Pesawat%20RC%20Cropped.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ayrton_Senna_Pesawat_RC_Cropped.jpg",
+  "width": 274,
+  "height": 349,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "File:Ayrton Senna 2.jpg: Instituto Ayrton Senna derivative work: F1fans",
+  "credit": "This file was derived from: Ayrton Senna 2.jpg:",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "premchand",
+  "seedRound": 0,
+  "qid": "Q174152",
+  "displayName": "Premchand",
+  "identity": "Novelist · India · 1880–1936",
+  "title": "Premchand's birth chart",
+  "metaDescription": "Premchand's chart, computed from a sourced birth date: Sun at 8.4° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 8.4° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.37",
+        "decan:leo:first"
+      ],
+      "text": "8.4° of Leo is the Sun's exact seat — first decan, 0°–10°, sub-ruled by the Sun in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:17.0°",
+        "personal:Venus:Leo:13.1°",
+        "personal:Mars:Virgo:6.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 17.0° Leo, Venus was at 13.1° Leo, Mars was at 6.4° Virgo. Read together: thought that arrives already in motion; attraction declared rather than implied; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:conjunction:1.02",
+        "aspect:Venus:Neptune:square:1.11",
+        "aspect:Mercury:Jupiter:trine:2.43"
+      ],
+      "text": "The tightest geometry in the chart puts Mars in the same degree of the zodiac from Uranus, 1.0° off exact. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Venus square Neptune at 1.1°, and Mercury trine Jupiter at 2.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. The Sun in Leo at 8.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 28.9° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth4",
+        "modalities:fixed5-mutable2-cardinal2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements fire 5, earth 4; modalities fixed 5, mutable 2, cardinal 2. A fire-weighted chart runs hot at the start line — initiative is its native language. No settled placement falls in air or water — an absence the tradition treats as information, not as a defect. Mercury was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 11.8° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-31/",
+    "label": "Everyone born on July 31"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:8.37",
+    "decan:leo:first",
+    "personal:Mercury:Leo:17.0°",
+    "personal:Venus:Leo:13.1°",
+    "personal:Mars:Virgo:6.4°",
+    "aspect:Mars:Uranus:conjunction:1.02",
+    "aspect:Venus:Neptune:square:1.11",
+    "aspect:Mercury:Jupiter:trine:2.43",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Saturn:fall",
+    "elements:fire5-earth4",
+    "modalities:fixed5-mutable2-cardinal2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 427,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

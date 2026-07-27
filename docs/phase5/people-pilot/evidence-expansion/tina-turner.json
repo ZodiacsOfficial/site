@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "tina-turner",
+ "qid": "Q131814",
+ "displayName": "Tina Turner",
+ "wikidataLabel": "Tina Turner",
+ "wikidataDescription": "American-born Swiss singer and songwriter (1939–2023)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q131814",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522549827
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Tina Turner",
+   "articleUrl": "https://en.wikipedia.org/wiki/Tina_Turner",
+   "pageId": 82061,
+   "revisionId": 1366163799,
+   "revisionTimestamp": "2026-07-26T17:38:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1939-11-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1939-11-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1939-11-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2023-05-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q476804",
+  "label": "Brownsville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q476804",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q476804",
+   "sourceEntityLabel": "Brownsville",
+   "latitude": 35.590558,
+   "longitude": -89.260902,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2490358",
+   "label": "choreographer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Tina Turner 50th Anniversary Tour.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Tina%20Turner%2050th%20Anniversary%20Tour.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Tina_Turner_50th_Anniversary_Tour.jpg",
+  "width": 1732,
+  "height": 1682,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Philip Spittle",
+  "credit": "IMG_1645",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

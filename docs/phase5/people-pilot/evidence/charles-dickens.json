@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "charles-dickens",
+ "qid": "Q5686",
+ "displayName": "Charles Dickens",
+ "wikidataLabel": "Charles Dickens",
+ "wikidataDescription": "English novelist and social critic (1812–1870)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5686",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521209439
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Charles Dickens",
+   "articleUrl": "https://en.wikipedia.org/wiki/Charles_Dickens",
+   "pageId": 5884,
+   "revisionId": 1363188404,
+   "revisionTimestamp": "2026-07-08T16:36:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1812-02-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1812-02-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1812-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1812-02-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1870-06-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1803681",
+  "label": "Landport",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1803681",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1803681",
+   "sourceEntityLabel": "Landport",
+   "latitude": 50.803,
+   "longitude": -1.087,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q15978337",
+   "label": "social critic"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q1607826",
+   "label": "editor"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q135268101",
+   "label": "parliamentary stenographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dickens Gurney head.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dickens%20Gurney%20head.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dickens_Gurney_head.jpg",
+  "width": 814,
+  "height": 1190,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Jeremiah Gurney",
+  "credit": "Heritage Auction Gallery",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

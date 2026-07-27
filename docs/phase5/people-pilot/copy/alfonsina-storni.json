@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "alfonsina-storni",
+  "seedRound": 0,
+  "qid": "Q238557",
+  "displayName": "Alfonsina Storni",
+  "identity": "Diarist and teacher · Switzerland · 1892–1938",
+  "title": "Alfonsina Storni's birth chart",
+  "metaDescription": "Alfonsina Storni's chart, computed from a sourced birth date: Sun at 8.5° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 21.6° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.50",
+        "decan:gemini:first"
+      ],
+      "text": "The Sun's exact place is 8.5° Gemini. That falls in the first decan, 0°–10°, sub-ruled by Mercury in the classical scheme — a air sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:16.6°",
+        "personal:Venus:Cancer:19.6°",
+        "personal:Mars:Aquarius:9.7°"
+      ],
+      "text": "Closer in, Mercury stands at 16.6° Taurus; Venus stands at 19.6° Cancer; Mars stands at 9.7° Aquarius. The tradition reads a mind that trusts the measured and the checked from Mercury, taste tuned to mood and undertow from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:conjunction:0.17",
+        "aspect:Sun:Neptune:conjunction:0.24",
+        "aspect:Neptune:Pluto:conjunction:0.41"
+      ],
+      "text": "Start where the chart is tightest — the Sun conjunction Pluto, 0.2° of separation. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, the Sun conjunction Neptune at 0.2°, and Neptune conjunction Pluto at 0.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Uranus"
+      ],
+      "text": "Uranus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile"
+      ],
+      "text": "The classical table has one entry for this chart. The Moon in Cancer at 21.6° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-earth2-fire1",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 air, 3 water, 2 earth, 1 fire; by modality, 4 mutable, 3 cardinal, 3 fixed. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Uranus was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:13.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.7° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 21.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-29/",
+    "label": "Everyone born on May 29"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:8.50",
+    "decan:gemini:first",
+    "personal:Mercury:Taurus:16.6°",
+    "personal:Venus:Cancer:19.6°",
+    "personal:Mars:Aquarius:9.7°",
+    "aspect:Sun:Pluto:conjunction:0.17",
+    "aspect:Sun:Neptune:conjunction:0.24",
+    "aspect:Neptune:Pluto:conjunction:0.41",
+    "figure:unaspected:Uranus",
+    "dignity:Moon:domicile",
+    "elements:air4-water3-earth2-fire1",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:cancer",
+    "moon-band:13.7"
+  ],
+  "measurements": {
+    "originalWords": 395,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

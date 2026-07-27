@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "eleanor-roosevelt",
+ "qid": "Q83396",
+ "displayName": "Eleanor Roosevelt",
+ "wikidataLabel": "Eleanor Roosevelt",
+ "wikidataDescription": "American diplomat and activist, First Lady of the United States from 1933 to 1945 (1884–1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q83396",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521780318
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Eleanor Roosevelt",
+   "articleUrl": "https://en.wikipedia.org/wiki/Eleanor_Roosevelt",
+   "pageId": 19280644,
+   "revisionId": 1364587815,
+   "revisionTimestamp": "2026-07-17T11:11:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1884-10-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1884-10-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1884-10-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-11-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11299",
+  "label": "Manhattan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11299",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q11299",
+   "sourceEntityLabel": "Manhattan",
+   "latitude": 40.728333333333,
+   "longitude": -73.994166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q1086863",
+   "label": "columnist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Eleanor Roosevelt at the United Nations, circa 1946-1947 (3x4 cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Eleanor%20Roosevelt%20at%20the%20United%20Nations%2C%20circa%201946-1947%20(3x4%20cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Eleanor_Roosevelt_at_the_United_Nations,_circa_1946-1947_(3x4_cropped).jpg",
+  "width": 1393,
+  "height": 1856,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "FDR Presidential Library & Museum",
+  "credit": "https://www.flickr.com/photos/fdrlibrary/50517137801/",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

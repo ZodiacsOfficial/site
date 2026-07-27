@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "frank-worrell",
+ "qid": "Q954650",
+ "displayName": "Frank Worrell",
+ "wikidataLabel": "Frank Worrell",
+ "wikidataDescription": "West Indian cricketer (1924–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q954650",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518677835
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Frank Worrell",
+   "articleUrl": "https://en.wikipedia.org/wiki/Frank_Worrell",
+   "pageId": 897236,
+   "revisionId": 1362979728,
+   "revisionTimestamp": "2026-07-07T09:43:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1924-08-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1924-08-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1924-08-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-03-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q819170",
+  "label": "Saint Michael",
+  "entityUrl": "https://www.wikidata.org/wiki/Q819170",
+  "country": {
+   "entity": "Q244",
+   "label": "Barbados"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q819170",
+   "sourceEntityLabel": "Saint Michael",
+   "latitude": 13.118055555556,
+   "longitude": -59.603055555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q12299841",
+   "label": "cricketer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Frank Worrell.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Frank%20Worrell.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Frank_Worrell.jpg",
+  "width": 193,
+  "height": 242,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Townsville Daily Bulletin (Qld. : 1885 - 1954), Saturday 27 October 1951, page 1 https://trove.nla.gov.au/ndp/del/article/63389549",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "teresa-teng",
+ "qid": "Q463945",
+ "displayName": "Teresa Teng",
+ "wikidataLabel": "Teresa Teng",
+ "wikidataDescription": "Taiwanese ROC singer (1953-1995)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q463945",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522005107
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Teresa Teng",
+   "articleUrl": "https://en.wikipedia.org/wiki/Teresa_Teng",
+   "pageId": 450210,
+   "revisionId": 1360108437,
+   "revisionTimestamp": "2026-06-19T08:16:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1953-01-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1953-01-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1953-01-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-05-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q706707",
+  "label": "Baojhong Township",
+  "entityUrl": "https://www.wikidata.org/wiki/Q706707",
+  "country": {
+   "entity": "Q865",
+   "label": "Taiwan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q706707",
+   "sourceEntityLabel": "Baojhong Township",
+   "latitude": 23.716666666666665,
+   "longitude": 120.3,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Teresa Teng US.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Teresa%20Teng%20US.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Teresa_Teng_US.jpg",
+  "width": 613,
+  "height": 501,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unknown author",
+  "credit": "邓丽君的神秘座驾 据悉全中国仅此1台",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "emiliano-zapata",
+ "qid": "Q41718",
+ "displayName": "Emiliano Zapata",
+ "wikidataLabel": "Emiliano Zapata",
+ "wikidataDescription": "Mexican revolutionary (1879–1919)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41718",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522930116
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Emiliano Zapata",
+   "articleUrl": "https://en.wikipedia.org/wiki/Emiliano_Zapata",
+   "pageId": 86692,
+   "revisionId": 1353323302,
+   "revisionTimestamp": "2026-05-09T16:00:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1879-08-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1879-08-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1879-08-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1919-04-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1813041",
+  "label": "Anenecuilco",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1813041",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1813041",
+   "sourceEntityLabel": "Anenecuilco",
+   "latitude": 18.7789286,
+   "longitude": -98.9813538,
+   "precision": 2.77778e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q212948",
+   "label": "partisan"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q131512",
+   "label": "farmer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Emiliano Zapata4.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Emiliano%20Zapata4.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Emiliano_Zapata4.jpg",
+  "width": 970,
+  "height": 1326,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Agustín Casasola",
+  "credit": "https://static1.squarespace.com/static/56420085e4b0a6ed01ccece1/58ec1c7cd482e9e6fdab471e/58ec1cb16a49630e8a3f5e5e/1491868856228/Emiliano+Zapata.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

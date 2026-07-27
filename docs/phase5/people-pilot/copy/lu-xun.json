@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "lu-xun",
+  "seedRound": 0,
+  "qid": "Q23114",
+  "displayName": "Lu Xun",
+  "identity": "Essayist · People's Republic of China · 1881–1936",
+  "title": "Lu Xun's birth chart",
+  "metaDescription": "Lu Xun's chart, computed from a sourced birth date: Sun at 2.2° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Taurus — Jupiter, Saturn, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.21",
+        "decan:libra:first"
+      ],
+      "text": "The Sun sits at 2.2° Libra — the first decan, 0°–10°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Libra and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:20.3°",
+        "personal:Venus:Leo:27.0°",
+        "personal:Mars:Cancer:0.4°"
+      ],
+      "text": "Closer in, Mercury stands at 20.3° Libra; Venus stands at 27.0° Leo; Mars stands at 0.4° Cancer. The tradition reads a mind at home in argument and pattern from Mercury, taste that runs toward the vivid and the immediate from Venus, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:trine:0.92",
+        "aspect:Venus:Jupiter:square:0.99",
+        "aspect:Sun:Mars:square:1.79"
+      ],
+      "text": "Uranus and Neptune hold the closest angle here — a trine, 0.9° wide. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Venus square Jupiter at 1.0°, and the Sun square Mars at 1.8° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mars:fall"
+      ],
+      "text": "The classical table has two entries for this chart. The Sun in Libra at 2.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 0.4° is in fall. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air3-fire1-water1",
+        "modalities:fixed5-cardinal4-mutable1",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements earth 5, air 3, fire 1, water 1; modalities fixed 5, cardinal 4, mutable 1. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Jupiter, Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:12.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 12.7° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-25/",
+    "label": "Everyone born on September 25"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:4",
+    "sun-degree:2.21",
+    "decan:libra:first",
+    "personal:Mercury:Libra:20.3°",
+    "personal:Venus:Leo:27.0°",
+    "personal:Mars:Cancer:0.4°",
+    "aspect:Uranus:Neptune:trine:0.92",
+    "aspect:Venus:Jupiter:square:0.99",
+    "aspect:Sun:Mars:square:1.79",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Mars:fall",
+    "elements:earth5-air3-fire1-water1",
+    "modalities:fixed5-cardinal4-mutable1",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:libra",
+    "moon-band:12.7"
+  ],
+  "measurements": {
+    "originalWords": 417,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

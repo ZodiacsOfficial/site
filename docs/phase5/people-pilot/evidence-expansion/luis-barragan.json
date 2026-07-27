@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "luis-barragan",
+ "qid": "Q243295",
+ "displayName": "Luis Barragán",
+ "wikidataLabel": "Luis Barragán",
+ "wikidataDescription": "Mexican architect (1902-1988)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q243295",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517600926
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Luis Barragán",
+   "articleUrl": "https://en.wikipedia.org/wiki/Luis_Barrag%C3%A1n",
+   "pageId": 30872415,
+   "revisionId": 1358409590,
+   "revisionTimestamp": "2026-06-08T14:17:54Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1902-03-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-03-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-03-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1988-11-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q9022",
+  "label": "Guadalajara",
+  "entityUrl": "https://www.wikidata.org/wiki/Q9022",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q9022",
+   "sourceEntityLabel": "Guadalajara",
+   "latitude": 20.676388888888887,
+   "longitude": -103.34222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q131062",
+   "label": "urban planner"
+  }
+ ],
+ "portrait": {
+  "file": "File:Luis Barragán Morfín 234.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Luis%20Barrag%C3%A1n%20Morf%C3%ADn%20234.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Luis_Barrag%C3%A1n_Morf%C3%ADn_234.jpg",
+  "width": 830,
+  "height": 582,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Tomjc.55",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

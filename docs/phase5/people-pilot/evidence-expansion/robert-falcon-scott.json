@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "robert-falcon-scott",
+ "qid": "Q102527",
+ "displayName": "Robert Falcon Scott",
+ "wikidataLabel": "Robert Falcon Scott",
+ "wikidataDescription": "Royal Navy officer and explorer (1868–1912)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q102527",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521351212
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Robert Falcon Scott",
+   "articleUrl": "https://en.wikipedia.org/wiki/Robert_Falcon_Scott",
+   "pageId": 25662,
+   "revisionId": 1363815262,
+   "revisionTimestamp": "2026-07-12T16:42:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1868-06-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1868-06-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1868-06-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1912-03-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q43382",
+  "label": "Plymouth",
+  "entityUrl": "https://www.wikidata.org/wiki/Q43382",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q43382",
+   "sourceEntityLabel": "Plymouth",
+   "latitude": 50.37138888888889,
+   "longitude": -4.142222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q10669499",
+   "label": "naval officer"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q5036514",
+   "label": "captain"
+  },
+  {
+   "entity": "Q13382749",
+   "label": "polar explorer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Scott of the Antarctic (bw) (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Scott%20of%20the%20Antarctic%20(bw)%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Scott_of_the_Antarctic_(bw)_(cropped).jpg",
+  "width": 967,
+  "height": 1284,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Henry Maull (1829–1914) and John Fox (1832–1907)",
+  "credit": "File:Scott of the Antarctic.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

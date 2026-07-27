@@ -1,0 +1,110 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ferenc-puskas",
+ "qid": "Q482931",
+ "displayName": "Ferenc Puskás",
+ "wikidataLabel": "Ferenc Puskás",
+ "wikidataDescription": "Hungarian association football player (1927–2006)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q482931",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522583960
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ferenc Puskás",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ferenc_Pusk%C3%A1s",
+   "pageId": 205150,
+   "revisionId": 1366117373,
+   "revisionTimestamp": "2026-07-26T10:45:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1927-04-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1927-04-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   },
+   {
+    "time": "+1927-04-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1927-04-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2006-11-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1781",
+  "label": "Budapest",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1781",
+  "country": {
+   "entity": "Q28",
+   "label": "Hungary"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1781",
+   "sourceEntityLabel": "Budapest",
+   "latitude": 47.498333333333,
+   "longitude": 19.040833333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q628099",
+   "label": "association football coach"
+  }
+ ],
+ "portrait": {
+  "file": "File:Puskas (1971).tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Puskas%20(1971).tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Puskas_(1971).tif",
+  "width": 1999,
+  "height": 2712,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown",
+  "credit": "Arquivo Nacional",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

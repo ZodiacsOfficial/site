@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "inge-lehmann",
+ "qid": "Q256839",
+ "displayName": "Inge Lehmann",
+ "wikidataLabel": "Inge Lehmann",
+ "wikidataDescription": "Danish seismologist who discovered the Earth's inner core (1888-1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q256839",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2511452664
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Inge Lehmann",
+   "articleUrl": "https://en.wikipedia.org/wiki/Inge_Lehmann",
+   "pageId": 145577,
+   "revisionId": 1354006415,
+   "revisionTimestamp": "2026-05-13T18:36:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1888-05-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1888-05-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1888-05-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-02-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1748",
+  "label": "Copenhagen",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1748",
+  "country": {
+   "entity": "Q35",
+   "label": "Denmark"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1748",
+   "sourceEntityLabel": "Copenhagen",
+   "latitude": 55.676111111111,
+   "longitude": 12.568888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q12051314",
+   "label": "seismologist"
+  },
+  {
+   "entity": "Q520549",
+   "label": "geologist"
+  },
+  {
+   "entity": "Q294126",
+   "label": "surveyor"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q12094958",
+   "label": "geophysicist"
+  },
+  {
+   "entity": "Q116994205",
+   "label": "geodesist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Inge Lehman.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Inge%20Lehman.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Inge_Lehman.jpg",
+  "width": 3370,
+  "height": 4922,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Even Neuhaus (6.2.1863-20.4.1946)",
+  "credit": "http://www5.kb.dk/images/billed/2010/okt/billeder/object11164/da/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

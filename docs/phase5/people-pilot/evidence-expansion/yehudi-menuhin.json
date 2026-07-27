@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yehudi-menuhin",
+ "qid": "Q156814",
+ "displayName": "Yehudi Menuhin",
+ "wikidataLabel": "Yehudi Menuhin",
+ "wikidataDescription": "American violinist and conductor (1916–1999)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q156814",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522286708
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yehudi Menuhin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yehudi_Menuhin",
+   "pageId": 57520,
+   "revisionId": 1364394044,
+   "revisionTimestamp": "2026-07-16T07:15:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1916-04-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1916-04-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1916-04-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1999-03-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  },
+  {
+   "entity": "Q1475726",
+   "label": "philatelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:YehudiMenuhinStageDoorCanteen.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:YehudiMenuhinStageDoorCanteen.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:YehudiMenuhinStageDoorCanteen.jpg",
+  "width": 640,
+  "height": 478,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Film screenshot",
+  "credit": "Stage Door Canteen film",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

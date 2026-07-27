@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "peter-tosh",
+  "seedRound": 0,
+  "qid": "Q273049",
+  "displayName": "Peter Tosh",
+  "identity": "Guitarist · Jamaica · 1944–1987",
+  "title": "Peter Tosh's birth chart",
+  "metaDescription": "Peter Tosh's chart, computed from a sourced birth date: Sun at 26.2° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mercury sit 0.8° from an exact conjunction — near enough that the tradition reads identity and thinking as a single working part. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct.",
+  "ledeFact": "aspect:Sun:Mercury:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.19",
+        "decan:libra:third"
+      ],
+      "text": "The Sun's exact place is 26.2° Libra. That falls in the third decan, 20°–30°, sub-ruled by Mercury in the classical scheme — a air sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Libra:25.4°",
+        "personal:Venus:Scorpio:26.3°",
+        "personal:Mars:Scorpio:4.2°"
+      ],
+      "text": "Closer in, Mercury stands at 25.4° Libra; Venus stands at 26.3° Scorpio; Mars stands at 4.2° Scorpio. The tradition reads a mind at home in argument and pattern from Mercury, taste tuned to mood and undertow from Venus, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mercury:conjunction:0.82",
+        "aspect:Uranus:Pluto:sextile:2.58",
+        "aspect:Jupiter:Uranus:square:5.3"
+      ],
+      "text": "Start where the chart is tightest — the Sun conjunction Mercury, 0.8° of separation. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Uranus sextile Pluto at 2.6°, and Jupiter square Uranus at 5.3° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has five entries for this chart. The Sun in Libra at 26.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Scorpio at 26.3° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 4.2° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 18.0° is in detriment; Saturn in Cancer at 10.8° is in detriment. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-earth1-fire1",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements air 4, water 3, earth 1, fire 1; modalities cardinal 4, fixed 3, mutable 2. Uranus was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 12.3° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-19/",
+    "label": "Everyone born on October 19"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mercury:conjunction",
+    "sun-degree:26.19",
+    "decan:libra:third",
+    "personal:Mercury:Libra:25.4°",
+    "personal:Venus:Scorpio:26.3°",
+    "personal:Mars:Scorpio:4.2°",
+    "aspect:Sun:Mercury:conjunction:0.82",
+    "aspect:Uranus:Pluto:sextile:2.58",
+    "aspect:Jupiter:Uranus:square:5.3",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:air4-water3-earth1-fire1",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 453,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

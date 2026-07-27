@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "walter-payton",
+  "seedRound": 1,
+  "qid": "Q963117",
+  "displayName": "Walter Payton",
+  "identity": "American football player · United States · 1954–1999",
+  "title": "Walter Payton's birth chart",
+  "metaDescription": "Walter Payton's chart, computed from a sourced birth date: Sun at 2.2° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 2.2° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.20",
+        "decan:leo:first"
+      ],
+      "text": "Leo, but precisely: 2.2°, first decan, 0°–10°, under the Sun in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:12.6°",
+        "personal:Venus:Virgo:14.1°",
+        "personal:Mars:Sagittarius:25.7°"
+      ],
+      "text": "Closer in, Mercury stands at 12.6° Cancer; Venus stands at 14.1° Virgo; Mars stands at 25.7° Sagittarius. The tradition reads a mind that absorbs before it argues from Mercury, taste for the substantial and the lasting from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:sextile:0.09",
+        "aspect:Uranus:Neptune:square:0.53",
+        "aspect:Neptune:Pluto:sextile:0.55"
+      ],
+      "text": "The day's firmest angle joins Venus and Jupiter — a sextile holding at 0.1°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Uranus square Neptune at 0.5°, and Neptune sextile Pluto at 0.6° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Venus:fall",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The classical table has three entries for this chart. The Sun in Leo at 2.2° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 14.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 14.0° is in exaltation — the tradition’s honoured-guest placement, working at its best. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air2-earth1",
+        "modalities:cardinal4-fixed3-mutable3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 water, 3 fire, 2 air, 1 earth; by modality, 4 cardinal, 3 fixed, 3 mutable. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Mars was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:14.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 14.1° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 8.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-25/",
+    "label": "Everyone born on July 25"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:2.20",
+    "decan:leo:first",
+    "personal:Mercury:Cancer:12.6°",
+    "personal:Venus:Virgo:14.1°",
+    "personal:Mars:Sagittarius:25.7°",
+    "aspect:Venus:Jupiter:sextile:0.09",
+    "aspect:Uranus:Neptune:square:0.53",
+    "aspect:Neptune:Pluto:sextile:0.55",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Venus:fall",
+    "dignity:Jupiter:exaltation",
+    "elements:water4-fire3-air2-earth1",
+    "modalities:cardinal4-fixed3-mutable3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:gemini",
+    "moon-band:14.1"
+  ],
+  "measurements": {
+    "originalWords": 414,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

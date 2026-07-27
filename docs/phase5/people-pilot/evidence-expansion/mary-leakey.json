@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mary-leakey",
+ "qid": "Q231111",
+ "displayName": "Mary Leakey",
+ "wikidataLabel": "Mary Leakey",
+ "wikidataDescription": "British paleoanthropologist (1913-1996)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q231111",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520256194
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mary Leakey",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mary_Leakey",
+   "pageId": 677297,
+   "revisionId": 1365303852,
+   "revisionTimestamp": "2026-07-21T15:26:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-02-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-02-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1996-12-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q84",
+  "label": "London",
+  "entityUrl": "https://www.wikidata.org/wiki/Q84",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q84",
+   "sourceEntityLabel": "London",
+   "latitude": 51.507222222222,
+   "longitude": -0.1275,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q3621491",
+   "label": "archaeologist"
+  },
+  {
+   "entity": "Q17488316",
+   "label": "prehistorian"
+  },
+  {
+   "entity": "Q21272406",
+   "label": "paleoanthropologist"
+  },
+  {
+   "entity": "Q1662561",
+   "label": "paleontologist"
+  },
+  {
+   "entity": "Q2083925",
+   "label": "botanical collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mary Leakey.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mary%20Leakey.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mary_Leakey.jpg",
+  "width": 330,
+  "height": 340,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "National Institutes of Health",
+  "credit": "https://ihm.nlm.nih.gov/images/A16794",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

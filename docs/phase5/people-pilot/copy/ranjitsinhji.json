@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ranjitsinhji",
+  "seedRound": 0,
+  "qid": "Q2757835",
+  "displayName": "Ranjitsinhji",
+  "identity": "Cricketer · India · 1872–1933",
+  "title": "Ranjitsinhji's birth chart",
+  "metaDescription": "Ranjitsinhji's chart, computed from a sourced birth date: Sun at 17.8° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Count only what the day settles, and fire still carries five of the ten placements whose signs are settled. A fire-weighted chart runs hot at the start line — initiative is its native language.",
+  "ledeFact": "element:fire:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.83",
+        "decan:virgo:second"
+      ],
+      "text": "The Sun's exact place is 17.8° Virgo. That falls in the second decan, 10°–20°, sub-ruled by Saturn in the classical scheme — a earth sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Virgo:2.2°",
+        "personal:Venus:Libra:3.1°",
+        "personal:Mars:Leo:14.2°"
+      ],
+      "text": "The personal planets sit Mercury at 2.2° Virgo, Venus at 3.1° Libra, Mars at 14.2° Leo. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a air sign reads as taste led by wit and proportion; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:sextile:1.12",
+        "aspect:Jupiter:Pluto:square:1.47",
+        "aspect:Sun:Pluto:trine:2.92"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Uranus: 1.1° from an exact sextile. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Jupiter square Pluto at 1.5°, and the Sun trine Pluto at 2.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Saturn-Pluto"
+      ],
+      "text": "the Sun, Saturn, Pluto close a triangle of trines. The closed triangle is the scheme’s picture of flow — and its warning that flow, unspent, stays private."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Virgo at 2.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 3.1° is in domicile — the planet in its own sign, running on home rules; Saturn in Capricorn at 14.7° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth4-air1",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 fire, 4 earth, 1 air by element and 4 fixed, 3 mutable, 3 cardinal by mode. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Saturn, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:13.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 13.7° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 13.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-10/",
+    "label": "Everyone born on September 10"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "element:fire:5",
+    "sun-degree:17.83",
+    "decan:virgo:second",
+    "personal:Mercury:Virgo:2.2°",
+    "personal:Venus:Libra:3.1°",
+    "personal:Mars:Leo:14.2°",
+    "aspect:Venus:Uranus:sextile:1.12",
+    "aspect:Jupiter:Pluto:square:1.47",
+    "aspect:Sun:Pluto:trine:2.92",
+    "figure:grand-trine:Sun-Saturn-Pluto",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire5-earth4-air1",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:sagittarius",
+    "moon-band:13.7"
+  ],
+  "measurements": {
+    "originalWords": 451,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

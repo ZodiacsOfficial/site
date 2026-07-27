@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "cantinflas",
+  "seedRound": 0,
+  "qid": "Q195371",
+  "displayName": "Cantinflas",
+  "identity": "Comedian and screenwriter · Mexico · 1911–1993",
+  "title": "Cantinflas's birth chart",
+  "metaDescription": "Cantinflas's chart, computed from a sourced birth date: Sun at 18.9° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 18.9° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.91",
+        "decan:leo:second"
+      ],
+      "text": "The Sun's exact place is 18.9° Leo. That falls in the second decan, 10°–20°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:16.3°",
+        "personal:Venus:Virgo:26.7°",
+        "personal:Mars:Taurus:17.6°"
+      ],
+      "text": "For the fast movers, Mercury was at 16.3° Virgo, Venus was at 26.7° Virgo, Mars was at 17.6° Taurus. Read together: a mind that trusts the measured and the checked; taste for the substantial and the lasting; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:trine:0.22",
+        "aspect:Sun:Saturn:square:0.92",
+        "aspect:Mercury:Mars:trine:1.29"
+      ],
+      "text": "Venus to Uranus is the closest call of the day, a trine within 0.2°. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun square Saturn at 0.9°, and Mercury trine Mars at 1.3° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Jupiter stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment"
+      ],
+      "text": "The classical table has four entries for this chart. The Sun in Leo at 18.9° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 16.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Virgo at 26.7° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Taurus at 17.6° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-water3-fire1-air1",
+        "modalities:fixed4-mutable4-cardinal2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements earth 5, water 3, fire 1, air 1; modalities fixed 4, mutable 4, cardinal 2. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Uranus was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:12.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 12.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 20.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-12/",
+    "label": "Everyone born on August 12"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:18.91",
+    "decan:leo:second",
+    "personal:Mercury:Virgo:16.3°",
+    "personal:Venus:Virgo:26.7°",
+    "personal:Mars:Taurus:17.6°",
+    "aspect:Venus:Uranus:trine:0.22",
+    "aspect:Sun:Saturn:square:0.92",
+    "aspect:Mercury:Mars:trine:1.29",
+    "figure:unaspected:Jupiter",
+    "dignity:Sun:domicile",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "elements:earth5-water3-fire1-air1",
+    "modalities:fixed4-mutable4-cardinal2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:pisces",
+    "moon-band:12.9"
+  ],
+  "measurements": {
+    "originalWords": 437,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

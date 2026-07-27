@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elvis-presley",
+ "qid": "Q303",
+ "displayName": "Elvis Presley",
+ "wikidataLabel": "Elvis Presley",
+ "wikidataDescription": "American singer and actor (1935–1977)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q303",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522856218
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elvis Presley",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elvis_Presley",
+   "pageId": 9288,
+   "revisionId": 1365670102,
+   "revisionTimestamp": "2026-07-23T19:41:09Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1935-01-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1935-01-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1935-01-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1977-08-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q667727",
+  "label": "Tupelo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q667727",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q667727",
+   "sourceEntityLabel": "Tupelo",
+   "latitude": 34.25761111111111,
+   "longitude": -88.7033888888889,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q12362622",
+   "label": "philanthropist"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elvis Presley Publicity Photo for The Trouble with Girls 1968.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elvis%20Presley%20Publicity%20Photo%20for%20The%20Trouble%20with%20Girls%201968.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elvis_Presley_Publicity_Photo_for_The_Trouble_with_Girls_1968.jpg",
+  "width": 1044,
+  "height": 1278,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "MGM",
+  "credit": "eBay",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

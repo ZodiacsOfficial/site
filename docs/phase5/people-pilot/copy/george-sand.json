@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "george-sand",
+  "seedRound": 0,
+  "qid": "Q3816",
+  "displayName": "George Sand",
+  "identity": "Writer and women's rights activist · France · 1804–1876",
+  "title": "George Sand's birth chart",
+  "metaDescription": "George Sand's chart, computed from a sourced birth date: Sun at 9.3° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.3° separates the Sun and Pluto from an exact trine; at that range identity and depth read as one mechanism. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted.",
+  "ledeFact": "aspect:Sun:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.33",
+        "decan:cancer:first"
+      ],
+      "text": "At noon on that date the Sun stood at 9.3° Cancer, inside the first decan (0°–10°), whose traditional sub-ruler is the Moon. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:18.1°",
+        "personal:Venus:Leo:17.1°",
+        "personal:Mars:Taurus:22.6°"
+      ],
+      "text": "Mercury holds 18.1° Gemini, Venus holds 17.1° Leo, Mars holds 22.6° Taurus — in the old shorthand, thought that travels by comparison; attraction declared rather than implied; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:trine:0.25",
+        "aspect:Mars:Neptune:opposition:0.85",
+        "aspect:Mercury:Venus:sextile:1.06"
+      ],
+      "text": "Closest first: the Sun to Pluto, a trine with 0.3° of slack. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mars opposition Neptune at 0.8°, and Mercury sextile Venus at 1.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Mars-Neptune:apex-Venus",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars opposes Neptune while both square Venus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Mars:detriment"
+      ],
+      "text": "Read against the old dignities, two placements stand out. Mercury in Gemini at 18.1° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 22.6° is in detriment — the planet opposite its home, working against the grain. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-fire2-earth2",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 3 water, 3 air, 2 fire, 2 earth by element and 4 cardinal, 3 mutable, 3 fixed by mode. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:14.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 20.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-1/",
+    "label": "Everyone born on July 1"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:trine",
+    "sun-degree:9.33",
+    "decan:cancer:first",
+    "personal:Mercury:Gemini:18.1°",
+    "personal:Venus:Leo:17.1°",
+    "personal:Mars:Taurus:22.6°",
+    "aspect:Sun:Pluto:trine:0.25",
+    "aspect:Mars:Neptune:opposition:0.85",
+    "aspect:Mercury:Venus:sextile:1.06",
+    "figure:t-square:Mars-Neptune:apex-Venus",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:domicile",
+    "dignity:Mars:detriment",
+    "elements:water3-air3-fire2-earth2",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aries",
+    "moon-band:14.2"
+  ],
+  "measurements": {
+    "originalWords": 408,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

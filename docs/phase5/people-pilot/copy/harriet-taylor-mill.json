@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "harriet-taylor-mill",
+  "seedRound": 0,
+  "qid": "Q240782",
+  "displayName": "Harriet Taylor Mill",
+  "identity": "Philosopher and economist · United Kingdom · 1807–1858",
+  "title": "Harriet Taylor Mill's birth chart",
+  "metaDescription": "Harriet Taylor Mill's chart, computed from a sourced birth date: Sun at 14.3° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Libra — the Sun, Mercury, Venus and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:libra:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.28",
+        "decan:libra:second"
+      ],
+      "text": "At noon on that date the Sun stood at 14.3° Libra, inside the second decan (10°–20°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Libra:20.6°",
+        "personal:Venus:Libra:25.7°",
+        "personal:Mars:Sagittarius:0.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Libra (20.6°), Venus in Libra (25.7°), Mars in Sagittarius (0.4°): thought that travels by comparison, attraction that begins as conversation, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:conjunction:0.19",
+        "aspect:Jupiter:Neptune:sextile:1.89",
+        "aspect:Saturn:Pluto:trine:1.92"
+      ],
+      "text": "The tightest geometry in the chart puts Mars in the same degree of the zodiac from Neptune, 0.2° off exact. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Jupiter sextile Neptune at 1.9°, and Saturn trine Pluto at 1.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:detriment",
+        "dignity:Venus:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Libra at 14.3° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Capricorn at 14.7° is in detriment — the planet opposite its home, working against the grain; Venus in Libra at 25.7° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-fire2-water2-earth1",
+        "modalities:cardinal5-mutable3-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 air, 2 fire, 2 water, 1 earth; by modality, 5 cardinal, 3 mutable, 2 fixed. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Venus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.7° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 14.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-8/",
+    "label": "Everyone born on October 8"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "stellium:libra:4",
+    "sun-degree:14.28",
+    "decan:libra:second",
+    "personal:Mercury:Libra:20.6°",
+    "personal:Venus:Libra:25.7°",
+    "personal:Mars:Sagittarius:0.4°",
+    "aspect:Mars:Neptune:conjunction:0.19",
+    "aspect:Jupiter:Neptune:sextile:1.89",
+    "aspect:Saturn:Pluto:trine:1.92",
+    "figure:none",
+    "dignity:Sun:fall",
+    "dignity:Moon:detriment",
+    "dignity:Venus:domicile",
+    "elements:air5-fire2-water2-earth1",
+    "modalities:cardinal5-mutable3-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:capricorn",
+    "moon-band:12.7"
+  ],
+  "measurements": {
+    "originalWords": 453,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

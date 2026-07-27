@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "david-unaipon",
+  "seedRound": 0,
+  "qid": "Q939297",
+  "displayName": "David Unaipon",
+  "identity": "Inventor and writer · Australia · 1872–1967",
+  "title": "David Unaipon's birth chart",
+  "metaDescription": "David Unaipon's chart, computed from a sourced birth date: Sun at 5.3° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Leo — the Moon, Mars, Jupiter and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:leo:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.27",
+        "decan:libra:first"
+      ],
+      "text": "Libra, but precisely: 5.3°, first decan, 0°–10°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Virgo:23.5°",
+        "personal:Venus:Libra:25.2°",
+        "personal:Mars:Leo:25.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Virgo (23.5°), Venus in Libra (25.2°), Mars in Leo (25.4°): a mind that trusts the measured and the checked, taste led by wit and proportion, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:trine:0.08",
+        "aspect:Venus:Mars:sextile:0.16",
+        "aspect:Sun:Uranus:sextile:0.24"
+      ],
+      "text": "The tightest geometry in the chart puts Mars a third of the circle apart from Neptune, 0.1° off exact. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Venus sextile Mars at 0.2°, and the Sun sextile Uranus at 0.2° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. The Sun in Libra at 5.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 23.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 25.2° is in domicile — the planet in its own sign, running on home rules; Saturn in Capricorn at 14.7° is in domicile. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth3-air2",
+        "modalities:fixed5-cardinal4-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 5 in fire, 3 in earth, 2 in air by element, 5 fixed, 4 cardinal, 1 mutable by modality. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 14.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-28/",
+    "label": "Everyone born on September 28"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "stellium:leo:4",
+    "sun-degree:5.27",
+    "decan:libra:first",
+    "personal:Mercury:Virgo:23.5°",
+    "personal:Venus:Libra:25.2°",
+    "personal:Mars:Leo:25.4°",
+    "aspect:Mars:Neptune:trine:0.08",
+    "aspect:Venus:Mars:sextile:0.16",
+    "aspect:Sun:Uranus:sextile:0.24",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire5-earth3-air2",
+    "modalities:fixed5-cardinal4-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:leo",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 430,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

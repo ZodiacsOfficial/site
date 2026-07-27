@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "teresa-carreno",
+ "qid": "Q241494",
+ "displayName": "Teresa Carreño",
+ "wikidataLabel": "Teresa Carreño",
+ "wikidataDescription": "Venezuelan classical pianist",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q241494",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518199340
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Teresa Carreño",
+   "articleUrl": "https://en.wikipedia.org/wiki/Teresa_Carre%C3%B1o",
+   "pageId": 1445166,
+   "revisionId": 1354435691,
+   "revisionTimestamp": "2026-05-16T12:00:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1853-12-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1853-12-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1853-12-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1917-06-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1533",
+  "label": "Caracas",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1533",
+  "country": {
+   "entity": "Q717",
+   "label": "Venezuela"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1533",
+   "sourceEntityLabel": "Caracas",
+   "latitude": 10.50611111111111,
+   "longitude": -66.91444444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  },
+  {
+   "entity": "Q106651242",
+   "label": "woman conductor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Teresa Carreno 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Teresa%20Carreno%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Teresa_Carreno_2.jpg",
+  "width": 216,
+  "height": 270,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "desconocida",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

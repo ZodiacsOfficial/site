@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jackson-pollock",
+ "qid": "Q37571",
+ "displayName": "Jackson Pollock",
+ "wikidataLabel": "Jackson Pollock",
+ "wikidataDescription": "American painter (1912–1956)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37571",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522812986
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jackson Pollock",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jackson_Pollock",
+   "pageId": 16307,
+   "revisionId": 1364527747,
+   "revisionTimestamp": "2026-07-17T02:18:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-01-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-01-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-01-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1956-08-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q916603",
+  "label": "Cody",
+  "entityUrl": "https://www.wikidata.org/wiki/Q916603",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q916603",
+   "sourceEntityLabel": "Cody",
+   "latitude": 44.523333333333,
+   "longitude": -109.05722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jackson Pollock by Hans Namuth.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jackson%20Pollock%20by%20Hans%20Namuth.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jackson_Pollock_by_Hans_Namuth.jpg",
+  "width": 1832,
+  "height": 2440,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Hans Namuth",
+  "credit": "https://evergreenreview.com/print-index/1957-1967",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

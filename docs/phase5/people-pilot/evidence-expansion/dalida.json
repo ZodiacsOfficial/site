@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dalida",
+ "qid": "Q539171",
+ "displayName": "Dalida",
+ "wikidataLabel": "Dalida",
+ "wikidataDescription": "Egyptian-French singer and actress (1933-1987)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q539171",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518339694
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dalida",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dalida",
+   "pageId": 145584,
+   "revisionId": 1363587816,
+   "revisionTimestamp": "2026-07-11T03:38:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1933-01-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1933-01-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1933-01-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-05-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7504605",
+  "label": "Shobra",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7504605",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7504605",
+   "sourceEntityLabel": "Shobra",
+   "latitude": 30.0725,
+   "longitude": 31.240833,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q4610556",
+   "label": "model"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dalida 1974.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dalida%201974.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dalida_1974.jpg",
+  "width": 1920,
+  "height": 2988,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown, press",
+  "credit": "https://www.pinterest.com/pin/257971884890742851/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

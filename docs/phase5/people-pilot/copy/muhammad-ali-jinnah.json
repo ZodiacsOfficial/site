@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "muhammad-ali-jinnah",
+  "seedRound": 0,
+  "qid": "Q160554",
+  "displayName": "Muhammad Ali Jinnah",
+  "identity": "Lawyer · Pakistan · 1876–1948",
+  "title": "Muhammad Ali Jinnah's birth chart",
+  "metaDescription": "Muhammad Ali Jinnah's chart, computed from a sourced birth date: Sun at 3.9° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.4° separates the Sun and Saturn from an exact sextile; at that range identity and structure read as one mechanism. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.",
+  "ledeFact": "aspect:Sun:Saturn:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.93",
+        "decan:capricorn:first"
+      ],
+      "text": "At noon on that date the Sun stood at 3.9° Capricorn, inside the first decan (0°–10°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:15.7°",
+        "personal:Venus:Sagittarius:1.9°",
+        "personal:Mars:Scorpio:16.7°"
+      ],
+      "text": "The personal planets sit Mercury at 15.7° Capricorn, Venus at 1.9° Sagittarius, Mars at 16.7° Scorpio. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a fire sign reads as attraction declared rather than implied; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:sextile:0.4",
+        "aspect:Saturn:Neptune:sextile:0.93",
+        "aspect:Mercury:Mars:sextile:1.02"
+      ],
+      "text": "The day's firmest angle joins the Sun and Saturn — a sextile holding at 0.4°. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Saturn sextile Neptune at 0.9°, and Mercury sextile Mars at 1.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Mars in Scorpio at 16.7° is in domicile — the planet in its own sign, running on home rules; Jupiter in Sagittarius at 17.5° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire4-water2",
+        "modalities:fixed4-cardinal3-mutable3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 earth, 4 fire, 2 water; by modality, 4 fixed, 3 cardinal, 3 mutable. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:13.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 19.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-25/",
+    "label": "Everyone born on December 25"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Saturn:sextile",
+    "sun-degree:3.93",
+    "decan:capricorn:first",
+    "personal:Mercury:Capricorn:15.7°",
+    "personal:Venus:Sagittarius:1.9°",
+    "personal:Mars:Scorpio:16.7°",
+    "aspect:Sun:Saturn:sextile:0.4",
+    "aspect:Saturn:Neptune:sextile:0.93",
+    "aspect:Mercury:Mars:sextile:1.02",
+    "figure:unaspected:Moon",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:domicile",
+    "elements:earth4-fire4-water2",
+    "modalities:fixed4-cardinal3-mutable3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aries",
+    "moon-band:13.0"
+  ],
+  "measurements": {
+    "originalWords": 442,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

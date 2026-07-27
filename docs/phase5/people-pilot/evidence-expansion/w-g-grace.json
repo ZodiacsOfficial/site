@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "w-g-grace",
+ "qid": "Q616068",
+ "displayName": "W. G. Grace",
+ "wikidataLabel": "W. G. Grace",
+ "wikidataDescription": "English amateur cricketer (1848-1915)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q616068",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517662684
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "W. G. Grace",
+   "articleUrl": "https://en.wikipedia.org/wiki/W._G._Grace",
+   "pageId": 34119,
+   "revisionId": 1365018357,
+   "revisionTimestamp": "2026-07-19T20:32:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1848-07-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1848-07-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1848-07-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1915-10-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5303097",
+  "label": "Downend",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5303097",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5303097",
+   "sourceEntityLabel": "Downend",
+   "latitude": 51.4947,
+   "longitude": -2.5049,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q12299841",
+   "label": "cricketer"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:WG Grace c1902.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:WG%20Grace%20c1902.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:WG_Grace_c1902.jpg",
+  "width": 724,
+  "height": 867,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "George Beldam",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

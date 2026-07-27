@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "charles-dickens",
+  "seedRound": 0,
+  "qid": "Q5686",
+  "displayName": "Charles Dickens",
+  "identity": "Writer and botanist · United Kingdom · 1812–1870",
+  "title": "Charles Dickens's birth chart",
+  "metaDescription": "Charles Dickens's chart, computed from a sourced birth date: Sun at 17.6° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, mutable leads with five. Mutable signs end their seasons, and a mutable-heavy chart is read as one built for adaptation and hand-off rather than for standing still.",
+  "ledeFact": "modality:mutable:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.63",
+        "decan:aquarius:second"
+      ],
+      "text": "The Sun's position resolves to 17.6° Aquarius — deep enough in the second decan (10°–20°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:21.8°",
+        "personal:Venus:Pisces:15.9°",
+        "personal:Mars:Aries:7.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 21.8° Capricorn, Venus was at 15.9° Pisces, Mars was at 7.3° Aries. Read together: thought with its feet on the ground; attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:conjunction:1.18",
+        "aspect:Mercury:Uranus:sextile:1.41",
+        "aspect:Venus:Neptune:square:2.85"
+      ],
+      "text": "Start where the chart is tightest — Venus conjunction Pluto, 1.2° of separation. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Mercury sextile Uranus at 1.4°, and Venus square Neptune at 2.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Sun in Aquarius at 17.6° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 15.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Aries at 7.3° is in domicile — the planet in its own sign, running on home rules; Jupiter in Gemini at 26.5° is in detriment; Saturn in Capricorn at 4.3° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-air2-earth2",
+        "modalities:mutable5-cardinal3-fixed2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 3 fire, 3 water, 2 air, 2 earth by element and 5 mutable, 3 cardinal, 2 fixed by modality. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Jupiter was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:12.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 12.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 8.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-7/",
+    "label": "Everyone born on February 7"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:5",
+    "sun-degree:17.63",
+    "decan:aquarius:second",
+    "personal:Mercury:Capricorn:21.8°",
+    "personal:Venus:Pisces:15.9°",
+    "personal:Mars:Aries:7.3°",
+    "aspect:Venus:Pluto:conjunction:1.18",
+    "aspect:Mercury:Uranus:sextile:1.41",
+    "aspect:Venus:Neptune:square:2.85",
+    "figure:none",
+    "dignity:Sun:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:domicile",
+    "elements:fire3-water3-air2-earth2",
+    "modalities:mutable5-cardinal3-fixed2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:sagittarius",
+    "moon-band:12.9"
+  ],
+  "measurements": {
+    "originalWords": 423,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

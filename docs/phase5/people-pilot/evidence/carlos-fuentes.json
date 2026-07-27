@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "carlos-fuentes",
+ "qid": "Q154691",
+ "displayName": "Carlos Fuentes",
+ "wikidataLabel": "Carlos Fuentes",
+ "wikidataDescription": "Mexican writer (1928–2012)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q154691",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517440481
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Carlos Fuentes",
+   "articleUrl": "https://en.wikipedia.org/wiki/Carlos_Fuentes",
+   "pageId": 324754,
+   "revisionId": 1361343072,
+   "revisionTimestamp": "2026-06-27T09:37:09Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1928-11-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-11-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-11-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2012-05-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3306",
+  "label": "Panama City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3306",
+  "country": {
+   "entity": "Q804",
+   "label": "Panama"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3306",
+   "sourceEntityLabel": "Panama City",
+   "latitude": 8.971111111111112,
+   "longitude": -79.53472222222223,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q1209498",
+   "label": "poet lawyer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q1569495",
+   "label": "lecturer"
+  },
+  {
+   "entity": "Q6430706",
+   "label": "critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Carlos Fuentes 1987.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Carlos%20Fuentes%201987.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Carlos_Fuentes_1987.jpg",
+  "width": 3138,
+  "height": 4312,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Gotfryd, Bernard, photographer",
+  "credit": "https://www.loc.gov/pictures/item/2020730797/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

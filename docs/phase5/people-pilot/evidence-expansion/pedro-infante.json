@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "pedro-infante",
+ "qid": "Q467954",
+ "displayName": "Pedro Infante",
+ "wikidataLabel": "Pedro Infante",
+ "wikidataDescription": "Mexican actor and singer (1917-1957)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q467954",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2507031755
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Pedro Infante",
+   "articleUrl": "https://en.wikipedia.org/wiki/Pedro_Infante",
+   "pageId": 8258689,
+   "revisionId": 1360237235,
+   "revisionTimestamp": "2026-06-20T03:13:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-11-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-11-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-11-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1957-04-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q40194",
+  "label": "Mazatlán",
+  "entityUrl": "https://www.wikidata.org/wiki/Q40194",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q40194",
+   "sourceEntityLabel": "Mazatlán",
+   "latitude": 23.216666666666665,
+   "longitude": -106.40833333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q326358",
+   "label": "joiner"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Pedro Infante en 1954 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Pedro%20Infante%20en%201954%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Pedro_Infante_en_1954_(cropped).jpg",
+  "width": 1253,
+  "height": 1659,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Asociación Nacional de Actores",
+  "credit": "https://digitalcollections.oscars.org/digital/collection/p15759coll11/id/8600",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

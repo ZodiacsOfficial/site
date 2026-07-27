@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "harriet-beecher-stowe",
+  "seedRound": 0,
+  "qid": "Q102513",
+  "displayName": "Harriet Beecher Stowe",
+  "identity": "Novelist · United States · 1811–1896",
+  "title": "Harriet Beecher Stowe's birth chart",
+  "metaDescription": "Harriet Beecher Stowe's chart, computed from a sourced birth date: Sun at 22.7° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: the Sun and Saturn within 0.8°, identity wired to structure. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Sun:Saturn:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.66",
+        "decan:gemini:third"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 22.7° Gemini: the third decan, whose classical sub-ruler is Saturn. A air sign, read here in its third face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:5.4°",
+        "personal:Venus:Taurus:21.5°",
+        "personal:Mars:Scorpio:26.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Gemini (5.4°), Venus in Taurus (21.5°), Mars in Scorpio (26.4°): a mind at home in argument and pattern, taste for the substantial and the lasting, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:opposition:0.77",
+        "aspect:Jupiter:Pluto:square:2.33",
+        "aspect:Uranus:Pluto:trine:2.87"
+      ],
+      "text": "The Sun and Saturn hold the closest angle here — a opposition, 0.8° wide. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Jupiter square Pluto at 2.3°, and Uranus trine Pluto at 2.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Sun-Saturn:apex-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Saturn while both square Pluto. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The classical table has four entries for this chart. Mercury in Gemini at 5.4° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 21.5° is in domicile; Mars in Scorpio at 26.4° is in domicile; Jupiter in Gemini at 16.0° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-fire2-earth1",
+        "modalities:mutable6-fixed3",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 water, 2 fire, 1 earth by element and 6 mutable, 3 fixed by modality. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Mars, Saturn, Uranus and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 13.9° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-14/",
+    "label": "Everyone born on June 14"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Saturn:opposition",
+    "sun-degree:22.66",
+    "decan:gemini:third",
+    "personal:Mercury:Gemini:5.4°",
+    "personal:Venus:Taurus:21.5°",
+    "personal:Mars:Scorpio:26.4°",
+    "aspect:Sun:Saturn:opposition:0.77",
+    "aspect:Jupiter:Pluto:square:2.33",
+    "aspect:Uranus:Pluto:trine:2.87",
+    "figure:t-square:Sun-Saturn:apex-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:domicile",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "elements:air3-water3-fire2-earth1",
+    "modalities:mutable6-fixed3",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 454,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "paul-cezanne",
+ "qid": "Q35548",
+ "displayName": "Paul Cézanne",
+ "wikidataLabel": "Paul Cézanne",
+ "wikidataDescription": "French painter (1839–1906)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q35548",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522860269
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Paul Cézanne",
+   "articleUrl": "https://en.wikipedia.org/wiki/Paul_C%C3%A9zanne",
+   "pageId": 24472,
+   "revisionId": 1364952994,
+   "revisionTimestamp": "2026-07-19T13:38:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1839-01-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1839-01-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1839-01-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1906-10-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q47465",
+  "label": "Aix-en-Provence",
+  "entityUrl": "https://www.wikidata.org/wiki/Q47465",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q47465",
+   "sourceEntityLabel": "Aix-en-Provence",
+   "latitude": 43.527777777778,
+   "longitude": 5.4455555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Paul-Cezanne.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Paul-Cezanne.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Paul-Cezanne.jpg",
+  "width": 250,
+  "height": 333,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown; Cézanne was born in 1839 and died in 1906",
+  "credit": "https://anniversaire-celebrite.com/paul-cezanne-c1450",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

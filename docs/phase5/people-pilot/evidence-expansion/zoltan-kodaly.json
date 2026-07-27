@@ -1,0 +1,151 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "zoltan-kodaly",
+ "qid": "Q153008",
+ "displayName": "Zoltán Kodály",
+ "wikidataLabel": "Zoltán Kodály",
+ "wikidataDescription": "Hungarian composer, ethnomusicologist, pedagogue (1882–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q153008",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521829892
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Zoltán Kodály",
+   "articleUrl": "https://en.wikipedia.org/wiki/Zolt%C3%A1n_Kod%C3%A1ly",
+   "pageId": 172840,
+   "revisionId": 1362697929,
+   "revisionTimestamp": "2026-07-05T17:52:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1882-12-16T00:00:00Z|proleptic-gregorian",
+   "+1882-12-16T00:00:00Z|proleptic-julian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-12-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1882-12-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-julian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-12-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-03-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q171357",
+  "label": "Kecskemét",
+  "entityUrl": "https://www.wikidata.org/wiki/Q171357",
+  "country": {
+   "entity": "Q28",
+   "label": "Hungary"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q171357",
+   "sourceEntityLabel": "Kecskemét",
+   "latitude": 46.9075,
+   "longitude": 19.691666666666666,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q5758653",
+   "label": "secondary school teacher"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q17484288",
+   "label": "ethnomusicologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q25162544",
+   "label": "collector of folk music"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q2675537",
+   "label": "music teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Zoltán Kodály (1928, Pál M. Vajda).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Zolt%C3%A1n%20Kod%C3%A1ly%20(1928%2C%20P%C3%A1l%20M.%20Vajda).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Zolt%C3%A1n_Kod%C3%A1ly_(1928,_P%C3%A1l_M._Vajda).jpg",
+  "width": 1000,
+  "height": 1411,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Pál M. Vajda",
+  "credit": "https://nemzetikonyvtar.blog.hu/2021/10/16/hary_janos_szinpadra_lep",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

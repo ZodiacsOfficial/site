@@ -1,0 +1,114 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "annie-easley",
+ "qid": "Q11586",
+ "displayName": "Annie Easley",
+ "wikidataLabel": "Annie Easley",
+ "wikidataDescription": "American mathematician and rocket scientist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q11586",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2507899508
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Annie Easley",
+   "articleUrl": "https://en.wikipedia.org/wiki/Annie_Easley",
+   "pageId": 1551099,
+   "revisionId": 1353572684,
+   "revisionTimestamp": "2026-05-11T02:06:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1932-04-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-04-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1933-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-04-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-06-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q79867",
+  "label": "Birmingham",
+  "entityUrl": "https://www.wikidata.org/wiki/Q79867",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q79867",
+   "sourceEntityLabel": "Birmingham",
+   "latitude": 33.5175,
+   "longitude": -86.80944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q82594",
+   "label": "computer scientist"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Annie Easley.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Annie%20Easley.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Annie_Easley.jpg",
+  "width": 1984,
+  "height": 2600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "NASA",
+  "credit": "https://www.nasa.gov/feature/annie-easley http://www.fagowees.org/annie.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

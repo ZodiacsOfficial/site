@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alessandro-manzoni",
+ "qid": "Q1064",
+ "displayName": "Alessandro Manzoni",
+ "wikidataLabel": "Alessandro Manzoni",
+ "wikidataDescription": "Italian writer and poet (1785–1873)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1064",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522257875
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alessandro Manzoni",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alessandro_Manzoni",
+   "pageId": 44845,
+   "revisionId": 1356096623,
+   "revisionTimestamp": "2026-05-25T18:42:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1785-03-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1785-03-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1785-03-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1873-05-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q490",
+  "label": "Milan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q490",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q490",
+   "sourceEntityLabel": "Milan",
+   "latitude": 45.466944444444,
+   "longitude": 9.19,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:Francesco Hayez - Ritratto di Alessandro Manzoni.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Francesco%20Hayez%20-%20Ritratto%20di%20Alessandro%20Manzoni.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Francesco_Hayez_-_Ritratto_di_Alessandro_Manzoni.jpg",
+  "width": 3704,
+  "height": 4886,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Francesco Hayez",
+  "credit": "The Yorck Project (2002) 10.000 Meisterwerke der Malerei (DVD-ROM), distributed by DIRECTMEDIA Publishing GmbH. ISBN: 3936122202.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

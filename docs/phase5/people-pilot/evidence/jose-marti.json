@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jose-marti",
+ "qid": "Q103285",
+ "displayName": "José Martí",
+ "wikidataLabel": "José Martí",
+ "wikidataDescription": "Cuban poet, philosopher and nationalist (1853-1895)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q103285",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521439476
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "José Martí",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jos%C3%A9_Mart%C3%AD",
+   "pageId": 188158,
+   "revisionId": 1360542957,
+   "revisionTimestamp": "2026-06-22T04:00:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1853-01-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1853-01-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1853-01-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1895-05-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1563",
+  "label": "Havana",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1563",
+  "country": {
+   "entity": "Q241",
+   "label": "Cuba"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1563",
+   "sourceEntityLabel": "Havana",
+   "latitude": 23.136666666667,
+   "longitude": -82.358888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  }
+ ],
+ "portrait": {
+  "file": "File:MartiJohnManuel K TRestauration.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:MartiJohnManuel%20K%20TRestauration.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:MartiJohnManuel_K_TRestauration.jpg",
+  "width": 372,
+  "height": 452,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "John M. Kennedy T. (restoration work based on public domain old sources)",
+  "credit": "Derivative Work and uploaded by John Manuel - JMK.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

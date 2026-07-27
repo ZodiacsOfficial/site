@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bohumil-hrabal",
+ "qid": "Q242130",
+ "displayName": "Bohumil Hrabal",
+ "wikidataLabel": "Bohumil Hrabal",
+ "wikidataDescription": "Czech writer (1914–1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q242130",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517597779
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bohumil Hrabal",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bohumil_Hrabal",
+   "pageId": 65130,
+   "revisionId": 1362784873,
+   "revisionTimestamp": "2026-07-06T04:39:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-03-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-03-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-03-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-02-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q9179451",
+  "label": "Brno-Židenice",
+  "entityUrl": "https://www.wikidata.org/wiki/Q9179451",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q9179451",
+   "sourceEntityLabel": "Brno-Židenice",
+   "latitude": 49.19611111111111,
+   "longitude": 16.6475,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1209498",
+   "label": "poet lawyer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q140197632",
+   "label": "satirical novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bohumil Hrabal 1985 český spisovatel foto Hana Hamplová.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bohumil%20Hrabal%201985%20%C4%8Desk%C3%BD%20spisovatel%20foto%20Hana%20Hamplov%C3%A1.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bohumil_Hrabal_1985_%C4%8Desk%C3%BD_spisovatel_foto_Hana_Hamplov%C3%A1.jpg",
+  "width": 861,
+  "height": 1181,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Hana Hamplova",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

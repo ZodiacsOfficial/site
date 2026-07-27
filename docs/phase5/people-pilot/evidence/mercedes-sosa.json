@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mercedes-sosa",
+ "qid": "Q216450",
+ "displayName": "Mercedes Sosa",
+ "wikidataLabel": "Mercedes Sosa",
+ "wikidataDescription": "Argentine singer (1935-2009)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q216450",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518514651
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mercedes Sosa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mercedes_Sosa",
+   "pageId": 476992,
+   "revisionId": 1365479237,
+   "revisionTimestamp": "2026-07-22T18:27:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1935-07-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1935-07-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1935-07-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-10-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q44255",
+  "label": "San Miguel de Tucumán",
+  "entityUrl": "https://www.wikidata.org/wiki/Q44255",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q44255",
+   "sourceEntityLabel": "San Miguel de Tucumán",
+   "latitude": -26.816666666667,
+   "longitude": -65.216666666667,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mercedes Sosa, by Annemarie Heinrich.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mercedes%20Sosa%2C%20by%20Annemarie%20Heinrich.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mercedes_Sosa,_by_Annemarie_Heinrich.jpg",
+  "width": 600,
+  "height": 657,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Annemarie Heinrich",
+  "credit": "http://www.argentina.gob.ar/multimedia_ampliado.php?id=505",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

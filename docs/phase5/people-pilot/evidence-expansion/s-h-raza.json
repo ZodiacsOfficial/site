@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "s-h-raza",
+ "qid": "Q3105774",
+ "displayName": "S. H. Raza",
+ "wikidataLabel": "S. H. Raza",
+ "wikidataDescription": "Indian painter (1922–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3105774",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2514046952
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "S. H. Raza",
+   "articleUrl": "https://en.wikipedia.org/wiki/S._H._Raza",
+   "pageId": 5387978,
+   "revisionId": 1364519911,
+   "revisionTimestamp": "2026-07-17T01:27:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-02-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-02-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-02-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-07-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2341670",
+  "label": "Mandla district",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2341670",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2341670",
+   "sourceEntityLabel": "Mandla district",
+   "latitude": 22.7,
+   "longitude": 81,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q2500638",
+   "label": "creator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sayed Haider Raza (1995).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sayed%20Haider%20Raza%20(1995).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sayed_Haider_Raza_(1995).png",
+  "width": 312,
+  "height": 255,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Pantalaskas",
+  "credit": "Image tirée d'une vidéo pour l'Encyclopédie audiovisuelle de l'art contemporain. Travail personnel.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

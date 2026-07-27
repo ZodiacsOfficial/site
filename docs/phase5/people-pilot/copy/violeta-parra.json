@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "violeta-parra",
+  "seedRound": 0,
+  "qid": "Q230499",
+  "displayName": "Violeta Parra",
+  "identity": "Singer-songwriter and poet · Chile · 1917–1967",
+  "title": "Violeta Parra's birth chart",
+  "metaDescription": "Violeta Parra's chart, computed from a sourced birth date: Sun at 10.9° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Jupiter sit 0.6° from an exact trine — near enough that the tradition reads identity and expansion as a single working part. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Sun:Jupiter:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.88",
+        "decan:libra:second"
+      ],
+      "text": "Libra, but precisely: 10.9°, second decan, 10°–20°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:23.0°",
+        "personal:Venus:Scorpio:21.5°",
+        "personal:Mars:Leo:13.6°"
+      ],
+      "text": "Mercury holds 23.0° Virgo, Venus holds 21.5° Scorpio, Mars holds 13.6° Leo — in the old shorthand, a mind that trusts the measured and the checked; taste tuned to mood and undertow; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:trine:0.62",
+        "aspect:Jupiter:Saturn:sextile:0.62",
+        "aspect:Sun:Saturn:sextile:1.24"
+      ],
+      "text": "Nothing in the geometry sits closer than the Sun and Jupiter: 0.6° from an exact trine. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Jupiter sextile Saturn at 0.6°, and the Sun sextile Saturn at 1.2° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has five entries for this chart. The Sun in Libra at 10.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 23.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Scorpio at 21.5° is in detriment — the planet opposite its home, working against the grain; Jupiter in Gemini at 11.5° is in detriment; Saturn in Leo at 12.1° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-fire3-water2-earth1",
+        "modalities:fixed5-cardinal2-mutable2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 air, 3 fire, 2 water, 1 earth; by modality, 5 fixed, 2 cardinal, 2 mutable. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Jupiter and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 13.6° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-4/",
+    "label": "Everyone born on October 4"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:trine",
+    "sun-degree:10.88",
+    "decan:libra:second",
+    "personal:Mercury:Virgo:23.0°",
+    "personal:Venus:Scorpio:21.5°",
+    "personal:Mars:Leo:13.6°",
+    "aspect:Sun:Jupiter:trine:0.62",
+    "aspect:Jupiter:Saturn:sextile:0.62",
+    "aspect:Sun:Saturn:sextile:1.24",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:air3-fire3-water2-earth1",
+    "modalities:fixed5-cardinal2-mutable2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 433,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

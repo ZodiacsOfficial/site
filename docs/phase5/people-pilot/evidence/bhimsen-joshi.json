@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bhimsen-joshi",
+ "qid": "Q121077",
+ "displayName": "Bhimsen Joshi",
+ "wikidataLabel": "Bhimsen Joshi",
+ "wikidataDescription": "Indian Hindustani classical vocalist (1922–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q121077",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2492270729
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bhimsen Joshi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bhimsen_Joshi",
+   "pageId": 577439,
+   "revisionId": 1365925599,
+   "revisionTimestamp": "2026-07-25T06:32:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1922-02-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1922-02-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1922-02-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-01-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2624337",
+  "label": "Ron",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2624337",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2624337",
+   "sourceEntityLabel": "Ron",
+   "latitude": 15.67,
+   "longitude": 75.73,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Pandit Bhimsen Joshi (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Pandit%20Bhimsen%20Joshi%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Pandit_Bhimsen_Joshi_(cropped).jpg",
+  "width": 377,
+  "height": 414,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Bhaskar Bhatt Joshi",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

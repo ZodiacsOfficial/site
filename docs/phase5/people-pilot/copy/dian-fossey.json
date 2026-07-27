@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "dian-fossey",
+  "seedRound": 0,
+  "qid": "Q234224",
+  "displayName": "Dian Fossey",
+  "identity": "Anthropologist and writer · United States · 1932–1985",
+  "title": "Dian Fossey's birth chart",
+  "metaDescription": "Dian Fossey's chart, computed from a sourced birth date: Sun at 25.5° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Capricorn — the Sun, Mercury, Mars and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:capricorn:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.50",
+        "decan:capricorn:third"
+      ],
+      "text": "At the noon reference the Sun sits 25.5° into Capricorn — the third decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:2.8°",
+        "personal:Venus:Aquarius:27.2°",
+        "personal:Mars:Capricorn:29.1°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (2.8°), Venus in Aquarius (27.2°), Mars in Capricorn (29.1°): thought with its feet on the ground, attraction that begins as conversation, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:conjunction:0.12",
+        "aspect:Mars:Saturn:conjunction:3.44",
+        "aspect:Sun:Mars:conjunction:3.57"
+      ],
+      "text": "The day's firmest angle joins the Sun and Saturn — a conjunction holding at 0.1°. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Mars conjunction Saturn at 3.4°, and the Sun conjunction Mars at 3.6° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mars in Capricorn at 29.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Capricorn at 25.6° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire2-air1-water1",
+        "modalities:cardinal6-fixed2-mutable1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 5 earth, 2 fire, 1 air, 1 water; by modality, 6 cardinal, 2 fixed, 1 mutable. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 11.9° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-16/",
+    "label": "Everyone born on January 16"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "stellium:capricorn:4",
+    "sun-degree:25.50",
+    "decan:capricorn:third",
+    "personal:Mercury:Capricorn:2.8°",
+    "personal:Venus:Aquarius:27.2°",
+    "personal:Mars:Capricorn:29.1°",
+    "aspect:Sun:Saturn:conjunction:0.12",
+    "aspect:Mars:Saturn:conjunction:3.44",
+    "aspect:Sun:Mars:conjunction:3.57",
+    "figure:none",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:earth5-fire2-air1-water1",
+    "modalities:cardinal6-fixed2-mutable1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 417,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

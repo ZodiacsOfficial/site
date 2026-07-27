@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "virginia-apgar",
+ "qid": "Q463891",
+ "displayName": "Virginia Apgar",
+ "wikidataLabel": "Virginia Apgar",
+ "wikidataDescription": "American obstetrical anesthesiologist (1909-1974)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q463891",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517848427
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Virginia Apgar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Virginia_Apgar",
+   "pageId": 250256,
+   "revisionId": 1364382203,
+   "revisionTimestamp": "2026-07-16T05:30:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1909-06-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1909-06-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1909-06-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1974-08-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q287382",
+  "label": "Westfield",
+  "entityUrl": "https://www.wikidata.org/wiki/Q287382",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q287382",
+   "sourceEntityLabel": "Westfield",
+   "latitude": 40.6516,
+   "longitude": -74.3434,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1919436",
+   "label": "pediatrician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q28837",
+   "label": "anesthesiologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Virginia-Apgar-July-6-1959.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Virginia-Apgar-July-6-1959.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Virginia-Apgar-July-6-1959.jpg",
+  "width": 448,
+  "height": 600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "March of Dimes",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c31534.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

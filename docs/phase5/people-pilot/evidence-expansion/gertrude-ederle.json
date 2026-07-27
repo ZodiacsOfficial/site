@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gertrude-ederle",
+ "qid": "Q263287",
+ "displayName": "Gertrude Ederle",
+ "wikidataLabel": null,
+ "wikidataDescription": "American swimmer (1905–2003)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q263287",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517552273
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gertrude Ederle",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gertrude_Ederle",
+   "pageId": 335039,
+   "revisionId": 1363240671,
+   "revisionTimestamp": "2026-07-08T23:06:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1905-10-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1905-10-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1905-10-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-11-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10843402",
+   "label": "swimmer"
+  },
+  {
+   "entity": "Q112118895",
+   "label": "open water swimmer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gertrude Ederle.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gertrude%20Ederle.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gertrude_Ederle.jpg",
+  "width": 3618,
+  "height": 2704,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bain News Service, publisher",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ggbain.37118.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

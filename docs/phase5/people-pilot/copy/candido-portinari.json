@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "candido-portinari",
+  "seedRound": 0,
+  "qid": "Q319532",
+  "displayName": "Candido Portinari",
+  "identity": "Painter · Brazil · 1903–1962",
+  "title": "Candido Portinari's birth chart",
+  "metaDescription": "Candido Portinari's chart, computed from a sourced birth date: Sun at 6.7° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, cardinal leads with three. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:3",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.74",
+        "decan:capricorn:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 6.7° Capricorn: the first decan, whose classical sub-ruler is Saturn. A earth sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Capricorn:25.9°",
+        "personal:Venus:Scorpio:22.4°",
+        "personal:Mars:Aquarius:13.5°"
+      ],
+      "text": "Closer in, Mercury stands at 25.9° Capricorn; Venus stands at 22.4° Scorpio; Mars stands at 13.5° Aquarius. The tradition reads a mind that trusts the measured and the checked from Mercury, taste tuned to mood and undertow from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:square:1.97",
+        "aspect:Sun:Neptune:opposition:2.25",
+        "aspect:Mercury:Venus:sextile:3.49"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Pluto — a square holding at 2.0°. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, the Sun opposition Neptune at 2.3°, and Mercury sextile Venus at 3.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Venus in Scorpio at 22.4° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 17.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 7.7° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-earth2-fire1",
+        "modalities:cardinal3-fixed3-mutable3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements water 3, air 3, earth 2, fire 1; modalities cardinal 3, fixed 3, mutable 3. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 13.1° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-29/",
+    "label": "Everyone born on December 29"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:3",
+    "sun-degree:6.74",
+    "decan:capricorn:first",
+    "personal:Mercury:Capricorn:25.9°",
+    "personal:Venus:Scorpio:22.4°",
+    "personal:Mars:Aquarius:13.5°",
+    "aspect:Jupiter:Pluto:square:1.97",
+    "aspect:Sun:Neptune:opposition:2.25",
+    "aspect:Mercury:Venus:sextile:3.49",
+    "figure:none",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:water3-air3-earth2-fire1",
+    "modalities:cardinal3-fixed3-mutable3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 383,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

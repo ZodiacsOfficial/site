@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "audre-lorde",
+  "seedRound": 0,
+  "qid": "Q463319",
+  "displayName": "Audre Lorde",
+  "identity": "Poet and women's rights activist · United States · 1934–1992",
+  "title": "Audre Lorde's birth chart",
+  "metaDescription": "Audre Lorde's chart, computed from a sourced birth date: Sun at 29.4° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a opposition to Neptune at 0.1° — close enough to weld drive to imagination. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Mars:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.37",
+        "decan:aquarius:third"
+      ],
+      "text": "29.4° of Aquarius is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:17.4°",
+        "personal:Venus:Aquarius:8.9°",
+        "personal:Mars:Pisces:11.5°"
+      ],
+      "text": "Mercury holds 17.4° Pisces, Venus holds 8.9° Aquarius, Mars holds 11.5° Pisces — in the old shorthand, thought steeped in tone and memory; attraction that begins as conversation; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:square:0.04",
+        "aspect:Mars:Neptune:opposition:0.13",
+        "aspect:Jupiter:Uranus:opposition:1.43"
+      ],
+      "text": "Nothing in the geometry sits closer than Jupiter and Pluto: 0.0° from an exact square. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Mars opposition Neptune at 0.1°, and Jupiter opposition Uranus at 1.4° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Jupiter-Uranus:apex-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Uranus while both square Pluto. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mercury:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Sun in Aquarius at 29.4° is in detriment — the planet opposite its home, working against the grain; Mercury in Pisces at 17.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aquarius at 20.1° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-fire1-earth1",
+        "modalities:fixed3-mutable3-cardinal3",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 air, 3 water, 1 fire, 1 earth; by modality, 3 fixed, 3 mutable, 3 cardinal. Venus, Jupiter, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 13.0° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-18/",
+    "label": "Everyone born on February 18"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Neptune:opposition",
+    "sun-degree:29.37",
+    "decan:aquarius:third",
+    "personal:Mercury:Pisces:17.4°",
+    "personal:Venus:Aquarius:8.9°",
+    "personal:Mars:Pisces:11.5°",
+    "aspect:Jupiter:Pluto:square:0.04",
+    "aspect:Mars:Neptune:opposition:0.13",
+    "aspect:Jupiter:Uranus:opposition:1.43",
+    "figure:t-square:Jupiter-Uranus:apex-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Mercury:fall",
+    "dignity:Saturn:domicile",
+    "elements:air4-water3-fire1-earth1",
+    "modalities:fixed3-mutable3-cardinal3",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 435,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "machiko-hasegawa",
+ "qid": "Q265148",
+ "displayName": "Machiko Hasegawa",
+ "wikidataLabel": "Machiko Hasegawa",
+ "wikidataDescription": "Japanese manga artist (1920–1992)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "easia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q265148",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520333195
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Machiko Hasegawa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Machiko_Hasegawa",
+   "pageId": 750978,
+   "revisionId": 1365403820,
+   "revisionTimestamp": "2026-07-22T04:49:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-01-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-01-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-01-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1992-05-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q877177",
+  "label": "Taku",
+  "entityUrl": "https://www.wikidata.org/wiki/Q877177",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q877177",
+   "sourceEntityLabel": "Taku",
+   "latitude": 33.288555555555554,
+   "longitude": 130.11019444444443,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q191633",
+   "label": "mangaka"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hasegawa-Machiko-1.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hasegawa-Machiko-1.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hasegawa-Machiko-1.jpg",
+  "width": 2537,
+  "height": 3623,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "産業経済新聞社（Sankei Shinbun Co., Ltd.）",
+  "credit": "『サンケイグラフ』1955年5月22日号、産業経済新聞社”The Sankei Graphic”, Sankei Shinbun Co., Ltd. 1955.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

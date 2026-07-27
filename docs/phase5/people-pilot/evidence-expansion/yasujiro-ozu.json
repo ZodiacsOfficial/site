@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yasujiro-ozu",
+ "qid": "Q55402",
+ "displayName": "Yasujirō Ozu",
+ "wikidataLabel": "Yasujirō Ozu",
+ "wikidataDescription": "Japanese film director, screenwriter (1903–1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q55402",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522218758
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yasujirō Ozu",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yasujir%C5%8D_Ozu",
+   "pageId": 137241,
+   "revisionId": 1363088997,
+   "revisionTimestamp": "2026-07-07T23:56:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-12-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-12-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-12-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-12-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11559997",
+  "label": "Fukagawa-ku",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11559997",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1490",
+   "sourceEntityLabel": "Tokyo",
+   "latitude": 35.68944444444445,
+   "longitude": 139.69166666666666,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 1
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q2962070",
+   "label": "production designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Yasujiro Ozu by Shigeru Tanura.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Yasujiro%20Ozu%20by%20Shigeru%20Tanura.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Yasujiro_Ozu_by_Shigeru_Tanura.jpg",
+  "width": 2423,
+  "height": 3615,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Shigeru Tamura",
+  "credit": "This image is available from the website of the National Diet Library",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

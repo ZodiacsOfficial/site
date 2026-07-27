@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "henry-ford",
+ "qid": "Q8768",
+ "displayName": "Henry Ford",
+ "wikidataLabel": "Henry Ford",
+ "wikidataDescription": "American business magnate (1863–1947)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8768",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519404396
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Henry Ford",
+   "articleUrl": "https://en.wikipedia.org/wiki/Henry_Ford",
+   "pageId": 13371,
+   "revisionId": 1365122507,
+   "revisionTimestamp": "2026-07-20T11:18:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1863-07-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1863-07-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1863-07-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1947-04-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7581269",
+  "label": "Springwells Township",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7581269",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7581269",
+   "sourceEntityLabel": "Springwells Township",
+   "latitude": 42.316667,
+   "longitude": -83.15,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q10349745",
+   "label": "racing automobile driver"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q6606110",
+   "label": "industrialist"
+  },
+  {
+   "entity": "Q911554",
+   "label": "business magnate"
+  },
+  {
+   "entity": "Q1607826",
+   "label": "editor"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Henry ford 1919.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Henry%20ford%201919.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Henry_ford_1919.jpg",
+  "width": 1744,
+  "height": 2226,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Fred Hartsook",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c11278.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

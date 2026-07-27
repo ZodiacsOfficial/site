@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "alberto-santos-dumont",
+  "seedRound": 0,
+  "qid": "Q313211",
+  "displayName": "Alberto Santos-Dumont",
+  "identity": "Inventor · Brazil · 1873–1932",
+  "title": "Alberto Santos-Dumont's birth chart",
+  "metaDescription": "Alberto Santos-Dumont's chart, computed from a sourced birth date: Sun at 27.9° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a square to Neptune at 0.7° — close enough to weld identity to imagination. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Sun:Neptune:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.88",
+        "decan:cancer:third"
+      ],
+      "text": "27.9° of Cancer is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:24.1°",
+        "personal:Venus:Gemini:12.4°",
+        "personal:Mars:Scorpio:8.4°"
+      ],
+      "text": "Closer in, Mercury stands at 24.1° Leo; Venus stands at 12.4° Gemini; Mars stands at 8.4° Scorpio. The tradition reads thought that arrives already in motion from Mercury, attraction that begins as conversation from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:square:0.66",
+        "aspect:Saturn:Neptune:square:0.98",
+        "aspect:Sun:Saturn:opposition:1.63"
+      ],
+      "text": "Start where the chart is tightest — the Sun square Neptune, 0.7° of separation. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Saturn square Neptune at 1.0°, and the Sun opposition Saturn at 1.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Sun-Saturn:apex-Neptune"
+      ],
+      "text": "The Sun opposes Saturn while both square Neptune. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Mars in Scorpio at 8.4° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 2.4° is in detriment — the planet opposite its home, working against the grain; Saturn in Capricorn at 29.5° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth3-water2-air2",
+        "modalities:fixed4-cardinal3-mutable3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives fire 3, earth 3, water 2, air 2, and fixed 4, cardinal 3, mutable 3 across the modes. Saturn was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:12.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 14.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-20/",
+    "label": "Everyone born on July 20"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:square",
+    "sun-degree:27.88",
+    "decan:cancer:third",
+    "personal:Mercury:Leo:24.1°",
+    "personal:Venus:Gemini:12.4°",
+    "personal:Mars:Scorpio:8.4°",
+    "aspect:Sun:Neptune:square:0.66",
+    "aspect:Saturn:Neptune:square:0.98",
+    "aspect:Sun:Saturn:opposition:1.63",
+    "figure:t-square:Sun-Saturn:apex-Neptune",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:domicile",
+    "elements:fire3-earth3-water2-air2",
+    "modalities:fixed4-cardinal3-mutable3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:gemini",
+    "moon-band:12.8"
+  ],
+  "measurements": {
+    "originalWords": 411,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

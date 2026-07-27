@@ -1,0 +1,127 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "w-b-yeats",
+ "qid": "Q40213",
+ "displayName": "W. B. Yeats",
+ "wikidataLabel": "William Butler Yeats",
+ "wikidataDescription": "Irish poet and playwright (1865–1939)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q40213",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517371720
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "W. B. Yeats",
+   "articleUrl": "https://en.wikipedia.org/wiki/W._B._Yeats",
+   "pageId": 33684,
+   "revisionId": 1356018030,
+   "revisionTimestamp": "2026-05-25T07:38:09Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1865-06-13T00:00:00Z|proleptic-gregorian",
+   "+1865-03-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1865-06-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1865-03-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1865-06-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1939-01-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q966849",
+  "label": "Sandymount",
+  "entityUrl": "https://www.wikidata.org/wiki/Q966849",
+  "country": {
+   "entity": "Q27",
+   "label": "Ireland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q966849",
+   "sourceEntityLabel": "Sandymount",
+   "latitude": 53.3252,
+   "longitude": -6.2069,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q12328016",
+   "label": "mystic"
+  },
+  {
+   "entity": "Q155647",
+   "label": "astrologer"
+  }
+ ],
+ "portrait": {
+  "file": "File:William Butler Yeats by George Charles Beresford.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:William%20Butler%20Yeats%20by%20George%20Charles%20Beresford.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:William_Butler_Yeats_by_George_Charles_Beresford.jpg",
+  "width": 793,
+  "height": 1057,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "George Charles Beresford",
+  "credit": "National Portrait Gallery",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

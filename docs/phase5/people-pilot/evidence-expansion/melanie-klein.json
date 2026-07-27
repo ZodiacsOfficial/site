@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "melanie-klein",
+ "qid": "Q82999",
+ "displayName": "Melanie Klein",
+ "wikidataLabel": "Melanie Klein",
+ "wikidataDescription": "British Austrian born psychoanalyst (1882–1960)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q82999",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521509232
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Melanie Klein",
+   "articleUrl": "https://en.wikipedia.org/wiki/Melanie_Klein",
+   "pageId": 157854,
+   "revisionId": 1360267604,
+   "revisionTimestamp": "2026-06-20T09:37:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1882-03-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-03-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-03-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1960-09-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3410028",
+   "label": "psychoanalyst"
+  }
+ ],
+ "portrait": {
+  "file": "File:Melanie Klein 1952.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Melanie%20Klein%201952.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Melanie_Klein_1952.jpg",
+  "width": 2706,
+  "height": 3393,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Douglas Glass",
+  "credit": "https://wellcomeimages.org/indexplus/image/L0018518.html archive",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

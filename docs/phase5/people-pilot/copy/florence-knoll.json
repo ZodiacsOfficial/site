@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "florence-knoll",
+  "seedRound": 0,
+  "qid": "Q5460673",
+  "displayName": "Florence Knoll",
+  "identity": "Architect and interior designer · United States · 1917–2019",
+  "title": "Florence Knoll's birth chart",
+  "metaDescription": "Florence Knoll's chart, computed from a sourced birth date: Sun at 2.9° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 16.1° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.93",
+        "decan:gemini:first"
+      ],
+      "text": "The Sun's exact place is 2.9° Gemini. That falls in the first decan, 0°–10°, sub-ruled by Mercury in the classical scheme — a air sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:21.4°",
+        "personal:Venus:Gemini:10.4°",
+        "personal:Mars:Taurus:14.7°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Taurus (21.4°), Venus in Gemini (10.4°), Mars in Taurus (14.7°): a mind that trusts the measured and the checked, taste led by wit and proportion, drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:sextile:0.37",
+        "aspect:Mercury:Jupiter:conjunction:0.44",
+        "aspect:Jupiter:Uranus:square:1.86"
+      ],
+      "text": "The Sun and Neptune hold the closest angle here — a sextile, 0.4° wide. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mercury conjunction Jupiter at 0.4°, and Jupiter square Uranus at 1.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has three entries for this chart. The Moon in Cancer at 16.1° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 14.7° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 26.7° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-earth3-fire1",
+        "modalities:fixed5-cardinal3-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 3, water 3, earth 3, fire 1, and fixed 5, cardinal 3, mutable 2 across the modes. Mercury was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.2° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 16.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-24/",
+    "label": "Everyone born on May 24"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:2.93",
+    "decan:gemini:first",
+    "personal:Mercury:Taurus:21.4°",
+    "personal:Venus:Gemini:10.4°",
+    "personal:Mars:Taurus:14.7°",
+    "aspect:Sun:Neptune:sextile:0.37",
+    "aspect:Mercury:Jupiter:conjunction:0.44",
+    "aspect:Jupiter:Uranus:square:1.86",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:detriment",
+    "elements:air3-water3-earth3-fire1",
+    "modalities:fixed5-cardinal3-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:cancer",
+    "moon-band:12.2"
+  ],
+  "measurements": {
+    "originalWords": 399,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

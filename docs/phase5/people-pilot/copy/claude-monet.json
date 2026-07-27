@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "claude-monet",
+  "seedRound": 0,
+  "qid": "Q296",
+  "displayName": "Claude Monet",
+  "identity": "Painter · France · 1840–1926",
+  "title": "Claude Monet's birth chart",
+  "metaDescription": "Claude Monet's chart, computed from a sourced birth date: Sun at 22.2° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates Mars and Saturn from an exact square; at that range drive and structure read as one mechanism. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen.",
+  "ledeFact": "aspect:Mars:Saturn:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.23",
+        "decan:scorpio:third"
+      ],
+      "text": "At noon on that date the Sun stood at 22.2° Scorpio, inside the third decan (20°–30°), whose traditional sub-ruler is the Moon. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:14.6°",
+        "personal:Venus:Sagittarius:21.2°",
+        "personal:Mars:Virgo:20.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 14.6° Sagittarius, Venus was at 21.2° Sagittarius, Mars was at 20.4° Virgo. Read together: thought that arrives already in motion; attraction declared rather than implied; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:square:0.11",
+        "aspect:Venus:Saturn:conjunction:0.66",
+        "aspect:Venus:Mars:square:0.77"
+      ],
+      "text": "Start where the chart is tightest — Mars square Saturn, 0.1° of separation. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Venus conjunction Saturn at 0.7°, and Venus square Mars at 0.8° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Mars-Uranus:apex-Mercury"
+      ],
+      "text": "Mars opposes Uranus while both square Mercury. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. Mercury in Sagittarius at 14.6° is in detriment — the planet opposite its home, working against the grain. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth1-air1",
+        "modalities:mutable5-fixed3-cardinal1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 fire, 3 water, 1 earth, 1 air by element and 5 mutable, 3 fixed, 1 cardinal by mode. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 14.3° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-14/",
+    "label": "Everyone born on November 14"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Saturn:square",
+    "sun-degree:22.23",
+    "decan:scorpio:third",
+    "personal:Mercury:Sagittarius:14.6°",
+    "personal:Venus:Sagittarius:21.2°",
+    "personal:Mars:Virgo:20.4°",
+    "aspect:Mars:Saturn:square:0.11",
+    "aspect:Venus:Saturn:conjunction:0.66",
+    "aspect:Venus:Mars:square:0.77",
+    "figure:t-square:Mars-Uranus:apex-Mercury",
+    "dignity:Mercury:detriment",
+    "elements:fire4-water3-earth1-air1",
+    "modalities:mutable5-fixed3-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 412,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

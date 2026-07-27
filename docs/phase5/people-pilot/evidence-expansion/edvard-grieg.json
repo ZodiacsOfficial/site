@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edvard-grieg",
+ "qid": "Q80621",
+ "displayName": "Edvard Grieg",
+ "wikidataLabel": "Edvard Grieg",
+ "wikidataDescription": "Norwegian composer and pianist (1843–1907)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q80621",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521951113
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edvard Grieg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edvard_Grieg",
+   "pageId": 9514,
+   "revisionId": 1365972968,
+   "revisionTimestamp": "2026-07-25T14:02:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1843-06-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1843-06-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1843-06-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1907-09-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q26793",
+  "label": "Bergen",
+  "entityUrl": "https://www.wikidata.org/wiki/Q26793",
+  "country": {
+   "entity": "Q20",
+   "label": "Norway"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q26793",
+   "sourceEntityLabel": "Bergen",
+   "latitude": 60.3925,
+   "longitude": 5.3233333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  }
+ ],
+ "portrait": {
+  "file": "File:(Edvard Grieg portrait) (3470673354).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:(Edvard%20Grieg%20portrait)%20(3470673354).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:(Edvard_Grieg_portrait)_(3470673354).jpg",
+  "width": 1212,
+  "height": 1900,
+  "licenseShortName": "No restrictions",
+  "licenseUrl": "https://www.flickr.com/commons/usage/",
+  "artist": "Bergen Public Library Norway from Bergen, Norway",
+  "credit": "[Edvard Grieg portrait]",
+  "usageTerms": "No known copyright restrictions",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "anna-magnani",
+ "qid": "Q56011",
+ "displayName": "Anna Magnani",
+ "wikidataLabel": "Anna Magnani",
+ "wikidataDescription": "Italian actress (1908-1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q56011",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522105400
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Anna Magnani",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anna_Magnani",
+   "pageId": 190388,
+   "revisionId": 1351834613,
+   "revisionTimestamp": "2026-04-30T12:36:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-03-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-03-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-03-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-09-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q220",
+  "label": "Rome",
+  "entityUrl": "https://www.wikidata.org/wiki/Q220",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q220",
+   "sourceEntityLabel": "Rome",
+   "latitude": 41.893055555556,
+   "longitude": 12.482777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Anna Magnani - portrait.tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Anna%20Magnani%20-%20portrait.tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Anna_Magnani_-_portrait.tif",
+  "width": 3178,
+  "height": 3297,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Hans Krebs",
+  "credit": "This image is from the collection of the ETH-Bibliothek and has been published on Wikimedia Commons as part of a cooperation with Wikimedia CH. Corrections and additional information are welcome.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "friedrich-schiller",
+ "qid": "Q22670",
+ "displayName": "Friedrich Schiller",
+ "wikidataLabel": "Friedrich Schiller",
+ "wikidataDescription": "German playwright, poet, philosopher and historian (1759–1805)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q22670",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522261244
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Friedrich Schiller",
+   "articleUrl": "https://en.wikipedia.org/wiki/Friedrich_Schiller",
+   "pageId": 63742,
+   "revisionId": 1365935215,
+   "revisionTimestamp": "2026-07-25T08:21:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1759-11-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1759-11-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1759-11-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1805-05-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q61890",
+  "label": "Marbach am Neckar",
+  "entityUrl": "https://www.wikidata.org/wiki/Q61890",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q61890",
+   "sourceEntityLabel": "Marbach am Neckar",
+   "latitude": 48.940555555556,
+   "longitude": 9.2575,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q182436",
+   "label": "librarian"
+  },
+  {
+   "entity": "Q551835",
+   "label": "physician writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Friedrich Schiller by Ludovike Simanowiz.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Friedrich%20Schiller%20by%20Ludovike%20Simanowiz.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Friedrich_Schiller_by_Ludovike_Simanowiz.jpg",
+  "width": 675,
+  "height": 922,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ludovike Simanowiz",
+  "credit": "Neue Deutsche Biographie, hrsg. von der Historischen Kommission bei der Bayerischen Akademie der Wissenschaften durch Hans Günter Hockerts, redigiert von Franz Menges, Bernhard Ebneth, Stefan Jordan, Claus Priesner, Maria Schimke und Regine Sonntag, 22. Band: Rohmer-Schinkel, mit ADB & NDB-Gesamtregister auf CD-ROM, zweite Ausgabe; Verlag Duncker & Humblot, Berlin 2005, XVI …",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "arthur-schopenhauer",
+  "seedRound": 0,
+  "qid": "Q38193",
+  "displayName": "Arthur Schopenhauer",
+  "identity": "University teacher and philosopher · Poland · 1788–1860",
+  "title": "Arthur Schopenhauer's birth chart",
+  "metaDescription": "Arthur Schopenhauer's chart, computed from a sourced birth date: Sun at 3.5° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled fall in water signs — at least half of what the unknown hour leaves certain. Water reads the room before the room speaks — atmosphere first, analysis later.",
+  "ledeFact": "element:water:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.55",
+        "decan:pisces:first"
+      ],
+      "text": "3.5° of Pisces is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:12.2°",
+        "personal:Venus:Aries:3.6°",
+        "personal:Mars:Cancer:8.5°"
+      ],
+      "text": "Closer in, Mercury stands at 12.2° Pisces; Venus stands at 3.6° Aries; Mars stands at 8.5° Cancer. The tradition reads thought steeped in tone and memory from Mercury, attraction declared rather than implied from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:trine:0.44",
+        "aspect:Sun:Saturn:conjunction:1.93",
+        "aspect:Mercury:Mars:trine:3.65"
+      ],
+      "text": "Jupiter and Pluto hold the closest angle here — a trine, 0.4° wide. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun conjunction Saturn at 1.9°, and Mercury trine Mars at 3.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Jupiter-Neptune-Pluto"
+      ],
+      "text": "Jupiter, Neptune, Pluto close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Mercury in Pisces at 12.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 3.6° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 8.5° is in fall; Jupiter in Gemini at 16.7° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air3-earth1-fire1",
+        "modalities:mutable5-cardinal4-fixed1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 5, air 3, earth 1, fire 1, and mutable 5, cardinal 4, fixed 1 across the modes. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Uranus and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:14.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 15.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-22/",
+    "label": "Everyone born on February 22"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "element:water:5",
+    "sun-degree:3.55",
+    "decan:pisces:first",
+    "personal:Mercury:Pisces:12.2°",
+    "personal:Venus:Aries:3.6°",
+    "personal:Mars:Cancer:8.5°",
+    "aspect:Jupiter:Pluto:trine:0.44",
+    "aspect:Sun:Saturn:conjunction:1.93",
+    "aspect:Mercury:Mars:trine:3.65",
+    "figure:grand-trine:Jupiter-Neptune-Pluto",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:detriment",
+    "elements:water5-air3-earth1-fire1",
+    "modalities:mutable5-cardinal4-fixed1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:virgo",
+    "moon-band:14.4"
+  ],
+  "measurements": {
+    "originalWords": 433,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

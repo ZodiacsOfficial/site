@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "george-eliot",
+  "seedRound": 0,
+  "qid": "Q131333",
+  "displayName": "George Eliot",
+  "identity": "Novelist · United Kingdom · 1819–1880",
+  "title": "George Eliot's birth chart",
+  "metaDescription": "George Eliot's chart, computed from a sourced birth date: Sun at 29.4° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Sagittarius — Mercury, Venus, Uranus and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:sagittarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.40",
+        "decan:scorpio:third"
+      ],
+      "text": "The Sun's exact place is 29.4° Scorpio. That falls in the third decan, 20°–30°, sub-ruled by the Moon in the classical scheme — a water sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:16.8°",
+        "personal:Venus:Sagittarius:10.4°",
+        "personal:Mars:Leo:4.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 16.8° Sagittarius, Venus was at 10.4° Sagittarius, Mars was at 4.3° Leo. Read together: a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:sextile:0.71",
+        "aspect:Saturn:Uranus:square:0.78",
+        "aspect:Saturn:Pluto:conjunction:1.56"
+      ],
+      "text": "The tightest geometry in the chart puts Venus a sixth of the circle apart from Jupiter, 0.7° off exact. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Saturn square Uranus at 0.8°, and Saturn conjunction Pluto at 1.6° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment"
+      ],
+      "text": "The classical table has one entry for this chart. Mercury in Sagittarius at 16.8° is in detriment — the planet opposite its home, working against the grain. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-water3-air1",
+        "modalities:mutable6-fixed3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 5 fire, 3 water, 1 air by element and 6 mutable, 3 fixed by mode. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Saturn and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 14.3° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-22/",
+    "label": "Everyone born on November 22"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "stellium:sagittarius:4",
+    "sun-degree:29.40",
+    "decan:scorpio:third",
+    "personal:Mercury:Sagittarius:16.8°",
+    "personal:Venus:Sagittarius:10.4°",
+    "personal:Mars:Leo:4.3°",
+    "aspect:Venus:Jupiter:sextile:0.71",
+    "aspect:Saturn:Uranus:square:0.78",
+    "aspect:Saturn:Pluto:conjunction:1.56",
+    "figure:none",
+    "dignity:Mercury:detriment",
+    "elements:fire5-water3-air1",
+    "modalities:mutable6-fixed3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 406,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

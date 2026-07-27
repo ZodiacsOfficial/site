@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "glenn-gould",
+ "qid": "Q216924",
+ "displayName": "Glenn Gould",
+ "wikidataLabel": "Glenn Gould",
+ "wikidataDescription": "Canadian composer and pianist (1932–1982)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q216924",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518469360
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Glenn Gould",
+   "articleUrl": "https://en.wikipedia.org/wiki/Glenn_Gould",
+   "pageId": 65444,
+   "revisionId": 1365931715,
+   "revisionTimestamp": "2026-07-25T07:38:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-09-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-09-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-09-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1982-10-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q172",
+  "label": "Toronto",
+  "entityUrl": "https://www.wikidata.org/wiki/Q172",
+  "country": {
+   "entity": "Q16",
+   "label": "Canada"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q172",
+   "sourceEntityLabel": "Toronto",
+   "latitude": 43.670277777778,
+   "longitude": -79.386666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q5371902",
+   "label": "harpsichordist"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q108333755",
+   "label": "music publicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Glenn Gould 1.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Glenn%20Gould%201.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Glenn_Gould_1.jpg",
+  "width": 450,
+  "height": 350,
+  "licenseShortName": "Attribution",
+  "licenseUrl": null,
+  "artist": "Don Hunstein",
+  "credit": "e-mail from Katie Babcock, Marketing Associate for the Royal Conservatory of Music",
+  "usageTerms": null,
+  "attributionRequired": null,
+  "restrictions": ""
+ }
+}

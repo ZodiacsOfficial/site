@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "cecilia-payne-gaposchkin",
+  "seedRound": 0,
+  "qid": "Q234909",
+  "displayName": "Cecilia Payne-Gaposchkin",
+  "identity": "Astronomer and university teacher · United Kingdom · 1900–1979",
+  "title": "Cecilia Payne-Gaposchkin's birth chart",
+  "metaDescription": "Cecilia Payne-Gaposchkin's chart, computed from a sourced birth date: Sun at 19.4° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a opposition to Saturn at 0.2° — close enough to weld taste to structure. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit.",
+  "ledeFact": "aspect:Venus:Saturn:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.35",
+        "decan:taurus:second"
+      ],
+      "text": "At the noon reference the Sun sits 19.4° into Taurus — the second decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:29.1°",
+        "personal:Venus:Cancer:4.3°",
+        "personal:Mars:Aries:24.8°"
+      ],
+      "text": "The personal planets sit Mercury at 29.1° Aries, Venus at 4.3° Cancer, Mars at 24.8° Aries. Mercury in a fire sign reads as thought that arrives already in motion; Venus in a water sign reads as attraction that works by atmosphere; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:opposition:0.17",
+        "aspect:Mars:Neptune:sextile:0.52",
+        "aspect:Jupiter:Uranus:conjunction:3.23"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Saturn: 0.2° from an exact opposition. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Mars sextile Neptune at 0.5°, and Jupiter conjunction Uranus at 3.2° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Mars in Aries at 24.8° is in domicile — the planet in its own sign, running on home rules; Jupiter in Sagittarius at 8.1° is in domicile; Saturn in Capricorn at 4.5° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth2-air2-water1",
+        "modalities:cardinal4-mutable4-fixed1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 fire, 2 earth, 2 air, 1 water by element and 4 cardinal, 4 mutable, 1 fixed by mode. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Jupiter, Saturn and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 12.0° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-10/",
+    "label": "Everyone born on May 10"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Saturn:opposition",
+    "sun-degree:19.35",
+    "decan:taurus:second",
+    "personal:Mercury:Aries:29.1°",
+    "personal:Venus:Cancer:4.3°",
+    "personal:Mars:Aries:24.8°",
+    "aspect:Venus:Saturn:opposition:0.17",
+    "aspect:Mars:Neptune:sextile:0.52",
+    "aspect:Jupiter:Uranus:conjunction:3.23",
+    "figure:unaspected:Sun",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire4-earth2-air2-water1",
+    "modalities:cardinal4-mutable4-fixed1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 409,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

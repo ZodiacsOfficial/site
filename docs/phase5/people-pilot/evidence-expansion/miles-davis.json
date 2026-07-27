@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "miles-davis",
+ "qid": "Q93341",
+ "displayName": "Miles Davis",
+ "wikidataLabel": "Miles Davis",
+ "wikidataDescription": "American jazz trumpeter, bandleader, and composer (1926–1991)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q93341",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518345529
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Miles Davis",
+   "articleUrl": "https://en.wikipedia.org/wiki/Miles_Davis",
+   "pageId": 20405,
+   "revisionId": 1365213146,
+   "revisionTimestamp": "2026-07-21T00:57:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1926-05-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1926-05-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1926-05-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1991-09-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q443852",
+  "label": "Alton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q443852",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q443852",
+   "sourceEntityLabel": "Alton",
+   "latitude": 38.90028,
+   "longitude": -90.15972,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q12377274",
+   "label": "trumpeter"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Miles Davis (Three Deuces, New York, N.Y. 1947).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Miles%20Davis%20(Three%20Deuces%2C%20New%20York%2C%20N.Y.%201947).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Miles_Davis_(Three_Deuces,_New_York,_N.Y._1947).jpg",
+  "width": 338,
+  "height": 438,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "William P. Gottlieb",
+  "credit": "This image is available from the United States Library of Congress's Music Division under the digital ID gottlieb.06851.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

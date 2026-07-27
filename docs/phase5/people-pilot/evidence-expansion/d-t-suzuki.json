@@ -1,0 +1,127 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "d-t-suzuki",
+ "qid": "Q44847",
+ "displayName": "D. T. Suzuki",
+ "wikidataLabel": "D. T. Suzuki",
+ "wikidataDescription": "Japanese Buddhist scholar, Doctor of Letters (1870–1966)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q44847",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521420297
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "D. T. Suzuki",
+   "articleUrl": "https://en.wikipedia.org/wiki/D._T._Suzuki",
+   "pageId": 730735,
+   "revisionId": 1365690587,
+   "revisionTimestamp": "2026-07-23T22:05:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1870-10-18T00:00:00Z|proleptic-gregorian",
+   "+1870-10-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1870-10-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1870-10-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1870-10-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1966-06-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11520078",
+  "label": "Hondamachi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11520078",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11520078",
+   "sourceEntityLabel": "Hondamachi",
+   "latitude": 36.55786111111111,
+   "longitude": 136.6603888888889,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q19829980",
+   "label": "religious studies scholar"
+  }
+ ],
+ "portrait": {
+  "file": "File:Daisetsu Teitarō Suzuki photographed by Shigeru Tamura.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Daisetsu%20Teitar%C5%8D%20Suzuki%20photographed%20by%20Shigeru%20Tamura.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Daisetsu_Teitar%C5%8D_Suzuki_photographed_by_Shigeru_Tamura.jpg",
+  "width": 2059,
+  "height": 2809,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Shigeru Tamura",
+  "credit": "現代日本の百人（1953年刊）",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

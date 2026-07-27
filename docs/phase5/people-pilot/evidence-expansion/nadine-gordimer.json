@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nadine-gordimer",
+ "qid": "Q47619",
+ "displayName": "Nadine Gordimer",
+ "wikidataLabel": "Nadine Gordimer",
+ "wikidataDescription": "South African writer (1923–2014)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q47619",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515834223
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nadine Gordimer",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nadine_Gordimer",
+   "pageId": 179599,
+   "revisionId": 1365749122,
+   "revisionTimestamp": "2026-07-24T06:10:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1923-11-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-11-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1923-11-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2014-07-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q761408",
+  "label": "Springs",
+  "entityUrl": "https://www.wikidata.org/wiki/Q761408",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q761408",
+   "sourceEntityLabel": "Springs",
+   "latitude": -26.254722222222,
+   "longitude": 28.442777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q3579163",
+   "label": "scientific editor"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nadine Gordimer 01.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nadine%20Gordimer%2001.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nadine_Gordimer_01.JPG",
+  "width": 1104,
+  "height": 1472,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "Boberger. Photo: Bengt Oberger",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

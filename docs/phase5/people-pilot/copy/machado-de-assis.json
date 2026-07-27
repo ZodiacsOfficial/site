@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "machado-de-assis",
+  "seedRound": 0,
+  "qid": "Q311145",
+  "displayName": "Machado de Assis",
+  "identity": "Writer · Brazil · 1839–1908",
+  "title": "Machado de Assis's birth chart",
+  "metaDescription": "Machado de Assis's chart, computed from a sourced birth date: Sun at 29.5° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Venus and Neptune sit 0.6° from an exact opposition — near enough that the tradition reads taste and imagination as a single working part. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit.",
+  "ledeFact": "aspect:Venus:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.49",
+        "decan:gemini:third"
+      ],
+      "text": "Gemini, but precisely: 29.5°, third decan, 20°–30°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Gemini:22.4°",
+        "personal:Venus:Leo:11.7°",
+        "personal:Mars:Virgo:27.5°"
+      ],
+      "text": "The personal planets sit Mercury at 22.4° Gemini, Venus at 11.7° Leo, Mars at 27.5° Virgo. Mercury in a air sign reads as a mind at home in argument and pattern; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a earth sign reads as drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:opposition:0.57",
+        "aspect:Sun:Mars:square:1.98",
+        "aspect:Venus:Jupiter:sextile:2.56"
+      ],
+      "text": "Closest first: Venus to Neptune, a opposition with 0.6° of slack. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, the Sun square Mars at 2.0°, and Venus sextile Jupiter at 2.6° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Uranus"
+      ],
+      "text": "Uranus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, one sits in a sign it has an opinion about. Mercury in Gemini at 22.4° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire3-earth1-water1",
+        "modalities:mutable5-fixed2-cardinal2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: air 4, fire 3, earth 1, water 1 across the elements, and mutable 5, fixed 2, cardinal 2 across the modalities. Saturn and Neptune were retrograde. Uranus changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 11.8° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-21/",
+    "label": "Everyone born on June 21"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:opposition",
+    "sun-degree:29.49",
+    "decan:gemini:third",
+    "personal:Mercury:Gemini:22.4°",
+    "personal:Venus:Leo:11.7°",
+    "personal:Mars:Virgo:27.5°",
+    "aspect:Venus:Neptune:opposition:0.57",
+    "aspect:Sun:Mars:square:1.98",
+    "aspect:Venus:Jupiter:sextile:2.56",
+    "figure:unaspected:Uranus",
+    "dignity:Mercury:domicile",
+    "elements:air4-fire3-earth1-water1",
+    "modalities:mutable5-fixed2-cardinal2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 403,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "julia-de-burgos",
+  "seedRound": 0,
+  "qid": "Q468516",
+  "displayName": "Julia de Burgos",
+  "identity": "Poet and political activist · United States · 1914–1953",
+  "title": "Julia de Burgos's birth chart",
+  "metaDescription": "Julia de Burgos's chart, computed from a sourced birth date: Sun at 28.2° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.4° separates Venus and Pluto from an exact trine; at that range taste and depth read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Venus:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:28.17",
+        "decan:aquarius:third"
+      ],
+      "text": "At noon on that date the Sun stood at 28.2° Aquarius, inside the third decan (20°–30°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:14.9°",
+        "personal:Mars:Cancer:5.8°"
+      ],
+      "text": "Mercury holds 14.9° Pisces, Mars holds 5.8° Cancer — in the old shorthand, thought steeped in tone and memory; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:trine:0.39",
+        "aspect:Sun:Pluto:trine:1.02",
+        "aspect:Sun:Venus:conjunction:1.41"
+      ],
+      "text": "Venus and Pluto hold the closest angle here — a trine, 0.4° wide. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, the Sun trine Pluto at 1.0°, and the Sun conjunction Venus at 1.4° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mercury:fall",
+        "dignity:Mars:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Sun in Aquarius at 28.2° is in detriment — the planet opposite its home, working against the grain; Mercury in Pisces at 14.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 5.8° is in fall. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-water3",
+        "modalities:fixed3-mutable3-cardinal2",
+        "settled-signs:8",
+        "retrograde:2",
+        "sign-uncertain:Venus:aquarius:pisces"
+      ],
+      "text": "Counting only the 8 placements whose signs hold for the whole day, the chart runs 5 air, 3 water by element and 3 fixed, 3 mutable, 2 cardinal by modality. Venus crossed from Aquarius into Pisces during that day, so its sign is left open. No settled placement falls in fire or earth — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 13.7° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-17/",
+    "label": "Everyone born on February 17"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:trine",
+    "sun-degree:28.17",
+    "decan:aquarius:third",
+    "personal:Mercury:Pisces:14.9°",
+    "personal:Mars:Cancer:5.8°",
+    "aspect:Venus:Pluto:trine:0.39",
+    "aspect:Sun:Pluto:trine:1.02",
+    "aspect:Sun:Venus:conjunction:1.41",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Mercury:fall",
+    "dignity:Mars:fall",
+    "elements:air5-water3",
+    "modalities:fixed3-mutable3-cardinal2",
+    "settled-signs:8",
+    "retrograde:2",
+    "sign-uncertain:Venus:aquarius:pisces",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 407,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

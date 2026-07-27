@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "t-s-eliot",
+ "qid": "Q37767",
+ "displayName": "T. S. Eliot",
+ "wikidataLabel": "T. S. Eliot",
+ "wikidataDescription": "US-British poet (1888–1965)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37767",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518997950
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "T. S. Eliot",
+   "articleUrl": "https://en.wikipedia.org/wiki/T._S._Eliot",
+   "pageId": 30273,
+   "revisionId": 1365391877,
+   "revisionTimestamp": "2026-07-22T03:05:32Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1888-09-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1888-09-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1888-09-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1965-01-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q38022",
+  "label": "St. Louis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q38022",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q38022",
+   "sourceEntityLabel": "St. Louis",
+   "latitude": 38.62638888888889,
+   "longitude": -90.19944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q15978337",
+   "label": "social critic"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q115784320",
+   "label": "Nobel Prize winner"
+  }
+ ],
+ "portrait": {
+  "file": "File:Thomas Stearns Eliot by Lady Ottoline Morrell (1934).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Thomas%20Stearns%20Eliot%20by%20Lady%20Ottoline%20Morrell%20(1934).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Thomas_Stearns_Eliot_by_Lady_Ottoline_Morrell_(1934).jpg",
+  "width": 432,
+  "height": 500,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Thomas Stearns Eliot with his sister and his cousin by Lady Ottoline Morrell.jpg: Lady Ottoline Morrell (1873–1938) derivative work: Octave.H",
+  "credit": "Thomas Stearns Eliot with his sister and his cousin by Lady Ottoline Morrell.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

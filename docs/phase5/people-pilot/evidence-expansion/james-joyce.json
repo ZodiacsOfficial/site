@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "james-joyce",
+ "qid": "Q6882",
+ "displayName": "James Joyce",
+ "wikidataLabel": "James Joyce",
+ "wikidataDescription": "Irish novelist and poet (1882–1941)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q6882",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522863828
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "James Joyce",
+   "articleUrl": "https://en.wikipedia.org/wiki/James_Joyce",
+   "pageId": 15600,
+   "revisionId": 1364322144,
+   "revisionTimestamp": "2026-07-15T22:31:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1882-02-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-02-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-02-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-01-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2528857",
+  "label": "Rathgar",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2528857",
+  "country": {
+   "entity": "Q27",
+   "label": "Ireland"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2528857",
+   "sourceEntityLabel": "Rathgar",
+   "latitude": 53.311666666667,
+   "longitude": -6.2743333333333,
+   "precision": 0.00016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:James Joyce by Alex Ehrenzweig, 1915 cropped.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:James%20Joyce%20by%20Alex%20Ehrenzweig%2C%201915%20cropped.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:James_Joyce_by_Alex_Ehrenzweig,_1915_cropped.jpg",
+  "width": 855,
+  "height": 1297,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "James_Joyce_by_Alex_Ehrenzweig,_1915_restored.jpg: *James_Joyce_by_Alex_Ehrenzweig,_1915.jpg: Alex Ehrenzweig derivative work: RedAppleJack (talk) derivative work: Missionary (talk)",
+  "credit": "James_Joyce_by_Alex_Ehrenzweig,_1915_restored.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

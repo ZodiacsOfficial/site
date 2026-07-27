@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "walter-gropius",
+  "seedRound": 0,
+  "qid": "Q61071",
+  "displayName": "Walter Gropius",
+  "identity": "Architect and pedagogue · Germany · 1883–1969",
+  "title": "Walter Gropius's birth chart",
+  "metaDescription": "Walter Gropius's chart, computed from a sourced birth date: Sun at 27.1° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Taurus — the Sun, Saturn, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:taurus:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.13",
+        "decan:taurus:third"
+      ],
+      "text": "Taurus, but precisely: 27.1°, third decan, 20°–30°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Gemini:18.4°",
+        "personal:Venus:Aries:24.4°",
+        "personal:Mars:Aries:21.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Gemini (18.4°), Venus in Aries (24.4°), Mars in Aries (21.2°): a mind at home in argument and pattern, taste that runs toward the vivid and the immediate, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:trine:0.39",
+        "aspect:Saturn:Pluto:conjunction:0.46",
+        "aspect:Mercury:Uranus:square:0.86"
+      ],
+      "text": "Closest first: Uranus to Neptune, a trine with 0.4° of slack. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Saturn conjunction Pluto at 0.5°, and Mercury square Uranus at 0.9° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Jupiter stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The classical table has four entries for this chart. Mercury in Gemini at 18.4° is in domicile — the planet in its own sign, running on home rules; Venus in Aries at 24.4° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 21.2° is in domicile; Jupiter in Cancer at 2.6° is in exaltation — the tradition’s honoured-guest placement, working at its best. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air2-fire2-water1",
+        "modalities:fixed4-cardinal4-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 5 earth, 2 air, 2 fire, 1 water; by modality, 4 fixed, 4 cardinal, 2 mutable. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Uranus was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 16.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-18/",
+    "label": "Everyone born on May 18"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "stellium:taurus:4",
+    "sun-degree:27.13",
+    "decan:taurus:third",
+    "personal:Mercury:Gemini:18.4°",
+    "personal:Venus:Aries:24.4°",
+    "personal:Mars:Aries:21.2°",
+    "aspect:Uranus:Neptune:trine:0.39",
+    "aspect:Saturn:Pluto:conjunction:0.46",
+    "aspect:Mercury:Uranus:square:0.86",
+    "figure:unaspected:Jupiter",
+    "dignity:Mercury:domicile",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:exaltation",
+    "elements:earth5-air2-fire2-water1",
+    "modalities:fixed4-cardinal4-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:libra",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 426,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

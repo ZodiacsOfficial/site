@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hans-christian-andersen",
+ "qid": "Q5673",
+ "displayName": "Hans Christian Andersen",
+ "wikidataLabel": "Hans Christian Andersen",
+ "wikidataDescription": "Danish writer and poet (1805–1875)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5673",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522566504
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hans Christian Andersen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hans_Christian_Andersen",
+   "pageId": 13550,
+   "revisionId": 1364936125,
+   "revisionTimestamp": "2026-07-19T11:21:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1805-04-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1805-04-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1805-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1805-04-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1875-08-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q25331",
+  "label": "Odense",
+  "entityUrl": "https://www.wikidata.org/wiki/Q25331",
+  "country": {
+   "entity": "Q35",
+   "label": "Denmark"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q25331",
+   "sourceEntityLabel": "Odense",
+   "latitude": 55.4,
+   "longitude": 10.383333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q12356615",
+   "label": "traveler"
+  },
+  {
+   "entity": "Q55400155",
+   "label": "papercut artist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q117442841",
+   "label": "fairy tale teller"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hans Christian Andersen by Thora Hallager 1869.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hans%20Christian%20Andersen%20by%20Thora%20Hallager%201869.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hans_Christian_Andersen_by_Thora_Hallager_1869.jpg",
+  "width": 1409,
+  "height": 2149,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Thora Hallager",
+  "credit": "museum.odense.dk",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

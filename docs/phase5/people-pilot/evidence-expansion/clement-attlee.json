@@ -1,0 +1,114 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "clement-attlee",
+ "qid": "Q129006",
+ "displayName": "Clement Attlee",
+ "wikidataLabel": "Clement Attlee",
+ "wikidataDescription": "Prime Minister of the United Kingdom from 1945 to 1951 (1883–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q129006",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520333833
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Clement Attlee",
+   "articleUrl": "https://en.wikipedia.org/wiki/Clement_Attlee",
+   "pageId": 5766,
+   "revisionId": 1365743418,
+   "revisionTimestamp": "2026-07-24T05:02:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1883-01-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-01-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1883-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1883-01-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-10-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2465220",
+  "label": "Putney",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2465220",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2465220",
+   "sourceEntityLabel": "Putney",
+   "latitude": 51.4649,
+   "longitude": -0.2211,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Person attlee2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Person%20attlee2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Person_attlee2.jpg",
+  "width": 1559,
+  "height": 2048,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Presumably Yousuf Karsh",
+  "credit": "https://ww2db.com/image.php?image_id=4981",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

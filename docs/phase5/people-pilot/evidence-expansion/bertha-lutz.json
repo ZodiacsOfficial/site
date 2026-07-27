@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bertha-lutz",
+ "qid": "Q1264246",
+ "displayName": "Bertha Lutz",
+ "wikidataLabel": "Bertha Lutz",
+ "wikidataDescription": "Brazilian scientist (1894-1976)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1264246",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510422552
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bertha Lutz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bertha_Lutz",
+   "pageId": 516759,
+   "revisionId": 1346784596,
+   "revisionTimestamp": "2026-04-02T22:07:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1894-08-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1894-08-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1894-08-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-09-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q174",
+  "label": "São Paulo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q174",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q174",
+   "sourceEntityLabel": "São Paulo",
+   "latitude": -23.550394444444,
+   "longitude": -46.633947222222,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q16271064",
+   "label": "herpetologist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q109120509",
+   "label": "zoological collector"
+  },
+  {
+   "entity": "Q2083925",
+   "label": "botanical collector"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bertha Lutz 1925.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bertha%20Lutz%201925.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bertha_Lutz_1925.jpg",
+  "width": 3752,
+  "height": 4621,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Adam Cuerden",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID npcc.13397.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "garrincha",
+ "qid": "Q180642",
+ "displayName": "Garrincha",
+ "wikidataLabel": "Garrincha",
+ "wikidataDescription": "Brazilian association football player (1933–1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q180642",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516827124
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Garrincha",
+   "articleUrl": "https://en.wikipedia.org/wiki/Garrincha",
+   "pageId": 700574,
+   "revisionId": 1364820358,
+   "revisionTimestamp": "2026-07-18T18:15:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1933-10-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1933-10-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1933-10-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-01-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2058402",
+  "label": "Pau Grande",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2058402",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2058402",
+   "sourceEntityLabel": "Pau Grande",
+   "latitude": -22.5844,
+   "longitude": -43.1697,
+   "precision": 0.097292415223471,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Manoel Francisco dos Santos-Garrincha.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Manoel%20Francisco%20dos%20Santos-Garrincha.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Manoel_Francisco_dos_Santos-Garrincha.jpg",
+  "width": 538,
+  "height": 710,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "El Gráfico, n° 2233",
+  "credit": "This file was derived from: MFdSantos-Garrincha.jpg:",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

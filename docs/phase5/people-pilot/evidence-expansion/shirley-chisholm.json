@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "shirley-chisholm",
+ "qid": "Q239657",
+ "displayName": "Shirley Chisholm",
+ "wikidataLabel": "Shirley Chisholm",
+ "wikidataDescription": "first black woman elected to the United States Congress (1924-2005)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q239657",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517586432
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Shirley Chisholm",
+   "articleUrl": "https://en.wikipedia.org/wiki/Shirley_Chisholm",
+   "pageId": 567269,
+   "revisionId": 1360628890,
+   "revisionTimestamp": "2026-06-22T17:38:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1924-11-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1924-11-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1924-11-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-01-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18419",
+  "label": "Brooklyn",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18419",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18419",
+   "sourceEntityLabel": "Brooklyn",
+   "latitude": 40.65083333333333,
+   "longitude": -73.94972222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Shirley Chisholm.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Shirley%20Chisholm.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Shirley_Chisholm.jpg",
+  "width": 3014,
+  "height": 4492,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Adam Cuerden",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ds.07135.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

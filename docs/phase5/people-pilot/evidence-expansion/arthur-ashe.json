@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "arthur-ashe",
+ "qid": "Q53325",
+ "displayName": "Arthur Ashe",
+ "wikidataLabel": "Arthur Ashe",
+ "wikidataDescription": "American tennis player (1943–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q53325",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516845312
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Arthur Ashe",
+   "articleUrl": "https://en.wikipedia.org/wiki/Arthur_Ashe",
+   "pageId": 320157,
+   "revisionId": 1356161361,
+   "revisionTimestamp": "2026-05-26T02:09:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1943-07-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1943-07-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1943-07-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q43421",
+  "label": "Richmond",
+  "entityUrl": "https://www.wikidata.org/wiki/Q43421",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q43421",
+   "sourceEntityLabel": "Richmond",
+   "latitude": 37.54083333333333,
+   "longitude": -77.43666666666667,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10833314",
+   "label": "tennis player"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Arthur Ashe (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Arthur%20Ashe%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Arthur_Ashe_(cropped).jpg",
+  "width": 559,
+  "height": 767,
+  "licenseShortName": "CC BY-SA 3.0 nl",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/nl/deed.en",
+  "artist": "Bogaerts, Rob / Anefo",
+  "credit": "Nationaal Archief Fotocollectie Anefo Item number 927-7839",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 nl",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

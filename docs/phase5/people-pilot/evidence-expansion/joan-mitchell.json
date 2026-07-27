@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "joan-mitchell",
+ "qid": "Q469934",
+ "displayName": "Joan Mitchell",
+ "wikidataLabel": "Joan Mitchell",
+ "wikidataDescription": "American painter (1925–1992)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q469934",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517878533
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Joan Mitchell",
+   "articleUrl": "https://en.wikipedia.org/wiki/Joan_Mitchell",
+   "pageId": 4904950,
+   "revisionId": 1364203570,
+   "revisionTimestamp": "2026-07-15T03:40:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-02-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-02-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-02-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1992-10-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1297",
+  "label": "Chicago",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1297",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1297",
+   "sourceEntityLabel": "Chicago",
+   "latitude": 41.88194444444444,
+   "longitude": -87.62777777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  }
+ ],
+ "portrait": {
+  "file": "File:Joan Mitchell.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Joan%20Mitchell.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Joan_Mitchell.jpg",
+  "width": 463,
+  "height": 615,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "1942 Francis W. Parker School yearbook, approx. p. 50 (unpaginated), via Ancestry.com",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "meena-kumari",
+  "seedRound": 0,
+  "qid": "Q465848",
+  "displayName": "Meena Kumari",
+  "identity": "Actor and poet · India · 1933–1972",
+  "title": "Meena Kumari's birth chart",
+  "metaDescription": "Meena Kumari's chart, computed from a sourced birth date: Sun at 8.5° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 8.5° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.54",
+        "decan:leo:first"
+      ],
+      "text": "The Sun's position resolves to 8.5° Leo — deep enough in the first decan (0°–10°) that the Sun, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:5.5°",
+        "personal:Venus:Virgo:5.5°",
+        "personal:Mars:Libra:14.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 5.5° Leo, Venus was at 5.5° Virgo, Mars was at 14.4° Libra. Read together: thought that arrives already in motion; attraction that grows by reliability; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:trine:1.07",
+        "aspect:Jupiter:Pluto:sextile:1.44",
+        "aspect:Sun:Mercury:conjunction:3.03"
+      ],
+      "text": "Nothing in the geometry sits closer than Mars and Saturn: 1.1° from an exact trine. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Jupiter sextile Pluto at 1.4°, and the Sun conjunction Mercury at 3.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Sun in Leo at 8.5° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 5.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Libra at 14.4° is in detriment — the planet opposite its home, working against the grain; Jupiter in Virgo at 22.0° is in detriment; Saturn in Aquarius at 13.4° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth3-air2-water1",
+        "modalities:fixed3-mutable3-cardinal3",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 fire, 3 earth, 2 air, 1 water by element and 3 fixed, 3 mutable, 3 cardinal by modality. Mercury and Saturn were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 14.5° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-1/",
+    "label": "Everyone born on August 1"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:8.54",
+    "decan:leo:first",
+    "personal:Mercury:Leo:5.5°",
+    "personal:Venus:Virgo:5.5°",
+    "personal:Mars:Libra:14.4°",
+    "aspect:Mars:Saturn:trine:1.07",
+    "aspect:Jupiter:Pluto:sextile:1.44",
+    "aspect:Sun:Mercury:conjunction:3.03",
+    "figure:none",
+    "dignity:Sun:domicile",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:domicile",
+    "elements:fire3-earth3-air2-water1",
+    "modalities:fixed3-mutable3-cardinal3",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 422,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "carl-friedrich-gauss",
+  "seedRound": 0,
+  "qid": "Q6722",
+  "displayName": "Carl Friedrich Gauss",
+  "identity": "Mathematician and university teacher · Germany · 1777–1855",
+  "title": "Carl Friedrich Gauss's birth chart",
+  "metaDescription": "Carl Friedrich Gauss's chart, computed from a sourced birth date: Sun at 10.4° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Pluto sit 0.5° from an exact trine — near enough that the tradition reads drive and depth as a single working part. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Mars:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.36",
+        "decan:taurus:second"
+      ],
+      "text": "The Sun's exact place is 10.4° Taurus. That falls in the second decan, 10°–20°, sub-ruled by Mercury in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:14.3°",
+        "personal:Venus:Gemini:17.4°",
+        "personal:Mars:Libra:0.7°"
+      ],
+      "text": "The personal planets sit Mercury at 14.3° Taurus, Venus at 17.4° Gemini, Mars at 0.7° Libra. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a air sign reads as taste led by wit and proportion; Mars in a air sign reads as drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:trine:0.54",
+        "aspect:Saturn:Pluto:square:0.87",
+        "aspect:Sun:Mercury:conjunction:3.92"
+      ],
+      "text": "Mars to Pluto is the closest call of the day, a trine within 0.5°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Saturn square Pluto at 0.9°, and the Sun conjunction Mercury at 3.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mars in Libra at 0.7° is in detriment — the planet opposite its home, working against the grain; Jupiter in Cancer at 18.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Libra at 29.3° is in exaltation. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-earth3-water1",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 6 in air, 3 in earth, 1 in water by element, 4 fixed, 3 mutable, 3 cardinal by modality. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Mars, Saturn and Neptune were retrograde. Pluto changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 7.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-30/",
+    "label": "Everyone born on April 30"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:trine",
+    "sun-degree:10.36",
+    "decan:taurus:second",
+    "personal:Mercury:Taurus:14.3°",
+    "personal:Venus:Gemini:17.4°",
+    "personal:Mars:Libra:0.7°",
+    "aspect:Mars:Pluto:trine:0.54",
+    "aspect:Saturn:Pluto:square:0.87",
+    "aspect:Sun:Mercury:conjunction:3.92",
+    "figure:unaspected:Moon",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:exaltation",
+    "elements:air6-earth3-water1",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aquarius",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 452,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "leonard-bernstein",
+ "qid": "Q152505",
+ "displayName": "Leonard Bernstein",
+ "wikidataLabel": "Leonard Bernstein",
+ "wikidataDescription": "American conductor and composer (1918–1990)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q152505",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521826493
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Leonard Bernstein",
+   "articleUrl": "https://en.wikipedia.org/wiki/Leonard_Bernstein",
+   "pageId": 43282,
+   "revisionId": 1365991454,
+   "revisionTimestamp": "2026-07-25T16:38:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1918-08-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-08-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1918-08-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1990-10-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49163",
+  "label": "Lawrence",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49163",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49163",
+   "sourceEntityLabel": "Lawrence",
+   "latitude": 42.706944444444446,
+   "longitude": -71.16333333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q2675537",
+   "label": "music teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q61996872",
+   "label": "musicographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Leonard Bernstein by Jack Mitchell (high quality).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Leonard%20Bernstein%20by%20Jack%20Mitchell%20(high%20quality).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Leonard_Bernstein_by_Jack_Mitchell_(high_quality).jpg",
+  "width": 2544,
+  "height": 3200,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Jack Mitchell",
+  "credit": "User:X4n6",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "xu-beihong",
+  "seedRound": 0,
+  "qid": "Q714152",
+  "displayName": "Xu Beihong",
+  "identity": "Painter and teacher · People's Republic of China · 1895–1953",
+  "title": "Xu Beihong's birth chart",
+  "metaDescription": "Xu Beihong's chart, computed from a sourced birth date: Sun at 26.2° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.8° separates Venus and Pluto from an exact square; at that range taste and depth read as one mechanism. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower.",
+  "ledeFact": "aspect:Venus:Pluto:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.19",
+        "decan:cancer:third"
+      ],
+      "text": "At noon on that date the Sun stood at 26.2° Cancer, inside the third decan (20°–30°), whose traditional sub-ruler is Jupiter. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Cancer:7.0°",
+        "personal:Venus:Virgo:11.5°",
+        "personal:Mars:Leo:23.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Cancer (7.0°), Venus in Virgo (11.5°), Mars in Leo (23.8°): thought steeped in tone and memory, attraction that grows by reliability, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:square:0.77",
+        "aspect:Jupiter:Uranus:trine:4.04",
+        "aspect:Sun:Saturn:square:4.53"
+      ],
+      "text": "Venus to Pluto is the closest call of the day, a square within 0.8°. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Jupiter trine Uranus at 4.0°, and the Sun square Saturn at 4.5° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Mars"
+      ],
+      "text": "Mars makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Venus in Virgo at 11.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 19.9° is in exaltation — the tradition’s honoured-guest placement, working at its best. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-air3-earth1-fire1",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 5, air 3, earth 1, fire 1, and mutable 4, cardinal 3, fixed 3 across the modes. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Uranus was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 14.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-19/",
+    "label": "Everyone born on July 19"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:square",
+    "sun-degree:26.19",
+    "decan:cancer:third",
+    "personal:Mercury:Cancer:7.0°",
+    "personal:Venus:Virgo:11.5°",
+    "personal:Mars:Leo:23.8°",
+    "aspect:Venus:Pluto:square:0.77",
+    "aspect:Jupiter:Uranus:trine:4.04",
+    "aspect:Sun:Saturn:square:4.53",
+    "figure:unaspected:Mars",
+    "dignity:Venus:fall",
+    "dignity:Jupiter:exaltation",
+    "elements:water5-air3-earth1-fire1",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:gemini",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 408,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

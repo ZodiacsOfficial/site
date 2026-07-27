@@ -1,0 +1,151 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "voltaire",
+ "qid": "Q9068",
+ "displayName": "Voltaire",
+ "wikidataLabel": "Voltaire",
+ "wikidataDescription": "French writer, historian and philosopher (1694–1778)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9068",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522547209
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Voltaire",
+   "articleUrl": "https://en.wikipedia.org/wiki/Voltaire",
+   "pageId": 32375,
+   "revisionId": 1364297164,
+   "revisionTimestamp": "2026-07-15T19:22:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1694-11-21T00:00:00Z|proleptic-gregorian",
+   "+1694-02-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1694-11-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1694-02-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1694-11-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1778-05-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q90",
+  "label": "Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q90",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q90",
+   "sourceEntityLabel": "Paris",
+   "latitude": 48.85666666666667,
+   "longitude": 2.352222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q1209498",
+   "label": "poet lawyer"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q744738",
+   "label": "encyclopédistes"
+  },
+  {
+   "entity": "Q3589290",
+   "label": "correspondent"
+  },
+  {
+   "entity": "Q1238570",
+   "label": "political scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nicolas de Largillière - Portrait de Voltaire (1694-1778) en 1718 - P208 - Musée Carnavalet - 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nicolas%20de%20Largilli%C3%A8re%20-%20Portrait%20de%20Voltaire%20(1694-1778)%20en%201718%20-%20P208%20-%20Mus%C3%A9e%20Carnavalet%20-%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nicolas_de_Largilli%C3%A8re_-_Portrait_de_Voltaire_(1694-1778)_en_1718_-_P208_-_Mus%C3%A9e_Carnavalet_-_2.jpg",
+  "width": 4000,
+  "height": 6000,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Nicolas de Largillière",
+  "credit": null,
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

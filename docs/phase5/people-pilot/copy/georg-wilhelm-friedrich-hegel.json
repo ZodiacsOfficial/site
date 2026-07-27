@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "georg-wilhelm-friedrich-hegel",
+  "seedRound": 0,
+  "qid": "Q9235",
+  "displayName": "Georg Wilhelm Friedrich Hegel",
+  "identity": "Philosopher and university teacher · Germany · 1770–1831",
+  "title": "Georg Wilhelm Friedrich Hegel's birth chart",
+  "metaDescription": "Georg Wilhelm Friedrich Hegel's chart, computed from a sourced birth date: Sun at 4.1° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the nine placements whose signs are settled fall in earth signs — at least half of what the unknown hour leaves certain. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up.",
+  "ledeFact": "element:earth:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.12",
+        "decan:virgo:first"
+      ],
+      "text": "The Sun's position resolves to 4.1° Virgo — deep enough in the first decan (0°–10°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:13.9°",
+        "personal:Venus:Libra:13.0°",
+        "personal:Mars:Gemini:8.4°"
+      ],
+      "text": "The personal planets sit Mercury at 13.9° Virgo, Venus at 13.0° Libra, Mars at 8.4° Gemini. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a air sign reads as attraction that begins as conversation; Mars in a air sign reads as effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:trine:0.29",
+        "aspect:Mercury:Jupiter:square:1",
+        "aspect:Mars:Saturn:sextile:1.15"
+      ],
+      "text": "Closest first: Uranus to Pluto, a trine with 0.3° of slack. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mercury square Jupiter at 1.0°, and Mars sextile Saturn at 1.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Mercury-Uranus-Pluto",
+        "figure:t-square:Mars-Jupiter:apex-Mercury"
+      ],
+      "text": "Mercury, Uranus, Pluto close a triangle of trines. The closed triangle is the scheme’s picture of flow — and its warning that flow, unspent, stays private. Mars opposes Jupiter while both square Mercury. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Mercury in Virgo at 13.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 13.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Sagittarius at 14.9° is in domicile; Saturn in Leo at 9.6° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air2-fire2",
+        "modalities:mutable5-cardinal2-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 5, air 2, fire 2; modalities mutable 5, cardinal 2, fixed 2. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Uranus and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 12.3° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-27/",
+    "label": "Everyone born on August 27"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "element:earth:5",
+    "sun-degree:4.12",
+    "decan:virgo:first",
+    "personal:Mercury:Virgo:13.9°",
+    "personal:Venus:Libra:13.0°",
+    "personal:Mars:Gemini:8.4°",
+    "aspect:Uranus:Pluto:trine:0.29",
+    "aspect:Mercury:Jupiter:square:1",
+    "aspect:Mars:Saturn:sextile:1.15",
+    "figure:grand-trine:Mercury-Uranus-Pluto",
+    "figure:t-square:Mars-Jupiter:apex-Mercury",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:detriment",
+    "elements:earth5-air2-fire2",
+    "modalities:mutable5-cardinal2-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 492,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

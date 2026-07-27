@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "miriam-makeba",
+ "qid": "Q146256",
+ "displayName": "Miriam Makeba",
+ "wikidataLabel": "Miriam Makeba",
+ "wikidataDescription": "South African singer and civil rights activist (1932–2008)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q146256",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518710026
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Miriam Makeba",
+   "articleUrl": "https://en.wikipedia.org/wiki/Miriam_Makeba",
+   "pageId": 598363,
+   "revisionId": 1358004780,
+   "revisionTimestamp": "2026-06-06T00:07:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-03-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-03-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-03-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2008-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34647",
+  "label": "Johannesburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34647",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34647",
+   "sourceEntityLabel": "Johannesburg",
+   "latitude": -26.204361111111,
+   "longitude": 28.041638888889,
+   "precision": 0.000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Miriam Makeba (1968).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Miriam%20Makeba%20(1968).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Miriam_Makeba_(1968).png",
+  "width": 373,
+  "height": 656,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Reprise Records",
+  "credit": "Billboard, page 27, 30 March 1968",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

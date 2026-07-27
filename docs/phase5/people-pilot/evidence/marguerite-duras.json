@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marguerite-duras",
+ "qid": "Q153248",
+ "displayName": "Marguerite Duras",
+ "wikidataLabel": null,
+ "wikidataDescription": "French writer and film director (1914-1996)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "seasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q153248",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522061981
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marguerite Duras",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marguerite_Duras",
+   "pageId": 84569,
+   "revisionId": 1364772008,
+   "revisionTimestamp": "2026-07-18T12:46:09Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-04-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-04-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-04-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1996-03-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2681546",
+  "label": "Gia Định",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2681546",
+  "country": {
+   "entity": "Q6500483",
+   "label": "Nguyen dynasty"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2681546",
+   "sourceEntityLabel": "Gia Định",
+   "latitude": 10.8035404,
+   "longitude": 106.6966172,
+   "precision": 1e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Identite-Duras-1960-Sacem.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Identite-Duras-1960-Sacem.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Identite-Duras-1960-Sacem.png",
+  "width": 844,
+  "height": 890,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://musee.sacem.fr/index.php/Detail/objects/10336",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

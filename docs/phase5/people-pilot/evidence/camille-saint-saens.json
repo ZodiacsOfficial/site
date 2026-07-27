@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "camille-saint-saens",
+ "qid": "Q150445",
+ "displayName": "Camille Saint-Saëns",
+ "wikidataLabel": "Camille Saint-Saëns",
+ "wikidataDescription": "French composer, organist, conductor and pianist (1835–1921)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q150445",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518189631
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Camille Saint-Saëns",
+   "articleUrl": "https://en.wikipedia.org/wiki/Camille_Saint-Sa%C3%ABns",
+   "pageId": 48927,
+   "revisionId": 1362825622,
+   "revisionTimestamp": "2026-07-06T12:43:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1835-10-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1835-10-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1835-10-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1921-12-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q169293",
+  "label": "11th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q169293",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q169293",
+   "sourceEntityLabel": "11th arrondissement of Paris",
+   "latitude": 48.858677777778,
+   "longitude": 2.3793055555556,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q1350157",
+   "label": "music critic"
+  },
+  {
+   "entity": "Q2675537",
+   "label": "music teacher"
+  },
+  {
+   "entity": "Q118865",
+   "label": "clarinetist"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Camille Saint-Saens b Meurisse 1921.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Camille%20Saint-Saens%20b%20Meurisse%201921.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Camille_Saint-Saens_b_Meurisse_1921.jpg",
+  "width": 4664,
+  "height": 6559,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Agence de presse Meurisse",
+  "credit": "Bibliothèque nationale de France",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

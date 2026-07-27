@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "gertrude-b-elion",
+  "seedRound": 0,
+  "qid": "Q35703",
+  "displayName": "Gertrude B. Elion",
+  "identity": "Biochemist and university teacher · United States · 1918–1999",
+  "title": "Gertrude B. Elion's birth chart",
+  "metaDescription": "Gertrude B. Elion's chart, computed from a sourced birth date: Sun at 2.9° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Mars sit 0.6° from an exact trine — near enough that the tradition reads identity and drive as a single working part. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Sun:Mars:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.91",
+        "decan:aquarius:first"
+      ],
+      "text": "Aquarius, but precisely: 2.9°, first decan, 0°–10°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:8.4°",
+        "personal:Venus:Aquarius:28.3°",
+        "personal:Mars:Libra:2.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (8.4°), Venus in Aquarius (28.3°), Mars in Libra (2.3°): a mind that trusts the measured and the checked, taste led by wit and proportion, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:trine:0.59",
+        "aspect:Mars:Jupiter:trine:0.84",
+        "aspect:Sun:Jupiter:trine:1.42"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a third of the circle apart from Mars, 0.6° off exact. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mars trine Jupiter at 0.8°, and the Sun trine Jupiter at 1.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Sun-Mars-Jupiter",
+        "figure:t-square:Mercury-Pluto:apex-Mars"
+      ],
+      "text": "the Sun, Mars, Jupiter close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Mercury opposes Pluto while both square Mars. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. The Sun in Aquarius at 2.9° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 2.3° is in detriment; Jupiter in Gemini at 1.5° is in detriment; Saturn in Leo at 11.8° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-fire2-earth1-water1",
+        "modalities:fixed5-cardinal3-mutable2",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 6 air, 2 fire, 1 earth, 1 water; by modality, 5 fixed, 3 cardinal, 2 mutable. Venus, Jupiter, Saturn, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:12.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 12.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 23.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-23/",
+    "label": "Everyone born on January 23"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:trine",
+    "sun-degree:2.91",
+    "decan:aquarius:first",
+    "personal:Mercury:Capricorn:8.4°",
+    "personal:Venus:Aquarius:28.3°",
+    "personal:Mars:Libra:2.3°",
+    "aspect:Sun:Mars:trine:0.59",
+    "aspect:Mars:Jupiter:trine:0.84",
+    "aspect:Sun:Jupiter:trine:1.42",
+    "figure:grand-trine:Sun-Mars-Jupiter",
+    "figure:t-square:Mercury-Pluto:apex-Mars",
+    "dignity:Sun:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:air6-fire2-earth1-water1",
+    "modalities:fixed5-cardinal3-mutable2",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:gemini",
+    "moon-band:12.8"
+  ],
+  "measurements": {
+    "originalWords": 429,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

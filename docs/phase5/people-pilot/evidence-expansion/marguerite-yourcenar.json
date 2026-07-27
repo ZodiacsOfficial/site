@@ -1,0 +1,143 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marguerite-yourcenar",
+ "qid": "Q163118",
+ "displayName": "Marguerite Yourcenar",
+ "wikidataLabel": "Marguerite Yourcenar",
+ "wikidataDescription": "French novelist and essayist (1903-1987)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q163118",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522681275
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marguerite Yourcenar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marguerite_Yourcenar",
+   "pageId": 182057,
+   "revisionId": 1360138252,
+   "revisionTimestamp": "2026-06-19T13:56:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1903-06-08T00:00:00Z|proleptic-gregorian",
+   "+1903-06-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-06-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1903-06-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-06-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-12-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q239",
+  "label": "Brussels",
+  "entityUrl": "https://www.wikidata.org/wiki/Q239",
+  "country": {
+   "entity": "Q31",
+   "label": "Belgium"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q239",
+   "sourceEntityLabel": "Brussels",
+   "latitude": 50.846666666666664,
+   "longitude": 4.351666666666667,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marguerite Yourcenar-Bailleul-1982.10.04.Bernhard De Grendel (10).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marguerite%20Yourcenar-Bailleul-1982.10.04.Bernhard%20De%20Grendel%20(10).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marguerite_Yourcenar-Bailleul-1982.10.04.Bernhard_De_Grendel_(10).jpg",
+  "width": 1837,
+  "height": 1305,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Winoksbergen Bernhard De Grendel",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

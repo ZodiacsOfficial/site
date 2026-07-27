@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "booker-t-washington",
+ "qid": "Q319871",
+ "displayName": "Booker T. Washington",
+ "wikidataLabel": "Booker T. Washington",
+ "wikidataDescription": "African-American educator, author, orator, and advisor (1856-1915)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q319871",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516315584
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Booker T. Washington",
+   "articleUrl": "https://en.wikipedia.org/wiki/Booker_T._Washington",
+   "pageId": 37242,
+   "revisionId": 1365316243,
+   "revisionTimestamp": "2026-07-21T17:12:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1856-04-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1856-04-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1856-04-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1915-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5641340",
+  "label": "Hale's Ford",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5641340",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5641340",
+   "sourceEntityLabel": "Hale's Ford",
+   "latitude": 37.12694444,
+   "longitude": -79.69944444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q974144",
+   "label": "educator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q16611574",
+   "label": "social reformer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Booker T. Washington by Francis Benjamin Johnston, c. 1895.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Booker%20T.%20Washington%20by%20Francis%20Benjamin%20Johnston%2C%20c.%201895.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Booker_T._Washington_by_Francis_Benjamin_Johnston,_c._1895.jpg",
+  "width": 4621,
+  "height": 5623,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Frances Benjamin Johnston",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ppmsca.23961.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

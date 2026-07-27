@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "anne-bronte",
+ "qid": "Q44520",
+ "displayName": "Anne Brontë",
+ "wikidataLabel": null,
+ "wikidataDescription": "British novelist and poet (1820-1849)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q44520",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519403518
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Anne Brontë",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anne_Bront%C3%AB",
+   "pageId": 2029,
+   "revisionId": 1361005852,
+   "revisionTimestamp": "2026-06-25T01:28:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1820-01-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1820-01-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1820-01-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1849-05-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2406502",
+  "label": "Thornton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2406502",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2406502",
+   "sourceEntityLabel": "Thornton",
+   "latitude": 53.7898,
+   "longitude": -1.8504,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1540278",
+   "label": "governess"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Anne Brontë by Patrick Branwell Brontë restored.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Anne%20Bront%C3%AB%20by%20Patrick%20Branwell%20Bront%C3%AB%20restored.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Anne_Bront%C3%AB_by_Patrick_Branwell_Bront%C3%AB_restored.jpg",
+  "width": 704,
+  "height": 1024,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Branwell Brontë",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

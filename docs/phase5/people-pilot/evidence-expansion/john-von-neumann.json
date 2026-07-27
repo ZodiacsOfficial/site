@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "john-von-neumann",
+ "qid": "Q17455",
+ "displayName": "John von Neumann",
+ "wikidataLabel": "John von Neumann",
+ "wikidataDescription": "Hungarian and American mathematician and physicist (1903–1957)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q17455",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522493125
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "John von Neumann",
+   "articleUrl": "https://en.wikipedia.org/wiki/John_von_Neumann",
+   "pageId": 15942,
+   "revisionId": 1366022640,
+   "revisionTimestamp": "2026-07-25T20:46:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-12-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-12-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-12-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1957-02-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1781",
+  "label": "Budapest",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1781",
+  "country": {
+   "entity": "Q28",
+   "label": "Hungary"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1781",
+   "sourceEntityLabel": "Budapest",
+   "latitude": 47.498333333333,
+   "longitude": 19.040833333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q82594",
+   "label": "computer scientist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q15978655",
+   "label": "consultant"
+  },
+  {
+   "entity": "Q127050",
+   "label": "Manhattan Project"
+  }
+ ],
+ "portrait": {
+  "file": "File:JohnvonNeumann-LosAlamos.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:JohnvonNeumann-LosAlamos.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:JohnvonNeumann-LosAlamos.jpg",
+  "width": 982,
+  "height": 1274,
+  "licenseShortName": "Attribution",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": null,
+  "attributionRequired": null,
+  "restrictions": ""
+ }
+}

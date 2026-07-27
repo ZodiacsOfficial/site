@@ -1,0 +1,107 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mary-quant",
+ "qid": "Q234147",
+ "displayName": "Mary Quant",
+ "wikidataLabel": "Mary Quant",
+ "wikidataDescription": "British fashion designer (1930-2023)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234147",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518462275
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mary Quant",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mary_Quant",
+   "pageId": 201482,
+   "revisionId": 1359882891,
+   "revisionTimestamp": "2026-06-17T20:45:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1934-02-11T00:00:00Z|proleptic-gregorian",
+   "+1930-02-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-02-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1930-02-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1930-02-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2023-04-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q880861",
+  "label": "Blackheath",
+  "entityUrl": "https://www.wikidata.org/wiki/Q880861",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q880861",
+   "sourceEntityLabel": "Blackheath",
+   "latitude": 51.47,
+   "longitude": 0.009,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mary Quant (1966) (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mary%20Quant%20(1966)%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mary_Quant_(1966)_(cropped).jpg",
+  "width": 557,
+  "height": 922,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Jack de Nijs for Anefo / Anefo",
+  "credit": "Nationaal Archief",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

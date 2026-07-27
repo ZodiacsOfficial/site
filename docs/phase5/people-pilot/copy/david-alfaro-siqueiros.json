@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "david-alfaro-siqueiros",
+  "seedRound": 0,
+  "qid": "Q315647",
+  "displayName": "David Alfaro Siqueiros",
+  "identity": "Painter and university teacher · Mexico · 1896–1974",
+  "title": "David Alfaro Siqueiros's birth chart",
+  "metaDescription": "David Alfaro Siqueiros's chart, computed from a sourced birth date: Sun at 8.6° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, fixed leads with four. Fixed signs hold the middle of their seasons, and a fixed-heavy chart is read as one that consolidates and does not easily let go.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.64",
+        "decan:capricorn:first"
+      ],
+      "text": "Capricorn, but precisely: 8.6°, first decan, 0°–10°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:25.6°",
+        "personal:Venus:Aquarius:20.3°",
+        "personal:Mars:Gemini:13.6°"
+      ],
+      "text": "For the fast movers, Mercury was at 25.6° Capricorn, Venus was at 20.3° Aquarius, Mars was at 13.6° Gemini. Read together: a mind that trusts the measured and the checked; taste led by wit and proportion; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:conjunction:0.35",
+        "aspect:Mercury:Saturn:sextile:1.35",
+        "aspect:Mars:Pluto:conjunction:1.37"
+      ],
+      "text": "Saturn to Uranus is the closest call of the day, a conjunction within 0.3°. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Mercury sextile Saturn at 1.4°, and Mars conjunction Pluto at 1.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. The Moon in Scorpio at 8.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Virgo at 10.2° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-water3",
+        "modalities:fixed4-mutable4-cardinal2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 air, 3 earth, 3 water by element and 4 fixed, 4 mutable, 2 cardinal by mode. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Mars, Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:14.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 8.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-29/",
+    "label": "Everyone born on December 29"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:8.64",
+    "decan:capricorn:first",
+    "personal:Mercury:Capricorn:25.6°",
+    "personal:Venus:Aquarius:20.3°",
+    "personal:Mars:Gemini:13.6°",
+    "aspect:Saturn:Uranus:conjunction:0.35",
+    "aspect:Mercury:Saturn:sextile:1.35",
+    "aspect:Mars:Pluto:conjunction:1.37",
+    "figure:unaspected:Moon",
+    "dignity:Moon:fall",
+    "dignity:Jupiter:detriment",
+    "elements:air4-earth3-water3",
+    "modalities:fixed4-mutable4-cardinal2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:scorpio",
+    "moon-band:14.4"
+  ],
+  "measurements": {
+    "originalWords": 420,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

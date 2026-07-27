@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "charles-darwin",
+  "seedRound": 0,
+  "qid": "Q1035",
+  "displayName": "Charles Darwin",
+  "identity": "Geologist and explorer · United Kingdom · 1809–1882",
+  "title": "Charles Darwin's birth chart",
+  "metaDescription": "Charles Darwin's chart, computed from a sourced birth date: Sun at 23.4° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.6° separates Mercury and Uranus from an exact trine; at that range thinking and disruption read as one mechanism. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Mercury:Uranus:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.43",
+        "decan:aquarius:third"
+      ],
+      "text": "At noon on that date the Sun stood at 23.4° Aquarius, inside the third decan (20°–30°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:10.3°",
+        "personal:Venus:Aries:7.4°",
+        "personal:Mars:Libra:25.5°"
+      ],
+      "text": "Mercury holds 10.3° Pisces, Venus holds 7.4° Aries, Mars holds 25.5° Libra — in the old shorthand, thought steeped in tone and memory; attraction declared rather than implied; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Uranus:trine:0.59",
+        "aspect:Venus:Neptune:trine:0.75",
+        "aspect:Sun:Mars:trine:2.06"
+      ],
+      "text": "Closest first: Mercury to Uranus, a trine with 0.6° of slack. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Venus trine Neptune at 0.8°, and the Sun trine Mars at 2.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks five placements here. The Sun in Aquarius at 23.4° is in detriment — the planet opposite its home, working against the grain; Mercury in Pisces at 10.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 7.4° is in detriment; Mars in Libra at 25.5° is in detriment; Jupiter in Pisces at 22.1° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air2",
+        "modalities:mutable5-fixed2-cardinal2",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 water, 3 fire, 2 air by element and 5 mutable, 2 fixed, 2 cardinal by modality. Water reads the room before the room speaks — atmosphere first, analysis later. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Every other body stayed direct. Uranus changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 14.0° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-12/",
+    "label": "Everyone born on February 12"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Uranus:trine",
+    "sun-degree:23.43",
+    "decan:aquarius:third",
+    "personal:Mercury:Pisces:10.3°",
+    "personal:Venus:Aries:7.4°",
+    "personal:Mars:Libra:25.5°",
+    "aspect:Mercury:Uranus:trine:0.59",
+    "aspect:Venus:Neptune:trine:0.75",
+    "aspect:Sun:Mars:trine:2.06",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:water4-fire3-air2",
+    "modalities:mutable5-fixed2-cardinal2",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 455,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

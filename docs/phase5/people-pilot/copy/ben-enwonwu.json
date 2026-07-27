@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ben-enwonwu",
+  "seedRound": 0,
+  "qid": "Q4885605",
+  "displayName": "Ben Enwonwu",
+  "identity": "Painter · Nigeria · 1921–1994",
+  "title": "Ben Enwonwu's birth chart",
+  "metaDescription": "Ben Enwonwu's chart, computed from a sourced birth date: Sun at 21.4° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Cancer — the Sun, Mercury, Mars and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:cancer:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.43",
+        "decan:cancer:third"
+      ],
+      "text": "The Sun's exact place is 21.4° Cancer. That falls in the third decan, 20°–30°, sub-ruled by Jupiter in the classical scheme — a water sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:12.1°",
+        "personal:Venus:Gemini:6.3°",
+        "personal:Mars:Cancer:17.0°"
+      ],
+      "text": "Closer in, Mercury stands at 12.1° Cancer; Venus stands at 6.3° Gemini; Mars stands at 17.0° Cancer. The tradition reads a mind that absorbs before it argues from Mercury, taste led by wit and proportion from Venus, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:trine:0.53",
+        "aspect:Sun:Saturn:sextile:1.06",
+        "aspect:Mars:Jupiter:sextile:1.67"
+      ],
+      "text": "Uranus and Pluto hold the closest angle here — a trine, 0.5° wide. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun sextile Saturn at 1.1°, and Mars sextile Jupiter at 1.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Neptune"
+      ],
+      "text": "Neptune stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Scorpio at 18.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Cancer at 17.0° is in fall; Jupiter in Virgo at 15.3° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water6-earth2-air1-fire1",
+        "modalities:cardinal4-mutable4-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 6, earth 2, air 1, fire 1; modalities cardinal 4, mutable 4, fixed 2. Mercury and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:12.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 12.7° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 18.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-14/",
+    "label": "Everyone born on July 14"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "stellium:cancer:4",
+    "sun-degree:21.43",
+    "decan:cancer:third",
+    "personal:Mercury:Cancer:12.1°",
+    "personal:Venus:Gemini:6.3°",
+    "personal:Mars:Cancer:17.0°",
+    "aspect:Uranus:Pluto:trine:0.53",
+    "aspect:Sun:Saturn:sextile:1.06",
+    "aspect:Mars:Jupiter:sextile:1.67",
+    "figure:unaspected:Neptune",
+    "dignity:Moon:fall",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:detriment",
+    "elements:water6-earth2-air1-fire1",
+    "modalities:cardinal4-mutable4-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:scorpio",
+    "moon-band:12.7"
+  ],
+  "measurements": {
+    "originalWords": 413,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

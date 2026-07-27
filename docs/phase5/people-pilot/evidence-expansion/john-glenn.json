@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "john-glenn",
+ "qid": "Q182642",
+ "displayName": "John Glenn",
+ "wikidataLabel": "John Glenn",
+ "wikidataDescription": "American astronaut and politician (1921–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q182642",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520562879
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "John Glenn",
+   "articleUrl": "https://en.wikipedia.org/wiki/John_Glenn",
+   "pageId": 58702,
+   "revisionId": 1365555306,
+   "revisionTimestamp": "2026-07-23T03:47:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1921-07-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1921-07-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1921-07-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-12-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q249454",
+  "label": "Cambridge",
+  "entityUrl": "https://www.wikidata.org/wiki/Q249454",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q249454",
+   "sourceEntityLabel": "Cambridge",
+   "latitude": 40.025,
+   "longitude": -81.586666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q730242",
+   "label": "test pilot"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q11631",
+   "label": "astronaut"
+  },
+  {
+   "entity": "Q11631",
+   "label": "astronaut"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q2462658",
+   "label": "manager"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:John Glenn Low Res crop.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:John%20Glenn%20Low%20Res%20crop.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:John_Glenn_Low_Res_crop.jpg",
+  "width": 1488,
+  "height": 1984,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "U.S. Senate Historical Office",
+  "credit": "File:John Glenn Low Res.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

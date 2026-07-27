@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "george-orwell",
+  "seedRound": 0,
+  "qid": "Q3335",
+  "displayName": "George Orwell",
+  "identity": "Writer · India · 1903–1950",
+  "title": "George Orwell's birth chart",
+  "metaDescription": "George Orwell's chart, computed from a sourced birth date: Sun at 2.5° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Saturn sit 0.1° from an exact trine — near enough that the tradition reads drive and structure as a single working part. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Mars:Saturn:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.53",
+        "decan:cancer:first"
+      ],
+      "text": "Cancer, but precisely: 2.5°, first decan, 0°–10°, under the Moon in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:11.0°",
+        "personal:Venus:Leo:17.3°",
+        "personal:Mars:Libra:8.4°"
+      ],
+      "text": "Mercury holds 11.0° Gemini, Venus holds 17.3° Leo, Mars holds 8.4° Libra — in the old shorthand, a mind at home in argument and pattern; taste that runs toward the vivid and the immediate; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:trine:0.11",
+        "aspect:Jupiter:Uranus:square:0.53",
+        "aspect:Sun:Neptune:conjunction:0.86"
+      ],
+      "text": "The tightest geometry in the chart puts Mars a third of the circle apart from Saturn, 0.1° off exact. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Jupiter square Uranus at 0.5°, and the Sun conjunction Neptune at 0.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Mercury-Mars-Saturn",
+        "figure:t-square:Uranus-Pluto:apex-Jupiter"
+      ],
+      "text": "Mercury, Mars, Saturn close a triangle of trines. The closed triangle is the scheme’s picture of flow — and its warning that flow, unspent, stays private. Uranus opposes Pluto while both square Jupiter. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has four entries for this chart. Mercury in Gemini at 11.0° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 8.4° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 22.7° is in domicile; Saturn in Aquarius at 8.3° is in domicile. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-fire2",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: air 4, water 3, fire 2 across the elements, and mutable 4, cardinal 3, fixed 2 across the modalities. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Saturn and Uranus were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 15.2° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-25/",
+    "label": "Everyone born on June 25"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Saturn:trine",
+    "sun-degree:2.53",
+    "decan:cancer:first",
+    "personal:Mercury:Gemini:11.0°",
+    "personal:Venus:Leo:17.3°",
+    "personal:Mars:Libra:8.4°",
+    "aspect:Mars:Saturn:trine:0.11",
+    "aspect:Jupiter:Uranus:square:0.53",
+    "aspect:Sun:Neptune:conjunction:0.86",
+    "figure:grand-trine:Mercury-Mars-Saturn",
+    "figure:t-square:Uranus-Pluto:apex-Jupiter",
+    "dignity:Mercury:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air4-water3-fire2",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 464,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

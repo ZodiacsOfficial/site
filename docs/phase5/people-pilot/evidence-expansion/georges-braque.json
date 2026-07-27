@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "georges-braque",
+ "qid": "Q153793",
+ "displayName": "Georges Braque",
+ "wikidataLabel": "Georges Braque",
+ "wikidataDescription": "French painter and sculptor (1882-1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q153793",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518457527
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Georges Braque",
+   "articleUrl": "https://en.wikipedia.org/wiki/Georges_Braque",
+   "pageId": 12317,
+   "revisionId": 1365554830,
+   "revisionTimestamp": "2026-07-23T03:43:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1882-05-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-05-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-05-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-08-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q181946",
+  "label": "Argenteuil",
+  "entityUrl": "https://www.wikidata.org/wiki/Q181946",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q181946",
+   "sourceEntityLabel": "Argenteuil",
+   "latitude": 48.94777777777778,
+   "longitude": 2.2488888888888887,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q2519376",
+   "label": "jewelry designer"
+  },
+  {
+   "entity": "Q2707485",
+   "label": "scenographer"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q22343478",
+   "label": "collagist"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Georges Braque, 1908, photograph published in Gelett Burgess, The Wild Men of Paris, Architectural Record, May 1910.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Georges%20Braque%2C%201908%2C%20photograph%20published%20in%20Gelett%20Burgess%2C%20The%20Wild%20Men%20of%20Paris%2C%20Architectural%20Record%2C%20May%201910.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Georges_Braque,_1908,_photograph_published_in_Gelett_Burgess,_The_Wild_Men_of_Paris,_Architectural_Record,_May_1910.jpg",
+  "width": 391,
+  "height": 550,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photographer non-identified, anonymous",
+  "credit": "georgesbraque.fr and The Architectural Record",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

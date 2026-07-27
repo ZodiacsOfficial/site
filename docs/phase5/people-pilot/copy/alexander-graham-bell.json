@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "alexander-graham-bell",
+  "seedRound": 0,
+  "qid": "Q34286",
+  "displayName": "Alexander Graham Bell",
+  "identity": "Physicist · United Kingdom · 1847–1922",
+  "title": "Alexander Graham Bell's birth chart",
+  "metaDescription": "Alexander Graham Bell's chart, computed from a sourced birth date: Sun at 12.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mutable signs carry four of the nine placements whose signs are settled — the broadest certain weighting in the chart. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.32",
+        "decan:pisces:second"
+      ],
+      "text": "The Sun sits at 12.3° Pisces — the second decan, 10°–20°, which the tradition sub-rules by the Moon. Degrees matter more than the sign label here: two people born a fortnight apart share Pisces and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:25.3°",
+        "personal:Venus:Aries:0.8°",
+        "personal:Mars:Capricorn:14.9°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Pisces (25.3°), Venus in Aries (0.8°), Mars in Capricorn (14.9°): a mind that absorbs before it argues, taste that runs toward the vivid and the immediate, drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:square:2.44",
+        "aspect:Sun:Mars:sextile:2.54",
+        "aspect:Jupiter:Saturn:square:3.73"
+      ],
+      "text": "The day's firmest angle joins Mars and Uranus — a square holding at 2.4°. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun sextile Mars at 2.5°, and Jupiter square Saturn at 3.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. Mercury in Pisces at 25.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 0.8° is in detriment — the planet opposite its home, working against the grain; Mars in Capricorn at 14.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Gemini at 8.2° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-fire3-air2-earth1",
+        "modalities:mutable4-cardinal4-fixed1",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements water 3, fire 3, air 2, earth 1; modalities mutable 4, cardinal 4, fixed 1. Nothing here ran retrograde — all ten in direct motion that day."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 11.8° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-3/",
+    "label": "Everyone born on March 3"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:12.32",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:25.3°",
+    "personal:Venus:Aries:0.8°",
+    "personal:Mars:Capricorn:14.9°",
+    "aspect:Mars:Uranus:square:2.44",
+    "aspect:Sun:Mars:sextile:2.54",
+    "aspect:Jupiter:Saturn:square:3.73",
+    "figure:none",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:detriment",
+    "elements:water3-fire3-air2-earth1",
+    "modalities:mutable4-cardinal4-fixed1",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 412,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hideyo-noguchi",
+ "qid": "Q356114",
+ "displayName": "Hideyo Noguchi",
+ "wikidataLabel": "Hideyo Noguchi",
+ "wikidataDescription": "Japanese bacteriologist (1876–1928)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q356114",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519597753
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hideyo Noguchi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hideyo_Noguchi",
+   "pageId": 762320,
+   "revisionId": 1362107001,
+   "revisionTimestamp": "2026-07-01T23:53:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1876-11-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1876-11-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1876-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1928-05-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q669633",
+  "label": "Inawashiro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q669633",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q669633",
+   "sourceEntityLabel": "Inawashiro",
+   "latitude": 37.55777777777778,
+   "longitude": 140.10480555555554,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q3779582",
+   "label": "microbiologist"
+  },
+  {
+   "entity": "Q3368718",
+   "label": "pathologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Noguchi Hideyo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Noguchi%20Hideyo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Noguchi_Hideyo.jpg",
+  "width": 2930,
+  "height": 4669,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Noguchi Hideyo Memorial Hall",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

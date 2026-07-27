@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rene-lacoste",
+ "qid": "Q221454",
+ "displayName": "René Lacoste",
+ "wikidataLabel": "René Lacoste",
+ "wikidataDescription": "French tennis player",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q221454",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521614877
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "René Lacoste",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ren%C3%A9_Lacoste",
+   "pageId": 675849,
+   "revisionId": 1360952868,
+   "revisionTimestamp": "2026-06-24T18:12:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-07-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-07-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1996-10-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q163948",
+  "label": "10ᵗʰ arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q163948",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q163948",
+   "sourceEntityLabel": "10ᵗʰ arrondissement of Paris",
+   "latitude": 48.875508333333,
+   "longitude": 2.3578527777778,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10833314",
+   "label": "tennis player"
+  },
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  },
+  {
+   "entity": "Q13219424",
+   "label": "tennis coach"
+  },
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  },
+  {
+   "entity": "Q41583",
+   "label": "coach"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:René Lacoste.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ren%C3%A9%20Lacoste.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ren%C3%A9_Lacoste.jpg",
+  "width": 195,
+  "height": 281,
+  "licenseShortName": "CC BY-SA 3.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "artist": "Unknown author",
+  "credit": "This image was provided to Wikimedia Commons by the German Federal Archive (Deutsches Bundesarchiv) as part of a cooperation project. The German Federal Archive guarantees an authentic representation only using the originals (negative and/or positive), resp. the digitalization of the originals as provided by the Digital Image Archive.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

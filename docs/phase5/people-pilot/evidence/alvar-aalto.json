@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alvar-aalto",
+ "qid": "Q82840",
+ "displayName": "Alvar Aalto",
+ "wikidataLabel": "Alvar Aalto",
+ "wikidataDescription": "Finnish architect and designer (1898–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q82840",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522348107
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alvar Aalto",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alvar_Aalto",
+   "pageId": 2009,
+   "revisionId": 1366118816,
+   "revisionTimestamp": "2026-07-26T10:59:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-02-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-02-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-02-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-05-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6012",
+  "label": "Kuortane",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6012",
+  "country": {
+   "entity": "Q33",
+   "label": "Finland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6012",
+   "sourceEntityLabel": "Kuortane",
+   "latitude": 62.80555555555556,
+   "longitude": 23.506944444444443,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q131062",
+   "label": "urban planner"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alvar Aalto1.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alvar%20Aalto1.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alvar_Aalto1.jpg",
+  "width": 1200,
+  "height": 1585,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://4.bp.blogspot.com/-m01r5aY7syA/Tb-AgQBJJAI/AAAAAAAARMs/Rwe_vv-h4hs/s1600/alvar_aalto.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

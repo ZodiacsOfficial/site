@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "henri-de-toulouse-lautrec",
+ "qid": "Q82445",
+ "displayName": "Henri de Toulouse-Lautrec",
+ "wikidataLabel": "Henri de Toulouse-Lautrec",
+ "wikidataDescription": "French painter and illustrator (1864–1901)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q82445",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521528154
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Henri de Toulouse-Lautrec",
+   "articleUrl": "https://en.wikipedia.org/wiki/Henri_de_Toulouse-Lautrec",
+   "pageId": 64689,
+   "revisionId": 1364955823,
+   "revisionTimestamp": "2026-07-19T13:53:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1864-11-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1864-11-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1864-11-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1901-09-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q132801",
+  "label": "Albi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q132801",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q132801",
+   "sourceEntityLabel": "Albi",
+   "latitude": 43.928055555556,
+   "longitude": 2.1458333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q739437",
+   "label": "poster artist"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q627325",
+   "label": "graphic designer"
+  },
+  {
+   "entity": "Q7541856",
+   "label": "ceramicist"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Photolautrec.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Photolautrec.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Photolautrec.jpg",
+  "width": 1072,
+  "height": 1800,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Paul Sescau",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

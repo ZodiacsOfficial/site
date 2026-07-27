@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dean-martin",
+ "qid": "Q215359",
+ "displayName": "Dean Martin",
+ "wikidataLabel": "Dean Martin",
+ "wikidataDescription": "American singer, actor, comedian and film producer (1917–1995)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q215359",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518480804
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dean Martin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dean_Martin",
+   "pageId": 151603,
+   "revisionId": 1365068873,
+   "revisionTimestamp": "2026-07-20T02:47:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-06-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-06-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-06-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-12-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q986432",
+  "label": "Steubenville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q986432",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q986432",
+   "sourceEntityLabel": "Steubenville",
+   "latitude": 40.365277777778,
+   "longitude": -80.631111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q245068",
+   "label": "comedian"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q11338576",
+   "label": "boxer"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q947873",
+   "label": "television presenter"
+  },
+  {
+   "entity": "Q44508716",
+   "label": "television personality"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dean Martin - publicity.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dean%20Martin%20-%20publicity.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dean_Martin_-_publicity.JPG",
+  "width": 712,
+  "height": 888,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Studio",
+  "credit": "eBay",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

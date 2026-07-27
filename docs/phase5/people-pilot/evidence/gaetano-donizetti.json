@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gaetano-donizetti",
+ "qid": "Q101698",
+ "displayName": "Gaetano Donizetti",
+ "wikidataLabel": "Gaetano Donizetti",
+ "wikidataDescription": "Italian opera composer (1797–1848)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q101698",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522391289
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gaetano Donizetti",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gaetano_Donizetti",
+   "pageId": 37934,
+   "revisionId": 1362424789,
+   "revisionTimestamp": "2026-07-03T21:32:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1797-11-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1797-11-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1797-11-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1848-04-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q628",
+  "label": "Bergamo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q628",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q628",
+   "sourceEntityLabel": "Bergamo",
+   "latitude": 45.695,
+   "longitude": 9.67,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fotoreproductie van Gaetano Donizetti.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fotoreproductie%20van%20Gaetano%20Donizetti.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fotoreproductie_van_Gaetano_Donizetti.png",
+  "width": 1678,
+  "height": 2220,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Rijksmuseum",
+  "credit": "File:Fotoreproductie_van_een_portret_van_Gaetano_Donizetti_door_Eugen_Felix_Donizetti_(titel_op_object)_Bruckmann's_Portrait-Collection_(serietitel_op_object),_RP-F-2001-7-878-10.jpg",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

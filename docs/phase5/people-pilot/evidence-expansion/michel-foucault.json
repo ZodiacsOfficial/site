@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "michel-foucault",
+ "qid": "Q44272",
+ "displayName": "Michel Foucault",
+ "wikidataLabel": "Michel Foucault",
+ "wikidataDescription": "French philosopher (1926–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q44272",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522871504
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Michel Foucault",
+   "articleUrl": "https://en.wikipedia.org/wiki/Michel_Foucault",
+   "pageId": 47643,
+   "revisionId": 1364272740,
+   "revisionTimestamp": "2026-07-15T15:50:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1926-10-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1926-10-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1926-10-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-06-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6616",
+  "label": "Poitiers",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6616",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6616",
+   "sourceEntityLabel": "Poitiers",
+   "latitude": 46.581111111111,
+   "longitude": 0.33527777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q1371378",
+   "label": "ethnologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Photo of Michel Foucault on 1970 dustjacket of The Order of Things.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Photo%20of%20Michel%20Foucault%20on%201970%20dustjacket%20of%20The%20Order%20of%20Things.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Photo_of_Michel_Foucault_on_1970_dustjacket_of_The_Order_of_Things.jpg",
+  "width": 318,
+  "height": 418,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Jerry Bauer",
+  "credit": "Original publication: Dust jacket of Foucault, Michel (1970) (in English) The Order of Things: An Archaeology of the Human Sciences (1st American ed.), Pantheon Books ISBN: 978-0-394-43952-5. Immediate source: https://progressivegeographies.com/foucault-books/the-archaeology-of-foucault-research-and-writing-updates/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

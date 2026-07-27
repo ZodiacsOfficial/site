@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "henri-cartier-bresson",
+ "qid": "Q156567",
+ "displayName": "Henri Cartier-Bresson",
+ "wikidataLabel": "Henri Cartier-Bresson",
+ "wikidataDescription": "French photographer (1908–2004)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q156567",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522279311
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Henri Cartier-Bresson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Henri_Cartier-Bresson",
+   "pageId": 406119,
+   "revisionId": 1362337156,
+   "revisionTimestamp": "2026-07-03T08:29:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-08-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-08-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-08-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-08-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q419367",
+  "label": "Chanteloup-en-Brie",
+  "entityUrl": "https://www.wikidata.org/wiki/Q419367",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q419367",
+   "sourceEntityLabel": "Chanteloup-en-Brie",
+   "latitude": 48.855,
+   "longitude": 2.7391666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q957729",
+   "label": "photojournalist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q222344",
+   "label": "cinematographer"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q1414443",
+   "label": "filmmaker"
+  }
+ ],
+ "portrait": {
+  "file": "File:Portrait of Henri Cartier-Bresson - Paris - 1954 - Kimura Ihei.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Portrait%20of%20Henri%20Cartier-Bresson%20-%20Paris%20-%201954%20-%20Kimura%20Ihei.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Henri_Cartier-Bresson_-_Paris_-_1954_-_Kimura_Ihei.png",
+  "width": 1716,
+  "height": 2453,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ihei Kimura",
+  "credit": "田沼武能監修『木村伊兵衛 写真に生きる』クレヴィス、2021年11月13日、ISBN 978-4-909532-67-1",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

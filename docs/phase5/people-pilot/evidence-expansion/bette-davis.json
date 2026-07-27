@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bette-davis",
+ "qid": "Q71206",
+ "displayName": "Bette Davis",
+ "wikidataLabel": "Bette Davis",
+ "wikidataDescription": "American actress (1908–1989)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q71206",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518652800
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bette Davis",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bette_Davis",
+   "pageId": 63517,
+   "revisionId": 1364106502,
+   "revisionTimestamp": "2026-07-14T14:55:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-04-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-04-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-04-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1989-10-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49162",
+  "label": "Lowell",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49162",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49162",
+   "sourceEntityLabel": "Lowell",
+   "latitude": 42.639444444444,
+   "longitude": -71.314722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q948329",
+   "label": "character actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:BetteDavis1935.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:BetteDavis1935.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:BetteDavis1935.jpg",
+  "width": 435,
+  "height": 521,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Studio Publicity",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

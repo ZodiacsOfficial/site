@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "kathleen-kenyon",
+  "seedRound": 0,
+  "qid": "Q238890",
+  "displayName": "Kathleen Kenyon",
+  "identity": "Archaeologist · United Kingdom · 1906–1978",
+  "title": "Kathleen Kenyon's birth chart",
+  "metaDescription": "Kathleen Kenyon's chart, computed from a sourced birth date: Sun at 14.3° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 15.6° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.27",
+        "decan:capricorn:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 14.3° Capricorn: the second decan, whose classical sub-ruler is Venus. A earth sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:21.3°",
+        "personal:Venus:Capricorn:4.7°",
+        "personal:Mars:Pisces:6.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (21.3°), Venus in Capricorn (4.7°), Mars in Pisces (6.8°): a mind that decides at speaking speed, taste for the substantial and the lasting, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Pluto:opposition:0.02",
+        "aspect:Venus:Uranus:conjunction:0.26",
+        "aspect:Mars:Uranus:sextile:1.87"
+      ],
+      "text": "Mercury to Pluto is the closest call of the day, a opposition within 0.0°. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Venus conjunction Uranus at 0.3°, and Mars sextile Uranus at 1.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Mercury:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Taurus at 15.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Sagittarius at 21.3° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 29.7° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-water2-air2-fire1",
+        "modalities:cardinal4-fixed3-mutable3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: earth 5, water 2, air 2, fire 1 across the elements, and cardinal 4, fixed 3, mutable 3 across the modalities. An earth emphasis reads as patience with material reality — slow hands, durable results. Jupiter, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 15.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-5/",
+    "label": "Everyone born on January 5"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:14.27",
+    "decan:capricorn:second",
+    "personal:Mercury:Sagittarius:21.3°",
+    "personal:Venus:Capricorn:4.7°",
+    "personal:Mars:Pisces:6.8°",
+    "aspect:Mercury:Pluto:opposition:0.02",
+    "aspect:Venus:Uranus:conjunction:0.26",
+    "aspect:Mars:Uranus:sextile:1.87",
+    "figure:none",
+    "dignity:Moon:exaltation",
+    "dignity:Mercury:detriment",
+    "dignity:Saturn:domicile",
+    "elements:earth5-water2-air2-fire1",
+    "modalities:cardinal4-fixed3-mutable3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:taurus",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

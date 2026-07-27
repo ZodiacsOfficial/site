@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "montesquieu",
+ "qid": "Q15975",
+ "displayName": "Montesquieu",
+ "wikidataLabel": null,
+ "wikidataDescription": "French philosopher (1689–1755)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q15975",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522221601
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Montesquieu",
+   "articleUrl": "https://en.wikipedia.org/wiki/Montesquieu",
+   "pageId": 54956,
+   "revisionId": 1365313591,
+   "revisionTimestamp": "2026-07-21T16:49:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1689-01-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1689-01-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1689-01-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1755-02-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1859459",
+  "label": "Château de la Brède",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1859459",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1859459",
+   "sourceEntityLabel": "Château de la Brède",
+   "latitude": 44.679166666667,
+   "longitude": -0.54416666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q16533",
+   "label": "judge"
+  },
+  {
+   "entity": "Q744738",
+   "label": "encyclopédistes"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q1815782",
+   "label": "lord of the manor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Montesquieu 1.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Montesquieu%201.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Montesquieu_1.png",
+  "width": 1177,
+  "height": 1447,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "After Jacques-Antoine Dassier",
+  "credit": "Collection Chateau Versailles",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "babe-ruth",
+  "seedRound": 0,
+  "qid": "Q213812",
+  "displayName": "Babe Ruth",
+  "identity": "Baseball player · United States · 1895–1948",
+  "title": "Babe Ruth's birth chart",
+  "metaDescription": "Babe Ruth's chart, computed from a sourced birth date: Sun at 17.7° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.3° separates the Sun and Mars from an exact square; at that range identity and drive read as one mechanism. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Sun:Mars:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.70",
+        "decan:aquarius:second"
+      ],
+      "text": "At noon on that date the Sun stood at 17.7° Aquarius, inside the second decan (10°–20°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:5.4°",
+        "personal:Venus:Pisces:3.9°",
+        "personal:Mars:Taurus:17.4°"
+      ],
+      "text": "Closer in, Mercury stands at 5.4° Pisces; Venus stands at 3.9° Pisces; Mars stands at 17.4° Taurus. The tradition reads thought steeped in tone and memory from Mercury, attraction that works by atmosphere from Venus, effort banked steadily until it tells from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:square:0.34",
+        "aspect:Mercury:Venus:conjunction:1.46",
+        "aspect:Mercury:Saturn:trine:1.81"
+      ],
+      "text": "Nothing in the geometry sits closer than the Sun and Mars: 0.3° from an exact square. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mercury conjunction Venus at 1.5°, and Mercury trine Saturn at 1.8° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mars-Uranus:apex-Sun",
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Mars opposes Uranus while both square the Sun. The t-square is the figure the old texts trusted for output: friction with a fixed address. Jupiter makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Read against the old dignities, five placements stand out. The Sun in Aquarius at 17.7° is in detriment — the planet opposite its home, working against the grain; Mercury in Pisces at 5.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 3.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Taurus at 17.4° is in detriment; Jupiter in Gemini at 26.6° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water4-earth1",
+        "modalities:mutable5-fixed4",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 4, water 4, earth 1, and mutable 5, fixed 4 across the modes. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 14.7° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-6/",
+    "label": "Everyone born on February 6"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:square",
+    "sun-degree:17.70",
+    "decan:aquarius:second",
+    "personal:Mercury:Pisces:5.4°",
+    "personal:Venus:Pisces:3.9°",
+    "personal:Mars:Taurus:17.4°",
+    "aspect:Sun:Mars:square:0.34",
+    "aspect:Mercury:Venus:conjunction:1.46",
+    "aspect:Mercury:Saturn:trine:1.81",
+    "figure:t-square:Mars-Uranus:apex-Sun",
+    "figure:unaspected:Jupiter",
+    "dignity:Sun:detriment",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:air4-water4-earth1",
+    "modalities:mutable5-fixed4",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 499,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

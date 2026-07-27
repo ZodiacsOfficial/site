@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "huda-sha-arawi",
+ "qid": "Q2423343",
+ "displayName": "Huda Sha'arawi",
+ "wikidataLabel": "Huda Sha'rawi",
+ "wikidataDescription": "Egyptian feminist and nationalist (1879–1947)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "mena",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2423343",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2494460410
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Huda Sha'arawi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Huda_Sha'arawi",
+   "pageId": 42217808,
+   "revisionId": 1360901148,
+   "revisionTimestamp": "2026-06-24T10:43:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1879-06-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1879-06-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1879-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1879-06-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1947-12-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q310117",
+  "label": "Minya",
+  "entityUrl": "https://www.wikidata.org/wiki/Q310117",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q310117",
+   "sourceEntityLabel": "Minya",
+   "latitude": 28.083333333333,
+   "longitude": 30.75,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q8359428",
+   "label": "social activist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Huda Sha'arawi1.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Huda%20Sha'arawi1.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Huda_Sha%27arawi1.jpg",
+  "width": 306,
+  "height": 423,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "http://www.ilbarrito.com/cronache-di-una-femminista-egiziana-vita-di-huda-shaarawi/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

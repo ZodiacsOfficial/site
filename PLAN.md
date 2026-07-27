@@ -2,14 +2,13 @@
 
 Last updated: 2026-07-26
 
-Active phase: **Phase 5C conservative People search release is complete.
-Phase 4 is complete and Phase 5B's twenty-profile pilot remains released. The
-owner declined outside legal advice and approved a documented conservative
-boundary: only the eighteen reviewed profiles of deceased public figures are
-open to search. The two living profiles and the People directory remain
-noindex and outside search discovery. The wider Phase 5 expansion is not
-authorized by this release. Phase 6 has not begun; Phase 1 external closure
-monitoring continues independently.**
+Active phase: **Phase 5 completion candidate — the full People directory.
+The reviewed set grows from 20 to 500 people (498 deceased indexable, the two
+living profiles unchanged and protected), all 366 birthday pages carry their
+People links with progressive disclosure, and the directory becomes indexable
+under the owner's 2026-07-27 completion authorization. Living-person
+indexing remains excluded without a separate person-specific authorization.
+Phase 6 has not begun.**
 
 ## Authority and operating rule
 
@@ -581,6 +580,32 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-07-27 — Phase 5 completion candidate: 500 people, full directory
+
+- Expanded the reviewed People set 20 → 500 through the documented pipeline:
+  936 curated deceased candidates, batch Wikidata/Wikipedia/Commons evidence,
+  fail-closed screening (78 exclusions recorded), balanced deterministic
+  selection (signs 39–46 each, 43.2% women — pool-limited under the
+  astrological constraints and recorded in selection-report.json, regions at
+  or near published minimums, eras 1593–1983), 25-sample civil-day
+  computation, and per-page composed copy.
+- Similarity across all 124,750 page pairs holds under the unchanged 0.32
+  ceiling: every new page measures ≤0.295 after deterministic reseed repair;
+  the maximum, 0.3048, is the frozen released pilot pair. Word floors and
+  substantive-statement floors hold (332–516 words; 12–23 statements).
+- Independent chart verification: 20 stratified samples recomputed through
+  src/lib/engine/server-ephemeris.ts agree with committed positions within
+  the 2-dp display bound (0.006°); full validation runs 11,587 checks.
+- 450 licence-reviewed portraits with rendered credits (50 deliberate
+  pastel-disc states); 500 deterministic OG cards. The generated v2 card
+  ceiling is raised 15 → 25MB (documented; request-time social assets, no
+  page-bundle cost). New research devDependency: tz-lookup (IANA zone from
+  reviewed birthplace coordinates, research tooling only).
+- index-policy.json now lists all 498 deceased profiles and enables the
+  directory (≥20 threshold met). The two living profiles keep every 5C
+  protection. Owner authorization of 2026-07-27 recorded in the policy.
+
 
 ### 2026-07-25 — Phase 4 publicly launched and formally complete
 

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "anne-sexton",
+ "qid": "Q270728",
+ "displayName": "Anne Sexton",
+ "wikidataLabel": "Anne Sexton",
+ "wikidataDescription": "American poet (1928–1974)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q270728",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517603228
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Anne Sexton",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anne_Sexton",
+   "pageId": 177377,
+   "revisionId": 1365170364,
+   "revisionTimestamp": "2026-07-20T18:39:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1928-11-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-11-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1974-10-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49196",
+  "label": "Newton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49196",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49196",
+   "sourceEntityLabel": "Newton",
+   "latitude": 42.336944444444,
+   "longitude": -71.209722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Anne Sexton, Boston University.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Anne%20Sexton%2C%20Boston%20University.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Anne_Sexton,_Boston_University.jpg",
+  "width": 2240,
+  "height": 1792,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Associated Press",
+  "credit": "https://www.newspapers.com/article/the-miami-herald-anne-sexton-boston-uni/156571419/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "karen-horney",
+ "qid": "Q71020",
+ "displayName": "Karen Horney",
+ "wikidataLabel": "Karen Horney",
+ "wikidataDescription": "American-German psychoanalyst",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q71020",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520940476
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Karen Horney",
+   "articleUrl": "https://en.wikipedia.org/wiki/Karen_Horney",
+   "pageId": 18307618,
+   "revisionId": 1365070857,
+   "revisionTimestamp": "2026-07-20T03:01:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1885-09-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1885-09-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1885-09-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1952-12-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1607",
+  "label": "Blankenese",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1607",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1607",
+   "sourceEntityLabel": "Blankenese",
+   "latitude": 53.55843,
+   "longitude": 9.81123,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q211346",
+   "label": "psychiatrist"
+  },
+  {
+   "entity": "Q3410028",
+   "label": "psychoanalyst"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1900167",
+   "label": "psychotherapist"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Karen Horney 1938.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Karen%20Horney%201938.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Karen_Horney_1938.jpg",
+  "width": 215,
+  "height": 293,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "http://creativecommons.org/licenses/by-sa/3.0/",
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

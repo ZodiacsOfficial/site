@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "frederick-banting",
+ "qid": "Q180350",
+ "displayName": "Frederick Banting",
+ "wikidataLabel": "Frederick Banting",
+ "wikidataDescription": "Canadian medical scientist and doctor (1891-1941)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q180350",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519849966
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Frederick Banting",
+   "articleUrl": "https://en.wikipedia.org/wiki/Frederick_Banting",
+   "pageId": 75076,
+   "revisionId": 1365193884,
+   "revisionTimestamp": "2026-07-20T21:44:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1891-11-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1891-11-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1891-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-02-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1490411",
+  "label": "Alliston",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1490411",
+  "country": {
+   "entity": "Q16",
+   "label": "Canada"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1490411",
+   "sourceEntityLabel": "Alliston",
+   "latitude": 44.1499,
+   "longitude": -79.8632,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q2114605",
+   "label": "pharmacologist"
+  },
+  {
+   "entity": "Q1650915",
+   "label": "researcher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2055046",
+   "label": "physiologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fredrick banting.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fredrick%20banting.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fredrick_banting.jpg",
+  "width": 480,
+  "height": 632,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Arthur Goss",
+  "credit": "via Library and Archives Canada",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

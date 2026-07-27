@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "cecile-chaminade",
+ "qid": "Q236438",
+ "displayName": "Cécile Chaminade",
+ "wikidataLabel": "Cécile Chaminade",
+ "wikidataDescription": "French composer and pianist (1857-1944)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q236438",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2511027793
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Cécile Chaminade",
+   "articleUrl": "https://en.wikipedia.org/wiki/C%C3%A9cile_Chaminade",
+   "pageId": 528477,
+   "revisionId": 1342099233,
+   "revisionTimestamp": "2026-03-07T00:09:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1857-08-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1857-08-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1857-08-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1944-04-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2891347",
+  "label": "Batignolles-Monceau",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2891347",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2891347",
+   "sourceEntityLabel": "Batignolles-Monceau",
+   "latitude": 48.8867,
+   "longitude": 2.3153,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q12902372",
+   "label": "flautist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cecile chaminade.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cecile%20chaminade.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cecile_chaminade.jpg",
+  "width": 1449,
+  "height": 2293,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Henrici, L. O. Representative Women. Kansas City, Mo.: The Crafters Publishers. 1913 Original source: What We Hear in Music, Anne S. Faulkner, Victor Talking Machine Co., 1913.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

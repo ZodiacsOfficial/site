@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nandalal-bose",
+ "qid": "Q3348980",
+ "displayName": "Nandalal Bose",
+ "wikidataLabel": "Nandalal Bose",
+ "wikidataDescription": "Indian artist (1882-1966)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3348980",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521448494
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nandalal Bose",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nandalal_Bose",
+   "pageId": 4261355,
+   "revisionId": 1363586222,
+   "revisionTimestamp": "2026-07-11T03:25:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1882-12-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-12-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-12-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1966-04-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7685498",
+  "label": "Tarapur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7685498",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7685498",
+   "sourceEntityLabel": "Tarapur",
+   "latitude": 25.38,
+   "longitude": 86.47,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nandalal Bose 1967 stamp of India.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nandalal%20Bose%201967%20stamp%20of%20India.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nandalal_Bose_1967_stamp_of_India.jpg",
+  "width": 803,
+  "height": 696,
+  "licenseShortName": "GODL-India",
+  "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+  "artist": "India Post, Government of India",
+  "credit": "[1] [2]",
+  "usageTerms": "Government Open Data License – India",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

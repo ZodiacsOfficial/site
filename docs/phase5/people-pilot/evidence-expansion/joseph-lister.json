@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "joseph-lister",
+ "qid": "Q155768",
+ "displayName": "Joseph Lister",
+ "wikidataLabel": "Joseph Lister",
+ "wikidataDescription": "British surgeon and antiseptic pioneer (1827–1912)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q155768",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517006422
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Joseph Lister",
+   "articleUrl": "https://en.wikipedia.org/wiki/Joseph_Lister",
+   "pageId": 16535,
+   "revisionId": 1365036642,
+   "revisionTimestamp": "2026-07-19T22:14:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1827-04-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1827-04-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1827-04-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1912-02-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q28404673",
+  "label": "Upton House, Newham",
+  "entityUrl": "https://www.wikidata.org/wiki/Q28404673",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q28404673",
+   "sourceEntityLabel": "Upton House, Newham",
+   "latitude": 51.5395,
+   "longitude": 0.0232,
+   "precision": 0.00044580570689785,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q774306",
+   "label": "surgeon"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q2083925",
+   "label": "botanical collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Joseph Lister, 1st Baron Lister (1827 – 1912) surgeon Wellcome M0002551.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Joseph%20Lister%2C%201st%20Baron%20Lister%20(1827%20%E2%80%93%201912)%20surgeon%20Wellcome%20M0002551.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Joseph_Lister,_1st_Baron_Lister_(1827_%E2%80%93_1912)_surgeon_Wellcome_M0002551.jpg",
+  "width": 1244,
+  "height": 1717,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": null,
+  "credit": "https://wellcomeimages.org/indexplus/obf_images/e5/93/ffb03e967eb355a6cc5af7f9a41e.jpg Gallery: https://wellcomeimages.org/indexplus/image/M0002551.html Wellcome Collection gallery (2018-03-30): https://wellcomecollection.org/works/v9wpd229 CC-BY-4.0",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

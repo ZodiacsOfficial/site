@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "diego-maradona",
+ "qid": "Q17515",
+ "displayName": "Diego Maradona",
+ "wikidataLabel": "Diego Maradona",
+ "wikidataDescription": "Argentine football player and manager (1960–2020)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q17515",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522096662
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Diego Maradona",
+   "articleUrl": "https://en.wikipedia.org/wiki/Diego_Maradona",
+   "pageId": 8485,
+   "revisionId": 1365701246,
+   "revisionTimestamp": "2026-07-23T23:31:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1960-10-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1960-10-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1960-10-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2020-11-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1622565",
+  "label": "Lanús",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1622565",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1622565",
+   "sourceEntityLabel": "Lanús",
+   "latitude": -34.7,
+   "longitude": -58.4,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q628099",
+   "label": "association football coach"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Argentina celebrando copa (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Argentina%20celebrando%20copa%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Argentina_celebrando_copa_(cropped).jpg",
+  "width": 365,
+  "height": 572,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "El Gráfico",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

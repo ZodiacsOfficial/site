@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maryam-mirzakhani",
+ "qid": "Q1771279",
+ "displayName": "Maryam Mirzakhani",
+ "wikidataLabel": "Maryam Mirzakhani",
+ "wikidataDescription": "Iranian mathematician (1977–2017)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1771279",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515912717
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Maryam Mirzakhani",
+   "articleUrl": "https://en.wikipedia.org/wiki/Maryam_Mirzakhani",
+   "pageId": 6409655,
+   "revisionId": 1365875302,
+   "revisionTimestamp": "2026-07-24T23:26:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1977-05-12T00:00:00Z|proleptic-gregorian",
+   "+1977-05-03T00:00:00Z|proleptic-gregorian",
+   "+1977-05-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1977-05-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1977-05-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   },
+   {
+    "time": "+1977-05-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1977-05-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2017-07-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3616",
+  "label": "Tehran",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3616",
+  "country": {
+   "entity": "Q794",
+   "label": "Iran"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3616",
+   "sourceEntityLabel": "Tehran",
+   "latitude": 35.68888888888889,
+   "longitude": 51.389722222222225,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q18663426",
+   "label": "topologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Maryam Mirzakhani in Seoul 2014.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Maryam%20Mirzakhani%20in%20Seoul%202014.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Maryam_Mirzakhani_in_Seoul_2014.jpg",
+  "width": 144,
+  "height": 200,
+  "licenseShortName": "CC BY-SA 2.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en",
+  "artist": "Gert-Martin Greuel",
+  "credit": "Archives of the Mathematisches Forschungsinstitut Oberwolfach",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

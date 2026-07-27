@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "oodgeroo-noonuccal",
+  "seedRound": 0,
+  "qid": "Q457278",
+  "displayName": "Oodgeroo Noonuccal",
+  "identity": "Poet and human rights defender · Australia · 1920–1993",
+  "title": "Oodgeroo Noonuccal's birth chart",
+  "metaDescription": "Oodgeroo Noonuccal's chart, computed from a sourced birth date: Sun at 10.4° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a square: Mercury and Uranus within 0.0°, thinking wired to disruption. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Mercury:Uranus:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.36",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun sits at 10.4° Scorpio — the second decan, 10°–20°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Scorpio and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:1.8°",
+        "personal:Venus:Sagittarius:12.1°",
+        "personal:Mars:Capricorn:11.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (1.8°), Venus in Sagittarius (12.1°), Mars in Capricorn (11.4°): a mind that decides at speaking speed, taste that runs toward the vivid and the immediate, drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Uranus:square:0.02",
+        "aspect:Sun:Mars:sextile:1.09",
+        "aspect:Venus:Jupiter:square:1.35"
+      ],
+      "text": "Start where the chart is tightest — Mercury square Uranus, 0.0° of separation. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun sextile Mars at 1.1°, and Venus square Jupiter at 1.4° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The classical table has three entries for this chart. Mercury in Sagittarius at 1.8° is in detriment — the planet opposite its home, working against the grain; Mars in Capricorn at 11.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Virgo at 13.4° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth3",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 fire, 3 water, 3 earth by element and 5 mutable, 3 fixed, 2 cardinal by mode. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:14.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 14.1° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 7.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-3/",
+    "label": "Everyone born on November 3"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Uranus:square",
+    "sun-degree:10.36",
+    "decan:scorpio:second",
+    "personal:Mercury:Sagittarius:1.8°",
+    "personal:Venus:Sagittarius:12.1°",
+    "personal:Mars:Capricorn:11.4°",
+    "aspect:Mercury:Uranus:square:0.02",
+    "aspect:Sun:Mars:sextile:1.09",
+    "aspect:Venus:Jupiter:square:1.35",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:detriment",
+    "elements:fire4-water3-earth3",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:leo",
+    "moon-band:14.1"
+  ],
+  "measurements": {
+    "originalWords": 435,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

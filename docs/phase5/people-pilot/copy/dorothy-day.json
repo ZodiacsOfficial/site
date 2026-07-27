@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "dorothy-day",
+  "seedRound": 0,
+  "qid": "Q150281",
+  "displayName": "Dorothy Day",
+  "identity": "Journalist and trade unionist · United States · 1897–1980",
+  "title": "Dorothy Day's birth chart",
+  "metaDescription": "Dorothy Day's chart, computed from a sourced birth date: Sun at 16.6° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Scorpio — the Sun, Mercury, Mars and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:scorpio:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.59",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun's position resolves to 16.6° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:16.9°",
+        "personal:Venus:Libra:22.8°",
+        "personal:Mars:Scorpio:20.4°"
+      ],
+      "text": "Closer in, Mercury stands at 16.9° Scorpio; Venus stands at 22.8° Libra; Mars stands at 20.4° Scorpio. The tradition reads thought steeped in tone and memory from Mercury, attraction that begins as conversation from Venus, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mercury:conjunction:0.3",
+        "aspect:Venus:Neptune:trine:0.79",
+        "aspect:Jupiter:Saturn:sextile:0.93"
+      ],
+      "text": "Start where the chart is tightest — the Sun conjunction Mercury, 0.3° of separation. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Venus trine Neptune at 0.8°, and Jupiter sextile Saturn at 0.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Moon in Taurus at 8.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 22.8° is in domicile — the planet in its own sign, running on home rules; Mars in Scorpio at 20.4° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air4-earth1-fire1",
+        "modalities:fixed5-mutable3-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 water, 4 air, 1 earth, 1 fire by element and 5 fixed, 3 mutable, 2 cardinal by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 8.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-8/",
+    "label": "Everyone born on November 8"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "stellium:scorpio:4",
+    "sun-degree:16.59",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:16.9°",
+    "personal:Venus:Libra:22.8°",
+    "personal:Mars:Scorpio:20.4°",
+    "aspect:Sun:Mercury:conjunction:0.3",
+    "aspect:Venus:Neptune:trine:0.79",
+    "aspect:Jupiter:Saturn:sextile:0.93",
+    "figure:unaspected:Moon",
+    "dignity:Moon:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:domicile",
+    "elements:water4-air4-earth1-fire1",
+    "modalities:fixed5-mutable3-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:taurus",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 413,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "frederick-banting",
+  "seedRound": 0,
+  "qid": "Q180350",
+  "displayName": "Frederick Banting",
+  "identity": "Physician and writer · Canada · 1891–1941",
+  "title": "Frederick Banting's birth chart",
+  "metaDescription": "Frederick Banting's chart, computed from a sourced birth date: Sun at 22.1° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mutable signs carry six of the nine placements whose signs are settled — the broadest certain weighting in the chart. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.08",
+        "decan:scorpio:third"
+      ],
+      "text": "The Sun sits at 22.1° Scorpio — the third decan, 20°–30°, which the tradition sub-rules by the Moon. Degrees matter more than the sign label here: two people born a fortnight apart share Scorpio and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:2.2°",
+        "personal:Venus:Sagittarius:6.7°",
+        "personal:Mars:Libra:15.1°"
+      ],
+      "text": "Closer in, Mercury stands at 2.2° Sagittarius; Venus stands at 6.7° Sagittarius; Mars stands at 15.1° Libra. The tradition reads a mind that decides at speaking speed from Mercury, taste that runs toward the vivid and the immediate from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:conjunction:0.08",
+        "aspect:Jupiter:Pluto:square:0.2",
+        "aspect:Jupiter:Neptune:square:0.27"
+      ],
+      "text": "Neptune to Pluto is the closest call of the day, a conjunction within 0.1°. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Jupiter square Pluto at 0.2°, and Jupiter square Neptune at 0.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Neptune:apex-Jupiter",
+        "figure:unaspected:Sun"
+      ],
+      "text": "Mercury opposes Neptune while both square Jupiter. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Sun stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The classical table has three entries for this chart. Mercury in Sagittarius at 2.2° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 15.1° is in detriment; Jupiter in Pisces at 8.3° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-fire2-earth1",
+        "modalities:mutable6-fixed2-cardinal1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 water, 3 air, 2 fire, 1 earth by element and 6 mutable, 2 fixed, 1 cardinal by modality. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 14.8° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-14/",
+    "label": "Everyone born on November 14"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:6",
+    "sun-degree:22.08",
+    "decan:scorpio:third",
+    "personal:Mercury:Sagittarius:2.2°",
+    "personal:Venus:Sagittarius:6.7°",
+    "personal:Mars:Libra:15.1°",
+    "aspect:Neptune:Pluto:conjunction:0.08",
+    "aspect:Jupiter:Pluto:square:0.2",
+    "aspect:Jupiter:Neptune:square:0.27",
+    "figure:t-square:Mercury-Neptune:apex-Jupiter",
+    "figure:unaspected:Sun",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:water3-air3-fire2-earth1",
+    "modalities:mutable6-fixed2-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 468,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

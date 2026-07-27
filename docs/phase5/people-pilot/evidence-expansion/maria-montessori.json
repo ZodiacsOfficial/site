@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maria-montessori",
+ "qid": "Q131117",
+ "displayName": "Maria Montessori",
+ "wikidataLabel": "Maria Montessori",
+ "wikidataDescription": "Italian physician and educator (1870-1952)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q131117",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520439674
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Maria Montessori",
+   "articleUrl": "https://en.wikipedia.org/wiki/Maria_Montessori",
+   "pageId": 6793630,
+   "revisionId": 1364269662,
+   "revisionTimestamp": "2026-07-15T15:34:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1870-08-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1870-08-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1870-08-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1952-05-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q123941",
+  "label": "Chiaravalle",
+  "entityUrl": "https://www.wikidata.org/wiki/Q123941",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q123941",
+   "sourceEntityLabel": "Chiaravalle",
+   "latitude": 43.599669444444,
+   "longitude": 13.325680555556,
+   "precision": 0.00000277777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Maria Montessori (portrait).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Maria%20Montessori%20(portrait).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Maria_Montessori_(portrait).jpg",
+  "width": 2691,
+  "height": 3588,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Nationaal Archief 119-0489",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "thomas-mann",
+  "seedRound": 0,
+  "qid": "Q37030",
+  "displayName": "Thomas Mann",
+  "identity": "Novelist and university teacher · Germany · 1875–1955",
+  "title": "Thomas Mann's birth chart",
+  "metaDescription": "Thomas Mann's chart, computed from a sourced birth date: Sun at 15.3° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 20.6° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.29",
+        "decan:gemini:second"
+      ],
+      "text": "The Sun's exact place is 15.3° Gemini. That falls in the second decan, 10°–20°, sub-ruled by Venus in the classical scheme — a air sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Cancer:9.1°",
+        "personal:Venus:Taurus:16.6°",
+        "personal:Mars:Capricorn:2.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Cancer (9.1°), Venus in Taurus (16.6°), Mars in Capricorn (2.4°): a mind that absorbs before it argues, taste for the substantial and the lasting, drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Neptune:trine:0.3",
+        "aspect:Sun:Uranus:sextile:3.14",
+        "aspect:Saturn:Pluto:square:3.39"
+      ],
+      "text": "The day's firmest angle joins Mars and Neptune — a trine holding at 0.3°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, the Sun sextile Uranus at 3.1°, and Saturn square Pluto at 3.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Venus:domicile",
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Moon in Cancer at 20.6° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 16.6° is in domicile; Mars in Capricorn at 2.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aquarius at 26.1° is in domicile. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-water2-fire1",
+        "modalities:fixed5-cardinal4-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in earth, 3 in air, 2 in water, 1 in fire by element, 5 fixed, 4 cardinal, 1 mutable by modality. An earth emphasis reads as patience with material reality — slow hands, durable results. Mars and Jupiter were retrograde. Saturn changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 20.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-6/",
+    "label": "Everyone born on June 6"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:15.29",
+    "decan:gemini:second",
+    "personal:Mercury:Cancer:9.1°",
+    "personal:Venus:Taurus:16.6°",
+    "personal:Mars:Capricorn:2.4°",
+    "aspect:Mars:Neptune:trine:0.3",
+    "aspect:Sun:Uranus:sextile:3.14",
+    "aspect:Saturn:Pluto:square:3.39",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Venus:domicile",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:earth4-air3-water2-fire1",
+    "modalities:fixed5-cardinal4-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 405,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "berthe-morisot",
+  "seedRound": 0,
+  "qid": "Q105320",
+  "displayName": "Berthe Morisot",
+  "identity": "Painter · France · 1841–1895",
+  "title": "Berthe Morisot's birth chart",
+  "metaDescription": "Berthe Morisot's chart, computed from a sourced birth date: Sun at 24.2° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in cardinal signs, the widest weighting the unknown hour leaves certain. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.23",
+        "decan:capricorn:third"
+      ],
+      "text": "The Sun's position resolves to 24.2° Capricorn — deep enough in the third decan (20°–30°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:10.6°",
+        "personal:Venus:Pisces:5.5°",
+        "personal:Mars:Libra:21.7°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (10.6°), Venus in Pisces (5.5°), Mars in Libra (21.7°): thought with its feet on the ground, attraction that works by atmosphere, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:square:2.51",
+        "aspect:Jupiter:Neptune:sextile:2.83",
+        "aspect:Mars:Pluto:opposition:3.75"
+      ],
+      "text": "The Sun and Mars hold the closest angle here — a square, 2.5° wide. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Jupiter sextile Neptune at 2.8°, and Mars opposition Pluto at 3.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Mars-Pluto:apex-Sun",
+        "figure:unaspected:Mercury"
+      ],
+      "text": "Mars opposes Pluto while both square the Sun. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. Mercury makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:exaltation",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Venus in Pisces at 5.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Libra at 21.7° is in detriment — the planet opposite its home, working against the grain; Jupiter in Sagittarius at 10.9° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth2-water2-air2",
+        "modalities:cardinal4-mutable4-fixed1",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 fire, 2 earth, 2 water, 2 air; by modality, 4 cardinal, 4 mutable, 1 fixed. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Nothing was retrograde that day, which is less common than it sounds."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 12.7° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-14/",
+    "label": "Everyone born on January 14"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:4",
+    "sun-degree:24.23",
+    "decan:capricorn:third",
+    "personal:Mercury:Capricorn:10.6°",
+    "personal:Venus:Pisces:5.5°",
+    "personal:Mars:Libra:21.7°",
+    "aspect:Sun:Mars:square:2.51",
+    "aspect:Jupiter:Neptune:sextile:2.83",
+    "aspect:Mars:Pluto:opposition:3.75",
+    "figure:t-square:Mars-Pluto:apex-Sun",
+    "figure:unaspected:Mercury",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:fire3-earth2-water2-air2",
+    "modalities:cardinal4-mutable4-fixed1",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 413,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

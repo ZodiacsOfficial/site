@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "seve-ballesteros",
+  "seedRound": 0,
+  "qid": "Q272190",
+  "displayName": "Seve Ballesteros",
+  "identity": "Golfer · Spain · 1957–2011",
+  "title": "Seve Ballesteros's birth chart",
+  "metaDescription": "Seve Ballesteros's chart, computed from a sourced birth date: Sun at 19.3° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 19.3° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.33",
+        "decan:aries:second"
+      ],
+      "text": "19.3° of Aries is the Sun's exact seat — second decan, 10°–20°, sub-ruled by the Sun in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Taurus:7.4°",
+        "personal:Venus:Aries:18.0°",
+        "personal:Mars:Gemini:14.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Taurus (7.4°), Venus in Aries (18.0°), Mars in Gemini (14.2°): thought with its feet on the ground, attraction declared rather than implied, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:opposition:0.1",
+        "aspect:Uranus:Neptune:square:1.3",
+        "aspect:Sun:Venus:conjunction:1.32"
+      ],
+      "text": "The day's firmest angle joins Mars and Saturn — a opposition holding at 0.1°. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Uranus square Neptune at 1.3°, and the Sun conjunction Venus at 1.3° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mercury-Neptune:apex-Uranus",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mercury opposes Neptune while both square Uranus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Aries at 19.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Aries at 18.0° is in detriment — the planet opposite its home, working against the grain; Jupiter in Virgo at 24.1° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire6-earth2-air1-water1",
+        "modalities:fixed5-mutable3-cardinal2",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 6 fire, 2 earth, 1 air, 1 water by element and 5 fixed, 3 mutable, 2 cardinal by mode. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:14.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 14.4° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 10.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-9/",
+    "label": "Everyone born on April 9"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:19.33",
+    "decan:aries:second",
+    "personal:Mercury:Taurus:7.4°",
+    "personal:Venus:Aries:18.0°",
+    "personal:Mars:Gemini:14.2°",
+    "aspect:Mars:Saturn:opposition:0.1",
+    "aspect:Uranus:Neptune:square:1.3",
+    "aspect:Sun:Venus:conjunction:1.32",
+    "figure:t-square:Mercury-Neptune:apex-Uranus",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:fire6-earth2-air1-water1",
+    "modalities:fixed5-mutable3-cardinal2",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:leo",
+    "moon-band:14.4"
+  ],
+  "measurements": {
+    "originalWords": 417,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

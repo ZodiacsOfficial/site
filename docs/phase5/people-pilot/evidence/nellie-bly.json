@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nellie-bly",
+ "qid": "Q230299",
+ "displayName": "Nellie Bly",
+ "wikidataLabel": "Nellie Bly",
+ "wikidataDescription": "American journalist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q230299",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519382405
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nellie Bly",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nellie_Bly",
+   "pageId": 185781,
+   "revisionId": 1364612368,
+   "revisionTimestamp": "2026-07-17T14:54:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1864-05-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1864-05-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1861-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   },
+   {
+    "time": "+1865-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1864-05-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1922-01-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1773483",
+  "label": "Burrell Township",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1773483",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1773483",
+   "sourceEntityLabel": "Burrell Township",
+   "latitude": 40.670833333333,
+   "longitude": -79.441944444444,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  },
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  },
+  {
+   "entity": "Q96050759",
+   "label": "newspaperperson"
+  },
+  {
+   "entity": "Q12356615",
+   "label": "traveler"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nellie Bly 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nellie%20Bly%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nellie_Bly_2.jpg",
+  "width": 926,
+  "height": 1396,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "H. J. Myers, photographer",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3b22819.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

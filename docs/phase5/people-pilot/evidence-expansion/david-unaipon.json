@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "david-unaipon",
+ "qid": "Q939297",
+ "displayName": "David Unaipon",
+ "wikidataLabel": "David Unaipon",
+ "wikidataDescription": "Indigenous Australian inventor and writer (1872–1967)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "oceania",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q939297",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521386838
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "David Unaipon",
+   "articleUrl": "https://en.wikipedia.org/wiki/David_Unaipon",
+   "pageId": 739127,
+   "revisionId": 1366071663,
+   "revisionTimestamp": "2026-07-26T03:08:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1872-09-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1872-09-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1872-09-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-02-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q19877475",
+  "label": "Raukkan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q19877475",
+  "country": {
+   "entity": "Q408",
+   "label": "Australia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q19877475",
+   "sourceEntityLabel": "Raukkan",
+   "latitude": -35.506,
+   "longitude": 139.135,
+   "precision": 0.11035072716935,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q432386",
+   "label": "preacher"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q30242234",
+   "label": "freedom fighter"
+  }
+ ],
+ "portrait": {
+  "file": "File:David Unaipon.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:David%20Unaipon.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:David_Unaipon.jpg",
+  "width": 850,
+  "height": 1072,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown",
+  "credit": "State Library of New South Wales, A 1929",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sarojini-naidu",
+ "qid": "Q250165",
+ "displayName": "Sarojini Naidu",
+ "wikidataLabel": "Sarojini Naidu",
+ "wikidataDescription": "Indian poet, politician, governor of the United Provinces of Agra and Oudh from1947 to 1949",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q250165",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510578015
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sarojini Naidu",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sarojini_Naidu",
+   "pageId": 133117,
+   "revisionId": 1365119550,
+   "revisionTimestamp": "2026-07-20T10:49:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1879-02-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1879-02-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1879-02-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1949-03-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1361",
+  "label": "Hyderabad",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1361",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1361",
+   "sourceEntityLabel": "Hyderabad",
+   "latitude": 17.361666666666668,
+   "longitude": 78.47472222222223,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q11571698",
+   "label": "independence activist"
+  },
+  {
+   "entity": "Q30242234",
+   "label": "freedom fighter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sarojini Naidu.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sarojini%20Naidu.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sarojini_Naidu.jpg",
+  "width": 743,
+  "height": 970,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Sarojini Naidu",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

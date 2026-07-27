@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "luchino-visconti",
+ "qid": "Q13888",
+ "displayName": "Luchino Visconti",
+ "wikidataLabel": "Luchino Visconti",
+ "wikidataDescription": "Italian director (1906–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q13888",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520679798
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Luchino Visconti",
+   "articleUrl": "https://en.wikipedia.org/wiki/Luchino_Visconti",
+   "pageId": 44822,
+   "revisionId": 1361011886,
+   "revisionTimestamp": "2026-06-25T02:18:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-11-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-11-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-11-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-03-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q490",
+  "label": "Milan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q490",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q490",
+   "sourceEntityLabel": "Milan",
+   "latitude": 45.466944444444,
+   "longitude": 9.19,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3387717",
+   "label": "theatre director"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q11613590",
+   "label": "theatre designer"
+  },
+  {
+   "entity": "Q28054786",
+   "label": "opera director"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Luchino Visconti 1972b.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Luchino%20Visconti%201972b.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Luchino_Visconti_1972b.jpg",
+  "width": 714,
+  "height": 941,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Marisa Rastellini (Mondadori Publisher)",
+  "credit": "http://www.gettyimages.co.uk/detail/news-photo/italian-director-luchino-visconti-having-a-break-1972-news-photo/141554541",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "eileen-gray",
+  "seedRound": 0,
+  "qid": "Q438129",
+  "displayName": "Eileen Gray",
+  "identity": "Architect and designer · Ireland · 1878–1976",
+  "title": "Eileen Gray's birth chart",
+  "metaDescription": "Eileen Gray's chart, computed from a sourced birth date: Sun at 15.8° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 15.8° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.77",
+        "decan:leo:second"
+      ],
+      "text": "The Sun's position resolves to 15.8° Leo — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Virgo:12.5°",
+        "personal:Venus:Cancer:15.8°",
+        "personal:Mars:Leo:29.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 12.5° Virgo, Venus was at 15.8° Cancer, Mars was at 29.3° Leo. Read together: thought with its feet on the ground; attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:conjunction:0.33",
+        "aspect:Jupiter:Saturn:sextile:1.95",
+        "aspect:Uranus:Pluto:square:2.51"
+      ],
+      "text": "The tightest geometry in the chart puts Mars in the same degree of the zodiac from Uranus, 0.3° off exact. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Jupiter sextile Saturn at 1.9°, and Uranus square Pluto at 2.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mercury:exaltation",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Leo at 15.8° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 12.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aries at 2.4° is in fall — the tradition’s uphill placement, strength earned rather than given. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-earth3-water1-air1",
+        "modalities:fixed6-mutable2-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 fire, 3 earth, 1 water, 1 air by element and 6 fixed, 2 mutable, 2 cardinal by mode. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. Jupiter and Saturn were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 23.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-8/",
+    "label": "Everyone born on August 8"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:15.77",
+    "decan:leo:second",
+    "personal:Mercury:Virgo:12.5°",
+    "personal:Venus:Cancer:15.8°",
+    "personal:Mars:Leo:29.3°",
+    "aspect:Mars:Uranus:conjunction:0.33",
+    "aspect:Jupiter:Saturn:sextile:1.95",
+    "aspect:Uranus:Pluto:square:2.51",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Mercury:exaltation",
+    "dignity:Saturn:fall",
+    "elements:fire5-earth3-water1-air1",
+    "modalities:fixed6-mutable2-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:sagittarius",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 407,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

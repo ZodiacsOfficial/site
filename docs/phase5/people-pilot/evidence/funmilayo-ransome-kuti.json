@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "funmilayo-ransome-kuti",
+ "qid": "Q226122",
+ "displayName": "Funmilayo Ransome-Kuti",
+ "wikidataLabel": "Funmilayo Ransome-Kuti",
+ "wikidataDescription": "Nigerian educator, political campaigner, suffragist, and women's rights activist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q226122",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521347439
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Funmilayo Ransome-Kuti",
+   "articleUrl": "https://en.wikipedia.org/wiki/Funmilayo_Ransome-Kuti",
+   "pageId": 8935089,
+   "revisionId": 1364196246,
+   "revisionTimestamp": "2026-07-15T02:39:30Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1900-10-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1900-10-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1900-10-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1978-04-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q206484",
+  "label": "Abeokuta",
+  "entityUrl": "https://www.wikidata.org/wiki/Q206484",
+  "country": {
+   "entity": "Q1033",
+   "label": "Nigeria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q206484",
+   "sourceEntityLabel": "Abeokuta",
+   "latitude": 7.15,
+   "longitude": 3.35,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q322170",
+   "label": "suffragette"
+  }
+ ],
+ "portrait": {
+  "file": "File:70 year old Funmilayo Ransome-Kuti on her birthday.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:70%20year%20old%20Funmilayo%20Ransome-Kuti%20on%20her%20birthday.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:70_year_old_Funmilayo_Ransome-Kuti_on_her_birthday.png",
+  "width": 325,
+  "height": 485,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "UNESCO",
+  "credit": "http://www.unesco.org/new/fileadmin/MULTIMEDIA/HQ/CI/CI/pdf/publications/frk_en.pdf",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

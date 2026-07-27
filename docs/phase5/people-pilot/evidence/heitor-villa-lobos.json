@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "heitor-villa-lobos",
+ "qid": "Q203514",
+ "displayName": "Heitor Villa-Lobos",
+ "wikidataLabel": "Heitor Villa-Lobos",
+ "wikidataDescription": "Brazilian composer (1887–1959)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q203514",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515851793
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Heitor Villa-Lobos",
+   "articleUrl": "https://en.wikipedia.org/wiki/Heitor_Villa-Lobos",
+   "pageId": 177304,
+   "revisionId": 1366107203,
+   "revisionTimestamp": "2026-07-26T08:50:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1887-03-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1887-03-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1887-03-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1959-11-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8678",
+  "label": "Rio de Janeiro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8678",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q8678",
+   "sourceEntityLabel": "Rio de Janeiro",
+   "latitude": -22.91111111111111,
+   "longitude": -43.205555555555556,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q2490358",
+   "label": "choreographer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q5758653",
+   "label": "secondary school teacher"
+  },
+  {
+   "entity": "Q24067349",
+   "label": "classical guitarist"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q13219637",
+   "label": "cellist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Heitor Villa-Lobos (c. 1922).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Heitor%20Villa-Lobos%20(c.%201922).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Heitor_Villa-Lobos_(c._1922).jpg",
+  "width": 219,
+  "height": 413,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Biblioteca Nacional do Brasil [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

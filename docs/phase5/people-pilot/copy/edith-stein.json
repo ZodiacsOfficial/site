@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "edith-stein",
+  "seedRound": 0,
+  "qid": "Q76749",
+  "displayName": "Edith Stein",
+  "identity": "Translator and university teacher · Poland · 1891–1942",
+  "title": "Edith Stein's birth chart",
+  "metaDescription": "Edith Stein's chart, computed from a sourced birth date: Sun at 18.8° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a conjunction to Saturn at 0.0° — close enough to weld drive to structure. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other.",
+  "ledeFact": "aspect:Mars:Saturn:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.82",
+        "decan:libra:second"
+      ],
+      "text": "At the noon reference the Sun sits 18.8° into Libra — the second decan, which the old scheme hands to Saturn. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:7.8°",
+        "personal:Venus:Libra:25.1°",
+        "personal:Mars:Virgo:24.0°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Libra (7.8°), Venus in Libra (25.1°), Mars in Virgo (24.0°): thought that travels by comparison, attraction that begins as conversation, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:conjunction:0.01",
+        "aspect:Jupiter:Neptune:square:0.14",
+        "aspect:Neptune:Pluto:conjunction:0.16"
+      ],
+      "text": "Mars and Saturn hold the closest angle here — a conjunction, 0.0° wide. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Jupiter square Neptune at 0.1°, and Neptune conjunction Pluto at 0.2° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Moon-Mercury-Pluto"
+      ],
+      "text": "the Moon, Mercury, Pluto close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Sun in Libra at 18.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Libra at 25.1° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 9.0° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-earth2-water2",
+        "modalities:mutable5-cardinal3-fixed2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 6, earth 2, water 2; modalities mutable 5, cardinal 3, fixed 2. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:14.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 14.0° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 7.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-12/",
+    "label": "Everyone born on October 12"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Saturn:conjunction",
+    "sun-degree:18.82",
+    "decan:libra:second",
+    "personal:Mercury:Libra:7.8°",
+    "personal:Venus:Libra:25.1°",
+    "personal:Mars:Virgo:24.0°",
+    "aspect:Mars:Saturn:conjunction:0.01",
+    "aspect:Jupiter:Neptune:square:0.14",
+    "aspect:Neptune:Pluto:conjunction:0.16",
+    "figure:grand-trine:Moon-Mercury-Pluto",
+    "dignity:Sun:fall",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:domicile",
+    "elements:air6-earth2-water2",
+    "modalities:mutable5-cardinal3-fixed2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aquarius",
+    "moon-band:14.0"
+  ],
+  "measurements": {
+    "originalWords": 415,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

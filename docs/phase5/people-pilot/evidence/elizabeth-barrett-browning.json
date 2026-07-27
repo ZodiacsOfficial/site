@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elizabeth-barrett-browning",
+ "qid": "Q228494",
+ "displayName": "Elizabeth Barrett Browning",
+ "wikidataLabel": "Elizabeth Barrett Browning",
+ "wikidataDescription": "English poet (1806–1861)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q228494",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520312791
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elizabeth Barrett Browning",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elizabeth_Barrett_Browning",
+   "pageId": 9627,
+   "revisionId": 1365786477,
+   "revisionTimestamp": "2026-07-24T11:46:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1806-03-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1806-03-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1806-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1806-03-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1861-06-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q114682119",
+  "label": "Coxhoe Hall",
+  "entityUrl": "https://www.wikidata.org/wiki/Q114682119",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q114682119",
+   "sourceEntityLabel": "Coxhoe Hall",
+   "latitude": 54.716746,
+   "longitude": -1.48882,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q16254673",
+   "label": "pamphleteer"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q12526417",
+   "label": "abolitionist"
+  }
+ ],
+ "portrait": {
+  "file": "File:ElizabethBarrettBrowning.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:ElizabethBarrettBrowning.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:ElizabethBarrettBrowning.jpg",
+  "width": 530,
+  "height": 679,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

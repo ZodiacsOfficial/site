@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "arthur-eddington",
+ "qid": "Q215022",
+ "displayName": "Arthur Eddington",
+ "wikidataLabel": "Arthur Eddington",
+ "wikidataDescription": "British astrophysicist (1882-1944)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q215022",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516215236
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Arthur Eddington",
+   "articleUrl": "https://en.wikipedia.org/wiki/Arthur_Eddington",
+   "pageId": 2274,
+   "revisionId": 1361410650,
+   "revisionTimestamp": "2026-06-27T19:49:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1882-12-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-12-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1882-12-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1944-11-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q994575",
+  "label": "Kendal",
+  "entityUrl": "https://www.wikidata.org/wiki/Q994575",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q994575",
+   "sourceEntityLabel": "Kendal",
+   "latitude": 54.326,
+   "longitude": -2.745,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Arthur Stanley Eddington.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Arthur%20Stanley%20Eddington.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Arthur_Stanley_Eddington.jpg",
+  "width": 538,
+  "height": 688,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "George Grantham Bain Collection, Library of Congress Prints and Photographs Division Washington, D.C.",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ggbain.38064.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "leonora-carrington",
+  "seedRound": 0,
+  "qid": "Q233207",
+  "displayName": "Leonora Carrington",
+  "identity": "Painter and novelist · United Kingdom · 1917–2011",
+  "title": "Leonora Carrington's birth chart",
+  "metaDescription": "Leonora Carrington's chart, computed from a sourced birth date: Sun at 16.1° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Aries — the Sun, Mercury, Venus and Mars. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aries:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.11",
+        "decan:aries:second"
+      ],
+      "text": "At noon on that date the Sun stood at 16.1° Aries, inside the second decan (10°–20°), whose traditional sub-ruler is the Sun. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:24.5°",
+        "personal:Venus:Aries:11.0°",
+        "personal:Mars:Aries:8.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (24.5°), Venus in Aries (11.0°), Mars in Aries (8.3°): thought that arrives already in motion, attraction declared rather than implied, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:square:0.68",
+        "aspect:Mercury:Uranus:sextile:1.84",
+        "aspect:Venus:Mars:conjunction:2.61"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury at right angles from Saturn, 0.7° off exact. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Mercury sextile Uranus at 1.8°, and Venus conjunction Mars at 2.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Jupiter makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, four placements stand out. The Sun in Aries at 16.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Aries at 11.0° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 8.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 23.8° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-water2-earth1-air1",
+        "modalities:cardinal6-fixed3",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements fire 5, water 2, earth 1, air 1; modalities cardinal 6, fixed 3. Neptune was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 12.4° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-6/",
+    "label": "Everyone born on April 6"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:aries:4",
+    "sun-degree:16.11",
+    "decan:aries:second",
+    "personal:Mercury:Aries:24.5°",
+    "personal:Venus:Aries:11.0°",
+    "personal:Mars:Aries:8.3°",
+    "aspect:Mercury:Saturn:square:0.68",
+    "aspect:Mercury:Uranus:sextile:1.84",
+    "aspect:Venus:Mars:conjunction:2.61",
+    "figure:unaspected:Jupiter",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:detriment",
+    "elements:fire5-water2-earth1-air1",
+    "modalities:cardinal6-fixed3",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 414,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

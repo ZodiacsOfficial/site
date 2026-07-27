@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "georges-lemaitre",
+ "qid": "Q12998",
+ "displayName": "Georges Lemaître",
+ "wikidataLabel": "Georges Lemaître",
+ "wikidataDescription": "Belgian astrophysicist and Catholic priest (1894–1966)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q12998",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517787919
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Georges Lemaître",
+   "articleUrl": "https://en.wikipedia.org/wiki/Georges_Lema%C3%AEtre",
+   "pageId": 224698,
+   "revisionId": 1347458645,
+   "revisionTimestamp": "2026-04-06T21:00:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1894-07-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1894-07-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1894-07-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1966-06-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q81046",
+  "label": null,
+  "entityUrl": "https://www.wikidata.org/wiki/Q81046",
+  "country": {
+   "entity": "Q31",
+   "label": "Belgium"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q81046",
+   "sourceEntityLabel": "Q81046",
+   "latitude": 50.416666666667,
+   "longitude": 4.4441666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2998308",
+   "label": "cosmologist"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q250867",
+   "label": "Catholic priest"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q98833890",
+   "label": "Catholic theologian"
+  }
+ ],
+ "portrait": {
+  "file": "File:Lemaitre.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Lemaitre.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Lemaitre.jpg",
+  "width": 497,
+  "height": 540,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unknown photographer, probably a CalTech employee. Cropped by Artistosteles",
+  "credit": "Gliscritti",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

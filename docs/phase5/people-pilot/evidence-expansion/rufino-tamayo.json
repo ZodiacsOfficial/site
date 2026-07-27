@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rufino-tamayo",
+ "qid": "Q690790",
+ "displayName": "Rufino Tamayo",
+ "wikidataLabel": "Rufino Tamayo",
+ "wikidataDescription": "Mexican painter, printmaker, and sculptor (1899-1991)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q690790",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2503327570
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rufino Tamayo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rufino_Tamayo",
+   "pageId": 556242,
+   "revisionId": 1364844868,
+   "revisionTimestamp": "2026-07-18T21:21:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-08-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-08-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-08-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1990-06-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q131429",
+  "label": "Oaxaca de Juárez",
+  "entityUrl": "https://www.wikidata.org/wiki/Q131429",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q131429",
+   "sourceEntityLabel": "Oaxaca de Juárez",
+   "latitude": 17.060555555555556,
+   "longitude": -96.72527777777778,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rufino Tamayo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rufino%20Tamayo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rufino_Tamayo.jpg",
+  "width": 2453,
+  "height": 3856,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "User Steve Eifert on en.wikipedia",
+  "credit": "US gov",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

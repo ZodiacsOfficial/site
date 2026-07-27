@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jean-luc-godard",
+ "qid": "Q53001",
+ "displayName": "Jean-Luc Godard",
+ "wikidataLabel": "Jean-Luc Godard",
+ "wikidataDescription": "French and Swiss film director (1930–2022)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q53001",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520619980
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jean-Luc Godard",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jean-Luc_Godard",
+   "pageId": 60368,
+   "revisionId": 1363500857,
+   "revisionTimestamp": "2026-07-10T16:16:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1930-12-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1930-12-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1930-12-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2022-09-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q259463",
+  "label": "7th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q259463",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q259463",
+   "sourceEntityLabel": "7th arrondissement of Paris",
+   "latitude": 48.859166666667,
+   "longitude": 2.3127777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q222344",
+   "label": "cinematographer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4220892",
+   "label": "film critic"
+  },
+  {
+   "entity": "Q2059704",
+   "label": "television director"
+  },
+  {
+   "entity": "Q578109",
+   "label": "television producer"
+  },
+  {
+   "entity": "Q18216771",
+   "label": "video artist"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jean-Luc Godard at Berkeley, 1968.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jean-Luc%20Godard%20at%20Berkeley%2C%201968.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jean-Luc_Godard_at_Berkeley,_1968.jpg",
+  "width": 600,
+  "height": 800,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Gary Stevens",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

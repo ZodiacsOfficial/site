@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "florence-nightingale",
+  "seedRound": 0,
+  "qid": "Q37103",
+  "displayName": "Florence Nightingale",
+  "identity": "Nurse and writer · Italy · 1820–1910",
+  "title": "Florence Nightingale's birth chart",
+  "metaDescription": "Florence Nightingale's chart, computed from a sourced birth date: Sun at 21.6° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 22.7° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.58",
+        "decan:taurus:third"
+      ],
+      "text": "The Sun's exact place is 21.6° Taurus. That falls in the third decan, 20°–30°, sub-ruled by Saturn in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:25.7°",
+        "personal:Venus:Cancer:6.7°",
+        "personal:Mars:Leo:10.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 25.7° Aries, Venus was at 6.7° Cancer, Mars was at 10.5° Leo. Read together: a mind that decides at speaking speed; taste tuned to mood and undertow; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:square:0.12",
+        "aspect:Mars:Saturn:trine:1.18",
+        "aspect:Neptune:Pluto:square:2.14"
+      ],
+      "text": "Start where the chart is tightest — Uranus square Pluto, 0.1° of separation. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mars trine Saturn at 1.2°, and Neptune square Pluto at 2.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Taurus at 22.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 17.7° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 9.3° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth3-water3",
+        "modalities:cardinal4-fixed3-mutable3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in fire, 3 in earth, 3 in water by element, 4 cardinal, 3 fixed, 3 mutable by modality. A fire-weighted chart runs hot at the start line — initiative is its native language. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus and Neptune were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:13.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 22.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-12/",
+    "label": "Everyone born on May 12"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:21.58",
+    "decan:taurus:third",
+    "personal:Mercury:Aries:25.7°",
+    "personal:Venus:Cancer:6.7°",
+    "personal:Mars:Leo:10.5°",
+    "aspect:Uranus:Pluto:square:0.12",
+    "aspect:Mars:Saturn:trine:1.18",
+    "aspect:Neptune:Pluto:square:2.14",
+    "figure:none",
+    "dignity:Moon:exaltation",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:fall",
+    "elements:fire4-earth3-water3",
+    "modalities:cardinal4-fixed3-mutable3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:taurus",
+    "moon-band:13.8"
+  ],
+  "measurements": {
+    "originalWords": 428,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

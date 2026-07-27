@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "r-k-narayan",
+  "seedRound": 0,
+  "qid": "Q334252",
+  "displayName": "R. K. Narayan",
+  "identity": "Writer and politician · India · 1906–2001",
+  "title": "R. K. Narayan's birth chart",
+  "metaDescription": "R. K. Narayan's chart, computed from a sourced birth date: Sun at 16.0° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 11.8° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.04",
+        "decan:libra:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 16.0° Libra: the second decan, whose classical sub-ruler is Saturn. A air sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:27.3°",
+        "personal:Venus:Sagittarius:0.7°",
+        "personal:Mars:Virgo:17.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 27.3° Libra, Venus was at 0.7° Sagittarius, Mars was at 17.5° Virgo. Read together: a mind at home in argument and pattern; taste that runs toward the vivid and the immediate; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:trine:1.2",
+        "aspect:Jupiter:Neptune:conjunction:2.21",
+        "aspect:Sun:Neptune:square:3.4"
+      ],
+      "text": "Start where the chart is tightest — Jupiter trine Saturn, 1.2° of separation. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Jupiter conjunction Neptune at 2.2°, and the Sun square Neptune at 3.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Venus"
+      ],
+      "text": "Venus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:domicile",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The classical table has three entries for this chart. The Sun in Libra at 16.0° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Cancer at 11.8° is in domicile — the planet in its own sign, running on home rules; Jupiter in Cancer at 10.4° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air3-earth2-fire1",
+        "modalities:cardinal6-mutable4",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: water 4, air 3, earth 2, fire 1 across the elements, and cardinal 6, mutable 4 across the modalities. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Saturn and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-10/",
+    "label": "Everyone born on October 10"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:16.04",
+    "decan:libra:second",
+    "personal:Mercury:Libra:27.3°",
+    "personal:Venus:Sagittarius:0.7°",
+    "personal:Mars:Virgo:17.5°",
+    "aspect:Jupiter:Saturn:trine:1.2",
+    "aspect:Jupiter:Neptune:conjunction:2.21",
+    "aspect:Sun:Neptune:square:3.4",
+    "figure:unaspected:Venus",
+    "dignity:Sun:fall",
+    "dignity:Moon:domicile",
+    "dignity:Jupiter:exaltation",
+    "elements:water4-air3-earth2-fire1",
+    "modalities:cardinal6-mutable4",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 431,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "banjo-paterson",
+ "qid": "Q436699",
+ "displayName": "Banjo Paterson",
+ "wikidataLabel": "Andrew Barton Paterson",
+ "wikidataDescription": "Australian journalist, author and poet (1864 - 1941)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q436699",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517355805
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Banjo Paterson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Banjo_Paterson",
+   "pageId": 81222,
+   "revisionId": 1361882733,
+   "revisionTimestamp": "2026-06-30T17:05:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1864-02-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1864-02-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1864-02-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-02-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q580973",
+  "label": "Orange",
+  "entityUrl": "https://www.wikidata.org/wiki/Q580973",
+  "country": {
+   "entity": "Q408",
+   "label": "Australia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q580973",
+   "sourceEntityLabel": "Orange",
+   "latitude": -33.281666666666666,
+   "longitude": 149.1011111,
+   "precision": 0.000278,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q164236",
+   "label": "war correspondent"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1209498",
+   "label": "poet lawyer"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Andrew Barton (Banjo) Paterson.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Andrew%20Barton%20(Banjo)%20Paterson.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Andrew_Barton_(Banjo)_Paterson.jpg",
+  "width": 1397,
+  "height": 1957,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Falk Studio",
+  "credit": "State Library of New South Wales, P1/577",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

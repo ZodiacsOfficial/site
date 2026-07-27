@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "satyajit-ray",
+  "seedRound": 0,
+  "qid": "Q8873",
+  "displayName": "Satyajit Ray",
+  "identity": "Film director and writer · India · 1921–1992",
+  "title": "Satyajit Ray's birth chart",
+  "metaDescription": "Satyajit Ray's chart, computed from a sourced birth date: Sun at 11.3° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.3° separates the Sun and Neptune from an exact square; at that range identity and imagination read as one mechanism. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected.",
+  "ledeFact": "aspect:Sun:Neptune:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.30",
+        "decan:taurus:second"
+      ],
+      "text": "At noon on that date the Sun stood at 11.3° Taurus, inside the second decan (10°–20°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:1.9°",
+        "personal:Venus:Aries:26.6°",
+        "personal:Mars:Taurus:27.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Taurus (1.9°), Venus in Aries (26.6°), Mars in Taurus (27.3°): thought with its feet on the ground, attraction declared rather than implied, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:opposition:0.05",
+        "aspect:Sun:Neptune:square:0.31",
+        "aspect:Uranus:Pluto:trine:1.77"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Uranus — a opposition holding at 0.1°. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, the Sun square Neptune at 0.3°, and Uranus trine Pluto at 1.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. Venus in Aries at 26.6° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 27.3° is in detriment; Jupiter in Virgo at 8.9° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire2-water2",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 5 earth, 2 fire, 2 water by element and 4 fixed, 3 mutable, 2 cardinal by mode. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Venus, Jupiter and Saturn were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 12.1° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-2/",
+    "label": "Everyone born on May 2"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:square",
+    "sun-degree:11.30",
+    "decan:taurus:second",
+    "personal:Mercury:Taurus:1.9°",
+    "personal:Venus:Aries:26.6°",
+    "personal:Mars:Taurus:27.3°",
+    "aspect:Jupiter:Uranus:opposition:0.05",
+    "aspect:Sun:Neptune:square:0.31",
+    "aspect:Uranus:Pluto:trine:1.77",
+    "figure:unaspected:Moon",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:earth5-fire2-water2",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 432,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

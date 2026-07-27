@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "charles-kingsford-smith",
+ "qid": "Q1065180",
+ "displayName": "Charles Kingsford Smith",
+ "wikidataLabel": "Charles Kingsford Smith",
+ "wikidataDescription": "Australian aviator (1897-1935)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "oceania",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1065180",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510390013
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Charles Kingsford Smith",
+   "articleUrl": "https://en.wikipedia.org/wiki/Charles_Kingsford_Smith",
+   "pageId": 226806,
+   "revisionId": 1364344150,
+   "revisionTimestamp": "2026-07-16T01:01:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1897-02-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1897-02-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1897-02-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1935-11-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5644792",
+  "label": "Hamilton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5644792",
+  "country": {
+   "entity": "Q408",
+   "label": "Australia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5644792",
+   "sourceEntityLabel": "Hamilton",
+   "latitude": -27.437,
+   "longitude": 153.059,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q104787833",
+   "label": "Flieger"
+  }
+ ],
+ "portrait": {
+  "file": "File:Charles Kingsford Smith 1932-06-20 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Charles%20Kingsford%20Smith%201932-06-20%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Charles_Kingsford_Smith_1932-06-20_(cropped).jpg",
+  "width": 2590,
+  "height": 3624,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Fairfax Corporation",
+  "credit": "National Library of Australia",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

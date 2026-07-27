@@ -1,0 +1,135 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bedrich-smetana",
+ "qid": "Q48173",
+ "displayName": "Bedřich Smetana",
+ "wikidataLabel": "Bedřich Smetana",
+ "wikidataDescription": "Czech composer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q48173",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518145583
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bedřich Smetana",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bed%C5%99ich_Smetana",
+   "pageId": 140422,
+   "revisionId": 1365685378,
+   "revisionTimestamp": "2026-07-23T21:25:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1824-03-02T00:00:00Z|proleptic-gregorian",
+   "+1824-04-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1824-03-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1824-04-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1824-03-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1884-05-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q722732",
+  "label": "Litomyšl",
+  "entityUrl": "https://www.wikidata.org/wiki/Q722732",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q722732",
+   "sourceEntityLabel": "Litomyšl",
+   "latitude": 49.872064383156,
+   "longitude": 16.310576465877,
+   "precision": 0.0013938249121379,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q1643514",
+   "label": "music arranger"
+  }
+ ],
+ "portrait": {
+  "file": "File:FriedrichSmetana.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:FriedrichSmetana.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:FriedrichSmetana.jpg",
+  "width": 2400,
+  "height": 3080,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "www.um-ak.co.kr/jakga/smetana.htm",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,107 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "enrico-caruso",
+ "qid": "Q170726",
+ "displayName": "Enrico Caruso",
+ "wikidataLabel": "Enrico Caruso",
+ "wikidataDescription": "Italian opera singer (1873–1921)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q170726",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521931187
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Enrico Caruso",
+   "articleUrl": "https://en.wikipedia.org/wiki/Enrico_Caruso",
+   "pageId": 67892,
+   "revisionId": 1365806338,
+   "revisionTimestamp": "2026-07-24T14:20:52Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1873-02-24T00:00:00Z|proleptic-gregorian",
+   "+1873-02-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1873-02-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1873-02-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1873-02-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1921-08-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2634",
+  "label": "Naples",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2634",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2634",
+   "sourceEntityLabel": "Naples",
+   "latitude": 40.83583333333333,
+   "longitude": 14.248611111111112,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Enrico Caruso tenor.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Enrico%20Caruso%20tenor.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Enrico_Caruso_tenor.jpg",
+  "width": 749,
+  "height": 968,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Copyright by Laveccha Studio, Chicago (no. 3).",
+  "credit": "Commons",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

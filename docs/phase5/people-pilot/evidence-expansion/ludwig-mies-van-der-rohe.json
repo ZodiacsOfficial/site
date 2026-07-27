@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ludwig-mies-van-der-rohe",
+ "qid": "Q41508",
+ "displayName": "Ludwig Mies van der Rohe",
+ "wikidataLabel": "Ludwig Mies van der Rohe",
+ "wikidataDescription": "German architect (1886–1969)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41508",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521666675
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ludwig Mies van der Rohe",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ludwig_Mies_van_der_Rohe",
+   "pageId": 17897,
+   "revisionId": 1365600718,
+   "revisionTimestamp": "2026-07-23T11:12:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1886-03-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1886-03-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1886-03-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1969-08-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1017",
+  "label": "Aachen",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1017",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1017",
+   "sourceEntityLabel": "Aachen",
+   "latitude": 50.776207,
+   "longitude": 6.083788,
+   "precision": 0.000277778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ludwig Mies van der Rohe in Arts & Architecture, June 1960 issue.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ludwig%20Mies%20van%20der%20Rohe%20in%20Arts%20%26%20Architecture%2C%20June%201960%20issue.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ludwig_Mies_van_der_Rohe_in_Arts_%26_Architecture,_June_1960_issue.jpg",
+  "width": 3212,
+  "height": 4131,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

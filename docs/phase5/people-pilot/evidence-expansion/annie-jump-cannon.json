@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "annie-jump-cannon",
+ "qid": "Q230650",
+ "displayName": "Annie Jump Cannon",
+ "wikidataLabel": "Annie Jump Cannon",
+ "wikidataDescription": "American astronomer (1863-1941)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q230650",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517531569
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Annie Jump Cannon",
+   "articleUrl": "https://en.wikipedia.org/wiki/Annie_Jump_Cannon",
+   "pageId": 299672,
+   "revisionId": 1365109576,
+   "revisionTimestamp": "2026-07-20T08:42:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1863-12-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1863-12-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1863-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-04-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q33518",
+  "label": "Dover",
+  "entityUrl": "https://www.wikidata.org/wiki/Q33518",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q33518",
+   "sourceEntityLabel": "Dover",
+   "latitude": 39.161662,
+   "longitude": -75.525709,
+   "precision": 0.11585675269173817,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q752129",
+   "label": "astrophysicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Annie Jump Cannon 1922 Portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Annie%20Jump%20Cannon%201922%20Portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Annie_Jump_Cannon_1922_Portrait.jpg",
+  "width": 2516,
+  "height": 3536,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "New York World-Telegram and the Sun Newspaper",
+  "credit": "http://www.britannica.com/EBchecked/topic/92776/Annie-Jump-Cannon",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

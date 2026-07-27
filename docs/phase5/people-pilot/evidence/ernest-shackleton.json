@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ernest-shackleton",
+ "qid": "Q957543",
+ "displayName": "Ernest Shackleton",
+ "wikidataLabel": "Ernest Shackleton",
+ "wikidataDescription": "Anglo-Irish Antarctic explorer (1874–1922)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q957543",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510770067
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ernest Shackleton",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ernest_Shackleton",
+   "pageId": 60004,
+   "revisionId": 1364579112,
+   "revisionTimestamp": "2026-07-17T09:29:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1874-02-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1874-02-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1874-02-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1922-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2969483",
+  "label": "Kilkea Castle",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2969483",
+  "country": {
+   "entity": "Q27",
+   "label": "Ireland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2969483",
+   "sourceEntityLabel": "Kilkea Castle",
+   "latitude": 52.94333333,
+   "longitude": -6.88694444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q12356615",
+   "label": "traveler"
+  },
+  {
+   "entity": "Q13382749",
+   "label": "polar explorer"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ernest Henry Shackleton Nadar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ernest%20Henry%20Shackleton%20Nadar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ernest_Henry_Shackleton_Nadar.jpg",
+  "width": 804,
+  "height": 1070,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nadar",
+  "credit": "Unknown source",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

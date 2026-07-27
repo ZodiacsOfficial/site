@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nadia-boulanger",
+ "qid": "Q140619",
+ "displayName": "Nadia Boulanger",
+ "wikidataLabel": "Nadia Boulanger",
+ "wikidataDescription": "French musician, conductor, and teacher (1887-1979)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q140619",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521303584
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nadia Boulanger",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nadia_Boulanger",
+   "pageId": 466207,
+   "revisionId": 1360017821,
+   "revisionTimestamp": "2026-06-18T18:43:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1887-09-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1887-09-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1887-09-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1979-10-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q275118",
+  "label": "9th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q275118",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q275118",
+   "sourceEntityLabel": "9th arrondissement of Paris",
+   "latitude": 48.878280555556,
+   "longitude": 2.3369666666667,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q16031530",
+   "label": "music theorist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q106651242",
+   "label": "woman conductor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nadia Boulanger 1925 colorized.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nadia%20Boulanger%201925%20colorized.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nadia_Boulanger_1925_colorized.jpg",
+  "width": 447,
+  "height": 559,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Edmond Joaillier (1886-1939)",
+  "credit": "This file was derived from: Nadia Boulanger 1925.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

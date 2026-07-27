@@ -1,0 +1,123 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "joseph-haydn",
+ "qid": "Q7349",
+ "displayName": "Joseph Haydn",
+ "wikidataLabel": "Joseph Haydn",
+ "wikidataDescription": "Austrian composer (1732–1809)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7349",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522263871
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Joseph Haydn",
+   "articleUrl": "https://en.wikipedia.org/wiki/Joseph_Haydn",
+   "pageId": 16094,
+   "revisionId": 1366126823,
+   "revisionTimestamp": "2026-07-26T12:25:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1732-03-31T00:00:00Z|proleptic-gregorian",
+   "+1732-04-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1732-03-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1732-04-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1732-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1809-05-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q673075",
+  "label": "Rohrau",
+  "entityUrl": "https://www.wikidata.org/wiki/Q673075",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q673075",
+   "sourceEntityLabel": "Rohrau",
+   "latitude": 48.066666666667,
+   "longitude": 16.85,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q115793211",
+   "label": "independent publisher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Joseph Haydn, målning av Thomas Hardy från 1792.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Joseph%20Haydn%2C%20m%C3%A5lning%20av%20Thomas%20Hardy%20fr%C3%A5n%201792.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Joseph_Haydn,_m%C3%A5lning_av_Thomas_Hardy_fr%C3%A5n_1792.jpg",
+  "width": 853,
+  "height": 1078,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Thomas Hardy",
+  "credit": "User Den fjättrade ankan on sv.wikipedia Originally from sv.wikipedia; description page is (was) here * 24 juli 2003 kl. 21.59 [[:sv:User:Den fjättrade ankan|Den fjättrade ankan]] 312x396 (13 458 bytes)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

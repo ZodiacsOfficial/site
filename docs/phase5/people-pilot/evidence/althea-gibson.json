@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "althea-gibson",
+ "qid": "Q53550",
+ "displayName": "Althea Gibson",
+ "wikidataLabel": "Althea Gibson",
+ "wikidataDescription": "American tennis player (1927-2003)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q53550",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518976997
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Althea Gibson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Althea_Gibson",
+   "pageId": 330436,
+   "revisionId": 1363102112,
+   "revisionTimestamp": "2026-07-08T01:50:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1927-08-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1927-08-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1927-08-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-09-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q13415476",
+  "label": "Silver",
+  "entityUrl": "https://www.wikidata.org/wiki/Q13415476",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q13415476",
+   "sourceEntityLabel": "Silver",
+   "latitude": 33.6779398,
+   "longitude": -80.3573053,
+   "precision": 1e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10833314",
+   "label": "tennis player"
+  },
+  {
+   "entity": "Q13219424",
+   "label": "tennis coach"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q11303721",
+   "label": "golfer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q490253",
+   "label": "professional golfer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Althea Gibson in 1956 by Fred Palumbo (NYWTS).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Althea%20Gibson%20in%201956%20by%20Fred%20Palumbo%20(NYWTS).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Althea_Gibson_in_1956_by_Fred_Palumbo_(NYWTS).jpg",
+  "width": 2722,
+  "height": 3749,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Adam Cuerden",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c14745.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "alessandro-manzoni",
+  "seedRound": 0,
+  "qid": "Q1064",
+  "displayName": "Alessandro Manzoni",
+  "identity": "Writer and politician · Italy · 1785–1873",
+  "title": "Alessandro Manzoni's birth chart",
+  "metaDescription": "Alessandro Manzoni's chart, computed from a sourced birth date: Sun at 17.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, fixed leads with four. Fixed weight is read as endurance, with the same machinery producing both loyalty and stubbornness.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.33",
+        "decan:pisces:second"
+      ],
+      "text": "Pisces, but precisely: 17.3°, second decan, 10°–20°, under the Moon in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:25.4°",
+        "personal:Venus:Taurus:2.9°",
+        "personal:Mars:Capricorn:28.0°"
+      ],
+      "text": "Mercury holds 25.4° Aquarius, Venus holds 2.9° Taurus, Mars holds 28.0° Capricorn — in the old shorthand, a mind at home in argument and pattern; taste for the substantial and the lasting; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:square:1.01",
+        "aspect:Uranus:Neptune:square:1.52",
+        "aspect:Neptune:Pluto:trine:1.7"
+      ],
+      "text": "The tightest geometry in the chart puts Venus at right angles from Saturn, 1.0° off exact. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Uranus square Neptune at 1.5°, and Neptune trine Pluto at 1.7° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Mercury"
+      ],
+      "text": "Mercury stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. Venus in Taurus at 2.9° is in domicile — the planet in its own sign, running on home rules; Mars in Capricorn at 28.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 19.9° is in domicile; Saturn in Aquarius at 1.9° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-earth2",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements air 4, water 3, earth 2; modalities fixed 4, cardinal 3, mutable 2. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Uranus and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 14.4° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-7/",
+    "label": "Everyone born on March 7"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:17.33",
+    "decan:pisces:second",
+    "personal:Mercury:Aquarius:25.4°",
+    "personal:Venus:Taurus:2.9°",
+    "personal:Mars:Capricorn:28.0°",
+    "aspect:Venus:Saturn:square:1.01",
+    "aspect:Uranus:Neptune:square:1.52",
+    "aspect:Neptune:Pluto:trine:1.7",
+    "figure:unaspected:Mercury",
+    "dignity:Venus:domicile",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air4-water3-earth2",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 421,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

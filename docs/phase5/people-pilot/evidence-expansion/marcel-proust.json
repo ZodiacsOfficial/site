@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marcel-proust",
+ "qid": "Q7199",
+ "displayName": "Marcel Proust",
+ "wikidataLabel": "Marcel Proust",
+ "wikidataDescription": "French novelist, critic and essayist (1871–1922)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7199",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522428905
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marcel Proust",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marcel_Proust",
+   "pageId": 21018,
+   "revisionId": 1363189958,
+   "revisionTimestamp": "2026-07-08T16:49:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1871-07-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1871-07-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1871-07-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1922-11-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q194420",
+  "label": "16th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q194420",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q194420",
+   "sourceEntityLabel": "16th arrondissement of Paris",
+   "latitude": 48.863611111111,
+   "longitude": 2.2764888888889,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marcel Proust 1895.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marcel%20Proust%201895.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marcel_Proust_1895.jpg",
+  "width": 1207,
+  "height": 1600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Otto Wegener",
+  "credit": "http://enlenguapropia.files.wordpress.com/2013/10/marcel-proust.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

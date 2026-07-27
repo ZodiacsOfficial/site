@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "lynn-margulis",
+  "seedRound": 0,
+  "qid": "Q234583",
+  "displayName": "Lynn Margulis",
+  "identity": "University teacher and botanist · United States · 1938–2011",
+  "title": "Lynn Margulis's birth chart",
+  "metaDescription": "Lynn Margulis's chart, computed from a sourced birth date: Sun at 14.5° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. The mutable signs sit where one season is already becoming the next — the scheme’s translators.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.52",
+        "decan:pisces:second"
+      ],
+      "text": "At noon on that date the Sun stood at 14.5° Pisces, inside the second decan (10°–20°), whose traditional sub-ruler is the Moon. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:12.1°",
+        "personal:Venus:Pisces:21.7°",
+        "personal:Mars:Aries:25.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 12.1° Pisces, Venus was at 21.7° Pisces, Mars was at 25.2° Aries. Read together: thought steeped in tone and memory; attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Uranus:sextile:1.42",
+        "aspect:Venus:Neptune:opposition:1.8",
+        "aspect:Sun:Mercury:conjunction:2.47"
+      ],
+      "text": "Mercury to Uranus is the closest call of the day, a sextile within 1.4°. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Venus opposition Neptune at 1.8°, and the Sun conjunction Mercury at 2.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "Jupiter makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, four placements stand out. Mercury in Pisces at 12.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 21.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Aries at 25.2° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 5.0° is in fall. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire2-earth2-air1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 water, 2 fire, 2 earth, 1 air by element and 4 mutable, 3 cardinal, 2 fixed by mode. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 13.7° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-5/",
+    "label": "Everyone born on March 5"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:14.52",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:12.1°",
+    "personal:Venus:Pisces:21.7°",
+    "personal:Mars:Aries:25.2°",
+    "aspect:Mercury:Uranus:sextile:1.42",
+    "aspect:Venus:Neptune:opposition:1.8",
+    "aspect:Sun:Mercury:conjunction:2.47",
+    "figure:unaspected:Jupiter",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:fall",
+    "elements:water4-fire2-earth2-air1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 423,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

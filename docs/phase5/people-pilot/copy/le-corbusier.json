@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "le-corbusier",
+  "seedRound": 0,
+  "qid": "Q4724",
+  "displayName": "Le Corbusier",
+  "identity": "Architect and painter · Switzerland · 1887–1965",
+  "title": "Le Corbusier's birth chart",
+  "metaDescription": "Le Corbusier's chart, computed from a sourced birth date: Sun at 12.9° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.0° separates the Sun and Uranus from an exact conjunction; at that range identity and disruption read as one mechanism. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all.",
+  "ledeFact": "aspect:Sun:Uranus:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.89",
+        "decan:libra:second"
+      ],
+      "text": "At noon on that date the Sun stood at 12.9° Libra, inside the second decan (10°–20°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Venus:Virgo:21.1°",
+        "personal:Mars:Leo:25.2°"
+      ],
+      "text": "Day to day the chart speaks through Venus in Virgo (21.1°), Mars in Leo (25.2°): attraction that grows by reliability, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Uranus:conjunction:0.01",
+        "aspect:Saturn:Pluto:sextile:0.06",
+        "aspect:Jupiter:Saturn:square:4.21"
+      ],
+      "text": "Closest first: the Sun to Uranus, a conjunction with 0.0° of slack. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Saturn sextile Pluto at 0.1°, and Jupiter square Saturn at 4.2° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Venus"
+      ],
+      "text": "Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:fall",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Sun in Libra at 12.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Virgo at 21.1° is in fall; Saturn in Leo at 4.9° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth2-fire2-water1",
+        "modalities:fixed4-cardinal2-mutable2",
+        "settled-signs:8",
+        "retrograde:3",
+        "sign-uncertain:Mercury:libra:scorpio"
+      ],
+      "text": "Tallied where the signs are certain — 8 placements whose signs hold for the whole day — the chart gives air 3, earth 2, fire 2, water 1, and fixed 4, cardinal 2, mutable 2 across the modes. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Mercury crossed from Libra into Scorpio during that day, so its sign is left open. Venus, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 12.1° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-6/",
+    "label": "Everyone born on October 6"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Uranus:conjunction",
+    "sun-degree:12.89",
+    "decan:libra:second",
+    "personal:Venus:Virgo:21.1°",
+    "personal:Mars:Leo:25.2°",
+    "aspect:Sun:Uranus:conjunction:0.01",
+    "aspect:Saturn:Pluto:sextile:0.06",
+    "aspect:Jupiter:Saturn:square:4.21",
+    "figure:unaspected:Venus",
+    "dignity:Sun:fall",
+    "dignity:Venus:fall",
+    "dignity:Saturn:detriment",
+    "elements:air3-earth2-fire2-water1",
+    "modalities:fixed4-cardinal2-mutable2",
+    "settled-signs:8",
+    "retrograde:3",
+    "sign-uncertain:Mercury:libra:scorpio",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 429,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

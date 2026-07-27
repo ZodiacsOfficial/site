@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "buster-keaton",
+ "qid": "Q103949",
+ "displayName": "Buster Keaton",
+ "wikidataLabel": "Buster Keaton",
+ "wikidataDescription": "American actor, comedian, and director (1895–1966)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q103949",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522610094
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Buster Keaton",
+   "articleUrl": "https://en.wikipedia.org/wiki/Buster_Keaton",
+   "pageId": 43055,
+   "revisionId": 1366029278,
+   "revisionTimestamp": "2026-07-25T21:40:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1895-10-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-10-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1895-10-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1966-02-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2038259",
+  "label": "Piqua",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2038259",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2038259",
+   "sourceEntityLabel": "Piqua",
+   "latitude": 37.922777777778,
+   "longitude": -95.535277777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q245068",
+   "label": "comedian"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q465501",
+   "label": "stunt performer"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q674067",
+   "label": "mime artist"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q47541952",
+   "label": "producer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Busterkeaton edit.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Busterkeaton%20edit.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Busterkeaton_edit.jpg",
+  "width": 4182,
+  "height": 5990,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bain News Service",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ggbain.32451.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "margaret-mead",
+ "qid": "Q180099",
+ "displayName": "Margaret Mead",
+ "wikidataLabel": "Margaret Mead",
+ "wikidataDescription": "American anthropologist (1901-1978)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q180099",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516837182
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Margaret Mead",
+   "articleUrl": "https://en.wikipedia.org/wiki/Margaret_Mead",
+   "pageId": 19617,
+   "revisionId": 1364628212,
+   "revisionTimestamp": "2026-07-17T16:47:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1901-12-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-12-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1901-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-12-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1978-11-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1345",
+  "label": "Philadelphia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1345",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1345",
+   "sourceEntityLabel": "Philadelphia",
+   "latitude": 39.952777777778,
+   "longitude": -75.163611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q674426",
+   "label": "curator"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1371378",
+   "label": "ethnologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Margaret Mead (1901-1978).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Margaret%20Mead%20(1901-1978).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Margaret_Mead_(1901-1978).jpg",
+  "width": 1419,
+  "height": 1756,
+  "licenseShortName": "No restrictions",
+  "licenseUrl": "https://www.flickr.com/commons/usage/",
+  "artist": "Smithsonian Institution from United States",
+  "credit": "Margaret Mead (1901-1978) Uploaded by Fæ",
+  "usageTerms": "No known copyright restrictions",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

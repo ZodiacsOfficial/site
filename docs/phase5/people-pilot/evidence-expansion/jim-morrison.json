@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jim-morrison",
+ "qid": "Q44301",
+ "displayName": "Jim Morrison",
+ "wikidataLabel": "Jim Morrison",
+ "wikidataDescription": "American singer and poet; lead vocalist of The Doors (1943–1971)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q44301",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518879321
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jim Morrison",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jim_Morrison",
+   "pageId": 15135713,
+   "revisionId": 1365172465,
+   "revisionTimestamp": "2026-07-20T18:58:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1943-12-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1943-12-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1943-12-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1971-07-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q949779",
+  "label": "Melbourne",
+  "entityUrl": "https://www.wikidata.org/wiki/Q949779",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q949779",
+   "sourceEntityLabel": "Melbourne",
+   "latitude": 28.08363,
+   "longitude": -80.60811,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2643890",
+   "label": "vocalist"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q12374149",
+   "label": "rock musician"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jim Morrison 1969.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jim%20Morrison%201969.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jim_Morrison_1969.JPG",
+  "width": 658,
+  "height": 877,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Elektra Records",
+  "credit": "eBay item photo front photo back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

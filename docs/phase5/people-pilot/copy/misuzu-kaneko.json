@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "misuzu-kaneko",
+  "seedRound": 0,
+  "qid": "Q291489",
+  "displayName": "Misuzu Kaneko",
+  "identity": "Poet · Japan · 1903–1930",
+  "title": "Misuzu Kaneko's birth chart",
+  "metaDescription": "Misuzu Kaneko's chart, computed from a sourced birth date: Sun at 20.1° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 20.1° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:20.06",
+        "decan:aries:third"
+      ],
+      "text": "The Sun's exact place is 20.1° Aries. That falls in the third decan, 20°–30°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:17.9°",
+        "personal:Venus:Taurus:21.4°",
+        "personal:Mars:Libra:2.6°"
+      ],
+      "text": "The personal planets sit Mercury at 17.9° Aries, Venus at 21.4° Taurus, Mars at 2.6° Libra. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a earth sign reads as taste for the substantial and the lasting; Mars in a air sign reads as drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Pluto:sextile:0.08",
+        "aspect:Mars:Neptune:square:1.5",
+        "aspect:Sun:Pluto:sextile:2.11"
+      ],
+      "text": "The day's firmest angle joins Mercury and Pluto — a sextile holding at 0.1°. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Mars square Neptune at 1.5°, and the Sun sextile Pluto at 2.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Venus"
+      ],
+      "text": "Venus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, five sit in a sign it has an opinion about. The Sun in Aries at 20.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Taurus at 21.4° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 2.6° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 11.5° is in domicile; Saturn in Aquarius at 8.1° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire3-water2-earth1",
+        "modalities:cardinal5-mutable3-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 4, fire 3, water 2, earth 1, and cardinal 5, mutable 3, fixed 2 across the modes. Mars and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:13.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 9.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-11/",
+    "label": "Everyone born on April 11"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:20.06",
+    "decan:aries:third",
+    "personal:Mercury:Aries:17.9°",
+    "personal:Venus:Taurus:21.4°",
+    "personal:Mars:Libra:2.6°",
+    "aspect:Mercury:Pluto:sextile:0.08",
+    "aspect:Mars:Neptune:square:1.5",
+    "aspect:Sun:Pluto:sextile:2.11",
+    "figure:unaspected:Venus",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air4-fire3-water2-earth1",
+    "modalities:cardinal5-mutable3-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:libra",
+    "moon-band:13.6"
+  ],
+  "measurements": {
+    "originalWords": 445,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "emmeline-pankhurst",
+  "seedRound": 0,
+  "qid": "Q211519",
+  "displayName": "Emmeline Pankhurst",
+  "identity": "Suffragette and writer · United Kingdom · 1858–1928",
+  "title": "Emmeline Pankhurst's birth chart",
+  "metaDescription": "Emmeline Pankhurst's chart, computed from a sourced birth date: Sun at 22.6° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mercury and Saturn sit 0.3° from an exact conjunction — near enough that the tradition reads thinking and structure as a single working part. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other.",
+  "ledeFact": "aspect:Mercury:Saturn:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:22.64",
+        "decan:cancer:third"
+      ],
+      "text": "Cancer, but precisely: 22.6°, third decan, 20°–30°, under Jupiter in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Leo:27.2°",
+        "personal:Mars:Scorpio:19.0°"
+      ],
+      "text": "Venus holds 27.2° Leo, Mars holds 19.0° Scorpio — in the old shorthand, taste that runs toward the vivid and the immediate; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:conjunction:0.34",
+        "aspect:Saturn:Uranus:sextile:1.53",
+        "aspect:Mercury:Uranus:sextile:1.87"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury in the same degree of the zodiac from Saturn, 0.3° off exact. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other. Behind it, Saturn sextile Uranus at 1.5°, and Mercury sextile Uranus at 1.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Sun-Mars-Neptune",
+        "figure:unaspected:Jupiter"
+      ],
+      "text": "the Sun, Mars, Neptune close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. Jupiter stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mars in Scorpio at 19.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Gemini at 11.3° is in detriment — the planet opposite its home, working against the grain; Saturn in Leo at 0.7° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-fire2-air2-earth1",
+        "modalities:fixed4-mutable3-cardinal1",
+        "settled-signs:8",
+        "retrograde:1",
+        "sign-uncertain:Mercury:cancer:leo"
+      ],
+      "text": "Tallied where the signs are certain — 8 placements whose signs hold for the whole day — the chart gives water 3, fire 2, air 2, earth 1, and fixed 4, mutable 3, cardinal 1 across the modes. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Mercury crossed from Cancer into Leo during that day, so its sign is left open. Neptune was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 13.4° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-15/",
+    "label": "Everyone born on July 15"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Saturn:conjunction",
+    "sun-degree:22.64",
+    "decan:cancer:third",
+    "personal:Venus:Leo:27.2°",
+    "personal:Mars:Scorpio:19.0°",
+    "aspect:Mercury:Saturn:conjunction:0.34",
+    "aspect:Saturn:Uranus:sextile:1.53",
+    "aspect:Mercury:Uranus:sextile:1.87",
+    "figure:grand-trine:Sun-Mars-Neptune",
+    "figure:unaspected:Jupiter",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:water3-fire2-air2-earth1",
+    "modalities:fixed4-mutable3-cardinal1",
+    "settled-signs:8",
+    "retrograde:1",
+    "sign-uncertain:Mercury:cancer:leo",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 472,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "cecilia-meireles",
+  "seedRound": 0,
+  "qid": "Q2607615",
+  "displayName": "Cecília Meireles",
+  "identity": "Journalist and university teacher · Brazil · 1901–1964",
+  "title": "Cecília Meireles's birth chart",
+  "metaDescription": "Cecília Meireles's chart, computed from a sourced birth date: Sun at 14.5° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: Mars and Pluto within 0.7°, drive wired to depth. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit.",
+  "ledeFact": "aspect:Mars:Pluto:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.52",
+        "decan:scorpio:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 14.5° Scorpio: the second decan, whose classical sub-ruler is Jupiter. A water sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Scorpio:8.1°",
+        "personal:Mars:Sagittarius:17.6°"
+      ],
+      "text": "Closer in, Mercury stands at 8.1° Scorpio; Mars stands at 17.6° Sagittarius. The tradition reads a mind that absorbs before it argues from Mercury, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:opposition:0.72",
+        "aspect:Venus:Neptune:opposition:1.39",
+        "aspect:Mercury:Jupiter:sextile:1.88"
+      ],
+      "text": "The day's firmest angle joins Mars and Pluto — a opposition holding at 0.7°. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, Venus opposition Neptune at 1.4°, and Mercury sextile Jupiter at 1.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has two entries for this chart. Jupiter in Capricorn at 9.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Capricorn at 12.1° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-fire2-earth2-air1",
+        "modalities:mutable3-cardinal3-fixed2",
+        "settled-signs:8",
+        "retrograde:3",
+        "sign-uncertain:Venus:sagittarius:capricorn"
+      ],
+      "text": "Counting only the 8 placements whose signs hold for the whole day, the chart runs 3 water, 2 fire, 2 earth, 1 air by element and 3 mutable, 3 cardinal, 2 fixed by modality. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Venus crossed from Sagittarius into Capricorn during that day, so its sign is left open. Mercury, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 12.1° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-7/",
+    "label": "Everyone born on November 7"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:opposition",
+    "sun-degree:14.52",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:8.1°",
+    "personal:Mars:Sagittarius:17.6°",
+    "aspect:Mars:Pluto:opposition:0.72",
+    "aspect:Venus:Neptune:opposition:1.39",
+    "aspect:Mercury:Jupiter:sextile:1.88",
+    "figure:unaspected:Moon",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:water3-fire2-earth2-air1",
+    "modalities:mutable3-cardinal3-fixed2",
+    "settled-signs:8",
+    "retrograde:3",
+    "sign-uncertain:Venus:sagittarius:capricorn",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 407,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

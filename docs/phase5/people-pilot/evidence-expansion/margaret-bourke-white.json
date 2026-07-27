@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "margaret-bourke-white",
+ "qid": "Q238364",
+ "displayName": "Margaret Bourke-White",
+ "wikidataLabel": "Margaret Bourke-White",
+ "wikidataDescription": "American photographer (1904-1971)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q238364",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518638432
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Margaret Bourke-White",
+   "articleUrl": "https://en.wikipedia.org/wiki/Margaret_Bourke-White",
+   "pageId": 490393,
+   "revisionId": 1363580941,
+   "revisionTimestamp": "2026-07-11T02:43:32Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1904-06-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1904-06-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1904-06-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1971-08-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18426",
+  "label": "The Bronx",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18426",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18426",
+   "sourceEntityLabel": "The Bronx",
+   "latitude": 40.846666666666664,
+   "longitude": -73.87333333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q11496048",
+   "label": "war photographer"
+  },
+  {
+   "entity": "Q957729",
+   "label": "photojournalist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q861009",
+   "label": "picture editor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Margaret Bourke-White 1955.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Margaret%20Bourke-White%201955.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Margaret_Bourke-White_1955.jpg",
+  "width": 1071,
+  "height": 1361,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bureau of Industrial Service. This was a division of advertising agency Young & Rubicam and was widely used for distribution of publicity materials in early television.",
+  "credit": "front back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

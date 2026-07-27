@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "umberto-eco",
+ "qid": "Q12807",
+ "displayName": "Umberto Eco",
+ "wikidataLabel": "Umberto Eco",
+ "wikidataDescription": "Italian semiotician, essayist, philosopher, literary critic, and novelist (1932–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q12807",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519635667
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Umberto Eco",
+   "articleUrl": "https://en.wikipedia.org/wiki/Umberto_Eco",
+   "pageId": 32003,
+   "revisionId": 1365280569,
+   "revisionTimestamp": "2026-07-21T11:33:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-01-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-01-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-02-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6088",
+  "label": "Alessandria",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6088",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6088",
+   "sourceEntityLabel": "Alessandria",
+   "latitude": 44.913330555556,
+   "longitude": 8.62,
+   "precision": 0.000277778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q21694753",
+   "label": "semiologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q3332711",
+   "label": "medievalist"
+  },
+  {
+   "entity": "Q17167049",
+   "label": "literary scholar"
+  }
+ ],
+ "portrait": {
+  "file": "File:Italiaanse schrijver Umberto Eco , kop, Bestanddeelnr 932-9758.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Italiaanse%20schrijver%20Umberto%20Eco%20%2C%20kop%2C%20Bestanddeelnr%20932-9758.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Italiaanse_schrijver_Umberto_Eco_,_kop,_Bestanddeelnr_932-9758.jpg",
+  "width": 2440,
+  "height": 3667,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Rob Bogaerts / Anefo",
+  "credit": "http://proxy.handle.net/10648/ad390f7a-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

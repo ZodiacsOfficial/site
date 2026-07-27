@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "antoine-de-saint-exupery",
+ "qid": "Q2908",
+ "displayName": "Antoine de Saint-Exupéry",
+ "wikidataLabel": "Antoine de Saint-Exupéry",
+ "wikidataDescription": "French writer and aviator (1900–1944)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2908",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522885705
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Antoine de Saint-Exupéry",
+   "articleUrl": "https://en.wikipedia.org/wiki/Antoine_de_Saint-Exup%C3%A9ry",
+   "pageId": 63174,
+   "revisionId": 1362136400,
+   "revisionTimestamp": "2026-07-02T03:59:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1900-06-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1900-06-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1900-06-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1944-07-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3344",
+  "label": "2nd arrondissement of Lyon",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3344",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q3344",
+   "sourceEntityLabel": "2nd arrondissement of Lyon",
+   "latitude": 45.754111111111,
+   "longitude": 4.8290777777778,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  }
+ ],
+ "portrait": {
+  "file": "File:11exupery-inline1-500.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:11exupery-inline1-500.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:11exupery-inline1-500.jpg",
+  "width": 363,
+  "height": 500,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Distributed by Agence France-Presse",
+  "credit": "NY Times online",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

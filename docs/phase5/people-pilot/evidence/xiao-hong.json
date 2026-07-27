@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "xiao-hong",
+ "qid": "Q464825",
+ "displayName": "Xiao Hong",
+ "wikidataLabel": "Xiao Hong",
+ "wikidataDescription": "Chinese writer (1911-1942)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q464825",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521473459
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Xiao Hong",
+   "articleUrl": "https://en.wikipedia.org/wiki/Xiao_Hong",
+   "pageId": 4938354,
+   "revisionId": 1363665448,
+   "revisionTimestamp": "2026-07-11T15:34:21Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-06-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-06-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-06-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1942-01-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1027409",
+  "label": "Hulan District",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1027409",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1027409",
+   "sourceEntityLabel": "Hulan District",
+   "latitude": 45.98272,
+   "longitude": 126.59873,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Xiao-Hong died 1942.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Xiao-Hong%20died%201942.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Xiao-Hong_died_1942.jpg",
+  "width": 536,
+  "height": 748,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://www.chinawhisper.com/10-most-talented-women-in-modern-china/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "malcolm-x",
+ "qid": "Q43303",
+ "displayName": "Malcolm X",
+ "wikidataLabel": "Malcolm X",
+ "wikidataDescription": "American Black rights activist (1925–1965)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q43303",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522875834
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Malcolm X",
+   "articleUrl": "https://en.wikipedia.org/wiki/Malcolm_X",
+   "pageId": 20796,
+   "revisionId": 1366153397,
+   "revisionTimestamp": "2026-07-26T16:17:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-05-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-05-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-05-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1965-02-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q43199",
+  "label": "Omaha",
+  "entityUrl": "https://www.wikidata.org/wiki/Q43199",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q43199",
+   "sourceEntityLabel": "Omaha",
+   "latitude": 41.25861111111111,
+   "longitude": -95.9375,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q107637527",
+   "label": "Muslim minister"
+  },
+  {
+   "entity": "Q125482",
+   "label": "imam"
+  },
+  {
+   "entity": "Q15995642",
+   "label": "religious leader"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  }
+ ],
+ "portrait": {
+  "file": "File:Malcolm X in 1964.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Malcolm%20X%20in%201964.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Malcolm_X_in_1964.jpg",
+  "width": 2924,
+  "height": 3899,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Marion S. Trikosko",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ppmsc.01274.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

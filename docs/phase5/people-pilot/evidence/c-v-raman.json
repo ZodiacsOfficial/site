@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "c-v-raman",
+ "qid": "Q60429",
+ "displayName": "C. V. Raman",
+ "wikidataLabel": "Chandrasekhara Venkata Raman",
+ "wikidataDescription": "Indian physicist (1888–1970)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q60429",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522915052
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "C. V. Raman",
+   "articleUrl": "https://en.wikipedia.org/wiki/C._V._Raman",
+   "pageId": 276727,
+   "revisionId": 1366060846,
+   "revisionTimestamp": "2026-07-26T01:45:38Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1888-11-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1888-11-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1888-11-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1970-11-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q207754",
+  "label": "Tiruchirappalli",
+  "entityUrl": "https://www.wikidata.org/wiki/Q207754",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q207754",
+   "sourceEntityLabel": "Tiruchirappalli",
+   "latitude": 10.826944444444,
+   "longitude": 78.692777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q15142825",
+   "label": "crystallographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sir CV Raman.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sir%20CV%20Raman.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sir_CV_Raman.JPG",
+  "width": 992,
+  "height": 1488,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nobel Foundation",
+  "credit": "From Nobel Lectures, Physics 1922-1941, Elsevier Publishing Company, Amsterdam, 1965",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

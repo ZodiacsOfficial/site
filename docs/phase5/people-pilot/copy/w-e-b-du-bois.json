@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "w-e-b-du-bois",
+  "seedRound": 0,
+  "qid": "Q158060",
+  "displayName": "W. E. B. Du Bois",
+  "identity": "Historian and sociologist · United States · 1868–1963",
+  "title": "W. E. B. Du Bois's birth chart",
+  "metaDescription": "W. E. B. Du Bois's chart, computed from a sourced birth date: Sun at 4.4° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a square to Uranus at 0.9° — close enough to weld taste to disruption. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower.",
+  "ledeFact": "aspect:Venus:Uranus:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.40",
+        "decan:pisces:first"
+      ],
+      "text": "At the noon reference the Sun sits 4.4° into Pisces — the first decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:22.1°",
+        "personal:Venus:Aries:9.9°",
+        "personal:Mars:Aquarius:22.1°"
+      ],
+      "text": "Mercury holds 22.1° Pisces, Venus holds 9.9° Aries, Mars holds 22.1° Aquarius — in the old shorthand, thought steeped in tone and memory; attraction declared rather than implied; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:square:0.9",
+        "aspect:Sun:Saturn:square:0.96",
+        "aspect:Jupiter:Pluto:sextile:2.28"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Uranus: 0.9° from an exact square. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, the Sun square Saturn at 1.0°, and Jupiter sextile Pluto at 2.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Mars"
+      ],
+      "text": "Mars makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Mercury in Pisces at 22.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 9.9° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 16.5° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air1-earth1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 water, 3 fire, 1 air, 1 earth by element and 4 mutable, 3 cardinal, 2 fixed by mode. Uranus was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 12.1° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-23/",
+    "label": "Everyone born on February 23"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Uranus:square",
+    "sun-degree:4.40",
+    "decan:pisces:first",
+    "personal:Mercury:Pisces:22.1°",
+    "personal:Venus:Aries:9.9°",
+    "personal:Mars:Aquarius:22.1°",
+    "aspect:Venus:Uranus:square:0.9",
+    "aspect:Sun:Saturn:square:0.96",
+    "aspect:Jupiter:Pluto:sextile:2.28",
+    "figure:unaspected:Mars",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:water4-fire3-air1-earth1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 397,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

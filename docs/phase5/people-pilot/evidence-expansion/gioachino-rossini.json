@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gioachino-rossini",
+ "qid": "Q9726",
+ "displayName": "Gioachino Rossini",
+ "wikidataLabel": "Gioachino Rossini",
+ "wikidataDescription": "Italian opera composer (1792–1868)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9726",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522261577
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gioachino Rossini",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gioachino_Rossini",
+   "pageId": 12406,
+   "revisionId": 1359295799,
+   "revisionTimestamp": "2026-06-14T12:36:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1792-02-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1792-02-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1792-02-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1868-11-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q13134",
+  "label": "Pesaro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q13134",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q13134",
+   "sourceEntityLabel": "Pesaro",
+   "latitude": 43.91015,
+   "longitude": 12.9133,
+   "precision": 0.00000277777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Composer Rossini G 1865 by Carjat.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Composer%20Rossini%20G%201865%20by%20Carjat.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Composer_Rossini_G_1865_by_Carjat.jpg",
+  "width": 1507,
+  "height": 1895,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Étienne Carjat",
+  "credit": "harvardartmuseums.org",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

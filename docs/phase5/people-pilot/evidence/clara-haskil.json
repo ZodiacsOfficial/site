@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "clara-haskil",
+ "qid": "Q123463",
+ "displayName": "Clara Haskil",
+ "wikidataLabel": "Clara Haskil",
+ "wikidataDescription": "Romanian-Swiss classical pianist (1895-1960)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q123463",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519849401
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Clara Haskil",
+   "articleUrl": "https://en.wikipedia.org/wiki/Clara_Haskil",
+   "pageId": 1398162,
+   "revisionId": 1331661474,
+   "revisionTimestamp": "2026-01-07T14:17:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1895-01-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-01-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1895-01-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1960-12-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q19660",
+  "label": "Bucharest",
+  "entityUrl": "https://www.wikidata.org/wiki/Q19660",
+  "country": {
+   "entity": "Q218",
+   "label": "Romania"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q19660",
+   "sourceEntityLabel": "Bucharest",
+   "latitude": 44.41336111111111,
+   "longitude": 26.09777777777778,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Clara Haskil fiatalon.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Clara%20Haskil%20fiatalon.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Clara_Haskil_fiatalon.jpg",
+  "width": 281,
+  "height": 300,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.szabadsag.ro/szabadsag/servlet/szabadsag/template/archive%2CPArchiveArticleSelectedScreen.vm/id/106706/mainarticle/false/web/false/quick/false/ynews/false",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

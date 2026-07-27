@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "selma-lagerlof",
+ "qid": "Q44519",
+ "displayName": "Selma Lagerlöf",
+ "wikidataLabel": "Selma Lagerlöf",
+ "wikidataDescription": "Swedish writer (1858–1940)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q44519",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518653979
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Selma Lagerlöf",
+   "articleUrl": "https://en.wikipedia.org/wiki/Selma_Lagerl%C3%B6f",
+   "pageId": 24002071,
+   "revisionId": 1364109195,
+   "revisionTimestamp": "2026-07-14T15:17:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1858-11-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-11-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-11-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1940-03-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10728500",
+  "label": "Östra Ämtervik church parish",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10728500",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q10728500",
+   "sourceEntityLabel": "Östra Ämtervik church parish",
+   "latitude": 59.733416666667,
+   "longitude": 13.200138888889,
+   "precision": 0.000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q12311797",
+   "label": "folkeskole teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Atelje Jaeger - Selma Lagerlöf 1928.jpeg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Atelje%20Jaeger%20-%20Selma%20Lagerl%C3%B6f%201928.jpeg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Atelje_Jaeger_-_Selma_Lagerl%C3%B6f_1928.jpeg",
+  "width": 2492,
+  "height": 3509,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Atelier Jaeger",
+  "credit": "http://www.marbacka.com/press/SLF_042.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

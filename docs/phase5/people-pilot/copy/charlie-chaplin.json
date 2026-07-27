@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "charlie-chaplin",
+  "seedRound": 0,
+  "qid": "Q882",
+  "displayName": "Charlie Chaplin",
+  "identity": "Film director and composer · United Kingdom · 1889–1977",
+  "title": "Charlie Chaplin's birth chart",
+  "metaDescription": "Charlie Chaplin's chart, computed from a sourced birth date: Sun at 26.7° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 26.7° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.67",
+        "decan:aries:third"
+      ],
+      "text": "The Sun's position resolves to 26.7° Aries — deep enough in the third decan (20°–30°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:17.1°",
+        "personal:Venus:Taurus:18.2°",
+        "personal:Mars:Taurus:13.3°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (17.1°), Venus in Taurus (18.2°), Mars in Taurus (13.3°): thought that arrives already in motion, attraction that grows by reliability, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:square:0.1",
+        "aspect:Mercury:Uranus:opposition:2.51",
+        "aspect:Mercury:Saturn:trine:3.73"
+      ],
+      "text": "The day's firmest angle joins Mars and Saturn — a square holding at 0.1°. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Mercury opposition Uranus at 2.5°, and Mercury trine Saturn at 3.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Sun in Aries at 26.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Taurus at 18.2° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 13.3° is in detriment — the planet opposite its home, working against the grain; Jupiter in Capricorn at 8.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Leo at 13.4° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth3-air3",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 fire, 3 earth, 3 air by element and 4 cardinal, 3 fixed, 2 mutable by mode. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Venus and Uranus were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 14.7° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-16/",
+    "label": "Everyone born on April 16"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:26.67",
+    "decan:aries:third",
+    "personal:Mercury:Aries:17.1°",
+    "personal:Venus:Taurus:18.2°",
+    "personal:Mars:Taurus:13.3°",
+    "aspect:Mars:Saturn:square:0.1",
+    "aspect:Mercury:Uranus:opposition:2.51",
+    "aspect:Mercury:Saturn:trine:3.73",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:detriment",
+    "elements:fire3-earth3-air3",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 435,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

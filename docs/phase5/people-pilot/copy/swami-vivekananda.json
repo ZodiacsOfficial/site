@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "swami-vivekananda",
+  "seedRound": 0,
+  "qid": "Q47478",
+  "displayName": "Swami Vivekananda",
+  "identity": "Philosopher and teacher · India · 1863–1902",
+  "title": "Swami Vivekananda's birth chart",
+  "metaDescription": "Swami Vivekananda's chart, computed from a sourced birth date: Sun at 21.6° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a square to Mars at 0.9° — close enough to weld taste to drive. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Venus:Mars:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:21.60",
+        "decan:capricorn:third"
+      ],
+      "text": "21.6° of Capricorn is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Mercury in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:4.1°",
+        "personal:Venus:Capricorn:29.3°",
+        "personal:Mars:Aries:28.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aquarius (4.1°), Venus in Capricorn (29.3°), Mars in Aries (28.4°): thought that travels by comparison, attraction that grows by reliability, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Mars:square:0.95",
+        "aspect:Mercury:Saturn:trine:1.43",
+        "aspect:Venus:Neptune:sextile:2"
+      ],
+      "text": "Closest first: Venus to Mars, a square with 0.9° of slack. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Mercury trine Saturn at 1.4°, and Venus sextile Neptune at 2.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Mars-Jupiter:apex-Sun",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars opposes Jupiter while both square the Sun. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Mars in Aries at 28.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 5.5° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-earth3-fire2",
+        "modalities:cardinal7-fixed2-mutable1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 5 in air, 3 in earth, 2 in fire by element, 7 cardinal, 2 fixed, 1 mutable by modality. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 12.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-12/",
+    "label": "Everyone born on January 12"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Mars:square",
+    "sun-degree:21.60",
+    "decan:capricorn:third",
+    "personal:Mercury:Aquarius:4.1°",
+    "personal:Venus:Capricorn:29.3°",
+    "personal:Mars:Aries:28.4°",
+    "aspect:Venus:Mars:square:0.95",
+    "aspect:Mercury:Saturn:trine:1.43",
+    "aspect:Venus:Neptune:sextile:2",
+    "figure:t-square:Mars-Jupiter:apex-Sun",
+    "figure:unaspected:Moon",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:air5-earth3-fire2",
+    "modalities:cardinal7-fixed2-mutable1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:libra",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 455,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

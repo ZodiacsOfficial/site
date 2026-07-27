@@ -1,0 +1,115 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "tyeb-mehta",
+ "qid": "Q3111894",
+ "displayName": "Tyeb Mehta",
+ "wikidataLabel": null,
+ "wikidataDescription": "Indian artist (1925–2009)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3111894",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2514056654
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Tyeb Mehta",
+   "articleUrl": "https://en.wikipedia.org/wiki/Tyeb_Mehta",
+   "pageId": 1914699,
+   "revisionId": 1357652859,
+   "revisionTimestamp": "2026-06-03T21:21:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1925-07-26T00:00:00Z|proleptic-gregorian",
+   "+1925-07-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-07-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1925-07-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-07-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2009-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2341421",
+  "label": "Kapadvanj",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2341421",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2341421",
+   "sourceEntityLabel": "Kapadvanj",
+   "latitude": 23.02,
+   "longitude": 73.07,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q1414443",
+   "label": "filmmaker"
+  }
+ ],
+ "portrait": {
+  "file": "File:Tyeb Mehta.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Tyeb%20Mehta.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Tyeb_Mehta.jpg",
+  "width": 585,
+  "height": 342,
+  "licenseShortName": "CC BY 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/2.0",
+  "artist": "Cea",
+  "credit": "www.flickr.com",
+  "usageTerms": "Creative Commons Attribution 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

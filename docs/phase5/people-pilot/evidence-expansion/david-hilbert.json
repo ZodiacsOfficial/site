@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "david-hilbert",
+ "qid": "Q41585",
+ "displayName": "David Hilbert",
+ "wikidataLabel": "David Hilbert",
+ "wikidataDescription": "German mathematician (1862–1943)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41585",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522812551
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "David Hilbert",
+   "articleUrl": "https://en.wikipedia.org/wiki/David_Hilbert",
+   "pageId": 8302,
+   "revisionId": 1361411809,
+   "revisionTimestamp": "2026-06-27T19:55:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1862-01-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1862-01-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1862-01-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1943-02-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1829",
+  "label": "Kaliningrad",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1829",
+  "country": {
+   "entity": "Q159",
+   "label": "Russia"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1829",
+   "sourceEntityLabel": "Kaliningrad",
+   "latitude": 54.716666666667,
+   "longitude": 20.5,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q14565331",
+   "label": "logician"
+  },
+  {
+   "entity": "Q101064325",
+   "label": "philosopher of mathematics"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hilbert.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hilbert.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hilbert.jpg",
+  "width": 437,
+  "height": 592,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Possibly Reid, Constance (1970) Hilbert, Berlin, Heidelberg: Springer Berlin Heidelberg Imprint Springer, p. 230 ISBN: 978-3-662-27132-2.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

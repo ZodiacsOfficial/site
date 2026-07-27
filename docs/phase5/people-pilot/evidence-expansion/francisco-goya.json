@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "francisco-goya",
+ "qid": "Q5432",
+ "displayName": "Francisco Goya",
+ "wikidataLabel": "Francisco Goya",
+ "wikidataDescription": "Spanish painter and printmaker (1746–1828)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5432",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522260842
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Francisco Goya",
+   "articleUrl": "https://en.wikipedia.org/wiki/Francisco_Goya",
+   "pageId": 10868,
+   "revisionId": 1366087836,
+   "revisionTimestamp": "2026-07-26T05:07:34Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1746-03-30T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1746-03-30T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1746-03-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1828-04-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1372769",
+  "label": "Fuendetodos",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1372769",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1372769",
+   "sourceEntityLabel": "Fuendetodos",
+   "latitude": 41.3413479,
+   "longitude": -0.9594579,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q10862983",
+   "label": "etcher"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Vicente López Portaña - el pintor Francisco de Goya.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Vicente%20L%C3%B3pez%20Porta%C3%B1a%20-%20el%20pintor%20Francisco%20de%20Goya.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Vicente_L%C3%B3pez_Porta%C3%B1a_-_el_pintor_Francisco_de_Goya.jpg",
+  "width": 1556,
+  "height": 1920,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Vicente López Portaña",
+  "credit": "Museo Nacional del Prado, Galería online",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

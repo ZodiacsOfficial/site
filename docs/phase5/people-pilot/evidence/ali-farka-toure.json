@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ali-farka-toure",
+ "qid": "Q334947",
+ "displayName": "Ali Farka Touré",
+ "wikidataLabel": "Ali Farka Touré",
+ "wikidataDescription": "Malian musician (1939–2006)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q334947",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2483583925
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ali Farka Touré",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ali_Farka_Tour%C3%A9",
+   "pageId": 23883645,
+   "revisionId": 1363294792,
+   "revisionTimestamp": "2026-07-09T08:01:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1939-10-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1939-10-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1939-10-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2006-03-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q9427",
+  "label": "Timbuktu",
+  "entityUrl": "https://www.wikidata.org/wiki/Q9427",
+  "country": {
+   "entity": "Q912",
+   "label": "Mali"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q9427",
+   "sourceEntityLabel": "Timbuktu",
+   "latitude": 16.773333055556,
+   "longitude": -2.9994438888889,
+   "precision": 2.7777777777778e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q131512",
+   "label": "farmer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ali Farka Toure.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ali%20Farka%20Toure.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ali_Farka_Toure.jpg",
+  "width": 1781,
+  "height": 2231,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Tagles",
+  "credit": "Own work",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

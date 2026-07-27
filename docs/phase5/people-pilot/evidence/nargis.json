@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nargis",
+ "qid": "Q159169",
+ "displayName": "Nargis",
+ "wikidataLabel": "Nargis",
+ "wikidataDescription": "Indian actress (1929-1981)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q159169",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517900742
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nargis",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nargis",
+   "pageId": 684951,
+   "revisionId": 1354141519,
+   "revisionTimestamp": "2026-05-14T15:40:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-06-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-06-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-06-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1981-05-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1348",
+  "label": "Kolkata",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1348",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1348",
+   "sourceEntityLabel": "Kolkata",
+   "latitude": 22.5675,
+   "longitude": 88.37,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nargis, Best Actress for Raat Aur Din.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nargis%2C%20Best%20Actress%20for%20Raat%20Aur%20Din.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nargis,_Best_Actress_for_Raat_Aur_Din.jpg",
+  "width": 1074,
+  "height": 1343,
+  "licenseShortName": "GODL-India",
+  "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+  "artist": "Ministry of Information and Broadcasting",
+  "credit": "Catalogue of 15th National Film Awards, 1967",
+  "usageTerms": "Government Open Data License – India",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

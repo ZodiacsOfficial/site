@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ghassan-kanafani",
+  "seedRound": 0,
+  "qid": "Q369696",
+  "displayName": "Ghassan Kanafani",
+  "identity": "Politician and novelist · Israel · 1936–1972",
+  "title": "Ghassan Kanafani's birth chart",
+  "metaDescription": "Ghassan Kanafani's chart, computed from a sourced birth date: Sun at 19.4° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 19.4° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.38",
+        "decan:aries:second"
+      ],
+      "text": "The Sun's exact place is 19.4° Aries. That falls in the second decan, 10°–20°, sub-ruled by the Sun in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:18.1°",
+        "personal:Venus:Pisces:28.0°",
+        "personal:Mars:Taurus:5.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 18.1° Aries, Venus was at 28.0° Pisces, Mars was at 5.5° Taurus. Read together: a mind that decides at speaking speed; taste tuned to mood and undertow; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:conjunction:0.99",
+        "aspect:Sun:Mercury:conjunction:1.23",
+        "aspect:Saturn:Neptune:opposition:2.66"
+      ],
+      "text": "Mars to Uranus is the closest call of the day, a conjunction within 1.0°. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, the Sun conjunction Mercury at 1.2°, and Saturn opposition Neptune at 2.7° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Moon:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Five planets here sit in a sign the classical scheme scores. The Sun in Aries at 19.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Scorpio at 16.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 28.0° is in exaltation; Mars in Taurus at 5.5° is in detriment — the planet opposite its home, working against the grain; Jupiter in Sagittarius at 24.4° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-earth3",
+        "modalities:mutable4-cardinal3-fixed3",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 4, fire 3, earth 3; modalities mutable 4, cardinal 3, fixed 3. Water reads the room before the room speaks — atmosphere first, analysis later. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Neptune was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 16.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-9/",
+    "label": "Everyone born on April 9"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:19.38",
+    "decan:aries:second",
+    "personal:Mercury:Aries:18.1°",
+    "personal:Venus:Pisces:28.0°",
+    "personal:Mars:Taurus:5.5°",
+    "aspect:Mars:Uranus:conjunction:0.99",
+    "aspect:Sun:Mercury:conjunction:1.23",
+    "aspect:Saturn:Neptune:opposition:2.66",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Moon:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:water4-fire3-earth3",
+    "modalities:mutable4-cardinal3-fixed3",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:scorpio",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 447,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

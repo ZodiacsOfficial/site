@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "sally-ride",
+  "seedRound": 0,
+  "qid": "Q49285",
+  "displayName": "Sally Ride",
+  "identity": "Physicist and astronaut · United States · 1951–2012",
+  "title": "Sally Ride's birth chart",
+  "metaDescription": "Sally Ride's chart, computed from a sourced birth date: Sun at 4.7° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.6° separates Venus and Neptune from an exact square; at that range taste and imagination read as one mechanism. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable.",
+  "ledeFact": "aspect:Venus:Neptune:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.71",
+        "decan:gemini:first"
+      ],
+      "text": "At noon on that date the Sun stood at 4.7° Gemini, inside the first decan (0°–10°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:10.0°",
+        "personal:Venus:Cancer:17.6°",
+        "personal:Mars:Gemini:3.6°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Taurus (10.0°), Venus in Cancer (17.6°), Mars in Gemini (3.6°): thought with its feet on the ground, attraction that works by atmosphere, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:square:0.36",
+        "aspect:Neptune:Pluto:sextile:0.55",
+        "aspect:Venus:Neptune:square:0.62"
+      ],
+      "text": "The tightest geometry in the chart puts Jupiter at right angles from Uranus, 0.4° off exact. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Neptune sextile Pluto at 0.6°, and Venus square Neptune at 0.6° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:none"
+      ],
+      "text": "The dignity table has nothing to say about this chart. All seven classical planets sit in signs it treats as neutral, so the reading rests entirely on placement and angle."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth2-water2-fire2",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 4, earth 2, water 2, fire 2; modalities cardinal 4, mutable 3, fixed 3. Saturn and Neptune were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:13.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 21.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-26/",
+    "label": "Everyone born on May 26"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:square",
+    "sun-degree:4.71",
+    "decan:gemini:first",
+    "personal:Mercury:Taurus:10.0°",
+    "personal:Venus:Cancer:17.6°",
+    "personal:Mars:Gemini:3.6°",
+    "aspect:Jupiter:Uranus:square:0.36",
+    "aspect:Neptune:Pluto:sextile:0.55",
+    "aspect:Venus:Neptune:square:0.62",
+    "figure:unaspected:Moon",
+    "dignity:none",
+    "elements:air4-earth2-water2-fire2",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aquarius",
+    "moon-band:13.8"
+  ],
+  "measurements": {
+    "originalWords": 363,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

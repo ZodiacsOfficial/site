@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "albert-camus",
+  "seedRound": 0,
+  "qid": "Q34670",
+  "displayName": "Albert Camus",
+  "identity": "Writer and association football player · Algeria · 1913–1960",
+  "title": "Albert Camus's birth chart",
+  "metaDescription": "Albert Camus's chart, computed from a sourced birth date: Sun at 14.5° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.6° separates the Sun and Jupiter from an exact sextile; at that range identity and expansion read as one mechanism. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Sun:Jupiter:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.49",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun's position resolves to 14.5° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:7.0°",
+        "personal:Venus:Libra:21.4°",
+        "personal:Mars:Cancer:22.2°"
+      ],
+      "text": "The personal planets sit Mercury at 7.0° Sagittarius, Venus at 21.4° Libra, Mars at 22.2° Cancer. Mercury in a fire sign reads as thought that arrives already in motion; Venus in a air sign reads as attraction that begins as conversation; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:sextile:0.58",
+        "aspect:Venus:Mars:square:0.82",
+        "aspect:Mercury:Uranus:sextile:3.14"
+      ],
+      "text": "The day's firmest angle joins the Sun and Jupiter — a sextile holding at 0.6°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Venus square Mars at 0.8°, and Mercury sextile Uranus at 3.1° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Venus:domicile",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Mercury in Sagittarius at 7.0° is in detriment — the planet opposite its home, working against the grain; Venus in Libra at 21.4° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 22.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 13.9° is in fall. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air3-fire1-earth1",
+        "modalities:cardinal5-fixed2-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements water 4, air 3, fire 1, earth 1; modalities cardinal 5, fixed 2, mutable 2. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Saturn, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 11.9° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-7/",
+    "label": "Everyone born on November 7"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:sextile",
+    "sun-degree:14.49",
+    "decan:scorpio:second",
+    "personal:Mercury:Sagittarius:7.0°",
+    "personal:Venus:Libra:21.4°",
+    "personal:Mars:Cancer:22.2°",
+    "aspect:Sun:Jupiter:sextile:0.58",
+    "aspect:Venus:Mars:square:0.82",
+    "aspect:Mercury:Uranus:sextile:3.14",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Venus:domicile",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:fall",
+    "elements:water4-air3-fire1-earth1",
+    "modalities:cardinal5-fixed2-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

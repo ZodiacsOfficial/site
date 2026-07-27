@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jacques-cousteau",
+ "qid": "Q83233",
+ "displayName": "Jacques Cousteau",
+ "wikidataLabel": "Jacques Cousteau",
+ "wikidataDescription": "French naval officer, oceanographer, filmmaker and author (1910-1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q83233",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517858892
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jacques Cousteau",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jacques_Cousteau",
+   "pageId": 16252,
+   "revisionId": 1365632420,
+   "revisionTimestamp": "2026-07-23T14:58:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1910-06-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1910-06-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1910-06-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-06-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q667867",
+  "label": "Saint-André-de-Cubzac",
+  "entityUrl": "https://www.wikidata.org/wiki/Q667867",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q667867",
+   "sourceEntityLabel": "Saint-André-de-Cubzac",
+   "latitude": 44.994722222222,
+   "longitude": -0.44583333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q1414443",
+   "label": "filmmaker"
+  },
+  {
+   "entity": "Q3492227",
+   "label": "innovator"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q16060693",
+   "label": "conservationist"
+  },
+  {
+   "entity": "Q3546255",
+   "label": "oceanographer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3349700",
+   "label": "Officer of the French Navy"
+  },
+  {
+   "entity": "Q3640160",
+   "label": "marine biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cousteau1972 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cousteau1972%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cousteau1972_(cropped).jpg",
+  "width": 755,
+  "height": 1060,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Hans Peters for Anefo .",
+  "credit": "http://proxy.handle.net/10648/abe56934-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

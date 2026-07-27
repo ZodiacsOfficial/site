@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "simon-bolivar",
+ "qid": "Q8605",
+ "displayName": "Simón Bolívar",
+ "wikidataLabel": "Simón Bolívar",
+ "wikidataDescription": "Venezuelan statesman and military officer (1783–1830)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8605",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521226558
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Simón Bolívar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sim%C3%B3n_Bol%C3%ADvar",
+   "pageId": 55917,
+   "revisionId": 1364294081,
+   "revisionTimestamp": "2026-07-15T18:58:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1783-07-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1783-07-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1783-07-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1830-12-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1533",
+  "label": "Caracas",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1533",
+  "country": {
+   "entity": "Q717",
+   "label": "Venezuela"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1533",
+   "sourceEntityLabel": "Caracas",
+   "latitude": 10.50611111111111,
+   "longitude": -66.91444444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Simón Bolívar by Acevedo Bernal, 1922.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sim%C3%B3n%20Bol%C3%ADvar%20by%20Acevedo%20Bernal%2C%201922.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sim%C3%B3n_Bol%C3%ADvar_by_Acevedo_Bernal,_1922.jpg",
+  "width": 832,
+  "height": 1200,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ricardo Acevedo Bernal",
+  "credit": "Held in the Colección Casa Museo Quinta de Bolívar, Bogotá, ColombiaImmediate source: [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

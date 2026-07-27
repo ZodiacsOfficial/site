@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "dinu-lipatti",
+  "seedRound": 0,
+  "qid": "Q322080",
+  "displayName": "Dinu Lipatti",
+  "identity": "Pianist · Romania · 1917–1950",
+  "title": "Dinu Lipatti's birth chart",
+  "metaDescription": "Dinu Lipatti's chart, computed from a sourced birth date: Sun at 28.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Pisces — the Sun, Mercury, Venus and Mars. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:pisces:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:28.25",
+        "decan:pisces:third"
+      ],
+      "text": "The Sun's position resolves to 28.3° Pisces — deep enough in the third decan (20°–30°) that Mars, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Pisces:18.5°",
+        "personal:Venus:Pisces:18.5°",
+        "personal:Mars:Pisces:24.3°"
+      ],
+      "text": "For the fast movers, Mercury was at 18.5° Pisces, Venus was at 18.5° Pisces, Mars was at 24.3° Pisces. Read together: thought steeped in tone and memory; attraction that works by atmosphere; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Venus:conjunction:0.02",
+        "aspect:Mars:Saturn:trine:0.6",
+        "aspect:Sun:Mars:conjunction:3.95"
+      ],
+      "text": "The day's firmest angle joins Mercury and Venus — a conjunction holding at 0.0°. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Mars trine Saturn at 0.6°, and the Sun conjunction Mars at 4.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Uranus"
+      ],
+      "text": "Uranus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Mercury in Pisces at 18.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 18.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Cancer at 23.7° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water6-earth1-air1-fire1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 6 water, 1 earth, 1 air, 1 fire by element and 4 mutable, 3 fixed, 2 cardinal by mode. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Saturn and Neptune were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 14.6° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-19/",
+    "label": "Everyone born on March 19"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "stellium:pisces:4",
+    "sun-degree:28.25",
+    "decan:pisces:third",
+    "personal:Mercury:Pisces:18.5°",
+    "personal:Venus:Pisces:18.5°",
+    "personal:Mars:Pisces:24.3°",
+    "aspect:Mercury:Venus:conjunction:0.02",
+    "aspect:Mars:Saturn:trine:0.6",
+    "aspect:Sun:Mars:conjunction:3.95",
+    "figure:unaspected:Uranus",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:water6-earth1-air1-fire1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 413,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

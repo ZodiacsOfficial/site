@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "amrita-pritam",
+  "seedRound": 0,
+  "qid": "Q1705018",
+  "displayName": "Amrita Pritam",
+  "identity": "Politician and autobiographer · Pakistan · 1919–2005",
+  "title": "Amrita Pritam's birth chart",
+  "metaDescription": "Amrita Pritam's chart, computed from a sourced birth date: Sun at 6.8° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Leo — Mercury, Mars, Jupiter and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:leo:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.80",
+        "decan:virgo:first"
+      ],
+      "text": "The Sun's position resolves to 6.8° Virgo — deep enough in the first decan (0°–10°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:18.8°",
+        "personal:Venus:Virgo:25.9°",
+        "personal:Mars:Leo:5.1°"
+      ],
+      "text": "Mercury holds 18.8° Leo, Venus holds 25.9° Virgo, Mars holds 5.1° Leo — in the old shorthand, thought that arrives already in motion; attraction that grows by reliability; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:sextile:0.69",
+        "aspect:Mars:Jupiter:conjunction:1.09",
+        "aspect:Saturn:Uranus:opposition:2.94"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a sixth of the circle apart from Pluto, 0.7° off exact. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mars conjunction Jupiter at 1.1°, and Saturn opposition Uranus at 2.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Mercury"
+      ],
+      "text": "Mercury makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Venus:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. The Moon in Scorpio at 11.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Virgo at 25.9° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-earth3-water2-air1",
+        "modalities:fixed6-mutable3-cardinal1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives fire 4, earth 3, water 2, air 1, and fixed 6, mutable 3, cardinal 1 across the modes. Venus and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 11.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-31/",
+    "label": "Everyone born on August 31"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "stellium:leo:4",
+    "sun-degree:6.80",
+    "decan:virgo:first",
+    "personal:Mercury:Leo:18.8°",
+    "personal:Venus:Virgo:25.9°",
+    "personal:Mars:Leo:5.1°",
+    "aspect:Sun:Pluto:sextile:0.69",
+    "aspect:Mars:Jupiter:conjunction:1.09",
+    "aspect:Saturn:Uranus:opposition:2.94",
+    "figure:unaspected:Mercury",
+    "dignity:Moon:fall",
+    "dignity:Venus:fall",
+    "elements:fire4-earth3-water2-air1",
+    "modalities:fixed6-mutable3-cardinal1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:scorpio",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 377,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

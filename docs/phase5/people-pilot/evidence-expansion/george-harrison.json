@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "george-harrison",
+ "qid": "Q2643",
+ "displayName": "George Harrison",
+ "wikidataLabel": "George Harrison",
+ "wikidataDescription": "English musician and member of the Beatles (1943–2001)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2643",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522564316
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "George Harrison",
+   "articleUrl": "https://en.wikipedia.org/wiki/George_Harrison",
+   "pageId": 12731,
+   "revisionId": 1364679186,
+   "revisionTimestamp": "2026-07-17T22:49:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1943-02-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1943-02-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1943-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1943-02-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2001-11-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q4548682",
+  "label": "12 Arnold Grove",
+  "entityUrl": "https://www.wikidata.org/wiki/Q4548682",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q4548682",
+   "sourceEntityLabel": "12 Arnold Grove",
+   "latitude": 53.399027777778,
+   "longitude": -2.9166388888889,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3140857",
+   "label": "horticulturist"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:George Harrison 1974 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:George%20Harrison%201974%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:George_Harrison_1974_(cropped).jpg",
+  "width": 1990,
+  "height": 2600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "David Hume Kennerly",
+  "credit": "Gerald R. Ford Presidential Library and Museum - A2428-14A as displayed at Media Photo Kit - The White House Years Page 1 of 3 (Photos 1-17 of 45)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

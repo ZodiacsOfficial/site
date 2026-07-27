@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alexander-graham-bell",
+ "qid": "Q34286",
+ "displayName": "Alexander Graham Bell",
+ "wikidataLabel": null,
+ "wikidataDescription": "Canadian-American scientist inventor of telephone (1847–1922)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q34286",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520280946
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alexander Graham Bell",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alexander_Graham_Bell",
+   "pageId": 852,
+   "revisionId": 1366001031,
+   "revisionTimestamp": "2026-07-25T17:58:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1847-03-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1847-03-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1847-03-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1922-08-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q23436",
+  "label": "Edinburgh",
+  "entityUrl": "https://www.wikidata.org/wiki/Q23436",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q23436",
+   "sourceEntityLabel": "Edinburgh",
+   "latitude": 55.95333333333333,
+   "longitude": -3.1891666666666665,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q1326886",
+   "label": "electrical engineer"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q2055046",
+   "label": "physiologist"
+  },
+  {
+   "entity": "Q60102223",
+   "label": "teacher of the deaf"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alexander Graham Bell.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alexander%20Graham%20Bell.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alexander_Graham_Bell.jpg",
+  "width": 480,
+  "height": 624,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Moffett Studio",
+  "credit": "Library and Archives Canada / C-017335",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

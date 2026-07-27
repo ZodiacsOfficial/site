@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "caroline-herschel",
+  "seedRound": 0,
+  "qid": "Q76948",
+  "displayName": "Caroline Herschel",
+  "identity": "Astronomer and singer · Germany · 1750–1848",
+  "title": "Caroline Herschel's birth chart",
+  "metaDescription": "Caroline Herschel's chart, computed from a sourced birth date: Sun at 25.8° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 13.1° Cancer, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.78",
+        "decan:pisces:third"
+      ],
+      "text": "At noon on that date the Sun stood at 25.8° Pisces, inside the third decan (20°–30°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:2.2°",
+        "personal:Venus:Aries:16.8°",
+        "personal:Mars:Taurus:13.3°"
+      ],
+      "text": "The personal planets sit Mercury at 2.2° Pisces, Venus at 16.8° Aries, Mars at 13.3° Taurus. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a fire sign reads as attraction declared rather than implied; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:square:0.12",
+        "aspect:Sun:Neptune:trine:0.82",
+        "aspect:Mercury:Pluto:square:2.1"
+      ],
+      "text": "Mercury and Saturn hold the closest angle here — a square, 0.1° wide. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun trine Neptune at 0.8°, and Mercury square Pluto at 2.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Moon in Cancer at 13.1° is in domicile — the planet in its own sign, running on home rules; Mercury in Pisces at 2.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 16.8° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 13.3° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire4-earth1-air1",
+        "modalities:mutable4-cardinal4-fixed2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 water, 4 fire, 1 earth, 1 air by element and 4 mutable, 4 cardinal, 2 fixed by mode. Venus, Saturn, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.6° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 13.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-16/",
+    "label": "Everyone born on March 16"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:domicile",
+    "sun-degree:25.78",
+    "decan:pisces:third",
+    "personal:Mercury:Pisces:2.2°",
+    "personal:Venus:Aries:16.8°",
+    "personal:Mars:Taurus:13.3°",
+    "aspect:Mercury:Saturn:square:0.12",
+    "aspect:Sun:Neptune:trine:0.82",
+    "aspect:Mercury:Pluto:square:2.1",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "elements:water4-fire4-earth1-air1",
+    "modalities:mutable4-cardinal4-fixed2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:cancer",
+    "moon-band:12.6"
+  ],
+  "measurements": {
+    "originalWords": 436,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

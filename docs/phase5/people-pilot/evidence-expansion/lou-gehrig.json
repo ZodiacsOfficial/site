@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lou-gehrig",
+ "qid": "Q357444",
+ "displayName": "Lou Gehrig",
+ "wikidataLabel": "Lou Gehrig",
+ "wikidataDescription": "American baseball player (1903–1941)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q357444",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2507731040
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lou Gehrig",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lou_Gehrig",
+   "pageId": 19381762,
+   "revisionId": 1364280805,
+   "revisionTimestamp": "2026-07-15T16:59:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-06-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-06-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-06-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-06-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11299",
+  "label": "Manhattan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11299",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11299",
+   "sourceEntityLabel": "Manhattan",
+   "latitude": 40.728333333333,
+   "longitude": -73.994166666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:GehrigCU.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:GehrigCU.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:GehrigCU.jpg",
+  "width": 536,
+  "height": 688,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "University Archives—Columbiana Library, Columbia University.",
+  "credit": "http://www.columbia.edu/cu/alumni/Magazine/images/Fall2001/GehrigCU.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

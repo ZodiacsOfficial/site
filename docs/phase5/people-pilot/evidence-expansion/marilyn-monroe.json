@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marilyn-monroe",
+ "qid": "Q4616",
+ "displayName": "Marilyn Monroe",
+ "wikidataLabel": "Marilyn Monroe",
+ "wikidataDescription": "American actress and model (1926–1962)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4616",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522565778
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marilyn Monroe",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marilyn_Monroe",
+   "pageId": 19318,
+   "revisionId": 1363148461,
+   "revisionTimestamp": "2026-07-08T10:22:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1926-06-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1926-06-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1926-06-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1962-08-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q65",
+  "label": "Los Angeles",
+  "entityUrl": "https://www.wikidata.org/wiki/Q65",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q65",
+   "sourceEntityLabel": "Los Angeles",
+   "latitude": 34.05223,
+   "longitude": -118.24368,
+   "precision": 0.10842311330607,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q728711",
+   "label": "Playboy Playmate"
+  },
+  {
+   "entity": "Q3357567",
+   "label": "fashion model"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marilyn Monroe in How to Marry a Millionaire.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marilyn%20Monroe%20in%20How%20to%20Marry%20a%20Millionaire.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marilyn_Monroe_in_How_to_Marry_a_Millionaire.jpg",
+  "width": 2001,
+  "height": 2876,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Sam Shaw",
+  "credit": "https://www.doctormacro.com/Images/Monroe,%20Marilyn/Annex/Annex%20-%20Monroe,%20Marilyn%20(How%20to%20Marry%20a%20Millionaire)_01.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

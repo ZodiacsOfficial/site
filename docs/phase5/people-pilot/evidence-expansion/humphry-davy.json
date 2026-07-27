@@ -1,0 +1,134 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "humphry-davy",
+ "qid": "Q131761",
+ "displayName": "Humphry Davy",
+ "wikidataLabel": "Humphry Davy",
+ "wikidataDescription": "British chemist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q131761",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520781954
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Humphry Davy",
+   "articleUrl": "https://en.wikipedia.org/wiki/Humphry_Davy",
+   "pageId": 14369,
+   "revisionId": 1361089655,
+   "revisionTimestamp": "2026-06-25T15:34:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1778-12-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1778-12-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1778-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1778-12-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1829-05-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q208209",
+  "label": "Penzance",
+  "entityUrl": "https://www.wikidata.org/wiki/Q208209",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q208209",
+   "sourceEntityLabel": "Penzance",
+   "latitude": 50.12139,
+   "longitude": -5.53685,
+   "precision": 1e-05,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q520549",
+   "label": "geologist"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sir Humphry Davy, Bt by Thomas Phillips.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sir%20Humphry%20Davy%2C%20Bt%20by%20Thomas%20Phillips.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sir_Humphry_Davy,_Bt_by_Thomas_Phillips.jpg",
+  "width": 2400,
+  "height": 3123,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Thomas Phillips",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

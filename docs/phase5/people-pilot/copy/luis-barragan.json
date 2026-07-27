@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "luis-barragan",
+  "seedRound": 0,
+  "qid": "Q243295",
+  "displayName": "Luis Barragán",
+  "identity": "Architect · Mexico · 1902–1988",
+  "title": "Luis Barragán's birth chart",
+  "metaDescription": "Luis Barragán's chart, computed from a sourced birth date: Sun at 18.3° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a trine to Pluto at 0.9° — close enough to weld taste to depth. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Venus:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.27",
+        "decan:pisces:second"
+      ],
+      "text": "At the noon reference the Sun sits 18.3° into Pisces — the second decan, which the old scheme hands to the Moon. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aquarius:22.2°",
+        "personal:Venus:Aquarius:17.6°",
+        "personal:Mars:Pisces:22.7°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aquarius (22.2°), Venus in Aquarius (17.6°), Mars in Pisces (22.7°): thought that travels by comparison, attraction that begins as conversation, effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:trine:0.94",
+        "aspect:Mercury:Uranus:sextile:1.07",
+        "aspect:Mars:Uranus:square:1.5"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Pluto: 0.9° from an exact trine. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Mercury sextile Uranus at 1.1°, and Mars square Uranus at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Uranus-Pluto:apex-Sun",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Uranus opposes Pluto while both square the Sun. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, one placement stands out. Saturn in Capricorn at 25.1° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-water3-earth1-fire1",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 5, water 3, earth 1, fire 1; modalities mutable 6, fixed 3, cardinal 1. Neptune was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:13.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 13.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-9/",
+    "label": "Everyone born on March 9"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Pluto:trine",
+    "sun-degree:18.27",
+    "decan:pisces:second",
+    "personal:Mercury:Aquarius:22.2°",
+    "personal:Venus:Aquarius:17.6°",
+    "personal:Mars:Pisces:22.7°",
+    "aspect:Venus:Pluto:trine:0.94",
+    "aspect:Mercury:Uranus:sextile:1.07",
+    "aspect:Mars:Uranus:square:1.5",
+    "figure:t-square:Uranus-Pluto:apex-Sun",
+    "figure:unaspected:Moon",
+    "dignity:Saturn:domicile",
+    "elements:air5-water3-earth1-fire1",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:pisces",
+    "moon-band:13.8"
+  ],
+  "measurements": {
+    "originalWords": 383,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

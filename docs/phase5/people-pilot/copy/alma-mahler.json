@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "alma-mahler",
+  "seedRound": 0,
+  "qid": "Q156898",
+  "displayName": "Alma Mahler",
+  "identity": "Composer and painter · Austria · 1879–1964",
+  "title": "Alma Mahler's birth chart",
+  "metaDescription": "Alma Mahler's chart, computed from a sourced birth date: Sun at 7.6° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: the Sun and Jupiter within 0.1°, identity wired to expansion. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Sun:Jupiter:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.63",
+        "decan:virgo:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 7.6° Virgo: the first decan, whose classical sub-ruler is Mercury. A earth sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:25.6°",
+        "personal:Venus:Libra:8.4°",
+        "personal:Mars:Taurus:20.5°"
+      ],
+      "text": "Mercury holds 25.6° Leo, Venus holds 8.4° Libra, Mars holds 20.5° Taurus — in the old shorthand, a mind that decides at speaking speed; taste led by wit and proportion; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:opposition:0.12",
+        "aspect:Mercury:Pluto:square:1.8",
+        "aspect:Sun:Uranus:conjunction:2.83"
+      ],
+      "text": "The Sun and Jupiter hold the closest angle here — a opposition, 0.1° wide. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Mercury square Pluto at 1.8°, and the Sun conjunction Uranus at 2.8° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Venus in Libra at 8.4° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 20.5° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 7.8° is in domicile; Saturn in Aries at 14.8° is in fall — the tradition’s uphill placement, strength earned rather than given. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire2-air1-water1",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:5"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 5 earth, 2 fire, 1 air, 1 water; by modality, 4 fixed, 3 mutable, 2 cardinal. An earth emphasis reads as patience with material reality — slow hands, durable results. Mercury, Jupiter, Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 12.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-31/",
+    "label": "Everyone born on August 31"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Jupiter:opposition",
+    "sun-degree:7.63",
+    "decan:virgo:first",
+    "personal:Mercury:Leo:25.6°",
+    "personal:Venus:Libra:8.4°",
+    "personal:Mars:Taurus:20.5°",
+    "aspect:Sun:Jupiter:opposition:0.12",
+    "aspect:Mercury:Pluto:square:1.8",
+    "aspect:Sun:Uranus:conjunction:2.83",
+    "figure:none",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:fall",
+    "elements:earth5-fire2-air1-water1",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:5",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 425,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

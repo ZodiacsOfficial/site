@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "anton-bruckner",
+ "qid": "Q81752",
+ "displayName": "Anton Bruckner",
+ "wikidataLabel": "Anton Bruckner",
+ "wikidataDescription": "Austrian composer (1824-1896)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q81752",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518149080
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Anton Bruckner",
+   "articleUrl": "https://en.wikipedia.org/wiki/Anton_Bruckner",
+   "pageId": 44012,
+   "revisionId": 1359444692,
+   "revisionTimestamp": "2026-06-15T09:42:21Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1824-09-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1824-09-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1824-09-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1896-10-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q257130",
+  "label": "Ansfelden",
+  "entityUrl": "https://www.wikidata.org/wiki/Q257130",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q257130",
+   "sourceEntityLabel": "Ansfelden",
+   "latitude": 48.208333333333,
+   "longitude": 14.288888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q16031530",
+   "label": "music theorist"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Joseph Anton Bruckner (1868).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Joseph%20Anton%20Bruckner%20(1868).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Joseph_Anton_Bruckner_(1868).jpg",
+  "width": 636,
+  "height": 857,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://steyrerpioniere.wordpress.com/2011/08/06/anton-bruckner/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

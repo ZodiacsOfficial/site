@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edith-wharton",
+ "qid": "Q276032",
+ "displayName": "Edith Wharton",
+ "wikidataLabel": "Edith Wharton",
+ "wikidataDescription": "American writer and designer (1862–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q276032",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515285573
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edith Wharton",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edith_Wharton",
+   "pageId": 160180,
+   "revisionId": 1363878357,
+   "revisionTimestamp": "2026-07-13T01:33:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1862-01-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1862-01-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1862-01-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-08-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q1792450",
+   "label": "art historian"
+  }
+ ],
+ "portrait": {
+  "file": "File:Edith Newbold Jones Wharton (cropped 03).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Edith%20Newbold%20Jones%20Wharton%20(cropped%2003).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Edith_Newbold_Jones_Wharton_(cropped_03).jpg",
+  "width": 716,
+  "height": 1047,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "E. F. Cooper, Newport, Rhode Island",
+  "credit": "Beinecke Rare Book & Manuscript Library, Yale University [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

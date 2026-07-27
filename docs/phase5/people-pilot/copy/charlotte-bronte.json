@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "charlotte-bronte",
+  "seedRound": 0,
+  "qid": "Q127332",
+  "displayName": "Charlotte Brontë",
+  "identity": "Poet and teacher · United Kingdom · 1816–1855",
+  "title": "Charlotte Brontë's birth chart",
+  "metaDescription": "Charlotte Brontë's chart, computed from a sourced birth date: Sun at 1.2° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mutable signs carry four of the nine placements whose signs are settled — the broadest certain weighting in the chart. Mutable signs end their seasons, and a mutable-heavy chart is read as one built for adaptation and hand-off rather than for standing still.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:1.23",
+        "decan:taurus:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 1.2° Taurus: the first decan, whose classical sub-ruler is Venus. A earth sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:16.6°",
+        "personal:Venus:Aries:4.4°",
+        "personal:Mars:Gemini:28.5°"
+      ],
+      "text": "Mercury holds 16.6° Aries, Venus holds 4.4° Aries, Mars holds 28.5° Gemini — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:sextile:0.66",
+        "aspect:Neptune:Pluto:square:1.54",
+        "aspect:Sun:Mars:sextile:2.75"
+      ],
+      "text": "The tightest geometry in the chart puts Saturn a sixth of the circle apart from Neptune, 0.7° off exact. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Neptune square Pluto at 1.5°, and the Sun sextile Mars at 2.8° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mars-Neptune:apex-Pluto"
+      ],
+      "text": "Mars opposes Neptune while both square Pluto. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Venus in Aries at 4.4° is in detriment — the planet opposite its home, working against the grain; Saturn in Aquarius at 22.6° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air2-water2-earth1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: fire 4, air 2, water 2, earth 1 across the elements, and mutable 4, fixed 3, cardinal 2 across the modalities. Fire leads with ignition: the first move made early, and certainty arriving ahead of the evidence. Jupiter, Uranus and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 11.9° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-21/",
+    "label": "Everyone born on April 21"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:1.23",
+    "decan:taurus:first",
+    "personal:Mercury:Aries:16.6°",
+    "personal:Venus:Aries:4.4°",
+    "personal:Mars:Gemini:28.5°",
+    "aspect:Saturn:Neptune:sextile:0.66",
+    "aspect:Neptune:Pluto:square:1.54",
+    "aspect:Sun:Mars:sextile:2.75",
+    "figure:t-square:Mars-Neptune:apex-Pluto",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:domicile",
+    "elements:fire4-air2-water2-earth1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 417,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

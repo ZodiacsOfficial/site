@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "abraham-lincoln",
+ "qid": "Q91",
+ "displayName": "Abraham Lincoln",
+ "wikidataLabel": "Abraham Lincoln",
+ "wikidataDescription": "president of the United States from 1861 to 1865 (1809-1865)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q91",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522980001
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Abraham Lincoln",
+   "articleUrl": "https://en.wikipedia.org/wiki/Abraham_Lincoln",
+   "pageId": 307,
+   "revisionId": 1365528615,
+   "revisionTimestamp": "2026-07-23T00:59:38Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1809-02-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1809-02-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1809-02-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1865-04-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q113363481",
+  "label": "Sinking Spring Farm",
+  "entityUrl": "https://www.wikidata.org/wiki/Q113363481",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q113363481",
+   "sourceEntityLabel": "Sinking Spring Farm",
+   "latitude": 37.53333333333333,
+   "longitude": -85.73333333333333,
+   "precision": 0.016666666666666666,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1416611",
+   "label": "postmaster"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q372436",
+   "label": "statesperson"
+  },
+  {
+   "entity": "Q131512",
+   "label": "farmer"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Abraham Lincoln O-77 matte collodion print.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Abraham%20Lincoln%20O-77%20matte%20collodion%20print.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Abraham_Lincoln_O-77_matte_collodion_print.jpg",
+  "width": 2200,
+  "height": 2835,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Alexander Gardner",
+  "credit": "museums.fivecolleges.edu",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

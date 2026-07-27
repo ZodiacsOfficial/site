@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "frank-lloyd-wright",
+ "qid": "Q5604",
+ "displayName": "Frank Lloyd Wright",
+ "wikidataLabel": "Frank Lloyd Wright",
+ "wikidataDescription": "American architect (1867-1959)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5604",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522196742
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Frank Lloyd Wright",
+   "articleUrl": "https://en.wikipedia.org/wiki/Frank_Lloyd_Wright",
+   "pageId": 10683,
+   "revisionId": 1365620867,
+   "revisionTimestamp": "2026-07-23T13:47:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1867-06-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1867-06-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1867-06-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1959-04-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1569965",
+  "label": "Richland Center",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1569965",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1569965",
+   "sourceEntityLabel": "Richland Center",
+   "latitude": 43.337777777778,
+   "longitude": -90.384722222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q131062",
+   "label": "urban planner"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q24205162",
+   "label": "printseller"
+  },
+  {
+   "entity": "Q58481158",
+   "label": "print collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Frank Lloyd Wright LC-USZ62-36384.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Frank%20Lloyd%20Wright%20LC-USZ62-36384.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Frank_Lloyd_Wright_LC-USZ62-36384.jpg",
+  "width": 914,
+  "height": 1500,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3a36793.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

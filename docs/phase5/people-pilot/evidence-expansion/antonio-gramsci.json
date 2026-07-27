@@ -1,0 +1,143 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "antonio-gramsci",
+ "qid": "Q83003",
+ "displayName": "Antonio Gramsci",
+ "wikidataLabel": "Antonio Gramsci",
+ "wikidataDescription": "Italian Marxist philosopher, writer, and politician (1891–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q83003",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521439104
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Antonio Gramsci",
+   "articleUrl": "https://en.wikipedia.org/wiki/Antonio_Gramsci",
+   "pageId": 56244,
+   "revisionId": 1364550997,
+   "revisionTimestamp": "2026-07-17T04:33:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1891-01-22T00:00:00Z|proleptic-gregorian",
+   "+1891-01-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1891-01-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1891-01-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1891-01-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-04-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q382548",
+  "label": "Ales",
+  "entityUrl": "https://www.wikidata.org/wiki/Q382548",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q382548",
+   "sourceEntityLabel": "Ales",
+   "latitude": 39.766666666667,
+   "longitude": 8.8166666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q17337766",
+   "label": "theatre critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gramsci.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gramsci.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gramsci.png",
+  "width": 959,
+  "height": 1297,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://eserver.org/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

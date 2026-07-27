@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "george-gershwin",
+  "seedRound": 0,
+  "qid": "Q123829",
+  "displayName": "George Gershwin",
+  "identity": "Composer and painter · United States · 1898–1937",
+  "title": "George Gershwin's birth chart",
+  "metaDescription": "George Gershwin's chart, computed from a sourced birth date: Sun at 3.6° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled fall in air signs — at least half of what the unknown hour leaves certain. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible.",
+  "ledeFact": "element:air:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.61",
+        "decan:libra:first"
+      ],
+      "text": "Libra, but precisely: 3.6°, first decan, 0°–10°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:17.1°",
+        "personal:Venus:Scorpio:20.0°",
+        "personal:Mars:Cancer:13.8°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Virgo (17.1°), Venus in Scorpio (20.0°), Mars in Cancer (13.8°): a mind that trusts the measured and the checked, taste tuned to mood and undertow, drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:trine:1.21",
+        "aspect:Mercury:Pluto:square:1.43",
+        "aspect:Mercury:Venus:sextile:2.84"
+      ],
+      "text": "Jupiter to Pluto is the closest call of the day, a trine within 1.2°. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Mercury square Pluto at 1.4°, and Mercury sextile Venus at 2.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Neptune"
+      ],
+      "text": "Neptune stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:detriment",
+        "dignity:Mars:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. The Sun in Libra at 3.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 17.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Scorpio at 20.0° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 13.8° is in fall. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-water2-fire2-earth1",
+        "modalities:mutable5-cardinal3-fixed2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 5 air, 2 water, 2 fire, 1 earth by element and 5 mutable, 3 cardinal, 2 fixed by modality. Pluto was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:14.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-26/",
+    "label": "Everyone born on September 26"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "element:air:5",
+    "sun-degree:3.61",
+    "decan:libra:first",
+    "personal:Mercury:Virgo:17.1°",
+    "personal:Venus:Scorpio:20.0°",
+    "personal:Mars:Cancer:13.8°",
+    "aspect:Jupiter:Pluto:trine:1.21",
+    "aspect:Mercury:Pluto:square:1.43",
+    "aspect:Mercury:Venus:sextile:2.84",
+    "figure:unaspected:Neptune",
+    "dignity:Sun:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:detriment",
+    "dignity:Mars:fall",
+    "elements:air5-water2-fire2-earth1",
+    "modalities:mutable5-cardinal3-fixed2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:aquarius",
+    "moon-band:14.2"
+  ],
+  "measurements": {
+    "originalWords": 411,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "enrico-fermi",
+  "seedRound": 0,
+  "qid": "Q8753",
+  "displayName": "Enrico Fermi",
+  "identity": "Physicist and university teacher · Italy · 1901–1954",
+  "title": "Enrico Fermi's birth chart",
+  "metaDescription": "Enrico Fermi's chart, computed from a sourced birth date: Sun at 5.6° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, cardinal leads with five. Cardinal weight is read as initiative: the instinct to be the reason something began.",
+  "ledeFact": "modality:cardinal:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.59",
+        "decan:libra:first"
+      ],
+      "text": "5.6° of Libra is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:27.7°",
+        "personal:Venus:Scorpio:14.3°",
+        "personal:Mars:Scorpio:19.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 27.7° Libra, Venus was at 14.3° Scorpio, Mars was at 19.4° Scorpio. Read together: thought that travels by comparison; attraction that works by atmosphere; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:square:1.02",
+        "aspect:Jupiter:Neptune:opposition:3.09",
+        "aspect:Mercury:Neptune:trine:3.81"
+      ],
+      "text": "The day's firmest angle joins the Sun and Jupiter — a square holding at 1.0°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Jupiter opposition Neptune at 3.1°, and Mercury trine Neptune at 3.8° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Jupiter-Neptune:apex-Sun",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Neptune while both square the Sun. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, five placements stand out. The Sun in Libra at 5.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Scorpio at 14.3° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 19.4° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 4.6° is in fall; Saturn in Capricorn at 10.0° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-earth2-fire1",
+        "modalities:cardinal5-fixed2-mutable2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 water, 2 earth, 1 fire by element and 5 cardinal, 2 fixed, 2 mutable by modality. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Pluto was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 14.9° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-29/",
+    "label": "Everyone born on September 29"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "modality:cardinal:5",
+    "sun-degree:5.59",
+    "decan:libra:first",
+    "personal:Mercury:Libra:27.7°",
+    "personal:Venus:Scorpio:14.3°",
+    "personal:Mars:Scorpio:19.4°",
+    "aspect:Sun:Jupiter:square:1.02",
+    "aspect:Jupiter:Neptune:opposition:3.09",
+    "aspect:Mercury:Neptune:trine:3.81",
+    "figure:t-square:Jupiter-Neptune:apex-Sun",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:air3-water3-earth2-fire1",
+    "modalities:cardinal5-fixed2-mutable2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 437,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

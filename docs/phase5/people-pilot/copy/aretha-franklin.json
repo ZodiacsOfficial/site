@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "aretha-franklin",
+  "seedRound": 0,
+  "qid": "Q125121",
+  "displayName": "Aretha Franklin",
+  "identity": "Singer and activist · United States · 1942–2018",
+  "title": "Aretha Franklin's birth chart",
+  "metaDescription": "Aretha Franklin's chart, computed from a sourced birth date: Sun at 4.4° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 4.4° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.41",
+        "decan:aries:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 4.4° Aries: the first decan, whose classical sub-ruler is Mars. A fire sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:12.4°",
+        "personal:Venus:Aquarius:19.8°",
+        "personal:Mars:Gemini:10.9°"
+      ],
+      "text": "Closer in, Mercury stands at 12.4° Pisces; Venus stands at 19.8° Aquarius; Mars stands at 10.9° Gemini. The tradition reads a mind that absorbs before it argues from Mercury, taste led by wit and proportion from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:trine:0.85",
+        "aspect:Uranus:Neptune:trine:0.94",
+        "aspect:Mercury:Mars:square:1.53"
+      ],
+      "text": "Start where the chart is tightest — the Sun trine Pluto, 0.8° of separation. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, Uranus trine Neptune at 0.9°, and Mercury square Mars at 1.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Moon:domicile",
+        "dignity:Mercury:fall",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. The Sun in Aries at 4.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; the Moon in Cancer at 12.2° is in domicile — the planet in its own sign, running on home rules; Mercury in Pisces at 12.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Gemini at 15.0° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth3-fire2-water2",
+        "modalities:mutable4-fixed4-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: air 3, earth 3, fire 2, water 2 across the elements, and mutable 4, fixed 4, cardinal 2 across the modalities. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 12.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-25/",
+    "label": "Everyone born on March 25"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:4.41",
+    "decan:aries:first",
+    "personal:Mercury:Pisces:12.4°",
+    "personal:Venus:Aquarius:19.8°",
+    "personal:Mars:Gemini:10.9°",
+    "aspect:Sun:Pluto:trine:0.85",
+    "aspect:Uranus:Neptune:trine:0.94",
+    "aspect:Mercury:Mars:square:1.53",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:fall",
+    "dignity:Jupiter:detriment",
+    "elements:air3-earth3-fire2-water2",
+    "modalities:mutable4-fixed4-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 436,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

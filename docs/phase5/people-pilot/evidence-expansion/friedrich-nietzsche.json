@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "friedrich-nietzsche",
+ "qid": "Q9358",
+ "displayName": "Friedrich Nietzsche",
+ "wikidataLabel": "Friedrich Nietzsche",
+ "wikidataDescription": "German philosopher (1844-1900)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9358",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522689933
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Friedrich Nietzsche",
+   "articleUrl": "https://en.wikipedia.org/wiki/Friedrich_Nietzsche",
+   "pageId": 10671,
+   "revisionId": 1365961057,
+   "revisionTimestamp": "2026-07-25T12:29:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1844-10-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1844-10-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1844-10-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1900-08-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q529879",
+  "label": "Röcken",
+  "entityUrl": "https://www.wikidata.org/wiki/Q529879",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q529879",
+   "sourceEntityLabel": "Röcken",
+   "latitude": 51.240833333333,
+   "longitude": 12.116111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q16267607",
+   "label": "classical philologist"
+  },
+  {
+   "entity": "Q1350157",
+   "label": "music critic"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nietzsche187a.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nietzsche187a.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nietzsche187a.jpg",
+  "width": 1464,
+  "height": 1986,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Friedrich Hermann Hartmann",
+  "credit": "https://s-media-cache-ak0.pinimg.com/originals/04/10/0b/04100baec90c105729b47f33c371476b.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

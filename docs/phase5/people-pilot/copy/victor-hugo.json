@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "victor-hugo",
+  "seedRound": 0,
+  "qid": "Q535",
+  "displayName": "Victor Hugo",
+  "identity": "Politician and playwright · France · 1802–1885",
+  "title": "Victor Hugo's birth chart",
+  "metaDescription": "Victor Hugo's chart, computed from a sourced birth date: Sun at 7.2° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Pisces — the Sun, Mercury, Venus and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:pisces:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.22",
+        "decan:pisces:first"
+      ],
+      "text": "The Sun sits at 7.2° Pisces — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Pisces and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:25.1°",
+        "personal:Venus:Pisces:2.4°",
+        "personal:Mars:Aquarius:0.7°"
+      ],
+      "text": "For the fast movers, Mercury was at 25.1° Pisces, Venus was at 2.4° Pisces, Mars was at 0.7° Aquarius. Read together: a mind that absorbs before it argues; taste tuned to mood and undertow; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:opposition:1.49",
+        "aspect:Saturn:Pluto:opposition:1.5",
+        "aspect:Sun:Pluto:conjunction:1.85"
+      ],
+      "text": "Closest first: Venus to Saturn, a opposition with 1.5° of slack. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Saturn opposition Pluto at 1.5°, and the Sun conjunction Pluto at 1.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation"
+      ],
+      "text": "The classical table has two entries for this chart. Mercury in Pisces at 25.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 2.4° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-fire2-air2-earth1",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 5 water, 2 fire, 2 air, 1 earth by element and 6 mutable, 3 fixed, 1 cardinal by modality. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. Jupiter, Saturn, Uranus and Neptune were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-26/",
+    "label": "Everyone born on February 26"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "stellium:pisces:4",
+    "sun-degree:7.22",
+    "decan:pisces:first",
+    "personal:Mercury:Pisces:25.1°",
+    "personal:Venus:Pisces:2.4°",
+    "personal:Mars:Aquarius:0.7°",
+    "aspect:Venus:Saturn:opposition:1.49",
+    "aspect:Saturn:Pluto:opposition:1.5",
+    "aspect:Sun:Pluto:conjunction:1.85",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "elements:water5-fire2-air2-earth1",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:sagittarius",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 431,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

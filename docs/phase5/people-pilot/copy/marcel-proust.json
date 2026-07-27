@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "marcel-proust",
+  "seedRound": 0,
+  "qid": "Q7199",
+  "displayName": "Marcel Proust",
+  "identity": "Novelist · France · 1871–1922",
+  "title": "Marcel Proust's birth chart",
+  "metaDescription": "Marcel Proust's chart, computed from a sourced birth date: Sun at 17.7° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Cancer — the Sun, Mercury, Jupiter and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:cancer:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.72",
+        "decan:cancer:second"
+      ],
+      "text": "The Sun's position resolves to 17.7° Cancer — deep enough in the second decan (10°–20°) that Mars, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:16.5°",
+        "personal:Venus:Virgo:3.1°",
+        "personal:Mars:Libra:11.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 16.5° Cancer, Venus was at 3.1° Virgo, Mars was at 11.2° Libra. Read together: thought steeped in tone and memory; attraction that grows by reliability; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Jupiter:square:0.64",
+        "aspect:Sun:Mercury:conjunction:1.21",
+        "aspect:Sun:Pluto:sextile:1.88"
+      ],
+      "text": "The tightest geometry in the chart puts Mars at right angles from Jupiter, 0.6° off exact. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, the Sun conjunction Mercury at 1.2°, and the Sun sextile Pluto at 1.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Jupiter-Saturn:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Saturn while both square Mars. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. Venus in Virgo at 3.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Libra at 11.2° is in detriment — the planet opposite its home, working against the grain; Jupiter in Cancer at 10.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Capricorn at 5.7° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth3-air1-fire1",
+        "modalities:cardinal7-mutable1-fixed1",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 water, 3 earth, 1 air, 1 fire by element and 7 cardinal, 1 mutable, 1 fixed by mode. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. Saturn was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 12.2° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-10/",
+    "label": "Everyone born on July 10"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "stellium:cancer:4",
+    "sun-degree:17.72",
+    "decan:cancer:second",
+    "personal:Mercury:Cancer:16.5°",
+    "personal:Venus:Virgo:3.1°",
+    "personal:Mars:Libra:11.2°",
+    "aspect:Mars:Jupiter:square:0.64",
+    "aspect:Sun:Mercury:conjunction:1.21",
+    "aspect:Sun:Pluto:sextile:1.88",
+    "figure:t-square:Jupiter-Saturn:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:water4-earth3-air1-fire1",
+    "modalities:cardinal7-mutable1-fixed1",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 466,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

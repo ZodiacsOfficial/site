@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "j-j-thomson",
+ "qid": "Q47285",
+ "displayName": "J. J. Thomson",
+ "wikidataLabel": "Joseph John Thomson",
+ "wikidataDescription": "British physicist (1856-1940)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q47285",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516000987
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "J. J. Thomson",
+   "articleUrl": "https://en.wikipedia.org/wiki/J._J._Thomson",
+   "pageId": 70085,
+   "revisionId": 1365637279,
+   "revisionTimestamp": "2026-07-23T15:35:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1856-12-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1856-12-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1856-12-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1940-08-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2015708",
+  "label": "Cheetham Hill",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2015708",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2015708",
+   "sourceEntityLabel": "Cheetham Hill",
+   "latitude": 53.504,
+   "longitude": -2.231,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:J.J. Thomson LCCN2014715407.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:J.J.%20Thomson%20LCCN2014715407.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:J.J._Thomson_LCCN2014715407.jpg",
+  "width": 3255,
+  "height": 4480,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bain News Service, publisher",
+  "credit": "Library of Congress Catalog: https://lccn.loc.gov/2014715407 Image download: https://cdn.loc.gov/service/pnp/ggbain/35200/35256v.jpg Original url: https://www.loc.gov/pictures/item/2014715407/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

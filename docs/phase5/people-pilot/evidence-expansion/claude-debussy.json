@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "claude-debussy",
+ "qid": "Q4700",
+ "displayName": "Claude Debussy",
+ "wikidataLabel": "Claude Debussy",
+ "wikidataDescription": "French classical composer (1862–1918)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4700",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522390215
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Claude Debussy",
+   "articleUrl": "https://en.wikipedia.org/wiki/Claude_Debussy",
+   "pageId": 6260,
+   "revisionId": 1364164437,
+   "revisionTimestamp": "2026-07-14T22:33:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1862-08-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1862-08-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1862-08-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1918-03-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60847808",
+  "label": "Saint-Germain-en-Laye",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60847808",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60847808",
+   "sourceEntityLabel": "Saint-Germain-en-Laye",
+   "latitude": 48.896388888889,
+   "longitude": 2.0905555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q1350157",
+   "label": "music critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Claude Debussy by Atelier Nadar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Claude%20Debussy%20by%20Atelier%20Nadar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Claude_Debussy_by_Atelier_Nadar.jpg",
+  "width": 1982,
+  "height": 2771,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Adam Cuerden",
+  "credit": "This file comes from Gallica Digital Library and is available under the digital ID btv1b53118843k/f1",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

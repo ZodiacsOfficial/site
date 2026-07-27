@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "johan-cruyff",
+ "qid": "Q17163",
+ "displayName": "Johan Cruyff",
+ "wikidataLabel": "Johan Cruyff",
+ "wikidataDescription": "Dutch footballer and manager (1947–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q17163",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521361508
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Johan Cruyff",
+   "articleUrl": "https://en.wikipedia.org/wiki/Johan_Cruyff",
+   "pageId": 26276416,
+   "revisionId": 1366150753,
+   "revisionTimestamp": "2026-07-26T15:57:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1947-04-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1947-04-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1947-04-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-03-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q582916",
+  "label": "Betondorp",
+  "entityUrl": "https://www.wikidata.org/wiki/Q582916",
+  "country": {
+   "entity": "Q55",
+   "label": "Netherlands"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q582916",
+   "sourceEntityLabel": "Betondorp",
+   "latitude": 52.34027777777778,
+   "longitude": 4.943333333333333,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q628099",
+   "label": "association football coach"
+  },
+  {
+   "entity": "Q41583",
+   "label": "coach"
+  }
+ ],
+ "portrait": {
+  "file": "File:Johan Cruijff (1974).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Johan%20Cruijff%20(1974).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Johan_Cruijff_(1974).jpg",
+  "width": 1504,
+  "height": 2005,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Rob Mieremet / Anefo",
+  "credit": "Nationaal Archief",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

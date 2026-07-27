@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "norbert-wiener",
+ "qid": "Q178577",
+ "displayName": "Norbert Wiener",
+ "wikidataLabel": null,
+ "wikidataDescription": "American mathematician, scientist in cybernetics and artificial intelligence (1894–1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q178577",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516767355
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Norbert Wiener",
+   "articleUrl": "https://en.wikipedia.org/wiki/Norbert_Wiener",
+   "pageId": 63185,
+   "revisionId": 1364909178,
+   "revisionTimestamp": "2026-07-19T06:00:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1894-11-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1894-11-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1894-11-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-03-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q59670",
+  "label": "Columbia",
+  "entityUrl": "https://www.wikidata.org/wiki/Q59670",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q59670",
+   "sourceEntityLabel": "Columbia",
+   "latitude": 38.95171,
+   "longitude": -92.33407,
+   "precision": 0.11551278186102,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q82594",
+   "label": "computer scientist"
+  },
+  {
+   "entity": "Q4479442",
+   "label": "founder"
+  },
+  {
+   "entity": "Q901",
+   "label": "scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Norbert wiener.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Norbert%20wiener.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Norbert_wiener.jpg",
+  "width": 289,
+  "height": 400,
+  "licenseShortName": "CC BY-SA 2.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0/de/deed.en",
+  "artist": "Konrad Jacobs",
+  "credit": "https://opc.mfo.de/detail?photo_id=4520",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

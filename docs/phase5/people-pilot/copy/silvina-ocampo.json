@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "silvina-ocampo",
+  "seedRound": 1,
+  "qid": "Q442829",
+  "displayName": "Silvina Ocampo",
+  "identity": "Writer · Argentina · 1903–1993",
+  "title": "Silvina Ocampo's birth chart",
+  "metaDescription": "Silvina Ocampo's chart, computed from a sourced birth date: Sun at 4.4° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 4.4° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.39",
+        "decan:leo:first"
+      ],
+      "text": "At the noon reference the Sun sits 4.4° into Leo — the first decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Leo:6.7°",
+        "personal:Venus:Virgo:18.3°",
+        "personal:Mars:Libra:24.9°"
+      ],
+      "text": "The personal planets sit Mercury at 6.7° Leo, Venus at 18.3° Virgo, Mars at 24.9° Libra. Mercury in a fire sign reads as thought that arrives already in motion; Venus in a earth sign reads as attraction that grows by reliability; Mars in a air sign reads as effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:opposition:0.54",
+        "aspect:Jupiter:Uranus:square:0.86",
+        "aspect:Sun:Saturn:opposition:1.72"
+      ],
+      "text": "Closest first: Mercury to Saturn, a opposition with 0.5° of slack. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Jupiter square Uranus at 0.9°, and the Sun opposition Saturn at 1.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Venus-Jupiter:apex-Uranus",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Venus opposes Jupiter while both square Uranus. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, five placements stand out. The Sun in Leo at 4.4° is in domicile — the planet in its own sign, running on home rules; Venus in Virgo at 18.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Libra at 24.9° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 23.0° is in domicile; Saturn in Aquarius at 6.1° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-air3-water2-earth1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 3 in fire, 3 in air, 2 in water, 1 in earth by element, 4 mutable, 3 fixed, 2 cardinal by modality. Jupiter, Saturn and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:virgo:libra"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Virgo into Libra during that day at the birthplace, travelling 14.0° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-28/",
+    "label": "Everyone born on July 28"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:4.39",
+    "decan:leo:first",
+    "personal:Mercury:Leo:6.7°",
+    "personal:Venus:Virgo:18.3°",
+    "personal:Mars:Libra:24.9°",
+    "aspect:Mercury:Saturn:opposition:0.54",
+    "aspect:Jupiter:Uranus:square:0.86",
+    "aspect:Sun:Saturn:opposition:1.72",
+    "figure:t-square:Venus-Jupiter:apex-Uranus",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire3-air3-water2-earth1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:virgo:libra"
+  ],
+  "measurements": {
+    "originalWords": 447,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

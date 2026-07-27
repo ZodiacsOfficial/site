@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "desmond-tutu",
+ "qid": "Q43033",
+ "displayName": "Desmond Tutu",
+ "wikidataLabel": "Desmond Tutu",
+ "wikidataDescription": "South African churchman, politician, archbishop, Nobel Prize winner (1931–2021)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q43033",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522118741
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Desmond Tutu",
+   "articleUrl": "https://en.wikipedia.org/wiki/Desmond_Tutu",
+   "pageId": 8401973,
+   "revisionId": 1365121363,
+   "revisionTimestamp": "2026-07-20T11:06:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-10-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-10-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-10-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2021-12-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6936880",
+  "label": "Munsieville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6936880",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6936880",
+   "sourceEntityLabel": "Munsieville",
+   "latitude": -26.075,
+   "longitude": 27.753,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3409375",
+   "label": "Anglican priest"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q98833883",
+   "label": "Protestant theologian"
+  },
+  {
+   "entity": "Q49476",
+   "label": "archbishop"
+  },
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  },
+  {
+   "entity": "Q134284649",
+   "label": "anti-apartheid activist"
+  },
+  {
+   "entity": "Q137178813",
+   "label": "Q137178813"
+  },
+  {
+   "entity": "Q2259532",
+   "label": "cleric"
+  }
+ ],
+ "portrait": {
+  "file": "File:Archbishop-Tutu-medium.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Archbishop-Tutu-medium.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Archbishop-Tutu-medium.jpg",
+  "width": 1152,
+  "height": 1728,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Benny Gool",
+  "credit": "Transferred from en.wikipedia to Commons.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

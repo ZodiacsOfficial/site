@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edward-elgar",
+ "qid": "Q179631",
+ "displayName": "Edward Elgar",
+ "wikidataLabel": "Edward Elgar",
+ "wikidataDescription": "English composer (1857-1934)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q179631",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516544839
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edward Elgar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edward_Elgar",
+   "pageId": 10085,
+   "revisionId": 1365886585,
+   "revisionTimestamp": "2026-07-25T00:48:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1857-06-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1857-06-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1857-06-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1934-02-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2423318",
+  "label": "Lower Broadheath",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2423318",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2423318",
+   "sourceEntityLabel": "Lower Broadheath",
+   "latitude": 52.209172222222,
+   "longitude": -2.2732277777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Edward Elgar 1857 - 1934.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Edward%20Elgar%201857%20-%201934.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Edward_Elgar_1857_-_1934.jpg",
+  "width": 3821,
+  "height": 5454,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "not stated",
+  "credit": "Modern Musicians by J. Cuthbert Hadden (First published by T.N.Foulis in 1913) - September 1918 Foulis reprint",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

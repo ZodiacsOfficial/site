@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sigmund-freud",
+ "qid": "Q9215",
+ "displayName": "Sigmund Freud",
+ "wikidataLabel": "Sigmund Freud",
+ "wikidataDescription": "Austrian psychiatrist and founder of psychoanalysis (1856–1939)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9215",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522570087
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sigmund Freud",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sigmund_Freud",
+   "pageId": 26743,
+   "revisionId": 1365999847,
+   "revisionTimestamp": "2026-07-25T17:49:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1856-05-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1856-05-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1856-05-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1939-09-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q654019",
+  "label": "Příbor",
+  "entityUrl": "https://www.wikidata.org/wiki/Q654019",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q654019",
+   "sourceEntityLabel": "Příbor",
+   "latitude": 49.640926771377,
+   "longitude": 18.145022037352,
+   "precision": 0.00138719719683,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3410028",
+   "label": "psychoanalyst"
+  },
+  {
+   "entity": "Q783906",
+   "label": "neurologist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q211346",
+   "label": "psychiatrist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sigmund Freud, by Max Halberstadt (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sigmund%20Freud%2C%20by%20Max%20Halberstadt%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sigmund_Freud,_by_Max_Halberstadt_(cropped).jpg",
+  "width": 1647,
+  "height": 2240,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Max Halberstadt",
+  "credit": "https://www.christies.com/lotfinder/lot_details.aspx?intObjectID=6116407",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

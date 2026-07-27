@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "karl-lagerfeld",
+ "qid": "Q76716",
+ "displayName": "Karl Lagerfeld",
+ "wikidataLabel": "Karl Lagerfeld",
+ "wikidataDescription": "German fashion designer (1933–2019)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q76716",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519790618
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Karl Lagerfeld",
+   "articleUrl": "https://en.wikipedia.org/wiki/Karl_Lagerfeld",
+   "pageId": 175855,
+   "revisionId": 1360560430,
+   "revisionTimestamp": "2026-06-22T07:23:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1933-09-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1933-09-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1933-09-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2019-02-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1055",
+  "label": "Hamburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1055",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1055",
+   "sourceEntityLabel": "Hamburg",
+   "latitude": 53.55,
+   "longitude": 10,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q2516866",
+   "label": "publisher"
+  },
+  {
+   "entity": "Q2000124",
+   "label": "postage stamp designer"
+  },
+  {
+   "entity": "Q1323191",
+   "label": "costume designer"
+  },
+  {
+   "entity": "Q19698265",
+   "label": "fashion photographer"
+  },
+  {
+   "entity": "Q2034021",
+   "label": "dressmaker"
+  },
+  {
+   "entity": "Q3243461",
+   "label": "collector"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Karl Lagerfeld 2014.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Karl%20Lagerfeld%202014.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Karl_Lagerfeld_2014.jpg",
+  "width": 421,
+  "height": 663,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "Christopher William Adach",
+  "credit": "https://www.flickr.com/photos/adach/14071166986/",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

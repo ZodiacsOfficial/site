@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "octavia-hill",
+  "seedRound": 0,
+  "qid": "Q437462",
+  "displayName": "Octavia Hill",
+  "identity": "Social reformer and writer · United Kingdom · 1838–1912",
+  "title": "Octavia Hill's birth chart",
+  "metaDescription": "Octavia Hill's chart, computed from a sourced birth date: Sun at 10.9° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Sagittarius — the Sun, Mercury, Venus and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:sagittarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.94",
+        "decan:sagittarius:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 10.9° Sagittarius: the second decan, whose classical sub-ruler is Mars. A fire sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:26.6°",
+        "personal:Venus:Sagittarius:7.3°",
+        "personal:Mars:Virgo:14.3°"
+      ],
+      "text": "Mercury holds 26.6° Sagittarius, Venus holds 7.3° Sagittarius, Mars holds 14.3° Virgo — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:sextile:0.89",
+        "aspect:Venus:Uranus:square:1.35",
+        "aspect:Sun:Uranus:square:2.31"
+      ],
+      "text": "Venus to Neptune is the closest call of the day, a sextile within 0.9°. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Venus square Uranus at 1.4°, and the Sun square Uranus at 2.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Mars-Uranus:apex-Sun",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars opposes Uranus while both square the Sun. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Mercury:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. The Moon in Cancer at 7.3° is in domicile — the planet in its own sign, running on home rules; Mercury in Sagittarius at 26.6° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-water2-air2-earth1",
+        "modalities:mutable6-cardinal3-fixed1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 5 fire, 2 water, 2 air, 1 earth by element and 6 mutable, 3 cardinal, 1 fixed by modality. Pluto was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:13.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 13.7° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 7.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-3/",
+    "label": "Everyone born on December 3"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:sagittarius:4",
+    "sun-degree:10.94",
+    "decan:sagittarius:second",
+    "personal:Mercury:Sagittarius:26.6°",
+    "personal:Venus:Sagittarius:7.3°",
+    "personal:Mars:Virgo:14.3°",
+    "aspect:Venus:Neptune:sextile:0.89",
+    "aspect:Venus:Uranus:square:1.35",
+    "aspect:Sun:Uranus:square:2.31",
+    "figure:t-square:Mars-Uranus:apex-Sun",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:detriment",
+    "elements:fire5-water2-air2-earth1",
+    "modalities:mutable6-cardinal3-fixed1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:cancer",
+    "moon-band:13.7"
+  ],
+  "measurements": {
+    "originalWords": 418,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "mary-oliver",
+  "seedRound": 0,
+  "qid": "Q454836",
+  "displayName": "Mary Oliver",
+  "identity": "Poet · United States · 1935–2019",
+  "title": "Mary Oliver's birth chart",
+  "metaDescription": "Mary Oliver's chart, computed from a sourced birth date: Sun at 17.0° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Pluto sit 0.8° from an exact trine — near enough that the tradition reads drive and depth as a single working part. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Mars:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.01",
+        "decan:virgo:second"
+      ],
+      "text": "The Sun's exact place is 17.0° Virgo. That falls in the second decan, 10°–20°, sub-ruled by Saturn in the classical scheme — a earth sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:10.5°",
+        "personal:Venus:Virgo:13.3°",
+        "personal:Mars:Scorpio:26.1°"
+      ],
+      "text": "Closer in, Mercury stands at 10.5° Libra; Venus stands at 13.3° Virgo; Mars stands at 26.1° Scorpio. The tradition reads a mind at home in argument and pattern from Mercury, taste for the substantial and the lasting from Venus, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:trine:0.85",
+        "aspect:Saturn:Uranus:sextile:0.89",
+        "aspect:Venus:Neptune:conjunction:1.07"
+      ],
+      "text": "Nothing in the geometry sits closer than Mars and Pluto: 0.8° from an exact trine. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Saturn sextile Uranus at 0.9°, and Venus conjunction Neptune at 1.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The classical table has two entries for this chart. Venus in Virgo at 13.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Scorpio at 26.1° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-water4-air2",
+        "modalities:mutable4-fixed4-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 earth, 4 water, 2 air by element and 4 mutable, 4 fixed, 2 cardinal by modality. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Venus, Saturn and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:14.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 14.9° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 16.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-10/",
+    "label": "Everyone born on September 10"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:trine",
+    "sun-degree:17.01",
+    "decan:virgo:second",
+    "personal:Mercury:Libra:10.5°",
+    "personal:Venus:Virgo:13.3°",
+    "personal:Mars:Scorpio:26.1°",
+    "aspect:Mars:Pluto:trine:0.85",
+    "aspect:Saturn:Uranus:sextile:0.89",
+    "aspect:Venus:Neptune:conjunction:1.07",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "dignity:Mars:domicile",
+    "elements:earth4-water4-air2",
+    "modalities:mutable4-fixed4-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aquarius",
+    "moon-band:14.9"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

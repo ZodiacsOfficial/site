@@ -1,0 +1,125 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lise-meitner",
+ "qid": "Q56189",
+ "displayName": "Lise Meitner",
+ "wikidataLabel": "Lise Meitner",
+ "wikidataDescription": "Austrian-Swedish physicist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q56189",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516858183
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lise Meitner",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lise_Meitner",
+   "pageId": 18070,
+   "revisionId": 1365052769,
+   "revisionTimestamp": "2026-07-20T00:25:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1878-11-07T00:00:00Z|proleptic-gregorian",
+   "+1878-11-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1878-11-00T00:00:00Z",
+    "precision": 10,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1878-11-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1878-11-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1878-11-00T00:00:00Z",
+  "precision": "month",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1968-10-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1741",
+  "label": "Vienna",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1741",
+  "country": {
+   "entity": "Q40",
+   "label": "Austria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1741",
+   "sourceEntityLabel": "Vienna",
+   "latitude": 48.208333333333336,
+   "longitude": 16.3725,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Lise Meitner (1878-1968), lecturing at Catholic University, Washington, D.C., 1946.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Lise%20Meitner%20(1878-1968)%2C%20lecturing%20at%20Catholic%20University%2C%20Washington%2C%20D.C.%2C%201946.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Lise_Meitner_(1878-1968),_lecturing_at_Catholic_University,_Washington,_D.C.,_1946.jpg",
+  "width": 1500,
+  "height": 2030,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Smithsonian Institution",
+  "credit": "Flickr: Lise Meitner (1878-1968), lecturing at Catholic University, Washington, D.C., 1946",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sri-aurobindo",
+ "qid": "Q192207",
+ "displayName": "Sri Aurobindo",
+ "wikidataLabel": "Aurobindo Ghosh",
+ "wikidataDescription": "Indian Bengali philosopher, yogi, maharishi, poet and nationalist (1872–1950)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q192207",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515939751
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sri Aurobindo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sri_Aurobindo",
+   "pageId": 23475401,
+   "revisionId": 1365890454,
+   "revisionTimestamp": "2026-07-25T01:13:38Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1872-08-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1872-08-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1872-08-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1950-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q68706518",
+  "label": "Sri Aurobindo Bhawan",
+  "entityUrl": "https://www.wikidata.org/wiki/Q68706518",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q19899229",
+   "sourceEntityLabel": "Ward No. 63, Kolkata Municipal Corporation",
+   "latitude": 22.5536,
+   "longitude": 88.3514,
+   "precision": 0.097270680185575,
+   "escalationSteps": 1
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q212238",
+   "label": "civil servant"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q2901587",
+   "label": "yogi"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sri aurobindo.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sri%20aurobindo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sri_aurobindo.jpg",
+  "width": 963,
+  "height": 1284,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Rudolf 1922",
+  "credit": "http://www.aurobindo.ru/workings/other/peter_heehs-the_lives_of_sri_aurobindo_e.htm",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

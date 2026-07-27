@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "freddie-mercury",
+ "qid": "Q15869",
+ "displayName": "Freddie Mercury",
+ "wikidataLabel": "Freddie Mercury",
+ "wikidataDescription": "British singer, songwriter and musician, frontman of the rock band Queen (1946–1991)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q15869",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520425721
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Freddie Mercury",
+   "articleUrl": "https://en.wikipedia.org/wiki/Freddie_Mercury",
+   "pageId": 42068,
+   "revisionId": 1365156693,
+   "revisionTimestamp": "2026-07-20T16:36:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1946-09-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1946-09-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1946-09-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1991-11-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2222874",
+  "label": "Zanzibar City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2222874",
+  "country": {
+   "entity": "Q924",
+   "label": "Tanzania"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2222874",
+   "sourceEntityLabel": "Zanzibar City",
+   "latitude": -6.1666666666667,
+   "longitude": 39.2,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q13235160",
+   "label": "manufacturer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q627325",
+   "label": "graphic designer"
+  },
+  {
+   "entity": "Q12374149",
+   "label": "rock musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Freddie Mercury at Sheraton Hotel Buenos Aires.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Freddie%20Mercury%20at%20Sheraton%20Hotel%20Buenos%20Aires.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Freddie_Mercury_at_Sheraton_Hotel_Buenos_Aires.jpg",
+  "width": 381,
+  "height": 471,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Scanned from Clarín magazine",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

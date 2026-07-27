@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "louis-armstrong",
+ "qid": "Q1779",
+ "displayName": "Louis Armstrong",
+ "wikidataLabel": "Louis Armstrong",
+ "wikidataDescription": "American jazz musician, trumpeter and singer (1901–1971)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1779",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522563860
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Louis Armstrong",
+   "articleUrl": "https://en.wikipedia.org/wiki/Louis_Armstrong",
+   "pageId": 18313,
+   "revisionId": 1365359824,
+   "revisionTimestamp": "2026-07-21T22:35:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1901-08-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-08-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-08-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1971-07-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34404",
+  "label": "New Orleans",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34404",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34404",
+   "sourceEntityLabel": "New Orleans",
+   "latitude": 29.976111111111113,
+   "longitude": -90.07833333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2914170",
+   "label": "street artist"
+  },
+  {
+   "entity": "Q12377274",
+   "label": "trumpeter"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q2722764",
+   "label": "radio personality"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Louis Armstrong restored.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Louis%20Armstrong%20restored.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Louis_Armstrong_restored.jpg",
+  "width": 3738,
+  "height": 2912,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "World-Telegram staff photographer",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3c27236.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

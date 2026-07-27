@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "zhou-enlai",
+  "seedRound": 0,
+  "qid": "Q17410",
+  "displayName": "Zhou Enlai",
+  "identity": "Politician · People's Republic of China · 1898–1976",
+  "title": "Zhou Enlai's birth chart",
+  "metaDescription": "Zhou Enlai's chart, computed from a sourced birth date: Sun at 14.6° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.9° separates Venus and Neptune from an exact square; at that range taste and imagination read as one mechanism. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards.",
+  "ledeFact": "aspect:Venus:Neptune:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.63",
+        "decan:pisces:second"
+      ],
+      "text": "At noon on that date the Sun stood at 14.6° Pisces, inside the second decan (10°–20°), whose traditional sub-ruler is the Moon. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:4.6°",
+        "personal:Venus:Pisces:18.9°",
+        "personal:Mars:Aquarius:17.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Pisces (4.6°), Venus in Pisces (18.9°), Mars in Aquarius (17.5°): thought steeped in tone and memory, attraction that works by atmosphere, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Pluto:opposition:0.69",
+        "aspect:Venus:Neptune:square:0.89",
+        "aspect:Mercury:Uranus:square:1.07"
+      ],
+      "text": "The day's firmest angle joins Saturn and Pluto — a opposition holding at 0.7°. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Venus square Neptune at 0.9°, and Mercury square Uranus at 1.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Saturn-Neptune:apex-Sun",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Saturn opposes Neptune while both square the Sun. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mercury in Pisces at 4.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 18.9° is in exaltation — the tradition’s honoured-guest placement, working at its best. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-fire3",
+        "modalities:mutable7-fixed2-cardinal1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives air 4, water 3, fire 3, and mutable 7, fixed 2, cardinal 1 across the modes. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Jupiter was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:12.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 6.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-5/",
+    "label": "Everyone born on March 5"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:square",
+    "sun-degree:14.63",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:4.6°",
+    "personal:Venus:Pisces:18.9°",
+    "personal:Mars:Aquarius:17.5°",
+    "aspect:Saturn:Pluto:opposition:0.69",
+    "aspect:Venus:Neptune:square:0.89",
+    "aspect:Mercury:Uranus:square:1.07",
+    "figure:t-square:Saturn-Neptune:apex-Sun",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "elements:air4-water3-fire3",
+    "modalities:mutable7-fixed2-cardinal1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:leo",
+    "moon-band:12.4"
+  ],
+  "measurements": {
+    "originalWords": 440,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "consuelo-velazquez",
+ "qid": "Q232750",
+ "displayName": "Consuelo Velázquez",
+ "wikidataLabel": "Consuelo Velázquez",
+ "wikidataDescription": "Mexican concert pianist, songwriter and recording artist (1916-2005)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q232750",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518866765
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Consuelo Velázquez",
+   "articleUrl": "https://en.wikipedia.org/wiki/Consuelo_Vel%C3%A1zquez",
+   "pageId": 864662,
+   "revisionId": 1363387169,
+   "revisionTimestamp": "2026-07-09T22:09:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1916-08-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1916-08-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1916-08-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-01-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1094355",
+  "label": "Ciudad Guzmán",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1094355",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1094355",
+   "sourceEntityLabel": "Ciudad Guzmán",
+   "latitude": 19.704722222222223,
+   "longitude": -103.4625,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Consuelo Velázquez.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Consuelo%20Vel%C3%A1zquez.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Consuelo_Vel%C3%A1zquez.jpg",
+  "width": 154,
+  "height": 231,
+  "licenseShortName": "CC0",
+  "licenseUrl": "http://creativecommons.org/publicdomain/zero/1.0/deed.en",
+  "artist": "Gobierno CDMX (œuvre originale), Fanfwah (extraction et retouches)",
+  "credit": "https://www.flickr.com/photos/140660272@N07/43927119084/",
+  "usageTerms": "Creative Commons Zero, Public Domain Dedication",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

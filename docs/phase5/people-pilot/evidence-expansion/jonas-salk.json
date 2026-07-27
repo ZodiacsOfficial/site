@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jonas-salk",
+ "qid": "Q200101",
+ "displayName": "Jonas Salk",
+ "wikidataLabel": "Jonas Salk",
+ "wikidataDescription": "Jewish-American inventor of polio vaccine (1914–1995)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q200101",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518554404
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jonas Salk",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jonas_Salk",
+   "pageId": 25709692,
+   "revisionId": 1365447780,
+   "revisionTimestamp": "2026-07-22T13:30:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-10-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-10-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-10-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-06-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q60",
+  "label": "New York City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q60",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q60",
+   "sourceEntityLabel": "New York City",
+   "latitude": 40.71277777777778,
+   "longitude": -74.00611111111111,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q12765408",
+   "label": "epidemiologist"
+  },
+  {
+   "entity": "Q205375",
+   "label": "inventor"
+  },
+  {
+   "entity": "Q15634281",
+   "label": "virologist"
+  },
+  {
+   "entity": "Q12119633",
+   "label": "immunologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jonas Salk candid.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jonas%20Salk%20candid.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jonas_Salk_candid.jpg",
+  "width": 1121,
+  "height": 1517,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "SAS Scandinavian Airlines",
+  "credit": "Commons: file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

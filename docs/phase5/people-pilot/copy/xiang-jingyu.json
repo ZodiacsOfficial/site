@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "xiang-jingyu",
+  "seedRound": 0,
+  "qid": "Q463096",
+  "displayName": "Xiang Jingyu",
+  "identity": "Politician and journalist · People's Republic of China · 1895–1928",
+  "title": "Xiang Jingyu's birth chart",
+  "metaDescription": "Xiang Jingyu's chart, computed from a sourced birth date: Sun at 11.3° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the ten placements whose signs are settled, mutable leads with six. Mutable weight bends without breaking — the chart of translators, editors, and second drafts.",
+  "ledeFact": "modality:mutable:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.35",
+        "decan:virgo:second"
+      ],
+      "text": "At noon on that date the Sun stood at 11.3° Virgo, inside the second decan (10°–20°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:26.3°",
+        "personal:Venus:Libra:3.3°",
+        "personal:Mars:Virgo:23.5°"
+      ],
+      "text": "The personal planets sit Mercury at 26.3° Virgo, Venus at 3.3° Libra, Mars at 23.5° Virgo. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a air sign reads as attraction that begins as conversation; Mars in a earth sign reads as effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:square:1.4",
+        "aspect:Mercury:Mars:conjunction:2.82",
+        "aspect:Venus:Jupiter:sextile:3.39"
+      ],
+      "text": "Nothing in the geometry sits closer than the Sun and Pluto: 1.4° from an exact square. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Mercury conjunction Mars at 2.8°, and Venus sextile Jupiter at 3.4° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Uranus"
+      ],
+      "text": "Uranus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Mercury in Virgo at 26.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 3.3° is in domicile — the planet in its own sign, running on home rules; Jupiter in Cancer at 29.9° is in exaltation. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth3-air3",
+        "modalities:mutable6-cardinal2-fixed2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 4 water, 3 earth, 3 air by element and 6 mutable, 2 cardinal, 2 fixed by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Venus was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 10.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-4/",
+    "label": "Everyone born on September 4"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:6",
+    "sun-degree:11.35",
+    "decan:virgo:second",
+    "personal:Mercury:Virgo:26.3°",
+    "personal:Venus:Libra:3.3°",
+    "personal:Mars:Virgo:23.5°",
+    "aspect:Sun:Pluto:square:1.4",
+    "aspect:Mercury:Mars:conjunction:2.82",
+    "aspect:Venus:Jupiter:sextile:3.39",
+    "figure:unaspected:Uranus",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:exaltation",
+    "elements:water4-earth3-air3",
+    "modalities:mutable6-cardinal2-fixed2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:pisces",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

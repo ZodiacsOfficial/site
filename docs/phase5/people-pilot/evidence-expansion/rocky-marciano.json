@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rocky-marciano",
+ "qid": "Q188362",
+ "displayName": "Rocky Marciano",
+ "wikidataLabel": "Rocky Marciano",
+ "wikidataDescription": "American heavyweight boxing champion (1923-1969)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q188362",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2496000037
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rocky Marciano",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rocky_Marciano",
+   "pageId": 154971,
+   "revisionId": 1366108742,
+   "revisionTimestamp": "2026-07-26T09:09:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1923-09-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-09-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1923-09-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1969-08-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49193",
+  "label": "Brockton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49193",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49193",
+   "sourceEntityLabel": "Brockton",
+   "latitude": 42.083333333333,
+   "longitude": -71.018888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11338576",
+   "label": "boxer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rocky Marciano by Stanley Weston.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rocky%20Marciano%20by%20Stanley%20Weston.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rocky_Marciano_by_Stanley_Weston.png",
+  "width": 1650,
+  "height": 2021,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Stanley Weston",
+  "credit": "Big Book Of Boxing September 1981",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

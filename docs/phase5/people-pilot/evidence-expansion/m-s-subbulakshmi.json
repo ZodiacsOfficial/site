@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "m-s-subbulakshmi",
+ "qid": "Q465067",
+ "displayName": "M. S. Subbulakshmi",
+ "wikidataLabel": "M. S. Subbulakshmi",
+ "wikidataDescription": "Indian Carnatic classical vocalist (1916–2004)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q465067",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2509847170
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "M. S. Subbulakshmi",
+   "articleUrl": "https://en.wikipedia.org/wiki/M._S._Subbulakshmi",
+   "pageId": 236845,
+   "revisionId": 1361798239,
+   "revisionTimestamp": "2026-06-30T04:12:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1916-09-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1916-09-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1916-09-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q228405",
+  "label": "Madurai",
+  "entityUrl": "https://www.wikidata.org/wiki/Q228405",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q228405",
+   "sourceEntityLabel": "Madurai",
+   "latitude": 9.9196611111111,
+   "longitude": 78.119394444444,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:M. S. Subbulakshmi (03).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:M.%20S.%20Subbulakshmi%20(03).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:M._S._Subbulakshmi_(03).jpg",
+  "width": 601,
+  "height": 722,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "Saregama Carnatic",
+  "credit": "YouTube – View/save archived versions on archive.org",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

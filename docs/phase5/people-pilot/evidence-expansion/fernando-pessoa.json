@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fernando-pessoa",
+ "qid": "Q173481",
+ "displayName": "Fernando Pessoa",
+ "wikidataLabel": "Fernando Pessoa",
+ "wikidataDescription": "Portuguese poet, writer, and philosopher (1888–1935); creator of the heteronymic system including Alberto Caeiro, Ricardo Reis, Álvaro de Campos, and Bernardo Soares",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q173481",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515846283
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fernando Pessoa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fernando_Pessoa",
+   "pageId": 11431,
+   "revisionId": 1361726182,
+   "revisionTimestamp": "2026-06-29T18:30:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1888-06-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1888-06-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1888-06-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1935-11-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q597",
+  "label": "Lisbon",
+  "entityUrl": "https://www.wikidata.org/wiki/Q597",
+  "country": {
+   "entity": "Q45",
+   "label": "Portugal"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q597",
+   "sourceEntityLabel": "Lisbon",
+   "latitude": 38.708042,
+   "longitude": -9.139016,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q2516866",
+   "label": "publisher"
+  }
+ ],
+ "portrait": {
+  "file": "File:216 2310-Fernando-Pessoa.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:216%202310-Fernando-Pessoa.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:216_2310-Fernando-Pessoa.jpg",
+  "width": 435,
+  "height": 472,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "S.A. e Maria José de Lencastre",
+  "credit": "Fernando Pessoa - Uma Fotobiografia © Livros Quetzal, S.A. e Maria José de Lencastre",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

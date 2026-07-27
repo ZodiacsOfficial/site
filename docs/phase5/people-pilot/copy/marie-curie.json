@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "marie-curie",
+  "seedRound": 0,
+  "qid": "Q7186",
+  "displayName": "Marie Curie",
+  "identity": "Physicist and university teacher · Poland · 1867–1934",
+  "title": "Marie Curie's birth chart",
+  "metaDescription": "Marie Curie's chart, computed from a sourced birth date: Sun at 14.6° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Scorpio — the Sun, Venus, Mars and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:scorpio:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.58",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun sits at 14.6° Scorpio — the second decan, 10°–20°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Scorpio and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:6.6°",
+        "personal:Venus:Scorpio:25.6°",
+        "personal:Mars:Scorpio:29.6°"
+      ],
+      "text": "The personal planets sit Mercury at 6.6° Sagittarius, Venus at 25.6° Scorpio, Mars at 29.6° Scorpio. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a water sign reads as taste tuned to mood and undertow; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:square:0.12",
+        "aspect:Venus:Saturn:conjunction:0.3",
+        "aspect:Sun:Pluto:opposition:0.55"
+      ],
+      "text": "Uranus and Neptune hold the closest angle here — a square, 0.1° wide. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Venus conjunction Saturn at 0.3°, and the Sun opposition Pluto at 0.6° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Sagittarius at 6.6° is in detriment — the planet opposite its home, working against the grain; Venus in Scorpio at 25.6° is in detriment; Mars in Scorpio at 29.6° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water6-fire2-air1-earth1",
+        "modalities:fixed6-mutable2-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 6, fire 2, air 1, earth 1, and fixed 6, mutable 2, cardinal 2 across the modes. Uranus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:12.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 12.7° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 16.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-7/",
+    "label": "Everyone born on November 7"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "stellium:scorpio:4",
+    "sun-degree:14.58",
+    "decan:scorpio:second",
+    "personal:Mercury:Sagittarius:6.6°",
+    "personal:Venus:Scorpio:25.6°",
+    "personal:Mars:Scorpio:29.6°",
+    "aspect:Uranus:Neptune:square:0.12",
+    "aspect:Venus:Saturn:conjunction:0.3",
+    "aspect:Sun:Pluto:opposition:0.55",
+    "figure:none",
+    "dignity:Mercury:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "elements:water6-fire2-air1-earth1",
+    "modalities:fixed6-mutable2-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:pisces",
+    "moon-band:12.7"
+  ],
+  "measurements": {
+    "originalWords": 456,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

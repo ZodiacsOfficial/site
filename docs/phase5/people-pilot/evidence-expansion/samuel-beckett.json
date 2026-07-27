@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "samuel-beckett",
+ "qid": "Q37327",
+ "displayName": "Samuel Beckett",
+ "wikidataLabel": "Samuel Beckett",
+ "wikidataDescription": "Irish writer (1906–1989)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37327",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521239599
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Samuel Beckett",
+   "articleUrl": "https://en.wikipedia.org/wiki/Samuel_Beckett",
+   "pageId": 27640,
+   "revisionId": 1362815040,
+   "revisionTimestamp": "2026-07-06T10:51:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-04-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-04-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-04-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1989-12-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1843815",
+  "label": "Foxrock",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1843815",
+  "country": {
+   "entity": "Q27",
+   "label": "Ireland"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1843815",
+   "sourceEntityLabel": "Foxrock",
+   "latitude": 53.2667,
+   "longitude": -6.1742,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q12299841",
+   "label": "cricketer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q58968",
+   "label": "intellectual"
+  },
+  {
+   "entity": "Q23833535",
+   "label": "French resistance fighter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Samuel Beckett, Pic, 1 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Samuel%20Beckett%2C%20Pic%2C%201%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Samuel_Beckett,_Pic,_1_(cropped).jpg",
+  "width": 1982,
+  "height": 2696,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Roger Pic",
+  "credit": "Bibliothèque nationale de France",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

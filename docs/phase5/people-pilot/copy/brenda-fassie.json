@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "brenda-fassie",
+  "seedRound": 0,
+  "qid": "Q186840",
+  "displayName": "Brenda Fassie",
+  "identity": "Singer · South Africa · 1964–2004",
+  "title": "Brenda Fassie's birth chart",
+  "metaDescription": "Brenda Fassie's chart, computed from a sourced birth date: Sun at 11.0° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.0° separates Mercury and Jupiter from an exact opposition; at that range thinking and expansion read as one mechanism. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Mercury:Jupiter:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.02",
+        "decan:scorpio:second"
+      ],
+      "text": "The Sun's position resolves to 11.0° Scorpio — deep enough in the second decan (10°–20°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:22.4°",
+        "personal:Venus:Libra:3.7°",
+        "personal:Mars:Leo:28.6°"
+      ],
+      "text": "The personal planets sit Mercury at 22.4° Scorpio, Venus at 3.7° Libra, Mars at 28.6° Leo. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a air sign reads as attraction that begins as conversation; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Jupiter:opposition:0.02",
+        "aspect:Mars:Saturn:opposition:0.21",
+        "aspect:Neptune:Pluto:sextile:1.53"
+      ],
+      "text": "Mercury and Jupiter hold the closest angle here — a opposition, 0.0° wide. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach. Behind it, Mars opposition Saturn at 0.2°, and Neptune sextile Pluto at 1.5° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Mercury-Jupiter:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mercury opposes Jupiter while both square Mars. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Venus in Libra at 3.7° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 28.4° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-earth3-air2-fire1",
+        "modalities:fixed6-mutable2-cardinal1",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 water, 3 earth, 2 air, 1 fire by element and 6 fixed, 2 mutable, 1 cardinal by mode. A water emphasis keeps long books: little is forgotten, and nothing is felt only once. Jupiter was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 12.6° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-3/",
+    "label": "Everyone born on November 3"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Jupiter:opposition",
+    "sun-degree:11.02",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:22.4°",
+    "personal:Venus:Libra:3.7°",
+    "personal:Mars:Leo:28.6°",
+    "aspect:Mercury:Jupiter:opposition:0.02",
+    "aspect:Mars:Saturn:opposition:0.21",
+    "aspect:Neptune:Pluto:sextile:1.53",
+    "figure:t-square:Mercury-Jupiter:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:domicile",
+    "elements:water3-earth3-air2-fire1",
+    "modalities:fixed6-mutable2-cardinal1",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 421,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

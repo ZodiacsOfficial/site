@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maya-angelou",
+ "qid": "Q19526",
+ "displayName": "Maya Angelou",
+ "wikidataLabel": "Maya Angelou",
+ "wikidataDescription": "American poet, author, and civil rights activist (1928–2014)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q19526",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518976554
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Maya Angelou",
+   "articleUrl": "https://en.wikipedia.org/wiki/Maya_Angelou",
+   "pageId": 288140,
+   "revisionId": 1363740530,
+   "revisionTimestamp": "2026-07-12T03:13:16Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1928-04-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-04-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1928-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-04-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2014-05-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q38022",
+  "label": "St. Louis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q38022",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q38022",
+   "sourceEntityLabel": "St. Louis",
+   "latitude": 38.62638888888889,
+   "longitude": -90.19944444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q245068",
+   "label": "comedian"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q578109",
+   "label": "television producer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Portrait photograph of Maya Angelou, c. 1974.webp",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Portrait%20photograph%20of%20Maya%20Angelou%2C%20c.%201974.webp",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Portrait_photograph_of_Maya_Angelou,_c._1974.webp",
+  "width": 1518,
+  "height": 2277,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

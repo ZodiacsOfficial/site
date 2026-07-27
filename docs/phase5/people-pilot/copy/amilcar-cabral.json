@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "amilcar-cabral",
+  "seedRound": 0,
+  "qid": "Q213416",
+  "displayName": "Amílcar Cabral",
+  "identity": "Politician and engineer · Guinea-Bissau · 1924–1973",
+  "title": "Amílcar Cabral's birth chart",
+  "metaDescription": "Amílcar Cabral's chart, computed from a sourced birth date: Sun at 19.5° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Uranus sit 0.1° from an exact opposition — near enough that the tradition reads identity and disruption as a single working part. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Sun:Uranus:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.47",
+        "decan:virgo:second"
+      ],
+      "text": "Virgo, but precisely: 19.5°, second decan, 10°–20°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:17.5°",
+        "personal:Venus:Leo:3.5°",
+        "personal:Mars:Aquarius:26.0°"
+      ],
+      "text": "The personal planets sit Mercury at 17.5° Virgo, Venus at 3.5° Leo, Mars at 26.0° Aquarius. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a air sign reads as drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Uranus:opposition:0.07",
+        "aspect:Sun:Mercury:conjunction:1.98",
+        "aspect:Mercury:Uranus:opposition:2.05"
+      ],
+      "text": "The Sun to Uranus is the closest call of the day, a opposition within 0.1°. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine. Behind it, the Sun conjunction Mercury at 2.0°, and Mercury opposition Uranus at 2.0° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The classical table has three entries for this chart. Mercury in Virgo at 17.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Sagittarius at 12.0° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 29.9° is in exaltation. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-fire3-earth2-air2",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 3, fire 3, earth 2, air 2; modalities mutable 5, fixed 3, cardinal 2. Mercury, Mars and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:13.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 10.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-12/",
+    "label": "Everyone born on September 12"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Uranus:opposition",
+    "sun-degree:19.47",
+    "decan:virgo:second",
+    "personal:Mercury:Virgo:17.5°",
+    "personal:Venus:Leo:3.5°",
+    "personal:Mars:Aquarius:26.0°",
+    "aspect:Sun:Uranus:opposition:0.07",
+    "aspect:Sun:Mercury:conjunction:1.98",
+    "aspect:Mercury:Uranus:opposition:2.05",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:exaltation",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:water3-fire3-earth2-air2",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:pisces",
+    "moon-band:13.6"
+  ],
+  "measurements": {
+    "originalWords": 409,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "pramoedya-ananta-toer",
+ "qid": "Q326935",
+ "displayName": "Pramoedya Ananta Toer",
+ "wikidataLabel": "Pramoedya Ananta Toer",
+ "wikidataDescription": "Indonesian writer (1925–2006)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "seasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q326935",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518982595
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Pramoedya Ananta Toer",
+   "articleUrl": "https://en.wikipedia.org/wiki/Pramoedya_Ananta_Toer",
+   "pageId": 911838,
+   "revisionId": 1346615908,
+   "revisionTimestamp": "2026-04-01T21:32:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-02-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-02-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2006-04-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10608",
+  "label": "Blora",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10608",
+  "country": {
+   "entity": "Q252",
+   "label": "Indonesia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q10608",
+   "sourceEntityLabel": "Blora",
+   "latitude": -7.06667,
+   "longitude": 111.38333,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Pramudya Ananta Tur Kesusastraan Modern Indonesia p226.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Pramudya%20Ananta%20Tur%20Kesusastraan%20Modern%20Indonesia%20p226.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Pramudya_Ananta_Tur_Kesusastraan_Modern_Indonesia_p226.jpg",
+  "width": 1000,
+  "height": 1234,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ministry of Education (Kempen)",
+  "credit": "Jassin, H.B. Kesusasteraan Indonesia Modern dalam Kritik dan Essay. Gunung Agung: Jakarta. 1955. Page in title.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

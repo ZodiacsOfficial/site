@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "pablo-neruda",
+  "seedRound": 0,
+  "qid": "Q34189",
+  "displayName": "Pablo Neruda",
+  "identity": "Poet and diplomat · Chile · 1904–1973",
+  "title": "Pablo Neruda's birth chart",
+  "metaDescription": "Pablo Neruda's chart, computed from a sourced birth date: Sun at 19.9° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Six of the ten placements whose signs are settled stand in Cancer — the Sun, the Moon, Mercury, Venus, Mars and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:cancer:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.86",
+        "decan:cancer:second"
+      ],
+      "text": "19.9° of Cancer is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Cancer:23.1°",
+        "personal:Venus:Cancer:21.1°",
+        "personal:Mars:Cancer:8.1°"
+      ],
+      "text": "The personal planets sit Mercury at 23.1° Cancer, Venus at 21.1° Cancer, Mars at 8.1° Cancer. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a water sign reads as attraction that works by atmosphere; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Uranus:trine:0.82",
+        "aspect:Sun:Venus:conjunction:1.2",
+        "aspect:Saturn:Pluto:trine:1.21"
+      ],
+      "text": "The tightest geometry in the chart puts Jupiter a third of the circle apart from Uranus, 0.8° off exact. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun conjunction Venus at 1.2°, and Saturn trine Pluto at 1.2° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Mars:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Moon in Cancer at 12.6° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 8.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aquarius at 19.7° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water6-fire2-air2",
+        "modalities:cardinal7-mutable2-fixed1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 6 water, 2 fire, 2 air by element and 7 cardinal, 2 mutable, 1 fixed by modality. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Saturn and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 12.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-12/",
+    "label": "Everyone born on July 12"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "stellium:cancer:6",
+    "sun-degree:19.86",
+    "decan:cancer:second",
+    "personal:Mercury:Cancer:23.1°",
+    "personal:Venus:Cancer:21.1°",
+    "personal:Mars:Cancer:8.1°",
+    "aspect:Jupiter:Uranus:trine:0.82",
+    "aspect:Sun:Venus:conjunction:1.2",
+    "aspect:Saturn:Pluto:trine:1.21",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Mars:fall",
+    "dignity:Saturn:domicile",
+    "elements:water6-fire2-air2",
+    "modalities:cardinal7-mutable2-fixed1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:cancer",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 447,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

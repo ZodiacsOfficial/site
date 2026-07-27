@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ba-jin",
+  "seedRound": 0,
+  "qid": "Q13005",
+  "displayName": "Ba Jin",
+  "identity": "Writer and politician · People's Republic of China · 1904–2005",
+  "title": "Ba Jin's birth chart",
+  "metaDescription": "Ba Jin's chart, computed from a sourced birth date: Sun at 2.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: Venus and Neptune within 0.2°, taste wired to imagination. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner.",
+  "ledeFact": "aspect:Venus:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.47",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun sits at 2.5° Sagittarius — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Sagittarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:16.2°",
+        "personal:Venus:Capricorn:7.9°",
+        "personal:Mars:Libra:2.9°"
+      ],
+      "text": "The personal planets sit Mercury at 16.2° Sagittarius, Venus at 7.9° Capricorn, Mars at 2.9° Libra. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a earth sign reads as taste for the substantial and the lasting; Mars in a air sign reads as drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:sextile:0.07",
+        "aspect:Venus:Neptune:opposition:0.24",
+        "aspect:Sun:Mars:sextile:0.38"
+      ],
+      "text": "Jupiter and Pluto hold the closest angle here — a sextile, 0.1° wide. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Venus opposition Neptune at 0.2°, and the Sun sextile Mars at 0.4° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Venus-Neptune:apex-Mars"
+      ],
+      "text": "Venus opposes Neptune while both square Mars. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Sagittarius at 16.2° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 2.9° is in detriment; Saturn in Aquarius at 15.5° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air3-earth1-water1",
+        "modalities:mutable4-cardinal4-fixed1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 4 in fire, 3 in air, 1 in earth, 1 in water by element, 4 mutable, 4 cardinal, 1 fixed by modality. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Jupiter, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 13.3° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-25/",
+    "label": "Everyone born on November 25"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:opposition",
+    "sun-degree:2.47",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:16.2°",
+    "personal:Venus:Capricorn:7.9°",
+    "personal:Mars:Libra:2.9°",
+    "aspect:Jupiter:Pluto:sextile:0.07",
+    "aspect:Venus:Neptune:opposition:0.24",
+    "aspect:Sun:Mars:sextile:0.38",
+    "figure:t-square:Venus-Neptune:apex-Mars",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:domicile",
+    "elements:fire4-air3-earth1-water1",
+    "modalities:mutable4-cardinal4-fixed1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 448,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

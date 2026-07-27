@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "cesaria-evora",
+ "qid": "Q103759",
+ "displayName": "Cesária Évora",
+ "wikidataLabel": "Cesária Évora",
+ "wikidataDescription": "Cape Verdean singer-songwriter (1941–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q103759",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521209412
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Cesária Évora",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ces%C3%A1ria_%C3%89vora",
+   "pageId": 8611104,
+   "revisionId": 1365288920,
+   "revisionTimestamp": "2026-07-21T13:03:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1941-08-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1941-08-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1941-08-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-12-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q495547",
+  "label": "Mindelo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q495547",
+  "country": {
+   "entity": "Q1011",
+   "label": "Cape Verde"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q495547",
+   "sourceEntityLabel": "Mindelo",
+   "latitude": 16.891352777778,
+   "longitude": -24.987983333333,
+   "precision": 2.778e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cesária Évora (2457851527).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ces%C3%A1ria%20%C3%89vora%20(2457851527).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ces%C3%A1ria_%C3%89vora_(2457851527).jpg",
+  "width": 2592,
+  "height": 3872,
+  "licenseShortName": "CC BY-SA 2.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/2.0",
+  "artist": "As fotos da Virada!",
+  "credit": "Cesária Évora",
+  "usageTerms": "Creative Commons Attribution-Share Alike 2.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

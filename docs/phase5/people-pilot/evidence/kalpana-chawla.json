@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kalpana-chawla",
+ "qid": "Q237879",
+ "displayName": "Kalpana Chawla",
+ "wikidataLabel": "Kalpana Chawla",
+ "wikidataDescription": "American astronaut",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q237879",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521899104
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kalpana Chawla",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kalpana_Chawla",
+   "pageId": 177537,
+   "revisionId": 1365014729,
+   "revisionTimestamp": "2026-07-19T20:11:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1962-03-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1962-03-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1962-03-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-02-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q256194",
+  "label": "Karnal",
+  "entityUrl": "https://www.wikidata.org/wiki/Q256194",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q256194",
+   "sourceEntityLabel": "Karnal",
+   "latitude": 29.69,
+   "longitude": 76.988333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10497074",
+   "label": "military flight engineer"
+  },
+  {
+   "entity": "Q11631",
+   "label": "astronaut"
+  },
+  {
+   "entity": "Q1939892",
+   "label": "amateur radio operator"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kalpana Chawla, NASA photo portrait in orange suit.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kalpana%20Chawla%2C%20NASA%20photo%20portrait%20in%20orange%20suit.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kalpana_Chawla,_NASA_photo_portrait_in_orange_suit.jpg",
+  "width": 2400,
+  "height": 3000,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "NASA",
+  "credit": "http://science.ksc.nasa.gov/shuttle/missions/sts-107/images/high/KSC-02PD-1127.jpg http://spaceflight.nasa.gov/gallery/images/shuttle/sts-107/html/jsc2002e25323.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": "personality"
+ }
+}

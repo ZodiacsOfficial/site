@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maurice-ravel",
+ "qid": "Q1178",
+ "displayName": "Maurice Ravel",
+ "wikidataLabel": "Maurice Ravel",
+ "wikidataDescription": "French composer (1875–1937)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1178",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520290755
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Maurice Ravel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Maurice_Ravel",
+   "pageId": 48068,
+   "revisionId": 1365341859,
+   "revisionTimestamp": "2026-07-21T20:20:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1875-03-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1875-03-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1875-03-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1937-12-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q235208",
+  "label": "Ciboure",
+  "entityUrl": "https://www.wikidata.org/wiki/Q235208",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q235208",
+   "sourceEntityLabel": "Ciboure",
+   "latitude": 43.385277777778,
+   "longitude": -1.6677777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Maurice Ravel 1925.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Maurice%20Ravel%201925.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Maurice_Ravel_1925.jpg",
+  "width": 2880,
+  "height": 3840,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown authorUnknown author The image holder, the Bibliothèque nationale de France has not identified a photographer. (Follow link and click on \"Detailed information\".)",
+  "credit": "Bibliothèque nationale de France",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

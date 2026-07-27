@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jose-ortega-y-gasset",
+ "qid": "Q153020",
+ "displayName": "José Ortega y Gasset",
+ "wikidataLabel": "José Ortega y Gasset",
+ "wikidataDescription": "Spanish liberal philosopher and essayist (1883–1955)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q153020",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517433540
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "José Ortega y Gasset",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jos%C3%A9_Ortega_y_Gasset",
+   "pageId": 668027,
+   "revisionId": 1363960641,
+   "revisionTimestamp": "2026-07-13T15:48:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-05-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-05-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-05-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1955-10-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2807",
+  "label": "Madrid",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2807",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2807",
+   "sourceEntityLabel": "Madrid",
+   "latitude": 40.41694444444445,
+   "longitude": -3.703333333333333,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q88193571",
+   "label": "philosopher of culture"
+  }
+ ],
+ "portrait": {
+  "file": "File:José Ortega y Gasset (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9%20Ortega%20y%20Gasset%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9_Ortega_y_Gasset_(cropped).jpg",
+  "width": 809,
+  "height": 1195,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "SAS Scandinavian Airlines",
+  "credit": "http://images.flysas.com",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

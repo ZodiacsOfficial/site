@@ -1,0 +1,137 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edouard-manet",
+ "qid": "Q40599",
+ "displayName": "Édouard Manet",
+ "wikidataLabel": "Édouard Manet",
+ "wikidataDescription": "French painter (1832–1883)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q40599",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522907484
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Édouard Manet",
+   "articleUrl": "https://en.wikipedia.org/wiki/%C3%89douard_Manet",
+   "pageId": 9615,
+   "revisionId": 1364955066,
+   "revisionTimestamp": "2026-07-19T13:49:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1832-01-23T00:00:00Z|proleptic-gregorian",
+   "+1832-01-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1832-01-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1832-01-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1832-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1832-01-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1883-04-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2845749",
+  "label": "former 10th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2845749",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2845749",
+   "sourceEntityLabel": "former 10th arrondissement of Paris",
+   "latitude": 48.852668,
+   "longitude": 2.329374,
+   "precision": 0.00000277777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q2079935",
+   "label": "architectural drafter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Édouard Manet, en buste, de face - Nadar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:%C3%89douard%20Manet%2C%20en%20buste%2C%20de%20face%20-%20Nadar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:%C3%89douard_Manet,_en_buste,_de_face_-_Nadar.jpg",
+  "width": 4701,
+  "height": 6253,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nadar / Adam Cuerden",
+  "credit": "This file comes from Gallica Digital Library and is available under the digital ID btv1b10535676j/f1",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "pierre-auguste-renoir",
+  "seedRound": 0,
+  "qid": "Q39931",
+  "displayName": "Pierre-Auguste Renoir",
+  "identity": "Painter · France · 1841–1919",
+  "title": "Pierre-Auguste Renoir's birth chart",
+  "metaDescription": "Pierre-Auguste Renoir's chart, computed from a sourced birth date: Sun at 6.8° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, mutable leads with four. Mutable weight bends without breaking — the chart of translators, editors, and second drafts.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.77",
+        "decan:pisces:first"
+      ],
+      "text": "The Sun's position resolves to 6.8° Pisces — deep enough in the first decan (0°–10°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:22.6°",
+        "personal:Venus:Aries:22.9°",
+        "personal:Mars:Scorpio:4.9°"
+      ],
+      "text": "The personal planets sit Mercury at 22.6° Pisces, Venus at 22.9° Aries, Mars at 4.9° Scorpio. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a fire sign reads as attraction declared rather than implied; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:trine:0.96",
+        "aspect:Sun:Mars:trine:1.86",
+        "aspect:Jupiter:Uranus:square:2.02"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Pluto — a trine holding at 1.0°. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, the Sun trine Mars at 1.9°, and Jupiter square Uranus at 2.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks five placements here. Mercury in Pisces at 22.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Aries at 22.9° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 4.9° is in domicile — the planet in its own sign, running on home rules; Jupiter in Sagittarius at 17.5° is in domicile; Saturn in Capricorn at 1.4° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-earth1-air1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:0"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives water 4, fire 3, earth 1, air 1, and mutable 4, cardinal 3, fixed 2 across the modes. Water reads the room before the room speaks — atmosphere first, analysis later. Nothing here ran retrograde — all ten in direct motion that day."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 13.3° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-25/",
+    "label": "Everyone born on February 25"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:6.77",
+    "decan:pisces:first",
+    "personal:Mercury:Pisces:22.6°",
+    "personal:Venus:Aries:22.9°",
+    "personal:Mars:Scorpio:4.9°",
+    "aspect:Jupiter:Pluto:trine:0.96",
+    "aspect:Sun:Mars:trine:1.86",
+    "aspect:Jupiter:Uranus:square:2.02",
+    "figure:none",
+    "dignity:Mercury:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:water4-fire3-earth1-air1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:0",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 417,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

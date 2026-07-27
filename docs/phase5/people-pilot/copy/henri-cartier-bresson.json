@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "henri-cartier-bresson",
+  "seedRound": 0,
+  "qid": "Q156567",
+  "displayName": "Henri Cartier-Bresson",
+  "identity": "Photographer and journalist · France · 1908–2004",
+  "title": "Henri Cartier-Bresson's birth chart",
+  "metaDescription": "Henri Cartier-Bresson's chart, computed from a sourced birth date: Sun at 28.9° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 28.9° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:28.95",
+        "decan:leo:third"
+      ],
+      "text": "28.9° of Leo is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Cancer:15.6°",
+        "personal:Mars:Leo:28.9°"
+      ],
+      "text": "Venus holds 15.6° Cancer, Mars holds 28.9° Leo — in the old shorthand, attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:conjunction:0.09",
+        "aspect:Jupiter:Pluto:sextile:0.15",
+        "aspect:Venus:Neptune:conjunction:0.55"
+      ],
+      "text": "The day's firmest angle joins the Sun and Mars — a conjunction holding at 0.1°. A conjunction concentrates rather than balances — the pair burns one fuel line. Behind it, Jupiter sextile Pluto at 0.1°, and Venus conjunction Neptune at 0.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Moon-Uranus:apex-Saturn"
+      ],
+      "text": "The Moon opposes Uranus while both square Saturn. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Moon:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Sun in Leo at 28.9° is in domicile — the planet in its own sign, running on home rules; the Moon in Cancer at 10.3° is in domicile; Saturn in Aries at 9.4° is in fall — the tradition’s uphill placement, strength earned rather than given. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth1-air1",
+        "modalities:cardinal5-fixed3-mutable1",
+        "settled-signs:9",
+        "retrograde:2",
+        "sign-uncertain:Mercury:leo:virgo"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 fire, 3 water, 1 earth, 1 air by element and 5 cardinal, 3 fixed, 1 mutable by modality. Mercury crossed from Leo into Virgo during that day, so its sign is left open. Saturn and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 10.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-22/",
+    "label": "Everyone born on August 22"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:28.95",
+    "decan:leo:third",
+    "personal:Venus:Cancer:15.6°",
+    "personal:Mars:Leo:28.9°",
+    "aspect:Sun:Mars:conjunction:0.09",
+    "aspect:Jupiter:Pluto:sextile:0.15",
+    "aspect:Venus:Neptune:conjunction:0.55",
+    "figure:t-square:Moon-Uranus:apex-Saturn",
+    "dignity:Sun:domicile",
+    "dignity:Moon:domicile",
+    "dignity:Saturn:fall",
+    "elements:fire4-water3-earth1-air1",
+    "modalities:cardinal5-fixed3-mutable1",
+    "settled-signs:9",
+    "retrograde:2",
+    "sign-uncertain:Mercury:leo:virgo",
+    "moon-sign:cancer",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 391,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

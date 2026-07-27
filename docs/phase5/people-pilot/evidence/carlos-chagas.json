@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "carlos-chagas",
+ "qid": "Q438907",
+ "displayName": "Carlos Chagas",
+ "wikidataLabel": "Carlos Chagas",
+ "wikidataDescription": "Brazilian doctor and scientist (1878–1934)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q438907",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2497610747
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Carlos Chagas",
+   "articleUrl": "https://en.wikipedia.org/wiki/Carlos_Chagas",
+   "pageId": 1046233,
+   "revisionId": 1364889616,
+   "revisionTimestamp": "2026-07-19T02:46:49Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1879-07-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1879-07-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1879-07-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1934-11-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1754812",
+  "label": "Oliveira",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1754812",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1754812",
+   "sourceEntityLabel": "Oliveira",
+   "latitude": -20.695833333333,
+   "longitude": -44.826944444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q15816836",
+   "label": "bacteriologist"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q3055126",
+   "label": "entomologist"
+  },
+  {
+   "entity": "Q3400985",
+   "label": "academic"
+  },
+  {
+   "entity": "Q98544732",
+   "label": "scientific collector"
+  }
+ ],
+ "portrait": {
+  "file": "File:Carlos chagas 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Carlos%20chagas%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Carlos_chagas_2.jpg",
+  "width": 301,
+  "height": 310,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "J. Pinto",
+  "credit": "Biblioteca Virtual Carlos Chagas",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

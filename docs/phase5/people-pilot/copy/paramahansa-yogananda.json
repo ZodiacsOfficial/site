@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "paramahansa-yogananda",
+  "seedRound": 0,
+  "qid": "Q312549",
+  "displayName": "Paramahansa Yogananda",
+  "identity": "Philosopher · India · 1893–1952",
+  "title": "Paramahansa Yogananda's birth chart",
+  "metaDescription": "Paramahansa Yogananda's chart, computed from a sourced birth date: Sun at 15.2° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a trine to Jupiter at 0.5° — close enough to weld taste to expansion. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Venus:Jupiter:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.22",
+        "decan:capricorn:second"
+      ],
+      "text": "15.2° of Capricorn is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:22.9°",
+        "personal:Venus:Sagittarius:16.7°",
+        "personal:Mars:Aries:5.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (22.9°), Venus in Sagittarius (16.7°), Mars in Aries (5.5°): thought that arrives already in motion, attraction declared rather than implied, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:trine:0.48",
+        "aspect:Neptune:Pluto:conjunction:0.79",
+        "aspect:Sun:Jupiter:square:0.97"
+      ],
+      "text": "Venus to Jupiter is the closest call of the day, a trine within 0.5°. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, Neptune conjunction Pluto at 0.8°, and the Sun square Jupiter at 1.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Jupiter-Saturn:apex-Sun",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Saturn while both square the Sun. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Mercury in Sagittarius at 22.9° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 5.5° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 12.6° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-air3-earth1-water1",
+        "modalities:cardinal4-mutable4-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 5 in fire, 3 in air, 1 in earth, 1 in water by element, 4 cardinal, 4 mutable, 2 fixed by modality. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:13.6"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 13.6° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 20.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-5/",
+    "label": "Everyone born on January 5"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Jupiter:trine",
+    "sun-degree:15.22",
+    "decan:capricorn:second",
+    "personal:Mercury:Sagittarius:22.9°",
+    "personal:Venus:Sagittarius:16.7°",
+    "personal:Mars:Aries:5.5°",
+    "aspect:Venus:Jupiter:trine:0.48",
+    "aspect:Neptune:Pluto:conjunction:0.79",
+    "aspect:Sun:Jupiter:square:0.97",
+    "figure:t-square:Jupiter-Saturn:apex-Sun",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:fire5-air3-earth1-water1",
+    "modalities:cardinal4-mutable4-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:leo",
+    "moon-band:13.6"
+  ],
+  "measurements": {
+    "originalWords": 423,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

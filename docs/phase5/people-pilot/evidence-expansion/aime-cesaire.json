@@ -1,0 +1,125 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "aime-cesaire",
+ "qid": "Q223955",
+ "displayName": "Aimé Césaire",
+ "wikidataLabel": "Aimé Césaire",
+ "wikidataDescription": "Martinican writer, poet and politician (1913–2008)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q223955",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516209278
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Aimé Césaire",
+   "articleUrl": "https://en.wikipedia.org/wiki/Aim%C3%A9_C%C3%A9saire",
+   "pageId": 318336,
+   "revisionId": 1364069347,
+   "revisionTimestamp": "2026-07-14T08:09:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1913-06-26T00:00:00Z|proleptic-gregorian",
+   "+1913-06-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-06-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1913-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1913-06-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-06-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2008-04-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1648481",
+  "label": "Basse-Pointe",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1648481",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1648481",
+   "sourceEntityLabel": "Basse-Pointe",
+   "latitude": 14.868611111111,
+   "longitude": -61.120277777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:Aime Cesaire 2003.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Aime%20Cesaire%202003.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Aime_Cesaire_2003.jpg",
+  "width": 454,
+  "height": 653,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Jean Baptiste Devaux",
+  "credit": "",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

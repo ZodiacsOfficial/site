@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "john-stuart-mill",
+  "seedRound": 0,
+  "qid": "Q50020",
+  "displayName": "John Stuart Mill",
+  "identity": "Philosopher and economist · United Kingdom · 1806–1873",
+  "title": "John Stuart Mill's birth chart",
+  "metaDescription": "John Stuart Mill's chart, computed from a sourced birth date: Sun at 28.7° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.2° separates Mars and Jupiter from an exact trine; at that range drive and expansion read as one mechanism. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Mars:Jupiter:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:28.73",
+        "decan:taurus:third"
+      ],
+      "text": "At noon on that date the Sun stood at 28.7° Taurus, inside the third decan (20°–30°), whose traditional sub-ruler is Saturn. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:5.5°",
+        "personal:Venus:Aries:12.9°",
+        "personal:Mars:Taurus:7.1°"
+      ],
+      "text": "For the fast movers, Mercury was at 5.5° Taurus, Venus was at 12.9° Aries, Mars was at 7.1° Taurus. Read together: thought with its feet on the ground; attraction declared rather than implied; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Jupiter:trine:0.21",
+        "aspect:Sun:Neptune:opposition:0.23",
+        "aspect:Saturn:Uranus:conjunction:0.5"
+      ],
+      "text": "The day's firmest angle joins Mars and Jupiter — a trine holding at 0.2°. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, the Sun opposition Neptune at 0.2°, and Saturn conjunction Uranus at 0.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Venus in Aries at 12.9° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 7.1° is in detriment; Jupiter in Capricorn at 7.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Libra at 22.7° is in exaltation — the tradition’s honoured-guest placement, working at its best. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air2-water2-fire1",
+        "modalities:fixed4-cardinal4-mutable1",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 earth, 2 air, 2 water, 1 fire; by modality, 4 fixed, 4 cardinal, 1 mutable. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Jupiter, Saturn, Uranus and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 14.4° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-20/",
+    "label": "Everyone born on May 20"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Jupiter:trine",
+    "sun-degree:28.73",
+    "decan:taurus:third",
+    "personal:Mercury:Taurus:5.5°",
+    "personal:Venus:Aries:12.9°",
+    "personal:Mars:Taurus:7.1°",
+    "aspect:Mars:Jupiter:trine:0.21",
+    "aspect:Sun:Neptune:opposition:0.23",
+    "aspect:Saturn:Uranus:conjunction:0.5",
+    "figure:unaspected:Moon",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:exaltation",
+    "elements:earth4-air2-water2-fire1",
+    "modalities:fixed4-cardinal4-mutable1",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

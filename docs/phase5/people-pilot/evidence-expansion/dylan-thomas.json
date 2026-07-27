@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "dylan-thomas",
+ "qid": "Q191023",
+ "displayName": "Dylan Thomas",
+ "wikidataLabel": "Dylan Thomas",
+ "wikidataDescription": "Welsh poet and writer (1914–1953)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q191023",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519813133
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Dylan Thomas",
+   "articleUrl": "https://en.wikipedia.org/wiki/Dylan_Thomas",
+   "pageId": 8783,
+   "revisionId": 1366166378,
+   "revisionTimestamp": "2026-07-26T17:58:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-10-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-10-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-10-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1953-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q23051",
+  "label": "Swansea",
+  "entityUrl": "https://www.wikidata.org/wiki/Q23051",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q23051",
+   "sourceEntityLabel": "Swansea",
+   "latitude": 51.616666666667,
+   "longitude": -3.95,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q73306227",
+   "label": "television writer"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dylan Thomas icon Blashford 1937.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dylan%20Thomas%20icon%20Blashford%201937.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dylan_Thomas_icon_Blashford_1937.jpg",
+  "width": 630,
+  "height": 679,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nora Summers",
+  "credit": "Summers, Gabriel and Leonie; Towns, Jeff (2014). Dylan Thomas and the Bohemians: The Photographs of Nora Summers. Cardigan: Parthian. pp. 66–81. ISBN 9781909844988.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

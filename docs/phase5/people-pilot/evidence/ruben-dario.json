@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ruben-dario",
+ "qid": "Q173767",
+ "displayName": "Rubén Darío",
+ "wikidataLabel": "Rubén Darío",
+ "wikidataDescription": "Nicaraguan poet, journalist, writer, and diplomat (1867-1916)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q173767",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520318388
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rubén Darío",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rub%C3%A9n_Dar%C3%ADo",
+   "pageId": 467504,
+   "revisionId": 1366082621,
+   "revisionTimestamp": "2026-07-26T04:25:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1867-01-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1867-01-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1869-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1867-01-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1916-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1015865",
+  "label": "Ciudad Darío",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1015865",
+  "country": {
+   "entity": "Q811",
+   "label": "Nicaragua"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1015865",
+   "sourceEntityLabel": "Ciudad Darío",
+   "latitude": 12.731922222222222,
+   "longitude": -86.12439166666667,
+   "precision": 0.000277778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q42909",
+   "label": "reporter"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Portrait of Rubén Darío.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Portrait%20of%20Rub%C3%A9n%20Dar%C3%ADo.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Rub%C3%A9n_Dar%C3%ADo.jpg",
+  "width": 1407,
+  "height": 2017,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Darío, Rubén; Scan by University of Toronto (1920) Poemas, Buenos Aires: Ediciones Selectas América",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

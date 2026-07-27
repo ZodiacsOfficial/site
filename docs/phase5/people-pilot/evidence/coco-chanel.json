@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "coco-chanel",
+ "qid": "Q45661",
+ "displayName": "Coco Chanel",
+ "wikidataLabel": "Coco Chanel",
+ "wikidataDescription": "French fashion designer (1883–1971)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q45661",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521471223
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Coco Chanel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Coco_Chanel",
+   "pageId": 11291214,
+   "revisionId": 1365705838,
+   "revisionTimestamp": "2026-07-24T00:02:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-08-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-08-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-08-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1971-01-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q193821",
+  "label": "Saumur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q193821",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q193821",
+   "sourceEntityLabel": "Saumur",
+   "latitude": 47.259166666667,
+   "longitude": -0.078055555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  },
+  {
+   "entity": "Q18611810",
+   "label": "textile designer"
+  },
+  {
+   "entity": "Q2961975",
+   "label": "business executive"
+  },
+  {
+   "entity": "Q18199649",
+   "label": "modiste"
+  },
+  {
+   "entity": "Q4845479",
+   "label": "grand couturier"
+  },
+  {
+   "entity": "Q1323191",
+   "label": "costume designer"
+  },
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  }
+ ],
+ "portrait": {
+  "file": "File:Coco Chanel in Los Angeles, 1931 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Coco%20Chanel%20in%20Los%20Angeles%2C%201931%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Coco_Chanel_in_Los_Angeles,_1931_(cropped).jpg",
+  "width": 467,
+  "height": 651,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Los Angeles Times",
+  "credit": "https://digital.library.ucla.edu/catalog/ark:/21198/zz0002nwv5",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

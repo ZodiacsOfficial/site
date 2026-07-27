@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "nelson-mandela",
+  "seedRound": 0,
+  "qid": "Q8023",
+  "displayName": "Nelson Mandela",
+  "identity": "Politician and autobiographer · South Africa · 1918–2013",
+  "title": "Nelson Mandela's birth chart",
+  "metaDescription": "Nelson Mandela's chart, computed from a sourced birth date: Sun at 25.0° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.9° separates Mercury and Saturn from an exact conjunction; at that range thinking and structure read as one mechanism. When two functions occupy one degree, the tradition reads a fusion: neither can act without committing the other.",
+  "ledeFact": "aspect:Mercury:Saturn:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:24.96",
+        "decan:cancer:third"
+      ],
+      "text": "The Sun's position resolves to 25.0° Cancer — deep enough in the third decan (20°–30°) that Jupiter, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Leo:15.9°",
+        "personal:Venus:Gemini:22.4°",
+        "personal:Mars:Libra:12.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 15.9° Leo, Venus was at 22.4° Gemini, Mars was at 12.5° Libra. Read together: thought that arrives already in motion; attraction that begins as conversation; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:conjunction:0.92",
+        "aspect:Mars:Saturn:sextile:2.51",
+        "aspect:Mercury:Mars:sextile:3.43"
+      ],
+      "text": "The day's firmest angle joins Mercury and Saturn — a conjunction holding at 0.9°. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Mars sextile Saturn at 2.5°, and Mercury sextile Mars at 3.4° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Sun"
+      ],
+      "text": "The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Moon in Scorpio at 18.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Libra at 12.5° is in detriment — the planet opposite its home, working against the grain; Jupiter in Cancer at 1.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Leo at 15.0° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air3",
+        "modalities:fixed5-cardinal4-mutable1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: water 4, fire 3, air 3 across the elements, and fixed 5, cardinal 4, mutable 1 across the modalities. Water reads the room before the room speaks — atmosphere first, analysis later. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Uranus was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:12.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 12.2° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 18.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-18/",
+    "label": "Everyone born on July 18"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Saturn:conjunction",
+    "sun-degree:24.96",
+    "decan:cancer:third",
+    "personal:Mercury:Leo:15.9°",
+    "personal:Venus:Gemini:22.4°",
+    "personal:Mars:Libra:12.5°",
+    "aspect:Mercury:Saturn:conjunction:0.92",
+    "aspect:Mars:Saturn:sextile:2.51",
+    "aspect:Mercury:Mars:sextile:3.43",
+    "figure:unaspected:Sun",
+    "dignity:Moon:fall",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:detriment",
+    "elements:water4-fire3-air3",
+    "modalities:fixed5-cardinal4-mutable1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:scorpio",
+    "moon-band:12.2"
+  ],
+  "measurements": {
+    "originalWords": 430,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

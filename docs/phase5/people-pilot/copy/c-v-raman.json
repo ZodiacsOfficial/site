@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "c-v-raman",
+  "seedRound": 0,
+  "qid": "Q60429",
+  "displayName": "C. V. Raman",
+  "identity": "Physicist and university teacher · India · 1888–1970",
+  "title": "C. V. Raman's birth chart",
+  "metaDescription": "C. V. Raman's chart, computed from a sourced birth date: Sun at 15.3° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. The mutable signs hand one season to the next; a chart weighted there is built for transitions.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.32",
+        "decan:scorpio:second"
+      ],
+      "text": "15.3° of Scorpio is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Jupiter in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:2.6°",
+        "personal:Venus:Sagittarius:16.0°",
+        "personal:Mars:Capricorn:11.1°"
+      ],
+      "text": "Closer in, Mercury stands at 2.6° Scorpio; Venus stands at 16.0° Sagittarius; Mars stands at 11.1° Capricorn. The tradition reads thought steeped in tone and memory from Mercury, attraction declared rather than implied from Venus, effort banked steadily until it tells from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:sextile:0.5",
+        "aspect:Venus:Uranus:sextile:3.32",
+        "aspect:Venus:Saturn:trine:3.82"
+      ],
+      "text": "The day's firmest angle joins Saturn and Uranus — a sextile holding at 0.5°. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Venus sextile Uranus at 3.3°, and Venus trine Saturn at 3.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, three placements stand out. Mars in Capricorn at 11.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Sagittarius at 10.3° is in domicile — the planet in its own sign, running on home rules; Saturn in Leo at 19.8° is in detriment — the planet opposite its home, working against the grain. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-air3-water2-earth1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements fire 3, air 3, water 2, earth 1; modalities mutable 4, fixed 3, cardinal 2. Mercury, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 14.6° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-7/",
+    "label": "Everyone born on November 7"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:15.32",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:2.6°",
+    "personal:Venus:Sagittarius:16.0°",
+    "personal:Mars:Capricorn:11.1°",
+    "aspect:Saturn:Uranus:sextile:0.5",
+    "aspect:Venus:Uranus:sextile:3.32",
+    "aspect:Venus:Saturn:trine:3.82",
+    "figure:unaspected:Moon",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:detriment",
+    "elements:fire3-air3-water2-earth1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 384,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

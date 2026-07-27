@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gertrude-bell",
+ "qid": "Q231360",
+ "displayName": "Gertrude Bell",
+ "wikidataLabel": "Gertrude Bell",
+ "wikidataDescription": "British traveller, writer, mountaineer, politician, archaeologist and spy (1868–1926)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q231360",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517532373
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gertrude Bell",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gertrude_Bell",
+   "pageId": 275002,
+   "revisionId": 1365263165,
+   "revisionTimestamp": "2026-07-21T08:09:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1868-07-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1868-07-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1868-07-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1926-07-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1018448",
+  "label": "Washington",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1018448",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1018448",
+   "sourceEntityLabel": "Washington",
+   "latitude": 54.9,
+   "longitude": -1.52,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q3621491",
+   "label": "archaeologist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q9149093",
+   "label": "mountaineer"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q9352089",
+   "label": "spy"
+  },
+  {
+   "entity": "Q19361459",
+   "label": "assyriologist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q620573",
+   "label": "arabist"
+  },
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gertrude Bell circa 1910.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gertrude%20Bell%20circa%201910.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gertrude_Bell_circa_1910.png",
+  "width": 631,
+  "height": 847,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Historia/REX/Shutterstock.com (according to Brittanica.com)",
+  "credit": "https://www.britannica.com/biography/Gertrude-Bell /Archived",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

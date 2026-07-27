@@ -1,0 +1,130 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "halide-edib-ad-var",
+ "qid": "Q234289",
+ "displayName": "Halide Edib Adıvar",
+ "wikidataLabel": "Halide Edib Adıvar",
+ "wikidataDescription": "Turkish social reformer and statesperson (1884–1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234289",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517546357
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Halide Edib Adıvar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Halide_Edib_Ad%C4%B1var",
+   "pageId": 3488301,
+   "revisionId": 1361966751,
+   "revisionTimestamp": "2026-07-01T03:38:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1884-06-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1884-06-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1883-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1884-06-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-01-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q406",
+  "label": "Istanbul",
+  "entityUrl": "https://www.wikidata.org/wiki/Q406",
+  "country": {
+   "entity": "Q43",
+   "label": "Turkey"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q406",
+   "sourceEntityLabel": "Istanbul",
+   "latitude": 41.01,
+   "longitude": 28.960277777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Halide adivar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Halide%20adivar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Halide_adivar.jpg",
+  "width": 200,
+  "height": 243,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "https://images.gr-assets.com/authors/1459948484p5/1003078.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

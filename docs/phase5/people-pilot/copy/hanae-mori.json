@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "hanae-mori",
+  "seedRound": 0,
+  "qid": "Q755465",
+  "displayName": "Hanae Mori",
+  "identity": "Fashion designer · Japan · 1926–2022",
+  "title": "Hanae Mori's birth chart",
+  "metaDescription": "Hanae Mori's chart, computed from a sourced birth date: Sun at 17.1° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: Venus and Neptune within 0.1°, taste wired to imagination. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Venus:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.08",
+        "decan:capricorn:second"
+      ],
+      "text": "The Sun sits at 17.1° Capricorn — the second decan, 10°–20°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Capricorn and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:25.8°",
+        "personal:Venus:Aquarius:24.2°",
+        "personal:Mars:Sagittarius:7.6°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Sagittarius (25.8°), Venus in Aquarius (24.2°), Mars in Sagittarius (7.6°): a mind that decides at speaking speed, taste led by wit and proportion, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Neptune:opposition:0.1",
+        "aspect:Venus:Saturn:square:0.78",
+        "aspect:Saturn:Neptune:square:0.88"
+      ],
+      "text": "Start where the chart is tightest — Venus opposition Neptune, 0.1° of separation. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Venus square Saturn at 0.8°, and Saturn square Neptune at 0.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Venus-Neptune:apex-Saturn",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Venus opposes Neptune while both square Saturn. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, one sits in a sign it has an opinion about. Mercury in Sagittarius at 25.8° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-air2-earth1",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 fire, 3 water, 2 air, 1 earth by element and 4 fixed, 3 mutable, 2 cardinal by modality. A fire-weighted chart runs hot at the start line — initiative is its native language. Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:libra:scorpio"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Libra into Scorpio during that day at the birthplace, travelling 12.8° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-8/",
+    "label": "Everyone born on January 8"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Neptune:opposition",
+    "sun-degree:17.08",
+    "decan:capricorn:second",
+    "personal:Mercury:Sagittarius:25.8°",
+    "personal:Venus:Aquarius:24.2°",
+    "personal:Mars:Sagittarius:7.6°",
+    "aspect:Venus:Neptune:opposition:0.1",
+    "aspect:Venus:Saturn:square:0.78",
+    "aspect:Saturn:Neptune:square:0.88",
+    "figure:t-square:Venus-Neptune:apex-Saturn",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "elements:fire3-water3-air2-earth1",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:libra:scorpio"
+  ],
+  "measurements": {
+    "originalWords": 428,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

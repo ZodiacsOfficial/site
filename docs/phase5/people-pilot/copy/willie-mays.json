@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "willie-mays",
+  "seedRound": 0,
+  "qid": "Q561852",
+  "displayName": "Willie Mays",
+  "identity": "Baseball player · United States · 1931–2024",
+  "title": "Willie Mays's birth chart",
+  "metaDescription": "Willie Mays's chart, computed from a sourced birth date: Sun at 15.2° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a trine: Venus and Mars within 0.2°, taste wired to drive. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Venus:Mars:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:15.20",
+        "decan:taurus:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 15.2° Taurus: the second decan, whose classical sub-ruler is Mercury. A earth sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:5.3°",
+        "personal:Venus:Aries:12.7°",
+        "personal:Mars:Leo:12.9°"
+      ],
+      "text": "For the fast movers, Mercury was at 5.3° Taurus, Venus was at 12.7° Aries, Mars was at 12.9° Leo. Read together: a mind that trusts the measured and the checked; taste that runs toward the vivid and the immediate; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Mars:trine:0.23",
+        "aspect:Sun:Jupiter:sextile:0.52",
+        "aspect:Jupiter:Uranus:square:1.31"
+      ],
+      "text": "Start where the chart is tightest — Venus trine Mars, 0.2° of separation. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, the Sun sextile Jupiter at 0.5°, and Jupiter square Uranus at 1.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Moon-Jupiter:apex-Venus"
+      ],
+      "text": "The Moon opposes Jupiter while both square Venus. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has four entries for this chart. The Moon in Capricorn at 12.8° is in detriment — the planet opposite its home, working against the grain; Venus in Aries at 12.7° is in detriment; Jupiter in Cancer at 15.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Capricorn at 23.3° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire3-water2",
+        "modalities:cardinal6-fixed3-mutable1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives earth 5, fire 3, water 2, and cardinal 6, fixed 3, mutable 1 across the modes. Earth signs hold the scheme’s slow end, where results are measured in what survives rather than what starts. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Mercury, Saturn and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 12.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-6/",
+    "label": "Everyone born on May 6"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Mars:trine",
+    "sun-degree:15.20",
+    "decan:taurus:second",
+    "personal:Mercury:Taurus:5.3°",
+    "personal:Venus:Aries:12.7°",
+    "personal:Mars:Leo:12.9°",
+    "aspect:Venus:Mars:trine:0.23",
+    "aspect:Sun:Jupiter:sextile:0.52",
+    "aspect:Jupiter:Uranus:square:1.31",
+    "figure:t-square:Moon-Jupiter:apex-Venus",
+    "dignity:Moon:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:earth5-fire3-water2",
+    "modalities:cardinal6-fixed3-mutable1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:capricorn",
+    "moon-band:12.9"
+  ],
+  "measurements": {
+    "originalWords": 436,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

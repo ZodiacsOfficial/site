@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "pablo-neruda",
+ "qid": "Q34189",
+ "displayName": "Pablo Neruda",
+ "wikidataLabel": "Pablo Neruda",
+ "wikidataDescription": "Chilean poet and politician (1904-1973)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q34189",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515831601
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Pablo Neruda",
+   "articleUrl": "https://en.wikipedia.org/wiki/Pablo_Neruda",
+   "pageId": 7673195,
+   "revisionId": 1363763547,
+   "revisionTimestamp": "2026-07-12T07:19:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-07-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-07-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-07-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1973-09-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q51083",
+  "label": "Parral",
+  "entityUrl": "https://www.wikidata.org/wiki/Q51083",
+  "country": {
+   "entity": "Q298",
+   "label": "Chile"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q51083",
+   "sourceEntityLabel": "Parral",
+   "latitude": -36.15,
+   "longitude": -71.833333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q121998",
+   "label": "ambassador"
+  },
+  {
+   "entity": "Q207978",
+   "label": "consul"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Pablo Neruda 1963.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Pablo%20Neruda%201963.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Pablo_Neruda_1963.jpg",
+  "width": 738,
+  "height": 936,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown (Mondadori Publishers)",
+  "credit": "http://www.gettyimages.co.uk/detail/news-photo/three-quarter-face-portrait-of-a-thoughtful-pablo-neruda-news-photo/174306045",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

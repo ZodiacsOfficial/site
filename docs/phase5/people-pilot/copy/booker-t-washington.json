@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "booker-t-washington",
+  "seedRound": 0,
+  "qid": "Q319871",
+  "displayName": "Booker T. Washington",
+  "identity": "Writer and pedagogue · United States · 1856–1915",
+  "title": "Booker T. Washington's birth chart",
+  "metaDescription": "Booker T. Washington's chart, computed from a sourced birth date: Sun at 16.1° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Pisces — Mercury, Venus, Jupiter and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:pisces:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.09",
+        "decan:aries:second"
+      ],
+      "text": "At the noon reference the Sun sits 16.1° into Aries — the second decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:26.3°",
+        "personal:Venus:Pisces:18.3°",
+        "personal:Mars:Libra:11.8°"
+      ],
+      "text": "The personal planets sit Mercury at 26.3° Pisces, Venus at 18.3° Pisces, Mars at 11.8° Libra. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a water sign reads as attraction that works by atmosphere; Mars in a air sign reads as effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Neptune:sextile:0.06",
+        "aspect:Venus:Uranus:sextile:0.56",
+        "aspect:Venus:Neptune:conjunction:0.62"
+      ],
+      "text": "Closest first: Uranus to Neptune, a sextile with 0.1° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Venus sextile Uranus at 0.6°, and Venus conjunction Neptune at 0.6° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Read against the old dignities, five placements stand out. The Sun in Aries at 16.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Pisces at 26.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 18.3° is in exaltation; Mars in Libra at 11.8° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 22.8° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air2-earth2-fire1",
+        "modalities:mutable5-cardinal2-fixed2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 water, 2 air, 2 earth, 1 fire; by modality, 5 mutable, 2 cardinal, 2 fixed. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Mars was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 15.0° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-5/",
+    "label": "Everyone born on April 5"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:pisces:4",
+    "sun-degree:16.09",
+    "decan:aries:second",
+    "personal:Mercury:Pisces:26.3°",
+    "personal:Venus:Pisces:18.3°",
+    "personal:Mars:Libra:11.8°",
+    "aspect:Uranus:Neptune:sextile:0.06",
+    "aspect:Venus:Uranus:sextile:0.56",
+    "aspect:Venus:Neptune:conjunction:0.62",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:water4-air2-earth2-fire1",
+    "modalities:mutable5-cardinal2-fixed2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 464,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

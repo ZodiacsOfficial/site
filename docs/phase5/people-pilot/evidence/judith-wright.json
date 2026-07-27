@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "judith-wright",
+ "qid": "Q469885",
+ "displayName": "Judith Wright",
+ "wikidataLabel": "Judith Wright",
+ "wikidataDescription": "Australian poet, environmentalist and Indigenous rights campaigner (1915–2000)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q469885",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521473350
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Judith Wright",
+   "articleUrl": "https://en.wikipedia.org/wiki/Judith_Wright",
+   "pageId": 171616,
+   "revisionId": 1352404235,
+   "revisionTimestamp": "2026-05-04T00:39:25Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-05-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-05-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-05-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2000-06-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q606169",
+  "label": "Armidale",
+  "entityUrl": "https://www.wikidata.org/wiki/Q606169",
+  "country": {
+   "entity": "Q408",
+   "label": "Australia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q606169",
+   "sourceEntityLabel": "Armidale",
+   "latitude": -30.5,
+   "longitude": 151.66666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q3578589",
+   "label": "environmentalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Judith Wright bust, Garema Place.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Judith%20Wright%20bust%2C%20Garema%20Place.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Judith_Wright_bust,_Garema_Place.jpg",
+  "width": 2886,
+  "height": 4329,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Doug butler",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

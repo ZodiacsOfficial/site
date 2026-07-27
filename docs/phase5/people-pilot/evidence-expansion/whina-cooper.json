@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "whina-cooper",
+ "qid": "Q466142",
+ "displayName": "Whina Cooper",
+ "wikidataLabel": "Whina Cooper",
+ "wikidataDescription": "Māori leader (1895–1994)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "oceania",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q466142",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2507429109
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Whina Cooper",
+   "articleUrl": "https://en.wikipedia.org/wiki/Whina_Cooper",
+   "pageId": 1241302,
+   "revisionId": 1347884165,
+   "revisionTimestamp": "2026-04-09T11:54:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1895-12-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-12-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1895-12-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1994-03-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q697092",
+  "label": "Hokianga Harbour",
+  "entityUrl": "https://www.wikidata.org/wiki/Q697092",
+  "country": {
+   "entity": "Q664",
+   "label": "New Zealand"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q697092",
+   "sourceEntityLabel": "Hokianga Harbour",
+   "latitude": -35.417,
+   "longitude": 173.42,
+   "precision": 0.001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q15253558",
+   "label": "activist"
+  },
+  {
+   "entity": "Q1500610",
+   "label": "community leader"
+  }
+ ],
+ "portrait": {
+  "file": "File:Whina Cooper in Hamilton.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Whina%20Cooper%20in%20Hamilton.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Whina_Cooper_in_Hamilton.jpg",
+  "width": 427,
+  "height": 567,
+  "licenseShortName": "Copyrighted free use",
+  "licenseUrl": null,
+  "artist": "Christian Heinegg",
+  "credit": "http://find.natlib.govt.nz/primo_library/libweb/action/dlDisplay.do?dscnt=0&vid=TF&dstmp=1279099208548&docId=nlnz_tapuhi1200316&fromLogin=true",
+  "usageTerms": "Copyrighted free use",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

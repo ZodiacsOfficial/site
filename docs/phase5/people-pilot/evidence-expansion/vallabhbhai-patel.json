@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "vallabhbhai-patel",
+ "qid": "Q9455",
+ "displayName": "Vallabhbhai Patel",
+ "wikidataLabel": "Sardar Vallabhbhai Patel",
+ "wikidataDescription": "Indian barrister, leader of the Indian National Congress and founding father of the Republic of India (1875-1950)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9455",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517796905
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Vallabhbhai Patel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Vallabhbhai_Patel",
+   "pageId": 59659,
+   "revisionId": 1365429228,
+   "revisionTimestamp": "2026-07-22T10:21:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1875-10-31T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1875-10-31T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1875-10-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1950-12-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q219039",
+  "label": "Nadiad",
+  "entityUrl": "https://www.wikidata.org/wiki/Q219039",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q219039",
+   "sourceEntityLabel": "Nadiad",
+   "latitude": 22.7,
+   "longitude": 72.87,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q808967",
+   "label": "barrister"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q30242234",
+   "label": "freedom fighter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sardar patel (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sardar%20patel%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sardar_patel_(cropped).jpg",
+  "width": 446,
+  "height": 605,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Government of India work",
+  "credit": "http://photodivision.gov.in/waterMarkdetails.asp?id=11604.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

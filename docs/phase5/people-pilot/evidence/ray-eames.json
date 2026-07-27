@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ray-eames",
+ "qid": "Q380404",
+ "displayName": "Ray Eames",
+ "wikidataLabel": "Ray Eames",
+ "wikidataDescription": "American artist, designer, and filmmaker (1912–1988)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q380404",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512171960
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ray Eames",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ray_Eames",
+   "pageId": 14652526,
+   "revisionId": 1363287674,
+   "revisionTimestamp": "2026-07-09T06:45:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-12-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-12-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-12-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1988-08-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18013",
+  "label": "Sacramento",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18013",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18013",
+   "sourceEntityLabel": "Sacramento",
+   "latitude": 38.575277777778,
+   "longitude": -121.48611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q2962070",
+   "label": "production designer"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ray Eames.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ray%20Eames.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ray_Eames.jpg",
+  "width": 1362,
+  "height": 1498,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "2million2kara",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

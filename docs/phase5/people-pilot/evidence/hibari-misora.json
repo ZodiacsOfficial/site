@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hibari-misora",
+ "qid": "Q147811",
+ "displayName": "Hibari Misora",
+ "wikidataLabel": "Hibari Misora",
+ "wikidataDescription": "Japanese singer and actress (1937-1989)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q147811",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520893744
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hibari Misora",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hibari_Misora",
+   "pageId": 420368,
+   "revisionId": 1358462630,
+   "revisionTimestamp": "2026-06-08T21:06:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1937-05-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1937-05-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1937-05-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1989-06-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1141223",
+  "label": "Isogo-ku",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1141223",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1141223",
+   "sourceEntityLabel": "Isogo-ku",
+   "latitude": 35.402222222222,
+   "longitude": 139.61888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q943995",
+   "label": "impresario"
+  },
+  {
+   "entity": "Q970153",
+   "label": "child actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hibari Misora 01.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hibari%20Misora%2001.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hibari_Misora_01.jpg",
+  "width": 430,
+  "height": 640,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Japanese magazine \"The Mainichi Graphic, 17 November 1954 issue\" published by The Mainichi Newspapers Co.,Ltd.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

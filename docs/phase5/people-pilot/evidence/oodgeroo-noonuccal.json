@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "oodgeroo-noonuccal",
+ "qid": "Q457278",
+ "displayName": "Oodgeroo Noonuccal",
+ "wikidataLabel": "Oodgeroo Noonuccal",
+ "wikidataDescription": "Aboriginal Australian poet, artist, teacher and campaigner for Indigenous rights (1920–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q457278",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2494955877
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Oodgeroo Noonuccal",
+   "articleUrl": "https://en.wikipedia.org/wiki/Oodgeroo_Noonuccal",
+   "pageId": 1114702,
+   "revisionId": 1357372266,
+   "revisionTimestamp": "2026-06-02T06:58:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-11-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-11-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-11-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-09-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7620895",
+  "label": "Stradbroke Island",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7620895",
+  "country": {
+   "entity": "Q408",
+   "label": "Australia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q7620895",
+   "sourceEntityLabel": "Stradbroke Island",
+   "latitude": -27.532777777778,
+   "longitude": 153.45984444444,
+   "precision": null,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Oodgeroo Noonuccal 1970 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Oodgeroo%20Noonuccal%201970%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Oodgeroo_Noonuccal_1970_(cropped).jpg",
+  "width": 1086,
+  "height": 1521,
+  "licenseShortName": "No restrictions",
+  "licenseUrl": "https://www.flickr.com/commons/usage/",
+  "artist": "State Library of New South Wales",
+  "credit": "https://www.flickr.com/photos/statelibraryofnsw/50542396157/",
+  "usageTerms": "No known copyright restrictions",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

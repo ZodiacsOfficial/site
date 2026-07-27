@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "toni-morrison",
+  "seedRound": 0,
+  "qid": "Q72334",
+  "displayName": "Toni Morrison",
+  "identity": "Writer and university teacher · United States · 1931–2019",
+  "title": "Toni Morrison's birth chart",
+  "metaDescription": "Toni Morrison's chart, computed from a sourced birth date: Sun at 29.1° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.2° separates Venus and Uranus from an exact square; at that range taste and disruption read as one mechanism. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower.",
+  "ledeFact": "aspect:Venus:Uranus:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.09",
+        "decan:aquarius:third"
+      ],
+      "text": "At noon on that date the Sun stood at 29.1° Aquarius, inside the third decan (20°–30°), whose traditional sub-ruler is Venus. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:10.5°",
+        "personal:Venus:Capricorn:13.0°",
+        "personal:Mars:Cancer:29.5°"
+      ],
+      "text": "The personal planets sit Mercury at 10.5° Aquarius, Venus at 13.0° Capricorn, Mars at 29.5° Cancer. Mercury in a air sign reads as thought that travels by comparison; Venus in a earth sign reads as attraction that grows by reliability; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:square:0.16",
+        "aspect:Saturn:Pluto:opposition:0.16",
+        "aspect:Jupiter:Uranus:square:1.97"
+      ],
+      "text": "The day's firmest angle joins Venus and Uranus — a square holding at 0.2°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Saturn opposition Pluto at 0.2°, and Jupiter square Uranus at 2.0° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Venus-Jupiter:apex-Uranus",
+        "figure:unaspected:Mars"
+      ],
+      "text": "Venus opposes Jupiter while both square Uranus. The t-square is the figure the old texts trusted for output: friction with a fixed address. Mars makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Aquarius at 29.1° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 29.5° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Cancer at 10.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Capricorn at 19.2° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth3-air2-fire1",
+        "modalities:cardinal6-fixed2-mutable2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements water 4, earth 3, air 2, fire 1; modalities cardinal 6, fixed 2, mutable 2. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Mars, Jupiter, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 11.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-18/",
+    "label": "Everyone born on February 18"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Uranus:square",
+    "sun-degree:29.09",
+    "decan:aquarius:third",
+    "personal:Mercury:Aquarius:10.5°",
+    "personal:Venus:Capricorn:13.0°",
+    "personal:Mars:Cancer:29.5°",
+    "aspect:Venus:Uranus:square:0.16",
+    "aspect:Saturn:Pluto:opposition:0.16",
+    "aspect:Jupiter:Uranus:square:1.97",
+    "figure:t-square:Venus-Jupiter:apex-Uranus",
+    "figure:unaspected:Mars",
+    "dignity:Sun:detriment",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:water4-earth3-air2-fire1",
+    "modalities:cardinal6-fixed2-mutable2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:pisces",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 493,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "george-bernard-shaw",
+  "seedRound": 0,
+  "qid": "Q19185",
+  "displayName": "George Bernard Shaw",
+  "identity": "Politician and playwright · Ireland · 1856–1950",
+  "title": "George Bernard Shaw's birth chart",
+  "metaDescription": "George Bernard Shaw's chart, computed from a sourced birth date: Sun at 3.6° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 3.6° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.62",
+        "decan:leo:first"
+      ],
+      "text": "At noon on that date the Sun stood at 3.6° Leo, inside the first decan (0°–10°), whose traditional sub-ruler is the Sun. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Cancer:18.9°",
+        "personal:Venus:Leo:5.2°",
+        "personal:Mars:Libra:27.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Cancer (18.9°), Venus in Leo (5.2°), Mars in Libra (27.4°): thought steeped in tone and memory, attraction declared rather than implied, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Pluto:square:0.43",
+        "aspect:Mercury:Neptune:trine:1.24",
+        "aspect:Jupiter:Saturn:square:1.54"
+      ],
+      "text": "The tightest geometry in the chart puts Venus at right angles from Pluto, 0.4° off exact. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mercury trine Neptune at 1.2°, and Jupiter square Saturn at 1.5° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Sun in Leo at 3.6° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 27.4° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 7.6° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-earth2-air1",
+        "modalities:fixed4-cardinal4-mutable1",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives fire 3, water 3, earth 2, air 1, and fixed 4, cardinal 4, mutable 1 across the modes. Neptune was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 13.7° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-26/",
+    "label": "Everyone born on July 26"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:3.62",
+    "decan:leo:first",
+    "personal:Mercury:Cancer:18.9°",
+    "personal:Venus:Leo:5.2°",
+    "personal:Mars:Libra:27.4°",
+    "aspect:Venus:Pluto:square:0.43",
+    "aspect:Mercury:Neptune:trine:1.24",
+    "aspect:Jupiter:Saturn:square:1.54",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Saturn:detriment",
+    "elements:fire3-water3-earth2-air1",
+    "modalities:fixed4-cardinal4-mutable1",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 400,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

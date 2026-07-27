@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "nizar-qabbani",
+ "qid": "Q382312",
+ "displayName": "Nizar Qabbani",
+ "wikidataLabel": "Nizar Qabbani",
+ "wikidataDescription": "Syrian diplomat, poet and publisher (1923-1998)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q382312",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520321716
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Nizar Qabbani",
+   "articleUrl": "https://en.wikipedia.org/wiki/Nizar_Qabbani",
+   "pageId": 474429,
+   "revisionId": 1364196757,
+   "revisionTimestamp": "2026-07-15T02:43:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1923-03-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1923-03-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1923-03-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1998-04-30T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3766",
+  "label": "Damascus",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3766",
+  "country": {
+   "entity": "Q858",
+   "label": "Syria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3766",
+   "sourceEntityLabel": "Damascus",
+   "latitude": 33.513055555556,
+   "longitude": 36.291944444444,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q121998",
+   "label": "ambassador"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Nizar qabbani 01.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Nizar%20qabbani%2001.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Nizar_qabbani_01.jpg",
+  "width": 313,
+  "height": 400,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

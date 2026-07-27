@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "odysseas-elytis",
+ "qid": "Q160478",
+ "displayName": "Odysseas Elytis",
+ "wikidataLabel": "Odysseas Elytis",
+ "wikidataDescription": "Greek poet and art critic (1911–1996)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q160478",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522677717
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Odysseas Elytis",
+   "articleUrl": "https://en.wikipedia.org/wiki/Odysseas_Elytis",
+   "pageId": 155037,
+   "revisionId": 1351491776,
+   "revisionTimestamp": "2026-04-28T08:40:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1911-11-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1911-11-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1911-11-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1996-03-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q160544",
+  "label": "Heraklion",
+  "entityUrl": "https://www.wikidata.org/wiki/Q160544",
+  "country": {
+   "entity": "Q41",
+   "label": "Greece"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q160544",
+   "sourceEntityLabel": "Heraklion",
+   "latitude": 35.34027777777778,
+   "longitude": 25.134444444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4164507",
+   "label": "art critic"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Odysseas Elytis 1974.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Odysseas%20Elytis%201974.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Odysseas_Elytis_1974.jpg",
+  "width": 583,
+  "height": 687,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown (Mondadori Publishers)",
+  "credit": "http://www.gettyimages.co.uk/search/2/image?phrase=Odysseas%20Elytis%20Mondadori%20&family=editorial&sort=best&excludenudity=true&page=1",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

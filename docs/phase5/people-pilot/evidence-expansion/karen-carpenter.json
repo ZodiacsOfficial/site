@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "karen-carpenter",
+ "qid": "Q1250861",
+ "displayName": "Karen Carpenter",
+ "wikidataLabel": "Karen Carpenter",
+ "wikidataDescription": "American singer and drummer (1950–1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1250861",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521489010
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Karen Carpenter",
+   "articleUrl": "https://en.wikipedia.org/wiki/Karen_Carpenter",
+   "pageId": 431092,
+   "revisionId": 1364517023,
+   "revisionTimestamp": "2026-07-17T01:10:21Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1950-03-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1950-03-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1950-03-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-02-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q12073283",
+  "label": "Yale – New Haven Hospital",
+  "entityUrl": "https://www.wikidata.org/wiki/Q12073283",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q12073283",
+   "sourceEntityLabel": "Yale – New Haven Hospital",
+   "latitude": 41.3039,
+   "longitude": -72.9361,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q386854",
+   "label": "drummer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Karen Carpenter in 1972 White House.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Karen%20Carpenter%20in%201972%20White%20House.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Karen_Carpenter_in_1972_White_House.png",
+  "width": 579,
+  "height": 795,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "White House photo by Knudsen, Robert L.",
+  "credit": "Crop of File:Carpenters - Nixon - Office.png",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

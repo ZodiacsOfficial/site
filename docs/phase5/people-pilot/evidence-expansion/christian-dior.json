@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "christian-dior",
+ "qid": "Q159694",
+ "displayName": "Christian Dior",
+ "wikidataLabel": "Christian Dior",
+ "wikidataDescription": "French fashion designer (1905–1957)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q159694",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521017419
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Christian Dior",
+   "articleUrl": "https://en.wikipedia.org/wiki/Christian_Dior",
+   "pageId": 147187,
+   "revisionId": 1365461825,
+   "revisionTimestamp": "2026-07-22T15:42:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1905-01-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1905-01-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1905-01-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1957-10-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q333559",
+  "label": "Granville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q333559",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q333559",
+   "sourceEntityLabel": "Granville",
+   "latitude": 48.838055555556,
+   "longitude": -1.5869444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4845479",
+   "label": "grand couturier"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  },
+  {
+   "entity": "Q1323191",
+   "label": "costume designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Christian Dior 1954.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Christian%20Dior%201954.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Christian_Dior_1954.jpg",
+  "width": 1280,
+  "height": 1145,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "投稿者によるスキャン",
+  "credit": "『装苑』1954年5月号",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

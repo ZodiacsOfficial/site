@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bob-marley",
+  "seedRound": 0,
+  "qid": "Q409",
+  "displayName": "Bob Marley",
+  "identity": "Singer-songwriter · Jamaica · 1945–1981",
+  "title": "Bob Marley's birth chart",
+  "metaDescription": "Bob Marley's chart, computed from a sourced birth date: Sun at 17.6° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates Venus and Saturn from an exact square; at that range taste and structure read as one mechanism. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards.",
+  "ledeFact": "aspect:Venus:Saturn:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:17.56",
+        "decan:aquarius:second"
+      ],
+      "text": "At noon on that date the Sun stood at 17.6° Aquarius, inside the second decan (10°–20°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:2.0°",
+        "personal:Venus:Aries:4.4°",
+        "personal:Mars:Capricorn:24.1°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aquarius (2.0°), Venus in Aries (4.4°), Mars in Capricorn (24.1°): thought that travels by comparison, attraction declared rather than implied, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:square:0.13",
+        "aspect:Uranus:Pluto:sextile:0.23",
+        "aspect:Saturn:Neptune:square:1.68"
+      ],
+      "text": "Closest first: Venus to Saturn, a square with 0.1° of slack. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Uranus sextile Pluto at 0.2°, and Saturn square Neptune at 1.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Venus-Neptune:apex-Saturn"
+      ],
+      "text": "Venus opposes Neptune while both square Saturn. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, five placements stand out. The Sun in Aquarius at 17.6° is in detriment — the planet opposite its home, working against the grain; Venus in Aries at 4.4° is in detriment; Mars in Capricorn at 24.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Virgo at 26.5° is in detriment; Saturn in Cancer at 4.5° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire2-earth2-water1",
+        "modalities:cardinal4-fixed3-mutable2",
+        "settled-signs:9",
+        "retrograde:5"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 air, 2 fire, 2 earth, 1 water by element and 4 cardinal, 3 fixed, 2 mutable by modality. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:scorpio:sagittarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 12.4° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-6/",
+    "label": "Everyone born on February 6"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Saturn:square",
+    "sun-degree:17.56",
+    "decan:aquarius:second",
+    "personal:Mercury:Aquarius:2.0°",
+    "personal:Venus:Aries:4.4°",
+    "personal:Mars:Capricorn:24.1°",
+    "aspect:Venus:Saturn:square:0.13",
+    "aspect:Uranus:Pluto:sextile:0.23",
+    "aspect:Saturn:Neptune:square:1.68",
+    "figure:t-square:Venus-Neptune:apex-Saturn",
+    "dignity:Sun:detriment",
+    "dignity:Venus:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:air4-fire2-earth2-water1",
+    "modalities:cardinal4-fixed3-mutable2",
+    "settled-signs:9",
+    "retrograde:5",
+    "moon-uncertain:scorpio:sagittarius"
+  ],
+  "measurements": {
+    "originalWords": 434,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

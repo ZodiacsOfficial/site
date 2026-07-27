@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hannah-hoch",
+ "qid": "Q463411",
+ "displayName": "Hannah Höch",
+ "wikidataLabel": "Hannah Höch",
+ "wikidataDescription": "German artist (1889–1978)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q463411",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521032316
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hannah Höch",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hannah_H%C3%B6ch",
+   "pageId": 1254313,
+   "revisionId": 1366091382,
+   "revisionTimestamp": "2026-07-26T05:49:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1889-11-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1889-11-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1889-11-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1978-05-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6986",
+  "label": "Gotha",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6986",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6986",
+   "sourceEntityLabel": "Gotha",
+   "latitude": 50.948888888889,
+   "longitude": 10.718333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q22343478",
+   "label": "collagist"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q10373653",
+   "label": "watercolorist"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hannah Höch (1974).tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hannah%20H%C3%B6ch%20(1974).tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hannah_H%C3%B6ch_(1974).tif",
+  "width": 3543,
+  "height": 3543,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Dietmar Bührer (de:Dietmar Bührer)",
+  "credit": "File:Hannah Höch, 1974 Foto von Dietmar Bührer.tif",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

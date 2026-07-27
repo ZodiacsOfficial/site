@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "sukarno",
+  "seedRound": 0,
+  "qid": "Q76127",
+  "displayName": "Sukarno",
+  "identity": "Politician · Indonesia · 1901–1970",
+  "title": "Sukarno's birth chart",
+  "metaDescription": "Sukarno's chart, computed from a sourced birth date: Sun at 14.8° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Gemini — the Sun, Venus, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:gemini:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.77",
+        "decan:gemini:second"
+      ],
+      "text": "The Sun's exact place is 14.8° Gemini. That falls in the second decan, 10°–20°, sub-ruled by Venus in the classical scheme — a air sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:6.7°",
+        "personal:Venus:Gemini:24.4°",
+        "personal:Mars:Virgo:10.5°"
+      ],
+      "text": "The personal planets sit Mercury at 6.7° Cancer, Venus at 24.4° Gemini, Mars at 10.5° Virgo. Mercury in a water sign reads as a mind that absorbs before it argues; Venus in a air sign reads as taste led by wit and proportion; Mars in a earth sign reads as drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Uranus:opposition:0.14",
+        "aspect:Mars:Jupiter:trine:0.61",
+        "aspect:Uranus:Pluto:opposition:2.2"
+      ],
+      "text": "The Sun and Uranus hold the closest angle here — a opposition, 0.1° wide. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Mars trine Jupiter at 0.6°, and Uranus opposition Pluto at 2.2° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Sun-Uranus:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Sun opposes Uranus while both square Mars. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Two planets here sit in a sign the classical scheme scores. Jupiter in Capricorn at 11.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Capricorn at 15.1° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-water1-fire1",
+        "modalities:mutable6-cardinal3",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 air, 3 earth, 1 water, 1 fire; by modality, 6 mutable, 3 cardinal. Air weights a chart toward language and pattern — the impulse to name a thing before deciding how to feel about it. Jupiter, Saturn and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 12.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-6/",
+    "label": "Everyone born on June 6"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "stellium:gemini:4",
+    "sun-degree:14.77",
+    "decan:gemini:second",
+    "personal:Mercury:Cancer:6.7°",
+    "personal:Venus:Gemini:24.4°",
+    "personal:Mars:Virgo:10.5°",
+    "aspect:Sun:Uranus:opposition:0.14",
+    "aspect:Mars:Jupiter:trine:0.61",
+    "aspect:Uranus:Pluto:opposition:2.2",
+    "figure:t-square:Sun-Uranus:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Jupiter:fall",
+    "dignity:Saturn:domicile",
+    "elements:air4-earth3-water1-fire1",
+    "modalities:mutable6-cardinal3",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 461,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

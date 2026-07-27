@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "youssef-chahine",
+ "qid": "Q312611",
+ "displayName": "Youssef Chahine",
+ "wikidataLabel": "Youssef Chahine",
+ "wikidataDescription": "Egyptian film director (1926–2008)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q312611",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522497247
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Youssef Chahine",
+   "articleUrl": "https://en.wikipedia.org/wiki/Youssef_Chahine",
+   "pageId": 206924,
+   "revisionId": 1360627377,
+   "revisionTimestamp": "2026-06-22T17:27:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1926-01-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1926-01-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1926-01-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2008-07-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q87",
+  "label": "Alexandria",
+  "entityUrl": "https://www.wikidata.org/wiki/Q87",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q87",
+   "sourceEntityLabel": "Alexandria",
+   "latitude": 31.1975,
+   "longitude": 29.8925,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Youssef Chahine in Cairo 1986.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Youssef%20Chahine%20in%20Cairo%201986.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Youssef_Chahine_in_Cairo_1986.jpg",
+  "width": 481,
+  "height": 600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "First Published in Al - Ahram Daily News Paper when he launched his film (The 6th Day) - (اليوم السادس)",
+  "credit": "Fuera de Campo",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

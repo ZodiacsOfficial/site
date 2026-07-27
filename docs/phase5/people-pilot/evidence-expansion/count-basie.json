@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "count-basie",
+ "qid": "Q107008",
+ "displayName": "Count Basie",
+ "wikidataLabel": "Count Basie",
+ "wikidataDescription": "American jazz musician and composer (1904–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q107008",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516508223
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Count Basie",
+   "articleUrl": "https://en.wikipedia.org/wiki/Count_Basie",
+   "pageId": 68090,
+   "revisionId": 1362960951,
+   "revisionTimestamp": "2026-07-07T05:28:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-08-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-08-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-08-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-04-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1010539",
+  "label": "Red Bank",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1010539",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1010539",
+   "sourceEntityLabel": "Red Bank",
+   "latitude": 40.3487,
+   "longitude": -74.0665,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q15981151",
+   "label": "jazz musician"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q765778",
+   "label": "organist"
+  },
+  {
+   "entity": "Q135107015",
+   "label": "orchestra leader"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Count Basie (1955 Kriegsmann portrait - square crop).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Count%20Basie%20(1955%20Kriegsmann%20portrait%20-%20square%20crop).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Count_Basie_(1955_Kriegsmann_portrait_-_square_crop).jpg",
+  "width": 1500,
+  "height": 1500,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "James J. Kriegsmann",
+  "credit": "Scan via Heritage Auctions. Cropped and retouched by uploader; see upload history below for unretouched cropped version, or compare the full untouched scan with original margins (see \"other versions\"). Other information via the Library of Congress, which holds a copy of the photograph (LCCN 00650704).",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "joseph-haydn",
+  "seedRound": 0,
+  "qid": "Q7349",
+  "displayName": "Joseph Haydn",
+  "identity": "Composer · Austria · 1732–1809",
+  "title": "Joseph Haydn's birth chart",
+  "metaDescription": "Joseph Haydn's chart, computed from a sourced birth date: Sun at 11.0° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 11.0° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.97",
+        "decan:aries:second"
+      ],
+      "text": "At the noon reference the Sun sits 11.0° into Aries — the second decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aries:1.1°",
+        "personal:Venus:Taurus:15.4°",
+        "personal:Mars:Sagittarius:5.0°"
+      ],
+      "text": "The personal planets sit Mercury at 1.1° Aries, Venus at 15.4° Taurus, Mars at 5.0° Sagittarius. Mercury in a fire sign reads as thought that arrives already in motion; Venus in a earth sign reads as attraction that grows by reliability; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Jupiter:sextile:0.75",
+        "aspect:Sun:Uranus:trine:0.82",
+        "aspect:Neptune:Pluto:trine:1.77"
+      ],
+      "text": "Closest first: Mars to Jupiter, a sextile with 0.8° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, the Sun trine Uranus at 0.8°, and Neptune trine Pluto at 1.8° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Sun in Aries at 11.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Taurus at 15.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Aries at 7.3° is in fall — the tradition’s uphill placement, strength earned rather than given. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-air4-earth1",
+        "modalities:cardinal5-mutable4-fixed1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 fire, 4 air, 1 earth by element and 5 cardinal, 4 mutable, 1 fixed by mode. Fire leads with ignition: the first move made early, and certainty arriving ahead of the evidence. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Jupiter, Uranus and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 19.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-31/",
+    "label": "Everyone born on March 31"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:10.97",
+    "decan:aries:second",
+    "personal:Mercury:Aries:1.1°",
+    "personal:Venus:Taurus:15.4°",
+    "personal:Mars:Sagittarius:5.0°",
+    "aspect:Mars:Jupiter:sextile:0.75",
+    "aspect:Sun:Uranus:trine:0.82",
+    "aspect:Neptune:Pluto:trine:1.77",
+    "figure:unaspected:Moon",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:fall",
+    "elements:fire5-air4-earth1",
+    "modalities:cardinal5-mutable4-fixed1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:gemini",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 432,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

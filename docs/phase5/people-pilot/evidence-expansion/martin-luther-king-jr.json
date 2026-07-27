@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "martin-luther-king-jr",
+ "qid": "Q8027",
+ "displayName": "Martin Luther King Jr.",
+ "wikidataLabel": "Martin Luther King Jr.",
+ "wikidataDescription": "American Baptist minister and civil rights leader (1929–1968)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8027",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520284352
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Martin Luther King Jr.",
+   "articleUrl": "https://en.wikipedia.org/wiki/Martin_Luther_King_Jr.",
+   "pageId": 20076,
+   "revisionId": 1364606482,
+   "revisionTimestamp": "2026-07-17T14:10:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-01-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-01-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-01-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1968-04-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q23556",
+  "label": "Atlanta",
+  "entityUrl": "https://www.wikidata.org/wiki/Q23556",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q23556",
+   "sourceEntityLabel": "Atlanta",
+   "latitude": 33.754444444444445,
+   "longitude": -84.38972222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q152002",
+   "label": "pastor"
+  },
+  {
+   "entity": "Q432386",
+   "label": "preacher"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q16323111",
+   "label": "peace activist"
+  },
+  {
+   "entity": "Q16003550",
+   "label": "pacifist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  },
+  {
+   "entity": "Q15995642",
+   "label": "religious leader"
+  },
+  {
+   "entity": "Q2259532",
+   "label": "cleric"
+  },
+  {
+   "entity": "Q955464",
+   "label": "parson"
+  }
+ ],
+ "portrait": {
+  "file": "File:Martin Luther King, Jr. and Lyndon Johnson (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Martin%20Luther%20King%2C%20Jr.%20and%20Lyndon%20Johnson%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Martin_Luther_King,_Jr._and_Lyndon_Johnson_(cropped).jpg",
+  "width": 1141,
+  "height": 1521,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Yoichi Okamoto",
+  "credit": "Lyndon Baines Johnson Library and Museum. Image Serial Number: A2133-10. http://photolab.lbjlib.utexas.edu/detail.asp?id=1083",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

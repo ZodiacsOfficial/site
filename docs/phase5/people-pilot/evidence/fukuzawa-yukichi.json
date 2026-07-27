@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fukuzawa-yukichi",
+ "qid": "Q355447",
+ "displayName": "Fukuzawa Yukichi",
+ "wikidataLabel": "Fukuzawa Yukichi",
+ "wikidataDescription": "Modern Enlightenment thinker, educator, philosopher, scholar, author, writer, journalist, translator, entrepreneur, and founder of Keio University in Japan's Meiji era (1835-1901)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q355447",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515862724
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fukuzawa Yukichi",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fukuzawa_Yukichi",
+   "pageId": 313283,
+   "revisionId": 1361026608,
+   "revisionTimestamp": "2026-06-25T04:20:36Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1835-01-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1835-01-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1835-01-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1901-02-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11427870",
+  "label": "Dōjima",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11427870",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11427870",
+   "sourceEntityLabel": "Dōjima",
+   "latitude": 34.69513889,
+   "longitude": 135.49488889,
+   "precision": 0.10925853277711,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q6430706",
+   "label": "critic"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q1238570",
+   "label": "political scientist"
+  },
+  {
+   "entity": "Q6051619",
+   "label": "opinion journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fukuzawa Yukichi 1891.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fukuzawa%20Yukichi%201891.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fukuzawa_Yukichi_1891.jpg",
+  "width": 585,
+  "height": 756,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Fukuzawa Research Center",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

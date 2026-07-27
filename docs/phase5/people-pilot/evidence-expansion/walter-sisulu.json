@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "walter-sisulu",
+ "qid": "Q440490",
+ "displayName": "Walter Sisulu",
+ "wikidataLabel": "Walter Sisulu",
+ "wikidataDescription": "South African anti-apartheid activist and member of the African National Congress (1912-2003)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q440490",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515867435
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Walter Sisulu",
+   "articleUrl": "https://en.wikipedia.org/wiki/Walter_Sisulu",
+   "pageId": 222168,
+   "revisionId": 1354718358,
+   "revisionTimestamp": "2026-05-17T23:16:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-05-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-05-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-05-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2003-05-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q466551",
+  "label": "Transkei",
+  "entityUrl": "https://www.wikidata.org/wiki/Q466551",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q466551",
+   "sourceEntityLabel": "Transkei",
+   "latitude": -31,
+   "longitude": 29,
+   "precision": 1,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Walter Sisulu 1991 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Walter%20Sisulu%201991%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Walter_Sisulu_1991_(cropped).jpg",
+  "width": 629,
+  "height": 860,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Commonwealth of Learning (COL)",
+  "credit": "https://oasis.col.org/items/957530f1-84ad-4a30-b872-5fe08c05eb3a",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

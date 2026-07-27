@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mariama-ba",
+ "qid": "Q464389",
+ "displayName": "Mariama Bâ",
+ "wikidataLabel": "Mariama Bâ",
+ "wikidataDescription": "Senegalese writer (1929–1981)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q464389",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517852383
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mariama Bâ",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mariama_B%C3%A2",
+   "pageId": 438419,
+   "revisionId": 1362784222,
+   "revisionTimestamp": "2026-07-06T04:34:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-04-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-04-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-04-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1981-08-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3718",
+  "label": "Dakar",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3718",
+  "country": {
+   "entity": "Q1041",
+   "label": "Senegal"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3718",
+   "sourceEntityLabel": "Dakar",
+   "latitude": 14.672555555555556,
+   "longitude": -17.432,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mariama Bâ vers 1958 Unesco Domaine public.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mariama%20B%C3%A2%20vers%201958%20Unesco%20Domaine%20public.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mariama_B%C3%A2_vers_1958_Unesco_Domaine_public.jpg",
+  "width": 407,
+  "height": 542,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Dossier pédagogique Unesco - femmes dans l'histoire de l'Afrique. https://fr.unesco.org/womeninafrica/mariama-b%C3%A2/pedagogical-unit/3",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

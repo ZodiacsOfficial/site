@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "satyajit-ray",
+ "qid": "Q8873",
+ "displayName": "Satyajit Ray",
+ "wikidataLabel": "Satyajit Ray",
+ "wikidataDescription": "Indian filmmaker and writer (1921–1992)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q8873",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520476739
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Satyajit Ray",
+   "articleUrl": "https://en.wikipedia.org/wiki/Satyajit_Ray",
+   "pageId": 18933424,
+   "revisionId": 1357652922,
+   "revisionTimestamp": "2026-06-03T21:21:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1921-05-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1921-05-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1921-05-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1992-04-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1348",
+  "label": "Kolkata",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1348",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1348",
+   "sourceEntityLabel": "Kolkata",
+   "latitude": 22.5675,
+   "longitude": 88.37,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q7042855",
+   "label": "film editor"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q222344",
+   "label": "cinematographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Satyajit Ray in New York (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Satyajit%20Ray%20in%20New%20York%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Satyajit_Ray_in_New_York_(cropped).jpg",
+  "width": 398,
+  "height": 531,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Dinu Alam Newyork",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

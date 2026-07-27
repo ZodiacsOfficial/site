@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "billie-holiday",
+  "seedRound": 0,
+  "qid": "Q104358",
+  "displayName": "Billie Holiday",
+  "identity": "Actor and songwriter · United States · 1915–1959",
+  "title": "Billie Holiday's birth chart",
+  "metaDescription": "Billie Holiday's chart, computed from a sourced birth date: Sun at 16.8° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Pisces — Mercury, Venus, Mars and Jupiter. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:pisces:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.80",
+        "decan:aries:second"
+      ],
+      "text": "At the noon reference the Sun sits 16.8° into Aries — the second decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Pisces:25.0°",
+        "personal:Venus:Pisces:7.1°",
+        "personal:Mars:Pisces:22.9°"
+      ],
+      "text": "Mercury holds 25.0° Pisces, Venus holds 7.1° Pisces, Mars holds 22.9° Pisces — in the old shorthand, thought steeped in tone and memory; attraction that works by atmosphere; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:square:1.86",
+        "aspect:Sun:Uranus:sextile:1.9",
+        "aspect:Mercury:Mars:conjunction:2.12"
+      ],
+      "text": "Mercury and Saturn hold the closest angle here — a square, 1.9° wide. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, the Sun sextile Uranus at 1.9°, and Mercury conjunction Mars at 2.1° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Venus"
+      ],
+      "text": "Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Mercury:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Sun in Aries at 16.8° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Pisces at 25.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 7.1° is in exaltation; Jupiter in Pisces at 14.8° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water6-air2-fire1",
+        "modalities:mutable5-cardinal3-fixed1",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 6 water, 2 air, 1 fire; by modality, 5 mutable, 3 cardinal, 1 fixed. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Neptune was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 13.5° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-7/",
+    "label": "Everyone born on April 7"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:pisces:4",
+    "sun-degree:16.80",
+    "decan:aries:second",
+    "personal:Mercury:Pisces:25.0°",
+    "personal:Venus:Pisces:7.1°",
+    "personal:Mars:Pisces:22.9°",
+    "aspect:Mercury:Saturn:square:1.86",
+    "aspect:Sun:Uranus:sextile:1.9",
+    "aspect:Mercury:Mars:conjunction:2.12",
+    "figure:unaspected:Venus",
+    "dignity:Sun:exaltation",
+    "dignity:Mercury:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:water6-air2-fire1",
+    "modalities:mutable5-cardinal3-fixed1",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 416,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

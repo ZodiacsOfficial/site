@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "caroline-herschel",
+ "qid": "Q76948",
+ "displayName": "Caroline Herschel",
+ "wikidataLabel": "Caroline Herschel",
+ "wikidataDescription": "German-British astronomer (1750-1848)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q76948",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516980741
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Caroline Herschel",
+   "articleUrl": "https://en.wikipedia.org/wiki/Caroline_Herschel",
+   "pageId": 207843,
+   "revisionId": 1359383060,
+   "revisionTimestamp": "2026-06-14T23:53:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1750-03-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1750-03-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1750-03-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1848-01-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1715",
+  "label": "Hanover",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1715",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1715",
+   "sourceEntityLabel": "Hanover",
+   "latitude": 52.374444444444,
+   "longitude": 9.7386111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  }
+ ],
+ "portrait": {
+  "file": "File:1829 Melchior Gommar Tieleman, Ölgemälde Caroline Herschel Hannover.tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:1829%20Melchior%20Gommar%20Tieleman%2C%20%C3%96lgem%C3%A4lde%20Caroline%20Herschel%20Hannover.tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:1829_Melchior_Gommar_Tieleman,_%C3%96lgem%C3%A4lde_Caroline_Herschel_Hannover.tif",
+  "width": 836,
+  "height": 985,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Ölgemälde: Melchior Gommar Tieleman; Foto des gemeinfreien Gemäldes: unbekannt",
+  "credit": "Michael Hoskin: Discoverers of the Universe: William and Caroline Herschel, book preview: https://books.google.de/books?id=8MzDas3GeJMC&pg=PA142-IA14&dq=Melchior+gommar+Tielemann+1784+1864&hl=de&sa=X&ved=0ahUKEwiAnJTx9afZAhXQzaQKHXVjCb8Q6AEIODAC#v=onepage&q&f=false",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

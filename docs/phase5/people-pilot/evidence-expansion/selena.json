@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "selena",
+ "qid": "Q23543",
+ "displayName": "Selena",
+ "wikidataLabel": "Selena",
+ "wikidataDescription": "American singer (1971–1995)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q23543",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519220849
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Selena",
+   "articleUrl": "https://en.wikipedia.org/wiki/Selena",
+   "pageId": 69795,
+   "revisionId": 1365508732,
+   "revisionTimestamp": "2026-07-22T22:21:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1971-04-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1971-04-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1971-04-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q970581",
+  "label": "Lake Jackson",
+  "entityUrl": "https://www.wikidata.org/wiki/Q970581",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q970581",
+   "sourceEntityLabel": "Lake Jackson",
+   "latitude": 29.0369,
+   "longitude": -95.4383,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q17221",
+   "label": "spokesperson"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Selena in 1988.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Selena%20in%201988.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Selena_in_1988.jpg",
+  "width": 1040,
+  "height": 1512,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown.",
+  "credit": "WorthPoint",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

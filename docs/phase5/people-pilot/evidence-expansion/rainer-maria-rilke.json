@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rainer-maria-rilke",
+ "qid": "Q76483",
+ "displayName": "Rainer Maria Rilke",
+ "wikidataLabel": "Rainer Maria Rilke",
+ "wikidataDescription": "Austrian poet and writer (1875–1926)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q76483",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520235143
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rainer Maria Rilke",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rainer_Maria_Rilke",
+   "pageId": 26408,
+   "revisionId": 1361143061,
+   "revisionTimestamp": "2026-06-25T23:09:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1875-12-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1875-12-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1875-12-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1926-12-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1085",
+  "label": "Prague",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1085",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1085",
+   "sourceEntityLabel": "Prague",
+   "latitude": 50.0875,
+   "longitude": 14.421388888888888,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rainer Maria Rilke 1900.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rainer%20Maria%20Rilke%201900.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rainer_Maria_Rilke_1900.jpg",
+  "width": 375,
+  "height": 600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This file was derived from: Rainer Maria Rilke, 1900.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

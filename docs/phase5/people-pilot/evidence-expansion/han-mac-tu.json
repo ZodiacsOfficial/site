@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "han-mac-tu",
+ "qid": "Q1315921",
+ "displayName": "Hàn Mặc Tử",
+ "wikidataLabel": "Han Mac Tu",
+ "wikidataDescription": "Vietnamese poet (1912–1940)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "seasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1315921",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520317513
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hàn Mặc Tử",
+   "articleUrl": "https://en.wikipedia.org/wiki/H%C3%A0n_M%E1%BA%B7c_T%E1%BB%AD",
+   "pageId": 4265085,
+   "revisionId": 1362789861,
+   "revisionTimestamp": "2026-07-06T05:31:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1912-09-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1912-09-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1912-09-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1940-11-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1877",
+  "label": "Đồng Hới",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1877",
+  "country": {
+   "entity": "Q881",
+   "label": "Vietnam"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1877",
+   "sourceEntityLabel": "Đồng Hới",
+   "latitude": 17.483333333333,
+   "longitude": 106.6,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hanmactu.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hanmactu.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hanmactu.jpg",
+  "width": 654,
+  "height": 841,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": "en.wikipedia.org",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

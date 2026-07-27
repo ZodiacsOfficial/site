@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "roland-barthes",
+ "qid": "Q179109",
+ "displayName": "Roland Barthes",
+ "wikidataLabel": "Roland Barthes",
+ "wikidataDescription": "French philosopher and essayist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q179109",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522927362
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Roland Barthes",
+   "articleUrl": "https://en.wikipedia.org/wiki/Roland_Barthes",
+   "pageId": 174415,
+   "revisionId": 1365282164,
+   "revisionTimestamp": "2026-07-21T11:53:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-11-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-11-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-11-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1980-03-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3667188",
+  "label": "Cherbourg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3667188",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3667188",
+   "sourceEntityLabel": "Cherbourg",
+   "latitude": 49.63333333,
+   "longitude": -1.6,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q21694753",
+   "label": "semiologist"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q24387326",
+   "label": "mythographer"
+  },
+  {
+   "entity": "Q15962340",
+   "label": "literary theorist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q16743936",
+   "label": "ontologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Roland Barthes 1969.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Roland%20Barthes%201969.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Roland_Barthes_1969.jpg",
+  "width": 696,
+  "height": 520,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown",
+  "credit": "Dagens Nyheter, 27/2 1969 (via https://arkivet.dn.se/tidning/1969-02-27/11171-56/4?q=%22roland%20barthes%22)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

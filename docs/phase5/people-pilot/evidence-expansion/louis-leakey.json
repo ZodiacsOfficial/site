@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "louis-leakey",
+ "qid": "Q14837",
+ "displayName": "Louis Leakey",
+ "wikidataLabel": "Louis Leakey",
+ "wikidataDescription": "kenyan-British archaeologist and naturalist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q14837",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520108886
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Louis Leakey",
+   "articleUrl": "https://en.wikipedia.org/wiki/Louis_Leakey",
+   "pageId": 17965,
+   "revisionId": 1364804349,
+   "revisionTimestamp": "2026-07-18T16:43:21Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-08-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-08-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-08-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1972-10-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3870",
+  "label": "Nairobi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3870",
+  "country": {
+   "entity": "Q114",
+   "label": "Kenya"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3870",
+   "sourceEntityLabel": "Nairobi",
+   "latitude": -1.2863888888889,
+   "longitude": 36.817222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q3621491",
+   "label": "archaeologist"
+  },
+  {
+   "entity": "Q17488316",
+   "label": "prehistorian"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q21272406",
+   "label": "paleoanthropologist"
+  },
+  {
+   "entity": "Q1662561",
+   "label": "paleontologist"
+  },
+  {
+   "entity": "Q674426",
+   "label": "curator"
+  }
+ ],
+ "portrait": {
+  "file": "File:(left to right) Mary Douglas Nicol Leakey (1913-1996) and her husband Louis Seymour Bazett Leakey (1903-1972).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:(left%20to%20right)%20Mary%20Douglas%20Nicol%20Leakey%20(1913-1996)%20and%20her%20husband%20Louis%20Seymour%20Bazett%20Leakey%20(1903-1972).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:(left_to_right)_Mary_Douglas_Nicol_Leakey_(1913-1996)_and_her_husband_Louis_Seymour_Bazett_Leakey_(1903-1972).jpg",
+  "width": 1634,
+  "height": 2000,
+  "licenseShortName": "No restrictions",
+  "licenseUrl": "https://www.flickr.com/commons/usage/",
+  "artist": "Smithsonian Institution from United States",
+  "credit": "(left to right): Mary Douglas Nicol Leakey (1913-1996) and her husband Louis Seymour Bazett Leakey (1903-1972)",
+  "usageTerms": "No known copyright restrictions",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

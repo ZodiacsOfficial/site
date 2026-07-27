@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "carlos-chagas",
+  "seedRound": 0,
+  "qid": "Q438907",
+  "displayName": "Carlos Chagas",
+  "identity": "Bacteriologist · Brazil · 1879–1934",
+  "title": "Carlos Chagas's birth chart",
+  "metaDescription": "Carlos Chagas's chart, computed from a sourced birth date: Sun at 17.0° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a conjunction to Uranus at 0.7° — close enough to weld taste to disruption. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Venus:Uranus:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.98",
+        "decan:cancer:second"
+      ],
+      "text": "17.0° of Cancer is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Leo:7.7°",
+        "personal:Venus:Virgo:2.4°",
+        "personal:Mars:Aries:21.0°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Leo (7.7°), Venus in Virgo (2.4°), Mars in Aries (21.0°): thought that arrives already in motion, attraction that grows by reliability, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:conjunction:0.66",
+        "aspect:Jupiter:Neptune:sextile:0.93",
+        "aspect:Sun:Saturn:square:1.5"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Uranus: 0.7° from an exact conjunction. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Jupiter sextile Neptune at 0.9°, and the Sun square Saturn at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. Venus in Virgo at 2.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Aries at 21.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 12.6° is in domicile; Saturn in Aries at 15.5° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire3-water2",
+        "modalities:cardinal3-fixed3-mutable3",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements earth 4, fire 3, water 2; modalities cardinal 3, fixed 3, mutable 3. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Jupiter was retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:pisces:aries"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Pisces into Aries during that day at the birthplace, travelling 12.3° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-9/",
+    "label": "Everyone born on July 9"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Uranus:conjunction",
+    "sun-degree:16.98",
+    "decan:cancer:second",
+    "personal:Mercury:Leo:7.7°",
+    "personal:Venus:Virgo:2.4°",
+    "personal:Mars:Aries:21.0°",
+    "aspect:Venus:Uranus:conjunction:0.66",
+    "aspect:Jupiter:Neptune:sextile:0.93",
+    "aspect:Sun:Saturn:square:1.5",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:fall",
+    "elements:earth4-fire3-water2",
+    "modalities:cardinal3-fixed3-mutable3",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:pisces:aries"
+  ],
+  "measurements": {
+    "originalWords": 441,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "robert-capa",
+ "qid": "Q152524",
+ "displayName": "Robert Capa",
+ "wikidataLabel": "Robert Capa",
+ "wikidataDescription": "American photographer (1913–1954)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q152524",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517430688
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Robert Capa",
+   "articleUrl": "https://en.wikipedia.org/wiki/Robert_Capa",
+   "pageId": 162711,
+   "revisionId": 1364535656,
+   "revisionTimestamp": "2026-07-17T03:01:10Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1913-10-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1913-10-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1913-10-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1954-05-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1781",
+  "label": "Budapest",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1781",
+  "country": {
+   "entity": "Q28",
+   "label": "Hungary"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1781",
+   "sourceEntityLabel": "Budapest",
+   "latitude": 47.498333333333,
+   "longitude": 19.040833333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q164236",
+   "label": "war correspondent"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q11496048",
+   "label": "war photographer"
+  },
+  {
+   "entity": "Q957729",
+   "label": "photojournalist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q98084799",
+   "label": "professional photographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:RobertCapabyGerdaTaro.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:RobertCapabyGerdaTaro.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:RobertCapabyGerdaTaro.jpg",
+  "width": 1280,
+  "height": 953,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Gerda Taro",
+  "credit": "http://www.icp.org/site/c.dnJGKJNsFqG/b.2876631/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

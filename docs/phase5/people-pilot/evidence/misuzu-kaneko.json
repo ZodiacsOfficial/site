@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "misuzu-kaneko",
+ "qid": "Q291489",
+ "displayName": "Misuzu Kaneko",
+ "wikidataLabel": "Misuzu Kaneko",
+ "wikidataDescription": "Japanese poet",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q291489",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517657941
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Misuzu Kaneko",
+   "articleUrl": "https://en.wikipedia.org/wiki/Misuzu_Kaneko",
+   "pageId": 1425053,
+   "revisionId": 1362786545,
+   "revisionTimestamp": "2026-07-06T04:56:32Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1903-04-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-04-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-04-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1930-03-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8081775",
+  "label": "Ōtsu district",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8081775",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q127264",
+   "sourceEntityLabel": "Yamaguchi Prefecture",
+   "latitude": 34.18611111111111,
+   "longitude": 131.47027777777777,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 1
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kaneko Misuzu.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kaneko%20Misuzu.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kaneko_Misuzu.jpg",
+  "width": 822,
+  "height": 1280,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown photographer",
+  "credit": "https://www.nippon.com/en/japan-topics/c09201/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

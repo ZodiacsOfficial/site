@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "neil-armstrong",
+ "qid": "Q1615",
+ "displayName": "Neil Armstrong",
+ "wikidataLabel": "Neil Armstrong",
+ "wikidataDescription": "American astronaut and lunar explorer (1930–2012)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1615",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522519301
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Neil Armstrong",
+   "articleUrl": "https://en.wikipedia.org/wiki/Neil_Armstrong",
+   "pageId": 21247,
+   "revisionId": 1365168332,
+   "revisionTimestamp": "2026-07-20T18:21:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1930-08-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1930-08-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1930-08-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2012-08-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q492796",
+  "label": "Wapakoneta",
+  "entityUrl": "https://www.wikidata.org/wiki/Q492796",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q492796",
+   "sourceEntityLabel": "Wapakoneta",
+   "latitude": 40.569167,
+   "longitude": -84.194167,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q7890793",
+   "label": "United States Naval Aviator"
+  },
+  {
+   "entity": "Q730242",
+   "label": "test pilot"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q11631",
+   "label": "astronaut"
+  },
+  {
+   "entity": "Q10497074",
+   "label": "military flight engineer"
+  },
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  }
+ ],
+ "portrait": {
+  "file": "File:Neil Armstrong pose.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Neil%20Armstrong%20pose.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Neil_Armstrong_pose.jpg",
+  "width": 3300,
+  "height": 4125,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "NASA Photo ID: S69-31741 - Program: Apollo XI",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

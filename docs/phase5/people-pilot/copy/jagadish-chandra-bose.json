@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jagadish-chandra-bose",
+  "seedRound": 0,
+  "qid": "Q314267",
+  "displayName": "Jagadish Chandra Bose",
+  "identity": "Botanist and university teacher · Bangladesh · 1858–1937",
+  "title": "Jagadish Chandra Bose's birth chart",
+  "metaDescription": "Jagadish Chandra Bose's chart, computed from a sourced birth date: Sun at 7.8° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a opposition: Mars and Saturn within 0.4°, drive wired to structure. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Mars:Saturn:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.79",
+        "decan:sagittarius:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 7.8° Sagittarius: the first decan, whose classical sub-ruler is Jupiter. A fire sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:24.5°",
+        "personal:Venus:Sagittarius:28.7°",
+        "personal:Mars:Aquarius:12.7°"
+      ],
+      "text": "Mercury holds 24.5° Sagittarius, Venus holds 28.7° Sagittarius, Mars holds 12.7° Aquarius — in the old shorthand, a mind that decides at speaking speed; taste that runs toward the vivid and the immediate; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:opposition:0.41",
+        "aspect:Mercury:Neptune:square:2.35",
+        "aspect:Mercury:Venus:conjunction:4.24"
+      ],
+      "text": "Mars and Saturn hold the closest angle here — a opposition, 0.4° wide. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Mercury square Neptune at 2.4°, and Mercury conjunction Venus at 4.2° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Mercury-Jupiter:apex-Neptune",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mercury opposes Jupiter while both square Neptune. The t-square is the figure the old texts trusted for output: friction with a fixed address. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. Mercury in Sagittarius at 24.5° is in detriment — the planet opposite its home, working against the grain; Jupiter in Gemini at 17.7° is in detriment; Saturn in Leo at 12.3° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air4-water1-earth1",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:6"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in fire, 4 in air, 1 in water, 1 in earth by element, 6 mutable, 3 fixed, 1 cardinal by modality. Venus, Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:12.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 12.9° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 8.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-30/",
+    "label": "Everyone born on November 30"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Saturn:opposition",
+    "sun-degree:7.79",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:24.5°",
+    "personal:Venus:Sagittarius:28.7°",
+    "personal:Mars:Aquarius:12.7°",
+    "aspect:Mars:Saturn:opposition:0.41",
+    "aspect:Mercury:Neptune:square:2.35",
+    "aspect:Mercury:Venus:conjunction:4.24",
+    "figure:t-square:Mercury-Jupiter:apex-Neptune",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:fire4-air4-water1-earth1",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:6",
+    "moon-sign:libra",
+    "moon-band:12.9"
+  ],
+  "measurements": {
+    "originalWords": 397,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

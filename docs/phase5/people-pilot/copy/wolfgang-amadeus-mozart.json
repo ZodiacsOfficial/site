@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "wolfgang-amadeus-mozart",
+  "seedRound": 0,
+  "qid": "Q254",
+  "displayName": "Wolfgang Amadeus Mozart",
+  "identity": "Composer · Austria · 1756–1791",
+  "title": "Wolfgang Amadeus Mozart's birth chart",
+  "metaDescription": "Wolfgang Amadeus Mozart's chart, computed from a sourced birth date: Sun at 7.0° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Aquarius — the Sun, Mercury, Venus and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aquarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.04",
+        "decan:aquarius:first"
+      ],
+      "text": "At the noon reference the Sun sits 7.0° into Aquarius — the first decan, which the old scheme hands to Saturn. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aquarius:7.5°",
+        "personal:Venus:Aquarius:28.9°",
+        "personal:Mars:Cancer:0.4°"
+      ],
+      "text": "The personal planets sit Mercury at 7.5° Aquarius, Venus at 28.9° Aquarius, Mars at 0.4° Cancer. Mercury in a air sign reads as thought that travels by comparison; Venus in a air sign reads as attraction that begins as conversation; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mercury:conjunction:0.51",
+        "aspect:Jupiter:Pluto:sextile:0.74",
+        "aspect:Venus:Mars:trine:1.48"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun in the same degree of the zodiac from Mercury, 0.5° off exact. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Jupiter sextile Pluto at 0.7°, and Venus trine Mars at 1.5° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mars:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Aquarius at 7.0° is in detriment — the planet opposite its home, working against the grain; Mars in Cancer at 0.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aquarius at 1.9° is in domicile — the planet in its own sign, running on home rules. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-fire3-water2",
+        "modalities:fixed5-mutable3-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: air 5, fire 3, water 2 across the elements, and fixed 5, mutable 3, cardinal 2 across the modalities. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mars and Neptune were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:14.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 14.5° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 12.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-27/",
+    "label": "Everyone born on January 27"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:aquarius:4",
+    "sun-degree:7.04",
+    "decan:aquarius:first",
+    "personal:Mercury:Aquarius:7.5°",
+    "personal:Venus:Aquarius:28.9°",
+    "personal:Mars:Cancer:0.4°",
+    "aspect:Sun:Mercury:conjunction:0.51",
+    "aspect:Jupiter:Pluto:sextile:0.74",
+    "aspect:Venus:Mars:trine:1.48",
+    "figure:none",
+    "dignity:Sun:detriment",
+    "dignity:Mars:fall",
+    "dignity:Saturn:domicile",
+    "elements:air5-fire3-water2",
+    "modalities:fixed5-mutable3-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:sagittarius",
+    "moon-band:14.5"
+  ],
+  "measurements": {
+    "originalWords": 465,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

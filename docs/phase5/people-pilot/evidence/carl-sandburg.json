@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "carl-sandburg",
+ "qid": "Q193608",
+ "displayName": "Carl Sandburg",
+ "wikidataLabel": "Carl Sandburg",
+ "wikidataDescription": "American writer and editor (1878–1967)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q193608",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515850355
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Carl Sandburg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Carl_Sandburg",
+   "pageId": 40418,
+   "revisionId": 1365927149,
+   "revisionTimestamp": "2026-07-25T06:52:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1878-01-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1878-01-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1878-01-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1967-07-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q782574",
+  "label": "Galesburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q782574",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q782574",
+   "sourceEntityLabel": "Galesburg",
+   "latitude": 40.952222222222,
+   "longitude": -90.368611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q864380",
+   "label": "biographer"
+  },
+  {
+   "entity": "Q15627169",
+   "label": "trade unionist"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Carl Sandburg NYWTS.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Carl%20Sandburg%20NYWTS.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Carl_Sandburg_NYWTS.jpg",
+  "width": 2195,
+  "height": 2731,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Al Ravenna, World Telegram staff photographer",
+  "credit": "Library of Congress. New York World-Telegram & Sun Collection. http://hdl.loc.gov/loc.pnp/cph.3c15064",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

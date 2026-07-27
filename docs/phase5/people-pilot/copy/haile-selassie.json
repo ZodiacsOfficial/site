@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "haile-selassie",
+  "seedRound": 0,
+  "qid": "Q41178",
+  "displayName": "Haile Selassie",
+  "identity": "Politician · Ethiopia · 1892–1975",
+  "title": "Haile Selassie's birth chart",
+  "metaDescription": "Haile Selassie's chart, computed from a sourced birth date: Sun at 0.9° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 0.9° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:0.92",
+        "decan:leo:first"
+      ],
+      "text": "Leo, but precisely: 0.9°, first decan, 0°–10°, under the Sun in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:27.3°",
+        "personal:Venus:Cancer:10.9°",
+        "personal:Mars:Aquarius:15.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Leo (27.3°), Venus in Cancer (10.9°), Mars in Aquarius (15.2°): a mind that decides at speaking speed, taste tuned to mood and undertow, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Uranus:square:1.13",
+        "aspect:Neptune:Pluto:conjunction:1.14",
+        "aspect:Mercury:Jupiter:trine:3.16"
+      ],
+      "text": "The day's firmest angle joins the Sun and Uranus — a square holding at 1.1°. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Neptune conjunction Pluto at 1.1°, and Mercury trine Jupiter at 3.2° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Jupiter-Uranus:apex-Sun",
+        "figure:unaspected:Venus"
+      ],
+      "text": "Jupiter opposes Uranus while both square the Sun. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. Venus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile"
+      ],
+      "text": "The classical table has one entry for this chart. The Sun in Leo at 0.9° is in domicile — the planet in its own sign, running on home rules. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-air3-water2-earth1",
+        "modalities:fixed4-mutable3-cardinal2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 fire, 3 air, 2 water, 1 earth; by modality, 4 fixed, 3 mutable, 2 cardinal. A fire-weighted chart runs hot at the start line — initiative is its native language. Venus and Mars were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 13.6° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-23/",
+    "label": "Everyone born on July 23"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:0.92",
+    "decan:leo:first",
+    "personal:Mercury:Leo:27.3°",
+    "personal:Venus:Cancer:10.9°",
+    "personal:Mars:Aquarius:15.2°",
+    "aspect:Sun:Uranus:square:1.13",
+    "aspect:Neptune:Pluto:conjunction:1.14",
+    "aspect:Mercury:Jupiter:trine:3.16",
+    "figure:t-square:Jupiter-Uranus:apex-Sun",
+    "figure:unaspected:Venus",
+    "dignity:Sun:domicile",
+    "elements:fire3-air3-water2-earth1",
+    "modalities:fixed4-mutable3-cardinal2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 406,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

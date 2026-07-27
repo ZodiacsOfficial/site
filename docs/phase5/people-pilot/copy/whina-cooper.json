@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "whina-cooper",
+  "seedRound": 0,
+  "qid": "Q466142",
+  "displayName": "Whina Cooper",
+  "identity": "Teacher and historian · New Zealand · 1895–1994",
+  "title": "Whina Cooper's birth chart",
+  "metaDescription": "Whina Cooper's chart, computed from a sourced birth date: Sun at 16.7° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates the Sun and Neptune from an exact opposition; at that range identity and imagination read as one mechanism. Oppositions are read as full-moon geometry — maximum visibility between two needs that share one spine.",
+  "ledeFact": "aspect:Sun:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.72",
+        "decan:sagittarius:second"
+      ],
+      "text": "At noon on that date the Sun stood at 16.7° Sagittarius, inside the second decan (10°–20°), whose traditional sub-ruler is Mars. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:10.3°",
+        "personal:Mars:Scorpio:27.8°"
+      ],
+      "text": "Closer in, Mercury stands at 10.3° Sagittarius; Mars stands at 27.8° Scorpio. The tradition reads thought that arrives already in motion from Mercury, effort that surges when it matters from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:opposition:0.07",
+        "aspect:Mercury:Jupiter:trine:1.39",
+        "aspect:Mercury:Pluto:opposition:1.42"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun directly across the wheel from Neptune, 0.1° off exact. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, Mercury trine Jupiter at 1.4°, and Mercury opposition Pluto at 1.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mercury in Sagittarius at 10.3° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 27.8° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-air2-earth1",
+        "modalities:mutable5-fixed4",
+        "settled-signs:9",
+        "retrograde:3",
+        "sign-uncertain:Venus:libra:scorpio"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: fire 3, water 3, air 2, earth 1 across the elements, and mutable 5, fixed 4 across the modalities. Fire signs carry the scheme’s forward pressure: heat applied early, patience treated as a later skill. Venus crossed from Libra into Scorpio during that day, so its sign is left open. Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:14.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 14.1° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 13.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-9/",
+    "label": "Everyone born on December 9"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Neptune:opposition",
+    "sun-degree:16.72",
+    "decan:sagittarius:second",
+    "personal:Mercury:Sagittarius:10.3°",
+    "personal:Mars:Scorpio:27.8°",
+    "aspect:Sun:Neptune:opposition:0.07",
+    "aspect:Mercury:Jupiter:trine:1.39",
+    "aspect:Mercury:Pluto:opposition:1.42",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:domicile",
+    "elements:fire3-water3-air2-earth1",
+    "modalities:mutable5-fixed4",
+    "settled-signs:9",
+    "retrograde:3",
+    "sign-uncertain:Venus:libra:scorpio",
+    "moon-sign:virgo",
+    "moon-band:14.1"
+  ],
+  "measurements": {
+    "originalWords": 436,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

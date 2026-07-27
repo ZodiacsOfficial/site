@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "carl-jung",
+ "qid": "Q41532",
+ "displayName": "Carl Jung",
+ "wikidataLabel": "Carl Jung",
+ "wikidataDescription": "Swiss psychiatrist and psychotherapist (1875–1961)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41532",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522181750
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Carl Jung",
+   "articleUrl": "https://en.wikipedia.org/wiki/Carl_Jung",
+   "pageId": 42031,
+   "revisionId": 1366086620,
+   "revisionTimestamp": "2026-07-26T04:58:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1875-07-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1875-07-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1875-07-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1961-06-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q69413",
+  "label": "Kesswil",
+  "entityUrl": "https://www.wikidata.org/wiki/Q69413",
+  "country": {
+   "entity": "Q39",
+   "label": "Switzerland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q69413",
+   "sourceEntityLabel": "Kesswil",
+   "latitude": 47.58756,
+   "longitude": 9.3129,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1900167",
+   "label": "psychotherapist"
+  },
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q211346",
+   "label": "psychiatrist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q3410028",
+   "label": "psychoanalyst"
+  }
+ ],
+ "portrait": {
+  "file": "File:ETH-BIB-Jung, Carl Gustav (1875-1961)-Portrait-Portr 14163 (cropped).tif",
+  "filePage": "https://commons.wikimedia.org/wiki/File:ETH-BIB-Jung%2C%20Carl%20Gustav%20(1875-1961)-Portrait-Portr%2014163%20(cropped).tif",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:ETH-BIB-Jung,_Carl_Gustav_(1875-1961)-Portrait-Portr_14163_(cropped).tif",
+  "width": 2497,
+  "height": 3080,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unbekannt",
+  "credit": "This image is from the collection of the ETH-Bibliothek and has been published on Wikimedia Commons as part of a cooperation with Wikimedia CH. Corrections and additional information are welcome.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

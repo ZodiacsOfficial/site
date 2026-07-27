@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alexander-calder",
+ "qid": "Q151580",
+ "displayName": "Alexander Calder",
+ "wikidataLabel": "Alexander Calder",
+ "wikidataDescription": "American artist (1898–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q151580",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521440839
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alexander Calder",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alexander_Calder",
+   "pageId": 213216,
+   "revisionId": 1359305691,
+   "revisionTimestamp": "2026-06-14T14:12:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1898-07-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1898-07-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1898-07-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-11-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1186496",
+  "label": "Lawnton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1186496",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q1186496",
+   "sourceEntityLabel": "Lawnton",
+   "latitude": 40.261388888889,
+   "longitude": -76.803055555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q2519376",
+   "label": "jewelry designer"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q13235160",
+   "label": "manufacturer"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alexander Calder 1968.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alexander%20Calder%201968.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alexander_Calder_1968.jpg",
+  "width": 776,
+  "height": 999,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "Josepclopesbosc",
+  "credit": "This image has been extracted from another file",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": "personality"
+ }
+}

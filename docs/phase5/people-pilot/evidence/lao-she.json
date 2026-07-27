@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "lao-she",
+ "qid": "Q315167",
+ "displayName": "Lao She",
+ "wikidataLabel": "Lao She",
+ "wikidataDescription": "Chinese writer, novelist and playwright (1899-1966)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q315167",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516021337
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Lao She",
+   "articleUrl": "https://en.wikipedia.org/wiki/Lao_She",
+   "pageId": 65573,
+   "revisionId": 1362784861,
+   "revisionTimestamp": "2026-07-06T04:39:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-02-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-02-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-02-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1966-08-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q956",
+  "label": "Beijing",
+  "entityUrl": "https://www.wikidata.org/wiki/Q956",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q956",
+   "sourceEntityLabel": "Beijing",
+   "latitude": 39.90403,
+   "longitude": 116.407526,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:LaoShe.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:LaoShe.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:LaoShe.jpg",
+  "width": 787,
+  "height": 1105,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": "http://read.nlc.cn/allSearch/searchDetail?searchType=48&showType=3&indexName=data_531&fid=RW0000WHA2079",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

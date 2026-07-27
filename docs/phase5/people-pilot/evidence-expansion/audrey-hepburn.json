@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "audrey-hepburn",
+ "qid": "Q42786",
+ "displayName": "Audrey Hepburn",
+ "wikidataLabel": "Audrey Hepburn",
+ "wikidataDescription": "British actress (1929–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q42786",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522996625
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Audrey Hepburn",
+   "articleUrl": "https://en.wikipedia.org/wiki/Audrey_Hepburn",
+   "pageId": 52139,
+   "revisionId": 1365494311,
+   "revisionTimestamp": "2026-07-22T20:31:04Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1929-05-04T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1929-05-04T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1929-05-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-01-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q80336784",
+  "label": "Rue Keyenveld - Keienveldstraat",
+  "entityUrl": "https://www.wikidata.org/wiki/Q80336784",
+  "country": {
+   "entity": "Q31",
+   "label": "Belgium"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q80336784",
+   "sourceEntityLabel": "Rue Keyenveld - Keienveldstraat",
+   "latitude": 50.83436,
+   "longitude": 4.361803,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q4610556",
+   "label": "model"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q12362622",
+   "label": "philanthropist"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  },
+  {
+   "entity": "Q805221",
+   "label": "ballet dancer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q22336956",
+   "label": "humanitarian"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Audrey Hepburn in 1966.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Audrey%20Hepburn%20in%201966.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Audrey_Hepburn_in_1966.jpg",
+  "width": 1463,
+  "height": 2018,
+  "licenseShortName": "CC BY-SA 3.0 nl",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/nl/deed.en",
+  "artist": "Anefo",
+  "credit": "http://proxy.handle.net/10648/aafcd52a-d0b4-102d-bcf8-003048976d84",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 nl",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

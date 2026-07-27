@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "soong-ching-ling",
+  "seedRound": 0,
+  "qid": "Q17132",
+  "displayName": "Soong Ching-ling",
+  "identity": "Politician · People's Republic of China · 1893–1981",
+  "title": "Soong Ching-ling's birth chart",
+  "metaDescription": "Soong Ching-ling's chart, computed from a sourced birth date: Sun at 7.5° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun and Pluto sit 0.5° from an exact trine — near enough that the tradition reads identity and depth as a single working part. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Sun:Pluto:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.50",
+        "decan:aquarius:first"
+      ],
+      "text": "The Sun's exact place is 7.5° Aquarius. That falls in the first decan, 0°–10°, sub-ruled by Saturn in the classical scheme — a air sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:23.7°",
+        "personal:Venus:Capricorn:13.9°",
+        "personal:Mars:Aries:19.9°"
+      ],
+      "text": "The personal planets sit Mercury at 23.7° Capricorn, Venus at 13.9° Capricorn, Mars at 19.9° Aries. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a earth sign reads as taste for the substantial and the lasting; Mars in a fire sign reads as drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:trine:0.45",
+        "aspect:Neptune:Pluto:conjunction:0.68",
+        "aspect:Sun:Neptune:trine:1.13"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a third of the circle apart from Pluto, 0.5° off exact. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, Neptune conjunction Pluto at 0.7°, and the Sun trine Neptune at 1.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Sun-Saturn-Neptune",
+        "figure:t-square:Mars-Saturn:apex-Venus"
+      ],
+      "text": "the Sun, Saturn, Neptune close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. Mars opposes Saturn while both square Venus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The classical table has three entries for this chart. The Sun in Aquarius at 7.5° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 19.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 12.8° is in exaltation — the tradition’s honoured-guest placement, working at its best. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth2-fire2-water1",
+        "modalities:cardinal5-fixed2-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 9 placements whose signs hold for the whole day: elements air 4, earth 2, fire 2, water 1; modalities cardinal 5, fixed 2, mutable 2. Saturn, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 14.3° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-27/",
+    "label": "Everyone born on January 27"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:trine",
+    "sun-degree:7.50",
+    "decan:aquarius:first",
+    "personal:Mercury:Capricorn:23.7°",
+    "personal:Venus:Capricorn:13.9°",
+    "personal:Mars:Aries:19.9°",
+    "aspect:Sun:Pluto:trine:0.45",
+    "aspect:Neptune:Pluto:conjunction:0.68",
+    "aspect:Sun:Neptune:trine:1.13",
+    "figure:grand-trine:Sun-Saturn-Neptune",
+    "figure:t-square:Mars-Saturn:apex-Venus",
+    "dignity:Sun:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:air4-earth2-fire2-water1",
+    "modalities:cardinal5-fixed2-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 459,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

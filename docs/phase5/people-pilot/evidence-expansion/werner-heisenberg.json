@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "werner-heisenberg",
+ "qid": "Q40904",
+ "displayName": "Werner Heisenberg",
+ "wikidataLabel": "Werner Heisenberg",
+ "wikidataDescription": "German theoretical physicist and nobel prize winner (1901–1976)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q40904",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521446666
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Werner Heisenberg",
+   "articleUrl": "https://en.wikipedia.org/wiki/Werner_Heisenberg",
+   "pageId": 33130,
+   "revisionId": 1363695642,
+   "revisionTimestamp": "2026-07-11T19:36:07Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1901-12-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-12-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1976-02-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2999",
+  "label": "Würzburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2999",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2999",
+   "sourceEntityLabel": "Würzburg",
+   "latitude": 49.794444444444,
+   "longitude": 9.9294444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q9149093",
+   "label": "mountaineer"
+  },
+  {
+   "entity": "Q15980158",
+   "label": "non-fiction writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q16742096",
+   "label": "nuclear physicist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bundesarchiv Bild183-R57262, Werner Heisenberg.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bundesarchiv%20Bild183-R57262%2C%20Werner%20Heisenberg.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bundesarchiv_Bild183-R57262,_Werner_Heisenberg.jpg",
+  "width": 497,
+  "height": 789,
+  "licenseShortName": "CC BY-SA 3.0 de",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+  "artist": "Unknown author",
+  "credit": "This image was provided to Wikimedia Commons by the German Federal Archive (Deutsches Bundesarchiv) as part of a cooperation project. The German Federal Archive guarantees an authentic representation only using the originals (negative and/or positive), resp. the digitalization of the originals as provided by the Digital Image Archive.",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 de",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

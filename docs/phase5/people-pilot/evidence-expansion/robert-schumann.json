@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "robert-schumann",
+ "qid": "Q7351",
+ "displayName": "Robert Schumann",
+ "wikidataLabel": "Robert Schumann",
+ "wikidataDescription": "German composer, pianist and critic (1810–1856)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7351",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520527692
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Robert Schumann",
+   "articleUrl": "https://en.wikipedia.org/wiki/Robert_Schumann",
+   "pageId": 44887,
+   "revisionId": 1362609428,
+   "revisionTimestamp": "2026-07-05T03:09:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1810-06-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1810-06-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1810-06-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1856-07-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3778",
+  "label": "Zwickau",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3778",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3778",
+   "sourceEntityLabel": "Zwickau",
+   "latitude": 50.718888888889,
+   "longitude": 12.496111111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q1350157",
+   "label": "music critic"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q14915627",
+   "label": "musicologist"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1792450",
+   "label": "art historian"
+  },
+  {
+   "entity": "Q4164507",
+   "label": "art critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Robert-schumann.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Robert-schumann.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Robert-schumann.jpg",
+  "width": 518,
+  "height": 645,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Williamtosun",
+  "credit": "Own work",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

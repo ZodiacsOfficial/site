@@ -1,0 +1,119 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "socrates",
+ "qid": "Q102331",
+ "displayName": "Sócrates",
+ "wikidataLabel": "Sócrates",
+ "wikidataDescription": "Brazilian association football player (1954–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q102331",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517888250
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sócrates",
+   "articleUrl": "https://en.wikipedia.org/wiki/S%C3%B3crates",
+   "pageId": 23939880,
+   "revisionId": 1365878901,
+   "revisionTimestamp": "2026-07-24T23:58:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1954-02-19T00:00:00Z|proleptic-gregorian",
+   "+1954-02-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1954-02-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1954-02-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1954-02-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-12-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q12829733",
+  "label": "Belém",
+  "entityUrl": "https://www.wikidata.org/wiki/Q12829733",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q12829733",
+   "sourceEntityLabel": "Belém",
+   "latitude": -1.4558333333333,
+   "longitude": -48.503888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q937857",
+   "label": "association football player"
+  },
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q628099",
+   "label": "association football coach"
+  },
+  {
+   "entity": "Q1919436",
+   "label": "pediatrician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Socrates87660.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Socrates87660.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Socrates87660.jpg",
+  "width": 874,
+  "height": 1311,
+  "licenseShortName": "CC BY 3.0 br",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0/br/deed.en",
+  "artist": "Foto U. Dettmar/ABr.",
+  "credit": "http://powerkingplastics.com/19/socrates-footballer-858.jpg",
+  "usageTerms": "Creative Commons Attribution 3.0 br",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

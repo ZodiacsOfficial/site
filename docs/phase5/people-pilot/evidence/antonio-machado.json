@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "antonio-machado",
+ "qid": "Q243771",
+ "displayName": "Antonio Machado",
+ "wikidataLabel": "Antonio Machado",
+ "wikidataDescription": "Spanish poet and essayist (1875–1939)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q243771",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520668833
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Antonio Machado",
+   "articleUrl": "https://en.wikipedia.org/wiki/Antonio_Machado",
+   "pageId": 324387,
+   "revisionId": 1365993141,
+   "revisionTimestamp": "2026-07-25T16:53:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1875-07-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1875-07-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1875-07-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1939-02-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8717",
+  "label": "Seville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8717",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q8717",
+   "sourceEntityLabel": "Seville",
+   "latitude": 37.38861111111111,
+   "longitude": -5.995,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q58968",
+   "label": "intellectual"
+  }
+ ],
+ "portrait": {
+  "file": "File:Antonio Machado hacia 1917.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Antonio%20Machado%20hacia%201917.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Antonio_Machado_hacia_1917.png",
+  "width": 573,
+  "height": 947,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.abelmartin.com/album/imag/14.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

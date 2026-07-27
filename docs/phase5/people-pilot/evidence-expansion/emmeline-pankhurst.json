@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "emmeline-pankhurst",
+ "qid": "Q211519",
+ "displayName": "Emmeline Pankhurst",
+ "wikidataLabel": "Emmeline Pankhurst",
+ "wikidataDescription": "English suffragist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q211519",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520543829
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Emmeline Pankhurst",
+   "articleUrl": "https://en.wikipedia.org/wiki/Emmeline_Pankhurst",
+   "pageId": 60557,
+   "revisionId": 1365005618,
+   "revisionTimestamp": "2026-07-19T19:17:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1858-07-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-07-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-07-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1928-06-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2240567",
+  "label": "Moss Side",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2240567",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q2240567",
+   "sourceEntityLabel": "Moss Side",
+   "latitude": 53.456,
+   "longitude": -2.24,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q322170",
+   "label": "suffragette"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Emmeline Pankhurst, seated (1913).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Emmeline%20Pankhurst%2C%20seated%20(1913).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Emmeline_Pankhurst,_seated_(1913).jpg",
+  "width": 3125,
+  "height": 4122,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Adam Cuerden",
+  "credit": "http://hdl.loc.gov/loc.mss/mnwp.275016",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

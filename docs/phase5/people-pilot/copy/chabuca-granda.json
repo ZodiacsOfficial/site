@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "chabuca-granda",
+  "seedRound": 0,
+  "qid": "Q2605806",
+  "displayName": "Chabuca Granda",
+  "identity": "Singer and poet · Peru · 1920–1983",
+  "title": "Chabuca Granda's birth chart",
+  "metaDescription": "Chabuca Granda's chart, computed from a sourced birth date: Sun at 10.9° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled stand in Virgo — the Sun, Mercury, Venus, Jupiter and Saturn. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:virgo:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:10.86",
+        "decan:virgo:second"
+      ],
+      "text": "Virgo, but precisely: 10.9°, second decan, 10°–20°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:5.7°",
+        "personal:Venus:Virgo:27.8°",
+        "personal:Mars:Scorpio:29.3°"
+      ],
+      "text": "The personal planets sit Mercury at 5.7° Virgo, Venus at 27.8° Virgo, Mars at 29.3° Scorpio. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a earth sign reads as taste for the substantial and the lasting; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Mars:sextile:1.48",
+        "aspect:Jupiter:Uranus:opposition:1.77",
+        "aspect:Sun:Pluto:sextile:2.19"
+      ],
+      "text": "The day's firmest angle joins Venus and Mars — a sextile holding at 1.5°. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Jupiter opposition Uranus at 1.8°, and the Sun sextile Pluto at 2.2° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Jupiter-Uranus:apex-Mars",
+        "figure:unaspected:Neptune"
+      ],
+      "text": "Jupiter opposes Uranus while both square Mars. The t-square is the figure the old texts trusted for output: friction with a fixed address. Neptune stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:fall",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "Of the seven planets the classical scheme judges, five sit in a sign it has an opinion about. The Moon in Taurus at 13.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mercury in Virgo at 5.7° is in exaltation; Venus in Virgo at 27.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Scorpio at 29.3° is in domicile — the planet in its own sign, running on home rules; Jupiter in Virgo at 1.6° is in detriment — the planet opposite its home, working against the grain. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth6-water3-fire1",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 6 earth, 3 water, 1 fire by element and 6 mutable, 3 fixed, 1 cardinal by mode. An earth emphasis reads as trust in the tangible: the plan matters less than whether the thing stands up. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Uranus was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:13.7"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.7° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 13.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-3/",
+    "label": "Everyone born on September 3"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "stellium:virgo:5",
+    "sun-degree:10.86",
+    "decan:virgo:second",
+    "personal:Mercury:Virgo:5.7°",
+    "personal:Venus:Virgo:27.8°",
+    "personal:Mars:Scorpio:29.3°",
+    "aspect:Venus:Mars:sextile:1.48",
+    "aspect:Jupiter:Uranus:opposition:1.77",
+    "aspect:Sun:Pluto:sextile:2.19",
+    "figure:t-square:Jupiter-Uranus:apex-Mars",
+    "figure:unaspected:Neptune",
+    "dignity:Moon:exaltation",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:fall",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:detriment",
+    "elements:earth6-water3-fire1",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:taurus",
+    "moon-band:13.7"
+  ],
+  "measurements": {
+    "originalWords": 511,
+    "substantiveStatements": 22,
+    "blocks": 7
+  }
+}

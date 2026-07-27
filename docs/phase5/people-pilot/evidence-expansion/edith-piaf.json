@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edith-piaf",
+ "qid": "Q1631",
+ "displayName": "Édith Piaf",
+ "wikidataLabel": "Édith Piaf",
+ "wikidataDescription": "French singer (1915–1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1631",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522755228
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Édith Piaf",
+   "articleUrl": "https://en.wikipedia.org/wiki/%C3%89dith_Piaf",
+   "pageId": 64963,
+   "revisionId": 1365684116,
+   "revisionTimestamp": "2026-07-23T21:18:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-12-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-12-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-12-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q90",
+  "label": "Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q90",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q90",
+   "sourceEntityLabel": "Paris",
+   "latitude": 48.85666666666667,
+   "longitude": 2.352222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q13391399",
+   "label": "chansonnier"
+  },
+  {
+   "entity": "Q2914170",
+   "label": "street artist"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Piaf Harcourt 1946 2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Piaf%20Harcourt%201946%202.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Piaf_Harcourt_1946_2.jpg",
+  "width": 480,
+  "height": 650,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Studio Harcourt",
+  "credit": "RMN",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

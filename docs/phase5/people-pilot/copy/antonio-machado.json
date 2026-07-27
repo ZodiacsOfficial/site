@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "antonio-machado",
+  "seedRound": 0,
+  "qid": "Q243771",
+  "displayName": "Antonio Machado",
+  "identity": "Poet and teacher · Spain · 1875–1939",
+  "title": "Antonio Machado's birth chart",
+  "metaDescription": "Antonio Machado's chart, computed from a sourced birth date: Sun at 3.0° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 3.0° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.05",
+        "decan:leo:first"
+      ],
+      "text": "3.0° of Leo is the Sun's exact seat — first decan, 0°–10°, sub-ruled by the Sun in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Cancer:13.5°",
+        "personal:Venus:Cancer:17.2°",
+        "personal:Mars:Sagittarius:21.4°"
+      ],
+      "text": "For the fast movers, Mercury was at 13.5° Cancer, Venus was at 17.2° Cancer, Mars was at 21.4° Sagittarius. Read together: thought steeped in tone and memory; attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:square:0",
+        "aspect:Jupiter:Saturn:trine:0.44",
+        "aspect:Saturn:Pluto:square:0.7"
+      ],
+      "text": "Closest first: the Sun to Neptune, a square with 0.0° of slack. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Jupiter trine Saturn at 0.4°, and Saturn square Pluto at 0.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Moon:exaltation",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. The Sun in Leo at 3.0° is in domicile — the planet in its own sign, running on home rules; the Moon in Taurus at 11.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aquarius at 24.2° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-earth3-water2-air2",
+        "modalities:fixed6-cardinal3-mutable1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives fire 3, earth 3, water 2, air 2, and fixed 6, cardinal 3, mutable 1 across the modes. Saturn was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:14.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 11.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/july-26/",
+    "label": "Everyone born on July 26"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:3.05",
+    "decan:leo:first",
+    "personal:Mercury:Cancer:13.5°",
+    "personal:Venus:Cancer:17.2°",
+    "personal:Mars:Sagittarius:21.4°",
+    "aspect:Sun:Neptune:square:0",
+    "aspect:Jupiter:Saturn:trine:0.44",
+    "aspect:Saturn:Pluto:square:0.7",
+    "figure:unaspected:Moon",
+    "dignity:Sun:domicile",
+    "dignity:Moon:exaltation",
+    "dignity:Saturn:domicile",
+    "elements:fire3-earth3-water2-air2",
+    "modalities:fixed6-cardinal3-mutable1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:taurus",
+    "moon-band:14.2"
+  ],
+  "measurements": {
+    "originalWords": 390,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

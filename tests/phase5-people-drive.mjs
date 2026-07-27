@@ -17,6 +17,7 @@ const routes = ['/people/', ...people.map((person) => `/people/${person.slug}/`)
 const indexablePeople = people.filter((person) => person.indexEligibility.eligible);
 const protectedLiving = people.filter((person) => !person.indexEligibility.eligible);
 const indexablePaths = new Set(indexablePeople.map((person) => `/people/${person.slug}/`));
+if (peopleData.directoryIndexable) indexablePaths.add('/people/');
 const representative = [
   '/people/ada-lovelace/',
   '/people/serena-williams/',
@@ -143,7 +144,10 @@ await withPreview({ port: 4425 }, async (baseURL) => {
       }
     }
     check(inventoryErrors.length === 0, `inventory browser errors: ${inventoryErrors.join(' | ')}`);
-    check(indexablePeople.length === 18, `expected 18 indexable profiles, found ${indexablePeople.length}`);
+    check(
+      indexablePeople.length === people.filter((person) => !person.living).length,
+      `indexable must equal the deceased count: ${indexablePeople.length} vs ${people.filter((person) => !person.living).length}`,
+    );
     check(
       protectedLiving.map((person) => person.slug).sort().join(',')
         === 'rigoberta-menchu,serena-williams',
@@ -160,10 +164,10 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     const directoryErrors = [];
     directoryPage.on('pageerror', (error) => directoryErrors.push(error.message));
     await directoryPage.goto(`${baseURL}/people/`, { waitUntil: 'networkidle' });
-    check(await directoryPage.locator('[data-person-card]').count() === 20, 'directory does not show exactly 20 people');
+    check(await directoryPage.locator('[data-person-card]').count() === people.length, `directory does not show exactly ${people.length} people`);
     check(
-      await directoryPage.locator('[data-filter-discipline]').count() === 7,
-      'directory does not use the seven approved discipline filters',
+      await directoryPage.locator('[data-filter-discipline]').count() === 9,
+      'directory does not use the nine approved discipline filters',
     );
     check(await directoryPage.locator('[data-people-search]').isVisible(), 'enhanced name search is not visible');
     const signTargets = await directoryPage.locator('[data-filter-sign]').evaluateAll((nodes) => (
@@ -185,14 +189,18 @@ await withPreview({ port: 4425 }, async (baseURL) => {
     });
     check(focus.style !== 'none' && focus.width !== '0px', 'sign filter keyboard focus is not visible');
 
-    await directoryPage.locator('#people-name').fill('Ada');
-    await directoryPage.waitForTimeout(50);
+    const uniqueNeedle = 'Ada Lovelace';
+    const expectedMatches = people.filter((person) => (
+      person.displayName.toLowerCase().includes(uniqueNeedle.toLowerCase())
+    )).length;
+    await directoryPage.locator('#people-name').fill(uniqueNeedle);
+    await directoryPage.waitForTimeout(80);
     check(
-      await directoryPage.locator('[data-person-card]:visible').count() === 1,
-      'name search did not narrow to one person',
+      await directoryPage.locator('[data-person-card]:visible').count() === expectedMatches,
+      'name search did not narrow to the exact match set',
     );
     check(
-      (await directoryPage.locator('[data-people-count]').innerText()).startsWith('1 of 20'),
+      (await directoryPage.locator('[data-people-count]').innerText()).startsWith(`${expectedMatches} of ${people.length}`),
       'name-search result count is not announced',
     );
     await directoryPage.locator('#people-name').fill('not a pilot name');
@@ -316,11 +324,36 @@ await withPreview({ port: 4425 }, async (baseURL) => {
       await birthdayPage.locator('.person-related a[href="/people/serena-williams/"]').count() === 0,
       'indexable related-person rail links to a protected living profile',
     );
-    await birthdayPage.goto(`${baseURL}/birthday/february-29/`, { waitUntil: 'domcontentloaded' });
+    const takenRoutes = new Set(indexablePeople.map((person) => person.birthDate.birthdayRoute));
+    const MONTH_SLUGS = ['january','february','march','april','may','june','july','august','september','october','november','december'];
+    let emptyRoute = null;
+    outer: for (let month = 1; month <= 12 && !emptyRoute; month += 1) {
+      for (let day = 1; day <= 28; day += 1) {
+        const route = `/birthday/${MONTH_SLUGS[month - 1]}-${day}/`;
+        if (!takenRoutes.has(route)) { emptyRoute = route; break outer; }
+      }
+    }
+    await birthdayPage.goto(`${baseURL}${emptyRoute}`, { waitUntil: 'domcontentloaded' });
     check(
       await birthdayPage.locator('.bday-people').count() === 0,
-      'empty birthday date renders a People section',
+      `empty birthday date renders a People section (${emptyRoute})`,
     );
+    /* Crowded date: the details disclosure appears past three people. */
+    const crowded = [...takenRoutes].map((route) => ({
+      route,
+      count: indexablePeople.filter((person) => person.birthDate.birthdayRoute === route).length,
+    })).sort((a, b) => b.count - a.count)[0];
+    if (crowded.count > 3) {
+      await birthdayPage.goto(`${baseURL}${crowded.route}`, { waitUntil: 'domcontentloaded' });
+      check(
+        await birthdayPage.locator('.bday-people__more summary').count() === 1,
+        `crowded birthday date lacks the progressive disclosure (${crowded.route})`,
+      );
+      check(
+        (await birthdayPage.locator('.bday-people [data-person-card]').count()) === crowded.count,
+        `crowded date does not carry all ${crowded.count} people (${crowded.route})`,
+      );
+    }
     await birthdayContext.close();
   } finally {
     await browser.close();
@@ -335,6 +368,6 @@ if (failures.length) {
 
 console.log(
   `phase5-people-drive: PASS — ${assertions} assertions;`
-  + ' 18 indexable profiles, directory + 2 living profiles protected,'
+  + ` ${indexablePeople.length} indexable profiles, directory + ${protectedLiving.length} living profiles protected,`
   + ' 20 portraits/fallbacks, no-JS, responsive, keyboard and reduced-motion states',
 );

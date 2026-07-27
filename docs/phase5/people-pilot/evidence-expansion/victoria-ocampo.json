@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "victoria-ocampo",
+ "qid": "Q72790",
+ "displayName": "Victoria Ocampo",
+ "wikidataLabel": "Victoria Ocampo",
+ "wikidataDescription": "Argentine writer and translator (1890-1979)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q72790",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516891340
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Victoria Ocampo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Victoria_Ocampo",
+   "pageId": 496752,
+   "revisionId": 1335724582,
+   "revisionTimestamp": "2026-01-30T21:16:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1890-04-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1890-04-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1890-04-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1979-01-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1486",
+  "label": "Buenos Aires",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1486",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1486",
+   "sourceEntityLabel": "Buenos Aires",
+   "latitude": -34.599722222222,
+   "longitude": -58.381944444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q2516866",
+   "label": "publisher"
+  },
+  {
+   "entity": "Q6430706",
+   "label": "critic"
+  },
+  {
+   "entity": "Q662729",
+   "label": "public figure"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q58968",
+   "label": "intellectual"
+  },
+  {
+   "entity": "Q15472169",
+   "label": "patron of the arts"
+  }
+ ],
+ "portrait": {
+  "file": "File:Victoria Ocampo por Gisèle Freund crop.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Victoria%20Ocampo%20por%20Gis%C3%A8le%20Freund%20crop.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Victoria_Ocampo_por_Gis%C3%A8le_Freund_crop.jpg",
+  "width": 1711,
+  "height": 2540,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Freund, Gisèle (Alemania, Schonenberg, 1908 - Francia, Paris, 2000)",
+  "credit": "https://www.bellasartes.gob.ar/coleccion/obra/9421/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

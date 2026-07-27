@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mary-mcleod-bethune",
+ "qid": "Q291068",
+ "displayName": "Mary McLeod Bethune",
+ "wikidataLabel": "Mary McLeod Bethune",
+ "wikidataDescription": "American educator and civil rights leader (1875-1955)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q291068",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517658375
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mary McLeod Bethune",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mary_McLeod_Bethune",
+   "pageId": 1412179,
+   "revisionId": 1361403407,
+   "revisionTimestamp": "2026-06-27T18:58:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1875-07-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1875-07-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1875-07-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1955-05-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2032002",
+  "label": "Mayesville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2032002",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2032002",
+   "sourceEntityLabel": "Mayesville",
+   "latitude": 33.985555555556,
+   "longitude": -80.207222222222,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1476215",
+   "label": "human rights defender"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  },
+  {
+   "entity": "Q15995642",
+   "label": "religious leader"
+  },
+  {
+   "entity": "Q219477",
+   "label": "missionary"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q34074720",
+   "label": "feminist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Mary Jane McLeod Bethune, c1910.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Mary%20Jane%20McLeod%20Bethune%2C%20c1910.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Mary_Jane_McLeod_Bethune,_c1910.jpg",
+  "width": 2941,
+  "height": 3633,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Miriam Matthews Photograph Collection, UCLA Library Digital Collections, https://digital.library.ucla.edu/catalog/ark:/21198/z16x0v29",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

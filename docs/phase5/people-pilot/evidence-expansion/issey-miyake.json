@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "issey-miyake",
+ "qid": "Q469027",
+ "displayName": "Issey Miyake",
+ "wikidataLabel": "Issey Miyake",
+ "wikidataDescription": "Japanese fashion designer (1938−2022)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "design"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q469027",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522040312
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Issey Miyake",
+   "articleUrl": "https://en.wikipedia.org/wiki/Issey_Miyake",
+   "pageId": 322247,
+   "revisionId": 1365591099,
+   "revisionTimestamp": "2026-07-23T09:29:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1938-04-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1938-04-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1938-04-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2022-08-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34664",
+  "label": "Hiroshima",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34664",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34664",
+   "sourceEntityLabel": "Hiroshima",
+   "latitude": 34.38525,
+   "longitude": 132.45530555555555,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3501317",
+   "label": "fashion designer"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q43845",
+   "label": "businessperson"
+  },
+  {
+   "entity": "Q579021",
+   "label": "perfumer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Issey Miyake Tokyo 2016.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Issey%20Miyake%20Tokyo%202016.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Issey_Miyake_Tokyo_2016.jpg",
+  "width": 1558,
+  "height": 1870,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Hsinhuei Chiou",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

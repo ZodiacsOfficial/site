@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "marlene-dietrich",
+ "qid": "Q4612",
+ "displayName": "Marlene Dietrich",
+ "wikidataLabel": "Marlene Dietrich",
+ "wikidataDescription": "German and American actress and singer (1901–1992)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q4612",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522094617
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Marlene Dietrich",
+   "articleUrl": "https://en.wikipedia.org/wiki/Marlene_Dietrich",
+   "pageId": 145325,
+   "revisionId": 1366061053,
+   "revisionTimestamp": "2026-07-26T01:46:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1901-12-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-12-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-12-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1992-05-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q464401",
+  "label": "Rote Insel",
+  "entityUrl": "https://www.wikidata.org/wiki/Q464401",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q464401",
+   "sourceEntityLabel": "Rote Insel",
+   "latitude": 52.483889,
+   "longitude": 13.362222,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q138858",
+   "label": "entertainer"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q1397808",
+   "label": "resistance fighter"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Marlene Dietrich Ross-Verlag 0875(crop).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Marlene%20Dietrich%20Ross-Verlag%200875(crop).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Marlene_Dietrich_Ross-Verlag_0875(crop).jpg",
+  "width": 2003,
+  "height": 2671,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "für die Datei Arths-at",
+  "credit": "https://commons.wikimedia.org/wiki/File:Marlene_Dietrich_Ross-Verlag_0875.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

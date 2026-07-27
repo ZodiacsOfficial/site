@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "sugar-ray-robinson",
+ "qid": "Q316706",
+ "displayName": "Sugar Ray Robinson",
+ "wikidataLabel": "Sugar Ray Robinson",
+ "wikidataDescription": "American boxer (1921–1989)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q316706",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2507882913
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Sugar Ray Robinson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Sugar_Ray_Robinson",
+   "pageId": 146195,
+   "revisionId": 1362943071,
+   "revisionTimestamp": "2026-07-07T02:41:57Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1921-05-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1921-05-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1921-05-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1989-04-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q405097",
+  "label": "Ailey",
+  "entityUrl": "https://www.wikidata.org/wiki/Q405097",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q405097",
+   "sourceEntityLabel": "Ailey",
+   "latitude": 32.187222222222,
+   "longitude": -82.568888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11338576",
+   "label": "boxer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Sugar Ray Robinson 1947.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Sugar%20Ray%20Robinson%201947.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Sugar_Ray_Robinson_1947.jpg",
+  "width": 732,
+  "height": 1008,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "ACME",
+  "credit": "[1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

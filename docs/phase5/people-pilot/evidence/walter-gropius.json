@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "walter-gropius",
+ "qid": "Q61071",
+ "displayName": "Walter Gropius",
+ "wikidataLabel": "Walter Gropius",
+ "wikidataDescription": "German-American architect (1883–1969)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "architecture"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q61071",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517009249
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Walter Gropius",
+   "articleUrl": "https://en.wikipedia.org/wiki/Walter_Gropius",
+   "pageId": 33807,
+   "revisionId": 1364973833,
+   "revisionTimestamp": "2026-07-19T16:13:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-05-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-05-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-05-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1969-07-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q64",
+  "label": "Berlin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q64",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q64",
+   "sourceEntityLabel": "Berlin",
+   "latitude": 52.516666666667,
+   "longitude": 13.383333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q42973",
+   "label": "architect"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q131062",
+   "label": "urban planner"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q11287574",
+   "label": "industrial designer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Walter Gropius Foto 1920.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Walter%20Gropius%20Foto%201920.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Walter_Gropius_Foto_1920.jpg",
+  "width": 300,
+  "height": 445,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Louis Held",
+  "credit": "anxo.org",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

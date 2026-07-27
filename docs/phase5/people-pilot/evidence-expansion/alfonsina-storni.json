@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alfonsina-storni",
+ "qid": "Q238557",
+ "displayName": "Alfonsina Storni",
+ "wikidataLabel": "Alfonsina Storni",
+ "wikidataDescription": "Argentine writer and poet",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q238557",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517577940
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alfonsina Storni",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alfonsina_Storni",
+   "pageId": 2671219,
+   "revisionId": 1363645717,
+   "revisionTimestamp": "2026-07-11T12:49:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1892-05-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1892-05-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1892-05-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1938-10-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q69043",
+  "label": "Capriasca",
+  "entityUrl": "https://www.wikidata.org/wiki/Q69043",
+  "country": {
+   "entity": "Q39",
+   "label": "Switzerland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q69043",
+   "sourceEntityLabel": "Capriasca",
+   "latitude": 46.066666666667,
+   "longitude": 8.9666666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:AlfosinaStorni.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:AlfosinaStorni.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:AlfosinaStorni.jpg",
+  "width": 266,
+  "height": 428,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Here",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

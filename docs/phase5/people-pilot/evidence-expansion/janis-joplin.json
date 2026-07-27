@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "janis-joplin",
+ "qid": "Q1514",
+ "displayName": "Janis Joplin",
+ "wikidataLabel": "Janis Joplin",
+ "wikidataDescription": "American singer (1943–1970)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1514",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518045038
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Janis Joplin",
+   "articleUrl": "https://en.wikipedia.org/wiki/Janis_Joplin",
+   "pageId": 16245,
+   "revisionId": 1362210944,
+   "revisionTimestamp": "2026-07-02T14:56:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1943-01-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1943-01-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1943-01-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1970-10-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q45400",
+  "label": "Port Arthur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q45400",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q45400",
+   "sourceEntityLabel": "Port Arthur",
+   "latitude": 29.885,
+   "longitude": -93.94,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Janis Joplin 1970.JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Janis%20Joplin%201970.JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Janis_Joplin_1970.JPG",
+  "width": 629,
+  "height": 758,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Grossman Glotzer Management Corporation",
+  "credit": "eBay item photo front photo back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

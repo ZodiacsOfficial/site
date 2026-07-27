@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "wilt-chamberlain",
+  "seedRound": 2,
+  "qid": "Q182455",
+  "displayName": "Wilt Chamberlain",
+  "identity": "Basketball player and screenwriter · United States · 1936–1999",
+  "title": "Wilt Chamberlain's birth chart",
+  "metaDescription": "Wilt Chamberlain's chart, computed from a sourced birth date: Sun at 28.4° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 28.4° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:28.39",
+        "decan:leo:third"
+      ],
+      "text": "28.4° of Leo is the Sun's exact seat — third decan, 20°–30°, sub-ruled by Mars in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:21.9°",
+        "personal:Venus:Virgo:13.0°",
+        "personal:Mars:Leo:7.3°"
+      ],
+      "text": "The personal planets sit Mercury at 21.9° Virgo, Venus at 13.0° Virgo, Mars at 7.3° Leo. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a earth sign reads as attraction that grows by reliability; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Neptune:square:1.08",
+        "aspect:Mercury:Saturn:opposition:1.16",
+        "aspect:Venus:Jupiter:square:1.7"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Neptune — a square holding at 1.1°. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Mercury opposition Saturn at 1.2°, and Venus square Jupiter at 1.7° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Saturn-Neptune:apex-Jupiter",
+        "figure:unaspected:Sun"
+      ],
+      "text": "Saturn opposes Neptune while both square Jupiter. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:fall",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Leo at 28.4° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 21.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Virgo at 13.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Sagittarius at 14.8° is in domicile. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire3-water2-air1",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: earth 4, fire 3, water 2, air 1 across the elements, and mutable 5, fixed 3, cardinal 2 across the modalities. Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:11.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 11.9° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 19.3°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-21/",
+    "label": "Everyone born on August 21"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:28.39",
+    "decan:leo:third",
+    "personal:Mercury:Virgo:21.9°",
+    "personal:Venus:Virgo:13.0°",
+    "personal:Mars:Leo:7.3°",
+    "aspect:Jupiter:Neptune:square:1.08",
+    "aspect:Mercury:Saturn:opposition:1.16",
+    "aspect:Venus:Jupiter:square:1.7",
+    "figure:t-square:Saturn-Neptune:apex-Jupiter",
+    "figure:unaspected:Sun",
+    "dignity:Sun:domicile",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:fall",
+    "dignity:Jupiter:domicile",
+    "elements:earth4-fire3-water2-air1",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:libra",
+    "moon-band:11.9"
+  ],
+  "measurements": {
+    "originalWords": 463,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "toshiro-mifune",
+ "qid": "Q37001",
+ "displayName": "Toshiro Mifune",
+ "wikidataLabel": "Toshirō Mifune",
+ "wikidataDescription": "Japanese actor (1920–1997)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q37001",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518479920
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Toshiro Mifune",
+   "articleUrl": "https://en.wikipedia.org/wiki/Toshiro_Mifune",
+   "pageId": 139098,
+   "revisionId": 1361420275,
+   "revisionTimestamp": "2026-06-27T20:46:05Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1920-04-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1920-04-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1920-04-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1997-12-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q170322",
+  "label": "Qingdao",
+  "entityUrl": "https://www.wikidata.org/wiki/Q170322",
+  "country": {
+   "entity": "Q148",
+   "label": "People's Republic of China"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q170322",
+   "sourceEntityLabel": "Qingdao",
+   "latitude": 36.116666666667,
+   "longitude": 120.4,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Toshiro Mifune 1954 Scan10003 160913.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Toshiro%20Mifune%201954%20Scan10003%20160913.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Toshiro_Mifune_1954_Scan10003_160913.jpg",
+  "width": 1944,
+  "height": 2612,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "映画世界社 (Eiga Sekai Publications, Inc.)",
+  "credit": "『映画ファン』1954年11月号、映画世界社、1954年、p. 12Magazine for Japanese Movies \"Eiga Fan (Movie Fan)\"November 1954 issue, Eiga Sekai Publications, Inc. 1954 , p. 12",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

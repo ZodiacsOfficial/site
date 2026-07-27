@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "william-wilberforce",
+  "seedRound": 0,
+  "qid": "Q207672",
+  "displayName": "William Wilberforce",
+  "identity": "Politician and writer · United Kingdom · 1759–1833",
+  "title": "William Wilberforce's birth chart",
+  "metaDescription": "William Wilberforce's chart, computed from a sourced birth date: Sun at 0.9° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a square to Mars at 0.8° — close enough to weld taste to drive. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower.",
+  "ledeFact": "aspect:Venus:Mars:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:0.92",
+        "decan:virgo:first"
+      ],
+      "text": "At the noon reference the Sun sits 0.9° into Virgo — the first decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:28.1°",
+        "personal:Venus:Libra:16.9°",
+        "personal:Mars:Cancer:16.0°"
+      ],
+      "text": "Mercury holds 28.1° Virgo, Venus holds 16.9° Libra, Mars holds 16.0° Cancer — in the old shorthand, thought with its feet on the ground; attraction that begins as conversation; effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:sextile:0.73",
+        "aspect:Venus:Mars:square:0.84",
+        "aspect:Venus:Neptune:sextile:0.98"
+      ],
+      "text": "The day's firmest angle joins Jupiter and Saturn — a sextile holding at 0.7°. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Venus square Mars at 0.8°, and Venus sextile Neptune at 1.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Mars-Jupiter:apex-Venus",
+        "figure:unaspected:Sun"
+      ],
+      "text": "Mars opposes Jupiter while both square Venus. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Sun makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. Mercury in Virgo at 28.1° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 16.9° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 16.0° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Capricorn at 13.0° is in fall. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire3-water2-air1",
+        "modalities:mutable5-cardinal4-fixed1",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements earth 4, fire 3, water 2, air 1; modalities mutable 5, cardinal 4, fixed 1. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Jupiter, Saturn, Uranus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:12.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 12.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-24/",
+    "label": "Everyone born on August 24"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Mars:square",
+    "sun-degree:0.92",
+    "decan:virgo:first",
+    "personal:Mercury:Virgo:28.1°",
+    "personal:Venus:Libra:16.9°",
+    "personal:Mars:Cancer:16.0°",
+    "aspect:Jupiter:Saturn:sextile:0.73",
+    "aspect:Venus:Mars:square:0.84",
+    "aspect:Venus:Neptune:sextile:0.98",
+    "figure:t-square:Mars-Jupiter:apex-Venus",
+    "figure:unaspected:Sun",
+    "dignity:Mercury:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:fall",
+    "elements:earth4-fire3-water2-air1",
+    "modalities:mutable5-cardinal4-fixed1",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:virgo",
+    "moon-band:12.2"
+  ],
+  "measurements": {
+    "originalWords": 445,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

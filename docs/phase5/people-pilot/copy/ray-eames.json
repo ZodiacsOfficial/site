@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ray-eames",
+  "seedRound": 0,
+  "qid": "Q380404",
+  "displayName": "Ray Eames",
+  "identity": "Film director and designer · United States · 1912–1988",
+  "title": "Ray Eames's birth chart",
+  "metaDescription": "Ray Eames's chart, computed from a sourced birth date: Sun at 23.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Sagittarius — the Sun, Mercury, Mars and Jupiter. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:sagittarius:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.52",
+        "decan:sagittarius:third"
+      ],
+      "text": "At the noon reference the Sun sits 23.5° into Sagittarius — the third decan, which the old scheme hands to the Sun. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:9.2°",
+        "personal:Venus:Aquarius:3.5°",
+        "personal:Mars:Sagittarius:11.1°"
+      ],
+      "text": "Closer in, Mercury stands at 9.2° Sagittarius; Venus stands at 3.5° Aquarius; Mars stands at 11.1° Sagittarius. The tradition reads thought that arrives already in motion from Mercury, attraction that begins as conversation from Venus, effort spent in bursts and openings from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:conjunction:1.97",
+        "aspect:Venus:Uranus:conjunction:2.17",
+        "aspect:Sun:Jupiter:conjunction:2.37"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury in the same degree of the zodiac from Mars, 2.0° off exact. The tradition stops reading a conjunction as two things. It is one appetite with two names, and it moves together or not at all. Behind it, Venus conjunction Uranus at 2.2°, and the Sun conjunction Jupiter at 2.4° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mercury in Sagittarius at 9.2° is in detriment — the planet opposite its home, working against the grain; Jupiter in Sagittarius at 25.9° is in domicile — the planet in its own sign, running on home rules. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air3-water2-earth1",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements fire 4, air 3, water 2, earth 1; modalities mutable 6, fixed 3, cardinal 1. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Mercury, Saturn, Neptune and Pluto were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 12.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-15/",
+    "label": "Everyone born on December 15"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:sagittarius:4",
+    "sun-degree:23.52",
+    "decan:sagittarius:third",
+    "personal:Mercury:Sagittarius:9.2°",
+    "personal:Venus:Aquarius:3.5°",
+    "personal:Mars:Sagittarius:11.1°",
+    "aspect:Mercury:Mars:conjunction:1.97",
+    "aspect:Venus:Uranus:conjunction:2.17",
+    "aspect:Sun:Jupiter:conjunction:2.37",
+    "figure:none",
+    "dignity:Mercury:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:fire4-air3-water2-earth1",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:pisces",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 421,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

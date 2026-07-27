@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "rosa-bonheur",
+ "qid": "Q241732",
+ "displayName": "Rosa Bonheur",
+ "wikidataLabel": "Rosa Bonheur",
+ "wikidataDescription": "French artist (1822-1899)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q241732",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522266726
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Rosa Bonheur",
+   "articleUrl": "https://en.wikipedia.org/wiki/Rosa_Bonheur",
+   "pageId": 73518,
+   "revisionId": 1365991649,
+   "revisionTimestamp": "2026-07-25T16:40:14Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1822-03-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1822-03-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1822-03-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1899-05-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1479",
+  "label": "Bordeaux",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1479",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1479",
+   "sourceEntityLabel": "Bordeaux",
+   "latitude": 44.837777777778,
+   "longitude": -0.57944444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q1056391",
+   "label": "head teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:André Adolphe-Eugène Disdéri (French - (Rosa Bonheur) - Google Art Project.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Andr%C3%A9%20Adolphe-Eug%C3%A8ne%20Disd%C3%A9ri%20(French%20-%20(Rosa%20Bonheur)%20-%20Google%20Art%20Project.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Andr%C3%A9_Adolphe-Eug%C3%A8ne_Disd%C3%A9ri_(French_-_(Rosa_Bonheur)_-_Google_Art_Project.jpg",
+  "width": 2838,
+  "height": 4649,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Eugène Disdéri",
+  "credit": "eAFbxHg4K5vgbA at Google Cultural Institute maximum zoom level",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

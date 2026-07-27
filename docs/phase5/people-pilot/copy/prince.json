@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "prince",
+  "seedRound": 0,
+  "qid": "Q7542",
+  "displayName": "Prince",
+  "identity": "Film actor and singer · United States · 1958–2016",
+  "title": "Prince's birth chart",
+  "metaDescription": "Prince's chart, computed from a sourced birth date: Sun at 16.4° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Fixed signs carry four of the eight placements whose signs are settled — the broadest certain weighting in the chart. The fixed signs hold what the cardinal signs start; a chart weighted there finishes its sentences.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:16.43",
+        "decan:gemini:second"
+      ],
+      "text": "The Sun sits at 16.4° Gemini — the second decan, 10°–20°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Gemini and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:3.6°",
+        "personal:Venus:Taurus:7.5°"
+      ],
+      "text": "Closer in, Mercury stands at 3.6° Gemini; Venus stands at 7.5° Taurus. The tradition reads a mind at home in argument and pattern from Mercury, taste for the substantial and the lasting from Venus."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:sextile:0.93",
+        "aspect:Venus:Uranus:square:1.22",
+        "aspect:Neptune:Pluto:sextile:2.38"
+      ],
+      "text": "Start where the chart is tightest — Jupiter sextile Saturn, 0.9° of separation. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Venus square Uranus at 1.2°, and Neptune sextile Pluto at 2.4° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Venus-Neptune:apex-Uranus"
+      ],
+      "text": "Venus opposes Neptune while both square Uranus. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Venus:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mercury in Gemini at 3.6° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 7.5° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-fire3-earth1-water1",
+        "modalities:fixed4-mutable3-cardinal1",
+        "settled-signs:8",
+        "retrograde:3",
+        "sign-uncertain:Mars:pisces:aries"
+      ],
+      "text": "Tallied where the signs are certain — 8 placements whose signs hold for the whole day — the chart gives air 3, fire 3, earth 1, water 1, and fixed 4, mutable 3, cardinal 1 across the modes. Mars crossed from Pisces into Aries during that day, so its sign is left open. Jupiter, Saturn and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 12.3° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-7/",
+    "label": "Everyone born on June 7"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:16.43",
+    "decan:gemini:second",
+    "personal:Mercury:Gemini:3.6°",
+    "personal:Venus:Taurus:7.5°",
+    "aspect:Jupiter:Saturn:sextile:0.93",
+    "aspect:Venus:Uranus:square:1.22",
+    "aspect:Neptune:Pluto:sextile:2.38",
+    "figure:t-square:Venus-Neptune:apex-Uranus",
+    "dignity:Mercury:domicile",
+    "dignity:Venus:domicile",
+    "elements:air3-fire3-earth1-water1",
+    "modalities:fixed4-mutable3-cardinal1",
+    "settled-signs:8",
+    "retrograde:3",
+    "sign-uncertain:Mars:pisces:aries",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 399,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

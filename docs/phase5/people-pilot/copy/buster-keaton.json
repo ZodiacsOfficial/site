@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "buster-keaton",
+  "seedRound": 0,
+  "qid": "Q103949",
+  "displayName": "Buster Keaton",
+  "identity": "Comedian and writer · United States · 1895–1966",
+  "title": "Buster Keaton's birth chart",
+  "metaDescription": "Buster Keaton's chart, computed from a sourced birth date: Sun at 11.3° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a conjunction to Saturn at 0.0° — close enough to weld thinking to structure. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Mercury:Saturn:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.25",
+        "decan:libra:second"
+      ],
+      "text": "11.3° of Libra is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:6.6°",
+        "personal:Venus:Virgo:18.6°",
+        "personal:Mars:Libra:13.4°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Scorpio (6.6°), Venus in Virgo (18.6°), Mars in Libra (13.4°): thought steeped in tone and memory, attraction that grows by reliability, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:conjunction:0.02",
+        "aspect:Venus:Neptune:square:0.61",
+        "aspect:Venus:Uranus:sextile:0.7"
+      ],
+      "text": "Closest first: Mercury to Saturn, a conjunction with 0.0° of slack. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Venus square Neptune at 0.6°, and Venus sextile Uranus at 0.7° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Sun in Libra at 11.3° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Virgo at 18.6° is in fall; Mars in Libra at 13.4° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-fire2-earth1",
+        "modalities:fixed4-cardinal3-mutable3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Balance, counted honestly across the 10 placements whose signs hold for the whole day: elements air 4, water 3, fire 2, earth 1; modalities fixed 4, cardinal 3, mutable 3. Venus, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:12.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 20.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-4/",
+    "label": "Everyone born on October 4"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Saturn:conjunction",
+    "sun-degree:11.25",
+    "decan:libra:second",
+    "personal:Mercury:Scorpio:6.6°",
+    "personal:Venus:Virgo:18.6°",
+    "personal:Mars:Libra:13.4°",
+    "aspect:Mercury:Saturn:conjunction:0.02",
+    "aspect:Venus:Neptune:square:0.61",
+    "aspect:Venus:Uranus:sextile:0.7",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "elements:air4-water3-fire2-earth1",
+    "modalities:fixed4-cardinal3-mutable3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:aries",
+    "moon-band:12.1"
+  ],
+  "measurements": {
+    "originalWords": 381,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

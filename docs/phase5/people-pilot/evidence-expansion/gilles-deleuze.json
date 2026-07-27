@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gilles-deleuze",
+ "qid": "Q184226",
+ "displayName": "Gilles Deleuze",
+ "wikidataLabel": "Gilles Deleuze",
+ "wikidataDescription": "French philosopher (1925–1995)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q184226",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522864189
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gilles Deleuze",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gilles_Deleuze",
+   "pageId": 12557,
+   "revisionId": 1366169402,
+   "revisionTimestamp": "2026-07-26T18:15:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-01-18T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-01-18T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-01-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1995-11-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q197297",
+  "label": "17th arrondissement of Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q197297",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q197297",
+   "sourceEntityLabel": "17th arrondissement of Paris",
+   "latitude": 48.882244444444,
+   "longitude": 2.3078388888889,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q24265174",
+   "label": "philosophy historian"
+  },
+  {
+   "entity": "Q17391638",
+   "label": "art theorist"
+  }
+ ],
+ "portrait": {
+  "file": "File:AVT Gilles-Deleuze 6342.webp",
+  "filePage": "https://commons.wikimedia.org/wiki/File:AVT%20Gilles-Deleuze%206342.webp",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:AVT_Gilles-Deleuze_6342.webp",
+  "width": 495,
+  "height": 630,
+  "licenseShortName": "CC BY-SA 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/4.0",
+  "artist": "Tintinades",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

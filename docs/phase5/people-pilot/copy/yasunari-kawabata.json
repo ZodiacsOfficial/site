@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "yasunari-kawabata",
+  "seedRound": 0,
+  "qid": "Q43736",
+  "displayName": "Yasunari Kawabata",
+  "identity": "Writer · Japan · 1899–1972",
+  "title": "Yasunari Kawabata's birth chart",
+  "metaDescription": "Yasunari Kawabata's chart, computed from a sourced birth date: Sun at 19.9° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Gemini — the Sun, Mercury, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:gemini:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.95",
+        "decan:gemini:second"
+      ],
+      "text": "The Sun sits at 19.9° Gemini — the second decan, 10°–20°, which the tradition sub-rules by Venus. Degrees matter more than the sign label here: two people born a fortnight apart share Gemini and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:15.4°",
+        "personal:Venus:Taurus:24.0°",
+        "personal:Mars:Leo:27.2°"
+      ],
+      "text": "Closer in, Mercury stands at 15.4° Gemini; Venus stands at 24.0° Taurus; Mars stands at 27.2° Leo. The tradition reads a mind at home in argument and pattern from Mercury, taste for the substantial and the lasting from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Pluto:conjunction:0.09",
+        "aspect:Sun:Saturn:opposition:0.48",
+        "aspect:Mars:Neptune:sextile:2.91"
+      ],
+      "text": "Nothing in the geometry sits closer than Mercury and Pluto: 0.1° from an exact conjunction. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, the Sun opposition Saturn at 0.5°, and Mars sextile Neptune at 2.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:domicile",
+        "dignity:Mercury:domicile",
+        "dignity:Venus:domicile"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Cancer at 22.0° is in domicile — the planet in its own sign, running on home rules; Mercury in Gemini at 15.4° is in domicile; Venus in Taurus at 24.0° is in domicile. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire3-water2-earth1",
+        "modalities:mutable6-fixed3-cardinal1",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 air, 3 fire, 2 water, 1 earth by element and 6 mutable, 3 fixed, 1 cardinal by mode. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Jupiter, Saturn and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:cancer",
+        "moon-band:12.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Cancer for the whole of that day at the birthplace, covering 12.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 22.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-11/",
+    "label": "Everyone born on June 11"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "stellium:gemini:4",
+    "sun-degree:19.95",
+    "decan:gemini:second",
+    "personal:Mercury:Gemini:15.4°",
+    "personal:Venus:Taurus:24.0°",
+    "personal:Mars:Leo:27.2°",
+    "aspect:Mercury:Pluto:conjunction:0.09",
+    "aspect:Sun:Saturn:opposition:0.48",
+    "aspect:Mars:Neptune:sextile:2.91",
+    "figure:unaspected:Moon",
+    "dignity:Moon:domicile",
+    "dignity:Mercury:domicile",
+    "dignity:Venus:domicile",
+    "elements:air4-fire3-water2-earth1",
+    "modalities:mutable6-fixed3-cardinal1",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:cancer",
+    "moon-band:12.0"
+  ],
+  "measurements": {
+    "originalWords": 443,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

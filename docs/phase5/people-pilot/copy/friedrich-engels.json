@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "friedrich-engels",
+  "seedRound": 0,
+  "qid": "Q34787",
+  "displayName": "Friedrich Engels",
+  "identity": "Economist and philosopher · Germany · 1820–1895",
+  "title": "Friedrich Engels's birth chart",
+  "metaDescription": "Friedrich Engels's chart, computed from a sourced birth date: Sun at 6.2° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled stand in Sagittarius — the Sun, Mercury, Mars, Uranus and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:sagittarius:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.20",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun sits at 6.2° Sagittarius — the first decan, 0°–10°, which the tradition sub-rules by Jupiter. Degrees matter more than the sign label here: two people born a fortnight apart share Sagittarius and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Sagittarius:22.3°",
+        "personal:Venus:Libra:25.2°",
+        "personal:Mars:Sagittarius:17.6°"
+      ],
+      "text": "Closer in, Mercury stands at 22.3° Sagittarius; Venus stands at 25.2° Libra; Mars stands at 17.6° Sagittarius. The tradition reads a mind that decides at speaking speed from Mercury, taste led by wit and proportion from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Saturn:trine:0.68",
+        "aspect:Uranus:Pluto:square:1",
+        "aspect:Uranus:Neptune:conjunction:2.03"
+      ],
+      "text": "Nothing in the geometry sits closer than the Sun and Saturn: 0.7° from an exact trine. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Uranus square Pluto at 1.0°, and Uranus conjunction Neptune at 2.0° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Moon-Jupiter:apex-Mars"
+      ],
+      "text": "The Moon opposes Jupiter while both square Mars. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Venus:domicile",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, four sit in a sign it has an opinion about. Mercury in Sagittarius at 22.3° is in detriment — the planet opposite its home, working against the grain; Venus in Libra at 25.2° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 14.1° is in domicile; Saturn in Aries at 6.9° is in fall — the tradition’s uphill placement, strength earned rather than given. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire6-water2-earth1-air1",
+        "modalities:mutable8-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 6 fire, 2 water, 1 earth, 1 air by element and 8 mutable, 2 cardinal by mode. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Mercury, Saturn and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:virgo",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Virgo for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 15.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-28/",
+    "label": "Everyone born on November 28"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:sagittarius:5",
+    "sun-degree:6.20",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:22.3°",
+    "personal:Venus:Libra:25.2°",
+    "personal:Mars:Sagittarius:17.6°",
+    "aspect:Sun:Saturn:trine:0.68",
+    "aspect:Uranus:Pluto:square:1",
+    "aspect:Uranus:Neptune:conjunction:2.03",
+    "figure:t-square:Moon-Jupiter:apex-Mars",
+    "dignity:Mercury:detriment",
+    "dignity:Venus:domicile",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:fall",
+    "elements:fire6-water2-earth1-air1",
+    "modalities:mutable8-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:virgo",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 455,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

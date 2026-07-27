@@ -1,0 +1,132 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "karl-marx",
+ "qid": "Q9061",
+ "displayName": "Karl Marx",
+ "wikidataLabel": "Karl Marx",
+ "wikidataDescription": "German-born philosopher (1818–1883)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9061",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522870233
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Karl Marx",
+   "articleUrl": "https://en.wikipedia.org/wiki/Karl_Marx",
+   "pageId": 16743,
+   "revisionId": 1365465604,
+   "revisionTimestamp": "2026-07-22T16:19:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1818-05-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1818-05-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1818-05-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1883-03-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q3138",
+  "label": "Trier",
+  "entityUrl": "https://www.wikidata.org/wiki/Q3138",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q3138",
+   "sourceEntityLabel": "Trier",
+   "latitude": 49.75565,
+   "longitude": 6.63935,
+   "precision": 0.13904760827128,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Karl Marx 001 restored.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Karl%20Marx%20001%20restored.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Karl_Marx_001_restored.jpg",
+  "width": 1428,
+  "height": 2048,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "John Jabez Edwin Mayall",
+  "credit": "File:Karl Marx 001.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": "communist"
+ }
+}

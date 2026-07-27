@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "jean-bartik",
+  "seedRound": 0,
+  "qid": "Q11428",
+  "displayName": "Jean Bartik",
+  "identity": "Mathematician · United States · 1924–2011",
+  "title": "Jean Bartik's birth chart",
+  "metaDescription": "Jean Bartik's chart, computed from a sourced birth date: Sun at 5.7° Capricorn. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates Mercury and Mars from an exact square; at that range thinking and drive read as one mechanism. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected.",
+  "ledeFact": "aspect:Mercury:Mars:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.74",
+        "decan:capricorn:first"
+      ],
+      "text": "The Sun's position resolves to 5.7° Capricorn — deep enough in the first decan (0°–10°) that Saturn, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Capricorn:4.9°",
+        "personal:Venus:Sagittarius:7.3°",
+        "personal:Mars:Aries:5.0°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (4.9°), Venus in Sagittarius (7.3°), Mars in Aries (5.0°): thought with its feet on the ground, attraction declared rather than implied, effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Mars:square:0.14",
+        "aspect:Sun:Mars:square:0.73",
+        "aspect:Sun:Mercury:conjunction:0.87"
+      ],
+      "text": "Nothing in the geometry sits closer than Mercury and Mars: 0.1° from an exact square. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, the Sun square Mars at 0.7°, and the Sun conjunction Mercury at 0.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Saturn-Uranus-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Saturn, Uranus, Pluto close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Mars in Aries at 5.0° is in domicile — the planet in its own sign, running on home rules; Jupiter in Capricorn at 2.2° is in fall — the tradition’s uphill placement, strength earned rather than given. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-fire3-water3",
+        "modalities:cardinal5-mutable2-fixed2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives earth 3, fire 3, water 3, and cardinal 5, mutable 2, fixed 2 across the modes. An earth emphasis reads as patience with material reality — slow hands, durable results. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Mercury, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 15.0° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-27/",
+    "label": "Everyone born on December 27"
+  },
+  "signLink": {
+    "href": "/capricorn/",
+    "label": "The Capricorn guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Mars:square",
+    "sun-degree:5.74",
+    "decan:capricorn:first",
+    "personal:Mercury:Capricorn:4.9°",
+    "personal:Venus:Sagittarius:7.3°",
+    "personal:Mars:Aries:5.0°",
+    "aspect:Mercury:Mars:square:0.14",
+    "aspect:Sun:Mars:square:0.73",
+    "aspect:Sun:Mercury:conjunction:0.87",
+    "figure:grand-trine:Saturn-Uranus-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:fall",
+    "elements:earth3-fire3-water3",
+    "modalities:cardinal5-mutable2-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 443,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

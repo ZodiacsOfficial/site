@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "peter-tosh",
+ "qid": "Q273049",
+ "displayName": "Peter Tosh",
+ "wikidataLabel": "Peter Tosh",
+ "wikidataDescription": "Jamaican reggae singer and musician (1944–1987)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q273049",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517614355
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Peter Tosh",
+   "articleUrl": "https://en.wikipedia.org/wiki/Peter_Tosh",
+   "pageId": 47486961,
+   "revisionId": 1356812736,
+   "revisionTimestamp": "2026-05-30T00:00:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1944-10-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1944-10-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1944-10-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-09-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1543067",
+  "label": "Grange Hill",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1543067",
+  "country": {
+   "entity": "Q766",
+   "label": "Jamaica"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1543067",
+   "sourceEntityLabel": "Grange Hill",
+   "latitude": 18.31027778,
+   "longitude": -78.18388889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q55960555",
+   "label": "recording artist"
+  },
+  {
+   "entity": "Q1075651",
+   "label": "keyboardist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q639669",
+   "label": "musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:BushDoctor1978.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:BushDoctor1978.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:BushDoctor1978.jpg",
+  "width": 489,
+  "height": 377,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "TimDuncan",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

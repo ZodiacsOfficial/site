@@ -1,0 +1,110 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "mary-seacole",
+ "qid": "Q963703",
+ "displayName": "Mary Seacole",
+ "wikidataLabel": "Mary Seacole",
+ "wikidataDescription": "British-Jamaican businesswoman and nurse",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q963703",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522565613
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Mary Seacole",
+   "articleUrl": "https://en.wikipedia.org/wiki/Mary_Seacole",
+   "pageId": 1040779,
+   "revisionId": 1364320474,
+   "revisionTimestamp": "2026-07-15T22:19:48Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [],
+  "allValues": [
+   {
+    "time": "+1805-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1805-01-01T00:00:00Z",
+  "precision": "year",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1881-05-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q34692",
+  "label": "Kingston",
+  "entityUrl": "https://www.wikidata.org/wiki/Q34692",
+  "country": {
+   "entity": "Q766",
+   "label": "Jamaica"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q34692",
+   "sourceEntityLabel": "Kingston",
+   "latitude": 17.971388888889,
+   "longitude": -76.793055555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q186360",
+   "label": "nurse"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q3536384",
+   "label": "traditional healer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Seacole - Challen.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Seacole%20-%20Challen.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Seacole_-_Challen.jpg",
+  "width": 1257,
+  "height": 1688,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Albert Charles Challen",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "max-planck",
+ "qid": "Q9021",
+ "displayName": "Max Planck",
+ "wikidataLabel": "Max Planck",
+ "wikidataDescription": "German theoretical physicist (1858–1947)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q9021",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521590504
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Max Planck",
+   "articleUrl": "https://en.wikipedia.org/wiki/Max_Planck",
+   "pageId": 19848,
+   "revisionId": 1365281455,
+   "revisionTimestamp": "2026-07-21T11:45:00Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1858-04-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1858-04-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1858-04-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1947-10-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1707",
+  "label": "Kiel",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1707",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1707",
+   "sourceEntityLabel": "Kiel",
+   "latitude": 54.323333333333,
+   "longitude": 10.139444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q19350898",
+   "label": "theoretical physicist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Max Planck.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Max%20Planck.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Max_Planck.png",
+  "width": 236,
+  "height": 351,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Courtesy of the Clendening History of Medicine Library, University of Kansas Medical Center.",
+  "credit": "Max_planck.jpg",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

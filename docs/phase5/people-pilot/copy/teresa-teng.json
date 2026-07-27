@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "teresa-teng",
+  "seedRound": 0,
+  "qid": "Q463945",
+  "displayName": "Teresa Teng",
+  "identity": "Singer and actor · Taiwan · 1953–1995",
+  "title": "Teresa Teng's birth chart",
+  "metaDescription": "Teresa Teng's chart, computed from a sourced birth date: Sun at 9.0° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Across the nine placements whose signs are settled, fixed leads with four. Fixed weight is the scheme’s deep keel: slow to turn, near-impossible to capsize.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.97",
+        "decan:aquarius:first"
+      ],
+      "text": "The Sun's exact place is 9.0° Aquarius. That falls in the first decan, 0°–10°, sub-ruled by Saturn in the classical scheme — a air sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aquarius:5.6°",
+        "personal:Venus:Pisces:25.9°",
+        "personal:Mars:Pisces:22.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 5.6° Aquarius, Venus was at 25.9° Pisces, Mars was at 22.5° Pisces. Read together: a mind at home in argument and pattern; taste tuned to mood and undertow; drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:sextile:1.51",
+        "aspect:Sun:Jupiter:square:2.98",
+        "aspect:Sun:Mercury:conjunction:3.35"
+      ],
+      "text": "Nothing in the geometry sits closer than Neptune and Pluto: 1.5° from an exact sextile. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, the Sun square Jupiter at 3.0°, and the Sun conjunction Mercury at 3.4° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The classical table has three entries for this chart. The Sun in Aquarius at 9.0° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 25.9° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Libra at 27.3° is in exaltation. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-earth1-fire1",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 air, 3 water, 1 earth, 1 fire by element and 4 fixed, 3 cardinal, 2 mutable by mode. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Uranus, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 12.0° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-29/",
+    "label": "Everyone born on January 29"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:8.97",
+    "decan:aquarius:first",
+    "personal:Mercury:Aquarius:5.6°",
+    "personal:Venus:Pisces:25.9°",
+    "personal:Mars:Pisces:22.5°",
+    "aspect:Neptune:Pluto:sextile:1.51",
+    "aspect:Sun:Jupiter:square:2.98",
+    "aspect:Sun:Mercury:conjunction:3.35",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Saturn:exaltation",
+    "elements:air4-water3-earth1-fire1",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 395,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

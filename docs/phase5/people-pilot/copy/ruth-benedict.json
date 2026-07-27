@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "ruth-benedict",
+  "seedRound": 0,
+  "qid": "Q228822",
+  "displayName": "Ruth Benedict",
+  "identity": "Anthropologist and university teacher · United States · 1887–1948",
+  "title": "Ruth Benedict's birth chart",
+  "metaDescription": "Ruth Benedict's chart, computed from a sourced birth date: Sun at 14.7° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Gemini — the Sun, Mercury, Mars and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:gemini:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:14.66",
+        "decan:gemini:second"
+      ],
+      "text": "14.7° of Gemini is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:25.6°",
+        "personal:Venus:Cancer:26.5°",
+        "personal:Mars:Gemini:4.6°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Gemini (25.6°), Venus in Cancer (26.5°), Mars in Gemini (4.6°): thought that travels by comparison, attraction that works by atmosphere, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:square:0.04",
+        "aspect:Mars:Pluto:conjunction:0.83",
+        "aspect:Mercury:Jupiter:trine:0.88"
+      ],
+      "text": "Start where the chart is tightest — Venus square Jupiter, 0.0° of separation. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Mars conjunction Pluto at 0.8°, and Mercury trine Jupiter at 0.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "Read against the old dignities, two placements stand out. Mercury in Gemini at 25.6° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 20.7° is in detriment — the planet opposite its home, working against the grain. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-water2-fire1-earth1",
+        "modalities:mutable5-cardinal4-fixed1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 6 air, 2 water, 1 fire, 1 earth by element and 5 mutable, 4 cardinal, 1 fixed by modality. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. Jupiter and Uranus were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:14.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 14.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 11.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-5/",
+    "label": "Everyone born on June 5"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "stellium:gemini:4",
+    "sun-degree:14.66",
+    "decan:gemini:second",
+    "personal:Mercury:Gemini:25.6°",
+    "personal:Venus:Cancer:26.5°",
+    "personal:Mars:Gemini:4.6°",
+    "aspect:Venus:Jupiter:square:0.04",
+    "aspect:Mars:Pluto:conjunction:0.83",
+    "aspect:Mercury:Jupiter:trine:0.88",
+    "figure:none",
+    "dignity:Mercury:domicile",
+    "dignity:Saturn:detriment",
+    "elements:air6-water2-fire1-earth1",
+    "modalities:mutable5-cardinal4-fixed1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:sagittarius",
+    "moon-band:14.1"
+  ],
+  "measurements": {
+    "originalWords": 401,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

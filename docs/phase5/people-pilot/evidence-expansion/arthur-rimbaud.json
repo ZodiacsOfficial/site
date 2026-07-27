@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "arthur-rimbaud",
+ "qid": "Q493",
+ "displayName": "Arthur Rimbaud",
+ "wikidataLabel": "Arthur Rimbaud",
+ "wikidataDescription": "French poet (1854-1891)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q493",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522823955
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Arthur Rimbaud",
+   "articleUrl": "https://en.wikipedia.org/wiki/Arthur_Rimbaud",
+   "pageId": 155094,
+   "revisionId": 1362024922,
+   "revisionTimestamp": "2026-07-01T14:08:20Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1854-10-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1854-10-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1854-10-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1891-11-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2960786",
+  "label": "Charleville",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2960786",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2960786",
+   "sourceEntityLabel": "Charleville",
+   "latitude": 49.772479,
+   "longitude": 4.7200227,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q20722777",
+   "label": "arms trader"
+  },
+  {
+   "entity": "Q1937330",
+   "label": "world traveler"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Rimbaud.PNG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Rimbaud.PNG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Rimbaud.PNG",
+  "width": 664,
+  "height": 874,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Étienne Carjat",
+  "credit": "Close-up from Arthur Rimbaud [1872] - foto de Étienne Carjat",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

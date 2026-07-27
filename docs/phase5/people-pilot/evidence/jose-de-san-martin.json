@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jose-de-san-martin",
+ "qid": "Q134160",
+ "displayName": "José de San Martín",
+ "wikidataLabel": "José de San Martín",
+ "wikidataDescription": "Argentine general and independence leader (1778–1850)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q134160",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520936344
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "José de San Martín",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jos%C3%A9_de_San_Mart%C3%ADn",
+   "pageId": 360387,
+   "revisionId": 1365998630,
+   "revisionTimestamp": "2026-07-25T17:39:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1778-02-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1778-02-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1778-02-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1850-08-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q55854",
+  "label": "Yapeyú",
+  "entityUrl": "https://www.wikidata.org/wiki/Q55854",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q55854",
+   "sourceEntityLabel": "Yapeyú",
+   "latitude": -29.469611,
+   "longitude": -56.817444,
+   "precision": 0.000001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q4991371",
+   "label": "soldier"
+  }
+ ],
+ "portrait": {
+  "file": "File:José de San Martín (retrato, c.1828).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9%20de%20San%20Mart%C3%ADn%20(retrato%2C%20c.1828).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jos%C3%A9_de_San_Mart%C3%ADn_(retrato,_c.1828).jpg",
+  "width": 1199,
+  "height": 1573,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The exact author is disputed. Some sources attribute it to Jean Baptiste Madou, others to the art teacher of San Martin's daughter, and others suspect it to be the work of many different people.",
+  "credit": "Museo Histórico Nacional",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "joan-didion",
+ "qid": "Q267691",
+ "displayName": "Joan Didion",
+ "wikidataLabel": "Joan Didion",
+ "wikidataDescription": "American writer (1934-2021)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q267691",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522005492
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Joan Didion",
+   "articleUrl": "https://en.wikipedia.org/wiki/Joan_Didion",
+   "pageId": 348311,
+   "revisionId": 1364576265,
+   "revisionTimestamp": "2026-07-17T08:50:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1934-12-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-12-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1934-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2021-12-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q18013",
+  "label": "Sacramento",
+  "entityUrl": "https://www.wikidata.org/wiki/Q18013",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q18013",
+   "sourceEntityLabel": "Sacramento",
+   "latitude": 38.575277777778,
+   "longitude": -121.48611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q876864",
+   "label": "editing staff"
+  }
+ ],
+ "portrait": {
+  "file": "File:Didion1970 (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Didion1970%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Didion1970_(cropped).jpg",
+  "width": 1035,
+  "height": 1310,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Kathleen Ballard, Los Angeles Times",
+  "credit": "https://digital.library.ucla.edu/catalog/ark:/21198/zz0002w3wq",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

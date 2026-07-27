@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "williamina-fleming",
+ "qid": "Q284180",
+ "displayName": "Williamina Fleming",
+ "wikidataLabel": "Williamina Fleming",
+ "wikidataDescription": "astronoma escocesa (1857-1911)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q284180",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517453802
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Williamina Fleming",
+   "articleUrl": "https://en.wikipedia.org/wiki/Williamina_Fleming",
+   "pageId": 253620,
+   "revisionId": 1362412762,
+   "revisionTimestamp": "2026-07-03T20:11:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1857-05-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1857-05-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1857-05-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1911-05-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q123709",
+  "label": "Dundee",
+  "entityUrl": "https://www.wikidata.org/wiki/Q123709",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q123709",
+   "sourceEntityLabel": "Dundee",
+   "latitude": 56.46055555555556,
+   "longitude": -2.97,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Williamina Paton Stevens Fleming circa 1890s.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Williamina%20Paton%20Stevens%20Fleming%20circa%201890s.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Williamina_Paton_Stevens_Fleming_circa_1890s.jpg",
+  "width": 1463,
+  "height": 1894,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.cfa.harvard.edu/lib/online/almanac/0300c.htm",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

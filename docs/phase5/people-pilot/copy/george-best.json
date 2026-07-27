@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "george-best",
+  "seedRound": 0,
+  "qid": "Q164521",
+  "displayName": "George Best",
+  "identity": "Association football player · United Kingdom · 1946–2005",
+  "title": "George Best's birth chart",
+  "metaDescription": "George Best's chart, computed from a sourced birth date: Sun at 0.7° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Six of the ten placements whose signs are settled fall in air signs — at least half of what the unknown hour leaves certain. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted.",
+  "ledeFact": "element:air:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:0.74",
+        "decan:gemini:first"
+      ],
+      "text": "The Sun's position resolves to 0.7° Gemini — deep enough in the first decan (0°–10°) that Mercury, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Taurus:20.1°",
+        "personal:Venus:Gemini:27.9°",
+        "personal:Mars:Leo:14.3°"
+      ],
+      "text": "The personal planets sit Mercury at 20.1° Taurus, Venus at 27.9° Gemini, Mars at 14.3° Leo. Mercury in a earth sign reads as thought with its feet on the ground; Venus in a air sign reads as attraction that begins as conversation; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:sextile:1.19",
+        "aspect:Jupiter:Uranus:trine:1.72",
+        "aspect:Mars:Uranus:sextile:2.25"
+      ],
+      "text": "Mercury to Saturn is the closest call of the day, a sextile within 1.2°. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Jupiter trine Uranus at 1.7°, and Mars sextile Uranus at 2.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Venus"
+      ],
+      "text": "Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. Saturn in Cancer at 21.3° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air6-fire2-earth1-water1",
+        "modalities:fixed4-mutable3-cardinal3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 6 air, 2 fire, 1 earth, 1 water by element and 4 fixed, 3 mutable, 3 cardinal by mode. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Jupiter and Neptune were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:12.5"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 12.5° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 10.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-22/",
+    "label": "Everyone born on May 22"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "element:air:6",
+    "sun-degree:0.74",
+    "decan:gemini:first",
+    "personal:Mercury:Taurus:20.1°",
+    "personal:Venus:Gemini:27.9°",
+    "personal:Mars:Leo:14.3°",
+    "aspect:Mercury:Saturn:sextile:1.19",
+    "aspect:Jupiter:Uranus:trine:1.72",
+    "aspect:Mars:Uranus:sextile:2.25",
+    "figure:unaspected:Venus",
+    "dignity:Saturn:detriment",
+    "elements:air6-fire2-earth1-water1",
+    "modalities:fixed4-mutable3-cardinal3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aquarius",
+    "moon-band:12.5"
+  ],
+  "measurements": {
+    "originalWords": 392,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "michelangelo-antonioni",
+  "seedRound": 0,
+  "qid": "Q55433",
+  "displayName": "Michelangelo Antonioni",
+  "identity": "Film director and screenwriter · Italy · 1912–2007",
+  "title": "Michelangelo Antonioni's birth chart",
+  "metaDescription": "Michelangelo Antonioni's chart, computed from a sourced birth date: Sun at 5.9° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Libra — the Sun, Mercury, Venus and Mars. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:libra:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.92",
+        "decan:libra:first"
+      ],
+      "text": "5.9° of Libra is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Venus in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:2.1°",
+        "personal:Venus:Libra:28.9°",
+        "personal:Mars:Libra:17.5°"
+      ],
+      "text": "For the fast movers, Mercury was at 2.1° Libra, Venus was at 28.9° Libra, Mars was at 17.5° Libra. Read together: thought that travels by comparison; attraction that begins as conversation; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:square:0.66",
+        "aspect:Venus:Pluto:trine:1.17",
+        "aspect:Mercury:Saturn:trine:1.88"
+      ],
+      "text": "Nothing in the geometry sits closer than Venus and Uranus: 0.7° from an exact square. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, Venus trine Pluto at 1.2°, and Mercury trine Saturn at 1.9° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Sun-Saturn-Uranus",
+        "figure:t-square:Uranus-Neptune:apex-Venus"
+      ],
+      "text": "the Sun, Saturn, Uranus close a triangle of trines. A grand trine is read as self-sufficiency in one element: the current circulates whether or not anything is asked of it. Uranus opposes Neptune while both square Venus. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:exaltation",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Sun in Libra at 5.9° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Taurus at 10.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Libra at 28.9° is in domicile — the planet in its own sign, running on home rules; Mars in Libra at 17.5° is in detriment — the planet opposite its home, working against the grain; Jupiter in Sagittarius at 10.3° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-earth2-water2-fire1",
+        "modalities:cardinal7-mutable2-fixed1",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 air, 2 earth, 2 water, 1 fire by element and 7 cardinal, 2 mutable, 1 fixed by mode. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:13.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 10.7°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-29/",
+    "label": "Everyone born on September 29"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "stellium:libra:4",
+    "sun-degree:5.92",
+    "decan:libra:first",
+    "personal:Mercury:Libra:2.1°",
+    "personal:Venus:Libra:28.9°",
+    "personal:Mars:Libra:17.5°",
+    "aspect:Venus:Uranus:square:0.66",
+    "aspect:Venus:Pluto:trine:1.17",
+    "aspect:Mercury:Saturn:trine:1.88",
+    "figure:grand-trine:Sun-Saturn-Uranus",
+    "figure:t-square:Uranus-Neptune:apex-Venus",
+    "dignity:Sun:fall",
+    "dignity:Moon:exaltation",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:air5-earth2-water2-fire1",
+    "modalities:cardinal7-mutable2-fixed1",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:taurus",
+    "moon-band:13.0"
+  ],
+  "measurements": {
+    "originalWords": 499,
+    "substantiveStatements": 22,
+    "blocks": 7
+  }
+}

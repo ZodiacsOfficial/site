@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "herman-melville",
+  "seedRound": 0,
+  "qid": "Q4985",
+  "displayName": "Herman Melville",
+  "identity": "Teacher and poet · United States · 1819–1891",
+  "title": "Herman Melville's birth chart",
+  "metaDescription": "Herman Melville's chart, computed from a sourced birth date: Sun at 8.5° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 8.5° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:domicile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.53",
+        "decan:leo:first"
+      ],
+      "text": "The Sun's position resolves to 8.5° Leo — deep enough in the first decan (0°–10°) that the Sun, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Virgo:4.2°",
+        "personal:Venus:Cancer:20.1°",
+        "personal:Mars:Gemini:7.6°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Virgo (4.2°), Venus in Cancer (20.1°), Mars in Gemini (7.6°): thought with its feet on the ground, attraction that works by atmosphere, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Mars:sextile:0.97",
+        "aspect:Neptune:Pluto:square:1.12",
+        "aspect:Saturn:Pluto:conjunction:3.03"
+      ],
+      "text": "The tightest geometry in the chart puts the Sun a sixth of the circle apart from Mars, 1.0° off exact. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Neptune square Pluto at 1.1°, and Saturn conjunction Pluto at 3.0° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Venus"
+      ],
+      "text": "Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:domicile",
+        "dignity:Mercury:exaltation",
+        "dignity:Saturn:fall"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Sun in Leo at 8.5° is in domicile — the planet in its own sign, running on home rules; Mercury in Virgo at 4.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Aries at 0.4° is in fall — the tradition’s uphill placement, strength earned rather than given. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-water2-air2-earth1",
+        "modalities:mutable6-fixed2-cardinal2",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 5 fire, 2 water, 2 air, 1 earth by element and 6 mutable, 2 fixed, 2 cardinal by modality. Fire weights a chart toward initiative — starting, asserting, spending energy to find out what happens. Jupiter, Saturn, Uranus, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:14.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 14.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 9.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-1/",
+    "label": "Everyone born on August 1"
+  },
+  "signLink": {
+    "href": "/leo/",
+    "label": "The Leo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:domicile",
+    "sun-degree:8.53",
+    "decan:leo:first",
+    "personal:Mercury:Virgo:4.2°",
+    "personal:Venus:Cancer:20.1°",
+    "personal:Mars:Gemini:7.6°",
+    "aspect:Sun:Mars:sextile:0.97",
+    "aspect:Neptune:Pluto:square:1.12",
+    "aspect:Saturn:Pluto:conjunction:3.03",
+    "figure:unaspected:Venus",
+    "dignity:Sun:domicile",
+    "dignity:Mercury:exaltation",
+    "dignity:Saturn:fall",
+    "elements:fire5-water2-air2-earth1",
+    "modalities:mutable6-fixed2-cardinal2",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:sagittarius",
+    "moon-band:14.2"
+  ],
+  "measurements": {
+    "originalWords": 404,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "thurgood-marshall",
+ "qid": "Q312348",
+ "displayName": "Thurgood Marshall",
+ "wikidataLabel": "Thurgood Marshall",
+ "wikidataDescription": "Associate Justice of the Supreme Court of the United States from 1967 to 1991 (1908–1993)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q312348",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517736407
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Thurgood Marshall",
+   "articleUrl": "https://en.wikipedia.org/wiki/Thurgood_Marshall",
+   "pageId": 57445,
+   "revisionId": 1364647242,
+   "revisionTimestamp": "2026-07-17T18:36:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-07-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-07-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-07-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-01-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5092",
+  "label": "Baltimore",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5092",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5092",
+   "sourceEntityLabel": "Baltimore",
+   "latitude": 39.286388888889,
+   "longitude": -76.615,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q16533",
+   "label": "judge"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q1021386",
+   "label": "civil rights advocate"
+  }
+ ],
+ "portrait": {
+  "file": "File:Thurgood-marshall-2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Thurgood-marshall-2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Thurgood-marshall-2.jpg",
+  "width": 1184,
+  "height": 1488,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Robert S. Oakes",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3b07878.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

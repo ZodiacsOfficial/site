@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kartini",
+ "qid": "Q1373764",
+ "displayName": "Kartini",
+ "wikidataLabel": "Kartini",
+ "wikidataDescription": "Indonesian heroine, feminist (1879–1904)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1373764",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2484043421
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kartini",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kartini",
+   "pageId": 2239963,
+   "revisionId": 1351500228,
+   "revisionTimestamp": "2026-04-28T10:26:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1879-04-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1879-04-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1879-04-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1904-09-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2662601",
+  "label": "Jepara",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2662601",
+  "country": {
+   "entity": "Q252",
+   "label": "Indonesia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2662601",
+   "sourceEntityLabel": "Jepara",
+   "latitude": -6.5736111111111,
+   "longitude": 110.67583333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q10694573",
+   "label": "textile artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:COLLECTIE TROPENMUSEUM Portret van Raden Ajeng Kartini TMnr 10018776.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:COLLECTIE%20TROPENMUSEUM%20Portret%20van%20Raden%20Ajeng%20Kartini%20TMnr%2010018776.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:COLLECTIE_TROPENMUSEUM_Portret_van_Raden_Ajeng_Kartini_TMnr_10018776.jpg",
+  "width": 534,
+  "height": 700,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "fotografer tidak diketahui.",
+  "credit": "Wereldmuseum Amsterdam",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

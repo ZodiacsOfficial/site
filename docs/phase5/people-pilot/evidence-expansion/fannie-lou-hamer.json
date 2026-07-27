@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "fannie-lou-hamer",
+ "qid": "Q438438",
+ "displayName": "Fannie Lou Hamer",
+ "wikidataLabel": "Fannie Lou Hamer",
+ "wikidataDescription": "American civil rights activist (1917–1977)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q438438",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519976120
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Fannie Lou Hamer",
+   "articleUrl": "https://en.wikipedia.org/wiki/Fannie_Lou_Hamer",
+   "pageId": 992342,
+   "revisionId": 1361039803,
+   "revisionTimestamp": "2026-06-25T06:54:12Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-10-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-10-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-10-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1977-03-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q490859",
+  "label": "Montgomery County",
+  "entityUrl": "https://www.wikidata.org/wiki/Q490859",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q490859",
+   "sourceEntityLabel": "Montgomery County",
+   "latitude": 33.5,
+   "longitude": -89.61,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q23045969",
+   "label": "sharecropper"
+  },
+  {
+   "entity": "Q11499147",
+   "label": "political activist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Fannie Lou Hamer 1964-08-22.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Fannie%20Lou%20Hamer%201964-08-22.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Fannie_Lou_Hamer_1964-08-22.jpg",
+  "width": 3044,
+  "height": 4579,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Adam Cuerden",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID ds.07134.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

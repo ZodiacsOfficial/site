@@ -1,0 +1,115 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "johannes-brahms",
+ "qid": "Q7294",
+ "displayName": "Johannes Brahms",
+ "wikidataLabel": "Johannes Brahms",
+ "wikidataDescription": "German composer (1833–1897)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7294",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520046093
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Johannes Brahms",
+   "articleUrl": "https://en.wikipedia.org/wiki/Johannes_Brahms",
+   "pageId": 16339,
+   "revisionId": 1364190540,
+   "revisionTimestamp": "2026-07-15T01:59:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1833-05-07T00:00:00Z|proleptic-gregorian",
+   "+1834-05-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1833-05-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1834-05-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1833-05-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1897-04-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1055",
+  "label": "Hamburg",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1055",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1055",
+   "sourceEntityLabel": "Hamburg",
+   "latitude": 53.55,
+   "longitude": 10,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  }
+ ],
+ "portrait": {
+  "file": "File:JohannesBrahms.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:JohannesBrahms.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:JohannesBrahms.jpg",
+  "width": 1462,
+  "height": 1914,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "C. Brasch, Berlin (biography)",
+  "credit": "http://wicr.uindy.edu/Education/Composers/BrahmsJ.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "heinrich-hertz",
+  "seedRound": 0,
+  "qid": "Q41257",
+  "displayName": "Heinrich Hertz",
+  "identity": "Physicist and philosopher · Germany · 1857–1894",
+  "title": "Heinrich Hertz's birth chart",
+  "metaDescription": "Heinrich Hertz's chart, computed from a sourced birth date: Sun at 3.8° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a sextile to Pluto at 0.1° — close enough to weld identity to depth. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Sun:Pluto:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.83",
+        "decan:pisces:first"
+      ],
+      "text": "At the noon reference the Sun sits 3.8° into Pisces — the first decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:7.1°",
+        "personal:Venus:Aries:20.1°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aquarius (7.1°), Venus in Aries (20.1°): thought that travels by comparison, attraction declared rather than implied."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Pluto:sextile:0.09",
+        "aspect:Uranus:Neptune:sextile:1.78",
+        "aspect:Mercury:Pluto:square:3.21"
+      ],
+      "text": "The Sun and Pluto hold the closest angle here — a sextile, 0.1° wide. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Uranus sextile Neptune at 1.8°, and Mercury square Pluto at 3.2° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Venus"
+      ],
+      "text": "Venus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. Venus in Aries at 20.1° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 7.5° is in detriment. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air2-fire2-earth2",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:1",
+        "sign-uncertain:Mars:pisces:aries"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 water, 2 air, 2 fire, 2 earth by element and 4 fixed, 3 cardinal, 2 mutable by modality. Water signs hold memory in the scheme, where nothing is quite finished and little is genuinely forgotten. Mars crossed from Pisces into Aries during that day, so its sign is left open. Saturn was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:13.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 13.8° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 7.1°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-22/",
+    "label": "Everyone born on February 22"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Pluto:sextile",
+    "sun-degree:3.83",
+    "decan:pisces:first",
+    "personal:Mercury:Aquarius:7.1°",
+    "personal:Venus:Aries:20.1°",
+    "aspect:Sun:Pluto:sextile:0.09",
+    "aspect:Uranus:Neptune:sextile:1.78",
+    "aspect:Mercury:Pluto:square:3.21",
+    "figure:unaspected:Venus",
+    "dignity:Venus:detriment",
+    "dignity:Saturn:detriment",
+    "elements:water3-air2-fire2-earth2",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:1",
+    "sign-uncertain:Mars:pisces:aries",
+    "moon-sign:aquarius",
+    "moon-band:13.8"
+  ],
+  "measurements": {
+    "originalWords": 383,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

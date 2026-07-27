@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "lata-mangeshkar",
+  "seedRound": 0,
+  "qid": "Q156347",
+  "displayName": "Lata Mangeshkar",
+  "identity": "Singer and film actor · India · 1929–2022",
+  "title": "Lata Mangeshkar's birth chart",
+  "metaDescription": "Lata Mangeshkar's chart, computed from a sourced birth date: Sun at 4.6° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mars holds a sextile to Saturn at 0.2° — close enough to weld drive to structure. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Mars:Saturn:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:4.64",
+        "decan:libra:first"
+      ],
+      "text": "At the noon reference the Sun sits 4.6° into Libra — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:23.0°",
+        "personal:Venus:Virgo:3.1°",
+        "personal:Mars:Libra:24.4°"
+      ],
+      "text": "Mercury holds 23.0° Libra, Venus holds 3.1° Virgo, Mars holds 24.4° Libra — in the old shorthand, thought that travels by comparison; attraction that grows by reliability; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Saturn:sextile:0.19",
+        "aspect:Venus:Neptune:conjunction:0.8",
+        "aspect:Mercury:Mars:conjunction:1.45"
+      ],
+      "text": "Mars and Saturn hold the closest angle here — a sextile, 0.2° wide. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Venus conjunction Neptune at 0.8°, and Mercury conjunction Mars at 1.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks four placements here. The Sun in Libra at 4.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Virgo at 3.1° is in fall; Mars in Libra at 24.4° is in detriment — the planet opposite its home, working against the grain; Jupiter in Gemini at 16.3° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth2-fire2-water1",
+        "modalities:cardinal5-mutable4",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives air 4, earth 2, fire 2, water 1, and cardinal 5, mutable 4 across the modes. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. Mercury and Uranus were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:cancer:leo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Cancer into Leo during that day at the birthplace, travelling 14.3° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-28/",
+    "label": "Everyone born on September 28"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Saturn:sextile",
+    "sun-degree:4.64",
+    "decan:libra:first",
+    "personal:Mercury:Libra:23.0°",
+    "personal:Venus:Virgo:3.1°",
+    "personal:Mars:Libra:24.4°",
+    "aspect:Mars:Saturn:sextile:0.19",
+    "aspect:Venus:Neptune:conjunction:0.8",
+    "aspect:Mercury:Mars:conjunction:1.45",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:air4-earth2-fire2-water1",
+    "modalities:cardinal5-mutable4",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:cancer:leo"
+  ],
+  "measurements": {
+    "originalWords": 399,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

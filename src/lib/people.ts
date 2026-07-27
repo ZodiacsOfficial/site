@@ -98,7 +98,7 @@ const modalityCountsSchema = z.object({
 });
 
 const readingBlockSchema = z.object({
-  key: z.enum(['sun', 'geometry', 'dignity', 'shape', 'moon']),
+  key: z.enum(['sun', 'personal', 'geometry', 'figures', 'dignity', 'shape', 'moon']),
   title: z.string().min(1),
   facts: z.array(z.string()).min(1),
   text: z.string().min(1),
@@ -242,7 +242,7 @@ const personSchema = z.object({
     metaDescription: z.string().min(1).max(180),
     lede: z.string().min(1),
     ledeFact: z.string().min(1),
-    blocks: z.array(readingBlockSchema).min(4).max(5),
+    blocks: z.array(readingBlockSchema).min(4).max(7),
     birthdayLink: z.object({
       href: z.string().regex(/^\/birthday\/[a-z]+-\d{1,2}\/$/u),
       label: z.string().min(1),
@@ -254,7 +254,7 @@ const personSchema = z.object({
     measurements: z.object({
       originalWords: z.number().int().min(250),
       substantiveStatements: z.number().int().min(8),
-      blocks: z.number().int().min(4).max(5),
+      blocks: z.number().int().min(4).max(7),
     }).strict(),
   }).strict(),
 }).strict();
@@ -266,8 +266,8 @@ const peoplePilotSchema = z.object({
   sourceManifestSha256: z.string().regex(/^[a-f0-9]{64}$/u),
   sourceIndexPolicySha256: z.string().regex(/^[a-f0-9]{64}$/u),
   indexPolicyApprovedAtUtc: isoInstantSchema,
-  directoryIndexable: z.literal(false),
-  people: z.array(personSchema).length(20),
+  directoryIndexable: z.boolean(),
+  people: z.array(personSchema).min(20).max(500),
 }).strict();
 
 export const PEOPLE_PILOT = peoplePilotSchema.parse(rawPeople);
@@ -284,6 +284,8 @@ export const PEOPLE_DISCIPLINE_FILTERS = [
   { slug: 'art', name: 'Art' },
   { slug: 'architecture', name: 'Architecture' },
   { slug: 'sport', name: 'Sport' },
+  { slug: 'film-stage', name: 'Film & stage' },
+  { slug: 'design', name: 'Design' },
   { slug: 'public-life', name: 'Public life' },
 ] as const;
 export type PeopleDisciplineGroup = typeof PEOPLE_DISCIPLINE_FILTERS[number]['slug'];
@@ -313,6 +315,50 @@ const DISCIPLINE_GROUP_BY_SOURCE: Readonly<Record<string, PeopleDisciplineGroup>
   sociologist: 'science',
   'tennis player': 'sport',
   'theoretical physicist': 'science',
+  physicist: 'science', botanist: 'science', zoologist: 'science', ornithologist: 'science',
+  naturalist: 'science', geneticist: 'science', biochemist: 'science', statistician: 'science',
+  'computer scientist': 'science', astronomer: 'science', astrophysicist: 'science',
+  physician: 'science', surgeon: 'science', nurse: 'science', psychologist: 'science',
+  psychiatrist: 'science', psychoanalyst: 'science', neurologist: 'science',
+  anthropologist: 'science', archaeologist: 'science', paleontologist: 'science',
+  geologist: 'science', oceanographer: 'science', seismologist: 'science', ecologist: 'science',
+  primatologist: 'science', ethologist: 'science', virologist: 'science',
+  bacteriologist: 'science', immunologist: 'science', pharmacologist: 'science',
+  engineer: 'science', inventor: 'science', 'aerospace engineer': 'science',
+  agronomist: 'science', economist: 'science', cartographer: 'science',
+  writer: 'writing', playwright: 'writing', 'short story writer': 'writing',
+  'literary critic': 'writing', historian: 'writing', philosopher: 'writing',
+  screenwriter: 'writing', biographer: 'writing', translator: 'writing', diarist: 'writing',
+  autobiographer: 'writing', "children's writer": 'writing', 'science fiction writer': 'writing',
+  lyricist: 'writing', publisher: 'writing',
+  singer: 'music', musician: 'music', violinist: 'music', cellist: 'music', guitarist: 'music',
+  conductor: 'music', songwriter: 'music', 'opera singer': 'music', saxophonist: 'music',
+  trumpeter: 'music', drummer: 'music', bandleader: 'music', 'music educator': 'music',
+  'recording artist': 'music',
+  sculptor: 'art', photographer: 'art', printmaker: 'art', illustrator: 'art', artist: 'art',
+  'visual artist': 'art', muralist: 'art', ceramicist: 'art', photojournalist: 'art',
+  'urban planner': 'architecture',
+  'fashion designer': 'design', designer: 'design', 'costume designer': 'design',
+  'industrial designer': 'design', 'furniture designer': 'design', 'interior designer': 'design',
+  'film director': 'film-stage', actor: 'film-stage', 'film actor': 'film-stage',
+  'stage actor': 'film-stage', 'film producer': 'film-stage', comedian: 'film-stage',
+  'television actor': 'film-stage', filmmaker: 'film-stage',
+  politician: 'public-life', statesperson: 'public-life', lawyer: 'public-life',
+  judge: 'public-life', activist: 'public-life', 'human rights activist': 'public-life',
+  'civil rights advocate': 'public-life', suffragist: 'public-life', suffragette: 'public-life',
+  "women's rights activist": 'public-life', 'trade unionist': 'public-life',
+  diplomat: 'public-life', revolutionary: 'public-life', 'resistance fighter': 'public-life',
+  'political activist': 'public-life', philanthropist: 'public-life',
+  'social reformer': 'public-life', nun: 'public-life', missionary: 'public-life',
+  explorer: 'public-life', aviator: 'public-life', astronaut: 'public-life',
+  'polar explorer': 'public-life', teacher: 'public-life', 'university teacher': 'public-life',
+  pedagogue: 'public-life', feminist: 'public-life',
+  'association football player': 'sport', footballer: 'sport', 'baseball player': 'sport',
+  'basketball player': 'sport', boxer: 'sport', athlete: 'sport', sprinter: 'sport',
+  'long-distance runner': 'sport', swimmer: 'sport', cricketer: 'sport', golfer: 'sport',
+  'racing driver': 'sport', 'racing automobile driver': 'sport', 'ice hockey player': 'sport',
+  'American football player': 'sport', 'figure skater': 'sport',
+  'track and field athlete': 'sport', mountaineer: 'sport', 'Formula One driver': 'sport',
 };
 
 export function peopleDisciplineGroups(person: PersonRecord): PeopleDisciplineGroup[] {
@@ -328,5 +374,7 @@ export function peopleForBirthday(route: string) {
     person.suppression.status === 'active'
     && person.indexEligibility.eligible
     && person.birthDate.birthdayRoute === route
-  )).slice(0, 3);
+  )).sort((a, b) => a.birthDate.computedGregorianDate.localeCompare(b.birthDate.computedGregorianDate));
 }
+/** First three render immediately; the rest sit behind a native details disclosure. */
+export const BIRTHDAY_PEOPLE_VISIBLE = 3;

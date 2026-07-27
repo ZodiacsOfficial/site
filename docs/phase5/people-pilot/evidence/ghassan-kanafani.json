@@ -1,0 +1,111 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ghassan-kanafani",
+ "qid": "Q369696",
+ "displayName": "Ghassan Kanafani",
+ "wikidataLabel": "Ghassan Kanafani",
+ "wikidataDescription": "Palestinian writer (1936-1972)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q369696",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517648054
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ghassan Kanafani",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ghassan_Kanafani",
+   "pageId": 668031,
+   "revisionId": 1348321566,
+   "revisionTimestamp": "2026-04-12T01:03:40Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1936-04-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1936-04-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1936-04-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1972-07-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q126084",
+  "label": "Acre",
+  "entityUrl": "https://www.wikidata.org/wiki/Q126084",
+  "country": {
+   "entity": "Q801",
+   "label": "Israel"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q126084",
+   "sourceEntityLabel": "Acre",
+   "latitude": 32.926111111111,
+   "longitude": 35.083888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q12144794",
+   "label": "prose writer"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": null
+}

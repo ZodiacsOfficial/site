@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "luciano-pavarotti",
+  "seedRound": 0,
+  "qid": "Q37615",
+  "displayName": "Luciano Pavarotti",
+  "identity": "Opera singer and film actor · Italy · 1935–2007",
+  "title": "Luciano Pavarotti's birth chart",
+  "metaDescription": "Luciano Pavarotti's chart, computed from a sourced birth date: Sun at 18.2° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, the Sun holds a sextile to Mars at 0.1° — close enough to weld identity to drive. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Sun:Mars:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.19",
+        "decan:libra:second"
+      ],
+      "text": "18.2° of Libra is the Sun's exact seat — second decan, 10°–20°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Venus:Virgo:9.5°",
+        "personal:Mars:Sagittarius:18.1°"
+      ],
+      "text": "The personal planets sit Venus at 9.5° Virgo, Mars at 18.1° Sagittarius. Venus in a earth sign reads as attraction that grows by reliability; Mars in a fire sign reads as effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:sextile:0.04",
+        "aspect:Sun:Mars:sextile:0.1",
+        "aspect:Mars:Neptune:square:2.54"
+      ],
+      "text": "Saturn and Uranus hold the closest angle here — a sextile, 0.0° wide. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, the Sun sextile Mars at 0.1°, and Mars square Neptune at 2.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Mercury-Uranus:apex-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mercury opposes Uranus while both square Pluto. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Venus:fall"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags two placements in this chart. The Sun in Libra at 18.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Virgo at 9.5° is in fall. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-water3-fire2-air1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:3",
+        "sign-uncertain:Mercury:scorpio:libra"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 3 earth, 3 water, 2 fire, 1 air; by modality, 4 mutable, 3 cardinal, 2 fixed. Mercury crossed from Scorpio into Libra during that day, so its sign is left open. Mercury, Saturn and Uranus were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aries",
+        "moon-band:15.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aries for the whole of that day at the birthplace, covering 15.1° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 21.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-12/",
+    "label": "Everyone born on October 12"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:sextile",
+    "sun-degree:18.19",
+    "decan:libra:second",
+    "personal:Venus:Virgo:9.5°",
+    "personal:Mars:Sagittarius:18.1°",
+    "aspect:Saturn:Uranus:sextile:0.04",
+    "aspect:Sun:Mars:sextile:0.1",
+    "aspect:Mars:Neptune:square:2.54",
+    "figure:t-square:Mercury-Uranus:apex-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Venus:fall",
+    "elements:earth3-water3-fire2-air1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "sign-uncertain:Mercury:scorpio:libra",
+    "moon-sign:aries",
+    "moon-band:15.1"
+  ],
+  "measurements": {
+    "originalWords": 403,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

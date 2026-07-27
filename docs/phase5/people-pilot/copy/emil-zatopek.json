@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "emil-zatopek",
+  "seedRound": 0,
+  "qid": "Q52589",
+  "displayName": "Emil Zátopek",
+  "identity": "Athlete · Czech Republic · 1922–2000",
+  "title": "Emil Zátopek's birth chart",
+  "metaDescription": "Emil Zátopek's chart, computed from a sourced birth date: Sun at 25.7° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a conjunction to Jupiter at 0.0° — close enough to weld thinking to expansion. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct.",
+  "ledeFact": "aspect:Mercury:Jupiter:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.71",
+        "decan:virgo:third"
+      ],
+      "text": "At the noon reference the Sun sits 25.7° into Virgo — the third decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:22.0°",
+        "personal:Venus:Scorpio:12.0°",
+        "personal:Mars:Capricorn:3.3°"
+      ],
+      "text": "Closer in, Mercury stands at 22.0° Libra; Venus stands at 12.0° Scorpio; Mars stands at 3.3° Capricorn. The tradition reads thought that travels by comparison from Mercury, attraction that works by atmosphere from Venus, effort banked steadily until it tells from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Jupiter:conjunction:0",
+        "aspect:Uranus:Pluto:trine:0.07",
+        "aspect:Venus:Pluto:trine:0.87"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury in the same degree of the zodiac from Jupiter, 0.0° off exact. A conjunction is the least negotiable aspect in the scheme — no distance to argue across, so the pair arrives as a single instinct. Behind it, Uranus trine Pluto at 0.1°, and Venus trine Pluto at 0.9° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:grand-trine:Venus-Uranus-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Venus, Uranus, Pluto close a triangle of trines. Three trines close into a circuit the tradition calls a grand trine — ease so complete it can idle unnoticed for years. The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks three placements here. Venus in Scorpio at 12.0° is in detriment — the planet opposite its home, working against the grain; Mars in Capricorn at 3.3° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Libra at 8.8° is in exaltation. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-earth2-fire1",
+        "modalities:cardinal5-mutable2-fixed2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 air, 3 water, 2 earth, 1 fire by element and 5 cardinal, 2 mutable, 2 fixed by modality. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Uranus was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:leo:virgo"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Leo into Virgo during that day at the birthplace, travelling 15.0° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-19/",
+    "label": "Everyone born on September 19"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Jupiter:conjunction",
+    "sun-degree:25.71",
+    "decan:virgo:third",
+    "personal:Mercury:Libra:22.0°",
+    "personal:Venus:Scorpio:12.0°",
+    "personal:Mars:Capricorn:3.3°",
+    "aspect:Mercury:Jupiter:conjunction:0",
+    "aspect:Uranus:Pluto:trine:0.07",
+    "aspect:Venus:Pluto:trine:0.87",
+    "figure:grand-trine:Venus-Uranus-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Venus:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:exaltation",
+    "elements:air3-water3-earth2-fire1",
+    "modalities:cardinal5-mutable2-fixed2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:leo:virgo"
+  ],
+  "measurements": {
+    "originalWords": 443,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

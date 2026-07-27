@@ -1,0 +1,140 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alfred-wegener",
+ "qid": "Q76323",
+ "displayName": "Alfred Wegener",
+ "wikidataLabel": "Alfred Wegener",
+ "wikidataDescription": "German climatologist and geophysicist (1880–1930)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q76323",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520925295
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alfred Wegener",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alfred_Wegener",
+   "pageId": 1331018,
+   "revisionId": 1354964425,
+   "revisionTimestamp": "2026-05-19T05:30:50Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1880-11-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1880-11-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1880-11-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1930-11-00T00:00:00Z",
+  "precision": "month",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q64",
+  "label": "Berlin",
+  "entityUrl": "https://www.wikidata.org/wiki/Q64",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q64",
+   "sourceEntityLabel": "Berlin",
+   "latitude": 52.516666666667,
+   "longitude": 13.383333333333,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2310145",
+   "label": "meteorologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q13382749",
+   "label": "polar explorer"
+  },
+  {
+   "entity": "Q169470",
+   "label": "physicist"
+  },
+  {
+   "entity": "Q901402",
+   "label": "geographer"
+  },
+  {
+   "entity": "Q12094958",
+   "label": "geophysicist"
+  },
+  {
+   "entity": "Q1113838",
+   "label": "climatologist"
+  },
+  {
+   "entity": "Q520549",
+   "label": "geologist"
+  },
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q11063",
+   "label": "astronomer"
+  },
+  {
+   "entity": "Q11424604",
+   "label": "earth scientist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alfred Wegener ca.1924-30.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alfred%20Wegener%20ca.1924-30.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alfred_Wegener_ca.1924-30.jpg",
+  "width": 1224,
+  "height": 1480,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Bildindex der Kunst und Architektur: object 20550837 – image file fm426294a.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

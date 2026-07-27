@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "charles-r-drew",
+ "qid": "Q1065848",
+ "displayName": "Charles R. Drew",
+ "wikidataLabel": "Charles Drew",
+ "wikidataDescription": "American surgeon and medical researcher (1904–1950)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1065848",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512623446
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Charles R. Drew",
+   "articleUrl": "https://en.wikipedia.org/wiki/Charles_R._Drew",
+   "pageId": 181532,
+   "revisionId": 1360796575,
+   "revisionTimestamp": "2026-06-23T17:28:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1904-06-03T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1904-06-03T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1904-06-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1950-04-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q61",
+  "label": "Washington, D.C.",
+  "entityUrl": "https://www.wikidata.org/wiki/Q61",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q61",
+   "sourceEntityLabel": "Washington, D.C.",
+   "latitude": 38.895,
+   "longitude": -77.036666666667,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q774306",
+   "label": "surgeon"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Portrait of Charles Drew.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Portrait%20of%20Charles%20Drew.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Portrait_of_Charles_Drew.jpg",
+  "width": 4269,
+  "height": 5375,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Associated Photographic Services, Inc",
+  "credit": "National Library of Medicine: [1]: Year supplied: ca. 1949Original Repository: Howard University. Moorland-Spingarn Research Center. Charles R. Drew Papers. Courtesy of the Moorland-Spingarn Research Center.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "f-scott-fitzgerald",
+ "qid": "Q93354",
+ "displayName": "F. Scott Fitzgerald",
+ "wikidataLabel": "F. Scott Fitzgerald",
+ "wikidataDescription": "American writer (1896–1940)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q93354",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520230483
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "F. Scott Fitzgerald",
+   "articleUrl": "https://en.wikipedia.org/wiki/F._Scott_Fitzgerald",
+   "pageId": 12505972,
+   "revisionId": 1365235706,
+   "revisionTimestamp": "2026-07-21T03:38:01Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1896-09-24T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1896-09-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1896-09-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1940-12-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q28848",
+  "label": "Saint Paul",
+  "entityUrl": "https://www.wikidata.org/wiki/Q28848",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q28848",
+   "sourceEntityLabel": "Saint Paul",
+   "latitude": 44.944166666667,
+   "longitude": -93.093611111111,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q15949613",
+   "label": "short story writer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  }
+ ],
+ "portrait": {
+  "file": "File:F. Scott Fitzgerald (1929 photo portrait by Nickolas Muray) Cropped.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:F.%20Scott%20Fitzgerald%20(1929%20photo%20portrait%20by%20Nickolas%20Muray)%20Cropped.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:F._Scott_Fitzgerald_(1929_photo_portrait_by_Nickolas_Muray)_Cropped.jpg",
+  "width": 1554,
+  "height": 1922,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nickolas Muray",
+  "credit": "Variations of this photo, both black-and-white and colorized, were published in a variety of newspapers and magazines throughout the year 1929. This scan is sourced via ElectricLiterature.com.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

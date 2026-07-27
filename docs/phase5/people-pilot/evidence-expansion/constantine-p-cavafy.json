@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "constantine-p-cavafy",
+ "qid": "Q216980",
+ "displayName": "Constantine P. Cavafy",
+ "wikidataLabel": "Konstantinos P. Cavafy",
+ "wikidataDescription": "Greek-Egyptian poet and journalist (1863–1933)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q216980",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517375090
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Constantine P. Cavafy",
+   "articleUrl": "https://en.wikipedia.org/wiki/Constantine_P._Cavafy",
+   "pageId": 729945,
+   "revisionId": 1363073244,
+   "revisionTimestamp": "2026-07-07T21:40:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1863-04-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1863-04-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1863-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1863-04-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1933-04-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q87",
+  "label": "Alexandria",
+  "entityUrl": "https://www.wikidata.org/wiki/Q87",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q87",
+   "sourceEntityLabel": "Alexandria",
+   "latitude": 31.1975,
+   "longitude": 29.8925,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q212238",
+   "label": "civil servant"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Konstantinos Kavafis.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Konstantinos%20Kavafis.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Konstantinos_Kavafis.jpg",
+  "width": 1515,
+  "height": 2172,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown photographer (signed: Pacino)",
+  "credit": "C.P. Cavafy Archives - Onassis Foundation",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "homi-j-bhabha",
+  "seedRound": 0,
+  "qid": "Q325611",
+  "displayName": "Homi J. Bhabha",
+  "identity": "Nuclear physicist · India · 1909–1966",
+  "title": "Homi J. Bhabha's birth chart",
+  "metaDescription": "Homi J. Bhabha's chart, computed from a sourced birth date: Sun at 6.2° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mercury and Uranus sit 0.4° from an exact square — near enough that the tradition reads thinking and disruption as a single working part. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards.",
+  "ledeFact": "aspect:Mercury:Uranus:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:6.20",
+        "decan:scorpio:first"
+      ],
+      "text": "The Sun's exact place is 6.2° Scorpio. That falls in the first decan, 0°–10°, sub-ruled by Mars in the classical scheme — a water sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Libra:18.0°",
+        "personal:Venus:Sagittarius:20.7°",
+        "personal:Mars:Pisces:25.7°"
+      ],
+      "text": "The personal planets sit Mercury at 18.0° Libra, Venus at 20.7° Sagittarius, Mars at 25.7° Pisces. Mercury in a air sign reads as a mind at home in argument and pattern; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Uranus:square:0.41",
+        "aspect:Mercury:Saturn:opposition:0.5",
+        "aspect:Saturn:Neptune:square:0.85"
+      ],
+      "text": "Mercury and Uranus hold the closest angle here — a square, 0.4° wide. A square is friction that produces motion — the aspect the tradition credits with building capability precisely by refusing to be comfortable. Behind it, Mercury opposition Saturn at 0.5°, and Saturn square Neptune at 0.8° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Mercury-Saturn:apex-Uranus",
+        "figure:unaspected:Sun"
+      ],
+      "text": "Mercury opposes Saturn while both square Uranus. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Sun stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Saturn:fall"
+      ],
+      "text": "Of the seven planets the classical scheme judges, one sits in a sign it has an opinion about. Saturn in Aries at 18.5° is in fall — the tradition’s uphill placement, strength earned rather than given. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-fire2-earth1",
+        "modalities:cardinal5-mutable3-fixed1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 water, 3 air, 2 fire, 1 earth by element and 5 cardinal, 3 mutable, 1 fixed by mode. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Saturn, Neptune and Pluto were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 14.8° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-30/",
+    "label": "Everyone born on October 30"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Uranus:square",
+    "sun-degree:6.20",
+    "decan:scorpio:first",
+    "personal:Mercury:Libra:18.0°",
+    "personal:Venus:Sagittarius:20.7°",
+    "personal:Mars:Pisces:25.7°",
+    "aspect:Mercury:Uranus:square:0.41",
+    "aspect:Mercury:Saturn:opposition:0.5",
+    "aspect:Saturn:Neptune:square:0.85",
+    "figure:t-square:Mercury-Saturn:apex-Uranus",
+    "figure:unaspected:Sun",
+    "dignity:Saturn:fall",
+    "elements:water3-air3-fire2-earth1",
+    "modalities:cardinal5-mutable3-fixed1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 449,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

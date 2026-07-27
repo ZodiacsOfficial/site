@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "yasunari-kawabata",
+ "qid": "Q43736",
+ "displayName": "Yasunari Kawabata",
+ "wikidataLabel": "Yasunari Kawabata",
+ "wikidataDescription": "Japanese novelist (1899–1972)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q43736",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522885560
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Yasunari Kawabata",
+   "articleUrl": "https://en.wikipedia.org/wiki/Yasunari_Kawabata",
+   "pageId": 291698,
+   "revisionId": 1360646147,
+   "revisionTimestamp": "2026-06-22T19:22:38Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1899-06-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1899-06-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1899-06-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1972-04-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q35765",
+  "label": "Osaka",
+  "entityUrl": "https://www.wikidata.org/wiki/Q35765",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q35765",
+   "sourceEntityLabel": "Osaka",
+   "latitude": 34.69375,
+   "longitude": 135.5021111111111,
+   "precision": 0.00002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  }
+ ],
+ "portrait": {
+  "file": "File:Yasunari Kawabata 1938.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Yasunari%20Kawabata%201938.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Yasunari_Kawabata_1938.jpg",
+  "width": 1140,
+  "height": 1204,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://mhsteger.tumblr.com/post/697607461/yasunari-kawabata-born-14-june-1899-died-16",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

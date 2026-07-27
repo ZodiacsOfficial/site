@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hilma-af-klint",
+ "qid": "Q436267",
+ "displayName": "Hilma af Klint",
+ "wikidataLabel": "Hilma af Klint",
+ "wikidataDescription": "Swedish artist (1862–1944)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q436267",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518527893
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hilma af Klint",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hilma_af_Klint",
+   "pageId": 4267006,
+   "revisionId": 1361374246,
+   "revisionTimestamp": "2026-06-27T15:18:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1862-10-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1862-10-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1862-10-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1944-10-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q109010",
+  "label": "Solna Municipality",
+  "entityUrl": "https://www.wikidata.org/wiki/Q109010",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q109010",
+   "sourceEntityLabel": "Solna Municipality",
+   "latitude": 59.366666666667,
+   "longitude": 18.016666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3068256",
+   "label": "female painter"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Hilma-af-Klint-uncropped.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Hilma-af-Klint-uncropped.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Hilma-af-Klint-uncropped.jpg",
+  "width": 1920,
+  "height": 2696,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "AnonymousUnknown author",
+  "credit": "http://hs.mediadelivery.fi/img/1920/ea65e0e5295140ecb08498ba17e96384.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

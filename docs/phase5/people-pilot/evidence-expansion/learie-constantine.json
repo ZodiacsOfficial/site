@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "learie-constantine",
+ "qid": "Q3228666",
+ "displayName": "Learie Constantine",
+ "wikidataLabel": "Learie Constantine",
+ "wikidataDescription": "West Indian cricketer, lawyer, politician and diplomat (1901-1971)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3228666",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517666650
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Learie Constantine",
+   "articleUrl": "https://en.wikipedia.org/wiki/Learie_Constantine",
+   "pageId": 1734619,
+   "revisionId": 1362048319,
+   "revisionTimestamp": "2026-07-01T17:08:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1901-09-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-09-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-09-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1971-07-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q49295424",
+  "label": "Petit Valley",
+  "entityUrl": "https://www.wikidata.org/wiki/Q49295424",
+  "country": {
+   "entity": "Q754",
+   "label": "Trinidad and Tobago"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q49295424",
+   "sourceEntityLabel": "Petit Valley",
+   "latitude": 10.701490759093415,
+   "longitude": -61.55035074976497,
+   "precision": 2.77778e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q12299841",
+   "label": "cricketer"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Learie Constantine 1930 03.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Learie%20Constantine%201930%2003.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Learie_Constantine_1930_03.jpg",
+  "width": 2488,
+  "height": 3082,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Fairfax Corporation Restored by Adam Cuerden",
+  "credit": "https://nla.gov.au/nla.obj-162802066",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

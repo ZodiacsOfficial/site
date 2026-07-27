@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "konrad-lorenz",
+  "seedRound": 0,
+  "qid": "Q78496",
+  "displayName": "Konrad Lorenz",
+  "identity": "Ethologist and university teacher · Austria · 1903–1989",
+  "title": "Konrad Lorenz's birth chart",
+  "metaDescription": "Konrad Lorenz's chart, computed from a sourced birth date: Sun at 13.9° Scorpio. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.4° separates Mercury and Neptune from an exact trine; at that range thinking and imagination read as one mechanism. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Mercury:Neptune:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:13.86",
+        "decan:scorpio:second"
+      ],
+      "text": "At noon on that date the Sun stood at 13.9° Scorpio, inside the second decan (10°–20°), whose traditional sub-ruler is Jupiter. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:5.3°",
+        "personal:Venus:Virgo:29.1°",
+        "personal:Mars:Capricorn:3.2°"
+      ],
+      "text": "Mercury holds 5.3° Scorpio, Venus holds 29.1° Virgo, Mars holds 3.2° Capricorn — in the old shorthand, thought steeped in tone and memory; attraction that grows by reliability; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Neptune:trine:0.4",
+        "aspect:Sun:Jupiter:trine:0.44",
+        "aspect:Mercury:Saturn:square:1.89"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury a third of the circle apart from Neptune, 0.4° off exact. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, the Sun trine Jupiter at 0.4°, and Mercury square Saturn at 1.9° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Mars:exaltation",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Read against the old dignities, four placements stand out. Venus in Virgo at 29.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Capricorn at 3.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 13.4° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 3.4° is in domicile. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air3-earth2-fire1",
+        "modalities:mutable5-fixed3-cardinal2",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Tallied where the signs are certain — 10 placements whose signs hold for the whole day — the chart gives water 4, air 3, earth 2, fire 1, and mutable 5, fixed 3, cardinal 2 across the modes. Water reads the room before the room speaks — atmosphere first, analysis later. Jupiter, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:14.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 14.0° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 12.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-7/",
+    "label": "Everyone born on November 7"
+  },
+  "signLink": {
+    "href": "/scorpio/",
+    "label": "The Scorpio guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Neptune:trine",
+    "sun-degree:13.86",
+    "decan:scorpio:second",
+    "personal:Mercury:Scorpio:5.3°",
+    "personal:Venus:Virgo:29.1°",
+    "personal:Mars:Capricorn:3.2°",
+    "aspect:Mercury:Neptune:trine:0.4",
+    "aspect:Sun:Jupiter:trine:0.44",
+    "aspect:Mercury:Saturn:square:1.89",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "dignity:Mars:exaltation",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:domicile",
+    "elements:water4-air3-earth2-fire1",
+    "modalities:mutable5-fixed3-cardinal2",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:gemini",
+    "moon-band:14.0"
+  ],
+  "measurements": {
+    "originalWords": 439,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

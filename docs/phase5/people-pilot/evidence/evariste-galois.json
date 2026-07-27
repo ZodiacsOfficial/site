@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "evariste-galois",
+ "qid": "Q7091",
+ "displayName": "Évariste Galois",
+ "wikidataLabel": "Évariste Galois",
+ "wikidataDescription": "French mathematician (1811-1832)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7091",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517802873
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Évariste Galois",
+   "articleUrl": "https://en.wikipedia.org/wiki/%C3%89variste_Galois",
+   "pageId": 9815,
+   "revisionId": 1364967746,
+   "revisionTimestamp": "2026-07-19T15:21:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1811-10-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1811-10-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1811-10-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1832-05-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q249852",
+  "label": "Bourg-la-Reine",
+  "entityUrl": "https://www.wikidata.org/wiki/Q249852",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q249852",
+   "sourceEntityLabel": "Bourg-la-Reine",
+   "latitude": 48.778055555556,
+   "longitude": 2.3158333333333,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  }
+ ],
+ "portrait": {
+  "file": "File:E. Galois Portrait No.2.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:E.%20Galois%20Portrait%20No.2.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:E._Galois_Portrait_No.2.jpg",
+  "width": 779,
+  "height": 1105,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Alfred Galois",
+  "credit": "Dupuy, Paul, \"ガロア -その真実の生涯-\", translated by Tsuji, Yuichi, Tokyo Tosho, 1972",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

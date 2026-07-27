@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "edith-piaf",
+  "seedRound": 0,
+  "qid": "Q1631",
+  "displayName": "Édith Piaf",
+  "identity": "Singer and actor · France · 1915–1963",
+  "title": "Édith Piaf's birth chart",
+  "metaDescription": "Édith Piaf's chart, computed from a sourced birth date: Sun at 26.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Venus and Jupiter sit 0.3° from an exact sextile — near enough that the tradition reads taste and expansion as a single working part. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it.",
+  "ledeFact": "aspect:Venus:Jupiter:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:26.51",
+        "decan:sagittarius:third"
+      ],
+      "text": "The Sun's exact place is 26.5° Sagittarius. That falls in the third decan, 20°–30°, sub-ruled by the Sun in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Sagittarius:28.5°",
+        "personal:Venus:Capricorn:20.9°",
+        "personal:Mars:Leo:28.9°"
+      ],
+      "text": "Closer in, Mercury stands at 28.5° Sagittarius; Venus stands at 20.9° Capricorn; Mars stands at 28.9° Leo. The tradition reads a mind that decides at speaking speed from Mercury, taste for the substantial and the lasting from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Jupiter:sextile:0.25",
+        "aspect:Mercury:Mars:trine:0.41",
+        "aspect:Sun:Mercury:conjunction:1.95"
+      ],
+      "text": "The day's firmest angle joins Venus and Jupiter — a sextile holding at 0.3°. The scheme reads a sextile as a door left unlocked. Useful, and entirely dependent on someone walking through it. Behind it, Mercury trine Mars at 0.4°, and the Sun conjunction Mercury at 1.9° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has three entries for this chart. Mercury in Sagittarius at 28.5° is in detriment — the planet opposite its home, working against the grain; Jupiter in Pisces at 20.6° is in domicile — the planet in its own sign, running on home rules; Saturn in Cancer at 14.3° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-water3-earth1-air1",
+        "modalities:mutable3-cardinal3-fixed3",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 fire, 3 water, 1 earth, 1 air by element and 3 mutable, 3 cardinal, 3 fixed by mode. A fire emphasis is read as appetite for the first move, with information gathered by doing rather than before doing. Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 11.9° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-19/",
+    "label": "Everyone born on December 19"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Jupiter:sextile",
+    "sun-degree:26.51",
+    "decan:sagittarius:third",
+    "personal:Mercury:Sagittarius:28.5°",
+    "personal:Venus:Capricorn:20.9°",
+    "personal:Mars:Leo:28.9°",
+    "aspect:Venus:Jupiter:sextile:0.25",
+    "aspect:Mercury:Mars:trine:0.41",
+    "aspect:Sun:Mercury:conjunction:1.95",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:detriment",
+    "elements:fire4-water3-earth1-air1",
+    "modalities:mutable3-cardinal3-fixed3",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 417,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

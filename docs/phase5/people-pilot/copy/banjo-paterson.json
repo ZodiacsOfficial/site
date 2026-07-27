@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "banjo-paterson",
+  "seedRound": 0,
+  "qid": "Q436699",
+  "displayName": "Banjo Paterson",
+  "identity": "Poet and lawyer · Australia · 1864–1941",
+  "title": "Banjo Paterson's birth chart",
+  "metaDescription": "Banjo Paterson's chart, computed from a sourced birth date: Sun at 27.7° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in fixed signs, the widest weighting the unknown hour leaves certain. Fixed weight is read as endurance, with the same machinery producing both loyalty and stubbornness.",
+  "ledeFact": "modality:fixed:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.72",
+        "decan:aquarius:third"
+      ],
+      "text": "The Sun's exact place is 27.7° Aquarius. That falls in the third decan, 20°–30°, sub-ruled by Venus in the classical scheme — a air sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aquarius:1.3°",
+        "personal:Venus:Capricorn:19.8°",
+        "personal:Mars:Capricorn:14.7°"
+      ],
+      "text": "Closer in, Mercury stands at 1.3° Aquarius; Venus stands at 19.8° Capricorn; Mars stands at 14.7° Capricorn. The tradition reads a mind at home in argument and pattern from Mercury, taste for the substantial and the lasting from Venus, drive that grinds rather than flares from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Jupiter:square:1.1",
+        "aspect:Venus:Saturn:square:2.12",
+        "aspect:Mars:Saturn:square:3.05"
+      ],
+      "text": "The Sun and Jupiter hold the closest angle here — a square, 1.1° wide. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, Venus square Saturn at 2.1°, and Mars square Saturn at 3.0° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mars:exaltation",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Aquarius at 27.7° is in detriment — the planet opposite its home, working against the grain; Mars in Capricorn at 14.7° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Libra at 17.7° is in exaltation. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-water1-fire1",
+        "modalities:fixed4-cardinal4-mutable1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 4 air, 3 earth, 1 water, 1 fire by element and 4 fixed, 4 cardinal, 1 mutable by modality. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Saturn and Uranus were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 12.1° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-17/",
+    "label": "Everyone born on February 17"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:4",
+    "sun-degree:27.72",
+    "decan:aquarius:third",
+    "personal:Mercury:Aquarius:1.3°",
+    "personal:Venus:Capricorn:19.8°",
+    "personal:Mars:Capricorn:14.7°",
+    "aspect:Sun:Jupiter:square:1.1",
+    "aspect:Venus:Saturn:square:2.12",
+    "aspect:Mars:Saturn:square:3.05",
+    "figure:none",
+    "dignity:Sun:detriment",
+    "dignity:Mars:exaltation",
+    "dignity:Saturn:exaltation",
+    "elements:air4-earth3-water1-fire1",
+    "modalities:fixed4-cardinal4-mutable1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 413,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

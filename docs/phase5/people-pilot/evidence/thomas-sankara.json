@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "thomas-sankara",
+ "qid": "Q202155",
+ "displayName": "Thomas Sankara",
+ "wikidataLabel": "Thomas Sankara",
+ "wikidataDescription": "President of Burkina Faso from 1983 to 1987",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q202155",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519461263
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Thomas Sankara",
+   "articleUrl": "https://en.wikipedia.org/wiki/Thomas_Sankara",
+   "pageId": 165553,
+   "revisionId": 1365214443,
+   "revisionTimestamp": "2026-07-21T01:09:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1949-12-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1949-12-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1949-12-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-10-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q940973",
+  "label": "Yako",
+  "entityUrl": "https://www.wikidata.org/wiki/Q940973",
+  "country": {
+   "entity": "Q965",
+   "label": "Burkina Faso"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q940973",
+   "sourceEntityLabel": "Yako",
+   "latitude": 12.966666666667,
+   "longitude": -2.2666666666667,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q189290",
+   "label": "military officer"
+  },
+  {
+   "entity": "Q372436",
+   "label": "statesperson"
+  },
+  {
+   "entity": "Q4991371",
+   "label": "soldier"
+  },
+  {
+   "entity": "Q83307",
+   "label": "minister"
+  }
+ ],
+ "portrait": {
+  "file": "File:Thomas Sankara in Harlem (1984).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Thomas%20Sankara%20in%20Harlem%20(1984).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Thomas_Sankara_in_Harlem_(1984).png",
+  "width": 671,
+  "height": 860,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "The Militant/ Ernest Harsch",
+  "credit": "https://www.themilitant.com/1987/5141/MIL5141.pdf#page=5 Published 6 November 1987",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "r-k-narayan",
+ "qid": "Q334252",
+ "displayName": "R. K. Narayan",
+ "wikidataLabel": "R. K. Narayan",
+ "wikidataDescription": "Indian writer (1906–2001)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q334252",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518708483
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "R. K. Narayan",
+   "articleUrl": "https://en.wikipedia.org/wiki/R._K._Narayan",
+   "pageId": 149895,
+   "revisionId": 1360114421,
+   "revisionTimestamp": "2026-06-19T09:30:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-10-10T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-10-10T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-10-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2001-05-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1352",
+  "label": "Chennai",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1352",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1352",
+   "sourceEntityLabel": "Chennai",
+   "latitude": 13.0825,
+   "longitude": 80.275,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:RK Narayan in Mysore.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:RK%20Narayan%20in%20Mysore.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:RK_Narayan_in_Mysore.jpg",
+  "width": 249,
+  "height": 337,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "R. K. Balaraman (photographer)",
+  "credit": "http://www.frontline.in/multimedia/dynamic/03008/FL30_RKN_1_3008718g.jpg (taken from here)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

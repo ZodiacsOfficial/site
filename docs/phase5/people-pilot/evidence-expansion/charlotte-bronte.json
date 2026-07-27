@@ -1,0 +1,122 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "charlotte-bronte",
+ "qid": "Q127332",
+ "displayName": "Charlotte Brontë",
+ "wikidataLabel": "Charlotte Brontë",
+ "wikidataDescription": "British novelist and poet (1816-1855)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q127332",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520834582
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Charlotte Brontë",
+   "articleUrl": "https://en.wikipedia.org/wiki/Charlotte_Bront%C3%AB",
+   "pageId": 6532,
+   "revisionId": 1361687656,
+   "revisionTimestamp": "2026-06-29T13:54:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1816-04-21T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1816-04-21T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1816-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1816-04-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1855-03-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2406502",
+  "label": "Thornton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2406502",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2406502",
+   "sourceEntityLabel": "Thornton",
+   "latitude": 53.7898,
+   "longitude": -1.8504,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1540278",
+   "label": "governess"
+  },
+  {
+   "entity": "Q37226",
+   "label": "teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:CBRichmond.png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:CBRichmond.png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:CBRichmond.png",
+  "width": 200,
+  "height": 286,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "George Richmond",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

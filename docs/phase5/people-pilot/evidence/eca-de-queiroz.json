@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "eca-de-queiroz",
+ "qid": "Q316327",
+ "displayName": "Eça de Queiroz",
+ "wikidataLabel": "José Maria de Eça de Queirós",
+ "wikidataDescription": "Portuguese writer and diplomat (1845–1900)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q316327",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2510661374
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Eça de Queiroz",
+   "articleUrl": "https://en.wikipedia.org/wiki/E%C3%A7a_de_Queiroz",
+   "pageId": 544614,
+   "revisionId": 1363004477,
+   "revisionTimestamp": "2026-07-07T14:05:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1845-11-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1845-11-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1845-11-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1900-08-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q200459",
+  "label": "Póvoa de Varzim",
+  "entityUrl": "https://www.wikidata.org/wiki/Q200459",
+  "country": {
+   "entity": "Q45",
+   "label": "Portugal"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q200459",
+   "sourceEntityLabel": "Póvoa de Varzim",
+   "latitude": 41.39158,
+   "longitude": -8.75713,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q193391",
+   "label": "diplomat"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Eça de Queirós c. 1882.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:E%C3%A7a%20de%20Queir%C3%B3s%20c.%201882.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:E%C3%A7a_de_Queir%C3%B3s_c._1882.jpg",
+  "width": 539,
+  "height": 800,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Photographia Contemporanea In O Contemporâneo, nº 108, Lisboa [1882], p. [1]",
+  "credit": "Biblioteca Nacional de Portugal [1]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

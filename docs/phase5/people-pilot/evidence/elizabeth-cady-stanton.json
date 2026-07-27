@@ -1,0 +1,118 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "elizabeth-cady-stanton",
+ "qid": "Q465335",
+ "displayName": "Elizabeth Cady Stanton",
+ "wikidataLabel": "Elizabeth Cady Stanton",
+ "wikidataDescription": "American writer, suffragist and Women's Rights activist (1815–1902)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q465335",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517028360
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Elizabeth Cady Stanton",
+   "articleUrl": "https://en.wikipedia.org/wiki/Elizabeth_Cady_Stanton",
+   "pageId": 43384,
+   "revisionId": 1360500832,
+   "revisionTimestamp": "2026-06-21T21:27:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1815-11-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1815-11-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1815-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1815-11-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1902-10-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1377991",
+  "label": "Johnstown",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1377991",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1377991",
+   "sourceEntityLabel": "Johnstown",
+   "latitude": 43.0072,
+   "longitude": -74.3722,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q12526417",
+   "label": "abolitionist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Elizabeth Stanton.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Elizabeth%20Stanton.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Elizabeth_Stanton.jpg",
+  "width": 308,
+  "height": 450,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://www.freeschoolpress.com/ushistory/ElizabethCadyStanton.jpg[dead link]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

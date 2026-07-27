@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "colette",
+  "seedRound": 0,
+  "qid": "Q218679",
+  "displayName": "Colette",
+  "identity": "Novelist and actor · France · 1873–1954",
+  "title": "Colette's birth chart",
+  "metaDescription": "Colette's chart, computed from a sourced birth date: Sun at 8.7° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a sextile to Venus at 0.9° — close enough to weld thinking to taste. Sextiles are read as standing invitations — productive exactly as often as they are accepted.",
+  "ledeFact": "aspect:Mercury:Venus:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.70",
+        "decan:aquarius:first"
+      ],
+      "text": "8.7° of Aquarius is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Saturn in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:22.6°",
+        "personal:Venus:Pisces:23.5°",
+        "personal:Mars:Scorpio:2.5°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (22.6°), Venus in Pisces (23.5°), Mars in Scorpio (2.5°): thought with its feet on the ground, attraction that works by atmosphere, effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Venus:sextile:0.88",
+        "aspect:Mercury:Neptune:square:1.06",
+        "aspect:Mars:Uranus:square:1.08"
+      ],
+      "text": "The tightest geometry in the chart puts Mercury a sixth of the circle apart from Venus, 0.9° off exact. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, Mercury square Neptune at 1.1°, and Mars square Uranus at 1.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Sun-Uranus:apex-Mars"
+      ],
+      "text": "The Sun opposes Uranus while both square Mars. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags four placements in this chart. The Sun in Aquarius at 8.7° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 23.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Scorpio at 2.5° is in domicile — the planet in its own sign, running on home rules; Saturn in Capricorn at 25.4° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-fire3-water2-air1",
+        "modalities:fixed5-cardinal3-mutable1",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: earth 3, fire 3, water 2, air 1 across the elements, and fixed 5, cardinal 3, mutable 1 across the modalities. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Jupiter, Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 15.3° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-28/",
+    "label": "Everyone born on January 28"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Venus:sextile",
+    "sun-degree:8.70",
+    "decan:aquarius:first",
+    "personal:Mercury:Capricorn:22.6°",
+    "personal:Venus:Pisces:23.5°",
+    "personal:Mars:Scorpio:2.5°",
+    "aspect:Mercury:Venus:sextile:0.88",
+    "aspect:Mercury:Neptune:square:1.06",
+    "aspect:Mars:Uranus:square:1.08",
+    "figure:t-square:Sun-Uranus:apex-Mars",
+    "dignity:Sun:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:earth3-fire3-water2-air1",
+    "modalities:fixed5-cardinal3-mutable1",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 436,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

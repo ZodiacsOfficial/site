@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "cecilia-meireles",
+ "qid": "Q2607615",
+ "displayName": "Cecília Meireles",
+ "wikidataLabel": "Cecília Meireles",
+ "wikidataDescription": "Brazilian writer (1901–1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2607615",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521472411
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Cecília Meireles",
+   "articleUrl": "https://en.wikipedia.org/wiki/Cec%C3%ADlia_Meireles",
+   "pageId": 1270340,
+   "revisionId": 1354664319,
+   "revisionTimestamp": "2026-05-17T17:43:19Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1901-11-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1901-11-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1901-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1901-11-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-11-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q8678",
+  "label": "Rio de Janeiro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q8678",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q8678",
+   "sourceEntityLabel": "Rio de Janeiro",
+   "latitude": -22.91111111111111,
+   "longitude": -43.205555555555556,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cecília-Meireles.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cec%C3%ADlia-Meireles.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cec%C3%ADlia-Meireles.jpg",
+  "width": 450,
+  "height": 650,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Folhapress",
+  "credit": "http://www.elfikurten.com.br/2011/02/cecilia-meireles-poetiza-educadora.html",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

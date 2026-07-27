@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "bruce-lee",
+  "seedRound": 0,
+  "qid": "Q16397",
+  "displayName": "Bruce Lee",
+  "identity": "Film director and writer · United States · 1940–1973",
+  "title": "Bruce Lee's birth chart",
+  "metaDescription": "Bruce Lee's chart, computed from a sourced birth date: Sun at 5.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Scorpio — the Moon, Mercury, Venus and Mars. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:scorpio:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.45",
+        "decan:sagittarius:first"
+      ],
+      "text": "At the noon reference the Sun sits 5.5° into Sagittarius — the first decan, which the old scheme hands to Jupiter. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Scorpio:15.4°",
+        "personal:Venus:Scorpio:1.6°",
+        "personal:Mars:Scorpio:4.7°"
+      ],
+      "text": "The personal planets sit Mercury at 15.4° Scorpio, Venus at 1.6° Scorpio, Mars at 4.7° Scorpio. Mercury in a water sign reads as thought steeped in tone and memory; Venus in a water sign reads as attraction that works by atmosphere; Mars in a water sign reads as effort that surges when it matters."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Pluto:square:0.46",
+        "aspect:Sun:Pluto:trine:1.22",
+        "aspect:Jupiter:Saturn:conjunction:1.96"
+      ],
+      "text": "The day's firmest angle joins Mars and Pluto — a square holding at 0.5°. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun trine Pluto at 1.2°, and Jupiter conjunction Saturn at 2.0° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Venus-Jupiter:apex-Pluto"
+      ],
+      "text": "Venus opposes Jupiter while both square Pluto. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:domicile"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Moon in Scorpio at 14.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Scorpio at 1.6° is in detriment — the planet opposite its home, working against the grain; Mars in Scorpio at 4.7° is in domicile — the planet in its own sign, running on home rules. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-earth4-fire2",
+        "modalities:fixed8-mutable2",
+        "settled-signs:10",
+        "retrograde:4"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 water, 4 earth, 2 fire; by modality, 8 fixed, 2 mutable. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. No settled placement falls in air — an absence the tradition treats as information, not as a defect. Jupiter, Saturn, Uranus and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:14.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 14.8° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 14.4°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-27/",
+    "label": "Everyone born on November 27"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "stellium:scorpio:4",
+    "sun-degree:5.45",
+    "decan:sagittarius:first",
+    "personal:Mercury:Scorpio:15.4°",
+    "personal:Venus:Scorpio:1.6°",
+    "personal:Mars:Scorpio:4.7°",
+    "aspect:Mars:Pluto:square:0.46",
+    "aspect:Sun:Pluto:trine:1.22",
+    "aspect:Jupiter:Saturn:conjunction:1.96",
+    "figure:t-square:Venus-Jupiter:apex-Pluto",
+    "dignity:Moon:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:domicile",
+    "elements:water4-earth4-fire2",
+    "modalities:fixed8-mutable2",
+    "settled-signs:10",
+    "retrograde:4",
+    "moon-sign:scorpio",
+    "moon-band:14.8"
+  ],
+  "measurements": {
+    "originalWords": 464,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

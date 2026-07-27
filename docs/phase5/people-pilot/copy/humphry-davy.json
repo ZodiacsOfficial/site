@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "humphry-davy",
+  "seedRound": 0,
+  "qid": "Q131761",
+  "displayName": "Humphry Davy",
+  "identity": "Chemist and photographer · United Kingdom · 1778–1829",
+  "title": "Humphry Davy's birth chart",
+  "metaDescription": "Humphry Davy's chart, computed from a sourced birth date: Sun at 25.8° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.4° separates Mars and Uranus from an exact trine; at that range drive and disruption read as one mechanism. A trine runs downhill — the talent that never announces itself because it never had to.",
+  "ledeFact": "aspect:Mars:Uranus:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.75",
+        "decan:sagittarius:third"
+      ],
+      "text": "The Sun's position resolves to 25.8° Sagittarius — deep enough in the third decan (20°–30°) that the Sun, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:10.7°",
+        "personal:Venus:Capricorn:24.5°",
+        "personal:Mars:Libra:16.9°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Capricorn (10.7°), Venus in Capricorn (24.5°), Mars in Libra (16.9°): thought with its feet on the ground, attraction that grows by reliability, effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:trine:0.43",
+        "aspect:Sun:Jupiter:square:0.49",
+        "aspect:Neptune:Pluto:trine:1.01"
+      ],
+      "text": "The tightest geometry in the chart puts Mars a third of the circle apart from Uranus, 0.4° off exact. A trine runs downhill — the talent that never announces itself because it never had to. Behind it, the Sun square Jupiter at 0.5°, and Neptune trine Pluto at 1.0° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. Mars in Libra at 16.9° is in detriment — the planet opposite its home, working against the grain; Jupiter in Virgo at 26.2° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-earth3-fire2-water1",
+        "modalities:mutable4-cardinal4-fixed2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in air, 3 in earth, 2 in fire, 1 in water by element, 4 mutable, 4 cardinal, 2 fixed by modality. Air runs on comparison and connection — the pattern noticed first, the feeling filed second. Uranus was retrograde. Venus changed direction during the day, so its motion is left open."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:11.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 11.8° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 10.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/december-17/",
+    "label": "Everyone born on December 17"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Uranus:trine",
+    "sun-degree:25.75",
+    "decan:sagittarius:third",
+    "personal:Mercury:Capricorn:10.7°",
+    "personal:Venus:Capricorn:24.5°",
+    "personal:Mars:Libra:16.9°",
+    "aspect:Mars:Uranus:trine:0.43",
+    "aspect:Sun:Jupiter:square:0.49",
+    "aspect:Neptune:Pluto:trine:1.01",
+    "figure:unaspected:Moon",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:detriment",
+    "elements:air4-earth3-fire2-water1",
+    "modalities:mutable4-cardinal4-fixed2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:sagittarius",
+    "moon-band:11.8"
+  ],
+  "measurements": {
+    "originalWords": 367,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "birgit-nilsson",
+ "qid": "Q233951",
+ "displayName": "Birgit Nilsson",
+ "wikidataLabel": "Birgit Nilsson",
+ "wikidataDescription": "Swedish opera singer (1918–2005)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q233951",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522867040
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Birgit Nilsson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Birgit_Nilsson",
+   "pageId": 762369,
+   "revisionId": 1359300151,
+   "revisionTimestamp": "2026-06-14T13:22:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1918-05-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1918-05-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1918-05-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2005-12-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10718286",
+  "label": "Västra Karup",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10718286",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q10718286",
+   "sourceEntityLabel": "Västra Karup",
+   "latitude": 56.410944444444,
+   "longitude": 12.741944444444,
+   "precision": 0.000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2865819",
+   "label": "opera singer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Birgit Nilsson, Swedish Wagnerian Soprano, at home (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Birgit%20Nilsson%2C%20Swedish%20Wagnerian%20Soprano%2C%20at%20home%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Birgit_Nilsson,_Swedish_Wagnerian_Soprano,_at_home_(cropped).jpg",
+  "width": 3163,
+  "height": 3283,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bernard Gotfryd",
+  "credit": "Photo by Bernard Gotfryd scanned from slide https://www.loc.gov/item/2020732364/ converted from the 93MB tiff file",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

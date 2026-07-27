@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "henry-lawson",
+ "qid": "Q453577",
+ "displayName": "Henry Lawson",
+ "wikidataLabel": "Henry Lawson",
+ "wikidataDescription": "Australian writer and poet (1867–1922)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "oceania",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q453577",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517350111
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Henry Lawson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Henry_Lawson",
+   "pageId": 156799,
+   "revisionId": 1361320268,
+   "revisionTimestamp": "2026-06-27T04:37:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1867-06-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1867-06-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1867-06-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1922-09-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5607467",
+  "label": "Grenfell",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5607467",
+  "country": {
+   "entity": "Q408",
+   "label": "Australia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5607467",
+   "sourceEntityLabel": "Grenfell",
+   "latitude": -33.90972222222222,
+   "longitude": 148.195,
+   "precision": 0.000278,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Henry Lawson photograph 1902.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Henry%20Lawson%20photograph%201902.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Henry_Lawson_photograph_1902.jpg",
+  "width": 304,
+  "height": 406,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

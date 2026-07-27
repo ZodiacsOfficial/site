@@ -1,0 +1,114 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "amy-johnson",
+ "qid": "Q2998",
+ "displayName": "Amy Johnson",
+ "wikidataLabel": "Amy Johnson",
+ "wikidataDescription": "pioneering English aviator (1903–1941)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2998",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517812256
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Amy Johnson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Amy_Johnson",
+   "pageId": 184413,
+   "revisionId": 1357583569,
+   "revisionTimestamp": "2026-06-03T13:55:15Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1903-07-01T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1903-07-01T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1904-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1903-07-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q128147",
+  "label": "Kingston upon Hull",
+  "entityUrl": "https://www.wikidata.org/wiki/Q128147",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q128147",
+   "sourceEntityLabel": "Kingston upon Hull",
+   "latitude": 53.74444444444445,
+   "longitude": -0.33249999999999996,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2095549",
+   "label": "aircraft pilot"
+  },
+  {
+   "entity": "Q81096",
+   "label": "engineer"
+  },
+  {
+   "entity": "Q27732138",
+   "label": "glider pilot"
+  }
+ ],
+ "portrait": {
+  "file": "File:Amy Johnson (Our Generation, 1938) (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Amy%20Johnson%20(Our%20Generation%2C%201938)%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Amy_Johnson_(Our_Generation,_1938)_(cropped).jpg",
+  "width": 961,
+  "height": 1056,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Andy Dingley (scanner)",
+  "credit": "Scan from Foreword by E. Royston Pike (1938) Our Generation, London: Waverley Book Company",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

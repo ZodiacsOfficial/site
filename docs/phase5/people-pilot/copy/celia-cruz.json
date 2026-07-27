@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "celia-cruz",
+  "seedRound": 0,
+  "qid": "Q474045",
+  "displayName": "Celia Cruz",
+  "identity": "Singer and actor · Cuba · 1925–2003",
+  "title": "Celia Cruz's birth chart",
+  "metaDescription": "Celia Cruz's chart, computed from a sourced birth date: Sun at 27.8° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mars and Pluto sit 0.2° from an exact square — near enough that the tradition reads drive and depth as a single working part. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards.",
+  "ledeFact": "aspect:Mars:Pluto:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:27.78",
+        "decan:libra:third"
+      ],
+      "text": "Libra, but precisely: 27.8°, third decan, 20°–30°, under Mercury in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Scorpio:7.3°",
+        "personal:Venus:Sagittarius:11.7°",
+        "personal:Mars:Libra:14.9°"
+      ],
+      "text": "For the fast movers, Mercury was at 7.3° Scorpio, Venus was at 11.7° Sagittarius, Mars was at 14.9° Libra. Read together: a mind that absorbs before it argues; taste that runs toward the vivid and the immediate; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Pluto:trine:0.01",
+        "aspect:Mars:Pluto:square:0.17",
+        "aspect:Mars:Jupiter:square:0.53"
+      ],
+      "text": "Closest first: Saturn to Pluto, a trine with 0.0° of slack. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mars square Pluto at 0.2°, and Mars square Jupiter at 0.5° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Jupiter-Pluto:apex-Mars",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Jupiter opposes Pluto while both square Mars. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:fall"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Libra at 27.8° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Libra at 14.9° is in detriment — the planet opposite its home, working against the grain; Jupiter in Capricorn at 15.4° is in fall. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-fire3-air2-earth1",
+        "modalities:cardinal4-mutable3-fixed3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: water 4, fire 3, air 2, earth 1 across the elements, and cardinal 4, mutable 3, fixed 3 across the modalities. Uranus and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:sagittarius",
+        "moon-band:13.9"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Sagittarius for the whole of that day at the birthplace, covering 13.9° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 17.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-21/",
+    "label": "Everyone born on October 21"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mars:Pluto:square",
+    "sun-degree:27.78",
+    "decan:libra:third",
+    "personal:Mercury:Scorpio:7.3°",
+    "personal:Venus:Sagittarius:11.7°",
+    "personal:Mars:Libra:14.9°",
+    "aspect:Saturn:Pluto:trine:0.01",
+    "aspect:Mars:Pluto:square:0.17",
+    "aspect:Mars:Jupiter:square:0.53",
+    "figure:t-square:Jupiter-Pluto:apex-Mars",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:fall",
+    "elements:water4-fire3-air2-earth1",
+    "modalities:cardinal4-mutable3-fixed3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:sagittarius",
+    "moon-band:13.9"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

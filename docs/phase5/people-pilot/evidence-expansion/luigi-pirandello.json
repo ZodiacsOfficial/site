@@ -1,0 +1,120 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "luigi-pirandello",
+ "qid": "Q1403",
+ "displayName": "Luigi Pirandello",
+ "wikidataLabel": "Luigi Pirandello",
+ "wikidataDescription": "Italian dramatist, novelist, short story writer and poet (1867-1936)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1403",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517818441
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Luigi Pirandello",
+   "articleUrl": "https://en.wikipedia.org/wiki/Luigi_Pirandello",
+   "pageId": 18707,
+   "revisionId": 1360647683,
+   "revisionTimestamp": "2026-06-22T19:30:29Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1867-06-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1867-06-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1867-06-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1936-12-10T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q13678",
+  "label": "Agrigento",
+  "entityUrl": "https://www.wikidata.org/wiki/Q13678",
+  "country": {
+   "entity": "Q38",
+   "label": "Italy"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q13678",
+   "sourceEntityLabel": "Agrigento",
+   "latitude": 37.3125,
+   "longitude": 13.575,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3455803",
+   "label": "director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Luigi Pirandello 1932.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Luigi%20Pirandello%201932.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Luigi_Pirandello_1932.jpg",
+  "width": 3342,
+  "height": 4021,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Agence de presse Meurisse",
+  "credit": "Bibliothèque nationale de France",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

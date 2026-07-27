@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "aung-san",
+ "qid": "Q194161",
+ "displayName": "Aung San",
+ "wikidataLabel": "Aung San",
+ "wikidataDescription": "Burmese revolutionary leader (1915-1947)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "seasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q194161",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515850478
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Aung San",
+   "articleUrl": "https://en.wikipedia.org/wiki/Aung_San",
+   "pageId": 585020,
+   "revisionId": 1364899998,
+   "revisionTimestamp": "2026-07-19T04:15:13Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1915-02-13T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1915-02-13T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1915-02-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1947-07-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q15261159",
+  "label": "Natmauk",
+  "entityUrl": "https://www.wikidata.org/wiki/Q15261159",
+  "country": {
+   "entity": "Q836",
+   "label": "Myanmar"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q15261159",
+   "sourceEntityLabel": "Natmauk",
+   "latitude": 20.35027778,
+   "longitude": 95.40138889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q148057",
+   "label": "national hero"
+  }
+ ],
+ "portrait": {
+  "file": "File:Aung San color portrait.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Aung%20San%20color%20portrait.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Aung_San_color_portrait.jpg",
+  "width": 300,
+  "height": 384,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Various collections",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

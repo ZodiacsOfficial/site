@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "anton-bruckner",
+  "seedRound": 0,
+  "qid": "Q81752",
+  "displayName": "Anton Bruckner",
+  "identity": "Composer and university teacher · Austria · 1824–1896",
+  "title": "Anton Bruckner's birth chart",
+  "metaDescription": "Anton Bruckner's chart, computed from a sourced birth date: Sun at 11.8° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a trine: the Sun and Uranus within 0.1°, identity wired to disruption. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required.",
+  "ledeFact": "aspect:Sun:Uranus:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.80",
+        "decan:virgo:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 11.8° Virgo: the second decan, whose classical sub-ruler is Saturn. A earth sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:8.5°",
+        "personal:Venus:Virgo:21.9°",
+        "personal:Mars:Scorpio:17.4°"
+      ],
+      "text": "Closer in, Mercury stands at 8.5° Libra; Venus stands at 21.9° Virgo; Mars stands at 17.4° Scorpio. The tradition reads a mind at home in argument and pattern from Mercury, taste for the substantial and the lasting from Venus, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Uranus:trine:0.14",
+        "aspect:Mercury:Saturn:trine:0.86",
+        "aspect:Jupiter:Pluto:trine:1.09"
+      ],
+      "text": "Closest first: the Sun to Uranus, a trine with 0.1° of slack. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mercury trine Saturn at 0.9°, and Jupiter trine Pluto at 1.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Mercury-Pluto:apex-Neptune",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mercury opposes Pluto while both square Neptune. Two squares braced against one opposition make a t-square — the chart’s working end, where pressure keeps finding the same outlet. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:fall",
+        "dignity:Mars:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Venus in Virgo at 21.9° is in fall — the tradition’s uphill placement, strength earned rather than given; Mars in Scorpio at 17.4° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air2-fire2-water1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:3"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 earth, 2 air, 2 fire, 1 water; by modality, 4 cardinal, 3 mutable, 2 fixed. Earth weights a chart toward the material and the durable — what can be built, kept, and relied on. Uranus, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 11.9° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/september-4/",
+    "label": "Everyone born on September 4"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Uranus:trine",
+    "sun-degree:11.80",
+    "decan:virgo:second",
+    "personal:Mercury:Libra:8.5°",
+    "personal:Venus:Virgo:21.9°",
+    "personal:Mars:Scorpio:17.4°",
+    "aspect:Sun:Uranus:trine:0.14",
+    "aspect:Mercury:Saturn:trine:0.86",
+    "aspect:Jupiter:Pluto:trine:1.09",
+    "figure:t-square:Mercury-Pluto:apex-Neptune",
+    "figure:unaspected:Moon",
+    "dignity:Venus:fall",
+    "dignity:Mars:domicile",
+    "elements:earth4-air2-fire2-water1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:3",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 452,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

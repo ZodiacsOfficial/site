@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "eva-peron",
+ "qid": "Q40933",
+ "displayName": "Eva Perón",
+ "wikidataLabel": "Eva Perón",
+ "wikidataDescription": "Argentine actress and politician (1919–1952)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q40933",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520435431
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Eva Perón",
+   "articleUrl": "https://en.wikipedia.org/wiki/Eva_Per%C3%B3n",
+   "pageId": 51584,
+   "revisionId": 1365954162,
+   "revisionTimestamp": "2026-07-25T11:27:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1919-05-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1919-05-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1919-05-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1952-07-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1020277",
+  "label": "Junín",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1020277",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1020277",
+   "sourceEntityLabel": "Junín",
+   "latitude": -34.583333333333336,
+   "longitude": -60.95,
+   "precision": 0.016666666666666666,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q15627169",
+   "label": "trade unionist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q27532437",
+   "label": "suffragist"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Evita (cropped2).JPG",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Evita%20(cropped2).JPG",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Evita_(cropped2).JPG",
+  "width": 623,
+  "height": 834,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Pinélides Fusco",
+  "credit": "Museo Evita",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

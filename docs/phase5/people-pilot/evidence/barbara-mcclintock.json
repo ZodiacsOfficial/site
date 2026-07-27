@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "barbara-mcclintock",
+ "qid": "Q199654",
+ "displayName": "Barbara McClintock",
+ "wikidataLabel": "Barbara McClintock",
+ "wikidataDescription": "American scientist and cytogeneticist",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q199654",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517006923
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Barbara McClintock",
+   "articleUrl": "https://en.wikipedia.org/wiki/Barbara_McClintock",
+   "pageId": 55188,
+   "revisionId": 1366116223,
+   "revisionTimestamp": "2026-07-26T10:32:27Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1902-06-16T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1902-06-16T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1902-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1902-06-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1992-09-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q33486",
+  "label": "Hartford",
+  "entityUrl": "https://www.wikidata.org/wiki/Q33486",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q33486",
+   "sourceEntityLabel": "Hartford",
+   "latitude": 41.763333333333,
+   "longitude": -72.685,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2374149",
+   "label": "botanist"
+  },
+  {
+   "entity": "Q71049338",
+   "label": "cytogeneticist"
+  },
+  {
+   "entity": "Q593644",
+   "label": "chemist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q3126128",
+   "label": "geneticist"
+  },
+  {
+   "entity": "Q15839136",
+   "label": "cell biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Barbara McClintock (1902-1992) shown in her laboratory in 1947.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Barbara%20McClintock%20(1902-1992)%20shown%20in%20her%20laboratory%20in%201947.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Barbara_McClintock_(1902-1992)_shown_in_her_laboratory_in_1947.jpg",
+  "width": 1833,
+  "height": 1500,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Smithsonian Institution/Science Service; Restored by Adam Cuerden",
+  "credit": "Flickr: Barbara McClintock (1902-1992)Smithsonian original",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

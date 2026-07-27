@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "yuri-gagarin",
+  "seedRound": 0,
+  "qid": "Q7327",
+  "displayName": "Yuri Gagarin",
+  "identity": "Astronaut · Russia · 1934–1968",
+  "title": "Yuri Gagarin's birth chart",
+  "metaDescription": "Yuri Gagarin's chart, computed from a sourced birth date: Sun at 18.1° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mercury and Neptune sit 0.6° from an exact opposition — near enough that the tradition reads thinking and imagination as a single working part. An opposition puts two needs on opposite shores of the same water. Neither drowns; neither gets the whole beach.",
+  "ledeFact": "aspect:Mercury:Neptune:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.11",
+        "decan:pisces:second"
+      ],
+      "text": "Pisces, but precisely: 18.1°, second decan, 10°–20°, under the Moon in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Pisces:11.4°",
+        "personal:Venus:Aquarius:10.4°",
+        "personal:Mars:Pisces:26.1°"
+      ],
+      "text": "The personal planets sit Mercury at 11.4° Pisces, Venus at 10.4° Aquarius, Mars at 26.1° Pisces. Mercury in a water sign reads as a mind that absorbs before it argues; Venus in a air sign reads as taste led by wit and proportion; Mars in a water sign reads as drive that moves on certainty and current."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Saturn:trine:0.43",
+        "aspect:Mercury:Neptune:opposition:0.56",
+        "aspect:Jupiter:Pluto:square:0.88"
+      ],
+      "text": "Jupiter and Saturn hold the closest angle here — a trine, 0.4° wide. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mercury opposition Neptune at 0.6°, and Jupiter square Pluto at 0.9° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Jupiter-Uranus:apex-Pluto",
+        "figure:unaspected:Venus"
+      ],
+      "text": "Jupiter opposes Uranus while both square Pluto. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. Venus stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:fall",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Mercury in Pisces at 11.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aquarius at 22.2° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air3-fire1-earth1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 4 water, 3 air, 1 fire, 1 earth; by modality, 4 mutable, 3 cardinal, 2 fixed. Mercury, Jupiter, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 14.2° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-9/",
+    "label": "Everyone born on March 9"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Neptune:opposition",
+    "sun-degree:18.11",
+    "decan:pisces:second",
+    "personal:Mercury:Pisces:11.4°",
+    "personal:Venus:Aquarius:10.4°",
+    "personal:Mars:Pisces:26.1°",
+    "aspect:Jupiter:Saturn:trine:0.43",
+    "aspect:Mercury:Neptune:opposition:0.56",
+    "aspect:Jupiter:Pluto:square:0.88",
+    "figure:t-square:Jupiter-Uranus:apex-Pluto",
+    "figure:unaspected:Venus",
+    "dignity:Mercury:fall",
+    "dignity:Saturn:domicile",
+    "elements:water4-air3-fire1-earth1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 447,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "fanny-blankers-koen",
+  "seedRound": 0,
+  "qid": "Q229046",
+  "displayName": "Fanny Blankers-Koen",
+  "identity": "Sprinter · Netherlands · 1918–2004",
+  "title": "Fanny Blankers-Koen's birth chart",
+  "metaDescription": "Fanny Blankers-Koen's chart, computed from a sourced birth date: Sun at 5.3° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Fixed signs carry six of the ten placements whose signs are settled — the broadest certain weighting in the chart. The fixed signs hold what the cardinal signs start; a chart weighted there finishes its sentences.",
+  "ledeFact": "modality:fixed:6",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:5.35",
+        "decan:taurus:first"
+      ],
+      "text": "The Sun's exact place is 5.3° Taurus. That falls in the first decan, 0°–10°, sub-ruled by Venus in the classical scheme — a earth sign read through a fixed season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Taurus:6.5°",
+        "personal:Venus:Pisces:19.2°",
+        "personal:Mars:Virgo:13.8°"
+      ],
+      "text": "The personal planets sit Mercury at 6.5° Taurus, Venus at 19.2° Pisces, Mars at 13.8° Virgo. Mercury in a earth sign reads as a mind that trusts the measured and the checked; Venus in a water sign reads as taste tuned to mood and undertow; Mars in a earth sign reads as drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Sun:Neptune:square:1.01",
+        "aspect:Sun:Mercury:conjunction:1.19",
+        "aspect:Mars:Jupiter:square:1.32"
+      ],
+      "text": "The Sun and Neptune hold the closest angle here — a square, 1.0° wide. Right angles are where the scheme puts its grit. A square asks two functions to work in a mode neither would have chosen. Behind it, the Sun conjunction Mercury at 1.2°, and Mars square Jupiter at 1.3° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:t-square:Sun-Moon:apex-Saturn"
+      ],
+      "text": "The Sun opposes the Moon while both square Saturn. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:fall",
+        "dignity:Venus:exaltation",
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has four entries for this chart. The Moon in Scorpio at 6.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Venus in Pisces at 19.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Gemini at 12.5° is in detriment — the planet opposite its home, working against the grain; Saturn in Leo at 7.9° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth3-water3-air2-fire2",
+        "modalities:fixed6-mutable3-cardinal1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 3 earth, 3 water, 2 air, 2 fire by element and 6 fixed, 3 mutable, 1 cardinal by modality. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Mercury was retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:12.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 12.1° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 6.2°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-26/",
+    "label": "Everyone born on April 26"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "modality:fixed:6",
+    "sun-degree:5.35",
+    "decan:taurus:first",
+    "personal:Mercury:Taurus:6.5°",
+    "personal:Venus:Pisces:19.2°",
+    "personal:Mars:Virgo:13.8°",
+    "aspect:Sun:Neptune:square:1.01",
+    "aspect:Sun:Mercury:conjunction:1.19",
+    "aspect:Mars:Jupiter:square:1.32",
+    "figure:t-square:Sun-Moon:apex-Saturn",
+    "dignity:Moon:fall",
+    "dignity:Venus:exaltation",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:earth3-water3-air2-fire2",
+    "modalities:fixed6-mutable3-cardinal1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:scorpio",
+    "moon-band:12.1"
+  ],
+  "measurements": {
+    "originalWords": 447,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,150 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "joan-miro",
+ "qid": "Q152384",
+ "displayName": "Joan Miró",
+ "wikidataLabel": "Joan Miró",
+ "wikidataDescription": "Spanish painter, sculptor, and ceramicist (1893–1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q152384",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520564653
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Joan Miró",
+   "articleUrl": "https://en.wikipedia.org/wiki/Joan_Mir%C3%B3",
+   "pageId": 63093,
+   "revisionId": 1365673785,
+   "revisionTimestamp": "2026-07-23T20:07:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1893-04-20T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1893-04-20T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1893-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1893-04-20T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-12-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1492",
+  "label": "Barcelona",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1492",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1492",
+   "sourceEntityLabel": "Barcelona",
+   "latitude": 41.3825,
+   "longitude": 2.1769444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q16947657",
+   "label": "lithographer"
+  },
+  {
+   "entity": "Q7541856",
+   "label": "ceramicist"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q2000124",
+   "label": "postage stamp designer"
+  },
+  {
+   "entity": "Q56236186",
+   "label": "carpets designer"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q2707485",
+   "label": "scenographer"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q10694573",
+   "label": "textile artist"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Joan Miro (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Joan%20Miro%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Joan_Miro_(cropped).jpg",
+  "width": 243,
+  "height": 283,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Carl Van Vechten",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID van.5a52418.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

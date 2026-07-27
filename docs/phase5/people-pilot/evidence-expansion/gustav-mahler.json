@@ -1,0 +1,124 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gustav-mahler",
+ "qid": "Q7304",
+ "displayName": "Gustav Mahler",
+ "wikidataLabel": "Gustav Mahler",
+ "wikidataDescription": "Austrian late-Romantic composer (1860–1911)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7304",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522391612
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gustav Mahler",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gustav_Mahler",
+   "pageId": 65174,
+   "revisionId": 1364852706,
+   "revisionTimestamp": "2026-07-18T22:25:59Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1860-07-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1860-07-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1860-07-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1911-05-18T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q999950",
+  "label": "Kaliště",
+  "entityUrl": "https://www.wikidata.org/wiki/Q999950",
+  "country": {
+   "entity": "Q213",
+   "label": "Czech Republic"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q999950",
+   "sourceEntityLabel": "Kaliště",
+   "latitude": 49.592655395272,
+   "longitude": 15.304099440745,
+   "precision": 0.0013858238364438,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q806349",
+   "label": "bandleader"
+  },
+  {
+   "entity": "Q1776724",
+   "label": "theatre manager"
+  },
+  {
+   "entity": "Q215793",
+   "label": "chapelmaster"
+  },
+  {
+   "entity": "Q3029406",
+   "label": "opera director"
+  }
+ ],
+ "portrait": {
+  "file": "File:Photo of Gustav Mahler by Moritz Nähr 01.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Photo%20of%20Gustav%20Mahler%20by%20Moritz%20N%C3%A4hr%2001.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Photo_of_Gustav_Mahler_by_Moritz_N%C3%A4hr_01.jpg",
+  "width": 801,
+  "height": 956,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Moritz Nähr",
+  "credit": "[1] (archive url) / [2]",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "maurice-merleau-ponty",
+ "qid": "Q212639",
+ "displayName": "Maurice Merleau-Ponty",
+ "wikidataLabel": "Maurice Merleau-Ponty",
+ "wikidataDescription": "French phenomenological philosopher",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q212639",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515912080
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Maurice Merleau-Ponty",
+   "articleUrl": "https://en.wikipedia.org/wiki/Maurice_Merleau-Ponty",
+   "pageId": 19373,
+   "revisionId": 1365805452,
+   "revisionTimestamp": "2026-07-24T14:15:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1908-03-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1908-03-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1908-03-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1961-05-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q207587",
+  "label": "Rochefort",
+  "entityUrl": "https://www.wikidata.org/wiki/Q207587",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q207587",
+   "sourceEntityLabel": "Rochefort",
+   "latitude": 45.941944444444,
+   "longitude": -0.96694444444444,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q121594",
+   "label": "professor"
+  },
+  {
+   "entity": "Q17391638",
+   "label": "art theorist"
+  },
+  {
+   "entity": "Q21550346",
+   "label": "aesthetician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Maurice Merleau-Ponty.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Maurice%20Merleau-Ponty.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Maurice_Merleau-Ponty.jpg",
+  "width": 463,
+  "height": 652,
+  "licenseShortName": "CC BY 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/3.0",
+  "artist": "http://www.philosophical-investigations.org/Users/PerigGouanvic",
+  "credit": "http://www.philosophical-investigations.org/Users/PerigGouanvic/Merleau-Ponty_and_the_Post-Modern_Non-Self",
+  "usageTerms": "Creative Commons Attribution 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

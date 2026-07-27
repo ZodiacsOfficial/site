@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "ernest-everett-just",
+ "qid": "Q724591",
+ "displayName": "Ernest Everett Just",
+ "wikidataLabel": "Ernest Everett Just",
+ "wikidataDescription": "American biologist (1883–1941)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q724591",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2513155784
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Ernest Everett Just",
+   "articleUrl": "https://en.wikipedia.org/wiki/Ernest_Everett_Just",
+   "pageId": 7575460,
+   "revisionId": 1364614004,
+   "revisionTimestamp": "2026-07-17T15:07:24Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1883-08-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1883-08-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1883-08-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1941-10-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q47716",
+  "label": "Charleston",
+  "entityUrl": "https://www.wikidata.org/wiki/Q47716",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q47716",
+   "sourceEntityLabel": "Charleston",
+   "latitude": 32.78333333333333,
+   "longitude": -79.93194444444444,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q3640160",
+   "label": "marine biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Ernest Everett Just.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Ernest%20Everett%20Just.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Ernest_Everett_Just.jpg",
+  "width": 212,
+  "height": 288,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

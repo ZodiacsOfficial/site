@@ -1,0 +1,136 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "julio-cortazar",
+ "qid": "Q174210",
+ "displayName": "Julio Cortázar",
+ "wikidataLabel": "Julio Cortázar",
+ "wikidataDescription": "Argentine writer and translator (1914–1984)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q174210",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515846363
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Julio Cortázar",
+   "articleUrl": "https://en.wikipedia.org/wiki/Julio_Cort%C3%A1zar",
+   "pageId": 334671,
+   "revisionId": 1366027331,
+   "revisionTimestamp": "2026-07-25T21:23:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1914-08-26T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1914-08-26T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1914-08-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1984-02-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q239",
+  "label": "Brussels",
+  "entityUrl": "https://www.wikidata.org/wiki/Q239",
+  "country": {
+   "entity": "Q31",
+   "label": "Belgium"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q239",
+   "sourceEntityLabel": "Brussels",
+   "latitude": 50.846666666666664,
+   "longitude": 4.351666666666667,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q14467526",
+   "label": "linguist"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  }
+ ],
+ "portrait": {
+  "file": "File:Cortázar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Cort%C3%A1zar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Cort%C3%A1zar.jpg",
+  "width": 1950,
+  "height": 2617,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Sara Facio",
+  "credit": "Buenos Aires, Buenos Aires, by Alicia D'Amico, Sara Facio & Julio Cortázar - Editorial Sudamericana, Buenos Aires (1968)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

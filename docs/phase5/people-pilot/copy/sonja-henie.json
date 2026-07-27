@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "sonja-henie",
+  "seedRound": 0,
+  "qid": "Q204205",
+  "displayName": "Sonja Henie",
+  "identity": "Actor and figure skater · Norway · 1912–1969",
+  "title": "Sonja Henie's birth chart",
+  "metaDescription": "Sonja Henie's chart, computed from a sourced birth date: Sun at 18.2° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 18.2° Aries, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Sun:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.24",
+        "decan:aries:second"
+      ],
+      "text": "The Sun's exact place is 18.2° Aries. That falls in the second decan, 10°–20°, sub-ruled by the Sun in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Aries:29.2°",
+        "personal:Venus:Pisces:24.9°",
+        "personal:Mars:Cancer:1.6°"
+      ],
+      "text": "Closer in, Mercury stands at 29.2° Aries; Venus stands at 24.9° Pisces; Mars stands at 1.6° Cancer. The tradition reads a mind that decides at speaking speed from Mercury, taste tuned to mood and undertow from Venus, drive that moves on certainty and current from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:sextile:2.03",
+        "aspect:Mercury:Pluto:sextile:2.13",
+        "aspect:Venus:Pluto:square:2.2"
+      ],
+      "text": "Nothing in the geometry sits closer than Saturn and Neptune: 2.0° from an exact sextile. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Mercury sextile Pluto at 2.1°, and Venus square Pluto at 2.2° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:fall",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. The Sun in Aries at 18.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Venus in Pisces at 24.9° is in exaltation; Mars in Cancer at 1.6° is in fall — the tradition’s uphill placement, strength earned rather than given; Jupiter in Sagittarius at 15.3° is in domicile — the planet in its own sign, running on home rules. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire3-water3-air2-earth1",
+        "modalities:cardinal4-mutable3-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Counting only the 9 placements whose signs hold for the whole day, the chart runs 3 fire, 3 water, 2 air, 1 earth by element and 4 cardinal, 3 mutable, 2 fixed by modality. Fire leads with ignition: the first move made early, and certainty arriving ahead of the evidence. Mercury and Jupiter were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 12.0° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-8/",
+    "label": "Everyone born on April 8"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "dignity:Sun:exaltation",
+    "sun-degree:18.24",
+    "decan:aries:second",
+    "personal:Mercury:Aries:29.2°",
+    "personal:Venus:Pisces:24.9°",
+    "personal:Mars:Cancer:1.6°",
+    "aspect:Saturn:Neptune:sextile:2.03",
+    "aspect:Mercury:Pluto:sextile:2.13",
+    "aspect:Venus:Pluto:square:2.2",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:fall",
+    "dignity:Jupiter:domicile",
+    "elements:fire3-water3-air2-earth1",
+    "modalities:cardinal4-mutable3-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 451,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

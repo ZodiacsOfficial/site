@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "machiko-hasegawa",
+  "seedRound": 0,
+  "qid": "Q265148",
+  "displayName": "Machiko Hasegawa",
+  "identity": "Writer and illustrator · Japan · 1920–1992",
+  "title": "Machiko Hasegawa's birth chart",
+  "metaDescription": "Machiko Hasegawa's chart, computed from a sourced birth date: Sun at 8.9° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a sextile to Uranus at 0.4° — close enough to weld taste to disruption. A sixth of the circle is close enough for cooperation and far enough that it stays optional.",
+  "ledeFact": "aspect:Venus:Uranus:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.94",
+        "decan:aquarius:first"
+      ],
+      "text": "At the noon reference the Sun sits 8.9° into Aquarius — the first decan, which the old scheme hands to Saturn. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:4.2°",
+        "personal:Venus:Capricorn:0.8°",
+        "personal:Mars:Libra:29.3°"
+      ],
+      "text": "The personal planets sit Mercury at 4.2° Aquarius, Venus at 0.8° Capricorn, Mars at 29.3° Libra. Mercury in a air sign reads as thought that travels by comparison; Venus in a earth sign reads as attraction that grows by reliability; Mars in a air sign reads as effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:sextile:0.37",
+        "aspect:Mars:Uranus:trine:1.08",
+        "aspect:Sun:Neptune:opposition:1.26"
+      ],
+      "text": "Venus and Uranus hold the closest angle here — a sextile, 0.4° wide. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Mars trine Uranus at 1.1°, and the Sun opposition Neptune at 1.3° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mars:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks two placements here. The Sun in Aquarius at 8.9° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 29.3° is in detriment. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-earth2-fire2-water2",
+        "modalities:fixed4-cardinal3-mutable2",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 air, 2 earth, 2 fire, 2 water by element and 4 fixed, 3 cardinal, 2 mutable by mode. Jupiter, Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:taurus:gemini"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Taurus into Gemini during that day at the birthplace, travelling 14.2° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-30/",
+    "label": "Everyone born on January 30"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Uranus:sextile",
+    "sun-degree:8.94",
+    "decan:aquarius:first",
+    "personal:Mercury:Aquarius:4.2°",
+    "personal:Venus:Capricorn:0.8°",
+    "personal:Mars:Libra:29.3°",
+    "aspect:Venus:Uranus:sextile:0.37",
+    "aspect:Mars:Uranus:trine:1.08",
+    "aspect:Sun:Neptune:opposition:1.26",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Mars:detriment",
+    "elements:air3-earth2-fire2-water2",
+    "modalities:fixed4-cardinal3-mutable2",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:taurus:gemini"
+  ],
+  "measurements": {
+    "originalWords": 379,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

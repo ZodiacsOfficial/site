@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "elizabeth-bishop",
+  "seedRound": 0,
+  "qid": "Q235946",
+  "displayName": "Elizabeth Bishop",
+  "identity": "Poet and university teacher · United States · 1911–1979",
+  "title": "Elizabeth Bishop's birth chart",
+  "metaDescription": "Elizabeth Bishop's chart, computed from a sourced birth date: Sun at 18.8° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Venus holds a sextile to Mars at 0.9° — close enough to weld taste to drive. A sixth of the circle is close enough for cooperation and far enough that it stays optional.",
+  "ledeFact": "aspect:Venus:Mars:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:18.83",
+        "decan:aquarius:second"
+      ],
+      "text": "At the noon reference the Sun sits 18.8° into Aquarius — the second decan, which the old scheme hands to Mercury. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Capricorn:24.3°",
+        "personal:Venus:Pisces:6.5°",
+        "personal:Mars:Capricorn:5.6°"
+      ],
+      "text": "Mercury holds 24.3° Capricorn, Venus holds 6.5° Pisces, Mars holds 5.6° Capricorn — in the old shorthand, thought with its feet on the ground; attraction that works by atmosphere; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Mars:sextile:0.86",
+        "aspect:Mercury:Uranus:conjunction:2.37",
+        "aspect:Saturn:Uranus:square:4.34"
+      ],
+      "text": "Closest first: Venus to Mars, a sextile with 0.9° of slack. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Mercury conjunction Uranus at 2.4°, and Saturn square Uranus at 4.3° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Mars:exaltation"
+      ],
+      "text": "Read against the old dignities, three placements stand out. The Sun in Aquarius at 18.8° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 6.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Capricorn at 5.6° is in exaltation. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-air3-water3",
+        "modalities:cardinal4-fixed3-mutable3",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "Among the 10 placements whose signs hold for the whole day, the elements divide 4 earth, 3 air, 3 water; by modality, 4 cardinal, 3 fixed, 3 mutable. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:14.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 14.3° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 16.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-8/",
+    "label": "Everyone born on February 8"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Mars:sextile",
+    "sun-degree:18.83",
+    "decan:aquarius:second",
+    "personal:Mercury:Capricorn:24.3°",
+    "personal:Venus:Pisces:6.5°",
+    "personal:Mars:Capricorn:5.6°",
+    "aspect:Venus:Mars:sextile:0.86",
+    "aspect:Mercury:Uranus:conjunction:2.37",
+    "aspect:Saturn:Uranus:square:4.34",
+    "figure:unaspected:Moon",
+    "dignity:Sun:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Mars:exaltation",
+    "elements:earth4-air3-water3",
+    "modalities:cardinal4-fixed3-mutable3",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:gemini",
+    "moon-band:14.3"
+  ],
+  "measurements": {
+    "originalWords": 396,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

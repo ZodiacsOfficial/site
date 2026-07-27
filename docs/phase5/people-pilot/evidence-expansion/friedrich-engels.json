@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "friedrich-engels",
+ "qid": "Q34787",
+ "displayName": "Friedrich Engels",
+ "wikidataLabel": "Friedrich Engels",
+ "wikidataDescription": "German philosopher, sociologist and economist (1820–1895)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q34787",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521237660
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Friedrich Engels",
+   "articleUrl": "https://en.wikipedia.org/wiki/Friedrich_Engels",
+   "pageId": 47096,
+   "revisionId": 1366140357,
+   "revisionTimestamp": "2026-07-26T14:30:35Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1820-11-28T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1820-11-28T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   }
+  ],
+  "time": "+1820-11-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1895-08-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q153974",
+  "label": "Barmen",
+  "entityUrl": "https://www.wikidata.org/wiki/Q153974",
+  "country": {
+   "entity": "Q183",
+   "label": "Germany"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q153974",
+   "sourceEntityLabel": "Barmen",
+   "latitude": 51.266666666667,
+   "longitude": 7.2,
+   "precision": 0.016666666666667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q15319501",
+   "label": "social scientist"
+  },
+  {
+   "entity": "Q15994177",
+   "label": "political theorist"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q3242115",
+   "label": "revolutionary"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q28692502",
+   "label": "women's rights activist"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q131524",
+   "label": "entrepreneur"
+  },
+  {
+   "entity": "Q201788",
+   "label": "historian"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  }
+ ],
+ "portrait": {
+  "file": "File:Friedrich Engels portrait (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Friedrich%20Engels%20portrait%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Friedrich_Engels_portrait_(cropped).jpg",
+  "width": 615,
+  "height": 820,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "William Hall (1826–ca. 1898) (cropped and sepia tone removed)",
+  "credit": "File:Friedrich_Engels_portrait.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": "communist"
+ }
+}

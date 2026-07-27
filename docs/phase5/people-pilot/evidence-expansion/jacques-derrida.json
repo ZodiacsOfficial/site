@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jacques-derrida",
+ "qid": "Q130631",
+ "displayName": "Jacques Derrida",
+ "wikidataLabel": "Jacques Derrida",
+ "wikidataDescription": "French philosopher (1930–2004)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "philosophy"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q130631",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520339500
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jacques Derrida",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jacques_Derrida",
+   "pageId": 53255,
+   "revisionId": 1365144446,
+   "revisionTimestamp": "2026-07-20T14:52:28Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1930-07-15T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1930-07-15T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1930-07-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2004-10-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2673474",
+  "label": "El Biar",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2673474",
+  "country": {
+   "entity": "Q262",
+   "label": "Algeria"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2673474",
+   "sourceEntityLabel": "El Biar",
+   "latitude": 36.768333333333,
+   "longitude": 3.0305555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Derrida EHESS (cropped).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Derrida%20EHESS%20(cropped).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Derrida_EHESS_(cropped).png",
+  "width": 881,
+  "height": 1174,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Auto-épreuve",
+  "credit": "File:Derrida_EHESS.jpg",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "oliver-tambo",
+ "qid": "Q359579",
+ "displayName": "Oliver Tambo",
+ "wikidataLabel": "Oliver Tambo",
+ "wikidataDescription": "South African anti-apartheid activist and politician (1917–1993)",
+ "retrievedAtUtc": "2026-07-26T19:05:54.525Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q359579",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2503007332
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Oliver Tambo",
+   "articleUrl": "https://en.wikipedia.org/wiki/Oliver_Tambo",
+   "pageId": 433822,
+   "revisionId": 1359350460,
+   "revisionTimestamp": "2026-06-14T19:25:46Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1917-10-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1917-10-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1917-10-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1993-04-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q15262422",
+  "label": "Nkantolo",
+  "entityUrl": "https://www.wikidata.org/wiki/Q15262422",
+  "country": {
+   "entity": "Q258",
+   "label": "South Africa"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q15262422",
+   "sourceEntityLabel": "Nkantolo",
+   "latitude": -30.783,
+   "longitude": 29.67,
+   "precision": 0.00002777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Oliver Tambo (1981).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Oliver%20Tambo%20(1981).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Oliver_Tambo_(1981).jpg",
+  "width": 860,
+  "height": 1147,
+  "licenseShortName": "CC BY-SA 3.0 nl",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0/nl/deed.en",
+  "artist": "Rob Croes for Anefo",
+  "credit": "Nationaal Archief",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0 nl",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

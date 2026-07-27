@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jean-bartik",
+ "qid": "Q11428",
+ "displayName": "Jean Bartik",
+ "wikidataLabel": "Jean Bartik",
+ "wikidataDescription": "American ENIAC computer programmer (1924–2011)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q11428",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521638263
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jean Bartik",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jean_Bartik",
+   "pageId": 5178038,
+   "revisionId": 1313724589,
+   "revisionTimestamp": "2025-09-27T21:04:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1924-12-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1924-12-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1924-12-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2011-03-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q27985158",
+  "label": "Alanthus Grove",
+  "entityUrl": "https://www.wikidata.org/wiki/Q27985158",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q27985158",
+   "sourceEntityLabel": "Alanthus Grove",
+   "latitude": 40.30694444,
+   "longitude": -94.54416667,
+   "precision": 0.11779794717837,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q5482740",
+   "label": "programmer"
+  },
+  {
+   "entity": "Q170790",
+   "label": "mathematician"
+  },
+  {
+   "entity": "Q82594",
+   "label": "computer scientist"
+  },
+  {
+   "entity": "Q1568338",
+   "label": "technical writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Two women operating ENIAC (full resolution).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Two%20women%20operating%20ENIAC%20(full%20resolution).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Two_women_operating_ENIAC_(full_resolution).jpg",
+  "width": 5682,
+  "height": 3899,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unidentified U.S. Army photographer",
+  "credit": "Image from Historic Computer Images",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

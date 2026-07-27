@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "smita-patil",
+ "qid": "Q467960",
+ "displayName": "Smita Patil",
+ "wikidataLabel": "Smita Patil",
+ "wikidataDescription": "Indian actress (1955–1986)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q467960",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517870136
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Smita Patil",
+   "articleUrl": "https://en.wikipedia.org/wiki/Smita_Patil",
+   "pageId": 2492663,
+   "revisionId": 1366035636,
+   "revisionTimestamp": "2026-07-25T22:19:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1955-10-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1955-10-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1955-10-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1986-12-13T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1538",
+  "label": "Pune",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1538",
+  "country": {
+   "entity": "Q668",
+   "label": "India"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1538",
+   "sourceEntityLabel": "Pune",
+   "latitude": 18.52111111111111,
+   "longitude": 73.85527777777777,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q2259451",
+   "label": "stage actor"
+  },
+  {
+   "entity": "Q10798782",
+   "label": "television actor"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  }
+ ],
+ "portrait": {
+  "file": "File:Smita Patil 2013 stamp of India (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Smita%20Patil%202013%20stamp%20of%20India%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Smita_Patil_2013_stamp_of_India_(cropped).jpg",
+  "width": 327,
+  "height": 409,
+  "licenseShortName": "GODL-India",
+  "licenseUrl": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+  "artist": "India Post, Government of India",
+  "credit": "[1] [2]",
+  "usageTerms": "Government Open Data License – India",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

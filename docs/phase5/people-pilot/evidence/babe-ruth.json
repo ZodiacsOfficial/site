@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "babe-ruth",
+ "qid": "Q213812",
+ "displayName": "Babe Ruth",
+ "wikidataLabel": "Babe Ruth",
+ "wikidataDescription": "American baseball player (1895–1948)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q213812",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521502500
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Babe Ruth",
+   "articleUrl": "https://en.wikipedia.org/wiki/Babe_Ruth",
+   "pageId": 4173,
+   "revisionId": 1365827562,
+   "revisionTimestamp": "2026-07-24T17:27:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1895-02-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1895-02-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1895-02-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1948-08-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q5092",
+  "label": "Baltimore",
+  "entityUrl": "https://www.wikidata.org/wiki/Q5092",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q5092",
+   "sourceEntityLabel": "Baltimore",
+   "latitude": 39.286388888889,
+   "longitude": -76.615,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10871364",
+   "label": "baseball player"
+  }
+ ],
+ "portrait": {
+  "file": "File:Babe Ruth, 1933.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Babe%20Ruth%2C%201933.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Babe_Ruth,_1933.jpg",
+  "width": 1103,
+  "height": 1294,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Charles M. Conlon",
+  "credit": "https://www.ebay.com/itm/BABE-RUTH-1933-YANKEES-CONLON-BASEBALL-POSTER-22-X-28-OFFICIALLY-LICENSED-/223259724073",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

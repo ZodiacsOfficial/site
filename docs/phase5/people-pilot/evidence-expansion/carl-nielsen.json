@@ -1,0 +1,135 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "carl-nielsen",
+ "qid": "Q205139",
+ "displayName": "Carl Nielsen",
+ "wikidataLabel": "Carl Nielsen",
+ "wikidataDescription": "Danish composer",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q205139",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518151829
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Carl Nielsen",
+   "articleUrl": "https://en.wikipedia.org/wiki/Carl_Nielsen",
+   "pageId": 97817,
+   "revisionId": 1347873116,
+   "revisionTimestamp": "2026-04-09T10:01:42Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1865-06-09T00:00:00Z|proleptic-gregorian",
+   "+1865-08-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1865-06-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1865-08-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1865-06-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1931-10-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q7563774",
+  "label": "Sortelung",
+  "entityUrl": "https://www.wikidata.org/wiki/Q7563774",
+  "country": {
+   "entity": "Q35",
+   "label": "Denmark"
+  },
+  "claimCount": 2,
+  "coordinates": {
+   "sourceEntity": "Q7563774",
+   "sourceEntityLabel": "Sortelung",
+   "latitude": 55.3117,
+   "longitude": 10.4139,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q21680663",
+   "label": "classical composer"
+  },
+  {
+   "entity": "Q2490358",
+   "label": "choreographer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q16145150",
+   "label": "music educator"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q1259917",
+   "label": "violinist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Carl Nielsen c. 1908 - Restoration.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Carl%20Nielsen%20c.%201908%20-%20Restoration.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Carl_Nielsen_c._1908_-_Restoration.jpg",
+  "width": 2347,
+  "height": 3452,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Georg Lindstrøm 1866-1923 Restored by Adam Cuerden",
+  "credit": "Historic Dage: Article from August 19, 2014 entitled \"Til København med Carl Nielsen og H.C. Andersen\"",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

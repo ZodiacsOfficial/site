@@ -1,0 +1,134 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "b-r-ambedkar",
+ "qid": "Q231690",
+ "displayName": "B. R. Ambedkar",
+ "wikidataLabel": "B. R. Ambedkar",
+ "wikidataDescription": "Indian polymath, philosopher, and social reformer (1891–1956)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "sasia",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q231690",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522593571
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "B. R. Ambedkar",
+   "articleUrl": "https://en.wikipedia.org/wiki/B._R._Ambedkar",
+   "pageId": 197522,
+   "revisionId": 1365324483,
+   "revisionTimestamp": "2026-07-21T18:15:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1891-04-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1891-04-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1891-04-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1956-12-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q54295687",
+  "label": "Bhim Janmabhoomi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q54295687",
+  "country": null,
+  "claimCount": 2,
+  "coordinates": null
+ },
+ "occupations": [
+  {
+   "entity": "Q188094",
+   "label": "economist"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q77844028",
+   "label": "constitutionalist"
+  },
+  {
+   "entity": "Q808967",
+   "label": "barrister"
+  },
+  {
+   "entity": "Q185351",
+   "label": "jurist"
+  },
+  {
+   "entity": "Q2306091",
+   "label": "sociologist"
+  },
+  {
+   "entity": "Q4773904",
+   "label": "anthropologist"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q16611574",
+   "label": "social reformer"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Dr. Bhimrao Ambedkar.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Dr.%20Bhimrao%20Ambedkar.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Dr._Bhimrao_Ambedkar.jpg",
+  "width": 1229,
+  "height": 1600,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "http://anithawnp.webnode.com/indian-heroes/dr-b-r-ambedkar/[dead link] (read on archive.org)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

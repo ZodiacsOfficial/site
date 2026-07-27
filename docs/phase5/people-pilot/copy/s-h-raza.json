@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "s-h-raza",
+  "seedRound": 0,
+  "qid": "Q3105774",
+  "displayName": "S. H. Raza",
+  "identity": "Painter · India · 1922–2016",
+  "title": "S. H. Raza's birth chart",
+  "metaDescription": "S. H. Raza's chart, computed from a sourced birth date: Sun at 2.9° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mercury and Jupiter sit 0.9° from an exact trine — near enough that the tradition reads thinking and expansion as a single working part. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Mercury:Jupiter:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:2.86",
+        "decan:pisces:first"
+      ],
+      "text": "Pisces, but precisely: 2.9°, first decan, 0°–10°, under Jupiter in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aquarius:17.4°",
+        "personal:Venus:Pisces:6.0°",
+        "personal:Mars:Sagittarius:1.8°"
+      ],
+      "text": "Closer in, Mercury stands at 17.4° Aquarius; Venus stands at 6.0° Pisces; Mars stands at 1.8° Sagittarius. The tradition reads a mind at home in argument and pattern from Mercury, taste tuned to mood and undertow from Venus, drive that ignites on contact from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Jupiter:trine:0.9",
+        "aspect:Sun:Mars:square:1.06",
+        "aspect:Uranus:Pluto:trine:1.11"
+      ],
+      "text": "Start where the chart is tightest — Mercury trine Jupiter, 0.9° of separation. A trine is an open channel. The two cooperate without being asked, which is exactly why it is easy to spend and easy to take for granted. Behind it, the Sun square Mars at 1.1°, and Uranus trine Pluto at 1.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Venus:exaltation",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. The Moon in Capricorn at 13.5° is in detriment — the planet opposite its home, working against the grain; Venus in Pisces at 6.0° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Libra at 6.5° is in exaltation. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water4-air3-fire2-earth1",
+        "modalities:mutable4-cardinal4-fixed2",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 4 water, 3 air, 2 fire, 1 earth by element and 4 mutable, 4 cardinal, 2 fixed by mode. Water reads the room before the room speaks — atmosphere first, analysis later. Mercury, Jupiter, Saturn, Neptune and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:12.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 12.2° between midnight and midnight. That is quick enough to make the exact degree a neighbourhood rather than an address, and slow enough to leave the sign settled. At the noon reference it stands at 13.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/february-22/",
+    "label": "Everyone born on February 22"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Jupiter:trine",
+    "sun-degree:2.86",
+    "decan:pisces:first",
+    "personal:Mercury:Aquarius:17.4°",
+    "personal:Venus:Pisces:6.0°",
+    "personal:Mars:Sagittarius:1.8°",
+    "aspect:Mercury:Jupiter:trine:0.9",
+    "aspect:Sun:Mars:square:1.06",
+    "aspect:Uranus:Pluto:trine:1.11",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Venus:exaltation",
+    "dignity:Saturn:exaltation",
+    "elements:water4-air3-fire2-earth1",
+    "modalities:mutable4-cardinal4-fixed2",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:capricorn",
+    "moon-band:12.2"
+  ],
+  "measurements": {
+    "originalWords": 425,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,131 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "david-alfaro-siqueiros",
+ "qid": "Q315647",
+ "displayName": "David Alfaro Siqueiros",
+ "wikidataLabel": "David Alfaro Siqueiros",
+ "wikidataDescription": "Mexican painter and muralist (1908–1974)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q315647",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521417066
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "David Alfaro Siqueiros",
+   "articleUrl": "https://en.wikipedia.org/wiki/David_Alfaro_Siqueiros",
+   "pageId": 172013,
+   "revisionId": 1358652627,
+   "revisionTimestamp": "2026-06-10T02:29:44Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1896-12-29T00:00:00Z|proleptic-gregorian",
+   "+1886-12-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1896-12-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1886-12-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1896-12-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1974-01-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q61302",
+  "label": "Chihuahua City",
+  "entityUrl": "https://www.wikidata.org/wiki/Q61302",
+  "country": {
+   "entity": "Q96",
+   "label": "Mexico"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q61302",
+   "sourceEntityLabel": "Chihuahua City",
+   "latitude": 28.636944444444445,
+   "longitude": -106.07694444444445,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q47064",
+   "label": "military personnel"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q22669155",
+   "label": "fresco painter"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q483501",
+   "label": "artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:David Alfaro Siqueiros (El Coronelazo).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:David%20Alfaro%20Siqueiros%20(El%20Coronelazo).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:David_Alfaro_Siqueiros_(El_Coronelazo).jpg",
+  "width": 495,
+  "height": 711,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Galería Fundación Héctor García",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

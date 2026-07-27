@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "prince",
+ "qid": "Q7542",
+ "displayName": "Prince",
+ "wikidataLabel": "Prince",
+ "wikidataDescription": "American musician (1958–2016)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q7542",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521411522
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Prince (musician)",
+   "articleUrl": "https://en.wikipedia.org/wiki/Prince_(musician)",
+   "pageId": 57317,
+   "revisionId": 1366162124,
+   "revisionTimestamp": "2026-07-26T17:24:41Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1958-06-07T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1958-06-07T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1958-06-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2016-04-21T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q36091",
+  "label": "Minneapolis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q36091",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q36091",
+   "sourceEntityLabel": "Minneapolis",
+   "latitude": 44.981944444444444,
+   "longitude": -93.26916666666666,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q488205",
+   "label": "singer-songwriter"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q183945",
+   "label": "record producer"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q1327329",
+   "label": "multi-instrumentalist"
+  },
+  {
+   "entity": "Q5716684",
+   "label": "dancer"
+  },
+  {
+   "entity": "Q855091",
+   "label": "guitarist"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Prince promo picture (1988; cropped and retouched).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Prince%20promo%20picture%20(1988%3B%20cropped%20and%20retouched).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Prince_promo_picture_(1988;_cropped_and_retouched).png",
+  "width": 2665,
+  "height": 3400,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown authorUnknown author, based on File:Prince promo picture (1988; cropped).png",
+  "credit": "Warner-Elektra-Atlantic",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

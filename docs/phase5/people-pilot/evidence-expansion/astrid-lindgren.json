@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "astrid-lindgren",
+ "qid": "Q55767",
+ "displayName": "Astrid Lindgren",
+ "wikidataLabel": "Astrid Lindgren",
+ "wikidataDescription": "Swedish writer of fiction and screenplays (1907–2002)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q55767",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516449413
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Astrid Lindgren",
+   "articleUrl": "https://en.wikipedia.org/wiki/Astrid_Lindgren",
+   "pageId": 37413,
+   "revisionId": 1360445322,
+   "revisionTimestamp": "2026-06-21T14:55:33Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1907-11-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1907-11-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1907-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2002-01-28T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q10715638",
+  "label": "Vimmerby Parish",
+  "entityUrl": "https://www.wikidata.org/wiki/Q10715638",
+  "country": {
+   "entity": "Q34",
+   "label": "Sweden"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q10715638",
+   "sourceEntityLabel": "Vimmerby Parish",
+   "latitude": 57.6657,
+   "longitude": 15.8579,
+   "precision": 0.0000027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q4853732",
+   "label": "children's writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q62083492",
+   "label": "young adult author"
+  }
+ ],
+ "portrait": {
+  "file": "File:Astrid Lindgren (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Astrid%20Lindgren%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Astrid_Lindgren_(cropped).jpg",
+  "width": 402,
+  "height": 570,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Astrids bilder",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,120 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "judith-wright",
+  "seedRound": 0,
+  "qid": "Q469885",
+  "displayName": "Judith Wright",
+  "identity": "Poet and human rights defender · Australia · 1915–2000",
+  "title": "Judith Wright's birth chart",
+  "metaDescription": "Judith Wright's chart, computed from a sourced birth date: Sun at 8.6° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Cancer — Mercury, Saturn, Neptune and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:cancer:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:8.55",
+        "decan:gemini:first"
+      ],
+      "text": "8.6° of Gemini is the Sun's exact seat — first decan, 0°–10°, sub-ruled by Mercury in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Cancer:1.8°",
+        "personal:Venus:Taurus:10.8°",
+        "personal:Mars:Taurus:3.7°"
+      ],
+      "text": "For the fast movers, Mercury was at 1.8° Cancer, Venus was at 10.8° Taurus, Mars was at 3.7° Taurus. Read together: thought steeped in tone and memory; attraction that grows by reliability; effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:conjunction:0.49",
+        "aspect:Mercury:Pluto:conjunction:0.61",
+        "aspect:Saturn:Pluto:conjunction:1.1"
+      ],
+      "text": "Closest first: Mercury to Saturn, a conjunction with 0.5° of slack. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Mercury conjunction Pluto at 0.6°, and Saturn conjunction Pluto at 1.1° — both still well inside the orbs this site uses. The unknown hour cannot unmake any of this: every aspect named survived all twenty-five samples of the day."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:detriment",
+        "dignity:Venus:domicile",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags five placements in this chart. The Moon in Capricorn at 9.6° is in detriment — the planet opposite its home, working against the grain; Venus in Taurus at 10.8° is in domicile — the planet in its own sign, running on home rules; Mars in Taurus at 3.7° is in detriment; Jupiter in Pisces at 24.8° is in domicile; Saturn in Cancer at 2.3° is in detriment. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water5-earth3-air2",
+        "modalities:cardinal5-fixed3-mutable2",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: water 5, earth 3, air 2 across the elements, and cardinal 5, fixed 3, mutable 2 across the modalities. A water emphasis reads as porousness: the room is registered whole, long before it is analysed in parts. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Uranus was retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:capricorn",
+        "moon-band:14.8"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Capricorn for the whole of that day at the birthplace, covering 14.8° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 9.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/may-31/",
+    "label": "Everyone born on May 31"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "stellium:cancer:4",
+    "sun-degree:8.55",
+    "decan:gemini:first",
+    "personal:Mercury:Cancer:1.8°",
+    "personal:Venus:Taurus:10.8°",
+    "personal:Mars:Taurus:3.7°",
+    "aspect:Mercury:Saturn:conjunction:0.49",
+    "aspect:Mercury:Pluto:conjunction:0.61",
+    "aspect:Saturn:Pluto:conjunction:1.1",
+    "figure:unaspected:Moon",
+    "dignity:Moon:detriment",
+    "dignity:Venus:domicile",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "dignity:Saturn:detriment",
+    "elements:water5-earth3-air2",
+    "modalities:cardinal5-fixed3-mutable2",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:capricorn",
+    "moon-band:14.8"
+  ],
+  "measurements": {
+    "originalWords": 453,
+    "substantiveStatements": 21,
+    "blocks": 7
+  }
+}

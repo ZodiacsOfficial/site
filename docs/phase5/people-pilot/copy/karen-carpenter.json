@@ -1,0 +1,112 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "karen-carpenter",
+  "seedRound": 0,
+  "qid": "Q1250861",
+  "displayName": "Karen Carpenter",
+  "identity": "Singer · United States · 1950–1983",
+  "title": "Karen Carpenter's birth chart",
+  "metaDescription": "Karen Carpenter's chart, computed from a sourced birth date: Sun at 11.6° Pisces. Birth time unknown, so no houses or rising sign.",
+  "lede": "Tightest of all, Mercury holds a conjunction to Jupiter at 1.0° — close enough to weld thinking to expansion. A conjunction concentrates rather than balances — the pair burns one fuel line.",
+  "ledeFact": "aspect:Mercury:Jupiter:conjunction",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:11.55",
+        "decan:pisces:second"
+      ],
+      "text": "11.6° of Pisces is the Sun's exact seat — second decan, 10°–20°, sub-ruled by the Moon in the old triplicity scheme. The degree is the address; the sign is only the street."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Aquarius:21.8°",
+        "personal:Venus:Aquarius:5.0°",
+        "personal:Mars:Libra:8.8°"
+      ],
+      "text": "Mercury holds 21.8° Aquarius, Venus holds 5.0° Aquarius, Mars holds 8.8° Libra — in the old shorthand, thought that travels by comparison; attraction that begins as conversation; effort aimed through strategy and words."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Neptune:Pluto:sextile:0.43",
+        "aspect:Mercury:Jupiter:conjunction:0.99",
+        "aspect:Venus:Mars:trine:3.89"
+      ],
+      "text": "The tightest geometry in the chart puts Neptune a sixth of the circle apart from Pluto, 0.4° off exact. Sextiles are read as standing invitations — productive exactly as often as they are accepted. Behind it, Mercury conjunction Jupiter at 1.0°, and Venus trine Mars at 3.9° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:unaspected:Uranus"
+      ],
+      "text": "Uranus makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment"
+      ],
+      "text": "The dignity table, which predates the outer planets and only ever spoke for seven, marks one placement here. Mars in Libra at 8.8° is in detriment — the planet opposite its home, working against the grain. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-water2-fire2-earth1",
+        "modalities:fixed5-cardinal3-mutable2",
+        "settled-signs:10",
+        "retrograde:5"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 air, 2 water, 2 fire, 1 earth by element and 5 fixed, 3 cardinal, 2 mutable by mode. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible. Mars, Saturn, Uranus, Neptune and Pluto were retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:leo",
+        "moon-band:14.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Leo for the whole of that day at the birthplace, covering 14.0° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/march-2/",
+    "label": "Everyone born on March 2"
+  },
+  "signLink": {
+    "href": "/pisces/",
+    "label": "The Pisces guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Jupiter:conjunction",
+    "sun-degree:11.55",
+    "decan:pisces:second",
+    "personal:Mercury:Aquarius:21.8°",
+    "personal:Venus:Aquarius:5.0°",
+    "personal:Mars:Libra:8.8°",
+    "aspect:Neptune:Pluto:sextile:0.43",
+    "aspect:Mercury:Jupiter:conjunction:0.99",
+    "aspect:Venus:Mars:trine:3.89",
+    "figure:unaspected:Uranus",
+    "dignity:Mars:detriment",
+    "elements:air5-water2-fire2-earth1",
+    "modalities:fixed5-cardinal3-mutable2",
+    "settled-signs:10",
+    "retrograde:5",
+    "moon-sign:leo",
+    "moon-band:14.0"
+  ],
+  "measurements": {
+    "originalWords": 372,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

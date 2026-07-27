@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "louisa-may-alcott",
+  "seedRound": 0,
+  "qid": "Q185696",
+  "displayName": "Louisa May Alcott",
+  "identity": "Writer and nurse · United States · 1832–1888",
+  "title": "Louisa May Alcott's birth chart",
+  "metaDescription": "Louisa May Alcott's chart, computed from a sourced birth date: Sun at 7.5° Sagittarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "Mercury and Saturn sit 0.0° from an exact square — near enough that the tradition reads thinking and structure as a single working part. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected.",
+  "ledeFact": "aspect:Mercury:Saturn:square",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.55",
+        "decan:sagittarius:first"
+      ],
+      "text": "The Sun's exact place is 7.5° Sagittarius. That falls in the first decan, 0°–10°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Sagittarius:26.8°",
+        "personal:Venus:Capricorn:9.3°",
+        "personal:Mars:Taurus:25.1°"
+      ],
+      "text": "The personal planets sit Mercury at 26.8° Sagittarius, Venus at 9.3° Capricorn, Mars at 25.1° Taurus. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a earth sign reads as taste for the substantial and the lasting; Mars in a earth sign reads as drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Saturn:square:0.02",
+        "aspect:Mars:Neptune:trine:0.08",
+        "aspect:Venus:Pluto:square:0.48"
+      ],
+      "text": "Nothing in the geometry sits closer than Mercury and Saturn: 0.0° from an exact square. The old texts treat a square as the aspect you feel earliest and thank latest: obstruction first, competence afterwards. Behind it, Mars trine Neptune at 0.1°, and Venus square Pluto at 0.5° — both still well inside the orbs this site uses. These angles were checked through every hour of that civil day and survive throughout, which is why an unrecorded hour does not disturb them."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:grand-trine:Mars-Saturn-Neptune",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Mars, Saturn, Neptune close a triangle of trines. The closed triangle is the scheme’s picture of flow — and its warning that flow, unspent, stays private. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:detriment",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "Three planets here sit in a sign the classical scheme scores. Mercury in Sagittarius at 26.8° is in detriment — the planet opposite its home, working against the grain; Mars in Taurus at 25.1° is in detriment; Jupiter in Pisces at 19.2° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth4-fire3-water1-air1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Tallied where the signs are certain — 9 placements whose signs hold for the whole day — the chart gives earth 4, fire 3, water 1, air 1, and mutable 4, cardinal 3, fixed 2 across the modes. Earth counts what remains: the built, the kept, the finished. Promise weighs less than delivery. Mars and Pluto were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aquarius:pisces"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aquarius into Pisces during that day at the birthplace, travelling 11.9° between one midnight and the next. Half the day belongs to each sign, and the split falls at an unrecorded hour — so this page holds the Moon as a genuine unknown."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/november-29/",
+    "label": "Everyone born on November 29"
+  },
+  "signLink": {
+    "href": "/sagittarius/",
+    "label": "The Sagittarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Saturn:square",
+    "sun-degree:7.55",
+    "decan:sagittarius:first",
+    "personal:Mercury:Sagittarius:26.8°",
+    "personal:Venus:Capricorn:9.3°",
+    "personal:Mars:Taurus:25.1°",
+    "aspect:Mercury:Saturn:square:0.02",
+    "aspect:Mars:Neptune:trine:0.08",
+    "aspect:Venus:Pluto:square:0.48",
+    "figure:grand-trine:Mars-Saturn-Neptune",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:detriment",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:domicile",
+    "elements:earth4-fire3-water1-air1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aquarius:pisces"
+  ],
+  "measurements": {
+    "originalWords": 471,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

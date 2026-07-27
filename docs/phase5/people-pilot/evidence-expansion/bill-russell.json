@@ -1,0 +1,116 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "bill-russell",
+ "qid": "Q242185",
+ "displayName": "Bill Russell",
+ "wikidataLabel": "Bill Russell",
+ "wikidataDescription": "American basketball player (1934–2022)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "sport"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q242185",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2519462059
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Bill Russell",
+   "articleUrl": "https://en.wikipedia.org/wiki/Bill_Russell",
+   "pageId": 412214,
+   "revisionId": 1365343274,
+   "revisionTimestamp": "2026-07-21T20:30:58Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1934-02-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1934-02-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1934-02-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2022-07-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q947115",
+  "label": "Monroe",
+  "entityUrl": "https://www.wikidata.org/wiki/Q947115",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q947115",
+   "sourceEntityLabel": "Monroe",
+   "latitude": 32.5094,
+   "longitude": -92.1183,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3665646",
+   "label": "basketball player"
+  },
+  {
+   "entity": "Q5137571",
+   "label": "basketball coach"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q13382122",
+   "label": "high jumper"
+  },
+  {
+   "entity": "Q2066131",
+   "label": "athlete"
+  }
+ ],
+ "portrait": {
+  "file": "File:Bill russell dribbling (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Bill%20russell%20dribbling%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Bill_russell_dribbling_(cropped).jpg",
+  "width": 687,
+  "height": 806,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "Here",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

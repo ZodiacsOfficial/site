@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "astor-piazzolla",
+ "qid": "Q172505",
+ "displayName": "Astor Piazzolla",
+ "wikidataLabel": "Astor Piazzolla",
+ "wikidataDescription": "Argentine tango composer, bandoneon player and arranger",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q172505",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518710291
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Astor Piazzolla",
+   "articleUrl": "https://en.wikipedia.org/wiki/Astor_Piazzolla",
+   "pageId": 44903,
+   "revisionId": 1361967367,
+   "revisionTimestamp": "2026-07-01T03:44:26Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1921-03-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1921-03-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1921-03-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1992-07-04T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q52607",
+  "label": "Mar del Plata",
+  "entityUrl": "https://www.wikidata.org/wiki/Q52607",
+  "country": {
+   "entity": "Q414",
+   "label": "Argentina"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q52607",
+   "sourceEntityLabel": "Mar del Plata",
+   "latitude": -38,
+   "longitude": -57.55,
+   "precision": 0.0166667,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q20791985",
+   "label": "bandoneonist"
+  },
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q1415090",
+   "label": "film score composer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Astor Piazzolla.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Astor%20Piazzolla.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Astor_Piazzolla.jpg",
+  "width": 650,
+  "height": 831,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": null,
+  "credit": null,
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

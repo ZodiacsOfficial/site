@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "patsy-cline",
+ "qid": "Q273080",
+ "displayName": "Patsy Cline",
+ "wikidataLabel": "Patsy Cline",
+ "wikidataDescription": "American country singer (1932–1963)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q273080",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517614974
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Patsy Cline",
+   "articleUrl": "https://en.wikipedia.org/wiki/Patsy_Cline",
+   "pageId": 89644,
+   "revisionId": 1365750054,
+   "revisionTimestamp": "2026-07-24T06:23:11Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1932-09-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1932-09-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1932-09-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1963-03-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q492355",
+  "label": "Winchester",
+  "entityUrl": "https://www.wikidata.org/wiki/Q492355",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q492355",
+   "sourceEntityLabel": "Winchester",
+   "latitude": 39.1783,
+   "longitude": -78.1667,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q177220",
+   "label": "singer"
+  },
+  {
+   "entity": "Q753110",
+   "label": "songwriter"
+  },
+  {
+   "entity": "Q66763670",
+   "label": "country musician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Patsy Cline 1957--Front.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Patsy%20Cline%201957--Front.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Patsy_Cline_1957--Front.jpg",
+  "width": 819,
+  "height": 1078,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "eBay item front & back",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

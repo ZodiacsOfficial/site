@@ -1,0 +1,111 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "getulio-vargas",
+ "qid": "Q156844",
+ "displayName": "Getúlio Vargas",
+ "wikidataLabel": "Getúlio Vargas",
+ "wikidataDescription": "President of Brazil (1930–1945; 1951–1954)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "latam",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q156844",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520054259
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Getúlio Vargas",
+   "articleUrl": "https://en.wikipedia.org/wiki/Get%C3%BAlio_Vargas",
+   "pageId": 23809308,
+   "revisionId": 1365107417,
+   "revisionTimestamp": "2026-07-20T08:15:39Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1882-04-19T00:00:00Z|proleptic-gregorian",
+   "+1883-04-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1882-04-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1883-04-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "deprecated"
+   }
+  ],
+  "time": "+1882-04-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1954-08-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q385327",
+  "label": "São Borja",
+  "entityUrl": "https://www.wikidata.org/wiki/Q385327",
+  "country": {
+   "entity": "Q155",
+   "label": "Brazil"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q385327",
+   "sourceEntityLabel": "São Borja",
+   "latitude": -28.660833333333,
+   "longitude": -56.003888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q40348",
+   "label": "lawyer"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Getulio Vargas (1930).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Getulio%20Vargas%20(1930).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Getulio_Vargas_(1930).jpg",
+  "width": 1046,
+  "height": 1574,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Governo do Brasil",
+  "credit": "Galeria de Presidentes",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,128 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "jean-piaget",
+ "qid": "Q123190",
+ "displayName": "Jean Piaget",
+ "wikidataLabel": "Jean Piaget",
+ "wikidataDescription": "Swiss psychologist, biologist, logician, philosopher and academic (1896–1980)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q123190",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520126401
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Jean Piaget",
+   "articleUrl": "https://en.wikipedia.org/wiki/Jean_Piaget",
+   "pageId": 95274,
+   "revisionId": 1365169169,
+   "revisionTimestamp": "2026-07-20T18:28:02Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1896-08-09T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1896-08-09T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1896-08-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1980-09-16T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q69345",
+  "label": "Neuchâtel",
+  "entityUrl": "https://www.wikidata.org/wiki/Q69345",
+  "country": {
+   "entity": "Q39",
+   "label": "Switzerland"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q69345",
+   "sourceEntityLabel": "Neuchâtel",
+   "latitude": 46.990277777778,
+   "longitude": 6.9305555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q212980",
+   "label": "psychologist"
+  },
+  {
+   "entity": "Q350979",
+   "label": "zoologist"
+  },
+  {
+   "entity": "Q14565331",
+   "label": "logician"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q16271261",
+   "label": "malacologist"
+  },
+  {
+   "entity": "Q1231865",
+   "label": "pedagogue"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Jean Piaget in Ann Arbor (cropped).png",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Jean%20Piaget%20in%20Ann%20Arbor%20(cropped).png",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Jean_Piaget_in_Ann_Arbor_(cropped).png",
+  "width": 193,
+  "height": 241,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unidentified (Ensian published by University of Michigan)",
+  "credit": "1968 Michiganensian, p. 91 (see other scan of the document here)",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

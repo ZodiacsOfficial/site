@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "rufino-tamayo",
+  "seedRound": 1,
+  "qid": "Q690790",
+  "displayName": "Rufino Tamayo",
+  "identity": "Painter · Mexico · 1899–1990",
+  "title": "Rufino Tamayo's birth chart",
+  "metaDescription": "Rufino Tamayo's chart, computed from a sourced birth date: Sun at 3.3° Virgo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Moon stands at 18.6° Taurus, in exaltation — the tradition’s honoured-guest placement, working at its best. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "ledeFact": "dignity:Moon:exaltation",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.26",
+        "decan:virgo:first"
+      ],
+      "text": "The Sun sits at 3.3° Virgo — the first decan, 0°–10°, which the tradition sub-rules by Mercury. Degrees matter more than the sign label here: two people born a fortnight apart share Virgo and share almost nothing else about where the Sun actually stood."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Leo:21.3°",
+        "personal:Venus:Leo:27.7°",
+        "personal:Mars:Libra:13.2°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Leo (21.3°), Venus in Leo (27.7°), Mars in Libra (13.2°): a mind that decides at speaking speed, taste that runs toward the vivid and the immediate, drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Pluto:opposition:0.46",
+        "aspect:Sun:Uranus:square:0.81",
+        "aspect:Venus:Neptune:sextile:0.98"
+      ],
+      "text": "Closest first: Saturn to Pluto, a opposition with 0.5° of slack. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility. Behind it, the Sun square Uranus at 0.8°, and Venus sextile Neptune at 1.0° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Moon:exaltation",
+        "dignity:Mars:detriment"
+      ],
+      "text": "The classical table has two entries for this chart. The Moon in Taurus at 18.6° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Libra at 13.2° is in detriment — the planet opposite its home, working against the grain. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire4-air3-earth2-water1",
+        "modalities:mutable5-fixed4-cardinal1",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: fire 4, air 3, earth 2, water 1 across the elements, and mutable 5, fixed 4, cardinal 1 across the modalities. Mercury was retrograde — motion that reverses only from this vantage point, and which the old reading treats as delay used for revision."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:taurus",
+        "moon-band:13.2"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Taurus for the whole of that day at the birthplace, covering 13.2° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 18.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/august-26/",
+    "label": "Everyone born on August 26"
+  },
+  "signLink": {
+    "href": "/virgo/",
+    "label": "The Virgo guide"
+  },
+  "substantiveFacts": [
+    "dignity:Moon:exaltation",
+    "sun-degree:3.26",
+    "decan:virgo:first",
+    "personal:Mercury:Leo:21.3°",
+    "personal:Venus:Leo:27.7°",
+    "personal:Mars:Libra:13.2°",
+    "aspect:Saturn:Pluto:opposition:0.46",
+    "aspect:Sun:Uranus:square:0.81",
+    "aspect:Venus:Neptune:sextile:0.98",
+    "figure:unaspected:Moon",
+    "dignity:Moon:exaltation",
+    "dignity:Mars:detriment",
+    "elements:fire4-air3-earth2-water1",
+    "modalities:mutable5-fixed4-cardinal1",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:taurus",
+    "moon-band:13.2"
+  ],
+  "measurements": {
+    "originalWords": 394,
+    "substantiveStatements": 17,
+    "blocks": 7
+  }
+}

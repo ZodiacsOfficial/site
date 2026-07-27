@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "flannery-o-connor",
+ "qid": "Q234579",
+ "displayName": "Flannery O'Connor",
+ "wikidataLabel": "Flannery O'Connor",
+ "wikidataDescription": "American writer (1925–1964)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q234579",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517549803
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Flannery O'Connor",
+   "articleUrl": "https://en.wikipedia.org/wiki/Flannery_O'Connor",
+   "pageId": 96429,
+   "revisionId": 1362272404,
+   "revisionTimestamp": "2026-07-02T22:16:51Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1925-03-25T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1925-03-25T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1925-03-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1964-08-03T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q83813",
+  "label": "Savannah",
+  "entityUrl": "https://www.wikidata.org/wiki/Q83813",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q83813",
+   "sourceEntityLabel": "Savannah",
+   "latitude": 32.050833333333,
+   "longitude": -81.103888888889,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q69423232",
+   "label": "film screenwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Flannery-O'Connor 1947.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Flannery-O'Connor%201947.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Flannery-O%27Connor_1947.jpg",
+  "width": 313,
+  "height": 389,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Cmacauley",
+  "credit": "This file was derived from: Robie with Flannery 1947.jpg",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,133 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "miguel-de-unamuno",
+ "qid": "Q185085",
+ "displayName": "Miguel de Unamuno",
+ "wikidataLabel": "Miguel de Unamuno",
+ "wikidataDescription": "Spanish poet (1864-1936)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q185085",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518611128
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Miguel de Unamuno",
+   "articleUrl": "https://en.wikipedia.org/wiki/Miguel_de_Unamuno",
+   "pageId": 173327,
+   "revisionId": 1364427316,
+   "revisionTimestamp": "2026-07-16T13:05:08Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1864-09-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1864-09-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1864-09-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1936-12-31T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q65559008",
+  "label": "Bilbao",
+  "entityUrl": "https://www.wikidata.org/wiki/Q65559008",
+  "country": {
+   "entity": "Q29",
+   "label": "Spain"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q65559008",
+   "sourceEntityLabel": "Q65559008",
+   "latitude": 43.256548,
+   "longitude": -2.922136,
+   "precision": 1e-06,
+   "escalationSteps": 0
+  },
+  "labelNote": "birthplace entity is the birth house (Q65559008, no English label); label taken from its parent municipality Q8692"
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q1622272",
+   "label": "university teacher"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  }
+ ],
+ "portrait": {
+  "file": "File:Miguel de Unamuno Meurisse 1925.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Miguel%20de%20Unamuno%20Meurisse%201925.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Miguel_de_Unamuno_Meurisse_1925.jpg",
+  "width": 1502,
+  "height": 1733,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Agence de presse Meurisse",
+  "credit": "Bibliothèque nationale de France",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "james-van-der-zee",
+  "seedRound": 0,
+  "qid": "Q3161458",
+  "displayName": "James Van Der Zee",
+  "identity": "Photographer · United States · 1886–1983",
+  "title": "James Van Der Zee's birth chart",
+  "metaDescription": "James Van Der Zee's chart, computed from a sourced birth date: Sun at 7.8° Cancer. Birth time unknown, so no houses or rising sign.",
+  "lede": "The chart's headline is a sextile: Mercury and Neptune within 0.3°, thinking wired to imagination. A sextile pays out only on effort; the scheme calls it opportunity rather than gift.",
+  "ledeFact": "aspect:Mercury:Neptune:sextile",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:7.80",
+        "decan:cancer:first"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 7.8° Cancer: the first decan, whose classical sub-ruler is the Moon. A water sign, read here in its first face."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:26.5°",
+        "personal:Mars:Virgo:29.0°"
+      ],
+      "text": "For the fast movers, Mercury was at 26.5° Cancer, Mars was at 29.0° Virgo. Read together: a mind that absorbs before it argues; drive that grinds rather than flares."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mercury:Neptune:sextile:0.32",
+        "aspect:Uranus:Pluto:trine:0.36",
+        "aspect:Venus:Mars:trine:0.47"
+      ],
+      "text": "Closest first: Mercury to Neptune, a sextile with 0.3° of slack. A sixth of the circle is close enough for cooperation and far enough that it stays optional. Behind it, Uranus trine Pluto at 0.4°, and Venus trine Mars at 0.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Jupiter:detriment",
+        "dignity:Saturn:detriment"
+      ],
+      "text": "The classical table has two entries for this chart. Jupiter in Virgo at 28.1° is in detriment — the planet opposite its home, working against the grain; Saturn in Cancer at 11.4° is in detriment. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:water3-air3-earth3",
+        "modalities:cardinal4-mutable4-fixed1",
+        "settled-signs:9",
+        "retrograde:0",
+        "sign-uncertain:Venus:taurus:gemini"
+      ],
+      "text": "Of the 9 placements whose signs hold for the whole day: 3 in water, 3 in air, 3 in earth by element, 4 cardinal, 4 mutable, 1 fixed by modality. Water weights a chart toward the felt and the remembered — information that arrives as atmosphere before it arrives as words. Venus crossed from Taurus into Gemini during that day, so its sign is left open. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Nothing was retrograde that day, which is less common than it sounds."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:gemini",
+        "moon-band:14.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Gemini for the whole of that day at the birthplace, covering 14.0° between midnight and midnight. The sign survives the missing hour; the degree does not, and is given as a reference rather than a fact. At the noon reference it stands at 8.0°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-29/",
+    "label": "Everyone born on June 29"
+  },
+  "signLink": {
+    "href": "/cancer/",
+    "label": "The Cancer guide"
+  },
+  "substantiveFacts": [
+    "aspect:Mercury:Neptune:sextile",
+    "sun-degree:7.80",
+    "decan:cancer:first",
+    "personal:Mercury:Cancer:26.5°",
+    "personal:Mars:Virgo:29.0°",
+    "aspect:Mercury:Neptune:sextile:0.32",
+    "aspect:Uranus:Pluto:trine:0.36",
+    "aspect:Venus:Mars:trine:0.47",
+    "figure:unaspected:Moon",
+    "dignity:Jupiter:detriment",
+    "dignity:Saturn:detriment",
+    "elements:water3-air3-earth3",
+    "modalities:cardinal4-mutable4-fixed1",
+    "settled-signs:9",
+    "retrograde:0",
+    "sign-uncertain:Venus:taurus:gemini",
+    "moon-sign:gemini",
+    "moon-band:14.0"
+  ],
+  "measurements": {
+    "originalWords": 385,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

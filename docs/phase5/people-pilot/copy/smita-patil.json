@@ -1,0 +1,118 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "smita-patil",
+  "seedRound": 0,
+  "qid": "Q467960",
+  "displayName": "Smita Patil",
+  "identity": "Film actor · India · 1955–1986",
+  "title": "Smita Patil's birth chart",
+  "metaDescription": "Smita Patil's chart, computed from a sourced birth date: Sun at 23.1° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Libra — the Sun, Mercury, Mars and Neptune. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:libra:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.11",
+        "decan:libra:third"
+      ],
+      "text": "The Sun's exact place is 23.1° Libra. That falls in the third decan, 20°–30°, sub-ruled by Mercury in the classical scheme — a air sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:15.9°",
+        "personal:Venus:Scorpio:5.3°",
+        "personal:Mars:Libra:2.4°"
+      ],
+      "text": "Mercury holds 15.9° Libra, Venus holds 5.3° Scorpio, Mars holds 2.4° Libra — in the old shorthand, a mind at home in argument and pattern; taste tuned to mood and undertow; drive that argues its way forward."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Uranus:sextile:0.32",
+        "aspect:Neptune:Pluto:sextile:0.33",
+        "aspect:Jupiter:Neptune:sextile:1.81"
+      ],
+      "text": "Closest first: Mars to Uranus, a sextile with 0.3° of slack. A sextile is an offer rather than a given: available when it is reached for, quiet when it is not. Behind it, Neptune sextile Pluto at 0.3°, and Jupiter sextile Neptune at 1.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:fall",
+        "dignity:Venus:detriment",
+        "dignity:Mars:detriment"
+      ],
+      "text": "Four planets here sit in a sign the classical scheme scores. The Sun in Libra at 23.1° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Scorpio at 9.9° is in fall; Venus in Scorpio at 5.3° is in detriment — the planet opposite its home, working against the grain; Mars in Libra at 2.4° is in detriment. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-water3-fire3",
+        "modalities:fixed6-cardinal4",
+        "settled-signs:10",
+        "retrograde:1"
+      ],
+      "text": "Of the 10 placements whose signs hold for the whole day: 4 in air, 3 in water, 3 in fire by element, 6 fixed, 4 cardinal by modality. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mercury was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:12.3"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 12.3° between midnight and midnight. Fast enough that its degree is approximate, slow enough that its sign is not in doubt. At the noon reference it stands at 9.9°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-17/",
+    "label": "Everyone born on October 17"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "stellium:libra:4",
+    "sun-degree:23.11",
+    "decan:libra:third",
+    "personal:Mercury:Libra:15.9°",
+    "personal:Venus:Scorpio:5.3°",
+    "personal:Mars:Libra:2.4°",
+    "aspect:Mars:Uranus:sextile:0.32",
+    "aspect:Neptune:Pluto:sextile:0.33",
+    "aspect:Jupiter:Neptune:sextile:1.81",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Moon:fall",
+    "dignity:Venus:detriment",
+    "dignity:Mars:detriment",
+    "elements:air4-water3-fire3",
+    "modalities:fixed6-cardinal4",
+    "settled-signs:10",
+    "retrograde:1",
+    "moon-sign:scorpio",
+    "moon-band:12.3"
+  ],
+  "measurements": {
+    "originalWords": 418,
+    "substantiveStatements": 20,
+    "blocks": 7
+  }
+}

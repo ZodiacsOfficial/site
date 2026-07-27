@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "kathleen-kenyon",
+ "qid": "Q238890",
+ "displayName": "Kathleen Kenyon",
+ "wikidataLabel": "Kathleen Kenyon",
+ "wikidataDescription": "British archaeologist (1906-1978)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q238890",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520904738
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Kathleen Kenyon",
+   "articleUrl": "https://en.wikipedia.org/wiki/Kathleen_Kenyon",
+   "pageId": 16820,
+   "revisionId": 1356309339,
+   "revisionTimestamp": "2026-05-27T00:36:55Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1906-01-05T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1906-01-05T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1906-01-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1978-08-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q84",
+  "label": "London",
+  "entityUrl": "https://www.wikidata.org/wiki/Q84",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q84",
+   "sourceEntityLabel": "London",
+   "latitude": 51.507222222222,
+   "longitude": -0.1275,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q3621491",
+   "label": "archaeologist"
+  },
+  {
+   "entity": "Q7245047",
+   "label": "principal"
+  }
+ ],
+ "portrait": {
+  "file": "File:Kathleen Kenyon.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Kathleen%20Kenyon.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Kathleen_Kenyon.jpg",
+  "width": 500,
+  "height": 571,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "UCL Institute of Archaeology",
+  "credit": "Pye, Elizabeth. \"From the Archives: Women of the Early Institute\". Archaeology International 18: 131–133. DOI:10.5334/ai.1817.",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

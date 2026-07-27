@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "franz-schubert",
+  "seedRound": 0,
+  "qid": "Q7312",
+  "displayName": "Franz Schubert",
+  "identity": "Composer and teacher · Austria · 1797–1828",
+  "title": "Franz Schubert's birth chart",
+  "metaDescription": "Franz Schubert's chart, computed from a sourced birth date: Sun at 12.2° Aquarius. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.9° separates Venus and Uranus from an exact trine; at that range taste and disruption read as one mechanism. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned.",
+  "ledeFact": "aspect:Venus:Uranus:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.16",
+        "decan:aquarius:second"
+      ],
+      "text": "At noon on that date the Sun stood at 12.2° Aquarius, inside the second decan (10°–20°), whose traditional sub-ruler is Mercury. The decan is the older, finer division — it is what the sign looks like once you stop rounding it to thirty degrees."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Capricorn:12.8°",
+        "personal:Mars:Aries:10.2°"
+      ],
+      "text": "For the fast movers, Venus was at 12.8° Capricorn, Mars was at 10.2° Aries. Read together: attraction that grows by reliability; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:trine:0.94",
+        "aspect:Uranus:Neptune:sextile:1.21",
+        "aspect:Sun:Neptune:square:1.47"
+      ],
+      "text": "Venus and Uranus hold the closest angle here — a trine, 0.9° wide. Trines are read as inheritance rather than achievement: the ease is genuine, and nothing about it was earned. Behind it, Uranus sextile Neptune at 1.2°, and the Sun square Neptune at 1.5° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "No closed figure — no grand trine, t-square, or grand cross — holds among the day-stable angles. The chart distributes its tension pair by pair rather than through one standing structure."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:detriment",
+        "dignity:Mars:domicile",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags three placements in this chart. The Sun in Aquarius at 12.2° is in detriment — the planet opposite its home, working against the grain; Mars in Aries at 10.2° is in domicile — the planet in its own sign, running on home rules; Jupiter in Pisces at 15.7° is in domicile. The table describes circumstance rather than quality — a planet in detriment is inconvenienced, not diminished."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-earth2-fire1",
+        "modalities:mutable4-fixed3-cardinal2",
+        "settled-signs:9",
+        "retrograde:2",
+        "sign-uncertain:Mercury:aquarius:pisces"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 3 air, 3 water, 2 earth, 1 fire by element and 4 mutable, 3 fixed, 2 cardinal by mode. Mercury crossed from Aquarius into Pisces during that day, so its sign is left open. Saturn and Uranus were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:pisces",
+        "moon-band:12.4"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Pisces for the whole of that day at the birthplace, covering 12.4° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 19.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/january-31/",
+    "label": "Everyone born on January 31"
+  },
+  "signLink": {
+    "href": "/aquarius/",
+    "label": "The Aquarius guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Uranus:trine",
+    "sun-degree:12.16",
+    "decan:aquarius:second",
+    "personal:Venus:Capricorn:12.8°",
+    "personal:Mars:Aries:10.2°",
+    "aspect:Venus:Uranus:trine:0.94",
+    "aspect:Uranus:Neptune:sextile:1.21",
+    "aspect:Sun:Neptune:square:1.47",
+    "figure:none",
+    "dignity:Sun:detriment",
+    "dignity:Mars:domicile",
+    "dignity:Jupiter:domicile",
+    "elements:air3-water3-earth2-fire1",
+    "modalities:mutable4-fixed3-cardinal2",
+    "settled-signs:9",
+    "retrograde:2",
+    "sign-uncertain:Mercury:aquarius:pisces",
+    "moon-sign:pisces",
+    "moon-band:12.4"
+  ],
+  "measurements": {
+    "originalWords": 419,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

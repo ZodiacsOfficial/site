@@ -1,0 +1,114 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "gustave-flaubert",
+ "qid": "Q43444",
+ "displayName": "Gustave Flaubert",
+ "wikidataLabel": "Gustave Flaubert",
+ "wikidataDescription": "French novelist (1821–1880)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q43444",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520222307
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Gustave Flaubert",
+   "articleUrl": "https://en.wikipedia.org/wiki/Gustave_Flaubert",
+   "pageId": 12307,
+   "revisionId": 1366153411,
+   "revisionTimestamp": "2026-07-26T16:17:22Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1821-12-12T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1821-12-12T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1821-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1821-12-12T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1880-05-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q30974",
+  "label": "Rouen",
+  "entityUrl": "https://www.wikidata.org/wiki/Q30974",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q30974",
+   "sourceEntityLabel": "Rouen",
+   "latitude": 49.443055555556,
+   "longitude": 1.1025,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q487596",
+   "label": "dramaturge"
+  }
+ ],
+ "portrait": {
+  "file": "File:Gustave Flaubert.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Gustave%20Flaubert.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Gustave_Flaubert.jpg",
+  "width": 984,
+  "height": 1084,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nadar",
+  "credit": "This file comes from Gallica Digital Library and is available under the digital ID btv1b100502719/f1",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

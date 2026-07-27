@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edgar-allan-poe",
+ "qid": "Q16867",
+ "displayName": "Edgar Allan Poe",
+ "wikidataLabel": "Edgar Allan Poe",
+ "wikidataDescription": "American writer and literary critic (1809–1849)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q16867",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522910592
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edgar Allan Poe",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edgar_Allan_Poe",
+   "pageId": 9549,
+   "revisionId": 1365306152,
+   "revisionTimestamp": "2026-07-21T15:47:47Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1809-01-19T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1809-01-19T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1809-01-19T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1849-10-07T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q100",
+  "label": "Boston",
+  "entityUrl": "https://www.wikidata.org/wiki/Q100",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q100",
+   "sourceEntityLabel": "Boston",
+   "latitude": 42.360277777777775,
+   "longitude": -71.05777777777777,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q4263842",
+   "label": "literary critic"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q18844224",
+   "label": "science fiction writer"
+  },
+  {
+   "entity": "Q10297252",
+   "label": "crime fiction writer"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q482980",
+   "label": "author"
+  },
+  {
+   "entity": "Q822146",
+   "label": "lyricist"
+  },
+  {
+   "entity": "Q15962340",
+   "label": "literary theorist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Edgar Allan Poe, circa 1849, restored, squared off.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Edgar%20Allan%20Poe%2C%20circa%201849%2C%20restored%2C%20squared%20off.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Edgar_Allan_Poe,_circa_1849,_restored,_squared_off.jpg",
+  "width": 1556,
+  "height": 2188,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown authorUnknown author; Restored by Yann Forget and Adam Cuerden",
+  "credit": "Derived from File:Edgar Allan Poe, circa 1849, restored.jpg; originally from http://www.getty.edu/art/gettyguide/artObjectDetails?artobj=39406",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

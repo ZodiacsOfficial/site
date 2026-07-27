@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "tsuguharu-foujita",
+ "qid": "Q261846",
+ "displayName": "Tsuguharu Foujita",
+ "wikidataLabel": "Tsuguharu Foujita",
+ "wikidataDescription": "French painter (1886-1968)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "easia",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q261846",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2517545453
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Tsuguharu Foujita",
+   "articleUrl": "https://en.wikipedia.org/wiki/Tsuguharu_Foujita",
+   "pageId": 63078,
+   "revisionId": 1364957494,
+   "revisionTimestamp": "2026-07-19T14:02:03Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1886-11-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1886-11-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1886-11-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1968-01-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q11501909",
+  "label": "Shin-ogawamachi",
+  "entityUrl": "https://www.wikidata.org/wiki/Q11501909",
+  "country": {
+   "entity": "Q17",
+   "label": "Japan"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q11501909",
+   "sourceEntityLabel": "Shin-ogawamachi",
+   "latitude": 35.70591666666667,
+   "longitude": 139.74244166666668,
+   "precision": 0.000002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q11569986",
+   "label": "printmaker"
+  },
+  {
+   "entity": "Q644687",
+   "label": "illustrator"
+  },
+  {
+   "entity": "Q15296811",
+   "label": "draftsperson"
+  }
+ ],
+ "portrait": {
+  "file": "File:1930 Tsuguharu Fujita.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:1930%20Tsuguharu%20Fujita.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:1930_Tsuguharu_Fujita.jpg",
+  "width": 1186,
+  "height": 1581,
+  "licenseShortName": "CC BY 4.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by/4.0",
+  "artist": "Georges Chevalier",
+  "credit": "https://collections.albert-kahn.hauts-de-seine.fr/document/proprit-d-albert-kahn-boulogne-france-monsieur-fujita/617a7a3dcf8b8968b3352c44?filtrerParThme%5B0%5D=Personnalit%C3%A9&filtrerParDomaine%5B0%5D=Images%20fixes&s=dateDePriseDeVue&so=desc&pos=3431&pgn=227",
+  "usageTerms": "Creative Commons Attribution 4.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,114 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "edvard-grieg",
+  "seedRound": 0,
+  "qid": "Q80621",
+  "displayName": "Edvard Grieg",
+  "identity": "Composer · Norway · 1843–1907",
+  "title": "Edvard Grieg's birth chart",
+  "metaDescription": "Edvard Grieg's chart, computed from a sourced birth date: Sun at 23.6° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Venus and Saturn sit 0.3° from an exact trine — near enough that the tradition reads taste and structure as a single working part. The scheme reads trines as water finding its level: effortless, and invisible to the person living it.",
+  "ledeFact": "aspect:Venus:Saturn:trine",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:23.64",
+        "decan:gemini:third"
+      ],
+      "text": "The Sun's exact place is 23.6° Gemini. That falls in the third decan, 20°–30°, sub-ruled by Saturn in the classical scheme — a air sign read through a mutable season."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Gemini:29.3°",
+        "personal:Venus:Taurus:24.9°",
+        "personal:Mars:Sagittarius:12.2°"
+      ],
+      "text": "For the fast movers, Mercury was at 29.3° Gemini, Venus was at 24.9° Taurus, Mars was at 12.2° Sagittarius. Read together: a mind at home in argument and pattern; taste for the substantial and the lasting; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Saturn:trine:0.31",
+        "aspect:Sun:Pluto:sextile:0.93",
+        "aspect:Neptune:Pluto:sextile:1.33"
+      ],
+      "text": "Closest first: Venus to Saturn, a trine with 0.3° of slack. A third of the circle is the tradition’s friendliest distance — same element, shared assumptions, no translation required. Behind it, the Sun sextile Pluto at 0.9°, and Neptune sextile Pluto at 1.3° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mercury:domicile",
+        "dignity:Venus:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "Of the seven planets the classical scheme judges, three sit in a sign it has an opinion about. Mercury in Gemini at 29.3° is in domicile — the planet in its own sign, running on home rules; Venus in Taurus at 24.9° is in domicile; Saturn in Capricorn at 24.6° is in domicile. Condition, not character: that is all the dignity table ever measured."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air4-fire3-earth2",
+        "modalities:mutable3-fixed3-cardinal3",
+        "settled-signs:9",
+        "retrograde:4"
+      ],
+      "text": "The certain ground: 9 placements whose signs hold for the whole day, dividing 4 air, 3 fire, 2 earth by element and 3 mutable, 3 fixed, 3 cardinal by mode. An air emphasis is read as distance for the sake of clarity: the idea gets examined before it gets adopted. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Mercury, Mars, Saturn and Neptune were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:capricorn:aquarius"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Capricorn into Aquarius during that day at the birthplace, travelling 13.0° between one midnight and the next. The hour would decide it; no hour was recorded. The reading keeps the question open rather than flipping a coin dressed as astrology."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-15/",
+    "label": "Everyone born on June 15"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Venus:Saturn:trine",
+    "sun-degree:23.64",
+    "decan:gemini:third",
+    "personal:Mercury:Gemini:29.3°",
+    "personal:Venus:Taurus:24.9°",
+    "personal:Mars:Sagittarius:12.2°",
+    "aspect:Venus:Saturn:trine:0.31",
+    "aspect:Sun:Pluto:sextile:0.93",
+    "aspect:Neptune:Pluto:sextile:1.33",
+    "figure:unaspected:Moon",
+    "dignity:Mercury:domicile",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:domicile",
+    "elements:air4-fire3-earth2",
+    "modalities:mutable3-fixed3-cardinal3",
+    "settled-signs:9",
+    "retrograde:4",
+    "moon-uncertain:capricorn:aquarius"
+  ],
+  "measurements": {
+    "originalWords": 424,
+    "substantiveStatements": 18,
+    "blocks": 7
+  }
+}

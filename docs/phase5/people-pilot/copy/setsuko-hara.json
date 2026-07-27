@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "setsuko-hara",
+  "seedRound": 0,
+  "qid": "Q236129",
+  "displayName": "Setsuko Hara",
+  "identity": "Actor · Japan · 1920–2015",
+  "title": "Setsuko Hara's birth chart",
+  "metaDescription": "Setsuko Hara's chart, computed from a sourced birth date: Sun at 25.6° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled fall in mutable signs, the widest weighting the unknown hour leaves certain. Mutable weight is read as flexibility, and the old texts are frank that its cost is scatter.",
+  "ledeFact": "modality:mutable:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:25.60",
+        "decan:gemini:third"
+      ],
+      "text": "Gemini, but precisely: 25.6°, third decan, 20°–30°, under Saturn in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The fast planets",
+      "facts": [
+        "personal:Mercury:Cancer:17.5°",
+        "personal:Venus:Gemini:21.0°",
+        "personal:Mars:Libra:22.9°"
+      ],
+      "text": "Closer in, Mercury stands at 17.5° Cancer; Venus stands at 21.0° Gemini; Mars stands at 22.9° Libra. The tradition reads a mind that absorbs before it argues from Mercury, taste led by wit and proportion from Venus, drive that argues its way forward from Mars."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Uranus:opposition:0.58",
+        "aspect:Saturn:Pluto:sextile:0.74",
+        "aspect:Uranus:Pluto:trine:1.33"
+      ],
+      "text": "Saturn to Uranus is the closest call of the day, a opposition within 0.6°. An opposition is the tradition’s tug of war. Both ends are real, and the work is holding them at once rather than picking a winner. Behind it, Saturn sextile Pluto at 0.7°, and Uranus trine Pluto at 1.3° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Mars:detriment"
+      ],
+      "text": "The classical table has one entry for this chart. Mars in Libra at 22.9° is in detriment — the planet opposite its home, working against the grain. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-fire2-earth1",
+        "modalities:mutable4-cardinal3-fixed2",
+        "settled-signs:9",
+        "retrograde:1"
+      ],
+      "text": "The honest balance sheet uses the 9 placements whose signs hold for the whole day: air 3, water 3, fire 2, earth 1 across the elements, and mutable 4, cardinal 3, fixed 2 across the modalities. Uranus was retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:gemini:cancer"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Gemini into Cancer during that day at the birthplace, travelling 15.2° between one midnight and the next. A birth time would settle it in a second; there isn’t one. So the Moon stays unnamed here — the alternative is a guess wearing the clothes of a fact."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-17/",
+    "label": "Everyone born on June 17"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "modality:mutable:4",
+    "sun-degree:25.60",
+    "decan:gemini:third",
+    "personal:Mercury:Cancer:17.5°",
+    "personal:Venus:Gemini:21.0°",
+    "personal:Mars:Libra:22.9°",
+    "aspect:Saturn:Uranus:opposition:0.58",
+    "aspect:Saturn:Pluto:sextile:0.74",
+    "aspect:Uranus:Pluto:trine:1.33",
+    "figure:unaspected:Moon",
+    "dignity:Mars:detriment",
+    "elements:air3-water3-fire2-earth1",
+    "modalities:mutable4-cardinal3-fixed2",
+    "settled-signs:9",
+    "retrograde:1",
+    "moon-uncertain:gemini:cancer"
+  ],
+  "measurements": {
+    "originalWords": 376,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

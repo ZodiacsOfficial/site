@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "denis-diderot",
+  "seedRound": 0,
+  "qid": "Q448",
+  "displayName": "Denis Diderot",
+  "identity": "Philosopher · France · 1713–1784",
+  "title": "Denis Diderot's birth chart",
+  "metaDescription": "Denis Diderot's chart, computed from a sourced birth date: Sun at 12.1° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the nine placements whose signs are settled stand in Virgo — Mercury, Saturn, Uranus and Pluto. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:virgo:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:12.06",
+        "decan:libra:second"
+      ],
+      "text": "Measured rather than labelled, the Sun holds 12.1° Libra: the second decan, whose classical sub-ruler is Saturn. A air sign, read here in its second face."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Virgo:24.2°",
+        "personal:Venus:Leo:29.4°",
+        "personal:Mars:Sagittarius:3.9°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Virgo (24.2°), Venus in Leo (29.4°), Mars in Sagittarius (3.9°): a mind that trusts the measured and the checked, taste that runs toward the vivid and the immediate, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Saturn:Neptune:trine:0.22",
+        "aspect:Mars:Jupiter:square:0.25",
+        "aspect:Neptune:Pluto:trine:0.82"
+      ],
+      "text": "The tightest geometry in the chart puts Saturn a third of the circle apart from Neptune, 0.2° off exact. The scheme reads trines as water finding its level: effortless, and invisible to the person living it. Behind it, Mars square Jupiter at 0.3°, and Neptune trine Pluto at 0.8° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "The standing structure",
+      "facts": [
+        "figure:t-square:Venus-Jupiter:apex-Mars",
+        "figure:unaspected:Sun"
+      ],
+      "text": "Venus opposes Jupiter while both square Mars. A t-square aims the whole axis at its apex planet; the tradition reads it as the chart’s standing assignment. The Sun stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Mercury:exaltation",
+        "dignity:Jupiter:domicile"
+      ],
+      "text": "The classical table has three entries for this chart. The Sun in Libra at 12.1° is in fall — the tradition’s uphill placement, strength earned rather than given; Mercury in Virgo at 24.2° is in exaltation — the tradition’s honoured-guest placement, working at its best; Jupiter in Pisces at 4.1° is in domicile — the planet in its own sign, running on home rules. The old table grades terrain, not talent — a placement in fall works uphill, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-fire2-air1-water1",
+        "modalities:mutable6-fixed2-cardinal1",
+        "settled-signs:9",
+        "retrograde:2"
+      ],
+      "text": "Among the 9 placements whose signs hold for the whole day, the elements divide 5 earth, 2 fire, 1 air, 1 water; by modality, 6 mutable, 2 fixed, 1 cardinal. An earth emphasis reads as patience with material reality — slow hands, durable results. Jupiter and Neptune were retrograde — apparent retreat against the stars, which the old reading takes as a function working from the inside first."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:aries:taurus"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Aries into Taurus during that day at the birthplace, travelling 14.0° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-5/",
+    "label": "Everyone born on October 5"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "stellium:virgo:4",
+    "sun-degree:12.06",
+    "decan:libra:second",
+    "personal:Mercury:Virgo:24.2°",
+    "personal:Venus:Leo:29.4°",
+    "personal:Mars:Sagittarius:3.9°",
+    "aspect:Saturn:Neptune:trine:0.22",
+    "aspect:Mars:Jupiter:square:0.25",
+    "aspect:Neptune:Pluto:trine:0.82",
+    "figure:t-square:Venus-Jupiter:apex-Mars",
+    "figure:unaspected:Sun",
+    "dignity:Sun:fall",
+    "dignity:Mercury:exaltation",
+    "dignity:Jupiter:domicile",
+    "elements:earth5-fire2-air1-water1",
+    "modalities:mutable6-fixed2-cardinal1",
+    "settled-signs:9",
+    "retrograde:2",
+    "moon-uncertain:aries:taurus"
+  ],
+  "measurements": {
+    "originalWords": 468,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "j-m-w-turner",
+  "seedRound": 0,
+  "qid": "Q159758",
+  "displayName": "J. M. W. Turner",
+  "identity": "Painter · United Kingdom · 1775–1851",
+  "title": "J. M. W. Turner's birth chart",
+  "metaDescription": "J. M. W. Turner's chart, computed from a sourced birth date: Sun at 3.1° Taurus. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled fall in earth signs — at least half of what the unknown hour leaves certain. An earth emphasis reads as patience with material reality — slow hands, durable results.",
+  "ledeFact": "element:earth:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:3.10",
+        "decan:taurus:first"
+      ],
+      "text": "Taurus, but precisely: 3.1°, first decan, 0°–10°, under Venus in the triplicity scheme. The tradition kept these divisions because thirty degrees is a long street."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:6.1°",
+        "personal:Venus:Taurus:28.9°",
+        "personal:Mars:Leo:26.9°"
+      ],
+      "text": "Mercury holds 6.1° Aries, Venus holds 28.9° Taurus, Mars holds 26.9° Leo — in the old shorthand, a mind that decides at speaking speed; taste for the substantial and the lasting; drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Venus:Uranus:conjunction:1.9",
+        "aspect:Venus:Mars:square:1.93",
+        "aspect:Venus:Pluto:trine:2.14"
+      ],
+      "text": "The day's firmest angle joins Venus and Uranus — a conjunction holding at 1.9°. Two bodies in the same degree are not read as neighbours but as a merger: whatever one wants, the other is already funding. Behind it, Venus square Mars at 1.9°, and Venus trine Pluto at 2.1° — both still well inside the orbs this site uses. These are the day-proof angles — present at midnight, present at noon, present at the next midnight."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:grand-trine:Venus-Saturn-Pluto",
+        "figure:unaspected:Moon"
+      ],
+      "text": "Venus, Saturn, Pluto close a triangle of trines. The closed triangle is the scheme’s picture of flow — and its warning that flow, unspent, stays private. The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Venus:domicile",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "Of the seven planets the classical scheme judges, two sit in a sign it has an opinion about. Venus in Taurus at 28.9° is in domicile — the planet in its own sign, running on home rules; Saturn in Libra at 3.5° is in exaltation — the tradition’s honoured-guest placement, working at its best. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:earth5-air3-fire2",
+        "modalities:fixed5-cardinal3-mutable2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The honest balance sheet uses the 10 placements whose signs hold for the whole day: earth 5, air 3, fire 2 across the elements, and fixed 5, cardinal 3, mutable 2 across the modalities. No settled placement falls in water — an absence the tradition treats as information, not as a defect. Saturn and Neptune were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:aquarius",
+        "moon-band:14.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Aquarius for the whole of that day at the birthplace, covering 14.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 11.8°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-23/",
+    "label": "Everyone born on April 23"
+  },
+  "signLink": {
+    "href": "/taurus/",
+    "label": "The Taurus guide"
+  },
+  "substantiveFacts": [
+    "element:earth:5",
+    "sun-degree:3.10",
+    "decan:taurus:first",
+    "personal:Mercury:Aries:6.1°",
+    "personal:Venus:Taurus:28.9°",
+    "personal:Mars:Leo:26.9°",
+    "aspect:Venus:Uranus:conjunction:1.9",
+    "aspect:Venus:Mars:square:1.93",
+    "aspect:Venus:Pluto:trine:2.14",
+    "figure:grand-trine:Venus-Saturn-Pluto",
+    "figure:unaspected:Moon",
+    "dignity:Venus:domicile",
+    "dignity:Saturn:exaltation",
+    "elements:earth5-air3-fire2",
+    "modalities:fixed5-cardinal3-mutable2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:aquarius",
+    "moon-band:14.1"
+  ],
+  "measurements": {
+    "originalWords": 430,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

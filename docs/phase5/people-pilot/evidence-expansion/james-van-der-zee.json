@@ -1,0 +1,100 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "james-van-der-zee",
+ "qid": "Q3161458",
+ "displayName": "James Van Der Zee",
+ "wikidataLabel": "James Van Der Zee",
+ "wikidataDescription": "African American photographer (1886–1983)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q3161458",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2512460654
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "James Van Der Zee",
+   "articleUrl": "https://en.wikipedia.org/wiki/James_Van_Der_Zee",
+   "pageId": 867130,
+   "revisionId": 1364556887,
+   "revisionTimestamp": "2026-07-17T05:13:31Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1886-06-29T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1886-06-29T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1886-06-29T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1983-05-15T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q2076362",
+  "label": "Lenox",
+  "entityUrl": "https://www.wikidata.org/wiki/Q2076362",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q2076362",
+   "sourceEntityLabel": "Lenox",
+   "latitude": 42.356388888889,
+   "longitude": -73.285277777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:James Van Der Zee portrait, RIT NandE Vol13Num34 1981 Oct29 Complete (cropped).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:James%20Van%20Der%20Zee%20portrait%2C%20RIT%20NandE%20Vol13Num34%201981%20Oct29%20Complete%20(cropped).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:James_Van_Der_Zee_portrait,_RIT_NandE_Vol13Num34_1981_Oct29_Complete_(cropped).jpg",
+  "width": 668,
+  "height": 649,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Rochester Institute of Technology",
+  "credit": "News & Events 1981 at the RIT Digital Archive",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

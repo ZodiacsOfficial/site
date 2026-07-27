@@ -1,0 +1,144 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "andy-warhol",
+ "qid": "Q5603",
+ "displayName": "Andy Warhol",
+ "wikidataLabel": "Andy Warhol",
+ "wikidataDescription": "American artist, film director, and producer (1928–1987)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q5603",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522104485
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Andy Warhol",
+   "articleUrl": "https://en.wikipedia.org/wiki/Andy_Warhol",
+   "pageId": 864,
+   "revisionId": 1365963741,
+   "revisionTimestamp": "2026-07-25T12:56:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1928-08-06T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1928-08-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1928-08-06T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1987-02-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1342",
+  "label": "Pittsburgh",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1342",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1342",
+   "sourceEntityLabel": "Pittsburgh",
+   "latitude": 40.44166666666667,
+   "longitude": -80,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q33231",
+   "label": "photographer"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q1281618",
+   "label": "sculptor"
+  },
+  {
+   "entity": "Q3391743",
+   "label": "visual artist"
+  },
+  {
+   "entity": "Q222344",
+   "label": "cinematographer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q18939491",
+   "label": "diarist"
+  },
+  {
+   "entity": "Q5322166",
+   "label": "designer"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  },
+  {
+   "entity": "Q1414443",
+   "label": "filmmaker"
+  }
+ ],
+ "portrait": {
+  "file": "File:Andy Warhol at the Jewish Museum (by Bernard Gotfryd) – LOC.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Andy%20Warhol%20at%20the%20Jewish%20Museum%20(by%20Bernard%20Gotfryd)%20%E2%80%93%20LOC.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Andy_Warhol_at_the_Jewish_Museum_(by_Bernard_Gotfryd)_%E2%80%93_LOC.jpg",
+  "width": 3224,
+  "height": 4686,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Bernard Gotfryd",
+  "credit": "Library of Congress Catalog: https://lccn.loc.gov/2020734073/ Flickr: https://www.flickr.com/photos/library_of_congress/51224640393/ Original url: https://www.loc.gov/pictures/resource/gtfy.04532/",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

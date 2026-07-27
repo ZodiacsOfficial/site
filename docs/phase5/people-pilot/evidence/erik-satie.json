@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "erik-satie",
+ "qid": "Q187192",
+ "displayName": "Erik Satie",
+ "wikidataLabel": "Erik Satie",
+ "wikidataDescription": "French composer and pianist (1866-1925)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q187192",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2518186794
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Erik Satie",
+   "articleUrl": "https://en.wikipedia.org/wiki/Erik_Satie",
+   "pageId": 9956,
+   "revisionId": 1364459912,
+   "revisionTimestamp": "2026-07-16T18:00:06Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1866-05-17T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1866-05-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1866-05-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1925-07-01T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q231720",
+  "label": "Honfleur",
+  "entityUrl": "https://www.wikidata.org/wiki/Q231720",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q231720",
+   "sourceEntityLabel": "Honfleur",
+   "latitude": 49.418888888889,
+   "longitude": 0.23305555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q486748",
+   "label": "pianist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Satie-erik-4ff9d0bde1749.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Satie-erik-4ff9d0bde1749.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Satie-erik-4ff9d0bde1749.jpg",
+  "width": 1000,
+  "height": 1000,
+  "licenseShortName": "CC BY-SA 3.0",
+  "licenseUrl": "https://creativecommons.org/licenses/by-sa/3.0",
+  "artist": "Sonia y natalia",
+  "credit": "Own work",
+  "usageTerms": "Creative Commons Attribution-Share Alike 3.0",
+  "attributionRequired": "true",
+  "restrictions": ""
+ }
+}

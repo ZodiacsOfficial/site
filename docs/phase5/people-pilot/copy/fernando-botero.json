@@ -1,0 +1,116 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "fernando-botero",
+  "seedRound": 0,
+  "qid": "Q272877",
+  "displayName": "Fernando Botero",
+  "identity": "Painter · Colombia · 1932–2023",
+  "title": "Fernando Botero's birth chart",
+  "metaDescription": "Fernando Botero's chart, computed from a sourced birth date: Sun at 29.4° Aries. Birth time unknown, so no houses or rising sign.",
+  "lede": "Four of the ten placements whose signs are settled stand in Aries — the Sun, Mercury, Mars and Uranus. The placements whose signs could change with an unknown hour are not counted. A cluster that size becomes the section the rest of the chart plays around.",
+  "ledeFact": "stellium:aries:4",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:29.41",
+        "decan:aries:third"
+      ],
+      "text": "The Sun's exact place is 29.4° Aries. That falls in the third decan, 20°–30°, sub-ruled by Jupiter in the classical scheme — a fire sign read through a cardinal season."
+    },
+    {
+      "key": "personal",
+      "title": "The personal registers",
+      "facts": [
+        "personal:Mercury:Aries:14.5°",
+        "personal:Venus:Gemini:15.0°",
+        "personal:Mars:Aries:12.7°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Aries (14.5°), Venus in Gemini (15.0°), Mars in Aries (12.7°): a mind that decides at speaking speed, taste led by wit and proportion, drive that ignites on contact."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Uranus:Pluto:square:0.09",
+        "aspect:Mars:Jupiter:trine:0.09",
+        "aspect:Mercury:Venus:sextile:0.49"
+      ],
+      "text": "Uranus and Pluto hold the closest angle here — a square, 0.1° wide. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, Mars trine Jupiter at 0.1°, and Mercury sextile Venus at 0.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:none"
+      ],
+      "text": "The day-stable angles form no closed figure. Nothing funnels; each aspect is its own negotiation, which the tradition reads as a chart of separate treaties rather than one campaign."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:exaltation",
+        "dignity:Mars:domicile",
+        "dignity:Saturn:domicile"
+      ],
+      "text": "The classical table has three entries for this chart. The Sun in Aries at 29.4° is in exaltation — the tradition’s honoured-guest placement, working at its best; Mars in Aries at 12.7° is in domicile — the planet in its own sign, running on home rules; Saturn in Aquarius at 4.3° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:fire5-air3-earth1-water1",
+        "modalities:cardinal6-mutable2-fixed2",
+        "settled-signs:10",
+        "retrograde:2"
+      ],
+      "text": "The certain ground: 10 placements whose signs hold for the whole day, dividing 5 fire, 3 air, 1 earth, 1 water by element and 6 cardinal, 2 mutable, 2 fixed by mode. Mercury and Neptune were retrograde — apparent backward motion from where the Earth sits, which the tradition reads as a function turned inward before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:libra",
+        "moon-band:15.1"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Libra for the whole of that day at the birthplace, covering 15.1° between midnight and midnight. Whatever the unrecorded hour was, it happened inside one Moon sign — the degree floats, the sign holds. At the noon reference it stands at 12.5°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/april-19/",
+    "label": "Everyone born on April 19"
+  },
+  "signLink": {
+    "href": "/aries/",
+    "label": "The Aries guide"
+  },
+  "substantiveFacts": [
+    "stellium:aries:4",
+    "sun-degree:29.41",
+    "decan:aries:third",
+    "personal:Mercury:Aries:14.5°",
+    "personal:Venus:Gemini:15.0°",
+    "personal:Mars:Aries:12.7°",
+    "aspect:Uranus:Pluto:square:0.09",
+    "aspect:Mars:Jupiter:trine:0.09",
+    "aspect:Mercury:Venus:sextile:0.49",
+    "figure:none",
+    "dignity:Sun:exaltation",
+    "dignity:Mars:domicile",
+    "dignity:Saturn:domicile",
+    "elements:fire5-air3-earth1-water1",
+    "modalities:cardinal6-mutable2-fixed2",
+    "settled-signs:10",
+    "retrograde:2",
+    "moon-sign:libra",
+    "moon-band:15.1"
+  ],
+  "measurements": {
+    "originalWords": 400,
+    "substantiveStatements": 19,
+    "blocks": 7
+  }
+}

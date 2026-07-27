@@ -1,0 +1,134 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "george-eliot",
+ "qid": "Q131333",
+ "displayName": "George Eliot",
+ "wikidataLabel": "George Eliot",
+ "wikidataDescription": "English novelist, essayist, poet and journalist (1819–1880)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q131333",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2520639268
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "George Eliot",
+   "articleUrl": "https://en.wikipedia.org/wiki/George_Eliot",
+   "pageId": 13049,
+   "revisionId": 1364793655,
+   "revisionTimestamp": "2026-07-18T15:47:17Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1819-11-22T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1819-11-22T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1819-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1819-11-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1880-12-22T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q175632",
+  "label": "Nuneaton",
+  "entityUrl": "https://www.wikidata.org/wiki/Q175632",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q175632",
+   "sourceEntityLabel": "Nuneaton",
+   "latitude": 52.523,
+   "longitude": -1.4683,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q333634",
+   "label": "translator"
+  },
+  {
+   "entity": "Q4964182",
+   "label": "philosopher"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q49757",
+   "label": "poet"
+  },
+  {
+   "entity": "Q1930187",
+   "label": "journalist"
+  },
+  {
+   "entity": "Q11774202",
+   "label": "essayist"
+  },
+  {
+   "entity": "Q1607826",
+   "label": "editor"
+  }
+ ],
+ "portrait": {
+  "file": "File:George Eliot, por François D'Albert Durade.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:George%20Eliot%2C%20por%20Fran%C3%A7ois%20D'Albert%20Durade.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:George_Eliot,_por_Fran%C3%A7ois_D%27Albert_Durade.jpg",
+  "width": 1344,
+  "height": 1690,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "replica by François D’Albert Durade (1804–1886)",
+  "credit": "National Portrait Gallery: NPG 1405",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

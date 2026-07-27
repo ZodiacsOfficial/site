@@ -1,0 +1,104 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "claude-monet",
+ "qid": "Q296",
+ "displayName": "Claude Monet",
+ "wikidataLabel": "Claude Monet",
+ "wikidataDescription": "French painter (1840–1926)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "art"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q296",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522905876
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Claude Monet",
+   "articleUrl": "https://en.wikipedia.org/wiki/Claude_Monet",
+   "pageId": 6548,
+   "revisionId": 1364953615,
+   "revisionTimestamp": "2026-07-19T13:41:21Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1840-11-14T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1840-11-14T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1840-11-14T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1926-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q90",
+  "label": "Paris",
+  "entityUrl": "https://www.wikidata.org/wiki/Q90",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q90",
+   "sourceEntityLabel": "Paris",
+   "latitude": 48.85666666666667,
+   "longitude": 2.352222222222222,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q1028181",
+   "label": "painter"
+  },
+  {
+   "entity": "Q1925963",
+   "label": "graphic artist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Claude Monet 1899 Nadar crop.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Claude%20Monet%201899%20Nadar%20crop.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Claude_Monet_1899_Nadar_crop.jpg",
+  "width": 2021,
+  "height": 2694,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nadar",
+  "credit": "Claude Monet 1899 Nadar.jpg This is a retouched picture, which means that it has been digitally altered from its original version. Modifications: Resim kırpıldı, renk ve parlaklık ayarı yapıldı. The original can be viewed here: Claude Monet 1899 Nadar.jpg: . Modifications made by Dsmurat.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

@@ -1,0 +1,138 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "hector-berlioz",
+ "qid": "Q1151",
+ "displayName": "Hector Berlioz",
+ "wikidataLabel": "Hector Berlioz",
+ "wikidataDescription": "French composer and conductor (1803–1869)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "music"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1151",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522562693
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Hector Berlioz",
+   "articleUrl": "https://en.wikipedia.org/wiki/Hector_Berlioz",
+   "pageId": 53424,
+   "revisionId": 1359686355,
+   "revisionTimestamp": "2026-06-16T16:52:37Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1803-12-11T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1803-12-11T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1803-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1803-12-11T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1869-03-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q864123",
+  "label": "La Côte-Saint-André",
+  "entityUrl": "https://www.wikidata.org/wiki/Q864123",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q864123",
+   "sourceEntityLabel": "La Côte-Saint-André",
+   "latitude": 45.393611111111,
+   "longitude": 5.2605555555556,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q158852",
+   "label": "conductor"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q18814623",
+   "label": "autobiographer"
+  },
+  {
+   "entity": "Q1350157",
+   "label": "music critic"
+  },
+  {
+   "entity": "Q8178443",
+   "label": "librettist"
+  },
+  {
+   "entity": "Q214970",
+   "label": "virtuoso"
+  },
+  {
+   "entity": "Q182436",
+   "label": "librarian"
+  },
+  {
+   "entity": "Q36834",
+   "label": "composer"
+  },
+  {
+   "entity": "Q61996872",
+   "label": "musicographer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Berlioz Petit BNF Gallica-crop.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Berlioz%20Petit%20BNF%20Gallica-crop.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Berlioz_Petit_BNF_Gallica-crop.jpg",
+  "width": 2976,
+  "height": 4007,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Pierre Petit",
+  "credit": "This file comes from Gallica Digital Library and is available under the digital ID btv1b84543244",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

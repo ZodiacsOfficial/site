@@ -1,0 +1,121 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "alexandre-dumas",
+ "qid": "Q38337",
+ "displayName": "Alexandre Dumas",
+ "wikidataLabel": "Alexandre Dumas",
+ "wikidataDescription": "French writer and dramatist (1802–1870)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "writing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q38337",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522257938
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Alexandre Dumas",
+   "articleUrl": "https://en.wikipedia.org/wiki/Alexandre_Dumas",
+   "pageId": 157272,
+   "revisionId": 1365932154,
+   "revisionTimestamp": "2026-07-25T07:44:23Z"
+  }
+ },
+ "birth": {
+  "claimCount": 3,
+  "distinctDayPrecisionValues": [
+   "+1802-07-24T00:00:00Z|proleptic-gregorian",
+   "+1802-07-24T00:00:00Z|proleptic-julian"
+  ],
+  "allValues": [
+   {
+    "time": "+1802-07-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1802-00-00T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1802-07-24T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-julian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1802-07-24T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1870-12-05T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q213883",
+  "label": "Villers-Cotterêts",
+  "entityUrl": "https://www.wikidata.org/wiki/Q213883",
+  "country": {
+   "entity": "Q142",
+   "label": "France"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q213883",
+   "sourceEntityLabel": "Villers-Cotterêts",
+   "latitude": 49.253055555556,
+   "longitude": 3.0902777777778,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q214917",
+   "label": "playwright"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Alexander Dumas père par Nadar - Google Art Project.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Alexander%20Dumas%20p%C3%A8re%20par%20Nadar%20-%20Google%20Art%20Project.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Alexander_Dumas_p%C3%A8re_par_Nadar_-_Google_Art_Project.jpg",
+  "width": 3000,
+  "height": 3953,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Nadar",
+  "credit": "ZgHm9RK24bLVIg at Google Cultural Institute maximum zoom level",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

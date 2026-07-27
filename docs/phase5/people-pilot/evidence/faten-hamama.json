@@ -1,0 +1,112 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "faten-hamama",
+ "qid": "Q2424957",
+ "displayName": "Faten Hamama",
+ "wikidataLabel": "Faten Hamama",
+ "wikidataDescription": "Egyptian producer and actress (1931–2015).",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "mena",
+  "field": "performing"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q2424957",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521467786
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Faten Hamama",
+   "articleUrl": "https://en.wikipedia.org/wiki/Faten_Hamama",
+   "pageId": 1514483,
+   "revisionId": 1359390673,
+   "revisionTimestamp": "2026-06-15T01:04:43Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1931-05-27T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1931-05-27T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1931-05-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+2015-01-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q6021507",
+  "label": "El-Senbellawein",
+  "entityUrl": "https://www.wikidata.org/wiki/Q6021507",
+  "country": {
+   "entity": "Q79",
+   "label": "Egypt"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q6021507",
+   "sourceEntityLabel": "El-Senbellawein",
+   "latitude": 30.044988,
+   "longitude": 31.248863,
+   "precision": 1e-7,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q10800557",
+   "label": "film actor"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  }
+ ],
+ "portrait": {
+  "file": "File:Faten Hamama (1965).jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Faten%20Hamama%20(1965).jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Faten_Hamama_(1965).jpg",
+  "width": 1046,
+  "height": 1469,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Press",
+  "credit": "https://see.news/remembering-faten-hamama-on-her-birth-anniv-sada-elbald",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

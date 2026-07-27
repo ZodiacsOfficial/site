@@ -33,9 +33,9 @@ const people = manifest.people;
 /* 1 — exactly 20 unique QIDs and slugs */
 const qids = new Set(people.map((person) => person.qid));
 const slugs = new Set(people.map((person) => person.slug));
-check('exactly 20 pilot people', people.length === 20, `${people.length}`);
-check('20 unique QIDs', qids.size === 20, `${qids.size}`);
-check('20 unique slugs', slugs.size === 20, `${slugs.size}`);
+check('exactly 500 reviewed people', people.length === 500, `${people.length}`);
+check('unique QIDs', qids.size === people.length, `${qids.size}`);
+check('unique slugs', slugs.size === people.length, `${slugs.size}`);
 
 /* 2 — all twelve Sun signs */
 const SIGNS = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
@@ -46,20 +46,28 @@ for (const person of people) (bySign[person.sunSign.slug] ??= []).push(person);
 const missingSigns = SIGNS.filter((sign) => !bySign[sign]);
 check('all twelve Sun signs represented', missingSigns.length === 0, missingSigns.join(', '));
 
-/* 3 — era separation for every same-sign pair */
+/* 3 — same-sign temporal separation. The pilot's 40-year rule scaled to
+   a 500-person directory as a minimum same-sign birth-date gap: no two
+   people who share a Sun sign were born within 365 days of each other
+   (the selection tool enforced 730 days wherever the pool allowed; the
+   relaxations are recorded in selection-report.json). */
 const eraRows = [];
 for (const sign of SIGNS) {
-  const group = bySign[sign] ?? [];
-  if (group.length < 2) continue;
-  for (let i = 0; i < group.length; i += 1) {
-    for (let j = i + 1; j < group.length; j += 1) {
-      const a = Number(group[i].birthDate.computedGregorianDate.slice(0, 4));
-      const b = Number(group[j].birthDate.computedGregorianDate.slice(0, 4));
-      const years = Math.abs(a - b);
-      eraRows.push({ sign, a: `${group[i].slug} (${a})`, b: `${group[j].slug} (${b})`, years });
-      check(`era separation ${sign}: ${group[i].slug} ${a} / ${group[j].slug} ${b}`, years >= 40, `${years} years`);
+  const group = (bySign[sign] ?? []).slice()
+    .sort((a, b) => a.birthDate.computedGregorianDate.localeCompare(b.birthDate.computedGregorianDate));
+  let minGap = Infinity;
+  let closest = '';
+  for (let index = 1; index < group.length; index += 1) {
+    const gap = (Date.parse(group[index].birthDate.computedGregorianDate)
+      - Date.parse(group[index - 1].birthDate.computedGregorianDate)) / 86_400_000;
+    if (gap < minGap) {
+      minGap = gap;
+      closest = `${group[index - 1].slug} / ${group[index].slug}`;
     }
   }
+  eraRows.push({ sign, count: group.length, minGapDays: Math.round(minGap), closest });
+  check(`same-sign separation ${sign}`, group.length < 2 || minGap >= 365,
+    `${group.length} people; closest ${closest} at ${Math.round(minGap)} days`);
 }
 
 /* 4 — no pilot record is cusp-ambiguous */
@@ -367,8 +375,8 @@ if (phase5c) {
     '',
   );
   check(
-    'Phase 5C exact indexable set',
-    indexable.length === 18
+    'indexable set is exactly the non-living reviewed records',
+    indexable.length === manifest.people.filter((person) => !person.living).length
       && indexable.every((person) => !person.living)
       && indexable.map((person) => person.slug).sort().join(',')
         === [...policy.indexableProfiles].sort().join(','),
@@ -383,10 +391,9 @@ if (phase5c) {
     `${protectedLiving.length} protected`,
   );
   check(
-    'Phase 5C directory remains below threshold and noindex',
-    policy.directoryIndexable === false
-      && indexable.length < policy.minimumIndexableProfilesForDirectory,
-    `${indexable.length}/${policy.minimumIndexableProfilesForDirectory}`,
+    'directory indexability follows the policy threshold',
+    policy.directoryIndexable === (indexable.length >= policy.minimumIndexableProfilesForDirectory),
+    `${indexable.length}/${policy.minimumIndexableProfilesForDirectory} → ${policy.directoryIndexable}`,
   );
 } else if (phase5b) {
   check('no /people/ entry in the sitemap', !/\/people\//u.test(sitemap), '');

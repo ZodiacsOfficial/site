@@ -1,0 +1,115 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "edward-jenner",
+ "qid": "Q40852",
+ "displayName": "Edward Jenner",
+ "wikidataLabel": "Edward Jenner",
+ "wikidataDescription": "English physician, scientist and pioneer of vaccination (1749–1823)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "europe",
+  "field": "science"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q40852",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2522260287
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Edward Jenner",
+   "articleUrl": "https://en.wikipedia.org/wiki/Edward_Jenner",
+   "pageId": 9506,
+   "revisionId": 1365785642,
+   "revisionTimestamp": "2026-07-24T11:39:53Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1749-05-17T00:00:00Z|proleptic-gregorian",
+   "+1749-05-06T00:00:00Z|proleptic-julian"
+  ],
+  "allValues": [
+   {
+    "time": "+1749-05-17T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   },
+   {
+    "time": "+1749-05-06T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-julian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1749-05-17T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1823-01-26T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q584443",
+  "label": "Berkeley",
+  "entityUrl": "https://www.wikidata.org/wiki/Q584443",
+  "country": {
+   "entity": "Q145",
+   "label": "United Kingdom"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q584443",
+   "sourceEntityLabel": "Berkeley",
+   "latitude": 51.691,
+   "longitude": -2.459,
+   "precision": 0.00027777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q39631",
+   "label": "physician"
+  },
+  {
+   "entity": "Q18805",
+   "label": "naturalist"
+  },
+  {
+   "entity": "Q864503",
+   "label": "biologist"
+  }
+ ],
+ "portrait": {
+  "file": "File:Edward Jenner by James Northcote.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Edward%20Jenner%20by%20James%20Northcote.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Edward_Jenner_by_James_Northcote.jpg",
+  "width": 640,
+  "height": 800,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "James Northcote",
+  "credit": "one or more third parties have made copyright claims against Wikimedia Commons in relation to the work from which this is sourced or a purely mechanical reproduction thereof. This may be due to recognition of the \"sweat of the brow\" doctrine, allowing works to be eligible for protection through skill and labour, and not purely by originality as is the case in the United Stat…",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

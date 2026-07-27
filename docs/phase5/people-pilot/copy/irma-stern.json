@@ -1,0 +1,122 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "irma-stern",
+  "seedRound": 0,
+  "qid": "Q281203",
+  "displayName": "Irma Stern",
+  "identity": "Painter · South Africa · 1894–1966",
+  "title": "Irma Stern's birth chart",
+  "metaDescription": "Irma Stern's chart, computed from a sourced birth date: Sun at 9.2° Libra. Birth time unknown, so no houses or rising sign.",
+  "lede": "Five of the ten placements whose signs are settled fall in air signs — at least half of what the unknown hour leaves certain. Air signs carry exchange in the scheme — comparison, argument, the sentence that makes the situation legible.",
+  "ledeFact": "element:air:5",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:9.21",
+        "decan:libra:first"
+      ],
+      "text": "At the noon reference the Sun sits 9.2° into Libra — the first decan, which the old scheme hands to Venus. Same sign, different decan, different chart."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Mercury:Libra:29.2°",
+        "personal:Venus:Virgo:24.3°",
+        "personal:Mars:Taurus:3.1°"
+      ],
+      "text": "Day to day the chart speaks through Mercury in Libra (29.2°), Venus in Virgo (24.3°), Mars in Taurus (3.1°): thought that travels by comparison, attraction that grows by reliability, effort banked steadily until it tells."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Mars:Jupiter:sextile:2.44",
+        "aspect:Sun:Pluto:trine:2.49",
+        "aspect:Mercury:Saturn:conjunction:3.44"
+      ],
+      "text": "The tightest geometry in the chart puts Mars a sixth of the circle apart from Jupiter, 2.4° off exact. A sextile pays out only on effort; the scheme calls it opportunity rather than gift. Behind it, the Sun trine Pluto at 2.5°, and Mercury conjunction Saturn at 3.4° — both still well inside the orbs this site uses. Every angle named here holds for the whole of that day at the birthplace, so an unknown hour cannot take it away."
+    },
+    {
+      "key": "figures",
+      "title": "What the angles build",
+      "facts": [
+        "figure:unaspected:Moon"
+      ],
+      "text": "The Moon makes no major aspect that survives the day; the old reading gives such a planet autonomy — it acts alone, sometimes loudly."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Sun:fall",
+        "dignity:Moon:fall",
+        "dignity:Venus:fall",
+        "dignity:Mars:detriment",
+        "dignity:Jupiter:exaltation",
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags six placements in this chart. The Sun in Libra at 9.2° is in fall — the tradition’s uphill placement, strength earned rather than given; the Moon in Scorpio at 19.6° is in fall; Venus in Virgo at 24.3° is in fall; Mars in Taurus at 3.1° is in detriment — the planet opposite its home, working against the grain; Jupiter in Cancer at 5.5° is in exaltation — the tradition’s honoured-guest placement, working at its best; Saturn in Libra at 25.8° is in exaltation. None of this ranks anyone; dignity describes footing, and footing can be worked with."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air5-water3-earth2",
+        "modalities:cardinal4-fixed3-mutable3",
+        "settled-signs:10",
+        "retrograde:3"
+      ],
+      "text": "Counting only the 10 placements whose signs hold for the whole day, the chart runs 5 air, 3 water, 2 earth by element and 4 cardinal, 3 fixed, 3 mutable by modality. An air-weighted chart thinks in through-lines; the sentence is how it takes hold of the world. No settled placement falls in fire — an absence the tradition treats as information, not as a defect. Mars, Neptune and Pluto were retrograde — the backward drift a body appears to make as the Earth overtakes it, read in the scheme as a function that reviews before it releases."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon, and how far it can move",
+      "facts": [
+        "moon-sign:scorpio",
+        "moon-band:13.0"
+      ],
+      "uncertain": false,
+      "text": "The Moon stayed in Scorpio for the whole of that day at the birthplace, covering 13.0° between midnight and midnight. The missing clock moves the Moon by half a sign at most here, and the boundary was never close. At the noon reference it stands at 19.6°."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/october-2/",
+    "label": "Everyone born on October 2"
+  },
+  "signLink": {
+    "href": "/libra/",
+    "label": "The Libra guide"
+  },
+  "substantiveFacts": [
+    "element:air:5",
+    "sun-degree:9.21",
+    "decan:libra:first",
+    "personal:Mercury:Libra:29.2°",
+    "personal:Venus:Virgo:24.3°",
+    "personal:Mars:Taurus:3.1°",
+    "aspect:Mars:Jupiter:sextile:2.44",
+    "aspect:Sun:Pluto:trine:2.49",
+    "aspect:Mercury:Saturn:conjunction:3.44",
+    "figure:unaspected:Moon",
+    "dignity:Sun:fall",
+    "dignity:Moon:fall",
+    "dignity:Venus:fall",
+    "dignity:Mars:detriment",
+    "dignity:Jupiter:exaltation",
+    "dignity:Saturn:exaltation",
+    "elements:air5-water3-earth2",
+    "modalities:cardinal4-fixed3-mutable3",
+    "settled-signs:10",
+    "retrograde:3",
+    "moon-sign:scorpio",
+    "moon-band:13.0"
+  ],
+  "measurements": {
+    "originalWords": 463,
+    "substantiveStatements": 22,
+    "blocks": 7
+  }
+}

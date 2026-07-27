@@ -1,0 +1,126 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "oscar-micheaux",
+ "qid": "Q1354247",
+ "displayName": "Oscar Micheaux",
+ "wikidataLabel": "Oscar Micheaux",
+ "wikidataDescription": "American writer and director (1884-1951)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "film"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q1354247",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2515283304
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Oscar Micheaux",
+   "articleUrl": "https://en.wikipedia.org/wiki/Oscar_Micheaux",
+   "pageId": 205856,
+   "revisionId": 1349121416,
+   "revisionTimestamp": "2026-04-15T21:44:45Z"
+  }
+ },
+ "birth": {
+  "claimCount": 2,
+  "distinctDayPrecisionValues": [
+   "+1884-01-02T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1884-01-02T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "preferred"
+   },
+   {
+    "time": "+1884-01-01T00:00:00Z",
+    "precision": 9,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1884-01-02T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1951-03-25T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q304036",
+  "label": "Metropolis",
+  "entityUrl": "https://www.wikidata.org/wiki/Q304036",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q304036",
+   "sourceEntityLabel": "Metropolis",
+   "latitude": 37.15306,
+   "longitude": -88.72528,
+   "precision": 0.0001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q2526255",
+   "label": "film director"
+  },
+  {
+   "entity": "Q6625963",
+   "label": "novelist"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q33999",
+   "label": "actor"
+  },
+  {
+   "entity": "Q28389",
+   "label": "screenwriter"
+  },
+  {
+   "entity": "Q3282637",
+   "label": "film producer"
+  }
+ ],
+ "portrait": {
+  "file": "File:Oscar Micheaux.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Oscar%20Micheaux.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Oscar_Micheaux.jpg",
+  "width": 400,
+  "height": 521,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "(1) http://shorock.com/arts/micheaux/portrait.html (2) http://en.wikipedia.org/wiki/File:Oscar_Micheaux.jpg",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

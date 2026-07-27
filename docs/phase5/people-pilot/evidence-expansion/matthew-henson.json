@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "matthew-henson",
+ "qid": "Q976683",
+ "displayName": "Matthew Henson",
+ "wikidataLabel": "Matthew Henson",
+ "wikidataDescription": "American explorer (1866–1955)",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "namerica",
+  "field": "explore"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q976683",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2516597634
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Matthew Henson",
+   "articleUrl": "https://en.wikipedia.org/wiki/Matthew_Henson",
+   "pageId": 602354,
+   "revisionId": 1366015681,
+   "revisionTimestamp": "2026-07-25T19:55:56Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1866-08-08T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1866-08-08T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1866-08-08T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1955-03-09T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q501319",
+  "label": "Charles County",
+  "entityUrl": "https://www.wikidata.org/wiki/Q501319",
+  "country": {
+   "entity": "Q30",
+   "label": "United States"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q501319",
+   "sourceEntityLabel": "Charles County",
+   "latitude": 38.48,
+   "longitude": -77.01,
+   "precision": 0.0002777777777777778,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q11900058",
+   "label": "explorer"
+  },
+  {
+   "entity": "Q36180",
+   "label": "writer"
+  },
+  {
+   "entity": "Q12356615",
+   "label": "traveler"
+  }
+ ],
+ "portrait": {
+  "file": "File:Matthew Henson 1910.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Matthew%20Henson%201910.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Matthew_Henson_1910.jpg",
+  "width": 2515,
+  "height": 2986,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "Unknown author",
+  "credit": "This image is available from the United States Library of Congress's Prints and Photographs division under the digital ID cph.3g07503.This tag does not indicate the copyright status of the attached work. A normal copyright tag is still required. See Commons:Licensing.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}

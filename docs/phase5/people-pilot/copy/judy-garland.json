@@ -1,0 +1,110 @@
+{
+  "schema": "zodiacs.phase5.copy.v1",
+  "slug": "judy-garland",
+  "seedRound": 0,
+  "qid": "Q11637",
+  "displayName": "Judy Garland",
+  "identity": "Television actor and singer · United States · 1922–1969",
+  "title": "Judy Garland's birth chart",
+  "metaDescription": "Judy Garland's chart, computed from a sourced birth date: Sun at 19.0° Gemini. Birth time unknown, so no houses or rising sign.",
+  "lede": "0.1° separates the Sun and Mars from an exact opposition; at that range identity and drive read as one mechanism. Across the wheel, each body sees the other in full. The old reading is not conflict so much as permanent mutual visibility.",
+  "ledeFact": "aspect:Sun:Mars:opposition",
+  "blocks": [
+    {
+      "key": "sun",
+      "title": "Where the Sun actually stood",
+      "facts": [
+        "sun-degree:19.00",
+        "decan:gemini:second"
+      ],
+      "text": "The Sun's position resolves to 19.0° Gemini — deep enough in the second decan (10°–20°) that Venus, its traditional sub-ruler, colours the reading."
+    },
+    {
+      "key": "personal",
+      "title": "Closer to the ground",
+      "facts": [
+        "personal:Venus:Cancer:19.3°",
+        "personal:Mars:Sagittarius:18.9°"
+      ],
+      "text": "Venus holds 19.3° Cancer, Mars holds 18.9° Sagittarius — in the old shorthand, attraction that works by atmosphere; effort spent in bursts and openings."
+    },
+    {
+      "key": "geometry",
+      "title": "The angles that hold",
+      "facts": [
+        "aspect:Jupiter:Pluto:square:0.04",
+        "aspect:Sun:Mars:opposition:0.15",
+        "aspect:Mercury:Saturn:square:0.79"
+      ],
+      "text": "Jupiter and Pluto hold the closest angle here — a square, 0.0° wide. Nothing in a square flows; everything in it works. The old texts kept squares for the charts they respected. Behind it, the Sun opposition Mars at 0.1°, and Mercury square Saturn at 0.8° — both still well inside the orbs this site uses. All of it stands whatever the hour was: each angle was tested from midnight to midnight before it was written down."
+    },
+    {
+      "key": "figures",
+      "title": "Figures in the geometry",
+      "facts": [
+        "figure:t-square:Sun-Mars:apex-Uranus"
+      ],
+      "text": "The Sun opposes Mars while both square Uranus. The t-square is the figure the old texts trusted for output: friction with a fixed address."
+    },
+    {
+      "key": "dignity",
+      "title": "The classical map",
+      "facts": [
+        "dignity:Saturn:exaltation"
+      ],
+      "text": "The oldest layer of the scheme — seven planets, four conditions — flags a single placement in this chart. Saturn in Libra at 0.9° is in exaltation — the tradition’s honoured-guest placement, working at its best. Dignity is a statement about conditions, not about worth."
+    },
+    {
+      "key": "shape",
+      "title": "The shape of the whole",
+      "facts": [
+        "elements:air3-water3-fire2",
+        "modalities:cardinal4-mutable3-fixed1",
+        "settled-signs:8",
+        "retrograde:2",
+        "sign-uncertain:Mercury:cancer:gemini"
+      ],
+      "text": "Of the 8 placements whose signs hold for the whole day: 3 in air, 3 in water, 2 in fire by element, 4 cardinal, 3 mutable, 1 fixed by modality. Mercury crossed from Cancer into Gemini during that day, so its sign is left open. No settled placement falls in earth — an absence the tradition treats as information, not as a defect. Mercury and Mars were retrograde — the optical reversal the tradition reads as review — energy turned over before it is turned out."
+    },
+    {
+      "key": "moon",
+      "title": "The Moon is genuinely open",
+      "facts": [
+        "moon-uncertain:sagittarius:capricorn"
+      ],
+      "uncertain": true,
+      "text": "The Moon crossed from Sagittarius into Capricorn during that day at the birthplace, travelling 13.2° between one midnight and the next. Without a recorded hour there is no honest way to say which side it was on, so this reading does not say. The Moon sign is a real question here, not a rounding error, and it needs a birth time nobody has published."
+    }
+  ],
+  "birthdayLink": {
+    "href": "/birthday/june-10/",
+    "label": "Everyone born on June 10"
+  },
+  "signLink": {
+    "href": "/gemini/",
+    "label": "The Gemini guide"
+  },
+  "substantiveFacts": [
+    "aspect:Sun:Mars:opposition",
+    "sun-degree:19.00",
+    "decan:gemini:second",
+    "personal:Venus:Cancer:19.3°",
+    "personal:Mars:Sagittarius:18.9°",
+    "aspect:Jupiter:Pluto:square:0.04",
+    "aspect:Sun:Mars:opposition:0.15",
+    "aspect:Mercury:Saturn:square:0.79",
+    "figure:t-square:Sun-Mars:apex-Uranus",
+    "dignity:Saturn:exaltation",
+    "elements:air3-water3-fire2",
+    "modalities:cardinal4-mutable3-fixed1",
+    "settled-signs:8",
+    "retrograde:2",
+    "sign-uncertain:Mercury:cancer:gemini",
+    "moon-uncertain:sagittarius:capricorn"
+  ],
+  "measurements": {
+    "originalWords": 385,
+    "substantiveStatements": 16,
+    "blocks": 7
+  }
+}

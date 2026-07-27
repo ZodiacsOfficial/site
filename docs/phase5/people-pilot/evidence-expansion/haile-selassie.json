@@ -1,0 +1,108 @@
+{
+ "schema": "zodiacs.phase5.evidence.v1",
+ "slug": "haile-selassie",
+ "qid": "Q41178",
+ "displayName": "Haile Selassie",
+ "wikidataLabel": "Haile Selassie I",
+ "wikidataDescription": "Emperor of Ethiopia from 1930 to 1974",
+ "retrievedAtUtc": "2026-07-26T18:47:50.947Z",
+ "selection": {
+  "region": "africa",
+  "field": "publiclife"
+ },
+ "sources": {
+  "wikidata": {
+   "entityUrl": "https://www.wikidata.org/wiki/Q41178",
+   "propertiesUsed": [
+    "P569",
+    "P19",
+    "P625",
+    "P106",
+    "P18",
+    "P570",
+    "P17",
+    "P131"
+   ],
+   "lastrevid": 2521971961
+  },
+  "wikipedia": {
+   "language": "en",
+   "title": "Haile Selassie",
+   "articleUrl": "https://en.wikipedia.org/wiki/Haile_Selassie",
+   "pageId": 42120,
+   "revisionId": 1365578526,
+   "revisionTimestamp": "2026-07-23T07:04:18Z"
+  }
+ },
+ "birth": {
+  "claimCount": 1,
+  "distinctDayPrecisionValues": [
+   "+1892-07-23T00:00:00Z|proleptic-gregorian"
+  ],
+  "allValues": [
+   {
+    "time": "+1892-07-23T00:00:00Z",
+    "precision": 11,
+    "calendar": "proleptic-gregorian",
+    "rank": "normal"
+   }
+  ],
+  "time": "+1892-07-23T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian",
+  "timeOfDay": null,
+  "timeOfDayEvidence": "none — Wikidata carries no birth-time claim for this person"
+ },
+ "death": {
+  "time": "+1975-08-27T00:00:00Z",
+  "precision": "day",
+  "calendarModel": "proleptic-gregorian"
+ },
+ "living": false,
+ "birthPlace": {
+  "entity": "Q1875896",
+  "label": "Ejersa Goro",
+  "entityUrl": "https://www.wikidata.org/wiki/Q1875896",
+  "country": {
+   "entity": "Q115",
+   "label": "Ethiopia"
+  },
+  "claimCount": 1,
+  "coordinates": {
+   "sourceEntity": "Q1875896",
+   "sourceEntityLabel": "Ejersa Goro",
+   "latitude": 9.4875,
+   "longitude": 42.23111,
+   "precision": 0.00001,
+   "escalationSteps": 0
+  }
+ },
+ "occupations": [
+  {
+   "entity": "Q82955",
+   "label": "politician"
+  },
+  {
+   "entity": "Q116",
+   "label": "monarch"
+  },
+  {
+   "entity": "Q1097498",
+   "label": "ruler"
+  }
+ ],
+ "portrait": {
+  "file": "File:Haile Selassie in full dress.jpg",
+  "filePage": "https://commons.wikimedia.org/wiki/File:Haile%20Selassie%20in%20full%20dress.jpg",
+  "descriptionUrl": "https://commons.wikimedia.org/wiki/File:Haile_Selassie_in_full_dress.jpg",
+  "width": 600,
+  "height": 1173,
+  "licenseShortName": "Public domain",
+  "licenseUrl": null,
+  "artist": "unknown; according to [1] and [2] an official portrait of which b/w copies were distributed by the Ethiopian government",
+  "credit": "http://www.pinterest.com/pin/394416879836603435/ (via http://www.pinterest.com/pin/55169164157483842/). Original source unknown.",
+  "usageTerms": "Public domain",
+  "attributionRequired": "false",
+  "restrictions": ""
+ }
+}
