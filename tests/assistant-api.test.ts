@@ -374,6 +374,20 @@ describe('POST /api/assistant', () => {
     expect(modelCalls).toHaveLength(0);
   });
 
+  it('honours an operator-set ceiling from the environment', async () => {
+    const modelCalls: Array<Record<string, unknown>> = [];
+    const handler = createAssistantHandler(dependencies({
+      env: { ...ENV, ASSISTANT_GLOBAL_DAILY_LIMIT: '10000' },
+      quota: { visitor: 2, global: 9_000 },
+      modelCalls,
+    }));
+    const res = new MockResponse();
+    await handler(request(), res);
+    // 9,000 is past the 3,000 default but inside the configured ceiling.
+    expect(res.statusCode).toBe(200);
+    expect(modelCalls).toHaveLength(1);
+  });
+
   it('serves a visitor while the service is still inside the global ceiling', async () => {
     const modelCalls: Array<Record<string, unknown>> = [];
     const handler = createAssistantHandler(dependencies({

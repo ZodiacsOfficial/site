@@ -17,7 +17,13 @@ const DAILY_LIMIT = 30;
  * fresh per-visitor budget per bucket. This ceiling is the backstop that
  * turns worst-case spend into a fixed number.
  */
-const GLOBAL_DAILY_LIMIT = 3_000;
+const GLOBAL_DAILY_LIMIT_DEFAULT = 3_000;
+/** Operators tune the ceiling without a deploy; a bad value keeps the default. */
+function globalDailyLimit(env: NodeJS.ProcessEnv): number {
+  const raw = Number(env.ASSISTANT_GLOBAL_DAILY_LIMIT);
+  return Number.isSafeInteger(raw) && raw > 0 ? raw : GLOBAL_DAILY_LIMIT_DEFAULT;
+}
+
 /** A hung PostgREST must not hold the invocation for its full duration. */
 const QUOTA_TIMEOUT_MS = 5_000;
 const INSTANCE_LIMIT = 5;
@@ -360,8 +366,12 @@ export function createAssistantHandler(overrides: Partial<HandlerDependencies> =
       sendJson(res, 429, { error: 'limit' });
       return;
     }
-    if (quota.global > GLOBAL_DAILY_LIMIT) {
+    const ceiling = globalDailyLimit(env);
+    if (quota.global > ceiling) {
       // The service is over its day's budget: rest until the UTC day turns.
+      // Logged so an operator can tell this apart from a failed bump, which
+      // gives the visitor the same calm response.
+      dependencies.log(`assistant: service ceiling reached — ${quota.global}/${ceiling} today`);
       sendJson(res, 503, { error: 'unavailable' });
       return;
     }
