@@ -2,12 +2,13 @@
 
 Last updated: 2026-07-26
 
-Active phase: **Phase 5 is complete and formally closed. The People
-directory carries 500 reviewed profiles — 498 deceased profiles and the
-directory publicly indexable under the owner's 2026-07-27 authorization,
-the two living profiles protected at every layer — and all 366 birthday
-pages carry their People links. Phase 6 (Ask Zodiacs) is now authorized
-and begins from the merged main. Phase 7 is not part of this program.**
+Active phase: **Phase 6 candidate — Ask Zodiacs. The existing isolated
+assistant gains its committed quota migration, the indexable /ask/ home
+with the feature-off static guide, exact-preview chart consent, the
+internal-source row, and executable grounded/red-team evaluation suites.
+The public flag stays off until the release ladder — migration, secrets,
+budget, owner canary, red-team, ≥90% link sample — is green. Phase 7 is
+not part of this program.**
 
 ## Authority and operating rule
 
@@ -598,6 +599,31 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-07-27 — Phase 6 candidate: Ask Zodiacs implementation
+
+- Committed the assistant_quota migration (RLS on, zero policies, revoked
+  public grants, service-role-only definer bump with pinned search_path,
+  two-day self-cleaning retention) with a disposable PostgreSQL 17
+  contract suite and a replay-safety pass.
+- Added /ask/ — an indexable static guide that stays useful with the
+  feature off and without JavaScript; the conversation reuses the
+  existing one-click panel. New OG tool card; sitemap row; the
+  coordinated dist baseline moves 2418 → 2419; the assistant's own site
+  guide now covers /ask/.
+- Extended the reviewed panel: plain-language chart consent showing the
+  exact placements-only payload before anything is sent (both grant and
+  decline paths browser-tested), an internal-source row under every
+  answer, and a generated/symbolic disclosure in five locales.
+- Persona addendum (Fable-authored): answers name their site sources and
+  say plainly when the site does not cover a topic; the byte-identity
+  pin is updated.
+- Executable evaluations committed: docs/phase6/eval (24 grounded
+  questions, 16 red-team cases) run by scripts/assistant-eval.mjs
+  against a live deployment only; the grounded bar is ≥90% internal-link
+  share with zero invented paths.
+- New browser gate tests/phase6-ask-drive.mjs (23 checks) wired into CI
+  beside a Phase 6 assistant-quota SQL job.
 
 ### 2026-07-27 — Phase 5 completion candidate: 500 people, full directory
 

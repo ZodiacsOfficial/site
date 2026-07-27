@@ -26,6 +26,7 @@ export const MAX_CONTEXT_BYTES = 60 * 1024;
 // or current-sky question. The generator verifies every route has a real page
 // and takes its explanation from that page's meta description.
 export const TOOL_ROUTES = Object.freeze([
+  '/ask/',
   '/baby-zodiac/',
   '/birth-chart/',
   '/birthday/',

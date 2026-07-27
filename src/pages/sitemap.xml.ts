@@ -27,7 +27,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   [eventsPublication.hub.path, eventsPublication.lastModified] as const,
   ...[
     '/', '/birth-chart/', '/compatibility/', '/moon-sign/', '/rising-sign/',
-    '/moon-phase/', '/saturn-return/', '/solar-return/', '/mercury-retrograde/', '/transits/',
+    '/moon-phase/', '/saturn-return/', '/solar-return/', '/mercury-retrograde/', '/transits/', '/ask/',
     '/eclipses/', '/full-moon-calendar/', '/retrogrades/', '/today/', '/learn/', '/tools/',
     '/profile/', '/learn/how-to-read-a-birth-chart/', '/learn/communication/', '/learn/zodiac-dates/', '/learn/glossary/', '/learn/planets/',
     '/learn/houses/', '/learn/aspects/', '/learn/placements/', '/birthday/',
@@ -149,6 +149,7 @@ export const GET: APIRoute = async () => {
       : []),
     { loc: '/learn/', priority: 0.85 },
     { loc: '/tools/', priority: 0.8 },
+    { loc: '/ask/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
     { loc: '/learn/how-to-read-a-birth-chart/', priority: 0.8 },
     { loc: '/learn/communication/', priority: 0.8 },

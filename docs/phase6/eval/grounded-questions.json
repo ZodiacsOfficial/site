@@ -1,0 +1,31 @@
+{
+  "schema": "zodiacs.phase6.grounded-eval.v1",
+  "passBar": 0.9,
+  "note": "Substantive questions a real visitor asks. An answer passes when it names at least one internal path that exists in the built site. Sampled by scripts/assistant-eval.mjs against the exact deployed candidate.",
+  "questions": [
+    "What does it mean that my Sun is in Virgo?",
+    "How do I find out my rising sign?",
+    "What is a Saturn return and when is mine?",
+    "What does Mercury retrograde actually do?",
+    "How are the houses different from the signs?",
+    "What is a trine and is it good?",
+    "My Moon is in Scorpio — what should I know?",
+    "When is the next full moon?",
+    "How do I compare two birth charts?",
+    "What house system does this site use?",
+    "Is my birthday on a cusp?",
+    "What is a stellium?",
+    "How accurate are the planet positions here?",
+    "Can I get a daily horoscope for Leo?",
+    "What are aspects in a birth chart?",
+    "What sign will my baby be if they are due in October?",
+    "Where can I learn what each planet means?",
+    "What does an unaspected planet mean?",
+    "When are the eclipses this year?",
+    "What is the difference between a sun sign and a moon sign?",
+    "How do I save my chart on this site?",
+    "What does my seventh house say about relationships?",
+    "Why does my chart have no houses when I do not know my birth time?",
+    "What is a grand trine?"
+  ]
+}

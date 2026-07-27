@@ -28,6 +28,7 @@ describe('assistant site context', () => {
     const { context, counts } = await generateAssistantContext();
 
     expect(TOOL_ROUTES).toEqual([
+      '/ask/',
       '/baby-zodiac/',
       '/birth-chart/',
       '/birthday/',
@@ -49,13 +50,13 @@ describe('assistant site context', () => {
 
     expect(counts).toEqual({
       birthdays: 366,
-      consumerRoutes: 667,
+      consumerRoutes: 668,
       glossary: 139,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 40,
-      tools: 16,
+      staticPages: 41,
+      tools: 17,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
