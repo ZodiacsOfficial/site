@@ -82,6 +82,22 @@ for (const person of people) {
   );
 }
 
+/* 4b — the cusp verdict must agree with the civil-day transition record.
+   These are computed by different code paths over the same day; when they
+   disagree, a profile states a settled Sun sign that its own transitions
+   block declares open. */
+for (const person of people) {
+  const sunTransition = (person.signUncertainTransitions ?? [])
+    .some((transition) => transition.body === 'Sun');
+  check(
+    `cusp agrees with civil-day transitions ${person.slug}`,
+    !(sunTransition && person.sunSign.cuspCheck.ambiguous === false),
+    sunTransition
+      ? 'Sun changes sign during the civil day'
+      : 'no Sun transition recorded',
+  );
+}
+
 /* 5 — explicit calendar model plus a documented conversion */
 for (const person of people) {
   check(
