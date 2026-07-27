@@ -10,6 +10,14 @@ const MAX_MESSAGES = 12;
 const MAX_MESSAGE_CHARS = 1_200;
 const MAX_CHART_CHARS = 2_000;
 const DAILY_LIMIT = 30;
+/**
+ * Service-wide ceiling for one UTC day. The per-visitor limit alone cannot
+ * bound provider spend: the origin check is a browser convenience, not an
+ * authentication boundary, and a caller with an address range can mint one
+ * fresh per-visitor budget per bucket. This ceiling is the backstop that
+ * turns worst-case spend into a fixed number.
+ */
+const GLOBAL_DAILY_LIMIT = 3_000;
 const INSTANCE_LIMIT = 5;
 const INSTANCE_WINDOW_MS = 60_000;
 
@@ -107,12 +115,42 @@ export function hashVisitor(salt: string, clientIp: string): string {
   return createHash('sha256').update(salt).update(clientIp).digest('hex');
 }
 
+/**
+ * The quota bucket for an address. One household or phone routinely holds a
+ * whole IPv6 /64, so hashing the full address hands the same visitor an
+ * unlimited supply of daily budgets; bucket IPv6 to its /64 network instead.
+ * IPv4-mapped forms unwrap first so they bucket as the IPv4 address they are.
+ */
+export function quotaBucket(rawIp: string): string {
+  const ip = rawIp.trim().toLowerCase();
+  if (!ip) return 'unknown';
+
+  const mapped = /^::ffff:(\d{1,3}(?:\.\d{1,3}){3})$/.exec(ip);
+  if (mapped) return mapped[1];
+  if (!ip.includes(':')) return ip;
+
+  const [head = '', tail = ''] = ip.split('%')[0].split('::');
+  const headParts = head.split(':').filter(Boolean);
+  const tailParts = tail.split(':').filter(Boolean);
+  const hextets = ip.includes('::')
+    ? [...headParts, ...Array(Math.max(0, 8 - headParts.length - tailParts.length)).fill('0'), ...tailParts]
+    : headParts;
+  const network = hextets.slice(0, 4).map((hextet) => hextet.replace(/^0+(?=.)/, ''));
+  while (network.length < 4) network.push('0');
+  return `${network.join(':')}::/64`;
+}
+
 function clientIp(req: any): string {
+  // Vercel overwrites x-forwarded-for, so its first element is the real
+  // client. Behind a proxy that appended instead, the first element would be
+  // caller-controlled — the platform contract is what makes this safe.
   const forwarded = requestHeader(req, 'x-forwarded-for').split(',')[0]?.trim();
-  if (forwarded) return forwarded;
+  if (forwarded) return quotaBucket(forwarded);
   const direct = requestHeader(req, 'x-real-ip').trim();
-  if (direct) return direct;
-  return typeof req.socket?.remoteAddress === 'string' && req.socket.remoteAddress ? req.socket.remoteAddress : 'unknown';
+  if (direct) return quotaBucket(direct);
+  return typeof req.socket?.remoteAddress === 'string' && req.socket.remoteAddress
+    ? quotaBucket(req.socket.remoteAddress)
+    : 'unknown';
 }
 
 export function parseRequestBody(input: unknown): AssistantRequestBody | null {
@@ -215,14 +253,23 @@ function startEventStream(res: any): void {
   if (typeof res.flushHeaders === 'function') res.flushHeaders();
 }
 
+/** One bump returns both counters: this visitor today, and the whole service today. */
+export function parseQuotaResult(payload: unknown): { visitor: number; global: number } | null {
+  const record = Array.isArray(payload) && payload.length === 1 ? payload[0] : payload;
+  if (!record || typeof record !== 'object') return null;
+  const visitor = parseQuotaCount((record as Record<string, unknown>).visitor);
+  const global = parseQuotaCount((record as Record<string, unknown>).global);
+  return visitor === null || global === null ? null : { visitor, global };
+}
+
 async function bumpDailyQuota(
   fetchImpl: typeof fetch,
   supabaseUrl: string,
   serviceKey: string,
   visitorHash: string,
-): Promise<number | null> {
+): Promise<{ visitor: number; global: number } | null> {
   try {
-    const response = await fetchImpl(`${supabaseUrl.replace(/\/+$/, '')}/rest/v1/rpc/assistant_quota_bump`, {
+    const response = await fetchImpl(`${supabaseUrl.replace(/\/+$/, '')}/rest/v1/rpc/assistant_quota_bump_v2`, {
       method: 'POST',
       headers: {
         apikey: serviceKey,
@@ -233,7 +280,7 @@ async function bumpDailyQuota(
       body: JSON.stringify({ visitor_hash: visitorHash }),
     });
     if (!response.ok) return null;
-    return parseQuotaCount(await response.json());
+    return parseQuotaResult(await response.json());
   } catch {
     return null;
   }
@@ -282,13 +329,18 @@ export function createAssistantHandler(overrides: Partial<HandlerDependencies> =
       return;
     }
 
-    const dailyCount = await bumpDailyQuota(dependencies.fetch, supabaseUrl, serviceKey, visitorHash);
-    if (dailyCount === null) {
+    const quota = await bumpDailyQuota(dependencies.fetch, supabaseUrl, serviceKey, visitorHash);
+    if (quota === null) {
       sendJson(res, 503, { error: 'unavailable' });
       return;
     }
-    if (dailyCount > DAILY_LIMIT) {
+    if (quota.visitor > DAILY_LIMIT) {
       sendJson(res, 429, { error: 'limit' });
+      return;
+    }
+    if (quota.global > GLOBAL_DAILY_LIMIT) {
+      // The service is over its day's budget: rest until the UTC day turns.
+      sendJson(res, 503, { error: 'unavailable' });
       return;
     }
 
