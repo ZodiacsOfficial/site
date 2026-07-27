@@ -33,7 +33,7 @@ const people = manifest.people;
 /* 1 — exactly 20 unique QIDs and slugs */
 const qids = new Set(people.map((person) => person.qid));
 const slugs = new Set(people.map((person) => person.slug));
-check('exactly 500 reviewed people', people.length === 500, `${people.length}`);
+check('exactly 499 reviewed people', people.length === 499, `${people.length}`);
 check('unique QIDs', qids.size === people.length, `${qids.size}`);
 check('unique slugs', slugs.size === people.length, `${slugs.size}`);
 
@@ -79,6 +79,22 @@ for (const person of people) {
       ? `ingress at ${person.sunSign.cuspCheck.boundaryUtc}`
       : `${person.sunSign.cuspCheck.degreesInsideAtWindowStart}° inside at window start, `
         + `${person.sunSign.cuspCheck.degreesToNextBoundaryAtWindowEnd}° to the next boundary at window end`,
+  );
+}
+
+/* 4b — the cusp verdict must agree with the civil-day transition record.
+   These are computed by different code paths over the same day; when they
+   disagree, a profile states a settled Sun sign that its own transitions
+   block declares open. */
+for (const person of people) {
+  const sunTransition = (person.signUncertainTransitions ?? [])
+    .some((transition) => transition.body === 'Sun');
+  check(
+    `cusp agrees with civil-day transitions ${person.slug}`,
+    !(sunTransition && person.sunSign.cuspCheck.ambiguous === false),
+    sunTransition
+      ? 'Sun changes sign during the civil day'
+      : 'no Sun transition recorded',
   );
 }
 
