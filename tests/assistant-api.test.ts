@@ -7,6 +7,8 @@ import {
   hashVisitor,
   isAllowedSiteRequest,
   parseQuotaCount,
+  parseQuotaResult,
+  quotaBucket,
   parseRequestBody,
 } from '../api/assistant';
 
@@ -61,10 +63,12 @@ class MockResponse {
   }
 }
 
+/** A number stands for "this visitor's count"; objects pass through verbatim. */
 function quotaFetch(payload: unknown, calls: Array<{ url: string; init?: RequestInit }> = []): typeof fetch {
+  const envelope = typeof payload === 'number' ? { visitor: payload, global: payload } : payload;
   return (async (url: string | URL | Request, init?: RequestInit) => {
     calls.push({ url: String(url), init });
-    return new Response(JSON.stringify(payload), {
+    return new Response(JSON.stringify(envelope), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
@@ -177,6 +181,29 @@ describe('assistant request validation', () => {
     expect(parseQuotaCount([])).toBeNull();
     expect(parseQuotaCount({ nope: 1 })).toBeNull();
   });
+
+  it('parses the two-counter bump envelope', () => {
+    expect(parseQuotaResult({ visitor: 3, global: 900 })).toEqual({ visitor: 3, global: 900 });
+    expect(parseQuotaResult([{ visitor: '3', global: '900' }])).toEqual({ visitor: 3, global: 900 });
+    expect(parseQuotaResult({ visitor: 3 })).toBeNull();
+    expect(parseQuotaResult(7)).toBeNull();
+    expect(parseQuotaResult(null)).toBeNull();
+  });
+
+  it('buckets IPv6 addresses to their /64 so one visitor cannot mint budgets', () => {
+    // Every address inside a /64 shares one bucket.
+    const a = quotaBucket('2001:db8:abcd:1234:0:0:0:1');
+    const b = quotaBucket('2001:db8:abcd:1234:ffff:ffff:ffff:ffff');
+    expect(a).toBe(b);
+    // A different /64 is a different bucket.
+    expect(quotaBucket('2001:db8:abcd:1235::1')).not.toBe(a);
+    // Compressed and expanded spellings agree.
+    expect(quotaBucket('2001:0db8:abcd:1234::1')).toBe(a);
+    // IPv4 and IPv4-mapped forms stay per-address.
+    expect(quotaBucket('203.0.113.42')).toBe('203.0.113.42');
+    expect(quotaBucket('::ffff:203.0.113.42')).toBe('203.0.113.42');
+    expect(quotaBucket('  ')).toBe('unknown');
+  });
 });
 
 describe('POST /api/assistant', () => {
@@ -207,7 +234,7 @@ describe('POST /api/assistant', () => {
 
     const expectedHash = hashVisitor(ENV.ASSISTANT_SALT, '203.0.113.42');
     expect(quotaCalls).toHaveLength(1);
-    expect(quotaCalls[0]?.url).toBe('https://example.supabase.co/rest/v1/rpc/assistant_quota_bump');
+    expect(quotaCalls[0]?.url).toBe('https://example.supabase.co/rest/v1/rpc/assistant_quota_bump_v2');
     expect(JSON.parse(String(quotaCalls[0]?.init?.body))).toEqual({ visitor_hash: expectedHash });
 
     expect(modelCalls).toHaveLength(1);
@@ -281,10 +308,35 @@ describe('POST /api/assistant', () => {
     expect(modelCalls).toHaveLength(0);
   });
 
+  it('rests the service when the day\'s global ceiling is spent, before calling Anthropic', async () => {
+    const modelCalls: Array<Record<string, unknown>> = [];
+    // Under this visitor's own limit, but the service is over its day budget.
+    const handler = createAssistantHandler(dependencies({
+      quota: { visitor: 2, global: 3_001 },
+      modelCalls,
+    }));
+    const res = new MockResponse();
+    await handler(request(), res);
+    expect([res.statusCode, res.text]).toEqual([503, '{"error":"unavailable"}']);
+    expect(modelCalls).toHaveLength(0);
+  });
+
+  it('serves a visitor while the service is still inside the global ceiling', async () => {
+    const modelCalls: Array<Record<string, unknown>> = [];
+    const handler = createAssistantHandler(dependencies({
+      quota: { visitor: 1, global: 3_000 },
+      modelCalls,
+    }));
+    const res = new MockResponse();
+    await handler(request(), res);
+    expect(res.statusCode).toBe(200);
+    expect(modelCalls).toHaveLength(1);
+  });
+
   it('allows the first 30 paced daily requests and rejects request 31', async () => {
     let quotaCount = 0;
     let now = Date.UTC(2026, 6, 12, 12);
-    const fetch = (async () => new Response(JSON.stringify(++quotaCount), {
+    const fetch = (async () => new Response(JSON.stringify({ visitor: ++quotaCount, global: quotaCount }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     })) as typeof globalThis.fetch;

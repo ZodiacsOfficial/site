@@ -591,6 +591,11 @@ function setBusy(busy: boolean): void {
 }
 
 function refreshSavedChart(): void {
+  // A consent card on screen previews the chart that was saved when it
+  // opened. Once the saved chart changes, that preview no longer describes
+  // what a later confirmation would send, so the card is withdrawn rather
+  // than left to grant consent for text the visitor never saw.
+  dismissPendingConsent?.();
   savedChart = readLatestSavedChart();
   chartEnabled = false;
   chartConsented = false;
@@ -621,6 +626,8 @@ function abortRequest(): void {
 }
 
 let chartConsented = false;
+/** Withdraws an on-screen consent card, declining it, when set. */
+let dismissPendingConsent: (() => void) | null = null;
 
 /**
  * Plain-language consent with an exact preview of the payload. Resolves
@@ -657,11 +664,13 @@ async function requestChartConsent(): Promise<boolean> {
     cancel.textContent = copy.consentCancel;
     const settle = (granted: boolean) => {
       card.remove();
+      dismissPendingConsent = null;
       chartConsented = granted;
       if (!granted) chartEnabled = false;
       syncChartButton();
       resolve(granted);
     };
+    dismissPendingConsent = () => settle(false);
     confirm.addEventListener('click', () => settle(true));
     cancel.addEventListener('click', () => settle(false));
     row.append(confirm, cancel);

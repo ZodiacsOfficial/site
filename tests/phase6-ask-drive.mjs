@@ -185,6 +185,32 @@ await withPreview({ port: 4406 }, async (baseURL) => {
     check('chart payload stays placements-only',
       Boolean(chartRequest) && !/1988|Lisbon|06:20/.test(chartRequest.chart));
 
+    /* A chart change withdraws a consent card that previewed the old chart. */
+    const swapChart = (lon, id) => page.evaluate(({ saved, lon: nextLon, id: nextId }) => {
+      const next = structuredClone(saved);
+      next.charts[0].id = nextId;
+      next.charts[0].summary.bodies[0].lon = nextLon;
+      localStorage.setItem('zodiacs.profile.v1', JSON.stringify(next));
+      dispatchEvent(new CustomEvent('zodiacs:profile'));
+    }, { saved: profile, lon, id });
+
+    // The confirm above granted consent; a chart change clears it, which is
+    // what puts a fresh card on screen for the withdrawal case.
+    await swapChart(12.5, 'ask-drive-chart-2');
+    await page.locator('.zassistant [aria-pressed="false"]').first().click();
+    await page.locator('.zassistant__consent-preview').waitFor({ timeout: 15_000 });
+    const beforeSwap = requests.length;
+    await swapChart(48.25, 'ask-drive-chart-3');
+    await page.waitForFunction(
+      () => document.querySelectorAll('.zassistant__consent-preview').length === 0,
+      null,
+      { timeout: 10_000 },
+    );
+    check('a chart change withdraws the stale consent card', true);
+    check('withdrawing consent sent nothing', requests.length === beforeSwap);
+    check('withdrawn consent leaves the chart toggle off',
+      await page.locator('.zassistant [aria-pressed="false"]').count() >= 1);
+
     /* Stop cancels a slow answer. */
     mode = 'slow';
     await textarea.fill('Long question about houses');
