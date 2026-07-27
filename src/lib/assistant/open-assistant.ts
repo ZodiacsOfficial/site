@@ -65,6 +65,11 @@ interface Copy {
   user: string;
   assistant: string;
   privacy: string;
+  consentTitle: string;
+  consentBody: string;
+  consentConfirm: string;
+  consentCancel: string;
+  sources: string;
 }
 
 const COPY: Record<AssistantLocale, Copy> = {
@@ -90,7 +95,12 @@ const COPY: Record<AssistantLocale, Copy> = {
     rateLimited: "That's everything for today — the assistant caps out at 30 messages a day.",
     user: 'You',
     assistant: 'Zodiacs',
-    privacy: "The assistant can be wrong. Conversations aren't stored by us.",
+    privacy: "The assistant can be wrong. Answers are generated; astrology here is symbolic, not deterministic. Conversations aren't stored by us.",
+    consentTitle: 'Before your chart is attached',
+    consentBody: "This is exactly what will be sent with your next question — placements only, computed in your browser. Nothing else about you is included, and it isn't stored.",
+    consentConfirm: 'Attach my chart',
+    consentCancel: 'Keep it private',
+    sources: 'From this site:',
   },
   es: {
     title: 'Pregúntale a Zodiacs',
@@ -114,7 +124,12 @@ const COPY: Record<AssistantLocale, Copy> = {
     rateLimited: 'Eso es todo por hoy: el asistente tiene un límite de 30 mensajes al día.',
     user: 'Tú',
     assistant: 'Zodiacs',
-    privacy: 'El asistente puede equivocarse. Nosotros no guardamos las conversaciones.',
+    privacy: "El asistente puede equivocarse. Las respuestas son generadas; aquí la astrología es simbólica, no determinista. Nosotros no guardamos las conversaciones.",
+    consentTitle: 'Antes de adjuntar tu carta',
+    consentBody: 'Esto es exactamente lo que se enviará con tu próxima pregunta — solo posiciones, calculadas en tu navegador. No se incluye nada más sobre ti y no se guarda.',
+    consentConfirm: 'Adjuntar mi carta',
+    consentCancel: 'Mantenerla privada',
+    sources: 'De este sitio:',
   },
   pt: {
     title: 'Pergunte ao Zodiacs',
@@ -138,7 +153,12 @@ const COPY: Record<AssistantLocale, Copy> = {
     rateLimited: 'Isso é tudo por hoje — o assistente tem um limite de 30 mensagens por dia.',
     user: 'Você',
     assistant: 'Zodiacs',
-    privacy: 'O assistente pode errar. Não armazenamos as conversas.',
+    privacy: "O assistente pode errar. As respostas são geradas; aqui a astrologia é simbólica, não determinista. Não armazenamos as conversas.",
+    consentTitle: 'Antes de anexar seu mapa',
+    consentBody: 'Isto é exatamente o que será enviado com a sua próxima pergunta — apenas posições, calculadas no seu navegador. Nada mais sobre você é incluído, e nada é armazenado.',
+    consentConfirm: 'Anexar meu mapa',
+    consentCancel: 'Manter privado',
+    sources: 'Deste site:',
   },
   fr: {
     title: 'Pose une question à Zodiacs',
@@ -162,7 +182,12 @@ const COPY: Record<AssistantLocale, Copy> = {
     rateLimited: 'C’est tout pour aujourd’hui — l’assistant est limité à 30 messages par jour.',
     user: 'Toi',
     assistant: 'Zodiacs',
-    privacy: 'L’assistant peut se tromper. Nous ne conservons pas les conversations.',
+    privacy: "L’assistant peut se tromper. Les réponses sont générées ; l’astrologie est ici symbolique, non déterministe. Nous ne conservons pas les conversations.",
+    consentTitle: 'Avant de joindre votre thème',
+    consentBody: 'Voici exactement ce qui sera envoyé avec votre prochaine question — les positions seulement, calculées dans votre navigateur. Rien d’autre vous concernant n’est inclus, et rien n’est conservé.',
+    consentConfirm: 'Joindre mon thème',
+    consentCancel: 'Le garder privé',
+    sources: 'Depuis ce site :',
   },
   it: {
     title: 'Chiedi a Zodiacs',
@@ -186,7 +211,12 @@ const COPY: Record<AssistantLocale, Copy> = {
     rateLimited: 'Per oggi è tutto — l’assistente ha un limite di 30 messaggi al giorno.',
     user: 'Tu',
     assistant: 'Zodiacs',
-    privacy: 'L’assistente può sbagliare. Non conserviamo le conversazioni.',
+    privacy: "L’assistente può sbagliare. Le risposte sono generate; qui l’astrologia è simbolica, non deterministica. Non conserviamo le conversazioni.",
+    consentTitle: 'Prima di allegare il tuo tema',
+    consentBody: 'Questo è esattamente ciò che verrà inviato con la tua prossima domanda — solo posizioni, calcolate nel tuo browser. Nient’altro su di te è incluso, e nulla viene conservato.',
+    consentConfirm: 'Allega il mio tema',
+    consentCancel: 'Tienilo privato',
+    sources: 'Da questo sito:',
   },
 };
 
@@ -563,6 +593,7 @@ function setBusy(busy: boolean): void {
 function refreshSavedChart(): void {
   savedChart = readLatestSavedChart();
   chartEnabled = false;
+  chartConsented = false;
   chartSummaryPromise = null;
   syncChartButton();
 }
@@ -587,6 +618,76 @@ async function failureCode(response: Response): Promise<string> {
 function abortRequest(): void {
   if (!activeRequest) return;
   activeRequest.abort();
+}
+
+let chartConsented = false;
+
+/**
+ * Plain-language consent with an exact preview of the payload. Resolves
+ * true only when the visitor confirms; the summary shown is the same
+ * string the request will carry.
+ */
+async function requestChartConsent(): Promise<boolean> {
+  if (chartConsented) return true;
+  const log = transcript;
+  if (!savedChart || !log) return false;
+  chartSummaryPromise ??= placementSummaryForChart(savedChart);
+  const summary = await chartSummaryPromise;
+  if (!summary) return false;
+  return new Promise((resolve) => {
+    const copy = currentCopy();
+    const card = document.createElement('section');
+    card.className = 'zassistant__consent';
+    const heading = document.createElement('h3');
+    heading.textContent = copy.consentTitle;
+    const body = document.createElement('p');
+    body.textContent = copy.consentBody;
+    const preview = document.createElement('pre');
+    preview.className = 'zassistant__consent-preview';
+    preview.textContent = summary;
+    const row = document.createElement('div');
+    row.className = 'zassistant__consent-actions';
+    const confirm = document.createElement('button');
+    confirm.type = 'button';
+    confirm.className = 'zassistant__consent-confirm';
+    confirm.textContent = copy.consentConfirm;
+    const cancel = document.createElement('button');
+    cancel.type = 'button';
+    cancel.className = 'zassistant__consent-cancel';
+    cancel.textContent = copy.consentCancel;
+    const settle = (granted: boolean) => {
+      card.remove();
+      chartConsented = granted;
+      if (!granted) chartEnabled = false;
+      syncChartButton();
+      resolve(granted);
+    };
+    confirm.addEventListener('click', () => settle(true));
+    cancel.addEventListener('click', () => settle(false));
+    row.append(confirm, cancel);
+    card.append(heading, body, preview, row);
+    log.append(card);
+    scrollTranscript();
+    confirm.focus();
+  });
+}
+
+/** Append the internal-source row beneath a completed answer. */
+function appendSourcesRow(container: HTMLElement, text: string): void {
+  const paths = [...new Set([...text.matchAll(/(?:^|[\s([])(\/(?!\/)[a-z0-9-]+(?:\/[a-z0-9-]+)*\/?)/g)]
+    .map((match) => match[1].endsWith('/') ? match[1] : `${match[1]}/`))].slice(0, 4);
+  if (paths.length === 0) return;
+  const row = document.createElement('p');
+  row.className = 'zassistant__sources';
+  row.append(document.createTextNode(`${currentCopy().sources} `));
+  paths.forEach((path, index) => {
+    if (index > 0) row.append(document.createTextNode(' · '));
+    const anchor = document.createElement('a');
+    anchor.href = path;
+    anchor.textContent = path;
+    row.append(anchor);
+  });
+  container.append(row);
 }
 
 function questionRequestsMyChart(question: string): boolean {
@@ -619,14 +720,17 @@ async function submitQuestion(): Promise<void> {
   let answer = '';
   try {
     let chart: string | undefined;
-    const shouldAttachChart = Boolean(savedChart) && (chartEnabled || questionRequestsMyChart(question));
-    if (shouldAttachChart && savedChart) {
-      chartEnabled = true;
-      syncChartButton();
+    const wantsChart = Boolean(savedChart) && (chartEnabled || questionRequestsMyChart(question));
+    if (wantsChart && savedChart) {
       setStatus(currentCopy().chartReading);
-      chartSummaryPromise ??= placementSummaryForChart(savedChart);
-      const resolved = await chartSummaryPromise;
-      if (chartEnabled && resolved) chart = resolved;
+      const granted = await requestChartConsent();
+      if (granted) {
+        chartEnabled = true;
+        syncChartButton();
+        chartSummaryPromise ??= placementSummaryForChart(savedChart);
+        const resolved = await chartSummaryPromise;
+        if (chartEnabled && resolved) chart = resolved;
+      }
     }
     setStatus(currentCopy().thinking);
 
@@ -646,6 +750,7 @@ async function submitQuestion(): Promise<void> {
     if (!answer.trim()) throw new AssistantFailure('unavailable');
 
     renderAssistantText(assistantMessage.body, answer);
+    appendSourcesRow(assistantMessage.body, answer);
     assistantMessage.article.removeAttribute('aria-busy');
     messages = [...requestMessages, { role: 'assistant' as const, content: answer }].slice(-MAX_MESSAGES);
     setStatus(currentCopy().complete);
@@ -747,8 +852,15 @@ function build(): void {
   chartButton.className = 'zassistant__chart-chip';
   chartButton.hidden = true;
   chartButton.addEventListener('click', () => {
-    chartEnabled = !chartEnabled;
-    syncChartButton();
+    if (chartEnabled) {
+      chartEnabled = false;
+      syncChartButton();
+      return;
+    }
+    void requestChartConsent().then((granted) => {
+      chartEnabled = granted;
+      syncChartButton();
+    });
   });
 
   transcript = document.createElement('div');

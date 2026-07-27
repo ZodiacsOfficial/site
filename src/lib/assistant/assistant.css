@@ -243,3 +243,46 @@
   .zassistant__hint { display: none; }
   .zassistant__message { width: 96%; }
 }
+
+/* Phase 6 — consent card and internal-source row */
+.zassistant__consent {
+  margin: 10px 0;
+  padding: 14px 16px;
+  border: 1px solid rgba(198, 204, 218, 0.22);
+  border-left: 2px solid var(--zassistant-accent, #b6d4e4);
+  border-radius: 12px;
+  background: rgba(21, 25, 37, 0.9);
+}
+.zassistant__consent h3 { margin: 0 0 6px; font: 600 13px/1.3 inherit; color: #eef1f7; }
+.zassistant__consent p { margin: 0 0 10px; font-size: 12.5px; line-height: 1.55; color: #c6ccda; }
+.zassistant__consent-preview {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  max-height: 180px;
+  overflow: auto;
+  border: 1px solid rgba(198, 204, 218, 0.14);
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.3);
+  font: 11px/1.6 ui-monospace, Menlo, monospace;
+  color: #c6ccda;
+  white-space: pre-wrap;
+}
+.zassistant__consent-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.zassistant__consent-confirm,
+.zassistant__consent-cancel {
+  min-height: 40px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  font: 500 13px/1 inherit;
+  cursor: pointer;
+}
+.zassistant__consent-confirm { border: 0; background: #eef1f7; color: #10131a; }
+.zassistant__consent-cancel { border: 1px solid rgba(198, 204, 218, 0.3); background: none; color: #c6ccda; }
+.zassistant__sources {
+  margin: 10px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid rgba(198, 204, 218, 0.12);
+  font-size: 11.5px;
+  color: #8e96ab;
+}
+.zassistant__sources a { color: #c6ccda; text-underline-offset: 3px; }

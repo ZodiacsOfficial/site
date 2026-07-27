@@ -109,6 +109,9 @@ jobs:
       - name: Phase 5 People noindex pilot
         run: OUT_DIR=tests/visual/artifacts/phase5-people npm run test:phase5:people
 
+      - name: Phase 6 Ask Zodiacs drive
+        run: npm run test:phase6:ask
+
       - name: Today SSR and personalization
         run: npm run test:today:browser
 
@@ -192,6 +195,14 @@ jobs:
 
   phase4-compat-invites-sql:
     name: Phase 4 compatibility invite SQL
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+  phase6-assistant-sql:
+    name: Phase 6 assistant quota SQL
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:

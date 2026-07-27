@@ -154,7 +154,7 @@ The Vercel daily-email endpoints require `EMAIL_PROVIDER=resend`, distinct `RESE
 | `PUBLIC_SUPABASE_URL` | Vercel server/public config | Supabase origin used by the quota RPC. |
 | `SUPABASE_SERVICE_ROLE_KEY` | Vercel server secret | Calls `assistant_quota_bump`; never included in the client bundle. |
 
-The current endpoint enforces five requests per minute per function instance and thirty per day through Supabase. The production schema must include `assistant_quota` and the `assistant_quota_bump` definer function as a committed migration before the flag is enabled.
+The current endpoint enforces five requests per minute per function instance and thirty per day through Supabase. The committed migration `20260727050000_phase6_assistant_quota.sql` supplies `assistant_quota` and the `assistant_quota_bump` definer function; apply and verify it through the reviewed live path before `ASSISTANT_ENABLED=1`.
 
 ### Phase 1 optional model-assisted prose
 
