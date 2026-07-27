@@ -410,14 +410,24 @@ function pairCard(a, b) {
          <img class="disc" src="${DISCS[b.slug]}" width="300" height="300"
               style="margin-left:-72px; box-shadow: 0 0 0 10px ${VOID};" />
        </div>`;
+  // Both variants read as prose, so both wear the prose face: mono is the
+  // data register here, and a middle-dot triad set in it was wide enough to
+  // wrap inside its own last clause ("what / makes it last"). Each clause is
+  // kept whole so any wrap lands on a separator instead.
+  const triad = format(OG_EN.compatibility.data, {
+    aElement: ELEMENT_LABEL[a.element],
+    bElement: ELEMENT_LABEL[b.element].toLowerCase(),
+    aModality: MODALITY_LABEL[a.modality].toLowerCase(),
+    bModality: MODALITY_LABEL[b.modality].toLowerCase(),
+  })
+    .split(' · ')
+    .map((clause) => clause.replaceAll(' ', ' '))
+    // The sans middot carries its ink left of centre, so a plain space each
+    // side reads lopsided; margins set the optical gap instead.
+    .join(`<span style="margin: 0 0.42em; color: ${MUTED};">·</span>`);
   const dataLine = same
     ? `<div class="sub" style="font-size: 24px; max-width: 560px;">${a.essence}</div>`
-    : `<div class="data">${format(OG_EN.compatibility.data, {
-      aElement: ELEMENT_LABEL[a.element],
-      bElement: ELEMENT_LABEL[b.element].toLowerCase(),
-      aModality: MODALITY_LABEL[a.modality].toLowerCase(),
-      bModality: MODALITY_LABEL[b.modality].toLowerCase(),
-    })}</div>`;
+    : `<div class="sub" style="font-size: 24px; max-width: 600px; color: ${MUTED};">${triad}</div>`;
   const body = `
   <div class="stage">
     <div class="left">
