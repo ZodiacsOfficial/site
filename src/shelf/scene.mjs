@@ -1,22 +1,22 @@
 // The room.
 //
-// Twelve volumes on a curved shelf in a void, lit as an archive is lit: one
+// Twelve gold sculptures on plinths in a void, lit as a gallery is lit: one
 // key from above and in front, a cold fill, and a small pool of light on
-// whichever volume the shelf is currently offering. Nothing renders unless
+// whichever piece the row is currently offering. Nothing renders unless
 // something moved — see `needsRender` in main.mjs.
+//
+// Each figure is a shallow cast: its silhouette, traced from the artwork by
+// scripts/build-figure-assets.mjs, extruded along z. The photograph faces the
+// viewer, the registry's hallmark is struck into the back, and the cut edge
+// between them is the colour of the metal.
 
 import * as THREE from 'three';
 
-import { SHELF, volumePose, isVisible } from './layout.mjs';
-import { paintSpine, paintEdge, paintCover, loadDisc } from './textures.mjs';
+import { GALLERY, figurePose, fitScale, floorY, isVisible } from './layout.mjs';
+import { paintPlinth, paintReverse, loadSculpture } from './textures.mjs';
+import geometryData from './figures.geometry.json';
 
-const PAPER = 0xd8d4c8;
-
-function shadeOf(hex, amount) {
-  const c = new THREE.Color(hex);
-  c.multiplyScalar(1 - amount);
-  return c;
-}
+const { quant: QUANT, rowSize: ROW_TIER, heroSize: HERO_TIER } = geometryData;
 
 function textureFrom(canvas, renderer) {
   const texture = new THREE.CanvasTexture(canvas);
@@ -26,14 +26,24 @@ function textureFrom(canvas, renderer) {
   return texture;
 }
 
-/** A soft elliptical smudge — the contact shadow each volume casts. */
+function mapFrom(image, renderer) {
+  const texture = new THREE.Texture(image);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy());
+  texture.generateMipmaps = true;
+  texture.minFilter = THREE.LinearMipmapLinearFilter;
+  texture.needsUpdate = true;
+  return texture;
+}
+
+/** A soft elliptical smudge — the shadow each plinth casts on the floor. */
 function shadowTexture() {
   const canvas = document.createElement('canvas');
   canvas.width = 128;
   canvas.height = 128;
   const ctx = canvas.getContext('2d');
   const gradient = ctx.createRadialGradient(64, 64, 2, 64, 64, 62);
-  gradient.addColorStop(0, 'rgba(0,0,0,0.72)');
+  gradient.addColorStop(0, 'rgba(0,0,0,0.76)');
   gradient.addColorStop(0.45, 'rgba(0,0,0,0.34)');
   gradient.addColorStop(1, 'rgba(0,0,0,0)');
   ctx.fillStyle = gradient;
@@ -41,7 +51,7 @@ function shadowTexture() {
   return canvas;
 }
 
-/** The shelf surface: a pool of light rather than a plank. */
+/** The floor: a pool of light rather than a plane you can see the edge of. */
 function surfaceTexture() {
   const canvas = document.createElement('canvas');
   canvas.width = 512;
@@ -65,7 +75,98 @@ function surfaceTexture() {
   return canvas;
 }
 
-export function createScene(canvas, volumes) {
+/** One traced ring — integers on the quantisation grid — as a THREE path. */
+function pathFrom(flat, Path) {
+  const path = new Path();
+  path.moveTo(flat[0] / QUANT, flat[1] / QUANT);
+  for (let i = 2; i < flat.length; i += 2) path.lineTo(flat[i] / QUANT, flat[i + 1] / QUANT);
+  path.closePath();
+  return path;
+}
+
+/**
+ * The cast. Both faces take the same texture coordinates — the artwork's box
+ * within its plate — so the reverse is painted pre-mirrored to compensate.
+ */
+function castGeometry(figure) {
+  const { u0, u1, v0, v1 } = figure.textureBox;
+  const halfWidth = figure.aspect / 2;
+  const uvFor = (x, y) => new THREE.Vector2(
+    u0 + (((x + halfWidth) / figure.aspect) * (u1 - u0)),
+    v0 + (y * (v1 - v0)),
+  );
+
+  const uvGenerator = {
+    generateTopUV(_geometry, vertices, indexA, indexB, indexC) {
+      return [indexA, indexB, indexC].map((index) => uvFor(
+        vertices[index * 3],
+        vertices[(index * 3) + 1],
+      ));
+    },
+    // The cut edge is a flat colour; its coordinates only have to be valid.
+    generateSideWallUV(_geometry, vertices, indexA, indexB, indexC, indexD) {
+      return [indexA, indexB, indexC, indexD].map((index) => new THREE.Vector2(
+        vertices[index * 3] + halfWidth,
+        vertices[(index * 3) + 1],
+      ));
+    },
+  };
+
+  const shapes = figure.shapes.map(({ outer, holes }) => {
+    const shape = pathFrom(outer, THREE.Shape);
+    shape.holes = holes.map((hole) => pathFrom(hole, THREE.Path));
+    return shape;
+  });
+
+  const geometry = new THREE.ExtrudeGeometry(shapes, {
+    depth: GALLERY.depth,
+    bevelEnabled: false,
+    curveSegments: 1,
+    steps: 1,
+    UVGenerator: uvGenerator,
+  });
+  geometry.computeVertexNormals();
+  return splitCastGroups(geometry);
+}
+
+/**
+ * Three materials out of one extrusion: the face that carries the photograph,
+ * the back that carries the hallmark, and the cut edge between them. Triangles
+ * are sorted by where they sit in z, so the split holds whatever order the
+ * extruder happens to emit them in.
+ */
+function splitCastGroups(geometry) {
+  const position = geometry.getAttribute('position');
+  const triangles = position.count / 3;
+  const epsilon = GALLERY.depth * 0.01;
+
+  const materialFor = (triangle) => {
+    let front = true;
+    let back = true;
+    for (let corner = 0; corner < 3; corner += 1) {
+      const z = position.getZ((triangle * 3) + corner);
+      if (Math.abs(z - GALLERY.depth) > epsilon) front = false;
+      if (Math.abs(z) > epsilon) back = false;
+    }
+    if (front) return 0;
+    if (back) return 1;
+    return 2;
+  };
+
+  geometry.clearGroups();
+  let start = 0;
+  let current = materialFor(0);
+  for (let triangle = 1; triangle <= triangles; triangle += 1) {
+    const next = triangle < triangles ? materialFor(triangle) : -1;
+    if (next === current) continue;
+    geometry.addGroup(start * 3, (triangle - start) * 3, current);
+    start = triangle;
+    current = next;
+  }
+  return geometry;
+}
+
+export function createScene(canvas, records) {
   const renderer = new THREE.WebGLRenderer({
     canvas,
     antialias: true,
@@ -75,92 +176,130 @@ export function createScene(canvas, volumes) {
   renderer.setClearAlpha(0);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 100);
-  // Slightly above the shelf and aimed a little over it, so the volumes sit
-  // in the lower half of the frame with their feet and shadows showing and
-  // the title above them keeps its air.
-  camera.position.set(0, 1.2, 6.2);
-  camera.lookAt(0, 0.42, 0);
+  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
+  // A little above the plinths and aimed just over them, so the figures sit in
+  // the lower half of the frame with their shadows showing and the title above
+  // them keeps its air.
+  camera.position.set(0, 1.05, 6.2);
+  camera.lookAt(0, 0.30, 0);
 
-  scene.add(new THREE.HemisphereLight(0x39435a, 0x05060a, 0.62));
+  // The photographs already carry their own light. The rig here is even enough
+  // not to fight that, with just enough direction that turning a piece reads.
+  scene.add(new THREE.HemisphereLight(0x3d4761, 0x06070b, 1.05));
 
-  const key = new THREE.DirectionalLight(0xe6ecf8, 1.25);
-  key.position.set(2.6, 4.2, 5.2);
+  const key = new THREE.DirectionalLight(0xf2f0e4, 0.9);
+  key.position.set(2.2, 4.4, 5.6);
   scene.add(key);
 
-  const fill = new THREE.DirectionalLight(0x8ea6cf, 0.38);
-  fill.position.set(-4.4, 1.4, 2.6);
+  const fill = new THREE.DirectionalLight(0x8ea6cf, 0.32);
+  fill.position.set(-4.6, 1.2, 2.8);
   scene.add(fill);
 
-  // Follows the focused volume: the shelf offers one at a time.
-  const offer = new THREE.PointLight(0xdfe8fa, 9, 7.5, 2);
-  offer.position.set(0, 1.15, 2.3);
+  const rim = new THREE.DirectionalLight(0xbcd0f0, 0.28);
+  rim.position.set(-1.4, 2.2, -5.2);
+  scene.add(rim);
+
+  // Follows the focused figure: the gallery offers one at a time.
+  const offer = new THREE.PointLight(0xf3ead6, 7, 9, 2);
   scene.add(offer);
 
+  const floor = floorY();
   const surface = new THREE.Mesh(
-    new THREE.PlaneGeometry(30, 6.5),
+    new THREE.PlaneGeometry(44, 8),
     new THREE.MeshBasicMaterial({
       map: textureFrom(surfaceTexture(), renderer),
       transparent: true,
       depthWrite: false,
     }),
   );
-  const floorY = SHELF.baseY - SHELF.height / 2;
   surface.rotation.x = -Math.PI / 2;
-  surface.position.set(0, floorY - 0.002, -0.6);
+  surface.position.set(0, floor - 0.002, -0.5);
   scene.add(surface);
 
   const shadowMap = textureFrom(shadowTexture(), renderer);
-  const bookGeometry = new THREE.BoxGeometry(SHELF.thickness, SHELF.height, SHELF.depth);
-  const shadowGeometry = new THREE.PlaneGeometry(0.98, 0.98);
+  const plinthGeometry = new THREE.CylinderGeometry(
+    GALLERY.plinthRadius, GALLERY.plinthRadius * 1.06, GALLERY.plinthHeight, 40, 1, false,
+  );
+  const shadowGeometry = new THREE.PlaneGeometry(2.3, 2.3);
+  const plinthCap = new THREE.MeshStandardMaterial({
+    color: 0x141824, roughness: 0.82, metalness: 0, transparent: true,
+  });
 
   const disposables = [
-    bookGeometry, shadowGeometry, shadowMap,
+    plinthGeometry, shadowGeometry, shadowMap, plinthCap,
     surface.geometry, surface.material, surface.material.map,
   ];
 
-  const books = volumes.map((volume) => {
-    const spine = textureFrom(paintSpine(volume), renderer);
-    const edge = textureFrom(paintEdge(volume), renderer);
-    const board = shadeOf(volume.hue, 0.78);
+  const figures = records.map((record) => {
+    const traced = geometryData.figures[record.slug];
+    const scale = fitScale(traced.aspect);
+    const cast = new THREE.Color(traced.edgeColor);
 
-    const coverMaterial = new THREE.MeshStandardMaterial({
-      color: board, roughness: 0.86, metalness: 0, transparent: true,
+    // Until the plate arrives the piece stands in its own metal, then the
+    // photograph is laid onto the face.
+    const face = new THREE.MeshStandardMaterial({
+      color: cast, roughness: 0.62, metalness: 0.18, transparent: true, alphaTest: 0.3,
     });
-    const backMaterial = new THREE.MeshStandardMaterial({
-      color: board, roughness: 0.9, metalness: 0, transparent: true,
+    const reverse = new THREE.MeshStandardMaterial({
+      map: textureFrom(paintReverse(record, traced.edgeColor), renderer),
+      roughness: 0.7,
+      metalness: 0.14,
+      transparent: true,
     });
-    const paperMaterial = new THREE.MeshStandardMaterial({
-      color: PAPER, roughness: 0.95, metalness: 0, transparent: true,
-    });
-    const edgeMaterial = new THREE.MeshStandardMaterial({
-      map: edge, roughness: 0.95, metalness: 0, transparent: true,
-    });
-    const spineMaterial = new THREE.MeshStandardMaterial({
-      map: spine, roughness: 0.8, metalness: 0, transparent: true,
+    // The cut edge is the one surface with no photograph on it. Keep it dark
+    // and matt: a bright edge makes a shallow cast read as a thick slab. The
+    // scalar is small because colours multiply in linear space — a third here
+    // is well over half once it is written back out.
+    const edge = new THREE.MeshStandardMaterial({
+      color: cast.clone().multiplyScalar(0.045),
+      roughness: 0.94,
+      metalness: 0,
+      transparent: true,
     });
 
-    // BoxGeometry face order: +X, -X, +Y, -Y, +Z, -Z.
-    const materials = [
-      coverMaterial, backMaterial, paperMaterial,
-      paperMaterial, spineMaterial, edgeMaterial,
-    ];
-    const mesh = new THREE.Mesh(bookGeometry, materials);
-    mesh.userData.volume = volume;
+    const mesh = new THREE.Mesh(castGeometry(traced), [face, reverse, edge]);
+    mesh.scale.setScalar(scale);
     scene.add(mesh);
+
+    const plinth = new THREE.Mesh(plinthGeometry, [
+      new THREE.MeshStandardMaterial({
+        map: textureFrom(paintPlinth(record), renderer),
+        roughness: 0.88,
+        metalness: 0,
+        transparent: true,
+      }),
+      plinthCap,
+      plinthCap,
+    ]);
+    scene.add(plinth);
 
     const shadow = new THREE.Mesh(
       shadowGeometry,
       new THREE.MeshBasicMaterial({
-        map: shadowMap, transparent: true, depthWrite: false, opacity: 0.85,
+        map: shadowMap, transparent: true, depthWrite: false, opacity: 0.8,
       }),
     );
     shadow.rotation.x = -Math.PI / 2;
     scene.add(shadow);
 
-    disposables.push(spine, edge, shadow.material, ...new Set(materials));
+    // Raycasting a silhouette as sparse as Libra's chains is hopeless, so
+    // picking runs against a box instead. It is never added to the scene —
+    // nothing to draw, its matrix is kept by hand.
+    const proxyGeometry = new THREE.BoxGeometry(traced.aspect, 1, GALLERY.depth);
+    proxyGeometry.translate(0, 0.5, GALLERY.depth / 2);
+    const proxy = new THREE.Mesh(proxyGeometry, plinthCap);
+    proxy.scale.setScalar(scale);
 
-    return { volume, mesh, shadow, materials, coverMaterial, spineMaterial, cover: null };
+    disposables.push(
+      mesh.geometry, face, reverse, reverse.map, edge,
+      plinth.material[0], plinth.material[0].map, shadow.material, proxyGeometry,
+    );
+
+    return {
+      record, mesh, plinth, shadow, proxy, scale, face,
+      materials: [face, reverse, edge],
+      tier: 0,
+    };
   });
 
   const raycaster = new THREE.Raycaster();
@@ -168,100 +307,136 @@ export function createScene(canvas, volumes) {
   let aspect = 1;
 
   /**
-   * Where an opened volume stands. Narrow viewports give the card the floor,
-   * so the volume is both lifted and stood down to clear the sheet.
+   * Where an examined figure stands. Narrow viewports give the card the floor.
+   *
+   * A piece drawn out is also turned to face the viewer squarely. Standing it
+   * off to one side without that turn shows the cut edge of every contour down
+   * its length — a shallow cast seen at an angle reads as a flight of steps.
    */
   function stagePose(zoom) {
     const wide = aspect >= 1.05;
-    return wide
-      ? { x: -1.3, y: 0.58, z: 1.75 + zoom * 1.15, scale: 1 }
-      : { x: 0, y: 1.42, z: 1.5 + zoom * 0.9, scale: 0.64 + zoom * 0.24 };
+    const place = wide
+      ? { x: -1.25, y: -0.70, z: 1.75 + (zoom * 1.2), scale: 1 }
+      : { x: 0, y: -0.24, z: 1.7 + (zoom * 0.9), scale: 0.7 + (zoom * 0.2) };
+    return { ...place, faceYaw: Math.atan2(-place.x, camera.position.z - place.z) };
   }
 
   /**
-   * Place everything for a given shelf state. `open` runs 0 → 1 as a volume
-   * leaves the shelf, so the two poses simply cross-fade.
+   * Place everything for a given state. `open` runs 0 → 1 as a figure is drawn
+   * out of the row, so the two poses simply cross-fade.
    */
   function layout(state) {
     const { focus, openIndex, open, yaw, pitch, zoom } = state;
     const stage = stagePose(zoom);
-    const dimmed = 1 - open * 0.86;
+    const dimmed = 1 - (open * 0.88);
 
-    for (let i = 0; i < books.length; i += 1) {
-      const book = books[i];
-      const pose = volumePose(i, focus, SHELF);
+    for (let i = 0; i < figures.length; i += 1) {
+      const figure = figures[i];
+      const pose = figurePose(i, focus, GALLERY);
       const visible = isVisible(i, focus) || (open > 0 && i === openIndex);
-      book.mesh.visible = visible;
-      book.shadow.visible = visible;
+      figure.mesh.visible = visible;
+      figure.plinth.visible = visible;
+      figure.shadow.visible = visible;
       if (!visible) continue;
 
-      const opening = i === openIndex ? open : 0;
-      const recede = i === openIndex ? 0 : open * 0.55;
+      const drawn = i === openIndex ? open : 0;
+      const recede = i === openIndex ? 0 : open * 0.6;
+      const scale = figure.scale * THREE.MathUtils.lerp(1, stage.scale, drawn);
 
-      book.mesh.position.set(
-        THREE.MathUtils.lerp(pose.x, stage.x, opening),
-        THREE.MathUtils.lerp(pose.y, stage.y, opening),
-        THREE.MathUtils.lerp(pose.z - recede, stage.z, opening),
+      figure.mesh.position.set(
+        THREE.MathUtils.lerp(pose.x, stage.x, drawn),
+        THREE.MathUtils.lerp(pose.y, stage.y, drawn),
+        THREE.MathUtils.lerp(pose.z - recede, stage.z, drawn),
       );
-      book.mesh.rotation.set(
-        pitch * opening,
-        THREE.MathUtils.lerp(pose.rotationY, -Math.PI / 2 + yaw, opening),
+      figure.mesh.rotation.set(
+        pitch * drawn,
+        THREE.MathUtils.lerp(pose.rotationY, stage.faceYaw + yaw, drawn),
         0,
       );
-      book.mesh.scale.setScalar(THREE.MathUtils.lerp(1, stage.scale, opening));
+      figure.mesh.scale.setScalar(scale);
+
+      figure.proxy.position.copy(figure.mesh.position);
+      figure.proxy.rotation.copy(figure.mesh.rotation);
+      figure.proxy.scale.setScalar(scale);
+      figure.proxy.updateMatrixWorld(true);
 
       const opacity = i === openIndex ? 1 : dimmed;
-      for (const material of book.materials) material.opacity = opacity;
+      for (const material of figure.materials) material.opacity = opacity;
 
-      book.shadow.position.set(pose.x, floorY + 0.004, pose.z + 0.08);
-      book.shadow.rotation.z = pose.rotationY;
-      book.shadow.material.opacity = 0.85 * (1 - opening) * (i === openIndex ? 1 : dimmed);
-      book.shadow.scale.setScalar(1 + pose.prominence * 0.12);
+      // The plinth stays in the row; only the figure is lifted off it.
+      figure.plinth.position.set(pose.x, pose.y - (GALLERY.plinthHeight / 2), pose.z);
+      figure.plinth.rotation.y = pose.rotationY;
+      figure.plinth.material[0].opacity = opacity * (1 - (drawn * 0.75));
+      plinthCap.opacity = dimmed;
+
+      figure.shadow.position.set(pose.x, floor + 0.004, pose.z + 0.05);
+      figure.shadow.rotation.z = pose.rotationY;
+      figure.shadow.material.opacity = 0.8 * (1 - (drawn * 0.7))
+        * (i === openIndex ? 1 : dimmed);
+      figure.shadow.scale.setScalar(1 + (pose.prominence * 0.1));
     }
 
-    // The pool of light follows whatever the shelf is offering, and travels
-    // with a volume when it is taken out.
-    const front = volumePose(Math.round(focus), focus, SHELF);
+    // The pool of light follows whatever the row is offering, and travels with
+    // a figure when it is drawn out.
+    const front = figurePose(Math.round(focus), focus, GALLERY);
     offer.position.set(
       THREE.MathUtils.lerp(front.x * 0.5, stage.x, open),
-      THREE.MathUtils.lerp(SHELF.baseY + 0.95, stage.y + 0.85, open),
-      THREE.MathUtils.lerp(front.z + 2.3, stage.z + 1.5, open),
+      THREE.MathUtils.lerp(GALLERY.baseY + 1.5, stage.y + 1.5, open),
+      THREE.MathUtils.lerp(front.z + 2.6, stage.z + 1.8, open),
     );
-    offer.intensity = 9 + open * 3.5;
+    offer.intensity = 7 - (open * 2.6);
   }
 
-  /** Paint the full cover for a volume the reader opened, once. */
-  async function dressCover(index) {
-    const book = books[index];
-    if (!book || book.cover) return false;
-    book.cover = textureFrom(paintCover(book.volume, await loadDisc(book.volume.slug)), renderer);
-    book.coverMaterial.map = book.cover;
-    book.coverMaterial.color.set(0xffffff);
-    book.coverMaterial.needsUpdate = true;
-    disposables.push(book.cover);
+  /** Lay the photograph onto a figure's face, at the tier asked for. */
+  async function dress(index, tier) {
+    const figure = figures[index];
+    if (!figure || figure.tier >= tier) return false;
+    const image = await loadSculpture(figure.record.slug, tier);
+    if (!image || figure.tier >= tier) return false;
+    const map = mapFrom(image, renderer);
+    const previous = figure.face.map;
+    figure.face.map = map;
+    figure.face.color.set(0xffffff);
+    figure.face.needsUpdate = true;
+    figure.tier = tier;
+    previous?.dispose();
+    disposables.push(map);
     return true;
   }
+
+  /** The row tier, nearest the focus first so what is on screen resolves first. */
+  async function dressRow(focus, onReady) {
+    const order = figures
+      .map((_, index) => index)
+      .sort((a, b) => Math.abs(a - focus) - Math.abs(b - focus));
+    for (const index of order) {
+      if (await dress(index, ROW_TIER)) onReady?.();
+    }
+  }
+
+  /** The full plate, for a figure being examined. */
+  const refine = (index) => dress(index, HERO_TIER);
 
   function resize(width, height, dpr) {
     aspect = width / height;
     renderer.setPixelRatio(Math.min(2, dpr));
     renderer.setSize(width, height, false);
     camera.aspect = aspect;
-    // Hold the shelf in frame on tall, narrow viewports.
-    camera.fov = aspect < 0.9 ? 46 : 38;
+    // Hold the row in frame on tall, narrow viewports.
+    camera.fov = aspect < 0.9 ? 48 : 38;
     camera.updateProjectionMatrix();
   }
 
-  /** Index of the volume under the pointer, or -1. */
+  /** Index of the figure under the pointer, or -1. */
   function pick(clientX, clientY) {
     const rect = renderer.domElement.getBoundingClientRect();
-    pointer.x = ((clientX - rect.left) / rect.width) * 2 - 1;
-    pointer.y = -((clientY - rect.top) / rect.height) * 2 + 1;
+    pointer.x = (((clientX - rect.left) / rect.width) * 2) - 1;
+    pointer.y = (-((clientY - rect.top) / rect.height) * 2) + 1;
     raycaster.setFromCamera(pointer, camera);
-    const meshes = books.filter((b) => b.mesh.visible).map((b) => b.mesh);
-    const hit = raycaster.intersectObjects(meshes, false)[0];
+    const proxies = figures.filter((figure) => figure.mesh.visible).map((figure) => figure.proxy);
+    const hit = raycaster.intersectObjects(proxies, false)[0];
     if (!hit) return -1;
-    return books.findIndex((b) => b.mesh === hit.object);
+    return figures.findIndex((figure) => figure.proxy === hit.object);
   }
 
   function render() {
@@ -273,5 +448,8 @@ export function createScene(canvas, volumes) {
     renderer.dispose();
   }
 
-  return { layout, render, resize, pick, dressCover, dispose, renderer, isWide: () => aspect >= 1.05 };
+  return {
+    layout, render, resize, pick, dressRow, refine, dispose, renderer,
+    isWide: () => aspect >= 1.05,
+  };
 }

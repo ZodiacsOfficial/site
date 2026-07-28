@@ -113,6 +113,16 @@
       "permanent": true
     },
     {
+      "source": "/registry/shelf",
+      "destination": "/registry/gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/shelf/",
+      "destination": "/registry/gallery/",
+      "permanent": true
+    },
+    {
       "source": "/registry/aura",
       "destination": "/registry/collection/",
       "permanent": true
@@ -294,7 +304,7 @@
       ]
     },
     {
-      "source": "/assets/shelf.js",
+      "source": "/assets/gallery.js",
       "headers": [
         {
           "key": "Cache-Control",
@@ -312,7 +322,7 @@
       ]
     },
     {
-      "source": "/assets/(art|nuggets|og)/(.*)",
+      "source": "/assets/(art|nuggets|og|sculptures)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

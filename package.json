@@ -27,6 +27,7 @@
     "data:registry-establishment": "node scripts/sync-registry-establishment.mjs",
     "data:cities": "node scripts/build-cities.mjs",
     "data:cabinet-materials": "node scripts/build-cabinet-materials.mjs",
+    "data:figure-assets": "node scripts/build-figure-assets.mjs",
     "data:icons": "node scripts/build-icons.mjs",
     "data:i18n-additions": "node scripts/build-i18n-additions.mjs",
     "data:pwa-icons": "node scripts/build-pwa-icons.mjs",

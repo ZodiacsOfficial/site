@@ -245,3 +245,79 @@ Shipped as planned except where noted:
 - Dedicated OG card via `scripts/build-og-void.mjs` (`data:og`) is a
   nice-to-have; until then the page uses `/assets/og/v2/share.png`.
 - Confirm how `src/pages/sitemap.xml.ts` treats wing URLs and follow suit.
+
+---
+
+## §12 — Reworked as the Gallery: gold sculptures, 2026-07-28
+
+Owner direction after seeing the shelf: the books were the reference's
+metaphor, not the registry's. The Twelve are already objects — the **Gold
+Sculptures** (the Cabinet's edition tier IV) — so the row now holds those.
+Interaction model unchanged; only what the objects ARE changed.
+
+**Owner decisions.** (1) Full 360° rotation with a **hallmarked reverse** — a
+designed engraved back, not a mirrored front. (2) Renamed to
+`/registry/gallery/`, "The Gallery", with a courtesy 301 from
+`/registry/shelf/`; the source folder and `scripts/build-shelf.mjs` keep their
+names. (3) The landing hero's "Browse the Twelve" stays pointed at the featured
+sign — that behaviour is pinned by `tests/registry-selector-drive.mjs` and
+`scripts/registry-pastel-polish.test.mjs`.
+
+**The constraint that shaped everything.** There is no 3D geometry anywhere in
+the repo and never was. The sculptures are twelve 2D renders under
+`public/assets/nuggets/` — palette PNGs, quantised alpha, non-uniform aspect,
+1024px at most. So the objects are built honestly from what exists: trace the
+alpha silhouette, extrude it into a shallow cast, put the photograph on the
+face and the registry's hallmark on the back.
+
+**The pipeline** (`scripts/build-figure-assets.mjs`, `npm run data:figure-assets`):
+
+- `src/shelf/contour.mjs` — marching squares with linear interpolation on the
+  alpha field (so a quantised edge still traces smoothly), even/odd ring
+  classification into outlines and holes, Ramer–Douglas–Peucker, then
+  normalisation to scene units (height 1, feet on 0, centred) quantised onto a
+  4096 grid. Pure arithmetic: no sharp, no Three, no DOM.
+- Emits committed `src/shelf/figures.geometry.json` (47 KB, 4,738 points across
+  the twelve) and `public/assets/sculptures/{512,1024}/`.
+- Per-sign threshold overrides: Libra traces at alpha ≥ 40 because its chains
+  are a few pixels wide and sever at the default 128. It keeps 22 holes — one
+  per chain link. Pisces resolves into 7 pieces (its loose beads); Gemini keeps
+  11 (the gap between the twins, the lyre's strings).
+
+**Two determinism rules, deliberately different** — this is why the builder is
+NOT in the `legacy-drift` job:
+
+- The **geometry** is traced from an unresized raw decode using only IEEE
+  arithmetic, so it re-derives identically anywhere.
+  `scripts/shelf-figures.test.mjs` regenerates it from the art and compares
+  against the committed file: stale geometry fails CI.
+- The **webp encodes** are libvips output and are not byte-stable across
+  platforms. Committed, guarded by invariants, never by bytes — the same rule
+  `scripts/build-cabinet-materials.mjs` already lives under.
+
+Nothing in the geometry path may resize. Resampling is where platforms
+disagree.
+
+**Things learned the hard way.**
+
+- `Math.round()` yields `-0` for small negatives; JSON writes it as `0`. Left
+  alone, a fresh trace and the committed file compare unequal while serialising
+  identically. `quantiseRing` settles it.
+- Colours multiply in **linear** space. Darkening the cut edge to a third of
+  the cast colour still rendered well over half once written back out; the
+  scalar that actually reads as a shadowed edge is ~0.045.
+- A figure drawn out is also **turned to face the viewer**
+  (`stagePose().faceYaw`). Standing it off to one side without that turn shows
+  the cut edge of every contour down its length, and a shallow cast seen at an
+  angle reads as a flight of steps.
+- `maxWidth` must clear the *narrowest* gap the arc produces. The row
+  compresses in x toward its ends (spacing × cos of the end angle ≈ 1.607 at
+  the current constants), so 1.5 is the honest ceiling — the collision test
+  catches this.
+- The reverse is painted **pre-mirrored**: the extrusion gives both faces the
+  same texture coordinates, so the back is read from behind.
+
+**As measured.** Bundle 163 KB gzip (cap 180). Row tier 609 KB across the
+twelve, hero tier 2.27 MB loaded one sign at a time on view. Geometry 47 KB
+raw. No dependency changes, so no lockfile movement and no daily-publication or
+Phase-1 receipt knock-ons.

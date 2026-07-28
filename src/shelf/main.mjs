@@ -1,19 +1,19 @@
-// Driving the shelf.
+// Driving the gallery.
 //
 // Input, damping, and the accessible controls that shadow every gesture. The
-// page is complete without this file: the register below the stage is the
-// real catalogue, and it stays in the document whether or not WebGL exists.
+// page is complete without this file: the register below the stage is the real
+// catalogue, and it stays in the document whether or not WebGL exists.
 
 import {
-  SHELF, approach, clampFocus, nearestIndex,
+  GALLERY, approach, clampFocus, nearestIndex, shortestTurn,
   wheelToFocusDelta, dragToFocusDelta,
 } from './layout.mjs';
 import { createScene } from './scene.mjs';
 import { createCard } from './card.mjs';
 import { ensureFonts } from './textures.mjs';
 
-const stage = document.querySelector('[data-shelf-stage]');
-const source = document.getElementById('shelf-volumes');
+const stage = document.querySelector('[data-gallery-stage]');
+const source = document.getElementById('gallery-figures');
 if (stage && source) void mount(stage, JSON.parse(source.textContent));
 
 function supported() {
@@ -25,14 +25,14 @@ function supported() {
   }
 }
 
-async function mount(root, volumes) {
+async function mount(root, records) {
   if (!supported()) return;
 
-  const count = volumes.length;
-  const mountPoint = root.querySelector('[data-shelf-canvas]');
-  const rail = root.querySelector('[data-shelf-rail]');
-  const opener = root.querySelector('[data-shelf-open]');
-  const live = root.querySelector('[data-shelf-live]');
+  const count = records.length;
+  const mountPoint = root.querySelector('[data-gallery-canvas]');
+  const rail = root.querySelector('[data-gallery-rail]');
+  const opener = root.querySelector('[data-gallery-open]');
+  const live = root.querySelector('[data-gallery-live]');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
   await ensureFonts();
@@ -44,14 +44,14 @@ async function mount(root, volumes) {
 
   let scene;
   try {
-    scene = createScene(canvas, volumes);
+    scene = createScene(canvas, records);
   } catch {
     canvas.remove();
     return;
   }
 
   const state = {
-    focus: motion.matches ? 0 : -1.7,
+    focus: motion.matches ? 0 : -1.4,
     targetFocus: 0,
     open: 0,
     targetOpen: 0,
@@ -61,10 +61,10 @@ async function mount(root, volumes) {
     zoom: 0, targetZoom: 0,
   };
 
-  const card = createCard(root, { onClose: () => closeVolume() });
+  const card = createCard(root, { onClose: () => closeFigure() });
 
   // ---- the frame loop --------------------------------------------------
-  // Nothing is drawn unless something is still moving; the shelf at rest
+  // Nothing is drawn unless something is still moving; the gallery at rest
   // costs nothing.
 
   let raf = 0;
@@ -81,7 +81,7 @@ async function mount(root, volumes) {
 
   function step(dt) {
     const fast = motion.matches ? 200 : 9;
-    const turn = motion.matches ? 200 : 14;
+    const turn = motion.matches ? 200 : 12;
     state.focus = approach(state.focus, state.targetFocus, fast, dt);
     state.open = approach(state.open, state.targetOpen, motion.matches ? 200 : 7.5, dt);
     state.yaw = approach(state.yaw, state.targetYaw, turn, dt);
@@ -115,7 +115,7 @@ async function mount(root, volumes) {
     raf = requestAnimationFrame(frame);
   }
 
-  // ---- shelf position --------------------------------------------------
+  // ---- position along the row ------------------------------------------
 
   let snapTimer = 0;
   function scheduleSnap() {
@@ -127,11 +127,11 @@ async function mount(root, volumes) {
     }, 140);
   }
 
-  function focusVolume(index, { announce = true } = {}) {
+  function focusFigure(index, { announce = true } = {}) {
     state.targetFocus = clampFocus(index, count);
     window.clearTimeout(snapTimer);
     syncChrome();
-    if (announce) speak(`${volumes[current()].name}, Lot ${volumes[current()].lot}`);
+    if (announce) speak(`${records[current()].name}, Lot ${records[current()].lot}`);
     invalidate();
   }
 
@@ -148,12 +148,12 @@ async function mount(root, volumes) {
 
   function syncChrome() {
     const index = current();
-    const volume = volumes[index];
+    const record = records[index];
     if (opener) {
-      opener.textContent = state.openIndex >= 0 ? 'Close the volume' : `Open ${volume.name}`;
+      opener.textContent = state.openIndex >= 0 ? 'Return the sculpture' : `View ${record.name}`;
       opener.setAttribute(
         'aria-label',
-        state.openIndex >= 0 ? 'Close the volume' : `Open the ${volume.name} volume`,
+        state.openIndex >= 0 ? 'Return the sculpture to the row' : `View the ${record.name} sculpture`,
       );
     }
     for (const [i, button] of ticks.entries()) {
@@ -167,65 +167,67 @@ async function mount(root, volumes) {
     }
   }
 
-  // ---- opening and closing ---------------------------------------------
+  // ---- drawing a figure out and returning it ---------------------------
 
-  async function openVolume(index) {
-    const volume = volumes[index];
+  async function openFigure(index) {
+    const record = records[index];
     state.openIndex = index;
     state.targetOpen = 1;
     state.targetYaw = 0;
     state.targetPitch = 0;
     state.targetZoom = 0;
     root.classList.add('is-open');
-    card.open(volume);
+    card.open(record);
     syncChrome();
-    speak(`${volume.name} opened. Lot ${volume.lot} of twelve.`);
+    speak(`${record.name} drawn forward. Lot ${record.lot} of twelve.`);
     invalidate();
     card.closer.focus({ preventScroll: true });
-    if (await scene.dressCover(index)) invalidate();
+    if (await scene.refine(index)) invalidate();
   }
 
-  function closeVolume() {
+  function closeFigure() {
     if (state.openIndex < 0) return;
     const index = state.openIndex;
     state.targetOpen = 0;
-    state.targetYaw = 0;
+    // A figure turned right around settles back the short way rather than
+    // unwinding every turn it was given.
+    state.targetYaw = shortestTurn(state.yaw, 0);
     state.targetPitch = 0;
     state.targetZoom = 0;
     root.classList.remove('is-open');
     card.close();
-    // Keep the volume identified until it is back in line, then release it.
+    // Keep the figure identified until it is back in line, then release it.
     window.setTimeout(() => {
       if (state.targetOpen === 0) state.openIndex = -1;
     }, 700);
     syncChrome();
-    speak(`${volumes[index].name} reshelved.`);
+    speak(`${records[index].name} returned to the row.`);
     ticks[index]?.focus({ preventScroll: true });
     invalidate();
   }
 
   function toggle(index) {
-    if (state.openIndex >= 0 && state.targetOpen > 0) closeVolume();
-    else void openVolume(index);
+    if (state.openIndex >= 0 && state.targetOpen > 0) closeFigure();
+    else void openFigure(index);
   }
 
-  // ---- the tick rail: the shelf's keyboard and pointer contract ---------
+  // ---- the tick rail: the gallery's keyboard and pointer contract -------
 
-  const ticks = volumes.map((volume, index) => {
+  const ticks = records.map((record, index) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'rail__tick';
-    button.style.setProperty('--sign', volume.hue);
+    button.style.setProperty('--sign', record.hue);
     button.dataset.index = String(index);
     button.tabIndex = index === 0 ? 0 : -1;
     button.innerHTML = '<span class="rail__glyph" aria-hidden="true"></span>';
-    button.querySelector('.rail__glyph').textContent = volume.glyph;
-    button.setAttribute('aria-label', `${volume.name}, Lot ${volume.lot} of twelve`);
+    button.querySelector('.rail__glyph').textContent = record.glyph;
+    button.setAttribute('aria-label', `${record.name}, Lot ${record.lot} of twelve`);
     button.addEventListener('click', () => {
-      if (current() === index && state.targetOpen === 0) void openVolume(index);
+      if (current() === index && state.targetOpen === 0) void openFigure(index);
       else {
-        if (state.targetOpen > 0) closeVolume();
-        focusVolume(index);
+        if (state.targetOpen > 0) closeFigure();
+        focusFigure(index);
       }
     });
     rail.append(button);
@@ -240,9 +242,9 @@ async function mount(root, volumes) {
     else if (event.key === 'End') next = count - 1;
     if (next === null) return;
     event.preventDefault();
-    if (state.targetOpen > 0) closeVolume();
+    if (state.targetOpen > 0) closeFigure();
     const index = clampFocus(next, count);
-    focusVolume(index);
+    focusFigure(index);
     ticks[index].focus({ preventScroll: true });
   });
 
@@ -251,7 +253,7 @@ async function mount(root, volumes) {
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && state.targetOpen > 0) {
       event.preventDefault();
-      closeVolume();
+      closeFigure();
     }
   });
 
@@ -293,7 +295,7 @@ async function mount(root, volumes) {
     if (pointers.size === 2 && pinch > 0) {
       const [a, b] = [...pointers.values()];
       const spread = Math.hypot(a.x - b.x, a.y - b.y);
-      state.targetZoom = Math.min(1, Math.max(0, state.targetZoom + (spread - pinch) / 320));
+      state.targetZoom = Math.min(1, Math.max(0, state.targetZoom + ((spread - pinch) / 320)));
       pinch = spread;
       invalidate();
       return;
@@ -306,9 +308,10 @@ async function mount(root, volumes) {
     drag.moved = true;
 
     if (state.targetOpen > 0) {
-      // An opened volume turns in the hand; the shelf stays where it is.
-      state.targetYaw = Math.max(-0.62, Math.min(0.62, drag.yaw + dx / 260));
-      state.targetPitch = Math.max(-0.44, Math.min(0.44, drag.pitch + dy / 300));
+      // A figure drawn out turns in the hand — right around, as often as the
+      // reader likes. The row stays where it is.
+      state.targetYaw = drag.yaw + (dx / 190);
+      state.targetPitch = Math.max(-0.44, Math.min(0.44, drag.pitch + (dy / 300)));
     } else {
       const width = canvas.clientWidth;
       state.targetFocus = clampFocus(drag.focus + dragToFocusDelta(dx, width), count);
@@ -332,23 +335,23 @@ async function mount(root, volumes) {
     if (!finished.moved) {
       const index = scene.pick(event.clientX, event.clientY);
       if (index >= 0) {
-        if (state.targetOpen > 0) closeVolume();
-        else if (index === current()) void openVolume(index);
-        else focusVolume(index);
+        if (state.targetOpen > 0) closeFigure();
+        else if (index === current()) void openFigure(index);
+        else focusFigure(index);
       } else if (state.targetOpen > 0) {
-        closeVolume();
+        closeFigure();
       }
       return;
     }
 
     if (state.targetOpen > 0) return;
-    // Carry the throw a little, then settle on a volume.
-    const carried = motion.matches ? 0 : -finished.velocity * 2.4;
+    // Carry the throw a little, then settle on a figure.
+    const carried = motion.matches ? 0 : -finished.velocity * 1.8;
     state.targetFocus = nearestIndex(
       clampFocus(state.targetFocus + carried, count), count,
     );
     syncChrome();
-    speak(`${volumes[current()].name}, Lot ${volumes[current()].lot}`);
+    speak(`${records[current()].name}, Lot ${records[current()].lot}`);
     invalidate();
   }
 
@@ -358,7 +361,7 @@ async function mount(root, volumes) {
   canvas.addEventListener('wheel', (event) => {
     if (state.targetOpen > 0) {
       event.preventDefault();
-      state.targetZoom = Math.min(1, Math.max(0, state.targetZoom - event.deltaY / 900));
+      state.targetZoom = Math.min(1, Math.max(0, state.targetZoom - (event.deltaY / 900)));
       invalidate();
       return;
     }
@@ -367,7 +370,7 @@ async function mount(root, volumes) {
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? canvas.clientHeight : 1;
     const delta = wheelToFocusDelta(event.deltaX * unit, event.deltaY * unit);
     if (!delta) return;
-    // At either end the shelf gives the wheel back so the page can scroll.
+    // At either end the row gives the wheel back so the page can scroll.
     const atStart = state.targetFocus <= 0.002 && delta < 0;
     const atEnd = state.targetFocus >= count - 1.002 && delta > 0;
     if (atStart || atEnd) return;
@@ -423,6 +426,10 @@ async function mount(root, volumes) {
   root.classList.add('is-ready');
   syncChrome();
   invalidate();
+
+  // The plates arrive after the room does: each figure stands in its own metal
+  // until its photograph is laid on, nearest the front first.
+  void scene.dressRow(0, invalidate);
 }
 
-export { SHELF };
+export { GALLERY };

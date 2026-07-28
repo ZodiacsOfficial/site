@@ -12,7 +12,7 @@ export interface LegacyUrl {
 
 export const LEGACY_URLS: LegacyUrl[] = [
   { path: '/registry/', priority: 0.8 },
-  { path: '/registry/shelf/', priority: 0.65 },
+  { path: '/registry/gallery/', priority: 0.65 },
   ...SIGN_SLUGS.map((slug) => ({ path: `/registry/${slug}/`, priority: 0.6 })),
   { path: '/thesis/', priority: 0.6 },
   { path: '/archive/', priority: 0.6 },

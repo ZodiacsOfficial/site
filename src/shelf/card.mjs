@@ -2,8 +2,8 @@
 //
 // Everything the reader can select, copy, or tab to lives in the DOM — the
 // canvas next to it is decoration. Addresses are read from the registry file
-// itself at the moment a volume is opened, never from a copy baked into this
-// page, so the shelf can only ever show what the registry currently says.
+// itself at the moment a figure is drawn out, never from a copy baked into
+// this page, so the gallery can only ever show what the registry says now.
 
 const REGISTRY_URL = '/registry/zodiacs.registry.json';
 
@@ -89,14 +89,14 @@ function recordRow(entry) {
 }
 
 export function createCard(root, { onClose }) {
-  const element = root.querySelector('[data-shelf-card]');
+  const element = root.querySelector('[data-gallery-card]');
   const lot = element.querySelector('[data-card-lot]');
   const name = element.querySelector('[data-card-name]');
   const figure = element.querySelector('[data-card-figure]');
   const facts = element.querySelector('[data-card-facts]');
   const records = element.querySelector('[data-card-records]');
   const entry = element.querySelector('[data-card-entry]');
-  const closer = element.querySelector('[data-shelf-close]');
+  const closer = element.querySelector('[data-gallery-close]');
 
   closer.addEventListener('click', () => onClose());
 
@@ -110,7 +110,7 @@ export function createCard(root, { onClose }) {
     facts.append(dt, dd);
   }
 
-  async function fillRecords(volume, mine) {
+  async function fillRecords(record, mine) {
     records.replaceChildren();
     const note = document.createElement('p');
     note.className = 'rec__note';
@@ -119,7 +119,7 @@ export function createCard(root, { onClose }) {
     try {
       const data = await registry();
       if (mine !== token) return;
-      const asset = data.assets.find((a) => a.sign === volume.slug);
+      const asset = data.assets.find((a) => a.sign === record.slug);
       if (!asset) throw new Error('sign not in registry');
       // `representations` already carries the native mint alongside the
       // bridged one, so list each chain once, native first.
@@ -136,27 +136,27 @@ export function createCard(root, { onClose }) {
     }
   }
 
-  function open(volume) {
+  function open(record) {
     token += 1;
-    element.style.setProperty('--sign', volume.hue);
-    lot.textContent = `Lot ${volume.lot} of XII · Nº ${String(volume.order).padStart(2, '0')} of 12`;
-    name.textContent = volume.name;
-    figure.textContent = volume.epithet;
+    element.style.setProperty('--sign', record.hue);
+    lot.textContent = `Lot ${record.lot} of XII · Nº ${String(record.order).padStart(2, '0')} of 12`;
+    name.textContent = record.name;
+    figure.textContent = record.epithet;
 
     facts.replaceChildren();
-    fact('Classification', `${volume.modality} ${volume.element.toLowerCase()}`);
-    fact('Ruling planet', volume.ruler);
-    fact('Dates', volume.dates);
-    fact('Archetype', volume.archetype);
-    fact('Principal star', volume.star);
+    fact('Classification', `${record.modality} ${record.element.toLowerCase()}`);
+    fact('Ruling planet', record.ruler);
+    fact('Dates', record.dates);
+    fact('Archetype', record.archetype);
+    fact('Principal star', record.star);
 
-    entry.href = `/registry/${volume.slug}/`;
-    entry.setAttribute('aria-label', `Open the ${volume.name} catalogue entry`);
+    entry.href = `/registry/${record.slug}/`;
+    entry.setAttribute('aria-label', `Open the ${record.name} catalogue entry`);
 
     element.hidden = false;
     // Let the attribute land before the transition class, or it does not run.
     requestAnimationFrame(() => element.classList.add('is-open'));
-    void fillRecords(volume, token);
+    void fillRecords(record, token);
   }
 
   function close() {

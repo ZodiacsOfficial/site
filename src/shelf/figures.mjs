@@ -1,10 +1,14 @@
-// The shelf's volume table — build-time only.
+// The gallery's figure table — build-time only.
 //
 // One entry per sign, assembled from the two files that already hold this
 // material: registry/zodiacs.registry.json (element, modality, ruler,
 // archetype, dates, symbol) and scripts/sign-data.mjs (lot numeral, glyph,
-// epithet, display dates). Nothing is retyped here, so the shelf cannot
+// epithet, display dates). Nothing is retyped here, so the gallery cannot
 // drift from the catalogue it stands for.
+//
+// The sculptures' own geometry lives elsewhere — figures.geometry.json, traced
+// from the artwork by scripts/build-figure-assets.mjs and joined to these
+// records by slug inside the scene.
 //
 // Addresses are deliberately absent. The page fetches them from the registry
 // file itself when a volume is opened, which keeps one answer to "what is the
@@ -42,7 +46,7 @@ export function figureOf(epithet) {
   return epithet.split('.')[0]?.trim() ?? '';
 }
 
-export async function readVolumes() {
+export async function readFigures() {
   const registry = JSON.parse(await readFile(REGISTRY, 'utf8'));
   const assets = new Map(registry.assets.map((asset) => [asset.sign, asset]));
   const nav = new Map(NAV_SIGNS.map((sign) => [sign.slug, sign]));
@@ -51,7 +55,7 @@ export async function readVolumes() {
     const asset = assets.get(slug);
     const page = SIGN_PAGES[slug];
     const chrome = nav.get(slug);
-    if (!asset || !page || !chrome) throw new Error(`shelf: incomplete record for ${slug}`);
+    if (!asset || !page || !chrome) throw new Error(`gallery: incomplete record for ${slug}`);
 
     const { metadata } = asset;
     return {

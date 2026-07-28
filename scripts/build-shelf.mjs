@@ -1,34 +1,39 @@
-// Builds the Shelf — /registry/shelf/.
+// Builds the Gallery — /registry/gallery/.
 //
 //   node scripts/build-shelf.mjs
 //
+// (The source folder and this script keep their original names; only the
+// public surface is the Gallery. Renaming them is a follow-up, not a
+// prerequisite.)
+//
 // Emits two artifacts, both committed:
 //
-//   public/registry/shelf/index.html  the page, register and all
-//   public/assets/shelf.js            the bundled scene (src/shelf/*)
+//   public/registry/gallery/index.html  the page, register and all
+//   public/assets/gallery.js            the bundled scene (src/shelf/*)
 //
-// The twelve volumes are read from registry/zodiacs.registry.json and
+// The twelve records are read from registry/zodiacs.registry.json and
 // scripts/sign-data.mjs, so this page cannot disagree with the catalogue it
 // stands for. Addresses are NOT written here: the page fetches them from the
-// registry file when a volume is opened, which keeps one answer on the site
-// to what a sign's mint is.
+// registry file when a figure is drawn out, which keeps one answer on the site
+// to what a sign's mint is. The sculptures' geometry and plates come from
+// scripts/build-figure-assets.mjs.
 
 import { mkdir, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import * as esbuild from 'esbuild';
 
-import { readVolumes } from '../src/shelf/volumes.mjs';
+import { readFigures } from '../src/shelf/figures.mjs';
 import { wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mjs';
 import { CHANNELS } from './sign-data.mjs';
 import { EN } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
-const PAGE_DIR = resolve(root, 'public/registry/shelf');
-const SCRIPT_OUT = resolve(root, 'public/assets/shelf.js');
+const PAGE_DIR = resolve(root, 'public/registry/gallery');
+const SCRIPT_OUT = resolve(root, 'public/assets/gallery.js');
 const SCRIPT_SRC = resolve(root, 'src/shelf/main.mjs');
-const URL_PATH = 'https://zodiacs.org/registry/shelf/';
+const URL_PATH = 'https://zodiacs.org/registry/gallery/';
 
 const esc = (value) => String(value)
   .replace(/&/g, '&amp;')
@@ -36,7 +41,7 @@ const esc = (value) => String(value)
   .replace(/>/g, '&gt;')
   .replace(/"/g, '&quot;');
 
-const volumes = await readVolumes();
+const figures = await readFigures();
 
 // ---- the scene bundle --------------------------------------------------------
 
@@ -56,8 +61,9 @@ await esbuild.build({
 
 // ---- the page ----------------------------------------------------------------
 
-const DESCRIPTION = 'The twelve Zodiacs records standing spine out. Browse the shelf, '
-  + 'open a volume for its classification, dates, and addresses on Solana and Base.';
+const DESCRIPTION = 'The twelve Gold Sculptures of the Zodiacs registry, standing in a row. '
+  + 'Draw one forward to turn it in the light, and read its classification, '
+  + 'dates, and addresses on Solana and Base.';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -67,59 +73,60 @@ const jsonLd = {
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
         { '@type': 'ListItem', position: 2, name: 'The Registry', item: 'https://zodiacs.org/registry/' },
-        { '@type': 'ListItem', position: 3, name: 'The Shelf', item: URL_PATH },
+        { '@type': 'ListItem', position: 3, name: 'The Gallery', item: URL_PATH },
       ],
     },
     {
       '@type': 'WebPage',
       '@id': `${URL_PATH}#page`,
       url: URL_PATH,
-      name: 'The Shelf · The Twelve — Zodiacs.org',
+      name: 'The Gallery · The Twelve — Zodiacs.org',
       description: DESCRIPTION,
       inLanguage: 'en',
       isPartOf: { '@id': 'https://zodiacs.org/#site' },
     },
     {
       '@type': 'ItemList',
-      '@id': `${URL_PATH}#shelf`,
-      name: 'The Twelve — volumes on the shelf',
-      numberOfItems: volumes.length,
-      itemListElement: volumes.map((volume) => ({
+      '@id': `${URL_PATH}#gallery`,
+      name: 'The Twelve — Gold Sculptures in the gallery',
+      numberOfItems: figures.length,
+      itemListElement: figures.map((figure) => ({
         '@type': 'ListItem',
-        position: volume.order,
-        name: volume.name,
-        url: `https://zodiacs.org/registry/${volume.slug}/`,
+        position: figure.order,
+        name: figure.name,
+        url: `https://zodiacs.org/registry/${figure.slug}/`,
       })),
     },
   ],
 };
 
-// Only what the scene needs to paint and describe a volume. No addresses.
-const shelfData = volumes.map((volume) => ({
-  slug: volume.slug,
-  order: volume.order,
-  lot: volume.lot,
-  name: volume.name,
-  glyph: volume.glyph,
-  figure: volume.figure,
-  epithet: volume.epithet,
-  hue: volume.hue,
-  element: volume.element,
-  modality: volume.modality,
-  ruler: volume.ruler,
-  archetype: volume.archetype,
-  dates: volume.dates,
-  datesShort: volume.datesShort,
-  star: volume.star,
+// Only what the scene needs to letter a plinth and a hallmark, and what the
+// card needs to describe the piece. No addresses.
+const figureData = figures.map((figure) => ({
+  slug: figure.slug,
+  order: figure.order,
+  lot: figure.lot,
+  name: figure.name,
+  glyph: figure.glyph,
+  figure: figure.figure,
+  epithet: figure.epithet,
+  hue: figure.hue,
+  element: figure.element,
+  modality: figure.modality,
+  ruler: figure.ruler,
+  archetype: figure.archetype,
+  dates: figure.dates,
+  datesShort: figure.datesShort,
+  star: figure.star,
 }));
 
-const ledger = volumes.map((volume) => `        <li class="ledger__row" style="--sign:${volume.hue}">
-          <span class="ledger__lot">${esc(volume.lot)}</span>
-          <span class="ledger__glyph" aria-hidden="true">${esc(volume.glyph)}</span>
-          <a class="ledger__name" href="/registry/${volume.slug}/">${esc(volume.name)}</a>
-          <span class="ledger__figure">${esc(volume.figure)}</span>
-          <span class="ledger__class">${esc(volume.modality)} ${esc(volume.element.toLowerCase())} · ${esc(volume.ruler)}</span>
-          <span class="ledger__dates">${esc(volume.dates)}</span>
+const ledger = figures.map((figure) => `        <li class="ledger__row" style="--sign:${figure.hue}">
+          <img class="ledger__plate" src="/assets/nuggets/thumb/${figure.slug}.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
+          <span class="ledger__lot">${esc(figure.lot)}</span>
+          <a class="ledger__name" href="/registry/${figure.slug}/">${esc(figure.name)}</a>
+          <span class="ledger__figure">${esc(figure.figure)}</span>
+          <span class="ledger__class">${esc(figure.modality)} ${esc(figure.element.toLowerCase())} · ${esc(figure.ruler)}</span>
+          <span class="ledger__dates">${esc(figure.dates)}</span>
         </li>`).join('\n');
 
 const css = `
@@ -156,11 +163,11 @@ const css = `
       position: relative; display: flex; flex-direction: column;
       isolation: isolate; overflow: clip; padding-bottom: 30px;
     }
-    .shelf-live .stage { min-height: 100svh; padding-bottom: 0; }
+    .gallery-live .stage { min-height: 100svh; padding-bottom: 0; }
     /* No scene, no controls — the register below is the whole page. */
-    html:not(.shelf-live) .stage__chrome,
-    html:not(.shelf-live) .stage__mount,
-    html:not(.shelf-live) .stage__scrim { display: none; }
+    html:not(.gallery-live) .stage__chrome,
+    html:not(.gallery-live) .stage__mount,
+    html:not(.gallery-live) .stage__scrim { display: none; }
     .stage::before {
       content: ''; position: absolute; inset: 0; z-index: -2; pointer-events: none;
       background:
@@ -193,7 +200,7 @@ const css = `
       transition: opacity 420ms var(--ease);
     }
     .stage__head a { pointer-events: auto; }
-    /* An opened volume is the subject; the title steps back for it, and gets
+    /* A figure drawn forward is the subject; the title steps back for it, and gets
        out of the way entirely where the card takes the lower screen. */
     .stage.is-open .stage__head { opacity: 0.12; }
     @media (max-width: 899.5px) { .stage.is-open .stage__head { opacity: 0; } }
@@ -227,7 +234,7 @@ const css = `
       display: flex; flex-direction: column; align-items: center; gap: 13px;
       padding: 26px 20px calc(24px + env(safe-area-inset-bottom));
     }
-    /* The volumes pass behind the controls, so the controls get a floor. */
+    /* The sculptures pass behind the controls, so the controls get a floor. */
     .stage__chrome::before {
       content: ''; position: absolute; inset: -70px 0 0; z-index: -1;
       pointer-events: none;
@@ -383,17 +390,20 @@ const css = `
 
     .ledger { list-style: none; margin: 38px 0 0; padding: 0; }
     .ledger__row {
-      display: grid; align-items: baseline; gap: 2px 16px;
-      grid-template-columns: 34px 22px 1fr;
-      grid-template-areas: 'lot glyph name' '. . figure' '. . class' '. . dates';
-      padding: 18px 4px; border-top: 1px solid var(--hair);
+      display: grid; align-items: center; gap: 2px 16px;
+      grid-template-columns: 56px 34px 1fr;
+      grid-template-areas: 'plate lot name' 'plate . figure' 'plate . class' 'plate . dates';
+      padding: 16px 4px; border-top: 1px solid var(--hair);
+    }
+    .ledger__plate {
+      grid-area: plate; width: 56px; height: 56px; object-fit: contain;
+      align-self: center;
     }
     .ledger__row:last-child { border-bottom: 1px solid var(--hair); }
     .ledger__lot {
       grid-area: lot; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
       color: var(--ink-dim);
     }
-    .ledger__glyph { grid-area: glyph; font-size: 17px; color: var(--sign); }
     .ledger__name {
       grid-area: name; font-size: 24px; text-decoration: none; color: var(--ink);
       border-bottom: 1px solid transparent; justify-self: start;
@@ -409,10 +419,11 @@ const css = `
     }
     @media (min-width: 760px) {
       .ledger__row {
-        grid-template-columns: 40px 26px minmax(140px, 1fr) minmax(120px, 1fr) minmax(150px, 1fr) auto;
-        grid-template-areas: 'lot glyph name figure class dates';
-        gap: 18px; padding: 15px 4px;
+        grid-template-columns: 64px 40px minmax(130px, 1fr) minmax(120px, 1fr) minmax(150px, 1fr) auto;
+        grid-template-areas: 'plate lot name figure class dates';
+        gap: 18px; padding: 12px 4px;
       }
+      .ledger__plate { width: 64px; height: 64px; }
       .ledger__dates { text-align: right; }
     }
 
@@ -458,11 +469,11 @@ const html = `<!doctype html>
     try {
       var probe = document.createElement('canvas');
       if (probe.getContext('webgl2') || probe.getContext('webgl')) {
-        document.documentElement.classList.add('shelf-live');
+        document.documentElement.classList.add('gallery-live');
       }
     } catch (e) {}
   </script>
-  <title>The Shelf · The Twelve — Zodiacs.org</title>
+  <title>The Gallery · The Twelve — Zodiacs.org</title>
   <meta name="description" content="${esc(DESCRIPTION)}" />
   <link rel="canonical" href="${URL_PATH}" />
   <script>
@@ -485,17 +496,17 @@ const html = `<!doctype html>
   <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
 
   <meta property="og:site_name" content="Zodiacs" />
-  <meta property="og:title" content="The Shelf · The Twelve — Zodiacs" />
+  <meta property="og:title" content="The Gallery · The Twelve — Zodiacs" />
   <meta property="og:description" content="${esc(DESCRIPTION)}" />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="${URL_PATH}" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Zodiacs — the official registry of the Twelve, on Solana and Base." />
+  <meta property="og:image:alt" content="Zodiacs — the twelve Gold Sculptures of the official registry." />
   <meta property="og:locale" content="en_US" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Shelf · The Twelve — Zodiacs" />
+  <meta name="twitter:title" content="The Gallery · The Twelve — Zodiacs" />
   <meta name="twitter:description" content="${esc(DESCRIPTION)}" />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
   <meta name="twitter:image:alt" content="Zodiacs — the official registry of the Twelve." />
@@ -524,33 +535,34 @@ ${JSON.stringify(jsonLd, null, 2)}
   ${wingNavHtml({ includeSearch: true })}
 
   <main>
-    <section class="stage" data-shelf-stage aria-labelledby="shelf-title">
-      <div class="stage__mount" data-shelf-canvas></div>
+    <section class="stage" data-gallery-stage aria-labelledby="gallery-title">
+      <div class="stage__mount" data-gallery-canvas></div>
       <div class="stage__scrim" aria-hidden="true"></div>
 
       <header class="stage__head">
-        <p class="kicker">Twelve volumes, one to a sign.</p>
-        <h1 id="shelf-title">The Shelf</h1>
+        <p class="kicker">Twelve gold sculptures, one to a sign.</p>
+        <h1 id="gallery-title">The Gallery</h1>
         <p class="stage__lede">
-          The registry standing spine out. Open a volume for its
-          classification, its dates, and its addresses on Solana and Base.
+          The Gold Sculptures of the Twelve, one to a sign. Draw one forward
+          for its classification, its dates, and its addresses on Solana and
+          Base.
         </p>
       </header>
 
       <div class="stage__chrome">
-        <div class="rail" data-shelf-rail role="group" aria-label="The twelve volumes"></div>
+        <div class="rail" data-gallery-rail role="group" aria-label="The twelve sculptures"></div>
         <div class="stage__actions">
-          <button class="stage__open" type="button" data-shelf-open>Open Aries</button>
+          <button class="stage__open" type="button" data-gallery-open>View Aries</button>
           <a class="stage__scroll" href="#register">The register ↓</a>
         </div>
         <p class="stage__hint">
-          Drag or scroll to move along the shelf. Select a volume to open it,
-          then drag to turn it. Escape puts it back.
+          Drag or scroll to move along the row. Select a sculpture to draw it
+          forward, then drag to turn it right around. Escape returns it.
         </p>
       </div>
 
-      <aside class="card" data-shelf-card hidden aria-labelledby="card-name" aria-live="off">
-        <button class="card__close" type="button" data-shelf-close aria-label="Close the volume">✕</button>
+      <aside class="card" data-gallery-card hidden aria-labelledby="card-name" aria-live="off">
+        <button class="card__close" type="button" data-gallery-close aria-label="Return the sculpture">✕</button>
         <p class="card__lot" data-card-lot></p>
         <h2 class="card__name" id="card-name" data-card-name></h2>
         <p class="card__figure" data-card-figure></p>
@@ -561,7 +573,7 @@ ${JSON.stringify(jsonLd, null, 2)}
         </a>
       </aside>
 
-      <p class="sr-only" role="status" aria-live="polite" data-shelf-live></p>
+      <p class="sr-only" role="status" aria-live="polite" data-gallery-live></p>
     </section>
 
     <section class="register" id="register">
@@ -606,8 +618,8 @@ ${CHANNELS.map((c) => `          <a href="${c.url}" rel="noopener noreferrer">${
     </footer>
   </main>
 
-  <script type="application/json" id="shelf-volumes">${JSON.stringify(shelfData)}</script>
-  <script defer src="/assets/shelf.js"></script>
+  <script type="application/json" id="gallery-figures">${JSON.stringify(figureData)}</script>
+  <script defer src="/assets/gallery.js"></script>
   <script>${wingNavScript()}</script>
 </body>
 </html>
@@ -617,5 +629,6 @@ await mkdir(PAGE_DIR, { recursive: true });
 await writeFile(resolve(PAGE_DIR, 'index.html'), html, 'utf8');
 
 process.stdout.write(
-  `shelf: wrote registry/shelf/index.html and assets/shelf.js (${volumes.length} volumes)\n`,
+  `gallery: wrote registry/gallery/index.html and assets/gallery.js `
+  + `(${figures.length} sculptures)\n`,
 );
