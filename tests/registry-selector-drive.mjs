@@ -189,11 +189,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             JSON.stringify(closedLines.map((line) => line.center)),
           );
           await burger.click();
-          // The morph itself lasts 220ms. Leave a scheduling margin so slower
-          // CI runners are measured at the settled X rather than one frame
-          // before the transition completes.
-          await navPage.waitForTimeout(320);
-          const openState = await burger.evaluate((element, prefix) => {
+          // The morph itself lasts 220ms, but a loaded runner can paint the
+          // settled frame well after any fixed margin — one sample at +320ms
+          // has been caught at 90% of the animation. Poll for the settled X
+          // instead; a genuinely broken morph still fails when the poll
+          // exhausts, with the final state in the detail.
+          let openState = null;
+          const readBurger = () => burger.evaluate((element, prefix) => {
             const lines = [...element.querySelectorAll(`.${prefix}__burger-line`)];
             return {
               expanded: element.getAttribute('aria-expanded'),
@@ -206,6 +208,14 @@ await withPreview({ port: 4404 }, async (baseURL) => {
               }),
             };
           }, route.prefix);
+          for (let attempt = 0; attempt < 20; attempt += 1) {
+            openState = await readBurger();
+            const settled = openState.opacities[1] === 0
+              && Math.abs(openState.centers[0].y - openState.centers[2].y) <= 0.5
+              && Math.abs(openState.centers[0].x - openState.centers[2].x) <= 0.5;
+            if (settled) break;
+            await navPage.waitForTimeout(150);
+          }
           check(
             `${label} morphs cleanly into an accessible close control`,
             openState.expanded === 'true'
