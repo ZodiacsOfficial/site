@@ -1,0 +1,160 @@
+---
+/**
+ * The twelve houses as a chart wheel with one sector lit. Laid out the way
+ * a real chart is: the ascendant on the left, houses running counter-
+ * clockwise from it, so the tenth sits at the top as the midheaven does.
+ *
+ * Static inline SVG: no island, no JS. The wedge fades in behind
+ * prefers-reduced-motion; the geometry stands still without it.
+ */
+import { SIGNS } from '../lib/signs';
+
+interface Props {
+  /** 1–12. */
+  house: number;
+  /** Hue for the lit sector — the house's natural-affinity sign. */
+  hue: string;
+  size?: number;
+  class?: string;
+}
+
+const { house, hue, size = 200, class: className } = Astro.props;
+
+const CX = 100;
+const CY = 100;
+const R_OUT = 78;
+const R_IN = 40;
+
+const point = (deg: number, radius: number) => {
+  const rad = ((deg - 90) * Math.PI) / 180;
+  return [CX + radius * Math.cos(rad), CY + radius * Math.sin(rad)] as const;
+};
+const fmt = (n: number) => Number(n.toFixed(2));
+
+/** Ascendant sits at 9 o'clock (270° clockwise from the top); houses run
+ *  counter-clockwise from there, which is decreasing clockwise-degrees. */
+const houseStart = (n: number) => 270 - 30 * (n - 1);
+
+const start = houseStart(house);
+const end = start - 30;
+
+const [osx, osy] = point(start, R_OUT);
+const [oex, oey] = point(end, R_OUT);
+const [isx, isy] = point(start, R_IN);
+const [iex, iey] = point(end, R_IN);
+
+// sweep-flag 0 — the wedge is drawn counter-clockwise, matching house order.
+const wedge = [
+  `M ${fmt(osx)} ${fmt(osy)}`,
+  `A ${R_OUT} ${R_OUT} 0 0 0 ${fmt(oex)} ${fmt(oey)}`,
+  `L ${fmt(iex)} ${fmt(iey)}`,
+  `A ${R_IN} ${R_IN} 0 0 1 ${fmt(isx)} ${fmt(isy)}`,
+  'Z',
+].join(' ');
+
+const cusps = Array.from({ length: 12 }, (_, i) => {
+  const deg = houseStart(i + 1);
+  const [x1, y1] = point(deg, R_IN);
+  const [x2, y2] = point(deg, R_OUT);
+  return { x1: fmt(x1), y1: fmt(y1), x2: fmt(x2), y2: fmt(y2) };
+});
+
+const numerals = Array.from({ length: 12 }, (_, i) => {
+  const n = i + 1;
+  const [x, y] = point(houseStart(n) - 15, (R_OUT + R_IN) / 2);
+  return { n, x: fmt(x), y: fmt(y), lit: n === house };
+});
+
+// The twelve sign hues stay on the rim, so the wheel reads as the same
+// object as the aspect diagram.
+const ticks = SIGNS.map((sign, i) => {
+  const deg = i * 30;
+  const [x1, y1] = point(deg, R_OUT + 3);
+  const [x2, y2] = point(deg, R_OUT + 9);
+  return { x1: fmt(x1), y1: fmt(y1), x2: fmt(x2), y2: fmt(y2), hue: sign.hue };
+});
+
+const ANGLE_LABEL: Record<number, string> = { 1: 'ASC', 4: 'IC', 7: 'DSC', 10: 'MC' };
+const uid = `hw${house}`;
+---
+<figure class:list={['house-wheel', className]} style={`--size:${size}px;--lit:${hue}`}>
+  <svg viewBox="0 0 200 200" width={size} height={size} role="img" aria-labelledby={`${uid}-t`}>
+    <title id={`${uid}-t`}>
+      A chart wheel with the {house === 1 ? 'first' : `${house}th`} house sector highlighted, ascendant on the left.
+    </title>
+
+    <path class="hw-wedge" d={wedge} />
+
+    <circle class="hw-ring" cx={CX} cy={CY} r={R_OUT} />
+    <circle class="hw-ring" cx={CX} cy={CY} r={R_IN} />
+
+    <g class="hw-ticks">
+      {ticks.map((t) => <line x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} style={`--tick:${t.hue}`} />)}
+    </g>
+
+    <g class="hw-cusps">
+      {cusps.map((c) => <line x1={c.x1} y1={c.y1} x2={c.x2} y2={c.y2} />)}
+    </g>
+
+    <g class="hw-numerals">
+      {numerals.map((m) => (
+        <text
+          class:list={['hw-numeral', m.lit && 'is-lit']}
+          x={m.x}
+          y={m.y}
+          text-anchor="middle"
+          dominant-baseline="central"
+        >{m.n}</text>
+      ))}
+    </g>
+
+    {ANGLE_LABEL[house] && (
+      <text class="hw-angle" x={CX} y={CY} text-anchor="middle" dominant-baseline="central">
+        {ANGLE_LABEL[house]}
+      </text>
+    )}
+  </svg>
+</figure>
+
+<style>
+  .house-wheel {
+    margin: 0;
+    width: var(--size);
+    max-width: 100%;
+    line-height: 0;
+  }
+  .house-wheel svg { width: 100%; height: auto; overflow: visible; }
+
+  .hw-wedge { fill: color-mix(in oklab, var(--lit) 18%, transparent); }
+  .hw-ring { fill: none; stroke: var(--hair-2); stroke-width: 1; }
+  .hw-ticks line { stroke: var(--tick); stroke-width: 2; stroke-linecap: round; opacity: 0.72; }
+  .hw-cusps line { stroke: var(--hair-1); stroke-width: 1; }
+
+  .hw-numeral {
+    fill: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 10px;
+  }
+  .hw-numeral.is-lit { fill: var(--lit); font-weight: 600; }
+
+  .hw-angle {
+    fill: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hw-wedge {
+      opacity: 0;
+      animation: hw-lift var(--dur-3, 800ms) var(--ease-soft, cubic-bezier(0.22, 1, 0.36, 1)) 160ms forwards;
+      transform-origin: 100px 100px;
+    }
+    .hw-numeral.is-lit {
+      opacity: 0;
+      animation: hw-lift var(--dur-2, 420ms) var(--ease-soft, cubic-bezier(0.22, 1, 0.36, 1)) 640ms forwards;
+    }
+  }
+
+  @keyframes hw-lift { to { opacity: 1; } }
+</style>

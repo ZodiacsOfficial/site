@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
 import SignIcon from '../../../components/SignIcon.astro';
+import HouseWheel from '../../../components/HouseWheel.astro';
 import { SIGNS } from '../../../lib/signs';
 import { EDITOR_AUTHOR } from '../../../lib/editorial';
 
@@ -87,7 +88,8 @@ const jsonLd = [
   sources={entry.data.sources}
 >
   <article class="container container--narrow learn-detail">
-    <header class="learn-detail__hero reveal">
+    <header class="learn-detail__hero learn-detail__hero--figured reveal">
+      <div class="learn-detail__heroText">
       <span class="learn-hero-glyph house-badge" style={`--sign:${naturalSign.hue}`} aria-hidden="true">{n}</span>
       <em class="kicker">The houses</em>
       <h1 id={slug} class="display">The {ORDINALS[n - 1]} house</h1>
@@ -101,6 +103,8 @@ const jsonLd = [
         {n === 7 && ' · cusp: the descendant'}
         {n === 10 && ' · cusp: the midheaven (MC)'}
       </p>
+      </div>
+      <HouseWheel house={n} hue={naturalSign.hue} size={232} class="learn-detail__figure" />
     </header>
 
     <div class="prose reveal">
@@ -130,6 +134,20 @@ const jsonLd = [
 <style>
   .learn-detail { display: grid; gap: clamp(28px, 5vw, 44px); padding-block: clamp(24px, 5vw, 56px) clamp(36px, 6vw, 72px); }
   .learn-detail__hero { display: grid; gap: 12px; justify-items: start; }
+
+  /* The wheel carries the sector; the text keeps the measure it had. */
+  .learn-detail__hero--figured {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(20px, 4vw, 48px);
+  }
+  .learn-detail__heroText { display: grid; gap: 12px; justify-items: start; min-width: 0; }
+  .learn-detail__figure { justify-self: end; }
+
+  @media (max-width: 720px) {
+    .learn-detail__hero--figured { grid-template-columns: minmax(0, 1fr); }
+    .learn-detail__figure { justify-self: start; margin-top: 4px; }
+  }
   .learn-detail__hero h1 {
     margin: 4px 0 0;
     font-size: clamp(2.2rem, 1.5rem + 3.6vw, 3.8rem);
