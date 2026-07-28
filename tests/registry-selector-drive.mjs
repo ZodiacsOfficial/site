@@ -14,6 +14,21 @@ const OUT = process.env.OUT_DIR ?? null;
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
+/**
+ * The gallery band replaces the strip wherever WebGL exists, so the strip's
+ * own assertions run with WebGL denied — the fallback those readers actually
+ * get. The band is asserted separately, on an unstubbed page.
+ */
+async function stubNoWebgl(page) {
+  await page.addInitScript(() => {
+    const real = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type, ...rest) {
+      if (type === 'webgl' || type === 'webgl2') return null;
+      return real.call(this, type, ...rest);
+    };
+  });
+}
+
 if (OUT) await mkdir(OUT, { recursive: true });
 
 await withPreview({ port: 4404 }, async (baseURL) => {
@@ -21,6 +36,23 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     executablePath: await findChromium(),
     args: STABLE_CHROMIUM_ARGS,
   });
+
+  // The hub loads React from unpkg at runtime. A sandbox that cannot reach
+  // the CDN can point REACT_UMD_DIR at a directory holding the two UMD
+  // builds; CI never sets it and takes the network path.
+  const reactShimDir = process.env.REACT_UMD_DIR ?? null;
+  const shimReact = async (page) => {
+    if (!reactShimDir) return;
+    await page.route('https://unpkg.com/react@18.3.1/umd/react.production.min.js', (route) =>
+      route.fulfill({ path: `${reactShimDir}/react.production.min.js` }));
+    await page.route('https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js', (route) =>
+      route.fulfill({ path: `${reactShimDir}/react-dom.production.min.js` }));
+  };
+  const newPage = async (options) => {
+    const page = await browser.newPage(options);
+    await shimReact(page);
+    return page;
+  };
 
   try {
     const navRoutes = [
@@ -33,7 +65,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       let referenceGeometry = null;
       let referenceMenuVisual = null;
       for (const route of navRoutes) {
-        const navPage = await browser.newPage({ viewport: { width, height: 900 } });
+        const navPage = await newPage({ viewport: { width, height: 900 } });
         await navPage.goto(`${baseURL}${route.path}`, { waitUntil: 'domcontentloaded' });
         const nav = navPage.locator(route.selector).first();
         await nav.waitFor({ state: 'visible' });
@@ -287,7 +319,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     }
 
     for (const width of [360, 390]) {
-      const fallbackPage = await browser.newPage({
+      const fallbackPage = await newPage({
         viewport: { width, height: 844 },
         javaScriptEnabled: false,
       });
@@ -323,8 +355,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await fallbackPage.close();
     }
 
-    const homeMaterialPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
-    const registryMaterialPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const homeMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
+    const registryMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
     await Promise.all([
       homeMaterialPage.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded' }),
       registryMaterialPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' }),
@@ -378,6 +410,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       reducedMotion: 'reduce',
     });
     const reducedPage = await reducedContext.newPage();
+    await shimReact(reducedPage);
     await reducedPage.goto(`${baseURL}/registry/aries/`, { waitUntil: 'domcontentloaded' });
     const reducedBurger = reducedPage.locator('.wnav__burger');
     await reducedBurger.click();
@@ -396,7 +429,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         { slug: 'cancer', next: 'leo', name: 'Leo' },
         { slug: 'pisces', next: 'aries', name: 'Aries' },
       ]) {
-        const recordPage = await browser.newPage({ viewport: { width, height: 844 } });
+        const recordPage = await newPage({ viewport: { width, height: 844 } });
         await recordPage.goto(`${baseURL}/registry/${record.slug}/`, { waitUntil: 'domcontentloaded' });
         const action = recordPage.locator('.lot__next');
         await action.waitFor({ state: 'visible' });
@@ -452,11 +485,20 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       }
     }
 
-    const desktop = await browser.newPage({ viewport: { width: 1126, height: 1180 } });
+    const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
     const desktopErrors = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
+    await stubNoWebgl(desktop);
     await desktop.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
     await desktop.waitForSelector('.strip__glyph');
+    check(
+      'denied WebGL renders the strip, not the band',
+      await desktop.evaluate(() => (
+        !document.documentElement.classList.contains('gallery-live')
+        && document.querySelectorAll('.gband').length === 0
+        && document.querySelectorAll('.strip-wrap').length === 1
+      )),
+    );
 
     const desktopLayout = await desktop.locator('.strip').evaluate((element) => ({
       display: getComputedStyle(element).display,
@@ -587,11 +629,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     if (OUT) await desktop.locator('.hero').screenshot({ path: `${OUT}/registry-selector-1126.png` });
     await desktop.close();
 
-    const mobile = await browser.newPage({
+    const mobile = await newPage({
       viewport: { width: 390, height: 844 },
       deviceScaleFactor: 2,
       hasTouch: true,
     });
+    await stubNoWebgl(mobile);
     await mobile.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
     await mobile.waitForSelector('.strip__glyph');
     const mobileLayout = await mobile.locator('.strip').evaluate((element) => ({
@@ -617,10 +660,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     if (OUT) await mobile.locator('.hero').screenshot({ path: `${OUT}/registry-selector-390.png` });
     await mobile.close();
 
-    const reduced = await browser.newPage({
+    const reduced = await newPage({
       viewport: { width: 1126, height: 1180 },
       reducedMotion: 'reduce',
     });
+    await stubNoWebgl(reduced);
     await reduced.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
     await reduced.waitForSelector('.strip__glyph');
     await reduced.locator('[data-sign="libra"]').click();
@@ -628,6 +672,69 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       .evaluate((element) => getComputedStyle(element).animationName);
     check('reduced motion swaps records without animation', animationName === 'none', animationName);
     await reduced.close();
+
+    // ---- the gallery band: the selector wherever WebGL exists -------------
+    // CI browsers without GL take the strip path above; the band checks then
+    // record themselves as skipped rather than failing the gate.
+    for (const [label, viewport] of [
+      ['1280', { viewport: { width: 1280, height: 900 } }],
+      ['390', { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true }],
+    ]) {
+      const band = await newPage(viewport);
+      const bandErrors = [];
+      band.on('pageerror', (error) => bandErrors.push(String(error)));
+      await band.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      const bandLive = await band.evaluate(() => document.documentElement.classList.contains('gallery-live'));
+      if (!bandLive) {
+        check(`band at ${label} (skipped — this browser reports no WebGL)`, true);
+        await band.close();
+        continue;
+      }
+      check(`band at ${label} replaces the strip`, await band.evaluate(() => (
+        document.querySelectorAll('.strip-wrap').length === 0
+        && document.querySelectorAll('[data-gallery-stage][data-gallery-embed]').length === 1
+      )));
+      await band.evaluate(() => document.querySelector('.gband')?.scrollIntoView({ block: 'center' }));
+      let bandReady = true;
+      try {
+        await band.waitForSelector('.gband.is-ready', { timeout: 30000 });
+      } catch {
+        bandReady = false;
+      }
+      check(`band at ${label} mounts the scene`, bandReady);
+      if (bandReady) {
+        check(
+          `band at ${label} rails all twelve`,
+          await band.locator('.gband .rail__tick').count() === 12,
+        );
+        await band.locator('.gband .rail__tick').nth(4).click();
+        await band.waitForTimeout(1100);
+        check(
+          `band at ${label} rail drives the featured record`,
+          await band.locator('[data-featured-sign]').getAttribute('data-featured-sign') === 'leo',
+        );
+        check(
+          `band at ${label} leaves the address bar alone`,
+          await band.evaluate(() => window.location.hash === ''),
+        );
+        const bandOpener = await band.locator('.gband__open').getAttribute('href');
+        check(
+          `band at ${label} opener goes into the gallery`,
+          Boolean(bandOpener && bandOpener.startsWith('/registry/gallery/')),
+          String(bandOpener),
+        );
+        check(
+          `band at ${label} hides the duplicate featured artwork`,
+          await band.evaluate(() => {
+            const stageEl = document.querySelector('#featured-sign .glyph-stage');
+            return Boolean(stageEl) && getComputedStyle(stageEl).display === 'none';
+          }),
+        );
+      }
+      check(`band at ${label} runtime is error-free`, bandErrors.length === 0, bandErrors.join(' | '));
+      if (OUT) await band.screenshot({ path: `${OUT}/registry-band-${label}.png` });
+      await band.close();
+    }
   } finally {
     await browser.close();
   }
