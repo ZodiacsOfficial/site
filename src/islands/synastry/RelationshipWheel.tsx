@@ -39,6 +39,12 @@ export interface WheelPerson {
   label: string;
   /** Bodies with retrograde where known — the ring draws from these. */
   bodies: { body: string; lon: number; retrograde?: boolean }[];
+  /**
+   * Bodies with ecliptic latitude, for the sphere view — present when this
+   * side came through the engine, null when a share token carried only
+   * longitudes (the sphere then sits that side on the band and says so).
+   */
+  depth?: { body: string; lon: number; lat: number; retrograde?: boolean }[] | null;
   asc: number | null;
   mc: number | null;
   cusps: number[] | null;
@@ -66,6 +72,8 @@ const COPY = {
     wheel: 'Wheel',
     grid: 'Grid',
     composite: 'Composite',
+    depth: 'In 3D',
+    depthCaption: 'Both charts on one sphere: {a} solid, {b} dashed, and the lines between them are where the charts touch — drawn through space, not around a rim.',
     exactDetails: 'Exact relationship details',
     outerPositions: 'Outer-ring positions',
     contactOrbs: 'Contact orbs',
@@ -83,6 +91,8 @@ const COPY = {
     wheel: 'Rueda',
     grid: 'Cuadrícula',
     composite: 'Compuesta',
+    depth: 'En 3D',
+    depthCaption: 'Las dos cartas en una esfera: {a} en trazo continuo, {b} en discontinuo, y las líneas entre ambas marcan dónde se tocan — trazadas por el espacio, no por el borde.',
     exactDetails: 'Detalles exactos de la relación',
     outerPositions: 'Posiciones del anillo exterior',
     contactOrbs: 'Orbes de los contactos',
@@ -100,6 +110,8 @@ const COPY = {
     wheel: 'Roda',
     grid: 'Grade',
     composite: 'Composito',
+    depth: 'Em 3D',
+    depthCaption: 'Os dois mapas em uma esfera: {a} em traço contínuo, {b} tracejado, e as linhas entre eles mostram onde os mapas se tocam — traçadas pelo espaço, não pela borda.',
     exactDetails: 'Detalhes exatos da relação',
     outerPositions: 'Posições do anel externo',
     contactOrbs: 'Orbes dos contatos',
@@ -117,6 +129,8 @@ const COPY = {
     wheel: 'Roue',
     grid: 'Grille',
     composite: 'Composite',
+    depth: 'En 3D',
+    depthCaption: 'Les deux thèmes sur une même sphère\u00a0: {a} en trait plein, {b} en pointillés, et les lignes entre eux marquent où les thèmes se touchent — tracées à travers l’espace, pas le long d’un bord.',
     exactDetails: 'Détails exacts de la relation',
     outerPositions: 'Positions de l’anneau extérieur',
     contactOrbs: 'Orbes des contacts',
@@ -134,6 +148,8 @@ const COPY = {
     wheel: 'Ruota',
     grid: 'Griglia',
     composite: 'Composito',
+    depth: 'In 3D',
+    depthCaption: 'I due temi su una sola sfera: {a} a tratto pieno, {b} tratteggiato, e le linee fra loro segnano dove i temi si toccano — tracciate nello spazio, non lungo un bordo.',
     exactDetails: 'Dettagli esatti della relazione',
     outerPositions: 'Posizioni dell’anello esterno',
     contactOrbs: 'Orbi dei contatti',
@@ -151,13 +167,15 @@ const COPY = {
     wheel: 'Колесо',
     grid: 'Сетка',
     composite: 'Композит',
+    depth: 'В 3D',
+    depthCaption: 'Обе карты на одной сфере: {a} — сплошной линией, {b} — пунктиром, а линии между ними показывают, где карты соприкасаются. Подписи к сфере пока по-английски.',
     exactDetails: 'Точные данные отношений',
     outerPositions: 'Положения внешнего кольца',
     contactOrbs: 'Орбисы контактов',
   },
 } as const;
 
-const TAB_ORDER = ['wheel', 'grid', 'composite'] as const;
+const TAB_ORDER = ['wheel', 'grid', 'composite', 'depth'] as const;
 type RelationshipTab = typeof TAB_ORDER[number];
 
 /** South Node stays off drawn wheels — the sitewide convention. */
@@ -195,6 +213,7 @@ function contactReading(
 export default function RelationshipWheel({ locale, a, b, summary }: RelationshipWheelProps) {
   const c = COPY[locale];
   const [tab, setTab] = useState<RelationshipTab>('wheel');
+  const [sphereMod, setSphereMod] = useState<typeof import('../chart3d/EclipticView') | null>(null);
   const [flipped, setFlipped] = useState(false);
   // Canonical focus ids are always chart-A-first and live above every tab.
   const [sel, setSel] = useState<string | null>(null);
@@ -276,7 +295,14 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
       compositeTracked.current = true;
       track('composite_view');
     }
+    if (next === 'depth' && !sphereMod) {
+      void import('../chart3d/EclipticView').then((mod) => setSphereMod(mod));
+    }
   }
+
+  /** Sphere bodies: real latitudes where the engine gave them, band otherwise. */
+  const sphereBodies = (person: WheelPerson) =>
+    person.depth ?? person.bodies.map(({ body, lon, retrograde }) => ({ body, lon, lat: 0, retrograde }));
 
   function onTabKeyDown(event: KeyboardEvent) {
     const current = TAB_ORDER.indexOf(tab);
@@ -551,6 +577,30 @@ export default function RelationshipWheel({ locale, a, b, summary }: Relationshi
           data-relationship-panel="composite"
         >
           <CompositePanel locale={locale} data={composite} />
+        </section>
+      )}
+
+      {tab === 'depth' && (
+        <section
+          id="relationship-panel-depth"
+          role="tabpanel"
+          aria-labelledby="relationship-tab-depth"
+          class="rwheel__panel"
+          data-relationship-panel="depth"
+        >
+          <p class="tring__caption mono">{formatRelationshipCopy(c.depthCaption, { a: a.label, b: b.label })}</p>
+          {sphereMod ? (
+            <sphereMod.default
+              bodies={sphereBodies(a)}
+              partner={{ label: b.label, bodies: sphereBodies(b) }}
+              interAspects={summary.top}
+              asc={a.asc}
+              locale={locale}
+              size={460}
+            />
+          ) : (
+            <p class="field__help rwheel__hint" aria-live="polite">…</p>
+          )}
         </section>
       )}
     </div>

@@ -55,7 +55,7 @@ import { sectOf } from '../../lib/sect';
 import type { HouseSystem } from '../../lib/engine/types';
 import type { EntityRef } from '../../lib/scene/types';
 import { SIGNS, formatLongitude } from '../../lib/signs';
-import { planetLabel } from '../../lib/i18n/astrology';
+import { aspectLabel, planetLabel } from '../../lib/i18n/astrology';
 import { collisionNudge } from '../../lib/scene/layout';
 import { turnFrame, bodyLonAt, type TurnFrame } from './turning';
 import { depthCopyFor, fill } from './copy';
@@ -69,10 +69,15 @@ interface Body {
   speed?: number;
 }
 interface AspectLink { a: string; b: string; type: string }
+interface InterLink { a: string; b: string; type: string; orb: number }
 
 interface Props {
   bodies: Body[];
   aspects?: AspectLink[];
+  /** A second chart on the same sphere — synastry mode. */
+  partner?: { label: string; bodies: Body[] } | null;
+  /** Cross-chart contacts, tightest first; drawn as chords through space. */
+  interAspects?: InterLink[];
   cusps?: number[] | null;
   asc?: number | null;
   mc?: number | null;
@@ -132,7 +137,7 @@ const deg2 = (v: number, locale: string) =>
   v.toLocaleString(locale, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 
 export default function EclipticView({
-  bodies, aspects = [], cusps = null,
+  bodies, aspects = [], partner = null, interAspects = [], cusps = null,
   asc = null, mc = null, dsc = null, ic = null,
   latitude = null, longitude = null, utcMs = null,
   houseSystem = 'whole', polarFallback = false, birthClock = null,
@@ -215,6 +220,9 @@ export default function EclipticView({
   const sited = asc !== null && mc !== null
     && latitude !== null && longitude !== null && utcMs !== null;
 
+  /** A second chart present: single-chart readouts stand down. */
+  const duo = partner !== null && partner.bodies.some((b) => GLYPH[b.body] !== undefined);
+
   const obliquity = useMemo(
     () => (utcMs === null ? OBLIQUITY : meanObliquity(julianCenturies(utcMs))),
     [utcMs],
@@ -244,8 +252,8 @@ export default function EclipticView({
   const nodeLon = node ? node.lon : null;
 
   const eclipse = useMemo(
-    () => (sun && nodeLon !== null ? eclipseProximity(sun.lon, nodeLon) : null),
-    [sun?.lon, nodeLon],
+    () => (!duo && sun && nodeLon !== null ? eclipseProximity(sun.lon, nodeLon) : null),
+    [duo, sun?.lon, nodeLon],
   );
 
   /** Meridians through the ecliptic poles, and parallels of latitude. */
@@ -300,11 +308,12 @@ export default function EclipticView({
    * merely misses behind it.
    */
   const declHeadline: DeclinationAspect | null = useMemo(() => {
+    if (duo) return null;
     const key = (a: string, b: string) => [a, b].sort().join('|');
     const drawn = new Set(aspects.map((a) => key(a.a, a.b)));
     const missed = declAspects.filter((d) => !drawn.has(key(d.a, d.b)));
     return missed.find((d) => d.separation >= 30) ?? missed[0] ?? declAspects[0] ?? null;
-  }, [declAspects, aspects]);
+  }, [duo, declAspects, aspects]);
 
   /**
    * The ring the pair shares. A parallel rides one circle, so the two
@@ -386,6 +395,7 @@ export default function EclipticView({
       const dec = declinationOf(b.lon, b.lat, obliquity);
       return {
         ...b,
+        partner: false,
         lonAt,
         dec,
         outOfBounds: Math.abs(dec) > obliquity,
@@ -396,6 +406,45 @@ export default function EclipticView({
       };
     })
     .sort((a, z) => a.p.depth - z.p.depth), [shown, drawLon, solidity, obliquity, frame, spin, tilt, anchor]);
+
+  /** The second chart's bodies, dashed, at their own true positions. */
+  const partnerMarks = useMemo(() => (partner?.bodies ?? [])
+    .filter((b) => GLYPH[b.body])
+    .map((b) => {
+      const dec = declinationOf(b.lon, b.lat, obliquity);
+      return {
+        ...b,
+        partner: true,
+        lonAt: b.lon,
+        dec,
+        outOfBounds: Math.abs(dec) > obliquity,
+        up: true,
+        p: at(b.lon, b.lat, R_BODY),
+        foot: at(b.lon, 0, R_BODY),
+        hub: at(b.lon, b.lat, R_BODY),
+      };
+    })
+    .sort((a, z) => a.p.depth - z.p.depth), [partner, obliquity, spin, tilt, anchor]);
+
+  /** A longitude-only side has every latitude at exactly zero. */
+  const flatSide = duo && partnerMarks.length > 0 && (
+    partnerMarks.every((m) => m.lat === 0)
+    || marks.filter((m) => m.body !== 'Sun').every((m) => m.lat === 0)
+  );
+
+  /** Cross-chart contacts as chords between the two bodies' real positions. */
+  const interChords = useMemo(() => {
+    if (!duo) return [];
+    const mine = new Map(marks.map((m) => [m.body, m.p]));
+    const theirs = new Map(partnerMarks.map((m) => [m.body, m.p]));
+    return interAspects
+      .map((link) => {
+        const p1 = mine.get(link.a);
+        const p2 = theirs.get(link.b);
+        return p1 && p2 ? { ...link, p1, p2, depth: (p1.depth + p2.depth) / 2 } : null;
+      })
+      .filter(Boolean) as (InterLink & { p1: Projected; p2: Projected; depth: number })[];
+  }, [duo, interAspects, marks, partnerMarks]);
 
   const web = useMemo(() => {
     const pos = new Map<string, Projected>();
@@ -561,25 +610,28 @@ export default function EclipticView({
 
   const backWire = wire.filter((w) => !w.front);
   const frontWire = wire.filter((w) => w.front);
-  const backBodies = marks.filter((m) => m.p.depth < 0);
-  const frontBodies = marks.filter((m) => m.p.depth >= 0);
+  const drawnBodies = duo
+    ? [...marks, ...partnerMarks].sort((a, z) => a.p.depth - z.p.depth)
+    : marks;
+  const backBodies = drawnBodies.filter((m) => m.p.depth < 0);
+  const frontBodies = drawnBodies.filter((m) => m.p.depth >= 0);
 
-  const bodyGroup = (m: typeof marks[number]) => {
+  const bodyGroup = (m: (typeof marks[number]) | (typeof partnerMarks[number])) => {
     const dim = m.up ? 1 : 0.45;
     const o = cue(m.p.depth) * dim;
     const r = 8 + 2.4 * ((m.p.depth + 1) / 2);
     const hue = SIGNS[Math.floor(norm360(m.lon) / 30)].hue;
-    const isPicked = selection?.kind === 'body' && selection.body === m.body;
+    const isPicked = !m.partner && selection?.kind === 'body' && selection.body === m.body;
     return (
       <g
-        class={`ev-body${m.body === 'Sun' ? ' is-sun' : ''}${isPicked ? ' is-picked' : ''}`}
+        class={`ev-body${m.body === 'Sun' ? ' is-sun' : ''}${isPicked ? ' is-picked' : ''}${m.partner ? ' is-partner' : ''}`}
         style={`--hue:${hue};opacity:${o.toFixed(3)}`}
-        onPointerUp={onSelect ? pick({ kind: 'body', body: m.body as never }) : undefined}
+        onPointerUp={onSelect && !m.partner ? pick({ kind: 'body', body: m.body as never }) : undefined}
       >
         <line class="ev-stem" x1={m.foot.x.toFixed(2)} y1={m.foot.y.toFixed(2)} x2={m.p.x.toFixed(2)} y2={m.p.y.toFixed(2)} />
         <circle class="ev-foot" cx={m.foot.x.toFixed(2)} cy={m.foot.y.toFixed(2)} r="1.7" />
         {isPicked && <circle class="ev-halo" cx={m.p.x.toFixed(2)} cy={m.p.y.toFixed(2)} r={(r + 4).toFixed(2)} />}
-        {sect?.light === m.body && (
+        {!m.partner && sect?.light === m.body && (
           <circle class="ev-sectring" cx={m.p.x.toFixed(2)} cy={m.p.y.toFixed(2)} r={(r + 3).toFixed(2)} />
         )}
         <circle class="ev-disc" cx={m.p.x.toFixed(2)} cy={m.p.y.toFixed(2)} r={r.toFixed(2)} />
@@ -667,6 +719,16 @@ export default function EclipticView({
           ))}
         </g>
 
+        {interChords.length > 0 && (
+          <g class="ev-inter">
+            {interChords.map((w) => (
+              <line x1={w.p1.x.toFixed(2)} y1={w.p1.y.toFixed(2)} x2={w.p2.x.toFixed(2)} y2={w.p2.y.toFixed(2)}
+                    stroke={ASPECT_COLOR[w.type] ?? 'rgba(198,204,218,0.5)'}
+                    style={`opacity:${(0.55 + 0.45 * ((w.depth + 1) / 2)).toFixed(3)}`} />
+            ))}
+          </g>
+        )}
+
         {declChord && (
           <line class="ev-declchord"
                 x1={declChord.p1.x.toFixed(2)} y1={declChord.p1.y.toFixed(2)}
@@ -753,6 +815,8 @@ export default function EclipticView({
           {sited && <li><i class="ev-key-line ev-key-horizon" />{copy.keyHorizon}</li>}
           <li><i class="ev-key-line ev-key-bounds" />{copy.keyBounds}</li>
           {declHeadline && <li><i class="ev-key-line ev-key-decl" />{copy.keyDecl}</li>}
+          {duo && <li><i class="ev-key-line ev-key-yours" />{copy.keyYours}</li>}
+          {duo && <li><i class="ev-key-line ev-key-theirs" />{copy.keyTheirs}</li>}
         </ul>
       </div>
 
@@ -769,7 +833,7 @@ export default function EclipticView({
           </p>
         )}
 
-        {offPlane && !picked && (
+        {!duo && offPlane && !picked && (
           <p class="mono ev-readout">
             {fill(copy.offPlane, {
               body: planetLabel(textLocale, offPlane.body),
@@ -778,6 +842,21 @@ export default function EclipticView({
             })} · {copy.sunDefines}
           </p>
         )}
+
+        {duo && interChords[0] && (
+          <p class="mono ev-readout">
+            {fill(copy.interLine, {
+              a: planetLabel(textLocale, interChords[0].a),
+              rel: aspectLabel(textLocale, interChords[0].type as never),
+              b: planetLabel(textLocale, interChords[0].b),
+              orb: deg2(interChords[0].orb, textLocale),
+            })}
+          </p>
+        )}
+        {duo && interChords.length > 1 && (
+          <p class="ev-note ev-fine">{fill(copy.interMore, { n: String(interChords.length) })}</p>
+        )}
+        {flatSide && <p class="ev-note ev-fine">{copy.flatSide}</p>}
 
         {daylight && <p class="ev-note">{daylight}</p>}
 
@@ -826,7 +905,7 @@ export default function EclipticView({
 
         {nodeLon !== null && <p class="ev-note ev-fine">{copy.moonMean}</p>}
         {scrub !== 0 && <p class="ev-note ev-fine">{copy.scrubNote}</p>}
-        {!sited && <p class="ev-note">{copy.noAngles}</p>}
+        {!duo && !sited && <p class="ev-note">{copy.noAngles}</p>}
         {copy.englishNote && <p class="ev-note ev-note--marker">{copy.englishNote}</p>}
       </figcaption>
     </figure>

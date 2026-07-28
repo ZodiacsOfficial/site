@@ -2357,3 +2357,10 @@
 
 /* Method fine print for the dimensional view — the receipts stay visible. */
 .ev-fine { font-size: 11px; color: var(--faint); }
+
+/* ── Synastry: the second chart, dashed ── */
+.ev-body.is-partner .ev-disc { stroke-dasharray: 3 2.2; }
+.ev-body.is-partner .ev-stem { stroke-dasharray: 2 3; }
+.ev-inter line { stroke-width: 1.15; stroke-linecap: round; }
+.ev-key-yours { border-color: var(--ink-1, #C6CCDA); }
+.ev-key-theirs { border-color: var(--ink-1, #C6CCDA); border-top-style: dashed; }
