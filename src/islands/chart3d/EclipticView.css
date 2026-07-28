@@ -1,0 +1,111 @@
+/* The ecliptic seen in three dimensions. Void surfaces, the twelve pastel
+   sign hues as the only chroma — the same palette as the flat wheel. */
+
+.ev {
+  margin: 0;
+  display: grid;
+  gap: 14px;
+  justify-items: center;
+  width: 100%;
+}
+
+.ev-stage {
+  width: min(var(--ev-size), 100%);
+  height: auto;
+  touch-action: none;
+  cursor: grab;
+  overflow: visible;
+}
+.ev-stage:active { cursor: grabbing; }
+
+/* The ecliptic itself: the plane the flat wheel draws and calls the whole
+   chart. Here it is one line seen at an angle. */
+.ev-plane {
+  fill: none;
+  stroke: var(--hair-2);
+  stroke-width: 1;
+}
+
+.ev-tick {
+  stroke: var(--tick);
+  stroke-width: 2;
+  stroke-linecap: round;
+  opacity: 0.72;
+}
+
+/* The Moon's orbit, inclined 5.1° — dashed so it reads as a path rather
+   than a second rim. */
+.ev-moonpath {
+  fill: none;
+  stroke: var(--sign-cancer);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  opacity: 0.7;
+}
+
+.ev-node circle { fill: var(--sign-cancer); opacity: 0.9; }
+.ev-node text {
+  fill: var(--faint);
+  font-family: var(--font-mono);
+  font-size: 10px;
+}
+
+/* The stem is the measurement: how far off the plane the wheel was not
+   telling you. */
+.ev-stem {
+  stroke: var(--hue);
+  stroke-width: 1.5;
+  opacity: 0.85;
+}
+.ev-foot { fill: var(--hue); opacity: 0.6; }
+.ev-disc {
+  fill: var(--hue);
+  stroke: var(--void-0);
+  stroke-width: 1.5;
+}
+.ev-glyph {
+  fill: var(--void-0);
+  font-size: 10px;
+  font-family: var(--font-mono);
+  pointer-events: none;
+}
+
+/* The Sun has no stem to draw — it is always exactly on the plane. */
+.ev-body.is-sun .ev-stem,
+.ev-body.is-sun .ev-foot { display: none; }
+
+.ev-controls { width: min(var(--ev-size), 100%); }
+
+.ev-slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: var(--text-sm);
+  color: var(--text-2);
+}
+.ev-slider input {
+  flex: 1;
+  accent-color: var(--sign-gemini);
+}
+.ev-slider .mono {
+  min-width: 4ch;
+  text-align: right;
+  color: var(--faint);
+  font-size: 11px;
+}
+
+.ev-caption {
+  display: grid;
+  gap: 8px;
+  max-width: 54ch;
+  font-size: var(--text-sm);
+  color: var(--text-2);
+  text-align: center;
+}
+.ev-caption p { margin: 0; text-wrap: pretty; }
+.ev-readout { font-size: 11px; color: var(--faint); letter-spacing: 0.04em; }
+.ev-note { color: var(--muted); }
+
+@media (prefers-reduced-motion: reduce) {
+  .ev-stage { transition: none; }
+}

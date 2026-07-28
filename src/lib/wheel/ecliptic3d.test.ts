@@ -1,0 +1,122 @@
+import { describe, expect, it } from 'vitest';
+import {
+  eclipseProximity,
+  eclipticToVec,
+  inclinedCircle,
+  MOON_INCLINATION,
+  orient,
+  place,
+  project,
+  separation,
+} from './ecliptic3d';
+
+const CX = 100;
+const CY = 100;
+const R = 80;
+
+describe('ecliptic directions', () => {
+  it('puts every direction on the unit sphere', () => {
+    for (const [lon, lat] of [[0, 0], [90, 17.7], [212, -8], [359, 5.3]]) {
+      const v = eclipticToVec(lon, lat);
+      expect(Math.hypot(v.x, v.y, v.z)).toBeCloseTo(1, 12);
+    }
+  });
+
+  it('sends ecliptic north to +z and the plane to z = 0', () => {
+    expect(eclipticToVec(0, 90).z).toBeCloseTo(1, 12);
+    expect(eclipticToVec(137, 0).z).toBeCloseTo(0, 12);
+  });
+});
+
+describe('orientation', () => {
+  it('recovers the flat wheel at tilt 0, whatever the latitude', () => {
+    // The familiar wheel is this view seen down the pole: latitude becomes
+    // depth alone, so two bodies sharing a longitude must coincide on screen.
+    const onPlane = place(75, 0, 0, 0, CX, CY, R);
+    const wayOffPlane = place(75, 17.7, 0, 0, CX, CY, R);
+    // Same direction on screen, differing only by the foreshortening of cos(lat).
+    const angleOf = (p: { x: number; y: number }) => Math.atan2(CY - p.y, p.x - CX);
+    expect(angleOf(onPlane)).toBeCloseTo(angleOf(wayOffPlane), 12);
+    expect(wayOffPlane.depth).toBeGreaterThan(onPlane.depth);
+  });
+
+  it('reads latitude as height when edge-on, north upward', () => {
+    const north = place(0, 30, 0, 90, CX, CY, R);
+    const south = place(0, -30, 0, 90, CX, CY, R);
+    // SVG y grows downward, so ecliptic north must sit at the smaller y.
+    expect(north.y).toBeLessThan(CY);
+    expect(south.y).toBeGreaterThan(CY);
+  });
+
+  it('keeps the Sun on the ring at every tilt, because it defines the plane', () => {
+    for (const tilt of [0, 22.5, 45, 67.5, 90]) {
+      const p = place(212, 0, 0, tilt, CX, CY, R);
+      const v = orient(eclipticToVec(212, 0), 0, tilt);
+      expect(Math.hypot(v.x, v.y, v.z)).toBeCloseTo(1, 12);
+      expect(Number.isFinite(p.x) && Number.isFinite(p.y)).toBe(true);
+    }
+  });
+
+  it('leaves a direction unmoved by a null rotation', () => {
+    const v = eclipticToVec(123, -4.5);
+    const same = orient(v, 0, 0);
+    expect(same.x).toBeCloseTo(v.x, 12);
+    expect(same.y).toBeCloseTo(v.y, 12);
+    expect(same.z).toBeCloseTo(v.z, 12);
+  });
+
+  it('projects the centre of the sphere to the centre of the frame', () => {
+    expect(project({ x: 0, y: 0, z: 1 }, CX, CY, R)).toMatchObject({ x: CX, y: CY });
+  });
+});
+
+describe("the Moon's inclined path", () => {
+  it('crosses the ecliptic exactly at the nodes', () => {
+    const node = 47;
+    const path = inclinedCircle(node, MOON_INCLINATION, 1);
+    const crossings = path.filter((p) => Math.abs(p.lat) < 1e-9);
+    expect(crossings.length).toBeGreaterThanOrEqual(2);
+    // Ascending at the node, descending opposite it.
+    expect(separation(crossings[0].lon, node)).toBeCloseTo(0, 6);
+    expect(separation(crossings[1].lon, node + 180)).toBeCloseTo(0, 6);
+  });
+
+  it('peaks at the inclination and never exceeds it', () => {
+    const path = inclinedCircle(0, MOON_INCLINATION, 1);
+    const peak = Math.max(...path.map((p) => Math.abs(p.lat)));
+    expect(peak).toBeCloseTo(MOON_INCLINATION, 6);
+    for (const point of path) {
+      expect(Math.abs(point.lat)).toBeLessThanOrEqual(MOON_INCLINATION + 1e-9);
+    }
+  });
+
+  it('follows the node when the node moves', () => {
+    for (const node of [0, 47, 180, 300]) {
+      const first = inclinedCircle(node, MOON_INCLINATION, 1)[0];
+      expect(first.lat).toBeCloseTo(0, 9);
+      expect(separation(first.lon, node)).toBeCloseTo(0, 6);
+    }
+  });
+});
+
+describe('eclipse proximity', () => {
+  it('is possible only near the line of nodes', () => {
+    expect(eclipseProximity(47, 47).possible).toBe(true);
+    expect(eclipseProximity(227, 47).possible).toBe(true);
+    expect(eclipseProximity(137, 47).possible).toBe(false);
+  });
+
+  it('measures to the nearer node', () => {
+    expect(eclipseProximity(57, 47).degrees).toBeCloseTo(10, 9);
+    expect(eclipseProximity(217, 47).degrees).toBeCloseTo(10, 9);
+  });
+});
+
+describe('longitude separation', () => {
+  it('never exceeds half a turn and wraps correctly', () => {
+    expect(separation(350, 10)).toBeCloseTo(20, 9);
+    expect(separation(10, 350)).toBeCloseTo(20, 9);
+    expect(separation(0, 180)).toBeCloseTo(180, 9);
+    expect(separation(-10, 10)).toBeCloseTo(20, 9);
+  });
+});

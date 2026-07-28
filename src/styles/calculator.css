@@ -2101,3 +2101,27 @@
 @media (prefers-reduced-motion: reduce) {
   .tring__range { cursor: pointer; }
 }
+
+/* ── The third dimension ────────────────────────────────────────── */
+/* Opt-in view under the wheel; the flat chart stays the default read. */
+.calc__depth {
+  display: grid;
+  gap: 18px;
+  justify-items: center;
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--hair-1);
+}
+.calc__depth-btn {
+  appearance: none;
+  background: transparent;
+  border: 1px solid var(--hair-2);
+  border-radius: 999px;
+  padding: 8px 16px;
+  color: var(--text-2);
+  font: inherit;
+  font-size: var(--text-sm);
+  cursor: pointer;
+  transition: border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease);
+}
+.calc__depth-btn:hover { border-color: var(--hair-2); color: var(--text); }
