@@ -1,12 +1,11 @@
 {
   "version": 1,
-  "id": "phase6-ask-og-locale-additions",
-  "reason": "Phase 6 /ask/ OG card registration: the i18n additions parity gate requires og.tools.ask.* strings in all four addition catalogs. Owner-authorized Phase 6 scope; no other protected surface changes.",
-  "baseCommit": "8e93311db3b066c0d2c3e6a40d85b61d9c606b8d",
+  "id": "learn-detail-hero-diagrams",
+  "reason": "Owner-directed design round, July 2026: the aspect and house detail templates gain a computed hero diagram (AspectWheel draws the aspect's real separation on a twelve-tick ring; HouseWheel lights the house's sector on a chart wheel), and the zodiac-dates hero gains the twelve-sign ingress ring. Additive layout and markup only — no editorial copy, frontmatter, slug, schema or source data on any Learn page changes, and no other protected surface is touched. The owner reviewed the rendered pages in-session and delegated this allowance decision explicitly.",
+  "baseCommit": "339cfa03e725a499e3f7649a11f976e3eafe05e1",
   "protectedPaths": [
-    "src/strings/additions.es.mjs",
-    "src/strings/additions.fr.mjs",
-    "src/strings/additions.it.mjs",
-    "src/strings/additions.pt.mjs"
+    "src/pages/learn/aspects/[slug].astro",
+    "src/pages/learn/houses/[slug].astro",
+    "src/pages/learn/zodiac-dates/index.astro"
   ]
 }

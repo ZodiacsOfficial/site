@@ -1,0 +1,142 @@
+---
+/**
+ * The twelve signs on one ring, in the order the Sun enters them — Aries
+ * at the top, where the tropical zodiac starts at the March equinox, then
+ * clockwise through the year.
+ *
+ * The discs are the real pastel icons, not redrawn glyphs, so this is the
+ * same object the sign guides and the nav grid use. Positioning is CSS
+ * transforms on a square box; the settle is keyframes behind
+ * prefers-reduced-motion.
+ */
+import SignIcon from './SignIcon.astro';
+import { SIGNS } from '../lib/signs';
+
+interface Props {
+  /** Box edge in px. Discs and radius scale from it. */
+  size?: number;
+  /** Slug to lift out of the ring, if the page is about one sign. */
+  active?: string;
+  class?: string;
+}
+
+const { size = 320, active, class: className } = Astro.props;
+
+/** Source tier only — CSS owns the rendered geometry, so the ring can
+ *  shrink at narrow widths without the discs drifting off it. */
+const disc = Math.round(size * 0.155);
+
+/** The equinoxes and solstices, which are the four ingresses people know. */
+const CARDINAL: Record<string, string> = {
+  aries: 'March equinox',
+  cancer: 'June solstice',
+  libra: 'September equinox',
+  capricorn: 'December solstice',
+};
+---
+<figure
+  class:list={['zodiac-ring', className]}
+  style={`--ring-size:${size}px`}
+>
+  <div class="zr-plate" aria-hidden="true"></div>
+
+  <ul class="zr-list">
+    {SIGNS.map((sign, i) => (
+      <li
+        class:list={['zr-item', active === sign.slug && 'is-active']}
+        style={`--i:${i};--angle:${i * 30}deg;--hue:${sign.hue}`}
+      >
+        <a class="zr-link" href={`/${sign.slug}/`}>
+          <SignIcon sign={sign.slug} size={disc} />
+          <span class="zr-name">
+            {sign.name}{CARDINAL[sign.slug] ? <span class="zr-cardinal"> · {CARDINAL[sign.slug]}</span> : null}
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</figure>
+
+<style>
+  .zodiac-ring {
+    position: relative;
+    margin: 0;
+    width: var(--ring-size);
+    max-width: 100%;
+    aspect-ratio: 1;
+    flex: 0 0 auto;
+    /* Derived here, not inline, so a narrower --ring-size carries through. */
+    --ring-disc: calc(var(--ring-size) * 0.155);
+    --ring-radius: calc((var(--ring-size) - var(--ring-disc)) / 2);
+  }
+
+  /* One hairline circle behind the discs — the ring, and nothing else. */
+  .zr-plate {
+    position: absolute;
+    inset: calc(var(--ring-disc) / 2);
+    border: 1px solid var(--hair-1);
+    border-radius: 50%;
+  }
+
+  .zr-list {
+    position: absolute;
+    inset: 0;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .zr-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--ring-disc);
+    height: var(--ring-disc);
+    margin: calc(var(--ring-disc) / -2) 0 0 calc(var(--ring-disc) / -2);
+    /* Rotate out to the angle, then counter-rotate so the disc sits level. */
+    transform:
+      rotate(var(--angle))
+      translateY(calc(var(--ring-radius) * -1))
+      rotate(calc(var(--angle) * -1));
+  }
+
+  .zr-link {
+    display: block;
+    border-radius: 50%;
+    line-height: 0;
+    outline-offset: 3px;
+    transition: transform var(--dur-1) var(--ease);
+  }
+  .zr-link:hover { transform: scale(1.14); }
+  .zr-item.is-active .zr-link { transform: scale(1.14); }
+
+  /* CSS sets the rendered size; the component picked the source tier. */
+  .zr-link :global(.sign-icon) { width: 100%; }
+
+  /* The name is for screen readers and hover, never ambient clutter. */
+  .zr-name {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .zr-item {
+      opacity: 0;
+      animation: zr-settle var(--dur-2) var(--ease-soft) forwards;
+      /* Round the ring in zodiac order, one disc at a time. */
+      animation-delay: calc(var(--i) * 55ms + 120ms);
+    }
+  }
+
+  @keyframes zr-settle { to { opacity: 1; } }
+
+  @media (max-width: 900px) {
+    .zodiac-ring { --ring-size: 260px; }
+  }
+</style>

@@ -1,0 +1,172 @@
+---
+/**
+ * The aspect, drawn. A twelve-tick ring with the two bodies placed at the
+ * aspect's real separation and the chord between them — so the page about
+ * 90 degrees actually shows 90 degrees.
+ *
+ * Static inline SVG: no island, no JS. The draw-in is CSS keyframes behind
+ * prefers-reduced-motion, and the geometry is correct with motion stilled.
+ */
+import { SIGNS } from '../lib/signs';
+
+interface Props {
+  /** Separation in degrees: 0, 60, 90, 120, 180. */
+  angle: number;
+  /** Zodiac-order index of the first body's sign (0 = Aries). */
+  fromSign?: number;
+  size?: number;
+  class?: string;
+}
+
+const { angle, fromSign = 0, size = 200, class: className } = Astro.props;
+
+const CX = 100;
+const CY = 100;
+const R_RING = 78;
+const R_NODE = 62;
+const R_ARC = 30;
+/** The label rides inside the arc, on the bisector — always clear of the
+ *  chord, which at 180° runs straight through the centre. */
+const R_LABEL = 15;
+
+/** Zodiac runs counter-clockwise from the ascendant; the ring starts at the top. */
+const point = (deg: number, radius: number) => {
+  const rad = ((deg - 90) * Math.PI) / 180;
+  return [CX + radius * Math.cos(rad), CY + radius * Math.sin(rad)] as const;
+};
+const fmt = (n: number) => Number(n.toFixed(2));
+
+// A conjunction has no chord to draw; the two bodies sit together. Splaying
+// them by a few degrees keeps both discs legible without lying about the angle.
+const splay = angle === 0 ? 5 : 0;
+const degA = -splay;
+const degB = angle + splay;
+
+const [ax, ay] = point(degA, R_NODE);
+const [bx, by] = point(degB, R_NODE);
+
+const signA = SIGNS[fromSign % 12];
+const signB = SIGNS[(fromSign + Math.round(angle / 30)) % 12];
+
+// The interior arc that annotates the separation.
+const [arcSx, arcSy] = point(degA, R_ARC);
+const [arcEx, arcEy] = point(degB, R_ARC);
+const largeArc = angle > 180 ? 1 : 0;
+const arcPath = angle === 0
+  ? ''
+  : `M ${fmt(arcSx)} ${fmt(arcSy)} A ${R_ARC} ${R_ARC} 0 ${largeArc} 1 ${fmt(arcEx)} ${fmt(arcEy)}`;
+
+const [labelX, labelY] = point(angle / 2, R_LABEL);
+
+const ticks = SIGNS.map((sign, i) => {
+  const deg = i * 30;
+  const [x1, y1] = point(deg, R_RING);
+  const [x2, y2] = point(deg, R_RING - 7);
+  return { x1: fmt(x1), y1: fmt(y1), x2: fmt(x2), y2: fmt(y2), hue: sign.hue };
+});
+
+const chordLength = Math.hypot(bx - ax, by - ay);
+const uid = `aw${Math.round(angle)}${fromSign}`;
+---
+<figure class:list={['aspect-wheel', className]} style={`--size:${size}px;--hue-a:${signA.hue};--hue-b:${signB.hue};--chord:${fmt(chordLength)}`}>
+  <svg viewBox="0 0 200 200" width={size} height={size} role="img" aria-labelledby={`${uid}-t`}>
+    <title id={`${uid}-t`}>
+      {angle === 0
+        ? `Two bodies in the same degree — a conjunction, 0 degrees apart.`
+        : `Two bodies ${angle} degrees apart on the zodiac wheel: ${signA.name} and ${signB.name}.`}
+    </title>
+
+    <circle class="aw-ring" cx={CX} cy={CY} r={R_RING} />
+
+    <g class="aw-ticks">
+      {ticks.map((t) => (
+        <line x1={t.x1} y1={t.y1} x2={t.x2} y2={t.y2} style={`--tick:${t.hue}`} />
+      ))}
+    </g>
+
+    {arcPath && <path class="aw-arc" d={arcPath} />}
+
+    <line class="aw-spoke" x1={CX} y1={CY} x2={fmt(ax)} y2={fmt(ay)} />
+    <line class="aw-spoke" x1={CX} y1={CY} x2={fmt(bx)} y2={fmt(by)} />
+
+    <line class="aw-chord" x1={fmt(ax)} y1={fmt(ay)} x2={fmt(bx)} y2={fmt(by)} />
+
+    <circle class="aw-node aw-node--a" cx={fmt(ax)} cy={fmt(ay)} r="7" />
+    <circle class="aw-node aw-node--b" cx={fmt(bx)} cy={fmt(by)} r="7" />
+
+    {angle > 0 && (
+      <text class="aw-label" x={fmt(labelX)} y={fmt(labelY)} text-anchor="middle" dominant-baseline="middle">
+        {angle}°
+      </text>
+    )}
+  </svg>
+</figure>
+
+<style>
+  .aspect-wheel {
+    margin: 0;
+    width: var(--size);
+    max-width: 100%;
+    line-height: 0;
+  }
+  .aspect-wheel svg { width: 100%; height: auto; overflow: visible; }
+
+  .aw-ring {
+    fill: none;
+    stroke: var(--hair-2);
+    stroke-width: 1;
+  }
+  .aw-ticks line {
+    stroke: var(--tick);
+    stroke-width: 2;
+    stroke-linecap: round;
+    opacity: 0.72;
+  }
+  .aw-arc {
+    fill: none;
+    stroke: var(--hair-2);
+    stroke-width: 1;
+    stroke-dasharray: 2 3;
+  }
+  .aw-spoke {
+    stroke: var(--hair-2);
+    stroke-width: 1;
+  }
+  .aw-chord {
+    stroke: var(--text-2);
+    stroke-width: 1.25;
+    stroke-linecap: round;
+  }
+  .aw-node { stroke: var(--bg, #08090C); stroke-width: 2; }
+  .aw-node--a { fill: var(--hue-a); }
+  .aw-node--b { fill: var(--hue-b); }
+
+  .aw-label {
+    fill: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+
+  /* The chord draws itself once, then the bodies settle onto it. */
+  @media (prefers-reduced-motion: no-preference) {
+    .aw-chord {
+      stroke-dasharray: var(--chord);
+      stroke-dashoffset: var(--chord);
+      animation: aw-draw var(--dur-3, 800ms) var(--ease-soft, cubic-bezier(0.22, 1, 0.36, 1)) 120ms forwards;
+    }
+    .aw-node,
+    .aw-label,
+    .aw-arc {
+      opacity: 0;
+      animation: aw-settle var(--dur-2, 420ms) var(--ease-soft, cubic-bezier(0.22, 1, 0.36, 1)) forwards;
+    }
+    .aw-node--a { animation-delay: 300ms; }
+    .aw-node--b { animation-delay: 560ms; }
+    .aw-arc { animation-delay: 720ms; }
+    .aw-label { animation-delay: 820ms; }
+  }
+
+  @keyframes aw-draw { to { stroke-dashoffset: 0; } }
+  @keyframes aw-settle { to { opacity: 1; } }
+</style>

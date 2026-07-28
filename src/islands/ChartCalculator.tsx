@@ -87,6 +87,7 @@ interface RunInput {
 type ShareSurfaceModule = typeof import('./PositionsShareSurface');
 type TourModule = typeof import('./explorer/tour');
 type LensModule = typeof import('./explorer/lens/ChartLens');
+type DepthModule = typeof import('./chart3d/EclipticView');
 type LensId = import('./explorer/lens/copy').LensId;
 type LensRingRenderer = (geo: import('../lib/wheel/Wheel').WheelGeometry) => import('preact').ComponentChildren;
 
@@ -97,6 +98,18 @@ const LENS_LABELS: Record<ReleasedLocale, Record<'rail' | 'natal' | LensId, stri
   pt: { rail: 'O mapa ao longo do tempo', natal: 'Natal', sky: 'Céu agora', progressed: 'Progredido', return: 'Retorno solar' },
   fr: { rail: 'Le thème au fil du temps', natal: 'Natal', sky: 'Ciel actuel', progressed: 'Progressé', return: 'Révolution solaire' },
   it: { rail: 'Il tema nel tempo', natal: 'Natale', sky: 'Cielo attuale', progressed: 'Progredito', return: 'Rivoluzione solare' },
+};
+/**
+ * The depth view's own strings live beside it, in the lazily-loaded chunk.
+ * Only its trigger has to be named out here, so only that is duplicated —
+ * importing the view's copy map would drag all six locales into this page.
+ */
+const DEPTH_TOGGLE: Record<ReleasedLocale, { open: string; close: string }> = {
+  en: { open: 'See it in three dimensions', close: 'Hide the third dimension' },
+  es: { open: 'Verla en tres dimensiones', close: 'Ocultar la tercera dimensión' },
+  pt: { open: 'Ver em três dimensões', close: 'Ocultar a terceira dimensão' },
+  fr: { open: 'Voir en trois dimensions', close: 'Masquer la troisième dimension' },
+  it: { open: 'Vedilo in tre dimensioni', close: 'Nascondi la terza dimensione' },
 };
 const DETAIL_LABELS: Record<ReleasedLocale, { lead: string; placements: string; aspects: string }> = {
   en: { lead: 'See exact chart data — ', placements: ' placements · ', aspects: ' aspects' },
@@ -322,6 +335,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [saveSource, setSaveSource] = useState<SavePrefillSource>('auto');
   const [positionsOnly, setPositionsOnly] = useState<PositionsShareChart | null>(null);
   const [shareSurface, setShareSurface] = useState<ShareSurfaceModule | null>(null);
+  const [depthMod, setDepthMod] = useState<DepthModule | null>(null);
+  const [depthOpen, setDepthOpen] = useState(false);
   const [calendarSurface, setCalendarSurface] = useState<CalendarSubscribeModule | null>(null);
   const [copyLinkModule, setCopyLinkModule] = useState<CopyLinkModule | null>(null);
   const [communicationSurface, setCommunicationSurface] = useState<CommunicationReadModule | null>(null);
@@ -503,6 +518,24 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       setLensMod(mod);
       setLens(next);
       track('lens_change', { lens: next });
+    } catch {
+      setError(t(locale, 'chartError'));
+    }
+  }
+
+  /**
+   * The third dimension is opt-in and lazily fetched: the flat wheel is the
+   * default reading, and this chunk never reaches a reader who does not ask.
+   */
+  async function toggleDepth() {
+    if (depthOpen) {
+      setDepthOpen(false);
+      return;
+    }
+    try {
+      const mod = depthMod ?? await import('./chart3d/EclipticView');
+      setDepthMod(mod);
+      setDepthOpen(true);
     } catch {
       setError(t(locale, 'chartError'));
     }
@@ -1024,6 +1057,13 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       house: chart.houses ? houseOf(b.lon, chart.houses.cusps) : null,
     }));
   }, [chart]);
+
+  /** Russian keeps the English label with the site's not-yet-translated mark. */
+  const depthToggleLabel = (() => {
+    const set = DEPTH_TOGGLE[releasedLocale ?? 'en'];
+    const text = depthOpen ? set.close : set.open;
+    return releasedLocale ? text : `${text} — пока по-английски`;
+  })();
 
   const sun = chart?.bodies.find((b) => b.body === 'Sun');
   const moon = chart?.bodies.find((b) => b.body === 'Moon');
@@ -1562,6 +1602,37 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                         hasHouses={chart.houses != null}
                         locale={locale}
                       />
+                      <div class="calc__depth">
+                        <button
+                          type="button"
+                          class="calc__depth-btn"
+                          aria-expanded={depthOpen}
+                          onClick={() => void toggleDepth()}
+                        >
+                          {depthToggleLabel}
+                        </button>
+                        {depthOpen && depthMod && (
+                          <depthMod.default
+                            bodies={chart.bodies}
+                            aspects={chart.aspects.filter((a) => a.orb < 6)}
+                            cusps={viewCusps}
+                            asc={asc}
+                            mc={chart.angles?.mc ?? null}
+                            dsc={chart.angles?.dsc ?? null}
+                            ic={chart.angles?.ic ?? null}
+                            latitude={chart.input.latitude ?? null}
+                            longitude={chart.input.longitude ?? null}
+                            utcMs={chart.input.utc.getTime()}
+                            houseSystem={chart.input.houseSystem}
+                            polarFallback={chart.flags.includes('polar-fallback')}
+                            birthClock={computedInput?.timeKnown ? computedInput.time : null}
+                            locale={locale}
+                            selection={selection}
+                            onSelect={applySelect}
+                            size={440}
+                          />
+                        )}
+                      </div>
                       {lens !== 'natal' && lensMod && (
                         <lensMod.default
                           lens={lens}
