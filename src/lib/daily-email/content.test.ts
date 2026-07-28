@@ -117,7 +117,9 @@ describe('daily email content', () => {
           .replaceAll('’', '’')
           .replaceAll("'", '&#39;'));
       }
-      expect(message.html).toContain(`/assets/zodiac-icons/128/${sign}.webp`);
+      // PNG, not WebP — Outlook on Windows decodes neither WebP nor AVIF.
+      expect(message.html).toContain(`/assets/zodiac-icons/128/${sign}.png`);
+      expect(message.html).not.toContain('.webp');
       expect(message.html).toContain('bgcolor="#060709"');
       expect(message.text).toContain(unsubscribeUrl);
       expect(message.html).toContain(unsubscribeUrl.replaceAll('&', '&amp;'));

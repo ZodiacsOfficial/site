@@ -5,6 +5,13 @@ import { findInterAspects, type InterAspect, type MinimalBody } from '../src/lib
 import { BODY_ROLE } from '../src/lib/compat';
 import type { SavedChart } from '../src/lib/profile/schema';
 import { signDigestUnsubscribe } from '../src/lib/server/digest-unsubscribe';
+import {
+  renderEmailHtml,
+  renderEmailText,
+  type EmailDocument,
+  type EmailSection,
+} from '../src/lib/email/template';
+import { SIGNS } from '../src/lib/signs';
 
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const DIGEST_ORB = 3;
@@ -190,58 +197,76 @@ function unsubscribeUrl(userId: string, secret: string): string {
   return `${baseUrl()}/api/unsubscribe?u=${encodeURIComponent(userId)}&sig=${encodeURIComponent(sig)}`;
 }
 
-function renderDigest(recipient: RecipientDigest, weekStart: Date, secret: string, maxCharts: number): { subject: string; text: string; unsubscribe: string } {
-  const label = rangeLabel(weekStart);
-  const lines = [
-    `Your sky, ${label}`,
-    '',
-    'A short Monday digest for your saved charts.',
-    '',
-  ];
+/** The Sun's sign in a saved chart — sets the accent hue and header disc. */
+function chartSunSign(chart: SavedChart): string | undefined {
+  const sun = chart.summary.bodies.find((body) => body.body === 'Sun');
+  if (!sun || typeof sun.lon !== 'number') return undefined;
+  const index = Math.floor(((sun.lon % 360) + 360) % 360 / 30);
+  return SIGNS[index]?.slug;
+}
 
-  for (const chart of recipient.charts.slice(0, maxCharts)) {
-    lines.push(`For ${chart.name}`);
+function renderDigest(
+  recipient: RecipientDigest,
+  weekStart: Date,
+  secret: string,
+  maxCharts: number,
+): { subject: string; text: string; html: string; unsubscribe: string } {
+  const label = rangeLabel(weekStart);
+  const charts = recipient.charts.slice(0, maxCharts);
+  const unsubscribe = unsubscribeUrl(recipient.userId, secret);
+
+  const sections: EmailSection[] = charts.map((chart) => {
     const hits = topTransits(chart, weekStart);
-    if (hits.length === 0) {
-      lines.push(`No major transits within ${DIGEST_ORB} deg for this chart this week.`);
-    } else {
-      hits.forEach((hit, index) => {
-        lines.push(`${index + 1}. ${transitSentence(hit)}`);
-        lines.push(`   ${receiptLine(hit)}`);
-      });
-    }
-    lines.push('');
-  }
+    return {
+      heading: chart.name,
+      rows: hits.map((hit) => ({
+        label: monthDay(hit.date),
+        body: transitSentence(hit).replace(`${monthDay(hit.date)}: `, ''),
+        receipt: receiptLine(hit).replace(/^Receipt: /, ''),
+      })),
+      empty: `Nothing within ${DIGEST_ORB}° of exact this week — a quiet one for this chart.`,
+    };
+  });
 
   if (recipient.charts.length > maxCharts) {
-    lines.push(`Showing ${maxCharts} of ${recipient.charts.length} saved charts this week.`);
-    lines.push('');
+    sections.push({
+      paragraphs: [`Showing ${maxCharts} of ${recipient.charts.length} saved charts this week.`],
+    });
   }
 
-  const unsubscribe = unsubscribeUrl(recipient.userId, secret);
-  lines.push(`Read all transits: ${baseUrl()}/transits/`);
-  lines.push(`Unsubscribe: ${unsubscribe}`);
+  const doc: EmailDocument = {
+    preheader: `Your saved charts, ${label} — the closest transits, with orbs.`,
+    eyebrow: `Weekly digest · ${label}`,
+    title: `Your sky, ${label}`,
+    sign: charts[0] ? chartSunSign(charts[0]) : undefined,
+    identity: charts.length === 1
+      ? charts[0].name
+      : `${charts.length} saved charts`,
+    intro: 'The closest aspects to your saved charts this week, with the orb each one is measured at.',
+    sections,
+    cta: { label: 'Read all transits', url: `${baseUrl()}/transits/` },
+    footerLines: [
+      'You receive this because you asked for a Monday digest of your saved charts.',
+    ],
+    unsubscribeUrl: unsubscribe,
+  };
 
   return {
     subject: `Your sky, ${label}`,
-    text: lines.join('\n'),
+    text: renderEmailText(doc),
+    html: renderEmailHtml(doc, baseUrl()),
     unsubscribe,
   };
 }
 
-function escapeHtml(value: string): string {
-  return value
-    .replaceAll('&', '&amp;')
-    .replaceAll('<', '&lt;')
-    .replaceAll('>', '&gt;')
-    .replaceAll('"', '&quot;');
-}
-
-function textToHtml(text: string): string {
-  return `<pre style="font:16px/1.55 system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;white-space:pre-wrap;color:#1b1d22">${escapeHtml(text)}</pre>`;
-}
-
-async function sendEmail(apiKey: string, to: string, subject: string, text: string, unsubscribe: string): Promise<void> {
+async function sendEmail(
+  apiKey: string,
+  to: string,
+  subject: string,
+  text: string,
+  html: string,
+  unsubscribe: string,
+): Promise<void> {
   const response = await fetch('https://api.resend.com/emails', {
     method: 'POST',
     headers: {
@@ -253,7 +278,7 @@ async function sendEmail(apiKey: string, to: string, subject: string, text: stri
       to: [to],
       subject,
       text,
-      html: textToHtml(text),
+      html,
       headers: {
         'List-Unsubscribe': `<${unsubscribe}>`,
         'List-Unsubscribe-Post': 'List-Unsubscribe=One-Click',
@@ -386,7 +411,7 @@ async function run(): Promise<void> {
 
     // One bad address or a Resend 429 must not sink the rest of the batch.
     try {
-      await sendEmail(resendKey!, to, rendered.subject, rendered.text, rendered.unsubscribe);
+      await sendEmail(resendKey!, to, rendered.subject, rendered.text, rendered.html, rendered.unsubscribe);
       sent += 1;
       console.log(`weekly-digest: sent ${sent}/${recipients.length} to ${maskEmail(to)}`);
     } catch (error) {

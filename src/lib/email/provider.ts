@@ -18,6 +18,7 @@ import type { ReleasedLocale as Locale } from '../i18n/core';
 import { serverUiMessage } from '../i18n/ui/server.js';
 import { signBySlug } from '../signs.js';
 import { createRateLimitedResendRequest } from '../daily-email/resend-request.js';
+import { renderEmailHtml, type EmailDocument } from './template.js';
 
 type Environment = Record<string, unknown>;
 type Fetch = typeof fetch;
@@ -85,7 +86,10 @@ class ResendAdapter implements EmailSubscriptionAdapter {
     const confirmation = new URL('/api/email/confirm', baseUrl(this.env));
     confirmation.searchParams.set('token', token);
 
-    // Text-only by design: no tracking pixels, remote images, or open signal.
+    // No remote resource of any kind is referenced here — no image, no
+    // stylesheet, no pixel — so opening this message still signals nothing.
+    // The HTML part is inline styles and tables only, which keeps that
+    // property while letting the confirmation look like the site.
     const body = daily
       ? [
         `Confirm that you want the free Zodiacs.org daily forecast for ${signBySlug(sign!).name}:`,
@@ -101,6 +105,41 @@ class ResendAdapter implements EmailSubscriptionAdapter {
         '',
         serverUiMessage(this.locale, 'emailConfirmIgnore'),
       ].join('\n');
+
+    const subject = daily
+      ? 'Confirm your Zodiacs.org daily forecast'
+      : serverUiMessage(this.locale, 'emailConfirmSubject');
+
+    // `sign` is deliberately omitted: the header disc is a remote image, and
+    // this message stays free of remote resources.
+    const document: EmailDocument = daily
+      ? {
+        preheader: 'One tap to confirm your daily forecast.',
+        eyebrow: 'Confirm your subscription',
+        title: subject,
+        identity: `Daily · ${signBySlug(sign!).name}`,
+        intro: `Confirm that you want the free Zodiacs.org daily forecast for ${signBySlug(sign!).name}.`,
+        sections: [{
+          paragraphs: [
+            'The link works for 48 hours. If you did not request this, ignore this email — nothing will be subscribed.',
+          ],
+        }],
+        cta: { label: 'Confirm subscription', url: confirmation.toString() },
+        footerLines: ['Zodiacs.org — free astrology tools and sign guides.'],
+      }
+      : {
+        preheader: serverUiMessage(this.locale, 'emailConfirmMessage'),
+        eyebrow: 'Zodiacs.org',
+        title: subject,
+        intro: serverUiMessage(this.locale, 'emailConfirmMessage'),
+        sections: [{ paragraphs: [serverUiMessage(this.locale, 'emailConfirmIgnore')] }],
+        cta: {
+          label: serverUiMessage(this.locale, 'emailConfirmSubject'),
+          url: confirmation.toString(),
+        },
+        footerLines: ['Zodiacs.org'],
+      };
+
     const request = createRateLimitedResendRequest(this.fetcher);
     try {
       const response = await request('https://api.resend.com/emails', {
@@ -112,10 +151,9 @@ class ResendAdapter implements EmailSubscriptionAdapter {
         body: JSON.stringify({
           from: environmentValue(this.env, 'RESEND_FROM_EMAIL'),
           to: [email],
-          subject: daily
-            ? 'Confirm your Zodiacs.org daily forecast'
-            : serverUiMessage(this.locale, 'emailConfirmSubject'),
+          subject,
           text: body,
+          html: renderEmailHtml(document, baseUrl(this.env)),
         }),
       });
       if (!response.ok) throw providerError(this.provider, response.status);

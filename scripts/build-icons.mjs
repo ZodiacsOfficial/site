@@ -24,6 +24,12 @@ const srcDir = resolve(root, 'public/assets/sdk/zodiac-icons/circle');
 const outBase = resolve(root, 'public/assets/zodiac-icons');
 
 const SIZES = [48, 128, 400];
+/**
+ * Email clients are the one surface that cannot read AVIF or WebP, so the
+ * 128 tier also lands as PNG. Everything the site renders keeps using the
+ * modern formats; only the mailers reach for this file.
+ */
+const PNG_SIZES = [128];
 const SOURCE_SIZE = 1024;
 const VISIBLE_DIAMETER = 946;
 const ALPHA_THRESHOLD = 8;
@@ -136,8 +142,16 @@ for (const slug of SIGN_ORDER) {
       smartSubsample: true,
     }).toFile(webpOut);
     written += 2;
+
+    if (PNG_SIZES.includes(size)) {
+      await resized.clone().png({
+        compressionLevel: 9,
+        palette: true,
+      }).toFile(resolve(outBase, String(size), `${slug}.png`));
+      written += 1;
+    }
   }
-  console.log(`icons: ${slug} → ${SIZES.join('/')}px avif+webp`);
+  console.log(`icons: ${slug} → ${SIZES.join('/')}px avif+webp, ${PNG_SIZES.join('/')}px png`);
 }
 
 console.log(`Done — ${written} derivative files under public/assets/zodiac-icons/.`);
