@@ -1593,7 +1593,14 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                           See it in three dimensions
                         </button>
                         {depthOpen && depthMod && (
-                          <depthMod.default bodies={chart.bodies} size={420} />
+                          <depthMod.default
+                            bodies={chart.bodies}
+                            aspects={chart.aspects.filter((a) => a.orb < 6)}
+                            cusps={viewCusps}
+                            asc={asc}
+                            mc={chart.angles?.mc ?? null}
+                            size={440}
+                          />
                         )}
                       </div>
                       {lens !== 'natal' && lensMod && (

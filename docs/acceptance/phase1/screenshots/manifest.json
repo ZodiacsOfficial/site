@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-07-28T07:07:05.758Z",
+  "capturedAt": "2026-07-28T08:21:35.695Z",
   "browser": "Chromium 141.0.7390.37",
   "dailyDate": "2026-07-28",
   "publicationCanonicalSha256": "128d4e348d2309c6e01165bbc6bbdea0115a8f3bc641c41a50f8abd5ae0946d8",
-  "templateSourceSha256": "98e34623fa9005ec26881a5b00af9df52abd24eb10694ed4f3b1f99d3623ba8b",
+  "templateSourceSha256": "a73370d3c070a9d3b50307203286bf87ba0b1714dc478b627f3b98fae00e6910",
   "renderPayloadSha256": {
     "daily": "c2f4ba033d95e2fb05dcce5e21b5098b766c5831a2324a6407638c1292dc36da",
     "dailyPublication": "40a07a024e2d0028bb256c0214a67015ebec4d86642a9e4f1d9e9025a48e8e3f",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-07-28T07:06:47.956Z",
-    "templateSourceSha256": "98e34623fa9005ec26881a5b00af9df52abd24eb10694ed4f3b1f99d3623ba8b",
+    "builtAt": "2026-07-28T08:21:09.070Z",
+    "templateSourceSha256": "a73370d3c070a9d3b50307203286bf87ba0b1714dc478b627f3b98fae00e6910",
     "dailyDate": "2026-07-28",
     "publicationCanonicalSha256": "128d4e348d2309c6e01165bbc6bbdea0115a8f3bc641c41a50f8abd5ae0946d8",
     "renderPayloadSha256": {
@@ -88,7 +88,7 @@
         "file": "horoscopes-hub-360.png",
         "width": 360,
         "height": 5287,
-        "sha256": "6b5e8def1c6263484021bcd498aca2d554c88b280ab594c3933bc011543f1c28"
+        "sha256": "e8b176f4feca139302489a4d392995e966e874bdbacc19e4958840063e571181"
       },
       "layout": {
         "clientWidth": 360,
@@ -134,7 +134,7 @@
         "file": "daily-360.png",
         "width": 360,
         "height": 3697,
-        "sha256": "494fde5f512a82a1bfc3fd4201f98857ee3916298c46564d8a6f6ac5a41517c5"
+        "sha256": "29869829586c731bc522675fd0a2fff8403ba9e0b096fa6e060e7a79c88e4f9d"
       },
       "layout": {
         "clientWidth": 360,
@@ -157,7 +157,7 @@
         "file": "daily-1280.png",
         "width": 1280,
         "height": 3012,
-        "sha256": "f1d0aa34dc3f16766776c79765f807ea9be4715f4839e4baff6c113100d702cc"
+        "sha256": "ec5e3773a158cb27a2d032b0e9e142edd6da9292cd02974f6676aeb2f1b7cc61"
       },
       "layout": {
         "clientWidth": 1280,
@@ -203,7 +203,7 @@
         "file": "tomorrow-1280.png",
         "width": 1280,
         "height": 2962,
-        "sha256": "3469d5c787171edd94d473220151acd6d8d0b54e347e271c596366d16189677c"
+        "sha256": "2651dfdc64720d3d562f46befe6c3c55daedfff5f14cce592bd5debca4cc0da0"
       },
       "layout": {
         "clientWidth": 1280,
