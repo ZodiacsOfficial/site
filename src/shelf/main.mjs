@@ -106,7 +106,9 @@ async function mount(root, records) {
 
   const navBar = document.querySelector('.wnav');
   const head = root.querySelector('.stage__head');
-  const chrome = root.querySelector('.stage__chrome');
+  // The standalone page and the embed name their chrome differently; the
+  // band above it is measured the same way either way.
+  const chrome = root.querySelector('.stage__chrome, .gband__chrome');
   const GAP = 20;
   const FLOOR = 140;
 

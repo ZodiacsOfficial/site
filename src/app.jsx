@@ -1374,7 +1374,7 @@
             lives, and how public blockchain records become symbolic context.
           </p>
 
-          <Selector active={active} setActive={setActive} />
+          {!GALLERY_LIVE && <Selector active={active} setActive={setActive} />}
 
           <FeaturedCard sign={sign} animKey={animKey} />
         </section>
@@ -1640,6 +1640,88 @@
           <div className="strip__sub">
             Swipe or scroll to choose
           </div>
+        </section>
+      );
+    }
+
+    /* The gallery band — the twelve Gold Sculptures as the hub's selector.
+       Set before first paint by the head probe; constant for the page's
+       life, so the strip and the band never both render. */
+    const GALLERY_LIVE = document.documentElement.classList.contains('gallery-live');
+
+    let galleryBundleRequested = false;
+
+    function GalleryBand({ active, setActive }) {
+      const stageRef = useRef(null);
+      // The slug the scene last announced — the guard that keeps the
+      // selection loop (scene → state → scene) from echoing.
+      const gallerySlug = useRef(null);
+      const slug = (SIGNS.find(s => s.ticker === active) ?? SIGNS[0]).asset.sign;
+
+      // The scene bundle carries Three.js; it is fetched only as the band
+      // approaches the viewport, and only once.
+      useEffect(() => {
+        const node = stageRef.current;
+        if (!node) return undefined;
+        const inject = () => {
+          if (galleryBundleRequested) return;
+          galleryBundleRequested = true;
+          const script = document.createElement('script');
+          script.src = '/assets/gallery.js';
+          script.defer = true;
+          document.body.appendChild(script);
+        };
+        if (!('IntersectionObserver' in window)) { inject(); return undefined; }
+        const io = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { inject(); io.disconnect(); }
+        }, { rootMargin: '400px 0px' });
+        io.observe(node);
+        return () => io.disconnect();
+      }, []);
+
+      // Scene → page: walking the row selects the sign everywhere below.
+      useEffect(() => {
+        const node = stageRef.current;
+        if (!node) return undefined;
+        const onSign = (event) => {
+          const next = event?.detail?.slug;
+          if (!next) return;
+          gallerySlug.current = next;
+          const match = SIGNS.find(s => s.asset.sign === next);
+          if (match) setActive(match.ticker);
+        };
+        node.addEventListener('zodiacs:gallery-sign', onSign);
+        return () => node.removeEventListener('zodiacs:gallery-sign', onSign);
+      }, [setActive]);
+
+      // Page → scene: any other selector turns the row to match.
+      useEffect(() => {
+        const node = stageRef.current;
+        if (!node || gallerySlug.current === slug) return;
+        node.dispatchEvent(new CustomEvent('zodiacs:gallery-focus', { detail: { slug } }));
+      }, [slug]);
+
+      return (
+        <section
+          ref={stageRef}
+          className="gband"
+          aria-label="The Gallery — the twelve Gold Sculptures"
+          data-gallery-stage=""
+          data-gallery-embed=""
+          data-gallery-initial={slug}
+        >
+          <div className="gband__mount" data-gallery-canvas="" />
+          <div className="gband__chrome">
+            <div className="rail" data-gallery-rail="" role="group" aria-label="The twelve sculptures" />
+            <a className="gband__open" data-gallery-open="" href="/registry/gallery/">
+              <span>View in the gallery</span><span className="arr" aria-hidden="true">→</span>
+            </a>
+            <p className="gband__hint" data-gallery-hint="">
+              Drag sideways to walk the row. Selecting the front sculpture
+              opens its page in the gallery.
+            </p>
+          </div>
+          <p className="sr-only" role="status" aria-live="polite" data-gallery-live="" />
         </section>
       );
     }
@@ -3590,6 +3672,9 @@
           <div className="grain" aria-hidden="true" />
           <Header />
           <CineHero sign={sign} />
+          {GALLERY_LIVE && (
+            <GalleryBand active={activeTicker} setActive={setActiveTicker} />
+          )}
           <div className="zd">
             <Hero
               sign={sign}
