@@ -880,13 +880,13 @@ export default function EclipticView({
           </p>
         )}
 
-        {declAspects.length > 1 && (
+        {!duo && declAspects.length > 1 && (
           <p class="ev-note ev-fine">
             {fill(copy.declMore, { n: String(declAspects.length) })}
           </p>
         )}
 
-        {strayest && (
+        {!duo && strayest && (
           <p class="ev-note">
             {fill(copy.outOfBounds, {
               body: planetLabel(textLocale, strayest.body),
@@ -903,7 +903,7 @@ export default function EclipticView({
           </p>
         )}
 
-        {nodeLon !== null && <p class="ev-note ev-fine">{copy.moonMean}</p>}
+        {!duo && nodeLon !== null && <p class="ev-note ev-fine">{copy.moonMean}</p>}
         {scrub !== 0 && <p class="ev-note ev-fine">{copy.scrubNote}</p>}
         {!duo && !sited && <p class="ev-note">{copy.noAngles}</p>}
         {copy.englishNote && <p class="ev-note ev-note--marker">{copy.englishNote}</p>}
