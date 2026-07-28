@@ -722,7 +722,7 @@ const terms: GlossaryTerm[] = [
     slug: 'sect',
     term: 'Sect',
     definition: 'Sect divides charts into those born by day and those born by night, according to whether the Sun stood above or below the horizon at the moment of birth. The tradition sorts the planets by the same halves: Sun, Jupiter, and Saturn belong to the day, and Moon, Venus, and Mars to the night, with whichever group matches the chart said to be in sect. Mercury takes the half it rises in. Sect needs a birth time and place, because it needs a horizon.',
-    receipt: 'Day chart when the Sun’s altitude at birth is above 0°',
+    receipt: 'Day chart when the Sun’s altitude at birth is 0° or above',
     aliases: ['day chart', 'night chart', 'diurnal chart', 'nocturnal chart'],
     related: ['sect-light', 'ascendant', 'no-time-chart', 'luminary'],
     link: { href: '/birth-chart/', label: 'Find a chart’s sect' },
