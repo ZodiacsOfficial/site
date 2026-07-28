@@ -245,6 +245,16 @@ for (const file of await htmlFiles(dist)) {
     if (!Array.isArray(organization?.sameAs) || organization.sameAs.length < 1) {
       failures.push(`${label}: homepage Organization needs sameAs profiles`);
     }
+    const registryProfiles = Array.isArray(organization?.sameAs)
+      ? organization.sameAs.filter((profile) => (
+          typeof profile === 'string' && /astrofolio/i.test(profile)
+        ))
+      : [];
+    if (registryProfiles.length > 0) {
+      failures.push(
+        `${label}: consumer Organization sameAs crosses the Registry boundary: ${registryProfiles.join(', ')}`,
+      );
+    }
     if (!faq || !Array.isArray(faq.mainEntity) || faq.mainEntity.length < 1) {
       failures.push(`${label}: homepage is missing its FAQPage questions`);
     }
