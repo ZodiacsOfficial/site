@@ -50,12 +50,12 @@ describe('assistant site context', () => {
 
     expect(counts).toEqual({
       birthdays: 366,
-      consumerRoutes: 668,
+      consumerRoutes: 669,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 41,
+      staticPages: 42,
       tools: 17,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');

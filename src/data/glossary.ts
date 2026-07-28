@@ -337,7 +337,7 @@ const terms: GlossaryTerm[] = [
     definition: 'Declination is angular distance north or south of the celestial equator, which is a different reference plane from the ecliptic and so a different measurement from ecliptic latitude. A chart wheel does not carry it: the wheel plots zodiac longitude only. The dimensional view on the birth-chart page computes declination for the ten Sun-through-Pluto bodies and draws the circles they ride.',
     receipt: 'Bounded by the obliquity of the ecliptic, ±23.44°',
     related: ['ecliptic-latitude', 'out-of-bounds', 'parallel', 'contraparallel'],
-    link: { href: '/birth-chart/', label: 'See declination in a chart' },
+    link: { href: '/birth-chart/three-dimensions/#declination', label: 'Read how declination works' },
   },
   {
     slug: 'out-of-bounds',
@@ -346,7 +346,7 @@ const terms: GlossaryTerm[] = [
     receipt: 'Out of bounds when |declination| > 23.44°',
     aliases: ['oob'],
     related: ['declination', 'ecliptic', 'moon'],
-    link: { href: '/birth-chart/', label: 'Check a chart for out-of-bounds bodies' },
+    link: { href: '/birth-chart/three-dimensions/#out-of-bounds', label: 'Read how out of bounds works' },
   },
   {
     slug: 'parallel',
@@ -355,7 +355,7 @@ const terms: GlossaryTerm[] = [
     receipt: 'Same-side declinations within 1° · 1.5° with Sun or Moon',
     aliases: ['declination aspect'],
     related: ['contraparallel', 'declination', 'conjunction', 'aspect'],
-    link: { href: '/birth-chart/', label: 'Find the parallels in a chart' },
+    link: { href: '/birth-chart/three-dimensions/#parallels', label: 'Read how parallels work' },
   },
   {
     slug: 'contraparallel',
@@ -363,7 +363,7 @@ const terms: GlossaryTerm[] = [
     definition: 'A contraparallel joins two bodies at the same declination on opposite sides of the celestial equator, mirrored across it, and traditional practice reads it much as it reads an opposition. Like the parallel it is invisible on a chart wheel, which plots zodiac longitude and not declination. This site marks contraparallels within 1° of exact, or 1.5° when the Sun or Moon is one of the pair.',
     receipt: 'Mirrored declinations within 1° · 1.5° with Sun or Moon',
     related: ['parallel', 'declination', 'opposition', 'aspect'],
-    link: { href: '/birth-chart/', label: 'Find the contraparallels in a chart' },
+    link: { href: '/birth-chart/three-dimensions/#parallels', label: 'Read how contraparallels work' },
   },
   {
     slug: 'ephemeris',
@@ -725,7 +725,7 @@ const terms: GlossaryTerm[] = [
     receipt: 'Day chart when the Sun’s altitude at birth is 0° or above',
     aliases: ['day chart', 'night chart', 'diurnal chart', 'nocturnal chart'],
     related: ['sect-light', 'ascendant', 'no-time-chart', 'luminary'],
-    link: { href: '/birth-chart/', label: 'Find a chart’s sect' },
+    link: { href: '/birth-chart/three-dimensions/#sect', label: 'Read how sect works' },
   },
   {
     slug: 'sect-light',
@@ -733,7 +733,7 @@ const terms: GlossaryTerm[] = [
     definition: 'The sect light is the luminary that belongs to the chart’s own half of the day: the Sun in a chart born by day, the Moon in one born by night. Traditional practice gives it first weight among the ten bodies. The dimensional view on the birth-chart page rings whichever luminary holds the role.',
     receipt: 'Sun by day · Moon by night',
     related: ['sect', 'luminary', 'sun', 'moon'],
-    link: { href: '/birth-chart/', label: 'See which luminary leads' },
+    link: { href: '/birth-chart/three-dimensions/#sect', label: 'Read how the sect light works' },
   },
   {
     slug: 'personal-planets',

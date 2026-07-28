@@ -12,6 +12,7 @@ const targetPresence = /\/learn\/glossary\/#/;
 const ASTRO_LINK_COUNTS = new Map(Object.entries({
   'src/pages/baby-zodiac/index.astro': 5,
   'src/pages/birth-chart/index.astro': 5,
+  'src/pages/birth-chart/three-dimensions/index.astro': 1,
   'src/pages/birthday/index.astro': 5,
   'src/pages/compatibility/index.astro': 2,
   'src/pages/eclipses/index.astro': 3,
@@ -124,7 +125,7 @@ describe('glossary crosslinks', () => {
       }
     }
 
-    expect(linkedFiles).toHaveLength(152);
-    expect(linkCount).toBe(234);
+    expect(linkedFiles).toHaveLength(153);
+    expect(linkCount).toBe(235);
   });
 });
