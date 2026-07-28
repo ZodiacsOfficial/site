@@ -1018,8 +1018,9 @@ const indexablePeoplePaths = new Set(
     .map((person) => `/people/${person.slug}/`),
 );
 const sitemapPolicy = {
-  // 2420 = 2419 + /birth-chart/three-dimensions/ (2026-07-28).
-  total: 2420 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
+  // 2421 = 2419 + /birth-chart/three-dimensions/ + /registry/gallery/
+  // (both 2026-07-28).
+  total: 2421 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true),
   compatibilityPairs: 78,
   birthdays: 1830,

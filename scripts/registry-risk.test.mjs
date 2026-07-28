@@ -51,6 +51,30 @@ describe('Registry risk and trust copy', () => {
     expect(signSource).not.toContain('Acquire via Jupiter');
   });
 
+  it("keeps the Gallery card's acquisition copy on the approved wording", async () => {
+    const [generator, page] = await Promise.all([
+      readFile(resolve(root, 'scripts/build-shelf.mjs'), 'utf8'),
+      readFile(resolve(root, 'public/registry/gallery/index.html'), 'utf8'),
+    ]);
+
+    for (const source of [generator, page]) {
+      const text = compact(source);
+      // The CTA labels the risk suite pins on the other surfaces.
+      expect(text).toContain('Open Jupiter route');
+      expect(text).toContain('View market data');
+      // The market-panel risk sentence and the read-only stance, verbatim.
+      expect(text).toContain('not a valuation or recommendation');
+      expect(text).toContain('can lose all market value');
+      expect(text).toContain('does not request custody, signing, approvals, or transactions');
+      expect(text).toContain('/disclosure/');
+      expect(source).not.toContain('Acquire via Jupiter');
+    }
+
+    // The route is built at runtime from the live registry answer — the mint
+    // itself is never baked into the page.
+    expect(page).not.toContain('jup.ag/swap/');
+  });
+
   it('keeps the generated Registry application aligned with its canonical source', async () => {
     const bundle = await readFile(resolve(root, 'public/assets/app.js'), 'utf8');
     expect(bundle).toContain('third-party onchain services');

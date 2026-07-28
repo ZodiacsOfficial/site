@@ -113,6 +113,16 @@
       "permanent": true
     },
     {
+      "source": "/registry/shelf",
+      "destination": "/registry/gallery/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/shelf/",
+      "destination": "/registry/gallery/",
+      "permanent": true
+    },
+    {
       "source": "/registry/aura",
       "destination": "/registry/collection/",
       "permanent": true
@@ -294,6 +304,15 @@
       ]
     },
     {
+      "source": "/assets/gallery.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/assets/zodiac-icons/(.*)",
       "headers": [
         {
@@ -303,7 +322,7 @@
       ]
     },
     {
-      "source": "/assets/(art|nuggets|og)/(.*)",
+      "source": "/assets/(art|nuggets|og|sculptures)/(.*)",
       "headers": [
         {
           "key": "Cache-Control",

@@ -12,6 +12,12 @@ reverse-engineer filenames from `index.html`.
 - `nuggets/thumb/<sign>.png` - smaller figure thumbnails for grid and mobile UI.
 - `cabinet-materials/<material>/<sign>.{avif,webp}` - normalized 256px
   Bronze, Silver, and Gold Cabinet of Twelve editions with a shared 14% inset.
+- `sculptures/{512,1024}/<sign>.webp` - the Gallery's figure plates: the same
+  sculptures fitted into a square, colour-bled into the transparent margin so a
+  resampled edge keeps its gold. Row tier is 512, hero tier is 1024, and the
+  hero layout halves exactly onto the row so one texture box serves both.
+  Rebuild with `npm run data:figure-assets`, which also retraces the
+  silhouettes into `src/shelf/figures.geometry.json`.
 - `og/share.png` - 1200 x 630 social sharing image.
 - `manifest.json` - machine-readable inventory of every PNG, including dimensions and byte sizes.
 
