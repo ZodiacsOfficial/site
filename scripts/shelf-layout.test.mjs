@@ -3,6 +3,7 @@ import { describe, expect, it } from 'vitest';
 
 import {
   GALLERY,
+  VITRINE,
   angleStep,
   approach,
   clampFocus,
@@ -11,10 +12,15 @@ import {
   fitScale,
   floorY,
   isVisible,
+  lerpContent,
+  lerpRect,
   nearestIndex,
   neighbourPush,
+  rowContent,
   shortestTurn,
   signFromHash,
+  stageContent,
+  vitrineFrame,
   wheelToFocusDelta,
 } from '../src/shelf/layout.mjs';
 import { figureOf, readFigures, classification } from '../src/shelf/figures.mjs';
@@ -101,6 +107,126 @@ describe('gallery geometry', () => {
 
   it('puts the floor one plinth below the feet', () => {
     expect(floorY(GALLERY)).toBeCloseTo(GALLERY.baseY - GALLERY.plinthHeight, 12);
+  });
+});
+
+describe('framing the vitrine', () => {
+  const CANVAS = { canvasWidth: 1440, canvasHeight: 900 };
+  // Where a point lands on the canvas, in CSS pixels from the top-left, given
+  // a frame. The inverse of the arithmetic under test — a figure standing at
+  // the world origin projects to the middle of its band.
+  // Panning the camera moves the image the other way, hence both inversions.
+  const project = (frame, canvas, worldX, worldY) => {
+    const perPixel = frame.worldHeight / canvas.canvasHeight;
+    return {
+      x: (canvas.canvasWidth / 2) + ((worldX - frame.panX) / perPixel),
+      y: (canvas.canvasHeight / 2) - ((worldY - frame.panY) / perPixel),
+    };
+  };
+
+  it('fills the band it is given, and no more', () => {
+    const content = { height: 1.8, width: 1.2, centerY: 0, centerZ: 0 };
+    const rect = { x: 0, y: 300, width: 1440, height: 400 };
+    const frame = vitrineFrame({ ...CANVAS, rect, content, margin: 1 });
+    // The content's height covers exactly the band's height in pixels.
+    const perPixel = frame.worldHeight / CANVAS.canvasHeight;
+    expect(content.height / perPixel).toBeCloseTo(rect.height, 6);
+  });
+
+  it('centres the content in the band, not in the canvas', () => {
+    const content = { height: 1.4, width: 1, centerY: 0, centerZ: 0 };
+    // A band low and to the left — the shape an open card leaves behind.
+    const rect = { x: 0, y: 420, width: 900, height: 380 };
+    const frame = vitrineFrame({ ...CANVAS, rect, content, margin: 1 });
+    const middle = project(frame, CANVAS, 0, 0);
+    expect(middle.x).toBeCloseTo(rect.x + (rect.width / 2), 6);
+    expect(middle.y).toBeCloseTo(rect.y + (rect.height / 2), 6);
+  });
+
+  it('keeps the whole figure inside the band on every viewport tried', () => {
+    const viewports = [
+      { canvasWidth: 360, canvasHeight: 640 },
+      { canvasWidth: 390, canvasHeight: 844 },
+      { canvasWidth: 768, canvasHeight: 1024 },
+      { canvasWidth: 1024, canvasHeight: 768 },
+      { canvasWidth: 1440, canvasHeight: 900 },
+      { canvasWidth: 1920, canvasHeight: 1080 },
+    ];
+    for (const canvas of viewports) {
+      // The worst case: the tallest cast, in the tightest plausible band.
+      const content = stageContent(GALLERY.height, GALLERY.maxWidth / GALLERY.height);
+      const rect = {
+        x: 0,
+        y: 90,
+        width: canvas.canvasWidth * 0.62,
+        height: canvas.canvasHeight * 0.34,
+      };
+      const frame = vitrineFrame({ ...canvas, rect, content, margin: 1 });
+      const head = project(frame, canvas, 0, content.height / 2);
+      const feet = project(frame, canvas, 0, -content.height / 2);
+      const label = `${canvas.canvasWidth}x${canvas.canvasHeight}`;
+      expect(head.y, label).toBeGreaterThanOrEqual(rect.y - 1e-6);
+      expect(feet.y, label).toBeLessThanOrEqual(rect.y + rect.height + 1e-6);
+      const left = project(frame, canvas, -content.width / 2, 0);
+      const right = project(frame, canvas, content.width / 2, 0);
+      expect(left.x, label).toBeGreaterThanOrEqual(rect.x - 1e-6);
+      expect(right.x, label).toBeLessThanOrEqual(rect.x + rect.width + 1e-6);
+    }
+  });
+
+  it('stands further back the shallower the band', () => {
+    const content = rowContent();
+    const frame = (height) => vitrineFrame({
+      ...CANVAS, content, margin: 1, rect: { x: 0, y: 0, width: 1440, height },
+    });
+    expect(frame(300).distance).toBeGreaterThan(frame(600).distance);
+    // And never so far that the row becomes specks, nor so close that a
+    // figure is in your face — whatever furniture the page grows.
+    for (const height of [40, 120, 400, 880, 4000]) {
+      const { worldHeight } = frame(height);
+      expect(worldHeight).toBeGreaterThanOrEqual(VITRINE.minWorldHeight - 1e-9);
+      expect(worldHeight).toBeLessThanOrEqual(VITRINE.maxWorldHeight + 1e-9);
+    }
+  });
+
+  it('survives a band the page has not measured yet', () => {
+    const frame = vitrineFrame({
+      canvasWidth: 0,
+      canvasHeight: 0,
+      rect: { x: 0, y: 0, width: 0, height: 0 },
+      content: rowContent(),
+      margin: 1,
+    });
+    expect(Number.isFinite(frame.distance)).toBe(true);
+    expect(Number.isFinite(frame.panX)).toBe(true);
+    expect(Number.isFinite(frame.panY)).toBe(true);
+    expect(frame.distance).toBeGreaterThan(0);
+  });
+
+  it('describes the row as the box the twelve actually occupy', () => {
+    const row = rowContent();
+    const top = row.centerY + (row.height / 2);
+    const bottom = row.centerY - (row.height / 2);
+    // Nothing sticks out: the tallest head is inside the top, the plinths and
+    // their shadows are inside the bottom.
+    expect(top).toBeGreaterThanOrEqual(GALLERY.baseY + GALLERY.height);
+    expect(bottom).toBeLessThanOrEqual(floorY(GALLERY));
+  });
+
+  it('crosses from the row to one figure without a jump', () => {
+    const row = rowContent();
+    const stage = stageContent(1.6, 0.8);
+    expect(lerpContent(row, stage, 0)).toEqual(row);
+    expect(lerpContent(row, stage, 1)).toEqual(stage);
+    const half = lerpContent(row, stage, 0.5);
+    expect(half.height).toBeCloseTo((row.height + stage.height) / 2, 12);
+    expect(half.centerZ).toBeCloseTo(VITRINE.stageZ / 2, 12);
+
+    const a = { x: 0, y: 100, width: 800, height: 400 };
+    const b = { x: 0, y: 60, width: 500, height: 300 };
+    expect(lerpRect(a, b, 0)).toEqual(a);
+    expect(lerpRect(a, b, 1)).toEqual(b);
+    expect(lerpRect(a, b, 0.25).width).toBeCloseTo(725, 12);
   });
 });
 

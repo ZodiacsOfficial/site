@@ -148,6 +148,9 @@ const css = `
       --mono: 'JetBrains Mono', ui-monospace, 'SFMono-Regular', monospace;
       --ease: cubic-bezier(0.4, 0, 0.2, 1);
       --sign: #C6CCDA;
+      /* The card's column on wide viewports — the stage measures the room it
+         leaves, and the controls step out of its way by the same amount. */
+      --card-w: clamp(392px, 26vw, 460px);
     }
 
     * { box-sizing: border-box; }
@@ -175,7 +178,6 @@ const css = `
     /* No scene, no controls — the register below is the whole page. */
     html:not(.gallery-live) .stage__chrome,
     html:not(.gallery-live) .stage__mount,
-    html:not(.gallery-live) .stage__scrim,
     html:not(.gallery-live) .stage__scrim-top { display: none; }
     .stage::before {
       content: ''; position: absolute; inset: 0; z-index: -2; pointer-events: none;
@@ -191,48 +193,49 @@ const css = `
       content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
       background: radial-gradient(96% 70% at 50% 50%, transparent 52%, rgba(6,7,9,0.9) 100%);
     }
-    /* Volumes scroll past the title on wide screens; the title keeps its
-       contrast without a panel behind it. */
-    .stage__scrim {
-      position: absolute; inset: 0 auto 0 0; width: min(38%, 540px);
-      z-index: 2; pointer-events: none; display: none;
-      background: linear-gradient(to right, rgba(6,7,9,0.82) 0%, rgba(6,7,9,0.42) 46%, rgba(6,7,9,0) 100%);
-      transition: opacity 420ms var(--ease);
-    }
-    @media (min-width: 900px) { .stage.is-ready .stage__scrim { display: block; } }
-    .stage.is-open .stage__scrim { opacity: 0; }
-    /* And a band across the top, so a tall figure passing behind the title
-       dims before the lettering rather than fighting it. */
+    /* The camera is framed to the band left between the masthead and the
+       controls, so nothing passes behind the lettering by design. This stays
+       as insurance for the moment a figure is drawn out and crosses it. */
     .stage__scrim-top {
-      position: absolute; inset: 0 0 auto 0; height: 240px;
+      position: absolute; inset: 0 0 auto 0; height: 190px;
       z-index: 2; pointer-events: none; opacity: 0;
       background: linear-gradient(to bottom,
-        rgba(6,7,9,0.92) 0%, rgba(6,7,9,0.55) 55%, rgba(6,7,9,0) 100%);
+        rgba(6,7,9,0.86) 0%, rgba(6,7,9,0.38) 58%, rgba(6,7,9,0) 100%);
       transition: opacity 700ms var(--ease);
     }
     .stage.is-ready .stage__scrim-top { opacity: 1; }
-    .stage.is-open .stage__scrim-top { opacity: 0; }
 
+    /* A masthead, not a hero: the sculptures are the page, and every pixel
+       this block gives back is a pixel they stand in. */
     .stage__head {
       position: relative; z-index: 3; pointer-events: none;
-      padding: calc(112px + env(safe-area-inset-top)) 26px 0;
-      max-width: 560px;
+      padding: calc(100px + env(safe-area-inset-top)) 26px 0;
+      max-width: 520px;
       transition: opacity 420ms var(--ease);
     }
     .stage__head a { pointer-events: auto; }
-    /* A figure drawn forward is the subject; the title steps back for it, and gets
-       out of the way entirely where the card takes the lower screen. */
-    .stage.is-open .stage__head { opacity: 0.12; }
-    @media (max-width: 899.5px) { .stage.is-open .stage__head { opacity: 0; } }
+    /* A figure drawn forward is the subject; the title leaves entirely rather
+       than lingering behind it at a quarter strength. */
+    .stage.is-open .stage__head { opacity: 0; }
     .kicker {
-      margin: 0 0 10px; font-style: italic; font-size: 15px; color: var(--ink-mute);
+      margin: 0 0 7px; font-style: italic; font-size: 14.5px; color: var(--ink-mute);
     }
     .stage h1 {
       margin: 0; font-family: var(--serif); font-weight: 400;
-      font-size: clamp(38px, 6.4vw, 62px); line-height: 1.02; letter-spacing: -0.012em;
+      font-size: clamp(32px, 4.6vw, 50px); line-height: 1.04; letter-spacing: -0.012em;
     }
     .stage__lede {
-      margin: 14px 0 0; max-width: 44ch; color: var(--ink-2); font-size: 17px;
+      margin: 10px 0 0; max-width: 42ch; color: var(--ink-2); font-size: 16px;
+      line-height: 1.5;
+    }
+    /* Short viewports spend their height on the sculptures. */
+    @media (max-height: 760px) {
+      .stage__head { padding-top: calc(88px + env(safe-area-inset-top)); }
+      .stage__lede { display: none; }
+    }
+    @media (max-height: 620px) {
+      .kicker { display: none; }
+      .stage h1 { font-size: clamp(28px, 4vw, 38px); }
     }
 
     .stage__mount {
@@ -248,18 +251,37 @@ const css = `
     .stage__chrome, .stage__mount { opacity: 0; transition: opacity 700ms var(--ease); }
     .stage.is-ready .stage__chrome, .stage.is-ready .stage__mount { opacity: 1; }
     .stage:not(.is-ready) .stage__chrome { pointer-events: none; }
+    /* Narrow viewports hand the lower screen to the card, so the controls
+       would only show through it. The card carries its own way back. The
+       delayed visibility takes them out of the tab order once they have
+       faded, rather than leaving invisible buttons to walk into. */
+    @media (max-width: 899.5px) {
+      .stage.is-open .stage__chrome {
+        opacity: 0; pointer-events: none; visibility: hidden;
+        transition: opacity 420ms var(--ease), visibility 0s 420ms;
+      }
+    }
 
     .stage__chrome {
       position: relative; z-index: 3; margin-top: auto;
-      display: flex; flex-direction: column; align-items: center; gap: 13px;
-      padding: 26px 20px calc(24px + env(safe-area-inset-bottom));
+      display: flex; flex-direction: column; align-items: center; gap: 12px;
+      padding: 22px 20px calc(22px + env(safe-area-inset-bottom));
+      transition: padding-right 480ms var(--ease);
     }
-    /* The sculptures pass behind the controls, so the controls get a floor. */
+    /* The plinths stop above this line, but the floor they stand on and the
+       shadows they cast run under it — so the controls get a floor of
+       their own. */
     .stage__chrome::before {
-      content: ''; position: absolute; inset: -70px 0 0; z-index: -1;
+      content: ''; position: absolute; inset: -80px 0 0; z-index: -1;
       pointer-events: none;
       background: linear-gradient(to bottom, rgba(6,7,9,0) 0%, rgba(6,7,9,0.72) 48%, rgba(6,7,9,0.94) 100%);
     }
+    /* With a card open beside the piece, the controls centre themselves under
+       the piece rather than under the page. */
+    @media (min-width: 900px) {
+      .stage.is-open .stage__chrome { padding-right: calc(var(--card-w) + 68px); }
+    }
+    @media (max-height: 620px) { .stage__hint { display: none; } }
 
     .rail {
       display: flex; align-items: center; gap: 2px; padding: 5px;
@@ -308,42 +330,54 @@ const css = `
     /* ── The records card ───────────────────────────────────────────── */
 
     .card {
-      position: absolute; z-index: 4; overflow-y: auto;
+      position: absolute; z-index: 4; overflow-y: auto; overscroll-behavior: contain;
       background: var(--surface); border: 1px solid var(--hair-2);
       backdrop-filter: saturate(150%) blur(22px);
       -webkit-backdrop-filter: saturate(150%) blur(22px);
       box-shadow: 0 30px 80px -30px rgba(0,0,0,0.9);
       opacity: 0; transition: opacity 420ms var(--ease), transform 420ms var(--ease);
+      /* The record runs longer than the card on every viewport — the addresses
+         are always below the fold. Dissolving the last few millimetres says
+         so plainly, where a hard edge would read as the end of the record. */
+      -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 42px), rgba(0,0,0,0.08) 100%);
+      mask-image: linear-gradient(to bottom, #000 calc(100% - 42px), rgba(0,0,0,0.08) 100%);
     }
     .card[hidden] { display: none; }
     .card.is-open { opacity: 1; transform: none; }
     @media (min-width: 900px) {
       .card {
-        top: 50%; right: 34px; width: min(392px, 38vw);
-        max-height: min(74svh, 640px); transform: translate(18px, -50%);
-        border-radius: 20px; padding: 26px 26px 28px;
+        top: 50%; right: 34px; width: var(--card-w);
+        max-height: min(76svh, 660px); transform: translate(18px, -50%);
+        border-radius: 20px; padding: 26px 26px 34px;
       }
       .card.is-open { transform: translate(0, -50%); }
     }
     @media (max-width: 899.5px) {
       .card {
-        left: 12px; right: 12px; bottom: 12px; max-height: 58svh;
-        transform: translateY(18px); border-radius: 20px; padding: 22px 20px 24px;
+        left: 12px; right: 12px; bottom: 12px; max-height: 52svh;
+        transform: translateY(18px); border-radius: 20px; padding: 22px 20px 30px;
       }
     }
 
+    /* Sticky rather than absolute: the record runs longer than the card on
+       most viewports, and a close control that scrolls away is no control. */
     .card__close {
-      position: absolute; top: 14px; right: 14px; width: 32px; height: 32px;
+      position: sticky; top: 0; z-index: 2; float: right;
+      width: 32px; height: 32px; margin-left: 14px;
       display: grid; place-items: center; border-radius: 50%; cursor: pointer;
-      border: 1px solid var(--hair); background: rgba(198,204,218,0.05);
+      border: 1px solid var(--hair); background: rgba(13,16,23,0.88);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
       color: var(--ink-2); font-family: var(--sans); font-size: 16px; line-height: 1;
       transition: background 200ms var(--ease), color 200ms var(--ease);
     }
     .card__close:hover { background: rgba(198,204,218,0.13); color: var(--ink); }
     .card__close:focus-visible { outline: 2px solid var(--sign); outline-offset: 2px; }
 
+    /* Tall enough to swallow the floated close button, so the name below it
+       starts at the margin rather than indented around it. */
     .card__lot {
-      margin: 0 0 10px; font-family: var(--mono); font-size: 10px;
+      margin: 0 0 8px; min-height: 32px; display: flex; align-items: center;
+      font-family: var(--mono); font-size: 10px;
       letter-spacing: 0.18em; text-transform: uppercase; color: var(--sign);
     }
     .card__name {
@@ -356,7 +390,7 @@ const css = `
 
     /* ── The shop window ── */
     .card__market {
-      margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid var(--hair);
+      margin: 16px 0 0; padding: 15px 0 0; border-top: 1px solid var(--hair);
     }
     .card__market-state { margin: 0; font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim); }
     .card__price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
@@ -409,15 +443,15 @@ const css = `
       font-variant-numeric: tabular-nums;
     }
     .card__risk {
-      margin: 14px 0 0; font-family: var(--serif); font-style: italic;
-      font-size: 11.5px; line-height: 1.55; color: var(--ink-dim);
+      margin: 13px 0 0; font-family: var(--serif); font-style: italic;
+      font-size: 11px; line-height: 1.5; color: var(--ink-dim);
     }
     .card__risk a { color: var(--ink-mute); }
     .card__risk a:hover { color: var(--ink-2); }
 
     .card__facts {
-      margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--hair);
-      display: grid; grid-template-columns: auto 1fr; gap: 9px 18px;
+      margin: 16px 0 0; padding: 15px 0 0; border-top: 1px solid var(--hair);
+      display: grid; grid-template-columns: auto 1fr; gap: 8px 18px;
     }
     .card__facts dt {
       font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em;
@@ -427,7 +461,7 @@ const css = `
       margin: 0; font-size: 15.5px; color: var(--ink-2); text-align: right;
     }
 
-    .card__records { margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--hair); display: grid; gap: 10px; }
+    .card__records { margin: 16px 0 0; padding: 15px 0 0; border-top: 1px solid var(--hair); display: grid; gap: 10px; }
     .rec { display: grid; gap: 6px; }
     .rec__head { display: flex; align-items: baseline; gap: 8px; }
     .rec__chain {
@@ -619,16 +653,14 @@ ${JSON.stringify(jsonLd, null, 2)}
   <main>
     <section class="stage" data-gallery-stage aria-labelledby="gallery-title">
       <div class="stage__mount" data-gallery-canvas></div>
-      <div class="stage__scrim" aria-hidden="true"></div>
       <div class="stage__scrim-top" aria-hidden="true"></div>
 
       <header class="stage__head">
-        <p class="kicker">Twelve gold sculptures, one to a sign.</p>
+        <p class="kicker">One sculpture to a sign, twelve in all.</p>
         <h1 id="gallery-title">The Gallery</h1>
         <p class="stage__lede">
-          The Gold Sculptures of the Twelve, one to a sign. Draw one forward
-          for its classification, its dates, and its addresses on Solana and
-          Base.
+          Draw a sculpture forward to turn it in the light, read its
+          classification and dates, and see its addresses on Solana and Base.
         </p>
       </header>
 
@@ -638,9 +670,9 @@ ${JSON.stringify(jsonLd, null, 2)}
           <button class="stage__open" type="button" data-gallery-open>View Aries</button>
           <a class="stage__scroll" href="#register">The register ↓</a>
         </div>
-        <p class="stage__hint">
-          Drag or scroll to move along the row. Select a sculpture to draw it
-          forward, then drag to turn it right around. Escape returns it.
+        <p class="stage__hint" data-gallery-hint>
+          Drag or scroll along the row. Select a sculpture to draw it forward,
+          then drag to turn it. Escape returns it.
         </p>
       </div>
 

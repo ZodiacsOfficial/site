@@ -16,11 +16,26 @@ const WSOL_MINT = 'So11111111111111111111111111111111111111112';
 
 const DEX_API = 'https://api.dexscreener.com/latest/dex/pairs/';
 
+// A request that hangs is a failure too. Without a deadline the card sits on
+// "Reading the registry…" for as long as the other end holds the socket open,
+// which reads as broken where the honest unavailable state reads as offline.
+const REGISTRY_DEADLINE = 12000;
+const MARKET_DEADLINE = 8000;
+
+/** fetch with a deadline. AbortController rather than AbortSignal.timeout,
+ *  which the bundle's Safari 15 target does not have. */
+function fetchWithin(url, ms, init) {
+  const controller = new AbortController();
+  const timer = window.setTimeout(() => controller.abort(), ms);
+  return fetch(url, { ...init, signal: controller.signal })
+    .finally(() => window.clearTimeout(timer));
+}
+
 let pending = null;
 
 function registry() {
   if (!pending) {
-    pending = fetch(REGISTRY_URL, { cache: 'no-store' })
+    pending = fetchWithin(REGISTRY_URL, REGISTRY_DEADLINE, { cache: 'no-store' })
       .then((response) => {
         if (!response.ok) throw new Error(`registry ${response.status}`);
         return response.json();
@@ -44,7 +59,7 @@ function marketQuote(market) {
   if (!quotes.has(key)) {
     const url = DEX_API
       + `${encodeURIComponent(market.chainId)}/${encodeURIComponent(market.pairId)}`;
-    const promise = fetch(url)
+    const promise = fetchWithin(url, MARKET_DEADLINE)
       .then((response) => {
         if (!response.ok) throw new Error(`market ${response.status}`);
         return response.json();

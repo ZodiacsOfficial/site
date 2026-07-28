@@ -359,3 +359,78 @@ prev/next on the card, analytics events, dedicated OG card.
 
 Bundle after round two: ~161 KB gzip (cap 180). No dependency changes, so no
 lockfile movement and no Phase-1/daily-publication knock-ons.
+
+## §14 — Round three: the camera is framed to measured room (2026-07-28)
+
+Owner report after round two: *"some of the sculptures are tall so they
+overlap with the text on top — that's still an issue on mobile. On desktop it
+seems like there is a lot of empty space. Fix/audit all the frontend issues
+and make this page as if it was made by a world class designer for luxury
+goods."*
+
+An eight-viewport Playwright audit (360×640 → 1920×1080, row and open states)
+found the round-two constants were the wrong instrument, not the wrong values:
+
+- the free band between header and controls ran from **139 px** (360×640) to
+  **574 px** (1920×1080), and one pair of camera constants cannot serve both;
+- with a card open, the sculpture was **cropped at the waist** on phones and
+  **cut off at the feet** on desktop, with the rail crossing its ankles;
+- the desktop title block reserved ~300 px of full-width vertical for a
+  520-px-wide masthead — the reported "empty space".
+
+### The change
+
+**The camera is fitted to a rectangle the page measures, not to constants.**
+`vitrineFrame()` in `layout.mjs` takes the canvas size, a band in CSS pixels,
+and the world box to show, and returns the distance to stand back plus a pan —
+a translation across the view axis, which shifts the image without distorting
+it. `main.mjs` measures two bands (`bandRects()`, using `offsetTop`/`offsetLeft`
+so the card's entrance transform and the page scroll are both irrelevant):
+
+- **row** — header bottom → controls top, full width;
+- **stage** — nav bottom → controls top, stopping at the card's left edge on
+  wide viewports; nav bottom → sheet top on narrow ones.
+
+`scene.mjs` lerps between the two by `state.open` and places the rig, whose
+only fixed properties are a 34° lens and a 6° downward tilt. Consequences:
+
+- Nothing can pass behind the title: the row's band starts below it. The top
+  scrim survives only as insurance for the open transition.
+- Nothing is cropped: the fit takes whichever axis binds first, and a cast is
+  a flat plate, so the square-on pose is its largest silhouette — margin is
+  air, not headroom (hence `stageMargin` 1.2).
+- `fov` no longer switches on aspect, and `stagePose` no longer needs its
+  `faceYaw` correction: a piece on display stands on the camera's own axis,
+  so it is square by construction.
+- Bounds (`minWorldHeight` 3, `maxWorldHeight` 7.2) stop a pathological band
+  from putting a figure in your face or reducing the row to specks.
+
+### The design pass around it
+
+- Masthead, not hero: title `clamp(32px, 4.6vw, 50px)`, lede dropped under
+  760 px of height, kicker under 620 px. The lede no longer repeats the
+  kicker's sentence.
+- The title leaves entirely when a piece is drawn out (was 0.12 opacity), and
+  the room dims further behind it (0.12 → 0.06).
+- Controls step out of the card's column on wide viewports (`--card-w`, shared
+  by the card and the chrome's padding) and fade out entirely on narrow ones,
+  where the sheet owns the lower screen. Delayed `visibility` takes them out
+  of the tab order once faded.
+- The card: sticky close button (it used to scroll away), a bottom dissolve
+  that says the record continues — the addresses are below the fold on every
+  viewport — and tightened section rhythm.
+- The rail now **compares** rather than closes: walking it with a piece on
+  display swaps the piece, keyboard included, without stealing focus.
+- The hint follows the state (browsing the row vs turning a piece).
+- Both fetches got deadlines (registry 12 s, market 8 s). A hung request used
+  to leave "Loading market context." on screen indefinitely.
+
+### Verified
+
+`scripts/shelf-layout.test.mjs` gained a framing block (fills its band, centres
+in the band rather than the canvas, keeps the widest cast inside the band at
+six viewports, respects the world-height bounds, survives an unmeasured band).
+A ten-check Playwright walkthrough covers deep links, rail-swaps-while-open,
+arrow keys, Escape, the live-mint route, the turntable, reduced motion holding
+still, and the register standing without scripting. Bundle 165 KB gzip
+(cap 180). Generators re-run byte-identical; no dependency changes.

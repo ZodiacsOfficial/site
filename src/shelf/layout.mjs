@@ -14,9 +14,9 @@ export const GALLERY = Object.freeze({
   radius: 26,
   spacing: 1.72,
   /**
-   * The tallest a figure may stand. Held low enough that the tallest heads
-   * clear the page title above the row — the stage shares its viewport with
-   * the header, and the header wins.
+   * The tallest a figure may stand. Every figure is scaled to sit inside this
+   * height, so the row has one known top edge whatever the twelve are shaped
+   * like — which is what lets the camera be framed to a measured band.
    */
   height: 1.6,
   /**
@@ -157,4 +157,126 @@ export function signFromHash(hash, slugs) {
  */
 export function isVisible(index, focus, span = 7) {
   return Math.abs(index - focus) <= span;
+}
+
+// ---- framing -----------------------------------------------------------------
+//
+// The stage shares one viewport with a header above it, controls below it, and
+// — once a sculpture is drawn out — a card beside or under it. Rather than
+// guess a camera position and hope the tallest figure clears the title, the
+// page measures the free band it actually has and the camera is fitted to it.
+// Everything below is the arithmetic for that; main.mjs supplies the measured
+// rectangles and scene.mjs applies the result.
+
+export const VITRINE = Object.freeze({
+  /** Vertical fov of the rig, in radians. A longish lens: 34 degrees. */
+  fov: 0.5934119456780721,
+  /**
+   * How far the camera looks down on the row. Enough to see the tops of the
+   * plinths and the shadows they sit in, not enough to foreshorten a figure.
+   */
+  tilt: 0.1047197551196598,
+  /**
+   * Air left around the content inside its band, as a multiplier. A cast is a
+   * flat plate, so turning or tilting one only ever shrinks its silhouette:
+   * the square-on pose is the widest and tallest it gets, and the margin is
+   * air rather than headroom.
+   */
+  rowMargin: 1.12,
+  stageMargin: 1.2,
+  /** How much of that air a full zoom takes back. */
+  zoomGain: 0.3,
+  /** How far a figure steps out of the row to be examined. */
+  stageZ: 0.9,
+  /**
+   * Bounds on the world height the camera resolves across the whole canvas.
+   * The floor stops an unusually tall band from pushing the row into your
+   * face; the ceiling stops a cramped one from reducing it to specks.
+   */
+  minWorldHeight: 3,
+  maxWorldHeight: 7.2,
+});
+
+/** The world box the whole row occupies: plinth foot to tallest head. */
+export function rowContent(gallery = GALLERY) {
+  const bottom = floorY(gallery) - 0.1; // the shadows spread a little wider
+  const top = gallery.baseY + gallery.height + 0.04;
+  return {
+    height: top - bottom,
+    // A single cast plus air. The row is meant to run off both edges; this
+    // only ever pulls the camera back on a viewport too narrow to hold one.
+    width: gallery.maxWidth * 1.2,
+    centerY: (top + bottom) / 2,
+    centerZ: 0,
+  };
+}
+
+/** The world box one figure occupies while it is being examined. */
+export function stageContent(scale, aspect, vitrine = VITRINE) {
+  return {
+    height: scale,
+    width: scale * aspect,
+    // A figure on display is placed by its middle, not its feet: the camera
+    // frames the box, so the box may as well sit on the axis.
+    centerY: 0,
+    centerZ: vitrine.stageZ,
+  };
+}
+
+const mix = (a, b, t) => a + ((b - a) * t);
+
+/** Between the row's box and one figure's, as it is drawn out. */
+export function lerpContent(row, stage, t) {
+  return {
+    height: mix(row.height, stage.height, t),
+    width: mix(row.width, stage.width, t),
+    centerY: mix(row.centerY, stage.centerY, t),
+    centerZ: mix(row.centerZ, stage.centerZ, t),
+  };
+}
+
+/** Between the band the row gets and the band a card leaves it. */
+export function lerpRect(a, b, t) {
+  return {
+    x: mix(a.x, b.x, t),
+    y: mix(a.y, b.y, t),
+    width: mix(a.width, b.width, t),
+    height: mix(a.height, b.height, t),
+  };
+}
+
+/**
+ * Fit a world box into a rectangle of the canvas.
+ *
+ * Returns the distance the camera must stand back for the box to fill that
+ * rectangle, and the pan — a translation perpendicular to the view axis, which
+ * shifts the image without distorting it — that puts the box at the
+ * rectangle's centre rather than the canvas's.
+ *
+ * `rect` is in CSS pixels with its origin at the canvas's top-left corner.
+ */
+export function vitrineFrame(view, vitrine = VITRINE) {
+  const { canvasWidth, canvasHeight, rect, content, margin = 1 } = view;
+  const canvasW = Math.max(1, canvasWidth);
+  const canvasH = Math.max(1, canvasHeight);
+  const bandW = Math.max(1, rect.width);
+  const bandH = Math.max(1, rect.height);
+
+  // The world height the whole canvas must resolve for the box — margin and
+  // all — to fill its band. Whichever axis binds first wins, so nothing is
+  // ever cropped by the narrow side of an awkward viewport.
+  const worldHeight = Math.min(vitrine.maxWorldHeight, Math.max(
+    vitrine.minWorldHeight,
+    (content.height * margin * canvasH) / bandH,
+    (content.width * margin * canvasH) / bandW,
+  ));
+
+  const perPixel = worldHeight / canvasH;
+  return {
+    worldHeight,
+    distance: worldHeight / (2 * Math.tan(vitrine.fov / 2)),
+    // Panning the camera right moves the image left, hence the inversion.
+    panX: ((canvasW / 2) - (rect.x + (bandW / 2))) * perPixel,
+    panY: ((rect.y + (bandH / 2)) - (canvasH / 2)) * perPixel,
+  };
 }

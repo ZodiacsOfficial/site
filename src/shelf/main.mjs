@@ -32,8 +32,14 @@ async function mount(root, records) {
   const mountPoint = root.querySelector('[data-gallery-canvas]');
   const rail = root.querySelector('[data-gallery-rail]');
   const opener = root.querySelector('[data-gallery-open]');
+  const hint = root.querySelector('[data-gallery-hint]');
   const live = root.querySelector('[data-gallery-live]');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+  const HINT_ROW = 'Drag or scroll along the row. Select a sculpture to draw '
+    + 'it forward, then drag to turn it. Escape returns it.';
+  const HINT_SHOWING = 'Drag to turn the sculpture. The rail walks along the '
+    + 'twelve; Escape returns it to the row.';
 
   await ensureFonts();
 
@@ -66,6 +72,57 @@ async function mount(root, records) {
   };
 
   const card = createCard(root, { onClose: () => closeFigure() });
+
+  // ---- the vitrine -------------------------------------------------------
+  //
+  // The stage shares one viewport with the header above it, the controls below
+  // it, and — once a sculpture is drawn out — the card beside or under it.
+  // Rather than pick a camera position and hope the tallest figure clears the
+  // title, measure the band actually left over and hand it to the scene, which
+  // fits the camera to it. Offsets rather than client rects: they ignore the
+  // card's entrance transform and the page's scroll position alike.
+
+  const navBar = document.querySelector('.wnav');
+  const head = root.querySelector('.stage__head');
+  const chrome = root.querySelector('.stage__chrome');
+  const GAP = 20;
+  const FLOOR = 140;
+
+  function bandRects() {
+    const width = mountPoint.offsetWidth;
+    const height = mountPoint.offsetHeight;
+    // The bar is fixed, and the stage starts at the top of the document.
+    const navFloor = navBar
+      ? navBar.getBoundingClientRect().bottom + window.scrollY
+      : 84;
+    const headFloor = head ? head.offsetTop + head.offsetHeight : navFloor;
+    const controls = chrome ? chrome.offsetTop : height;
+
+    const band = (top, bottom, left, right) => ({
+      x: left,
+      y: top,
+      width: Math.max(FLOOR, right - left),
+      height: Math.max(FLOOR, bottom - top),
+    });
+
+    const row = band(headFloor + GAP, controls - GAP, 0, width);
+
+    // With the title out of the way, a figure on display starts under the bar
+    // and stops wherever the card begins.
+    const panel = card.element.hidden ? null : card.element;
+    if (!panel || !panel.offsetWidth) return { row, stage: row };
+    const ceiling = navFloor + GAP;
+    const beside = panel.offsetLeft > width * 0.4;
+    const stage = beside
+      ? band(ceiling, controls - GAP, 0, panel.offsetLeft - GAP)
+      : band(ceiling, panel.offsetTop - GAP, 0, width);
+    return { row, stage };
+  }
+
+  function syncBands() {
+    const { row, stage } = bandRects();
+    scene.setBands(row, stage);
+  }
 
   // A piece on display turns slowly, as on a dealer's turntable, until the
   // reader takes it in hand — then it is theirs to aim. Reduced motion
@@ -174,12 +231,19 @@ async function mount(root, records) {
       window.history.replaceState(null, '', `#${record.slug}`);
       mirroredSlug = record.slug;
     }
+    const showing = state.openIndex >= 0;
     if (opener) {
-      opener.textContent = state.openIndex >= 0 ? 'Return the sculpture' : `View ${record.name}`;
+      opener.textContent = showing ? 'Return the sculpture' : `View ${record.name}`;
       opener.setAttribute(
         'aria-label',
-        state.openIndex >= 0 ? 'Return the sculpture to the row' : `View the ${record.name} sculpture`,
+        showing ? 'Return the sculpture to the row' : `View the ${record.name} sculpture`,
       );
+    }
+    // The instruction follows the state: browsing the row and turning a piece
+    // in the hand are different gestures.
+    if (hint) {
+      const text = showing ? HINT_SHOWING : HINT_ROW;
+      if (hint.textContent !== text) hint.textContent = text;
     }
     for (const [i, button] of ticks.entries()) {
       const isCurrent = i === index;
@@ -194,7 +258,7 @@ async function mount(root, records) {
 
   // ---- drawing a figure out and returning it ---------------------------
 
-  async function openFigure(index) {
+  async function openFigure(index, { takeFocus = true } = {}) {
     const record = records[index];
     handTurned = false;
     state.openIndex = index;
@@ -204,11 +268,24 @@ async function mount(root, records) {
     state.targetZoom = 0;
     root.classList.add('is-open');
     card.open(record);
+    // The card is in the document now, so the room it leaves can be measured
+    // before the first frame of the piece being drawn out.
+    syncBands();
     syncChrome();
     speak(`${record.name} drawn forward. Lot ${record.lot} of twelve.`);
     invalidate();
-    card.closer.focus({ preventScroll: true });
+    // Moving from one piece on display to the next leaves the reader's focus
+    // where it was — on the rail they are walking along.
+    if (takeFocus) card.closer.focus({ preventScroll: true });
     if (await scene.refine(index)) invalidate();
+  }
+
+  /** Walking the rail with a piece already on display swaps the piece. */
+  function showFigure(index) {
+    focusFigure(index, { announce: state.targetOpen === 0 });
+    if (state.targetOpen > 0 && index !== state.openIndex) {
+      void openFigure(index, { takeFocus: false });
+    }
   }
 
   function closeFigure() {
@@ -251,10 +328,7 @@ async function mount(root, records) {
     button.setAttribute('aria-label', `${record.name}, Lot ${record.lot} of twelve`);
     button.addEventListener('click', () => {
       if (current() === index && state.targetOpen === 0) void openFigure(index);
-      else {
-        if (state.targetOpen > 0) closeFigure();
-        focusFigure(index);
-      }
+      else showFigure(index);
     });
     rail.append(button);
     return button;
@@ -268,9 +342,8 @@ async function mount(root, records) {
     else if (event.key === 'End') next = count - 1;
     if (next === null) return;
     event.preventDefault();
-    if (state.targetOpen > 0) closeFigure();
     const index = clampFocus(next, count);
-    focusFigure(index);
+    showFigure(index);
     ticks[index].focus({ preventScroll: true });
   });
 
@@ -414,11 +487,15 @@ async function mount(root, records) {
     const rect = mountPoint.getBoundingClientRect();
     if (!rect.width || !rect.height) return;
     scene.resize(rect.width, rect.height, window.devicePixelRatio || 1);
+    syncBands();
     invalidate();
   }
 
+  // The card counts as furniture: it decides how much room a figure on display
+  // has, and it grows as its market context and records arrive.
   const observer = new ResizeObserver(resize);
   observer.observe(mountPoint);
+  observer.observe(card.element);
   resize();
 
   motion.addEventListener?.('change', invalidate);

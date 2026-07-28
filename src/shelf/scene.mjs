@@ -12,7 +12,10 @@
 
 import * as THREE from 'three';
 
-import { GALLERY, figurePose, fitScale, floorY, isVisible } from './layout.mjs';
+import {
+  GALLERY, VITRINE, figurePose, fitScale, floorY, isVisible,
+  lerpContent, lerpRect, rowContent, stageContent, vitrineFrame,
+} from './layout.mjs';
 import { paintPlinth, paintReverse, loadSculpture } from './textures.mjs';
 import geometryData from './figures.geometry.json';
 
@@ -176,12 +179,12 @@ export function createScene(canvas, records) {
   renderer.setClearAlpha(0);
 
   const scene = new THREE.Scene();
-  const camera = new THREE.PerspectiveCamera(38, 1, 0.1, 200);
-  // A little above the plinths and aimed just over them, so the figures sit in
-  // the lower half of the frame with their shadows showing and the title above
-  // them keeps its air.
-  camera.position.set(0, 1.05, 6.2);
-  camera.lookAt(0, 0.42, 0);
+  // A longish lens, held constant across every viewport: the fit is done by
+  // moving the camera, not by widening it, so a phone and a desktop see the
+  // same sculpture rather than the same slice of room.
+  const camera = new THREE.PerspectiveCamera(
+    THREE.MathUtils.radToDeg(VITRINE.fov), 1, 0.1, 200,
+  );
 
   // The photographs already carry their own light. The rig here is even enough
   // not to fight that, with just enough direction that turning a piece reads.
@@ -297,6 +300,7 @@ export function createScene(canvas, records) {
 
     return {
       record, mesh, plinth, shadow, proxy, scale, face,
+      aspect: traced.aspect,
       materials: [face, reverse, edge],
       tier: 0,
     };
@@ -304,31 +308,79 @@ export function createScene(canvas, records) {
 
   const raycaster = new THREE.Raycaster();
   const pointer = new THREE.Vector2();
-  let aspect = 1;
+
+  // ---- the camera --------------------------------------------------------
+  //
+  // The rig is one fixed downward tilt; everything else about where it stands
+  // comes from the band of canvas the page has measured out for the
+  // sculptures. Pan is a translation across the view axis, so shifting a
+  // figure into a band beside a card moves the image without skewing it.
+
+  const FORWARD = new THREE.Vector3(0, -Math.sin(VITRINE.tilt), -Math.cos(VITRINE.tilt));
+  const RIGHT = new THREE.Vector3(1, 0, 0);
+  const UP = new THREE.Vector3(0, Math.cos(VITRINE.tilt), -Math.sin(VITRINE.tilt));
+  const aim = new THREE.Vector3();
+
+  let canvasSize = { width: 1, height: 1 };
+  let bands = { row: null, stage: null };
+
+  /** Until the page has measured itself, the whole canvas is the band. */
+  const bandFor = (which) => bands[which]
+    ?? { x: 0, y: 0, width: canvasSize.width, height: canvasSize.height };
 
   /**
-   * Where an examined figure stands. Narrow viewports give the card the floor.
-   *
-   * A piece drawn out is also turned to face the viewer squarely. Standing it
-   * off to one side without that turn shows the cut edge of every contour down
-   * its length — a shallow cast seen at an angle reads as a flight of steps.
+   * The two rectangles the sculptures may occupy: the band left between the
+   * header and the controls, and the smaller one left beside — or above — the
+   * card once a figure is drawn out. Both in CSS pixels from the canvas's
+   * top-left corner.
    */
-  function stagePose(zoom) {
-    const wide = aspect >= 1.05;
-    const place = wide
-      ? { x: -1.25, y: -0.58, z: 1.75 + (zoom * 1.2), scale: 1 }
-      : { x: 0, y: 0.34, z: 1.7 + (zoom * 0.9), scale: 0.7 + (zoom * 0.2) };
-    return { ...place, faceYaw: Math.atan2(-place.x, camera.position.z - place.z) };
+  function setBands(row, stage) {
+    bands = { row, stage };
+  }
+
+  function placeCamera(open, opened, zoom) {
+    const content = lerpContent(
+      rowContent(),
+      stageContent(opened.scale, opened.aspect),
+      open,
+    );
+    const rect = lerpRect(bandFor('row'), bandFor('stage'), open);
+    // A figure under examination gets more air than the row does, and pinching
+    // in takes some of it back.
+    const margin = THREE.MathUtils.lerp(VITRINE.rowMargin, VITRINE.stageMargin, open)
+      - (zoom * VITRINE.zoomGain * open);
+
+    const frame = vitrineFrame({
+      canvasWidth: canvasSize.width,
+      canvasHeight: canvasSize.height,
+      rect,
+      content,
+      margin,
+    });
+
+    aim.set(0, content.centerY, content.centerZ)
+      .addScaledVector(RIGHT, frame.panX)
+      .addScaledVector(UP, frame.panY);
+    camera.position.copy(aim).addScaledVector(FORWARD, -frame.distance);
+    camera.lookAt(aim);
   }
 
   /**
    * Place everything for a given state. `open` runs 0 → 1 as a figure is drawn
    * out of the row, so the two poses simply cross-fade.
+   *
+   * A piece on display stands on the camera's own axis. Standing it off to one
+   * side instead — and letting the camera stay put — shows the cut edge of
+   * every contour down its length, and a shallow cast seen at an angle reads
+   * as a flight of steps.
    */
   function layout(state) {
     const { focus, openIndex, open, yaw, pitch, zoom } = state;
-    const stage = stagePose(zoom);
-    const dimmed = 1 - (open * 0.88);
+    const opened = figures[openIndex]
+      ?? figures[Math.min(figures.length - 1, Math.max(0, Math.round(focus)))];
+    const stage = { x: 0, y: -opened.scale / 2, z: VITRINE.stageZ };
+    // One piece in a pool of light; the rest of the room goes quiet.
+    const dimmed = 1 - (open * 0.94);
 
     for (let i = 0; i < figures.length; i += 1) {
       const figure = figures[i];
@@ -341,7 +393,7 @@ export function createScene(canvas, records) {
 
       const drawn = i === openIndex ? open : 0;
       const recede = i === openIndex ? 0 : open * 0.6;
-      const scale = figure.scale * THREE.MathUtils.lerp(1, stage.scale, drawn);
+      const { scale } = figure;
 
       figure.mesh.position.set(
         THREE.MathUtils.lerp(pose.x, stage.x, drawn),
@@ -350,7 +402,7 @@ export function createScene(canvas, records) {
       );
       figure.mesh.rotation.set(
         pitch * drawn,
-        THREE.MathUtils.lerp(pose.rotationY, stage.faceYaw + yaw, drawn),
+        THREE.MathUtils.lerp(pose.rotationY, yaw, drawn),
         0,
       );
       figure.mesh.scale.setScalar(scale);
@@ -381,10 +433,12 @@ export function createScene(canvas, records) {
     const front = figurePose(Math.round(focus), focus, GALLERY);
     offer.position.set(
       THREE.MathUtils.lerp(front.x * 0.5, stage.x, open),
-      THREE.MathUtils.lerp(GALLERY.baseY + 1.5, stage.y + 1.5, open),
+      THREE.MathUtils.lerp(GALLERY.baseY + 1.5, stage.y + (opened.scale * 0.9), open),
       THREE.MathUtils.lerp(front.z + 2.6, stage.z + 1.8, open),
     );
     offer.intensity = 7 - (open * 2.6);
+
+    placeCamera(open, opened, zoom);
   }
 
   /** Lay the photograph onto a figure's face, at the tier asked for. */
@@ -418,12 +472,10 @@ export function createScene(canvas, records) {
   const refine = (index) => dress(index, HERO_TIER);
 
   function resize(width, height, dpr) {
-    aspect = width / height;
+    canvasSize = { width, height };
     renderer.setPixelRatio(Math.min(2, dpr));
     renderer.setSize(width, height, false);
-    camera.aspect = aspect;
-    // Hold the row in frame on tall, narrow viewports.
-    camera.fov = aspect < 0.9 ? 48 : 38;
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
   }
 
@@ -448,8 +500,5 @@ export function createScene(canvas, records) {
     renderer.dispose();
   }
 
-  return {
-    layout, render, resize, pick, dressRow, refine, dispose, renderer,
-    isWide: () => aspect >= 1.05,
-  };
+  return { layout, render, resize, setBands, pick, dressRow, refine, dispose, renderer };
 }
