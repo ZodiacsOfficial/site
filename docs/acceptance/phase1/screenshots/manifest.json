@@ -6,11 +6,11 @@
     "script": "tests/phase1-acceptance-drive.mjs",
     "contractVersion": 3
   },
-  "capturedAt": "2026-07-28T14:46:36.891Z",
+  "capturedAt": "2026-07-28T19:04:11.963Z",
   "browser": "Chromium 141.0.7390.37",
   "dailyDate": "2026-07-28",
   "publicationCanonicalSha256": "128d4e348d2309c6e01165bbc6bbdea0115a8f3bc641c41a50f8abd5ae0946d8",
-  "templateSourceSha256": "5730a032c272539b71ea53f971ac2cd633576f0f3b4a7ecebe6fba7568b40928",
+  "templateSourceSha256": "5058596907320c0383dcbc12b757909864d92d449be47e051feb016aa500257f",
   "renderPayloadSha256": {
     "daily": "c2f4ba033d95e2fb05dcce5e21b5098b766c5831a2324a6407638c1292dc36da",
     "dailyPublication": "40a07a024e2d0028bb256c0214a67015ebec4d86642a9e4f1d9e9025a48e8e3f",
@@ -19,8 +19,8 @@
   },
   "buildReceipt": {
     "schema": "zodiacs.phase1-build-receipt.v1",
-    "builtAt": "2026-07-28T14:33:46.969Z",
-    "templateSourceSha256": "5730a032c272539b71ea53f971ac2cd633576f0f3b4a7ecebe6fba7568b40928",
+    "builtAt": "2026-07-28T19:03:53.458Z",
+    "templateSourceSha256": "5058596907320c0383dcbc12b757909864d92d449be47e051feb016aa500257f",
     "dailyDate": "2026-07-28",
     "publicationCanonicalSha256": "128d4e348d2309c6e01165bbc6bbdea0115a8f3bc641c41a50f8abd5ae0946d8",
     "renderPayloadSha256": {
@@ -179,13 +179,13 @@
       "screenshot": {
         "file": "tomorrow-360.png",
         "width": 360,
-        "height": 3623,
-        "sha256": "812e7dbd424da45abb048a03971e7eecdd631b9ea023049faef89d8c46e05db5"
+        "height": 3594,
+        "sha256": "e81820fe7373c8d0a6780e174817ae2a961b7a4b2ba2114a4cdfd3b4aebec13e"
       },
       "layout": {
         "clientWidth": 360,
         "scrollWidth": 360,
-        "scrollHeight": 3623,
+        "scrollHeight": 3594,
         "contentLength": 2367,
         "overlay": false
       },
@@ -226,7 +226,7 @@
         "file": "weekly-360.png",
         "width": 360,
         "height": 4570,
-        "sha256": "2a028f25ba2cceb50b7470670b1e98db82cd8d701970ae6f6109f5d42daa262c"
+        "sha256": "bee52e14a3cda0d4803a8f73c09d4e7079c3fb46bdb0f4c1b92b64a8a333a99c"
       },
       "layout": {
         "clientWidth": 360,
@@ -272,7 +272,7 @@
         "file": "monthly-360.png",
         "width": 360,
         "height": 4248,
-        "sha256": "5340b6bc786f298e8f9001416bed133f18eb3bc6de5db95ef90e560fdf600fbd"
+        "sha256": "4c47d44a90566569167cf148aac2e840fa507652f0411aa95ea60ec3e98aabcf"
       },
       "layout": {
         "clientWidth": 360,
@@ -364,7 +364,7 @@
         "file": "career-360.png",
         "width": 360,
         "height": 3341,
-        "sha256": "fa9c13880e0c617738af4f7c9a705b08278700c006efd6282f025dd687c3b38e"
+        "sha256": "9112ff122f3ab569ef34dd2509f2e85bf55628f91bfa82b3d291f22f5a205e24"
       },
       "layout": {
         "clientWidth": 360,
