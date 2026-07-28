@@ -1,6 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 import SignIcon from '../../../components/SignIcon.astro';
+import ZodiacRing from '../../../components/ZodiacRing.astro';
 import '../../../styles/rx-table.css';
 import { EDITOR_AUTHOR } from '../../../lib/editorial';
 import {
@@ -113,20 +114,23 @@ const generatedReceipt = INGRESS_GENERATED_AT.slice(0, 10)
   sources={sources}
 >
   <article class="zodiac-dates">
-    <header class="dates-hero container container--narrow">
-      <em class="kicker">Zodiac dates, {currentYear}–{nextYear}</em>
-      <h1 class="display">{headline}.</h1>
-      <p class="dates-hero__lede">
-        {'Twelve tropical signs, their exact 30-degree boundaries and standard correspondences, plus the UTC minute when the Sun enters each sign in '
-          + currentYear + ' and ' + nextYear + '.'}
-      </p>
-      <div class="dates-hero__actions">
-        <a class="btn btn--primary" href="/learn/zodiac-dates/zodiac-dates.csv" download>
-          <span>Download the table</span><span class="orb" aria-hidden="true">↓</span>
-        </a>
-        <a class="dates-hero__method" href="/methodology/">How the dates are computed →</a>
+    <header class="dates-hero container">
+      <div class="dates-hero__text">
+        <em class="kicker">Zodiac dates, {currentYear}–{nextYear}</em>
+        <h1 class="display">{headline}.</h1>
+        <p class="dates-hero__lede">
+          {'Twelve tropical signs, their exact 30-degree boundaries and standard correspondences, plus the UTC minute when the Sun enters each sign in '
+            + currentYear + ' and ' + nextYear + '.'}
+        </p>
+        <div class="dates-hero__actions">
+          <a class="btn btn--primary" href="/learn/zodiac-dates/zodiac-dates.csv" download>
+            <span>Download the table</span><span class="orb" aria-hidden="true">↓</span>
+          </a>
+          <a class="dates-hero__method" href="/methodology/">How the dates are computed →</a>
+        </div>
+        <p class="dates-hero__receipt mono">Ingress source generated {generatedReceipt}</p>
       </div>
-      <p class="dates-hero__receipt mono">Ingress source generated {generatedReceipt}</p>
+      <ZodiacRing size={360} class="dates-hero__ring" />
     </header>
 
     <section class="section--tight container dates-table-section" aria-labelledby="correspondence-table">
@@ -246,8 +250,21 @@ const generatedReceipt = INGRESS_GENERATED_AT.slice(0, 10)
   }
   .dates-hero {
     display: grid;
-    gap: 18px;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(24px, 5vw, 64px);
     padding-block: clamp(44px, 8vw, 92px) clamp(18px, 4vw, 38px);
+  }
+  .dates-hero__text { display: grid; gap: 18px; min-width: 0; }
+  /* :global — the class lands on the ring component's own root element,
+     which does not carry this page's scope attribute. */
+  .dates-hero :global(.dates-hero__ring) { justify-self: end; }
+
+  /* One column below the threshold; the ring stays, centred, and the
+     component drops itself to 260px there. */
+  @media (max-width: 900px) {
+    .dates-hero { grid-template-columns: minmax(0, 1fr); }
+    .dates-hero :global(.dates-hero__ring) { justify-self: center; margin-top: 8px; }
   }
   .dates-hero h1 {
     margin: 0;

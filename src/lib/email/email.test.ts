@@ -152,7 +152,7 @@ describe('Buttondown subscription adapter', () => {
 });
 
 describe('Resend and Loops subscription adapters', () => {
-  it('sends a text-only Resend confirmation before creating any contact', async () => {
+  it('sends a Resend confirmation that loads nothing remote, before creating any contact', async () => {
     const fetcher = vi.fn().mockResolvedValue({ ok: true, status: 200 });
     const adapter = createEmailSubscriptionAdapter({
       EMAIL_PROVIDER: 'resend',
@@ -172,7 +172,16 @@ describe('Resend and Loops subscription adapters', () => {
       subject: 'Confirm your Zodiacs.org weekly forecast',
     });
     expect(body.text).toContain('https://zodiacs.org/api/email/confirm?token=');
-    expect(body).not.toHaveProperty('html');
+
+    // The confirmation may be styled, but opening it must still signal
+    // nothing: no image, no stylesheet, no script, no CSS-fetched asset.
+    // Anchors are fine — a link is only fetched if the reader chooses to.
+    expect(body.html).toContain('https://zodiacs.org/api/email/confirm?token=');
+    expect(body.html).not.toMatch(/<img\b/iu);
+    expect(body.html).not.toMatch(/<script\b/iu);
+    expect(body.html).not.toMatch(/<link\b/iu);
+    expect(body.html).not.toMatch(/\burl\s*\(/iu);
+    expect(body.html).not.toMatch(/\bbackground(-image)?\s*[:=]\s*["']?(https?:)?\/\//iu);
     expect(fetcher.mock.calls.map((call) => call[0])).not.toContain('https://api.resend.com/contacts');
   });
 

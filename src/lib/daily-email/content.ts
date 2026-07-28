@@ -341,8 +341,10 @@ function htmlFromModel(model: MessageModel, baseUrl: string): string {
     <section style="border-top:1px solid #26282E;padding-top:18px;margin:4px 0 26px">
       <p style="font:14px/1.55 system-ui,-apple-system,sans-serif;margin:0;color:#C6CCDA"><strong style="color:#EEF1F7">Ahead: ${escapeHtml(model.nearbyEvent.title)}</strong>${escapeHtml(model.nearbyEvent.separator ?? ' — ')}${escapeHtml(model.nearbyEvent.summary)} <a href="${escapeHtml(model.nearbyEvent.url)}" style="color:#EEF1F7">Read the event</a></p>
     </section>` : '';
+  // PNG, not WebP: Outlook on Windows and several older clients decode
+  // neither WebP nor AVIF, and a broken disc is worse than no disc.
   const signIcon = model.sign ? `
-        <img src="${escapeHtml(siteUrl(baseUrl, `/assets/zodiac-icons/128/${model.sign}.webp`))}" width="44" height="44" alt="${escapeHtml(model.signName ?? '')}" style="display:block;width:44px;height:44px;border:0;border-radius:50%" />` : '';
+        <img src="${escapeHtml(siteUrl(baseUrl, `/assets/zodiac-icons/128/${model.sign}.png`))}" width="44" height="44" alt="${escapeHtml(model.signName ?? '')}" style="display:block;width:44px;height:44px;border:0;border-radius:50%" />` : '';
   const detail = model.identityDetail
     ? `<p style="font:12px/1.45 system-ui,-apple-system,sans-serif;margin:6px 0 0;color:#7A8397">${escapeHtml(model.identityDetail)}</p>`
     : '';
@@ -356,11 +358,13 @@ function htmlFromModel(model: MessageModel, baseUrl: string): string {
   <body bgcolor="#060709" style="margin:0;background:#060709;color:#C6CCDA">
     <span style="display:none!important;visibility:hidden;opacity:0;height:0;width:0;overflow:hidden">${escapeHtml(model.preheader)}</span>
     <main bgcolor="#060709" style="box-sizing:border-box;max-width:600px;margin:0 auto;background:#060709;padding:36px 24px 44px">
-      <header style="display:flex;align-items:center;gap:14px;border-bottom:1px solid #26282E;padding:0 0 22px;margin:0 0 28px">
-        ${signIcon}
-        <div style="min-width:0;flex:1"><p style="font:600 11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;margin:0;color:#7A8397">${escapeHtml(model.identity)}</p>${detail}</div>
-        <p style="font:600 13px/1.2 Georgia,serif;margin:0;color:#EEF1F7;white-space:nowrap">Zodiacs.org</p>
-      </header>
+      <table role="presentation" width="100%" cellspacing="0" cellpadding="0" border="0" style="border-bottom:1px solid #26282E;padding:0 0 22px;margin:0 0 28px">
+        <tr>
+          ${signIcon ? `<td width="58" style="width:58px;vertical-align:middle;padding:0 14px 22px 0">${signIcon}</td>` : ''}
+          <td style="vertical-align:middle;padding:0 0 22px"><p style="font:600 11px/1.4 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.12em;margin:0;color:#7A8397">${escapeHtml(model.identity)}</p>${detail}</td>
+          <td align="right" style="vertical-align:middle;padding:0 0 22px"><p style="font:600 13px/1.2 Georgia,serif;margin:0;color:#EEF1F7;white-space:nowrap">Zodiacs.org</p></td>
+        </tr>
+      </table>
       <h1 style="font:500 27px/1.34 Georgia,serif;margin:0 0 22px;color:#EEF1F7">${escapeHtml(model.title)}</h1>
       ${sections}
       ${why}
