@@ -691,6 +691,8 @@ export default function EclipticView({
           </p>
         )}
 
+        {nodeLon !== null && <p class="ev-note ev-fine">{copy.moonMean}</p>}
+        {scrub !== 0 && <p class="ev-note ev-fine">{copy.scrubNote}</p>}
         {!sited && <p class="ev-note">{copy.noAngles}</p>}
         {copy.englishNote && <p class="ev-note ev-note--marker">{copy.englishNote}</p>}
       </figcaption>

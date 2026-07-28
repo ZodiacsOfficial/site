@@ -40,6 +40,8 @@ export interface DepthCopy {
   /** {body} {deg} {limit} */
   outOfBounds: string;
   moonMean: string;
+  /** Shown while the time control is away from birth. */
+  scrubNote: string;
   noAngles: string;
   /** Selected-body readout. */
   latitudeShort: string;
@@ -77,6 +79,7 @@ const en: DepthCopy = {
   bornLevel: 'Born with the Sun on the horizon itself.',
   outOfBounds: '{body} declination {deg}° — out of bounds, past the {limit}° the Sun never passes.',
   moonMean: 'The Moon’s road is drawn at its mean 5.1° tilt through this chart’s nodes; the real nodes drift about 19.3° a year.',
+  scrubNote: 'As time runs, each planet moves along the zodiac at the rate it had at birth; its tilt above the plane is held.',
   noAngles: 'Without a birth time and place there is no horizon to draw — this is the sky, but not yet your sky.',
   latitudeShort: 'lat',
   declinationShort: 'dec',
@@ -112,6 +115,7 @@ const es: DepthCopy = {
   bornLevel: 'Nacimiento con el Sol justo en el horizonte.',
   outOfBounds: 'Declinación de {body}: {deg}° — fuera de límites, más allá de los {limit}° que el Sol nunca pasa.',
   moonMean: 'El camino de la Luna se dibuja con su inclinación media de 5,1° por los nodos de esta carta; los nodos reales se desplazan unos 19,3° al año.',
+  scrubNote: 'Al correr el tiempo, cada planeta avanza por el zodiaco al ritmo que llevaba al nacer; su inclinación sobre el plano queda fija.',
   noAngles: 'Sin hora y lugar de nacimiento no hay horizonte que dibujar: esto es el cielo, pero todavía no es tu cielo.',
   latitudeShort: 'lat',
   declinationShort: 'dec',
@@ -147,6 +151,7 @@ const pt: DepthCopy = {
   bornLevel: 'Nascimento com o Sol exatamente no horizonte.',
   outOfBounds: 'Declinação de {body}: {deg}° — fora de limites, além dos {limit}° que o Sol nunca passa.',
   moonMean: 'O caminho da Lua é desenhado na sua inclinação média de 5,1° pelos nodos deste mapa; os nodos reais deslocam-se cerca de 19,3° por ano.',
+  scrubNote: 'Com o tempo a correr, cada planeta avança pelo zodíaco no ritmo que tinha ao nascer; a sua inclinação sobre o plano fica fixa.',
   noAngles: 'Sem hora e local de nascimento não há horizonte a desenhar: este é o céu, mas ainda não o seu céu.',
   latitudeShort: 'lat',
   declinationShort: 'dec',
@@ -182,6 +187,7 @@ const fr: DepthCopy = {
   bornLevel: 'Naissance avec le Soleil sur l’horizon même.',
   outOfBounds: 'Déclinaison de {body} : {deg}° — hors limites, au-delà des {limit}° que le Soleil ne dépasse jamais.',
   moonMean: 'La route de la Lune est tracée à son inclinaison moyenne de 5,1° par les nœuds de ce thème ; les nœuds réels dérivent d’environ 19,3° par an.',
+  scrubNote: 'Quand le temps défile, chaque planète avance sur le zodiaque au rythme qu’elle avait à la naissance ; son inclinaison sur le plan reste fixe.',
   noAngles: 'Sans heure ni lieu de naissance, pas d’horizon à tracer : voici le ciel, mais pas encore le vôtre.',
   latitudeShort: 'lat',
   declinationShort: 'décl',
@@ -217,6 +223,7 @@ const it: DepthCopy = {
   bornLevel: 'Nascita con il Sole proprio sull’orizzonte.',
   outOfBounds: 'Declinazione di {body}: {deg}° — fuori limite, oltre i {limit}° che il Sole non supera mai.',
   moonMean: 'La strada della Luna è tracciata alla sua inclinazione media di 5,1° per i nodi di questo tema; i nodi reali si spostano di circa 19,3° all’anno.',
+  scrubNote: 'Mentre il tempo scorre, ogni pianeta avanza lungo lo zodiaco al ritmo che aveva alla nascita; la sua inclinazione sul piano resta ferma.',
   noAngles: 'Senza ora e luogo di nascita non c’è orizzonte da tracciare: questo è il cielo, ma non ancora il tuo cielo.',
   latitudeShort: 'lat',
   declinationShort: 'decl',

@@ -2328,3 +2328,6 @@
   .ev-slider span:first-child { min-width: 3.6em; }
   .ev-key { font-size: 10px; }
 }
+
+/* Method fine print for the dimensional view — the receipts stay visible. */
+.ev-fine { font-size: 11px; color: var(--faint); }
