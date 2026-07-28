@@ -1598,7 +1598,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                             aspects={chart.aspects.filter((a) => a.orb < 6)}
                             cusps={viewCusps}
                             asc={asc}
-                            mc={chart.angles?.mc ?? null}
                             size={440}
                           />
                         )}

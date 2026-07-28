@@ -34,6 +34,13 @@ const RAD = Math.PI / 180;
 export const MOON_INCLINATION = 5.145;
 
 /**
+ * Obliquity of the ecliptic: the tilt between the Earth's equator and its
+ * orbit, and so between the celestial equator and the ecliptic. The two
+ * circles cross at the equinoxes, which is why 0° Aries is where it is.
+ */
+export const OBLIQUITY = 23.4392911;
+
+/**
  * Greatest Sun–node elongation that still admits a solar eclipse. Beyond it
  * the new Moon passes too far above or below the ecliptic to cover the Sun.
  */
@@ -113,6 +120,31 @@ export function inclinedCircle(
 
 export function norm360(deg: number): number {
   return ((deg % 360) + 360) % 360;
+}
+
+/**
+ * Split a projected curve where it passes behind the sphere, so the far half
+ * can be drawn faintly and the near half solid. Without this a wireframe
+ * globe reads as a flat tangle of ellipses rather than an object.
+ */
+export function splitByDepth(
+  points: Projected[],
+): { front: boolean; points: Projected[] }[] {
+  const runs: { front: boolean; points: Projected[] }[] = [];
+  let current: { front: boolean; points: Projected[] } | null = null;
+
+  for (const point of points) {
+    const front = point.depth >= 0;
+    if (!current || current.front !== front) {
+      // Carry the crossing point into both runs so the halves meet.
+      if (current) current.points.push(point);
+      current = { front, points: current ? [current.points[current.points.length - 1], point] : [point] };
+      runs.push(current);
+    } else {
+      current.points.push(point);
+    }
+  }
+  return runs.filter((run) => run.points.length > 1);
 }
 
 /** Shortest separation between two longitudes, 0–180. */

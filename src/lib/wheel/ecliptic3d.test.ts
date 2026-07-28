@@ -8,6 +8,8 @@ import {
   place,
   project,
   separation,
+  OBLIQUITY,
+  splitByDepth,
 } from './ecliptic3d';
 
 const CX = 100;
@@ -118,5 +120,43 @@ describe('longitude separation', () => {
     expect(separation(10, 350)).toBeCloseTo(20, 9);
     expect(separation(0, 180)).toBeCloseTo(180, 9);
     expect(separation(-10, 10)).toBeCloseTo(20, 9);
+  });
+});
+
+describe('the celestial equator', () => {
+  it('crosses the ecliptic at the equinoxes', () => {
+    // Ascending at 0° Aries is what makes the vernal point the vernal point.
+    const path = inclinedCircle(0, OBLIQUITY, 1);
+    const crossings = path.filter((p) => Math.abs(p.lat) < 1e-9);
+    expect(separation(crossings[0].lon, 0)).toBeCloseTo(0, 6);
+    expect(separation(crossings[1].lon, 180)).toBeCloseTo(0, 6);
+  });
+
+  it('reaches the obliquity at the solstices and no further', () => {
+    const path = inclinedCircle(0, OBLIQUITY, 1);
+    expect(Math.max(...path.map((p) => Math.abs(p.lat)))).toBeCloseTo(OBLIQUITY, 6);
+  });
+});
+
+describe('depth splitting', () => {
+  const run = (depths: number[]) =>
+    splitByDepth(depths.map((depth, i) => ({ x: i, y: 0, depth })));
+
+  it('keeps a wholly front curve in one piece', () => {
+    const runs = run([1, 0.8, 0.5, 0.2]);
+    expect(runs).toHaveLength(1);
+    expect(runs[0].front).toBe(true);
+  });
+
+  it('cuts where the curve goes behind the sphere', () => {
+    const runs = run([1, 0.5, -0.5, -1, 0.5, 1]);
+    expect(runs.map((r) => r.front)).toEqual([true, false, true]);
+  });
+
+  it('joins the halves at the crossing so no gap opens', () => {
+    const runs = run([1, -1]);
+    expect(runs).toHaveLength(2);
+    // The last point of the front run is the first of the back run.
+    expect(runs[0].points[runs[0].points.length - 1]).toEqual(runs[1].points[0]);
   });
 });
