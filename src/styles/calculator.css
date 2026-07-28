@@ -2252,6 +2252,29 @@
   opacity: 0.55;
 }
 
+/* The ring a parallel pair shares, and the chord naming the pair. Orchid
+   is the one pastel none of the other circles has taken. */
+.ev-declring {
+  stroke: var(--sign-libra);
+  stroke-width: 1.1;
+  stroke-dasharray: 6 4;
+  opacity: 0.8;
+}
+.ev-declchord {
+  stroke: var(--sign-libra);
+  stroke-width: 1.1;
+  stroke-dasharray: 2 3;
+  stroke-linecap: round;
+  opacity: 0.7;
+}
+/* The chart's own luminary: Sun by day, Moon by night. */
+.ev-sectring {
+  fill: none;
+  stroke: var(--hue);
+  stroke-width: 0.9;
+  opacity: 0.7;
+}
+
 .ev-angle circle { fill: var(--sign-virgo); }
 .ev-angle text {
   fill: var(--faint);
@@ -2320,8 +2343,11 @@
 .ev-key-moon { border-color: var(--sign-cancer); border-top-style: dashed; }
 .ev-key-horizon { border-color: var(--sign-virgo); }
 .ev-key-bounds { border-color: var(--sign-sagittarius); border-top-style: dotted; }
+.ev-key-decl { border-color: var(--sign-libra); border-top-style: dashed; }
 
 .ev-picked { color: var(--text-2); font-size: 11px; letter-spacing: 0.04em; }
+.ev-link { color: var(--text-2); text-decoration-color: var(--hair-2); white-space: nowrap; }
+.ev-link:hover { color: var(--text); }
 .ev-note--marker { color: var(--faint); font-size: 11px; }
 
 @media (max-width: 420px) {

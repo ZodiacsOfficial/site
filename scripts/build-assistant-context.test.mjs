@@ -51,7 +51,7 @@ describe('assistant site context', () => {
     expect(counts).toEqual({
       birthdays: 366,
       consumerRoutes: 668,
-      glossary: 139,
+      glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,

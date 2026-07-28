@@ -24,6 +24,7 @@ export interface DepthCopy {
   keyMoon: string;
   keyHorizon: string;
   keyBounds: string;
+  keyDecl: string;
   dragHint: string;
   north: string;
   south: string;
@@ -33,10 +34,23 @@ export interface DepthCopy {
   /** {deg} */
   eclipseInside: string;
   eclipseOutside: string;
-  /** {deg} */
-  bornDay: string;
-  bornNight: string;
-  bornLevel: string;
+  /** {deg} {when} */
+  sectDay: string;
+  sectNight: string;
+  sectLevel: string;
+  /** Fills {when}: the time control moves the sky off the birth minute. */
+  atBirth: string;
+  atMoment: string;
+  /** {light} {inSect} {outSect} */
+  sectLine: string;
+  sectLink: string;
+  /** {a} {degA} {dirA} {b} {degB} {dirB} {rel} {orb} {sep} */
+  declLine: string;
+  declParallel: string;
+  declContra: string;
+  /** {n} */
+  declMore: string;
+  declLink: string;
   /** {body} {deg} {limit} */
   outOfBounds: string;
   moonMean: string;
@@ -66,6 +80,7 @@ const en: DepthCopy = {
   keyMoon: 'Moon’s orbit · 5.1° · dashed · crosses at the nodes',
   keyHorizon: 'horizon · your sky at birth · meets the zodiac at the ascendant',
   keyBounds: 'declination bounds · ±23.4° · the furthest the Sun ever goes',
+  keyDecl: 'shared declination · the ring a parallel pair rides',
   dragHint:
     'Drag to turn the sphere. Bodies sit at their real ecliptic latitude, on a globe of directions — where each one was, not how far away.',
   north: 'north',
@@ -74,9 +89,18 @@ const en: DepthCopy = {
   sunDefines: 'Sun 0.0° — it defines the plane',
   eclipseInside: 'The Sun is {deg}° from the nearer node, so this chart falls inside an eclipse season.',
   eclipseOutside: 'The Sun is {deg}° from the nearer node, so this chart is outside an eclipse season.',
-  bornDay: 'Born in daylight — the Sun stood {deg}° above the horizon.',
-  bornNight: 'Born at night — the Sun sat {deg}° below the horizon.',
-  bornLevel: 'Born with the Sun on the horizon itself.',
+  sectDay: 'Day chart — the Sun stood {deg}° above the horizon {when}.',
+  sectNight: 'Night chart — the Sun sat {deg}° below the horizon {when}.',
+  sectLevel: 'The Sun sits on the horizon itself, between a day chart and a night one.',
+  atBirth: 'at birth',
+  atMoment: 'at that moment',
+  sectLine: 'sect light {light} · in sect {inSect} · out of sect {outSect}',
+  sectLink: 'What sect means',
+  declLine: '{a} {degA}° {dirA} · {b} {degB}° {dirB} · {rel} to {orb}° · {sep}° apart on the wheel',
+  declParallel: 'parallel',
+  declContra: 'contraparallel',
+  declMore: 'This chart carries {n} declination aspects in all.',
+  declLink: 'What a parallel is',
   outOfBounds: '{body} declination {deg}° — out of bounds, past the {limit}° the Sun never passes.',
   moonMean: 'The Moon’s road is drawn at its mean 5.1° tilt through this chart’s nodes; the real nodes drift about 19.3° a year.',
   scrubNote: 'As time runs, each planet moves along the zodiac at the rate it had at birth; its tilt above the plane is held.',
@@ -102,6 +126,7 @@ const es: DepthCopy = {
   keyMoon: 'órbita de la Luna · 5,1° · discontinua · cruza en los nodos',
   keyHorizon: 'horizonte · tu cielo al nacer · toca el zodiaco en el ascendente',
   keyBounds: 'límites de declinación · ±23,4° · lo más lejos que llega el Sol',
+  keyDecl: 'declinación compartida · el anillo por el que va un par paralelo',
   dragHint:
     'Arrastra para girar la esfera. Los cuerpos están en su latitud eclíptica real, sobre un globo de direcciones: dónde estaba cada uno, no a qué distancia.',
   north: 'norte',
@@ -110,9 +135,18 @@ const es: DepthCopy = {
   sunDefines: 'Sol 0,0° — él define el plano',
   eclipseInside: 'El Sol está a {deg}° del nodo más cercano, así que esta carta cae dentro de una temporada de eclipses.',
   eclipseOutside: 'El Sol está a {deg}° del nodo más cercano, así que esta carta queda fuera de una temporada de eclipses.',
-  bornDay: 'Nacimiento de día — el Sol estaba {deg}° sobre el horizonte.',
-  bornNight: 'Nacimiento de noche — el Sol estaba {deg}° bajo el horizonte.',
-  bornLevel: 'Nacimiento con el Sol justo en el horizonte.',
+  sectDay: 'Carta diurna — el Sol estaba {deg}° sobre el horizonte {when}.',
+  sectNight: 'Carta nocturna — el Sol estaba {deg}° bajo el horizonte {when}.',
+  sectLevel: 'El Sol está justo en el horizonte, entre una carta diurna y una nocturna.',
+  atBirth: 'al nacer',
+  atMoment: 'en ese momento',
+  sectLine: 'luminaria de secta {light} · en secta {inSect} · fuera de secta {outSect}',
+  sectLink: 'Qué significa la secta',
+  declLine: '{a} {degA}° {dirA} · {b} {degB}° {dirB} · {rel} a {orb}° · {sep}° de distancia en la rueda',
+  declParallel: 'paralelo',
+  declContra: 'contraparalelo',
+  declMore: 'Esta carta reúne {n} aspectos de declinación en total.',
+  declLink: 'Qué es un paralelo',
   outOfBounds: 'Declinación de {body}: {deg}° — fuera de límites, más allá de los {limit}° que el Sol nunca pasa.',
   moonMean: 'El camino de la Luna se dibuja con su inclinación media de 5,1° por los nodos de esta carta; los nodos reales se desplazan unos 19,3° al año.',
   scrubNote: 'Al correr el tiempo, cada planeta avanza por el zodiaco al ritmo que llevaba al nacer; su inclinación sobre el plano queda fija.',
@@ -138,6 +172,7 @@ const pt: DepthCopy = {
   keyMoon: 'órbita da Lua · 5,1° · tracejada · cruza nos nodos',
   keyHorizon: 'horizonte · seu céu ao nascer · encontra o zodíaco no ascendente',
   keyBounds: 'limites de declinação · ±23,4° · o ponto mais distante que o Sol alcança',
+  keyDecl: 'declinação partilhada · o anel que um par paralelo percorre',
   dragHint:
     'Arraste para girar a esfera. Os corpos ficam na sua latitude eclíptica real, sobre um globo de direções: onde cada um estava, não a que distância.',
   north: 'norte',
@@ -146,9 +181,18 @@ const pt: DepthCopy = {
   sunDefines: 'Sol 0,0° — ele define o plano',
   eclipseInside: 'O Sol está a {deg}° do nodo mais próximo, então este mapa cai dentro de uma temporada de eclipses.',
   eclipseOutside: 'O Sol está a {deg}° do nodo mais próximo, então este mapa fica fora de uma temporada de eclipses.',
-  bornDay: 'Nascimento de dia — o Sol estava {deg}° acima do horizonte.',
-  bornNight: 'Nascimento de noite — o Sol estava {deg}° abaixo do horizonte.',
-  bornLevel: 'Nascimento com o Sol exatamente no horizonte.',
+  sectDay: 'Mapa diurno — o Sol estava {deg}° acima do horizonte {when}.',
+  sectNight: 'Mapa noturno — o Sol estava {deg}° abaixo do horizonte {when}.',
+  sectLevel: 'O Sol está exatamente no horizonte, entre um mapa diurno e um noturno.',
+  atBirth: 'ao nascer',
+  atMoment: 'nesse momento',
+  sectLine: 'luminar da seita {light} · em seita {inSect} · fora de seita {outSect}',
+  sectLink: 'O que significa a seita',
+  declLine: '{a} {degA}° {dirA} · {b} {degB}° {dirB} · {rel} a {orb}° · {sep}° de distância na roda',
+  declParallel: 'paralelo',
+  declContra: 'contraparalelo',
+  declMore: 'Este mapa reúne {n} aspetos de declinação no total.',
+  declLink: 'O que é um paralelo',
   outOfBounds: 'Declinação de {body}: {deg}° — fora de limites, além dos {limit}° que o Sol nunca passa.',
   moonMean: 'O caminho da Lua é desenhado na sua inclinação média de 5,1° pelos nodos deste mapa; os nodos reais deslocam-se cerca de 19,3° por ano.',
   scrubNote: 'Com o tempo a correr, cada planeta avança pelo zodíaco no ritmo que tinha ao nascer; a sua inclinação sobre o plano fica fixa.',
@@ -174,6 +218,7 @@ const fr: DepthCopy = {
   keyMoon: 'orbite de la Lune · 5,1° · pointillés · croise aux nœuds',
   keyHorizon: 'horizon · votre ciel à la naissance · rejoint le zodiaque à l’ascendant',
   keyBounds: 'limites de déclinaison · ±23,4° · le plus loin que le Soleil aille',
+  keyDecl: 'déclinaison partagée · l’anneau que suit une paire parallèle',
   dragHint:
     'Faites glisser pour tourner la sphère. Les corps sont à leur latitude écliptique réelle, sur un globe de directions : où chacun se trouvait, non à quelle distance.',
   north: 'nord',
@@ -182,9 +227,18 @@ const fr: DepthCopy = {
   sunDefines: 'Soleil 0,0° — c’est lui qui définit le plan',
   eclipseInside: 'Le Soleil est à {deg}° du nœud le plus proche : ce thème tombe dans une saison d’éclipses.',
   eclipseOutside: 'Le Soleil est à {deg}° du nœud le plus proche : ce thème est hors saison d’éclipses.',
-  bornDay: 'Naissance de jour — le Soleil était {deg}° au-dessus de l’horizon.',
-  bornNight: 'Naissance de nuit — le Soleil était {deg}° sous l’horizon.',
-  bornLevel: 'Naissance avec le Soleil sur l’horizon même.',
+  sectDay: 'Thème diurne — le Soleil était {deg}° au-dessus de l’horizon {when}.',
+  sectNight: 'Thème nocturne — le Soleil était {deg}° sous l’horizon {when}.',
+  sectLevel: 'Le Soleil est sur l’horizon même, entre un thème diurne et un thème nocturne.',
+  atBirth: 'à la naissance',
+  atMoment: 'à cet instant',
+  sectLine: 'luminaire de secte {light} · en secte {inSect} · hors secte {outSect}',
+  sectLink: 'Ce que veut dire la secte',
+  declLine: '{a} {degA}° {dirA} · {b} {degB}° {dirB} · {rel} à {orb}° · {sep}° d’écart sur la roue',
+  declParallel: 'parallèle',
+  declContra: 'contre-parallèle',
+  declMore: 'Ce thème compte {n} aspects de déclinaison en tout.',
+  declLink: 'Ce qu’est un parallèle',
   outOfBounds: 'Déclinaison de {body} : {deg}° — hors limites, au-delà des {limit}° que le Soleil ne dépasse jamais.',
   moonMean: 'La route de la Lune est tracée à son inclinaison moyenne de 5,1° par les nœuds de ce thème ; les nœuds réels dérivent d’environ 19,3° par an.',
   scrubNote: 'Quand le temps défile, chaque planète avance sur le zodiaque au rythme qu’elle avait à la naissance ; son inclinaison sur le plan reste fixe.',
@@ -210,6 +264,7 @@ const it: DepthCopy = {
   keyMoon: 'orbita della Luna · 5,1° · tratteggiata · incrocia ai nodi',
   keyHorizon: 'orizzonte · il tuo cielo alla nascita · tocca lo zodiaco all’ascendente',
   keyBounds: 'limiti di declinazione · ±23,4° · il punto più lontano che il Sole raggiunge',
+  keyDecl: 'declinazione condivisa · l’anello che percorre una coppia parallela',
   dragHint:
     'Trascina per ruotare la sfera. I corpi stanno alla loro latitudine eclittica reale, su un globo di direzioni: dove ciascuno era, non quanto lontano.',
   north: 'nord',
@@ -218,9 +273,18 @@ const it: DepthCopy = {
   sunDefines: 'Sole 0,0° — è lui a definire il piano',
   eclipseInside: 'Il Sole è a {deg}° dal nodo più vicino, quindi questo tema cade dentro una stagione di eclissi.',
   eclipseOutside: 'Il Sole è a {deg}° dal nodo più vicino, quindi questo tema resta fuori da una stagione di eclissi.',
-  bornDay: 'Nascita di giorno — il Sole stava {deg}° sopra l’orizzonte.',
-  bornNight: 'Nascita di notte — il Sole stava {deg}° sotto l’orizzonte.',
-  bornLevel: 'Nascita con il Sole proprio sull’orizzonte.',
+  sectDay: 'Tema diurno — il Sole stava {deg}° sopra l’orizzonte {when}.',
+  sectNight: 'Tema notturno — il Sole stava {deg}° sotto l’orizzonte {when}.',
+  sectLevel: 'Il Sole sta proprio sull’orizzonte, fra un tema diurno e uno notturno.',
+  atBirth: 'alla nascita',
+  atMoment: 'in quel momento',
+  sectLine: 'luminare di setta {light} · in setta {inSect} · fuori setta {outSect}',
+  sectLink: 'Che cosa significa la setta',
+  declLine: '{a} {degA}° {dirA} · {b} {degB}° {dirB} · {rel} a {orb}° · {sep}° di distanza sulla ruota',
+  declParallel: 'parallelo',
+  declContra: 'controparallelo',
+  declMore: 'Questo tema conta {n} aspetti di declinazione in tutto.',
+  declLink: 'Che cos’è un parallelo',
   outOfBounds: 'Declinazione di {body}: {deg}° — fuori limite, oltre i {limit}° che il Sole non supera mai.',
   moonMean: 'La strada della Luna è tracciata alla sua inclinazione media di 5,1° per i nodi di questo tema; i nodi reali si spostano di circa 19,3° all’anno.',
   scrubNote: 'Mentre il tempo scorre, ogni pianeta avanza lungo lo zodiaco al ritmo che aveva alla nascita; la sua inclinazione sul piano resta ferma.',

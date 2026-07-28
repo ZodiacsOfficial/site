@@ -20,7 +20,14 @@
  * Bodies also carry declination, measured from the equator rather than the
  * ecliptic. Past ±23.44° — further north or south than the Sun itself ever
  * goes — a body is out of bounds, and here that is something you can see
- * rather than look up.
+ * rather than look up. Two bodies riding the same declination circle are
+ * parallel, and mirrored across the equator contraparallel: a whole aspect
+ * family that the flat wheel, measuring a different angle, cannot draw at
+ * all. The sphere draws the ring they share.
+ *
+ * And the horizon's other consequence has a name. A chart with the Sun
+ * above it belongs to the day, one with the Sun below it to the night, and
+ * the tradition sorts the planets by the same halves.
  *
  * Its own lazy chunk: nothing here loads until the reader asks for it.
  */
@@ -43,6 +50,8 @@ import {
   type Projected,
 } from '../../lib/wheel/ecliptic3d';
 import { meanObliquity } from '../../lib/engine/houses';
+import { findDeclinationAspects, type DeclinationAspect } from '../../lib/declination';
+import { sectOf } from '../../lib/sect';
 import type { HouseSystem } from '../../lib/engine/types';
 import type { EntityRef } from '../../lib/scene/types';
 import { SIGNS, formatLongitude } from '../../lib/signs';
@@ -276,6 +285,40 @@ export default function EclipticView({
     (dec) => curve(declinationCircle(dec, obliquity, 4), R_SPHERE),
   ), [obliquity, spin, tilt, anchor]);
 
+  const declAspects = useMemo(() => findDeclinationAspects(
+    shown.filter((b) => GLYPH[b.body]).map((b) => ({ body: b.body, lon: b.lon, lat: b.lat })),
+    obliquity,
+  ), [shown, obliquity]);
+
+  /**
+   * One pair gets the ring and the caption, and which one is worth the
+   * space is a question about the wheel rather than about the orb. A pair
+   * the wheel already joins proves nothing, and neither does a pair sitting
+   * in the same few degrees of zodiac — the wheel shows those together
+   * anyway. What it cannot show is a tie across an arc, so the tightest
+   * pair the wheel both misses and scatters leads, with the tightest it
+   * merely misses behind it.
+   */
+  const declHeadline: DeclinationAspect | null = useMemo(() => {
+    const key = (a: string, b: string) => [a, b].sort().join('|');
+    const drawn = new Set(aspects.map((a) => key(a.a, a.b)));
+    const missed = declAspects.filter((d) => !drawn.has(key(d.a, d.b)));
+    return missed.find((d) => d.separation >= 30) ?? missed[0] ?? declAspects[0] ?? null;
+  }, [declAspects, aspects]);
+
+  /**
+   * The ring the pair shares. A parallel rides one circle, so the two
+   * declinations collapse to their mean rather than drawing twice at a
+   * degree's separation; a contraparallel gets both, which is the mirror.
+   */
+  const declRings = useMemo(() => {
+    if (!declHeadline) return [];
+    const decs = declHeadline.type === 'parallel'
+      ? [(declHeadline.decA + declHeadline.decB) / 2]
+      : [declHeadline.decA, declHeadline.decB];
+    return decs.map((dec) => curve(declinationCircle(dec, obliquity, 4), R_SPHERE));
+  }, [declHeadline, obliquity, spin, tilt, anchor]);
+
   /** The zodiac band: twelve tinted ribbons lying in the ecliptic plane. */
   const sectors = useMemo(() => SIGNS.map((sign, i) => {
     const outer: Projected[] = [];
@@ -444,9 +487,43 @@ export default function EclipticView({
 
   const sunAltitude = frame && sun ? altitudeOf(sun.lon, sun.lat, frame.zenith) : null;
   const daylight = sunAltitude === null ? null
-    : Math.abs(sunAltitude) < 0.5 ? copy.bornLevel
-      : fill(sunAltitude > 0 ? copy.bornDay : copy.bornNight,
-        { deg: deg1(Math.abs(sunAltitude), textLocale) });
+    : Math.abs(sunAltitude) < 0.5 ? copy.sectLevel
+      : fill(sunAltitude > 0 ? copy.sectDay : copy.sectNight, {
+        deg: deg1(Math.abs(sunAltitude), textLocale),
+        // Scrub far enough and a day chart becomes a night one, so the
+        // line has to stop claiming this is the birth minute.
+        when: scrub === 0 ? copy.atBirth : copy.atMoment,
+      });
+
+  /** Which half of the sky the chart belongs to, and who keeps it. */
+  const sect = useMemo(() => {
+    if (sunAltitude === null || !sun) return null;
+    const mercury = shown.find((b) => b.body === 'Mercury');
+    return sectOf({ sunAltitude, sunLon: sun.lon, mercuryLon: mercury?.lon ?? null });
+  }, [sunAltitude, sun?.lon, shown]);
+
+  const names = (bodies: readonly string[]) =>
+    bodies.map((body) => planetLabel(textLocale, body)).join(', ');
+
+  /** The pair, drawn where they actually stand rather than through the hub. */
+  const declChord = useMemo(() => {
+    if (!declHeadline) return null;
+    const one = marks.find((m) => m.body === declHeadline.a);
+    const other = marks.find((m) => m.body === declHeadline.b);
+    return one && other ? { p1: one.p, p2: other.p } : null;
+  }, [declHeadline, marks]);
+
+  const declText = declHeadline && fill(copy.declLine, {
+    a: planetLabel(textLocale, declHeadline.a),
+    degA: deg1(Math.abs(declHeadline.decA), textLocale),
+    dirA: declHeadline.decA >= 0 ? copy.north : copy.south,
+    b: planetLabel(textLocale, declHeadline.b),
+    degB: deg1(Math.abs(declHeadline.decB), textLocale),
+    dirB: declHeadline.decB >= 0 ? copy.north : copy.south,
+    rel: declHeadline.type === 'parallel' ? copy.declParallel : copy.declContra,
+    orb: deg2(declHeadline.orb, textLocale),
+    sep: deg1(declHeadline.separation, textLocale),
+  });
 
   const picked = selection?.kind === 'body'
     ? marks.find((m) => m.body === selection.body) : undefined;
@@ -489,6 +566,9 @@ export default function EclipticView({
         <line class="ev-stem" x1={m.foot.x.toFixed(2)} y1={m.foot.y.toFixed(2)} x2={m.p.x.toFixed(2)} y2={m.p.y.toFixed(2)} />
         <circle class="ev-foot" cx={m.foot.x.toFixed(2)} cy={m.foot.y.toFixed(2)} r="1.7" />
         {isPicked && <circle class="ev-halo" cx={m.p.x.toFixed(2)} cy={m.p.y.toFixed(2)} r={(r + 4).toFixed(2)} />}
+        {sect?.light === m.body && (
+          <circle class="ev-sectring" cx={m.p.x.toFixed(2)} cy={m.p.y.toFixed(2)} r={(r + 3).toFixed(2)} />
+        )}
         <circle class="ev-disc" cx={m.p.x.toFixed(2)} cy={m.p.y.toFixed(2)} r={r.toFixed(2)} />
         <text class="ev-glyph" x={m.p.x.toFixed(2)} y={m.p.y.toFixed(2)} text-anchor="middle" dominant-baseline="central">
           {GLYPH[m.body]}
@@ -528,6 +608,9 @@ export default function EclipticView({
           {horizon.filter((r) => !r.front).map((r) => <polyline class="ev-horizon" points={poly(r.points)} />)}
           {bounds.map((b) => b.filter((r) => !r.front).map((r) => (
             <polyline class="ev-bound" points={poly(r.points)} />
+          )))}
+          {declRings.map((ring) => ring.filter((r) => !r.front).map((r) => (
+            <polyline class="ev-declring" points={poly(r.points)} />
           )))}
         </g>
 
@@ -571,12 +654,21 @@ export default function EclipticView({
           ))}
         </g>
 
+        {declChord && (
+          <line class="ev-declchord"
+                x1={declChord.p1.x.toFixed(2)} y1={declChord.p1.y.toFixed(2)}
+                x2={declChord.p2.x.toFixed(2)} y2={declChord.p2.y.toFixed(2)} />
+        )}
+
         <g class="ev-ring" style={`opacity:${solidity.toFixed(3)}`}>
           {equator.filter((r) => r.front).map((r) => <polyline class="ev-equator" points={poly(r.points)} />)}
           {moonRoad.filter((r) => r.front).map((r) => <polyline class="ev-moonroad" points={poly(r.points)} />)}
           {horizon.filter((r) => r.front).map((r) => <polyline class="ev-horizon" points={poly(r.points)} />)}
           {bounds.map((b) => b.filter((r) => r.front).map((r) => (
             <polyline class="ev-bound" points={poly(r.points)} />
+          )))}
+          {declRings.map((ring) => ring.filter((r) => r.front).map((r) => (
+            <polyline class="ev-declring" points={poly(r.points)} />
           )))}
         </g>
         <g class="ev-wire" style={`opacity:${(solidity * 0.85).toFixed(3)}`}>
@@ -647,6 +739,7 @@ export default function EclipticView({
           <li><i class="ev-key-line ev-key-moon" />{copy.keyMoon}</li>
           {sited && <li><i class="ev-key-line ev-key-horizon" />{copy.keyHorizon}</li>}
           <li><i class="ev-key-line ev-key-bounds" />{copy.keyBounds}</li>
+          {declHeadline && <li><i class="ev-key-line ev-key-decl" />{copy.keyDecl}</li>}
         </ul>
       </div>
 
@@ -673,6 +766,32 @@ export default function EclipticView({
         )}
 
         {daylight && <p class="ev-note">{daylight}</p>}
+
+        {sect && (
+          <p class="mono ev-readout">
+            {fill(copy.sectLine, {
+              light: planetLabel(textLocale, sect.light),
+              inSect: names(sect.inSect),
+              outSect: names(sect.outOfSect),
+            })}
+            {' · '}
+            <a class="ev-link" href="/learn/glossary/#sect">{copy.sectLink}</a>
+          </p>
+        )}
+
+        {declText && (
+          <p class="mono ev-readout">
+            {declText}
+            {' · '}
+            <a class="ev-link" href="/learn/glossary/#parallel">{copy.declLink}</a>
+          </p>
+        )}
+
+        {declAspects.length > 1 && (
+          <p class="ev-note ev-fine">
+            {fill(copy.declMore, { n: String(declAspects.length) })}
+          </p>
+        )}
 
         {strayest && (
           <p class="ev-note">
