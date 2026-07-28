@@ -369,6 +369,14 @@ ${JSON.stringify(jsonLd(m), null, 2)}
       .split { grid-template-columns: 0.92fr 1.08fr; gap: 56px; align-items: start; }
       .split__figure { position: sticky; top: 86px; }
     }
+    .figure__gallery {
+      display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
+      font-family: var(--display); font-size: 12px; letter-spacing: 0.04em;
+      color: var(--ink-dim); text-decoration: none;
+      border-bottom: 1px solid var(--hair-2); padding-bottom: 2px;
+      transition: color 200ms ease, border-color 200ms ease;
+    }
+    .figure__gallery:hover { color: var(--gold-bright); border-color: var(--gold); }
 
     /* Museum plinth card */
     .card {
@@ -713,6 +721,9 @@ ${JSON.stringify(jsonLd(m), null, 2)}
             <figcaption class="card__caption">${esc(m.name)} <span class="g">·</span> ${esc(meta.archetype)}</figcaption>
           </div>
         </figure>
+        <a class="figure__gallery" href="/registry/gallery/#${m.slug}">
+          <span>View in the gallery</span><span aria-hidden="true">→</span>
+        </a>
       </div>
 
       <div>

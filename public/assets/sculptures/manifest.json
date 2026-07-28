@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "source": "public/assets/nuggets",
+  "sizes": [
+    512,
+    1024
+  ],
+  "signs": [
+    "aries",
+    "taurus",
+    "gemini",
+    "cancer",
+    "leo",
+    "virgo",
+    "libra",
+    "scorpio",
+    "sagittarius",
+    "capricorn",
+    "aquarius",
+    "pisces"
+  ]
+}

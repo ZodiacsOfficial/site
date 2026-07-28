@@ -1018,7 +1018,7 @@ const indexablePeoplePaths = new Set(
     .map((person) => `/people/${person.slug}/`),
 );
 const sitemapPolicy = {
-  total: 2419 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
+  total: 2420 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true),
   compatibilityPairs: 78,
   birthdays: 1830,

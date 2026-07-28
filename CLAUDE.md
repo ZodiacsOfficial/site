@@ -54,6 +54,18 @@ owns that page.
 - `public/registry/{sign}/index.html` ← `node scripts/build-sign-pages.mjs`
   (data: `scripts/sign-data.mjs` + `public/registry/zodiacs.registry.json`)
 - `public/archive/` (+ feeds) ← `node scripts/build-archive.mjs`
+- `public/registry/gallery/index.html` + `public/assets/gallery.js` ←
+  `node scripts/build-shelf.mjs` (page + esbuild-bundled Three.js scene;
+  source `src/shelf/`, data from `sign-data.mjs` + the registry JSON —
+  addresses are fetched live by the page, never baked in)
+- `src/shelf/figures.geometry.json` + `public/assets/sculptures/{512,1024}/`
+  ← `node scripts/build-figure-assets.mjs` (silhouettes traced from
+  `public/assets/nuggets/` and extruded by the gallery; the nuggets
+  themselves are never touched). Deliberately NOT in the drift job: the
+  traced geometry re-derives identically anywhere and is re-checked by
+  `scripts/shelf-figures.test.mjs`, but the webp encodes are libvips output
+  and are not byte-stable across platforms — same rule as the cabinet
+  materials.
 - `public/assets/app.js` ← `node scripts/build-app.mjs` (source `src/app.jsx`)
 - `public/registry/index.html` Aura marker region (meta flag + no-JS entry
   between the `registry-aura-entry` comments) ← stamped by
