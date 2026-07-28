@@ -3180,6 +3180,8 @@
           </nav>
           <p className="cat__lots-note">
             Tap a glyph to open its catalogue entry — lore, provenance &amp; acquisition.
+            {' '}The same twelve stand spine out on{' '}
+            <a className="cat__shelf-link" href="/registry/shelf/">the shelf</a>.
           </p>
         </section>
       );

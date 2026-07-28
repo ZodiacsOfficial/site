@@ -54,6 +54,10 @@ owns that page.
 - `public/registry/{sign}/index.html` ← `node scripts/build-sign-pages.mjs`
   (data: `scripts/sign-data.mjs` + `public/registry/zodiacs.registry.json`)
 - `public/archive/` (+ feeds) ← `node scripts/build-archive.mjs`
+- `public/registry/shelf/index.html` + `public/assets/shelf.js` ←
+  `node scripts/build-shelf.mjs` (page + esbuild-bundled Three.js scene;
+  source `src/shelf/`, data from `sign-data.mjs` + the registry JSON —
+  addresses are fetched live by the page, never baked in)
 - `public/assets/app.js` ← `node scripts/build-app.mjs` (source `src/app.jsx`)
 - `public/registry/index.html` Aura marker region (meta flag + no-JS entry
   between the `registry-aura-entry` comments) ← stamped by

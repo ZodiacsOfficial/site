@@ -207,7 +207,37 @@ depend on.
 - No new fonts, no CDN scripts, no external requests beyond same-origin.
 - Frozen legacy OG cards (`public/assets/og/*.png`) stay untouched.
 
-## 10. Open items for the implementer
+## 10. As built (2026-07-28)
+
+Shipped as planned except where noted:
+
+- **The page is generated, not hand-authored.** `scripts/build-shelf.mjs`
+  emits BOTH `public/registry/shelf/index.html` and `public/assets/shelf.js`.
+  Twelve volumes meant twelve repeated blocks of catalogue data in the
+  register, the JSON-LD `ItemList`, and the scene's data island; generating
+  them keeps one source (`sign-data.mjs` + the registry JSON) and puts the
+  page under the same CI drift gate as the rest of the wing.
+- **Inspection turns the volume, not the camera.** The records card is a
+  fixed DOM overlay, so orbiting the camera would swing the card's subject
+  out from under it. Drag applies damped yaw/pitch to the volume itself
+  (clamped ±35°/±25°), wheel and pinch zoom it. No OrbitControls — the
+  hand-rolled version is a few lines and keeps the bundle down.
+- **Bundle**: 128 KB gzip (budget was 180). `three` is a devDependency,
+  bundled at generator time; nothing resolves it at runtime.
+- **Reference licence**: re-checked at implementation time — still no LICENSE
+  on `mintdotgg/bookshelf`. Built clean-room from the behaviour description
+  in §1; no code, assets, or copy taken.
+- **Glyphs keep U+FE0E.** Stripping the text-presentation selector makes
+  browsers resolve ♈ to the colour emoji font — in the page AND in the canvas
+  the spines are painted with. `scripts/shelf-layout.test.mjs` pins it.
+- **Knock-on regenerations.** Adding a dependency changes `package.json` and
+  `package-lock.json`, which are hashed into the daily publication's
+  `generatorSha256` and the Phase 1 pixel-evidence receipt. Both were
+  regenerated (`npm run editorial:daily:build`, `npm run
+  test:phase1:acceptance`); expect the same on any future dependency change.
+- **OG card**: uses the existing `/assets/og/v2/registry.png`; no new card.
+
+## 11. Open items for the implementer
 
 - Re-check the reference repo's license before borrowing anything; absent a
   verified permissive license, the clean-room rule in §1 stands.
