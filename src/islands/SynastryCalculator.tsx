@@ -58,6 +58,8 @@ interface Person {
     mc: number | null;
     cusps: number[] | null;
   };
+  /** Latitude-bearing bodies for the sphere view; null off the engine paths. */
+  depth: { body: string; lon: number; lat: number; retrograde?: boolean }[] | null;
   /** Privacy-safe shape used by the positions-only send-back codec. */
   positions: PositionsShareInput;
 }
@@ -234,6 +236,8 @@ async function resolveSaved(chart: SavedChart, loadEngine: EngineLoader): Promis
       mc: chart.summary.angles?.mc ?? null,
       cusps: null,
     },
+    // Stored summaries are longitude-only on purpose; the sphere says so.
+    depth: null,
     positions: {
       bodies: resolved.bodies as PositionsShareInput['bodies'],
       angles: chart.summary.angles,
@@ -272,6 +276,7 @@ async function resolveLink(link: { input: ShareChartInput; label: string }, load
       mc: result.angles?.mc ?? null,
       cusps: input.timeKnown ? (result.houses?.cusps ?? null) : null,
     },
+    depth: result.bodies.map(({ body, lon, lat, retrograde }) => ({ body, lon, lat, retrograde })),
     positions: {
       bodies: result.bodies,
       angles: result.angles ? { asc: result.angles.asc, mc: result.angles.mc } : null,
@@ -306,6 +311,7 @@ async function resolveForm(slot: SlotState, fallbackLabel: string, loadEngine: E
       mc: result.angles?.mc ?? null,
       cusps: timeKnown ? (result.houses?.cusps ?? null) : null,
     },
+    depth: result.bodies.map(({ body, lon, lat, retrograde }) => ({ body, lon, lat, retrograde })),
     positions: {
       bodies: result.bodies,
       angles: result.angles ? { asc: result.angles.asc, mc: result.angles.mc } : null,
@@ -329,6 +335,7 @@ function resolvePositions(
       mc: chart.angles?.mc ?? null,
       cusps: null,
     },
+    depth: null,
     positions: chart,
   };
 }
@@ -1330,6 +1337,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               a={{
                 label: result.a.label,
                 bodies: result.a.wheel.bodies,
+                depth: result.a.depth,
                 asc: result.a.asc,
                 mc: result.a.wheel.mc,
                 cusps: result.a.wheel.cusps,
@@ -1338,6 +1346,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
               b={{
                 label: result.b.label,
                 bodies: result.b.wheel.bodies,
+                depth: result.b.depth,
                 asc: result.b.asc,
                 mc: result.b.wheel.mc,
                 cusps: result.b.wheel.cusps,

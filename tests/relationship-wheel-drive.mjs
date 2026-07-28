@@ -96,8 +96,8 @@ try {
   check('cross-chart chords draw', (await page.locator('[data-transit-aspect]').count()) > 0);
   check('caption names both people', /Frida/.test(await page.locator('.tring__caption').textContent() ?? '')
     && /Diego/.test(await page.locator('.tring__caption').textContent() ?? ''));
-  check('Wheel, Grid, and Composite tabs render with Wheel selected',
-    (await page.getByRole('tab').count()) === 3
+  check('Wheel, Grid, Composite, and In-3D tabs render with Wheel selected',
+    (await page.getByRole('tab').count()) === 4
       && await page.locator('[data-relationship-tab="wheel"]').getAttribute('aria-selected') === 'true');
   check('an uncurated top contact keeps the role-composed fallback verbatim',
     (await page.locator('.syn__aspect-read[data-fallback-line]').first().textContent())?.trim() === FALLBACK_NEPTUNE_URANUS);
@@ -185,6 +185,22 @@ try {
   check('composite analytics fires once per compare without props',
     relationshipEvents.filter((event) => event.name === 'composite_view').length === 1
       && Object.keys(relationshipEvents.find((event) => event.name === 'composite_view')?.props ?? { unexpected: true }).length === 0);
+
+  // The In-3D tab lazy-loads the sphere with both charts and their contacts.
+  await page.locator('[data-relationship-tab="depth"]').click();
+  await page.waitForSelector('[data-relationship-panel="depth"] figure.ev', { timeout: 20000 });
+  check('depth tab renders both charts on the sphere',
+    (await page.locator('[data-relationship-panel="depth"] .ev-body').count()) === 20
+      && (await page.locator('[data-relationship-panel="depth"] .ev-body.is-partner').count()) === 10);
+  check('depth tab draws cross-chart contacts through space',
+    (await page.locator('[data-relationship-panel="depth"] .ev-inter line').count()) >= 1);
+  check('depth tab keys both charts in the legend',
+    (await page.locator('[data-relationship-panel="depth"] .ev-key-yours').count()) === 1
+      && (await page.locator('[data-relationship-panel="depth"] .ev-key-theirs').count()) === 1);
+  check('depth tab shows the tightest contact readout',
+    /from exact/.test(await page.locator('[data-relationship-panel="depth"] .ev-readout').first().textContent() ?? ''));
+  await shot(page, 'rwheel-depth.png', { clip: { x: 0, y: 0, width: 1440, height: 1400 } });
+  await page.locator('[data-relationship-tab="wheel"]').click();
 
   // The invite + pairing blocks survive below the module.
   check('pairing CTA renders', (await page.locator('.syn__next-action .btn--ghost').count()) === 1);
