@@ -152,6 +152,22 @@ export function signFromHash(hash, slugs) {
 }
 
 /**
+ * The row band of an embedded stage: the section is its own room, with no
+ * masthead inside it and no card ever, so the band runs from the section's
+ * top down to its controls. Same floor discipline as the page's own bands —
+ * a collapsed section must never produce a degenerate rectangle.
+ */
+export function embedBand(width, height, chromeTop, gap = 20, floor = 140) {
+  const bottom = Math.min(height, chromeTop) - gap;
+  return {
+    x: 0,
+    y: gap,
+    width: Math.max(floor, width),
+    height: Math.max(floor, bottom - gap),
+  };
+}
+
+/**
  * Figures far enough off-screen that there is nothing to draw. Generous by a
  * slot on each side so one is never seen appearing.
  */

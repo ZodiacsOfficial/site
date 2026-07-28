@@ -8,6 +8,7 @@ import {
   approach,
   clampFocus,
   dragToFocusDelta,
+  embedBand,
   figurePose,
   fitScale,
   floorY,
@@ -227,6 +228,44 @@ describe('framing the vitrine', () => {
     expect(lerpRect(a, b, 0)).toEqual(a);
     expect(lerpRect(a, b, 1)).toEqual(b);
     expect(lerpRect(a, b, 0.25).width).toBeCloseTo(725, 12);
+  });
+});
+
+describe('the embedded band', () => {
+  it('runs from the section top down to its controls', () => {
+    expect(embedBand(1280, 520, 430)).toEqual({ x: 0, y: 20, width: 1280, height: 390 });
+  });
+
+  it('stops at the section bottom when the controls sit below it', () => {
+    const band = embedBand(1280, 520, 9999);
+    expect(band.y + band.height).toBeLessThanOrEqual(500);
+  });
+
+  it('keeps its floor when the section collapses', () => {
+    const band = embedBand(0, 0, 0);
+    expect(band.width).toBeGreaterThanOrEqual(140);
+    expect(band.height).toBeGreaterThanOrEqual(140);
+  });
+
+  it('frames the whole row inside embed-shaped bands', () => {
+    // The frame centres the content in the band (proved above); here the
+    // claim is that its height in pixels never exceeds the band's.
+    for (const [width, height] of [[1440, 420], [768, 380], [390, 300]]) {
+      const content = rowContent();
+      const rect = embedBand(width, height, height - 96);
+      const frame = vitrineFrame({
+        canvasWidth: width, canvasHeight: height, rect, content, margin: 1,
+      });
+      const perPixel = frame.worldHeight / height;
+      const bandCenter = rect.y + (rect.height / 2);
+      const label = `${width}x${height}`;
+      const top = bandCenter - ((content.height / 2) / perPixel);
+      const bottom = bandCenter + ((content.height / 2) / perPixel);
+      expect(top, label).toBeGreaterThanOrEqual(rect.y - 1e-6);
+      expect(bottom, label).toBeLessThanOrEqual(rect.y + rect.height + 1e-6);
+      const right = (width / 2) + ((content.width / 2) / perPixel);
+      expect(right, label).toBeLessThanOrEqual(rect.x + rect.width + 1e-6);
+    }
   });
 });
 
