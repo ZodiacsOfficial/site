@@ -51,6 +51,8 @@ export interface DepthCopy {
   /** {n} */
   declMore: string;
   declLink: string;
+  /** Selected body's own ties: {rel} {body} {orb} */
+  declPicked: string;
   /** {body} {deg} {limit} */
   outOfBounds: string;
   moonMean: string;
@@ -101,6 +103,7 @@ const en: DepthCopy = {
   declContra: 'contraparallel',
   declMore: 'This chart carries {n} declination aspects in all.',
   declLink: 'What a parallel is',
+  declPicked: '{rel} {body} {orb}°',
   outOfBounds: '{body} declination {deg}° — out of bounds, past the {limit}° the Sun never passes.',
   moonMean: 'The Moon’s road is drawn at its mean 5.1° tilt through this chart’s nodes; the real nodes drift about 19.3° a year.',
   scrubNote: 'As time runs, each planet moves along the zodiac at the rate it had at birth; its tilt above the plane is held.',
@@ -147,6 +150,7 @@ const es: DepthCopy = {
   declContra: 'contraparalelo',
   declMore: 'Esta carta reúne {n} aspectos de declinación en total.',
   declLink: 'Qué es un paralelo',
+  declPicked: '{rel} con {body} {orb}°',
   outOfBounds: 'Declinación de {body}: {deg}° — fuera de límites, más allá de los {limit}° que el Sol nunca pasa.',
   moonMean: 'El camino de la Luna se dibuja con su inclinación media de 5,1° por los nodos de esta carta; los nodos reales se desplazan unos 19,3° al año.',
   scrubNote: 'Al correr el tiempo, cada planeta avanza por el zodiaco al ritmo que llevaba al nacer; su inclinación sobre el plano queda fija.',
@@ -193,6 +197,7 @@ const pt: DepthCopy = {
   declContra: 'contraparalelo',
   declMore: 'Este mapa reúne {n} aspetos de declinação no total.',
   declLink: 'O que é um paralelo',
+  declPicked: '{rel} com {body} {orb}°',
   outOfBounds: 'Declinação de {body}: {deg}° — fora de limites, além dos {limit}° que o Sol nunca passa.',
   moonMean: 'O caminho da Lua é desenhado na sua inclinação média de 5,1° pelos nodos deste mapa; os nodos reais deslocam-se cerca de 19,3° por ano.',
   scrubNote: 'Com o tempo a correr, cada planeta avança pelo zodíaco no ritmo que tinha ao nascer; a sua inclinação sobre o plano fica fixa.',
@@ -239,6 +244,7 @@ const fr: DepthCopy = {
   declContra: 'contre-parallèle',
   declMore: 'Ce thème compte {n} aspects de déclinaison en tout.',
   declLink: 'Ce qu’est un parallèle',
+  declPicked: '{rel} avec {body} {orb}°',
   outOfBounds: 'Déclinaison de {body} : {deg}° — hors limites, au-delà des {limit}° que le Soleil ne dépasse jamais.',
   moonMean: 'La route de la Lune est tracée à son inclinaison moyenne de 5,1° par les nœuds de ce thème ; les nœuds réels dérivent d’environ 19,3° par an.',
   scrubNote: 'Quand le temps défile, chaque planète avance sur le zodiaque au rythme qu’elle avait à la naissance ; son inclinaison sur le plan reste fixe.',
@@ -285,6 +291,7 @@ const it: DepthCopy = {
   declContra: 'controparallelo',
   declMore: 'Questo tema conta {n} aspetti di declinazione in tutto.',
   declLink: 'Che cos’è un parallelo',
+  declPicked: '{rel} con {body} {orb}°',
   outOfBounds: 'Declinazione di {body}: {deg}° — fuori limite, oltre i {limit}° che il Sole non supera mai.',
   moonMean: 'La strada della Luna è tracciata alla sua inclinazione media di 5,1° per i nodi di questo tema; i nodi reali si spostano di circa 19,3° all’anno.',
   scrubNote: 'Mentre il tempo scorre, ogni pianeta avanza lungo lo zodiaco al ritmo che aveva alla nascita; la sua inclinazione sul piano resta ferma.',

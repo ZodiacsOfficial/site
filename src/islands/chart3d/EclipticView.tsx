@@ -528,6 +528,19 @@ export default function EclipticView({
   const picked = selection?.kind === 'body'
     ? marks.find((m) => m.body === selection.body) : undefined;
 
+  /**
+   * The rest of the declination aspects are reachable rather than merely
+   * counted: tap a body and its own ties come with its readout.
+   */
+  const pickedDecl = !picked ? [] : declAspects
+    .filter((d) => d.a === picked.body || d.b === picked.body)
+    .slice(0, 2)
+    .map((d) => fill(copy.declPicked, {
+      rel: d.type === 'parallel' ? copy.declParallel : copy.declContra,
+      body: planetLabel(textLocale, d.a === picked.body ? d.b : d.a),
+      orb: deg2(d.orb, textLocale),
+    }));
+
   /** Birth clock plus the offset. Zone rules inside the window aren't modelled. */
   const scrubClock = useMemo(() => {
     if (!birthClock) return null;
@@ -752,6 +765,7 @@ export default function EclipticView({
             {copy.latitudeShort} {picked.lat >= 0 ? '+' : '−'}{deg2(Math.abs(picked.lat), textLocale)}° ·{' '}
             {copy.declinationShort} {picked.dec >= 0 ? '+' : '−'}{deg2(Math.abs(picked.dec), textLocale)}°
             {frame ? ` · ${picked.up ? copy.above : copy.below}` : ''}
+            {pickedDecl.map((line) => ` · ${line}`)}
           </p>
         )}
 
