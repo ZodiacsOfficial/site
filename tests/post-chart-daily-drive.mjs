@@ -623,10 +623,17 @@ await withPreview({ port: 4426 }, async (baseURL) => {
       await reconfirm.waitFor({ state: 'visible' });
       check('profile changed-recipient page returned 200', run.response?.ok() === true);
       check('profile changed-recipient state never claims active', !(await run.panel.innerText()).includes('On · reading'));
-      check('profile changed-recipient copy is explicit', await run.panel.getByText(
+      // The paused-delivery sentence can paint a beat after the button on a
+      // slow runner (CI read a stale count once, 2026-07-28). Wait for it,
+      // then still hold it to exactly one appearance.
+      const changedCopy = run.panel.getByText(
         'Your account email changed. Delivery is paused until you confirm the current address.',
         { exact: true },
-      ).count() === 1);
+      );
+      await changedCopy.first().waitFor({ state: 'visible' });
+      const changedCopyCount = await changedCopy.count();
+      check('profile changed-recipient copy is explicit', changedCopyCount === 1,
+        `count=${changedCopyCount}`);
       await reconfirm.click();
       await run.panel.getByRole('heading', { name: 'Confirm from your inbox.', exact: true }).waitFor();
       check('profile re-confirm uses the prior explicit chart and timezone',

@@ -22,8 +22,19 @@ const maxDiffRatio = 0.001;
 const fixedNow = '2026-07-10T12:00:00.000Z';
 // Daily JSON is intentionally refreshed independently of layout changes. The
 // ticker's values, glyph types, and hues all come from that receipt, so mask
-// the live row plus the Today-by-sign date stamp. Their surrounding bands,
-// headings, sign controls, and any data-driven reflow remain under comparison.
+// the live row plus the Today-by-sign date stamp. The surrounding bands,
+// headings, sign controls, and CSS-driven reflow remain under comparison.
+//
+// The ticker's TEXT is additionally replaced with a fixed line before capture.
+// Masking alone cannot protect it: the dimension check runs before any mask
+// applies, so on days the refreshed receipt is long enough to wrap the row,
+// the page grows and every home case fails on height (2026-07-28 was such a
+// day). A canonical line keeps page height independent of the day's data
+// while still failing the suite if a style change rewraps that same line.
+const canonicalSkyTicker =
+  'jul 10 · ☉ Sun 15°00′ Leo · ☽ Moon in Aries · ☿ Mercury direct · '
+  + '♄ Saturn retrograde · ♆ Neptune retrograde · ♇ Pluto retrograde · '
+  + '○ New moon — Aug 12';
 const liveDailySelectors = [
   '.skyticker',
   '.tbs__stamp',
@@ -74,7 +85,7 @@ function fileStem(testCase) {
   return `${testCase.name}-${testCase.viewport.name}${motion}`;
 }
 
-async function settlePage(page, { result, normalizeEventsHub }) {
+async function settlePage(page, { result, normalizeEventsHub, name }) {
   await page.waitForLoadState('networkidle');
   const loadFonts = () => page.evaluate(async () => {
     await Promise.all([...document.fonts].map((font) => font.load().catch(() => undefined)));
@@ -135,6 +146,16 @@ async function settlePage(page, { result, normalizeEventsHub }) {
       try { video.currentTime = 0; } catch { /* poster remains deterministic */ }
     }
   });
+  // After hydration is done: the live row keeps its element (the mask
+  // presence check still counts it) but reads the canonical line, so the
+  // day's receipt can never change how many lines it wraps to.
+  if (name === 'home') {
+    await page.evaluate((text) => {
+      const ticker = document.querySelector('.skyticker');
+      if (ticker) ticker.textContent = text;
+    }, canonicalSkyTicker);
+  }
+
   // Long editorial pages can introduce below-the-fold font faces only after
   // the lazy-loading sweep. Wait once more so fallback metrics cannot become
   // a platform baseline by racing the final screenshot.
