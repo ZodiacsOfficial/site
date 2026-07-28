@@ -169,3 +169,175 @@ export function eclipseProximity(sunLon: number, nodeLon: number): {
   );
   return { degrees, possible: degrees <= SOLAR_ECLIPSE_LIMIT };
 }
+
+/* ── The observer's sky ──────────────────────────────────────────────
+ *
+ * Everything above describes where the bodies are. What follows describes
+ * where the *observer* stood, which is what turns a sky map into a birth
+ * chart: the horizon at that minute and place, and the declination bounds
+ * the Sun itself never passes.
+ *
+ * Still closed-form, still no ephemeris — these depend on the Earth's
+ * rotation and tilt, not on where the planets went.
+ */
+
+/** Milliseconds at J2000.0 (2000-01-01 12:00 UT). */
+const J2000_MS = Date.UTC(2000, 0, 1, 12);
+const MS_PER_DAY = 86_400_000;
+
+/**
+ * Julian centuries since J2000.0.
+ *
+ * UTC stands in for UT1 here. They differ by under 0.9 s by definition,
+ * which reaches the ascendant as under 0.004° — far below anything this
+ * drawing can show.
+ */
+export function julianCenturies(utcMs: number): number {
+  return (utcMs - J2000_MS) / (MS_PER_DAY * 36525);
+}
+
+/**
+ * Greenwich mean sidereal time in hours, 0–24.
+ *
+ * Sidereal time runs about four minutes a day faster than clock time,
+ * which is the whole reason the ascendant sweeps the zodiac while the
+ * planets stay put. Callers that want apparent sidereal time are off by
+ * the equation of the equinoxes — at most ~1.1 s, or 0.005° of ascendant.
+ */
+export function gmstHours(utcMs: number): number {
+  const days = (utcMs - J2000_MS) / MS_PER_DAY;
+  const hours = 18.697374558 + 24.06570982441908 * days;
+  return ((hours % 24) + 24) % 24;
+}
+
+/** A unit vector back to the ecliptic direction it came from. */
+export function vecToEcliptic(v: Vec3): EclipticPoint {
+  const length = Math.hypot(v.x, v.y, v.z) || 1;
+  return {
+    lon: norm360(Math.atan2(v.y, v.x) / RAD),
+    lat: Math.asin(Math.max(-1, Math.min(1, v.z / length))) / RAD,
+  };
+}
+
+/**
+ * Equatorial direction to ecliptic. The same rotation as the ecliptic →
+ * equatorial one, taken the other way (ε negated).
+ */
+export function equatorialToEcliptic(
+  raDeg: number,
+  decDeg: number,
+  obliquityDeg = OBLIQUITY,
+): EclipticPoint {
+  const a = raDeg * RAD;
+  const d = decDeg * RAD;
+  const e = obliquityDeg * RAD;
+  const sinLat = Math.sin(d) * Math.cos(e) - Math.cos(d) * Math.sin(e) * Math.sin(a);
+  const y = Math.sin(d) * Math.sin(e) + Math.cos(d) * Math.cos(e) * Math.sin(a);
+  const x = Math.cos(d) * Math.cos(a);
+  return {
+    lon: norm360(Math.atan2(y, x) / RAD),
+    lat: Math.asin(Math.max(-1, Math.min(1, sinLat))) / RAD,
+  };
+}
+
+/**
+ * Declination — the angle north or south of the celestial equator, which is
+ * a different measurement from ecliptic latitude and the one that decides
+ * whether a body is out of bounds.
+ */
+export function declinationOf(
+  lonDeg: number,
+  latDeg: number,
+  obliquityDeg = OBLIQUITY,
+): number {
+  const l = lonDeg * RAD;
+  const b = latDeg * RAD;
+  const e = obliquityDeg * RAD;
+  const sinDec = Math.sin(b) * Math.cos(e) + Math.cos(b) * Math.sin(e) * Math.sin(l);
+  return Math.asin(Math.max(-1, Math.min(1, sinDec))) / RAD;
+}
+
+/**
+ * The point directly overhead at a given local sidereal time and
+ * geographic latitude: right ascension equal to the meridian's, declination
+ * equal to the observer's latitude. Everything about the horizon follows
+ * from it.
+ */
+export function zenithOf(
+  ramcDeg: number,
+  latitudeDeg: number,
+  obliquityDeg = OBLIQUITY,
+): EclipticPoint {
+  return equatorialToEcliptic(ramcDeg, latitudeDeg, obliquityDeg);
+}
+
+/**
+ * How high a direction sits above the horizon, in degrees. Negative is
+ * below — which is how a chart knows whether the Sun had set.
+ */
+export function altitudeOf(
+  lonDeg: number,
+  latDeg: number,
+  zenith: EclipticPoint,
+): number {
+  const d = eclipticToVec(lonDeg, latDeg);
+  const z = eclipticToVec(zenith.lon, zenith.lat);
+  const dot = d.x * z.x + d.y * z.y + d.z * z.z;
+  return Math.asin(Math.max(-1, Math.min(1, dot))) / RAD;
+}
+
+/**
+ * The horizon: every direction exactly 90° from the zenith. Where this
+ * circle cuts the ecliptic on the eastern side is the ascendant, which is
+ * the whole reason a birth chart needs a time and a place.
+ */
+export function horizonCircle(
+  zenith: EclipticPoint,
+  stepDeg = 3,
+): EclipticPoint[] {
+  const z = eclipticToVec(zenith.lon, zenith.lat);
+  // Any seed not parallel to the zenith; swapped near the pole to stay stable.
+  const seed: Vec3 = Math.abs(z.z) < 0.9 ? { x: 0, y: 0, z: 1 } : { x: 1, y: 0, z: 0 };
+
+  const ux = seed.y * z.z - seed.z * z.y;
+  const uy = seed.z * z.x - seed.x * z.z;
+  const uz = seed.x * z.y - seed.y * z.x;
+  const un = Math.hypot(ux, uy, uz) || 1;
+  const u: Vec3 = { x: ux / un, y: uy / un, z: uz / un };
+
+  const w: Vec3 = {
+    x: z.y * u.z - z.z * u.y,
+    y: z.z * u.x - z.x * u.z,
+    z: z.x * u.y - z.y * u.x,
+  };
+
+  const points: EclipticPoint[] = [];
+  for (let t = 0; t <= 360; t += stepDeg) {
+    const r = t * RAD;
+    const c = Math.cos(r);
+    const s = Math.sin(r);
+    points.push(vecToEcliptic({
+      x: u.x * c + w.x * s,
+      y: u.y * c + w.y * s,
+      z: u.z * c + w.z * s,
+    }));
+  }
+  return points;
+}
+
+/**
+ * A small circle of constant declination. Drawn at ±ε these are the
+ * celestial tropics — the furthest north and south the Sun ever reaches,
+ * and so the bounds a body has to exceed to be called out of bounds.
+ */
+export function declinationCircle(
+  declinationDeg: number,
+  obliquityDeg = OBLIQUITY,
+  stepDeg = 3,
+): EclipticPoint[] {
+  const points: EclipticPoint[] = [];
+  for (let ra = 0; ra <= 360; ra += stepDeg) {
+    points.push(equatorialToEcliptic(ra, declinationDeg, obliquityDeg));
+  }
+  return points;
+}

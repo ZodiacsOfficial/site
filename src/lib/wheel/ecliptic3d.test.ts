@@ -10,6 +10,13 @@ import {
   separation,
   OBLIQUITY,
   splitByDepth,
+  gmstHours,
+  julianCenturies,
+  declinationOf,
+  declinationCircle,
+  zenithOf,
+  horizonCircle,
+  altitudeOf,
 } from './ecliptic3d';
 
 const CX = 100;
@@ -158,5 +165,90 @@ describe('depth splitting', () => {
     expect(runs).toHaveLength(2);
     // The last point of the front run is the first of the back run.
     expect(runs[0].points[runs[0].points.length - 1]).toEqual(runs[1].points[0]);
+  });
+});
+
+describe('sidereal time', () => {
+  it('matches the standard GMST at the J2000 epoch', () => {
+    expect(gmstHours(Date.UTC(2000, 0, 1, 12))).toBeCloseTo(18.697374558, 6);
+  });
+
+  it('gains the sidereal day on the solar day', () => {
+    // A solar day advances sidereal time by about four minutes.
+    const day0 = gmstHours(Date.UTC(2026, 0, 1, 0));
+    const day1 = gmstHours(Date.UTC(2026, 0, 2, 0));
+    const gained = ((day1 - day0) % 24 + 24) % 24;
+    expect(gained * 60).toBeCloseTo(3.943, 1);
+  });
+
+  it('stays inside the clock face', () => {
+    for (const ms of [Date.UTC(1815, 11, 10), Date.UTC(2026, 6, 28), Date.UTC(2199, 0, 1)]) {
+      const h = gmstHours(ms);
+      expect(h).toBeGreaterThanOrEqual(0);
+      expect(h).toBeLessThan(24);
+    }
+  });
+
+  it('counts centuries from J2000', () => {
+    expect(julianCenturies(Date.UTC(2000, 0, 1, 12))).toBeCloseTo(0, 12);
+    expect(julianCenturies(Date.UTC(2100, 0, 1, 12))).toBeCloseTo(1, 3);
+  });
+});
+
+describe('declination', () => {
+  it('reaches the obliquity at the solstice points and zero at the equinoxes', () => {
+    expect(declinationOf(90, 0)).toBeCloseTo(OBLIQUITY, 9);
+    expect(declinationOf(270, 0)).toBeCloseTo(-OBLIQUITY, 9);
+    expect(declinationOf(0, 0)).toBeCloseTo(0, 9);
+    expect(declinationOf(180, 0)).toBeCloseTo(0, 9);
+  });
+
+  it('puts the ecliptic pole one obliquity short of the celestial pole', () => {
+    expect(declinationOf(0, 90)).toBeCloseTo(90 - OBLIQUITY, 9);
+  });
+
+  it('separates from ecliptic latitude — the reason out of bounds exists', () => {
+    // A body north of the ecliptic near the June solstice point stacks its
+    // latitude onto the obliquity and can pass the Sun's own limit.
+    const dec = declinationOf(90, 5);
+    expect(dec).toBeGreaterThan(OBLIQUITY);
+    expect(dec).toBeCloseTo(OBLIQUITY + 5, 1);
+  });
+
+  it('round-trips through a constant-declination circle', () => {
+    for (const target of [OBLIQUITY, -OBLIQUITY, 12.5]) {
+      for (const point of declinationCircle(target, OBLIQUITY, 15)) {
+        expect(declinationOf(point.lon, point.lat, OBLIQUITY)).toBeCloseTo(target, 9);
+      }
+    }
+  });
+
+  it('touches the ecliptic only at the solstice points', () => {
+    const north = declinationCircle(OBLIQUITY, OBLIQUITY, 1);
+    const touching = north.filter((p) => Math.abs(p.lat) < 1e-6);
+    expect(touching.length).toBeGreaterThan(0);
+    for (const p of touching) expect(separation(p.lon, 90)).toBeCloseTo(0, 3);
+  });
+});
+
+describe('the horizon', () => {
+  const zenith = zenithOf(137, 51.5);
+
+  it('holds every point at zero altitude', () => {
+    for (const p of horizonCircle(zenith, 5)) {
+      expect(altitudeOf(p.lon, p.lat, zenith)).toBeCloseTo(0, 9);
+    }
+  });
+
+  it('puts the zenith overhead and its opposite underfoot', () => {
+    expect(altitudeOf(zenith.lon, zenith.lat, zenith)).toBeCloseTo(90, 9);
+    expect(altitudeOf(zenith.lon + 180, -zenith.lat, zenith)).toBeCloseTo(-90, 9);
+  });
+
+  it('stays a great circle at polar latitudes, where the house system gives up', () => {
+    const polar = zenithOf(137, 78);
+    const ring = horizonCircle(polar, 5);
+    expect(ring.length).toBeGreaterThan(70);
+    for (const p of ring) expect(altitudeOf(p.lon, p.lat, polar)).toBeCloseTo(0, 9);
   });
 });
