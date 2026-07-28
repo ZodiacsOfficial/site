@@ -35,7 +35,7 @@ describe('glossary data', () => {
     // `actual` below, update the pin, and never rename or drop an existing
     // slug in the same change.
     const actual = createHash('sha256').update(slugs.join('\n')).digest('hex');
-    expect(actual).toBe('141155bc280f639f97d0ff0584169bc32ca7b67e4251c424791a352d211f477a');
+    expect(actual).toBe('f6e64365e87fcb86ee9cf8b6cc119cb49f961a92860dca7ddffb790c6c3328f7');
   });
 
   it('keeps definitions within the house voice contract', () => {

@@ -30,8 +30,12 @@ describe('independent daily fact audit', () => {
 
   it('rejects fabricated lunar metadata and a changed monthly day slice', async () => {
     const candidate = clone(daily);
-    candidate.moon.phase = 'Full Moon';
-    candidate.moon.illumination = 0;
+    // Whatever the committed phase is, claim a different one. Naming a
+    // fixed phase here passes the audit outright on the days the sky
+    // happens to agree with it, which is the audit working and the test
+    // failing.
+    candidate.moon.phase = daily.moon.phase === 'Full Moon' ? 'New Moon' : 'Full Moon';
+    candidate.moon.illumination = daily.moon.illumination > 0.5 ? 0 : 1;
     candidate.events = [{
       kind: 'aspect',
       a: 'Mars',

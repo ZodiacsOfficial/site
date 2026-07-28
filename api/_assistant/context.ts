@@ -731,17 +731,18 @@ REGISTRY WING
 GLOSSARY TERMS
 The definitions live at /learn/glossary/#slug. These are the names available there:
 Air, Angle, Angular separation, Apparent position, Applying aspect, Aquarius, Aries, Ascendant, Aspect, Bi-wheel, Big three, Birth chart (natal chart)
-Cancer, Capricorn, Cardinal, Chart ruler, Classical ruler, Composite chart, Conjunction, Cusp, Day sign, Decan, Degree, Descendant
-Detriment, Direct motion, Domicile, Earth, Eclipse, Eclipse season, Ecliptic, Ecliptic latitude, Eighth house, Element, Eleventh house, Ephemeris
-Essential dignity, Exact aspect, Exaltation, Fall, Fifth house, Fire, First house, Fixed, Fourth house, Full moon, Gemini, Geocentric position
-Glyph, Hemisphere, House, House system, IC (Imum Coeli), Ingress, Inter-chart aspect, Jupiter, Leo, Libra, Local mean time, Luminary
-Lunar eclipse, Lunar nodes, Lunation, Major aspect, Mars, Mercury, Midheaven (MC), Modality, Modern ruler, Moon, Moon phase, Moon sign
-Mutable, Natural house, Neptune, New moon, Night sign, Ninth house, No-time chart, North Node, Opposition, Orb, Outer planets, Partile aspect
-Personal planets, Pisces, Placement, Placidus, Planet, Pluto, Polar fallback, Polarity, Precession, Progression, Quadrant, Retrograde loop
-Retrograde motion, Return, Rising sign, Rulership, Sagittarius, Saturn, Saturn return, Scorpio, Second house, Separating aspect, Seventh house, Sextile
-Sidereal zodiac, Sixth house, Solar eclipse, Solar return, South Node, Square, Station, Stellium, Sun, Sun sign, Synastry, Taurus
-Tenth house, Third house, Time zone, Transit, Trine, Tropical zodiac, True node, Twelfth house, UTC, Uranus, Venus, Virgo
-Void-of-course Moon, Water, Whole-sign houses, Zodiac, Zodiac longitude, Zodiac season, Zodiac sign
+Cancer, Capricorn, Cardinal, Chart ruler, Classical ruler, Composite chart, Conjunction, Contraparallel, Cusp, Day sign, Decan, Declination
+Degree, Descendant, Detriment, Direct motion, Domicile, Earth, Eclipse, Eclipse season, Ecliptic, Ecliptic latitude, Eighth house, Element
+Eleventh house, Ephemeris, Essential dignity, Exact aspect, Exaltation, Fall, Fifth house, Fire, First house, Fixed, Fourth house, Full moon
+Gemini, Geocentric position, Glyph, Hemisphere, House, House system, IC (Imum Coeli), Ingress, Inter-chart aspect, Jupiter, Leo, Libra
+Local mean time, Luminary, Lunar eclipse, Lunar nodes, Lunation, Major aspect, Mars, Mercury, Midheaven (MC), Modality, Modern ruler, Moon
+Moon phase, Moon sign, Mutable, Natural house, Neptune, New moon, Night sign, Ninth house, No-time chart, North Node, Opposition, Orb
+Out of bounds, Outer planets, Parallel, Partile aspect, Personal planets, Pisces, Placement, Placidus, Planet, Pluto, Polar fallback, Polarity
+Precession, Progression, Quadrant, Retrograde loop, Retrograde motion, Return, Rising sign, Rulership, Sagittarius, Saturn, Saturn return, Scorpio
+Second house, Sect, Sect light, Separating aspect, Seventh house, Sextile, Sidereal zodiac, Sixth house, Solar eclipse, Solar return, South Node, Square
+Station, Stellium, Sun, Sun sign, Synastry, Taurus, Tenth house, Third house, Time zone, Transit, Trine, Tropical zodiac
+True node, Twelfth house, UTC, Uranus, Venus, Virgo, Void-of-course Moon, Water, Whole-sign houses, Zodiac, Zodiac longitude, Zodiac season
+Zodiac sign
 
 ANSWERING BOUNDARIES
 - For calculation details and privacy, use /methodology/ and /privacy/.
