@@ -54,28 +54,61 @@ function registry() {
 // figure asks again. Same memo discipline as the registry above.
 const quotes = new Map();
 
-function marketQuote(market) {
-  const key = `${market.chainId}:${market.pairId}`;
+function memoQuote(key, request) {
   if (!quotes.has(key)) {
-    const url = DEX_API
-      + `${encodeURIComponent(market.chainId)}/${encodeURIComponent(market.pairId)}`;
-    const promise = fetchWithin(url, MARKET_DEADLINE)
-      .then((response) => {
-        if (!response.ok) throw new Error(`market ${response.status}`);
-        return response.json();
-      })
-      .then((payload) => {
-        const pair = payload && payload.pairs && payload.pairs[0];
-        if (!pair) throw new Error('market: pair not indexed');
-        return pair;
-      })
-      .catch((error) => {
-        quotes.delete(key);
-        throw error;
-      });
-    quotes.set(key, promise);
+    quotes.set(key, request().catch((error) => {
+      quotes.delete(key);
+      throw error;
+    }));
   }
   return quotes.get(key);
+}
+
+function marketQuote(market) {
+  const url = DEX_API
+    + `${encodeURIComponent(market.chainId)}/${encodeURIComponent(market.pairId)}`;
+  return memoQuote(`${market.chainId}:${market.pairId}`, () => fetchWithin(url, MARKET_DEADLINE)
+    .then((response) => {
+      if (!response.ok) throw new Error(`market ${response.status}`);
+      return response.json();
+    })
+    .then((payload) => {
+      const pair = payload && payload.pairs && payload.pairs[0];
+      if (!pair) throw new Error('market: pair not indexed');
+      return pair;
+    }));
+}
+
+/**
+ * A sign with no pinned pair (cancer, sagittarius) is quoted by its mint
+ * instead — the same DexScreener token endpoint the hub's Market snapshot
+ * uses — taking the deepest pool as the quote. The mint comes from the live
+ * registry answer, so this route exists only for a verified record.
+ */
+function tokenQuote(mint) {
+  const url = `https://api.dexscreener.com/tokens/v1/solana/${encodeURIComponent(mint)}`;
+  return memoQuote(`tokens:solana:${mint}`, () => fetchWithin(url, MARKET_DEADLINE)
+    .then((response) => {
+      if (!response.ok) throw new Error(`market ${response.status}`);
+      return response.json();
+    })
+    .then((payload) => {
+      const pairs = Array.isArray(payload) ? payload : payload && payload.pairs;
+      if (!Array.isArray(pairs)) throw new Error('market: malformed');
+      let best = null;
+      let bestLiquidity = -1;
+      for (const pair of pairs) {
+        if (!pair || !pair.pairAddress) continue;
+        if (!pair.baseToken || pair.baseToken.address !== mint) continue;
+        const liquidity = Number(pair.liquidity && pair.liquidity.usd) || 0;
+        if (liquidity > bestLiquidity) {
+          bestLiquidity = liquidity;
+          best = pair;
+        }
+      }
+      if (!best) throw new Error('market: token not indexed');
+      return best;
+    }));
 }
 
 // Formatters shared with the sign pages' market panel (build-sign-pages.mjs).
@@ -208,13 +241,23 @@ export function createCard(root, { onClose }) {
     marketGrid.append(dt, dd);
   }
 
+  /** The native mint for a sign, from the live registry answer. */
+  async function nativeMint(slug) {
+    const data = await registry();
+    const asset = data.assets.find((a) => a.sign === slug);
+    const mint = asset && asset.native && asset.native.address;
+    if (!mint) throw new Error('registry: sign not found');
+    return mint;
+  }
+
   async function fillMarket(record, mine) {
-    if (!record.market) {
-      marketState.textContent = 'Market context unavailable.';
-      return;
-    }
     try {
-      const pair = await marketQuote(record.market);
+      // A pinned pair is the quote of record; without one the sign is quoted
+      // by its mint. Either way the card shows live numbers whenever
+      // DexScreener indexes the token at all.
+      const pair = record.market
+        ? await marketQuote(record.market)
+        : await tokenQuote(await nativeMint(record.slug));
       if (mine !== token) return;
 
       priceValue.textContent = fmtPrice(pair.priceUsd);
@@ -225,7 +268,7 @@ export function createCard(root, { onClose }) {
 
       marketGrid.replaceChildren();
       marketCell('Liquidity', fmtCompact(pair.liquidity && pair.liquidity.usd));
-      marketCell('Market cap', fmtCompact(pair.marketCap));
+      marketCell('Market cap', fmtCompact(pair.marketCap ?? pair.fdv));
 
       marketState.hidden = true;
       priceRow.hidden = false;

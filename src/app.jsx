@@ -1022,7 +1022,61 @@
         }
       };
     }
+    function parseTokenMarketPayload(payload, mint) {
+      const pairs = Array.isArray(payload) ? payload : payload?.pairs;
+      if (!Array.isArray(pairs) || !pairs.length) return unavailableMarketContext('no-pair');
+      let best = null;
+      let bestLiquidity = -1;
+      for (const pair of pairs) {
+        if (!pair?.pairAddress || pair.baseToken?.address !== mint) continue;
+        const liquidity = toFiniteNumber(pair.liquidity?.usd) ?? 0;
+        if (liquidity > bestLiquidity) {
+          bestLiquidity = liquidity;
+          best = pair;
+        }
+      }
+      if (!best) return unavailableMarketContext('no-pair');
+      return {
+        status: 'ok',
+        pair: {
+          chainId: best.chainId,
+          dexId: best.dexId || '',
+          url: best.url || '',
+          pairAddress: best.pairAddress,
+          priceUsd: best.priceUsd,
+          priceChange24h: best.priceChange?.h24,
+          liquidityUsd: best.liquidity?.usd,
+          marketCap: best.marketCap ?? best.fdv,
+          pairCreatedAt: best.pairCreatedAt
+        }
+      };
+    }
     function loadMarketContext(config) {
+      // A sign with no pinned pair is quoted by its mint instead — the same
+      // token endpoint the Market snapshot uses — taking the deepest pool.
+      if (config?.tokenMint) {
+        const key = `tokens:solana:${config.tokenMint}`;
+        if (MARKET_CONTEXT_CACHE.has(key)) return MARKET_CONTEXT_CACHE.get(key);
+        const url = `https://api.dexscreener.com/tokens/v1/solana/${encodeURIComponent(config.tokenMint)}`;
+        const request = fetch(url)
+          .then(async (response) => {
+            if (!response.ok) return unavailableMarketContext('http');
+            let payload;
+            try {
+              payload = await response.json();
+            } catch {
+              return unavailableMarketContext('json');
+            }
+            return parseTokenMarketPayload(payload, config.tokenMint);
+          })
+          .catch(() => unavailableMarketContext('network'))
+          .then((result) => {
+            MARKET_CONTEXT_CACHE.set(key, Promise.resolve(result));
+            return result;
+          });
+        MARKET_CONTEXT_CACHE.set(key, request);
+        return request;
+      }
       if (!config?.chainId || !config?.pairId) {
         return Promise.resolve(unavailableMarketContext('not-configured'));
       }
@@ -1804,7 +1858,12 @@
 
     function useMarketContext(sign, enabled) {
       const signKey = sign?.asset?.sign;
-      const config = signKey ? ZODIAC_MARKET_PAIRS[signKey] : null;
+      // Cancer and Sagittarius carry no pinned pair; their quote comes from
+      // the token endpoint by mint, so all twelve show live numbers whenever
+      // DexScreener indexes anything.
+      const fallbackMint = sign?.representations?.solana?.address || null;
+      const config = (signKey ? ZODIAC_MARKET_PAIRS[signKey] : null)
+        ?? (fallbackMint ? { tokenMint: fallbackMint } : null);
       const [state, setState] = useState(
         config ? { status: 'idle' } : unavailableMarketContext('not-configured')
       );
