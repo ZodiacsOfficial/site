@@ -1,0 +1,217 @@
+# The Shelf — `/registry/shelf/` (implementation handoff)
+
+Planning session: Fable, 2026-07-28, with owner decisions confirmed in-session.
+Implementer: Opus 5. Branch: `claude/scrolling-zodiacs-registry-7juf11`.
+
+## 1. What this is
+
+The owner wants a Stripe-Press-style scrolling shelf for the Twelve, referenced
+via <https://x.com/carrabre/status/2081963872890822790>, which points at
+<https://github.com/mintdotgg/bookshelf> — an open-source Three.js "editorial
+bookshelf": a full-viewport 3D shelf you browse by drag / scroll / arrow keys /
+tick rail, where clicking a volume pulls it forward for orbit-and-zoom
+inspection; covers are procedurally generated from catalog metadata; it
+respects reduced-motion preferences and supports keyboard navigation.
+
+**License gate (read first).** As of 2026-07-28 the reference repo shows **no
+license** (no LICENSE file on `main` or `master`; none surfaced on the repo
+page). No license ⇒ all rights reserved ⇒ **clean-room only**: use the repo
+strictly as a behavioral reference. Do not copy its code, shaders, assets,
+copy, or file structure. Re-verify the license at implementation time; only a
+verified permissive license changes this. `three` itself is MIT and fine to
+depend on.
+
+## 2. Locked decisions (owner, 2026-07-28)
+
+1. **Placement** — standalone wing page at `/registry/shelf/`. The registry
+   landing and its React hero are untouched apart from one link (see §4).
+2. **Contents** — twelve hardbound volumes, one per sign, in zodiac order
+   (Aries № 1 … Pisces № 12). Spines in the sign's pastel hue with glyph,
+   name, and №; covers procedurally composed from registry metadata.
+3. **Rendering** — Three.js, bundled self-contained into a committed
+   `public/assets/shelf.js`, with a full static no-JS fallback in the HTML.
+4. **Inspection** — pulling a volume opens it face-on beside a records card:
+   №, element · modality · ruling planet, date range, Solana + Base
+   addresses, and "Open catalogue entry →" to `/registry/{sign}/`.
+   **No acquisition links on the card** — acquisition stays on sign pages.
+
+## 3. Experience spec
+
+- **Entry.** The page paints immediately as static content (list + poster
+  treatment); the scene fades in when ready. Full-viewport stage below the
+  wing nav.
+- **Shelf.** Twelve volumes spine-out. Spine: flat pastel sign hue against
+  void, EB Garamond title, sign glyph, № in JetBrains Mono. Cover: a museum
+  plate composed from the disc art (`/assets/zodiac-icons/400/{sign}.png`),
+  archetype line, and date range.
+- **Browse.** Wheel/trackpad, pointer drag with inertia, ←/→ keys, and a
+  12-tick rail (real DOM buttons, one per sign) for direct jumps. Hover/focus
+  eases neighboring spines apart slightly.
+- **Inspect.** Click/Enter pulls the volume to center, face-on; damped orbit +
+  zoom (drag / pinch); Esc, a close control, or clicking the void reshelves
+  it. The records card is a **DOM overlay** (never text rendered into the
+  canvas), so it stays selectable, accessible, and crisp.
+- **Records card.** Dry catalogue register, e.g.:
+  - `№ 5 — Leo` (serif display)
+  - `Fixed fire · ruled by the Sun · Jul 23 – Aug 22`
+  - archetype line from registry metadata
+  - addresses in mono with copy affordances: Solana (native SPL) and Base
+    (bridged ERC-20, chainId 8453) — **fetched live** from
+    `/registry/zodiacs.registry.json` at inspect time (see §5). On network
+    failure: "Records unavailable offline." — never a stale address.
+  - `Open catalogue entry →` → `/registry/{sign}/`
+- **Reduced motion.** Under `prefers-reduced-motion`: no idle sway, no
+  inertia, crossfades instead of travel — or serve the static presentation
+  outright. Implementer's judgment on which, but motion must be effectively
+  eliminated; the reference's own reduced-motion behavior is the bar.
+- **No-JS / SEO.** The HTML contains the full Twelve as a styled list (name,
+  №, archetype, dates, link to catalogue entry) — this is both the fallback
+  and the crawlable content. JSON-LD `BreadcrumbList` + `ItemList` (12
+  positions) following `public/registry/index.html` conventions. The canvas
+  container is `aria-hidden`; all controls that matter exist in the DOM.
+- **Keyboard / a11y.** Tab reaches the tick rail; arrows move selection;
+  Enter inspects; Esc closes; focus moves into the card while open and is
+  restored on close; a polite `aria-live` region announces the pulled volume
+  ("№ 5 — Leo, pulled forward").
+
+## 4. Architecture
+
+**New files**
+
+- `public/registry/shelf/index.html` — hand-authored wing page (source of
+  truth, not generated). Copy head conventions from
+  `public/registry/index.html`: self-hosted `@font-face` blocks, canonical
+  `https://zodiacs.org/registry/shelf/`, the Plausible canonical-payload
+  snippet, `theme-color #060709`, OG tags (reuse
+  `/assets/og/v2/share.png` initially). Wing nav + footer: reuse the wnav
+  markup pattern — `scripts/wing-nav.mjs` is the canonical source; use its
+  renderer at authoring time if that's clean, else mirror the static markup
+  exactly.
+- `src/shelf/` — plain JS/TS modules, no React: scene setup, spine/cover
+  procedural texture painter, input handling, card wiring. Keep pure math
+  (shelf layout positions, snap points, easing, camera keyframes) in
+  dependency-free modules so they unit-test under vitest.
+- `scripts/build-shelf.mjs` — esbuild (already a devDependency) bundle:
+  ESM → minified IIFE, target ES2020, tree-shaken `three`, banner
+  `/* Generated from src/shelf/ by scripts/build-shelf.mjs — do not edit. */`.
+  Output must be deterministic (no timestamps/randomness) — the drift gate
+  depends on it.
+- `public/assets/shelf.js` — the committed generated bundle (house pattern,
+  same as `public/assets/app.js`).
+
+**Wiring**
+
+- `package.json`: add `"legacy:shelf": "node scripts/build-shelf.mjs"` and a
+  pinned `three` devDependency (bundled at generator time; nothing ships from
+  node_modules at runtime).
+- `.github/workflows/site-check.yml`, `legacy-drift` job: add
+  `node scripts/build-shelf.mjs` beside `build-app.mjs` /
+  `build-sign-pages.mjs` so CI fails on drift.
+- `vercel.json`: add a header for `/assets/shelf.js` →
+  `public, max-age=0, must-revalidate` (same as `app.js`).
+- `CLAUDE.md`: add the generated-file line under "Generated vs source".
+- **Landing link**: one quiet records-register line in the `#catalogue`
+  section of `public/registry/index.html` (hand-edit; stay clear of the
+  `registry-aura-entry` marker region), e.g. "The Twelve, spine out —
+  browse the shelf." → `/registry/shelf/`. Optional stretch: a wnav Registry
+  menu item — that touches `scripts/wing-nav.mjs` and regenerates every sign
+  page; do it only if the diff stays clean, and commit regenerated pages
+  together with it.
+- **Sitemap**: check `src/pages/sitemap.xml.ts` — if wing URLs
+  (`/registry/`, `/registry/{sign}/`) are listed, add `/registry/shelf/`.
+- **Service worker**: expect **no change**. HTML navigations stay
+  network-first; `shelf.js` must NOT be added to any cache-first/precache
+  list; `/registry/**.json` stays never-cached (the live-address rule in §5
+  depends on this). Verify against `scripts/build-service-worker.mjs`.
+- **`scripts/report-bundles.mjs`**: `shelf.js` carries no
+  astronomy-engine/createRequire (nothing to trip), but confirm the script's
+  scope over public assets and register the new file properly if it does size
+  accounting — never bypass the check.
+
+## 5. Data contract
+
+- **Inlined in the page** (needed before any network, and doubling as the
+  no-JS list): sign order/№, displayName, glyph, hue, archetype, element,
+  modality, rulingPlanet, dateRange. Values must match
+  `public/registry/zodiacs.registry.json` and the wing's existing per-sign
+  data (`scripts/sign-data.mjs`).
+- **Fetched live at inspect time**: `/registry/zodiacs.registry.json` →
+  `assets[].native.address`, `assets[].representations[].address`. Identity
+  data is never served stale: no SW cache (already guaranteed), no
+  long-lived in-page cache beyond the visit, honest failure copy offline.
+- **Hues**: wing pages inline hue VALUES — public HTML can't reference the
+  hashed `src/styles/tokens.css`. Copy the exact values already used by wing
+  sources (`src/lib/signs.ts` / `src/styles/tokens.css` are the source of
+  truth; `scripts/wing-nav.mjs` and `scripts/build-sign-pages.mjs` already
+  duplicate them — stay byte-identical with those).
+- **Textures**: cover plates from `/assets/zodiac-icons/400/{sign}.png`
+  (immutable-cached). Spine/cover text painted onto 2D canvas textures using
+  the self-hosted fonts — load EB Garamond via the FontFace API from
+  `/fonts/*.woff2` before painting; JetBrains Mono for № and data lines. No
+  Google Fonts, no CDN anything.
+
+## 6. Design-system constraints (Cosmic Void, wing register)
+
+- Void surfaces (`#060709` family); the twelve pastel hues are the ONLY
+  chroma. No gold (Warm Gilt is retired), no gradient/aurora backgrounds, no
+  decorative status dots.
+- Museum register: EB Garamond display and body are both allowed on wing
+  pages; kickers are sentence-case serif-italic; no mono-caps eyebrows.
+- Voice: dry catalogue lines; state computed facts with values; the banned
+  smug tells in CLAUDE.md apply. No market/price language anywhere on this
+  page.
+- Scene craft: near-monochrome environment — hue lives in the volumes, the
+  room stays void. Soft archive lighting, matte materials; avoid the glossy
+  PBR-showroom look.
+
+## 7. Performance & runtime rules
+
+- Budget: `shelf.js` ≤ ~180 KB gzip. Measure OrbitControls vs a hand-rolled
+  damped orbit (the interaction needs orbit + zoom + reset only) and take the
+  smaller if quality holds.
+- Renderer: devicePixelRatio capped at 2; render-on-demand (idle scene stops
+  drawing after input settles), RAF paused when the tab is hidden; dispose
+  geometry/materials/textures and release the context on `pagehide`.
+- Init: `defer` the script; static content is the LCP; the scene mounts only
+  after fonts + first texture batch are ready. If WebGL is unavailable or
+  init fails, the static page IS the page — no error states above the fold.
+- Mobile: horizontal drag with inertia for the shelf; pinch-zoom only inside
+  inspect; never hijack vertical page scroll.
+
+## 8. Acceptance checklist
+
+- [ ] `npm run build && npm run check && npm test` green
+- [ ] `node scripts/check-dist.mjs` green (all new internal links resolve)
+- [ ] `node scripts/build-shelf.mjs` run twice → byte-identical output
+- [ ] Generated output committed together with source (`shelf.js`; sign pages
+      only if the wnav stretch happens)
+- [ ] Registry-aura marker region untouched; committed state stays flag-off
+      (`content="0"`, no entry)
+- [ ] Keyboard-only walkthrough: browse → inspect → copy address → close
+- [ ] `prefers-reduced-motion` walkthrough
+- [ ] JS disabled: page reads as a complete catalogue list
+- [ ] Lighthouse sanity on `/registry/shelf/` (`tests/visual/lighthouse.mjs`
+      exists): CLS ≈ 0, LCP from static content
+- [ ] No console errors; WebGL context loss handled (restore or fall back)
+- [ ] vitest unit coverage for the layout math (positions for 12 volumes,
+      clamping, snap points)
+- [ ] Visual regression suite (`tests/visual/visual-regression.mjs`): add a
+      baseline for the new page or confirm it isn't swept accidentally
+
+## 9. Non-goals
+
+- No changes to the landing hero / `src/app.jsx` (the `#catalogue` link edit
+  in the landing HTML is the only landing change).
+- No sign-page content changes (unless the wnav stretch is taken).
+- No acquisition links on the shelf or card; no ES locale for this page.
+- No new fonts, no CDN scripts, no external requests beyond same-origin.
+- Frozen legacy OG cards (`public/assets/og/*.png`) stay untouched.
+
+## 10. Open items for the implementer
+
+- Re-check the reference repo's license before borrowing anything; absent a
+  verified permissive license, the clean-room rule in §1 stands.
+- OrbitControls vs hand-rolled orbit — decide after measuring the bundle.
+- Dedicated OG card via `scripts/build-og-void.mjs` (`data:og`) is a
+  nice-to-have; until then the page uses `/assets/og/v2/share.png`.
+- Confirm how `src/pages/sitemap.xml.ts` treats wing URLs and follow suit.
