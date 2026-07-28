@@ -15,6 +15,8 @@ export interface DepthCopy {
   figureLabel: string;
   tiltLabel: string;
   tiltAria: string;
+  timeLabel: string;
+  timeAria: string;
   reset: string;
   resetAria: string;
   keyEcliptic: string;
@@ -53,6 +55,8 @@ const en: DepthCopy = {
     'The chart as an armillary sphere. Drag to turn it. The ecliptic carries the zodiac band; the celestial equator crosses it at the equinoxes, the Moon’s orbit at the nodes, and the horizon at your ascendant.',
   tiltLabel: 'Tilt',
   tiltAria: 'Tilt the sphere: 0 degrees looks straight down on the flat wheel, 90 degrees is edge-on to the ecliptic',
+  timeLabel: 'Time',
+  timeAria: 'Move the sky through the twelve hours either side of birth; the planets barely move, the horizon turns',
   reset: 'Reset view',
   resetAria: 'Return the sphere to its opening angle',
   keyEcliptic: 'ecliptic · the zodiac band the chart sits on',
@@ -86,6 +90,8 @@ const es: DepthCopy = {
     'La carta como esfera armilar. Arrástrala para girarla. La eclíptica lleva la banda zodiacal; el ecuador celeste la cruza en los equinoccios, la órbita de la Luna en los nodos y el horizonte en tu ascendente.',
   tiltLabel: 'Inclinación',
   tiltAria: 'Inclina la esfera: 0 grados mira la rueda plana desde arriba, 90 grados la deja de canto',
+  timeLabel: 'Hora',
+  timeAria: 'Mueve el cielo por las doce horas antes y después del nacimiento; los planetas apenas se mueven, el horizonte gira',
   reset: 'Restablecer vista',
   resetAria: 'Devuelve la esfera a su ángulo inicial',
   keyEcliptic: 'eclíptica · la banda zodiacal donde vive la carta',
@@ -119,6 +125,8 @@ const pt: DepthCopy = {
     'O mapa como esfera armilar. Arraste para girar. A eclíptica carrega a faixa zodiacal; o equador celeste a cruza nos equinócios, a órbita da Lua nos nodos e o horizonte no seu ascendente.',
   tiltLabel: 'Inclinação',
   tiltAria: 'Incline a esfera: 0 graus olha a roda plana de cima, 90 graus a deixa de perfil',
+  timeLabel: 'Hora',
+  timeAria: 'Mova o céu pelas doze horas antes e depois do nascimento; os planetas quase não se movem, o horizonte gira',
   reset: 'Redefinir vista',
   resetAria: 'Devolve a esfera ao ângulo inicial',
   keyEcliptic: 'eclíptica · a faixa zodiacal onde o mapa fica',
@@ -152,6 +160,8 @@ const fr: DepthCopy = {
     'Le thème en sphère armillaire. Faites glisser pour la tourner. L’écliptique porte la bande zodiacale ; l’équateur céleste la croise aux équinoxes, l’orbite de la Lune aux nœuds et l’horizon à votre ascendant.',
   tiltLabel: 'Inclinaison',
   tiltAria: 'Inclinez la sphère : 0 degré regarde la roue plate d’en haut, 90 degrés la met de profil',
+  timeLabel: 'Heure',
+  timeAria: 'Déplacez le ciel sur les douze heures autour de la naissance ; les planètes bougent à peine, l’horizon tourne',
   reset: 'Réinitialiser la vue',
   resetAria: 'Ramène la sphère à son angle d’ouverture',
   keyEcliptic: 'écliptique · la bande zodiacale où se tient le thème',
@@ -185,6 +195,8 @@ const it: DepthCopy = {
     'Il tema come sfera armillare. Trascina per ruotarla. L’eclittica porta la fascia zodiacale; l’equatore celeste la incrocia agli equinozi, l’orbita della Luna ai nodi e l’orizzonte al tuo ascendente.',
   tiltLabel: 'Inclinazione',
   tiltAria: 'Inclina la sfera: 0 gradi guarda la ruota piatta dall’alto, 90 gradi la mette di taglio',
+  timeLabel: 'Ora',
+  timeAria: 'Muovi il cielo nelle dodici ore intorno alla nascita; i pianeti si muovono appena, l’orizzonte gira',
   reset: 'Reimposta vista',
   resetAria: 'Riporta la sfera al suo angolo iniziale',
   keyEcliptic: 'eclittica · la fascia zodiacale su cui sta il tema',
