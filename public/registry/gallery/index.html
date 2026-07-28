@@ -296,7 +296,8 @@
     /* No scene, no controls — the register below is the whole page. */
     html:not(.gallery-live) .stage__chrome,
     html:not(.gallery-live) .stage__mount,
-    html:not(.gallery-live) .stage__scrim { display: none; }
+    html:not(.gallery-live) .stage__scrim,
+    html:not(.gallery-live) .stage__scrim-top { display: none; }
     .stage::before {
       content: ''; position: absolute; inset: 0; z-index: -2; pointer-events: none;
       background:
@@ -321,6 +322,17 @@
     }
     @media (min-width: 900px) { .stage.is-ready .stage__scrim { display: block; } }
     .stage.is-open .stage__scrim { opacity: 0; }
+    /* And a band across the top, so a tall figure passing behind the title
+       dims before the lettering rather than fighting it. */
+    .stage__scrim-top {
+      position: absolute; inset: 0 0 auto 0; height: 240px;
+      z-index: 2; pointer-events: none; opacity: 0;
+      background: linear-gradient(to bottom,
+        rgba(6,7,9,0.92) 0%, rgba(6,7,9,0.55) 55%, rgba(6,7,9,0) 100%);
+      transition: opacity 700ms var(--ease);
+    }
+    .stage.is-ready .stage__scrim-top { opacity: 1; }
+    .stage.is-open .stage__scrim-top { opacity: 0; }
 
     .stage__head {
       position: relative; z-index: 3; pointer-events: none;
@@ -463,6 +475,67 @@
       margin: 8px 0 0; font-style: italic; font-size: 16px; color: var(--ink-2);
     }
 
+    /* ── The shop window ── */
+    .card__market {
+      margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid var(--hair);
+    }
+    .card__market-state { margin: 0; font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim); }
+    .card__price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .card__price[hidden] { display: none; }
+    .card__price-value {
+      font-family: var(--serif); font-size: clamp(27px, 3vw, 33px);
+      line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums;
+    }
+    .card__price-change {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+      padding: 3px 9px; border-radius: 999px; border: 1px solid var(--hair-2);
+      color: var(--ink-mute);
+    }
+    .card__price-change--up {
+      color: var(--ink);
+      border-color: color-mix(in oklab, var(--sign) 55%, transparent);
+      background: color-mix(in oklab, var(--sign) 14%, transparent);
+    }
+    .card__price-change--down { color: var(--ink-mute); }
+    .card__cta { display: flex; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+    .card__cta[hidden] { display: none; }
+    .card__buy {
+      flex: 1 1 auto; display: inline-flex; justify-content: center; align-items: center;
+      gap: 8px; padding: 11px 18px; border-radius: 999px;
+      background: rgba(238,241,247,0.10); border: 1px solid var(--hair-2);
+      font-family: var(--sans); font-size: 14px; font-weight: 550; color: var(--ink);
+      text-decoration: none;
+      transition: background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .card__buy:hover { background: rgba(238,241,247,0.16); border-color: rgba(198,204,218,0.32); }
+    .card__buy:focus-visible { outline: 2px solid var(--sign); outline-offset: 2px; }
+    .card__data {
+      display: inline-flex; align-items: center; gap: 7px; padding: 4px 0;
+      font-family: var(--sans); font-size: 13px; color: var(--ink-2);
+      text-decoration: none; border-bottom: 1px solid var(--hair-2);
+      transition: color 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .card__data:hover { color: var(--ink); border-color: var(--sign); }
+    .card__data:focus-visible { outline: 2px solid var(--sign); outline-offset: 3px; }
+    .card__market-grid {
+      margin: 14px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 18px;
+    }
+    .card__market-grid[hidden] { display: none; }
+    .card__market-grid dt {
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-dim); align-self: center;
+    }
+    .card__market-grid dd {
+      margin: 0; font-size: 15px; color: var(--ink-2); text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .card__risk {
+      margin: 14px 0 0; font-family: var(--serif); font-style: italic;
+      font-size: 11.5px; line-height: 1.55; color: var(--ink-dim);
+    }
+    .card__risk a { color: var(--ink-mute); }
+    .card__risk a:hover { color: var(--ink-2); }
+
     .card__facts {
       margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--hair);
       display: grid; grid-template-columns: auto 1fr; gap: 9px 18px;
@@ -519,6 +592,7 @@
 
     .ledger { list-style: none; margin: 38px 0 0; padding: 0; }
     .ledger__row {
+      scroll-margin-top: 96px;
       display: grid; align-items: center; gap: 2px 16px;
       grid-template-columns: 56px 34px 1fr;
       grid-template-areas: 'plate lot name' 'plate . figure' 'plate . class' 'plate . dates';
@@ -632,6 +706,7 @@
     <section class="stage" data-gallery-stage aria-labelledby="gallery-title">
       <div class="stage__mount" data-gallery-canvas></div>
       <div class="stage__scrim" aria-hidden="true"></div>
+      <div class="stage__scrim-top" aria-hidden="true"></div>
 
       <header class="stage__head">
         <p class="kicker">Twelve gold sculptures, one to a sign.</p>
@@ -660,6 +735,33 @@
         <p class="card__lot" data-card-lot></p>
         <h2 class="card__name" id="card-name" data-card-name></h2>
         <p class="card__figure" data-card-figure></p>
+
+        <div class="card__market">
+          <p class="card__market-state" data-market-state>Loading market context.</p>
+          <div class="card__price" data-market-price-row hidden>
+            <span class="card__price-value" data-market-price></span>
+            <span class="card__price-change" data-market-change></span>
+          </div>
+          <div class="card__cta" data-market-cta hidden>
+            <a class="card__buy" data-market-jupiter rel="noopener noreferrer external nofollow">
+              <span>Open Jupiter route</span><span aria-hidden="true">↗</span>
+            </a>
+            <a class="card__data" data-market-dexscreener rel="noopener noreferrer external nofollow">
+              <span>View market data</span><span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <dl class="card__market-grid" data-market-grid hidden></dl>
+          <p class="card__risk">
+            Independent third-party data, not a valuation or recommendation. It
+            may be delayed or unavailable; prices and liquidity can change
+            quickly, and a Zodiac can lose all market value. The route above
+            opens an independent third-party venue; this Registry page does not
+            request custody, signing, approvals, or transactions. Operator and
+            economic-interest statements remain pending confirmation; see the
+            <a href="/disclosure/">Disclosure</a>.
+          </p>
+        </div>
+
         <dl class="card__facts" data-card-facts></dl>
         <div class="card__records" data-card-records></div>
         <a class="card__entry" data-card-entry href="/registry/">
@@ -680,7 +782,7 @@
         </p>
       </div>
       <ol class="ledger">
-        <li class="ledger__row" style="--sign:#DE8E79">
+        <li class="ledger__row" id="aries" style="--sign:#DE8E79">
           <img class="ledger__plate" src="/assets/nuggets/thumb/aries.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">I</span>
           <a class="ledger__name" href="/registry/aries/">Aries</a>
@@ -688,7 +790,7 @@
           <span class="ledger__class">Cardinal fire · Mars</span>
           <span class="ledger__dates">21 March — 19 April</span>
         </li>
-        <li class="ledger__row" style="--sign:#B9D4BE">
+        <li class="ledger__row" id="taurus" style="--sign:#B9D4BE">
           <img class="ledger__plate" src="/assets/nuggets/thumb/taurus.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">II</span>
           <a class="ledger__name" href="/registry/taurus/">Taurus</a>
@@ -696,7 +798,7 @@
           <span class="ledger__class">Fixed earth · Venus</span>
           <span class="ledger__dates">20 April — 20 May</span>
         </li>
-        <li class="ledger__row" style="--sign:#B29DD0">
+        <li class="ledger__row" id="gemini" style="--sign:#B29DD0">
           <img class="ledger__plate" src="/assets/nuggets/thumb/gemini.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">III</span>
           <a class="ledger__name" href="/registry/gemini/">Gemini</a>
@@ -704,7 +806,7 @@
           <span class="ledger__class">Mutable air · Mercury</span>
           <span class="ledger__dates">21 May — 20 June</span>
         </li>
-        <li class="ledger__row" style="--sign:#B6D4E4">
+        <li class="ledger__row" id="cancer" style="--sign:#B6D4E4">
           <img class="ledger__plate" src="/assets/nuggets/thumb/cancer.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">IV</span>
           <a class="ledger__name" href="/registry/cancer/">Cancer</a>
@@ -712,7 +814,7 @@
           <span class="ledger__class">Cardinal water · Luna</span>
           <span class="ledger__dates">21 June — 22 July</span>
         </li>
-        <li class="ledger__row" style="--sign:#E0A9B4">
+        <li class="ledger__row" id="leo" style="--sign:#E0A9B4">
           <img class="ledger__plate" src="/assets/nuggets/thumb/leo.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">V</span>
           <a class="ledger__name" href="/registry/leo/">Leo</a>
@@ -720,7 +822,7 @@
           <span class="ledger__class">Fixed fire · Sun</span>
           <span class="ledger__dates">23 July — 22 August</span>
         </li>
-        <li class="ledger__row" style="--sign:#B7D9B0">
+        <li class="ledger__row" id="virgo" style="--sign:#B7D9B0">
           <img class="ledger__plate" src="/assets/nuggets/thumb/virgo.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">VI</span>
           <a class="ledger__name" href="/registry/virgo/">Virgo</a>
@@ -728,7 +830,7 @@
           <span class="ledger__class">Mutable earth · Mercury</span>
           <span class="ledger__dates">23 August — 22 September</span>
         </li>
-        <li class="ledger__row" style="--sign:#D3A9DE">
+        <li class="ledger__row" id="libra" style="--sign:#D3A9DE">
           <img class="ledger__plate" src="/assets/nuggets/thumb/libra.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">VII</span>
           <a class="ledger__name" href="/registry/libra/">Libra</a>
@@ -736,7 +838,7 @@
           <span class="ledger__class">Cardinal air · Venus</span>
           <span class="ledger__dates">23 September — 22 October</span>
         </li>
-        <li class="ledger__row" style="--sign:#B9DCE8">
+        <li class="ledger__row" id="scorpio" style="--sign:#B9DCE8">
           <img class="ledger__plate" src="/assets/nuggets/thumb/scorpio.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">VIII</span>
           <a class="ledger__name" href="/registry/scorpio/">Scorpio</a>
@@ -744,7 +846,7 @@
           <span class="ledger__class">Fixed water · Mars</span>
           <span class="ledger__dates">23 October — 21 November</span>
         </li>
-        <li class="ledger__row" style="--sign:#E0B080">
+        <li class="ledger__row" id="sagittarius" style="--sign:#E0B080">
           <img class="ledger__plate" src="/assets/nuggets/thumb/sagittarius.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">IX</span>
           <a class="ledger__name" href="/registry/sagittarius/">Sagittarius</a>
@@ -752,7 +854,7 @@
           <span class="ledger__class">Mutable fire · Jupiter</span>
           <span class="ledger__dates">22 November — 21 December</span>
         </li>
-        <li class="ledger__row" style="--sign:#C0DEA8">
+        <li class="ledger__row" id="capricorn" style="--sign:#C0DEA8">
           <img class="ledger__plate" src="/assets/nuggets/thumb/capricorn.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">X</span>
           <a class="ledger__name" href="/registry/capricorn/">Capricorn</a>
@@ -760,7 +862,7 @@
           <span class="ledger__class">Cardinal earth · Saturn</span>
           <span class="ledger__dates">22 December — 19 January</span>
         </li>
-        <li class="ledger__row" style="--sign:#AE8FC9">
+        <li class="ledger__row" id="aquarius" style="--sign:#AE8FC9">
           <img class="ledger__plate" src="/assets/nuggets/thumb/aquarius.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">XI</span>
           <a class="ledger__name" href="/registry/aquarius/">Aquarius</a>
@@ -768,7 +870,7 @@
           <span class="ledger__class">Fixed air · Saturn</span>
           <span class="ledger__dates">20 January — 18 February</span>
         </li>
-        <li class="ledger__row" style="--sign:#A9D4C4">
+        <li class="ledger__row" id="pisces" style="--sign:#A9D4C4">
           <img class="ledger__plate" src="/assets/nuggets/thumb/pisces.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">XII</span>
           <a class="ledger__name" href="/registry/pisces/">Pisces</a>
@@ -810,7 +912,7 @@
     </footer>
   </main>
 
-  <script type="application/json" id="gallery-figures">[{"slug":"aries","order":1,"lot":"I","name":"Aries","glyph":"♈︎","figure":"The Ram","epithet":"The Ram. Where the year begins.","hue":"#DE8E79","element":"Fire","modality":"Cardinal","ruler":"Mars","archetype":"The Initiator","dates":"21 March — 19 April","datesShort":"Mar 21 – Apr 19","star":"Hamal"},{"slug":"taurus","order":2,"lot":"II","name":"Taurus","glyph":"♉︎","figure":"The Bull","epithet":"The Bull. The oldest figure in the sky.","hue":"#B9D4BE","element":"Earth","modality":"Fixed","ruler":"Venus","archetype":"The Steward","dates":"20 April — 20 May","datesShort":"Apr 20 – May 20","star":"Aldebaran"},{"slug":"gemini","order":3,"lot":"III","name":"Gemini","glyph":"♊︎","figure":"The Twins","epithet":"The Twins. One mortal, one divine.","hue":"#B29DD0","element":"Air","modality":"Mutable","ruler":"Mercury","archetype":"The Messenger","dates":"21 May — 20 June","datesShort":"May 21 – Jun 20","star":"Pollux"},{"slug":"cancer","order":4,"lot":"IV","name":"Cancer","glyph":"♋︎","figure":"The Crab","epithet":"The Crab. The gate of incarnation.","hue":"#B6D4E4","element":"Water","modality":"Cardinal","ruler":"Luna","archetype":"The Keeper","dates":"21 June — 22 July","datesShort":"Jun 21 – Jul 22","star":"Praesepe"},{"slug":"leo","order":5,"lot":"V","name":"Leo","glyph":"♌︎","figure":"The Lion","epithet":"The Lion. The king’s star at its heart.","hue":"#E0A9B4","element":"Fire","modality":"Fixed","ruler":"Sun","archetype":"The Sovereign","dates":"23 July — 22 August","datesShort":"Jul 23 – Aug 22","star":"Regulus"},{"slug":"virgo","order":6,"lot":"VI","name":"Virgo","glyph":"♍︎","figure":"The Maiden","epithet":"The Maiden. Last of the immortals to leave.","hue":"#B7D9B0","element":"Earth","modality":"Mutable","ruler":"Mercury","archetype":"The Archivist","dates":"23 August — 22 September","datesShort":"Aug 23 – Sep 22","star":"Spica"},{"slug":"libra","order":7,"lot":"VII","name":"Libra","glyph":"♎︎","figure":"The Scales","epithet":"The Scales. The one instrument among the living signs.","hue":"#D3A9DE","element":"Air","modality":"Cardinal","ruler":"Venus","archetype":"The Arbiter","dates":"23 September — 22 October","datesShort":"Sep 23 – Oct 22","star":"Zubeneschamali"},{"slug":"scorpio","order":8,"lot":"VIII","name":"Scorpio","glyph":"♏︎","figure":"The Scorpion","epithet":"The Scorpion. Orion’s opposite, set never to meet.","hue":"#B9DCE8","element":"Water","modality":"Fixed","ruler":"Mars","archetype":"The Custodian","dates":"23 October — 21 November","datesShort":"Oct 23 – Nov 21","star":"Antares"},{"slug":"sagittarius","order":9,"lot":"IX","name":"Sagittarius","glyph":"♐︎","figure":"The Archer","epithet":"The Archer. His arrow trained on the Scorpion’s heart.","hue":"#E0B080","element":"Fire","modality":"Mutable","ruler":"Jupiter","archetype":"The Wayfinder","dates":"22 November — 21 December","datesShort":"Nov 22 – Dec 21","star":"Kaus Australis"},{"slug":"capricorn","order":10,"lot":"X","name":"Capricorn","glyph":"♑︎","figure":"The Goat-Fish","epithet":"The Goat-Fish. The gate of return.","hue":"#C0DEA8","element":"Earth","modality":"Cardinal","ruler":"Saturn","archetype":"The Institution","dates":"22 December — 19 January","datesShort":"Dec 22 – Jan 19","star":"Deneb Algedi"},{"slug":"aquarius","order":11,"lot":"XI","name":"Aquarius","glyph":"♒︎","figure":"The Water-Bearer","epithet":"The Water-Bearer. The vase that never empties.","hue":"#AE8FC9","element":"Air","modality":"Fixed","ruler":"Saturn","archetype":"The Architect","dates":"20 January — 18 February","datesShort":"Jan 20 – Feb 18","star":"Sadalsuud"},{"slug":"pisces","order":12,"lot":"XII","name":"Pisces","glyph":"♓︎","figure":"The Fishes","epithet":"The Fishes. Bound by a cord, never to be parted.","hue":"#A9D4C4","element":"Water","modality":"Mutable","ruler":"Jupiter","archetype":"The Mystic","dates":"19 February — 20 March","datesShort":"Feb 19 – Mar 20","star":"Alrescha"}]</script>
+  <script type="application/json" id="gallery-figures">[{"slug":"aries","order":1,"lot":"I","name":"Aries","glyph":"♈︎","figure":"The Ram","epithet":"The Ram. Where the year begins.","hue":"#DE8E79","element":"Fire","modality":"Cardinal","ruler":"Mars","archetype":"The Initiator","dates":"21 March — 19 April","datesShort":"Mar 21 – Apr 19","star":"Hamal","market":{"chainId":"solana","pairId":"HRn98YLGigP475eS1GaQYRMbqk1V4dkV6tdKyLhVh2iS"}},{"slug":"taurus","order":2,"lot":"II","name":"Taurus","glyph":"♉︎","figure":"The Bull","epithet":"The Bull. The oldest figure in the sky.","hue":"#B9D4BE","element":"Earth","modality":"Fixed","ruler":"Venus","archetype":"The Steward","dates":"20 April — 20 May","datesShort":"Apr 20 – May 20","star":"Aldebaran","market":{"chainId":"solana","pairId":"2GNtxia4fLW3URj5MLqVfgoKrAgDpphtAVazK41eTPfu"}},{"slug":"gemini","order":3,"lot":"III","name":"Gemini","glyph":"♊︎","figure":"The Twins","epithet":"The Twins. One mortal, one divine.","hue":"#B29DD0","element":"Air","modality":"Mutable","ruler":"Mercury","archetype":"The Messenger","dates":"21 May — 20 June","datesShort":"May 21 – Jun 20","star":"Pollux","market":{"chainId":"solana","pairId":"HxhdKrB1UpSwfuMoZMVzPVELzbPWHdyN6PHU9CBFium9"}},{"slug":"cancer","order":4,"lot":"IV","name":"Cancer","glyph":"♋︎","figure":"The Crab","epithet":"The Crab. The gate of incarnation.","hue":"#B6D4E4","element":"Water","modality":"Cardinal","ruler":"Luna","archetype":"The Keeper","dates":"21 June — 22 July","datesShort":"Jun 21 – Jul 22","star":"Praesepe","market":null},{"slug":"leo","order":5,"lot":"V","name":"Leo","glyph":"♌︎","figure":"The Lion","epithet":"The Lion. The king’s star at its heart.","hue":"#E0A9B4","element":"Fire","modality":"Fixed","ruler":"Sun","archetype":"The Sovereign","dates":"23 July — 22 August","datesShort":"Jul 23 – Aug 22","star":"Regulus","market":{"chainId":"solana","pairId":"48ErBGMqiZekyLoCcebd7cS5KNQPzqr7QQAK9mzAPQGQ"}},{"slug":"virgo","order":6,"lot":"VI","name":"Virgo","glyph":"♍︎","figure":"The Maiden","epithet":"The Maiden. Last of the immortals to leave.","hue":"#B7D9B0","element":"Earth","modality":"Mutable","ruler":"Mercury","archetype":"The Archivist","dates":"23 August — 22 September","datesShort":"Aug 23 – Sep 22","star":"Spica","market":{"chainId":"solana","pairId":"5WcVjf8fzPkHaZqTSZDdbDFL6p2bLbAgEigxpevNrcRh"}},{"slug":"libra","order":7,"lot":"VII","name":"Libra","glyph":"♎︎","figure":"The Scales","epithet":"The Scales. The one instrument among the living signs.","hue":"#D3A9DE","element":"Air","modality":"Cardinal","ruler":"Venus","archetype":"The Arbiter","dates":"23 September — 22 October","datesShort":"Sep 23 – Oct 22","star":"Zubeneschamali","market":{"chainId":"solana","pairId":"DTXPQjK4ae4h2Wc7D5Rpij8YmSQxqLuTcNKrpBCjcAN9"}},{"slug":"scorpio","order":8,"lot":"VIII","name":"Scorpio","glyph":"♏︎","figure":"The Scorpion","epithet":"The Scorpion. Orion’s opposite, set never to meet.","hue":"#B9DCE8","element":"Water","modality":"Fixed","ruler":"Mars","archetype":"The Custodian","dates":"23 October — 21 November","datesShort":"Oct 23 – Nov 21","star":"Antares","market":{"chainId":"solana","pairId":"3d2KYuMgj2yotNC6SKX4HNoeSWp4n8zqZSQ9kFH81Yta"}},{"slug":"sagittarius","order":9,"lot":"IX","name":"Sagittarius","glyph":"♐︎","figure":"The Archer","epithet":"The Archer. His arrow trained on the Scorpion’s heart.","hue":"#E0B080","element":"Fire","modality":"Mutable","ruler":"Jupiter","archetype":"The Wayfinder","dates":"22 November — 21 December","datesShort":"Nov 22 – Dec 21","star":"Kaus Australis","market":null},{"slug":"capricorn","order":10,"lot":"X","name":"Capricorn","glyph":"♑︎","figure":"The Goat-Fish","epithet":"The Goat-Fish. The gate of return.","hue":"#C0DEA8","element":"Earth","modality":"Cardinal","ruler":"Saturn","archetype":"The Institution","dates":"22 December — 19 January","datesShort":"Dec 22 – Jan 19","star":"Deneb Algedi","market":{"chainId":"solana","pairId":"549aknNCvxbiqmikS6sAnY6Dbg37MeENWn6ZFBfc7sin"}},{"slug":"aquarius","order":11,"lot":"XI","name":"Aquarius","glyph":"♒︎","figure":"The Water-Bearer","epithet":"The Water-Bearer. The vase that never empties.","hue":"#AE8FC9","element":"Air","modality":"Fixed","ruler":"Saturn","archetype":"The Architect","dates":"20 January — 18 February","datesShort":"Jan 20 – Feb 18","star":"Sadalsuud","market":{"chainId":"solana","pairId":"BygCEAhCNyWC8Co9yPa4K84NGkgkgMWdib2FG5hhuiUv"}},{"slug":"pisces","order":12,"lot":"XII","name":"Pisces","glyph":"♓︎","figure":"The Fishes","epithet":"The Fishes. Bound by a cord, never to be parted.","hue":"#A9D4C4","element":"Water","modality":"Mutable","ruler":"Jupiter","archetype":"The Mystic","dates":"19 February — 20 March","datesShort":"Feb 19 – Mar 20","star":"Alrescha","market":{"chainId":"solana","pairId":"Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko"}}]</script>
   <script defer src="/assets/gallery.js"></script>
   <script>
   (function(){

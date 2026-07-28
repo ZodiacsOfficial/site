@@ -25,7 +25,7 @@ import * as esbuild from 'esbuild';
 
 import { readFigures } from '../src/shelf/figures.mjs';
 import { wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mjs';
-import { CHANNELS } from './sign-data.mjs';
+import { CHANNELS, MARKET_PAIRS } from './sign-data.mjs';
 import { EN } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -118,9 +118,17 @@ const figureData = figures.map((figure) => ({
   dates: figure.dates,
   datesShort: figure.datesShort,
   star: figure.star,
+  // The Dex Screener pair is venue routing, baked here exactly as the sign
+  // pages bake it. Registry identity (mints) stays out of the page — the
+  // card reads those live. Cancer and Sagittarius have no indexed pair and
+  // show a quiet unavailable state instead.
+  market: MARKET_PAIRS[figure.slug] ?? null,
 }));
 
-const ledger = figures.map((figure) => `        <li class="ledger__row" style="--sign:${figure.hue}">
+// Each row carries the sign's id, so /registry/gallery/#leo is a real
+// fragment: without JavaScript it lands on Leo's line of the register,
+// and the scene reads the same hash to stand in front of the sculpture.
+const ledger = figures.map((figure) => `        <li class="ledger__row" id="${figure.slug}" style="--sign:${figure.hue}">
           <img class="ledger__plate" src="/assets/nuggets/thumb/${figure.slug}.png" alt="" width="72" height="72" loading="lazy" decoding="async" />
           <span class="ledger__lot">${esc(figure.lot)}</span>
           <a class="ledger__name" href="/registry/${figure.slug}/">${esc(figure.name)}</a>
@@ -167,7 +175,8 @@ const css = `
     /* No scene, no controls — the register below is the whole page. */
     html:not(.gallery-live) .stage__chrome,
     html:not(.gallery-live) .stage__mount,
-    html:not(.gallery-live) .stage__scrim { display: none; }
+    html:not(.gallery-live) .stage__scrim,
+    html:not(.gallery-live) .stage__scrim-top { display: none; }
     .stage::before {
       content: ''; position: absolute; inset: 0; z-index: -2; pointer-events: none;
       background:
@@ -192,6 +201,17 @@ const css = `
     }
     @media (min-width: 900px) { .stage.is-ready .stage__scrim { display: block; } }
     .stage.is-open .stage__scrim { opacity: 0; }
+    /* And a band across the top, so a tall figure passing behind the title
+       dims before the lettering rather than fighting it. */
+    .stage__scrim-top {
+      position: absolute; inset: 0 0 auto 0; height: 240px;
+      z-index: 2; pointer-events: none; opacity: 0;
+      background: linear-gradient(to bottom,
+        rgba(6,7,9,0.92) 0%, rgba(6,7,9,0.55) 55%, rgba(6,7,9,0) 100%);
+      transition: opacity 700ms var(--ease);
+    }
+    .stage.is-ready .stage__scrim-top { opacity: 1; }
+    .stage.is-open .stage__scrim-top { opacity: 0; }
 
     .stage__head {
       position: relative; z-index: 3; pointer-events: none;
@@ -334,6 +354,67 @@ const css = `
       margin: 8px 0 0; font-style: italic; font-size: 16px; color: var(--ink-2);
     }
 
+    /* ── The shop window ── */
+    .card__market {
+      margin: 18px 0 0; padding: 16px 0 0; border-top: 1px solid var(--hair);
+    }
+    .card__market-state { margin: 0; font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim); }
+    .card__price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .card__price[hidden] { display: none; }
+    .card__price-value {
+      font-family: var(--serif); font-size: clamp(27px, 3vw, 33px);
+      line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums;
+    }
+    .card__price-change {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+      padding: 3px 9px; border-radius: 999px; border: 1px solid var(--hair-2);
+      color: var(--ink-mute);
+    }
+    .card__price-change--up {
+      color: var(--ink);
+      border-color: color-mix(in oklab, var(--sign) 55%, transparent);
+      background: color-mix(in oklab, var(--sign) 14%, transparent);
+    }
+    .card__price-change--down { color: var(--ink-mute); }
+    .card__cta { display: flex; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+    .card__cta[hidden] { display: none; }
+    .card__buy {
+      flex: 1 1 auto; display: inline-flex; justify-content: center; align-items: center;
+      gap: 8px; padding: 11px 18px; border-radius: 999px;
+      background: rgba(238,241,247,0.10); border: 1px solid var(--hair-2);
+      font-family: var(--sans); font-size: 14px; font-weight: 550; color: var(--ink);
+      text-decoration: none;
+      transition: background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .card__buy:hover { background: rgba(238,241,247,0.16); border-color: rgba(198,204,218,0.32); }
+    .card__buy:focus-visible { outline: 2px solid var(--sign); outline-offset: 2px; }
+    .card__data {
+      display: inline-flex; align-items: center; gap: 7px; padding: 4px 0;
+      font-family: var(--sans); font-size: 13px; color: var(--ink-2);
+      text-decoration: none; border-bottom: 1px solid var(--hair-2);
+      transition: color 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .card__data:hover { color: var(--ink); border-color: var(--sign); }
+    .card__data:focus-visible { outline: 2px solid var(--sign); outline-offset: 3px; }
+    .card__market-grid {
+      margin: 14px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 18px;
+    }
+    .card__market-grid[hidden] { display: none; }
+    .card__market-grid dt {
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-dim); align-self: center;
+    }
+    .card__market-grid dd {
+      margin: 0; font-size: 15px; color: var(--ink-2); text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .card__risk {
+      margin: 14px 0 0; font-family: var(--serif); font-style: italic;
+      font-size: 11.5px; line-height: 1.55; color: var(--ink-dim);
+    }
+    .card__risk a { color: var(--ink-mute); }
+    .card__risk a:hover { color: var(--ink-2); }
+
     .card__facts {
       margin: 20px 0 0; padding: 18px 0 0; border-top: 1px solid var(--hair);
       display: grid; grid-template-columns: auto 1fr; gap: 9px 18px;
@@ -390,6 +471,7 @@ const css = `
 
     .ledger { list-style: none; margin: 38px 0 0; padding: 0; }
     .ledger__row {
+      scroll-margin-top: 96px;
       display: grid; align-items: center; gap: 2px 16px;
       grid-template-columns: 56px 34px 1fr;
       grid-template-areas: 'plate lot name' 'plate . figure' 'plate . class' 'plate . dates';
@@ -538,6 +620,7 @@ ${JSON.stringify(jsonLd, null, 2)}
     <section class="stage" data-gallery-stage aria-labelledby="gallery-title">
       <div class="stage__mount" data-gallery-canvas></div>
       <div class="stage__scrim" aria-hidden="true"></div>
+      <div class="stage__scrim-top" aria-hidden="true"></div>
 
       <header class="stage__head">
         <p class="kicker">Twelve gold sculptures, one to a sign.</p>
@@ -566,6 +649,33 @@ ${JSON.stringify(jsonLd, null, 2)}
         <p class="card__lot" data-card-lot></p>
         <h2 class="card__name" id="card-name" data-card-name></h2>
         <p class="card__figure" data-card-figure></p>
+
+        <div class="card__market">
+          <p class="card__market-state" data-market-state>Loading market context.</p>
+          <div class="card__price" data-market-price-row hidden>
+            <span class="card__price-value" data-market-price></span>
+            <span class="card__price-change" data-market-change></span>
+          </div>
+          <div class="card__cta" data-market-cta hidden>
+            <a class="card__buy" data-market-jupiter rel="noopener noreferrer external nofollow">
+              <span>Open Jupiter route</span><span aria-hidden="true">↗</span>
+            </a>
+            <a class="card__data" data-market-dexscreener rel="noopener noreferrer external nofollow">
+              <span>View market data</span><span aria-hidden="true">↗</span>
+            </a>
+          </div>
+          <dl class="card__market-grid" data-market-grid hidden></dl>
+          <p class="card__risk">
+            Independent third-party data, not a valuation or recommendation. It
+            may be delayed or unavailable; prices and liquidity can change
+            quickly, and a Zodiac can lose all market value. The route above
+            opens an independent third-party venue; this Registry page does not
+            request custody, signing, approvals, or transactions. Operator and
+            economic-interest statements remain pending confirmation; see the
+            <a href="/disclosure/">Disclosure</a>.
+          </p>
+        </div>
+
         <dl class="card__facts" data-card-facts></dl>
         <div class="card__records" data-card-records></div>
         <a class="card__entry" data-card-entry href="/registry/">

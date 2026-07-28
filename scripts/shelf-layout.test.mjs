@@ -14,6 +14,7 @@ import {
   nearestIndex,
   neighbourPush,
   shortestTurn,
+  signFromHash,
   wheelToFocusDelta,
 } from '../src/shelf/layout.mjs';
 import { figureOf, readFigures, classification } from '../src/shelf/figures.mjs';
@@ -100,6 +101,20 @@ describe('gallery geometry', () => {
 
   it('puts the floor one plinth below the feet', () => {
     expect(floorY(GALLERY)).toBeCloseTo(GALLERY.baseY - GALLERY.plinthHeight, 12);
+  });
+});
+
+describe('deep links', () => {
+  const slugs = ['aries', 'taurus', 'gemini'];
+
+  it('names a figure from the hash, and nobody otherwise', () => {
+    expect(signFromHash('#taurus', slugs)).toBe(1);
+    expect(signFromHash('#TAURUS', slugs)).toBe(1);
+    expect(signFromHash('taurus', slugs)).toBe(1);
+    expect(signFromHash('#ophiuchus', slugs)).toBe(-1);
+    expect(signFromHash('', slugs)).toBe(-1);
+    expect(signFromHash('#', slugs)).toBe(-1);
+    expect(signFromHash(undefined, slugs)).toBe(-1);
   });
 });
 

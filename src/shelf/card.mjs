@@ -1,11 +1,20 @@
-// The records card.
+// The records card — and, since the owner's round-two direction, the shop
+// window. A drawn-forward sculpture shows its price and a route to acquire it,
+// above the registry facts it always showed.
 //
 // Everything the reader can select, copy, or tab to lives in the DOM — the
 // canvas next to it is decoration. Addresses are read from the registry file
 // itself at the moment a figure is drawn out, never from a copy baked into
 // this page, so the gallery can only ever show what the registry says now.
+// The acquisition route is built from that same live answer: no verified
+// mint, no buy button.
 
 const REGISTRY_URL = '/registry/zodiacs.registry.json';
+
+/** Mirrors WSOL_MINT in scripts/sign-data.mjs — the sol side of the route. */
+const WSOL_MINT = 'So11111111111111111111111111111111111111112';
+
+const DEX_API = 'https://api.dexscreener.com/latest/dex/pairs/';
 
 let pending = null;
 
@@ -24,6 +33,63 @@ function registry() {
       });
   }
   return pending;
+}
+
+// One quote per pair per visit; a failed fetch is forgotten so reopening the
+// figure asks again. Same memo discipline as the registry above.
+const quotes = new Map();
+
+function marketQuote(market) {
+  const key = `${market.chainId}:${market.pairId}`;
+  if (!quotes.has(key)) {
+    const url = DEX_API
+      + `${encodeURIComponent(market.chainId)}/${encodeURIComponent(market.pairId)}`;
+    const promise = fetch(url)
+      .then((response) => {
+        if (!response.ok) throw new Error(`market ${response.status}`);
+        return response.json();
+      })
+      .then((payload) => {
+        const pair = payload && payload.pairs && payload.pairs[0];
+        if (!pair) throw new Error('market: pair not indexed');
+        return pair;
+      })
+      .catch((error) => {
+        quotes.delete(key);
+        throw error;
+      });
+    quotes.set(key, promise);
+  }
+  return quotes.get(key);
+}
+
+// Formatters shared with the sign pages' market panel (build-sign-pages.mjs).
+// Everything lands via textContent, so nothing here needs escaping.
+
+function fmtPrice(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return '—';
+  const digits = Math.abs(n) < 0.0001 ? 8 : Math.abs(n) < 0.01 ? 6 : 4;
+  return `$${n.toFixed(digits).replace(/0+$/, '').replace(/\.$/, '')}`;
+}
+
+function fmtCompact(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return '—';
+  const a = Math.abs(n);
+  if (a >= 1e9) return `$${(n / 1e9).toLocaleString(undefined, { maximumFractionDigits: 1 })}B`;
+  if (a >= 1e6) return `$${(n / 1e6).toLocaleString(undefined, { maximumFractionDigits: 1 })}M`;
+  if (a >= 1e3) return `$${(n / 1e3).toLocaleString(undefined, { maximumFractionDigits: 1 })}K`;
+  return `$${n.toLocaleString(undefined, { maximumFractionDigits: 2 })}`;
+}
+
+function fmtPct(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n)) return '—';
+  return `${n > 0 ? '+' : ''}${n.toLocaleString(undefined, {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  })}%`;
 }
 
 function truncate(address) {
@@ -98,6 +164,15 @@ export function createCard(root, { onClose }) {
   const entry = element.querySelector('[data-card-entry]');
   const closer = element.querySelector('[data-gallery-close]');
 
+  const marketState = element.querySelector('[data-market-state]');
+  const priceRow = element.querySelector('[data-market-price-row]');
+  const priceValue = element.querySelector('[data-market-price]');
+  const priceChange = element.querySelector('[data-market-change]');
+  const cta = element.querySelector('[data-market-cta]');
+  const jupiter = element.querySelector('[data-market-jupiter]');
+  const dexscreener = element.querySelector('[data-market-dexscreener]');
+  const marketGrid = element.querySelector('[data-market-grid]');
+
   closer.addEventListener('click', () => onClose());
 
   let token = 0;
@@ -108,6 +183,42 @@ export function createCard(root, { onClose }) {
     const dd = document.createElement('dd');
     dd.textContent = description;
     facts.append(dt, dd);
+  }
+
+  function marketCell(term, description) {
+    const dt = document.createElement('dt');
+    dt.textContent = term;
+    const dd = document.createElement('dd');
+    dd.textContent = description;
+    marketGrid.append(dt, dd);
+  }
+
+  async function fillMarket(record, mine) {
+    if (!record.market) {
+      marketState.textContent = 'Market context unavailable.';
+      return;
+    }
+    try {
+      const pair = await marketQuote(record.market);
+      if (mine !== token) return;
+
+      priceValue.textContent = fmtPrice(pair.priceUsd);
+      const change = Number(pair.priceChange && pair.priceChange.h24);
+      priceChange.textContent = fmtPct(change);
+      priceChange.classList.toggle('card__price-change--up', Number.isFinite(change) && change > 0);
+      priceChange.classList.toggle('card__price-change--down', Number.isFinite(change) && change < 0);
+
+      marketGrid.replaceChildren();
+      marketCell('Liquidity', fmtCompact(pair.liquidity && pair.liquidity.usd));
+      marketCell('Market cap', fmtCompact(pair.marketCap));
+
+      marketState.hidden = true;
+      priceRow.hidden = false;
+      marketGrid.hidden = false;
+    } catch {
+      if (mine !== token) return;
+      marketState.textContent = 'Market context unavailable.';
+    }
   }
 
   async function fillRecords(record, mine) {
@@ -124,11 +235,22 @@ export function createCard(root, { onClose }) {
       // `representations` already carries the native mint alongside the
       // bridged one, so list each chain once, native first.
       const seen = new Map();
-      for (const entry of [asset.native, ...asset.representations]) {
-        const identity = `${entry.chain}:${entry.address}`;
-        if (!seen.has(identity)) seen.set(identity, entry);
+      for (const entryRecord of [asset.native, ...asset.representations]) {
+        const identity = `${entryRecord.chain}:${entryRecord.address}`;
+        if (!seen.has(identity)) seen.set(identity, entryRecord);
       }
       records.replaceChildren(...[...seen.values()].map(recordRow));
+
+      // The route is offered only once the registry has answered — the mint
+      // in the URL is the one the reader can verify two lines below.
+      const mint = asset.native.address;
+      jupiter.href = `https://jup.ag/swap/${WSOL_MINT}-${mint}`;
+      jupiter.setAttribute('aria-label',
+        `Open the Jupiter route for ${record.name} — independent third-party venue`);
+      dexscreener.href = record.market
+        ? `https://dexscreener.com/${record.market.chainId}/${record.market.pairId}`
+        : `https://dexscreener.com/search?q=${mint}`;
+      cta.hidden = false;
     } catch {
       if (mine !== token) return;
       note.textContent = 'Records unavailable offline.';
@@ -143,6 +265,17 @@ export function createCard(root, { onClose }) {
     name.textContent = record.name;
     figure.textContent = record.epithet;
 
+    // The shop window resets with each figure; quotes and routes arrive as
+    // their fetches resolve.
+    marketState.hidden = false;
+    marketState.textContent = 'Loading market context.';
+    priceRow.hidden = true;
+    priceChange.classList.remove('card__price-change--up', 'card__price-change--down');
+    marketGrid.hidden = true;
+    cta.hidden = true;
+    jupiter.removeAttribute('href');
+    dexscreener.removeAttribute('href');
+
     facts.replaceChildren();
     fact('Classification', `${record.modality} ${record.element.toLowerCase()}`);
     fact('Ruling planet', record.ruler);
@@ -156,6 +289,7 @@ export function createCard(root, { onClose }) {
     element.hidden = false;
     // Let the attribute land before the transition class, or it does not run.
     requestAnimationFrame(() => element.classList.add('is-open'));
+    void fillMarket(record, token);
     void fillRecords(record, token);
   }
 

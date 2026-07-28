@@ -13,8 +13,12 @@
 export const GALLERY = Object.freeze({
   radius: 26,
   spacing: 1.72,
-  /** The tallest a figure may stand. */
-  height: 1.85,
+  /**
+   * The tallest a figure may stand. Held low enough that the tallest heads
+   * clear the page title above the row — the stage shares its viewport with
+   * the header, and the header wins.
+   */
+  height: 1.6,
   /**
    * The widest it may reach — a lion is low and long where a maiden is tall.
    * Held under the narrowest gap the arc produces (the row compresses in x
@@ -136,6 +140,15 @@ export function dragToFocusDelta(pixels, viewportWidth) {
   const width = Math.max(320, viewportWidth || 1024);
   // A drag across the full width of the stage walks about four figures.
   return (-pixels / width) * 4;
+}
+
+/**
+ * A location hash names a sculpture: "#leo" opens the gallery on Leo. Exact
+ * slug match, case folded; anything else is nobody.
+ */
+export function signFromHash(hash, slugs) {
+  const slug = String(hash || '').replace(/^#/, '').toLowerCase();
+  return slug ? slugs.indexOf(slug) : -1;
 }
 
 /**

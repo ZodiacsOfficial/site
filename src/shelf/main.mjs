@@ -5,7 +5,7 @@
 // catalogue, and it stays in the document whether or not WebGL exists.
 
 import {
-  GALLERY, approach, clampFocus, nearestIndex, shortestTurn,
+  GALLERY, approach, clampFocus, nearestIndex, shortestTurn, signFromHash,
   wheelToFocusDelta, dragToFocusDelta,
 } from './layout.mjs';
 import { createScene } from './scene.mjs';
@@ -50,9 +50,13 @@ async function mount(root, records) {
     return;
   }
 
+  // "#leo" arrives standing in front of Leo — no entrance drift, the reader
+  // asked for a particular piece.
+  const asked = signFromHash(window.location.hash, records.map((record) => record.slug));
+
   const state = {
-    focus: motion.matches ? 0 : -1.4,
-    targetFocus: 0,
+    focus: asked >= 0 ? asked : motion.matches ? 0 : -1.4,
+    targetFocus: asked >= 0 ? asked : 0,
     open: 0,
     targetOpen: 0,
     openIndex: -1,
@@ -62,6 +66,12 @@ async function mount(root, records) {
   };
 
   const card = createCard(root, { onClose: () => closeFigure() });
+
+  // A piece on display turns slowly, as on a dealer's turntable, until the
+  // reader takes it in hand — then it is theirs to aim. Reduced motion
+  // disables the turntable outright.
+  const TURNTABLE_RATE = 0.22;
+  let handTurned = false;
 
   // ---- the frame loop --------------------------------------------------
   // Nothing is drawn unless something is still moving; the gallery at rest
@@ -102,7 +112,13 @@ async function mount(root, records) {
     if (disposed) return;
     const dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016);
     last = now;
-    const moving = step(dt);
+    const turning = state.targetOpen === 1 && state.open > 0.98
+      && !handTurned && !motion.matches && !drag;
+    if (turning) {
+      state.yaw += TURNTABLE_RATE * dt;
+      state.targetYaw = state.yaw;
+    }
+    const moving = step(dt) || turning;
     scene.layout(state);
     scene.render();
     raf = moving ? requestAnimationFrame(frame) : 0;
@@ -146,9 +162,18 @@ async function mount(root, records) {
     spoken = window.setTimeout(() => { live.textContent = message; }, 220);
   }
 
+  // Seeded with the arrival slug so a plain visit keeps its clean URL until
+  // the reader actually browses.
+  let mirroredSlug = records[asked >= 0 ? asked : 0]?.slug ?? null;
   function syncChrome() {
     const index = current();
     const record = records[index];
+    // The address bar names the sculpture in front, so any moment of the
+    // browse can be shared. replaceState only — browsing is not history.
+    if (record.slug !== mirroredSlug && window.history?.replaceState) {
+      window.history.replaceState(null, '', `#${record.slug}`);
+      mirroredSlug = record.slug;
+    }
     if (opener) {
       opener.textContent = state.openIndex >= 0 ? 'Return the sculpture' : `View ${record.name}`;
       opener.setAttribute(
@@ -171,6 +196,7 @@ async function mount(root, records) {
 
   async function openFigure(index) {
     const record = records[index];
+    handTurned = false;
     state.openIndex = index;
     state.targetOpen = 1;
     state.targetYaw = 0;
@@ -309,7 +335,8 @@ async function mount(root, records) {
 
     if (state.targetOpen > 0) {
       // A figure drawn out turns in the hand — right around, as often as the
-      // reader likes. The row stays where it is.
+      // reader likes. The row stays where it is, and the turntable yields.
+      handTurned = true;
       state.targetYaw = drag.yaw + (dx / 190);
       state.targetPitch = Math.max(-0.44, Math.min(0.44, drag.pitch + (dy / 300)));
     } else {
@@ -424,6 +451,10 @@ async function mount(root, records) {
   window.addEventListener('pagehide', teardown, { once: true });
 
   root.classList.add('is-ready');
+  // The hash is also a real anchor into the register below, and the browser
+  // will have jumped there before this script ran. With the scene live, the
+  // sculpture row IS the destination — come back up to it.
+  if (asked >= 0) window.scrollTo({ top: 0, behavior: 'instant' });
   syncChrome();
   invalidate();
 

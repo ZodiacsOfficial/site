@@ -181,7 +181,7 @@ export function createScene(canvas, records) {
   // the lower half of the frame with their shadows showing and the title above
   // them keeps its air.
   camera.position.set(0, 1.05, 6.2);
-  camera.lookAt(0, 0.30, 0);
+  camera.lookAt(0, 0.42, 0);
 
   // The photographs already carry their own light. The rig here is even enough
   // not to fight that, with just enough direction that turning a piece reads.
@@ -316,8 +316,8 @@ export function createScene(canvas, records) {
   function stagePose(zoom) {
     const wide = aspect >= 1.05;
     const place = wide
-      ? { x: -1.25, y: -0.70, z: 1.75 + (zoom * 1.2), scale: 1 }
-      : { x: 0, y: -0.24, z: 1.7 + (zoom * 0.9), scale: 0.7 + (zoom * 0.2) };
+      ? { x: -1.25, y: -0.58, z: 1.75 + (zoom * 1.2), scale: 1 }
+      : { x: 0, y: 0.34, z: 1.7 + (zoom * 0.9), scale: 0.7 + (zoom * 0.2) };
     return { ...place, faceYaw: Math.atan2(-place.x, camera.position.z - place.z) };
   }
 

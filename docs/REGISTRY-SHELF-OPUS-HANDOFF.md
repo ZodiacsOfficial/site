@@ -321,3 +321,41 @@ disagree.
 twelve, hero tier 2.27 MB loaded one sign at a time on view. Geometry 47 KB
 raw. No dependency changes, so no lockfile movement and no daily-publication or
 Phase-1 receipt knock-ons.
+
+---
+
+## §13 — Round two: the shop window, the turntable, deep links (2026-07-28)
+
+Owner direction after using the Gallery, superseding §2.4 and §10's
+"no acquisition on the card":
+
+- **The card is now a shop window.** Under the epithet: price (large) with the
+  24h change chip, then "Open Jupiter route" / "View market data", then
+  Liquidity · Market cap, then the risk paragraph — all above the facts and
+  addresses. Market data is the sign pages' own plumbing (Dex Screener pair
+  fetch, `MARKET_PAIRS` baked per figure; cancer and sagittarius show the
+  quiet unavailable state). The buy route is built at runtime from the live
+  registry answer — `jup.ag/swap/WSOL-{mint}` appears only after the mint
+  resolves, and never exists in the committed page. All acquisition copy is
+  verbatim reuse of approved sentences; `scripts/registry-risk.test.mjs` now
+  covers the gallery too (CTA labels pinned, "Acquire via Jupiter" banned,
+  no `jup.ag/swap/` in the static HTML).
+- **Header overlap fixed.** `GALLERY.height` 1.85 → 1.6, camera aim raised to
+  y 0.42, and a top scrim band (`.stage__scrim-top`) dims anything passing
+  behind the title. Stage poses re-anchored (wide y −0.58; narrow y 0.34 so
+  the figure stands clear of the card sheet on phones).
+- **Turntable.** A drawn-forward figure rotates at 0.22 rad/s until the
+  reader drags it (`handTurned`), under `prefers-reduced-motion: no-preference`
+  only. The RAF runs only while a piece is on display; the row at rest still
+  renders nothing.
+- **Deep links.** `/registry/gallery/#leo` arrives standing in front of Leo
+  (`signFromHash` in layout.mjs, unit-tested); browsing mirrors the current
+  slug into the hash via `replaceState` (seeded so a plain visit keeps its
+  clean URL until the reader moves). Every sign page now carries
+  "View in the gallery →" under its figure card.
+
+Declined this round: floor reflections, nameplate, texture crossfades,
+prev/next on the card, analytics events, dedicated OG card.
+
+Bundle after round two: ~161 KB gzip (cap 180). No dependency changes, so no
+lockfile movement and no Phase-1/daily-publication knock-ons.
