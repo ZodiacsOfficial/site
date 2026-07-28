@@ -423,6 +423,26 @@ packet per event: Pinterest pin title+description, the T-7/T-2/T-0/T+1 X
 posts (≤280 chars each, observatory voice, real numbers), a digest
 paragraph, and which standing pages deserve a freshness check."
 
+**P3-input — sky-event extraction** (run before P3; a data job, not a
+writing job). SOL compiles P3's input itself under a strict
+no-memory rule: every event, instant, sign, and degree is copied from
+sources — first `https://zodiacs.org/feeds/events.xml` (the curated
+timeline; each item's pubDate is the exact UTC instant and its link the
+standing page), then each event page to confirm instant/sign/degree and
+take the card from `og:image`; optionally the attached repo files
+(`events-publication.json`, `transits-YYYY-MM.json` current + next
+month, `eclipses.json`) for fast-planet ingresses and exact aspect
+instants. Packet rules: window = today +14 days, stated explicitly; one
+line per event (weekday · date · name · UTC instant · sign/degree ·
+page URL · card URL); a TENTPOLE flag for any major event up to 14 days
+past the window with its T-14/T-7/T-2 dates computed; a 7-day lookback
+for recap material; always-on links (/today/, /transits/,
+/birth-chart/, the window's key sign guides and horoscopes); and an
+integrity footer listing anything unverifiable as "unverified — request
+repo data". Values recalled from model memory are prohibited — if it
+cannot browse, it stops and asks for the repo files rather than
+producing a packet.
+
 **P4 — Outreach batch.** "Target category: {widgets | data citations |
 resource pages}. Here are 5 candidate sites/writers and their recent
 work. Draft 5 personalized pitches (≤120 words each, honest, specific to
