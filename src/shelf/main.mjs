@@ -5,8 +5,8 @@
 // and the disc strip serves as the selector instead.
 
 import {
-  GALLERY, approach, clampFocus, embedBand, nearestIndex, shortestTurn,
-  signFromHash, wheelToFocusDelta, dragToFocusDelta,
+  DOCK, GALLERY, approach, clampFocus, dockMagnify, embedBand, nearestIndex,
+  shortestTurn, signFromHash, wheelToFocusDelta, dragToFocusDelta,
 } from './layout.mjs';
 import { createScene } from './scene.mjs';
 import { createCard } from './card.mjs';
@@ -262,6 +262,8 @@ async function mount(root, records) {
     if (rail.scrollWidth > rail.clientWidth) {
       ticks[index]?.scrollIntoView({ block: 'nearest', inline: 'center' });
     }
+    // At rest the current sign is the one standing proud.
+    if (!rail.matches(':hover')) dockAt(null);
   }
 
   // ---- drawing a figure out and returning it ---------------------------
@@ -350,6 +352,54 @@ async function mount(root, records) {
     return button;
   });
 
+  // ---- the rail magnifies like a dock ------------------------------------
+  //
+  // Whatever the cursor is nearest swells most and its neighbours less, so the
+  // row of twelve reads as one creature moving under the hand. At rest the
+  // current sign stands proud on its own — a reader on a touchscreen, or on a
+  // keyboard, still sees which of the twelve the row is holding.
+
+  // The pitch the wave is measured in: one resting tick. Read from the
+  // stylesheet so the two never drift apart.
+  const tickPitch = parseFloat(getComputedStyle(rail).getPropertyValue('--tick')) || 32;
+  let dockFrame = 0;
+
+  /** Size every disc for a cursor at `cursorX`, or for rest when null. */
+  function dockAt(cursorX) {
+    dockFrame = 0;
+    const resting = current();
+    let nearest = -1;
+    let best = Infinity;
+    for (const [i, button] of ticks.entries()) {
+      if (cursorX === null) {
+        button.style.setProperty('--mag', i === resting ? String(1 + DOCK.rest) : '1');
+        continue;
+      }
+      const box = button.getBoundingClientRect();
+      const away = (box.left + (box.width / 2)) - cursorX;
+      button.style.setProperty('--mag', dockMagnify(away / tickPitch).toFixed(3));
+      if (Math.abs(away) < best) { best = Math.abs(away); nearest = i; }
+    }
+    // The wave names whichever disc it has swollen most.
+    if (cursorX === null) clearName('rail');
+    else nameFor(nearest, 'rail');
+  }
+
+  function scheduleDock(cursorX) {
+    if (dockFrame) cancelAnimationFrame(dockFrame);
+    dockFrame = requestAnimationFrame(() => dockAt(cursorX));
+  }
+
+  rail.addEventListener('pointermove', (event) => {
+    // A wave that follows the cursor is motion; reduced motion keeps only the
+    // resting magnification, which is affordance rather than animation. Read
+    // at event time, so a reader who changes the preference is obeyed without
+    // reloading the page.
+    if (motion.matches || event.pointerType !== 'mouse') return;
+    scheduleDock(event.clientX);
+  });
+  rail.addEventListener('pointerleave', () => scheduleDock(null));
+
   rail.addEventListener('keydown', (event) => {
     const moves = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 1, ArrowUp: -1 };
     let next = null;
@@ -378,25 +428,50 @@ async function mount(root, records) {
   let drag = null;
   let pinch = 0;
 
-  /** The hovered figure lifts to say it opens; a small label names it. */
+  /**
+   * One label, one meaning: this is the piece you are pointing at. It serves
+   * the sculptures and the rail alike, placed under whichever it is naming.
+   * Whoever raised it owns it — the rail leaving must not take down a name
+   * the row has just put up, or the two surfaces fight over one element.
+   */
+  let namedBy = null;
+
+  function clearName(source) {
+    if (!nameLabel || namedBy !== source) return;
+    namedBy = null;
+    nameLabel.classList.remove('is-visible', 'is-rail');
+  }
+
+  function nameFor(index, source) {
+    if (!nameLabel) return;
+    if (index < 0 || !source) {
+      clearName(source);
+      return;
+    }
+    namedBy = source;
+    const record = records[index];
+    nameLabel.textContent = `${record.name} — Lot ${record.lot}`;
+    const x = source === 'rail'
+      ? (() => {
+        const box = ticks[index].getBoundingClientRect();
+        return (box.left + (box.width / 2)) - mountPoint.getBoundingClientRect().left;
+      })()
+      : scene.screenX(index);
+    if (Number.isFinite(x)) {
+      const width = mountPoint.offsetWidth;
+      nameLabel.style.left = `${Math.min(width - 70, Math.max(70, x))}px`;
+    }
+    nameLabel.classList.toggle('is-rail', source === 'rail');
+    nameLabel.classList.add('is-visible');
+  }
+
+  /** The hovered figure lifts to say it opens; the label names it. */
   function setHover(index) {
     if (state.hover === index) return;
     state.hover = index;
     canvas.style.cursor = index >= 0 ? 'pointer' : '';
-    if (nameLabel) {
-      if (index >= 0) {
-        const record = records[index];
-        nameLabel.textContent = `${record.name} — Lot ${record.lot}`;
-        const x = scene.screenX(index);
-        if (Number.isFinite(x)) {
-          const width = mountPoint.offsetWidth;
-          nameLabel.style.left = `${Math.min(width - 70, Math.max(70, x))}px`;
-        }
-        nameLabel.classList.add('is-visible');
-      } else {
-        nameLabel.classList.remove('is-visible');
-      }
-    }
+    if (index >= 0) nameFor(index, 'stage');
+    else clearName('stage');
     invalidate();
   }
 
