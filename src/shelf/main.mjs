@@ -390,14 +390,15 @@ async function mount(root, records) {
     dockFrame = requestAnimationFrame(() => dockAt(cursorX));
   }
 
-  // A wave that follows the cursor is motion; reduced motion keeps only the
-  // resting magnification, which is affordance rather than animation.
-  if (!motion.matches) {
-    rail.addEventListener('pointermove', (event) => {
-      if (event.pointerType === 'mouse') scheduleDock(event.clientX);
-    });
-    rail.addEventListener('pointerleave', () => scheduleDock(null));
-  }
+  rail.addEventListener('pointermove', (event) => {
+    // A wave that follows the cursor is motion; reduced motion keeps only the
+    // resting magnification, which is affordance rather than animation. Read
+    // at event time, so a reader who changes the preference is obeyed without
+    // reloading the page.
+    if (motion.matches || event.pointerType !== 'mouse') return;
+    scheduleDock(event.clientX);
+  });
+  rail.addEventListener('pointerleave', () => scheduleDock(null));
 
   rail.addEventListener('keydown', (event) => {
     const moves = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 1, ArrowUp: -1 };

@@ -686,9 +686,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     // ---- the gallery band: the selector wherever WebGL exists -------------
     // CI browsers without GL take the strip path above; the band checks then
     // record themselves as skipped rather than failing the gate.
+    // The dock wave is motion, and the scene withholds it under a reduced
+    // motion preference — which some CI browsers report by default. State the
+    // preference explicitly so this section tests the wave, not the runner.
     for (const [label, viewport] of [
-      ['1280', { viewport: { width: 1280, height: 900 } }],
-      ['390', { viewport: { width: 390, height: 844 }, deviceScaleFactor: 2, hasTouch: true }],
+      ['1280', { viewport: { width: 1280, height: 900 }, reducedMotion: 'no-preference' }],
+      ['390', {
+        viewport: { width: 390, height: 844 },
+        deviceScaleFactor: 2,
+        hasTouch: true,
+        reducedMotion: 'no-preference',
+      }],
     ]) {
       const band = await newPage(viewport);
       const bandErrors = [];
@@ -758,6 +766,32 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           );
           await band.mouse.move(spot.x + (spot.width / 2), spot.y - 220);
           await band.waitForTimeout(420);
+
+          // The same rail under a reduced motion preference: the current sign
+          // still stands proud, but the cursor raises no wave.
+          const calm = await newPage({
+            viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce',
+          });
+          await calm.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+          await calm.evaluate(() => document.querySelector('.gband')?.scrollIntoView({ block: 'center' }));
+          try {
+            await calm.waitForSelector('.gband.is-ready', { timeout: 30000 });
+            const calmSpot = await calm.locator('.gband .rail__tick').nth(6).boundingBox();
+            await calm.mouse.move(calmSpot.x + (calmSpot.width / 2), calmSpot.y + (calmSpot.height / 2));
+            await calm.waitForTimeout(420);
+            const calmWave = await calm.locator('.gband .rail__tick').evaluateAll((ticks) => (
+              ticks.map((t) => Math.round(t.getBoundingClientRect().width))
+            ));
+            const proud = calmWave.filter((w) => w > Math.min(...calmWave) + 1).length;
+            check(
+              'band withholds the wave under reduced motion',
+              proud <= 1,
+              calmWave.join(','),
+            );
+          } catch {
+            check('band withholds the wave under reduced motion (skipped — no scene)', true);
+          }
+          await calm.close();
         }
         // The band opens on the seasonal sign, so the walk target is chosen
         // relative to it — two along, wrapping — rather than a fixed tick.
