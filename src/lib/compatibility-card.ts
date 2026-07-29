@@ -273,29 +273,29 @@ export async function drawCompatibilityCard(
   ctx.fillStyle = INK;
   ctx.font = `500 ${headlineSize}px ${SERIF}`;
   ctx.textAlign = 'center';
-  ctx.fillText(headline, W / 2, 962);
+  ctx.fillText(headline, W / 2, 950);
 
   ctx.fillStyle = FAINT;
   ctx.font = `400 21px ${MONO}`;
-  ctx.fillText(shareCardText(locale, 'tightestContacts'), W / 2, 1026);
+  ctx.fillText(shareCardText(locale, 'tightestContacts'), W / 2, 1012);
   drawn.slice(0, 3).forEach((aspect, index) => {
     const contact = `${planetLabel(locale, aspect.a)} ${aspectLabel(locale, aspect.type)} ${planetLabel(locale, aspect.b)} · ${aspect.orb.toFixed(1)}°`;
     const size = fitText(ctx, contact, W - 180, index === 0 ? 36 : 30, 22);
     ctx.fillStyle = index === 0 ? INK : MUTED;
     ctx.font = `500 ${size}px ${SERIF}`;
-    ctx.fillText(contact, W / 2, 1080 + index * 46);
+    ctx.fillText(contact, W / 2, 1062 + index * 45);
   });
 
   // ── Both big threes, one compact line each ─────────────────────────
   ctx.strokeStyle = HAIR;
   ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.moveTo(120, 1176);
-  ctx.lineTo(W - 120, 1176);
+  ctx.moveTo(120, 1188);
+  ctx.lineTo(W - 120, 1188);
   ctx.stroke();
 
   people.forEach((person, personIndex) => {
-    const y = 1214 + personIndex * 44;
+    const y = 1222 + personIndex * 42;
     const placements = rows[personIndex]
       .map((row) => (row.sign ? `${row.sign} ${row.degree!.toFixed(0)}°` : '—'))
       .join('  ·  ');
