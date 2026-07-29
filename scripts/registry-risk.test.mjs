@@ -51,10 +51,10 @@ describe('Registry risk and trust copy', () => {
     expect(signSource).not.toContain('Acquire via Jupiter');
   });
 
-  it("keeps the Gallery card's acquisition copy on the approved wording", async () => {
+  it("keeps the gallery card's acquisition copy on the approved wording", async () => {
     const [generator, page] = await Promise.all([
-      readFile(resolve(root, 'scripts/build-shelf.mjs'), 'utf8'),
-      readFile(resolve(root, 'public/registry/gallery/index.html'), 'utf8'),
+      readFile(resolve(root, 'src/app.jsx'), 'utf8'),
+      readFile(resolve(root, 'public/assets/app.js'), 'utf8'),
     ]);
 
     for (const source of [generator, page]) {
@@ -71,8 +71,9 @@ describe('Registry risk and trust copy', () => {
     }
 
     // The route is built at runtime from the live registry answer — the mint
-    // itself is never baked into the page.
-    expect(page).not.toContain('jup.ag/swap/');
+    // itself is never baked into the page that hosts the card.
+    const hub = await readFile(resolve(root, 'public/registry/index.html'), 'utf8');
+    expect(hub).not.toContain('jup.ag/swap/');
   });
 
   it('keeps the generated Registry application aligned with its canonical source', async () => {

@@ -1,8 +1,8 @@
-// Driving the gallery.
+// Driving the gallery band — the twelve sculptures on the registry page.
 //
 // Input, damping, and the accessible controls that shadow every gesture. The
-// page is complete without this file: the register below the stage is the real
-// catalogue, and it stays in the document whether or not WebGL exists.
+// page is complete without this file: without WebGL the band never renders
+// and the disc strip serves as the selector instead.
 
 import {
   GALLERY, approach, clampFocus, embedBand, nearestIndex, shortestTurn,
@@ -13,9 +13,8 @@ import { createCard } from './card.mjs';
 import { ensureFonts } from './textures.mjs';
 
 // The twelve records ride inside the bundle (stamped by build-shelf.mjs), so
-// any page that renders the stage skeleton can host the row. The standalone
-// gallery page still carries its JSON island — the reader can view source and
-// see what the scene was given — and the island wins when present.
+// any page that renders the stage skeleton can host the row. A page may still
+// override them with a JSON island, which wins when present.
 const stage = document.querySelector('[data-gallery-stage]');
 const source = document.getElementById('gallery-figures');
 if (stage) {
@@ -34,11 +33,6 @@ function supported() {
 async function mount(root, records) {
   if (!supported()) return;
 
-  // Embedded, the row is another page's selector: no card, no hash writes, no
-  // draw-forward — choosing a sculpture is announced as an event, and opening
-  // one is a navigation to the gallery itself.
-  const embed = root.hasAttribute('data-gallery-embed');
-
   const count = records.length;
   const mountPoint = root.querySelector('[data-gallery-canvas]');
   const rail = root.querySelector('[data-gallery-rail]');
@@ -47,8 +41,10 @@ async function mount(root, records) {
   const live = root.querySelector('[data-gallery-live]');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  const HINT_ROW = 'Drag or scroll along the row. Select a sculpture to draw '
-    + 'it forward, then drag to turn it. Escape returns it.';
+  const nameLabel = root.querySelector('[data-gallery-name]');
+
+  const HINT_ROW = 'Select a sculpture for its record and market context. '
+    + 'Drag sideways to walk the row.';
   const HINT_SHOWING = 'Drag to turn the sculpture. The rail walks along the '
     + 'twelve; Escape returns it to the row.';
 
@@ -67,14 +63,12 @@ async function mount(root, records) {
     return;
   }
 
-  // "#leo" arrives standing in front of Leo — no entrance drift, the reader
-  // asked for a particular piece. Embedded, the host page may also name a
-  // starting sign; a slug in the hash still outranks it.
+  // "/registry/#leo" arrives standing in front of Leo with its record open —
+  // the reader asked for a particular piece. Otherwise the host page names
+  // the starting sign.
   const slugs = records.map((record) => record.slug);
   const asked = signFromHash(window.location.hash, slugs);
-  const seeded = asked >= 0
-    ? asked
-    : embed ? slugs.indexOf(root.dataset.galleryInitial ?? '') : -1;
+  const seeded = asked >= 0 ? asked : slugs.indexOf(root.dataset.galleryInitial ?? '');
   const start = Math.max(0, seeded);
 
   const state = {
@@ -86,14 +80,10 @@ async function mount(root, records) {
     yaw: 0, targetYaw: 0,
     pitch: 0, targetPitch: 0,
     zoom: 0, targetZoom: 0,
+    hover: -1,
   };
 
-  const card = embed ? null : createCard(root, { onClose: () => closeFigure() });
-
-  /** Embedded, opening a sculpture means going to the gallery itself. */
-  function navigateTo(index) {
-    window.location.assign(`/registry/gallery/#${records[index].slug}`);
-  }
+  const card = createCard(root, { onClose: () => closeFigure() });
 
   // ---- the vitrine -------------------------------------------------------
   //
@@ -104,11 +94,7 @@ async function mount(root, records) {
   // fits the camera to it. Offsets rather than client rects: they ignore the
   // card's entrance transform and the page's scroll position alike.
 
-  const navBar = document.querySelector('.wnav');
-  const head = root.querySelector('.stage__head');
-  // The standalone page and the embed name their chrome differently; the
-  // band above it is measured the same way either way.
-  const chrome = root.querySelector('.stage__chrome, .gband__chrome');
+  const chrome = root.querySelector('.gband__chrome');
   const GAP = 20;
   const FLOOR = 140;
 
@@ -116,19 +102,10 @@ async function mount(root, records) {
     const width = mountPoint.offsetWidth;
     const height = mountPoint.offsetHeight;
 
-    // Embedded, the section is its own room: no masthead inside it, no card
-    // ever — the row band runs from the section's top to its controls.
-    if (embed) {
-      const row = embedBand(width, height, chrome ? chrome.offsetTop : height, GAP, FLOOR);
-      return { row, stage: row };
-    }
-
-    // The bar is fixed, and the stage starts at the top of the document.
-    const navFloor = navBar
-      ? navBar.getBoundingClientRect().bottom + window.scrollY
-      : 84;
-    const headFloor = head ? head.offsetTop + head.offsetHeight : navFloor;
-    const controls = chrome ? chrome.offsetTop : height;
+    // The section is its own room. The row band runs from its top down to
+    // its controls; with a card open, the piece on display gets whatever the
+    // card leaves — beside it on wide viewports, above it on narrow ones.
+    const row = embedBand(width, height, chrome ? chrome.offsetTop : height, GAP, FLOOR);
 
     const band = (top, bottom, left, right) => ({
       x: left,
@@ -137,17 +114,13 @@ async function mount(root, records) {
       height: Math.max(FLOOR, bottom - top),
     });
 
-    const row = band(headFloor + GAP, controls - GAP, 0, width);
-
-    // With the title out of the way, a figure on display starts under the bar
-    // and stops wherever the card begins.
     const panel = card.element.hidden ? null : card.element;
     if (!panel || !panel.offsetWidth) return { row, stage: row };
-    const ceiling = navFloor + GAP;
+    const controls = chrome ? chrome.offsetTop : height;
     const beside = panel.offsetLeft > width * 0.4;
     const stage = beside
-      ? band(ceiling, controls - GAP, 0, panel.offsetLeft - GAP)
-      : band(ceiling, panel.offsetTop - GAP, 0, width);
+      ? band(GAP, controls - GAP, 0, panel.offsetLeft - GAP)
+      : band(GAP, panel.offsetTop - GAP, 0, width);
     return { row, stage };
   }
 
@@ -207,9 +180,9 @@ async function mount(root, records) {
       state.yaw += TURNTABLE_RATE * dt;
       state.targetYaw = state.yaw;
     }
-    const moving = step(dt) || turning;
-    scene.layout(state);
+    const settling = scene.layout(state);
     scene.render();
+    const moving = step(dt) || turning || settling;
     raf = moving ? requestAnimationFrame(frame) : 0;
     if (!moving) last = 0;
   }
@@ -251,47 +224,32 @@ async function mount(root, records) {
     spoken = window.setTimeout(() => { live.textContent = message; }, 220);
   }
 
-  // Seeded with the arrival slug so a plain visit keeps its clean URL until
-  // the reader actually browses. Embedded, seeded empty instead: the first
-  // sync announces the arrival sign to the host page, hash or no hash.
-  let mirroredSlug = embed ? null : records[asked >= 0 ? asked : 0]?.slug ?? null;
+  // Seeded empty: the first sync announces the arrival sign to the host
+  // page, hash or no hash. The band never writes the address bar — the
+  // page's hashes belong to its section anchors.
+  let mirroredSlug = null;
   function syncChrome() {
     const index = current();
     const record = records[index];
     if (record.slug !== mirroredSlug) {
       mirroredSlug = record.slug;
-      if (embed) {
-        // The host page owns the address bar; the selection is an event.
-        root.dispatchEvent(new CustomEvent('zodiacs:gallery-sign', {
-          bubbles: true,
-          detail: { slug: record.slug },
-        }));
-      } else if (window.history?.replaceState) {
-        // The address bar names the sculpture in front, so any moment of the
-        // browse can be shared. replaceState only — browsing is not history.
-        window.history.replaceState(null, '', `#${record.slug}`);
-      }
+      // The host page owns the address bar; the selection is an event.
+      root.dispatchEvent(new CustomEvent('zodiacs:gallery-sign', {
+        bubbles: true,
+        detail: { slug: record.slug },
+      }));
     }
     const showing = state.openIndex >= 0;
     if (opener) {
-      if (embed) {
-        // The opener is the host's anchor into the gallery; its wording is
-        // the host page's. Only the destination and the accessible name
-        // follow the row.
-        opener.setAttribute('href', `/registry/gallery/#${record.slug}`);
-        opener.setAttribute('aria-label', `View ${record.name} in the gallery`);
-      } else {
-        opener.textContent = showing ? 'Return the sculpture' : `View ${record.name}`;
-        opener.setAttribute(
-          'aria-label',
-          showing ? 'Return the sculpture to the row' : `View the ${record.name} sculpture`,
-        );
-      }
+      opener.textContent = showing ? 'Return the sculpture' : `View ${record.name}`;
+      opener.setAttribute(
+        'aria-label',
+        showing ? 'Return the sculpture to the row' : `View the ${record.name} sculpture`,
+      );
     }
     // The instruction follows the state: browsing the row and turning a piece
-    // in the hand are different gestures. Embedded there is one state, and
-    // the host writes the words.
-    if (hint && !embed) {
+    // in the hand are different gestures.
+    if (hint) {
       const text = showing ? HINT_SHOWING : HINT_ROW;
       if (hint.textContent !== text) hint.textContent = text;
     }
@@ -309,12 +267,12 @@ async function mount(root, records) {
   // ---- drawing a figure out and returning it ---------------------------
 
   async function openFigure(index, { takeFocus = true } = {}) {
-    if (embed) {
-      navigateTo(index);
-      return;
-    }
     const record = records[index];
     handTurned = false;
+    setHover(-1);
+    // One gesture: a side figure swings to the front as it is drawn out.
+    state.targetFocus = clampFocus(index, count);
+    window.clearTimeout(snapTimer);
     state.openIndex = index;
     state.targetOpen = 1;
     state.targetYaw = 0;
@@ -381,9 +339,7 @@ async function mount(root, records) {
     button.querySelector('.rail__glyph').textContent = record.glyph;
     button.setAttribute('aria-label', `${record.name}, Lot ${record.lot} of twelve`);
     button.addEventListener('click', () => {
-      // Embedded the rail only selects; the opener and the sculpture itself
-      // are the doors into the gallery.
-      if (!embed && current() === index && state.targetOpen === 0) void openFigure(index);
+      if (current() === index && state.targetOpen === 0) void openFigure(index);
       else showFigure(index);
     });
     rail.append(button);
@@ -403,7 +359,7 @@ async function mount(root, records) {
     ticks[index].focus({ preventScroll: true });
   });
 
-  if (!embed) opener?.addEventListener('click', () => toggle(current()));
+  opener?.addEventListener('click', () => toggle(current()));
 
   document.addEventListener('keydown', (event) => {
     if (event.key === 'Escape' && state.targetOpen > 0) {
@@ -417,6 +373,30 @@ async function mount(root, records) {
   const pointers = new Map();
   let drag = null;
   let pinch = 0;
+
+  /** The hovered figure lifts to say it opens; a small label names it. */
+  function setHover(index) {
+    if (state.hover === index) return;
+    state.hover = index;
+    canvas.style.cursor = index >= 0 ? 'pointer' : '';
+    if (nameLabel) {
+      if (index >= 0) {
+        const record = records[index];
+        nameLabel.textContent = `${record.name} — Lot ${record.lot}`;
+        const x = scene.screenX(index);
+        if (Number.isFinite(x)) {
+          const width = mountPoint.offsetWidth;
+          nameLabel.style.left = `${Math.min(width - 70, Math.max(70, x))}px`;
+        }
+        nameLabel.classList.add('is-visible');
+      } else {
+        nameLabel.classList.remove('is-visible');
+      }
+    }
+    invalidate();
+  }
+
+  canvas.addEventListener('pointerleave', () => setHover(-1));
 
   canvas.addEventListener('pointerdown', (event) => {
     canvas.setPointerCapture(event.pointerId);
@@ -456,11 +436,19 @@ async function mount(root, records) {
       return;
     }
 
-    if (!drag || drag.id !== event.pointerId) return;
+    if (!drag || drag.id !== event.pointerId) {
+      // Hovering a figure is the invitation to open it. Pointer devices
+      // only — touch has no hover, and there a tap opens directly.
+      if (!drag && event.pointerType === 'mouse' && state.targetOpen === 0) {
+        setHover(scene.pick(event.clientX, event.clientY));
+      }
+      return;
+    }
     const dx = event.clientX - drag.startX;
     const dy = event.clientY - drag.startY;
     if (!drag.moved && Math.hypot(dx, dy) < 5) return;
     drag.moved = true;
+    setHover(-1);
 
     if (state.targetOpen > 0) {
       // A figure drawn out turns in the hand — right around, as often as the
@@ -491,9 +479,15 @@ async function mount(root, records) {
     if (!finished.moved) {
       const index = scene.pick(event.clientX, event.clientY);
       if (index >= 0) {
-        if (state.targetOpen > 0) closeFigure();
-        else if (index === current()) void openFigure(index);
-        else focusFigure(index);
+        // One gesture, one meaning: a sculpture opens its record — front,
+        // side, it makes no difference. Tapping the piece already on display
+        // returns it; tapping a different one swaps the viewing.
+        if (state.targetOpen > 0) {
+          if (index === state.openIndex) closeFigure();
+          else void openFigure(index, { takeFocus: false });
+        } else {
+          void openFigure(index);
+        }
       } else if (state.targetOpen > 0) {
         closeFigure();
       }
@@ -521,10 +515,9 @@ async function mount(root, records) {
       invalidate();
       return;
     }
-    // Embedded mid-page, a vertical wheel is the page scrolling past — only
-    // a sideways wheel walks the row. The standalone stage owns its viewport
-    // and reads the dominant axis instead.
-    if (embed && Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+    // Mid-page, a vertical wheel is the page scrolling past — only a
+    // sideways wheel walks the row.
+    if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
     // Firefox reports wheel deltas in lines, and some setups in pages; both
     // would crawl if read as pixels.
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? canvas.clientHeight : 1;
@@ -555,7 +548,7 @@ async function mount(root, records) {
   // has, and it grows as its market context and records arrive.
   const observer = new ResizeObserver(resize);
   observer.observe(mountPoint);
-  if (card) observer.observe(card.element);
+  observer.observe(card.element);
   resize();
 
   motion.addEventListener?.('change', invalidate);
@@ -575,7 +568,7 @@ async function mount(root, records) {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
     root.classList.remove('is-ready', 'is-open');
-    card?.close();
+    card.close();
   });
 
   function teardown() {
@@ -589,23 +582,23 @@ async function mount(root, records) {
 
   // The host page steers the row: its own selector still names signs, and the
   // row follows without re-announcing what it was just told.
-  if (embed) {
-    root.addEventListener('zodiacs:gallery-focus', (event) => {
-      const slug = event?.detail?.slug;
-      const index = slugs.indexOf(String(slug || '').toLowerCase());
-      if (index >= 0 && index !== current()) {
-        mirroredSlug = records[index].slug;
-        focusFigure(index, { announce: false });
-      }
-    });
-  }
+  root.addEventListener('zodiacs:gallery-focus', (event) => {
+    const slug = event?.detail?.slug;
+    const index = slugs.indexOf(String(slug || '').toLowerCase());
+    if (index >= 0 && index !== current()) {
+      mirroredSlug = records[index].slug;
+      focusFigure(index, { announce: false });
+    }
+  });
 
   root.classList.add('is-ready');
-  // The hash is also a real anchor into the register below, and the browser
-  // will have jumped there before this script ran. With the scene live, the
-  // sculpture row IS the destination — come back up to it. Embedded, the
-  // host page's scroll is its own business.
-  if (asked >= 0 && !embed) window.scrollTo({ top: 0, behavior: 'instant' });
+  // A slug in the hash is a request to view that piece: bring the band into
+  // view and put the record on display. The static catalogue carries the
+  // same ids for readers without JavaScript.
+  if (asked >= 0) {
+    root.scrollIntoView({ block: 'center', behavior: 'instant' });
+    void openFigure(asked, { takeFocus: false });
+  }
   syncChrome();
   invalidate();
 

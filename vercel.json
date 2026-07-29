@@ -114,12 +114,22 @@
     },
     {
       "source": "/registry/shelf",
-      "destination": "/registry/gallery/",
+      "destination": "/registry/",
       "permanent": true
     },
     {
       "source": "/registry/shelf/",
-      "destination": "/registry/gallery/",
+      "destination": "/registry/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/gallery",
+      "destination": "/registry/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/gallery/",
+      "destination": "/registry/",
       "permanent": true
     },
     {

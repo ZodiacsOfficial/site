@@ -3654,7 +3654,7 @@
     /* ── The gallery band — the twelve as the hub's selector ─────────────
        Rendered only when the pre-paint WebGL probe marks html.gallery-live;
        otherwise the Selector strip below serves, unchanged. The band hosts
-       the same scene as /registry/gallery/, embedded (no card, no hash). */
+       the one gallery on the site — the record card opens right here. */
     .gband {
       position: relative; isolation: isolate; overflow: clip;
       height: clamp(380px, 62vh, 560px);
@@ -3717,6 +3717,184 @@
     /* The band shows the chosen figure large; the featured card keeps its
        facts and drops the duplicate artwork. */
     html.gallery-live #featured-sign .glyph-stage { display: none; }
+    /* A viewing: the band grows for the piece on display, and the record
+       card takes its place beside it — below it on narrow viewports. */
+    .gband { transition: height 480ms var(--ease); }
+    .gband.is-open { height: min(92svh, 760px); }
+    .gband__open {
+      font-family: inherit; font-size: 14px; cursor: pointer;
+      padding: 9px 20px; border-radius: 999px;
+      color: var(--ink); background: rgba(198,204,218,0.09);
+      border: 1px solid var(--hair-2);
+      transition: background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .gband__open:hover { background: rgba(198,204,218,0.15); border-color: var(--hair-3); }
+    .gband__open:focus-visible { outline: 2px solid var(--ink-2); outline-offset: 2px; }
+    .gband__name {
+      position: absolute; bottom: 118px; z-index: 2; margin: 0;
+      transform: translateX(-50%); pointer-events: none;
+      font-family: var(--serif); font-style: italic; font-size: 15px;
+      color: var(--ink-2); opacity: 0; transition: opacity 260ms var(--ease);
+      text-shadow: 0 1px 8px rgba(6,7,9,0.9); white-space: nowrap;
+    }
+    .gband__name.is-visible { opacity: 1; }
+    .gband.is-open .gband__name { opacity: 0; }
+    @media (min-width: 900px) {
+      .gband.is-open .gband__chrome { padding-right: calc(clamp(392px, 26vw, 460px) + 68px); }
+    }
+    @media (max-width: 899.5px) {
+      .gband.is-open .gband__chrome {
+        opacity: 0; pointer-events: none; visibility: hidden;
+        transition: opacity 420ms var(--ease), visibility 0s 420ms;
+      }
+    }
+
+    /* ── The record card, in the band ── */
+    .gcard {
+      position: absolute; z-index: 4; overflow-y: auto; overscroll-behavior: contain;
+      background: rgba(10,12,17,0.82); border: 1px solid var(--hair-2);
+      backdrop-filter: saturate(150%) blur(22px);
+      -webkit-backdrop-filter: saturate(150%) blur(22px);
+      box-shadow: 0 30px 80px -30px rgba(0,0,0,0.9);
+      opacity: 0; transition: opacity 420ms var(--ease), transform 420ms var(--ease);
+      -webkit-mask-image: linear-gradient(to bottom, #000 calc(100% - 42px), rgba(0,0,0,0.08) 100%);
+      mask-image: linear-gradient(to bottom, #000 calc(100% - 42px), rgba(0,0,0,0.08) 100%);
+      font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--ink);
+    }
+    .gcard[hidden] { display: none; }
+    .gcard.is-open { opacity: 1; transform: none; }
+    @media (min-width: 900px) {
+      .gcard {
+        top: 50%; right: 34px; width: clamp(392px, 26vw, 460px);
+        max-height: min(84%, 660px); transform: translate(18px, -50%);
+        border-radius: 20px; padding: 26px 26px 34px;
+      }
+      .gcard.is-open { transform: translate(0, -50%); }
+    }
+    @media (max-width: 899.5px) {
+      .gcard {
+        left: 12px; right: 12px; bottom: 12px; max-height: 56%;
+        transform: translateY(18px); border-radius: 20px; padding: 22px 20px 30px;
+      }
+    }
+    .gcard .card__close {
+      position: sticky; top: 0; z-index: 2; float: right;
+      width: 32px; height: 32px; margin-left: 14px;
+      display: grid; place-items: center; border-radius: 50%; cursor: pointer;
+      border: 1px solid var(--hair); background: rgba(13,16,23,0.88);
+      backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+      color: var(--ink-2); font-size: 16px; line-height: 1; padding: 0;
+      transition: background 200ms var(--ease), color 200ms var(--ease);
+    }
+    .gcard .card__close:hover { background: rgba(198,204,218,0.13); color: var(--ink); }
+    .gcard .card__close:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px; }
+    .gcard .card__lot {
+      margin: 0 0 8px; min-height: 32px; display: flex; align-items: center;
+      font-family: var(--mono); font-size: 10px;
+      letter-spacing: 0.18em; text-transform: uppercase; color: var(--sign, var(--ink-2));
+    }
+    .gcard .card__name {
+      margin: 0; font-family: var(--serif); font-weight: 400;
+      font-size: clamp(30px, 4vw, 40px);
+      line-height: 1.05; letter-spacing: -0.01em; text-transform: none;
+    }
+    .gcard .card__figure {
+      margin: 8px 0 0; font-style: italic; font-size: 16px; color: var(--ink-2);
+    }
+    .gcard .card__market {
+      margin: 16px 0 0; padding: 15px 0 0; border-top: 1px solid var(--hair);
+    }
+    .gcard .card__market-state { margin: 0; font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim); }
+    .gcard .card__price { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
+    .gcard .card__price[hidden] { display: none; }
+    .gcard .card__price-value {
+      font-family: var(--serif); font-size: clamp(27px, 3vw, 33px);
+      line-height: 1; color: var(--ink); font-variant-numeric: tabular-nums;
+    }
+    .gcard .card__price-change {
+      font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.04em;
+      padding: 3px 9px; border-radius: 999px; border: 1px solid var(--hair-2);
+      color: var(--ink-mute);
+    }
+    .gcard .card__price-change--up {
+      color: var(--ink);
+      border-color: color-mix(in oklab, var(--sign, #C6CCDA) 55%, transparent);
+      background: color-mix(in oklab, var(--sign, #C6CCDA) 14%, transparent);
+    }
+    .gcard .card__price-change--down { color: var(--ink-mute); }
+    .gcard .card__cta { display: flex; align-items: center; gap: 12px; margin-top: 14px; flex-wrap: wrap; }
+    .gcard .card__cta[hidden] { display: none; }
+    .gcard .card__buy {
+      flex: 1 1 auto; display: inline-flex; justify-content: center; align-items: center;
+      gap: 8px; padding: 11px 18px; border-radius: 999px;
+      background: rgba(238,241,247,0.10); border: 1px solid var(--hair-2);
+      font-size: 15px; color: var(--ink); text-decoration: none;
+      transition: background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .gcard .card__buy:hover { background: rgba(238,241,247,0.16); border-color: var(--hair-3); }
+    .gcard .card__buy:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px; }
+    .gcard .card__data {
+      display: inline-flex; align-items: center; gap: 7px; padding: 4px 0;
+      font-size: 14px; color: var(--ink-2);
+      text-decoration: none; border-bottom: 1px solid var(--hair-2);
+      transition: color 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .gcard .card__data:hover { color: var(--ink); border-color: var(--sign, var(--ink-2)); }
+    .gcard .card__data:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 3px; }
+    .gcard .card__market-grid {
+      margin: 14px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 8px 18px;
+    }
+    .gcard .card__market-grid[hidden] { display: none; }
+    .gcard .card__market-grid dt, .gcard .card__facts dt {
+      font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--ink-dim); align-self: center;
+    }
+    .gcard .card__market-grid dd {
+      margin: 0; font-size: 15px; color: var(--ink-2); text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+    .gcard .card__risk {
+      margin: 13px 0 0; font-family: var(--serif); font-style: italic;
+      font-size: 11px; line-height: 1.5; color: var(--ink-dim);
+    }
+    .gcard .card__risk a { color: var(--ink-mute); }
+    .gcard .card__risk a:hover { color: var(--ink-2); }
+    .gcard .card__facts {
+      margin: 16px 0 0; padding: 15px 0 0; border-top: 1px solid var(--hair);
+      display: grid; grid-template-columns: auto 1fr; gap: 8px 18px;
+    }
+    .gcard .card__facts dd {
+      margin: 0; font-size: 15.5px; color: var(--ink-2); text-align: right;
+    }
+    .gcard .card__records { margin: 16px 0 0; padding: 15px 0 0; border-top: 1px solid var(--hair); display: grid; gap: 10px; }
+    .gcard .rec { display: grid; gap: 6px; }
+    .gcard .rec__head { display: flex; align-items: baseline; gap: 8px; }
+    .gcard .rec__chain { font-size: 14px; color: var(--ink); }
+    .gcard .rec__role {
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--ink-dim);
+    }
+    .gcard .rec__addr {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; padding: 9px 12px; cursor: pointer; text-align: left;
+      border: 1px solid var(--hair); border-radius: 10px;
+      background: rgba(198,204,218,0.04); color: var(--ink-2);
+      font-family: var(--mono); font-size: 12px;
+      transition: background 200ms var(--ease), border-color 200ms var(--ease);
+    }
+    .gcard .rec__addr:hover { background: rgba(198,204,218,0.09); border-color: var(--hair-2); }
+    .gcard .rec__addr:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px; }
+    .gcard .rec__value { overflow: hidden; text-overflow: ellipsis; }
+    .gcard .rec__copy { flex: 0 0 auto; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
+    .gcard .rec__note { margin: 0; font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim); }
+    .gcard .card__entry {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+      font-size: 15px; color: var(--ink);
+      text-decoration: none; border-bottom: 1px solid var(--hair-2); padding-bottom: 3px;
+      transition: border-color 220ms var(--ease);
+    }
+    .gcard .card__entry:hover { border-color: var(--sign, var(--ink-2)); }
+    .gcard .card__entry:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 3px; }
   </style>
 </head>
 <body>
@@ -3873,23 +4051,22 @@
           <a href="/disclosure/">Disclosure</a>.
         </p>
         <ul>
-          <li><a href="/registry/aries/">Aries — Lot I · The Ram</a></li>
-          <li><a href="/registry/taurus/">Taurus — Lot II · The Bull</a></li>
-          <li><a href="/registry/gemini/">Gemini — Lot III · The Twins</a></li>
-          <li><a href="/registry/cancer/">Cancer — Lot IV · The Crab</a></li>
-          <li><a href="/registry/leo/">Leo — Lot V · The Lion</a></li>
-          <li><a href="/registry/virgo/">Virgo — Lot VI · The Maiden</a></li>
-          <li><a href="/registry/libra/">Libra — Lot VII · The Scales</a></li>
-          <li><a href="/registry/scorpio/">Scorpio — Lot VIII · The Scorpion</a></li>
-          <li><a href="/registry/sagittarius/">Sagittarius — Lot IX · The Archer</a></li>
-          <li><a href="/registry/capricorn/">Capricorn — Lot X · The Goat-Fish</a></li>
-          <li><a href="/registry/aquarius/">Aquarius — Lot XI · The Water-Bearer</a></li>
-          <li><a href="/registry/pisces/">Pisces — Lot XII · The Fishes</a></li>
+          <li id="aries"><a href="/registry/aries/">Aries — Lot I · The Ram</a></li>
+          <li id="taurus"><a href="/registry/taurus/">Taurus — Lot II · The Bull</a></li>
+          <li id="gemini"><a href="/registry/gemini/">Gemini — Lot III · The Twins</a></li>
+          <li id="cancer"><a href="/registry/cancer/">Cancer — Lot IV · The Crab</a></li>
+          <li id="leo"><a href="/registry/leo/">Leo — Lot V · The Lion</a></li>
+          <li id="virgo"><a href="/registry/virgo/">Virgo — Lot VI · The Maiden</a></li>
+          <li id="libra"><a href="/registry/libra/">Libra — Lot VII · The Scales</a></li>
+          <li id="scorpio"><a href="/registry/scorpio/">Scorpio — Lot VIII · The Scorpion</a></li>
+          <li id="sagittarius"><a href="/registry/sagittarius/">Sagittarius — Lot IX · The Archer</a></li>
+          <li id="capricorn"><a href="/registry/capricorn/">Capricorn — Lot X · The Goat-Fish</a></li>
+          <li id="aquarius"><a href="/registry/aquarius/">Aquarius — Lot XI · The Water-Bearer</a></li>
+          <li id="pisces"><a href="/registry/pisces/">Pisces — Lot XII · The Fishes</a></li>
         </ul>
         <p>
-          The same twelve stand as Gold Sculptures in
-          <a href="/registry/gallery/">the gallery</a> — browse the row and draw
-          one forward to turn it in the light.
+          The same twelve stand as Gold Sculptures in the gallery at the top
+          of this page — select one for its record and market context.
         </p>
       </section>
 

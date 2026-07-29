@@ -721,7 +721,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
             <figcaption class="card__caption">${esc(m.name)} <span class="g">·</span> ${esc(meta.archetype)}</figcaption>
           </div>
         </figure>
-        <a class="figure__gallery" href="/registry/gallery/#${m.slug}">
+        <a class="figure__gallery" href="/registry/#${m.slug}">
           <span>View in the gallery</span><span aria-hidden="true">→</span>
         </a>
       </div>
