@@ -4,11 +4,10 @@
  * Keep keys and tool IDs stable so localized card generation can replace this
  * catalogue without scraping copy from Astro templates or generated HTML.
  */
+// Consumer Organization identity only. Registry channels remain contained on
+// the Registry's own static surfaces and must not enter consumer JSON-LD.
 export const SOCIAL_PROFILES = Object.freeze([
   'https://github.com/ZodiacsOfficial/sdk',
-  'https://x.com/astrofoliosol',
-  'https://www.instagram.com/astrofolioonsol/',
-  'https://t.me/astrofoliosol',
 ]);
 
 // English-only build descriptors for the Phase 1 route family. Keeping this
