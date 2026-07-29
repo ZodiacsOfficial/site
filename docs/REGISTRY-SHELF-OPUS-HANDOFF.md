@@ -495,3 +495,20 @@ evidence re-stamped). `registry-risk`'s gallery block now reads
 pinned against the hub HTML. The selector drive picks its walk target
 relative to the seasonal opening sign (a fixed tick collides one month a
 year — it did, in Leo season).
+
+## §17 — Wallet discs and relief (2026-07-29)
+
+Owner review: the pastel disc icons — what wallets actually show for these
+tokens — appeared nowhere in the gallery, leaving room to doubt the gold
+sculptures name the same contract addresses. Owner placements: the rail
+ticks ARE the discs now (48-tier avif/webp, the strip's old files), and the
+record card sets the 128-tier disc beside the address rows with one factual
+sentence, "As it appears in wallets." — no new legal phrasing, risk pins
+untouched. On dimensionality the owner picked bas-relief over commissioning
+true-3D models: the face artwork doubles as its own bump map
+(`face.bumpMap = map`, bumpScale 0.55; hallmark reverse at 0.28), so each
+cast bulges and catches the key light like a struck medallion as it turns.
+No new assets, no pipeline changes, `build-figure-assets.mjs` untouched.
+True 3D remains a possible future project: the load story would be
+low-poly row + streamed high-res on open, but the twelve models would have
+to be produced first, and quality would vary by sign.

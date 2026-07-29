@@ -89,6 +89,27 @@ describe('the gallery band on the registry hub', () => {
     }
   });
 
+  it('shows the wallet disc where a holder checks it', async () => {
+    // The rail ticks are the pastel discs wallets show, and the card sets
+    // the same disc beside the addresses it names.
+    const scene = await read('src/shelf/main.mjs');
+    expect(scene).toContain('/assets/zodiac-icons/48/');
+    const card = await read('src/shelf/card.mjs');
+    expect(card).toContain('/assets/zodiac-icons/128/');
+    expect(card).toContain('As it appears in wallets.');
+    const html = await read('public/registry/index.html');
+    expect(html).toContain('.gcard .rec__disc');
+    expect(html).toContain('.gband .rail__tick img');
+    const bundle = await read('public/assets/gallery.js');
+    expect(bundle).toContain('As it appears in wallets.');
+  });
+
+  it('strikes the casts in relief from their own artwork', async () => {
+    const sceneSource = await read('src/shelf/scene.mjs');
+    expect(sceneSource).toContain('bumpMap = map');
+    expect(sceneSource).toContain('bumpScale');
+  });
+
   it('bakes the twelve into the bundle so the skeleton is enough', async () => {
     const generator = await read('scripts/build-shelf.mjs');
     expect(generator).toContain('__GALLERY_FIGURES__: JSON.stringify(figureData)');

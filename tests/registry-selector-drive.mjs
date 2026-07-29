@@ -717,6 +717,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           `band at ${label} rails all twelve`,
           await band.locator('.gband .rail__tick').count() === 12,
         );
+        check(
+          `band at ${label} rail carries the wallet discs`,
+          await band.locator('.gband .rail__tick img').count() === 12,
+        );
         // The band opens on the seasonal sign, so the walk target is chosen
         // relative to it — two along, wrapping — rather than a fixed tick.
         const startIndex = Number(

@@ -243,8 +243,11 @@ export function createScene(canvas, records) {
     const face = new THREE.MeshStandardMaterial({
       color: cast, roughness: 0.62, metalness: 0.18, transparent: true, alphaTest: 0.3,
     });
+    const reverseMap = textureFrom(paintReverse(record, traced.edgeColor), renderer);
     const reverse = new THREE.MeshStandardMaterial({
-      map: textureFrom(paintReverse(record, traced.edgeColor), renderer),
+      map: reverseMap,
+      bumpMap: reverseMap,
+      bumpScale: 0.28,
       roughness: 0.7,
       metalness: 0.14,
       transparent: true,
@@ -465,6 +468,11 @@ export function createScene(canvas, records) {
     const map = mapFrom(image, renderer);
     const previous = figure.face.map;
     figure.face.map = map;
+    // The artwork doubles as its own relief: bumping the lit highlights
+    // makes the cast read as a struck medallion rather than a flat plate,
+    // and the modelling shifts as the piece turns.
+    figure.face.bumpMap = map;
+    figure.face.bumpScale = 0.55;
     figure.face.color.set(0xffffff);
     figure.face.needsUpdate = true;
     figure.tier = tier;
