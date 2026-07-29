@@ -72,6 +72,35 @@ export function modalityBalance(bodies: MinimalBody[]): Record<Modality, number>
   return out;
 }
 
+/**
+ * A planet conjunct its own counterpart in the other chart, for the three
+ * slowest bodies. Pluto takes a dozen years to cross a sign, so any two
+ * people born near each other carry Pluto conjunct Pluto at a fraction of
+ * a degree — it describes a birth cohort, not a couple. The tally keeps
+ * them; the headline should not lead with them.
+ */
+const GENERATIONAL_BODIES = new Set(['Uranus', 'Neptune', 'Pluto']);
+
+export function isGenerationalContact(
+  aspect: Pick<InterAspect, 'a' | 'b' | 'type'>,
+): boolean {
+  return aspect.type === 'conjunction'
+    && aspect.a === aspect.b
+    && GENERATIONAL_BODIES.has(aspect.a);
+}
+
+/**
+ * Contacts ordered by how much they say about this particular pair:
+ * personal contacts by orb first, then the generational self-conjunctions
+ * behind them. Demoted rather than dropped, so a chart whose only tight
+ * contacts are generational still shows something true.
+ */
+export function rankedContacts(aspects: readonly InterAspect[]): InterAspect[] {
+  const personal = aspects.filter((aspect) => !isGenerationalContact(aspect));
+  const generational = aspects.filter(isGenerationalContact);
+  return [...personal, ...generational];
+}
+
 export interface PairSummary {
   aspects: InterAspect[];
   /** The tightest few, for display. */
@@ -92,7 +121,7 @@ export function summarizePair(a: MinimalBody[], b: MinimalBody[], topN = 8): Pai
   for (const asp of aspects) counts[asp.type] += 1;
   return {
     aspects,
-    top: aspects.slice(0, topN),
+    top: rankedContacts(aspects).slice(0, topN),
     counts,
     easeful: counts.trine + counts.sextile,
     charged: counts.square + counts.opposition,
