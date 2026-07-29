@@ -783,20 +783,33 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         }
         if (label === '1280') {
           // Hover is the invitation: the figure lifts, the cursor says
-          // pointer, and the label names the piece.
+          // pointer, and the label names the piece. Where exactly the
+          // focused figure sits on the canvas shifts a few pixels with the
+          // runner's layout, so the probe sweeps likely body points and
+          // stops at the first hit rather than trusting one coordinate.
           const box = await band.locator('.gband canvas').boundingBox();
           if (box) {
-            await band.mouse.move(box.x + (box.width / 2), box.y + (box.height * 0.55));
-            await band.waitForTimeout(400);
+            let hovered = false;
+            const points = [];
+            for (const fy of [0.42, 0.5, 0.34, 0.58, 0.26]) {
+              for (const fx of [0.5, 0.46, 0.54]) points.push([fx, fy]);
+            }
+            for (const [fx, fy] of points) {
+              await band.mouse.move(box.x + (box.width * fx), box.y + (box.height * fy));
+              await band.waitForTimeout(250);
+              hovered = await band.evaluate(() => (
+                document.querySelector('.gband canvas')?.style.cursor === 'pointer'
+              ));
+              if (hovered) break;
+            }
             check(
               `band at ${label} hover invites the click`,
-              await band.evaluate(() => {
-                const canvasEl = document.querySelector('.gband canvas');
+              hovered && await band.evaluate(() => {
                 const labelEl = document.querySelector('.gband__name');
-                return canvasEl?.style.cursor === 'pointer'
-                  && Boolean(labelEl?.classList.contains('is-visible'))
+                return Boolean(labelEl?.classList.contains('is-visible'))
                   && /Lot/.test(labelEl?.textContent ?? '');
               }),
+              hovered ? 'hit' : 'no point hovered',
             );
           }
         }
