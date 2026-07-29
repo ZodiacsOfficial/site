@@ -110,6 +110,53 @@ describe('the gallery band on the registry hub', () => {
     expect(sceneSource).toContain('bumpScale');
   });
 
+  it('magnifies the rail from one custom property, width included', async () => {
+    // The centipede depends on --mag driving *width* as well as scale: a
+    // swollen disc has to push its neighbours aside, not cover them. Scale
+    // alone would still look magnified and would silently lose the wave.
+    const html = await read('public/registry/index.html');
+    expect(html).toContain('width: calc(var(--tick) * var(--mag))');
+    expect(html).toContain('transform: scale(var(--mag)); transform-origin: bottom center;');
+    // The scene measures the wave in this pitch, so the CSS has to declare it.
+    expect(html).toMatch(/\.gband \.rail \{\s*--tick:/);
+
+    const scene = await read('src/shelf/main.mjs');
+    expect(scene).toContain("getPropertyValue('--tick')");
+    expect(scene).toContain("setProperty('--mag'");
+    // The resting magnification is affordance, not animation: the current
+    // sign stands proud for touch and keyboard readers who raise no wave.
+    expect(scene).toContain('1 + DOCK.rest');
+    // And the wave itself is withheld while a reader asks for less motion,
+    // read at event time rather than latched at mount.
+    expect(scene).toContain('if (motion.matches || event.pointerType !== \'mouse\') return;');
+  });
+
+  it('spends size on focus rather than on which sign it is', async () => {
+    const layout = await read('src/shelf/layout.mjs');
+    // Fitting the twelve together caps the set into a narrow height band, so
+    // the spotlight's jump is the dominant size signal instead of identity.
+    expect(layout).toContain('heightSpread');
+    expect(layout).toContain('export function fitScales');
+    expect(layout).toContain('export const SPOTLIGHT');
+    expect(layout).toContain('export const DOCK');
+    expect(layout).toContain('export function dockMagnify');
+
+    const sceneSource = await read('src/shelf/scene.mjs');
+    // The set is fitted together, never figure by figure.
+    expect(sceneSource).toContain('fitScales(');
+    // Emphasis has to reach scale *and* opacity, or the row recedes in size
+    // while staying equally lit — half a spotlight reads as a glitch.
+    expect(sceneSource).toContain('spot.scale');
+    expect(sceneSource).toContain('spot.opacity');
+    // The camera frames the row it actually got, so a shorter tallest figure
+    // pulls the camera in rather than shrinking the row on screen.
+    expect(sceneSource).toContain('rowContent(GALLERY, tallest)');
+
+    const bundle = await read('public/assets/gallery.js');
+    expect(bundle).toContain('--mag');
+    expect(bundle).toContain('--tick');
+  });
+
   it('bakes the twelve into the bundle so the skeleton is enough', async () => {
     const generator = await read('scripts/build-shelf.mjs');
     expect(generator).toContain('__GALLERY_FIGURES__: JSON.stringify(figureData)');
