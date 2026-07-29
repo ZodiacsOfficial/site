@@ -53,15 +53,40 @@ describe('the gallery band on the registry hub', () => {
     expect(html).toContain('html.gallery-live #featured-sign .glyph-stage { display: none; }');
   });
 
-  it('keeps the embedded scene off the address bar and off vertical wheels', async () => {
+  it('keeps the scene off the address bar and off vertical wheels', async () => {
     const scene = await read('src/shelf/main.mjs');
-    expect(scene).toContain("root.hasAttribute('data-gallery-embed')");
-    // Hash writes belong to the standalone page alone.
-    expect(scene).toContain('} else if (window.history?.replaceState) {');
+    // The band never writes the hash — the page's hashes belong to its
+    // section anchors; a slug is read on arrival only.
+    expect(scene).not.toContain('replaceState');
+    expect(scene).toContain('signFromHash(window.location.hash');
     // A vertical wheel over the band is the page scrolling past.
     expect(scene).toContain('Math.abs(event.deltaX) <= Math.abs(event.deltaY)');
-    // Opening a sculpture from the hub is a navigation, not a card.
-    expect(scene).toContain("window.location.assign(`/registry/gallery/#${records[index].slug}`)");
+    // A sculpture opens its record in place — never a navigation.
+    expect(scene).not.toContain('location.assign');
+    expect(scene).toContain('void openFigure(index)');
+    // Hovering says so before the click does.
+    expect(scene).toContain('setHover(scene.pick(');
+  });
+
+  it('renders the record card and the hover label in the band', async () => {
+    const source = await read('src/app.jsx');
+    for (const marker of [
+      'data-gallery-card',
+      'data-market-jupiter',
+      'data-market-dexscreener',
+      'data-gallery-name',
+      'Open Jupiter route',
+      'View market data',
+    ]) expect(source).toContain(marker);
+    const html = await read('public/registry/index.html');
+    expect(html).toContain('.gcard {');
+    expect(html).toContain('.gband.is-open {');
+    expect(html).toContain('.gband__name {');
+    // The static catalogue carries the twelve as fragment targets for the
+    // sign pages' backlinks, JavaScript or not.
+    for (const slug of ['aries', 'virgo', 'pisces']) {
+      expect(html).toContain(`<li id="${slug}">`);
+    }
   });
 
   it('bakes the twelve into the bundle so the skeleton is enough', async () => {

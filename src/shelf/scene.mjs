@@ -303,6 +303,9 @@ export function createScene(canvas, records) {
       aspect: traced.aspect,
       materials: [face, reverse, edge],
       tier: 0,
+      // How far this figure has risen toward its hovered pose, eased in
+      // layout() so the lift breathes instead of popping.
+      hover: 0,
     };
   });
 
@@ -381,6 +384,9 @@ export function createScene(canvas, records) {
     const stage = { x: 0, y: -opened.scale / 2, z: VITRINE.stageZ };
     // One piece in a pool of light; the rest of the room goes quiet.
     const dimmed = 1 - (open * 0.94);
+    // Hover eases in and out rather than popping; while any figure is still
+    // rising or settling, the caller keeps the frame loop alive.
+    let hoverSettling = false;
 
     for (let i = 0; i < figures.length; i += 1) {
       const figure = figures[i];
@@ -393,12 +399,20 @@ export function createScene(canvas, records) {
 
       const drawn = i === openIndex ? open : 0;
       const recede = i === openIndex ? 0 : open * 0.6;
-      const { scale } = figure;
+
+      // The lift that says a sculpture opens: hovered pieces rise a little
+      // and step forward, the bookshelf gesture.
+      const hoverTarget = i === state.hover && drawn === 0 ? 1 : 0;
+      const eased = figure.hover + ((hoverTarget - figure.hover) * 0.22);
+      figure.hover = Math.abs(eased - hoverTarget) < 0.004 ? hoverTarget : eased;
+      if (figure.hover !== hoverTarget) hoverSettling = true;
+      const lift = figure.hover * (1 - open);
+      const scale = figure.scale * (1 + (lift * 0.05));
 
       figure.mesh.position.set(
         THREE.MathUtils.lerp(pose.x, stage.x, drawn),
-        THREE.MathUtils.lerp(pose.y, stage.y, drawn),
-        THREE.MathUtils.lerp(pose.z - recede, stage.z, drawn),
+        THREE.MathUtils.lerp(pose.y + (lift * 0.07), stage.y, drawn),
+        THREE.MathUtils.lerp(pose.z - recede + (lift * 0.16), stage.z, drawn),
       );
       figure.mesh.rotation.set(
         pitch * drawn,
@@ -439,6 +453,7 @@ export function createScene(canvas, records) {
     offer.intensity = 7 - (open * 2.6);
 
     placeCamera(open, opened, zoom);
+    return hoverSettling;
   }
 
   /** Lay the photograph onto a figure's face, at the tier asked for. */
@@ -479,6 +494,19 @@ export function createScene(canvas, records) {
     camera.updateProjectionMatrix();
   }
 
+  /** CSS x of a figure's centre on the canvas, for the hover label. */
+  const projected = new THREE.Vector3();
+  function screenX(index) {
+    const figure = figures[index];
+    if (!figure) return NaN;
+    projected.set(
+      figure.mesh.position.x,
+      figure.mesh.position.y + (figure.scale * 0.5),
+      figure.mesh.position.z,
+    ).project(camera);
+    return ((projected.x + 1) / 2) * canvasSize.width;
+  }
+
   /** Index of the figure under the pointer, or -1. */
   function pick(clientX, clientY) {
     const rect = renderer.domElement.getBoundingClientRect();
@@ -500,5 +528,7 @@ export function createScene(canvas, records) {
     renderer.dispose();
   }
 
-  return { layout, render, resize, setBands, pick, dressRow, refine, dispose, renderer };
+  return {
+    layout, render, resize, setBands, pick, screenX, dressRow, refine, dispose, renderer,
+  };
 }

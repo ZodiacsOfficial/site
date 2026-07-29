@@ -54,10 +54,12 @@ owns that page.
 - `public/registry/{sign}/index.html` ← `node scripts/build-sign-pages.mjs`
   (data: `scripts/sign-data.mjs` + `public/registry/zodiacs.registry.json`)
 - `public/archive/` (+ feeds) ← `node scripts/build-archive.mjs`
-- `public/registry/gallery/index.html` + `public/assets/gallery.js` ←
-  `node scripts/build-shelf.mjs` (page + esbuild-bundled Three.js scene;
-  source `src/shelf/`, data from `sign-data.mjs` + the registry JSON —
-  addresses are fetched live by the page, never baked in)
+- `public/assets/gallery.js` ← `node scripts/build-shelf.mjs`
+  (esbuild-bundled Three.js scene for the gallery band on `/registry/`;
+  source `src/shelf/`, records baked from `sign-data.mjs` + the registry
+  JSON — addresses are fetched live by the card, never baked in. The
+  standalone `/registry/gallery/` page is retired; `vercel.json` 301s it
+  to `/registry/`)
 - `src/shelf/figures.geometry.json` + `public/assets/sculptures/{512,1024}/`
   ← `node scripts/build-figure-assets.mjs` (silhouettes traced from
   `public/assets/nuggets/` and extruded by the gallery; the nuggets

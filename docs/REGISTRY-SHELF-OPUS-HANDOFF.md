@@ -463,3 +463,35 @@ assertions under a WebGL-denying stub and asserts the band unstubbed
 (skip-with-log where the browser has no GL); `REACT_UMD_DIR` lets a
 CDN-less sandbox shim unpkg React. New pins in
 `scripts/registry-gallery-band.test.mjs`.
+
+## §16 — One gallery: the registry band absorbs the page (2026-07-28)
+
+Owner review of production found the two-surface split confusing: clicking
+the front sculpture on the hub navigated away, clicking a side one silently
+selected (read as "frozen"), the market card lived a page and a second click
+away, and nothing said the sculptures were clickable. Owner decisions:
+retire `/registry/gallery/` (301 → `/registry/`, both literal forms;
+`/registry/shelf` re-pointed home to avoid a chain), click ANY sculpture
+opens the record card in place (side figures swing to front and open in one
+motion; tapping the displayed piece or empty space returns it), the band
+grows to `min(92svh, 760px)` for a viewing (card beside on ≥900px, bottom
+sheet below), and hover lifts the figure with a serif name label + pointer
+cursor (the bookshelf gesture; touch's affordance is one-tap-opens).
+
+Mechanics: `build-shelf.mjs` is bundle-only (`assets/gallery.js` with the
+records baked; page emission deleted). `main.mjs` collapsed to one mode —
+no hash writes ever (arrival `/registry/#slug` focuses, opens, and
+`scrollIntoView`s the band; sign-page backlinks re-point there; the static
+no-JS catalogue carries `<li id="{slug}">` so fragments resolve without
+JS and check-dist keeps validating them). `scene.layout` eases a per-figure
+hover lift and reports unsettled transitions so the render-on-demand loop
+stays alive; `scene.screenX()` places the label. The card markup lives in
+`GalleryBand` (`.gcard` namespace — the hub's `.card` belongs to the
+featured card), operated by `card.mjs` unchanged, token fallback included.
+Sitemap entry removed (`src/lib/legacy/urls.ts`; check-dist total 2420 —
+note `src/lib` is in the phase-1 template-source hash, so the acceptance
+evidence re-stamped). `registry-risk`'s gallery block now reads
+`src/app.jsx` + `public/assets/app.js`, with the no-baked-mint invariant
+pinned against the hub HTML. The selector drive picks its walk target
+relative to the seasonal opening sign (a fixed tick collides one month a
+year — it did, in Leo season).

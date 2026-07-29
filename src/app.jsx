@@ -1704,6 +1704,7 @@
       return (
         <section
           ref={stageRef}
+          id="gallery"
           className="gband"
           aria-label="The Gallery — the twelve Gold Sculptures"
           data-gallery-stage=""
@@ -1711,16 +1712,57 @@
           data-gallery-initial={slug}
         >
           <div className="gband__mount" data-gallery-canvas="" />
+          <p className="gband__name" data-gallery-name="" aria-hidden="true" />
           <div className="gband__chrome">
             <div className="rail" data-gallery-rail="" role="group" aria-label="The twelve sculptures" />
-            <a className="gband__open" data-gallery-open="" href="/registry/gallery/">
-              <span>View in the gallery</span><span className="arr" aria-hidden="true">→</span>
-            </a>
+            <button className="gband__open" type="button" data-gallery-open="">
+              View the sculpture
+            </button>
             <p className="gband__hint" data-gallery-hint="">
-              Drag sideways to walk the row. Selecting the front sculpture
-              opens its page in the gallery.
+              Select a sculpture for its record and market context. Drag
+              sideways to walk the row.
             </p>
           </div>
+
+          <aside className="gcard" data-gallery-card="" hidden aria-labelledby="gcard-name" aria-live="off">
+            <button className="card__close" type="button" data-gallery-close="" aria-label="Return the sculpture">✕</button>
+            <p className="card__lot" data-card-lot="" />
+            <h2 className="card__name" id="gcard-name" data-card-name="" />
+            <p className="card__figure" data-card-figure="" />
+
+            <div className="card__market">
+              <p className="card__market-state" data-market-state="">Loading market context.</p>
+              <div className="card__price" data-market-price-row="" hidden>
+                <span className="card__price-value" data-market-price="" />
+                <span className="card__price-change" data-market-change="" />
+              </div>
+              <div className="card__cta" data-market-cta="" hidden>
+                <a className="card__buy" data-market-jupiter="" rel="noopener noreferrer external nofollow">
+                  <span>Open Jupiter route</span><span aria-hidden="true">↗</span>
+                </a>
+                <a className="card__data" data-market-dexscreener="" rel="noopener noreferrer external nofollow">
+                  <span>View market data</span><span aria-hidden="true">↗</span>
+                </a>
+              </div>
+              <dl className="card__market-grid" data-market-grid="" hidden />
+              <p className="card__risk">
+                Independent third-party data, not a valuation or recommendation.
+                It may be delayed or unavailable; prices and liquidity can
+                change quickly, and a Zodiac can lose all market value. The
+                route above opens an independent third-party venue; this
+                Registry page does not request custody, signing, approvals, or
+                transactions. Operator and economic-interest statements remain
+                pending confirmation; see the <a href="/disclosure/">Disclosure</a>.
+              </p>
+            </div>
+
+            <dl className="card__facts" data-card-facts="" />
+            <div className="card__records" data-card-records="" />
+            <a className="card__entry" data-card-entry="" href="/registry/">
+              <span>Open catalogue entry</span><span aria-hidden="true">→</span>
+            </a>
+          </aside>
+
           <p className="sr-only" role="status" aria-live="polite" data-gallery-live="" />
         </section>
       );
@@ -3322,7 +3364,7 @@
           <p className="cat__lots-note">
             Tap a glyph to open its catalogue entry — lore, provenance &amp; acquisition.
             {' '}The same twelve stand as Gold Sculptures in{' '}
-            <a className="cat__shelf-link" href="/registry/gallery/">the gallery</a>.
+            <a className="cat__shelf-link" href="#gallery">the gallery above</a>.
           </p>
         </section>
       );

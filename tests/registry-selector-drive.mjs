@@ -717,22 +717,102 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           `band at ${label} rails all twelve`,
           await band.locator('.gband .rail__tick').count() === 12,
         );
-        await band.locator('.gband .rail__tick').nth(4).click();
+        // The band opens on the seasonal sign, so the walk target is chosen
+        // relative to it — two along, wrapping — rather than a fixed tick.
+        const startIndex = Number(
+          await band.locator('.rail__tick[aria-current="true"]').getAttribute('data-index'),
+        );
+        const targetIndex = (startIndex + 2) % 12;
+        const targetTick = band.locator(`.rail__tick[data-index="${targetIndex}"]`);
+        const targetName = (await targetTick.getAttribute('aria-label')).split(',')[0];
+        await targetTick.click();
         await band.waitForTimeout(1100);
         check(
           `band at ${label} rail drives the featured record`,
-          await band.locator('[data-featured-sign]').getAttribute('data-featured-sign') === 'leo',
+          await band.locator('[data-featured-sign]').getAttribute('data-featured-sign')
+            === targetName.toLowerCase(),
+          targetName,
         );
         check(
           `band at ${label} leaves the address bar alone`,
           await band.evaluate(() => window.location.hash === ''),
         );
-        const bandOpener = await band.locator('.gband__open').getAttribute('href');
+        const openerLabel = (await band.locator('.gband__open').innerText()).trim();
         check(
-          `band at ${label} opener goes into the gallery`,
-          Boolean(bandOpener && bandOpener.startsWith('/registry/gallery/')),
-          String(bandOpener),
+          `band at ${label} opener names the selection`,
+          openerLabel === `View ${targetName}`,
+          openerLabel,
         );
+        // The second press on the current tick is the keyboard door into the
+        // record: the card opens in place, the band grows for the viewing.
+        await targetTick.click();
+        let cardOpen = true;
+        try {
+          await band.waitForSelector('.gcard.is-open', { timeout: 8000 });
+        } catch {
+          cardOpen = false;
+        }
+        check(`band at ${label} opens the record in place`, cardOpen);
+        await band.evaluate((name) => { window.__bandTargetName = name; }, targetName);
+        if (cardOpen) {
+          check(
+            `band at ${label} card names the piece and its market`,
+            await band.evaluate(() => {
+              const name = document.querySelector('[data-card-name]')?.textContent;
+              const state = document.querySelector('[data-market-state]')?.textContent ?? '';
+              const risk = document.querySelector('.gcard .card__risk')?.textContent ?? '';
+              return name === window.__bandTargetName
+                && /market context/i.test(state)
+                && risk.includes('can lose all market value');
+            }),
+          );
+          check(
+            `band at ${label} grows for the viewing`,
+            await band.evaluate(() => document.querySelector('.gband')?.classList.contains('is-open')),
+          );
+          check(
+            `band at ${label} still leaves the address bar alone`,
+            await band.evaluate(() => window.location.hash === ''),
+          );
+          await band.keyboard.press('Escape');
+          await band.waitForTimeout(900);
+          check(
+            `band at ${label} Escape returns the sculpture`,
+            await band.evaluate(() => !document.querySelector('.gband')?.classList.contains('is-open')),
+          );
+        }
+        if (label === '1280') {
+          // Hover is the invitation: the figure lifts, the cursor says
+          // pointer, and the label names the piece. Where exactly the
+          // focused figure sits on the canvas shifts a few pixels with the
+          // runner's layout, so the probe sweeps likely body points and
+          // stops at the first hit rather than trusting one coordinate.
+          const box = await band.locator('.gband canvas').boundingBox();
+          if (box) {
+            let hovered = false;
+            const points = [];
+            for (const fy of [0.42, 0.5, 0.34, 0.58, 0.26]) {
+              for (const fx of [0.5, 0.46, 0.54]) points.push([fx, fy]);
+            }
+            for (const [fx, fy] of points) {
+              await band.mouse.move(box.x + (box.width * fx), box.y + (box.height * fy));
+              await band.waitForTimeout(250);
+              hovered = await band.evaluate(() => (
+                document.querySelector('.gband canvas')?.style.cursor === 'pointer'
+              ));
+              if (hovered) break;
+            }
+            check(
+              `band at ${label} hover invites the click`,
+              hovered && await band.evaluate(() => {
+                const labelEl = document.querySelector('.gband__name');
+                return Boolean(labelEl?.classList.contains('is-visible'))
+                  && /Lot/.test(labelEl?.textContent ?? '');
+              }),
+              hovered ? 'hit' : 'no point hovered',
+            );
+          }
+        }
         check(
           `band at ${label} hides the duplicate featured artwork`,
           await band.evaluate(() => {
