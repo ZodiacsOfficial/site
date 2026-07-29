@@ -1,10 +1,9 @@
 {
   "version": 1,
-  "id": "gallery-wallet-discs-relief",
-  "reason": "Owner-directed follow-up to the gallery consolidation, July 2026: the pastel disc icons wallets show for these tokens now stand in the gallery — the rail ticks are the discs, and the record card sets the disc beside the address rows with the factual note 'As it appears in wallets.' — plus bas-relief on the casts. Touches the hub page (disc and token-row CSS) and the band gate test; the scene sources and bundle are unprotected. The registry catalogue itself is untouched. Owner approved the placements and the release path in-session.",
-  "baseCommit": "1b9cb0da1ce6295def62cbc5503078f22c977ea1",
+  "id": "gallery-spotlight-and-dock",
+  "reason": "Owner-directed correction, July 2026: the gallery band's size language was inverted — a sculpture appeared to shrink when it came to the front, because each figure was fitted alone to the row's limits (46% spread between signs) while focus was worth only ~4%. The set is now fitted together into a narrow height band, the focused piece stands at full size while the rest recede and dim, and the disc rail magnifies like a dock under the cursor. Touches only the hub page's rail and label CSS; the scene sources and bundle are unprotected. The registry catalogue itself is untouched. Owner approved the design and the release path in-session.",
+  "baseCommit": "eebe360ce14054e6a2adc0d3e0ff6dc7bdc34edb",
   "protectedPaths": [
-    "public/registry/index.html",
-    "scripts/registry-gallery-band.test.mjs"
+    "public/registry/index.html"
   ]
 }
