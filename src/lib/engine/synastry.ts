@@ -73,46 +73,41 @@ export function modalityBalance(bodies: MinimalBody[]): Record<Modality, number>
 }
 
 /**
- * A planet conjunct its own counterpart in the other chart, for the three
- * slowest bodies. Pluto takes a dozen years to cross a sign, so any two
- * people born near each other carry Pluto conjunct Pluto at a fraction of
- * a degree — it describes a birth cohort, not a couple. The tally keeps
- * them; the headline should not lead with them.
+ * A slow planet conjunct its own counterpart in the other chart. Pluto
+ * takes a dozen years to cross a sign, so any two people born near each
+ * other carry Pluto conjunct Pluto at a fraction of a degree; Jupiter and
+ * Saturn do the same over shorter spans. Such a contact reports when two
+ * people were born, not who they are to each other.
+ *
+ * Only the same planet against itself qualifies. A cross-body contact
+ * between slow planets still varies enough to be worth its orb, and keeps
+ * its place in the ranking.
  */
-const GENERATIONAL_BODIES = new Set(['Uranus', 'Neptune', 'Pluto']);
+const SLOW_BODIES = new Set(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
 
 export function isGenerationalContact(
   aspect: Pick<InterAspect, 'a' | 'b' | 'type'>,
 ): boolean {
   return aspect.type === 'conjunction'
     && aspect.a === aspect.b
-    && GENERATIONAL_BODIES.has(aspect.a);
+    && SLOW_BODIES.has(aspect.a);
 }
 
 /**
- * The bodies that describe a person rather than a cohort. They move fast
- * enough that a few days' difference in birth date moves them, which is
- * exactly what makes a contact between them worth naming.
- */
-const PERSONAL_BODIES = new Set(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars']);
-
-/**
- * Contacts ordered by how much they say about this particular pair, in
- * three bands, each sorted by orb:
+ * Contacts ordered by how much they say about this particular pair: orb
+ * first, as before, with the generational self-conjunctions moved behind
+ * everything else.
  *
- *   1. anything touching a personal body — the contacts a reader recognises
- *   2. the slower pairings, real but shared with everyone born nearby
- *   3. a slow planet conjunct its own counterpart, which is only a birth date
- *
- * Demoted rather than dropped: a pair whose only tight contacts are
- * generational still gets shown something true, just not as a headline.
+ * Demoted rather than dropped. A pair whose only tight contacts are
+ * generational still gets shown something true — it simply does not lead
+ * with a fact that would be equally true of any two strangers born the
+ * same season.
  */
 export function rankedContacts(aspects: readonly InterAspect[]): InterAspect[] {
-  const band = (aspect: InterAspect) => {
-    if (isGenerationalContact(aspect)) return 2;
-    return PERSONAL_BODIES.has(aspect.a) || PERSONAL_BODIES.has(aspect.b) ? 0 : 1;
-  };
-  return [...aspects].sort((one, other) => band(one) - band(other) || one.orb - other.orb);
+  return [...aspects].sort((one, other) => (
+    Number(isGenerationalContact(one)) - Number(isGenerationalContact(other))
+    || one.orb - other.orb
+  ));
 }
 
 export interface PairSummary {
