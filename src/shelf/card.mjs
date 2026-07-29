@@ -297,7 +297,23 @@ export function createCard(root, { onClose }) {
         const identity = `${entryRecord.chain}:${entryRecord.address}`;
         if (!seen.has(identity)) seen.set(identity, entryRecord);
       }
-      records.replaceChildren(...[...seen.values()].map(recordRow));
+      // The disc a wallet shows for this token, beside the addresses that
+      // name it — the point where a holder checks they agree.
+      const identity = document.createElement('div');
+      identity.className = 'rec__token';
+      const disc = document.createElement('img');
+      disc.className = 'rec__disc';
+      disc.src = `/assets/zodiac-icons/128/${record.slug}.webp`;
+      disc.width = 40;
+      disc.height = 40;
+      disc.alt = '';
+      disc.loading = 'lazy';
+      disc.decoding = 'async';
+      const note = document.createElement('span');
+      note.className = 'rec__token-note';
+      note.textContent = 'As it appears in wallets.';
+      identity.append(disc, note);
+      records.replaceChildren(identity, ...[...seen.values()].map(recordRow));
 
       // The route is offered only once the registry has answered — the mint
       // in the URL is the one the reader can verify two lines below.

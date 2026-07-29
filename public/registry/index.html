@@ -3698,7 +3698,8 @@
       transform: scale(1.06);
     }
     .gband .rail__tick:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px; }
-    .gband .rail__glyph { display: block; }
+    .gband .rail__tick picture { display: block; line-height: 0; }
+    .gband .rail__tick img { width: 26px; height: 26px; border-radius: 50%; display: block; }
     .gband__open {
       display: inline-flex; align-items: center; gap: 7px;
       font-size: 13.5px; color: var(--ink-2); text-decoration: none;
@@ -3887,6 +3888,11 @@
     .gcard .rec__value { overflow: hidden; text-overflow: ellipsis; }
     .gcard .rec__copy { flex: 0 0 auto; font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-dim); }
     .gcard .rec__note { margin: 0; font-family: var(--mono); font-size: 11.5px; color: var(--ink-dim); }
+    .gcard .rec__token { display: flex; align-items: center; gap: 12px; }
+    .gcard .rec__disc { width: 40px; height: 40px; border-radius: 50%; flex: 0 0 auto; display: block; }
+    .gcard .rec__token-note {
+      font-family: var(--serif); font-style: italic; font-size: 13.5px; color: var(--ink-2);
+    }
     .gcard .card__entry {
       display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
       font-size: 15px; color: var(--ink);

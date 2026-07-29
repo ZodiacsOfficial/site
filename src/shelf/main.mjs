@@ -335,8 +335,12 @@ async function mount(root, records) {
     button.style.setProperty('--sign', record.hue);
     button.dataset.index = String(index);
     button.tabIndex = index === 0 ? 0 : -1;
-    button.innerHTML = '<span class="rail__glyph" aria-hidden="true"></span>';
-    button.querySelector('.rail__glyph').textContent = record.glyph;
+    // The tick is the sign's pastel disc — the same icon wallets show for
+    // the token — so the row and a holder's wallet visibly agree.
+    button.innerHTML = '<picture aria-hidden="true">'
+      + `<source srcset="/assets/zodiac-icons/48/${record.slug}.avif" type="image/avif"/>`
+      + `<img src="/assets/zodiac-icons/48/${record.slug}.webp" width="26" height="26"`
+      + ' alt="" loading="lazy" decoding="async"/></picture>';
     button.setAttribute('aria-label', `${record.name}, Lot ${record.lot} of twelve`);
     button.addEventListener('click', () => {
       if (current() === index && state.targetOpen === 0) void openFigure(index);
