@@ -434,3 +434,32 @@ A ten-check Playwright walkthrough covers deep links, rail-swaps-while-open,
 arrow keys, Escape, the live-mint route, the turntable, reduced motion holding
 still, and the register standing without scripting. Bundle 165 KB gzip
 (cap 180). Generators re-run byte-identical; no dependency changes.
+
+## §15 — Shipped, then embedded: the hub band (2026-07-28)
+
+PR #183 merged the gallery to production (squash 1d0a2b7); zodiacs.org
+serves it. Owner then directed: DexScreener context is mandatory on the
+card, and the gallery becomes the registry hub's selector, below the hero
+film, replacing the disc strip. Decisions (owner-picked): selector row —
+the band drives `activeTicker` (featured card + detail panel), clicking
+the front sculpture navigates to `/registry/gallery/#slug`, no in-place
+card on the hub; the strip survives as the no-WebGL fallback behind the
+same pre-paint probe the gallery page uses; unpaired signs (cancer,
+sagittarius) are quoted by mint via `tokens/v1/solana/{mint}` (deepest
+pool) on both the gallery card and the hub's MarketContext.
+
+Mechanics worth knowing: the twelve records are esbuild-`define`d into
+gallery.js (`__GALLERY_FIGURES__`) so the React-rendered skeleton is
+enough — the standalone page's JSON island stays and wins when present.
+Embed mode (`data-gallery-embed`) never writes the hash, dispatches
+`zodiacs:gallery-sign` on settle, listens for `zodiacs:gallery-focus`,
+takes only horizontal wheel (vertical falls through to the page), and
+measures its band with `embedBand()` (chrome lookup covers
+`.gband__chrome`). The bundle lazy-loads via IntersectionObserver from a
+`GalleryBand` component between CineHero and `.zd`; `GALLERY_LIVE` gates
+Selector vs band; the featured card hides its `.glyph-stage` under
+`html.gallery-live`. `tests/registry-selector-drive.mjs` runs strip
+assertions under a WebGL-denying stub and asserts the band unstubbed
+(skip-with-log where the browser has no GL); `REACT_UMD_DIR` lets a
+CDN-less sandbox shim unpkg React. New pins in
+`scripts/registry-gallery-band.test.mjs`.

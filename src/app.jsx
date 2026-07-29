@@ -1022,7 +1022,61 @@
         }
       };
     }
+    function parseTokenMarketPayload(payload, mint) {
+      const pairs = Array.isArray(payload) ? payload : payload?.pairs;
+      if (!Array.isArray(pairs) || !pairs.length) return unavailableMarketContext('no-pair');
+      let best = null;
+      let bestLiquidity = -1;
+      for (const pair of pairs) {
+        if (!pair?.pairAddress || pair.baseToken?.address !== mint) continue;
+        const liquidity = toFiniteNumber(pair.liquidity?.usd) ?? 0;
+        if (liquidity > bestLiquidity) {
+          bestLiquidity = liquidity;
+          best = pair;
+        }
+      }
+      if (!best) return unavailableMarketContext('no-pair');
+      return {
+        status: 'ok',
+        pair: {
+          chainId: best.chainId,
+          dexId: best.dexId || '',
+          url: best.url || '',
+          pairAddress: best.pairAddress,
+          priceUsd: best.priceUsd,
+          priceChange24h: best.priceChange?.h24,
+          liquidityUsd: best.liquidity?.usd,
+          marketCap: best.marketCap ?? best.fdv,
+          pairCreatedAt: best.pairCreatedAt
+        }
+      };
+    }
     function loadMarketContext(config) {
+      // A sign with no pinned pair is quoted by its mint instead — the same
+      // token endpoint the Market snapshot uses — taking the deepest pool.
+      if (config?.tokenMint) {
+        const key = `tokens:solana:${config.tokenMint}`;
+        if (MARKET_CONTEXT_CACHE.has(key)) return MARKET_CONTEXT_CACHE.get(key);
+        const url = `https://api.dexscreener.com/tokens/v1/solana/${encodeURIComponent(config.tokenMint)}`;
+        const request = fetch(url)
+          .then(async (response) => {
+            if (!response.ok) return unavailableMarketContext('http');
+            let payload;
+            try {
+              payload = await response.json();
+            } catch {
+              return unavailableMarketContext('json');
+            }
+            return parseTokenMarketPayload(payload, config.tokenMint);
+          })
+          .catch(() => unavailableMarketContext('network'))
+          .then((result) => {
+            MARKET_CONTEXT_CACHE.set(key, Promise.resolve(result));
+            return result;
+          });
+        MARKET_CONTEXT_CACHE.set(key, request);
+        return request;
+      }
       if (!config?.chainId || !config?.pairId) {
         return Promise.resolve(unavailableMarketContext('not-configured'));
       }
@@ -1320,7 +1374,7 @@
             lives, and how public blockchain records become symbolic context.
           </p>
 
-          <Selector active={active} setActive={setActive} />
+          {!GALLERY_LIVE && <Selector active={active} setActive={setActive} />}
 
           <FeaturedCard sign={sign} animKey={animKey} />
         </section>
@@ -1590,6 +1644,88 @@
       );
     }
 
+    /* The gallery band — the twelve Gold Sculptures as the hub's selector.
+       Set before first paint by the head probe; constant for the page's
+       life, so the strip and the band never both render. */
+    const GALLERY_LIVE = document.documentElement.classList.contains('gallery-live');
+
+    let galleryBundleRequested = false;
+
+    function GalleryBand({ active, setActive }) {
+      const stageRef = useRef(null);
+      // The slug the scene last announced — the guard that keeps the
+      // selection loop (scene → state → scene) from echoing.
+      const gallerySlug = useRef(null);
+      const slug = (SIGNS.find(s => s.ticker === active) ?? SIGNS[0]).asset.sign;
+
+      // The scene bundle carries Three.js; it is fetched only as the band
+      // approaches the viewport, and only once.
+      useEffect(() => {
+        const node = stageRef.current;
+        if (!node) return undefined;
+        const inject = () => {
+          if (galleryBundleRequested) return;
+          galleryBundleRequested = true;
+          const script = document.createElement('script');
+          script.src = '/assets/gallery.js';
+          script.defer = true;
+          document.body.appendChild(script);
+        };
+        if (!('IntersectionObserver' in window)) { inject(); return undefined; }
+        const io = new IntersectionObserver(([entry]) => {
+          if (entry.isIntersecting) { inject(); io.disconnect(); }
+        }, { rootMargin: '400px 0px' });
+        io.observe(node);
+        return () => io.disconnect();
+      }, []);
+
+      // Scene → page: walking the row selects the sign everywhere below.
+      useEffect(() => {
+        const node = stageRef.current;
+        if (!node) return undefined;
+        const onSign = (event) => {
+          const next = event?.detail?.slug;
+          if (!next) return;
+          gallerySlug.current = next;
+          const match = SIGNS.find(s => s.asset.sign === next);
+          if (match) setActive(match.ticker);
+        };
+        node.addEventListener('zodiacs:gallery-sign', onSign);
+        return () => node.removeEventListener('zodiacs:gallery-sign', onSign);
+      }, [setActive]);
+
+      // Page → scene: any other selector turns the row to match.
+      useEffect(() => {
+        const node = stageRef.current;
+        if (!node || gallerySlug.current === slug) return;
+        node.dispatchEvent(new CustomEvent('zodiacs:gallery-focus', { detail: { slug } }));
+      }, [slug]);
+
+      return (
+        <section
+          ref={stageRef}
+          className="gband"
+          aria-label="The Gallery — the twelve Gold Sculptures"
+          data-gallery-stage=""
+          data-gallery-embed=""
+          data-gallery-initial={slug}
+        >
+          <div className="gband__mount" data-gallery-canvas="" />
+          <div className="gband__chrome">
+            <div className="rail" data-gallery-rail="" role="group" aria-label="The twelve sculptures" />
+            <a className="gband__open" data-gallery-open="" href="/registry/gallery/">
+              <span>View in the gallery</span><span className="arr" aria-hidden="true">→</span>
+            </a>
+            <p className="gband__hint" data-gallery-hint="">
+              Drag sideways to walk the row. Selecting the front sculpture
+              opens its page in the gallery.
+            </p>
+          </div>
+          <p className="sr-only" role="status" aria-live="polite" data-gallery-live="" />
+        </section>
+      );
+    }
+
     /* The 'Registry' section — institutional identity card. Same
        museum-vitrine aesthetic as the Detail Panel; restated as facts
        about the registry itself, not about a single sign. */
@@ -1804,7 +1940,12 @@
 
     function useMarketContext(sign, enabled) {
       const signKey = sign?.asset?.sign;
-      const config = signKey ? ZODIAC_MARKET_PAIRS[signKey] : null;
+      // Cancer and Sagittarius carry no pinned pair; their quote comes from
+      // the token endpoint by mint, so all twelve show live numbers whenever
+      // DexScreener indexes anything.
+      const fallbackMint = sign?.representations?.solana?.address || null;
+      const config = (signKey ? ZODIAC_MARKET_PAIRS[signKey] : null)
+        ?? (fallbackMint ? { tokenMint: fallbackMint } : null);
       const [state, setState] = useState(
         config ? { status: 'idle' } : unavailableMarketContext('not-configured')
       );
@@ -3531,6 +3672,9 @@
           <div className="grain" aria-hidden="true" />
           <Header />
           <CineHero sign={sign} />
+          {GALLERY_LIVE && (
+            <GalleryBand active={activeTicker} setActive={setActiveTicker} />
+          )}
           <div className="zd">
             <Hero
               sign={sign}

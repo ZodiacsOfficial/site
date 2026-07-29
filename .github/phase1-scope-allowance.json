@@ -1,26 +1,12 @@
 {
   "version": 1,
-  "id": "gallery-registry-wing",
-  "reason": "Owner-directed Registry gallery, July 2026: /registry/gallery/ presents the twelve Gold Sculptures (Three.js row, records-and-market card, deep links), each sign page gains a gallery backlink, the hub app links the gallery from the catalogue note, and registry-risk.test.mjs extends its pinned acquisition/risk copy to the new surface. The registry catalogue itself (zodiacs.registry.json, verifier, addresses) is untouched; the gallery reads it live. Owner approved the feature and the release in-session.",
-  "baseCommit": "759b2bae68a33a9f53362dc1f559bd6dac13d132",
+  "id": "gallery-band-hub-selector",
+  "reason": "Owner-directed follow-up to the gallery release, July 2026: the registry hub gains the gallery band below the hero film — the twelve sculptures replace the disc strip as the sign selector wherever WebGL exists, with the strip preserved as the fallback — and both market surfaces quote unpaired signs by mint. Touches the hub page (probe + band CSS), the hub application, its compiled bundle, and the new band gate test. The registry catalogue itself is untouched. Owner approved the design and the release path in-session.",
+  "baseCommit": "1d0a2b7ee0c9c974ca96f11988f3c7f99c84432d",
   "protectedPaths": [
     "public/assets/app.js",
-    "public/registry/aquarius/index.html",
-    "public/registry/aries/index.html",
-    "public/registry/cancer/index.html",
-    "public/registry/capricorn/index.html",
-    "public/registry/gallery/index.html",
-    "public/registry/gemini/index.html",
     "public/registry/index.html",
-    "public/registry/leo/index.html",
-    "public/registry/libra/index.html",
-    "public/registry/pisces/index.html",
-    "public/registry/sagittarius/index.html",
-    "public/registry/scorpio/index.html",
-    "public/registry/taurus/index.html",
-    "public/registry/virgo/index.html",
-    "scripts/build-sign-pages.mjs",
-    "scripts/registry-risk.test.mjs",
+    "scripts/registry-gallery-band.test.mjs",
     "src/app.jsx"
   ]
 }

@@ -45,6 +45,31 @@ const figures = await readFigures();
 
 // ---- the scene bundle --------------------------------------------------------
 
+// Only what the scene needs to letter a plinth and a hallmark, and what the
+// card needs to describe the piece. No addresses.
+const figureData = figures.map((figure) => ({
+  slug: figure.slug,
+  order: figure.order,
+  lot: figure.lot,
+  name: figure.name,
+  glyph: figure.glyph,
+  figure: figure.figure,
+  epithet: figure.epithet,
+  hue: figure.hue,
+  element: figure.element,
+  modality: figure.modality,
+  ruler: figure.ruler,
+  archetype: figure.archetype,
+  dates: figure.dates,
+  datesShort: figure.datesShort,
+  star: figure.star,
+  // The Dex Screener pair is venue routing, baked here exactly as the sign
+  // pages bake it. Registry identity (mints) stays out of the page — the
+  // card reads those live. Cancer and Sagittarius have no indexed pair and
+  // show a quiet unavailable state instead.
+  market: MARKET_PAIRS[figure.slug] ?? null,
+}));
+
 await esbuild.build({
   entryPoints: [SCRIPT_SRC],
   outfile: SCRIPT_OUT,
@@ -53,7 +78,13 @@ await esbuild.build({
   target: ['es2020', 'safari15'],
   minify: true,
   legalComments: 'none',
-  define: { 'process.env.NODE_ENV': '"production"' },
+  define: {
+    'process.env.NODE_ENV': '"production"',
+    // The records ride inside the bundle so any page with the stage skeleton
+    // can host the row; the standalone page's JSON island stays authoritative
+    // when present, and both are stamped from the same readFigures() call.
+    __GALLERY_FIGURES__: JSON.stringify(figureData),
+  },
   banner: {
     js: '/* Generated from src/shelf/ by scripts/build-shelf.mjs — do not edit directly. */',
   },
@@ -99,31 +130,6 @@ const jsonLd = {
     },
   ],
 };
-
-// Only what the scene needs to letter a plinth and a hallmark, and what the
-// card needs to describe the piece. No addresses.
-const figureData = figures.map((figure) => ({
-  slug: figure.slug,
-  order: figure.order,
-  lot: figure.lot,
-  name: figure.name,
-  glyph: figure.glyph,
-  figure: figure.figure,
-  epithet: figure.epithet,
-  hue: figure.hue,
-  element: figure.element,
-  modality: figure.modality,
-  ruler: figure.ruler,
-  archetype: figure.archetype,
-  dates: figure.dates,
-  datesShort: figure.datesShort,
-  star: figure.star,
-  // The Dex Screener pair is venue routing, baked here exactly as the sign
-  // pages bake it. Registry identity (mints) stays out of the page — the
-  // card reads those live. Cancer and Sagittarius have no indexed pair and
-  // show a quiet unavailable state instead.
-  market: MARKET_PAIRS[figure.slug] ?? null,
-}));
 
 // Each row carries the sign's id, so /registry/gallery/#leo is a real
 // fragment: without JavaScript it lands on Leo's line of the register,

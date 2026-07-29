@@ -11,6 +11,17 @@
        renders nothing. Mark Chromium so the nav-pill lens applies only there. */
     try { if (window.chrome && window.CSS && CSS.supports('backdrop-filter', "url('#zdx-lens-nav')")) document.documentElement.classList.add('zdx-lens'); } catch (e) {}
   </script>
+  <script>
+    /* The gallery band mounts only where WebGL exists. Settled before first
+       paint so the page renders one selector or the other, never a flash of
+       both — same probe the gallery page itself uses. */
+    try {
+      var glProbe = document.createElement('canvas');
+      if (glProbe.getContext('webgl2') || glProbe.getContext('webgl')) {
+        document.documentElement.classList.add('gallery-live');
+      }
+    } catch (e) {}
+  </script>
   <meta name="description" content="Zodiacs. Twelve signs, one official record. Match asset addresses across Solana and Base, then build symbolic context from public records." />
 
   <link rel="canonical" href="https://zodiacs.org/registry/" />
@@ -3639,6 +3650,73 @@
 
       .static-site { max-width: 860px; }
     }
+
+    /* ── The gallery band — the twelve as the hub's selector ─────────────
+       Rendered only when the pre-paint WebGL probe marks html.gallery-live;
+       otherwise the Selector strip below serves, unchanged. The band hosts
+       the same scene as /registry/gallery/, embedded (no card, no hash). */
+    .gband {
+      position: relative; isolation: isolate; overflow: clip;
+      height: clamp(380px, 62vh, 560px);
+      background:
+        radial-gradient(120% 90% at 50% 32%, rgba(30,37,53,0.5), transparent 70%),
+        var(--bg);
+      border-bottom: 1px solid var(--hair);
+    }
+    .gband__mount { position: absolute; inset: 0; z-index: 1; touch-action: pan-y; }
+    .gband .stage__canvas { display: block; width: 100%; height: 100%; cursor: grab; }
+    .gband .stage__canvas:active { cursor: grabbing; }
+    .gband__chrome {
+      position: absolute; inset: auto 0 0 0; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      padding: 16px 20px 16px; pointer-events: none;
+    }
+    .gband__chrome > * { pointer-events: auto; }
+    .gband__chrome::before {
+      content: ''; position: absolute; inset: -60px 0 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(6,7,9,0) 0%, rgba(6,7,9,0.7) 55%, rgba(6,7,9,0.92) 100%);
+    }
+    .gband .rail {
+      display: flex; align-items: center; gap: 2px; padding: 5px;
+      border-radius: 999px; border: 1px solid var(--hair);
+      background: rgba(10,12,17,0.6);
+      backdrop-filter: saturate(140%) blur(16px);
+      -webkit-backdrop-filter: saturate(140%) blur(16px);
+      max-width: 100%; overflow-x: auto; scrollbar-width: none;
+    }
+    .gband .rail::-webkit-scrollbar { display: none; }
+    .gband .rail__tick {
+      flex: 0 0 auto; width: 32px; height: 32px; display: grid; place-items: center;
+      border: 0; border-radius: 50%; background: none; cursor: pointer; padding: 0;
+      color: var(--ink-mute); font-size: 15px; line-height: 1;
+      transition: color 220ms var(--ease), background 220ms var(--ease), transform 220ms var(--ease);
+    }
+    .gband .rail__tick:hover { color: var(--ink-2); background: rgba(198,204,218,0.07); }
+    .gband .rail__tick[aria-current='true'] {
+      color: var(--sign, var(--ink));
+      background: color-mix(in oklab, var(--sign, #C6CCDA) 16%, transparent);
+      transform: scale(1.06);
+    }
+    .gband .rail__tick:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px; }
+    .gband .rail__glyph { display: block; }
+    .gband__open {
+      display: inline-flex; align-items: center; gap: 7px;
+      font-size: 13.5px; color: var(--ink-2); text-decoration: none;
+      border-bottom: 1px solid var(--hair-2); padding-bottom: 2px;
+      transition: color 200ms var(--ease), border-color 200ms var(--ease);
+    }
+    .gband__open:hover { color: var(--ink); border-color: var(--hair-3); }
+    .gband__open:focus-visible { outline: 2px solid var(--ink-2); outline-offset: 3px; }
+    .gband__hint {
+      margin: 0; font-size: 12px; color: var(--ink-mute);
+      text-align: center; max-width: 54ch;
+    }
+    @media (max-height: 700px), (max-width: 640px) { .gband__hint { display: none; } }
+    .gband__mount, .gband__chrome { opacity: 0; transition: opacity 700ms var(--ease); }
+    .gband.is-ready .gband__mount, .gband.is-ready .gband__chrome { opacity: 1; }
+    /* The band shows the chosen figure large; the featured card keeps its
+       facts and drops the duplicate artwork. */
+    html.gallery-live #featured-sign .glyph-stage { display: none; }
   </style>
 </head>
 <body>
