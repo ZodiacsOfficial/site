@@ -512,3 +512,42 @@ No new assets, no pipeline changes, `build-figure-assets.mjs` untouched.
 True 3D remains a possible future project: the load story would be
 low-poly row + streamed high-res on open, but the twelve models would have
 to be produced first, and quality would vary by sign.
+
+## §18 — The row means focus (2026-07-29)
+
+Owner review found the size language inverted: *"it shrinks when it's looked
+at as the focus instead of being enlarged."* Measured, and literally true.
+Focus was worth ~4% of apparent size (only `focusOut` 0.22 at ~6 units'
+distance), while the twelve differed from EACH OTHER by 46% in height —
+each was fitted alone to the height/width limits, so Virgo stood at 1.60 and
+Cancer at 1.09. Scrolling Virgo → Leo made the newly focused piece 29%
+shorter. Identity noise was ten times the focus signal.
+
+Three instruments, all owner-picked:
+
+1. **Levelled fitting** (`fitScales` in layout.mjs). Each figure takes its
+   own limit, then the set is capped into `GALLERY.heightSpread` (14%) of the
+   shortest the limits allow. Scales only ever shrink, so the collision
+   clearance holds by construction. `rowContent(gallery, tallest)` now takes
+   the real tallest so the camera reframes — a shorter set costs nothing on
+   screen, it just brings the camera closer. Noise 46% → 14%.
+   *Rejected: equalising ink area.* Measured it — a sparse arrow
+   (Sagittarius, ink 0.247) would tower at 1.60 over a solid bull (Taurus,
+   0.832) at 0.87. Worse than the disease.
+2. **The spotlight** (`emphasis`, SPOTLIGHT 1 / 0.78 / 0.65, dim 0.62).
+   Smoothstep from focus through one slot to two, applied to the cast, its
+   plinth, and its shadow, composed with the card-open dimming rather than
+   replacing it. Focus is now worth 28% — twice the identity noise, and a
+   unit test pins that ratio so it cannot silently invert again.
+3. **The dock wave** (`dockMagnify`, DOCK amplitude 0.9 / spread 1.9 /
+   rest 0.28). `--mag` per tick drives width AND transform, so the swollen
+   disc pushes its neighbours aside instead of covering them — measured in CI
+   as 32→61→32 across the rail. `--tick` lives in the stylesheet and main.mjs
+   reads it, so pitch and CSS cannot drift. At rest the current sign stands
+   proud (1.28) for touch and keyboard readers. Reduced motion keeps the rest
+   state and drops the cursor-following wave.
+
+One trap worth remembering: the name label is shared by the rail and the
+sculptures, and without ownership (`namedBy`) the rail's pointerleave
+retracted a label the row had just raised — while `setHover`'s early return
+refused to restore it. Each surface now retracts only its own naming.

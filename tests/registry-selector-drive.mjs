@@ -721,6 +721,44 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           `band at ${label} rail carries the wallet discs`,
           await band.locator('.gband .rail__tick img').count() === 12,
         );
+        // At rest the current sign stands proud, so touch and keyboard
+        // readers see the selection without a cursor.
+        const restWidths = await band.locator('.gband .rail__tick').evaluateAll((ticks) => {
+          const current = ticks.findIndex((t) => t.getAttribute('aria-current') === 'true');
+          return { current: ticks[current].getBoundingClientRect().width,
+            other: ticks[(current + 5) % ticks.length].getBoundingClientRect().width };
+        });
+        check(
+          `band at ${label} rests with the current disc proud`,
+          restWidths.current > restWidths.other + 1,
+          `${restWidths.current.toFixed(1)} vs ${restWidths.other.toFixed(1)}`,
+        );
+        if (label === '1280') {
+          // The dock wave: the disc under the cursor swells most, its
+          // neighbour less, and the far end of the rail is untouched.
+          const target = band.locator('.gband .rail__tick').nth(6);
+          const spot = await target.boundingBox();
+          await band.mouse.move(spot.x + (spot.width / 2), spot.y + (spot.height / 2));
+          await band.waitForTimeout(420);
+          const wave = await band.locator('.gband .rail__tick').evaluateAll((ticks) => (
+            ticks.map((t) => t.getBoundingClientRect().width)
+          ));
+          check(
+            `band at ${label} rail magnifies like a dock`,
+            wave[6] > wave[5] && wave[5] > wave[4] && wave[4] > wave[0] && wave[6] > wave[0] * 1.4,
+            wave.map((w) => w.toFixed(0)).join(','),
+          );
+          check(
+            `band at ${label} the wave names its disc`,
+            await band.evaluate(() => {
+              const el = document.querySelector('.gband__name');
+              return Boolean(el?.classList.contains('is-visible'))
+                && Boolean(el?.classList.contains('is-rail'));
+            }),
+          );
+          await band.mouse.move(spot.x + (spot.width / 2), spot.y - 220);
+          await band.waitForTimeout(420);
+        }
         // The band opens on the seasonal sign, so the walk target is chosen
         // relative to it — two along, wrapping — rather than a fixed tick.
         const startIndex = Number(

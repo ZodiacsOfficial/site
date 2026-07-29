@@ -3669,33 +3669,43 @@
     .gband__chrome {
       position: absolute; inset: auto 0 0 0; z-index: 2;
       display: flex; flex-direction: column; align-items: center; gap: 10px;
-      padding: 16px 20px 16px; pointer-events: none;
+      /* Headroom for the dock wave: a swollen disc rises out of the rail. */
+      padding: 42px 20px 16px; pointer-events: none;
     }
     .gband__chrome > * { pointer-events: auto; }
     .gband__chrome::before {
       content: ''; position: absolute; inset: -60px 0 0; z-index: -1; pointer-events: none;
       background: linear-gradient(to bottom, rgba(6,7,9,0) 0%, rgba(6,7,9,0.7) 55%, rgba(6,7,9,0.92) 100%);
     }
+    /* The rail magnifies like a dock: --mag is written per tick by the scene,
+       and because it drives width as well as scale the swollen disc pushes
+       its neighbours aside instead of covering them. --tick is the resting
+       pitch the wave is measured in; main.mjs reads it from here. */
     .gband .rail {
-      display: flex; align-items: center; gap: 2px; padding: 5px;
+      --tick: 32px;
+      display: flex; align-items: flex-end; gap: 2px; padding: 5px;
       border-radius: 999px; border: 1px solid var(--hair);
       background: rgba(10,12,17,0.6);
       backdrop-filter: saturate(140%) blur(16px);
       -webkit-backdrop-filter: saturate(140%) blur(16px);
-      max-width: 100%; overflow-x: auto; scrollbar-width: none;
+      max-width: 100%; overflow-x: auto; overflow-y: visible; scrollbar-width: none;
     }
     .gband .rail::-webkit-scrollbar { display: none; }
     .gband .rail__tick {
-      flex: 0 0 auto; width: 32px; height: 32px; display: grid; place-items: center;
+      --mag: 1;
+      flex: 0 0 auto;
+      width: calc(var(--tick) * var(--mag)); height: var(--tick);
+      display: grid; place-items: end center;
       border: 0; border-radius: 50%; background: none; cursor: pointer; padding: 0;
       color: var(--ink-mute); font-size: 15px; line-height: 1;
-      transition: color 220ms var(--ease), background 220ms var(--ease), transform 220ms var(--ease);
+      transition: width 160ms var(--ease), color 220ms var(--ease);
     }
-    .gband .rail__tick:hover { color: var(--ink-2); background: rgba(198,204,218,0.07); }
-    .gband .rail__tick[aria-current='true'] {
-      color: var(--sign, var(--ink));
-      background: color-mix(in oklab, var(--sign, #C6CCDA) 16%, transparent);
-      transform: scale(1.06);
+    .gband .rail__tick picture {
+      transform: scale(var(--mag)); transform-origin: bottom center;
+      transition: transform 160ms var(--ease);
+    }
+    .gband .rail__tick[aria-current='true'] picture {
+      filter: drop-shadow(0 0 10px color-mix(in oklab, var(--sign, #C6CCDA) 55%, transparent));
     }
     .gband .rail__tick:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px; }
     .gband .rail__tick picture { display: block; line-height: 0; }
@@ -3739,6 +3749,8 @@
       text-shadow: 0 1px 8px rgba(6,7,9,0.9); white-space: nowrap;
     }
     .gband__name.is-visible { opacity: 1; }
+    /* Naming a disc rather than a sculpture: the label sits above the rail. */
+    .gband__name.is-rail { bottom: 150px; font-size: 13.5px; }
     .gband.is-open .gband__name { opacity: 0; }
     @media (min-width: 900px) {
       .gband.is-open .gband__chrome { padding-right: calc(clamp(392px, 26vw, 460px) + 68px); }

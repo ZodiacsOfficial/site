@@ -2,15 +2,20 @@ import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 
 import {
+  DOCK,
   GALLERY,
+  SPOTLIGHT,
   VITRINE,
   angleStep,
   approach,
   clampFocus,
+  dockMagnify,
   dragToFocusDelta,
   embedBand,
+  emphasis,
   figurePose,
   fitScale,
+  fitScales,
   floorY,
   isVisible,
   lerpContent,
@@ -92,18 +97,37 @@ describe('gallery geometry', () => {
     const geometry = JSON.parse(
       await readFile(new URL('../src/shelf/figures.geometry.json', import.meta.url), 'utf8'),
     );
-    for (const { slug } of figures) {
-      const { aspect } = geometry.figures[slug];
-      const scale = fitScale(aspect, GALLERY);
+    const aspects = figures.map(({ slug }) => geometry.figures[slug].aspect);
+    const scales = fitScales(aspects, GALLERY);
+    for (const [index, { slug }] of figures.entries()) {
+      const aspect = aspects[index];
+      const scale = scales[index];
       expect(scale, slug).toBeGreaterThan(0);
       // Neither limit may be exceeded: height for the tall, width for the wide.
       expect(scale, slug).toBeLessThanOrEqual(GALLERY.height + 1e-9);
       expect(scale * aspect, slug).toBeLessThanOrEqual(GALLERY.maxWidth + 1e-9);
-      // And one of the two is always the binding limit — nothing sits small.
-      const binding = Math.abs(scale - GALLERY.height) < 1e-9
-        || Math.abs(scale * aspect - GALLERY.maxWidth) < 1e-9;
-      expect(binding, slug).toBe(true);
+      // Fitted alone it would be limit-bound; fitted as a set it may be held
+      // down by the band instead. Either way it never exceeds its own limit.
+      expect(scale, slug).toBeLessThanOrEqual(fitScale(aspect, GALLERY) + 1e-9);
     }
+    // The twelve read as one row of comparable objects: nothing may stand
+    // more than the band apart, or size starts meaning identity again.
+    const spread = (Math.max(...scales) / Math.min(...scales)) - 1;
+    expect(spread).toBeLessThanOrEqual(GALLERY.heightSpread + 1e-9);
+    // And the levelling only ever shrinks — the collision clearance holds.
+    for (const [index, scale] of scales.entries()) {
+      expect(scale).toBeLessThanOrEqual(fitScale(aspects[index], GALLERY) + 1e-9);
+    }
+  });
+
+  it('frames the row by its real tallest, not by the cap', () => {
+    const levelled = rowContent(GALLERY, 1.25);
+    const capped = rowContent(GALLERY);
+    // A shorter set gives a shorter box, so the camera comes closer and the
+    // row keeps its size on screen instead of leaving dead air above it.
+    expect(levelled.height).toBeLessThan(capped.height);
+    expect(levelled.centerY + (levelled.height / 2))
+      .toBeCloseTo(GALLERY.baseY + 1.25 + 0.04, 12);
   });
 
   it('puts the floor one plinth below the feet', () => {
@@ -266,6 +290,73 @@ describe('the embedded band', () => {
       const right = (width / 2) + ((content.width / 2) / perPixel);
       expect(right, label).toBeLessThanOrEqual(rect.x + rect.width + 1e-6);
     }
+  });
+});
+
+describe('the spotlight', () => {
+  it('offers one piece at a time', () => {
+    expect(emphasis(0).scale).toBeCloseTo(SPOTLIGHT.focus, 12);
+    expect(emphasis(1).scale).toBeCloseTo(SPOTLIGHT.near, 12);
+    expect(emphasis(2).scale).toBeCloseTo(SPOTLIGHT.far, 12);
+    // Beyond two slots the row has already receded as far as it goes.
+    expect(emphasis(6).scale).toBeCloseTo(SPOTLIGHT.far, 12);
+    expect(emphasis(-3).scale).toBeCloseTo(SPOTLIGHT.far, 12);
+  });
+
+  it('makes focus the loudest thing about a figure’s size', async () => {
+    const geometry = JSON.parse(
+      await readFile(new URL('../src/shelf/figures.geometry.json', import.meta.url), 'utf8'),
+    );
+    const scales = fitScales(Object.values(geometry.figures).map((f) => f.aspect), GALLERY);
+    const identity = (Math.max(...scales) / Math.min(...scales)) - 1;
+    const focus = (emphasis(0).scale / emphasis(1).scale) - 1;
+    expect(focus).toBeGreaterThan(identity * 1.5);
+  });
+
+  it('recedes smoothly, never popping between slots', () => {
+    let previous = emphasis(0).scale;
+    for (let distance = 0.02; distance <= 4; distance += 0.02) {
+      const { scale, opacity } = emphasis(distance);
+      expect(scale).toBeLessThanOrEqual(previous + 1e-9);
+      expect(previous - scale).toBeLessThan(0.02);
+      expect(opacity).toBeGreaterThanOrEqual(SPOTLIGHT.dim - 1e-9);
+      expect(opacity).toBeLessThanOrEqual(1 + 1e-9);
+      previous = scale;
+    }
+  });
+
+  it('dims what it shrinks, and only that', () => {
+    expect(emphasis(0).opacity).toBeCloseTo(1, 12);
+    expect(emphasis(2).opacity).toBeCloseTo(SPOTLIGHT.dim, 12);
+    expect(emphasis(1).opacity).toBeLessThan(1);
+    expect(emphasis(1).opacity).toBeGreaterThan(SPOTLIGHT.dim);
+  });
+});
+
+describe('the rail’s wave', () => {
+  it('swells most under the cursor and settles either side', () => {
+    expect(dockMagnify(0)).toBeCloseTo(1 + DOCK.amplitude, 12);
+    let previous = dockMagnify(0);
+    for (let distance = 0.1; distance <= 6; distance += 0.1) {
+      const mag = dockMagnify(distance);
+      expect(mag).toBeLessThan(previous);
+      expect(mag).toBeGreaterThanOrEqual(1);
+      previous = mag;
+    }
+    // Far enough along the rail the wave has passed by entirely.
+    expect(dockMagnify(6)).toBeCloseTo(1, 3);
+  });
+
+  it('reads the same either side of the cursor', () => {
+    for (const distance of [0.5, 1, 2.5]) {
+      expect(dockMagnify(distance)).toBeCloseTo(dockMagnify(-distance), 12);
+    }
+  });
+
+  it('stands the current sign proud when nothing is hovered', () => {
+    expect(DOCK.rest).toBeGreaterThan(0);
+    // Resting emphasis is quieter than the wave, so a hover still reads.
+    expect(1 + DOCK.rest).toBeLessThan(dockMagnify(0));
   });
 });
 
