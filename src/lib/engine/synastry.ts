@@ -90,15 +90,29 @@ export function isGenerationalContact(
 }
 
 /**
- * Contacts ordered by how much they say about this particular pair:
- * personal contacts by orb first, then the generational self-conjunctions
- * behind them. Demoted rather than dropped, so a chart whose only tight
- * contacts are generational still shows something true.
+ * The bodies that describe a person rather than a cohort. They move fast
+ * enough that a few days' difference in birth date moves them, which is
+ * exactly what makes a contact between them worth naming.
+ */
+const PERSONAL_BODIES = new Set(['Sun', 'Moon', 'Mercury', 'Venus', 'Mars']);
+
+/**
+ * Contacts ordered by how much they say about this particular pair, in
+ * three bands, each sorted by orb:
+ *
+ *   1. anything touching a personal body — the contacts a reader recognises
+ *   2. the slower pairings, real but shared with everyone born nearby
+ *   3. a slow planet conjunct its own counterpart, which is only a birth date
+ *
+ * Demoted rather than dropped: a pair whose only tight contacts are
+ * generational still gets shown something true, just not as a headline.
  */
 export function rankedContacts(aspects: readonly InterAspect[]): InterAspect[] {
-  const personal = aspects.filter((aspect) => !isGenerationalContact(aspect));
-  const generational = aspects.filter(isGenerationalContact);
-  return [...personal, ...generational];
+  const band = (aspect: InterAspect) => {
+    if (isGenerationalContact(aspect)) return 2;
+    return PERSONAL_BODIES.has(aspect.a) || PERSONAL_BODIES.has(aspect.b) ? 0 : 1;
+  };
+  return [...aspects].sort((one, other) => band(one) - band(other) || one.orb - other.orb);
 }
 
 export interface PairSummary {

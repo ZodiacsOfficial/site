@@ -119,11 +119,12 @@ function fitText(
 }
 
 /**
- * Wheel coordinates. The chart's own 0° Aries sits left and longitude runs
- * counterclockwise, matching every wheel the site already draws.
+ * Wheel coordinates. 0° Aries sits at the left and longitude runs
+ * counterclockwise — the same `180 + lon` mapping Wheel.tsx uses, so a
+ * chart shaped one way in the app is not mirrored on the card.
  */
 function at(lon: number, radius: number): { x: number; y: number } {
-  const angle = (180 - lon) * RAD;
+  const angle = (180 + lon) * RAD;
   return { x: CX + radius * Math.cos(angle), y: CY - radius * Math.sin(angle) };
 }
 
@@ -210,14 +211,14 @@ export async function drawCompatibilityCard(
   // ── The bi-wheel ───────────────────────────────────────────────────
   ctx.save();
   SIGNS.forEach((sign, index) => {
-    const from = (180 - index * 30) * RAD;
-    const to = (180 - (index + 1) * 30) * RAD;
+    const from = (180 + index * 30) * RAD;
+    const to = (180 + (index + 1) * 30) * RAD;
     ctx.beginPath();
-    ctx.arc(CX, CY, R_BAND_OUT, -from, -to);
-    ctx.arc(CX, CY, R_BAND_IN, -to, -from, true);
+    ctx.arc(CX, CY, R_BAND_OUT, -from, -to, true);
+    ctx.arc(CX, CY, R_BAND_IN, -to, -from);
     ctx.closePath();
     ctx.fillStyle = sign.hue;
-    ctx.globalAlpha = 0.17;
+    ctx.globalAlpha = 0.2;
     ctx.fill();
     ctx.globalAlpha = 1;
     ctx.strokeStyle = HAIR;
@@ -289,12 +290,12 @@ export async function drawCompatibilityCard(
   ctx.strokeStyle = HAIR;
   ctx.lineWidth = 1;
   ctx.beginPath();
-  ctx.moveTo(120, 1218);
-  ctx.lineTo(W - 120, 1218);
+  ctx.moveTo(120, 1176);
+  ctx.lineTo(W - 120, 1176);
   ctx.stroke();
 
   people.forEach((person, personIndex) => {
-    const y = 1256 + personIndex * 42;
+    const y = 1214 + personIndex * 44;
     const placements = rows[personIndex]
       .map((row) => (row.sign ? `${row.sign} ${row.degree!.toFixed(0)}°` : '—'))
       .join('  ·  ');
@@ -305,7 +306,8 @@ export async function drawCompatibilityCard(
     ctx.fillText(`${marker}  ${person.label}`, 120, y);
     ctx.textAlign = 'right';
     ctx.fillStyle = MUTED;
-    ctx.font = `500 25px ${SERIF}`;
+    const size = fitText(ctx, placements, 700, 25, 17);
+    ctx.font = `500 ${size}px ${SERIF}`;
     ctx.fillText(placements, W - 120, y);
   });
 
@@ -313,7 +315,7 @@ export async function drawCompatibilityCard(
   ctx.font = `500 30px ${SERIF}`;
   ctx.textAlign = SHARE_CARD_WORDMARK.align;
   try { ctx.letterSpacing = '8px'; } catch {}
-  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, H - 52);
+  ctx.fillText('ZODIACS · ORG', SHARE_CARD_WORDMARK.x, SHARE_CARD_WORDMARK.y);
   try { ctx.letterSpacing = '0px'; } catch {}
 
   const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/png'));
