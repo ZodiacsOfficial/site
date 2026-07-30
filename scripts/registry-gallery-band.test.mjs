@@ -14,6 +14,24 @@ import { describe, expect, it } from 'vitest';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const read = (path) => readFile(resolve(root, path), 'utf8');
 
+function functionBody(source, name) {
+  const signature = `function ${name}(`;
+  const start = source.indexOf(signature);
+  if (start < 0) return '';
+  const open = source.indexOf('{', start);
+  if (open < 0) return '';
+
+  let depth = 0;
+  for (let index = open; index < source.length; index += 1) {
+    if (source[index] === '{') depth += 1;
+    else if (source[index] === '}') {
+      depth -= 1;
+      if (depth === 0) return source.slice(open + 1, index);
+    }
+  }
+  return '';
+}
+
 describe('the gallery band on the registry hub', () => {
   it('renders the embedded stage skeleton and gates the strip on the probe', async () => {
     const source = await read('src/app.jsx');
@@ -68,6 +86,49 @@ describe('the gallery band on the registry hub', () => {
     expect(scene).toContain('setHover(scene.pick(');
   });
 
+  it('does not commit a touch gesture after the browser cancels it', async () => {
+    const scene = await read('src/shelf/main.mjs');
+
+    expect(scene).toContain("canvas.addEventListener('pointerup', endPointer)");
+    expect(scene).not.toContain("canvas.addEventListener('pointercancel', endPointer)");
+    expect(scene).toContain("canvas.addEventListener('pointercancel', cancelPointer)");
+    expect(scene).toContain("canvas.addEventListener('lostpointercapture', cancelPointer)");
+
+    const cancel = functionBody(scene, 'cancelPointer');
+    expect(cancel).not.toBe('');
+    expect(cancel).toContain('pointers.delete(event.pointerId)');
+    expect(cancel).toMatch(/pointers\.size < 2[\s\S]*pinch = 0/);
+    expect(cancel).toContain('drag = null');
+    // Cancellation is cleanup only: no tap hit-test and no inertial throw.
+    expect(cancel).not.toContain('scene.pick(');
+    expect(cancel).not.toContain('velocity');
+  });
+
+  it('never turns a vertical touch into a sculpture tap', async () => {
+    const scene = await read('src/shelf/main.mjs');
+    const release = functionBody(scene, 'endPointer');
+
+    expect(scene).toContain("drag.touchIntent = dragIntent(dx, dy)");
+    expect(scene).toContain("if (drag.touchIntent === 'vertical') return");
+    expect(release).toContain("if (finished.touchIntent === 'vertical') return");
+    expect(release.indexOf("if (finished.touchIntent === 'vertical') return"))
+      .toBeLessThan(release.indexOf('scene.pick('));
+  });
+
+  it('derives open chrome from the transition target and never scrolls the rail during drag', async () => {
+    const scene = await read('src/shelf/main.mjs');
+    const syncChrome = functionBody(scene, 'syncChrome');
+    expect(syncChrome).not.toBe('');
+
+    const showing = syncChrome.split('\n').find((line) => line.includes('const showing'));
+    expect(showing).toContain('state.targetOpen');
+    expect(showing).not.toContain('state.openIndex');
+    // A drag may update selection, but must not force nested/page scroll on
+    // every pointer sample. Deep-link arrival may still scroll the root once.
+    expect(syncChrome).not.toContain('.scrollIntoView(');
+    expect(syncChrome).toContain('if (!drag) centerRail(index)');
+  });
+
   it('renders the record card and the hover label in the band', async () => {
     const source = await read('src/app.jsx');
     for (const marker of [
@@ -110,12 +171,13 @@ describe('the gallery band on the registry hub', () => {
     expect(sceneSource).toContain('bumpScale');
   });
 
-  it('magnifies the rail from one custom property, width included', async () => {
-    // The centipede depends on --mag driving *width* as well as scale: a
-    // swollen disc has to push its neighbours aside, not cover them. Scale
-    // alone would still look magnified and would silently lose the wave.
+  it('magnifies the rail visually without resizing its hit areas', async () => {
+    // The pointer-following wave is paint-only: hit targets keep a stable
+    // pitch while the picture grows inside them, avoiding layout work during
+    // a WebGL interaction.
     const html = await read('public/registry/index.html');
-    expect(html).toContain('width: calc(var(--tick) * var(--mag))');
+    expect(html).toContain('width: var(--tick); height: var(--tick)');
+    expect(html).not.toContain('width: calc(var(--tick) * var(--mag))');
     expect(html).toContain('transform: scale(var(--mag)); transform-origin: bottom center;');
     // The scene measures the wave in this pitch, so the CSS has to declare it.
     expect(html).toMatch(/\.gband \.rail \{\s*--tick:/);

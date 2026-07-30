@@ -10,12 +10,14 @@ import {
   approach,
   clampFocus,
   dockMagnify,
+  dragIntent,
   dragToFocusDelta,
   embedBand,
   emphasis,
   figurePose,
   fitScale,
   fitScales,
+  flingCarry,
   floorY,
   isVisible,
   lerpContent,
@@ -417,6 +419,31 @@ describe('focus arithmetic', () => {
   it('walks about four figures across a full drag, and inverts direction', () => {
     expect(dragToFocusDelta(-1024, 1024)).toBeCloseTo(4, 10);
     expect(dragToFocusDelta(512, 1024)).toBeCloseTo(-2, 10);
+  });
+
+  it('can calm touch dragging without changing the established desktop scale', () => {
+    expect(dragToFocusDelta(-390, 390)).toBeCloseTo(4, 10);
+    expect(dragToFocusDelta(-390, 390, 3)).toBeCloseTo(3, 10);
+    expect(dragToFocusDelta(195, 390, 3)).toBeCloseTo(-1.5, 10);
+  });
+
+  it('waits for a clear touch axis before browsing or yielding to page scroll', () => {
+    expect(dragIntent(8, 0)).toBe('pending');
+    expect(dragIntent(10, 0)).toBe('horizontal');
+    expect(dragIntent(0, 10)).toBe('vertical');
+    expect(dragIntent(10, 9)).toBe('pending');
+    expect(dragIntent(-24, 4)).toBe('horizontal');
+    expect(dragIntent(4, -24)).toBe('vertical');
+  });
+
+  it('turns release velocity into a bounded, fresh fling', () => {
+    expect(flingCarry(0.1, 0)).toBe(0);
+    expect(flingCarry(0.5, 81)).toBe(0);
+    expect(flingCarry(Number.NaN, 0)).toBe(0);
+    expect(flingCarry(0.5, 20)).toBeCloseTo(-0.55, 10);
+    expect(flingCarry(-0.5, 20)).toBeCloseTo(0.55, 10);
+    expect(flingCarry(4, 20)).toBe(-1.25);
+    expect(flingCarry(-4, 20)).toBe(1.25);
   });
 
   it('draws a generous window around the focus', () => {

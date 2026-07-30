@@ -6,7 +6,8 @@
 
 import {
   DOCK, GALLERY, approach, clampFocus, dockMagnify, embedBand, nearestIndex,
-  shortestTurn, signFromHash, wheelToFocusDelta, dragToFocusDelta,
+  shortestTurn, signFromHash, wheelToFocusDelta, dragToFocusDelta, dragIntent,
+  flingCarry,
 } from './layout.mjs';
 import { createScene } from './scene.mjs';
 import { createCard } from './card.mjs';
@@ -43,10 +44,8 @@ async function mount(root, records) {
 
   const nameLabel = root.querySelector('[data-gallery-name]');
 
-  const HINT_ROW = 'Select a sculpture for its record and market context. '
-    + 'Drag sideways to walk the row.';
-  const HINT_SHOWING = 'Drag to turn the sculpture. The rail walks along the '
-    + 'twelve; Escape returns it to the row.';
+  const HINT_ROW = 'Drag to browse · Choose a sign to open.';
+  const HINT_SHOWING = 'Drag to rotate · Esc to close.';
 
   await ensureFonts();
 
@@ -228,9 +227,23 @@ async function mount(root, records) {
   // page, hash or no hash. The band never writes the address bar — the
   // page's hashes belong to its section anchors.
   let mirroredSlug = null;
+  let chromeIndex = -1;
+  let chromeShowing = null;
+
+  function centerRail(index) {
+    const tick = ticks[index];
+    const maximum = rail.scrollWidth - rail.clientWidth;
+    if (!tick || maximum <= 0) return;
+    const target = tick.offsetLeft + (tick.offsetWidth / 2) - (rail.clientWidth / 2);
+    rail.scrollTo({ left: Math.max(0, Math.min(maximum, target)), behavior: 'auto' });
+  }
+
   function syncChrome() {
     const index = current();
     const record = records[index];
+    const indexChanged = index !== chromeIndex;
+    const showing = state.targetOpen > 0;
+    const showingChanged = showing !== chromeShowing;
     if (record.slug !== mirroredSlug) {
       mirroredSlug = record.slug;
       // The host page owns the address bar; the selection is an event.
@@ -239,9 +252,8 @@ async function mount(root, records) {
         detail: { slug: record.slug },
       }));
     }
-    const showing = state.openIndex >= 0;
-    if (opener) {
-      opener.textContent = showing ? 'Return the sculpture' : `View ${record.name}`;
+    if (opener && (indexChanged || showingChanged)) {
+      opener.textContent = showing ? 'Back to the Twelve' : `View ${record.name}`;
       opener.setAttribute(
         'aria-label',
         showing ? 'Return the sculpture to the row' : `View the ${record.name} sculpture`,
@@ -249,21 +261,24 @@ async function mount(root, records) {
     }
     // The instruction follows the state: browsing the row and turning a piece
     // in the hand are different gestures.
-    if (hint) {
+    if (hint && (indexChanged || showingChanged)) {
       const text = showing ? HINT_SHOWING : HINT_ROW;
       if (hint.textContent !== text) hint.textContent = text;
     }
-    for (const [i, button] of ticks.entries()) {
-      const isCurrent = i === index;
-      button.tabIndex = isCurrent ? 0 : -1;
-      button.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+    if (indexChanged) {
+      for (const [i, button] of ticks.entries()) {
+        const isCurrent = i === index;
+        button.tabIndex = isCurrent ? 0 : -1;
+        button.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+      }
+      // Keep a narrow rail centred without asking scrollIntoView to move the
+      // page or any of the band's ancestors.
+      if (!drag) centerRail(index);
+      // At rest the current sign is the one standing proud.
+      if (!rail.matches(':hover')) dockAt(null);
     }
-    // The rail scrolls on narrow viewports; keep the current tick in view.
-    if (rail.scrollWidth > rail.clientWidth) {
-      ticks[index]?.scrollIntoView({ block: 'nearest', inline: 'center' });
-    }
-    // At rest the current sign is the one standing proud.
-    if (!rail.matches(':hover')) dockAt(null);
+    chromeIndex = index;
+    chromeShowing = showing;
   }
 
   // ---- drawing a figure out and returning it ---------------------------
@@ -427,6 +442,8 @@ async function mount(root, records) {
   const pointers = new Map();
   let drag = null;
   let pinch = 0;
+  const TOUCH_FIGURES_PER_VIEWPORT = 3;
+  const VELOCITY_BLEND = 0.35;
 
   /**
    * One label, one meaning: this is the piece you are pointing at. It serves
@@ -478,7 +495,9 @@ async function mount(root, records) {
   canvas.addEventListener('pointerleave', () => setHover(-1));
 
   canvas.addEventListener('pointerdown', (event) => {
-    canvas.setPointerCapture(event.pointerId);
+    // Mouse and pen keep their existing capture contract. Touch waits until
+    // horizontal intent is clear so a vertical page scroll remains native.
+    if (event.pointerType !== 'touch') canvas.setPointerCapture(event.pointerId);
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (pointers.size === 2) {
       const [a, b] = [...pointers.values()];
@@ -495,8 +514,13 @@ async function mount(root, records) {
       focus: state.targetFocus,
       yaw: state.targetYaw,
       pitch: state.targetPitch,
+      zoom: state.targetZoom,
+      pointerType: event.pointerType,
+      touchIntent: 'pending',
       velocity: 0,
+      velocitySamples: 0,
       time: event.timeStamp,
+      lastMove: event.timeStamp,
       moved: false,
     };
   });
@@ -525,21 +549,46 @@ async function mount(root, records) {
     }
     const dx = event.clientX - drag.startX;
     const dy = event.clientY - drag.startY;
-    if (!drag.moved && Math.hypot(dx, dy) < 5) return;
-    drag.moved = true;
-    setHover(-1);
+    if (!drag.moved) {
+      if (drag.pointerType === 'touch') {
+        if (drag.touchIntent === 'vertical') return;
+        drag.touchIntent = dragIntent(dx, dy);
+        if (drag.touchIntent !== 'horizontal') return;
+        if (!canvas.hasPointerCapture(event.pointerId)) {
+          canvas.setPointerCapture(event.pointerId);
+        }
+      } else if (Math.hypot(dx, dy) < 5) {
+        return;
+      }
+      drag.moved = true;
+      window.clearTimeout(snapTimer);
+      setHover(-1);
+    }
 
     if (state.targetOpen > 0) {
       // A figure drawn out turns in the hand — right around, as often as the
       // reader likes. The row stays where it is, and the turntable yields.
       handTurned = true;
       state.targetYaw = drag.yaw + (dx / 190);
-      state.targetPitch = Math.max(-0.44, Math.min(0.44, drag.pitch + (dy / 300)));
+      // A touch keeps vertical movement available to the page; mouse and pen
+      // retain the full two-axis inspection.
+      if (drag.pointerType !== 'touch') {
+        state.targetPitch = Math.max(-0.44, Math.min(0.44, drag.pitch + (dy / 300)));
+      }
     } else {
       const width = canvas.clientWidth;
-      state.targetFocus = clampFocus(drag.focus + dragToFocusDelta(dx, width), count);
+      const span = drag.pointerType === 'touch' ? TOUCH_FIGURES_PER_VIEWPORT : 4;
+      state.targetFocus = clampFocus(
+        drag.focus + dragToFocusDelta(dx, width, span),
+        count,
+      );
       const dt = Math.max(1, event.timeStamp - drag.time);
-      drag.velocity = (event.clientX - drag.lastX) / dt;
+      const sample = (event.clientX - drag.lastX) / dt;
+      drag.velocity = drag.velocitySamples === 0
+        ? sample
+        : (drag.velocity * (1 - VELOCITY_BLEND)) + (sample * VELOCITY_BLEND);
+      drag.velocitySamples += 1;
+      drag.lastMove = event.timeStamp;
       syncChrome();
     }
     drag.lastX = event.clientX;
@@ -556,6 +605,9 @@ async function mount(root, records) {
     drag = null;
 
     if (!finished.moved) {
+      // A vertical touch belongs to the page, even if the browser happens to
+      // deliver pointerup before it emits pointercancel for native scrolling.
+      if (finished.touchIntent === 'vertical') return;
       const index = scene.pick(event.clientX, event.clientY);
       if (index >= 0) {
         // One gesture, one meaning: a sculpture opens its record — front,
@@ -575,7 +627,8 @@ async function mount(root, records) {
 
     if (state.targetOpen > 0) return;
     // Carry the throw a little, then settle on a figure.
-    const carried = motion.matches ? 0 : -finished.velocity * 1.8;
+    const idleMs = Math.max(0, event.timeStamp - finished.lastMove);
+    const carried = motion.matches ? 0 : flingCarry(finished.velocity, idleMs);
     state.targetFocus = nearestIndex(
       clampFocus(state.targetFocus + carried, count), count,
     );
@@ -584,8 +637,28 @@ async function mount(root, records) {
     invalidate();
   }
 
+  function cancelPointer(event) {
+    pointers.delete(event.pointerId);
+    if (pointers.size < 2) pinch = 0;
+    if (drag?.id !== event.pointerId) return;
+    const cancelled = drag;
+    drag = null;
+    // Cancellation is not a release. Put the row or sculpture back exactly
+    // where this gesture found it, without picking, snapping, or momentum.
+    if (state.targetOpen > 0) {
+      state.targetYaw = cancelled.yaw;
+      state.targetPitch = cancelled.pitch;
+      state.targetZoom = cancelled.zoom;
+    } else {
+      state.targetFocus = cancelled.focus;
+      syncChrome();
+    }
+    invalidate();
+  }
+
   canvas.addEventListener('pointerup', endPointer);
-  canvas.addEventListener('pointercancel', endPointer);
+  canvas.addEventListener('pointercancel', cancelPointer);
+  canvas.addEventListener('lostpointercapture', cancelPointer);
 
   canvas.addEventListener('wheel', (event) => {
     if (state.targetOpen > 0) {

@@ -1719,8 +1719,7 @@
               View the sculpture
             </button>
             <p className="gband__hint" data-gallery-hint="">
-              Select a sculpture for its record and market context. Drag
-              sideways to walk the row.
+              Drag to browse · Choose a sign to open.
             </p>
           </div>
 
