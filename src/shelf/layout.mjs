@@ -264,7 +264,9 @@ export function emphasis(distance, spotlight = SPOTLIGHT) {
  * the pointer, so which of the twelve is under the hand is never in doubt.
  */
 export const DOCK = Object.freeze({
-  amplitude: 0.9,
+  // The peak stays within the rail's vertical paint box, so the horizontally
+  // scrollable pill never shears the top off a hovered disc.
+  amplitude: 0.42,
   spread: 1.9,
   /** How far the current sign stands proud when no cursor is on the rail. */
   rest: 0.28,

@@ -46,6 +46,7 @@ async function mount(root, records) {
 
   const HINT_ROW = 'Drag to browse · Choose a sign to open.';
   const HINT_SHOWING = 'Drag to rotate · Esc to close.';
+  const dockMotion = window.matchMedia('(hover: hover) and (pointer: fine)');
 
   await ensureFonts();
 
@@ -410,7 +411,7 @@ async function mount(root, records) {
     // resting magnification, which is affordance rather than animation. Read
     // at event time, so a reader who changes the preference is obeyed without
     // reloading the page.
-    if (motion.matches || event.pointerType !== 'mouse') return;
+    if (motion.matches || !dockMotion.matches || event.pointerType !== 'mouse') return;
     scheduleDock(event.clientX);
   });
   rail.addEventListener('pointerleave', () => scheduleDock(null));

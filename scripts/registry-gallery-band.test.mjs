@@ -45,6 +45,7 @@ describe('the gallery band on the registry hub', () => {
     ]) expect(source).toContain(marker);
     // One selector or the other, decided once by the probe — never both.
     expect(source).toContain('{!GALLERY_LIVE && <Selector');
+    expect(source).toContain('{!GALLERY_LIVE && <FeaturedCard');
     expect(source).toContain('{GALLERY_LIVE && (');
   });
 
@@ -67,8 +68,8 @@ describe('the gallery band on the registry hub', () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain("documentElement.classList.add('gallery-live')");
     expect(html).toContain('.gband {');
-    // The featured card yields its duplicate artwork to the band.
-    expect(html).toContain('html.gallery-live #featured-sign .glyph-stage { display: none; }');
+    // The fallback card is absent rather than merely concealed.
+    expect(html).not.toContain('html.gallery-live #featured-sign');
   });
 
   it('keeps the scene off the address bar and off vertical wheels', async () => {
@@ -185,12 +186,15 @@ describe('the gallery band on the registry hub', () => {
     const scene = await read('src/shelf/main.mjs');
     expect(scene).toContain("getPropertyValue('--tick')");
     expect(scene).toContain("setProperty('--mag'");
+    expect(scene).toContain("'(hover: hover) and (pointer: fine)'");
     // The resting magnification is affordance, not animation: the current
     // sign stands proud for touch and keyboard readers who raise no wave.
     expect(scene).toContain('1 + DOCK.rest');
     // And the wave itself is withheld while a reader asks for less motion,
     // read at event time rather than latched at mount.
-    expect(scene).toContain('if (motion.matches || event.pointerType !== \'mouse\') return;');
+    expect(scene).toContain(
+      'if (motion.matches || !dockMotion.matches || event.pointerType !== \'mouse\') return;',
+    );
   });
 
   it('spends size on focus rather than on which sign it is', async () => {

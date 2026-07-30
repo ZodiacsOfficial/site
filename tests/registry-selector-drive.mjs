@@ -771,6 +771,18 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             wave[6] > wave[5] && wave[5] > wave[4] && wave[4] > wave[0] && wave[6] > wave[0] * 1.4,
             wave.map((w) => w.toFixed(0)).join(','),
           );
+          const waveBounds = await rail.evaluate((element) => {
+            const railBox = element.getBoundingClientRect();
+            const pictureBox = element
+              .querySelector('.rail__tick[data-index="6"] picture')
+              .getBoundingClientRect();
+            return { railTop: railBox.top, pictureTop: pictureBox.top };
+          });
+          check(
+            `band at ${label} keeps the hovered disc inside the rail`,
+            waveBounds.pictureTop >= waveBounds.railTop + 1,
+            `${waveBounds.pictureTop.toFixed(1)} vs ${waveBounds.railTop.toFixed(1)}`,
+          );
           check(
             `band at ${label} the wave names its disc`,
             await band.evaluate(() => {
@@ -819,8 +831,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         await targetTick.click();
         await band.waitForTimeout(1100);
         check(
-          `band at ${label} rail drives the featured record`,
-          await band.locator('[data-featured-sign]').getAttribute('data-featured-sign')
+          `band at ${label} rail drives the Museum label`,
+          await band.locator('[data-museum-sign]').getAttribute('data-museum-sign')
             === targetName.toLowerCase(),
           targetName,
         );
@@ -910,11 +922,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           }
         }
         check(
-          `band at ${label} hides the duplicate featured artwork`,
-          await band.evaluate(() => {
-            const stageEl = document.querySelector('#featured-sign .glyph-stage');
-            return Boolean(stageEl) && getComputedStyle(stageEl).display === 'none';
-          }),
+          `band at ${label} removes the duplicate featured card`,
+          await band.evaluate(() => document.querySelector('#featured-sign') === null),
         );
       }
       check(`band at ${label} runtime is error-free`, bandErrors.length === 0, bandErrors.join(' | '));

@@ -349,6 +349,10 @@ describe('the rail’s wave', () => {
     expect(dockMagnify(6)).toBeCloseTo(1, 3);
   });
 
+  it('keeps the peak 26px disc inside the rail’s vertical paint box', () => {
+    expect(dockMagnify(0) * 26).toBeLessThanOrEqual(38);
+  });
+
   it('reads the same either side of the cursor', () => {
     for (const distance of [0.5, 1, 2.5]) {
       expect(dockMagnify(distance)).toBeCloseTo(dockMagnify(-distance), 12);

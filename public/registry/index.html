@@ -3488,6 +3488,14 @@
       }
       .hero > * { grid-column: 1; min-width: 0; }
       .hero > .card { grid-column: 2; grid-row: 1 / span 5; align-self: start; }
+      html.gallery-live .hero {
+        grid-template-columns: minmax(0, 1fr);
+        column-gap: 0;
+      }
+      html.gallery-live .hero__sub {
+        max-width: 52ch;
+        margin-bottom: 0;
+      }
       .hero__eyebrow { justify-self: start; }
       .hero__headline { font-size: clamp(64px, 6.4vw, 86px); margin-bottom: 26px; }
       .hero__sub { font-size: 19px; max-width: 42ch; margin-bottom: 40px; }
@@ -3735,9 +3743,8 @@
     @media (max-height: 620px) { .gband__hint { display: none; } }
     .gband__mount, .gband__chrome { opacity: 0; transition: opacity 700ms var(--ease); }
     .gband.is-ready .gband__mount, .gband.is-ready .gband__chrome { opacity: 1; }
-    /* The band shows the chosen figure large; the featured card keeps its
-       facts and drops the duplicate artwork. */
-    html.gallery-live #featured-sign .glyph-stage { display: none; }
+    /* With the 3D gallery active, the Museum label is the one persistent
+       selected-record surface. The fallback Featured card is not rendered. */
     /* A viewing: the band grows for the piece on display, and the record
        card takes its place beside it — below it on narrow viewports. */
     .gband { transition: height 480ms var(--ease); }

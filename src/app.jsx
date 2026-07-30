@@ -1376,7 +1376,7 @@
 
           {!GALLERY_LIVE && <Selector active={active} setActive={setActive} />}
 
-          <FeaturedCard sign={sign} animKey={animKey} />
+          {!GALLERY_LIVE && <FeaturedCard sign={sign} animKey={animKey} />}
         </section>
       );
     }
@@ -2106,7 +2106,11 @@
             <h2 className="sec__title">Museum label</h2>
           </div>
 
-          <article className="detail fade-key" key={animKey + '-detail'}>
+          <article
+            className="detail fade-key"
+            key={animKey + '-detail'}
+            data-museum-sign={sign.asset.sign}
+          >
             <a
               className="detail__symbol-link"
               href={`/registry/${sign.asset.sign}/`}
