@@ -72,6 +72,44 @@ export function modalityBalance(bodies: MinimalBody[]): Record<Modality, number>
   return out;
 }
 
+/**
+ * A slow planet conjunct its own counterpart in the other chart. Pluto
+ * takes a dozen years to cross a sign, so any two people born near each
+ * other carry Pluto conjunct Pluto at a fraction of a degree; Jupiter and
+ * Saturn do the same over shorter spans. Such a contact reports when two
+ * people were born, not who they are to each other.
+ *
+ * Only the same planet against itself qualifies. A cross-body contact
+ * between slow planets still varies enough to be worth its orb, and keeps
+ * its place in the ranking.
+ */
+const SLOW_BODIES = new Set(['Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto']);
+
+export function isGenerationalContact(
+  aspect: Pick<InterAspect, 'a' | 'b' | 'type'>,
+): boolean {
+  return aspect.type === 'conjunction'
+    && aspect.a === aspect.b
+    && SLOW_BODIES.has(aspect.a);
+}
+
+/**
+ * Contacts ordered by how much they say about this particular pair: orb
+ * first, as before, with the generational self-conjunctions moved behind
+ * everything else.
+ *
+ * Demoted rather than dropped. A pair whose only tight contacts are
+ * generational still gets shown something true — it simply does not lead
+ * with a fact that would be equally true of any two strangers born the
+ * same season.
+ */
+export function rankedContacts(aspects: readonly InterAspect[]): InterAspect[] {
+  return [...aspects].sort((one, other) => (
+    Number(isGenerationalContact(one)) - Number(isGenerationalContact(other))
+    || one.orb - other.orb
+  ));
+}
+
 export interface PairSummary {
   aspects: InterAspect[];
   /** The tightest few, for display. */
@@ -92,7 +130,7 @@ export function summarizePair(a: MinimalBody[], b: MinimalBody[], topN = 8): Pai
   for (const asp of aspects) counts[asp.type] += 1;
   return {
     aspects,
-    top: aspects.slice(0, topN),
+    top: rankedContacts(aspects).slice(0, topN),
     counts,
     easeful: counts.trine + counts.sextile,
     charged: counts.square + counts.opposition,
