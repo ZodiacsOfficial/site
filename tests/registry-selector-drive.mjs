@@ -712,7 +712,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         document.querySelectorAll('.strip-wrap').length === 0
         && document.querySelectorAll('[data-gallery-stage][data-gallery-embed]').length === 1
       )));
-      await band.evaluate(() => document.querySelector('.gband')?.scrollIntoView({ block: 'center' }));
+      await band.evaluate(() => document.querySelector('.gband')?.scrollIntoView({
+        block: 'center',
+        behavior: 'instant',
+      }));
       let bandReady = true;
       try {
         await band.waitForSelector('.gband.is-ready', { timeout: 30000 });
@@ -757,11 +760,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           const target = band.locator('.gband .rail__tick').nth(6);
           const spot = await target.boundingBox();
           const rail = band.locator('.gband .rail');
-          await rail.dispatchEvent('pointermove', {
-            pointerType: 'mouse',
-            clientX: spot.x + (spot.width / 2),
-            clientY: spot.y + (spot.height / 2),
-          });
+          // Use a real pointer move so :hover and the pointer event agree.
+          // A synthetic event can leave the rail reporting :hover=false,
+          // allowing its resting state to replace the test wave.
+          await band.mouse.move(
+            spot.x + (spot.width / 2),
+            spot.y + (spot.height / 2),
+          );
           await band.waitForTimeout(420);
           const wave = await band.locator('.gband .rail__tick').evaluateAll((ticks) => (
             ticks.map((t) => t.querySelector('picture').getBoundingClientRect().width)
@@ -791,7 +796,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
                 && Boolean(el?.classList.contains('is-rail'));
             }),
           );
-          await rail.dispatchEvent('pointerleave', { pointerType: 'mouse' });
+          await band.mouse.move(0, 0);
           await band.waitForTimeout(420);
 
           // The same rail under a reduced motion preference: the current sign
@@ -800,7 +805,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce',
           });
           await calm.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-          await calm.evaluate(() => document.querySelector('.gband')?.scrollIntoView({ block: 'center' }));
+          await calm.evaluate(() => document.querySelector('.gband')?.scrollIntoView({
+            block: 'center',
+            behavior: 'instant',
+          }));
           try {
             await calm.waitForSelector('.gband.is-ready', { timeout: 30000 });
             const calmSpot = await calm.locator('.gband .rail__tick').nth(6).boundingBox();
