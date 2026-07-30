@@ -159,10 +159,36 @@ export function wheelToFocusDelta(deltaX, deltaY, pixelsPerFigure = 190) {
 }
 
 /** Pointer travel across the canvas, in figures. */
-export function dragToFocusDelta(pixels, viewportWidth) {
+export function dragToFocusDelta(pixels, viewportWidth, figuresPerViewport = 4) {
   const width = Math.max(320, viewportWidth || 1024);
-  // A drag across the full width of the stage walks about four figures.
-  return (-pixels / width) * 4;
+  return (-pixels / width) * figuresPerViewport;
+}
+
+/**
+ * Decide whether a pending touch means to browse the row or scroll the page.
+ * Diagonal movement stays pending until one axis clearly wins.
+ */
+export function dragIntent(dx, dy, threshold = 9, axisRatio = 1.2) {
+  if (Math.hypot(dx, dy) < threshold) return 'pending';
+  if (Math.abs(dx) > Math.abs(dy) * axisRatio) return 'horizontal';
+  if (Math.abs(dy) > Math.abs(dx) * axisRatio) return 'vertical';
+  return 'pending';
+}
+
+/**
+ * Turn a release velocity into a small, predictable continuation.
+ * A pause before release cancels the fling; even a fast flick carries no more
+ * than one-and-a-quarter figures.
+ */
+export function flingCarry(
+  velocity,
+  idleMs,
+  { threshold = 0.11, multiplier = 1.1, maximum = 1.25, staleAfter = 80 } = {},
+) {
+  if (!Number.isFinite(velocity) || Math.abs(velocity) < threshold || idleMs > staleAfter) {
+    return 0;
+  }
+  return Math.max(-maximum, Math.min(maximum, -velocity * multiplier));
 }
 
 /**
@@ -238,7 +264,9 @@ export function emphasis(distance, spotlight = SPOTLIGHT) {
  * the pointer, so which of the twelve is under the hand is never in doubt.
  */
 export const DOCK = Object.freeze({
-  amplitude: 0.9,
+  // The peak stays within the rail's vertical paint box, so the horizontally
+  // scrollable pill never shears the top off a hovered disc.
+  amplitude: 0.42,
   spread: 1.9,
   /** How far the current sign stands proud when no cursor is on the rail. */
   rest: 0.28,

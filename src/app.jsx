@@ -1376,7 +1376,7 @@
 
           {!GALLERY_LIVE && <Selector active={active} setActive={setActive} />}
 
-          <FeaturedCard sign={sign} animKey={animKey} />
+          {!GALLERY_LIVE && <FeaturedCard sign={sign} animKey={animKey} />}
         </section>
       );
     }
@@ -1719,8 +1719,7 @@
               View the sculpture
             </button>
             <p className="gband__hint" data-gallery-hint="">
-              Select a sculpture for its record and market context. Drag
-              sideways to walk the row.
+              Drag to browse · Choose a sign to open.
             </p>
           </div>
 
@@ -2107,7 +2106,11 @@
             <h2 className="sec__title">Museum label</h2>
           </div>
 
-          <article className="detail fade-key" key={animKey + '-detail'}>
+          <article
+            className="detail fade-key"
+            key={animKey + '-detail'}
+            data-museum-sign={sign.asset.sign}
+          >
             <a
               className="detail__symbol-link"
               href={`/registry/${sign.asset.sign}/`}

@@ -712,7 +712,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         document.querySelectorAll('.strip-wrap').length === 0
         && document.querySelectorAll('[data-gallery-stage][data-gallery-embed]').length === 1
       )));
-      await band.evaluate(() => document.querySelector('.gband')?.scrollIntoView({ block: 'center' }));
+      await band.evaluate(() => document.querySelector('.gband')?.scrollIntoView({
+        block: 'center',
+        behavior: 'instant',
+      }));
       let bandReady = true;
       try {
         await band.waitForSelector('.gband.is-ready', { timeout: 30000 });
@@ -733,28 +736,57 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         // readers see the selection without a cursor.
         const restWidths = await band.locator('.gband .rail__tick').evaluateAll((ticks) => {
           const current = ticks.findIndex((t) => t.getAttribute('aria-current') === 'true');
-          return { current: ticks[current].getBoundingClientRect().width,
-            other: ticks[(current + 5) % ticks.length].getBoundingClientRect().width };
+          const visualWidth = (tick) => tick.querySelector('picture').getBoundingClientRect().width;
+          const hitWidths = ticks.map((tick) => tick.getBoundingClientRect().width);
+          return {
+            current: visualWidth(ticks[current]),
+            other: visualWidth(ticks[(current + 5) % ticks.length]),
+            hitSpread: Math.max(...hitWidths) - Math.min(...hitWidths),
+          };
         });
         check(
           `band at ${label} rests with the current disc proud`,
           restWidths.current > restWidths.other + 1,
           `${restWidths.current.toFixed(1)} vs ${restWidths.other.toFixed(1)}`,
         );
+        check(
+          `band at ${label} keeps stable rail hit areas`,
+          restWidths.hitSpread <= 0.5,
+          restWidths.hitSpread.toFixed(1),
+        );
         if (label === '1280') {
           // The dock wave: the disc under the cursor swells most, its
           // neighbour less, and the far end of the rail is untouched.
           const target = band.locator('.gband .rail__tick').nth(6);
           const spot = await target.boundingBox();
-          await band.mouse.move(spot.x + (spot.width / 2), spot.y + (spot.height / 2));
+          const rail = band.locator('.gband .rail');
+          // Use a real pointer move so :hover and the pointer event agree.
+          // A synthetic event can leave the rail reporting :hover=false,
+          // allowing its resting state to replace the test wave.
+          await band.mouse.move(
+            spot.x + (spot.width / 2),
+            spot.y + (spot.height / 2),
+          );
           await band.waitForTimeout(420);
           const wave = await band.locator('.gband .rail__tick').evaluateAll((ticks) => (
-            ticks.map((t) => t.getBoundingClientRect().width)
+            ticks.map((t) => t.querySelector('picture').getBoundingClientRect().width)
           ));
           check(
             `band at ${label} rail magnifies like a dock`,
             wave[6] > wave[5] && wave[5] > wave[4] && wave[4] > wave[0] && wave[6] > wave[0] * 1.4,
             wave.map((w) => w.toFixed(0)).join(','),
+          );
+          const waveBounds = await rail.evaluate((element) => {
+            const railBox = element.getBoundingClientRect();
+            const pictureBox = element
+              .querySelector('.rail__tick[data-index="6"] picture')
+              .getBoundingClientRect();
+            return { railTop: railBox.top, pictureTop: pictureBox.top };
+          });
+          check(
+            `band at ${label} keeps the hovered disc inside the rail`,
+            waveBounds.pictureTop >= waveBounds.railTop + 1,
+            `${waveBounds.pictureTop.toFixed(1)} vs ${waveBounds.railTop.toFixed(1)}`,
           );
           check(
             `band at ${label} the wave names its disc`,
@@ -764,7 +796,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
                 && Boolean(el?.classList.contains('is-rail'));
             }),
           );
-          await band.mouse.move(spot.x + (spot.width / 2), spot.y - 220);
+          await band.mouse.move(0, 0);
           await band.waitForTimeout(420);
 
           // The same rail under a reduced motion preference: the current sign
@@ -773,14 +805,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce',
           });
           await calm.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-          await calm.evaluate(() => document.querySelector('.gband')?.scrollIntoView({ block: 'center' }));
+          await calm.evaluate(() => document.querySelector('.gband')?.scrollIntoView({
+            block: 'center',
+            behavior: 'instant',
+          }));
           try {
             await calm.waitForSelector('.gband.is-ready', { timeout: 30000 });
             const calmSpot = await calm.locator('.gband .rail__tick').nth(6).boundingBox();
             await calm.mouse.move(calmSpot.x + (calmSpot.width / 2), calmSpot.y + (calmSpot.height / 2));
             await calm.waitForTimeout(420);
             const calmWave = await calm.locator('.gband .rail__tick').evaluateAll((ticks) => (
-              ticks.map((t) => Math.round(t.getBoundingClientRect().width))
+              ticks.map((t) => Math.round(t.querySelector('picture').getBoundingClientRect().width))
             ));
             const proud = calmWave.filter((w) => w > Math.min(...calmWave) + 1).length;
             check(
@@ -804,8 +839,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         await targetTick.click();
         await band.waitForTimeout(1100);
         check(
-          `band at ${label} rail drives the featured record`,
-          await band.locator('[data-featured-sign]').getAttribute('data-featured-sign')
+          `band at ${label} rail drives the Museum label`,
+          await band.locator('[data-museum-sign]').getAttribute('data-museum-sign')
             === targetName.toLowerCase(),
           targetName,
         );
@@ -856,6 +891,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             `band at ${label} Escape returns the sculpture`,
             await band.evaluate(() => !document.querySelector('.gband')?.classList.contains('is-open')),
           );
+          check(
+            `band at ${label} Escape immediately restores the opener`,
+            (await band.locator('.gband__open').innerText()).trim() === `View ${targetName}`,
+            (await band.locator('.gband__open').innerText()).trim(),
+          );
         }
         if (label === '1280') {
           // Hover is the invitation: the figure lifts, the cursor says
@@ -890,11 +930,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           }
         }
         check(
-          `band at ${label} hides the duplicate featured artwork`,
-          await band.evaluate(() => {
-            const stageEl = document.querySelector('#featured-sign .glyph-stage');
-            return Boolean(stageEl) && getComputedStyle(stageEl).display === 'none';
-          }),
+          `band at ${label} removes the duplicate featured card`,
+          await band.evaluate(() => document.querySelector('#featured-sign') === null),
         );
       }
       check(`band at ${label} runtime is error-free`, bandErrors.length === 0, bandErrors.join(' | '));

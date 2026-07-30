@@ -1,10 +1,12 @@
 {
   "version": 1,
-  "id": "gallery-spotlight-and-dock",
-  "reason": "Owner-directed correction, July 2026: the gallery band's size language was inverted — a sculpture appeared to shrink when it came to the front, because each figure was fitted alone to the row's limits (46% spread between signs) while focus was worth only ~4%. The set is now fitted together into a narrow height band, the focused piece stands at full size while the rest recede and dim, and the disc rail magnifies like a dock under the cursor. Touches the hub page's rail and label CSS, and the band's own test file, which the builders pattern covers by name; the scene sources and bundle are unprotected. The registry catalogue itself is untouched. Owner approved the design and the release path in-session.",
-  "baseCommit": "eebe360ce14054e6a2adc0d3e0ff6dc7bdc34edb",
+  "id": "registry-gallery-mobile-2026-07-30",
+  "reason": "Owner-approved Registry gallery release, July 30, 2026: make the sculpture rail dependable on touch screens, keep desktop hover discs inside their clipped rail, improve the return control and its supporting text, and remove the duplicate featured record when the live gallery is available. The Museum label remains the canonical detail surface and the no-WebGL fallback remains intact.",
+  "baseCommit": "4732189e65794047ac8c680f01bed525fe09bd9d",
   "protectedPaths": [
+    "public/assets/app.js",
     "public/registry/index.html",
-    "scripts/registry-gallery-band.test.mjs"
+    "scripts/registry-gallery-band.test.mjs",
+    "src/app.jsx"
   ]
 }

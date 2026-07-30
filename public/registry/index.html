@@ -3488,6 +3488,14 @@
       }
       .hero > * { grid-column: 1; min-width: 0; }
       .hero > .card { grid-column: 2; grid-row: 1 / span 5; align-self: start; }
+      html.gallery-live .hero {
+        grid-template-columns: minmax(0, 1fr);
+        column-gap: 0;
+      }
+      html.gallery-live .hero__sub {
+        max-width: 52ch;
+        margin-bottom: 0;
+      }
       .hero__eyebrow { justify-self: start; }
       .hero__headline { font-size: clamp(64px, 6.4vw, 86px); margin-bottom: 26px; }
       .hero__sub { font-size: 19px; max-width: 42ch; margin-bottom: 40px; }
@@ -3658,6 +3666,7 @@
     .gband {
       position: relative; isolation: isolate; overflow: clip;
       height: clamp(380px, 62vh, 560px);
+      height: clamp(380px, 62svh, 560px);
       background:
         radial-gradient(120% 90% at 50% 32%, rgba(30,37,53,0.5), transparent 70%),
         var(--bg);
@@ -3677,63 +3686,71 @@
       content: ''; position: absolute; inset: -60px 0 0; z-index: -1; pointer-events: none;
       background: linear-gradient(to bottom, rgba(6,7,9,0) 0%, rgba(6,7,9,0.7) 55%, rgba(6,7,9,0.92) 100%);
     }
-    /* The rail magnifies like a dock: --mag is written per tick by the scene,
-       and because it drives width as well as scale the swollen disc pushes
-       its neighbours aside instead of covering them. --tick is the resting
-       pitch the wave is measured in; main.mjs reads it from here. */
+    /* The rail magnifies like a dock: --mag is written per tick by the scene.
+       The hit areas keep a stable pitch while only the icon transforms, so a
+       change of selection never reflows the horizontally scrollable rail. */
     .gband .rail {
       --tick: 32px;
-      display: flex; align-items: flex-end; gap: 2px; padding: 5px;
+      display: flex; align-items: flex-end; gap: 5px; padding: 6px 9px;
       border-radius: 999px; border: 1px solid var(--hair);
       background: rgba(10,12,17,0.6);
       backdrop-filter: saturate(140%) blur(16px);
       -webkit-backdrop-filter: saturate(140%) blur(16px);
-      max-width: 100%; overflow-x: auto; overflow-y: visible; scrollbar-width: none;
+      max-width: 100%;
+      overflow-x: auto; overflow-y: visible;
+      overscroll-behavior-inline: contain;
+      scroll-padding-inline: 9px;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
     }
     .gband .rail::-webkit-scrollbar { display: none; }
     .gband .rail__tick {
       --mag: 1;
       flex: 0 0 auto;
-      width: calc(var(--tick) * var(--mag)); height: var(--tick);
+      width: var(--tick); height: var(--tick);
       display: grid; place-items: end center;
       border: 0; border-radius: 50%; background: none; cursor: pointer; padding: 0;
       color: var(--ink-mute); font-size: 15px; line-height: 1;
-      transition: width 160ms var(--ease), color 220ms var(--ease);
+      scroll-snap-align: center;
+      transition: color 180ms var(--ease-soft);
     }
     .gband .rail__tick picture {
       transform: scale(var(--mag)); transform-origin: bottom center;
-      transition: transform 160ms var(--ease);
-    }
-    .gband .rail__tick[aria-current='true'] picture {
-      filter: drop-shadow(0 0 10px color-mix(in oklab, var(--sign, #C6CCDA) 55%, transparent));
+      transition: transform 160ms var(--ease-soft);
     }
     .gband .rail__tick:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px; }
     .gband .rail__tick picture { display: block; line-height: 0; }
     .gband .rail__tick img { width: 26px; height: 26px; border-radius: 50%; display: block; }
     .gband__open {
       display: inline-flex; align-items: center; gap: 7px;
-      font-size: 13.5px; color: var(--ink-2); text-decoration: none;
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 13px; font-weight: 500; line-height: 1;
+      letter-spacing: 0.01em; color: var(--ink-2); text-decoration: none;
       border-bottom: 1px solid var(--hair-2); padding-bottom: 2px;
       transition: color 200ms var(--ease), border-color 200ms var(--ease);
     }
     .gband__open:hover { color: var(--ink); border-color: var(--hair-3); }
     .gband__open:focus-visible { outline: 2px solid var(--ink-2); outline-offset: 3px; }
     .gband__hint {
-      margin: 0; font-size: 12px; color: var(--ink-mute);
-      text-align: center; max-width: 54ch;
+      margin: 0;
+      max-width: min(68ch, calc(100vw - 48px));
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 12.5px; font-weight: 450; line-height: 1.45;
+      letter-spacing: 0.01em; color: var(--ink-dim);
+      text-align: center; text-wrap: balance;
     }
-    @media (max-height: 700px), (max-width: 640px) { .gband__hint { display: none; } }
+    @media (max-height: 620px) { .gband__hint { display: none; } }
     .gband__mount, .gband__chrome { opacity: 0; transition: opacity 700ms var(--ease); }
     .gband.is-ready .gband__mount, .gband.is-ready .gband__chrome { opacity: 1; }
-    /* The band shows the chosen figure large; the featured card keeps its
-       facts and drops the duplicate artwork. */
-    html.gallery-live #featured-sign .glyph-stage { display: none; }
+    /* With the 3D gallery active, the Museum label is the one persistent
+       selected-record surface. The fallback Featured card is not rendered. */
     /* A viewing: the band grows for the piece on display, and the record
        card takes its place beside it — below it on narrow viewports. */
     .gband { transition: height 480ms var(--ease); }
     .gband.is-open { height: min(92svh, 760px); }
     .gband__open {
-      font-family: inherit; font-size: 14px; cursor: pointer;
+      min-height: 40px; cursor: pointer;
       padding: 9px 20px; border-radius: 999px;
       color: var(--ink); background: rgba(198,204,218,0.09);
       border: 1px solid var(--hair-2);
@@ -3760,6 +3777,32 @@
         opacity: 0; pointer-events: none; visibility: hidden;
         transition: opacity 420ms var(--ease), visibility 0s 420ms;
       }
+    }
+    @media (max-width: 640px) {
+      .gband {
+        height: clamp(480px, 66vh, 560px);
+        height: clamp(480px, 66svh, 560px);
+      }
+      .gband__chrome { padding-inline: 16px; }
+      .gband__hint {
+        max-width: min(48ch, calc(100vw - 48px));
+        font-size: 12px;
+      }
+    }
+    @media (pointer: coarse) {
+      .gband .rail {
+        --tick: 44px;
+        gap: 2px;
+        max-width: calc(100% - 8px);
+        padding: 5px 8px;
+        overflow-y: hidden;
+        scroll-padding-inline: 8px;
+        scroll-snap-type: x mandatory;
+        touch-action: pan-x pan-y;
+      }
+      .gband .rail__tick { scroll-snap-stop: always; }
+      .gband .rail__tick img { width: 28px; height: 28px; }
+      .gband__open { min-height: 44px; padding-inline: 22px; }
     }
 
     /* ── The record card, in the band ── */
@@ -3913,6 +3956,39 @@
     }
     .gcard .card__entry:hover { border-color: var(--sign, var(--ink-2)); }
     .gcard .card__entry:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 3px; }
+
+    /* Keep state changes legible without moving or resizing the gallery UI. */
+    @media (prefers-reduced-motion: reduce) {
+      .gband { transition: none; }
+      .gband__mount,
+      .gband__chrome { transition: opacity 140ms linear; }
+      .gband__open {
+        transition:
+          color 120ms linear,
+          background-color 120ms linear,
+          border-color 120ms linear;
+      }
+      .gband__name { transition: opacity 120ms linear; }
+      .gband .rail__tick {
+        opacity: 0.72;
+        transition: opacity 120ms linear, color 120ms linear;
+      }
+      .gband .rail__tick[aria-current='true'] { opacity: 1; }
+      .gband .rail__tick picture {
+        transform: none;
+        transition: none;
+      }
+      .gband.is-open .gband__chrome { transition: none; }
+      .gcard { transition: opacity 160ms var(--ease-soft); }
+    }
+    @media (prefers-reduced-motion: reduce) and (min-width: 900px) {
+      .gcard,
+      .gcard.is-open { transform: translateY(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) and (max-width: 899.5px) {
+      .gcard,
+      .gcard.is-open { transform: none; }
+    }
   </style>
 </head>
 <body>
