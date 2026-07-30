@@ -1,20 +1,26 @@
-// Driving the gallery.
+// Driving the gallery band — the twelve sculptures on the registry page.
 //
 // Input, damping, and the accessible controls that shadow every gesture. The
-// page is complete without this file: the register below the stage is the real
-// catalogue, and it stays in the document whether or not WebGL exists.
+// page is complete without this file: without WebGL the band never renders
+// and the disc strip serves as the selector instead.
 
 import {
-  GALLERY, approach, clampFocus, nearestIndex, shortestTurn, signFromHash,
-  wheelToFocusDelta, dragToFocusDelta,
+  DOCK, GALLERY, approach, clampFocus, dockMagnify, embedBand, nearestIndex,
+  shortestTurn, signFromHash, wheelToFocusDelta, dragToFocusDelta, dragIntent,
+  flingCarry,
 } from './layout.mjs';
 import { createScene } from './scene.mjs';
 import { createCard } from './card.mjs';
 import { ensureFonts } from './textures.mjs';
 
+// The twelve records ride inside the bundle (stamped by build-shelf.mjs), so
+// any page that renders the stage skeleton can host the row. A page may still
+// override them with a JSON island, which wins when present.
 const stage = document.querySelector('[data-gallery-stage]');
 const source = document.getElementById('gallery-figures');
-if (stage && source) void mount(stage, JSON.parse(source.textContent));
+if (stage) {
+  void mount(stage, source ? JSON.parse(source.textContent) : __GALLERY_FIGURES__);
+}
 
 function supported() {
   try {
@@ -36,10 +42,11 @@ async function mount(root, records) {
   const live = root.querySelector('[data-gallery-live]');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  const HINT_ROW = 'Drag or scroll along the row. Select a sculpture to draw '
-    + 'it forward, then drag to turn it. Escape returns it.';
-  const HINT_SHOWING = 'Drag to turn the sculpture. The rail walks along the '
-    + 'twelve; Escape returns it to the row.';
+  const nameLabel = root.querySelector('[data-gallery-name]');
+
+  const HINT_ROW = 'Drag to browse · Choose a sign to open.';
+  const HINT_SHOWING = 'Drag to rotate · Esc to close.';
+  const dockMotion = window.matchMedia('(hover: hover) and (pointer: fine)');
 
   await ensureFonts();
 
@@ -56,19 +63,24 @@ async function mount(root, records) {
     return;
   }
 
-  // "#leo" arrives standing in front of Leo — no entrance drift, the reader
-  // asked for a particular piece.
-  const asked = signFromHash(window.location.hash, records.map((record) => record.slug));
+  // "/registry/#leo" arrives standing in front of Leo with its record open —
+  // the reader asked for a particular piece. Otherwise the host page names
+  // the starting sign.
+  const slugs = records.map((record) => record.slug);
+  const asked = signFromHash(window.location.hash, slugs);
+  const seeded = asked >= 0 ? asked : slugs.indexOf(root.dataset.galleryInitial ?? '');
+  const start = Math.max(0, seeded);
 
   const state = {
-    focus: asked >= 0 ? asked : motion.matches ? 0 : -1.4,
-    targetFocus: asked >= 0 ? asked : 0,
+    focus: asked >= 0 ? asked : motion.matches ? start : start - 1.4,
+    targetFocus: start,
     open: 0,
     targetOpen: 0,
     openIndex: -1,
     yaw: 0, targetYaw: 0,
     pitch: 0, targetPitch: 0,
     zoom: 0, targetZoom: 0,
+    hover: -1,
   };
 
   const card = createCard(root, { onClose: () => closeFigure() });
@@ -82,21 +94,18 @@ async function mount(root, records) {
   // fits the camera to it. Offsets rather than client rects: they ignore the
   // card's entrance transform and the page's scroll position alike.
 
-  const navBar = document.querySelector('.wnav');
-  const head = root.querySelector('.stage__head');
-  const chrome = root.querySelector('.stage__chrome');
+  const chrome = root.querySelector('.gband__chrome');
   const GAP = 20;
   const FLOOR = 140;
 
   function bandRects() {
     const width = mountPoint.offsetWidth;
     const height = mountPoint.offsetHeight;
-    // The bar is fixed, and the stage starts at the top of the document.
-    const navFloor = navBar
-      ? navBar.getBoundingClientRect().bottom + window.scrollY
-      : 84;
-    const headFloor = head ? head.offsetTop + head.offsetHeight : navFloor;
-    const controls = chrome ? chrome.offsetTop : height;
+
+    // The section is its own room. The row band runs from its top down to
+    // its controls; with a card open, the piece on display gets whatever the
+    // card leaves — beside it on wide viewports, above it on narrow ones.
+    const row = embedBand(width, height, chrome ? chrome.offsetTop : height, GAP, FLOOR);
 
     const band = (top, bottom, left, right) => ({
       x: left,
@@ -105,17 +114,13 @@ async function mount(root, records) {
       height: Math.max(FLOOR, bottom - top),
     });
 
-    const row = band(headFloor + GAP, controls - GAP, 0, width);
-
-    // With the title out of the way, a figure on display starts under the bar
-    // and stops wherever the card begins.
     const panel = card.element.hidden ? null : card.element;
     if (!panel || !panel.offsetWidth) return { row, stage: row };
-    const ceiling = navFloor + GAP;
+    const controls = chrome ? chrome.offsetTop : height;
     const beside = panel.offsetLeft > width * 0.4;
     const stage = beside
-      ? band(ceiling, controls - GAP, 0, panel.offsetLeft - GAP)
-      : band(ceiling, panel.offsetTop - GAP, 0, width);
+      ? band(GAP, controls - GAP, 0, panel.offsetLeft - GAP)
+      : band(GAP, panel.offsetTop - GAP, 0, width);
     return { row, stage };
   }
 
@@ -175,9 +180,9 @@ async function mount(root, records) {
       state.yaw += TURNTABLE_RATE * dt;
       state.targetYaw = state.yaw;
     }
-    const moving = step(dt) || turning;
-    scene.layout(state);
+    const settling = scene.layout(state);
     scene.render();
+    const moving = step(dt) || turning || settling;
     raf = moving ? requestAnimationFrame(frame) : 0;
     if (!moving) last = 0;
   }
@@ -219,21 +224,37 @@ async function mount(root, records) {
     spoken = window.setTimeout(() => { live.textContent = message; }, 220);
   }
 
-  // Seeded with the arrival slug so a plain visit keeps its clean URL until
-  // the reader actually browses.
-  let mirroredSlug = records[asked >= 0 ? asked : 0]?.slug ?? null;
+  // Seeded empty: the first sync announces the arrival sign to the host
+  // page, hash or no hash. The band never writes the address bar — the
+  // page's hashes belong to its section anchors.
+  let mirroredSlug = null;
+  let chromeIndex = -1;
+  let chromeShowing = null;
+
+  function centerRail(index) {
+    const tick = ticks[index];
+    const maximum = rail.scrollWidth - rail.clientWidth;
+    if (!tick || maximum <= 0) return;
+    const target = tick.offsetLeft + (tick.offsetWidth / 2) - (rail.clientWidth / 2);
+    rail.scrollTo({ left: Math.max(0, Math.min(maximum, target)), behavior: 'auto' });
+  }
+
   function syncChrome() {
     const index = current();
     const record = records[index];
-    // The address bar names the sculpture in front, so any moment of the
-    // browse can be shared. replaceState only — browsing is not history.
-    if (record.slug !== mirroredSlug && window.history?.replaceState) {
-      window.history.replaceState(null, '', `#${record.slug}`);
+    const indexChanged = index !== chromeIndex;
+    const showing = state.targetOpen > 0;
+    const showingChanged = showing !== chromeShowing;
+    if (record.slug !== mirroredSlug) {
       mirroredSlug = record.slug;
+      // The host page owns the address bar; the selection is an event.
+      root.dispatchEvent(new CustomEvent('zodiacs:gallery-sign', {
+        bubbles: true,
+        detail: { slug: record.slug },
+      }));
     }
-    const showing = state.openIndex >= 0;
-    if (opener) {
-      opener.textContent = showing ? 'Return the sculpture' : `View ${record.name}`;
+    if (opener && (indexChanged || showingChanged)) {
+      opener.textContent = showing ? 'Back to the Twelve' : `View ${record.name}`;
       opener.setAttribute(
         'aria-label',
         showing ? 'Return the sculpture to the row' : `View the ${record.name} sculpture`,
@@ -241,19 +262,24 @@ async function mount(root, records) {
     }
     // The instruction follows the state: browsing the row and turning a piece
     // in the hand are different gestures.
-    if (hint) {
+    if (hint && (indexChanged || showingChanged)) {
       const text = showing ? HINT_SHOWING : HINT_ROW;
       if (hint.textContent !== text) hint.textContent = text;
     }
-    for (const [i, button] of ticks.entries()) {
-      const isCurrent = i === index;
-      button.tabIndex = isCurrent ? 0 : -1;
-      button.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+    if (indexChanged) {
+      for (const [i, button] of ticks.entries()) {
+        const isCurrent = i === index;
+        button.tabIndex = isCurrent ? 0 : -1;
+        button.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+      }
+      // Keep a narrow rail centred without asking scrollIntoView to move the
+      // page or any of the band's ancestors.
+      if (!drag) centerRail(index);
+      // At rest the current sign is the one standing proud.
+      if (!rail.matches(':hover')) dockAt(null);
     }
-    // The rail scrolls on narrow viewports; keep the current tick in view.
-    if (rail.scrollWidth > rail.clientWidth) {
-      ticks[index]?.scrollIntoView({ block: 'nearest', inline: 'center' });
-    }
+    chromeIndex = index;
+    chromeShowing = showing;
   }
 
   // ---- drawing a figure out and returning it ---------------------------
@@ -261,6 +287,10 @@ async function mount(root, records) {
   async function openFigure(index, { takeFocus = true } = {}) {
     const record = records[index];
     handTurned = false;
+    setHover(-1);
+    // One gesture: a side figure swings to the front as it is drawn out.
+    state.targetFocus = clampFocus(index, count);
+    window.clearTimeout(snapTimer);
     state.openIndex = index;
     state.targetOpen = 1;
     state.targetYaw = 0;
@@ -323,8 +353,12 @@ async function mount(root, records) {
     button.style.setProperty('--sign', record.hue);
     button.dataset.index = String(index);
     button.tabIndex = index === 0 ? 0 : -1;
-    button.innerHTML = '<span class="rail__glyph" aria-hidden="true"></span>';
-    button.querySelector('.rail__glyph').textContent = record.glyph;
+    // The tick is the sign's pastel disc — the same icon wallets show for
+    // the token — so the row and a holder's wallet visibly agree.
+    button.innerHTML = '<picture aria-hidden="true">'
+      + `<source srcset="/assets/zodiac-icons/48/${record.slug}.avif" type="image/avif"/>`
+      + `<img src="/assets/zodiac-icons/48/${record.slug}.webp" width="26" height="26"`
+      + ' alt="" loading="lazy" decoding="async"/></picture>';
     button.setAttribute('aria-label', `${record.name}, Lot ${record.lot} of twelve`);
     button.addEventListener('click', () => {
       if (current() === index && state.targetOpen === 0) void openFigure(index);
@@ -333,6 +367,54 @@ async function mount(root, records) {
     rail.append(button);
     return button;
   });
+
+  // ---- the rail magnifies like a dock ------------------------------------
+  //
+  // Whatever the cursor is nearest swells most and its neighbours less, so the
+  // row of twelve reads as one creature moving under the hand. At rest the
+  // current sign stands proud on its own — a reader on a touchscreen, or on a
+  // keyboard, still sees which of the twelve the row is holding.
+
+  // The pitch the wave is measured in: one resting tick. Read from the
+  // stylesheet so the two never drift apart.
+  const tickPitch = parseFloat(getComputedStyle(rail).getPropertyValue('--tick')) || 32;
+  let dockFrame = 0;
+
+  /** Size every disc for a cursor at `cursorX`, or for rest when null. */
+  function dockAt(cursorX) {
+    dockFrame = 0;
+    const resting = current();
+    let nearest = -1;
+    let best = Infinity;
+    for (const [i, button] of ticks.entries()) {
+      if (cursorX === null) {
+        button.style.setProperty('--mag', i === resting ? String(1 + DOCK.rest) : '1');
+        continue;
+      }
+      const box = button.getBoundingClientRect();
+      const away = (box.left + (box.width / 2)) - cursorX;
+      button.style.setProperty('--mag', dockMagnify(away / tickPitch).toFixed(3));
+      if (Math.abs(away) < best) { best = Math.abs(away); nearest = i; }
+    }
+    // The wave names whichever disc it has swollen most.
+    if (cursorX === null) clearName('rail');
+    else nameFor(nearest, 'rail');
+  }
+
+  function scheduleDock(cursorX) {
+    if (dockFrame) cancelAnimationFrame(dockFrame);
+    dockFrame = requestAnimationFrame(() => dockAt(cursorX));
+  }
+
+  rail.addEventListener('pointermove', (event) => {
+    // A wave that follows the cursor is motion; reduced motion keeps only the
+    // resting magnification, which is affordance rather than animation. Read
+    // at event time, so a reader who changes the preference is obeyed without
+    // reloading the page.
+    if (motion.matches || !dockMotion.matches || event.pointerType !== 'mouse') return;
+    scheduleDock(event.clientX);
+  });
+  rail.addEventListener('pointerleave', () => scheduleDock(null));
 
   rail.addEventListener('keydown', (event) => {
     const moves = { ArrowRight: 1, ArrowLeft: -1, ArrowDown: 1, ArrowUp: -1 };
@@ -361,9 +443,62 @@ async function mount(root, records) {
   const pointers = new Map();
   let drag = null;
   let pinch = 0;
+  const TOUCH_FIGURES_PER_VIEWPORT = 3;
+  const VELOCITY_BLEND = 0.35;
+
+  /**
+   * One label, one meaning: this is the piece you are pointing at. It serves
+   * the sculptures and the rail alike, placed under whichever it is naming.
+   * Whoever raised it owns it — the rail leaving must not take down a name
+   * the row has just put up, or the two surfaces fight over one element.
+   */
+  let namedBy = null;
+
+  function clearName(source) {
+    if (!nameLabel || namedBy !== source) return;
+    namedBy = null;
+    nameLabel.classList.remove('is-visible', 'is-rail');
+  }
+
+  function nameFor(index, source) {
+    if (!nameLabel) return;
+    if (index < 0 || !source) {
+      clearName(source);
+      return;
+    }
+    namedBy = source;
+    const record = records[index];
+    nameLabel.textContent = `${record.name} — Lot ${record.lot}`;
+    const x = source === 'rail'
+      ? (() => {
+        const box = ticks[index].getBoundingClientRect();
+        return (box.left + (box.width / 2)) - mountPoint.getBoundingClientRect().left;
+      })()
+      : scene.screenX(index);
+    if (Number.isFinite(x)) {
+      const width = mountPoint.offsetWidth;
+      nameLabel.style.left = `${Math.min(width - 70, Math.max(70, x))}px`;
+    }
+    nameLabel.classList.toggle('is-rail', source === 'rail');
+    nameLabel.classList.add('is-visible');
+  }
+
+  /** The hovered figure lifts to say it opens; the label names it. */
+  function setHover(index) {
+    if (state.hover === index) return;
+    state.hover = index;
+    canvas.style.cursor = index >= 0 ? 'pointer' : '';
+    if (index >= 0) nameFor(index, 'stage');
+    else clearName('stage');
+    invalidate();
+  }
+
+  canvas.addEventListener('pointerleave', () => setHover(-1));
 
   canvas.addEventListener('pointerdown', (event) => {
-    canvas.setPointerCapture(event.pointerId);
+    // Mouse and pen keep their existing capture contract. Touch waits until
+    // horizontal intent is clear so a vertical page scroll remains native.
+    if (event.pointerType !== 'touch') canvas.setPointerCapture(event.pointerId);
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (pointers.size === 2) {
       const [a, b] = [...pointers.values()];
@@ -380,8 +515,13 @@ async function mount(root, records) {
       focus: state.targetFocus,
       yaw: state.targetYaw,
       pitch: state.targetPitch,
+      zoom: state.targetZoom,
+      pointerType: event.pointerType,
+      touchIntent: 'pending',
       velocity: 0,
+      velocitySamples: 0,
       time: event.timeStamp,
+      lastMove: event.timeStamp,
       moved: false,
     };
   });
@@ -400,23 +540,56 @@ async function mount(root, records) {
       return;
     }
 
-    if (!drag || drag.id !== event.pointerId) return;
+    if (!drag || drag.id !== event.pointerId) {
+      // Hovering a figure is the invitation to open it. Pointer devices
+      // only — touch has no hover, and there a tap opens directly.
+      if (!drag && event.pointerType === 'mouse' && state.targetOpen === 0) {
+        setHover(scene.pick(event.clientX, event.clientY));
+      }
+      return;
+    }
     const dx = event.clientX - drag.startX;
     const dy = event.clientY - drag.startY;
-    if (!drag.moved && Math.hypot(dx, dy) < 5) return;
-    drag.moved = true;
+    if (!drag.moved) {
+      if (drag.pointerType === 'touch') {
+        if (drag.touchIntent === 'vertical') return;
+        drag.touchIntent = dragIntent(dx, dy);
+        if (drag.touchIntent !== 'horizontal') return;
+        if (!canvas.hasPointerCapture(event.pointerId)) {
+          canvas.setPointerCapture(event.pointerId);
+        }
+      } else if (Math.hypot(dx, dy) < 5) {
+        return;
+      }
+      drag.moved = true;
+      window.clearTimeout(snapTimer);
+      setHover(-1);
+    }
 
     if (state.targetOpen > 0) {
       // A figure drawn out turns in the hand — right around, as often as the
       // reader likes. The row stays where it is, and the turntable yields.
       handTurned = true;
       state.targetYaw = drag.yaw + (dx / 190);
-      state.targetPitch = Math.max(-0.44, Math.min(0.44, drag.pitch + (dy / 300)));
+      // A touch keeps vertical movement available to the page; mouse and pen
+      // retain the full two-axis inspection.
+      if (drag.pointerType !== 'touch') {
+        state.targetPitch = Math.max(-0.44, Math.min(0.44, drag.pitch + (dy / 300)));
+      }
     } else {
       const width = canvas.clientWidth;
-      state.targetFocus = clampFocus(drag.focus + dragToFocusDelta(dx, width), count);
+      const span = drag.pointerType === 'touch' ? TOUCH_FIGURES_PER_VIEWPORT : 4;
+      state.targetFocus = clampFocus(
+        drag.focus + dragToFocusDelta(dx, width, span),
+        count,
+      );
       const dt = Math.max(1, event.timeStamp - drag.time);
-      drag.velocity = (event.clientX - drag.lastX) / dt;
+      const sample = (event.clientX - drag.lastX) / dt;
+      drag.velocity = drag.velocitySamples === 0
+        ? sample
+        : (drag.velocity * (1 - VELOCITY_BLEND)) + (sample * VELOCITY_BLEND);
+      drag.velocitySamples += 1;
+      drag.lastMove = event.timeStamp;
       syncChrome();
     }
     drag.lastX = event.clientX;
@@ -433,11 +606,20 @@ async function mount(root, records) {
     drag = null;
 
     if (!finished.moved) {
+      // A vertical touch belongs to the page, even if the browser happens to
+      // deliver pointerup before it emits pointercancel for native scrolling.
+      if (finished.touchIntent === 'vertical') return;
       const index = scene.pick(event.clientX, event.clientY);
       if (index >= 0) {
-        if (state.targetOpen > 0) closeFigure();
-        else if (index === current()) void openFigure(index);
-        else focusFigure(index);
+        // One gesture, one meaning: a sculpture opens its record — front,
+        // side, it makes no difference. Tapping the piece already on display
+        // returns it; tapping a different one swaps the viewing.
+        if (state.targetOpen > 0) {
+          if (index === state.openIndex) closeFigure();
+          else void openFigure(index, { takeFocus: false });
+        } else {
+          void openFigure(index);
+        }
       } else if (state.targetOpen > 0) {
         closeFigure();
       }
@@ -446,7 +628,8 @@ async function mount(root, records) {
 
     if (state.targetOpen > 0) return;
     // Carry the throw a little, then settle on a figure.
-    const carried = motion.matches ? 0 : -finished.velocity * 1.8;
+    const idleMs = Math.max(0, event.timeStamp - finished.lastMove);
+    const carried = motion.matches ? 0 : flingCarry(finished.velocity, idleMs);
     state.targetFocus = nearestIndex(
       clampFocus(state.targetFocus + carried, count), count,
     );
@@ -455,8 +638,28 @@ async function mount(root, records) {
     invalidate();
   }
 
+  function cancelPointer(event) {
+    pointers.delete(event.pointerId);
+    if (pointers.size < 2) pinch = 0;
+    if (drag?.id !== event.pointerId) return;
+    const cancelled = drag;
+    drag = null;
+    // Cancellation is not a release. Put the row or sculpture back exactly
+    // where this gesture found it, without picking, snapping, or momentum.
+    if (state.targetOpen > 0) {
+      state.targetYaw = cancelled.yaw;
+      state.targetPitch = cancelled.pitch;
+      state.targetZoom = cancelled.zoom;
+    } else {
+      state.targetFocus = cancelled.focus;
+      syncChrome();
+    }
+    invalidate();
+  }
+
   canvas.addEventListener('pointerup', endPointer);
-  canvas.addEventListener('pointercancel', endPointer);
+  canvas.addEventListener('pointercancel', cancelPointer);
+  canvas.addEventListener('lostpointercapture', cancelPointer);
 
   canvas.addEventListener('wheel', (event) => {
     if (state.targetOpen > 0) {
@@ -465,6 +668,9 @@ async function mount(root, records) {
       invalidate();
       return;
     }
+    // Mid-page, a vertical wheel is the page scrolling past — only a
+    // sideways wheel walks the row.
+    if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
     // Firefox reports wheel deltas in lines, and some setups in pages; both
     // would crawl if read as pixels.
     const unit = event.deltaMode === 1 ? 16 : event.deltaMode === 2 ? canvas.clientHeight : 1;
@@ -527,17 +733,31 @@ async function mount(root, records) {
   }
   window.addEventListener('pagehide', teardown, { once: true });
 
+  // The host page steers the row: its own selector still names signs, and the
+  // row follows without re-announcing what it was just told.
+  root.addEventListener('zodiacs:gallery-focus', (event) => {
+    const slug = event?.detail?.slug;
+    const index = slugs.indexOf(String(slug || '').toLowerCase());
+    if (index >= 0 && index !== current()) {
+      mirroredSlug = records[index].slug;
+      focusFigure(index, { announce: false });
+    }
+  });
+
   root.classList.add('is-ready');
-  // The hash is also a real anchor into the register below, and the browser
-  // will have jumped there before this script ran. With the scene live, the
-  // sculpture row IS the destination — come back up to it.
-  if (asked >= 0) window.scrollTo({ top: 0, behavior: 'instant' });
+  // A slug in the hash is a request to view that piece: bring the band into
+  // view and put the record on display. The static catalogue carries the
+  // same ids for readers without JavaScript.
+  if (asked >= 0) {
+    root.scrollIntoView({ block: 'center', behavior: 'instant' });
+    void openFigure(asked, { takeFocus: false });
+  }
   syncChrome();
   invalidate();
 
   // The plates arrive after the room does: each figure stands in its own metal
   // until its photograph is laid on, nearest the front first.
-  void scene.dressRow(0, invalidate);
+  void scene.dressRow(start, invalidate);
 }
 
 export { GALLERY };

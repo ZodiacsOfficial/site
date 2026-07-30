@@ -46,7 +46,7 @@ export type {
 } from './horoscope-program-types';
 
 export const HOROSCOPE_PROGRAM_SCHEMA = 'zodiacs.horoscope-program.v1' as const;
-export const HOROSCOPE_PROGRAM_RENDERER = 'zodiacs.horoscope-program-renderer.v5' as const;
+export const HOROSCOPE_PROGRAM_RENDERER = 'zodiacs.horoscope-program-renderer.v6' as const;
 
 export const HOROSCOPE_WORD_BOUNDS: Record<HoroscopeSurface, { min: number; max: number }> = {
   today: { min: 90, max: 140 },
@@ -933,6 +933,10 @@ function dailySurface(
   const moonHouse = solarHouse(moon.sign, sign);
   const secondaryHouse = solarHouse(secondary.sign, sign);
   const dayWord = surface === 'today' ? 'Today' : 'Tomorrow';
+  const exact = daily.events[0] as HoroscopeProgramEvent | undefined;
+  const tomorrowOpening = exact
+    ? `${TOMORROW_MOON_ACTION[moonHouse]}. Use the lead time to ${profile.test}.`
+    : `${TOMORROW_MOON_ACTION[moonHouse]}, using the lead time to prepare the conditions around the decision before tomorrow begins.`;
   const passages = surface === 'today'
     ? [
         passage(
@@ -946,7 +950,7 @@ function dailySurface(
       ]
     : [
         passage(
-          `${TOMORROW_MOON_ACTION[moonHouse]}. Use the lead time to ${profile.test}. As the ${daily.moon.phase.toLocaleLowerCase('en')} Moon develops, tomorrow’s foreground shifts toward ${HOUSE_THEME[moonHouse]}.`,
+          `${tomorrowOpening} As the ${daily.moon.phase.toLocaleLowerCase('en')} Moon develops, tomorrow’s foreground shifts toward ${HOUSE_THEME[moonHouse]}.`,
           catalog.position(daily, moon, sign),
         ),
         passage(
@@ -954,7 +958,6 @@ function dailySurface(
           catalog.position(daily, secondary, sign),
         ),
       ];
-  const exact = daily.events[0] as HoroscopeProgramEvent | undefined;
   if (exact) {
     const exactHouse = eventHouses(exact, sign)[0];
     const checkpoint = exactHouse === secondaryHouse

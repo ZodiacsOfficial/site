@@ -1,0 +1,92 @@
+name: Ask Zodiacs Live Evaluation
+
+on:
+  workflow_dispatch:
+    inputs:
+      suite:
+        description: One complete suite per runner and visitor quota
+        required: true
+        type: choice
+        options:
+          - grounded
+          - redteam
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ask-zodiacs-live-eval
+  cancel-in-progress: false
+
+jobs:
+  evaluate:
+    name: ${{ inputs.suite }} against production
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - name: Checkout evaluated source
+        uses: actions/checkout@v6
+
+      - name: Record reviewed main source
+        id: source
+        run: echo "sha=$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install
+        run: npm ci
+
+      - name: Build exact route inventory
+        run: npm run build
+
+      - name: Run live evaluation
+        id: live_eval
+        continue-on-error: true
+        env:
+          EVAL_SUITE: ${{ inputs.suite }}
+          DEPLOYMENT_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          set +e
+          node scripts/assistant-eval.mjs \
+            "--suite=${EVAL_SUITE}" \
+            --base=https://zodiacs.org \
+            --pace=13000 \
+            --limit=0 \
+            "--deployment-sha=${DEPLOYMENT_SHA}" \
+            > "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}.json" \
+            2> "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}.log"
+          evaluation_status=$?
+          set -e
+          node -e '
+            const fs = require("node:fs");
+            const evidence = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
+            const complete = evidence.suite === "grounded"
+              ? evidence.asked === evidence.sampledOf
+              : evidence.cases === evidence.sampledOf;
+            if (!complete || evidence.deploymentSha !== process.argv[2] || evidence.sourceCommit !== process.argv[2]) {
+              throw new Error("Evaluation evidence is incomplete or has mismatched provenance.");
+            }
+          ' "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}.json" "${DEPLOYMENT_SHA}"
+          exit "${evaluation_status}"
+
+      - name: Upload exact evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ask-zodiacs-${{ inputs.suite }}-${{ steps.source.outputs.sha }}
+          path: |
+            ${{ runner.temp }}/ask-zodiacs-${{ inputs.suite }}.json
+            ${{ runner.temp }}/ask-zodiacs-${{ inputs.suite }}.log
+          if-no-files-found: error
+          retention-days: 90
+
+      - name: Enforce evaluation result
+        if: always()
+        env:
+          EVAL_OUTCOME: ${{ steps.live_eval.outcome }}
+        run: test "${EVAL_OUTCOME}" = "success"

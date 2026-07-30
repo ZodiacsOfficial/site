@@ -2,14 +2,22 @@ import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 
 import {
+  DOCK,
   GALLERY,
+  SPOTLIGHT,
   VITRINE,
   angleStep,
   approach,
   clampFocus,
+  dockMagnify,
+  dragIntent,
   dragToFocusDelta,
+  embedBand,
+  emphasis,
   figurePose,
   fitScale,
+  fitScales,
+  flingCarry,
   floorY,
   isVisible,
   lerpContent,
@@ -91,18 +99,37 @@ describe('gallery geometry', () => {
     const geometry = JSON.parse(
       await readFile(new URL('../src/shelf/figures.geometry.json', import.meta.url), 'utf8'),
     );
-    for (const { slug } of figures) {
-      const { aspect } = geometry.figures[slug];
-      const scale = fitScale(aspect, GALLERY);
+    const aspects = figures.map(({ slug }) => geometry.figures[slug].aspect);
+    const scales = fitScales(aspects, GALLERY);
+    for (const [index, { slug }] of figures.entries()) {
+      const aspect = aspects[index];
+      const scale = scales[index];
       expect(scale, slug).toBeGreaterThan(0);
       // Neither limit may be exceeded: height for the tall, width for the wide.
       expect(scale, slug).toBeLessThanOrEqual(GALLERY.height + 1e-9);
       expect(scale * aspect, slug).toBeLessThanOrEqual(GALLERY.maxWidth + 1e-9);
-      // And one of the two is always the binding limit — nothing sits small.
-      const binding = Math.abs(scale - GALLERY.height) < 1e-9
-        || Math.abs(scale * aspect - GALLERY.maxWidth) < 1e-9;
-      expect(binding, slug).toBe(true);
+      // Fitted alone it would be limit-bound; fitted as a set it may be held
+      // down by the band instead. Either way it never exceeds its own limit.
+      expect(scale, slug).toBeLessThanOrEqual(fitScale(aspect, GALLERY) + 1e-9);
     }
+    // The twelve read as one row of comparable objects: nothing may stand
+    // more than the band apart, or size starts meaning identity again.
+    const spread = (Math.max(...scales) / Math.min(...scales)) - 1;
+    expect(spread).toBeLessThanOrEqual(GALLERY.heightSpread + 1e-9);
+    // And the levelling only ever shrinks — the collision clearance holds.
+    for (const [index, scale] of scales.entries()) {
+      expect(scale).toBeLessThanOrEqual(fitScale(aspects[index], GALLERY) + 1e-9);
+    }
+  });
+
+  it('frames the row by its real tallest, not by the cap', () => {
+    const levelled = rowContent(GALLERY, 1.25);
+    const capped = rowContent(GALLERY);
+    // A shorter set gives a shorter box, so the camera comes closer and the
+    // row keeps its size on screen instead of leaving dead air above it.
+    expect(levelled.height).toBeLessThan(capped.height);
+    expect(levelled.centerY + (levelled.height / 2))
+      .toBeCloseTo(GALLERY.baseY + 1.25 + 0.04, 12);
   });
 
   it('puts the floor one plinth below the feet', () => {
@@ -230,6 +257,115 @@ describe('framing the vitrine', () => {
   });
 });
 
+describe('the embedded band', () => {
+  it('runs from the section top down to its controls', () => {
+    expect(embedBand(1280, 520, 430)).toEqual({ x: 0, y: 20, width: 1280, height: 390 });
+  });
+
+  it('stops at the section bottom when the controls sit below it', () => {
+    const band = embedBand(1280, 520, 9999);
+    expect(band.y + band.height).toBeLessThanOrEqual(500);
+  });
+
+  it('keeps its floor when the section collapses', () => {
+    const band = embedBand(0, 0, 0);
+    expect(band.width).toBeGreaterThanOrEqual(140);
+    expect(band.height).toBeGreaterThanOrEqual(140);
+  });
+
+  it('frames the whole row inside embed-shaped bands', () => {
+    // The frame centres the content in the band (proved above); here the
+    // claim is that its height in pixels never exceeds the band's.
+    for (const [width, height] of [[1440, 420], [768, 380], [390, 300]]) {
+      const content = rowContent();
+      const rect = embedBand(width, height, height - 96);
+      const frame = vitrineFrame({
+        canvasWidth: width, canvasHeight: height, rect, content, margin: 1,
+      });
+      const perPixel = frame.worldHeight / height;
+      const bandCenter = rect.y + (rect.height / 2);
+      const label = `${width}x${height}`;
+      const top = bandCenter - ((content.height / 2) / perPixel);
+      const bottom = bandCenter + ((content.height / 2) / perPixel);
+      expect(top, label).toBeGreaterThanOrEqual(rect.y - 1e-6);
+      expect(bottom, label).toBeLessThanOrEqual(rect.y + rect.height + 1e-6);
+      const right = (width / 2) + ((content.width / 2) / perPixel);
+      expect(right, label).toBeLessThanOrEqual(rect.x + rect.width + 1e-6);
+    }
+  });
+});
+
+describe('the spotlight', () => {
+  it('offers one piece at a time', () => {
+    expect(emphasis(0).scale).toBeCloseTo(SPOTLIGHT.focus, 12);
+    expect(emphasis(1).scale).toBeCloseTo(SPOTLIGHT.near, 12);
+    expect(emphasis(2).scale).toBeCloseTo(SPOTLIGHT.far, 12);
+    // Beyond two slots the row has already receded as far as it goes.
+    expect(emphasis(6).scale).toBeCloseTo(SPOTLIGHT.far, 12);
+    expect(emphasis(-3).scale).toBeCloseTo(SPOTLIGHT.far, 12);
+  });
+
+  it('makes focus the loudest thing about a figure’s size', async () => {
+    const geometry = JSON.parse(
+      await readFile(new URL('../src/shelf/figures.geometry.json', import.meta.url), 'utf8'),
+    );
+    const scales = fitScales(Object.values(geometry.figures).map((f) => f.aspect), GALLERY);
+    const identity = (Math.max(...scales) / Math.min(...scales)) - 1;
+    const focus = (emphasis(0).scale / emphasis(1).scale) - 1;
+    expect(focus).toBeGreaterThan(identity * 1.5);
+  });
+
+  it('recedes smoothly, never popping between slots', () => {
+    let previous = emphasis(0).scale;
+    for (let distance = 0.02; distance <= 4; distance += 0.02) {
+      const { scale, opacity } = emphasis(distance);
+      expect(scale).toBeLessThanOrEqual(previous + 1e-9);
+      expect(previous - scale).toBeLessThan(0.02);
+      expect(opacity).toBeGreaterThanOrEqual(SPOTLIGHT.dim - 1e-9);
+      expect(opacity).toBeLessThanOrEqual(1 + 1e-9);
+      previous = scale;
+    }
+  });
+
+  it('dims what it shrinks, and only that', () => {
+    expect(emphasis(0).opacity).toBeCloseTo(1, 12);
+    expect(emphasis(2).opacity).toBeCloseTo(SPOTLIGHT.dim, 12);
+    expect(emphasis(1).opacity).toBeLessThan(1);
+    expect(emphasis(1).opacity).toBeGreaterThan(SPOTLIGHT.dim);
+  });
+});
+
+describe('the rail’s wave', () => {
+  it('swells most under the cursor and settles either side', () => {
+    expect(dockMagnify(0)).toBeCloseTo(1 + DOCK.amplitude, 12);
+    let previous = dockMagnify(0);
+    for (let distance = 0.1; distance <= 6; distance += 0.1) {
+      const mag = dockMagnify(distance);
+      expect(mag).toBeLessThan(previous);
+      expect(mag).toBeGreaterThanOrEqual(1);
+      previous = mag;
+    }
+    // Far enough along the rail the wave has passed by entirely.
+    expect(dockMagnify(6)).toBeCloseTo(1, 3);
+  });
+
+  it('keeps the peak 26px disc inside the rail’s vertical paint box', () => {
+    expect(dockMagnify(0) * 26).toBeLessThanOrEqual(38);
+  });
+
+  it('reads the same either side of the cursor', () => {
+    for (const distance of [0.5, 1, 2.5]) {
+      expect(dockMagnify(distance)).toBeCloseTo(dockMagnify(-distance), 12);
+    }
+  });
+
+  it('stands the current sign proud when nothing is hovered', () => {
+    expect(DOCK.rest).toBeGreaterThan(0);
+    // Resting emphasis is quieter than the wave, so a hover still reads.
+    expect(1 + DOCK.rest).toBeLessThan(dockMagnify(0));
+  });
+});
+
 describe('deep links', () => {
   const slugs = ['aries', 'taurus', 'gemini'];
 
@@ -287,6 +423,31 @@ describe('focus arithmetic', () => {
   it('walks about four figures across a full drag, and inverts direction', () => {
     expect(dragToFocusDelta(-1024, 1024)).toBeCloseTo(4, 10);
     expect(dragToFocusDelta(512, 1024)).toBeCloseTo(-2, 10);
+  });
+
+  it('can calm touch dragging without changing the established desktop scale', () => {
+    expect(dragToFocusDelta(-390, 390)).toBeCloseTo(4, 10);
+    expect(dragToFocusDelta(-390, 390, 3)).toBeCloseTo(3, 10);
+    expect(dragToFocusDelta(195, 390, 3)).toBeCloseTo(-1.5, 10);
+  });
+
+  it('waits for a clear touch axis before browsing or yielding to page scroll', () => {
+    expect(dragIntent(8, 0)).toBe('pending');
+    expect(dragIntent(10, 0)).toBe('horizontal');
+    expect(dragIntent(0, 10)).toBe('vertical');
+    expect(dragIntent(10, 9)).toBe('pending');
+    expect(dragIntent(-24, 4)).toBe('horizontal');
+    expect(dragIntent(4, -24)).toBe('vertical');
+  });
+
+  it('turns release velocity into a bounded, fresh fling', () => {
+    expect(flingCarry(0.1, 0)).toBe(0);
+    expect(flingCarry(0.5, 81)).toBe(0);
+    expect(flingCarry(Number.NaN, 0)).toBe(0);
+    expect(flingCarry(0.5, 20)).toBeCloseTo(-0.55, 10);
+    expect(flingCarry(-0.5, 20)).toBeCloseTo(0.55, 10);
+    expect(flingCarry(4, 20)).toBe(-1.25);
+    expect(flingCarry(-4, 20)).toBe(1.25);
   });
 
   it('draws a generous window around the focus', () => {

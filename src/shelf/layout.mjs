@@ -25,6 +25,15 @@ export const GALLERY = Object.freeze({
    * toward its ends), so no two casts can meet however they are proportioned.
    */
   maxWidth: 1.5,
+  /**
+   * How far apart the twelve may stand in height, fitted. Left to their own
+   * limits they differ by 46% — a maiden towers over a crab — and that
+   * swamps the only size difference that should mean anything, which is
+   * which piece the row is offering. Compressing the set into a narrow band
+   * costs nothing on screen: the camera frames the row's box, so a shorter
+   * tallest figure simply brings it closer.
+   */
+  heightSpread: 0.14,
   /** Depth of the cast. The figures are shallow, as struck pieces are. */
   depth: 0.07,
   /** Feet datum: the top of the plinth, which every figure stands on. */
@@ -40,12 +49,26 @@ export const GALLERY = Object.freeze({
 export const floorY = (gallery = GALLERY) => gallery.baseY - gallery.plinthHeight;
 
 /**
- * How far a figure of this proportion is scaled from its unit form (height 1).
- * Height is the usual limit; a wide cast is held back by its width instead, so
- * neighbours never collide however differently the twelve are proportioned.
+ * How far a figure of this proportion is scaled from its unit form (height 1)
+ * before the set is levelled. Height is the usual limit; a wide cast is held
+ * back by its width instead, so neighbours never collide however differently
+ * the twelve are proportioned.
  */
 export function fitScale(aspect, gallery = GALLERY) {
   return Math.min(gallery.height, gallery.maxWidth / aspect);
+}
+
+/**
+ * The twelve, fitted as a set rather than one at a time: every figure takes
+ * its own limit, then the whole row is capped into `heightSpread` of the
+ * shortest the limits allow. Scales only ever shrink, so the collision
+ * clearance that `fitScale` guarantees survives untouched — and size stops
+ * saying "this is a maiden" and starts saying "this is the one in front".
+ */
+export function fitScales(aspects, gallery = GALLERY) {
+  const limits = aspects.map((aspect) => fitScale(aspect, gallery));
+  const ceiling = Math.min(...limits) * (1 + gallery.heightSpread);
+  return limits.map((limit) => Math.min(limit, ceiling));
 }
 
 /** Radians between adjacent figures. */
@@ -136,10 +159,36 @@ export function wheelToFocusDelta(deltaX, deltaY, pixelsPerFigure = 190) {
 }
 
 /** Pointer travel across the canvas, in figures. */
-export function dragToFocusDelta(pixels, viewportWidth) {
+export function dragToFocusDelta(pixels, viewportWidth, figuresPerViewport = 4) {
   const width = Math.max(320, viewportWidth || 1024);
-  // A drag across the full width of the stage walks about four figures.
-  return (-pixels / width) * 4;
+  return (-pixels / width) * figuresPerViewport;
+}
+
+/**
+ * Decide whether a pending touch means to browse the row or scroll the page.
+ * Diagonal movement stays pending until one axis clearly wins.
+ */
+export function dragIntent(dx, dy, threshold = 9, axisRatio = 1.2) {
+  if (Math.hypot(dx, dy) < threshold) return 'pending';
+  if (Math.abs(dx) > Math.abs(dy) * axisRatio) return 'horizontal';
+  if (Math.abs(dy) > Math.abs(dx) * axisRatio) return 'vertical';
+  return 'pending';
+}
+
+/**
+ * Turn a release velocity into a small, predictable continuation.
+ * A pause before release cancels the fling; even a fast flick carries no more
+ * than one-and-a-quarter figures.
+ */
+export function flingCarry(
+  velocity,
+  idleMs,
+  { threshold = 0.11, multiplier = 1.1, maximum = 1.25, staleAfter = 80 } = {},
+) {
+  if (!Number.isFinite(velocity) || Math.abs(velocity) < threshold || idleMs > staleAfter) {
+    return 0;
+  }
+  return Math.max(-maximum, Math.min(maximum, -velocity * multiplier));
 }
 
 /**
@@ -152,11 +201,81 @@ export function signFromHash(hash, slugs) {
 }
 
 /**
+ * The row band of an embedded stage: the section is its own room, with no
+ * masthead inside it and no card ever, so the band runs from the section's
+ * top down to its controls. Same floor discipline as the page's own bands —
+ * a collapsed section must never produce a degenerate rectangle.
+ */
+export function embedBand(width, height, chromeTop, gap = 20, floor = 140) {
+  const bottom = Math.min(height, chromeTop) - gap;
+  return {
+    x: 0,
+    y: gap,
+    width: Math.max(floor, width),
+    height: Math.max(floor, bottom - gap),
+  };
+}
+
+/**
  * Figures far enough off-screen that there is nothing to draw. Generous by a
  * slot on each side so one is never seen appearing.
  */
 export function isVisible(index, focus, span = 7) {
   return Math.abs(index - focus) <= span;
+}
+
+/**
+ * The spotlight. A gallery offers one piece at a time: whatever the row is
+ * holding forward stands at full size and full strength, and the rest step
+ * back into the dark. Without this, focus is worth about four percent of
+ * apparent size — nothing next to the difference between one sculpture and
+ * the next — and the row reads as arbitrary.
+ */
+export const SPOTLIGHT = Object.freeze({
+  focus: 1,
+  near: 0.78,
+  far: 0.65,
+  dim: 0.62,
+});
+
+const smoothstep = (t) => t * t * (3 - (2 * t));
+
+/**
+ * How large and how present figure `distance` slots from the focus stands.
+ * Smooth and monotonic: full at the focus, `near` one slot out, `far` from
+ * two slots on, so nothing pops as the row slides between figures.
+ */
+export function emphasis(distance, spotlight = SPOTLIGHT) {
+  const away = Math.min(2, Math.abs(distance));
+  const first = Math.min(1, away);
+  const second = Math.max(0, away - 1);
+  const scale = second > 0
+    ? spotlight.near + ((spotlight.far - spotlight.near) * smoothstep(second))
+    : spotlight.focus + ((spotlight.near - spotlight.focus) * smoothstep(first));
+  const reach = smoothstep(away / 2);
+  return { scale, opacity: 1 + ((spotlight.dim - 1) * reach) };
+}
+
+// ---- the rail ----------------------------------------------------------------
+
+/**
+ * The rail magnifies like a dock: whatever the cursor is nearest swells
+ * most, its neighbours less, the next less again — a wave that travels with
+ * the pointer, so which of the twelve is under the hand is never in doubt.
+ */
+export const DOCK = Object.freeze({
+  // The peak stays within the rail's vertical paint box, so the horizontally
+  // scrollable pill never shears the top off a hovered disc.
+  amplitude: 0.42,
+  spread: 1.9,
+  /** How far the current sign stands proud when no cursor is on the rail. */
+  rest: 0.28,
+});
+
+/** Magnification for a tick `distance` ticks from the cursor. */
+export function dockMagnify(distance, dock = DOCK) {
+  const away = Math.abs(distance) / dock.spread;
+  return 1 + (dock.amplitude * Math.exp(-(away * away)));
 }
 
 // ---- framing -----------------------------------------------------------------
@@ -197,10 +316,14 @@ export const VITRINE = Object.freeze({
   maxWorldHeight: 7.2,
 });
 
-/** The world box the whole row occupies: plinth foot to tallest head. */
-export function rowContent(gallery = GALLERY) {
+/**
+ * The world box the whole row occupies: plinth foot to tallest head. The
+ * tallest is passed in because the set is levelled at runtime — framing the
+ * cap instead would leave dead air above the row.
+ */
+export function rowContent(gallery = GALLERY, tallest = gallery.height) {
   const bottom = floorY(gallery) - 0.1; // the shadows spread a little wider
-  const top = gallery.baseY + gallery.height + 0.04;
+  const top = gallery.baseY + tallest + 0.04;
   return {
     height: top - bottom,
     // A single cast plus air. The row is meant to run off both edges; this

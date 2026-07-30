@@ -434,3 +434,120 @@ A ten-check Playwright walkthrough covers deep links, rail-swaps-while-open,
 arrow keys, Escape, the live-mint route, the turntable, reduced motion holding
 still, and the register standing without scripting. Bundle 165 KB gzip
 (cap 180). Generators re-run byte-identical; no dependency changes.
+
+## §15 — Shipped, then embedded: the hub band (2026-07-28)
+
+PR #183 merged the gallery to production (squash 1d0a2b7); zodiacs.org
+serves it. Owner then directed: DexScreener context is mandatory on the
+card, and the gallery becomes the registry hub's selector, below the hero
+film, replacing the disc strip. Decisions (owner-picked): selector row —
+the band drives `activeTicker` (featured card + detail panel), clicking
+the front sculpture navigates to `/registry/gallery/#slug`, no in-place
+card on the hub; the strip survives as the no-WebGL fallback behind the
+same pre-paint probe the gallery page uses; unpaired signs (cancer,
+sagittarius) are quoted by mint via `tokens/v1/solana/{mint}` (deepest
+pool) on both the gallery card and the hub's MarketContext.
+
+Mechanics worth knowing: the twelve records are esbuild-`define`d into
+gallery.js (`__GALLERY_FIGURES__`) so the React-rendered skeleton is
+enough — the standalone page's JSON island stays and wins when present.
+Embed mode (`data-gallery-embed`) never writes the hash, dispatches
+`zodiacs:gallery-sign` on settle, listens for `zodiacs:gallery-focus`,
+takes only horizontal wheel (vertical falls through to the page), and
+measures its band with `embedBand()` (chrome lookup covers
+`.gband__chrome`). The bundle lazy-loads via IntersectionObserver from a
+`GalleryBand` component between CineHero and `.zd`; `GALLERY_LIVE` gates
+Selector vs band; the featured card hides its `.glyph-stage` under
+`html.gallery-live`. `tests/registry-selector-drive.mjs` runs strip
+assertions under a WebGL-denying stub and asserts the band unstubbed
+(skip-with-log where the browser has no GL); `REACT_UMD_DIR` lets a
+CDN-less sandbox shim unpkg React. New pins in
+`scripts/registry-gallery-band.test.mjs`.
+
+## §16 — One gallery: the registry band absorbs the page (2026-07-28)
+
+Owner review of production found the two-surface split confusing: clicking
+the front sculpture on the hub navigated away, clicking a side one silently
+selected (read as "frozen"), the market card lived a page and a second click
+away, and nothing said the sculptures were clickable. Owner decisions:
+retire `/registry/gallery/` (301 → `/registry/`, both literal forms;
+`/registry/shelf` re-pointed home to avoid a chain), click ANY sculpture
+opens the record card in place (side figures swing to front and open in one
+motion; tapping the displayed piece or empty space returns it), the band
+grows to `min(92svh, 760px)` for a viewing (card beside on ≥900px, bottom
+sheet below), and hover lifts the figure with a serif name label + pointer
+cursor (the bookshelf gesture; touch's affordance is one-tap-opens).
+
+Mechanics: `build-shelf.mjs` is bundle-only (`assets/gallery.js` with the
+records baked; page emission deleted). `main.mjs` collapsed to one mode —
+no hash writes ever (arrival `/registry/#slug` focuses, opens, and
+`scrollIntoView`s the band; sign-page backlinks re-point there; the static
+no-JS catalogue carries `<li id="{slug}">` so fragments resolve without
+JS and check-dist keeps validating them). `scene.layout` eases a per-figure
+hover lift and reports unsettled transitions so the render-on-demand loop
+stays alive; `scene.screenX()` places the label. The card markup lives in
+`GalleryBand` (`.gcard` namespace — the hub's `.card` belongs to the
+featured card), operated by `card.mjs` unchanged, token fallback included.
+Sitemap entry removed (`src/lib/legacy/urls.ts`; check-dist total 2420 —
+note `src/lib` is in the phase-1 template-source hash, so the acceptance
+evidence re-stamped). `registry-risk`'s gallery block now reads
+`src/app.jsx` + `public/assets/app.js`, with the no-baked-mint invariant
+pinned against the hub HTML. The selector drive picks its walk target
+relative to the seasonal opening sign (a fixed tick collides one month a
+year — it did, in Leo season).
+
+## §17 — Wallet discs and relief (2026-07-29)
+
+Owner review: the pastel disc icons — what wallets actually show for these
+tokens — appeared nowhere in the gallery, leaving room to doubt the gold
+sculptures name the same contract addresses. Owner placements: the rail
+ticks ARE the discs now (48-tier avif/webp, the strip's old files), and the
+record card sets the 128-tier disc beside the address rows with one factual
+sentence, "As it appears in wallets." — no new legal phrasing, risk pins
+untouched. On dimensionality the owner picked bas-relief over commissioning
+true-3D models: the face artwork doubles as its own bump map
+(`face.bumpMap = map`, bumpScale 0.55; hallmark reverse at 0.28), so each
+cast bulges and catches the key light like a struck medallion as it turns.
+No new assets, no pipeline changes, `build-figure-assets.mjs` untouched.
+True 3D remains a possible future project: the load story would be
+low-poly row + streamed high-res on open, but the twelve models would have
+to be produced first, and quality would vary by sign.
+
+## §18 — The row means focus (2026-07-29)
+
+Owner review found the size language inverted: *"it shrinks when it's looked
+at as the focus instead of being enlarged."* Measured, and literally true.
+Focus was worth ~4% of apparent size (only `focusOut` 0.22 at ~6 units'
+distance), while the twelve differed from EACH OTHER by 46% in height —
+each was fitted alone to the height/width limits, so Virgo stood at 1.60 and
+Cancer at 1.09. Scrolling Virgo → Leo made the newly focused piece 29%
+shorter. Identity noise was ten times the focus signal.
+
+Three instruments, all owner-picked:
+
+1. **Levelled fitting** (`fitScales` in layout.mjs). Each figure takes its
+   own limit, then the set is capped into `GALLERY.heightSpread` (14%) of the
+   shortest the limits allow. Scales only ever shrink, so the collision
+   clearance holds by construction. `rowContent(gallery, tallest)` now takes
+   the real tallest so the camera reframes — a shorter set costs nothing on
+   screen, it just brings the camera closer. Noise 46% → 14%.
+   *Rejected: equalising ink area.* Measured it — a sparse arrow
+   (Sagittarius, ink 0.247) would tower at 1.60 over a solid bull (Taurus,
+   0.832) at 0.87. Worse than the disease.
+2. **The spotlight** (`emphasis`, SPOTLIGHT 1 / 0.78 / 0.65, dim 0.62).
+   Smoothstep from focus through one slot to two, applied to the cast, its
+   plinth, and its shadow, composed with the card-open dimming rather than
+   replacing it. Focus is now worth 28% — twice the identity noise, and a
+   unit test pins that ratio so it cannot silently invert again.
+3. **The dock wave** (`dockMagnify`, DOCK amplitude 0.9 / spread 1.9 /
+   rest 0.28). `--mag` per tick drives width AND transform, so the swollen
+   disc pushes its neighbours aside instead of covering them — measured in CI
+   as 32→61→32 across the rail. `--tick` lives in the stylesheet and main.mjs
+   reads it, so pitch and CSS cannot drift. At rest the current sign stands
+   proud (1.28) for touch and keyboard readers. Reduced motion keeps the rest
+   state and drops the cursor-following wave.
+
+One trap worth remembering: the name label is shared by the rail and the
+sculptures, and without ownership (`namedBy`) the rail's pointerleave
+retracted a label the row had just raised — while `setHover`'s early return
+refused to restore it. Each surface now retracts only its own naming.

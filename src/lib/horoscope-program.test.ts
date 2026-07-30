@@ -95,7 +95,7 @@ describe('horoscope program domain', () => {
     }
     expect(validateHoroscopeProgramAgainstInput(input, first)).toEqual([]);
     expect(verifyHoroscopeProgramCopy(first).filter(({ path }) => (
-      path.includes('.readings.today.')
+      path.includes('.readings.today.') || path.includes('.readings.tomorrow.')
     ))).toEqual([]);
   });
 

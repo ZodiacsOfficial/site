@@ -277,24 +277,45 @@ async function bumpDailyQuota(
   visitorHash: string,
   log: (message: string) => void = () => {},
 ): Promise<{ visitor: number; global: number } | null> {
+  const headers: Record<string, string> = {
+    apikey: serviceKey,
+    'Content-Type': 'application/json',
+    'Cache-Control': 'no-store',
+  };
+  // Supabase's modern sb_secret_* keys are opaque API keys, not JWTs.
+  // Sending one as a Bearer token makes the gateway reject it before
+  // PostgREST sees the valid apikey header. Legacy service-role JWTs still
+  // need the Authorization header.
+  if (!serviceKey.startsWith('sb_secret_')) {
+    headers.Authorization = `Bearer ${serviceKey}`;
+  }
+
   const callBump = (routine: string) => fetchImpl(
     `${supabaseUrl.replace(/\/+$/, '')}/rest/v1/rpc/${routine}`,
     {
       method: 'POST',
-      headers: {
-        apikey: serviceKey,
-        Authorization: `Bearer ${serviceKey}`,
-        'Content-Type': 'application/json',
-        'Cache-Control': 'no-store',
-      },
+      headers,
       body: JSON.stringify({ visitor_hash: visitorHash }),
       signal: AbortSignal.timeout(QUOTA_TIMEOUT_MS),
     },
   );
 
+  const errorCode = async (response: Response): Promise<string> => {
+    try {
+      const payload = await response.json() as Record<string, unknown>;
+      return typeof payload?.code === 'string' ? payload.code : 'unknown';
+    } catch {
+      return 'unknown';
+    }
+  };
+
   try {
     const response = await callBump('assistant_quota_bump_v2');
-    if (response.ok) return parseQuotaResult(await response.json());
+    if (response.ok) {
+      const result = parseQuotaResult(await response.json());
+      if (result === null) log('assistant: quota RPC assistant_quota_bump_v2 returned an invalid result');
+      return result;
+    }
 
     // PostgREST answers 404 when a routine is absent from the schema cache:
     // the database is behind this deployment. A migration that has not landed
@@ -302,14 +323,24 @@ async function bumpDailyQuota(
     // fall back to the per-visitor bump this replaced. The ceiling resumes on
     // its own the moment the migration applies. Any other error still fails
     // closed.
-    if (response.status !== 404) return null;
+    if (response.status !== 404) {
+      log(`assistant: quota RPC assistant_quota_bump_v2 failed status=${response.status} code=${await errorCode(response)}`);
+      return null;
+    }
     const legacy = await callBump('assistant_quota_bump');
-    if (!legacy.ok) return null;
+    if (!legacy.ok) {
+      log(`assistant: quota RPC assistant_quota_bump failed status=${legacy.status} code=${await errorCode(legacy)}`);
+      return null;
+    }
     const visitor = parseQuotaCount(await legacy.json());
-    if (visitor === null) return null;
+    if (visitor === null) {
+      log('assistant: quota RPC assistant_quota_bump returned an invalid result');
+      return null;
+    }
     log('assistant: assistant_quota_bump_v2 missing — per-visitor limit only until the migration applies');
     return { visitor, global: 0 };
   } catch {
+    log('assistant: quota RPC unavailable — network failure or timeout');
     return null;
   }
 }

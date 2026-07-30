@@ -14,6 +14,21 @@ const OUT = process.env.OUT_DIR ?? null;
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
+/**
+ * The gallery band replaces the strip wherever WebGL exists, so the strip's
+ * own assertions run with WebGL denied — the fallback those readers actually
+ * get. The band is asserted separately, on an unstubbed page.
+ */
+async function stubNoWebgl(page) {
+  await page.addInitScript(() => {
+    const real = HTMLCanvasElement.prototype.getContext;
+    HTMLCanvasElement.prototype.getContext = function (type, ...rest) {
+      if (type === 'webgl' || type === 'webgl2') return null;
+      return real.call(this, type, ...rest);
+    };
+  });
+}
+
 if (OUT) await mkdir(OUT, { recursive: true });
 
 await withPreview({ port: 4404 }, async (baseURL) => {
@@ -21,6 +36,23 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     executablePath: await findChromium(),
     args: STABLE_CHROMIUM_ARGS,
   });
+
+  // The hub loads React from unpkg at runtime. A sandbox that cannot reach
+  // the CDN can point REACT_UMD_DIR at a directory holding the two UMD
+  // builds; CI never sets it and takes the network path.
+  const reactShimDir = process.env.REACT_UMD_DIR ?? null;
+  const shimReact = async (page) => {
+    if (!reactShimDir) return;
+    await page.route('https://unpkg.com/react@18.3.1/umd/react.production.min.js', (route) =>
+      route.fulfill({ path: `${reactShimDir}/react.production.min.js` }));
+    await page.route('https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js', (route) =>
+      route.fulfill({ path: `${reactShimDir}/react-dom.production.min.js` }));
+  };
+  const newPage = async (options) => {
+    const page = await browser.newPage(options);
+    await shimReact(page);
+    return page;
+  };
 
   try {
     const navRoutes = [
@@ -33,7 +65,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       let referenceGeometry = null;
       let referenceMenuVisual = null;
       for (const route of navRoutes) {
-        const navPage = await browser.newPage({ viewport: { width, height: 900 } });
+        const navPage = await newPage({ viewport: { width, height: 900 } });
         await navPage.goto(`${baseURL}${route.path}`, { waitUntil: 'domcontentloaded' });
         const nav = navPage.locator(route.selector).first();
         await nav.waitFor({ state: 'visible' });
@@ -157,11 +189,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             JSON.stringify(closedLines.map((line) => line.center)),
           );
           await burger.click();
-          // The morph itself lasts 220ms. Leave a scheduling margin so slower
-          // CI runners are measured at the settled X rather than one frame
-          // before the transition completes.
-          await navPage.waitForTimeout(320);
-          const openState = await burger.evaluate((element, prefix) => {
+          // The morph itself lasts 220ms, but a loaded runner can paint the
+          // settled frame well after any fixed margin — one sample at +320ms
+          // has been caught at 90% of the animation. Poll for the settled X
+          // instead; a genuinely broken morph still fails when the poll
+          // exhausts, with the final state in the detail.
+          let openState = null;
+          const readBurger = () => burger.evaluate((element, prefix) => {
             const lines = [...element.querySelectorAll(`.${prefix}__burger-line`)];
             return {
               expanded: element.getAttribute('aria-expanded'),
@@ -174,6 +208,14 @@ await withPreview({ port: 4404 }, async (baseURL) => {
               }),
             };
           }, route.prefix);
+          for (let attempt = 0; attempt < 20; attempt += 1) {
+            openState = await readBurger();
+            const settled = openState.opacities[1] === 0
+              && Math.abs(openState.centers[0].y - openState.centers[2].y) <= 0.5
+              && Math.abs(openState.centers[0].x - openState.centers[2].x) <= 0.5;
+            if (settled) break;
+            await navPage.waitForTimeout(150);
+          }
           check(
             `${label} morphs cleanly into an accessible close control`,
             openState.expanded === 'true'
@@ -287,7 +329,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     }
 
     for (const width of [360, 390]) {
-      const fallbackPage = await browser.newPage({
+      const fallbackPage = await newPage({
         viewport: { width, height: 844 },
         javaScriptEnabled: false,
       });
@@ -323,8 +365,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await fallbackPage.close();
     }
 
-    const homeMaterialPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
-    const registryMaterialPage = await browser.newPage({ viewport: { width: 390, height: 844 } });
+    const homeMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
+    const registryMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
     await Promise.all([
       homeMaterialPage.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded' }),
       registryMaterialPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' }),
@@ -378,6 +420,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       reducedMotion: 'reduce',
     });
     const reducedPage = await reducedContext.newPage();
+    await shimReact(reducedPage);
     await reducedPage.goto(`${baseURL}/registry/aries/`, { waitUntil: 'domcontentloaded' });
     const reducedBurger = reducedPage.locator('.wnav__burger');
     await reducedBurger.click();
@@ -396,7 +439,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         { slug: 'cancer', next: 'leo', name: 'Leo' },
         { slug: 'pisces', next: 'aries', name: 'Aries' },
       ]) {
-        const recordPage = await browser.newPage({ viewport: { width, height: 844 } });
+        const recordPage = await newPage({ viewport: { width, height: 844 } });
         await recordPage.goto(`${baseURL}/registry/${record.slug}/`, { waitUntil: 'domcontentloaded' });
         const action = recordPage.locator('.lot__next');
         await action.waitFor({ state: 'visible' });
@@ -452,11 +495,20 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       }
     }
 
-    const desktop = await browser.newPage({ viewport: { width: 1126, height: 1180 } });
+    const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
     const desktopErrors = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
+    await stubNoWebgl(desktop);
     await desktop.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
     await desktop.waitForSelector('.strip__glyph');
+    check(
+      'denied WebGL renders the strip, not the band',
+      await desktop.evaluate(() => (
+        !document.documentElement.classList.contains('gallery-live')
+        && document.querySelectorAll('.gband').length === 0
+        && document.querySelectorAll('.strip-wrap').length === 1
+      )),
+    );
 
     const desktopLayout = await desktop.locator('.strip').evaluate((element) => ({
       display: getComputedStyle(element).display,
@@ -587,11 +639,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     if (OUT) await desktop.locator('.hero').screenshot({ path: `${OUT}/registry-selector-1126.png` });
     await desktop.close();
 
-    const mobile = await browser.newPage({
+    const mobile = await newPage({
       viewport: { width: 390, height: 844 },
       deviceScaleFactor: 2,
       hasTouch: true,
     });
+    await stubNoWebgl(mobile);
     await mobile.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
     await mobile.waitForSelector('.strip__glyph');
     const mobileLayout = await mobile.locator('.strip').evaluate((element) => ({
@@ -617,10 +670,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     if (OUT) await mobile.locator('.hero').screenshot({ path: `${OUT}/registry-selector-390.png` });
     await mobile.close();
 
-    const reduced = await browser.newPage({
+    const reduced = await newPage({
       viewport: { width: 1126, height: 1180 },
       reducedMotion: 'reduce',
     });
+    await stubNoWebgl(reduced);
     await reduced.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
     await reduced.waitForSelector('.strip__glyph');
     await reduced.locator('[data-sign="libra"]').click();
@@ -628,6 +682,262 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       .evaluate((element) => getComputedStyle(element).animationName);
     check('reduced motion swaps records without animation', animationName === 'none', animationName);
     await reduced.close();
+
+    // ---- the gallery band: the selector wherever WebGL exists -------------
+    // CI browsers without GL take the strip path above; the band checks then
+    // record themselves as skipped rather than failing the gate.
+    // The dock wave is motion, and the scene withholds it under a reduced
+    // motion preference — which some CI browsers report by default. State the
+    // preference explicitly so this section tests the wave, not the runner.
+    for (const [label, viewport] of [
+      ['1280', { viewport: { width: 1280, height: 900 }, reducedMotion: 'no-preference' }],
+      ['390', {
+        viewport: { width: 390, height: 844 },
+        deviceScaleFactor: 2,
+        hasTouch: true,
+        reducedMotion: 'no-preference',
+      }],
+    ]) {
+      const band = await newPage(viewport);
+      const bandErrors = [];
+      band.on('pageerror', (error) => bandErrors.push(String(error)));
+      await band.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      const bandLive = await band.evaluate(() => document.documentElement.classList.contains('gallery-live'));
+      if (!bandLive) {
+        check(`band at ${label} (skipped — this browser reports no WebGL)`, true);
+        await band.close();
+        continue;
+      }
+      check(`band at ${label} replaces the strip`, await band.evaluate(() => (
+        document.querySelectorAll('.strip-wrap').length === 0
+        && document.querySelectorAll('[data-gallery-stage][data-gallery-embed]').length === 1
+      )));
+      await band.evaluate(() => document.querySelector('.gband')?.scrollIntoView({
+        block: 'center',
+        behavior: 'instant',
+      }));
+      let bandReady = true;
+      try {
+        await band.waitForSelector('.gband.is-ready', { timeout: 30000 });
+      } catch {
+        bandReady = false;
+      }
+      check(`band at ${label} mounts the scene`, bandReady);
+      if (bandReady) {
+        check(
+          `band at ${label} rails all twelve`,
+          await band.locator('.gband .rail__tick').count() === 12,
+        );
+        check(
+          `band at ${label} rail carries the wallet discs`,
+          await band.locator('.gband .rail__tick img').count() === 12,
+        );
+        // At rest the current sign stands proud, so touch and keyboard
+        // readers see the selection without a cursor.
+        const restWidths = await band.locator('.gband .rail__tick').evaluateAll((ticks) => {
+          const current = ticks.findIndex((t) => t.getAttribute('aria-current') === 'true');
+          const visualWidth = (tick) => tick.querySelector('picture').getBoundingClientRect().width;
+          const hitWidths = ticks.map((tick) => tick.getBoundingClientRect().width);
+          return {
+            current: visualWidth(ticks[current]),
+            other: visualWidth(ticks[(current + 5) % ticks.length]),
+            hitSpread: Math.max(...hitWidths) - Math.min(...hitWidths),
+          };
+        });
+        check(
+          `band at ${label} rests with the current disc proud`,
+          restWidths.current > restWidths.other + 1,
+          `${restWidths.current.toFixed(1)} vs ${restWidths.other.toFixed(1)}`,
+        );
+        check(
+          `band at ${label} keeps stable rail hit areas`,
+          restWidths.hitSpread <= 0.5,
+          restWidths.hitSpread.toFixed(1),
+        );
+        if (label === '1280') {
+          // The dock wave: the disc under the cursor swells most, its
+          // neighbour less, and the far end of the rail is untouched.
+          const target = band.locator('.gband .rail__tick').nth(6);
+          const spot = await target.boundingBox();
+          const rail = band.locator('.gband .rail');
+          // Use a real pointer move so :hover and the pointer event agree.
+          // A synthetic event can leave the rail reporting :hover=false,
+          // allowing its resting state to replace the test wave.
+          await band.mouse.move(
+            spot.x + (spot.width / 2),
+            spot.y + (spot.height / 2),
+          );
+          await band.waitForTimeout(420);
+          const wave = await band.locator('.gband .rail__tick').evaluateAll((ticks) => (
+            ticks.map((t) => t.querySelector('picture').getBoundingClientRect().width)
+          ));
+          check(
+            `band at ${label} rail magnifies like a dock`,
+            wave[6] > wave[5] && wave[5] > wave[4] && wave[4] > wave[0] && wave[6] > wave[0] * 1.4,
+            wave.map((w) => w.toFixed(0)).join(','),
+          );
+          const waveBounds = await rail.evaluate((element) => {
+            const railBox = element.getBoundingClientRect();
+            const pictureBox = element
+              .querySelector('.rail__tick[data-index="6"] picture')
+              .getBoundingClientRect();
+            return { railTop: railBox.top, pictureTop: pictureBox.top };
+          });
+          check(
+            `band at ${label} keeps the hovered disc inside the rail`,
+            waveBounds.pictureTop >= waveBounds.railTop + 1,
+            `${waveBounds.pictureTop.toFixed(1)} vs ${waveBounds.railTop.toFixed(1)}`,
+          );
+          check(
+            `band at ${label} the wave names its disc`,
+            await band.evaluate(() => {
+              const el = document.querySelector('.gband__name');
+              return Boolean(el?.classList.contains('is-visible'))
+                && Boolean(el?.classList.contains('is-rail'));
+            }),
+          );
+          await band.mouse.move(0, 0);
+          await band.waitForTimeout(420);
+
+          // The same rail under a reduced motion preference: the current sign
+          // still stands proud, but the cursor raises no wave.
+          const calm = await newPage({
+            viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce',
+          });
+          await calm.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+          await calm.evaluate(() => document.querySelector('.gband')?.scrollIntoView({
+            block: 'center',
+            behavior: 'instant',
+          }));
+          try {
+            await calm.waitForSelector('.gband.is-ready', { timeout: 30000 });
+            const calmSpot = await calm.locator('.gband .rail__tick').nth(6).boundingBox();
+            await calm.mouse.move(calmSpot.x + (calmSpot.width / 2), calmSpot.y + (calmSpot.height / 2));
+            await calm.waitForTimeout(420);
+            const calmWave = await calm.locator('.gband .rail__tick').evaluateAll((ticks) => (
+              ticks.map((t) => Math.round(t.querySelector('picture').getBoundingClientRect().width))
+            ));
+            const proud = calmWave.filter((w) => w > Math.min(...calmWave) + 1).length;
+            check(
+              'band withholds the wave under reduced motion',
+              proud <= 1,
+              calmWave.join(','),
+            );
+          } catch {
+            check('band withholds the wave under reduced motion (skipped — no scene)', true);
+          }
+          await calm.close();
+        }
+        // The band opens on the seasonal sign, so the walk target is chosen
+        // relative to it — two along, wrapping — rather than a fixed tick.
+        const startIndex = Number(
+          await band.locator('.rail__tick[aria-current="true"]').getAttribute('data-index'),
+        );
+        const targetIndex = (startIndex + 2) % 12;
+        const targetTick = band.locator(`.rail__tick[data-index="${targetIndex}"]`);
+        const targetName = (await targetTick.getAttribute('aria-label')).split(',')[0];
+        await targetTick.click();
+        await band.waitForTimeout(1100);
+        check(
+          `band at ${label} rail drives the Museum label`,
+          await band.locator('[data-museum-sign]').getAttribute('data-museum-sign')
+            === targetName.toLowerCase(),
+          targetName,
+        );
+        check(
+          `band at ${label} leaves the address bar alone`,
+          await band.evaluate(() => window.location.hash === ''),
+        );
+        const openerLabel = (await band.locator('.gband__open').innerText()).trim();
+        check(
+          `band at ${label} opener names the selection`,
+          openerLabel === `View ${targetName}`,
+          openerLabel,
+        );
+        // The second press on the current tick is the keyboard door into the
+        // record: the card opens in place, the band grows for the viewing.
+        await targetTick.click();
+        let cardOpen = true;
+        try {
+          await band.waitForSelector('.gcard.is-open', { timeout: 8000 });
+        } catch {
+          cardOpen = false;
+        }
+        check(`band at ${label} opens the record in place`, cardOpen);
+        await band.evaluate((name) => { window.__bandTargetName = name; }, targetName);
+        if (cardOpen) {
+          check(
+            `band at ${label} card names the piece and its market`,
+            await band.evaluate(() => {
+              const name = document.querySelector('[data-card-name]')?.textContent;
+              const state = document.querySelector('[data-market-state]')?.textContent ?? '';
+              const risk = document.querySelector('.gcard .card__risk')?.textContent ?? '';
+              return name === window.__bandTargetName
+                && /market context/i.test(state)
+                && risk.includes('can lose all market value');
+            }),
+          );
+          check(
+            `band at ${label} grows for the viewing`,
+            await band.evaluate(() => document.querySelector('.gband')?.classList.contains('is-open')),
+          );
+          check(
+            `band at ${label} still leaves the address bar alone`,
+            await band.evaluate(() => window.location.hash === ''),
+          );
+          await band.keyboard.press('Escape');
+          await band.waitForTimeout(900);
+          check(
+            `band at ${label} Escape returns the sculpture`,
+            await band.evaluate(() => !document.querySelector('.gband')?.classList.contains('is-open')),
+          );
+          check(
+            `band at ${label} Escape immediately restores the opener`,
+            (await band.locator('.gband__open').innerText()).trim() === `View ${targetName}`,
+            (await band.locator('.gband__open').innerText()).trim(),
+          );
+        }
+        if (label === '1280') {
+          // Hover is the invitation: the figure lifts, the cursor says
+          // pointer, and the label names the piece. Where exactly the
+          // focused figure sits on the canvas shifts a few pixels with the
+          // runner's layout, so the probe sweeps likely body points and
+          // stops at the first hit rather than trusting one coordinate.
+          const box = await band.locator('.gband canvas').boundingBox();
+          if (box) {
+            let hovered = false;
+            const points = [];
+            for (const fy of [0.42, 0.5, 0.34, 0.58, 0.26]) {
+              for (const fx of [0.5, 0.46, 0.54]) points.push([fx, fy]);
+            }
+            for (const [fx, fy] of points) {
+              await band.mouse.move(box.x + (box.width * fx), box.y + (box.height * fy));
+              await band.waitForTimeout(250);
+              hovered = await band.evaluate(() => (
+                document.querySelector('.gband canvas')?.style.cursor === 'pointer'
+              ));
+              if (hovered) break;
+            }
+            check(
+              `band at ${label} hover invites the click`,
+              hovered && await band.evaluate(() => {
+                const labelEl = document.querySelector('.gband__name');
+                return Boolean(labelEl?.classList.contains('is-visible'))
+                  && /Lot/.test(labelEl?.textContent ?? '');
+              }),
+              hovered ? 'hit' : 'no point hovered',
+            );
+          }
+        }
+        check(
+          `band at ${label} removes the duplicate featured card`,
+          await band.evaluate(() => document.querySelector('#featured-sign') === null),
+        );
+      }
+      check(`band at ${label} runtime is error-free`, bandErrors.length === 0, bandErrors.join(' | '));
+      if (OUT) await band.screenshot({ path: `${OUT}/registry-band-${label}.png` });
+      await band.close();
+    }
   } finally {
     await browser.close();
   }

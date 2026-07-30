@@ -13,7 +13,7 @@
 import * as THREE from 'three';
 
 import {
-  GALLERY, VITRINE, figurePose, fitScale, floorY, isVisible,
+  GALLERY, VITRINE, emphasis, figurePose, fitScales, floorY, isVisible,
   lerpContent, lerpRect, rowContent, stageContent, vitrineFrame,
 } from './layout.mjs';
 import { paintPlinth, paintReverse, loadSculpture } from './textures.mjs';
@@ -233,9 +233,15 @@ export function createScene(canvas, records) {
     surface.geometry, surface.material, surface.material.map,
   ];
 
-  const figures = records.map((record) => {
+  // Fitted as a set: every piece lands inside one narrow band of height, so
+  // the only sculpture that stands taller than the rest is the one the row is
+  // holding forward.
+  const fitted = fitScales(records.map((record) => geometryData.figures[record.slug].aspect));
+  const tallest = Math.max(...fitted);
+
+  const figures = records.map((record, order) => {
     const traced = geometryData.figures[record.slug];
-    const scale = fitScale(traced.aspect);
+    const scale = fitted[order];
     const cast = new THREE.Color(traced.edgeColor);
 
     // Until the plate arrives the piece stands in its own metal, then the
@@ -243,8 +249,11 @@ export function createScene(canvas, records) {
     const face = new THREE.MeshStandardMaterial({
       color: cast, roughness: 0.62, metalness: 0.18, transparent: true, alphaTest: 0.3,
     });
+    const reverseMap = textureFrom(paintReverse(record, traced.edgeColor), renderer);
     const reverse = new THREE.MeshStandardMaterial({
-      map: textureFrom(paintReverse(record, traced.edgeColor), renderer),
+      map: reverseMap,
+      bumpMap: reverseMap,
+      bumpScale: 0.28,
       roughness: 0.7,
       metalness: 0.14,
       transparent: true,
@@ -303,6 +312,9 @@ export function createScene(canvas, records) {
       aspect: traced.aspect,
       materials: [face, reverse, edge],
       tier: 0,
+      // How far this figure has risen toward its hovered pose, eased in
+      // layout() so the lift breathes instead of popping.
+      hover: 0,
     };
   });
 
@@ -340,7 +352,7 @@ export function createScene(canvas, records) {
 
   function placeCamera(open, opened, zoom) {
     const content = lerpContent(
-      rowContent(),
+      rowContent(GALLERY, tallest),
       stageContent(opened.scale, opened.aspect),
       open,
     );
@@ -381,6 +393,9 @@ export function createScene(canvas, records) {
     const stage = { x: 0, y: -opened.scale / 2, z: VITRINE.stageZ };
     // One piece in a pool of light; the rest of the room goes quiet.
     const dimmed = 1 - (open * 0.94);
+    // Hover eases in and out rather than popping; while any figure is still
+    // rising or settling, the caller keeps the frame loop alive.
+    let hoverSettling = false;
 
     for (let i = 0; i < figures.length; i += 1) {
       const figure = figures[i];
@@ -393,12 +408,25 @@ export function createScene(canvas, records) {
 
       const drawn = i === openIndex ? open : 0;
       const recede = i === openIndex ? 0 : open * 0.6;
-      const { scale } = figure;
+
+      // The spotlight: the piece the row is offering stands at full size and
+      // full strength, and the others step back into the dark. A figure being
+      // examined keeps the focus treatment however the row has slid behind it.
+      const spot = emphasis(drawn > 0 ? 0 : pose.distance);
+
+      // The lift that says a sculpture opens: hovered pieces rise a little
+      // and step forward, the bookshelf gesture.
+      const hoverTarget = i === state.hover && drawn === 0 ? 1 : 0;
+      const eased = figure.hover + ((hoverTarget - figure.hover) * 0.22);
+      figure.hover = Math.abs(eased - hoverTarget) < 0.004 ? hoverTarget : eased;
+      if (figure.hover !== hoverTarget) hoverSettling = true;
+      const lift = figure.hover * (1 - open);
+      const scale = figure.scale * spot.scale * (1 + (lift * 0.05));
 
       figure.mesh.position.set(
         THREE.MathUtils.lerp(pose.x, stage.x, drawn),
-        THREE.MathUtils.lerp(pose.y, stage.y, drawn),
-        THREE.MathUtils.lerp(pose.z - recede, stage.z, drawn),
+        THREE.MathUtils.lerp(pose.y + (lift * 0.07), stage.y, drawn),
+        THREE.MathUtils.lerp(pose.z - recede + (lift * 0.16), stage.z, drawn),
       );
       figure.mesh.rotation.set(
         pitch * drawn,
@@ -412,20 +440,23 @@ export function createScene(canvas, records) {
       figure.proxy.scale.setScalar(scale);
       figure.proxy.updateMatrixWorld(true);
 
-      const opacity = i === openIndex ? 1 : dimmed;
+      const opacity = (i === openIndex ? 1 : dimmed) * spot.opacity;
       for (const material of figure.materials) material.opacity = opacity;
 
-      // The plinth stays in the row; only the figure is lifted off it.
+      // The plinth stays in the row; only the figure is lifted off it. It
+      // recedes with its own piece, so a figure well down the row sits on a
+      // smaller, quieter stone.
       figure.plinth.position.set(pose.x, pose.y - (GALLERY.plinthHeight / 2), pose.z);
       figure.plinth.rotation.y = pose.rotationY;
+      figure.plinth.scale.set(spot.scale, 1, spot.scale);
       figure.plinth.material[0].opacity = opacity * (1 - (drawn * 0.75));
       plinthCap.opacity = dimmed;
 
       figure.shadow.position.set(pose.x, floor + 0.004, pose.z + 0.05);
       figure.shadow.rotation.z = pose.rotationY;
       figure.shadow.material.opacity = 0.8 * (1 - (drawn * 0.7))
-        * (i === openIndex ? 1 : dimmed);
-      figure.shadow.scale.setScalar(1 + (pose.prominence * 0.1));
+        * (i === openIndex ? 1 : dimmed) * spot.opacity;
+      figure.shadow.scale.setScalar(spot.scale * (1 + (pose.prominence * 0.1)));
     }
 
     // The pool of light follows whatever the row is offering, and travels with
@@ -439,6 +470,7 @@ export function createScene(canvas, records) {
     offer.intensity = 7 - (open * 2.6);
 
     placeCamera(open, opened, zoom);
+    return hoverSettling;
   }
 
   /** Lay the photograph onto a figure's face, at the tier asked for. */
@@ -450,6 +482,11 @@ export function createScene(canvas, records) {
     const map = mapFrom(image, renderer);
     const previous = figure.face.map;
     figure.face.map = map;
+    // The artwork doubles as its own relief: bumping the lit highlights
+    // makes the cast read as a struck medallion rather than a flat plate,
+    // and the modelling shifts as the piece turns.
+    figure.face.bumpMap = map;
+    figure.face.bumpScale = 0.55;
     figure.face.color.set(0xffffff);
     figure.face.needsUpdate = true;
     figure.tier = tier;
@@ -479,6 +516,19 @@ export function createScene(canvas, records) {
     camera.updateProjectionMatrix();
   }
 
+  /** CSS x of a figure's centre on the canvas, for the hover label. */
+  const projected = new THREE.Vector3();
+  function screenX(index) {
+    const figure = figures[index];
+    if (!figure) return NaN;
+    projected.set(
+      figure.mesh.position.x,
+      figure.mesh.position.y + (figure.scale * 0.5),
+      figure.mesh.position.z,
+    ).project(camera);
+    return ((projected.x + 1) / 2) * canvasSize.width;
+  }
+
   /** Index of the figure under the pointer, or -1. */
   function pick(clientX, clientY) {
     const rect = renderer.domElement.getBoundingClientRect();
@@ -500,5 +550,7 @@ export function createScene(canvas, records) {
     renderer.dispose();
   }
 
-  return { layout, render, resize, setBands, pick, dressRow, refine, dispose, renderer };
+  return {
+    layout, render, resize, setBands, pick, screenX, dressRow, refine, dispose, renderer,
+  };
 }
