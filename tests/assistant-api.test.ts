@@ -236,6 +236,10 @@ describe('POST /api/assistant', () => {
     expect(quotaCalls).toHaveLength(1);
     expect(quotaCalls[0]?.url).toBe('https://example.supabase.co/rest/v1/rpc/assistant_quota_bump_v2');
     expect(JSON.parse(String(quotaCalls[0]?.init?.body))).toEqual({ visitor_hash: expectedHash });
+    expect(quotaCalls[0]?.init?.headers).toMatchObject({
+      apikey: ENV.SUPABASE_SERVICE_ROLE_KEY,
+      Authorization: `Bearer ${ENV.SUPABASE_SERVICE_ROLE_KEY}`,
+    });
 
     expect(modelCalls).toHaveLength(1);
     const call = modelCalls[0] as any;
@@ -299,6 +303,22 @@ describe('POST /api/assistant', () => {
     expect([quotaRes.statusCode, quotaRes.text]).toEqual([503, '{"error":"unavailable"}']);
   });
 
+  it('sends modern Supabase secret keys only as API keys', async () => {
+    const quotaCalls: Array<{ url: string; init?: RequestInit }> = [];
+    const secretKey = 'sb_secret_test-only-not-a-real-key';
+    const handler = createAssistantHandler(dependencies({
+      calls: quotaCalls,
+      env: { ...ENV, SUPABASE_SERVICE_ROLE_KEY: secretKey },
+    }));
+    const res = new MockResponse();
+    await handler(request(), res);
+
+    expect(res.statusCode).toBe(200);
+    expect(quotaCalls).toHaveLength(1);
+    expect(quotaCalls[0]?.init?.headers).toMatchObject({ apikey: secretKey });
+    expect(quotaCalls[0]?.init?.headers).not.toHaveProperty('Authorization');
+  });
+
   it('returns the daily-limit response before calling Anthropic', async () => {
     const modelCalls: Array<Record<string, unknown>> = [];
     const handler = createAssistantHandler(dependencies({ quota: 31, modelCalls }));
@@ -353,12 +373,17 @@ describe('POST /api/assistant', () => {
 
   it('fails closed when the bump errors for any other reason', async () => {
     const modelCalls: Array<Record<string, unknown>> = [];
-    const fetchImpl = (async () => new Response('nope', { status: 500 })) as typeof fetch;
-    const handler = createAssistantHandler(dependencies({ fetch: fetchImpl, modelCalls }));
+    const logs: string[] = [];
+    const fetchImpl = (async () => new Response(JSON.stringify({ code: 'PGRST301' }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
+    })) as typeof fetch;
+    const handler = createAssistantHandler(dependencies({ fetch: fetchImpl, modelCalls, logs }));
     const res = new MockResponse();
     await handler(request(), res);
     expect([res.statusCode, res.text]).toEqual([503, '{"error":"unavailable"}']);
     expect(modelCalls).toHaveLength(0);
+    expect(logs).toContain('assistant: quota RPC assistant_quota_bump_v2 failed status=500 code=PGRST301');
   });
 
   it('rests the service when the day\'s global ceiling is spent, before calling Anthropic', async () => {
