@@ -159,8 +159,8 @@ describe('curated wing search entries', () => {
       }),
       expect.objectContaining({
         path: '/thesis/',
-        title: 'The Registry Thesis',
-        description: 'Why the twelve records exist — the essay of record, with published disclosures.',
+        title: 'The Zodiac Standard — the Registry thesis',
+        description: 'Twelve old names, twelve new records — the essay of record, with published disclosures.',
       }),
       expect.objectContaining({
         path: '/sdk/',
