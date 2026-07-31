@@ -8,7 +8,7 @@ const jsonLd = [
     headline: 'Como calculamos seu mapa astral',
     url: 'https://zodiacs.org/pt/methodology/',
     datePublished: '2026-07-07T03:45:11+07:00',
-    dateModified: '2026-07-15T00:00:00+07:00',
+    dateModified: '2026-07-31T19:00:00Z',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/pt/methodology/' },
@@ -31,13 +31,14 @@ const jsonLd = [
     <h1 class="method-title display">Como calculamos seu mapa astral.</h1>
     <div class="prose">
       <p>Os mapas são calculados no seu navegador com posições planetárias aparentes, geocêntricas e tropicais, o padrão da astrologia ocidental.</p>
-      <p>O mecanismo é testado com dados de referência do JPL Horizons da NASA. Também verificamos a coerência interna do céu calculado: ao nascer do sol, por exemplo, o ascendente deve coincidir com a posição do Sol.</p>
+      <p>O mecanismo é comparado com vetores de referência versionados do JPL Horizons. É um teste reproduzível, não uma certificação nem um endosso da NASA ou do JPL. Também verificamos a coerência interna do céu calculado: ao nascer do sol, por exemplo, o ascendente deve coincidir com a posição do Sol.</p>
       <h2>Fusos horários</h2>
-      <p>Convertemos seu horário local usando todo o histórico do fuso do seu local de nascimento, incluindo horário de verão, mudanças ocorridas durante guerras e hora média local anterior à padronização.</p>
+      <p>Convertemos seu horário local com os dados IANA/ICU disponíveis no navegador: horário de verão, mudanças ocorridas durante guerras e, quando o ambiente fornece esses dados, hora média local anterior à padronização. A cobertura histórica pode variar entre versões do navegador.</p>
       <h2>Privacidade</h2>
       <p>O mapa é calculado no seu dispositivo. Não existe uma API no servidor que receba seus dados de nascimento. Se você salvar um mapa, ele fica primeiro no armazenamento local; a sincronização com uma conta é opcional.</p>
       <h2>Limites claros</h2>
       <p>O intervalo aceito é de 1800 a 2199. Se você não souber a hora de nascimento, calculamos para o meio-dia: as posições dos planetas continuam úteis para o dia, mas o ascendente e as casas dependem do horário.</p>
+      <p>A precisão astronômica torna as posições e a conversão do horário reproduzíveis; ela não valida cientificamente interpretações ou previsões astrológicas.</p>
     </div>
   </section>
 </Base>

@@ -8,7 +8,7 @@ const jsonLd = [
     headline: 'Cómo calculamos tu carta',
     url: 'https://zodiacs.org/es/methodology/',
     datePublished: '2026-07-07T03:45:11+07:00',
-    dateModified: '2026-07-07T03:45:11+07:00',
+    dateModified: '2026-07-31T19:00:00Z',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/es/methodology/' },
@@ -31,13 +31,14 @@ const jsonLd = [
     <h1 class="method-title display">Cómo calculamos tu carta.</h1>
     <div class="prose">
       <p>Las cartas se calculan en tu navegador con posiciones planetarias aparentes, geocéntricas y tropicales, el marco estándar de la astrología occidental.</p>
-      <p>El motor se prueba contra datos de referencia de NASA JPL Horizons. También verificamos el cielo contra sí mismo: por ejemplo, al amanecer el ascendente debe coincidir con la posición del Sol.</p>
+      <p>El motor se compara con vectores de referencia guardados de JPL Horizons. Es una prueba reproducible, no una certificación ni un aval de NASA o JPL. También verificamos el cielo contra sí mismo: por ejemplo, al amanecer el ascendente debe coincidir con la posición del Sol.</p>
       <h2>Zonas horarias</h2>
-      <p>Convertimos tu hora local usando la historia completa de la zona horaria de tu lugar de nacimiento, incluyendo horario de verano, cambios de guerra y hora media local antes de la estandarización.</p>
+      <p>Convertimos tu hora local con los datos IANA/ICU disponibles en tu navegador: horario de verano, cambios de guerra y, cuando el entorno los incluye, hora media local anterior a la estandarización. La cobertura histórica puede variar entre versiones del navegador.</p>
       <h2>Privacidad</h2>
       <p>La carta se calcula en tu dispositivo. No hay una API del servidor que reciba tus datos de nacimiento. Si guardas una carta, vive primero en el almacenamiento local; la sincronización con cuenta es opcional.</p>
       <h2>Límites honestos</h2>
       <p>Los años admitidos son 1800–2199. Si no sabes tu hora de nacimiento, calculamos al mediodía: los planetas son útiles para el día, pero ascendente y casas necesitan la hora.</p>
+      <p>La precisión astronómica hace reproducibles las posiciones y la conversión horaria; no demuestra científicamente la interpretación ni la predicción astrológica.</p>
     </div>
   </section>
 </Base>

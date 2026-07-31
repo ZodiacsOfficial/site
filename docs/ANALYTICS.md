@@ -24,9 +24,13 @@ uses no cookies, pixels, fingerprinting, or session recording.
 
 | Event | Props | Fired when |
 | --- | --- | --- |
-| `chart_computed` | `mode` | A browser-computed astrology chart renders |
+| `chart_submitted` | `mode` | A valid calculator form starts a chart computation |
+| `chart_computed` | `mode`, `source` | A browser-computed astrology chart renders |
 | `chart_saved` | `source` | A chart or comparison is saved locally |
+| `second_chart_saved` | — | A distinct second chart is successfully saved locally |
+| `compat_submitted` | `source` | A guarded compatibility comparison starts |
 | `compat_computed` | `source` | A compatibility comparison renders |
+| `horoscope_chart_click` | `surface` | A horoscope hub or sign page opens the birth-chart calculator |
 | `email_subscribed` | `placement` | An anonymous week-ahead opt-in request is accepted |
 | `share_card_downloaded` | `variant` | A locally rendered PNG is downloaded or shared |
 | `widget_embed_copied` | `widget`, `mode` | Embed code is copied from the widget generator |
@@ -78,4 +82,4 @@ page use the directive taxonomy above.
 1. Provision Plausible cloud or a compatible self-hosted endpoint.
 2. Set `PUBLIC_PLAUSIBLE_SCRIPT_URL`; optionally set
    `PUBLIC_PLAUSIBLE_ENDPOINT` and `PUBLIC_PLAUSIBLE_DOMAIN`.
-3. Redeploy and verify the ten directive events without adding properties.
+3. Redeploy and verify the fourteen directive events without adding properties.

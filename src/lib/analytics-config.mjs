@@ -1,8 +1,12 @@
 /** Property allowlist shared by Astro pages and the generated Registry shell. */
 export const ANALYTICS_EVENT_PROPS = Object.freeze({
-  chart_computed: ['mode'],
+  chart_submitted: ['mode'],
+  chart_computed: ['mode', 'source'],
   chart_saved: ['source'],
+  second_chart_saved: [],
+  compat_submitted: ['source'],
   compat_computed: ['source'],
+  horoscope_chart_click: ['surface'],
   email_subscribed: ['placement'],
   share_card_downloaded: ['variant'],
   widget_embed_copied: ['widget', 'mode'],
@@ -64,6 +68,25 @@ export const ANALYTICS_EVENT_PROPS = Object.freeze({
 
 /** Closed-value contracts for the sharing loop's non-identifying dimensions. */
 export const ANALYTICS_EVENT_VALUES = Object.freeze({
+  chart_submitted: Object.freeze({
+    mode: Object.freeze(['full', 'moon', 'rising']),
+  }),
+  chart_computed: Object.freeze({
+    mode: Object.freeze(['full', 'moon', 'rising']),
+    source: Object.freeze(['form', 'shared']),
+  }),
+  chart_saved: Object.freeze({
+    source: Object.freeze(['free', 'tour', 'pair', 'invite_pair', 'invite']),
+  }),
+  compat_submitted: Object.freeze({
+    source: Object.freeze(['form', 'restored', 'invite']),
+  }),
+  compat_computed: Object.freeze({
+    source: Object.freeze(['form', 'restored', 'invite', 'returned']),
+  }),
+  horoscope_chart_click: Object.freeze({
+    surface: Object.freeze(['hub', 'sign']),
+  }),
   invite_opened: Object.freeze({
     state: Object.freeze(['ready', 'invalid', 'closed', 'used', 'unavailable', 'offline']),
   }),

@@ -79,15 +79,6 @@ export default function SunSignFallback({
     [selected],
   );
   const dailyLine = active ? sunSignLines[active.slug] ?? null : null;
-  const allReadings = useMemo(
-    () => SIGNS.map((sign) => ({
-      sign,
-      line: sunSignLines[sign.slug]
-        ?? 'Today’s note is temporarily unavailable.',
-    })),
-    [sunSignLines],
-  );
-
   const chooseSign = (slug: string) => {
     setSelected(slug);
     setHasInteracted(true);
@@ -121,7 +112,7 @@ export default function SunSignFallback({
           {SIGNS.map((sign) => (
             <a
               key={sign.slug}
-              href={`#today-sun-sign-${sign.slug}`}
+              href={`/horoscopes/${sign.slug}/`}
               class={`today-sign${selected === sign.slug ? ' today-sign--selected' : ''}`}
               style={`--sign:${sign.hue}`}
               aria-current={selected === sign.slug ? 'true' : undefined}
@@ -129,9 +120,8 @@ export default function SunSignFallback({
                 if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
                   return;
                 }
-                // Let the native fragment jump finish before the result grid
-                // narrows to the selected sign. Modified clicks stay native.
-                window.setTimeout(() => chooseSign(sign.slug), 0);
+                event.preventDefault();
+                chooseSign(sign.slug);
               }}
             >
               <PastelSignIcon sign={sign} size={34} className="today-sign__icon" />
@@ -191,30 +181,10 @@ export default function SunSignFallback({
             </a>
           </section>
         ) : (
-          <div class="today-sign-readings" data-today-all-signs>
-            {allReadings.map(({ sign, line }) => (
-              <article
-                key={sign.slug}
-                id={`today-sun-sign-${sign.slug}`}
-                class="today-sign-reading today-sign-reading--compact"
-                style={`--sign:${sign.hue}`}
-                data-today-sun-sign={sign.slug}
-              >
-                <p class="kicker">{sign.dates}</p>
-                <h3 class="today-sign-reading__title">
-                  <PastelSignIcon sign={sign} size={28} className="today-sign-reading__icon" />
-                  <span>{sign.name} today</span>
-                </h3>
-                <p class="today-sign-reading__line">{line}</p>
-                <a
-                  class="today-sign-reading__more"
-                  href={`/horoscopes/${sign.slug}/`}
-                  onClick={() => trackNextAction('sun-sign', 'open-horoscope')}
-                >
-                  Read the full {sign.name} horoscope <span aria-hidden="true">→</span>
-                </a>
-              </article>
-            ))}
+          <div class="today-fallback__gateway">
+            <strong>Looking for a general daily horoscope?</strong>
+            <p>The horoscope hub owns the complete daily reading for every Sun sign.</p>
+            <a href="/horoscopes/">Browse all 12 daily horoscopes <span aria-hidden="true">→</span></a>
           </div>
         )}
       </div>

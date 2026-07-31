@@ -8,7 +8,7 @@ Zodiacs.org is a free astrology reference and calculation platform. It also main
 
 The birth chart, compatibility, moon sign, rising sign, moon phase, Saturn return, transit, and baby-zodiac tools calculate in the visitor's browser. A visitor can use them without creating an account, and birth data is not sent to a chart-calculation server. Saved charts are local-first; optional account sync is available from the saved-charts profile for people who choose it.
 
-Planet positions are apparent geocentric tropical longitudes produced with Astronomy Engine. The calculation suite is tested against NASA JPL Horizons reference values. Historical civil time uses the IANA time-zone database, including pre-standard-time local mean time where applicable. Chart results print their UTC conversion, engine version, and relevant uncertainty notices rather than implying precision the inputs do not support.
+Planet positions are apparent geocentric tropical longitudes produced with Astronomy Engine. The calculation suite is checked against committed JPL Horizons reference vectors; this is a reproducible comparison, not NASA or JPL certification. Historical civil time uses the IANA/ICU data supplied by the visitor's browser or host runtime, including pre-standard-time local mean time where available. Chart results print their UTC conversion, engine version, and relevant uncertainty notices rather than implying precision the inputs do not support.
 
 Methodology and accuracy notes: https://zodiacs.org/methodology/
 

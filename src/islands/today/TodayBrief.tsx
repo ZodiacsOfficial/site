@@ -128,7 +128,7 @@ export default function TodayBrief({ sunSignLines }: Props) {
         <header class="today-card__head">
           <div>
             <p class="today-card__date">{dateLabel(daily.date)}</p>
-            <p class="today-card__time">Your daily astrology snapshot</p>
+            <p class="today-card__time">Private, local-first daily astrology</p>
           </div>
           {/* The fixed two-column shell is present during SSR, so recording the
               local streak never changes header geometry after hydration. */}
@@ -155,26 +155,11 @@ export default function TodayBrief({ sunSignLines }: Props) {
                   class={`today-returning-chart-status${comparisonUnavailable ? ' is-visible' : ''}`}
                   aria-hidden={comparisonUnavailable ? undefined : 'true'}
                 >
-                  Your saved-chart comparison is temporarily unavailable. Your Sun-sign baseline is ready below.
+                  Your saved-chart comparison is temporarily unavailable. Your daily horoscope links are ready below.
                 </p>
-                <div class="today-returning-sun-baselines" data-nosnippet>
-                  {SIGNS.map((sign) => (
-                    <section
-                      class="today-returning-sun-baseline"
-                      data-today-chart-sun={sign.slug}
-                      style={`--sign:${sign.hue}`}
-                    >
-                      <p class="kicker">{sign.name} Sun-sign baseline</p>
-                      <p>{sunSignLines[sign.slug]}</p>
-                      <a href={`/horoscopes/${sign.slug}/`}>
-                        Read the full {sign.name} horoscope <span aria-hidden="true">→</span>
-                      </a>
-                    </section>
-                  ))}
-                  <nav class="today-returning-sign-links" aria-label="Open a Sun-sign horoscope">
-                    {SIGNS.map((sign) => <a href={`/horoscopes/${sign.slug}/`}>{sign.name}</a>)}
-                  </nav>
-                </div>
+                <nav class="today-returning-sign-links" aria-label="Open a Sun-sign horoscope">
+                  {SIGNS.map((sign) => <a href={`/horoscopes/${sign.slug}/`}>{sign.name}</a>)}
+                </nav>
               </div>
               <p class="today-private">
                 Your saved chart and this comparison stay in this browser.
@@ -184,7 +169,7 @@ export default function TodayBrief({ sunSignLines }: Props) {
                 <div class="today-method-details__body">
                   <p>
                     The saved-chart layer runs privately in this browser. If it cannot load,
-                    the complete Sun-sign reading remains available here.
+                    links to the complete Sun-sign horoscopes remain available here.
                   </p>
                 </div>
               </details>

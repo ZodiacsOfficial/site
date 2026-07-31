@@ -460,8 +460,9 @@ for (const file of files) {
   }
 }
 
-// /today/ must be useful in the initial HTML. Saved-chart comparison is a
-// client enhancement, never a loading gate in front of the twelve Sun signs.
+// /today/ owns saved-chart personalization; /horoscopes/ owns complete generic
+// readings. The initial HTML must provide a useful twelve-sign gateway without
+// duplicating the twelve daily readings on a second indexable route.
 const dailyPublicationManifest = JSON.parse(await readFile(
   resolve(repo, 'src/data/daily-publication-manifest.json'),
   'utf8',
@@ -499,33 +500,24 @@ const dailyPublicationManifest = JSON.parse(await readFile(
     const renderedSigns = [
       ...todayHtml.matchAll(/data-today-sun-sign="([^"]+)"/g),
     ].map((match) => match[1]);
-    if (
-      renderedSigns.length !== signSlugs.length
-      || signSlugs.some((slug) => !renderedSigns.includes(slug))
-    ) {
-      fail(`today: initial HTML has ${renderedSigns.length}/12 Sun-sign readings`);
+    if (renderedSigns.length !== 0) {
+      fail(`today: initial HTML duplicates ${renderedSigns.length} Sun-sign reading(s)`);
     }
     const usefulLines = [
       ...todayHtml.matchAll(/<p class="today-sign-reading__line">[^<]{20,}<\/p>/g),
     ];
-    if (usefulLines.length !== signSlugs.length) {
-      fail(`today: initial HTML has ${usefulLines.length}/12 useful reading lines`);
+    if (usefulLines.length !== 0) {
+      fail(`today: initial HTML duplicates ${usefulLines.length} horoscope line(s)`);
     }
     const pickerIcons = [...todayHtml.matchAll(/class="today-sign__icon"/g)];
     const readingIcons = [...todayHtml.matchAll(/class="today-sign-reading__icon"/g)];
     if (pickerIcons.length !== signSlugs.length) {
       fail(`today: initial HTML has ${pickerIcons.length}/12 pastel picker icons`);
     }
-    if (readingIcons.length !== signSlugs.length) {
-      fail(`today: initial HTML has ${readingIcons.length}/12 pastel reading icons`);
+    if (readingIcons.length !== 0) {
+      fail(`today: initial HTML duplicates ${readingIcons.length} reading icon(s)`);
     }
     for (const slug of signSlugs) {
-      if (
-        !todayHtml.includes(`href="#today-sun-sign-${slug}"`)
-        || !todayHtml.includes(`id="today-sun-sign-${slug}"`)
-      ) {
-        fail(`today: initial HTML is missing the ${slug} no-JavaScript anchor`);
-      }
       if (!todayHtml.includes(`href="/horoscopes/${slug}/"`)) {
         fail(`today: initial HTML is missing the ${slug} horoscope link`);
       }
@@ -538,6 +530,9 @@ const dailyPublicationManifest = JSON.parse(await readFile(
     }
     if (!todayHtml.includes('data-today-state="sun-sign"')) {
       fail('today: initial HTML is missing the useful Sun-sign state');
+    }
+    if (!todayHtml.includes('The horoscope hub owns the complete daily reading for every Sun sign.')) {
+      fail('today: initial HTML is missing the generic-horoscope gateway');
     }
     if (!todayHtml.includes(`data-daily-date="${manifest.date}"`)) {
       fail(`today: rendered date does not match verified manifest ${manifest.date}`);
@@ -1018,9 +1013,9 @@ const indexablePeoplePaths = new Set(
     .map((person) => `/people/${person.slug}/`),
 );
 const sitemapPolicy = {
-  // 2420 = 2419 + /birth-chart/three-dimensions/ (2026-07-28; the gallery
-  // page later retired into the registry band the same day).
-  total: 2420 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
+  // 2417 = the coordinated HTML-page baseline after three machine-readable
+  // artifacts were removed from the sitemap (they remain publicly available).
+  total: 2417 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true),
   compatibilityPairs: 78,
   birthdays: 1830,

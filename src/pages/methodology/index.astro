@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { EDITOR_AUTHOR } from '../../lib/editorial';
+import { ENGINE_VERSION } from '../../lib/engine/types';
 
 const jsonLd = [
   {
@@ -8,7 +9,7 @@ const jsonLd = [
     headline: 'How zodiacs.org computes your chart',
     url: 'https://zodiacs.org/methodology/',
     datePublished: '2026-07-05T10:36:57Z',
-    dateModified: '2026-07-19T12:00:00Z',
+    dateModified: '2026-07-31T19:00:00Z',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/methodology/' },
@@ -19,7 +20,7 @@ const jsonLd = [
 ---
 <Base
   title="How We Compute Your Chart — Methodology & Privacy | Zodiacs.org"
-  description="The exact astronomy behind every chart on zodiacs.org: the ephemeris, house systems, historical timezone handling, accuracy testing against NASA JPL data, and the local-first privacy model."
+  description="How zodiacs.org computes a chart: ephemeris and house methods, JPL Horizons comparison tests, host-provided historical time zones, honest limits, and local-first privacy."
   path="/methodology/"
   type="article"
   jsonLd={jsonLd}
@@ -46,10 +47,12 @@ const jsonLd = [
       </p>
       <p>
         Every change to the engine must pass an automated accuracy gate
-        before it ships: positions are compared against{' '}
-        <strong>NASA JPL Horizons</strong> reference data at multiple epochs
-        (including a 1907 chart), with tolerances of a few hundredths of a
-        degree for planets. The test suite also checks the sky against itself:
+        before it ships. Committed vectors from{' '}
+        <a href="https://ssd.jpl.nasa.gov/horizons/" rel="noopener noreferrer">JPL Horizons</a>{' '}
+        cover modern and historical epochs, including 1907. In those vectors,
+        the tolerance is 0.05° for most planets and up to 0.2° for the Moon.
+        This is a reproducible comparison test, not certification or endorsement
+        by NASA or JPL. The suite also checks the sky against itself:
         at sunrise the computed ascendant must match the Sun's position; at
         solar noon the midheaven must.
       </p>
@@ -57,8 +60,8 @@ const jsonLd = [
       <h2>Angles and houses</h2>
       <p>
         The ascendant and midheaven are computed from Greenwich apparent
-        sidereal time, your birthplace coordinates, and the obliquity of the
-        ecliptic (IAU 2006). We offer <strong>whole sign</strong> houses (the
+        sidereal time, your birthplace coordinates, and the mean obliquity of the
+        ecliptic used by engine version {ENGINE_VERSION} (IAU 2006 polynomial). We offer <strong>whole sign</strong> houses (the
         oldest system — each house is one complete sign) and{' '}
         <strong>Placidus</strong> (the most common modern system, computed by
         iterative semi-arc division). Placidus is mathematically undefined
@@ -82,21 +85,39 @@ const jsonLd = [
       <h2>Time zones</h2>
       <p>
         A birth chart is only as good as its clock conversion. We resolve your
-        birth time against the <strong>complete IANA time zone history</strong>{' '}
-        of your birthplace: daylight saving in all its regional weirdness,
-        wartime clock changes, and pre-standardization <em>local mean time</em>{' '}
-        — including offsets with seconds, like Mexico City's −6:36:36 before
-        1922.
+        birth time with the <strong>IANA/ICU time-zone history supplied by your
+        browser or host runtime</strong>: daylight saving, regional and wartime
+        clock changes, and—where the runtime supplies it—pre-standardization{' '}
+        <em>local mean time</em>. One committed test covers Mexico City's
+        −6:36:36 offset in 1907.
       </p>
       <ul>
         <li><strong>Skipped times</strong> (spring-forward gaps) shift forward across the gap — the standard convention — and the chart says so.</li>
         <li><strong>Repeated times</strong> (fall-back folds) use the earlier pass, flagged on the chart.</li>
-        <li><strong>Very old dates</strong> use the local mean time of your birthplace's reference zone, the same convention professional software applies. For births before civil time standardization, a chart can differ by a few clock minutes from tools that use the exact town meridian — we flag these charts too.</li>
+        <li><strong>Very old dates</strong> use the local mean time recorded for your birthplace's reference zone when the host runtime provides it. Before civil time standardization, records are less uniform and a chart can differ by a few clock minutes from tools that use the exact town meridian—we flag these charts too.</li>
       </ul>
       <p>
         Every result lists its computed UTC instant, so the conversion is
         yours to check.
       </p>
+
+      <h2>What “accurate” means here</h2>
+      <p>
+        Astronomical accuracy means the positions, angles, and clock conversion
+        are reproducible within the stated inputs and test tolerances. It does
+        not establish that astrological interpretation or prediction is
+        scientifically validated. Interpretive text is a clearly labeled
+        astrological convention; it is not an astronomical measurement.
+      </p>
+
+      <h2>How to verify a result</h2>
+      <p>Open “How this chart was calculated” beneath a result and compare:</p>
+      <ul>
+        <li>the birth date, local time, place, and coordinates used;</li>
+        <li>the computed UTC instant and any daylight-saving or local-mean-time flag;</li>
+        <li>the selected house system and any polar fallback; and</li>
+        <li>the displayed engine version before comparing another tool.</li>
+      </ul>
 
       <h2>Birthplace search</h2>
       <p>
@@ -119,7 +140,8 @@ const jsonLd = [
       <h2>Honest limits</h2>
       <ul>
         <li>Chiron and the asteroids aren't included yet (the engine's remit is major bodies); they're planned via public-domain JPL data.</li>
-        <li>Unknown birth times get a noon chart: planets are exact to the day, but rising sign and houses genuinely require the clock, and we won't pretend otherwise.</li>
+        <li>Unknown birth times get a noon reference chart. Rising sign and houses are omitted, and dates when the Moon may have changed signs are flagged.</li>
+        <li>Historical time-zone coverage comes from the visitor's IANA/ICU runtime. Pre-1970 civil-time records can be incomplete, disputed, or differ between runtime versions.</li>
         <li>Supported birth years: 1800–2199.</li>
       </ul>
 

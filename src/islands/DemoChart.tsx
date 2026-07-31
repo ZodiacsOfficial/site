@@ -335,7 +335,14 @@ export default function DemoChart() {
           </div>
           <p class="demo__preview-hint mono">Tap a mark on the wheel—or choose a starting point.</p>
           <p class="demo__receipt mono">
-            {demo.name} · {demo.birth} · computed as {demo.utc.replace('T', ' ').slice(0, 16)} UTC
+            {demo.name} · {demo.birth} · computed as {demo.utc.replace('T', ' ').slice(0, 16)} UTC ·{' '}
+            <a
+              href="https://www.astro.com/astro-databank/Kahlo%2C_Frida"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              birth record: Astro-Databank, Rodden AA
+            </a>
           </p>
         </div>
       </div>

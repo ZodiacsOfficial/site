@@ -6,6 +6,7 @@
 import { EMPTY_PROFILE, MAX_CHARTS, PROFILE_KEY } from './schema';
 import type { Profile, SavedChart } from './schema';
 import { clearChartDeletion, recordChartDeletion } from './deletions';
+import { trackAnalytics } from '../analytics';
 
 const YEAR_AHEAD_CACHE_KEY = 'zodiacs.yearahead.v1';
 
@@ -99,10 +100,12 @@ export function saveChart(
     return 'updated';
   }
   if (profile.charts.length >= MAX_CHARTS) return 'full';
+  const previousCount = profile.charts.length;
   const inserted = explicitName ? { ...chart, name: explicitName } : chart;
   profile.charts.unshift(inserted);
   if (!persist(profile)) return 'error';
   clearChartDeletion(inserted.id);
+  if (previousCount === 1) trackAnalytics('second_chart_saved');
   return 'saved';
 }
 

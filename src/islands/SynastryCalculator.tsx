@@ -1116,6 +1116,10 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
     // `busy` closure, so state can't gate re-entry.
     if (compareInFlightRef.current) return;
     if (!slotReady(slotA) || !slotReady(slotB) || sameSaved) return;
+    const analyticsSource = slotA.source === 'positions' && slotA.positions?.invite
+      ? 'invite'
+      : slotA.source === 'form' && slotB.source === 'form' ? 'form' : 'restored';
+    track('compat_submitted', { source: analyticsSource });
     compareInFlightRef.current = true;
     focusAfterComputeRef.current = e !== undefined;
     setBusy(true);
@@ -1150,11 +1154,7 @@ export default function SynastryCalculator({ locale: rawLocale = 'en' }: { local
       setInvitePanelExpanded(false);
       setPairSave('idle');
       setPairAnnounce(''); // same-text re-announcements need a mutation
-      track('compat_computed', {
-        source: slotA.source === 'positions' && slotA.positions?.invite
-          ? 'invite'
-          : slotA.source === 'form' && slotB.source === 'form' ? 'form' : 'restored',
-      });
+      track('compat_computed', { source: analyticsSource });
     } catch (err) {
       setError(t(locale, 'compareError'));
       console.error(err);

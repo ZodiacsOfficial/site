@@ -70,6 +70,7 @@ import {
 } from '../lib/profile/post-chart-context';
 
 type Mode = 'full' | 'moon' | 'rising';
+type ComputationSource = 'form' | 'shared';
 
 interface Props { mode: Mode; locale?: Locale }
 
@@ -886,7 +887,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       name: decoded.name,
       subjectMode: nextSubjectMode,
       mine: nextMineHandoff,
-    }, false);
+    }, false, 'shared');
   }, []);
 
   useEffect(() => {
@@ -905,7 +906,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const canCompute = date !== '' && city !== null && (!timeKnown || time !== '')
     && !(mode === 'rising' && !timeKnown);
 
-  async function runChart(input: RunInput, focusAfterCompute: boolean) {
+  async function runChart(
+    input: RunInput,
+    focusAfterCompute: boolean,
+    source: ComputationSource,
+  ) {
     focusAfterComputeRef.current = focusAfterCompute;
     setBusy(true);
     setError('');
@@ -954,7 +959,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         }
       }
       track('result_rendered', { mode });
-      track('chart_computed', { mode });
+      track('chart_computed', { mode, source });
       if (locale !== 'ru') void import('./PwaInstallPrompt').then(setPwaInstallModule, () => {});
       setPwaComputationCount((count) => count + 1);
       const computedSun = result.bodies.find((body) => body.body === 'Sun');
@@ -998,6 +1003,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   function compute(e: Event) {
     e.preventDefault();
     if (!canCompute || !city) return;
+    track('chart_submitted', { mode });
     setFromLink(false);
     if (subjectMode === 'self') setLinkName(null);
     runChart({
@@ -1009,7 +1015,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       subjectMode,
       mine: mineHandoff,
       ...(subjectMode === 'other' && linkName ? { name: linkName } : {}),
-    }, true);
+    }, true, 'form');
   }
 
   const shareUrl = () =>

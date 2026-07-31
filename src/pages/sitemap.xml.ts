@@ -20,6 +20,7 @@ import type { EventsPublication } from '../lib/events/publication';
 const SITE = 'https://zodiacs.org';
 const eventsPublication = eventsPublicationData as EventsPublication;
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
+const PEOPLE_DIRECTORY_LASTMOD = '2026-07-31';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
 // its entry here in the same commit.
@@ -95,6 +96,13 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
     ].map((sign) => `/ru/${sign}/`),
   ].map((loc) => [loc, '2026-07-22'] as const),
+  ...[
+    '/', '/birth-chart/', '/methodology/',
+    '/es/birth-chart/', '/es/methodology/',
+    '/it/birth-chart/', '/it/methodology/', '/it/moon-sign/',
+    '/pt/birth-chart/', '/pt/methodology/', '/pt/moon-sign/',
+    '/ru/birth-chart/', '/ru/methodology/',
+  ].map((loc) => [loc, '2026-07-31'] as const),
 ]);
 
 function getLastmod(loc: string): string {
@@ -196,7 +204,7 @@ export const GET: APIRoute = async () => {
     ...(PEOPLE_DIRECTORY_INDEXABLE ? [{
       loc: '/people/',
       priority: 0.7,
-      lastmod: INDEXABLE_PEOPLE.map((person) => person.reviewedAtUtc.slice(0, 10)).sort().at(-1),
+      lastmod: PEOPLE_DIRECTORY_LASTMOD,
     }] : []),
     ...INDEXABLE_PEOPLE.map((person) => ({
       loc: `/people/${person.slug}/`,

@@ -18,11 +18,11 @@ const faq = [
   },
   {
     q: 'Do I need my exact birth time?',
-    a: 'For your rising sign and houses, yes — the ascendant changes roughly every two hours. Without a time we compute planets for noon: your Sun and usually your Moon are still exact to the day. Birth certificates, baby books, and parents are the usual sources.',
+    a: 'For your rising sign and houses, yes — the ascendant changes roughly every two hours. Without a birth time, we omit the Rising sign and houses, calculate the remaining positions at noon, and flag dates when the Moon may have changed signs. Birth certificates, baby books, and parents are the usual sources.',
   },
   {
     q: 'How accurate is this calculator?',
-    a: 'Planetary positions are computed with a professional-grade astronomical engine and are continuously tested against NASA JPL reference data to within a few hundredths of a degree — the same standard serious astrology software uses. Historical time zones, including pre-1922 local mean time and wartime clock changes, are resolved from the full IANA database.',
+    a: 'Planetary positions are computed with an open-source astronomical engine and checked against committed JPL Horizons reference vectors. In our test set, most planets stay within 0.05° and the Moon within 0.2°. Historical clock conversion uses the IANA/ICU time-zone data available in your browser, including local mean time where that runtime provides it.',
   },
   {
     q: 'What happens to my birth data?',
@@ -74,11 +74,17 @@ const jsonLd = [
 >
   <section class="section--tight container">
     <div class="tool-hero">
-      <h1 class="display">Get your free birth chart.</h1>
+      <em class="kicker">Free birth chart calculator</em>
+      <h1 class="display">Your full birth chart — accurate, private, and free.</h1>
       <p>
-        Enter your birth date, time, and place to see your sun, moon, rising,
-        planets, houses, and what they mean.
+        See your Sun, Moon, Rising, planets, houses, and aspects, with
+        plain-English explanations.
       </p>
+      <ul class="tool-proof" aria-label="Privacy and access details">
+        <li>Calculated in your browser</li>
+        <li>No account required</li>
+        <li>Saved charts stay on this device first</li>
+      </ul>
     </div>
 
     <ChartCalculator mode="full" client:load />
@@ -152,7 +158,8 @@ const jsonLd = [
 </Base>
 
 <style>
-  .tool-hero { max-width: 62ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero { max-width: 68ch; margin-bottom: clamp(28px, 5vw, 44px); }
+  .tool-hero .kicker { display: block; margin: 0 0 12px; }
   .tool-hero h1 {
     margin: 0 0 16px;
     font-family: var(--font-serif);
@@ -164,6 +171,25 @@ const jsonLd = [
     text-wrap: balance;
   }
   .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
+  .tool-proof {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 7px 22px;
+    margin: 18px 0 0;
+    padding: 0;
+    color: var(--faint);
+    font-size: 11px;
+    letter-spacing: 0.045em;
+    list-style: none;
+    text-transform: uppercase;
+  }
+  .tool-proof li { position: relative; }
+  .tool-proof li + li::before {
+    position: absolute;
+    left: -13px;
+    color: var(--hair-2);
+    content: '·';
+  }
   .faq { display: grid; gap: 8px; }
   .faq__item {
     border: 1px solid var(--hair-1);

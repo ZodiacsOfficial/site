@@ -196,6 +196,12 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
             if (destination) window.zodiacsAnalytics.track('sdk_click', {
               source: 'astrology', destination: destination
             });
+            var horoscopeSurface = link.getAttribute('data-horoscope-chart-cta');
+            if (horoscopeSurface === 'hub' || horoscopeSurface === 'sign') {
+              window.zodiacsAnalytics.track('horoscope_chart_click', {
+                surface: horoscopeSurface
+              });
+            }
           });
         </script>
         <script is:inline defer data-domain={plausibleDomain || undefined} src={plausibleScriptUrl}></script>

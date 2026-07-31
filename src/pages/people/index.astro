@@ -42,8 +42,8 @@ const jsonLd = [
     '@type': 'CollectionPage',
     '@id': 'https://zodiacs.org/people/#page',
     url: 'https://zodiacs.org/people/',
-    name: 'People',
-    description: 'Sourced, time-honest astrology charts for people in the public record.',
+    name: 'Famous people by zodiac sign',
+    description: 'Public figures grouped by Sun sign, using sourced birth dates and no invented birth times.',
     mainEntity: { '@id': 'https://zodiacs.org/people/#list' },
     isPartOf: { '@id': 'https://zodiacs.org/#site' },
   },
@@ -61,8 +61,8 @@ const jsonLd = [
 ];
 ---
 <Base
-  title="People — sourced birth charts | Zodiacs.org"
-  description="Astrology charts computed from sourced public birth dates, with unknown birth times and uncertain Moon signs stated plainly."
+  title="Famous People by Zodiac Sign — Sourced Birth Dates | Zodiacs.org"
+  description="Browse famous people by zodiac sign using sourced public birth dates. Unknown birth times, uncertain Moon signs, and omitted houses are stated plainly."
   path="/people/"
   noindex={!PEOPLE_DIRECTORY_INDEXABLE}
   nofollow={!PEOPLE_DIRECTORY_INDEXABLE}
@@ -72,11 +72,12 @@ const jsonLd = [
 >
   <section class="people-page">
     <header class="people-page__hero">
-      <p class="people-kicker">People · sourced charts</p>
-      <h1 class="display">People</h1>
+      <p class="people-kicker">Public figures · sourced dates</p>
+      <h1 class="display">Famous people by zodiac sign</h1>
       <p class="people-page__lede">
-        Charts for people whose birth dates are a matter of public record. Each one is computed here,
-        from a sourced date, with the parts we cannot know left visibly empty.
+        Browse {PEOPLE.length} public figures by Sun sign. Every profile starts
+        with a sourced birth date; every birth time in this directory is unknown,
+        so we never invent a Rising sign, houses, or a definite Moon sign on a boundary day.
       </p>
     </header>
 
@@ -128,7 +129,7 @@ const jsonLd = [
       </div>
       <noscript><style>.people-search-slot{display:none}</style></noscript>
 
-      <p class="people-count people-count--default">{PEOPLE.length} people. All birth times unknown.</p>
+      <p class="people-count people-count--default">{PEOPLE.length} sourced birth dates · all birth times unknown</p>
       {SIGNS.map((sign) => (
         <p class:list={['people-count', 'people-count--filter', `people-count--sign-${sign.slug}`]}>
           {signCounts.get(sign.slug)} of {PEOPLE.length} people · {sign.name}

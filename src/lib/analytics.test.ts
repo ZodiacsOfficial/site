@@ -2,9 +2,13 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import { ANALYTICS_EVENT_PROPS, sanitizeAnalyticsProperties, trackAnalytics } from './analytics';
 
 const REQUIRED_EVENTS = [
+  'chart_submitted',
   'chart_computed',
   'chart_saved',
+  'second_chart_saved',
+  'compat_submitted',
   'compat_computed',
+  'horoscope_chart_click',
   'email_subscribed',
   'share_card_downloaded',
   'widget_embed_copied',
@@ -104,6 +108,41 @@ describe('analytics event contract', () => {
       action: 'today',
       chartId: 'private',
     })).toEqual({ state: 'saved', action: 'today' });
+  });
+
+  it('keeps core funnel events closed and free of personal chart data', () => {
+    const privateFields = {
+      birthDate: '1990-01-01',
+      birthTime: '12:00',
+      place: 'Bangkok',
+      coordinates: '13.7,100.5',
+      sign: 'capricorn',
+      chartId: 'private',
+      name: 'Private Person',
+      email: 'private@example.com',
+      url: 'https://zodiacs.org/birth-chart/?private=1',
+      note: 'free text',
+    };
+    expect(sanitizeAnalyticsProperties('chart_submitted', {
+      mode: 'full',
+      ...privateFields,
+    })).toEqual({ mode: 'full' });
+    expect(sanitizeAnalyticsProperties('chart_computed', {
+      mode: 'moon',
+      source: 'shared',
+      ...privateFields,
+    })).toEqual({ mode: 'moon', source: 'shared' });
+    expect(sanitizeAnalyticsProperties('compat_submitted', {
+      source: 'invite',
+      ...privateFields,
+    })).toEqual({ source: 'invite' });
+    expect(sanitizeAnalyticsProperties('horoscope_chart_click', {
+      surface: 'sign',
+      ...privateFields,
+    })).toEqual({ surface: 'sign' });
+    expect(sanitizeAnalyticsProperties('chart_submitted', { mode: 'private-mode' })).toEqual({});
+    expect(sanitizeAnalyticsProperties('compat_submitted', { source: 'private-source' })).toEqual({});
+    expect(sanitizeAnalyticsProperties('horoscope_chart_click', { surface: 'private-surface' })).toEqual({});
   });
 
   it('keeps sharing-loop analytics inside fixed, non-identifying enums', () => {

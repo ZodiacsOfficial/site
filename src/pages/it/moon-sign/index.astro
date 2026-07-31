@@ -15,7 +15,7 @@ const faq = [
   },
   {
     q: 'Perché un altro sito mi ha dato un segno lunare diverso?',
-    a: 'Quasi sempre dipende da un problema di fuso orario: alcuni calcolatori convertono male l’ora di nascita, soprattutto per date antiche o luoghi che hanno cambiato orario nel tempo. Qui consideriamo l’intera cronologia del fuso del tuo luogo, compresa l’ora locale precedente alla standardizzazione, e mostriamo l’istante UTC calcolato perché tu possa verificarlo.',
+    a: 'Quasi sempre dipende da un problema di fuso orario: alcuni calcolatori convertono male l’ora di nascita, soprattutto per date antiche o luoghi che hanno cambiato orario nel tempo. Qui usiamo i dati IANA/ICU disponibili nel browser, compresa l’ora locale precedente alla standardizzazione quando l’ambiente la fornisce, e mostriamo l’istante UTC calcolato perché tu possa verificarlo.',
   },
   {
     q: 'Sole, Luna e ascendente: qual è la differenza?',

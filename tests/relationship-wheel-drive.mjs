@@ -185,6 +185,15 @@ try {
   check('composite analytics fires once per compare without props',
     relationshipEvents.filter((event) => event.name === 'composite_view').length === 1
       && Object.keys(relationshipEvents.find((event) => event.name === 'composite_view')?.props ?? { unexpected: true }).length === 0);
+  const submittedIndex = relationshipEvents.findIndex((event) => event.name === 'compat_submitted');
+  const computedIndex = relationshipEvents.findIndex((event) => event.name === 'compat_computed');
+  check('compatibility funnel records one safe submission before completion',
+    submittedIndex >= 0
+      && computedIndex > submittedIndex
+      && relationshipEvents.filter((event) => event.name === 'compat_submitted').length === 1
+      && relationshipEvents.filter((event) => event.name === 'compat_computed').length === 1
+      && JSON.stringify(relationshipEvents[submittedIndex].props) === JSON.stringify({ source: 'restored' })
+      && JSON.stringify(relationshipEvents[computedIndex].props) === JSON.stringify({ source: 'restored' }));
 
   // The In-3D tab lazy-loads the sphere with both charts and their contacts.
   await page.locator('[data-relationship-tab="depth"]').click();

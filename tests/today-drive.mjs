@@ -236,11 +236,10 @@ async function drive(BASE, browser) {
   await failedMainIsland.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   const savedChartFallback = failedMainIsland.locator('.today-returning-chart-placeholder');
   check(
-    'failed Today island keeps a useful Aries Sun-sign baseline in the reserved shell',
+    'failed Today island keeps all daily-horoscope routes in the reserved shell',
     await savedChartFallback.isVisible()
-      && await failedMainIsland.locator('[data-today-chart-sun="aries"]').isVisible()
-      && await failedMainIsland.getByText('Aries Sun-sign baseline', { exact: true }).isVisible()
-      && await failedMainIsland.locator('[data-today-chart-sun="aries"] a[href="/horoscopes/aries/"]').isVisible(),
+      && await savedChartFallback.locator('.today-returning-sign-links a[href^="/horoscopes/"]').count() === 12
+      && await savedChartFallback.locator('a[href="/horoscopes/aries/"]').isVisible(),
   );
   const failedMainCls = await measuredCls(failedMainIsland);
   check('failed Today island fallback has exactly zero CLS', failedMainCls === 0, String(failedMainCls));
@@ -260,9 +259,9 @@ async function drive(BASE, browser) {
       && getComputedStyle(document.querySelector('.today-returning-chart-placeholder')).display !== 'none'
   ));
   check(
-    'failed transit chunk keeps the compact Sun-sign baseline in the reserved shell',
+    'failed transit chunk keeps daily-horoscope links in the reserved shell',
     await failedTransits.locator('.today-returning-chart-placeholder').isVisible()
-      && await failedTransits.locator('[data-today-chart-sun="aries"]').isVisible()
+      && await failedTransits.locator('.today-returning-sign-links a[href^="/horoscopes/"]').count() === 12
       && !await failedTransits.locator('.today-fallback').isVisible(),
   );
   check(
@@ -355,14 +354,14 @@ async function drive(BASE, browser) {
   const emptyCls = await measuredCls(empty);
   check('empty Today hydration has exactly zero CLS', emptyCls === 0, String(emptyCls));
   check('no-chart state is honest', await empty.getByText('No saved chart on this device.').isVisible());
-  check('no-chart state renders all twelve sign notes', await empty.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 12);
+  check('no-chart state avoids duplicating all twelve horoscope readings', await empty.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 0);
   check(
     'sign picker uses all twelve pastel icon assets',
     await empty.locator('.today-sign-picker .today-sign__icon img[src^="/assets/zodiac-icons/48/"]').count() === 12,
   );
   check(
-    'sign notes use all twelve pastel icon assets',
-    await empty.locator('[data-today-all-signs] .today-sign-reading__icon img[src^="/assets/zodiac-icons/48/"]').count() === 12,
+    'sign picker links directly to all twelve complete horoscopes',
+    await empty.locator('.today-sign-picker a[href^="/horoscopes/"]').count() === 12,
   );
   check('no-chart state links to the calculator', await empty.locator('.today-fallback__personalize a[href="/birth-chart/"]').isVisible());
   check(
@@ -373,12 +372,12 @@ async function drive(BASE, browser) {
   check('edition details are closed by default', await empty.locator('.today-provenance').evaluate((node) => !node.open));
   check('public provenance link remains available', await empty.locator('a[href="/data/daily-publication.json"]').count() === 1);
   if (OUT) await empty.screenshot({ path: `${OUT}/today-empty-900.png`, fullPage: true });
-  await empty.locator('a[href="#today-sun-sign-leo"]').click();
+  await empty.locator('.today-sign-picker a[href="/horoscopes/leo/"]').click();
   await empty.waitForFunction(() => document.querySelectorAll('#today-sun-sign-reading [data-today-sun-sign]').length === 1);
   check('enhanced sign link narrows to one note', await empty.locator('#today-sun-sign-reading [data-today-sun-sign="leo"]').count() === 1);
   check('selected sign keeps its pastel icon', await empty.locator('#today-sun-sign-reading [data-today-sun-sign="leo"] .today-sign-reading__icon img[src$="/leo.webp"]').count() === 1);
-  const selectedHash = await empty.evaluate(() => location.hash);
-  check('enhanced sign link keeps native hash navigation', selectedHash === '#today-sun-sign-leo', selectedHash);
+  const selectedUrl = await empty.evaluate(() => location.pathname + location.hash);
+  check('enhanced sign picker previews in place', selectedUrl === '/today/', selectedUrl);
   await empty.close();
 
   const noJs = await browser.newPage({
@@ -386,8 +385,8 @@ async function drive(BASE, browser) {
     javaScriptEnabled: false,
   });
   await noJs.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
-  check('no-JavaScript page renders all twelve sign notes', await noJs.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 12);
-  check('no-JavaScript sign notes link to full horoscopes', await noJs.locator('#today-sun-sign-reading [data-today-sun-sign] a[href^="/horoscopes/"]').count() === 12);
+  check('no-JavaScript page does not duplicate all twelve readings', await noJs.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 0);
+  check('no-JavaScript sign picker links to all full horoscopes', await noJs.locator('.today-sign-picker a[href^="/horoscopes/"]').count() === 12);
   check('no-JavaScript page has no loading gate', await noJs.locator('.today-loading').count() === 0);
   const noJsEdition = noJs.locator('.today-provenance');
   check('no-JavaScript page keeps native edition details', await noJsEdition.count() === 1);

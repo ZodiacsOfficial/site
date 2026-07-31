@@ -16,9 +16,13 @@ export const ANALYTICS_EVENT_VALUES = EVENT_VALUES as Readonly<
 >;
 
 export type AnalyticsEventName =
+  | 'chart_submitted'
   | 'chart_computed'
   | 'chart_saved'
+  | 'second_chart_saved'
+  | 'compat_submitted'
   | 'compat_computed'
+  | 'horoscope_chart_click'
   | 'email_subscribed'
   | 'share_card_downloaded'
   | 'widget_embed_copied'

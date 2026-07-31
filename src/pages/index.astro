@@ -17,7 +17,7 @@ const faq = [
   },
   {
     q: 'How accurate are the charts?',
-    a: 'Planetary positions come from a professional-grade astronomical engine, tested automatically against NASA JPL reference data to within a few hundredths of a degree. Time zones are resolved against the complete historical database, including pre-1922 local mean time. Every chart lists its computed UTC instant, so you can check it.',
+    a: 'Planetary positions come from an open-source astronomical engine and are checked against committed JPL Horizons reference vectors. In our test set, most planets stay within 0.05° and the Moon within 0.2°. Historical clock conversion uses the IANA/ICU time-zone data available in your browser. Every chart lists its computed UTC instant and any uncertainty flags so you can check the inputs.',
   },
   {
     q: 'What happens to my birth data?',
@@ -124,6 +124,11 @@ const tools = [
             <a class="btn btn--primary" href="/birth-chart/"><span>Get your free birth chart</span><span class="orb">↗</span></a>
             <a class="btn btn--ghost hero__ghost" href="/horoscopes/"><span>See your forecasts</span></a>
           </div>
+          <p class="hero__proof" aria-label="Privacy and access details">
+            <span>Calculated in your browser</span>
+            <span>No account required</span>
+            <span>Saved charts stay on this device first</span>
+          </p>
         </div>
       </div>
     </div>
@@ -663,6 +668,25 @@ const tools = [
     justify-content: center;
     gap: 12px;
   }
+  .hero__proof {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 6px 16px;
+    margin: -6px 0 0;
+    color: rgba(198, 204, 218, 0.82);
+    font-size: 10px;
+    font-weight: 590;
+    letter-spacing: 0.055em;
+    line-height: 1.5;
+    text-transform: uppercase;
+    text-shadow: 0 1px 16px rgba(6, 7, 9, 0.72);
+  }
+  .hero__proof span + span::before {
+    margin-right: 16px;
+    color: rgba(198, 204, 218, 0.42);
+    content: '·';
+  }
   /* The homepage pair uses the Registry hero's exact liquid-glass material:
      one transparent nav-like capsule recipe for both actions. The primary's
      white orb keeps the hierarchy without turning the button into a slab. */
@@ -753,6 +777,8 @@ const tools = [
       line-height: 1.52;
     }
     .hero__ctas .btn { flex: 1 1 auto; justify-content: center; }
+    .hero__proof { max-width: 32ch; gap: 4px 10px; }
+    .hero__proof span + span::before { margin-right: 10px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .hero__frame { box-shadow: inset 0 0 0 1px rgba(198, 204, 218, 0.10); }
@@ -966,6 +992,8 @@ const tools = [
     letter-spacing: 0.05em;
     color: var(--faint);
   }
+  :global(.demo__receipt a) { color: var(--muted); text-underline-offset: 2px; }
+  :global(.demo__receipt a:hover) { color: var(--text-2); }
   :global(.demo__guide) { display: grid; gap: 16px; align-content: center; }
   :global(.demo__guide-head) { display: grid; gap: 8px; }
   :global(.demo__guide-head .kicker) { margin: 0; }

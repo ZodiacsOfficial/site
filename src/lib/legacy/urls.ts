@@ -17,7 +17,4 @@ export const LEGACY_URLS: LegacyUrl[] = [
   { path: '/archive/', priority: 0.6 },
   { path: '/sdk/', priority: 0.7 },
   { path: '/sdk/examples/simastry-aura/', priority: 0.4 },
-  { path: '/llms.txt', priority: 0.4 },
-  { path: '/llms-full.txt', priority: 0.4 },
-  { path: '/registry/zodiacs.registry.json', priority: 0.5 },
 ];

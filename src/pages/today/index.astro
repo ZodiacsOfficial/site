@@ -18,8 +18,8 @@ const sunSignLines = Object.fromEntries(
   inlineCriticalCss
   stableTypography
   localTypography
-  title="Today — Your Daily Astrology Brief | Zodiacs.org"
-  description="Choose your Sun sign for a clear daily note, or privately compare today’s sky with a birth chart saved on this device."
+  title="Today, Against Your Birth Chart — Private Daily Brief | Zodiacs.org"
+  description="Privately compare today’s sky with the latest birth chart saved on this device. No saved chart yet? Continue to the daily horoscope for your Sun sign."
   path="/today/"
 >
   <script slot="head" is:inline>
@@ -49,14 +49,6 @@ const sunSignLines = Object.fromEntries(
         var hasUsableChart = latestChart !== null;
         if (hasUsableChart) {
           document.documentElement.setAttribute('data-today-saved-chart', '');
-          var sun = latestChart.summary.bodies.find(function (body) {
-            return body && body.body === 'Sun' && Number.isFinite(body.lon);
-          });
-          if (sun) {
-            var signNames = ['aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo', 'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces'];
-            var longitude = ((sun.lon % 360) + 360) % 360;
-            document.documentElement.setAttribute('data-today-chart-sun-sign', signNames[Math.floor(longitude / 30)]);
-          }
         }
       } catch (error) {}
     })();
@@ -67,17 +59,16 @@ const sunSignLines = Object.fromEntries(
     data-generation-mode={publication.generation.mode}
   >
     <header class="today-hero">
-      <em class="kicker">Your daily brief</em>
-      <h1 class="display">Today</h1>
+      <em class="kicker">Your private daily brief</em>
+      <h1 class="display">Today, against your chart.</h1>
       <p>
-        Start with the zodiac sign you know. If you have a saved birth chart,
-        you’ll automatically get a more personal comparison.
+        If you have a birth chart saved on this device, we compare it with
+        today’s sky here. No saved chart yet? Choose a sign to continue to its daily horoscope.
       </p>
     </header>
 
-    <!-- The complete no-chart brief is server-rendered. This island owns all
-         of its copy, so it needs neither the full client UI catalog nor eager
-         hydration; personalization can wait until the first paint is idle. -->
+    <!-- The no-chart gateway is server-rendered. Personal comparison and the
+         optional one-sign preview can wait until the first paint is idle. -->
     <TodayBrief client:idle sunSignLines={sunSignLines} />
 
     <UpcomingEventLinks date={publication.date} />
@@ -198,24 +189,8 @@ const sunSignLines = Object.fromEntries(
   }
   .today-returning-chart-status { margin: 0; color: var(--muted); font-size: var(--text-sm); visibility: hidden; }
   .today-returning-chart-status.is-visible { visibility: visible; }
-  .today-returning-sun-baseline { display: none; gap: 8px; }
-  .today-returning-sun-baseline p { margin: 0; max-width: 58ch; }
-  .today-returning-sun-baseline > a { color: var(--sign); font-size: var(--text-sm); font-weight: 650; }
   .today-returning-sign-links { display: flex; flex-wrap: wrap; gap: 8px 14px; }
   .today-returning-sign-links a { color: var(--text-2); font-size: var(--text-sm); }
-  :root[data-today-chart-sun-sign] .today-returning-sign-links { display: none; }
-  :root[data-today-chart-sun-sign="aries"] [data-today-chart-sun="aries"],
-  :root[data-today-chart-sun-sign="taurus"] [data-today-chart-sun="taurus"],
-  :root[data-today-chart-sun-sign="gemini"] [data-today-chart-sun="gemini"],
-  :root[data-today-chart-sun-sign="cancer"] [data-today-chart-sun="cancer"],
-  :root[data-today-chart-sun-sign="leo"] [data-today-chart-sun="leo"],
-  :root[data-today-chart-sun-sign="virgo"] [data-today-chart-sun="virgo"],
-  :root[data-today-chart-sun-sign="libra"] [data-today-chart-sun="libra"],
-  :root[data-today-chart-sun-sign="scorpio"] [data-today-chart-sun="scorpio"],
-  :root[data-today-chart-sun-sign="sagittarius"] [data-today-chart-sun="sagittarius"],
-  :root[data-today-chart-sun-sign="capricorn"] [data-today-chart-sun="capricorn"],
-  :root[data-today-chart-sun-sign="aquarius"] [data-today-chart-sun="aquarius"],
-  :root[data-today-chart-sun-sign="pisces"] [data-today-chart-sun="pisces"] { display: grid; }
   .today-reading__head h2,
   .today-fallback__intro h2 {
     margin: 0;
@@ -341,28 +316,20 @@ const sunSignLines = Object.fromEntries(
     white-space: nowrap;
   }
   .today-fallback__result { min-height: 38px; }
-  .today-sign-readings {
+  :root[data-today-sun-sign]:not([data-today-saved-chart]) .today-fallback__result {
+    min-height: 260px;
+  }
+  .today-fallback__gateway {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 10px;
+    gap: 6px;
+    padding: 16px 18px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: var(--void-1);
   }
-  :root[data-today-sun-sign]:not([data-today-saved-chart]) .today-sign-readings {
-    grid-template-columns: 1fr;
-  }
-  :root[data-today-sun-sign="aries"] .today-sign-readings > :not([data-today-sun-sign="aries"]),
-  :root[data-today-sun-sign="taurus"] .today-sign-readings > :not([data-today-sun-sign="taurus"]),
-  :root[data-today-sun-sign="gemini"] .today-sign-readings > :not([data-today-sun-sign="gemini"]),
-  :root[data-today-sun-sign="cancer"] .today-sign-readings > :not([data-today-sun-sign="cancer"]),
-  :root[data-today-sun-sign="leo"] .today-sign-readings > :not([data-today-sun-sign="leo"]),
-  :root[data-today-sun-sign="virgo"] .today-sign-readings > :not([data-today-sun-sign="virgo"]),
-  :root[data-today-sun-sign="libra"] .today-sign-readings > :not([data-today-sun-sign="libra"]),
-  :root[data-today-sun-sign="scorpio"] .today-sign-readings > :not([data-today-sun-sign="scorpio"]),
-  :root[data-today-sun-sign="sagittarius"] .today-sign-readings > :not([data-today-sun-sign="sagittarius"]),
-  :root[data-today-sun-sign="capricorn"] .today-sign-readings > :not([data-today-sun-sign="capricorn"]),
-  :root[data-today-sun-sign="aquarius"] .today-sign-readings > :not([data-today-sun-sign="aquarius"]),
-  :root[data-today-sun-sign="pisces"] .today-sign-readings > :not([data-today-sun-sign="pisces"]) {
-    display: none;
-  }
+  .today-fallback__gateway strong { color: var(--text-2); font-size: var(--text-sm); }
+  .today-fallback__gateway p { margin: 0; color: var(--faint); font-size: 12px; line-height: 1.55; }
+  .today-fallback__gateway a { width: fit-content; color: var(--text-2); font-size: var(--text-sm); font-weight: 650; }
   .today-sign-reading {
     display: grid;
     justify-items: start;
@@ -476,7 +443,6 @@ const sunSignLines = Object.fromEntries(
     .today-lines li { padding-left: 14px; }
     .today-sign-picker__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
     .today-sign { min-height: 76px; }
-    .today-sign-readings { grid-template-columns: 1fr; }
     .today-fallback__personalize { align-items: flex-start; flex-direction: column; }
     .today-fallback__personalize .btn { width: 100%; justify-content: space-between; }
   }

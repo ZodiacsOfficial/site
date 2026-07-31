@@ -108,6 +108,20 @@ afterEach(() => {
 });
 
 describe('saveChart', () => {
+  it('emits the anonymous second-chart milestone exactly once', () => {
+    const track = vi.fn();
+    vi.stubGlobal('window', { dispatchEvent: vi.fn(), zodiacsAnalytics: { track } });
+
+    seedProfile([]);
+    expect(saveChart(makeChart('first'))).toBe('saved');
+    expect(saveChart(makeChart('second', { lat: 14 }))).toBe('saved');
+    expect(saveChart(makeChart('second-update', { lat: 14 }))).toBe('updated');
+    expect(saveChart(makeChart('third', { lat: 15 }))).toBe('saved');
+
+    expect(track).toHaveBeenCalledTimes(1);
+    expect(track).toHaveBeenCalledWith('second_chart_saved', {});
+  });
+
   it('preserves a rename when an opened chart is saved again without an explicit name', () => {
     const existing = makeChart('kept-id', {
       name: 'Mom',

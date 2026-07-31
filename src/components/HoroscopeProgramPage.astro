@@ -266,6 +266,20 @@ const skyMarkers = reading.skyStrip.markers;
 
     </section>
 
+    <aside class="program__personal" aria-label="Personal birth chart">
+      <div>
+        <span class="mono">Beyond your Sun sign</span>
+        <strong>Go beyond your Sun sign with your full birth chart.</strong>
+        <p>Your birth time and place add the Moon, Rising sign, houses, and personal angles.</p>
+      </div>
+      <div class="program__personal-actions">
+        <a class="btn btn--primary" href="/birth-chart/" data-horoscope-chart-cta="sign">
+          <span>Get your free birth chart</span><span class="orb" aria-hidden="true">↗</span>
+        </a>
+        <a href="/today/">Use a saved chart for today →</a>
+      </div>
+    </aside>
+
     <details class="program__basis">
       <summary>
         <span class="program__basis-summary">
@@ -481,6 +495,22 @@ const skyMarkers = reading.skyStrip.markers;
   }
   .program__section h3 { margin: 0 0 8px; font-size: var(--text-lg); letter-spacing: -0.01em; }
   .program__section p { margin: 0; color: var(--text-2); line-height: 1.68; text-wrap: pretty; }
+  .program__personal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(18px, 4vw, 34px);
+    padding: clamp(20px, 4vw, 28px);
+    border: 1px solid color-mix(in oklab, var(--sign) 28%, var(--hair-1));
+    border-radius: var(--r-lg);
+    background: color-mix(in oklab, var(--sign) 5%, var(--void-1));
+  }
+  .program__personal > div:first-child { display: grid; gap: 6px; max-width: 50ch; }
+  .program__personal .mono { color: var(--faint); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .program__personal strong { color: var(--text); font-size: var(--text-lg); letter-spacing: -0.01em; }
+  .program__personal p { margin: 0; color: var(--muted); font-size: var(--text-sm); line-height: 1.55; }
+  .program__personal-actions { display: grid; flex: 0 0 auto; justify-items: start; gap: 10px; }
+  .program__personal-actions > a:not(.btn) { color: var(--muted); font-size: 12px; }
   .program__basis {
     border-block: 1px solid var(--hair-1);
   }
@@ -647,6 +677,9 @@ const skyMarkers = reading.skyStrip.markers;
       height: auto;
       min-height: 292px;
     }
+    .program__personal { align-items: stretch; flex-direction: column; }
+    .program__personal-actions { width: 100%; }
+    .program__personal-actions .btn { width: 100%; justify-content: space-between; }
   }
   @media (max-width: 380px) {
     .program__sky-markers { grid-template-columns: 1fr; }
