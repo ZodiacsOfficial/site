@@ -63,11 +63,11 @@ export const OG_EN = Object.freeze({
   },
   thesis: {
     kicker: 'The Thesis',
-    title: 'Belief is the oldest asset.',
-    footer: 'zodiacs.org — The Registry · Revised July 2026',
+    title: 'The Zodiac Standard',
+    footer: 'zodiacs.org — The Registry · Belief is the oldest asset · Nº 07',
     path: '/thesis/',
     image: '/assets/og/v2/thesis.png',
-    alt: 'Belief is the oldest asset — the Zodiacs.org Registry thesis.',
+    alt: 'The Zodiac Standard — the Zodiacs.org Registry thesis.',
   },
   disclosure: {
     kicker: 'Registry disclosure',

@@ -10,8 +10,8 @@
        renders nothing. Mark Chromium so the nav-pill lens applies only there. */
     try { if (window.chrome && window.CSS && CSS.supports('backdrop-filter', "url('#zdx-lens-nav')")) document.documentElement.classList.add('zdx-lens'); } catch (e) {}
   </script>
-  <title>Belief is the oldest asset. — The Thesis | Zodiacs.org</title>
-  <meta name="description" content="The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed." />
+  <title>The Zodiac Standard — The Thesis | Zodiacs.org</title>
+  <meta name="description" content="Twelve old names, twelve new records: the case for the twelve Zodiacs onchain, the case against it, and the instrument disclosed — receipts included." />
   <link rel="canonical" href="https://zodiacs.org/thesis/" />
   <script>
     window.plausible = window.plausible || function () {
@@ -33,19 +33,19 @@
   <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
 
   <meta property="og:site_name" content="Zodiacs" />
-  <meta property="og:title" content="Belief is the oldest asset." />
-  <meta property="og:description" content="The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed." />
+  <meta property="og:title" content="The Zodiac Standard" />
+  <meta property="og:description" content="Twelve old names, twelve new records: the case for the twelve Zodiacs onchain, the case against it, and the instrument disclosed — receipts included." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://zodiacs.org/thesis/" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/thesis.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Belief is the oldest asset. — zodiacs.org, The Registry · Revised July 2026" />
+  <meta property="og:image:alt" content="The Zodiac Standard — zodiacs.org, The Registry · Nº 07 · 2026" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Belief is the oldest asset." />
-  <meta name="twitter:description" content="The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed." />
+  <meta name="twitter:title" content="The Zodiac Standard" />
+  <meta name="twitter:description" content="Twelve old names, twelve new records: the case for the twelve Zodiacs onchain, the case against it, and the instrument disclosed — receipts included." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/thesis.png" />
-  <meta name="twitter:image:alt" content="Belief is the oldest asset. — zodiacs.org, The Registry · Revised July 2026" />
+  <meta name="twitter:image:alt" content="The Zodiac Standard — zodiacs.org, The Registry · Nº 07 · 2026" />
 
   <script type="application/ld+json">
   {
@@ -62,8 +62,8 @@
       {
         "@type": "Article",
         "@id": "https://zodiacs.org/thesis/#article",
-        "headline": "Belief is the oldest asset.",
-        "description": "The registry’s argument for the twelve Zodiacs onchain — including the case against it, and the instrument disclosed.",
+        "headline": "The Zodiac Standard",
+        "description": "Twelve old names, twelve new records: the case for the twelve Zodiacs onchain, the case against it, and the instrument disclosed — receipts included.",
         "image": "https://zodiacs.org/assets/og/v2/thesis.png",
         "url": "https://zodiacs.org/thesis/",
         "inLanguage": "en",
@@ -715,6 +715,29 @@
       }
     }
   </style>
+
+  <style id="zthesis-additions">
+    .hero__epi { font-family: var(--serif); font-style: italic; font-size: clamp(17px, 2.4vw, 22px); color: var(--ink-2); margin: 14px 0 10px; }
+    .zfig { margin: 30px 0; border: 1px solid var(--hair); border-radius: 14px; background: var(--bg-2); padding: 18px 20px 16px; }
+    .zfig-head { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-mute); margin-bottom: 12px; }
+    .zfig-chip { display: inline-block; border: 1px solid var(--hair-2); border-radius: 999px; padding: 2px 9px; margin-right: 8px; color: var(--ink-dim); }
+    .zfig svg { width: 100%; height: auto; display: block; }
+    .zfig svg text { font-family: var(--mono); fill: var(--ink-mute); font-size: 10.5px; }
+    .zfig svg text.zfig-lab { fill: var(--ink-2); }
+    .zfig p.zfig-cap { font-style: italic; color: var(--ink-dim); font-size: 14.5px; line-height: 1.6; margin: 12px 0 0; }
+    .zfig p.zfig-src { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.02em; color: var(--ink-mute); margin: 7px 0 0; }
+    .ztblwrap { overflow-x: auto; }
+    .ztbl { width: 100%; border-collapse: collapse; font-size: 14.5px; min-width: 560px; }
+    .ztbl th { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-mute); text-align: left; padding: 8px 8px; border-bottom: 1px solid var(--hair-2); font-weight: 500; }
+    .ztbl td { padding: 8px 8px; border-bottom: 1px solid var(--hair); color: var(--ink-dim); vertical-align: top; line-height: 1.5; }
+    .ztbl td.rowh { color: var(--ink-2); }
+    .ztbl .unproven { color: var(--ink); border-bottom: 1px dashed var(--hair-3); }
+    .cellyes { color: var(--ink); font-family: var(--mono); font-size: 11px; border: 1px solid var(--hair-3); border-radius: 999px; padding: 0 7px; }
+    .cellno { color: var(--ink-mute); font-family: var(--mono); font-size: 11px; border: 1px dashed var(--hair-2); border-radius: 999px; padding: 0 7px; }
+    .zquote { margin: 26px 0; padding: 2px 0 2px 22px; border-left: 1px solid var(--hair-3); font-style: italic; color: var(--ink-2); }
+    .zquote footer { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-dim); margin-top: 8px; }
+    .zquote a { color: inherit; }
+  </style>
 </head>
 <body>
   <a href="#essay" class="skip">Skip to content</a>
@@ -773,12 +796,11 @@
     </video>
     <div class="hero__veil" aria-hidden="true"></div>
     <div class="hero__content">
-      <span class="hero__eyebrow">The Thesis <span class="g">— Why the Twelve</span></span>
-      <h1 class="hero__title">Belief is the <span class="it">oldest asset.</span></h1>
+      <span class="hero__eyebrow">The Thesis <span class="g">— Nº 07</span></span>
+      <h1 class="hero__title">The Zodiac <span class="it">Standard.</span></h1>
+      <p class="hero__epi">Belief is the oldest asset.</p>
       <p class="hero__sub">
-        Why the twelve Zodiacs, humanity's most durable identity system,
-        may belong onchain, what would have to be true for that to work,
-        and the strongest case against it, answered in the open.
+        You have a sign. Whether you believe in it is beside the point: you know what it is, and so does almost everyone you've ever met. This page is about what happened when those twelve old names met the newest kind of public record, and whether that meeting could amount to something worth holding.
       </p>
       <p class="hero__clock" data-season-clock hidden></p>
       <div class="hero__cue" aria-hidden="true"><span class="line"></span><span>Read the argument</span></div>
@@ -788,101 +810,65 @@
   <main class="pg">
     <article class="essay" id="essay">
       <div class="essay__rail reveal">
-        <span class="label label--gold">Nº 06 · Revised</span>
+        <span class="label label--gold">Nº 07 · The Zodiac Standard</span>
         <span class="line"></span>
         <span class="label">The Registry's Argument</span>
       </div>
 
       <div class="essay__body">
-        <section class="mov reveal" id="the-system">
-          <div class="mov__head"><span class="mov__no">I</span><h2 class="mov__title">The system that <span class="it">outlived everything.</span></h2></div>
+        <section class="mov reveal" id="everyone-has-a-sign">
+          <div class="mov__head"><span class="mov__no">I</span><h2 class="mov__title">Everyone has <span class="it">a sign.</span></h2></div>
           <p>
-            <span class="dc">B</span>efore money, before nations, before writing
-            reached most of the world, people organized identity by the sky.
-            The twelve-sign zodiac has run, recognizably continuous, from
-            Babylonian star catalogues through Greek mathematics, Roman empire,
-            Islamic astronomy, and the Renaissance — into the phone of nearly
-            every person alive. Roughly <a href="https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology" rel="noopener noreferrer">nine in ten Americans know their sign</a>.
+            <span class="dc">T</span>ry a small experiment the next time you're with people: ask their signs. You won't have to explain the question. Nobody taught it to you in school, nobody advertises it, and yet if you were born on the Western calendar, you were born into it: a name, one of twelve, attached to you before you could talk. Shown the list, <a href="https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology" rel="noopener noreferrer">about nine in ten American adults pick theirs</a> without hesitating.
           </p>
           <p>
-            Precision matters here, so two things this essay does not claim.
-            The Western twelve are globally <em>recognized</em>, not globally
-            <em>identical in meaning</em>: a sign carries different weight in
-            different places, and much of the world's astrological practice
-            runs on other systems entirely. Vedic astrology uses a sidereal
-            zodiac; the Chinese zodiac is a different scheme altogether.
-            Recognition is enough. A symbol set that nearly everyone on Earth
-            can name, that costs nothing to maintain, and that has survived
-            every empire that adopted it, needs no overclaim.
+            That's rare. Most things everyone recognizes are owned by someone: a logo, a brand, a franchise. The signs are owned by no one, sold by no one, and renewed every day by horoscope writers and apps that don't answer to anybody. That combination, familiar to nearly everyone and owned by nobody, is what this whole page is about.
           </p>
           <p>
-            That identity is <strong>permanent</strong>: nobody stops being a
-            Scorpio. It is <strong>recognized nearly everywhere</strong> the
-            Western calendar reaches. And it is <strong>renewed daily</strong>,
-            by horoscopes, birthdays, seasons, and retrogrades, without anyone
-            spending a cent to keep it alive.
+            Because in July 2024, someone gave the twelve signs a new format. Twelve tokens, one for each sign, were created on a public ledger called Solana. Each one is a permanent digital record with its own address and its own creation receipt, all dated 5 July 2024. This registry is the catalogue of those twelve records: what they are, where they live, and what's known about them. A Leo can now hold <em>Leo</em>, the way you might hold a coin or a card.
           </p>
-          <figure class="tline-wrap">
-            <div class="tline-scroll" role="img" aria-label="The format timeline: star catalogue, print, newspaper column, hotline, app, record — from the fifth century BCE to 2024">
-              <svg class="tline" viewBox="0 0 720 84" aria-hidden="true" focusable="false">
-                <line x1="16" y1="30" x2="704" y2="30" stroke="var(--hair-3)" stroke-width="1"/>
-                <circle cx="16" cy="30" r="3" fill="var(--gold)"/>
-                <text x="16" y="54" text-anchor="start" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Star catalogue</text>
-                <text x="16" y="70" text-anchor="start" fill="var(--ink-mute)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1">~5th c. BCE</text>
-                <circle cx="153.6" cy="30" r="3" fill="var(--gold)"/>
-                <text x="153.6" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Print</text>
-                <circle cx="291.2" cy="30" r="3" fill="var(--gold)"/>
-                <text x="291.2" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Newspaper column</text>
-                <circle cx="428.8" cy="30" r="3" fill="var(--gold)"/>
-                <text x="428.8" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Hotline</text>
-                <circle cx="566.4" cy="30" r="3" fill="var(--gold)"/>
-                <text x="566.4" y="54" text-anchor="middle" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">App</text>
-                <circle cx="704" cy="30" r="3" fill="var(--gold)"/>
-                <text x="704" y="54" text-anchor="end" fill="var(--ink-dim)" font-family="JetBrains Mono, monospace" font-size="9" letter-spacing="1">Record</text>
-                <text x="704" y="70" text-anchor="end" fill="var(--ink-mute)" font-family="JetBrains Mono, monospace" font-size="8" letter-spacing="1">2024</text>
-              </svg>
-            </div>
-          </figure>
+          <p>
+            The question underneath everything here is whether twelve tokens can borrow the durability of the twelve signs. The names are ancient and everywhere. The tokens are two years old and nearly unknown. Belief in a sign is not the same as wanting a token named after it, and anyone who tells you otherwise is selling something.
+          </p>
         </section>
 
-        <section class="mov reveal" id="attention">
-          <div class="mov__head"><span class="mov__no">II</span><h2 class="mov__title">Attention that <span class="it">renews itself.</span></h2></div>
+        <section class="mov reveal" id="where-the-signs-come-from">
+          <div class="mov__head"><span class="mov__no">II</span><h2 class="mov__title">Where the signs <span class="it">come from.</span></h2></div>
           <p>
-            Most cultural assets must manufacture attention to survive.
-            Astrology's attention arrives on schedule. Every day brings a new
-            horoscope; every month the sun changes signs; several times a year
-            a retrograde takes over the feed; every birthday, relationship,
-            and career change sends people back to their chart.
+            People have been keeping records of the sky for a very long time; Babylonian star lists go back thousands of years. The zodiac as you know it, twelve equal signs from Aries to Pisces, took its final shape in Babylonian astronomy around the fifth century BCE: roughly 2,400 years ago, about a century after the first coins.
           </p>
           <p>
-            The largest consumer platforms already follow this attention.
-            <a href="https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New" rel="noopener noreferrer">Tinder reported a near-20% lift</a> in Likes sent by women on
-            astrology-tagged profiles. <a href="https://newsroom.spotify.com/2019-02-01/spotify-celebrates-new-cosmic-playlists-with-readings-from-guest-astrologer/" rel="noopener noreferrer">Spotify built astrology playlists</a>;
-            <a href="https://www.hollywoodreporter.com/tv/tv-news/netflix-astrology-hub-zodiac-sign-1236349558/" rel="noopener noreferrer">Netflix released zodiac watchlists</a>. <a href="https://www.statista.com/statistics/1451873/costar-registered-users/" rel="noopener noreferrer">Co-Star reportedly grew</a> from
-            7.5&nbsp;million to over 30&nbsp;million users in three years.
-            None of these companies care about astrology. They follow
-            recurring mass behavior, and astrology is recurring mass behavior.
+            Think about what those centuries contain. The twelve names passed from Babylon to the Greeks, from the Greeks into Arabic astronomy, back into Europe, into the printing press, into the Sunday paper, onto your phone. Carved, printed, syndicated, dialed, downloaded. Every empire that carried the names is gone. Every currency that circulated when the names were fixed is dust. The mathematics changed, the meanings changed, the pictures changed, and the names never did. What survived all that time is a vocabulary, not a religion or an institution. And a vocabulary is the kind of thing a new format can borrow.
           </p>
+          <figure class="zfig" id="fig-1">
+            <figcaption class="zfig-head"><span class="zfig-chip">F1</span> The transmission.</figcaption>
+            <svg viewBox="0 0 920 322" role="img" aria-label="Timeline of the fixed twelve-sign zodiac from the fifth century BCE to the present, over the lifespans of empires and currencies that ended."><line x1="344.04040404040404" y1="60" x2="344.04040404040404" y2="292" stroke="rgba(198,204,218,0.05)"/><text x="344.0" y="308" text-anchor="middle">500 BCE</text><line x1="452.84343434343435" y1="60" x2="452.84343434343435" y2="292" stroke="rgba(198,204,218,0.05)"/><text x="452.8" y="308" text-anchor="middle">1 CE</text><line x1="561.2121212121212" y1="60" x2="561.2121212121212" y2="292" stroke="rgba(198,204,218,0.05)"/><text x="561.2" y="308" text-anchor="middle">500 CE</text><line x1="669.7979797979798" y1="60" x2="669.7979797979798" y2="292" stroke="rgba(198,204,218,0.05)"/><text x="669.8" y="308" text-anchor="middle">1000 CE</text><line x1="778.3838383838383" y1="60" x2="778.3838383838383" y2="292" stroke="rgba(198,204,218,0.05)"/><text x="778.4" y="308" text-anchor="middle">1500 CE</text><line x1="886.969696969697" y1="60" x2="886.969696969697" y2="292" stroke="rgba(198,204,218,0.05)"/><text x="887.0" y="308" text-anchor="middle">2000 CE</text><line x1="61.717171717171716" y1="112" x2="354.8989898989899" y2="112" stroke="rgba(198,204,218,0.28)" stroke-width="1.5" stroke-dasharray="2 5"/><text x="61.7" y="92" text-anchor="start">astral antecedents · star lists, omen series</text><line x1="354.8989898989899" y1="112" x2="892.6161616161617" y2="112" stroke="#C6CCDA" stroke-width="2"/><circle cx="892.6161616161617" cy="112" r="3.5" fill="#EEF1F7"/><line x1="354.8989898989899" y1="106" x2="354.8989898989899" y2="118" stroke="#C6CCDA" stroke-width="1.5"/><line x1="354.8989898989899" y1="34" x2="354.8989898989899" y2="104" stroke="rgba(198,204,218,0.10)"/><text x="352.9" y="30" text-anchor="start" class="zfig-lab">Babylon · the fixed twelve</text><line x1="420.0505050505051" y1="106" x2="420.0505050505051" y2="118" stroke="#C6CCDA" stroke-width="1.5"/><line x1="420.0505050505051" y1="52" x2="420.0505050505051" y2="104" stroke="rgba(198,204,218,0.10)"/><text x="418.1" y="48" text-anchor="start" class="zfig-lab">Hellenistic horoscopy</text><line x1="485.20202020202015" y1="106" x2="485.20202020202015" y2="118" stroke="#C6CCDA" stroke-width="1.5"/><line x1="485.20202020202015" y1="70" x2="485.20202020202015" y2="104" stroke="rgba(198,204,218,0.10)"/><text x="483.2" y="66" text-anchor="start" class="zfig-lab">Ptolemy</text><line x1="637.2222222222222" y1="106" x2="637.2222222222222" y2="118" stroke="#C6CCDA" stroke-width="1.5"/><line x1="637.2222222222222" y1="34" x2="637.2222222222222" y2="104" stroke="rgba(198,204,218,0.10)"/><text x="635.2" y="30" text-anchor="start" class="zfig-lab">Arabic astronomy</text><line x1="702.3737373737374" y1="106" x2="702.3737373737374" y2="118" stroke="#C6CCDA" stroke-width="1.5"/><line x1="702.3737373737374" y1="52" x2="702.3737373737374" y2="104" stroke="rgba(198,204,218,0.10)"/><text x="700.4" y="48" text-anchor="start" class="zfig-lab">Latin Europe</text><line x1="778.3838383838383" y1="106" x2="778.3838383838383" y2="118" stroke="#C6CCDA" stroke-width="1.5"/><line x1="778.3838383838383" y1="70" x2="778.3838383838383" y2="104" stroke="rgba(198,204,218,0.10)"/><text x="776.4" y="66" text-anchor="start" class="zfig-lab">print</text><line x1="867.4242424242425" y1="106" x2="867.4242424242425" y2="118" stroke="#C6CCDA" stroke-width="1.5"/><line x1="867.4242424242425" y1="88" x2="867.4242424242425" y2="104" stroke="rgba(198,204,218,0.10)"/><text x="870.4" y="84" text-anchor="end" class="zfig-lab">the newspaper column</text><line x1="889.1414141414141" y1="106" x2="889.1414141414141" y2="118" stroke="#C6CCDA" stroke-width="1.5"/><line x1="889.1414141414141" y1="34" x2="889.1414141414141" y2="104" stroke="rgba(198,204,218,0.10)"/><text x="892.1" y="30" text-anchor="end" class="zfig-lab">apps</text><rect x="316.67676767676767" y="152" width="18.9" height="13" rx="3" fill="#151925" stroke="rgba(198,204,218,0.16)"/><text x="343.6" y="162.5" text-anchor="start">Neo-Babylonian empire · ended 539 BCE</text><rect x="406.8030303030303" y="178" width="105.3" height="13" rx="3" fill="#151925" stroke="rgba(198,204,218,0.16)"/><text x="520.1" y="188.5" text-anchor="start">the denarius · ended 274 CE</text><rect x="446.76262626262627" y="204" width="109.2" height="13" rx="3" fill="#151925" stroke="rgba(198,204,218,0.16)"/><text x="564.0" y="214.5" text-anchor="start">Roman empire · ended 476 CE</text><rect x="524.2929292929293" y="230" width="243.9" height="13" rx="3" fill="#151925" stroke="rgba(198,204,218,0.16)"/><text x="532.3" y="240.5" text-anchor="start">Byzantine empire · ended 1453 CE</text><rect x="615.5050505050506" y="256" width="110.3" height="13" rx="3" fill="#151925" stroke="rgba(198,204,218,0.16)"/><text x="607.5" y="266.5" text-anchor="end">Abbasid caliphate · ended 1258 CE</text><text x="40.0" y="142" text-anchor="start">carriers beneath the line, all ended:</text></svg>
+            <p class="zfig-cap">Documented transmission of the fixed twelve-sign zodiac, from late Babylonian astronomy (~5th century BCE) to the present, with older astral material marked as antecedent. The twelve-name structure persisted; its methods and meanings changed at every hop.</p>
+          </figure>
+          <p>
+            The vocabulary is still in daily use, on a schedule. Every morning brings twelve new horoscopes. Every month the sun changes signs. Birthdays arrive all year round, and every so often an eclipse or a retrograde takes over your feed for a week. Nobody pays for this from a central budget; thousands of writers, apps, and creators keep it going for their own audiences, for their own reasons, without coordinating with anyone. Big companies have noticed. <a href="https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New" rel="noopener noreferrer">Tinder tested an astrology feature</a> and reported nearly 20% more Likes on participating profiles; <a href="https://newsroom.spotify.com/2019-02-01/spotify-celebrates-new-cosmic-playlists-with-readings-from-guest-astrologer/" rel="noopener noreferrer">Spotify</a> and <a href="https://www.hollywoodreporter.com/tv/tv-news/netflix-astrology-hub-zodiac-sign-1236349558/" rel="noopener noreferrer">Netflix</a> built astrology features; <a href="https://www.statista.com/statistics/1451873/costar-registered-users/" rel="noopener noreferrer">Co-Star, a horoscope app, reports</a> thirty million registered accounts. Those are product experiments, not declarations of faith: proof that companies believe the audience is there, not that the audience wants anything held.
+          </p>
+          <p>
+            The numbers above are American; good global numbers don't exist, and much of the world uses other systems entirely: Indian astrology runs on a different zodiac, and the Chinese zodiac is a different idea altogether. And <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">most people who check their horoscope</a> say they do it for fun, not for life decisions. Fun is real attention, and it is only that.
+          </p>
+          <figure class="zfig" id="fig-2">
+            <figcaption class="zfig-head"><span class="zfig-chip">F2</span> A year of attention.</figcaption>
+            <!-- thesis-attention-figure:begin -->
+<svg viewBox="0 0 920 268" role="img" aria-label="One year of daily en.wikipedia pageviews, twelve sign articles summed, 2025-08-01 to 2026-07-30, with sun ingress and eclipse dates marked."><line x1="52" y1="165" x2="900" y2="165" stroke="rgba(198,204,218,0.06)"/><text x="44.0" y="168.5" text-anchor="end">10k</text><line x1="52" y1="120" x2="900" y2="120" stroke="rgba(198,204,218,0.06)"/><text x="44.0" y="123.5" text-anchor="end">20k</text><line x1="52" y1="75" x2="900" y2="75" stroke="rgba(198,204,218,0.06)"/><text x="44.0" y="78.5" text-anchor="end">30k</text><line x1="52" y1="30" x2="900" y2="30" stroke="rgba(198,204,218,0.06)"/><text x="44.0" y="33.5" text-anchor="end">40k</text><line x1="52" y1="210" x2="900" y2="210" stroke="rgba(198,204,218,0.28)"/><text x="44.0" y="213.5" text-anchor="end">0</text><line x1="52" y1="210" x2="52" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="55.0" y="226" text-anchor="start">Aug '25</text><line x1="124.41873278236915" y1="210" x2="124.41873278236915" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="127.4" y="226" text-anchor="start">Sep</text><line x1="194.50137741046834" y1="210" x2="194.50137741046834" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="197.5" y="226" text-anchor="start">Oct</text><line x1="266.92011019283746" y1="210" x2="266.92011019283746" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="269.9" y="226" text-anchor="start">Nov</text><line x1="337.0027548209367" y1="210" x2="337.0027548209367" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="340.0" y="226" text-anchor="start">Dec</text><line x1="409.42148760330576" y1="210" x2="409.42148760330576" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="412.4" y="226" text-anchor="start">Jan '26</text><line x1="481.84022038567497" y1="210" x2="481.84022038567497" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="484.8" y="226" text-anchor="start">Feb</text><line x1="547.2506887052341" y1="210" x2="547.2506887052341" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="550.3" y="226" text-anchor="start">Mar</text><line x1="619.6694214876032" y1="210" x2="619.6694214876032" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="622.7" y="226" text-anchor="start">Apr</text><line x1="689.7520661157025" y1="210" x2="689.7520661157025" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="692.8" y="226" text-anchor="start">May</text><line x1="762.1707988980717" y1="210" x2="762.1707988980717" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="765.2" y="226" text-anchor="start">Jun</text><line x1="832.2534435261708" y1="210" x2="832.2534435261708" y2="214" stroke="rgba(198,204,218,0.28)"/><text x="835.3" y="226" text-anchor="start">Jul</text><path d="M 52.0 210 L 52.0 124.8 L 54.3 120.7 L 56.7 108.6 L 59.0 111.6 L 61.3 111.5 L 63.7 113.4 L 66.0 114.8 L 68.4 110.8 L 70.7 109.2 L 73.0 106.3 L 75.4 111.4 L 77.7 114.1 L 80.0 118.7 L 82.4 117.0 L 84.7 115.7 L 87.0 113.3 L 89.4 111.6 L 91.7 111.1 L 94.0 109.6 L 96.4 111.5 L 98.7 113.3 L 101.1 112.5 L 103.4 112.4 L 105.7 113.2 L 108.1 119.9 L 110.4 122.0 L 112.7 121.2 L 115.1 123.3 L 117.4 123.9 L 119.7 124.8 L 122.1 119.3 L 124.4 116.6 L 126.8 118.9 L 129.1 121.2 L 131.4 119.5 L 133.8 118.0 L 136.1 115.6 L 138.4 90.9 L 140.8 79.4 L 143.1 102.5 L 145.4 112.9 L 147.8 122.9 L 150.1 120.0 L 152.5 87.0 L 154.8 83.1 L 157.1 100.2 L 159.5 102.4 L 161.8 109.6 L 164.1 115.7 L 166.5 115.4 L 168.8 113.8 L 171.1 107.9 L 173.5 105.4 L 175.8 109.7 L 178.1 117.0 L 180.5 118.7 L 182.8 118.6 L 185.2 120.0 L 187.5 114.3 L 189.8 116.7 L 192.2 119.4 L 194.5 118.5 L 196.8 124.5 L 199.2 125.9 L 201.5 125.9 L 203.8 123.5 L 206.2 124.1 L 208.5 119.9 L 210.9 117.5 L 213.2 118.5 L 215.5 119.7 L 217.9 119.0 L 220.2 114.7 L 222.5 113.6 L 224.9 116.2 L 227.2 115.3 L 229.5 119.2 L 231.9 117.5 L 234.2 119.0 L 236.6 116.4 L 238.9 113.2 L 241.2 110.2 L 243.6 110.1 L 245.9 109.8 L 248.2 115.4 L 250.6 119.1 L 252.9 119.7 L 255.2 124.3 L 257.6 122.3 L 259.9 124.0 L 262.2 123.1 L 264.6 121.1 L 266.9 118.5 L 269.3 110.6 L 271.6 116.4 L 273.9 117.2 L 276.3 118.0 L 278.6 120.0 L 280.9 122.8 L 283.3 118.3 L 285.6 119.0 L 287.9 120.2 L 290.3 122.7 L 292.6 125.0 L 295.0 125.5 L 297.3 124.7 L 299.6 123.2 L 302.0 119.6 L 304.3 119.8 L 306.6 121.3 L 309.0 119.6 L 311.3 117.9 L 313.6 111.5 L 316.0 107.6 L 318.3 110.1 L 320.7 117.7 L 323.0 120.4 L 325.3 124.4 L 327.7 123.5 L 330.0 124.2 L 332.3 124.5 L 334.7 122.4 L 337.0 125.0 L 339.3 124.4 L 341.7 127.1 L 344.0 124.8 L 346.3 127.6 L 348.7 105.7 L 351.0 122.9 L 353.4 130.4 L 355.7 130.1 L 358.0 130.3 L 360.4 132.0 L 362.7 131.2 L 365.0 127.7 L 367.4 127.5 L 369.7 132.5 L 372.0 133.5 L 374.4 133.2 L 376.7 135.0 L 379.1 132.2 L 381.4 131.4 L 383.7 124.3 L 386.1 125.2 L 388.4 128.2 L 390.7 132.2 L 393.1 134.7 L 395.4 130.4 L 397.7 129.8 L 400.1 125.2 L 402.4 122.2 L 404.7 122.0 L 407.1 119.2 L 409.4 112.6 L 411.8 116.1 L 414.1 117.7 L 416.4 115.6 L 418.8 118.8 L 421.1 120.9 L 423.4 121.8 L 425.8 123.8 L 428.1 123.1 L 430.4 125.1 L 432.8 123.0 L 435.1 127.6 L 437.5 126.1 L 439.8 123.1 L 442.1 125.7 L 444.5 128.6 L 446.8 125.1 L 449.1 122.1 L 451.5 122.5 L 453.8 119.9 L 456.1 119.7 L 458.5 124.4 L 460.8 130.6 L 463.2 129.0 L 465.5 128.7 L 467.8 128.2 L 470.2 125.1 L 472.5 123.4 L 474.8 128.2 L 477.2 128.5 L 479.5 128.2 L 481.8 124.6 L 484.2 128.6 L 486.5 129.6 L 488.8 127.9 L 491.2 130.0 L 493.5 131.1 L 495.9 130.0 L 498.2 125.8 L 500.5 126.2 L 502.9 125.8 L 505.2 121.5 L 507.5 123.3 L 509.9 124.3 L 512.2 127.5 L 514.5 122.6 L 516.9 118.8 L 519.2 108.6 L 521.6 112.4 L 523.9 111.7 L 526.2 120.2 L 528.6 123.3 L 530.9 123.5 L 533.2 126.9 L 535.6 128.2 L 537.9 129.2 L 540.2 125.5 L 542.6 126.6 L 544.9 126.4 L 547.3 118.9 L 549.6 123.2 L 551.9 116.0 L 554.3 129.1 L 556.6 132.1 L 558.9 128.6 L 561.3 129.5 L 563.6 128.0 L 565.9 131.9 L 568.3 133.9 L 570.6 133.5 L 572.9 134.2 L 575.3 133.4 L 577.6 130.0 L 580.0 130.0 L 582.3 133.5 L 584.6 135.2 L 587.0 136.2 L 589.3 132.4 L 591.6 128.5 L 594.0 129.3 L 596.3 127.9 L 598.6 38.6 L 601.0 114.2 L 603.3 136.2 L 605.7 140.9 L 608.0 140.5 L 610.3 139.6 L 612.7 138.1 L 615.0 141.2 L 617.3 138.7 L 619.7 139.9 L 622.0 139.8 L 624.3 141.2 L 626.7 139.8 L 629.0 141.1 L 631.3 139.9 L 633.7 138.0 L 636.0 137.9 L 638.4 116.8 L 640.7 127.0 L 643.0 134.1 L 645.4 130.8 L 647.7 133.5 L 650.0 131.5 L 652.4 135.1 L 654.7 132.0 L 657.0 126.9 L 659.4 131.0 L 661.7 128.5 L 664.1 125.5 L 666.4 123.8 L 668.7 131.5 L 671.1 132.7 L 673.4 135.0 L 675.7 129.5 L 678.1 130.6 L 680.4 133.0 L 682.7 132.4 L 685.1 130.3 L 687.4 130.4 L 689.8 135.4 L 692.1 136.4 L 694.4 134.0 L 696.8 136.4 L 699.1 135.0 L 701.4 137.2 L 703.8 138.0 L 706.1 137.8 L 708.4 135.3 L 710.8 134.7 L 713.1 134.9 L 715.4 134.6 L 717.8 135.8 L 720.1 138.0 L 722.5 132.7 L 724.8 139.0 L 727.1 136.7 L 729.5 134.8 L 731.8 133.3 L 734.1 133.1 L 736.5 127.4 L 738.8 128.0 L 741.1 134.3 L 743.5 133.5 L 745.8 133.3 L 748.2 134.5 L 750.5 131.9 L 752.8 129.7 L 755.2 131.2 L 757.5 130.7 L 759.8 126.3 L 762.2 126.7 L 764.5 126.7 L 766.8 121.6 L 769.2 128.6 L 771.5 127.8 L 773.9 133.2 L 776.2 126.2 L 778.5 124.7 L 780.9 126.5 L 783.2 128.2 L 785.5 132.1 L 787.9 128.6 L 790.2 130.5 L 792.5 129.4 L 794.9 128.9 L 797.2 129.9 L 799.5 128.7 L 801.9 132.8 L 804.2 132.5 L 806.6 131.0 L 808.9 121.6 L 811.2 123.0 L 813.6 131.7 L 815.9 135.5 L 818.2 136.9 L 820.6 133.8 L 822.9 138.9 L 825.2 134.8 L 827.6 137.3 L 829.9 136.3 L 832.3 134.7 L 834.6 132.9 L 836.9 137.2 L 839.3 135.3 L 841.6 134.0 L 843.9 133.6 L 846.3 133.7 L 848.6 131.5 L 850.9 131.9 L 853.3 132.6 L 855.6 132.5 L 858.0 134.7 L 860.3 134.2 L 862.6 133.2 L 865.0 130.7 L 867.3 131.0 L 869.6 132.7 L 872.0 132.5 L 874.3 133.4 L 876.6 137.4 L 879.0 135.1 L 881.3 129.0 L 883.6 133.2 L 886.0 127.7 L 888.3 125.4 L 890.7 125.8 L 893.0 129.4 L 895.3 128.9 L 897.7 130.1 L 900.0 128.6 L 900.0 210 Z" fill="rgba(198,204,218,0.05)"/><path d="M 52.0 124.8 L 54.3 120.7 L 56.7 108.6 L 59.0 111.6 L 61.3 111.5 L 63.7 113.4 L 66.0 114.8 L 68.4 110.8 L 70.7 109.2 L 73.0 106.3 L 75.4 111.4 L 77.7 114.1 L 80.0 118.7 L 82.4 117.0 L 84.7 115.7 L 87.0 113.3 L 89.4 111.6 L 91.7 111.1 L 94.0 109.6 L 96.4 111.5 L 98.7 113.3 L 101.1 112.5 L 103.4 112.4 L 105.7 113.2 L 108.1 119.9 L 110.4 122.0 L 112.7 121.2 L 115.1 123.3 L 117.4 123.9 L 119.7 124.8 L 122.1 119.3 L 124.4 116.6 L 126.8 118.9 L 129.1 121.2 L 131.4 119.5 L 133.8 118.0 L 136.1 115.6 L 138.4 90.9 L 140.8 79.4 L 143.1 102.5 L 145.4 112.9 L 147.8 122.9 L 150.1 120.0 L 152.5 87.0 L 154.8 83.1 L 157.1 100.2 L 159.5 102.4 L 161.8 109.6 L 164.1 115.7 L 166.5 115.4 L 168.8 113.8 L 171.1 107.9 L 173.5 105.4 L 175.8 109.7 L 178.1 117.0 L 180.5 118.7 L 182.8 118.6 L 185.2 120.0 L 187.5 114.3 L 189.8 116.7 L 192.2 119.4 L 194.5 118.5 L 196.8 124.5 L 199.2 125.9 L 201.5 125.9 L 203.8 123.5 L 206.2 124.1 L 208.5 119.9 L 210.9 117.5 L 213.2 118.5 L 215.5 119.7 L 217.9 119.0 L 220.2 114.7 L 222.5 113.6 L 224.9 116.2 L 227.2 115.3 L 229.5 119.2 L 231.9 117.5 L 234.2 119.0 L 236.6 116.4 L 238.9 113.2 L 241.2 110.2 L 243.6 110.1 L 245.9 109.8 L 248.2 115.4 L 250.6 119.1 L 252.9 119.7 L 255.2 124.3 L 257.6 122.3 L 259.9 124.0 L 262.2 123.1 L 264.6 121.1 L 266.9 118.5 L 269.3 110.6 L 271.6 116.4 L 273.9 117.2 L 276.3 118.0 L 278.6 120.0 L 280.9 122.8 L 283.3 118.3 L 285.6 119.0 L 287.9 120.2 L 290.3 122.7 L 292.6 125.0 L 295.0 125.5 L 297.3 124.7 L 299.6 123.2 L 302.0 119.6 L 304.3 119.8 L 306.6 121.3 L 309.0 119.6 L 311.3 117.9 L 313.6 111.5 L 316.0 107.6 L 318.3 110.1 L 320.7 117.7 L 323.0 120.4 L 325.3 124.4 L 327.7 123.5 L 330.0 124.2 L 332.3 124.5 L 334.7 122.4 L 337.0 125.0 L 339.3 124.4 L 341.7 127.1 L 344.0 124.8 L 346.3 127.6 L 348.7 105.7 L 351.0 122.9 L 353.4 130.4 L 355.7 130.1 L 358.0 130.3 L 360.4 132.0 L 362.7 131.2 L 365.0 127.7 L 367.4 127.5 L 369.7 132.5 L 372.0 133.5 L 374.4 133.2 L 376.7 135.0 L 379.1 132.2 L 381.4 131.4 L 383.7 124.3 L 386.1 125.2 L 388.4 128.2 L 390.7 132.2 L 393.1 134.7 L 395.4 130.4 L 397.7 129.8 L 400.1 125.2 L 402.4 122.2 L 404.7 122.0 L 407.1 119.2 L 409.4 112.6 L 411.8 116.1 L 414.1 117.7 L 416.4 115.6 L 418.8 118.8 L 421.1 120.9 L 423.4 121.8 L 425.8 123.8 L 428.1 123.1 L 430.4 125.1 L 432.8 123.0 L 435.1 127.6 L 437.5 126.1 L 439.8 123.1 L 442.1 125.7 L 444.5 128.6 L 446.8 125.1 L 449.1 122.1 L 451.5 122.5 L 453.8 119.9 L 456.1 119.7 L 458.5 124.4 L 460.8 130.6 L 463.2 129.0 L 465.5 128.7 L 467.8 128.2 L 470.2 125.1 L 472.5 123.4 L 474.8 128.2 L 477.2 128.5 L 479.5 128.2 L 481.8 124.6 L 484.2 128.6 L 486.5 129.6 L 488.8 127.9 L 491.2 130.0 L 493.5 131.1 L 495.9 130.0 L 498.2 125.8 L 500.5 126.2 L 502.9 125.8 L 505.2 121.5 L 507.5 123.3 L 509.9 124.3 L 512.2 127.5 L 514.5 122.6 L 516.9 118.8 L 519.2 108.6 L 521.6 112.4 L 523.9 111.7 L 526.2 120.2 L 528.6 123.3 L 530.9 123.5 L 533.2 126.9 L 535.6 128.2 L 537.9 129.2 L 540.2 125.5 L 542.6 126.6 L 544.9 126.4 L 547.3 118.9 L 549.6 123.2 L 551.9 116.0 L 554.3 129.1 L 556.6 132.1 L 558.9 128.6 L 561.3 129.5 L 563.6 128.0 L 565.9 131.9 L 568.3 133.9 L 570.6 133.5 L 572.9 134.2 L 575.3 133.4 L 577.6 130.0 L 580.0 130.0 L 582.3 133.5 L 584.6 135.2 L 587.0 136.2 L 589.3 132.4 L 591.6 128.5 L 594.0 129.3 L 596.3 127.9 L 598.6 38.6 L 601.0 114.2 L 603.3 136.2 L 605.7 140.9 L 608.0 140.5 L 610.3 139.6 L 612.7 138.1 L 615.0 141.2 L 617.3 138.7 L 619.7 139.9 L 622.0 139.8 L 624.3 141.2 L 626.7 139.8 L 629.0 141.1 L 631.3 139.9 L 633.7 138.0 L 636.0 137.9 L 638.4 116.8 L 640.7 127.0 L 643.0 134.1 L 645.4 130.8 L 647.7 133.5 L 650.0 131.5 L 652.4 135.1 L 654.7 132.0 L 657.0 126.9 L 659.4 131.0 L 661.7 128.5 L 664.1 125.5 L 666.4 123.8 L 668.7 131.5 L 671.1 132.7 L 673.4 135.0 L 675.7 129.5 L 678.1 130.6 L 680.4 133.0 L 682.7 132.4 L 685.1 130.3 L 687.4 130.4 L 689.8 135.4 L 692.1 136.4 L 694.4 134.0 L 696.8 136.4 L 699.1 135.0 L 701.4 137.2 L 703.8 138.0 L 706.1 137.8 L 708.4 135.3 L 710.8 134.7 L 713.1 134.9 L 715.4 134.6 L 717.8 135.8 L 720.1 138.0 L 722.5 132.7 L 724.8 139.0 L 727.1 136.7 L 729.5 134.8 L 731.8 133.3 L 734.1 133.1 L 736.5 127.4 L 738.8 128.0 L 741.1 134.3 L 743.5 133.5 L 745.8 133.3 L 748.2 134.5 L 750.5 131.9 L 752.8 129.7 L 755.2 131.2 L 757.5 130.7 L 759.8 126.3 L 762.2 126.7 L 764.5 126.7 L 766.8 121.6 L 769.2 128.6 L 771.5 127.8 L 773.9 133.2 L 776.2 126.2 L 778.5 124.7 L 780.9 126.5 L 783.2 128.2 L 785.5 132.1 L 787.9 128.6 L 790.2 130.5 L 792.5 129.4 L 794.9 128.9 L 797.2 129.9 L 799.5 128.7 L 801.9 132.8 L 804.2 132.5 L 806.6 131.0 L 808.9 121.6 L 811.2 123.0 L 813.6 131.7 L 815.9 135.5 L 818.2 136.9 L 820.6 133.8 L 822.9 138.9 L 825.2 134.8 L 827.6 137.3 L 829.9 136.3 L 832.3 134.7 L 834.6 132.9 L 836.9 137.2 L 839.3 135.3 L 841.6 134.0 L 843.9 133.6 L 846.3 133.7 L 848.6 131.5 L 850.9 131.9 L 853.3 132.6 L 855.6 132.5 L 858.0 134.7 L 860.3 134.2 L 862.6 133.2 L 865.0 130.7 L 867.3 131.0 L 869.6 132.7 L 872.0 132.5 L 874.3 133.4 L 876.6 137.4 L 879.0 135.1 L 881.3 129.0 L 883.6 133.2 L 886.0 127.7 L 888.3 125.4 L 890.7 125.8 L 893.0 129.4 L 895.3 128.9 L 897.7 130.1 L 900.0 128.6" fill="none" stroke="#C6CCDA" stroke-width="1.6"/><line x1="453.976809553617" y1="232" x2="453.976809553617" y2="240" stroke="#8E96AB" stroke-width="1.5"/><line x1="523.0972305024998" y1="232" x2="523.0972305024998" y2="240" stroke="#8E96AB" stroke-width="1.5"/><line x1="593.0730043429243" y1="232" x2="593.0730043429243" y2="240" stroke="#8E96AB" stroke-width="1.5"/><line x1="664.2160308024692" y1="232" x2="664.2160308024692" y2="240" stroke="#8E96AB" stroke-width="1.5"/><line x1="736.5344733465973" y1="232" x2="736.5344733465973" y2="240" stroke="#8E96AB" stroke-width="1.5"/><line x1="809.7120422405877" y1="232" x2="809.7120422405877" y2="240" stroke="#8E96AB" stroke-width="1.5"/><line x1="883.1824949153148" y1="232" x2="883.1824949153148" y2="240" stroke="#8E96AB" stroke-width="1.5"/><path d="M 520.4049784547495 231 l 4.5 5 l -4.5 5 l -4.5 -5 Z" fill="#EEF1F7"/><path d="M 553.0481967743087 231 l 4.5 5 l -4.5 5 l -4.5 -5 Z" fill="#EEF1F7"/><text x="52.0" y="256" text-anchor="start">▏ sun enters a new sign (ephemeris register) · ◆ eclipse</text><circle cx="598.6446280991735" cy="38.595" r="3" fill="#EEF1F7"/><text x="604.6" y="32.595" text-anchor="start" class="zfig-lab">peak · 23 Mar · 38.1k</text></svg>
+            <!-- thesis-attention-figure:end -->
+            <p class="zfig-cap">Recurring publishing occasions in Western astrology, with measured attention around each. Cadence and response, not demand for any record.</p>
+            <p class="zfig-src">Wikimedia pageviews (user traffic), twelve sign articles summed · committed snapshot, fetched 2026-07-31 · occasions from the site’s ingress and eclipse registers · data: /thesis/thesis-attention.json</p>
+          </figure>
           <div class="stats" role="list" aria-label="Reported figures">
-            <div class="stats__cell" role="listitem"><div class="stats__k">12</div><div class="stats__v">Signs · fixed for millennia</div><span class="stats__tag">REPORTED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">~90%</div><div class="stats__v">of Americans know their sign</div><span class="stats__tag">SURVEYED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of women 18–49 say they believe · Pew</div><span class="stats__tag">SURVEYED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">30M+</div><div class="stats__v">Co-Star users · reported</div><span class="stats__tag">REPORTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">12</div><div class="stats__v">names · fixed scheme, ~5th century BCE</div><span class="stats__tag">REPORTED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">~90%</div><div class="stats__v">of U.S. adults selected a sign when shown the twelve · YouGov 2022, prompted</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">3 in 10</div><div class="stats__v">U.S. adults consult astrology at least yearly · Pew 2025</div><span class="stats__tag">SURVEYED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">30M</div><div class="stats__v">registered accounts, company-reported · Co-Star</div><span class="stats__tag">REPORTED</span></div>
           </div>
-          <p class="stats__src">
-            Sources:
-            <a href="https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology" rel="noopener noreferrer">YouGov, 2022</a> ·
-            <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Pew Research, 2025</a> ·
-            <a href="https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New" rel="noopener noreferrer">Tinder, 2026</a> ·
-            <a href="https://www.statista.com/statistics/1451873/costar-registered-users/" rel="noopener noreferrer">Statista (Co-Star)</a>
+          <p class="stats__src">Sources: <a href="https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology" rel="noopener noreferrer">YouGov, 2022</a> · <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Pew Research, 2025</a> · <a href="https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New" rel="noopener noreferrer">Tinder, 2026</a> · <a href="https://www.statista.com/statistics/1451873/costar-registered-users/" rel="noopener noreferrer">Statista (Co-Star)</a></p>
+          <p>
+            Some of this attention can be measured live. The chart below tracks public curiosity about the signs (encyclopedia pageviews, search interest) next to the famous crypto names you already know. Curiosity, not buying; the difference matters later.
           </p>
-
-          <p style="margin-top: 26px;">
-            Most of it is measurable. The instrument below reads
-            open sources (encyclopedia pageviews, search interest) and puts
-            the Twelve beside the tokens everyone already knows.
-          </p>
-
           <div class="pulse" id="pulse" data-pulse>
             <div class="pulse__head">
               <span class="label label--gold">The Pulse — attention, measured</span>
@@ -941,146 +927,109 @@
             </div>
           </div>
           <p class="pulse-caption">Attention is an input, never proof of demand.</p>
-
-          <p style="margin-top: 22px;">
-            The instrument imposes one discipline on the essay around it:
-            pageviews measure curiosity, not bids. Section IX depends on
-            the difference.
+          <p>
+            Everything above belongs to the <em>signs</em>. None of it automatically belongs to the <em>tokens</em>. Knowing your sign doesn't make you want a token named after it. The signs being scarce doesn't make the tokens scarce: anyone can create another Leo token tomorrow. The culture that keeps the signs alive doesn't know these records exist, and not a dollar of the horoscope economy flows to them. Twenty-four centuries of names; two years of records. The bridge between those two things is not built. Whether it ever gets built is the rest of this page.
           </p>
         </section>
 
-        <section class="mov reveal" id="belief-pays">
-          <div class="mov__head"><span class="mov__no">III</span><h2 class="mov__title">Belief pays — <span class="it">for something.</span></h2></div>
+        <section class="mov reveal" id="worth-holding">
+          <div class="mov__head"><span class="mov__no">III</span><h2 class="mov__title">What makes anything <span class="it">worth holding.</span></h2></div>
           <p>
-            A belief that never opens a wallet is trivia. This one opens
-            wallets on a schedule.
+            Why is gold valuable? Here's a famous answer, from the founder of the biggest crypto exchange in the world:
+          </p>
+          <blockquote class="zquote"><p>"Gold's price is not derived from its industrial or utility value. Just a pure belief system."</p><footer>— <a href="https://x.com/cz_binance/status/1983514879643292126" rel="noopener noreferrer">CZ, founder of Binance · October 2025</a></footer></blockquote>
+          <p>
+            He's half right, and the half matters. Gold isn't pure belief: it's hard to dig up, impossible to print, useful in electronics, worn on wrists, stacked in central-bank vaults, and easy to sell anywhere on Earth. But some real part of gold's value is belief: people hold it because they're confident other people will keep treating it as valuable. That confidence has thousands of years of evidence behind it. Gold's history is the track record that lets strangers trust each other about gold without ever meeting.
           </p>
           <p>
-            <a href="https://www.alliedmarketresearch.com/press-release/astrology-market.html" rel="noopener noreferrer">Allied Market Research valued the global astrology market</a>
-            at $12.8 billion in 2021, projected toward $22.8 billion by 2031.
-            On phones alone, <a href="https://sensortower.com/blog/astrology-apps-2019-revenue-downloads" rel="noopener noreferrer">Sensor Tower measured U.S. astrology app revenue</a>
-            growing 64.7 percent in a single year to nearly $40 million, with
-            the top apps compounding above 70 percent annually across the late
-            2010s. Venture capital noticed:
-            <a href="https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding" rel="noopener noreferrer">Co-Star raised a $15 million Series A led by Spark Capital</a>
-            (roughly $21 million in total) for an app that sells horoscopes.
+            Bitcoin showed the same thing can be built from scratch. No metal and no vault, only fixed rules anyone can check: there will only ever be 21 million, and no one can print more. What bitcoin didn't have was history, so it spent fifteen years earning some, surviving every article that declared it dead. History without code; code without history. Those are the two proven paths.
           </p>
           <p>
-            Every dollar above was
-            paid for readings, personalization, and entertainment — a service
-            consumed, not an asset held. Spending on horoscopes proves the
-            culture is monetizable; it does not prove anyone wants a
-            zero-cash-flow token wearing the same name. What this section
-            establishes is a necessary condition, not a sufficient one: a
-            culture that never paid for anything could not support an asset at
-            all. This one pays, reliably, and has for a century across formats
-            (newspaper columns, hotlines, apps). Whether paying converts to
-            holding is a separate question, and it is treated as one in
-            Section IX rather than smuggled through here.
+            Now put the twelve next to both, property by property. Gold has the story and none of the machinery: its supply grows every year with mining, it settles by vault and armored truck, and it can't be programmed into anything. Bitcoin has the machinery and none of the story: fixed supply, instant global settlement, permissionless — and abstract by design, a system ordinary people admire from outside rather than feel part of. The records of the twelve carry both columns' strengths at once. Supply fixed per record, with the authority status printed sign by sign in Part VII. Settlement in seconds, on Solana. Permissionless to hold and send. Programmable, with an open registry and SDK any app can read. And behind the names, twenty-four centuries of story that nobody has to be taught, because everyone already has a place in it. Six of those rows are checkable today. The seventh row is demand, and it is the one this page exists to test:
+          </p>
+          <figure class="zfig" id="fig-3">
+            <figcaption class="zfig-head"><span class="zfig-chip">F3</span> What gold has, what bitcoin has, what the twelve have.</figcaption>
+            <div class="ztblwrap"><table class="ztbl"><thead><tr><th></th><th>Gold</th><th>Bitcoin</th><th>The twelve records</th></tr></thead><tbody><tr><td class="rowh">Deep history</td><td>~5,000 years</td><td>15 years, earned in public</td><td>the names: ~2,400 years · the records: 2</td></tr><tr><td class="rowh">A story you’re already in</td><td>worn, gifted, inherited</td><td>technical by design · admired, not inhabited</td><td>everyone has a sign from birth</td></tr><tr><td class="rowh">Fixed supply</td><td><span class="cellno">no</span> · mining adds ~1–2% a year</td><td><span class="cellyes">yes</span> · 21 million, enforced</td><td><span class="cellyes">yes</span> · per record · authority status per sign below</td></tr><tr><td class="rowh">Settlement speed</td><td>days · vaults and shipment</td><td>minutes</td><td>seconds, on Solana</td></tr><tr><td class="rowh">Permissionless</td><td><span class="cellno">no</span> · custody and borders</td><td><span class="cellyes">yes</span></td><td><span class="cellyes">yes</span></td></tr><tr><td class="rowh">Programmable</td><td><span class="cellno">no</span></td><td>limited</td><td><span class="cellyes">yes</span> · open registry + SDK</td></tr><tr><td class="rowh">Proven demand</td><td><span class="cellyes">yes</span> · millennia of bids</td><td><span class="cellyes">yes</span> · a decade and a half of markets</td><td><span class="unproven">unproven</span> · the question this page tests</td></tr></tbody></table></div>
+            <p class="zfig-cap">Property by property. Six rows are checkable today, with the supply and authority receipts in Part VII. The last row is the open question, and the scoreboard in Part VI is where it gets answered.</p>
+          </figure>
+          <p>
+            One more idea belongs here, as a possibility rather than a promise. Software can now generate a new mascot, a new brand, a whole new "movement" overnight, basically for free. When anything can be manufactured, the things that can't be, the ones with long checkable human histories, may start to matter more. If that happens, twenty-four centuries of receipts are worth keeping in order. "May matter more" is not demand.
           </p>
           <p>
-            One caveat belongs in the open.
-            <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Pew finds</a>
-            that most people who consult astrology say they do it mostly for
-            fun, and almost none report relying on it for major life
-            decisions. Good. Fun is not a weakness in a memetic asset; it is
-            the propulsion system. Nobody bought Doge out of conviction in the
-            dog. The assets that spread are the ones that are fun to hold, fun
-            to send, fun to argue about, and the zodiac has been fun for two
-            thousand years.
+            And one lesson from the wreckage. The last decade launched thousands of meme tokens; most are dead. Nobody has counted the failures carefully enough to quote a rate, but the failures rhyme, and the rhymes are worth knowing. Tokens built on someone's brand die by lawsuit or license: someone owns the symbol. Tokens built on the sacred die by offense: the symbol is holy to some and hostile to others. Tokens built on a brand-new myth die of exhaustion: the belief has to be manufactured first and maintained forever. And tokens built on one joke die of boredom: there's nothing more to say about the dog, so attention has to be bought, forever. The signs dodge each of these in a checkable way: no owner, no single faith, no myth to manufacture, no shortage of material. Dodging risks still isn't the same as being wanted; both things are true.
           </p>
-          <div class="stats" role="list" aria-label="Market figures">
-            <div class="stats__cell" role="listitem"><div class="stats__k">$12.8B</div><div class="stats__v">global astrology market, 2021 · Allied</div><span class="stats__tag">REPORTED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$22.8B</div><div class="stats__v">projected by 2031 · Allied</div><span class="stats__tag">PROJECTED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">+64.7%</div><div class="stats__v">U.S. app revenue growth in one year · Sensor Tower</div><span class="stats__tag">REPORTED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$21M</div><div class="stats__v">raised by a single horoscope app · Axios</div><span class="stats__tag">REPORTED</span></div>
+          <p>
+            <strong>The twelve signs are scarce; tokens named after them are not.</strong> Anyone can launch a thirteenth Leo this afternoon, and someday someone will. No computer code prevents it. What the twelve familiar names give you is an obvious place for agreement to land. It's easier for strangers to converge on twelve names everyone knows than on an endless parade of new ones. Easier, not automatic. The bet is that convergence happens, and lands on these records; Part VI keeps score on it.
+          </p>
+        </section>
+
+        <section class="mov reveal" id="what-holding-means">
+          <div class="mov__head"><span class="mov__no">IV</span><h2 class="mov__title">What holding a sign <span class="it">actually means.</span></h2></div>
+          <p>
+            Each of the twelve records is a token at a specific, published address (think of an address as the record's fingerprint: unique, and checkable by anyone). The receipt from the day each one was created, 5 July 2024, is public. When you hold <em>Leo</em>, the ledger proves one thing: that your wallet holds that specific token. It does not prove you're a Leo. Anyone can buy any sign, and a Leo can hold none. A wallet doesn't prove a birthday. The honest comparison is a jersey: wearing one never proved you were on the team, and never needed to. It's a badge.
+          </p>
+          <p>
+            Why these twelve records, instead of any copy someone launches tomorrow? Three reasons, each with a weakness attached. <strong>They came first, on the record</strong>: continuous public history since July 2024, receipts published. No earlier dated public registry of one-token-per-sign records is known; if someone produces one, that claim dies. <strong>They're easy to build on</strong>: the registry file is public, and the <a href="https://zodiacs.org/sdk/" rel="noopener noreferrer">SDK</a> (the software kit that reads it) is open-source, so a builder can plug in within an afternoon. The same afternoon suffices to copy the format and point it elsewhere; openness cuts both ways. <strong>They sit on obvious names</strong>: agreement lands faster on names everyone knows. But names aren't addresses, and nothing in the culture takes that last step automatically. What could beat all three? A bigger company launching its own set. An exchange doing it with a hundred million users attached. Or, most likely on the current numbers, nobody converges on anything at all.
+          </p>
+          <p>
+            Today, a record does very little. The records are machine-readable, so any app can build on them. The features that exist so far are on apps run by the same operator behind this registry (<a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio</a>), and by the scoreboard's rules, activity from the operator's own apps doesn't count as evidence. Independent apps building on the records: zero so far, dated, on the scoreboard. Features that are merely planned don't count at all. Some people hold these tokens hoping others will want them later. That's true of every collectible ever made. Hope is not evidence.
+          </p>
+          <p>
+            The money in astrology is real, and none of it touches these records. The global astrology business was <a href="https://www.alliedmarketresearch.com/press-release/astrology-market.html" rel="noopener noreferrer">estimated at $12.8 billion in 2021</a>; the same firm forecasts $22.8 billion by 2031, and a forecast is a guess about the future. <a href="https://sensortower.com/blog/astrology-apps-2019-revenue-downloads" rel="noopener noreferrer">The ten biggest U.S. astrology apps took in about $40 million in 2019</a>, up 65% in a year. <a href="https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding" rel="noopener noreferrer">One horoscope app raised $15 million</a> from serious investors. Every one of those dollars bought a reading, a subscription, an app: a service, consumed and gone. People paying for horoscopes proves people pay for horoscopes. It does not prove anyone wants a token. The gap between those two sentences is the entire bet.
+          </p>
+          <div class="stats" role="list" aria-label="Reported figures">
+            <div class="stats__cell" role="listitem"><div class="stats__k">$12.8B</div><div class="stats__v">global astrology market, 2021 · Allied estimate</div><span class="stats__tag">ESTIMATED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$22.8B</div><div class="stats__v">Allied forecast for 2031 · a forecast, not a measurement</div><span class="stats__tag">FORECAST</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">+64.7%</div><div class="stats__v">one-year growth in top-ten U.S. astrology app spending, 2019 · Sensor Tower</div><span class="stats__tag">ESTIMATED</span></div>
+            <div class="stats__cell" role="listitem"><div class="stats__k">$15M</div><div class="stats__v">Series A raised by a horoscope app, 2021 · Axios</div><span class="stats__tag">REPORTED</span></div>
           </div>
-          <p class="stats__src">
-            Sources:
-            <a href="https://www.alliedmarketresearch.com/press-release/astrology-market.html" rel="noopener noreferrer">Allied Market Research</a> ·
-            <a href="https://sensortower.com/blog/astrology-apps-2019-revenue-downloads" rel="noopener noreferrer">Sensor Tower</a> ·
-            <a href="https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding" rel="noopener noreferrer">Axios, 2021</a>
-          </p>
+          <p class="stats__src">Sources: <a href="https://www.alliedmarketresearch.com/press-release/astrology-market.html" rel="noopener noreferrer">Allied Market Research</a> · <a href="https://sensortower.com/blog/astrology-apps-2019-revenue-downloads" rel="noopener noreferrer">Sensor Tower</a> · <a href="https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding" rel="noopener noreferrer">Axios, 2021</a></p>
         </section>
 
-        <section class="mov reveal" id="belief-becomes-record">
-          <div class="mov__head"><span class="mov__no">IV</span><h2 class="mov__title">Belief becomes <span class="it">record.</span></h2></div>
+        <section class="mov reveal" id="the-public-record">
+          <div class="mov__head"><span class="mov__no">V</span><h2 class="mov__title">What’s actually <span class="it">happened so far.</span></h2></div>
           <p>
-            A founder of the largest exchange in crypto states the strong
-            version of the claim this section needs:
-          </p>
-          <blockquote class="quote">
-            <p>"Gold's price is not derived from its industrial or utility
-            value. Just a pure belief system."</p>
-            <cite>— <a href="https://x.com/cz_binance/status/1983514879643292126" rel="noopener noreferrer">CZ, founder of Binance · October 2025</a></cite>
-          </blockquote>
-          <p>
-            The strong version is wrong. Gold is not pure belief: it is scarce
-            by physics,
-            costly to extract, worn as jewelry, vaulted by central banks,
-            liquid everywhere, and recognized by centuries of law and custom.
-            Belief is one layer of the premium, not the whole tower. What
-            survives the correction is narrower and still useful: some
-            meaningful share of gold's value is coordination around a durable
-            symbol, people holding it because they expect others to keep
-            treating it as worth holding. Coordination around a durable symbol
-            is the only thing this essay claims the Twelve can earn. Nothing
-            more is borrowed from gold than that.
+            The records are two years old, and their whole public life fits on one page: the good days and the bad ones, in order, with receipts for every line in the published evidence file.
           </p>
           <p>
-            The ledger's contribution is equally specific. Astrology has
-            produced words for four thousand years (spoken, printed, streamed)
-            and never anything that could be held. The Twelve change the
-            format: each sign now has a public record with a published
-            address. A Leo can hold <em>Leo</em>. What the chain
-            verifies is the holding, not the Leo. Anyone can buy all twelve
-            signs; a Leo can hold none. The token is a badge, not a
-            credential: a tradable symbol of affiliation, like a jersey, which
-            never proved fandom either and never needed to. This essay will
-            not pretend a wallet proves a birthday.
+            <strong>5 July 2024.</strong> All twelve records created in one day. The creation receipts are public, and you can <a href="https://zodiacs.org/disclosure/#origin" rel="noopener noreferrer">check them yourself</a>.
           </p>
+          <p>
+            <strong>6 July 2024 onward.</strong> Trading begins the next day, documented by traders with no connection to the project. The activity was small and niche, and it is documented.
+          </p>
+          <p>
+            <strong>Mid-July 2024.</strong> The first criticism arrives within two weeks: public claims that too few wallets held too much. The project account answered publicly. Both sides are preserved. How concentrated the holdings are today is a number, not an argument; it lives in the table in Part VII with a date on it.
+          </p>
+          <p>
+            <strong>2024 through 2026.</strong> The project's own accounts posted steadily. Independent discussion of these specific records stayed rare, and in the quiet stretches outsiders publicly called the whole thing a dead bag. Those posts are in the archive too.
+          </p>
+          <p>
+            <strong>17 February 2025.</strong> The strangest day so far. During the frenzy around an unrelated token that was also named Libra, a famous account bought this registry's Libra by mistake, said so, predicted it would go to zero, and then spent the evening telling followers he'd always been into astrology. It remains the highest-visibility moment these records have had.
+          </p>
+          <p>
+            <strong>And the language changed along the way.</strong> The first public voice around these tokens was memecoin voice: "own your sign," investment slogans, launch-account energy. The catalogue you're reading, with its receipts and rules, came later. Both eras are archived.
+          </p>
+          <p>
+            Two years proves this much: the records still work, the archive never broke, and the operator kept showing up. That is persistence, which is necessary and nowhere near enough. Everything that would settle the question comes next.
+          </p>
+          <figure class="zfig" id="fig-4">
+            <figcaption class="zfig-head"><span class="zfig-chip">F4</span> The public record, dated.</figcaption>
+            <svg viewBox="0 0 920 254" role="img" aria-label="Dated public history of the twelve records from July 2024 to July 2026, including adverse events."><line x1="40" y1="118" x2="900" y2="118" stroke="rgba(198,204,218,0.28)"/><line x1="62.546816479400746" y1="114" x2="62.546816479400746" y2="122" stroke="rgba(198,204,218,0.28)"/><text x="62.5" y="246" text-anchor="middle">Jul 2024</text><line x1="260.09987515605496" y1="114" x2="260.09987515605496" y2="122" stroke="rgba(198,204,218,0.28)"/><text x="260.1" y="246" text-anchor="middle">Jan 2025</text><line x1="454.4319600499376" y1="114" x2="454.4319600499376" y2="122" stroke="rgba(198,204,218,0.28)"/><text x="454.4" y="246" text-anchor="middle">Jul 2025</text><line x1="651.9850187265918" y1="114" x2="651.9850187265918" y2="122" stroke="rgba(198,204,218,0.28)"/><text x="652.0" y="246" text-anchor="middle">Jan 2026</text><line x1="846.3171036204744" y1="114" x2="846.3171036204744" y2="122" stroke="rgba(198,204,218,0.28)"/><text x="846.3" y="246" text-anchor="middle">Jul 2026</text><circle cx="66.8414481897628" cy="118" r="4" fill="#EEF1F7" stroke="#C6CCDA" stroke-width="1.6"/><circle cx="67.9151061173533" cy="118" r="4" fill="#EEF1F7" stroke="#C6CCDA" stroke-width="1.6"/><circle cx="76.50436953807741" cy="118" r="4" fill="none" stroke="#C6CCDA" stroke-width="1.6"/><circle cx="310.56179775280896" cy="118" r="4" fill="none" stroke="#C6CCDA" stroke-width="1.6"/><circle cx="310.56179775280896" cy="118" r="1.6" fill="#EEF1F7"/><circle cx="409.3383270911361" cy="118" r="4" fill="none" stroke="#C6CCDA" stroke-width="1.6"/><circle cx="869.9375780274656" cy="118" r="4" fill="#EEF1F7" stroke="#C6CCDA" stroke-width="1.6"/><line x1="66.8414481897628" y1="112" x2="66.8414481897628" y2="56" stroke="rgba(198,204,218,0.10)"/><text x="70.8" y="46" text-anchor="start" class="zfig-lab">5 Jul 2024</text><text x="70.8" y="59" text-anchor="start">twelve mints created</text><line x1="111.9350811485643" y1="124" x2="111.9350811485643" y2="136" stroke="rgba(198,204,218,0.10)"/><text x="115.9" y="146" text-anchor="start" class="zfig-lab">first documented trading</text><text x="115.9" y="159" text-anchor="start">(unaffiliated, from 6 Jul)</text><line x1="76.50436953807741" y1="124" x2="76.50436953807741" y2="170" stroke="rgba(198,204,218,0.10)"/><text x="80.5" y="180" text-anchor="start" class="zfig-lab">concentration criticism</text><text x="80.5" y="193" text-anchor="start">answered publicly</text><line x1="310.56179775280896" y1="112" x2="310.56179775280896" y2="56" stroke="rgba(198,204,218,0.10)"/><text x="310.6" y="46" text-anchor="middle" class="zfig-lab">accidental Libra purchase</text><text x="310.6" y="59" text-anchor="middle">highest-visibility moment</text><line x1="409.3383270911361" y1="124" x2="409.3383270911361" y2="170" stroke="rgba(198,204,218,0.10)"/><text x="409.3" y="180" text-anchor="middle" class="zfig-lab">'dead bag' commentary</text><text x="409.3" y="193" text-anchor="middle">quiet-period dismissals</text><line x1="869.9375780274656" y1="124" x2="869.9375780274656" y2="136" stroke="rgba(198,204,218,0.10)"/><text x="865.9" y="146" text-anchor="end" class="zfig-lab">registry + disclosures live</text><text x="865.9" y="159" text-anchor="end">this page</text><text x="40.0" y="228" text-anchor="start">● documented event ○ adverse commentary ◉ accidental purchase · every node carries receipts in the evidence register</text></svg>
+            <p class="zfig-cap">The documented public history of the twelve, adverse events included. Sources, artifact grades, and independence classifications for every node sit in the published evidence register.</p>
+            <p class="zfig-src">Receipts for every node: /thesis/thesis-history.json — post identifiers, capture times, artifact grades, independence classifications.</p>
+          </figure>
         </section>
 
         <section class="mov reveal" id="the-candidacy">
-          <div class="mov__head"><span class="mov__no">V</span><h2 class="mov__title">Twelve. Fixed. <span class="it">Contested.</span></h2></div>
+          <div class="mov__head"><span class="mov__no">VI</span><h2 class="mov__title">The test <span class="it">that can fail.</span></h2></div>
           <p>
-            The properties most assets spend their whole lives trying to
-            manufacture, the Twelve begin with:
-          </p>
-          <ul>
-            <li>A <strong>fixed story</strong> — twelve signs, closed more than two thousand years ago. No version two, no genre creep, no weekly launch diluting the ones before it.</li>
-            <li><strong>Unowned symbols</strong> — the zodiac is public domain: no IP holder, no licensor, no celebrity who can be canceled or cash out. (Not universally loved — some faiths object to astrology itself — but no one owns it, and no one can take it away.)</li>
-            <li><strong>Built-in distribution</strong> — everyone has a sign; the question "which one are you?" is the oldest onboarding flow in the world.</li>
-            <li><strong>Permanent relevance</strong> — the attention cycle resets monthly, forever.</li>
-          </ul>
-          <p>
-            The obvious objection is the correct one. The twelve <em>signs</em>
-            are scarce. <em>Tokens named after them</em> are not. Anyone can
-            deploy another Leo this afternoon, and eventually someone will.
-            Bitcoin's scarcity is enforced by consensus; no code on any chain
-            prevents a thirteenth Leo. And the openness runs deeper than
-            copycat tokens: the monetization surface around the zodiac (apps,
-            NFTs, wrappers, brands, competing registries) is unlimited. A
-            closed vocabulary is not a closed market.
+            Words like "canonical" and "official" get thrown around cheaply in crypto. This registry has no authority; nobody appointed it. "The canonical record of the twelve" is a goal, not a title, and the only way to earn it is for people with no connection to the registry to keep choosing these records when they could choose anything else.
           </p>
           <p>
-            This registry claims neither scarcity nor, yet, canonicity.
-            Canonicity in open
-            systems is never declared; it is converged upon, and the
-            convergence has not finished happening. What zodiacs.org holds
-            today is provenance and a head start: a continuous public record
-            since 5 July 2024, machine-readable addresses, an
-            <a href="https://zodiacs.org/sdk/" rel="noopener noreferrer">open-source SDK</a>
-            any builder can verify against. That makes it the earliest
-            candidate for the canonical record. The candidacy is judged on
-            evidence, and five kinds count: independent
-            integrations that read this registry rather than another; third
-            parties citing these addresses unprompted; holder dispersion
-            widening; liquidity that survives quiet months; an archive that
-            stays continuous through adverse ones. The current readings sit
-            in the scoreboard below, dated. Today they are mostly zeros and
-            baselines, and the scoreboard says so. Until better ones
-            accumulate here, "canonical" names the objective, not the fact.
+            The scoreboard measures five things: independent apps building on this registry; independent people citing these addresses without being asked; the tokens spreading across more unrelated wallets; markets that stay alive through quiet months; and an archive that never breaks. Each has a passing bar and a failing bar, with dates.
+          </p>
+          <p>
+            The strictest rule is who counts: only strangers. Anything connected to the operator — the operator's own apps, paid placements, sponsored mentions, coordinated campaigns, wallets the operator controls, liquidity the operator funds — is reported separately and counts for nothing. Every observation gets a written decision: counted or excluded, and why. The fifth measure, the unbroken archive, is under the operator's own control, which makes it the weakest kind of evidence there is. Breaking it would end the claim. Keeping it proves only diligence.
           </p>
           <div class="score" role="table" aria-label="Candidacy scoreboard">
             <div class="score__row score__row--head" role="row">
@@ -1114,120 +1063,14 @@
           </div>
           <p class="score__cap">The candidacy is judged on these. The same list defines the loss condition.</p>
           <p>
-            The closed set helps in exactly one way, and it is worth keeping
-            after all the concessions: coordination is cheaper on twelve
-            Schelling points than on an infinite genre. Twelve names everyone
-            already knows give convergence somewhere obvious to land. Cheaper
-            is not automatic. The bet is that convergence
-            happens, and happens here first.
-          </p>
-          <p>
-            Even the set's most famous "threat" argues for its fixedness.
-            Every few years the thirteenth-sign story trends (NASA mentions
-            Ophiuchus, the feed panics) and within a week the world has
-            reasserted the twelve. The panic is the system's immune response:
-            it arrives on schedule and generates
-            another cycle of attention for the same twelve names.
-          </p>
-        </section>
-
-        <section class="mov reveal" id="what-holding-means">
-          <div class="mov__head"><span class="mov__no">VI</span><h2 class="mov__title">What <span class="it">holding means.</span></h2></div>
-          <p>
-            Holding <em>Leo</em> does three things.
-          </p>
-          <p>
-            <strong>It signals.</strong> A sign is the one affiliation people
-            volunteer before being asked. A public record of holding it turns
-            the oldest self-description in the world into something you can
-            point to: a badge, worn by choice, verified as held rather than
-            as true.
-          </p>
-          <p>
-            <strong>It unlocks.</strong> The registry is open infrastructure.
-            Any app can read it and treat holders differently:
-            ownership-aware readings, sign-versus-sign games, shelves and
-            goods on the consumer surfaces
-            <a href="https://astrofolio.xyz/" rel="noopener noreferrer">Astrofolio</a>
-            maintains. The record is a key; the doors are being built around
-            it.
-          </p>
-          <p>
-            <strong>It speculates.</strong> Part of why anyone holds a memetic
-            asset is the expectation that others will want it later. This
-            essay will not pretend otherwise; pretending would insult the
-            reader. Holding a sign is, among other things, a position on the
-            argument of this page.
+            Right now, the scoreboard mostly reads zero, dated. The same scoreboard defines the loss: if a competing record earns more of this evidence than this one, it takes the position, and this page will say so.
           </p>
         </section>
 
         <section class="mov reveal" id="the-test">
-          <div class="mov__head"><span class="mov__no">VII</span><h2 class="mov__title">The generation, the gap, <span class="it">and the test.</span></h2></div>
+          <div class="mov__head"><span class="mov__no">·</span><h2 class="mov__title">The one-tap <span class="it">test.</span></h2></div>
           <p>
-            The cohort that grew up online treats crypto as ordinary
-            infrastructure. In <a href="https://www.gemini.com/blog/gemini-survey-finds-more-than-half-of-gen-z-owns-crypto" rel="noopener noreferrer">Gemini's 2024 global survey</a>,
-            just over half of Gen Z adults in the United States had owned
-            crypto, against 29 percent of Gen X.
-            <a href="https://www.prnewswire.com/news-releases/millennials-and-gen-z-are-as-likely-to-own-cryptocurrency-as-they-are-real-estate-302111864.html" rel="noopener noreferrer">Policygenius found</a>
-            Gen Z and millennials about as likely to own crypto as real
-            estate. Among traders specifically,
-            <a href="https://www.prnewswire.com/news-releases/new-etoro-survey-nearly-half-of-millennials-trust-us-stock-market-less-than-crypto-300797937.html" rel="noopener noreferrer">an eToro survey</a>
-            found 43 percent of millennial respondents trusting crypto
-            exchanges more than the stock market, and
-            <a href="https://www.okx.com/en-gb/learn/crypto-age-gap" rel="noopener noreferrer">a 2026 OKX poll</a>
-            of its surveyed population found roughly four in ten Gen Z and
-            millennial respondents rating crypto platforms highly against
-            about one in five for banks. Meanwhile
-            <a href="https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/" rel="noopener noreferrer">Pew finds</a>
-            astrology engagement concentrated in the same cohort: younger,
-            online, fluent in symbols.
-          </p>
-          <p>
-            Those surveys
-            are cohort statistics. No public dataset shows that the
-            individuals who read charts are the individuals who hold coins.
-            The overlap is plausible (same ages, same platforms, same comfort
-            with digital-native value), but plausible is not proven, and this
-            essay will not launder two circles into one. Likewise with the
-            inheritance numbers:
-            <a href="https://www.cerulli.com/press-releases/cerulli-anticipates-124-trillion-in-wealth-will-transfer-through-2048" rel="noopener noreferrer">Cerulli projects</a>
-            $124 trillion changing hands through 2048, roughly $45.6 trillion
-            of it to millennials. Transfers establish future purchasing power,
-            not its allocation. Nothing about an inheritance routes it to a
-            zodiac token, and the essay claims only the weaker thing: the
-            demographic holding the symbols will, in time, hold the money.
-          </p>
-          <p class="stats__title">Cohort statistics — overlap plausible, not proven</p>
-          <div class="stats" role="list" aria-label="Cohort statistics — overlap plausible, not proven">
-            <div class="stats__cell" role="listitem"><div class="stats__k">51%</div><div class="stats__v">of Gen Z have owned crypto · Gemini</div><span class="stats__tag">SURVEYED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">43%</div><div class="stats__v">of surveyed millennial traders trust crypto over the stock market · eToro</div><span class="stats__tag">SURVEYED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$124T</div><div class="stats__v">changing hands by 2048 · Cerulli</div><span class="stats__tag">PROJECTED</span></div>
-            <div class="stats__cell" role="listitem"><div class="stats__k">$45.6T</div><div class="stats__v">to millennials alone · Cerulli</div><span class="stats__tag">PROJECTED</span></div>
-          </div>
-          <p class="stats__src">
-            Sources:
-            <a href="https://www.gemini.com/blog/gemini-survey-finds-more-than-half-of-gen-z-owns-crypto" rel="noopener noreferrer">Gemini, 2024</a> ·
-            <a href="https://www.prnewswire.com/news-releases/new-etoro-survey-nearly-half-of-millennials-trust-us-stock-market-less-than-crypto-300797937.html" rel="noopener noreferrer">eToro</a> ·
-            <a href="https://www.okx.com/en-gb/learn/crypto-age-gap" rel="noopener noreferrer">OKX, 2026</a> ·
-            <a href="https://www.cerulli.com/press-releases/cerulli-anticipates-124-trillion-in-wealth-will-transfer-through-2048" rel="noopener noreferrer">Cerulli, 2024</a>
-          </p>
-          <p style="margin-top: 26px;">
-            This section owes one concession: a crypto-native corner of
-            astrology has existed for years without repricing anything. That
-            is a partial test with a negative result, not a postponed
-            experiment, and the friction explanation cannot be
-            spent forever. Friction is real: holding a token still costs a
-            normal person more than one tap, and the rails are visibly
-            removing that cost (passkey wallets, embedded onramps, social
-            platforms converging on payments). But an explanation that can
-            absorb any amount of disconfirmation is not an explanation, so the
-            registry commits to the honest version instead: a one-tap
-            claim surface for sign-holders, preregistered in the commitment
-            card below, with the result published either way, including a
-            failure. The card fixes the cohort, the claimant definition, the
-            retention arithmetic, the dispersion metric, and the thresholds
-            and dates before the test begins. A thesis that cannot lose is
-            not a thesis.
+            There's a lazy excuse available forever: "people would hold their signs, it's just too hard to buy a token." The friction is real, but an excuse that can never be tested is worthless. So the test is committed: a one-tap way for people to claim their sign, with the rules published before the test runs — who counts, what counts as keeping it, what numbers mean pass and fail, and the deadline. If the idea is right, the scoreboard will show it. If nothing moves, the excuse is dead, and the result gets printed either way. A thesis that cannot lose is not a thesis.
           </p>
           <aside class="tcard" aria-label="The one-tap test — commitment card">
             <div class="tcard__head">
@@ -1243,126 +1086,10 @@
           </aside>
         </section>
 
-        <section class="mov reveal" id="why-solana-why-base">
-          <div class="mov__head"><span class="mov__no">VIII</span><h2 class="mov__title">Why Solana. <span class="it">Why Base.</span></h2></div>
-          <p>
-            Identity-first, social, emotional, mobile, short sessions —
-            astrology behaves like the consumer activity Solana has already
-            proven it can carry. Phantom made the wallet feel mainstream;
-            Jupiter made the swap feel ordinary; the memecoin era proved the
-            chain absorbs high-frequency, socially transmitted demand. The
-            native records of the Twelve live there, where the consumer rails
-            are. Official bridged representations extend each sign to Base —
-            one origin, verified everywhere the registry points.
-          </p>
-        </section>
-
-        <section class="mov reveal" id="the-case-against">
-          <div class="mov__head"><span class="mov__no">IX</span><h2 class="mov__title">The case <span class="it">against.</span></h2></div>
-          <p>
-            An argument that hides its weaknesses is an advertisement. These
-            are the five strongest objections to everything above, stated the
-            way a skeptic would state them.
-          </p>
-          <p>
-            <strong>"Belief in the sign is not demand for the record."</strong> <span class="chip-ref">CONCEDED IN PART</span>
-            Correct — and this is the actual bet, so here it is at full
-            strength: nine in ten Americans know their sign, and approximately
-            zero of them woke up today wanting a token. Section III's spending
-            proves demand for readings and entertainment — a service consumed
-            — not for a zero-cash-flow asset with infinitely reproducible
-            substitutes. The baseball-card comparison sometimes offered here
-            is an analogy, not evidence: cards carried physical scarcity,
-            licensed imagery, grading, and dealer networks that tokens do not
-            inherit, and nobody has published a base rate for how often
-            durable cultures become durable financial assets. The nearest real
-            precedent actually cuts the other way, so it belongs on this page:
-            football fan tokens — durable tribal identity, closed sets,
-            official issuance — mostly shed the bulk of their value from their
-            peaks. The structural difference is real but must be stated
-            carefully: fan tokens were centrally issued instruments sold on
-            promised utility that largely failed to arrive, and they were
-            priced against those promises. The Twelve are permissionless
-            records that promise nothing — no votes, no perks, no yield —
-            which means there is less to fail to deliver, and also less to
-            point to. Whether "promises nothing" reads as a defense or an
-            indictment is precisely the reader's call. The essay's claim
-            survives only in its narrowest form: a paying culture, a durable
-            symbol set, and falling friction make the bet <em>possible</em>.
-            Nothing on this page makes it <em>likely</em>, and the essay stops
-            claiming at possible.
-          </p>
-          <p>
-            <strong>"If the audience wanted this, they would already have it."</strong> <a class="chip-ref" href="#the-test">TESTABLE — §VII</a>
-            Partly conceded above: the existing crypto-native astrology
-            overlap is a partial test with a negative result so far, and it
-            counts against the thesis rather than being suspended by it. What
-            remains true is that the mainstream astrology audience (the one
-            on Instagram and TikTok) has never faced a one-tap version of
-            this, the way it never faced one-tap horoscopes until apps existed
-            and then paid $40 million a year for them. That history says
-            friction can hide real demand; it does not say demand is hiding
-            here. Hence the committed test in Section VII, with criteria
-            published before the result. If the one-tap version reaches that
-            audience and nothing moves, the friction explanation is spent, and
-            the registry will say so on this page.
-          </p>
-          <p>
-            <strong>"The registry appointed itself."</strong> <a class="chip-ref" href="#the-candidacy">LOSS CONDITION DEFINED — §V</a>
-            It did. There was no other way to begin: every canonical registry
-            in history was self-appointed on day one and legitimate only in
-            retrospect. Legitimacy here is earned the boring way: publish
-            verifiable facts, keep the archive continuous, never sell the
-            position, be right for years. Section V lists the evidence that
-            would count toward the candidacy; the same list defines the loss
-            condition. If a competing record earns more integrations, more
-            verification, and more trust, this one loses its status, as it
-            should. A registry that cannot lose is not a registry; it is a
-            brand.
-          </p>
-          <p>
-            <strong>"This is a memecoin with a literature review."</strong> <span class="chip-ref">CONCEDED IN PART</span>
-            Half true, and the half that is true is embraced: the Twelve are
-            memetic assets, priced by attention and belief, and dressing that
-            up would be dishonest. The structural difference is narrower than
-            a defender would like and still real: memecoins are open genres —
-            dogs, cats, frogs — where every launch dilutes the last, while the
-            zodiac supplies twelve fixed names that give coordination
-            somewhere obvious to land. A closed vocabulary is not a closed
-            market, and Section V concedes as much; twelve Schelling points
-            make convergence cheaper, not certain. Most memetic assets ask you
-            to believe a joke will last. This one asks you to notice a belief
-            that already has — and then asks you to make the further, unproven
-            bet that the belief coordinates onto these records.
-          </p>
-          <p>
-            <strong>"You have described the mythology and omitted the instrument."</strong> <a class="chip-ref" href="#the-instrument">ANSWERED BY DATA — §X</a>
-            The sharpest objection of the five, and the only one prose cannot
-            answer. Even if every cultural claim above is right, a buyer
-            underwrites a specific instrument: a supply, a holder
-            distribution, a set of administrative authorities, a bridge, a
-            pool of liquidity, a treasury. A permanent symbol can be attached
-            to a temporary, concentrated, or extractive token, and cultural
-            durability protects no one from any of that. Telling readers the
-            facts are "verifiable onchain" is not disclosure; most readers
-            cannot reconstruct control rights from a block explorer, and
-            should not have to. So the answer is not an argument. It is the
-            next section.
-          </p>
-        </section>
-
         <section class="mov reveal" id="the-instrument">
-          <div class="mov__head"><span class="mov__no">X</span><h2 class="mov__title">The instrument, <span class="it">in the open.</span></h2></div>
+          <div class="mov__head"><span class="mov__no">VII</span><h2 class="mov__title">The numbers, <span class="it">in the open.</span></h2></div>
           <p>
-            The registry's position is that an essay asking readers to
-            scrutinize astrology has no right to ask faith on the asset. The
-            facts below are published here, dated, and kept current; several
-            are read live from the same
-            <a href="https://zodiacs.org/sdk/" rel="noopener noreferrer">SDK</a>
-            any builder can run independently. The twelve origin receipts (the
-            transaction that created each canonical mint, all dated
-            5 July 2024) are published with the operator statements in the
-            <a href="https://zodiacs.org/disclosure/#origin">registry disclosure</a>.
+            Whoever holds one of these records holds something very specific: a supply, a distribution of holders, administrative controls, a bridge, a market, a treasury. A beautiful old name can be attached to an ugly concentrated token, and history protects no one from that. So here is the instrument itself, measured and dated. Every number a stranger can verify links to its receipt, and every number that is only the operator's word says so, plainly. The origin receipts for all twelve, dated 5 July 2024, are published <a href="https://zodiacs.org/disclosure/#origin" rel="noopener noreferrer">with the operator's statements</a>.
           </p>
           <div class="disc-scroll" role="region" aria-label="Disclosure table — the instrument, per sign" tabindex="0">
             <table class="disc">
@@ -1387,6 +1114,64 @@
             </table>
           </div>
           <p class="disc-updated" data-disclosure-updated>Last updated: 2026-07-23</p>
+          <div class="ednote">
+            <p>Each figure above is published with its definition, its date, and its verification status. No adverse figure is omitted. Concentration is usually unflattering early, and it is printed anyway.</p>
+          </div>
+        </section>
+
+        <section class="mov reveal" id="the-case-against">
+          <div class="mov__head"><span class="mov__no">VIII</span><h2 class="mov__title">The best reasons <span class="it">to walk away.</span></h2></div>
+          <p>
+            Seven objections a smart skeptic would raise, with an answer to each, including the answers that aren't comfortable.
+          </p>
+          <p>
+            <strong>"Knowing your sign isn't wanting a token."</strong> Correct. This is the bet itself, and nothing on this page shows current demand for these records. The closest real-world cousin is a warning, not a comfort: official fan tokens for football clubs, with tribal identity, closed sets, and big launches, lost most of their peak value. The difference here is thin. Fan tokens promised perks that mostly never came, and were priced on those promises; these records promise nothing at all. Less to break, and less to point to. What's on offer is a testable possibility, not a probability, and nobody should read it as a high one.
+          </p>
+          <p>
+            <strong>"If people wanted this, it would already exist."</strong> The overlap of crypto and astrology has existed for years and converged on nothing: a real test, already failed once, and it counts against the thesis. What's genuinely untested is the mainstream version, one tap, no crypto knowledge required. That's the preregistered test above, with its deadline in print. If it fails too, the idea is out of excuses.
+          </p>
+          <p>
+            <strong>"You appointed yourselves."</strong> True. There was no committee to apply to. Some self-appointed records become real ones through years of use; most never do. The criteria are symmetric on purpose: the same evidence that would legitimize this record would legitimize a rival that earned more of it. Self-appointment isn't disqualifying. It also isn't evidence.
+          </p>
+          <p>
+            <strong>"This is a memecoin with a literature review."</strong> The tokens are memetic assets. Attention and belief set the price, and no bibliography changes that. The open question is only whether twelve fixed, ancient names behave differently from an endless genre of new jokes. That question is honest, and it is the one under test.
+          </p>
+          <p>
+            <strong>"You're describing a security and insisting you're not."</strong> What can be said is behavioral and checkable: this registry issues nothing, sells nothing, holds nothing for anyone, and promises nothing — no yield, no buyback, no roadmap for anyone to rely on. The records existed before this essay. The registry catalogues; it doesn't mint. And where an essayist's word shouldn't be enough, the <a href="https://zodiacs.org/disclosure/" rel="noopener noreferrer">plain-language disclosures</a> covering who operates what and who owns what are current and dated.
+          </p>
+          <p>
+            <strong>"One operator runs the registry, the app, and holds the assets."</strong> True, disclosed, and dated, in the operator's own words, including the detail in Part V that the sales voice came before the museum voice. The protection is architecture, not character. The registry file is public, the SDK is forkable, the archive is mirrored: everything needed to replace this registry is published by this registry. That lowers the cost of routing around the operator. It doesn't guarantee anyone will bother. Price the risk accordingly.
+          </p>
+          <p>
+            <strong>"The essay is the mythology; the token is the asset."</strong> The sharpest one, and it's right. Prose can't answer it; only the table in Part VII can. Trust the table more than the words. Wherever they disagree, the table wins.
+          </p>
+        </section>
+
+        <section class="mov reveal" id="the-honest-ending">
+          <div class="mov__head"><span class="mov__no">IX</span><h2 class="mov__title">The honest <span class="it">ending.</span></h2></div>
+          <p>
+            The twelve signs will be fine either way. They were fine before ledgers; they'll be fine after whatever comes next. What's being tested here is one narrow idea: that names everyone already knows spare a new kind of record the one cost that kills most of its kind, and that if that's true, strangers will keep arriving at these twelve records on their own, and the scoreboard on this page will slowly stop saying zero. That's the whole thesis: a prediction made in public, with a deadline, judged by rules published before the answer was known. It is not a promise.
+          </p>
+          <p>
+            If you take one thing from this page, take the method: receipts over claims, strangers over friends, tests that can fail over stories that can't. The signs earned their permanence over twenty-four centuries. The records have two years so far, and the scoreboard above is where you can watch the rest.
+          </p>
+          <div class="sig">
+            <span>Zodiacs.org — The Registry · An editorial thesis · not advice · The Zodiac Standard, Nº 07 · <a href="#changelog">changelog</a></span>
+          </div>
+        </section>
+
+        <section class="mov reveal" id="appendix">
+          <div class="mov__head"><span class="mov__no">＋</span><h2 class="mov__title">Appendix — <span class="it">the technical record.</span></h2></div>
+          <p>
+            <em>Kept apart so the essay reads and the record verifies. Everything below is maintained with the same care as the argument above.</em>
+          </p>
+        </section>
+
+        <section class="mov reveal" id="reading-the-instrument">
+          <div class="mov__head"><span class="mov__no">A</span><h2 class="mov__title">Reading <span class="it">the instrument.</span></h2></div>
+          <p>
+            The column legend for the instrument table in Part VII:
+          </p>
           <ul class="disc-legend">
             <li><strong>Supply</strong> — total and circulating, per sign</li>
             <li><strong>Mint authority</strong> — status per sign (retained / renounced), address if retained</li>
@@ -1397,39 +1182,40 @@
             <li><strong>Treasury and insider holdings</strong> — project-controlled wallets, amounts, any lockups or vesting, disposal policy</li>
             <li><strong>Registry continuity</strong> — governance of the record itself; what survives if the operating entity disappears (static registry file, forkable SDK, mirrored archive)</li>
           </ul>
-          <div class="ednote">
-            <p>Where a number above is unflattering — concentration usually is, early — it is published anyway, with the plan beside it. A registry that redacts its own instrument has already answered the fifth objection in the wrong direction.</p>
-          </div>
+          <p>
+            Statuses are three-valued and mean what they say: <strong>verified</strong> (a stranger can check the receipt), <strong>operator-attested</strong> (the operator states it, dated, not independently verified), <strong>pending</strong> (neither, and labeled so). Pending is never dressed as verified.
+          </p>
         </section>
 
-        <section class="mov reveal" id="the-slower-bet">
-          <div class="mov__head"><span class="mov__no">XI</span><h2 class="mov__title">The slower <span class="it">bet.</span></h2></div>
+        <section class="mov reveal" id="why-solana-why-base">
+          <div class="mov__head"><span class="mov__no">B</span><h2 class="mov__title">Why Solana. <span class="it">Why Base.</span></h2></div>
           <p>
-            The archive documents the Twelve in public from the origin
-            receipts of 5 July 2024 onward, with
-            registry addresses and community activity preserved across public
-            channels, including
-            <a href="https://x.com/astrofoliosol" rel="noopener noreferrer">X</a>,
-            <a href="https://www.instagram.com/astrofolioonsol/" rel="noopener noreferrer">Instagram</a>,
-            <a href="https://tiktok.com/@astrofolio" rel="noopener noreferrer">TikTok</a>, and
-            <a href="https://t.me/astrofoliosol" rel="noopener noreferrer">Telegram</a>.
-            Around the record, Astrofolio maintains the consumer surfaces
-            (shelves, multi-buy, physical goods) while this registry keeps the
-            canonical facts. The case against is printed above, and the
-            instrument is disclosed beside the mythology, because a registry
-            that lives on trust can afford to bury neither.
+            The native records were deployed on Solana. The relevant selection factors are technical and practical: transaction cost, confirmation behavior, consumer wallet availability, existing liquidity venues, and the operator's existing infrastructure at deployment time. Official bridged representations extend each sign to Base through the Wormhole lock-and-mint contracts listed per sign in the instrument. The Base representations trace to the specified Solana mints through those bridge contracts, and their validity depends on the bridge's stated contracts and trust assumptions. If the bridge fails, the native Solana records stand unaffected; the bridged representations are conveniences, not the record.
+          </p>
+        </section>
+
+        <section class="mov reveal" id="methodology">
+          <div class="mov__head"><span class="mov__no">C</span><h2 class="mov__title">Methodology <span class="it">and evidence.</span></h2></div>
+          <p>
+            The Pulse reads open sources on a published schedule: encyclopedia pageviews from the Wikimedia API (live, with a weekly committed snapshot as fallback) and search interest from public Trends data, with the comparison set and its limits stated inline. Pageviews measure curiosity, not bids; the essay never uses them as demand.
           </p>
           <p>
-            It is a bet on permanence over novelty, made as a
-            candidacy, judged on published criteria, losable in public.
+            The candidacy scoreboard and the one-tap test read their committed JSON registers, which carry measurement definitions, capture times, exclusions, and raw captures in the published <a href="https://zodiacs.org/thesis/thesis-candidacy-evidence.json" rel="noopener noreferrer">evidence file</a>. Every observation carries an independence classification (unsolicited-unaffiliated, unsolicited-unknown, prompted, campaign, affiliated) and an economic-interest classification; only unsolicited-unaffiliated observations count toward pass conditions, and each exclusion decision is recorded. The public-history events in Part V carry the same schema — post identifiers, capture times, artifact grades A–E, live/deleted status — in the same register family. The test is preregistered: criteria, cohort, thresholds, and dates were fixed and published before the test began, and the result publishes either way.
           </p>
-          <div class="sig">
-            <span>Zodiacs.org — The Registry · An editorial thesis · not advice · Revised July 2026 · <a href="#changelog">changelog</a></span>
-          </div>
+        </section>
+
+        <section class="mov reveal" id="verify">
+          <div class="mov__head"><span class="mov__no">D</span><h2 class="mov__title">Verify it <span class="it">yourself.</span></h2></div>
+          <p>
+            Each instrument row links to an independently checkable receipt, or is labeled operator-attested or pending. Mint addresses and origin transactions are on a public explorer; pool and holder data are on chain; the registry file is at <a href="https://zodiacs.org/registry/zodiacs.registry.json" rel="noopener noreferrer">/registry/zodiacs.registry.json</a>; the <a href="https://zodiacs.org/sdk/" rel="noopener noreferrer">SDK</a> reads it all programmatically. The <a href="https://zodiacs.org/disclosure/" rel="noopener noreferrer">disclosure register</a> carries the operator statements. If a claim on this page and a receipt ever disagree, the receipt wins, and the page is wrong until corrected.
+          </p>
         </section>
 
         <section class="mov reveal" id="changelog">
-          <div class="mov__head"><span class="mov__no">—</span><h2 class="mov__title">Changelog</h2></div>
+          <div class="mov__head"><span class="mov__no">E</span><h2 class="mov__title">Changelog</h2></div>
+          <p>
+            The essay's revision history (Nº 01 through Nº 07) is preserved unabridged. Nº 07 — The Zodiac Standard: retitled and rebuilt around the distinction between inherited recognition and demand, written in a plain consumer register. Corrects the chronology of earlier drafts (the fixed twelve-sign zodiac dates to roughly the fifth century BCE and does not predate coined money). Adds the candidacy exclusions for related-party and prompted activity, the documented public history of 2024–2026 with adverse events, and a rebuilt figure program. Removes the monetary-aggregate comparison and the demographic market-sizing of earlier drafts as unsound. Every concession of prior revisions survives. No factual claim was strengthened without a source; several were weakened by one.
+          </p>
           <p>
             <strong>Nº 06 — July 2026.</strong> The disclosure closeout. The
             candidacy scoreboard (§V), the one-tap test card (§VII), and the

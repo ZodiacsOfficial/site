@@ -1,13 +1,13 @@
 /*
  * QA gate for the thesis page: every markdown hyperlink in
- * zodiacs-thesis-v3.md must appear in public/thesis/index.html with the
+ * zodiacs-thesis-v4.md must appear in public/thesis/index.html with the
  * SAME URL and the SAME anchor text (byte-for-byte, entity-decoded).
  *
  *   node scripts/check-thesis-links.mjs
  */
 import { readFileSync } from 'node:fs';
 
-const md = readFileSync('zodiacs-thesis-v3.md', 'utf8');
+const md = readFileSync('zodiacs-thesis-v4.md', 'utf8');
 const html = readFileSync('public/thesis/index.html', 'utf8');
 
 // Collapse the page's insignificant whitespace the way a renderer would,

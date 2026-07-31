@@ -76,8 +76,8 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   }),
   freezeCuratedEntry({
     path: '/thesis/',
-    title: 'The Registry Thesis',
-    description: 'Why the twelve records exist — the essay of record, with published disclosures.',
+    title: 'The Zodiac Standard — the Registry thesis',
+    description: 'Twelve old names, twelve new records — the essay of record, with published disclosures.',
     kind: 'registry',
     keywords: ['registry', 'thesis', 'record', 'disclosures'],
   }),

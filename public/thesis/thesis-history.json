@@ -1,0 +1,119 @@
+{
+ "$comment": "Public-history register behind Part V of the thesis and its dated-timeline figure. Events from the 2026-07-31 external X-evidence audit (blind archaeology + lead reconciliation), operator-commissioned; artifact grades A–E per that audit's standard. Prose claims only what these receipts support. Refreshing is a reviewed action, never part of a build.",
+ "reviewedAt": "2026-07-31",
+ "independencePolicy": {
+  "classes": [
+   "unsolicited-unaffiliated",
+   "unsolicited-unknown",
+   "prompted",
+   "campaign",
+   "affiliated"
+  ],
+  "rule": "Only unsolicited-unaffiliated observations count toward any candidacy pass condition. Operator, related-party, paid, prompted, and coordinated activity is recorded and excluded. Prompted mentions are recorded as prompted."
+ },
+ "events": [
+  {
+   "id": "origin",
+   "dateUtc": "2024-07-05",
+   "summary": "All twelve mints created; origin receipts published in the registry disclosure.",
+   "type": "onchain",
+   "grade": "A",
+   "independence": "affiliated",
+   "economicInterest": "project",
+   "receipts": [
+    "https://zodiacs.org/disclosure/#origin"
+   ],
+   "proves": "Exact origin date and addresses.",
+   "doesNotProve": "Demand or canonicity."
+  },
+  {
+   "id": "early-trading",
+   "dateUtc": "2024-07-06",
+   "summary": "Public trading documented from the day after origin by unaffiliated traders posting rankings and commentary.",
+   "type": "original",
+   "grade": "A",
+   "independence": "unsolicited-unknown",
+   "economicInterest": "disclosed-holder",
+   "receipts": [
+    "https://x.com/0xfriggin/status/1809610788296093843",
+    "https://x.com/0xfriggin/status/1810351665045975133"
+   ],
+   "proves": "The records were publicly discoverable and traded.",
+   "doesNotProve": "Independent thesis adoption or durable demand."
+  },
+  {
+   "id": "concentration-criticism",
+   "dateUtc": "2024-07-14",
+   "summary": "Public holder-clustering criticism within the first two weeks; answered publicly by the affiliated project account. Both sides preserved.",
+   "type": "adverse",
+   "grade": "A",
+   "independence": "unsolicited-unknown",
+   "economicInterest": "unknown",
+   "receipts": [
+    "https://x.com/wantonwallet/status/1812520143638962302"
+   ],
+   "proves": "Early adverse scrutiny existed and was answered on the record.",
+   "doesNotProve": "Resolution of concentration; current values live in the instrument."
+  },
+  {
+   "id": "accidental-purchase",
+   "dateUtc": "2025-02-17",
+   "summary": "During the news cycle around an unrelated token also named Libra, a widely followed account bought the registry-listed Libra mint by mistake, called it the wrong token and a meme headed to zero, and later framed the purchase in astrology terms.",
+   "type": "external",
+   "grade": "A",
+   "independence": "unsolicited-unaffiliated",
+   "economicInterest": "disclosed-buyer",
+   "receipts": [
+    "https://x.com/stoolpresidente/status/1891528769770279114",
+    "https://x.com/stoolpresidente/status/1891545382481432591",
+    "https://x.com/stoolpresidente/status/1891546878350618936"
+   ],
+   "proves": "A high-visibility accidental entry, with its unflattering framing.",
+   "doesNotProve": "Deliberate support, sustained holding, or demand."
+  },
+  {
+   "id": "quiet-dismissals",
+   "dateUtc": "2025-05-20",
+   "summary": "During low-attention stretches, outside commentary publicly called the position a dead bag. Preserved as adverse evidence.",
+   "type": "adverse",
+   "grade": "A",
+   "independence": "unsolicited-unknown",
+   "economicInterest": "unknown",
+   "receipts": [
+    "https://x.com/search?q=astrofolio%20dead%20bag"
+   ],
+   "proves": "Quiet periods were visible to outsiders and said so.",
+   "doesNotProve": "Anything about future demand."
+  },
+  {
+   "id": "framing-shift",
+   "dateUtc": "2024-07-05/2026-07-23",
+   "summary": "The earliest affiliated language around the tokens was memecoin voice ('own your sign', investment slogans). The registry register — receipts, criteria, disclosures — arrived later, with zodiacs.org. Both eras archived.",
+   "type": "editorial",
+   "grade": "A",
+   "independence": "affiliated",
+   "economicInterest": "project",
+   "receipts": [
+    "https://x.com/astrofoliosol",
+    "https://zodiacs.org/archive/"
+   ],
+   "proves": "The sales voice predates the registry voice.",
+   "doesNotProve": "—"
+  },
+  {
+   "id": "registry-live",
+   "dateUtc": "2026-07-23",
+   "summary": "Registry, disclosures, candidacy scoreboard, and preregistered test published with dated values.",
+   "type": "editorial",
+   "grade": "A",
+   "independence": "affiliated",
+   "economicInterest": "project",
+   "receipts": [
+    "https://zodiacs.org/disclosure/",
+    "https://zodiacs.org/thesis/thesis-candidacy-evidence.json"
+   ],
+   "proves": "Operator persistence and a continuous archive.",
+   "doesNotProve": "Independent adoption; the scoreboard carries those readings."
+  }
+ ]
+}
