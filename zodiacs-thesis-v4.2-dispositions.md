@@ -1,5 +1,14 @@
 # Thesis v4.2 — review dispositions
 
+> **v4.3 note (owner-directed prose pass).** The owner rejected v4.2's register as
+> unreadable ("terms and conditions"). v4.3 rewrote the voice — cold open on the
+> 17 Feb 2025 accident, meta-narration deleted, definitions woven into prose,
+> cleft constructions broken, sentence rhythm restored, part titles de-bureaucratized —
+> applying craft rules from public writing skills (celestialdust/humanize-prose,
+> benjaroy/riff, nadiem99/claude-writing-skills). **No fact, calibration, exclusion,
+> concession, citation, or figure decision changed**; the dispositions below remain
+> the record for all of them. The appendix deliberately keeps its technical register.
+
 Companion to `zodiacs-thesis-v4.md` (internal version v4.2). Sources: ChatGPT 5.6 Pro
 adversarial review of v4.1; Grok Phase A blind X-evidence archaeology; Grok Phase B
 lead reconciliation; owner revision brief. Evidence controlled every disposition.
