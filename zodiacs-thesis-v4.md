@@ -1,4 +1,15 @@
 <!--
+THESIS v4.7 — "The Zodiac Standard"
+CHANGELOG v4.6 → v4.7 (owner-directed; Fable-authored):
+- F3 rebuilt as the affirmative property comparison: the records check boxes gold
+  cannot (fixed supply, instant settlement, permissionless, programmable) and the
+  box bitcoin cannot (a millennia-old story ordinary people already have a place
+  in). Six rows checkable today; ONE honest row kept — proven demand: unproven —
+  which is what keeps the page citable. Supply/authority rows point at Part VII.
+- F4 (risk matrix) cut; the four failure modes stand in prose. Old F5 renumbered F4.
+- Part III prose around the figure rewritten to introduce the comparison
+  affirmatively instead of suspiciously.
+
 THESIS v4.6 — "The Zodiac Standard"
 CHANGELOG v4.5 → v4.6 (owner-directed; Fable-authored):
 - Epigraph restored to "Belief is the oldest asset." (owner call).
@@ -83,15 +94,13 @@ He's half right, and the half matters. Gold isn't pure belief: it's hard to dig 
 
 Bitcoin showed the same thing can be built from scratch. No metal and no vault, only fixed rules anyone can check: there will only ever be 21 million, and no one can print more. What bitcoin didn't have was history, so it spent fifteen years earning some, surviving every article that declared it dead. History without code; code without history. Those are the two proven paths.
 
-You can see where this is going, and you should be suspicious exactly here. Old names plus new records sounds like the best of both. But a token doesn't inherit a culture's credibility by wearing its name. That transfer is the open question, and the table below marks it unproven:
+Now put the twelve next to both, property by property. Gold has the story and none of the machinery: its supply grows every year with mining, it settles by vault and armored truck, and it can't be programmed into anything. Bitcoin has the machinery and none of the story: fixed supply, instant global settlement, permissionless — and abstract by design, a system ordinary people admire from outside rather than feel part of. The records of the twelve carry both columns' strengths at once. Supply fixed per record, with the authority status printed sign by sign in Part VII. Settlement in seconds, on Solana. Permissionless to hold and send. Programmable, with an open registry and SDK any app can read. And behind the names, twenty-four centuries of story that nobody has to be taught, because everyone already has a place in it. Six of those rows are checkable today. The seventh row is demand, and it is the one this page exists to test:
 
-[FIGURE F3 — "Selected properties, compared." A plain table, not converging arrows. Rows: historical recognition; supply enforcement; settlement; address-level convergence; liquidity; governance and control. Columns: gold; bitcoin; registry-listed tokens. The token column is honest: "sign names high, addresses low"; "contract-specific, substitutes unlimited"; "native plus bridge dependencies"; "unproven"; "instrument-specific"; "contract, operator, bridge, and pool-specific." Caption: *Selected properties compared. Shared properties do not imply equivalent demand or durability; the cells marked unproven are unproven.*]
+[FIGURE F3 — "What gold has, what bitcoin has, what the twelve have." A plain table. Rows: deep history; a story you're already in; fixed supply; settlement speed; permissionless; programmable; proven demand. Columns: gold; bitcoin; the twelve records. Gold's column: ~5,000 years; worn, gifted, inherited; no — mining adds ~1–2% a year; days, by vault and shipment; no — custody and borders; no; yes — millennia of bids. Bitcoin's column: 15 years, earned in public; technical by design — admired, not inhabited; yes — 21 million, enforced; minutes; yes; limited; yes — a decade and a half of markets. The twelve's column: the names ~2,400 years, the records 2; everyone has a sign from birth; yes per record — authority status per sign in Part VII; seconds, on Solana; yes; yes — open registry + SDK; unproven — the question this page tests. Caption: *Property by property. Six rows are checkable today, with the supply and authority receipts in Part VII. The last row is the open question, and the scoreboard in Part VI is where it gets answered.*]
 
 One more idea belongs here, as a possibility rather than a promise. Software can now generate a new mascot, a new brand, a whole new "movement" overnight, basically for free. When anything can be manufactured, the things that can't be, the ones with long checkable human histories, may start to matter more. If that happens, twenty-four centuries of receipts are worth keeping in order. "May matter more" is not demand.
 
 And one lesson from the wreckage. The last decade launched thousands of meme tokens; most are dead. Nobody has counted the failures carefully enough to quote a rate, but the failures rhyme, and the rhymes are worth knowing. Tokens built on someone's brand die by lawsuit or license: someone owns the symbol. Tokens built on the sacred die by offense: the symbol is holy to some and hostile to others. Tokens built on a brand-new myth die of exhaustion: the belief has to be manufactured first and maintained forever. And tokens built on one joke die of boredom: there's nothing more to say about the dog, so attention has to be bought, forever. The signs dodge each of these in a checkable way: no owner, no single faith, no myth to manufacture, no shortage of material. Dodging risks still isn't the same as being wanted; both things are true.
-
-[FIGURE F4 — "Four risks, and the evidence." A grid: rows for brand-derived coins, sacred-symbol coins, manufactured movements, open genres, the twelve; columns for permission, offense, bootstrap, depth. Cells carry evidence status — supported / mixed / unsupported / not measured — with citations in the appendix, not pass/fail marks, and no "clears the board" row. Caption: *Four proposed sources of symbolic risk, with the evidence status of each cell. Clearing a risk eliminates that risk. It does not establish demand for a record.*]
 
 **The twelve signs are scarce; tokens named after them are not.** Anyone can launch a thirteenth Leo this afternoon, and someday someone will. No computer code prevents it. What the twelve familiar names give you is an obvious place for agreement to land. It's easier for strangers to converge on twelve names everyone knows than on an endless parade of new ones. Easier, not automatic. The bet is that convergence happens, and lands on these records; Part VI keeps score on it.
 
@@ -134,7 +143,7 @@ The records are two years old, and their whole public life fits on one page: the
 
 Two years proves this much: the records still work, the archive never broke, and the operator kept showing up. That is persistence, which is necessary and nowhere near enough. Everything that would settle the question comes next.
 
-[FIGURE F5 — "The public record, dated." A horizontal timeline, 5 July 2024 → present: origin receipts; first documented trading; concentration criticism and rebuttal; quiet periods with public dismissals marked as adverse events in the same visual weight as the rest; the accidental high-visibility purchase; the registry's launch. Each node keyed to its entry in the evidence register. Caption: *The documented public history of the twelve, adverse events included. Sources, artifact grades, and independence classifications for every node sit in the published evidence register.*]
+[FIGURE F4 — "The public record, dated." A horizontal timeline, 5 July 2024 → present: origin receipts; first documented trading; concentration criticism and rebuttal; quiet periods with public dismissals marked as adverse events in the same visual weight as the rest; the accidental high-visibility purchase; the registry's launch. Each node keyed to its entry in the evidence register. Caption: *The documented public history of the twelve, adverse events included. Sources, artifact grades, and independence classifications for every node sit in the published evidence register.*]
 
 ---
 
