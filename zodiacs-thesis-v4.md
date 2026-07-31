@@ -1,5 +1,20 @@
 <!--
-THESIS v4 — "The Zodiac Standard"
+THESIS v4.1 — "The Zodiac Standard"
+CHANGELOG v4 → v4.1 (round-2 owner direction, Fable-authored):
+- Part III gains a fourth failure mode: "Symbols with one joke fail on depth" — the content-moat
+  argument, with the self-referential proof (this registry is attached to a working astrology
+  platform that would deserve its traffic if no token existed).
+- Figure program F1–F7: [FIGURE] markers placed through Parts I–V with authored captions.
+  All figures are static inline SVG in the Cosmic Void system (void surfaces, hairlines,
+  EB Garamond/JetBrains Mono labels, pastel sign hues as the only chroma). Per-figure
+  content specs ship in the wiring packet; captions are owner-reviewable here.
+- F3 is the only data-bearing figure (FRED M2SL): a dated snapshot is committed at wiring
+  time and the caption's [SNAPSHOT DATE] placeholder is stamped then. (Numbering note:
+  the plan listed "two halves" as F3 and "expansion" as F4; they are swapped here so
+  figure numbers follow reading order — the M2 paragraph precedes the synthesis.)
+- Appendix E (Nº 07 entry) notes the figure program.
+- No other prose changed.
+
 CHANGELOG v3 → v4 (owner-directed rewrite, Fable-authored):
 - Retitled: H1 "The Zodiac Standard"; "Belief is the oldest asset." becomes the epigraph.
 - Rebuilt on the Bitcoin Standard arc: history → store-of-value theory → control group → the asset → candidacy/test → case against → instrument → close.
@@ -30,11 +45,15 @@ Before money, before nations, before writing reached most of the world, people o
 
 Hold that against the mortality rate of everything else. The empires that adopted the zodiac are gone. The languages it first spoke are dead. Every currency in circulation when the twelve were fixed has been dust for centuries — and the twelve are still here, unrevised, taking new formats as fast as formats are invented: carved, printed, syndicated, dialed, downloaded. A newspaper feature that ran for a hundred years would be an institution. This has run for two thousand, and it is not an institution. Institutions need budgets. Nobody pays to keep the zodiac alive.
 
+[FIGURE F1 — "The survivors' timeline." A horizontal band across five millennia: the unbroken line of the twelve running above the lifespans of the empires, scripts, and currencies that carried them, each rendered as a bar that starts and ends. Caption: *The twelve, continuous from the Babylonian star catalogues to the present, over the things that carried them. Everything beneath the line has ended. The line has not been revised.*]
+
 Precision matters here, so two things this essay does not claim. The Western twelve are globally *recognized*, not globally *identical in meaning*: a sign carries different weight in different places, and much of the world's astrological practice runs on other systems entirely. Vedic astrology uses a sidereal zodiac; the Chinese zodiac is a different scheme altogether. Recognition is enough. A symbol set that nearly everyone on Earth can name, that costs nothing to maintain, and that has survived every empire that adopted it, needs no overclaim.
 
 Three properties fall out of that history, and the rest of this essay leans on all three. The identity is **permanent**: nobody stops being a Scorpio. It is **recognized nearly everywhere** the Western calendar reaches. And it is **renewed daily** — by horoscopes, birthdays, seasons, and retrogrades — without anyone spending a cent to keep it alive.
 
 Most cultural assets must manufacture attention to survive. Astrology's attention arrives on schedule. Every day brings a new horoscope; every month the sun changes signs; several times a year a retrograde takes over the feed; every birthday, relationship, and career change sends people back to their chart.
+
+[FIGURE F2 — "Attention on schedule." Concentric rings on a year dial: the daily horoscope cycle innermost, the twelve monthly ingresses, the several-per-year retrogrades, and the annual ring of birthdays — every person's, distributed across all twelve segments. Caption: *The renewal calendar. Daily horoscopes, monthly ingresses, several retrogrades a year, one birthday per person. No budget maintains the cycle; the calendar does.*]
 
 The largest consumer platforms already follow this attention. [Tinder reported a near-20% lift](https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New) in Likes sent by women on astrology-tagged profiles. [Spotify built astrology playlists](https://newsroom.spotify.com/2019-02-01/spotify-celebrates-new-cosmic-playlists-with-readings-from-guest-astrologer/); [Netflix released zodiac watchlists](https://www.hollywoodreporter.com/tv/tv-news/netflix-astrology-hub-zodiac-sign-1236349558/). [Co-Star reportedly grew](https://www.statista.com/statistics/1451873/costar-registered-users/) from 7.5 million to over 30 million users in three years. None of these companies care about astrology. They follow recurring mass behavior, and astrology is recurring mass behavior.
 
@@ -59,6 +78,8 @@ Every store of value in history is a solved coordination problem. A thing holds 
 
 The question is what makes agreement durable, and the twentieth century ran the experiment at scale. Money issued by governments holds agreement by decree, and expands by decision: the [U.S. M2 money stock](https://fred.stlouisfed.org/series/M2SL) has multiplied more than twentyfold in the last half century. That expansion is policy, not malfunction — but it is exactly why the modern reader keeps a fraction of their attention on things that cannot be expanded by anyone: metal that must be mined, land that must be zoned, code that must reach consensus. When the denominator grows without limit, fixed points become interesting. That is the entire macro context this essay needs, and it stops there: this page has no opinion on monetary policy, only an observation about where attention goes when supply is a variable.
 
+[FIGURE F3 — "Expansion against the fixed set." Two lines on one axis of decades: U.S. M2 rising through its twentyfold multiplication, and the number of zodiac signs — flat at twelve — over the same period. Data: committed FRED M2SL snapshot, dated. Caption: *U.S. M2 money stock (FRED, series M2SL, snapshot [SNAPSHOT DATE]) beside the number of signs over the same half century. One line is policy. The other has not moved in two thousand years. Supply context only; no price claim is made or implied.*]
+
 What the fixed points have in common is worth stating carefully, because the Twelve will be measured against it.
 
 A founder of the largest exchange in crypto states the strong version of the claim about gold:
@@ -73,6 +94,8 @@ Bitcoin proved the complementary half. It demonstrated that scarcity can be enfo
 
 So the two best stores of value of the modern era hold their positions with opposite halves of the same pair: gold has the deep history and the physical drag; bitcoin has the fixed issuance and the digital rails, and bought its history retail. The obvious question — the one this essay exists to ask — is what a candidate would look like that starts with the cultural half already banked: symbols older than money, renewed daily at zero cost, tied to personal identity, and then given the digital half. Fixed issuance per record, permissionless settlement, public auditability. That is the shape of the claim. Whether the Twelve fill that shape is the rest of this page, including the sections that argue no.
 
+[FIGURE F4 — "The two halves." Two columns converging on a candidate shape between them: the gold column (five millennia of history, near-universal recognition, symbol coordination), the bitcoin column (enforced issuance, digital settlement, public auditability), and the outline both point at. Caption: *What gold has and what bitcoin built. The candidate shape starts with the cultural half banked and takes the digital half from the ledger. Whether the Twelve fill the outline is the question the rest of this page argues — both ways.*]
+
 One more property belongs in the theory before the candidate appears, because it is new to this decade. Intelligence is becoming abundant. Software now writes, draws, argues, and brands; the marginal cost of producing a new symbol, a new mascot, a new movement's worth of content is collapsing toward zero. Abundance moves value to whatever the abundant thing cannot make. A model can generate ten thousand mascots by morning; it cannot generate one symbol that five thousand years of humans already organized their identities around, because that value *is* the accumulated human time. The handmade commanded a premium after the factory; the live performance commanded a premium after the recording. The pattern is reliable: when production becomes synthetic, provenance becomes the product. The zodiac is human patrimony in exactly this sense — made by no company, trained on no dataset, five thousand years of people looking up. In an economy that automates the manufacture of meaning, the meanings that predate the machines are the ones that cannot be diluted by them.
 
 ---
@@ -86,6 +109,10 @@ The memecoin era is the largest natural experiment in belief-backed value ever r
 **Symbols someone worships fail on offense.** Sacred vocabulary makes an asset radioactive to some audience by construction — the symbol is holy to one group, hostile to another, blasphemous to a third. The zodiac is culturally weightless in exactly the right way: some faiths object to astrology itself, and Part VI takes that seriously, but the signs offend no one at scale. A Libra necklace has been a safe gift on every continent for centuries. There is no version of that sentence for most symbols strong enough to build on.
 
 **Symbols manufactured yesterday fail on the bootstrap.** The most self-aware corner of the memecoin era understood that belief itself is the asset — that all value is coordination, so a community that *chooses* to believe, together, deliberately, is doing openly what every market does tacitly. The insight is correct, and this essay shares it. But acting on it from a standing start means manufacturing a myth and then holding it up by continuous effort: content, ritual, recruitment, forever. Manufactured belief can work — bitcoin is manufactured belief that worked — but the base rate is brutal, and the maintenance never ends. The zodiac requires no manufacturing. The belief already exists, already renews itself daily, and has already survived every civilization that hosted it. One approach builds the church and hopes the congregation comes. The other opens a ledger next to a congregation five thousand years deep.
+
+**Symbols with one joke fail on depth.** A memecoin's entire content surface is a single meme, retold until it stops being funny. There is nothing more to say about the dog — no daily installment, no seasonal cycle, no personal angle for anyone who was not in on the joke — so attention has to be bought, and the buying never stops. The zodiac's content surface is, for practical purposes, inexhaustible, and none of it needs a token to exist: twelve horoscopes a day, a monthly ingress, several retrogrades a year, a hundred and forty-four sign-to-sign pairings, and a birth chart for every person ever born. The reader can audit this claim without leaving the site. This registry is attached to a working astrology platform — charts computed to the degree, an almanac, compatibility readings — that would deserve its traffic if no token existed. That is the depth difference stated as infrastructure: the culture produces the content on its own schedule; the registry only keeps the record.
+
+[FIGURE F5 — "The control matrix." A grid: rows for brand coins, sacred coins, manufactured movements, open genres, and the Twelve; columns for the four failure modes — permission, offense, bootstrap, depth. Pastel marks where each row fails; the last row clears the board. Caption: *Four ways a symbol fails: someone owns it, someone worships it, nobody believes it yet, or there is nothing more to say. Clearing all four qualifies the vocabulary — not any token wearing it. Part V carries that burden.*]
 
 Which leaves the concession that keeps this essay honest, stated as proudly as any claim in it: **the twelve signs are scarce; tokens named after them are not.** Anyone can deploy another Leo this afternoon, and eventually someone will. Bitcoin's scarcity is enforced by consensus; no code on any chain prevents a thirteenth Leo. The openness runs deeper than copycat tokens: the monetization surface around the zodiac — apps, NFTs, wrappers, brands, competing registries — is unlimited. A closed vocabulary is not a closed market. What a closed vocabulary does provide is twelve Schelling points: coordination is cheaper on twelve names everyone already knows than on an infinite genre where every launch dilutes the last. Cheaper is not automatic. The entire wager of this registry is that convergence happens, and happens here first — and Part V puts that wager under published criteria instead of leaving it as rhetoric.
 
@@ -116,6 +143,8 @@ Notice what did *not* have to happen for that record to matter. Nobody was recru
 
 And the distribution is already done. Every person alive was assigned a sign at birth — involuntarily, permanently, at zero cost. "Which one are you?" is the oldest onboarding flow in the world, and it converts without explanation in any language: your mother knows her sign; the reader of a balance sheet knows theirs. There is no other category whose entire addressable market already identifies with the asset vocabulary before the asset exists. The signs are, in the literal sense, pre-installed.
 
+[FIGURE F6 — "Born distribution." A ring of twelve near-equal segments in the twelve pastel hues, labeled with the sign names: humanity, partitioned at birth. One segment's edge carries the reader's implied place — every person alive holds exactly one membership. Caption: *Everyone alive was assigned one of these at birth, at zero cost, in every language. The membership predates the record; the record only makes it holdable.*]
+
 Holding *Leo*, then, does three things.
 
 **It signals.** A sign is the one affiliation people volunteer before being asked. A public record of holding it turns the oldest self-description in the world into something you can point to: a badge, worn by choice, verified as held rather than as true.
@@ -136,6 +165,8 @@ The properties most assets spend their whole lives trying to manufacture, the Tw
 - **Permanent relevance** — the attention cycle resets monthly, forever.
 
 This registry claims neither scarcity nor, yet, canonicity. Canonicity in open systems is never declared; it is converged upon, and the convergence has not finished happening. What zodiacs.org holds today is provenance and a head start: a continuous public record since 5 July 2024, machine-readable addresses, an [open-source SDK](https://zodiacs.org/sdk/) any builder can verify against. That makes it the earliest candidate for the canonical record. The candidacy is judged on evidence, and five kinds count: independent integrations that read this registry rather than another; third parties citing these addresses unprompted; holder dispersion widening; liquidity that survives quiet months; an archive that stays continuous through adverse ones. The current readings sit in the scoreboard below, dated. Today they are mostly zeros and baselines, and the scoreboard says so. Until better ones accumulate here, "canonical" names the objective, not the fact.
+
+[FIGURE F7 — "The candidacy loop." Five nodes in a cycle — integrations, citations, dispersion, liquidity, archive continuity — each feeding the next, the last feeding back to the first. The same arrows, read in reverse, are labeled as the loss condition. Caption: *The five kinds of evidence, and how each funds the next. Run forward, the loop is the candidacy; run backward, it is the loss condition. The scoreboard below reads which way it is turning, dated.*]
 
 [CANDIDACY SCOREBOARD — reads thesis-candidacy.json; resolved values are also baked into the static rows; #the-candidacy id preserved]
 
@@ -235,4 +266,4 @@ Every factual claim in the instrument resolves to a receipt a stranger can check
 
 ## E. Changelog.
 
-The essay's revision history (Nº 01 through Nº 07) is preserved unabridged. Nº 07 — The Zodiac Standard: retitled and rebuilt on the store-of-value arc; theory, control-group, and human-premium sections added; two objections added to the case against; technical material moved to this appendix. Every concession of prior revisions survives. No factual claim was weakened.
+The essay's revision history (Nº 01 through Nº 07) is preserved unabridged. Nº 07 — The Zodiac Standard: retitled and rebuilt on the store-of-value arc; theory, control-group, and human-premium sections added; a fourth failure mode (depth) added to the control group; two objections added to the case against; seven figures added through Parts I–V; technical material moved to this appendix. Every concession of prior revisions survives. No factual claim was weakened.
