@@ -1,16 +1,20 @@
 <!--
-THESIS v4.5 — "The Zodiac Standard"
-CHANGELOG v4.4 → v4.5 (owner-directed; Fable-authored):
-- Removed all self-referential process narration: the essay no longer announces its own
-  honesty, corrections, or methodology rules in-line ("we'll show you every receipt,"
-  "an earlier version of this page said…," "one rule about how we use it," "the part
-  we're proudest of," "a page that hides its zeros," etc.).
-- The chronology correction now lives ONLY in Appendix E's changelog (its proper home);
-  the prose simply states the correct facts.
-- The measurement discipline (curiosity ≠ buying) is stated once as fact where the Pulse
-  appears and in Appendix C; no "we never confuse the two" self-praise.
-- "Not advice" remains in the colophon line only.
-- No facts, calibrations, exclusions, citations, or figure decisions changed.
+THESIS v4.6 — "The Zodiac Standard"
+CHANGELOG v4.5 → v4.6 (owner-directed; Fable-authored):
+- Epigraph restored to "Belief is the oldest asset." (owner call).
+- Full edit pass under the no-ai-slop skill (petergyang/no-ai-slop): em-dash clusters
+  removed (colons, commas, periods, parentheses instead), binary contrasts stated
+  directly, negative listing and dramatic fragments rewritten, colon-reveal openers
+  removed, empty "just"/"actually" cut, self-answered question pairs reduced, the
+  closing kicker replaced with a concrete ending. Voice signals kept: the format
+  cadence line, "Easier, not automatic," the crux concession bold, "A thesis that
+  cannot lose is not a thesis."
+- F2 marker updated from CONDITIONAL to a measured spec: the overlay is buildable
+  (verified against the Wikimedia pageviews API; a year of daily views across the
+  twelve sign articles) with occasion ticks from the site's ephemeris registers.
+  Committed snapshot + generator land in the wiring packet. Spec changed from a
+  radial year dial to a linear twelve-month strip (time series read better linear).
+- No facts, calibrations, exclusions, or citations changed.
 - Apparatus markers unchanged: [STAT GRID], [THE PULSE], [CANDIDACY SCOREBOARD],
   [TEST COMMITMENT CARD], [INSTRUMENT TABLE]; ids the-instrument / the-candidacy /
   the-test / pulse must survive wiring. Dispositions: zodiacs-thesis-v4.2-dispositions.md.
@@ -18,9 +22,9 @@ CHANGELOG v4.4 → v4.5 (owner-directed; Fable-authored):
 
 # The Zodiac Standard
 
-*Recognition is inherited. Demand is not.*
+*Belief is the oldest asset.*
 
-You have a sign. Whether you believe in it is beside the point — you know what it is, and so does almost everyone you've ever met. This page is about what happened when those twelve old names met the newest kind of public record, and whether that meeting could amount to something worth holding.
+You have a sign. Whether you believe in it is beside the point: you know what it is, and so does almost everyone you've ever met. This page is about what happened when those twelve old names met the newest kind of public record, and whether that meeting could amount to something worth holding.
 
 *Read the argument*
 
@@ -28,29 +32,29 @@ You have a sign. Whether you believe in it is beside the point — you know what
 
 ## Part I. Everyone has a sign.
 
-Try a small experiment the next time you're with people: ask their signs. You won't have to explain the question. Nobody taught it to you in school, nobody advertises it, and yet if you were born on the Western calendar, you were born into it — a name, one of twelve, attached to you before you could talk. Shown the list, [about nine in ten American adults pick theirs](https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology) without hesitating.
+Try a small experiment the next time you're with people: ask their signs. You won't have to explain the question. Nobody taught it to you in school, nobody advertises it, and yet if you were born on the Western calendar, you were born into it: a name, one of twelve, attached to you before you could talk. Shown the list, [about nine in ten American adults pick theirs](https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology) without hesitating.
 
-That's rare. Most things everyone recognizes are owned by someone — a logo, a brand, a franchise. The signs are owned by no one, sold by no one, and renewed every day by horoscope writers and apps that don't answer to anybody. That combination — familiar to nearly everyone, owned by nobody — is what this whole page is about.
+That's rare. Most things everyone recognizes are owned by someone: a logo, a brand, a franchise. The signs are owned by no one, sold by no one, and renewed every day by horoscope writers and apps that don't answer to anybody. That combination, familiar to nearly everyone and owned by nobody, is what this whole page is about.
 
-Because in July 2024, someone gave the twelve signs a new format. Twelve tokens, one for each sign, were created on a public ledger called Solana — each one a permanent digital record with its own address, its own creation receipt, all dated 5 July 2024. This registry is the catalogue of those twelve records: what they are, where they live, and what's known about them. A Leo can now hold *Leo*, the way you might hold a coin or a card.
+Because in July 2024, someone gave the twelve signs a new format. Twelve tokens, one for each sign, were created on a public ledger called Solana. Each one is a permanent digital record with its own address and its own creation receipt, all dated 5 July 2024. This registry is the catalogue of those twelve records: what they are, where they live, and what's known about them. A Leo can now hold *Leo*, the way you might hold a coin or a card.
 
-The question underneath everything here: **can twelve tokens borrow the durability of the twelve signs?** The names are ancient and everywhere. The tokens are two years old and nearly unknown. Belief in a sign is not the same as wanting a token named after it — and anyone who tells you otherwise is selling something.
+The question underneath everything here is whether twelve tokens can borrow the durability of the twelve signs. The names are ancient and everywhere. The tokens are two years old and nearly unknown. Belief in a sign is not the same as wanting a token named after it, and anyone who tells you otherwise is selling something.
 
 ---
 
 ## Part II. Where the signs come from.
 
-People have been keeping records of the sky for a very long time; Babylonian star lists go back thousands of years. The zodiac as you know it — twelve equal signs, Aries through Pisces — took its final shape in Babylonian astronomy around the fifth century BCE: roughly 2,400 years ago, about a century after the first coins.
+People have been keeping records of the sky for a very long time; Babylonian star lists go back thousands of years. The zodiac as you know it, twelve equal signs from Aries to Pisces, took its final shape in Babylonian astronomy around the fifth century BCE: roughly 2,400 years ago, about a century after the first coins.
 
-Think about what those centuries contain. The twelve names passed from Babylon to the Greeks, from the Greeks into Arabic astronomy, back into Europe, into the printing press, into the Sunday paper, onto your phone. Carved, printed, syndicated, dialed, downloaded. Every empire that carried the names is gone. Every currency that circulated when the names were fixed is dust. The mathematics changed, the meanings changed, the pictures changed — and the names never did. What survived all that time isn't a religion or an institution. It's a vocabulary. And a vocabulary is exactly the kind of thing a new format can borrow.
+Think about what those centuries contain. The twelve names passed from Babylon to the Greeks, from the Greeks into Arabic astronomy, back into Europe, into the printing press, into the Sunday paper, onto your phone. Carved, printed, syndicated, dialed, downloaded. Every empire that carried the names is gone. Every currency that circulated when the names were fixed is dust. The mathematics changed, the meanings changed, the pictures changed, and the names never did. What survived all that time is a vocabulary, not a religion or an institution. And a vocabulary is the kind of thing a new format can borrow.
 
 [FIGURE F1 — "The transmission." A dated horizontal timeline beginning with the astral antecedents (marked as antecedents, visually distinct) and starting the main line at the fixed twelve, ~5th century BCE: Babylon → Hellenistic horoscopy → Ptolemy (2nd c. CE) → Arabic astronomy → Latin Europe → print → the newspaper column (20th c.) → apps. Beneath the line, the lifespans of carriers that ended. Caption: *Documented transmission of the fixed twelve-sign zodiac, from late Babylonian astronomy (~5th century BCE) to the present, with older astral material marked as antecedent. The twelve-name structure persisted; its methods and meanings changed at every hop.*]
 
-And the vocabulary isn't a museum piece — it's in use, today, on a schedule. Every morning brings twelve new horoscopes. Every month the sun changes signs. Birthdays arrive all year round, and every so often an eclipse or a retrograde takes over your feed for a week. Nobody pays for this from a central budget; thousands of writers, apps, and creators keep it going for their own audiences, for their own reasons, without coordinating with anyone. Big companies have noticed: [Tinder tested an astrology feature](https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New) and reported nearly 20% more Likes on participating profiles; [Spotify](https://newsroom.spotify.com/2019-02-01/spotify-celebrates-new-cosmic-playlists-with-readings-from-guest-astrologer/) and [Netflix](https://www.hollywoodreporter.com/tv/tv-news/netflix-astrology-hub-zodiac-sign-1236349558/) built astrology features; [Co-Star, a horoscope app, reports](https://www.statista.com/statistics/1451873/costar-registered-users/) thirty million registered accounts. Those are product experiments, not declarations of faith — proof that companies believe the audience is there, not proof the audience wants anything held.
+The vocabulary is still in daily use, on a schedule. Every morning brings twelve new horoscopes. Every month the sun changes signs. Birthdays arrive all year round, and every so often an eclipse or a retrograde takes over your feed for a week. Nobody pays for this from a central budget; thousands of writers, apps, and creators keep it going for their own audiences, for their own reasons, without coordinating with anyone. Big companies have noticed. [Tinder tested an astrology feature](https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New) and reported nearly 20% more Likes on participating profiles; [Spotify](https://newsroom.spotify.com/2019-02-01/spotify-celebrates-new-cosmic-playlists-with-readings-from-guest-astrologer/) and [Netflix](https://www.hollywoodreporter.com/tv/tv-news/netflix-astrology-hub-zodiac-sign-1236349558/) built astrology features; [Co-Star, a horoscope app, reports](https://www.statista.com/statistics/1451873/costar-registered-users/) thirty million registered accounts. Those are product experiments, not declarations of faith: proof that companies believe the audience is there, not that the audience wants anything held.
 
-The numbers above are American; good global numbers don't exist, and much of the world uses other systems entirely — Indian astrology runs on a different zodiac, and the Chinese zodiac is a different idea altogether. And [most people who check their horoscope](https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/) say they do it for fun, not for life decisions. Fun is real attention, and it is only that.
+The numbers above are American; good global numbers don't exist, and much of the world uses other systems entirely: Indian astrology runs on a different zodiac, and the Chinese zodiac is a different idea altogether. And [most people who check their horoscope](https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/) say they do it for fun, not for life decisions. Fun is real attention, and it is only that.
 
-[FIGURE F2 — "The publishing calendar." Recurring occasions on a year dial (dailies, sign changes, celestial events, birthdays), overlaid with measured attention — encyclopedia pageview patterns around each occasion, from the Pulse's committed snapshots. CONDITIONAL: ships only if the measured overlay is buildable from the data; a cadence wheel without measurement is decoration and is cut. Caption: *Recurring publishing occasions in Western astrology, with measured attention around each. Cadence and response, not demand for any record.*]
+[FIGURE F2 — "A year of attention." A linear twelve-month strip: one year of measured attention (daily en.wikipedia pageviews summed across the twelve sign articles) drawn as a single line with a zero baseline, with the recurring occasions ticked beneath from the site's ephemeris registers — sun ingresses and eclipses — and the peak day labeled. Data: committed pageviews snapshot + ingresses.json + eclipses.json; generator in the wiring packet. Caption: *Recurring publishing occasions in Western astrology, with measured attention around each. Cadence and response, not demand for any record.*]
 
 [STAT GRID — corrected labels]
 **12** names · fixed scheme, ~5th century BCE
@@ -59,11 +63,11 @@ The numbers above are American; good global numbers don't exist, and much of the
 **30M** registered accounts, company-reported · Co-Star
 Sources: [YouGov, 2022](https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology) · [Pew Research, 2025](https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/) · [Tinder, 2026](https://www.tinderpressroom.com/2026-03-12-Tinder-Debuts-Inaugural-Product-Keynote-Tinder-Sparks-2026-Start-Something-New) · [Statista (Co-Star)](https://www.statista.com/statistics/1451873/costar-registered-users/)
 
-Some of this attention can be measured live. The chart below tracks public curiosity about the signs — encyclopedia pageviews, search interest — next to the famous crypto names you already know. Curiosity, not buying; the difference matters later.
+Some of this attention can be measured live. The chart below tracks public curiosity about the signs (encyclopedia pageviews, search interest) next to the famous crypto names you already know. Curiosity, not buying; the difference matters later.
 
 [THE PULSE — live instrument, unchanged, including methodology disclosures; #pulse anchor preserved]
 
-Everything above belongs to the *signs*. None of it automatically belongs to the *tokens*. Knowing your sign doesn't make you want a token named after it. The signs being scarce doesn't make the tokens scarce — anyone can create another Leo token tomorrow. The culture that keeps the signs alive doesn't know these records exist, and not a dollar of the horoscope economy flows to them. Twenty-four centuries of names; two years of records. The bridge between those two things is not built. Whether it ever gets built is the rest of this page.
+Everything above belongs to the *signs*. None of it automatically belongs to the *tokens*. Knowing your sign doesn't make you want a token named after it. The signs being scarce doesn't make the tokens scarce: anyone can create another Leo token tomorrow. The culture that keeps the signs alive doesn't know these records exist, and not a dollar of the horoscope economy flows to them. Twenty-four centuries of names; two years of records. The bridge between those two things is not built. Whether it ever gets built is the rest of this page.
 
 ---
 
@@ -75,33 +79,33 @@ Why is gold valuable? Here's a famous answer, from the founder of the biggest cr
 >
 > — [CZ, founder of Binance · October 2025](https://x.com/cz_binance/status/1983514879643292126)
 
-He's half right, and the half matters. Gold isn't *pure* belief — it's hard to dig up, impossible to print, useful in electronics, worn on wrists, stacked in central-bank vaults, and easy to sell anywhere on Earth. But some real part of gold's value *is* belief: people hold it because they're confident other people will keep treating it as valuable. That confidence has thousands of years of evidence behind it. Gold's history isn't decoration — it's the track record that lets strangers trust each other about gold without ever meeting.
+He's half right, and the half matters. Gold isn't pure belief: it's hard to dig up, impossible to print, useful in electronics, worn on wrists, stacked in central-bank vaults, and easy to sell anywhere on Earth. But some real part of gold's value is belief: people hold it because they're confident other people will keep treating it as valuable. That confidence has thousands of years of evidence behind it. Gold's history is the track record that lets strangers trust each other about gold without ever meeting.
 
-Bitcoin showed the same thing can be built from scratch. No metal, no vault — just fixed rules anyone can check: there will only ever be 21 million, and no one can print more. What bitcoin *didn't* have was history, so it spent fifteen years earning some, surviving every article that declared it dead. History without code; code without history. Those are the two proven paths.
+Bitcoin showed the same thing can be built from scratch. No metal and no vault, only fixed rules anyone can check: there will only ever be 21 million, and no one can print more. What bitcoin didn't have was history, so it spent fifteen years earning some, surviving every article that declared it dead. History without code; code without history. Those are the two proven paths.
 
-You can see where this is going, and you should be suspicious exactly here. Old names plus new records sounds like the best of both. But a token doesn't inherit a culture's credibility just by wearing its name. That transfer is the open question, and the table below marks it unproven:
+You can see where this is going, and you should be suspicious exactly here. Old names plus new records sounds like the best of both. But a token doesn't inherit a culture's credibility by wearing its name. That transfer is the open question, and the table below marks it unproven:
 
 [FIGURE F3 — "Selected properties, compared." A plain table, not converging arrows. Rows: historical recognition; supply enforcement; settlement; address-level convergence; liquidity; governance and control. Columns: gold; bitcoin; registry-listed tokens. The token column is honest: "sign names high, addresses low"; "contract-specific, substitutes unlimited"; "native plus bridge dependencies"; "unproven"; "instrument-specific"; "contract, operator, bridge, and pool-specific." Caption: *Selected properties compared. Shared properties do not imply equivalent demand or durability; the cells marked unproven are unproven.*]
 
-There's one more idea worth planting, as a possibility rather than a promise. Software can now generate a new mascot, a new brand, a whole new "movement" overnight, basically for free. When anything can be manufactured, the things that *can't* be — the things with long, checkable human histories — may start to matter more. If that happens, twenty-four centuries of receipts are worth keeping in order. "May matter more" is not demand.
+One more idea belongs here, as a possibility rather than a promise. Software can now generate a new mascot, a new brand, a whole new "movement" overnight, basically for free. When anything can be manufactured, the things that can't be, the ones with long checkable human histories, may start to matter more. If that happens, twenty-four centuries of receipts are worth keeping in order. "May matter more" is not demand.
 
-And one lesson from the wreckage. The last decade launched thousands of meme tokens; most are dead. Nobody has counted the failures carefully enough to quote a rate, but the failures rhyme, and the rhymes are worth knowing. Tokens built on someone's *brand* die by lawsuit or license: someone owns the symbol. Tokens built on the *sacred* die by offense: the symbol is holy to some and hostile to others. Tokens built on a *brand-new myth* die of exhaustion: the belief has to be manufactured first and maintained forever. And tokens built on *one joke* die of boredom: there's nothing more to say about the dog, so attention has to be bought, forever. The signs dodge each of these in a checkable way — no owner, no single faith, no myth to manufacture, no shortage of material. Dodging risks still isn't the same as being wanted; both things are true.
+And one lesson from the wreckage. The last decade launched thousands of meme tokens; most are dead. Nobody has counted the failures carefully enough to quote a rate, but the failures rhyme, and the rhymes are worth knowing. Tokens built on someone's brand die by lawsuit or license: someone owns the symbol. Tokens built on the sacred die by offense: the symbol is holy to some and hostile to others. Tokens built on a brand-new myth die of exhaustion: the belief has to be manufactured first and maintained forever. And tokens built on one joke die of boredom: there's nothing more to say about the dog, so attention has to be bought, forever. The signs dodge each of these in a checkable way: no owner, no single faith, no myth to manufacture, no shortage of material. Dodging risks still isn't the same as being wanted; both things are true.
 
 [FIGURE F4 — "Four risks, and the evidence." A grid: rows for brand-derived coins, sacred-symbol coins, manufactured movements, open genres, the twelve; columns for permission, offense, bootstrap, depth. Cells carry evidence status — supported / mixed / unsupported / not measured — with citations in the appendix, not pass/fail marks, and no "clears the board" row. Caption: *Four proposed sources of symbolic risk, with the evidence status of each cell. Clearing a risk eliminates that risk. It does not establish demand for a record.*]
 
-**The twelve signs are scarce; tokens named after them are not.** Anyone can launch a thirteenth Leo this afternoon, and someday someone will. No computer code prevents it. What the twelve familiar names give you is an obvious place for agreement to land — it's easier for strangers to converge on twelve names everyone knows than on an endless parade of new ones. Easier, not automatic. The bet is that convergence happens, and lands on these records; Part VI keeps score on it.
+**The twelve signs are scarce; tokens named after them are not.** Anyone can launch a thirteenth Leo this afternoon, and someday someone will. No computer code prevents it. What the twelve familiar names give you is an obvious place for agreement to land. It's easier for strangers to converge on twelve names everyone knows than on an endless parade of new ones. Easier, not automatic. The bet is that convergence happens, and lands on these records; Part VI keeps score on it.
 
 ---
 
 ## Part IV. What holding a sign actually means.
 
-Each of the twelve records is a token at a specific, published address — think of an address as the record's fingerprint, unique and checkable by anyone. The receipt from the day each one was created, 5 July 2024, is public. When you hold *Leo*, the ledger proves one thing: that your wallet holds that specific token. It does not prove you're a Leo — anyone can buy any sign, and a Leo can hold none. A wallet doesn't prove a birthday. The honest comparison is a jersey: wearing one never proved you were on the team, and never needed to. It's a badge. Badges are allowed to just be badges.
+Each of the twelve records is a token at a specific, published address (think of an address as the record's fingerprint: unique, and checkable by anyone). The receipt from the day each one was created, 5 July 2024, is public. When you hold *Leo*, the ledger proves one thing: that your wallet holds that specific token. It does not prove you're a Leo. Anyone can buy any sign, and a Leo can hold none. A wallet doesn't prove a birthday. The honest comparison is a jersey: wearing one never proved you were on the team, and never needed to. It's a badge.
 
-So why these twelve records, instead of any copy someone launches tomorrow? Three reasons, each with its weakness attached. **They came first, on the record**: continuous public history since July 2024, receipts published — and no earlier dated public registry of one-token-per-sign records is known; if someone produces one, that claim dies. **They're easy to build on**: the registry file is public, the [SDK](https://zodiacs.org/sdk/) — the software kit that reads it — is open-source; a builder can plug in within an afternoon. The same afternoon suffices to copy the format and point it elsewhere; openness cuts both ways. **They sit on obvious names**: agreement lands faster on names everyone knows. But names aren't addresses, and nothing in the culture takes that last step automatically. What could beat all three? A bigger company launching its own set. An exchange doing it with a hundred million users attached. Or — the most likely outcome, on the current numbers — nobody converging on anything at all.
+Why these twelve records, instead of any copy someone launches tomorrow? Three reasons, each with a weakness attached. **They came first, on the record**: continuous public history since July 2024, receipts published. No earlier dated public registry of one-token-per-sign records is known; if someone produces one, that claim dies. **They're easy to build on**: the registry file is public, and the [SDK](https://zodiacs.org/sdk/) (the software kit that reads it) is open-source, so a builder can plug in within an afternoon. The same afternoon suffices to copy the format and point it elsewhere; openness cuts both ways. **They sit on obvious names**: agreement lands faster on names everyone knows. But names aren't addresses, and nothing in the culture takes that last step automatically. What could beat all three? A bigger company launching its own set. An exchange doing it with a hundred million users attached. Or, most likely on the current numbers, nobody converges on anything at all.
 
-What can you *do* with a record today? Not much. The records are machine-readable, so any app can build on them. Today, the features that exist are on apps run by the same operator behind this registry ([Astrofolio](https://astrofolio.xyz/)) — and by the scoreboard's rules, activity from the operator's own apps doesn't count as evidence. Independent apps building on the records: zero so far, dated, on the scoreboard. Features that are merely planned don't count at all. And yes — some people hold these tokens hoping others will want them later. That's true of every collectible ever made. Hope is not evidence.
+Today, a record does very little. The records are machine-readable, so any app can build on them. The features that exist so far are on apps run by the same operator behind this registry ([Astrofolio](https://astrofolio.xyz/)), and by the scoreboard's rules, activity from the operator's own apps doesn't count as evidence. Independent apps building on the records: zero so far, dated, on the scoreboard. Features that are merely planned don't count at all. Some people hold these tokens hoping others will want them later. That's true of every collectible ever made. Hope is not evidence.
 
-The money in astrology is real, and none of it touches these records. The global astrology business was [estimated at $12.8 billion in 2021](https://www.alliedmarketresearch.com/press-release/astrology-market.html), with a forecast — a forecast, meaning a guess about the future — of $22.8 billion by 2031. [The ten biggest U.S. astrology apps took in about $40 million in 2019](https://sensortower.com/blog/astrology-apps-2019-revenue-downloads), up 65% in a year. [One horoscope app raised $15 million](https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding) from serious investors. Every one of those dollars bought a reading, a subscription, an app — a service, consumed and gone. People paying for horoscopes proves people pay for horoscopes. It does not prove anyone wants a token. The gap between those two sentences is the entire bet.
+The money in astrology is real, and none of it touches these records. The global astrology business was [estimated at $12.8 billion in 2021](https://www.alliedmarketresearch.com/press-release/astrology-market.html); the same firm forecasts $22.8 billion by 2031, and a forecast is a guess about the future. [The ten biggest U.S. astrology apps took in about $40 million in 2019](https://sensortower.com/blog/astrology-apps-2019-revenue-downloads), up 65% in a year. [One horoscope app raised $15 million](https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding) from serious investors. Every one of those dollars bought a reading, a subscription, an app: a service, consumed and gone. People paying for horoscopes proves people pay for horoscopes. It does not prove anyone wants a token. The gap between those two sentences is the entire bet.
 
 [STAT GRID — corrected labels]
 **$12.8B** global astrology market, 2021 · Allied estimate
@@ -114,21 +118,21 @@ Sources: [Allied Market Research](https://www.alliedmarketresearch.com/press-rel
 
 ## Part V. What's actually happened so far.
 
-The records are two years old, and their whole public life fits on one page — the good days and the bad ones, in order, with receipts for every line in the published evidence file.
+The records are two years old, and their whole public life fits on one page: the good days and the bad ones, in order, with receipts for every line in the published evidence file.
 
-**5 July 2024.** All twelve records created in one day. The creation receipts are public — you can [check them yourself](https://zodiacs.org/disclosure/#origin).
+**5 July 2024.** All twelve records created in one day. The creation receipts are public, and you can [check them yourself](https://zodiacs.org/disclosure/#origin).
 
-**6 July 2024 onward.** Trading begins the next day, documented by traders with no connection to the project. Small, niche, real.
+**6 July 2024 onward.** Trading begins the next day, documented by traders with no connection to the project. The activity was small and niche, and it is documented.
 
-**Mid-July 2024.** The first criticism arrives within two weeks — public claims that too few wallets held too much. The project account answered publicly. Both sides are preserved. How concentrated the holdings are *today* is a number, not an argument; it lives in the table in Part VII with a date on it.
+**Mid-July 2024.** The first criticism arrives within two weeks: public claims that too few wallets held too much. The project account answered publicly. Both sides are preserved. How concentrated the holdings are today is a number, not an argument; it lives in the table in Part VII with a date on it.
 
-**2024 through 2026.** The project's own accounts posted steadily. Independent discussion of these specific records stayed rare — and in the quiet stretches, outsiders publicly called the whole thing a dead bag. Those posts are in the archive too.
+**2024 through 2026.** The project's own accounts posted steadily. Independent discussion of these specific records stayed rare, and in the quiet stretches outsiders publicly called the whole thing a dead bag. Those posts are in the archive too.
 
-**17 February 2025.** The strangest day so far: during the frenzy around an unrelated token that was also named Libra, a famous account bought *this* registry's Libra by mistake, said so, predicted it would go to zero — and then spent the evening telling followers he'd always been into astrology. It remains the highest-visibility moment these records have had.
+**17 February 2025.** The strangest day so far. During the frenzy around an unrelated token that was also named Libra, a famous account bought this registry's Libra by mistake, said so, predicted it would go to zero, and then spent the evening telling followers he'd always been into astrology. It remains the highest-visibility moment these records have had.
 
-**And the language changed along the way.** The first public voice around these tokens was memecoin voice — "own your sign," investment slogans, launch-account energy. The catalogue you're reading, with its receipts and rules, came later. Both eras are archived.
+**And the language changed along the way.** The first public voice around these tokens was memecoin voice: "own your sign," investment slogans, launch-account energy. The catalogue you're reading, with its receipts and rules, came later. Both eras are archived.
 
-Add it up and two years proves exactly this: the records still work, the archive never broke, and the operator kept showing up. Persistence — necessary, and nowhere near enough. Everything that would actually settle the question comes next.
+Two years proves this much: the records still work, the archive never broke, and the operator kept showing up. That is persistence, which is necessary and nowhere near enough. Everything that would settle the question comes next.
 
 [FIGURE F5 — "The public record, dated." A horizontal timeline, 5 July 2024 → present: origin receipts; first documented trading; concentration criticism and rebuttal; quiet periods with public dismissals marked as adverse events in the same visual weight as the rest; the accidental high-visibility purchase; the registry's launch. Each node keyed to its entry in the evidence register. Caption: *The documented public history of the twelve, adverse events included. Sources, artifact grades, and independence classifications for every node sit in the published evidence register.*]
 
@@ -140,13 +144,13 @@ Words like "canonical" and "official" get thrown around cheaply in crypto. This 
 
 The scoreboard measures five things: independent apps building on this registry; independent people citing these addresses without being asked; the tokens spreading across more unrelated wallets; markets that stay alive through quiet months; and an archive that never breaks. Each has a passing bar and a failing bar, with dates.
 
-The strictest part is who counts. **Only strangers.** Anything connected to the operator — the operator's own apps, paid placements, sponsored mentions, coordinated campaigns, wallets the operator controls, liquidity the operator funds — is reported separately and counts for nothing. Every observation gets a written decision: counted or excluded, and why. And the fifth measure, the unbroken archive, is under the operator's own control — the weakest kind of evidence there is. Breaking it would end the claim. Keeping it proves only diligence.
+The strictest rule is who counts: only strangers. Anything connected to the operator — the operator's own apps, paid placements, sponsored mentions, coordinated campaigns, wallets the operator controls, liquidity the operator funds — is reported separately and counts for nothing. Every observation gets a written decision: counted or excluded, and why. The fifth measure, the unbroken archive, is under the operator's own control, which makes it the weakest kind of evidence there is. Breaking it would end the claim. Keeping it proves only diligence.
 
 [CANDIDACY SCOREBOARD — reads thesis-candidacy.json; resolved values are also baked into the static rows; #the-candidacy id preserved. The scoreboard is the five-gauge display: current value, threshold, date, source, exclusion status per dimension.]
 
 Right now, the scoreboard mostly reads zero, dated. The same scoreboard defines the loss: if a competing record earns more of this evidence than this one, it takes the position, and this page will say so.
 
-There's a lazy excuse available forever: *"people would hold their signs, it's just too hard to buy a token."* The friction is real — but an excuse that can never be tested is worthless. So the test is committed: a one-tap way for people to claim their sign, with the rules — who counts, what counts as keeping it, what numbers mean pass and fail, and the deadline — published *before* the test runs. If the idea is right, the scoreboard will show it. If nothing moves, the excuse is dead, and the result gets printed either way. A thesis that cannot lose is not a thesis.
+There's a lazy excuse available forever: "people would hold their signs, it's just too hard to buy a token." The friction is real, but an excuse that can never be tested is worthless. So the test is committed: a one-tap way for people to claim their sign, with the rules published before the test runs — who counts, what counts as keeping it, what numbers mean pass and fail, and the deadline. If the idea is right, the scoreboard will show it. If nothing moves, the excuse is dead, and the result gets printed either way. A thesis that cannot lose is not a thesis.
 
 [TEST COMMITMENT CARD — reads thesis-test.json; preregistered criteria are also baked into the static rows; #the-test id preserved]
 
@@ -154,7 +158,7 @@ There's a lazy excuse available forever: *"people would hold their signs, it's j
 
 ## Part VII. The numbers, in the open.
 
-Whoever holds one of these records holds something very specific — a supply, a distribution of holders, administrative controls, a bridge, a market, a treasury — and a beautiful old name can be attached to an ugly concentrated token. History protects no one from that. So here is the instrument itself, measured and dated: every number a stranger can verify links to its receipt, and every number that is only the operator's word says so, plainly. The origin receipts for all twelve, dated 5 July 2024, are published [with the operator's statements](https://zodiacs.org/disclosure/#origin).
+Whoever holds one of these records holds something very specific: a supply, a distribution of holders, administrative controls, a bridge, a market, a treasury. A beautiful old name can be attached to an ugly concentrated token, and history protects no one from that. So here is the instrument itself, measured and dated. Every number a stranger can verify links to its receipt, and every number that is only the operator's word says so, plainly. The origin receipts for all twelve, dated 5 July 2024, are published [with the operator's statements](https://zodiacs.org/disclosure/#origin).
 
 [INSTRUMENT TABLE — per sign and aggregate, values from thesis-disclosure.json, baked static and re-hydrated live; #the-instrument id preserved; column legend in the appendix]
 
@@ -164,29 +168,29 @@ Whoever holds one of these records holds something very specific — a supply, a
 
 ## Part VIII. The best reasons to walk away.
 
-Seven objections a smart skeptic would raise, with an answer to each — including the answers that aren't comfortable.
+Seven objections a smart skeptic would raise, with an answer to each, including the answers that aren't comfortable.
 
-**"Knowing your sign isn't wanting a token."** Correct — this is the bet itself, and nothing on this page shows current demand for these records. The closest real-world cousin is a warning, not a comfort: official fan tokens for football clubs — tribal identity, closed sets, big launches — lost most of their peak value. The difference here is thin: fan tokens promised perks that mostly never came, and were priced on those promises; these records promise nothing at all. Less to break — and less to point to. What's on offer is a testable possibility, not a probability, and nobody should read it as a high one.
+**"Knowing your sign isn't wanting a token."** Correct. This is the bet itself, and nothing on this page shows current demand for these records. The closest real-world cousin is a warning, not a comfort: official fan tokens for football clubs, with tribal identity, closed sets, and big launches, lost most of their peak value. The difference here is thin. Fan tokens promised perks that mostly never came, and were priced on those promises; these records promise nothing at all. Less to break, and less to point to. What's on offer is a testable possibility, not a probability, and nobody should read it as a high one.
 
-**"If people wanted this, it would already exist."** The overlap of crypto and astrology has existed for years and converged on nothing — a real test, already failed once, and it counts against the thesis. What's genuinely untested is the mainstream version, one tap, no crypto knowledge required. That's the preregistered test above, with its deadline in print. If it fails too, the idea is out of excuses.
+**"If people wanted this, it would already exist."** The overlap of crypto and astrology has existed for years and converged on nothing: a real test, already failed once, and it counts against the thesis. What's genuinely untested is the mainstream version, one tap, no crypto knowledge required. That's the preregistered test above, with its deadline in print. If it fails too, the idea is out of excuses.
 
-**"You appointed yourselves."** True. There was no committee to apply to. Some self-appointed records become real ones through years of use; most never do. The criteria are symmetric on purpose — the same evidence that would legitimize this record would legitimize a rival that earned more of it. Self-appointment isn't disqualifying. It also isn't evidence.
+**"You appointed yourselves."** True. There was no committee to apply to. Some self-appointed records become real ones through years of use; most never do. The criteria are symmetric on purpose: the same evidence that would legitimize this record would legitimize a rival that earned more of it. Self-appointment isn't disqualifying. It also isn't evidence.
 
-**"This is a memecoin with a literature review."** The tokens are memetic assets — attention and belief set the price, and no bibliography changes that. The open question is only whether twelve fixed, ancient names behave differently from an endless genre of new jokes. That question is honest, and it is the one under test.
+**"This is a memecoin with a literature review."** The tokens are memetic assets. Attention and belief set the price, and no bibliography changes that. The open question is only whether twelve fixed, ancient names behave differently from an endless genre of new jokes. That question is honest, and it is the one under test.
 
-**"You're describing a security and insisting you're not."** What can be said is behavioral and checkable: this registry issues nothing, sells nothing, holds nothing for anyone, and promises nothing — no yield, no buyback, no roadmap for anyone to rely on. The records existed before this essay. The registry catalogues; it doesn't mint. And where an essayist's word shouldn't be enough, the [plain-language disclosures](https://zodiacs.org/disclosure/) — who operates what, who owns what — are current and dated.
+**"You're describing a security and insisting you're not."** What can be said is behavioral and checkable: this registry issues nothing, sells nothing, holds nothing for anyone, and promises nothing — no yield, no buyback, no roadmap for anyone to rely on. The records existed before this essay. The registry catalogues; it doesn't mint. And where an essayist's word shouldn't be enough, the [plain-language disclosures](https://zodiacs.org/disclosure/) covering who operates what and who owns what are current and dated.
 
-**"One operator runs the registry, the app, and holds the assets."** True, disclosed, and dated — in the operator's own words, including the detail in Part V that the sales voice came before the museum voice. The protection isn't character; it's architecture. The registry file is public, the SDK is forkable, the archive is mirrored — everything needed to replace this registry is published by this registry. That lowers the cost of routing around the operator. It doesn't guarantee anyone will bother. Price the risk accordingly.
+**"One operator runs the registry, the app, and holds the assets."** True, disclosed, and dated, in the operator's own words, including the detail in Part V that the sales voice came before the museum voice. The protection is architecture, not character. The registry file is public, the SDK is forkable, the archive is mirrored: everything needed to replace this registry is published by this registry. That lowers the cost of routing around the operator. It doesn't guarantee anyone will bother. Price the risk accordingly.
 
-**"The essay is the mythology; the token is the asset."** The sharpest one, and it's right. Prose can't answer it — only the table in Part VII can. Trust the table more than the words. Wherever they disagree, the table wins.
+**"The essay is the mythology; the token is the asset."** The sharpest one, and it's right. Prose can't answer it; only the table in Part VII can. Trust the table more than the words. Wherever they disagree, the table wins.
 
 ---
 
 ## Part IX. The honest ending.
 
-The twelve signs will be fine either way. They were fine before ledgers; they'll be fine after whatever comes next. What's being tested here is one narrow idea: that names everyone already knows spare a new kind of record the one cost that kills most of its kind — and that if that's true, strangers will keep arriving at these twelve records on their own, and the scoreboard on this page will slowly stop saying zero. That's the whole thesis. Not a promise. A prediction, in public, with a deadline, judged by rules published before the answer was known.
+The twelve signs will be fine either way. They were fine before ledgers; they'll be fine after whatever comes next. What's being tested here is one narrow idea: that names everyone already knows spare a new kind of record the one cost that kills most of its kind, and that if that's true, strangers will keep arriving at these twelve records on their own, and the scoreboard on this page will slowly stop saying zero. That's the whole thesis: a prediction made in public, with a deadline, judged by rules published before the answer was known. It is not a promise.
 
-If you take one thing from this page, take the method: receipts over claims, strangers over friends, tests that can fail over stories that can't. The signs earned their permanence over twenty-four centuries. The records get to try to earn theirs in public, the slow way — and this page is where you'll watch it happen, or watch it not.
+If you take one thing from this page, take the method: receipts over claims, strangers over friends, tests that can fail over stories that can't. The signs earned their permanence over twenty-four centuries. The records have two years so far, and the scoreboard above is where you can watch the rest.
 
 *Zodiacs.org — The Registry · An editorial thesis · not advice · The Zodiac Standard, Nº 07 · [changelog — in the appendix]*
 
