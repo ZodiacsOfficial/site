@@ -18,7 +18,7 @@ related_records:
 evidence_quality: medium
 privacy_class: aggregate-only
 decision: approved by the site owner on 2026-08-01 for production deployment through the Release & Trust Gate
-next_action: Deploy from current main, verify the public asset and rendered social metadata, then promote the release receipt through Daily Action v2.
+next_action: Merge the approved release, deploy its exact merge commit, verify the public asset and rendered social metadata, then promote the exact release receipt through Daily Action v2.
 ---
 
 # Content brief: Homepage Open Graph asset
@@ -52,7 +52,7 @@ Zodiacs homepage preview with a cream celestial design, twelve pastel zodiac sym
 - Use an absolute public URL in `og:image` and `twitter:image`.
 - Declare width `1200`, height `630`, MIME type `image/webp`, and the approved alt text.
 - Verify the rendered card in at least one real preview tool after release; source metadata alone is not delivery proof.
-- Compare against the current repository-defined consumer brand tokens before approval because the inspected working branch is older than production.
+- The asset was compared against the repository-defined consumer brand tokens during approval; recheck those tokens against the exact merge commit at the release gate.
 - Keep the image off navigation. No renderer route is required.
 
 ## Approval and boundaries

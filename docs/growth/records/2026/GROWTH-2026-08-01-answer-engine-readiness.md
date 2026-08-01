@@ -61,7 +61,7 @@ People and answer engines need a consistent explanation of what Zodiacs.org does
 - Canonical URL: https://zodiacs.org/.
 - Owned query/intent cluster: Zodiacs.org entity, private birth chart, chart accuracy, and daily horoscope.
 - Reproducible baseline: Unknown. Do not convert Ploy's spot check into a zero baseline.
-- Hypothesis: Removing contradictions and adding a durable validation artifact will improve factual retrieval before any speculative AI-SEO work.
+- Hypothesis: Removing the three corroborated contradictions will improve factual retrieval before any speculative AI-SEO work; validation artifacts require a separate approved follow-up.
 
 ## Intent and current destination
 
@@ -75,10 +75,10 @@ People and answer engines need a consistent explanation of what Zodiacs.org does
 - Improve: update `llms.txt` and `llms-full.txt` from monthly-only horoscope language to the actual daily publication model.
 - Improve: align AI-context privacy summaries with the assistant-data disclosure in the privacy policy.
 - Improve: replace "exact to the day" with precise unknown-time language that separates stable placements from Moon/angle/house uncertainty.
-- Create: a standalone, versioned engine-validation artifact derived from the existing JPL-backed tests.
-- Investigate: one explicit, non-duplicative semantic boundary between the consumer site and Registry wing.
+- Deferred follow-up: consider a standalone, versioned engine-validation artifact derived from the existing JPL-backed tests; it is not part of this approved release.
+- Deferred follow-up: investigate one explicit, non-duplicative semantic boundary between the consumer site and Registry wing; it is not part of this approved release.
 - Defer unless measured: HTTP discovery hints/content negotiation and broad answer-engine optimization.
-- Intended next step: human approval of copy and evidence changes, followed by release through the normal trust gate.
+- Intended next step: implement the owner-approved copy and evidence changes, then release them through the normal trust gate.
 - Why this is preferable to changing an existing page differently: it fixes contradictions at their sources and avoids creating thin pages for unverified queries.
 
 ## Priority assessment
@@ -88,8 +88,8 @@ People and answer engines need a consistent explanation of what Zodiacs.org does
 | User value | 3 | Privacy and unknown-time precision directly affect trust |
 | Evidence | 3 | Three core contradictions were independently corroborated |
 | Strategic fit | 3 | Supports private, transparent, evidence-led positioning |
-| Differentiation | 2 | A citable validation artifact can substantiate accuracy claims |
-| Effort | 2 | Copy fixes are small; validation artifact and entity review are moderate |
+| Differentiation | 2 | Consistent, evidence-bound trust copy is more defensible than broad accuracy claims |
+| Effort | 2 | The three approved copy fixes are small; deferred validation and entity work are excluded |
 | Measurement | 1 | Answer-engine visibility baseline is not yet reproducible |
 
 ## Constraints and risks
@@ -97,28 +97,28 @@ People and answer engines need a consistent explanation of what Zodiacs.org does
 - Roadmap/wing boundary: keep Registry clearly separate from the consumer product while preserving shared publisher provenance.
 - Privacy review: do not weaken or generalize the Anthropic disclosure; use the privacy policy as the source of truth.
 - Cannibalization risk: do not create new overlapping horoscope or accuracy pages without query evidence.
-- Page-velocity impact (0 or 1): 0 until approved.
+- Page-velocity impact (0 or 1): 0.
 - Rolling seven-day total after approval: to be computed by the canonical state writer.
-- Other dependencies: owner approval, current production source, release trust gate, and a reproducible answer-engine baseline.
+- Other dependencies: the exact approved merge revision, the release trust gate, and sanctioned Daily Action v2 promotion.
 
 ## Baseline and success
 
-- Primary measure and exact definition: consistency pass rate across AI-context files, public trust pages, and machine-readable metadata; acquisition measure to be defined before release.
+- Primary measure and exact definition: consistency pass rate across AI-context files, public trust pages, and machine-readable metadata; acquisition outcome remains directional and unmeasured at the 2026-08-29 review.
 - Baseline window/value: unknown/null for answer-engine acquisition; three high-value copy inconsistencies confirmed on 2026-08-01.
 - Expected impact and unit: fewer factual contradictions; search/citation impact unquantified.
 - Confidence: medium.
 - Effort: medium.
 - Risks and severity: medium risk of schema duplication or unsubstantiated accuracy claims; low risk for precise copy corrections.
-- Review window: define at approval.
-- Measurement date: null.
+- Review window: 28 days after the approved 2026-08-01 release window.
+- Measurement date: 2026-08-29.
 - Guardrails: no user-level tracking, no fabricated rankings, no new public claims without evidence, and no conflation of Registry with the consumer site.
 
 ## Decision
 
-- Decision: investigate; prioritize the three confirmed copy corrections.
-- Human decision owner/date: unassigned / null.
+- Decision: approved; implement the three corroborated copy corrections through the Release & Trust Gate while keeping speculative discovery hints deferred.
+- Human decision owner/date: site owner / 2026-08-01.
 - Rationale: Ploy surfaced useful contradictions, but two of its material claims were overstated and its query snapshot is not a reproducible baseline.
-- Next durable record: approved content brief or experiment record after owner review.
+- Next durable record: a sanctioned Growth Portfolio opportunity followed by matching studio-brief and release-gate records for the exact deployed revision.
 - Deployment identifier (`null` until released): null.
 - Result (`pending` until measured): pending.
 

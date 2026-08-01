@@ -20,7 +20,7 @@ related_records:
 evidence_quality: medium
 privacy_class: aggregate-only
 decision: approved by the site owner on 2026-08-01; adopt the selected provider-neutral mechanics in the existing Growth OS without adding redundant playbooks
-next_action: Merge the complete Growth OS documents, keep prohibited and deferred Ploy workflows excluded, and promote the accepted records through Daily Action v2.
+next_action: Merge the complete Growth OS documents; keep prohibited workflows excluded; promote approved records through Daily Action v2; submit the private-measurement proposal only for the required DEFERRED receipt with no business-state mutation.
 ---
 
 # Ploybook delta audit

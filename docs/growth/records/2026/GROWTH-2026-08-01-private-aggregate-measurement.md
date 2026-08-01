@@ -37,7 +37,7 @@ risk: Referrer-query leakage until the pending fix is deployed, provider-method 
 deployment_identifier: null
 measurement_date: null
 result: pending
-decision: defer Growth OS adoption while provider-side IP/User-Agent processing remains; separately accept the site's bounded daily deduplication under explicit disclosure and controls, and set every outbound referrer to null
+decision: "recommended canonical disposition: DEFERRED while provider-side IP/User-Agent processing remains; separately, the site owner accepts the site's bounded daily deduplication under explicit disclosure and controls and requires every outbound referrer to be null"
 next_action: Deploy and verify the referrer-null regression fix, keep all Plausible-derived data out of Growth OS, and resume adoption only after an approved no-IP path or authorized runtime-contract revision.
 ---
 
@@ -165,8 +165,8 @@ Daily action-per-route-view ratios may be directional, with denominator zero rep
 
 ## Decision
 
-- Decision: defer Growth OS adoption while Plausible's path uses provider-side IP/User-Agent processing; separately accept the bounded method for disclosed site operation and remediate referrers.
-- Human decision owner/date: project owner / 2026-08-01.
+- Decision: recommended canonical disposition is `DEFERRED` while Plausible's path uses provider-side IP/User-Agent processing; separately, the site owner accepts the bounded method for disclosed site operation and requires referrer remediation.
+- Human decision owner/date: site owner / 2026-08-01.
 - Rationale: Plausible's raw IP/User-Agent inputs are not stored, its salt rotates and is deleted every 24 hours, and its identifier cannot link a visitor across days or sites. That is acceptable for the public site's aggregate counting when disclosed; the raw referrer leak is not. The stricter Growth OS runtime contract still prohibits adopting a measurement path that performs provider-side IP/User-Agent processing, so Daily Action v2 must record `DEFERRED` and make no business-state mutation. Ploy's blank-endpoint conclusion and tour-trigger finding were both incorrect.
 - Next durable record: a deferred Daily Action v2 receipt; reconsider an analytics definition or experiment only after a compliant no-IP path or authorized contract revision.
 - Deployment identifier (`null` until released): null.
