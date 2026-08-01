@@ -29,6 +29,11 @@ const MOVEMENTS = [
   'Something you can carry',
 ];
 
+const SIGNS = [
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+];
+
 const KEY_COPY = [
   'Bitcoin made digital ownership possible. Zodiacs makes it personal.',
   'Before you had a username, you had a sign.',
@@ -149,6 +154,35 @@ describe('thesis Nº 09 editorial contract', () => {
     for (const phrase of rejected) {
       expect(visible, `visible essay still contains: ${phrase}`).not.toContain(phrase);
     }
+  });
+});
+
+describe('thesis hero icon contract', () => {
+  const heroIcons = sliceElement(
+    HTML,
+    /<div\b[^>]*class=["'][^"']*\bhero__twelve\b[^"']*["'][^>]*>/i,
+    'div',
+  );
+
+  it('uses the twelve canonical pastel icons in registry order', () => {
+    const links = tagParts(heroIcons, 'a');
+    expect(links).toHaveLength(12);
+    links.forEach(({ attrs, inner }, index) => {
+      const slug = SIGNS[index];
+      const label = `${slug[0].toUpperCase()}${slug.slice(1)} — registry record`;
+      expect(attrs).toMatch(new RegExp(`\\bhref=["']/registry/${slug}/["']`, 'i'));
+      expect(attrs).toContain(`aria-label="${label}"`);
+      expect(inner).toContain(`src="/assets/zodiac-icons/48/${slug}.webp"`);
+      expect(inner).toMatch(/class="hero__twelve-icon"/);
+      expect(inner).toMatch(/\bwidth="24"\s+height="24"/);
+      expect(inner).toMatch(/\balt=""/);
+      expect(inner).toMatch(/\baria-hidden="true"/);
+    });
+  });
+
+  it('contains no platform-rendered zodiac emoji or legacy glyph spans', () => {
+    expect(heroIcons).not.toMatch(/[♈♉♊♋♌♍♎♏♐♑♒♓]/u);
+    expect(heroIcons).not.toContain('hero__twelve-glyph');
   });
 });
 

@@ -763,21 +763,20 @@
     .zquote { margin: 26px 0; padding: 2px 0 2px 22px; border-left: 1px solid var(--hair-3); font-style: italic; color: var(--ink-2); }
     .zquote footer { font-style: normal; font-family: var(--mono); font-size: 11px; color: var(--ink-dim); margin-top: 8px; }
     .zquote a { color: inherit; }
-    .hero__twelve { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 10px; margin: 24px 0 2px; }
+    .hero__twelve { display: flex; justify-content: flex-start; flex-wrap: wrap; gap: 8px; margin: 24px 0 2px; }
     .hero__twelve a {
-      width: 24px; height: 24px; display: grid; place-items: center;
-      border: 1px solid color-mix(in srgb, var(--sign) 62%, transparent);
-      border-radius: 999px; background: color-mix(in srgb, var(--sign) 14%, rgba(6,7,9,0.78));
-      color: var(--sign); font-family: Georgia, 'Times New Roman', serif;
-      font-size: 14px; line-height: 1; text-decoration: none;
-      transition: transform 220ms var(--ease), background-color 220ms var(--ease);
+      width: 24px; height: 24px; display: block;
+      border-radius: 999px; text-decoration: none;
+      transition: transform 220ms var(--ease), filter 220ms var(--ease);
     }
-    .hero__twelve a:hover { transform: translateY(-2px); }
+    .hero__twelve a:hover { transform: translateY(-2px) scale(1.04); filter: brightness(1.08); }
     .hero__twelve a:focus-visible { outline-color: var(--sign, var(--gold)); }
-    .hero__twelve-glyph { transform: translateY(-0.02em); }
+    .hero__twelve-icon {
+      width: 100%; height: 100%; display: block; border-radius: 999px;
+      filter: drop-shadow(0 3px 6px rgba(0,0,0,0.22));
+    }
     @media (max-width: 480px) {
-      .hero__twelve { gap: 7px; }
-      .hero__twelve a { width: 20px; height: 20px; font-size: 12px; }
+      .hero__twelve { gap: 4px; }
     }
     @media (prefers-reduced-motion: reduce) { .hero__twelve a { transition: none; } }
     .ztbl-dots { display: inline-flex; gap: 3px; margin-left: 8px; vertical-align: middle; }
@@ -1400,7 +1399,7 @@
       <p class="hero__sub">
         Before you had a username, you had a sign. Now that old answer can become something you keep, show, gift, and carry across the digital world.
       </p>
-      <div class="hero__twelve" aria-label="The twelve records"><a href="/registry/aries/" aria-label="Aries — registry record" style="--sign:#DE8E79"><span class="hero__twelve-glyph" aria-hidden="true">♈</span></a><a href="/registry/taurus/" aria-label="Taurus — registry record" style="--sign:#B9D4BE"><span class="hero__twelve-glyph" aria-hidden="true">♉</span></a><a href="/registry/gemini/" aria-label="Gemini — registry record" style="--sign:#B29DD0"><span class="hero__twelve-glyph" aria-hidden="true">♊</span></a><a href="/registry/cancer/" aria-label="Cancer — registry record" style="--sign:#B6D4E4"><span class="hero__twelve-glyph" aria-hidden="true">♋</span></a><a href="/registry/leo/" aria-label="Leo — registry record" style="--sign:#E0A9B4"><span class="hero__twelve-glyph" aria-hidden="true">♌</span></a><a href="/registry/virgo/" aria-label="Virgo — registry record" style="--sign:#B7D9B0"><span class="hero__twelve-glyph" aria-hidden="true">♍</span></a><a href="/registry/libra/" aria-label="Libra — registry record" style="--sign:#D3A9DE"><span class="hero__twelve-glyph" aria-hidden="true">♎</span></a><a href="/registry/scorpio/" aria-label="Scorpio — registry record" style="--sign:#B9DCE8"><span class="hero__twelve-glyph" aria-hidden="true">♏</span></a><a href="/registry/sagittarius/" aria-label="Sagittarius — registry record" style="--sign:#E0B080"><span class="hero__twelve-glyph" aria-hidden="true">♐</span></a><a href="/registry/capricorn/" aria-label="Capricorn — registry record" style="--sign:#C0DEA8"><span class="hero__twelve-glyph" aria-hidden="true">♑</span></a><a href="/registry/aquarius/" aria-label="Aquarius — registry record" style="--sign:#AE8FC9"><span class="hero__twelve-glyph" aria-hidden="true">♒</span></a><a href="/registry/pisces/" aria-label="Pisces — registry record" style="--sign:#A9D4C4"><span class="hero__twelve-glyph" aria-hidden="true">♓</span></a></div>
+      <div class="hero__twelve" aria-label="The twelve records"><a href="/registry/aries/" aria-label="Aries — registry record" style="--sign:#DE8E79"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/aries.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/taurus/" aria-label="Taurus — registry record" style="--sign:#B9D4BE"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/taurus.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/gemini/" aria-label="Gemini — registry record" style="--sign:#B29DD0"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/gemini.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/cancer/" aria-label="Cancer — registry record" style="--sign:#B6D4E4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/cancer.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/leo/" aria-label="Leo — registry record" style="--sign:#E0A9B4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/leo.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/virgo/" aria-label="Virgo — registry record" style="--sign:#B7D9B0"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/virgo.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/libra/" aria-label="Libra — registry record" style="--sign:#D3A9DE"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/libra.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/scorpio/" aria-label="Scorpio — registry record" style="--sign:#B9DCE8"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/scorpio.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/sagittarius/" aria-label="Sagittarius — registry record" style="--sign:#E0B080"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/sagittarius.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/capricorn/" aria-label="Capricorn — registry record" style="--sign:#C0DEA8"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/capricorn.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/aquarius/" aria-label="Aquarius — registry record" style="--sign:#AE8FC9"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/aquarius.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/pisces/" aria-label="Pisces — registry record" style="--sign:#A9D4C4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/pisces.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a></div>
       <p class="hero__clock" data-season-clock></p>
       <div class="hero__cue" aria-hidden="true"><span class="line"></span><span>Read the story</span></div>
     </div>
