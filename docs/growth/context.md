@@ -61,7 +61,10 @@ rankings are a lagging signal, not the first definition of success.
 - Do not use token, market, financial, or crypto language outside the Collect
   wing.
 - Do not manufacture urgency or gate basic results behind signup.
-- Preserve the Cosmic Void design language on consumer surfaces.
+- Treat consumer and Registry/Collect as distinct brand modes. Use the current
+  repository-defined consumer tokens on consumer surfaces; do not transplant
+  the Registry's dark system into the consumer product. Record the selected
+  mode and its source-of-truth tokens in every page or creative brief.
 
 Before drafting copy, re-read the canonical voice rules and labels in
 [`../STRATEGY.md`](../STRATEGY.md) and [`../../CLAUDE.md`](../../CLAUDE.md).

@@ -43,11 +43,19 @@ next_action: complete checks
 - [ ] Structured data is valid, eligible, and matches visible content.
 - [ ] Core answers, entities, dates, and units are unambiguous when rendered.
 - [ ] Methodology/citations are reachable where needed.
+- [ ] Visible copy, JSON-LD, metadata, `llms.txt` variants, privacy/methodology
+      pages, dates/timezones, and canonical entity identifiers agree.
+- [ ] Required standards and optional/non-standard AI discovery experiments are
+      labeled separately.
+- [ ] OG/Twitter images are public and absolute; MIME type, dimensions,
+      crop-safe legibility, alt text, and rendered-card preview were verified.
 - [ ] Page-velocity impact keeps the rolling seven-day total at or below 10.
 
 ## Privacy and measurement
 
 - [ ] No visitor identity, account, IP, raw-session, birth, chart, or saved-profile data is collected or transmitted.
+- [ ] No IP-derived visitor identifier is created; analytics referrers are
+      absent or origin-only and never contain paths, queries, or fragments.
 - [ ] Birth calculation remains client-side.
 - [ ] Event payloads contain only documented aggregate-safe properties.
 - [ ] Baseline, primary measure, guardrails, owner, and review date exist.
@@ -70,6 +78,15 @@ Record exact commands, versions, and outcomes. Repository defaults are in
 | Tests |  |  |
 | Link/artifact integrity |  |  |
 | Targeted visual/accessibility check |  |  |
+| Post-release live bytes, if released |  |  |
+
+## Post-release proof, only after a separately approved release
+
+- Immutable deployment identifier:
+- Intended host and changed routes:
+- Live canonical, robots, sitemap, redirects, and representative bytes
+  verified:
+- Verification owner/date:
 
 ## Decision
 

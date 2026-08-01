@@ -24,14 +24,22 @@ passing record means “ready for a human release decision,” not “publish no
 4. Run repository-required checks and targeted tests proportional to risk.
 5. Check canonical, robots, sitemap, status codes, metadata, internal links,
    structured data, `llms.txt` relevance, and rendered answer clarity.
-6. Review keyboard use, focus, contrast, reduced motion, responsive behavior,
+6. Cross-check visible copy, JSON-LD, metadata, `llms.txt` variants, sitemaps,
+   and canonical privacy/methodology pages. Contradictions in cadence, privacy,
+   accuracy, dates/timezones, or entity identity are blockers. Label optional
+   or non-standard AI discovery hints separately from required standards.
+7. Review keyboard use, focus, contrast, reduced motion, responsive behavior,
    and meaningful alt text.
-7. Inspect analytics payloads and network behavior. Confirm no visitor
-   identity, birth data, chart data, or sensitive URL parameters leave the
-   device.
-8. Confirm the consumer/Collect boundary and page-velocity cap.
-9. Assign pass, pass-with-follow-up, or fail. List blockers separately.
-10. A human owner decides whether to merge and deploy.
+8. Inspect analytics payloads, referrers, service-side identity derivation, and
+   network behavior. Confirm no visitor identity, IP-derived identifier, birth
+   data, chart data, raw referrer, or sensitive URL parameter leaves the device.
+9. Confirm the consumer/Collect boundary and page-velocity cap.
+10. Assign pass, pass-with-follow-up, or fail. List blockers separately.
+11. A human owner decides whether to merge and deploy.
+12. After a separately approved release, record the immutable deployment
+    marker and verify live bytes for the intended host, canonical, robots,
+    sitemap, redirects, and representative changed routes. Source or preview
+    success alone is not proof that production changed.
 
 ## Trust dimensions
 
@@ -57,11 +65,15 @@ passing record means “ready for a human release decision,” not “publish no
 - Citations and methodology are reachable.
 - `llms.txt` and other discovery files are updated only when scope truly
   changes; never add claims purely for an AI crawler.
+- Required web standards and optional/non-standard answer-engine experiments
+  are labeled separately.
+- Machine-readable artifacts agree with visible claims and canonical policies.
 
 ### Privacy and measurement
 
 - Birth calculation stays client-side.
-- No identity-level analytics, raw sessions, fingerprinting, or birth fields.
+- No identity-level analytics, IP-derived identifiers, raw sessions,
+  fingerprinting, raw referrers, or birth fields.
 - Events contain only the minimum aggregate-safe properties.
 - Baseline, success measure, owner, review date, and rollback trigger exist.
 
@@ -70,6 +82,8 @@ passing record means “ready for a human release decision,” not “publish no
 - Signed release-check record linked from the pull request.
 - Blocking findings and owners.
 - Human release decision and, after release, immutable deployment reference.
+- Provider-neutral post-release proof that the intended production bytes are
+  live.
 - Follow-up measurement date.
 
 ## Stop conditions

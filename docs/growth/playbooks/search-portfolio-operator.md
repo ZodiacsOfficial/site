@@ -87,10 +87,19 @@ Validate before analysis:
 5. **Inspect the public result set.** Record formats, entities, unanswered
    questions, freshness, and trust signals. Do not copy competitor phrasing or
    structure mechanically.
-6. **Score the opportunity.** Use the rubric below and show the evidence.
-7. **Check constraints.** Verify roadmap order, the 10-page velocity cap,
+6. **Refresh an earning owner page before expanding the portfolio.** When a
+   priority URL has sufficient verified 90-day Search Console data, identify
+   high-impression queries that the rendered page does not answer clearly.
+   Record the exact proposed before-to-after placement. Stop when data is thin,
+   the term would shift intent, or a different canonical page owns the job.
+7. **Sample answer engines reproducibly when AEO matters.** Use a fixed panel
+   of 5–10 queries. Record query, engine/model, locale, run date, answer and
+   citation state, cited URL, and evidence capture. Treat one run as
+   directional and compare only like-for-like panels.
+8. **Score the opportunity.** Use the rubric below and show the evidence.
+9. **Check constraints.** Verify roadmap order, the 10-page velocity cap,
    content overlap, privacy, and wing boundaries.
-8. **Write the decision.** Complete
+10. **Write the decision.** Complete
    [`../templates/opportunity.md`](../templates/opportunity.md). Create a
    [`../templates/content-brief.md`](../templates/content-brief.md) only after
    the opportunity is approved.

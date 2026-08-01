@@ -35,14 +35,19 @@ above-the-fold change as a testable journey hypothesis, not routine SEO copy.
 3. Design the tool/data/visual value before expanding prose.
 4. Map claims to evidence. Use dates and degrees for computed sky facts when
    relevant. Do not manufacture scientific or therapeutic authority.
-5. Draft title, description, headings, key answer, internal links, next-step
+5. For comparison content, name the real decision job, state where each option
+   is the better fit, include at least one evidence-backed concession, and
+   compare only dated, verifiable dimensions. Never claim blanket superiority.
+6. Record the brand mode and source tokens from the current repository. Keep
+   consumer and Registry/Collect visual systems distinct.
+7. Draft title, description, headings, key answer, internal links, next-step
    CTA, structured data proposal, and social/OG message as one coherent set.
-6. Check the consumer/Collect wing boundary and canonical terminology.
-7. Implement on a branch when authorized. Preserve generated/source rules and
+8. Check the consumer/Collect wing boundary and canonical terminology.
+9. Implement on a branch when authorized. Preserve generated/source rules and
    unrelated work.
-8. Open a pull request with the brief, screenshots, checks, page-velocity
+10. Open a pull request with the brief, screenshots, checks, page-velocity
    impact, and rollback notes.
-9. Hand off to Release & Trust Gate. Do not merge or publish.
+11. Hand off to Release & Trust Gate. Do not merge or publish.
 
 ## Page artifact schema
 
@@ -69,11 +74,18 @@ velocity_units: 0
 ## Creative rules
 
 - An OG or social asset must accurately represent the shipped page.
-- Use the existing sign icon palette and Cosmic Void design system; no
-  mystical clip-art, gold on consumer surfaces, or generic gradient effects.
+- Use the current repository-defined logo, typography, tokens, and sign icon
+  palette for the selected brand mode; no mystical clip-art or generic effects.
 - Do not put private chart details in an image or URL.
 - Avoid promises the destination cannot fulfill.
-- Record source files, dimensions, alt text, and usage rights.
+- Record source files, exact dimensions, alt text, usage rights, and the page or
+  route that owns the asset.
+- For programmatic OG/social assets, prefer one reproducible fixed-size canvas
+  that uses real logo, font, and token sources. Screenshot the exact canvas,
+  keep any preview route unlinked and `noindex`, and make variants prop-driven
+  rather than redrawing each format.
+- For Open Graph images, default to 1200×630, generous crop-safe margins, a
+  public file below 5 MB, and legibility at roughly 600 pixels preview width.
 
 ## Outputs
 

@@ -47,6 +47,16 @@ next_action: editorial review
 | --- | --- | --- | --- |
 |  |  |  |  |
 
+## Comparison integrity, when applicable
+
+- Decision job:
+- Alternative's strongest fit / honest concession:
+- Zodiacs.org's strongest fit:
+
+| Dimension | Zodiacs.org | Alternative | Source | Checked |
+| --- | --- | --- | --- | --- |
+|  |  |  |  |  |
+
 ## Page system
 
 - Proposed title:
