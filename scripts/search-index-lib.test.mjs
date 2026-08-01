@@ -160,7 +160,7 @@ describe('curated wing search entries', () => {
       expect.objectContaining({
         path: '/thesis/',
         title: 'Why Zodiacs Matter — the Registry thesis',
-        description: 'Bitcoin made digital ownership possible. Zodiacs makes it personal — with the evidence and open questions in plain sight.',
+        description: 'Gold carries history. Bitcoin made ownership digital. Solana makes it fast. Zodiacs brings those qualities to a sign you already know.',
       }),
       expect.objectContaining({
         path: '/sdk/',

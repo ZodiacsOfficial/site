@@ -422,7 +422,7 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     '',
     'REGISTRY WING',
     '- /registry/ — The registry of the twelve signs: canonical records, provenance, and the Astrofolio catalogue.',
-    '- /thesis/ — The essay of record, with published disclosures.',
+    '- /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.',
     '- /sdk/ — Open tools for charts, icons, and the registry interface.',
     '',
     'GLOSSARY TERMS',

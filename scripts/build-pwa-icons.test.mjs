@@ -116,7 +116,7 @@ async function visibleFaviconDotCount(image) {
   const { mask, width, height } = await visibleMask(image);
   const centerX = (width - 1) / 2;
   const centerY = (height - 1) / 2;
-  const ringRadius = width * 19.25 / 64;
+  const ringRadius = width * 19 / 64;
   const probeRadius = Math.max(1, width * 0.04);
   let visibleDots = 0;
 
@@ -185,14 +185,24 @@ async function expectEquivalentPixels(leftImage, rightImage) {
 }
 
 describe('PWA icon compositor', () => {
+  it('pins authored icon references to the immutable v3 asset set', () => {
+    expect(BRAND_ICON_VERSION).toBe('v3');
+    expect(Object.values(BRAND_ICON_PATHS).every((path) => path.includes('/app-icons/v3/'))).toBe(true);
+  });
+
   it('renders the canonical wheel at manifest resolution', async () => {
     const image = await composeWheelIcon(192);
     const metadata = await sharp(image).metadata();
     expect(metadata).toMatchObject({ width: 192, height: 192, format: 'png' });
   });
 
-  it.each([180, 192, 512])('keeps the complete wheel centered at %ipx', async (size) => {
-    const bounds = await visibleBounds(await composeWheelIcon(size));
+  it.each([
+    { size: 180, maskable: false },
+    { size: 192, maskable: false },
+    { size: 512, maskable: false },
+    { size: 512, maskable: true },
+  ])('keeps the complete wheel centered at $size px (maskable: $maskable)', async ({ size, maskable }) => {
+    const bounds = await visibleBounds(await composeWheelIcon(size, { maskable }));
     const rightMargin = size - 1 - bounds.maxX;
     const bottomMargin = size - 1 - bounds.maxY;
 
@@ -220,11 +230,11 @@ describe('PWA icon compositor', () => {
     expect(result.maxRadius).toBeLessThanOrEqual(result.width * safeRadius + 1);
   });
 
-  it.each([16, 32, 96])('keeps all twelve favicon dots distinct and inside 35%% at %ipx', async (size) => {
+  it.each([16, 32, 48, 96])('keeps all twelve favicon dots distinct and inside 35%% at %ipx', async (size) => {
     const image = await composeFavicon(size);
     const result = await visibleComponentsAndRadius(image);
     expect(await visibleFaviconDotCount(image)).toBe(12);
-    if (size >= 32) expect(result.components).toBe(12);
+    expect(result.components).toBe(12);
     expect(result.maxRadius).toBeLessThanOrEqual(result.width * 0.35 + 1);
   });
 
@@ -333,5 +343,12 @@ describe('PWA icon compositor', () => {
       expect(html, page).toContain('href="/site.webmanifest"');
       expect(html.match(/<link rel="icon"[^>]+data:image/gu), page).toBeNull();
     }
+  });
+
+  it('keeps push notification artwork on the same immutable icon version', async () => {
+    const worker = await readFile(resolve('public/sw.js'), 'utf8');
+    expect(worker.match(/icon: '([^']+)'/u)?.[1]).toBe(BRAND_ICON_PATHS.icon192);
+    expect(worker.match(/badge: '([^']+)'/u)?.[1]).toBe(BRAND_ICON_PATHS.icon192);
+    expect(worker).not.toContain('/assets/app-icons/v2/');
   });
 });
