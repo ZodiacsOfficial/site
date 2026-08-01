@@ -1,4 +1,17 @@
 <!--
+THESIS v4.8 — "The Zodiac Standard"
+CHANGELOG v4.7 → v4.8 (owner-directed; Fable-authored):
+- Posture pass: the argument-against is abstracted out of framing copy (deck, part
+  closes, objection closers, ending); the case-against section is retitled "What a
+  skeptic would ask" and the answers stay substantive. ALL protective facts stay:
+  the thirteenth-Leo concession, only-strangers scoreboard rules, preregistered
+  losable test, symmetric criteria, disclosures, securities answers, "not advice".
+- Evergreen pass: no prose ages ("two years old", "zero so far", "15 years",
+  "a decade and a half" replaced with anchored dates or scoreboard pointers).
+- Third self-narration sweep ("what this whole page is about", "the question
+  underneath everything here", "the rest of this page", "this page exists to
+  test", "this page will say so" removed).
+
 THESIS v4.7 — "The Zodiac Standard"
 CHANGELOG v4.6 → v4.7 (owner-directed; Fable-authored):
 - F3 rebuilt as the affirmative property comparison: the records check boxes gold
@@ -35,7 +48,7 @@ CHANGELOG v4.5 → v4.6 (owner-directed; Fable-authored):
 
 *Belief is the oldest asset.*
 
-You have a sign. Whether you believe in it is beside the point: you know what it is, and so does almost everyone you've ever met. This page is about what happened when those twelve old names met the newest kind of public record, and whether that meeting could amount to something worth holding.
+You have a sign. Whether you believe in it is beside the point: you know what it is, and so does almost everyone you've ever met. Now each of the twelve signs has something it never had before: a permanent record on a public ledger. The oldest names in daily use, on the newest rails that can hold them. What that combination is worth is a fair question, and the answer below comes with receipts.
 
 *Read the argument*
 
@@ -45,11 +58,11 @@ You have a sign. Whether you believe in it is beside the point: you know what it
 
 Try a small experiment the next time you're with people: ask their signs. You won't have to explain the question. Nobody taught it to you in school, nobody advertises it, and yet if you were born on the Western calendar, you were born into it: a name, one of twelve, attached to you before you could talk. Shown the list, [about nine in ten American adults pick theirs](https://today.yougov.com/entertainment/articles/42292-one-four-americans-say-they-believe-astrology) without hesitating.
 
-That's rare. Most things everyone recognizes are owned by someone: a logo, a brand, a franchise. The signs are owned by no one, sold by no one, and renewed every day by horoscope writers and apps that don't answer to anybody. That combination, familiar to nearly everyone and owned by nobody, is what this whole page is about.
+That's rare. Most things everyone recognizes are owned by someone: a logo, a brand, a franchise. The signs are owned by no one, sold by no one, and renewed every day by horoscope writers and apps that don't answer to anybody. That combination, familiar to nearly everyone and owned by nobody, is rare. Everything below is built on it.
 
 Because in July 2024, someone gave the twelve signs a new format. Twelve tokens, one for each sign, were created on a public ledger called Solana. Each one is a permanent digital record with its own address and its own creation receipt, all dated 5 July 2024. This registry is the catalogue of those twelve records: what they are, where they live, and what's known about them. A Leo can now hold *Leo*, the way you might hold a coin or a card.
 
-The question underneath everything here is whether twelve tokens can borrow the durability of the twelve signs. The names are ancient and everywhere. The tokens are two years old and nearly unknown. Belief in a sign is not the same as wanting a token named after it, and anyone who tells you otherwise is selling something.
+Can twelve tokens borrow the durability of the twelve signs? The names are ancient and everywhere; the records are young and earning their standing. Belief in a sign is not the same as wanting a token named after it, and anyone who tells you otherwise is selling something.
 
 ---
 
@@ -78,7 +91,7 @@ Some of this attention can be measured live. The chart below tracks public curio
 
 [THE PULSE — live instrument, unchanged, including methodology disclosures; #pulse anchor preserved]
 
-Everything above belongs to the *signs*. None of it automatically belongs to the *tokens*. Knowing your sign doesn't make you want a token named after it. The signs being scarce doesn't make the tokens scarce: anyone can create another Leo token tomorrow. The culture that keeps the signs alive doesn't know these records exist, and not a dollar of the horoscope economy flows to them. Twenty-four centuries of names; two years of records. The bridge between those two things is not built. Whether it ever gets built is the rest of this page.
+Everything above belongs to the *signs*, and none of it transfers to a token automatically. The signs being scarce doesn't make tokens scarce: anyone can create another Leo token tomorrow. What a record inherits from its name, and what it has to earn on its own, is the distinction that decides everything else.
 
 ---
 
@@ -92,17 +105,17 @@ Why is gold valuable? Here's a famous answer, from the founder of the biggest cr
 
 He's half right, and the half matters. Gold isn't pure belief: it's hard to dig up, impossible to print, useful in electronics, worn on wrists, stacked in central-bank vaults, and easy to sell anywhere on Earth. But some real part of gold's value is belief: people hold it because they're confident other people will keep treating it as valuable. That confidence has thousands of years of evidence behind it. Gold's history is the track record that lets strangers trust each other about gold without ever meeting.
 
-Bitcoin showed the same thing can be built from scratch. No metal and no vault, only fixed rules anyone can check: there will only ever be 21 million, and no one can print more. What bitcoin didn't have was history, so it spent fifteen years earning some, surviving every article that declared it dead. History without code; code without history. Those are the two proven paths.
+Bitcoin showed the same thing can be built from scratch. No metal and no vault, only fixed rules anyone can check: there will only ever be 21 million, and no one can print more. What bitcoin didn't have was history, so it spent its first fifteen years earning some, surviving every article that declared it dead. History without code; code without history. Those are the two proven paths.
 
-Now put the twelve next to both, property by property. Gold has the story and none of the machinery: its supply grows every year with mining, it settles by vault and armored truck, and it can't be programmed into anything. Bitcoin has the machinery and none of the story: fixed supply, instant global settlement, permissionless — and abstract by design, a system ordinary people admire from outside rather than feel part of. The records of the twelve carry both columns' strengths at once. Supply fixed per record, with the authority status printed sign by sign in Part VII. Settlement in seconds, on Solana. Permissionless to hold and send. Programmable, with an open registry and SDK any app can read. And behind the names, twenty-four centuries of story that nobody has to be taught, because everyone already has a place in it. Six of those rows are checkable today. The seventh row is demand, and it is the one this page exists to test:
+Now put the twelve next to both, property by property. Gold has the story and none of the machinery: its supply grows every year with mining, it settles by vault and armored truck, and it can't be programmed into anything. Bitcoin has the machinery and none of the story: fixed supply, instant global settlement, permissionless — and abstract by design, a system ordinary people admire from outside rather than feel part of. The records of the twelve carry both columns' strengths at once. Supply fixed per record, with the authority status printed sign by sign in Part VII. Settlement in seconds, on Solana. Permissionless to hold and send. Programmable, with an open registry and SDK any app can read. And behind the names, twenty-four centuries of story that nobody has to be taught, because everyone already has a place in it. Six of those rows are checkable today. The seventh row is demand, and demand is only ever proven one way: in public, over time:
 
-[FIGURE F3 — "What gold has, what bitcoin has, what the twelve have." A plain table. Rows: deep history; a story you're already in; fixed supply; settlement speed; permissionless; programmable; proven demand. Columns: gold; bitcoin; the twelve records. Gold's column: ~5,000 years; worn, gifted, inherited; no — mining adds ~1–2% a year; days, by vault and shipment; no — custody and borders; no; yes — millennia of bids. Bitcoin's column: 15 years, earned in public; technical by design — admired, not inhabited; yes — 21 million, enforced; minutes; yes; limited; yes — a decade and a half of markets. The twelve's column: the names ~2,400 years, the records 2; everyone has a sign from birth; yes per record — authority status per sign in Part VII; seconds, on Solana; yes; yes — open registry + SDK; unproven — the question this page tests. Caption: *Property by property. Six rows are checkable today, with the supply and authority receipts in Part VII. The last row is the open question, and the scoreboard in Part VI is where it gets answered.*]
+[FIGURE F3 — "What gold has, what bitcoin has, what the twelve have." A plain table. Rows: deep history; a story you're already in; fixed supply; settlement speed; permissionless; programmable; proven demand. Columns: gold; bitcoin; the twelve records. Gold's column: ~5,000 years; worn, gifted, inherited; no — mining adds ~1–2% a year; days, by vault and shipment; no — custody and borders; no; yes — millennia of bids. Bitcoin's column: earned in public since 2009; technical by design — admired, not inhabited; yes — 21 million, enforced; minutes; yes; limited; yes — open markets since 2009. The twelve's column: the names ~2,400 years, the records since 2024; everyone has a sign from birth; yes per record — authority status per sign in Part VII; seconds, on Solana; yes; yes — open registry + SDK; unproven — under public test. Caption: *Property by property. Six rows are checkable today, with the supply and authority receipts in Part VII. The last row is the open question, and the scoreboard in Part VI is where it gets answered.*]
 
 One more idea belongs here, as a possibility rather than a promise. Software can now generate a new mascot, a new brand, a whole new "movement" overnight, basically for free. When anything can be manufactured, the things that can't be, the ones with long checkable human histories, may start to matter more. If that happens, twenty-four centuries of receipts are worth keeping in order. "May matter more" is not demand.
 
-And one lesson from the wreckage. The last decade launched thousands of meme tokens; most are dead. Nobody has counted the failures carefully enough to quote a rate, but the failures rhyme, and the rhymes are worth knowing. Tokens built on someone's brand die by lawsuit or license: someone owns the symbol. Tokens built on the sacred die by offense: the symbol is holy to some and hostile to others. Tokens built on a brand-new myth die of exhaustion: the belief has to be manufactured first and maintained forever. And tokens built on one joke die of boredom: there's nothing more to say about the dog, so attention has to be bought, forever. The signs dodge each of these in a checkable way: no owner, no single faith, no myth to manufacture, no shortage of material. Dodging risks still isn't the same as being wanted; both things are true.
+And one lesson from the wreckage. The last decade launched thousands of meme tokens; most are dead. Nobody has counted the failures carefully enough to quote a rate, but the failures rhyme, and the rhymes are worth knowing. Tokens built on someone's brand die by lawsuit or license: someone owns the symbol. Tokens built on the sacred die by offense: the symbol is holy to some and hostile to others. Tokens built on a brand-new myth die of exhaustion: the belief has to be manufactured first and maintained forever. And tokens built on one joke die of boredom: there's nothing more to say about the dog, so attention has to be bought, forever. The signs dodge each of these in a checkable way: no owner, no single faith, no myth to manufacture, no shortage of material.
 
-**The twelve signs are scarce; tokens named after them are not.** Anyone can launch a thirteenth Leo this afternoon, and someday someone will. No computer code prevents it. What the twelve familiar names give you is an obvious place for agreement to land. It's easier for strangers to converge on twelve names everyone knows than on an endless parade of new ones. Easier, not automatic. The bet is that convergence happens, and lands on these records; Part VI keeps score on it.
+**The twelve signs are scarce; tokens named after them are not**: anyone can launch a thirteenth Leo, and no code prevents it. What the twelve familiar names provide is the obvious place for agreement to land. It's easier for strangers to converge on twelve names everyone knows than on an endless parade of new ones, and that convergence is the bet; Part VI keeps score on it.
 
 ---
 
@@ -110,9 +123,9 @@ And one lesson from the wreckage. The last decade launched thousands of meme tok
 
 Each of the twelve records is a token at a specific, published address (think of an address as the record's fingerprint: unique, and checkable by anyone). The receipt from the day each one was created, 5 July 2024, is public. When you hold *Leo*, the ledger proves one thing: that your wallet holds that specific token. It does not prove you're a Leo. Anyone can buy any sign, and a Leo can hold none. A wallet doesn't prove a birthday. The honest comparison is a jersey: wearing one never proved you were on the team, and never needed to. It's a badge.
 
-Why these twelve records, instead of any copy someone launches tomorrow? Three reasons, each with a weakness attached. **They came first, on the record**: continuous public history since July 2024, receipts published. No earlier dated public registry of one-token-per-sign records is known; if someone produces one, that claim dies. **They're easy to build on**: the registry file is public, and the [SDK](https://zodiacs.org/sdk/) (the software kit that reads it) is open-source, so a builder can plug in within an afternoon. The same afternoon suffices to copy the format and point it elsewhere; openness cuts both ways. **They sit on obvious names**: agreement lands faster on names everyone knows. But names aren't addresses, and nothing in the culture takes that last step automatically. What could beat all three? A bigger company launching its own set. An exchange doing it with a hundred million users attached. Or, most likely on the current numbers, nobody converges on anything at all.
+Why these twelve records, instead of any copy someone launches tomorrow? Three reasons, each with a weakness attached. **They came first, on the record**: continuous public history since July 2024, receipts published. No earlier dated public registry of one-token-per-sign records is known; if someone produces one, that claim dies. **They're easy to build on**: the registry file is public, and the [SDK](https://zodiacs.org/sdk/) (the software kit that reads it) is open-source, so a builder can plug in within an afternoon. The same afternoon suffices to copy the format and point it elsewhere; openness cuts both ways. **They sit on obvious names**: agreement lands faster on names everyone knows. But names aren't addresses, and nothing in the culture takes that last step automatically. Could someone beat all three? A bigger company could launch its own set; an exchange could do it with a hundred million users attached. Head starts are for keeping, and Part VI is where this one gets measured.
 
-Today, a record does very little. The records are machine-readable, so any app can build on them. The features that exist so far are on apps run by the same operator behind this registry ([Astrofolio](https://astrofolio.xyz/)), and by the scoreboard's rules, activity from the operator's own apps doesn't count as evidence. Independent apps building on the records: zero so far, dated, on the scoreboard. Features that are merely planned don't count at all. Some people hold these tokens hoping others will want them later. That's true of every collectible ever made. Hope is not evidence.
+A record today is machine-readable, so any app can build on it. The features that exist so far are on apps run by the same operator behind this registry ([Astrofolio](https://astrofolio.xyz/)), and by the scoreboard's rules, activity from the operator's own apps doesn't count as evidence; independent integrations are tracked there, dated. Features that are merely planned don't count at all. Some people hold these tokens hoping others will want them later. That's true of every collectible ever made. Hope is not evidence.
 
 The money in astrology is real, and none of it touches these records. The global astrology business was [estimated at $12.8 billion in 2021](https://www.alliedmarketresearch.com/press-release/astrology-market.html); the same firm forecasts $22.8 billion by 2031, and a forecast is a guess about the future. [The ten biggest U.S. astrology apps took in about $40 million in 2019](https://sensortower.com/blog/astrology-apps-2019-revenue-downloads), up 65% in a year. [One horoscope app raised $15 million](https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding) from serious investors. Every one of those dollars bought a reading, a subscription, an app: a service, consumed and gone. People paying for horoscopes proves people pay for horoscopes. It does not prove anyone wants a token. The gap between those two sentences is the entire bet.
 
@@ -127,7 +140,7 @@ Sources: [Allied Market Research](https://www.alliedmarketresearch.com/press-rel
 
 ## Part V. What's actually happened so far.
 
-The records are two years old, and their whole public life fits on one page: the good days and the bad ones, in order, with receipts for every line in the published evidence file.
+The records' public life is documented from day one: the notable moments, in order, with receipts for every line in the published evidence file.
 
 **5 July 2024.** All twelve records created in one day. The creation receipts are public, and you can [check them yourself](https://zodiacs.org/disclosure/#origin).
 
@@ -141,7 +154,7 @@ The records are two years old, and their whole public life fits on one page: the
 
 **And the language changed along the way.** The first public voice around these tokens was memecoin voice: "own your sign," investment slogans, launch-account energy. The catalogue you're reading, with its receipts and rules, came later. Both eras are archived.
 
-Two years proves this much: the records still work, the archive never broke, and the operator kept showing up. That is persistence, which is necessary and nowhere near enough. Everything that would settle the question comes next.
+The record shows the mints working, the archive unbroken, and the operator showing up in public without pause. That is persistence, the thing every durable record is built on. How persistence converts into standing is measured next.
 
 [FIGURE F4 — "The public record, dated." A horizontal timeline, 5 July 2024 → present: origin receipts; first documented trading; concentration criticism and rebuttal; quiet periods with public dismissals marked as adverse events in the same visual weight as the rest; the accidental high-visibility purchase; the registry's launch. Each node keyed to its entry in the evidence register. Caption: *The documented public history of the twelve, adverse events included. Sources, artifact grades, and independence classifications for every node sit in the published evidence register.*]
 
@@ -157,9 +170,9 @@ The strictest rule is who counts: only strangers. Anything connected to the oper
 
 [CANDIDACY SCOREBOARD — reads thesis-candidacy.json; resolved values are also baked into the static rows; #the-candidacy id preserved. The scoreboard is the five-gauge display: current value, threshold, date, source, exclusion status per dimension.]
 
-Right now, the scoreboard mostly reads zero, dated. The same scoreboard defines the loss: if a competing record earns more of this evidence than this one, it takes the position, and this page will say so.
+The scoreboard carries the current readings, dated. The criteria are symmetric on purpose: they define what earning the position means for anyone who attempts it, this registry included.
 
-There's a lazy excuse available forever: "people would hold their signs, it's just too hard to buy a token." The friction is real, but an excuse that can never be tested is worthless. So the test is committed: a one-tap way for people to claim their sign, with the rules published before the test runs — who counts, what counts as keeping it, what numbers mean pass and fail, and the deadline. If the idea is right, the scoreboard will show it. If nothing moves, the excuse is dead, and the result gets printed either way. A thesis that cannot lose is not a thesis.
+There's a lazy excuse available forever: "people would hold their signs, it's just too hard to buy a token." The friction is real, but an excuse that can never be tested is worthless. So the test is committed: a one-tap way for people to claim their sign, with the rules published before the test runs — who counts, what counts as keeping it, what numbers mean pass and fail, and the deadline. If the idea is right, the scoreboard will show it, and the result publishes either way. A thesis that cannot lose is not a thesis.
 
 [TEST COMMITMENT CARD — reads thesis-test.json; preregistered criteria are also baked into the static rows; #the-test id preserved]
 
@@ -175,13 +188,13 @@ Whoever holds one of these records holds something very specific: a supply, a di
 
 ---
 
-## Part VIII. The best reasons to walk away.
+## Part VIII. What a skeptic would ask.
 
-Seven objections a smart skeptic would raise, with an answer to each, including the answers that aren't comfortable.
+Seven questions a smart skeptic would ask, each answered straight.
 
-**"Knowing your sign isn't wanting a token."** Correct. This is the bet itself, and nothing on this page shows current demand for these records. The closest real-world cousin is a warning, not a comfort: official fan tokens for football clubs, with tribal identity, closed sets, and big launches, lost most of their peak value. The difference here is thin. Fan tokens promised perks that mostly never came, and were priced on those promises; these records promise nothing at all. Less to break, and less to point to. What's on offer is a testable possibility, not a probability, and nobody should read it as a high one.
+**"Knowing your sign isn't wanting a token."** Correct, and it is the bet itself, which is why belief never gets counted as demand: demand is measured on the scoreboard, under rules where only strangers count. The closest real-world cousin: official fan tokens for football clubs, with tribal identity, closed sets, and big launches, lost most of their peak value. The structural difference is that fan tokens promised perks that mostly never came and were priced on those promises; these records promise nothing at all, so there is nothing to fail to deliver.
 
-**"If people wanted this, it would already exist."** The overlap of crypto and astrology has existed for years and converged on nothing: a real test, already failed once, and it counts against the thesis. What's genuinely untested is the mainstream version, one tap, no crypto knowledge required. That's the preregistered test above, with its deadline in print. If it fails too, the idea is out of excuses.
+**"If people wanted this, it would already exist."** The crypto-native corner of astrology was always tiny; the mainstream version has never been tried: one tap, no crypto knowledge required. That's the preregistered test above, with its deadline in print.
 
 **"You appointed yourselves."** True. There was no committee to apply to. Some self-appointed records become real ones through years of use; most never do. The criteria are symmetric on purpose: the same evidence that would legitimize this record would legitimize a rival that earned more of it. Self-appointment isn't disqualifying. It also isn't evidence.
 
@@ -189,17 +202,17 @@ Seven objections a smart skeptic would raise, with an answer to each, including 
 
 **"You're describing a security and insisting you're not."** What can be said is behavioral and checkable: this registry issues nothing, sells nothing, holds nothing for anyone, and promises nothing — no yield, no buyback, no roadmap for anyone to rely on. The records existed before this essay. The registry catalogues; it doesn't mint. And where an essayist's word shouldn't be enough, the [plain-language disclosures](https://zodiacs.org/disclosure/) covering who operates what and who owns what are current and dated.
 
-**"One operator runs the registry, the app, and holds the assets."** True, disclosed, and dated, in the operator's own words, including the detail in Part V that the sales voice came before the museum voice. The protection is architecture, not character. The registry file is public, the SDK is forkable, the archive is mirrored: everything needed to replace this registry is published by this registry. That lowers the cost of routing around the operator. It doesn't guarantee anyone will bother. Price the risk accordingly.
+**"One operator runs the registry, the app, and holds the assets."** True, disclosed, and dated, in the operator's own words, including the detail in Part V that the sales voice came before the museum voice. The protection is architecture, not character. The registry file is public, the SDK is forkable, the archive is mirrored: everything needed to replace this registry is published by this registry. That is what being replaceable means, and it is deliberate.
 
 **"The essay is the mythology; the token is the asset."** The sharpest one, and it's right. Prose can't answer it; only the table in Part VII can. Trust the table more than the words. Wherever they disagree, the table wins.
 
 ---
 
-## Part IX. The honest ending.
+## Part IX. Earned, not declared.
 
-The twelve signs will be fine either way. They were fine before ledgers; they'll be fine after whatever comes next. What's being tested here is one narrow idea: that names everyone already knows spare a new kind of record the one cost that kills most of its kind, and that if that's true, strangers will keep arriving at these twelve records on their own, and the scoreboard on this page will slowly stop saying zero. That's the whole thesis: a prediction made in public, with a deadline, judged by rules published before the answer was known. It is not a promise.
+The twelve signs never needed a ledger. They carried themselves for twenty-four centuries, through every format that tried to hold them, and they'll keep doing that. What the records add is narrower and newer: a named place in something that old, held on rails anyone can verify, with every fact about the instrument published where anyone can check it.
 
-If you take one thing from this page, take the method: receipts over claims, strangers over friends, tests that can fail over stories that can't. The signs earned their permanence over twenty-four centuries. The records have two years so far, and the scoreboard above is where you can watch the rest.
+Standing like that isn't declared; it's earned in public, at its own pace, on criteria set down in advance. Not a promise: a method. If you take one thing from the essay, take the method: receipts over claims, strangers over friends, criteria published before the answer is known. It's how the signs earned their permanence, and it's the only way the records can earn theirs.
 
 *Zodiacs.org — The Registry · An editorial thesis · not advice · The Zodiac Standard, Nº 07 · [changelog — in the appendix]*
 
