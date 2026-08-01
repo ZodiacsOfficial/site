@@ -137,7 +137,7 @@ try {
       && heroVideoStart.loop
       && heroVideoStart.muted
       && heroVideoStart.playsInline
-      && heroVideoStart.poster === '/assets/art/zodiac-clock-960.avif'
+      && heroVideoStart.poster === '/assets/art/zodiac-clock-768.avif'
       && heroVideoStart.source === '/assets/art/zodiac-clock.mp4'
       && !heroVideoStart.paused
       && !heroVideoLater.paused
