@@ -109,15 +109,23 @@ export async function attentionFigureSvg() {
   s += `<path d="${area}" fill="rgba(198,204,218,0.05)"/>`;
   s += `<path d="${path}" fill="none" stroke="#C6CCDA" stroke-width="1.6"/>`;
   const fromIso = iso(snap.from), toIso = iso(snap.to);
+  // Each ingress tick wears the hue of the sign the sun is entering — the
+  // twelve pastel disc hues, the site's only chroma.
+  const SIGN_HUES = {
+    aries: '#DE8E79', taurus: '#B9D4BE', gemini: '#B29DD0', cancer: '#B6D4E4',
+    leo: '#E0A9B4', virgo: '#B7D9B0', libra: '#D3A9DE', scorpio: '#B9DCE8',
+    sagittarius: '#E0B080', capricorn: '#C0DEA8', aquarius: '#AE8FC9', pisces: '#A9D4C4',
+  };
   for (const w of ing.windows.filter((w) => w.planet === 'Sun' && w.from > fromIso && w.from < toIso)) {
     const x = dX(Date.parse(w.from));
-    s += `<line x1="${x}" y1="${py1 + 22}" x2="${x}" y2="${py1 + 30}" stroke="#8E96AB" stroke-width="1.5"/>`;
+    const hue = SIGN_HUES[w.sign] || '#8E96AB';
+    s += `<line x1="${x}" y1="${py1 + 21}" x2="${x}" y2="${py1 + 31}" stroke="${hue}" stroke-width="2.5"><title>sun enters ${w.sign}</title></line>`;
   }
   for (const e of ecl.eclipses.filter((e) => e.peak > fromIso && e.peak < toIso)) {
     const x = dX(Date.parse(e.peak));
     s += `<path d="M ${x} ${py1 + 21} l 4.5 5 l -4.5 5 l -4.5 -5 Z" fill="#EEF1F7"/>`;
   }
-  s += text(px0, py1 + 46, '▏ sun enters a new sign (ephemeris register) · ◆ eclipse');
+  s += text(px0, py1 + 46, '▏ sun enters a new sign, tick in that sign’s hue (ephemeris register) · ◆ eclipse');
   let mi = 0;
   pts.forEach((p, i) => { if (p.v > pts[mi].v) mi = i; });
   const mx = dX(ts[mi]), my = vY(pts[mi].v);
