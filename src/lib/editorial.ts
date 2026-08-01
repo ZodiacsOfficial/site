@@ -6,6 +6,8 @@
  * are emitted for search engines or readers.
  */
 
+import { absoluteBrandIconUrl, BRAND_ICON_PATHS } from './brand-icons.mjs';
+
 export const EDITOR_NAME = 'Zodiacs.org Editorial System';
 export const EDITOR_ID = 'https://zodiacs.org/#org';
 export const EDITOR_PATH = '/about/#editorial-system';
@@ -19,7 +21,7 @@ export const EDITOR_ORGANIZATION = {
   url: 'https://zodiacs.org/',
   logo: {
     '@type': 'ImageObject',
-    url: 'https://zodiacs.org/assets/app-icons/icon-512.png',
+    url: absoluteBrandIconUrl(BRAND_ICON_PATHS.icon512),
     width: 512,
     height: 512,
   },

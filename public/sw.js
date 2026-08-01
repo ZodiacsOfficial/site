@@ -174,8 +174,8 @@ if (PUSH_ENABLED) {
 
     event.waitUntil(self.registration.showNotification(title, {
       body,
-      icon: '/assets/app-icons/icon-192.png',
-      badge: '/assets/app-icons/icon-192.png',
+      icon: '/assets/app-icons/v2/icon-192.png',
+      badge: '/assets/app-icons/v2/icon-192.png',
       tag: 'zodiacs-sky-alert',
       data: { url: path },
     }));
