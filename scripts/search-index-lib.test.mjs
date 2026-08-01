@@ -159,8 +159,8 @@ describe('curated wing search entries', () => {
       }),
       expect.objectContaining({
         path: '/thesis/',
-        title: 'The Zodiac Standard — the Registry thesis',
-        description: 'Twelve old names, twelve new records — the essay of record, with published disclosures.',
+        title: 'Why Zodiacs Matter — the Registry thesis',
+        description: 'Bitcoin made digital ownership possible. Zodiacs makes it personal — with the evidence and open questions in plain sight.',
       }),
       expect.objectContaining({
         path: '/sdk/',

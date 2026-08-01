@@ -76,10 +76,10 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   }),
   freezeCuratedEntry({
     path: '/thesis/',
-    title: 'The Zodiac Standard — the Registry thesis',
-    description: 'Twelve old names, twelve new records — the essay of record, with published disclosures.',
+    title: 'Why Zodiacs Matter — the Registry thesis',
+    description: 'Bitcoin made digital ownership possible. Zodiacs makes it personal — with the evidence and open questions in plain sight.',
     kind: 'registry',
-    keywords: ['registry', 'thesis', 'record', 'disclosures'],
+    keywords: ['registry', 'thesis', 'record', 'disclosures', 'identity', 'ownership'],
   }),
   freezeCuratedEntry({
     path: '/sdk/',
