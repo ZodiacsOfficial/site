@@ -63,11 +63,11 @@ export const OG_EN = Object.freeze({
   },
   thesis: {
     kicker: 'The Thesis',
-    title: 'The Zodiac Standard',
-    footer: 'zodiacs.org — The Registry · Belief is the oldest asset · Nº 07',
+    title: 'Why Zodiacs Matter',
+    footer: 'zodiacs.org — The Registry · Digital ownership, made personal · Nº 08',
     path: '/thesis/',
     image: '/assets/og/v2/thesis.png',
-    alt: 'The Zodiac Standard — the Zodiacs.org Registry thesis.',
+    alt: 'Why Zodiacs Matter — the Zodiacs.org Registry thesis.',
   },
   disclosure: {
     kicker: 'Registry disclosure',

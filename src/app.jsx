@@ -2220,7 +2220,7 @@
             <span>MMXXVI</span>
           </div>
           <a className="phil__more" href="/thesis/">
-            <span>Read the full thesis — belief is the oldest asset</span>
+            <span>Read the full thesis — why Zodiacs matter</span>
             <span className="phil__more-arr" aria-hidden="true">→</span>
           </a>
         </section>

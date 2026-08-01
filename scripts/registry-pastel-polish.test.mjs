@@ -87,7 +87,7 @@ describe('registry pastel polish', () => {
     expect(source).not.toContain('<a className="reg__story-link" href="/thesis/">');
     expect(registry).not.toContain('<p><a href="/thesis/">Read the Registry thesis →</a></p>');
     expect(source).toContain('id="thesis" className="phil reveal"');
-    expect(source).toContain('Read the full thesis — belief is the oldest asset');
+    expect(source).toContain('Read the full thesis — why Zodiacs matter');
     expect(registry).toContain('registry-collection-hero:slot');
     expect(registry).not.toContain('cine__why');
     expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');

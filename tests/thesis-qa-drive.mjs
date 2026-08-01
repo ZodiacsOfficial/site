@@ -32,8 +32,16 @@ const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
 const shot = async (page, sel, path) => {
   if (!OUT) return;
-  if (sel) await page.locator(sel).screenshot({ path: `${OUT}/${path}` }).catch(() => {});
-  else await page.screenshot({ path: `${OUT}/${path}` }).catch(() => {});
+  if (sel) {
+    const target = page.locator(sel);
+    await target.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(350);
+    await target.screenshot({ path: `${OUT}/${path}` }).catch(() => {});
+  } else {
+    await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+    await page.waitForTimeout(350);
+    await page.screenshot({ path: `${OUT}/${path}` }).catch(() => {});
+  }
 };
 
 try {
@@ -51,9 +59,10 @@ try {
   await page.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
 
   // Anchors resolve.
-  for (const id of ['the-system', 'attention', 'pulse', 'belief-pays', 'belief-becomes-record',
-    'the-candidacy', 'what-holding-means', 'the-test', 'why-solana-why-base',
-    'the-case-against', 'the-instrument', 'the-slower-bet', 'changelog', 'essay']) {
+  for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'worth-holding',
+    'pulse', 'the-candidacy', 'what-holding-means', 'the-public-record', 'the-test',
+    'why-solana-why-base', 'the-case-against', 'the-instrument', 'the-honest-ending',
+    'changelog', 'essay']) {
     check(`anchor #${id} resolves`, (await page.locator(`[id="${id}"]`).count()) === 1);
   }
 
@@ -62,10 +71,12 @@ try {
   check('season clock renders', /season · day \d+ of \d+/.test(clock ?? ''), clock ?? '(hidden)');
 
   // Masthead + footer + changelog entries.
-  check('masthead reads Nº 06 · Revised', /Nº 06 · Revised/.test(await page.locator('.essay__rail').textContent() ?? ''));
+  check('masthead reads Nº 08 · Why Zodiacs Matter', /Nº 08 · Why Zodiacs Matter/.test(await page.locator('.essay__rail').textContent() ?? ''));
+  check('hero leads with the consumer thesis',
+    /Bitcoin made digital ownership possible\. Zodiacs makes it personal\./.test(await page.locator('.hero__epi').textContent() ?? ''));
   check('footer links the changelog', (await page.locator('.sig a[href="#changelog"]').count()) === 1);
   const changelog = await page.locator('#changelog').textContent() ?? '';
-  check('changelog carries Nº 06 and preserves Nº 05', /Nº 06 — July 2026/.test(changelog) && /Nº 05 — July 2026/.test(changelog));
+  check('changelog carries Nº 08 and preserves Nº 07', /Nº 08 — Why Zodiacs Matter/.test(changelog) && /Nº 07 — July 2026\. The Zodiac Standard/.test(changelog));
 
   // Resolved disclosures — no amber chip remains after hydration settles.
   await wait(600);
@@ -87,19 +98,31 @@ try {
   check('test card admits the test has not begun', /has not begun/.test(tcard));
   check('test card fixes the no-later-than date', /2026-10-31/.test(tcard));
 
-  // Objection chips link to their sections.
-  check('objection chips render', (await page.locator('.chip-ref').count()) === 5);
-  check('testable chip targets §VII', (await page.locator('a.chip-ref[href="#the-test"]').count()) === 1);
+  // The human visual layer renders before the detailed evidence.
+  check('seven-era transmission renders', (await page.locator('.transmission .era').count()) === 7);
+  check('twelve-sign seasonal wheel renders', (await page.locator('.zodiac-wheel__sign').count()) === 12);
+  check('ownership and meaning bridge renders', (await page.locator('.meaning-bridge .bridge-card').count()) === 2);
+  check('consumer journey renders', (await page.locator('.journey__step').count()) === 4);
+  check('public scrapbook renders', (await page.locator('.scrapbook__entry').count()) === 6);
+  check('plain candidacy snapshot renders', (await page.locator('.human-score__item').count()) === 4);
+  check('three-question test renders', (await page.locator('.test-question').count()) === 3);
+  check('plain-language instrument renders', (await page.locator('.fact-card').count()) === 6);
+  check('technical evidence is progressively disclosed', (await page.locator('details.evidence-drawer').count()) >= 8);
 
   // Pulse caption present, directly after the instrument.
   check('pulse caption present', /Attention is an input, never proof of demand\./
     .test(await page.locator('.pulse-caption').textContent() ?? ''));
 
-  // Origin receipts are linked from §X prose.
-  check('§X links the registry disclosure origin row',
-    (await page.locator('#the-instrument a[href="https://zodiacs.org/disclosure/#origin"]').count()) === 1);
+  // Origin receipts stay linked from the public-history story.
+  check('public history links the registry disclosure origin row',
+    (await page.locator('#the-public-record a[href="https://zodiacs.org/disclosure/#origin"]').count()) === 1);
 
   // Evidence shots — desktop.
+  await shot(page, '#fig-1', 'thesis-f1-desktop.png');
+  await shot(page, '#fig-2', 'thesis-f2-desktop.png');
+  await shot(page, '#fig-3', 'thesis-f3-desktop.png');
+  await shot(page, '#what-holding-means', 'thesis-journey-desktop.png');
+  await shot(page, '#the-public-record', 'thesis-history-desktop.png');
   await shot(page, '#the-candidacy', 'thesis-v-desktop.png');
   await shot(page, '#the-test', 'thesis-vii-desktop.png');
   await shot(page, '#the-case-against', 'thesis-ix-desktop.png');
@@ -144,13 +167,19 @@ try {
       doc: document.documentElement.scrollWidth, win: window.innerWidth,
     }));
     check(`${width}px: no page-level horizontal overflow`, overflow.doc <= overflow.win, `${overflow.doc} vs ${overflow.win}`);
+    await mob.locator('#the-instrument details.evidence-drawer').evaluate((n) => { n.open = true; });
     const discScroll = await mob.locator('.disc-scroll').evaluate((n) => n.scrollWidth > n.clientWidth);
     check(`${width}px: disclosure table scrolls inside its own region`, discScroll);
-    for (const sel of ['.tline-scroll', '.tcard', '.score', '.ednote']) {
+    for (const sel of ['.story-figure', '.truth-panel', '.meaning-bridge', '.journey', '.human-score', '.test-questions', '.fact-grid']) {
       const fits = await mob.locator(sel).first().evaluate((n, w) => n.getBoundingClientRect().right <= w + 1, width);
       check(`${width}px: ${sel} fits the viewport`, fits);
     }
     if (width === 375) {
+      await shot(mob, '#fig-1', 'thesis-f1-mobile.png');
+      await shot(mob, '#fig-2', 'thesis-f2-mobile.png');
+      await shot(mob, '#fig-3', 'thesis-f3-mobile.png');
+      await shot(mob, '#what-holding-means', 'thesis-journey-mobile.png');
+      await shot(mob, '#the-public-record', 'thesis-history-mobile.png');
       await mob.locator('#the-candidacy').scrollIntoViewIfNeeded();
       await shot(mob, '#the-candidacy', 'thesis-v-mobile.png');
       await shot(mob, '#the-test', 'thesis-vii-mobile.png');
