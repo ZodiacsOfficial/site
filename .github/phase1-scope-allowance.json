@@ -1,8 +1,7 @@
 {
   "version": 1,
-  "id": "complete-zodiac-wheel-icon-2026-08-01",
-  "reason": "Owner-reported icon regression repair, August 1, 2026: replace near-boundary and stale-cached favicon, Apple, and PWA artwork with the complete twelve-sign wheel on cache-busted paths. The protected Registry and SDK pages change only their shared head icon metadata; their content and behavior remain unchanged.",
-  "baseCommit": "1c8d35a79cc98b85e0a1b72cf83a35c079f50f49",
+  "id": "thesis-n09-v3-site-icons",
+  "baseCommit": "12b4e115cc2545af62dddbcb1e7e9ee7e8ba6e4f",
   "protectedPaths": [
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",
@@ -17,8 +16,6 @@
     "public/registry/scorpio/index.html",
     "public/registry/taurus/index.html",
     "public/registry/virgo/index.html",
-    "public/sdk/index.html",
-    "scripts/build-app-icons.mjs",
-    "scripts/build-sign-pages.mjs"
+    "public/sdk/index.html"
   ]
 }
