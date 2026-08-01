@@ -139,6 +139,51 @@ async function visibleFaviconDotCount(image) {
   return visibleDots;
 }
 
+async function pixelDifference(leftImage, rightImage) {
+  const [left, right] = await Promise.all([
+    sharp(leftImage).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
+    sharp(rightImage).ensureAlpha().raw().toBuffer({ resolveWithObject: true }),
+  ]);
+  expect(left.info).toMatchObject({
+    width: right.info.width,
+    height: right.info.height,
+    channels: right.info.channels,
+  });
+  let totalDelta = 0;
+  let maxDelta = 0;
+  let changedChannels = 0;
+  for (let index = 0; index < left.data.length; index += 1) {
+    const delta = Math.abs(left.data[index] - right.data[index]);
+    totalDelta += delta;
+    maxDelta = Math.max(maxDelta, delta);
+    if (delta > 0) changedChannels += 1;
+  }
+  return {
+    meanDelta: totalDelta / left.data.length,
+    maxDelta,
+    changedRatio: changedChannels / left.data.length,
+  };
+}
+
+function icoPngFrames(icon) {
+  const count = icon.readUInt16LE(4);
+  return Array.from({ length: count }, (_, index) => {
+    const entry = 6 + index * 16;
+    const length = icon.readUInt32LE(entry + 8);
+    const offset = icon.readUInt32LE(entry + 12);
+    return icon.subarray(offset, offset + length);
+  });
+}
+
+async function expectEquivalentPixels(leftImage, rightImage) {
+  const difference = await pixelDifference(leftImage, rightImage);
+  // PNG compression is platform-dependent. Decoded output should be exact in
+  // practice, with a tiny allowance for architecture-specific resize math.
+  expect(difference.meanDelta).toBeLessThanOrEqual(0.1);
+  expect(difference.maxDelta).toBeLessThanOrEqual(8);
+  expect(difference.changedRatio).toBeLessThanOrEqual(0.01);
+}
+
 describe('PWA icon compositor', () => {
   it('renders the canonical wheel at manifest resolution', async () => {
     const image = await composeWheelIcon(192);
@@ -224,18 +269,35 @@ describe('PWA icon compositor', () => {
       expect(ico.readUInt16LE(4)).toBe(3);
       expect([ico.readUInt8(6), ico.readUInt8(22), ico.readUInt8(38)]).toEqual([16, 32, 48]);
 
-      const generatedPublicPaths = [
-        ...Object.values(BRAND_ICON_PATHS),
-        '/favicon.ico',
+      const rasterPublicPaths = [
+        BRAND_ICON_PATHS.favicon16,
+        BRAND_ICON_PATHS.favicon32,
+        BRAND_ICON_PATHS.favicon,
+        BRAND_ICON_PATHS.appleTouch,
+        BRAND_ICON_PATHS.icon192,
+        BRAND_ICON_PATHS.icon512,
+        BRAND_ICON_PATHS.maskable512,
         '/apple-touch-icon.png',
         '/assets/app-icons/icon-192.png',
         '/assets/app-icons/icon-512.png',
         '/assets/app-icons/maskable-512.png',
-        '/site.webmanifest',
       ];
-      for (const path of generatedPublicPaths) {
+      for (const path of rasterPublicPaths) {
+        await expectEquivalentPixels(
+          await readFile(resolve(rootDirectory, 'public', path.slice(1))),
+          await readFile(resolve('public', path.slice(1))),
+        );
+      }
+      for (const path of [BRAND_ICON_PATHS.faviconSvg, '/site.webmanifest']) {
         expect(await readFile(resolve(rootDirectory, 'public', path.slice(1))))
           .toEqual(await readFile(resolve('public', path.slice(1))));
+      }
+      const committedIco = await readFile(resolve('public/favicon.ico'));
+      const generatedFrames = icoPngFrames(ico);
+      const committedFrames = icoPngFrames(committedIco);
+      expect(committedFrames).toHaveLength(generatedFrames.length);
+      for (let index = 0; index < generatedFrames.length; index += 1) {
+        await expectEquivalentPixels(generatedFrames[index], committedFrames[index]);
       }
     } finally {
       await rm(rootDirectory, { recursive: true, force: true });
