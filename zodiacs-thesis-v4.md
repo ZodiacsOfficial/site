@@ -1,213 +1,216 @@
 <!--
-THESIS v4.9 — "Why Zodiacs Matter"
-CHANGELOG v4.8 → v4.9:
-- Rebuilt the essay for everyday astrology consumers around recognition, identity,
-  gifting, and portable ownership.
-- Clarified the division of labor: Bitcoin established digital ownership; Solana
-  and Base provide practical rails; the zodiac contributes meaning, lore, and
-  identity. The essay does not claim Zodiacs repairs or replaces Bitcoin.
-- Replaced the technical-first visual sequence with an illustrated almanac layer:
-  a seven-era transmission, seasonal wheel, ownership-and-meaning bridge, consumer
-  journey, public scrapbook, plain-language scoreboard, and readable instrument.
-- Kept the raw timelines, charts, tables, score criteria, and receipts behind
-  progressive-disclosure evidence drawers. No caveat or disclosure was removed.
+THESIS v4.10 — "Why Zodiacs Matter", Nº 09
+CHANGELOG v4.9 → v4.10:
+- Rebuilt the main essay as five consumer-facing movements around a familiar sign,
+  inherited lore, digital ownership, modern rails, and everyday use.
+- Moved methodology, adverse history, operator relationships, market risk, test
+  thresholds, and source qualifications into Evidence & disclosures.
+- Recast the Gold–Bitcoin–Zodiacs comparison as an always-visible binary matrix.
+  Body cells contain only checks and Xs; definitions and sources sit below it.
+- Extended the illustrated-almanac direction across every figure and updated the
+  edition to Nº 09. Raw registers, receipts, and historical files remain intact.
 -->
 
 # Why Zodiacs Matter
 
 *Bitcoin made digital ownership possible. Zodiacs makes it personal.*
 
-Before you had a username, you had a sign. Now that old answer can become something you hold, gift, display, and carry across the digital world.
+Before you had a username, you had a sign. Now that old answer can become something you keep, show, gift, and carry across the digital world.
 
 *Read the story*
 
 ---
 
-## Part I. Everyone has a sign.
+## Part I. The sign you already carry.
 
-Before you had a username, you had a sign. Maybe you read your horoscope every morning. Maybe you only think about it when a friend blames Mercury or someone asks on a first date. Either way, you know your answer. Aries. Cancer. Libra. Pisces. One of twelve small stories that people have been carrying for centuries.
+Before you had a username, you had a sign.
 
-That familiarity is unusual. Most symbols that travel this far belong to a company, a country, or a religion. The zodiac belongs to no one. No headquarters keeps it alive. People do — in newspaper columns, birth charts, group chats, necklaces, memes, and the question, “What’s your sign?”
+Maybe you read your horoscope every morning. Maybe astrology only comes up when a friend blames Mercury, a date asks for your birth time, or a birthday gift calls for something personal. You still know the answer: Aries, Taurus, Gemini, Cancer, Leo, Virgo, Libra, Scorpio, Sagittarius, Capricorn, Aquarius, or Pisces.
 
-The internet made these stories easier to share, but not easier to keep. A badge on one app usually stays on that app. A profile can disappear when a platform changes its rules. Something that feels like yours is often only being lent to you.
+That answer is part of everyday language. “Such a Leo” can be praise or a gentle roast. A Cancer pendant can feel more personal than a logo. Two strangers can compare signs before they know each other’s last names. The zodiac gives people twelve familiar ways to talk about character, compatibility, timing, and themselves.
 
-In July 2024, the twelve signs were given a new form: twelve public digital records, one for each sign. A Leo can now hold *Leo*. A Taurus can gift *Taurus*. The record can travel between apps without asking any one app for permission.
+Most symbols with that reach belong to a company, country, or institution. The zodiac is different. It lives in birth charts and newspaper columns, on necklaces and dating profiles, in group chats and memes. It travels because people carry it.
 
-That does not make it valuable. It makes it possible. This essay is about why the possibility is interesting — and what these young records still have to prove.
+The internet made the signs easier to share, but most digital expressions still belong to the place where they appear. A profile badge stays inside one app. A collection can vanish when a platform closes. The image may feel like yours while the platform controls the master list.
 
----
+In July 2024, the twelve signs gained another form: twelve public digital records, one for each sign. A Leo can hold *Leo*. A Taurus can gift *Taurus*. Each record can move from one wallet or application to another while its history remains publicly checkable.
 
-## Part II. A story that kept changing homes.
-
-The zodiac as we know it — twelve equal signs from Aries to Pisces — took shape in Babylonian astronomy around the fifth century BCE. It is roughly 2,400 years old. But its real achievement is not simply age. It is adaptation.
-
-The signs moved from clay tablets to star maps, from handwritten manuscripts to printed almanacs, from the Sunday paper to the phone in your hand. The carriers changed. The pictures changed. The meanings changed. The twelve names kept finding their way into the next medium.
-
-[FIGURE F1 — "The transmission." The primary visual is an illustrated sequence: clay tablet → star map → manuscript → almanac → newspaper → phone → public record. Caption: *The fixed twelve-sign vocabulary survived by moving with people. The new public records are another proposed home, not a replacement for any earlier one.* A disclosure drawer preserves the full dated historical timeline.]
-
-It is still alive because it has a rhythm. Every morning brings twelve new horoscopes. Every month the sun enters another sign. Birthdays arrive all year. An eclipse or retrograde can take over a group chat for a week. The zodiac gives people a recurring reason to return.
-
-That rhythm does not require deep belief. [Most people who check a horoscope say they do it for fun](https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/). Fun still matters. It is how people play with identity, start conversations, and recognize one another.
-
-[FIGURE F2 — "The rhythm repeats." The primary visual is a colorful wheel of twelve signs around the year. Caption: *Recurring publishing occasions in Western astrology, with measured attention around each. Cadence and response, not demand for any record.* A disclosure drawer preserves the generated twelve-month Wikimedia attention chart and source note.]
-
-[AUDIENCE RESEARCH — a disclosure drawer preserves the source-labeled YouGov, Pew, Tinder, and Co-Star figures.]
-
-Public curiosity can be measured. It shows that people keep returning to the signs. It does *not* show that they want these records. That distinction is the honest center of the thesis.
-
-[ATTENTION SPLIT — one visible panel: measured daily reads across the signs; one visible panel: “Demand is not proven.” The complete live Pulse remains in a disclosure drawer; #pulse is preserved.]
-
-Everything above belongs to the *signs*, and none of it transfers to a token automatically. Anyone can create another Leo token tomorrow. What a record inherits from its name, and what it has to earn on its own, is the distinction that decides everything else.
+A familiar sign can now be held, verified, sent, and carried between apps.
 
 ---
 
-## Part III. Ownership found its human side.
+## Part II. A story that survived every medium.
 
-Bitcoin changed a basic rule of the internet. For the first time, a person could hold something digital without needing a bank, a company, or a platform to keep the master list. You could verify it yourself. You could send it across the world. You could know that no one was quietly making more.
+The twelve-sign zodiac took shape in Babylonian astronomy around the fifth century BCE. Its vocabulary has lasted for roughly 2,400 years because each generation gave it a new format.
 
-That was a breakthrough in ownership. But ownership alone does not tell you why an ordinary person would care. A string of numbers can be scarce, fast, and secure while still feeling like a string of numbers.
+It moved from clay tablets to star maps. Scribes copied it into manuscripts. Printers placed it in almanacs. Newspapers gave it a daily column. Radio hosts read horoscopes on air. Apps turned a birth chart into something you could carry in your pocket. Every medium changed the presentation. The twelve names kept arriving intact.
 
-Zodiacs begins from the other direction. The meaning already exists. The names are familiar. The stories are personal. The new part is giving those stories the same useful properties that Bitcoin introduced: something digital that can be held, verified, and sent.
+[FIGURE F1 — "The transmission." An illustrated almanac sequence carries one multicolor thread through a clay tablet, star map, manuscript, almanac, newspaper, phone, and public record. Each era has its own pastel halo and crafted object. Caption: *The format keeps changing. The twelve signs keep traveling.* A disclosure drawer preserves the complete dated historical timeline and sources.]
 
-The speed and low cost come from the networks underneath — Solana today, with records bridged to Base. The meaning does not come from a blockchain. It comes from people recognizing the twelve signs and seeing themselves in one of them.
+Gold has endured for a similar human reason. Long before it became a line on a market screen, people made it into rings, offerings, heirlooms, and symbols of status. Its history gives it a meaning that chemistry alone cannot explain. The zodiac also carries an inheritance: stories, symbols, rituals, and recognition gathered across generations.
 
-[FIGURE F3 — "The meeting point." Digital ownership contributes *hold, verify, send*. The zodiac contributes *recognize, express, belong*. They join at Zodiacs. Caption: *The networks provide speed, cost, and verifiability. The zodiac provides recognition, lore, and identity. Neither one proves demand for these records.* The property comparison with gold and Bitcoin remains in a disclosure drawer.]
+It remains present because it has a rhythm. Every morning brings twelve new horoscopes. Birthdays carry the signs through the year. Every month opens another season. An eclipse or retrograde can take over a group chat for a week.
 
-This is not a replacement for Bitcoin, and the zodiac does not repair it. They answer different needs. Bitcoin proved that digital scarcity could work. Zodiacs asks what happens when that kind of ownership carries a story people already know.
+This rhythm leaves a visible cultural trace. [Most Americans who consult astrology or horoscopes say they do it mostly for fun](https://www.pewresearch.org/religion/2025/05/21/3-in-10-americans-consult-astrology-tarot-cards-or-fortune-tellers/). Fun is where much of culture lives: in small rituals, shared references, and playful ways of saying who we are.
 
-There is one limit that must stay in view: **the twelve signs are scarce, but tokens named after them are not.** Anyone can create another Leo. These records only matter if people freely choose them over the copies. That choice cannot be written into existence. It has to be earned.
+[FIGURE F2 — "The rhythm repeats." A richer twelve-segment orbit follows the signs through the year, with a quiet sun-and-moon center, soft star field, and illustrated publishing moments. Caption: *Twelve signs create a reason to return every day, every season, and every birthday.* The generated twelve-month Wikimedia attention chart and source note remain in a disclosure drawer.]
 
----
+[AUDIENCE RESEARCH — a disclosure drawer preserves the source-labeled Pew, YouGov, Tinder, and Co–Star figures. The complete live Pulse remains available at #pulse.]
 
-## Part IV. A badge you can carry.
-
-Holding Leo does not prove you are a Leo. A wallet does not know your birthday, and it should not. Think of the record like a jersey, a charm, or a favorite card: a way to show an affinity, not an official document about who you are.
-
-[CONSUMER JOURNEY — keep it → show it → gift it → carry it.]
-
-**A badge, not a birth certificate.** It expresses identity. It does not verify identity, predict your future, or grant membership in anything.
-
-Why these twelve records instead of a copy made tomorrow? They have a dated beginning, a continuous public history, and an open [software kit](https://zodiacs.org/sdk/) that other apps can read. Those are useful beginnings, not a crown. Openness also makes the idea easy to copy. A larger company could launch another set. An older record could surface. People could simply decide they do not want any of them.
-
-Today, the working experiences are mostly built by the same operator behind this registry, including [Astrofolio](https://astrofolio.xyz/). That proves the records can be used. It does not prove that independent builders or everyday astrology consumers will choose them. The public test in Part VI is designed to tell the difference.
-
-People already pay for readings, subscriptions, and astrology apps. None of that spending belongs to these records. A person buying a horoscope proves that person wanted a horoscope — not a token. The gap between those two things is the entire bet.
-
-MARKET RESEARCH — a disclosure drawer preserves the source-labeled figures from [Allied Market Research](https://www.alliedmarketresearch.com/press-release/astrology-market.html), [Sensor Tower](https://sensortower.com/blog/astrology-apps-2019-revenue-downloads), and [Axios, 2021](https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding).
+A symbol lasts when people can recognize it in its next form. Clay became paper. Paper became pixels. A public digital record is the latest place the signs can live.
 
 ---
 
-## Part V. A young record with nothing hidden.
+## Part III. Ownership becomes personal.
 
-The zodiac is ancient. These records are not. They began on 5 July 2024, and their short life includes a launch, early trading, fair criticism, long quiet stretches, one very strange Libra mix-up, and a change in voice. All of it belongs in the story.
+Bitcoin introduced a new kind of ownership to the internet. A digital asset could have a limited supply, a public history, and an owner who did not need a bank or platform to hold it. Anyone could inspect the ledger. One person could send value directly to another. The rules were enforced by a network rather than a company’s private database.
 
-[PUBLIC SCRAPBOOK]
+That breakthrough was deliberately universal. One bitcoin carries the same rules across birthdays, hometowns, and tastes. Its neutrality is part of its strength.
 
-- **5 July 2024.** The twelve are created. The public [creation receipts](https://zodiacs.org/disclosure/#origin) remain available.
-- **6 July onward.** Small, independent trading begins. Not a mass movement; a niche beginning.
-- **Mid-July 2024.** The first concentration criticism arrives. The criticism and the answer are both preserved.
-- **17 February 2025.** A famous account buys this Libra during a frenzy around another token with the same name, then says the purchase was a mistake. Visible, funny, and not lasting demand.
-- **2024–2026.** The operator keeps posting through long quiet stretches. Independent attention stays rare. “Dead bag” comments remain in the archive alongside favorable moments.
-- **Now.** Launch slogans have given way to a registry, disclosures, and a test that can fail. The earlier memecoin voice remains in the record.
+Zodiacs begins with something personal. The names already mean something to people. The new step is to make each sign holdable, transferable, and independently verifiable. Bitcoin supplied the ownership model. Solana supplies fast, low-cost execution. The zodiac supplies recognition, lore, and identity.
 
-Persistence matters, but persistence by the operator is not public adoption. The next chapter asks the harder question: are people with no connection to this project choosing the records for themselves?
+[FIGURE F3 — "The meeting point." Gold contributes illustrated layers of history and lore. Bitcoin contributes a public ledger, ownership key, and verification path. Solana contributes speed, low fees, and efficient movement. The three streams converge on a complete twelve-sign rosette labeled Zodiacs. Caption: *Old stories meet digital ownership on modern rails.*]
 
-[FIGURE F4 — a disclosure drawer preserves the full dated public-history timeline, adverse events included, with every node keyed to thesis-history.json.]
+Gold carries history and lore. Bitcoin made ownership digital. Solana makes it fast and efficient. Zodiacs brings those qualities to a sign people already know.
 
----
+### Gold, Bitcoin, and Zodiacs.
 
-## Part VI. What still has to be earned.
+| Property | Gold | Bitcoin | Zodiacs |
+|---|:---:|:---:|:---:|
+| Millennia of history | ✓ | × | ✓ |
+| Ancient mythology and symbolism | ✓ | × | ✓ |
+| Identity from birth | × | × | ✓ |
+| Scarcity | ✓ | ✓ | ✓ |
+| Fixed supply | × | ✓ | ✓ |
+| Public verification | × | ✓ | ✓ |
+| Digital ownership | × | ✓ | ✓ |
+| Permissionless online transfer | × | ✓ | ✓ |
+| Programmable | × | ✓ | ✓ |
+| Base-layer settlement in seconds | × | × | ✓ |
+| Predictably low base-layer fees | × | × | ✓ |
 
-No one appointed these records “official,” and this registry has no authority to make them so. The only meaningful kind of standing is chosen standing: independent people and builders using these records when they could use anything else.
+Gold carries history, symbolism, and natural scarcity. Bitcoin brought fixed digital scarcity, public verification, and direct internet ownership. Zodiacs combines the inherited world of the zodiac with blockchain ownership and Solana’s modern performance.
 
-The latest snapshot is mixed, and mostly early. The markets and archive are still present. Independent adoption has not arrived. Holder concentration has not improved. That is not a verdict; it is the starting score.
+<details>
+<summary>How this comparison is measured</summary>
 
-The strict rule is simple: friends, paid campaigns, operator-owned apps, and operator-controlled wallets do not count as outside adoption. Only strangers count.
+The checks describe the property named by each row; they are not investment ratings.
 
-[PLAIN-LANGUAGE SCORE — independent builders: not yet; unprompted citations: not yet; broader ownership: needs work; markets and archive: present. A disclosure drawer preserves the complete dated candidacy scoreboard and exclusions; #the-candidacy is preserved.]
+**Millennia of history** and **ancient mythology and symbolism** refer to the cultural subject carried by the asset. For Zodiacs, that subject is the ancient zodiac; the public digital records themselves date from 2024. **Identity from birth** means that a zodiac sign is culturally assigned from a birth date. It is an expression of identity, not identity verification.
 
-These criteria work both ways. If another set earns stronger independent use, the same evidence should favor it. If these records fail to spread beyond their operator, the claim fails with them.
+**Scarcity** means availability is constrained rather than freely reproducible. Gold is naturally scarce, while its total above-ground stock, reserves, and annual production remain estimates rather than a fixed ceiling; see the [World Gold Council’s estimate](https://www.gold.org/goldhub/data/how-much-gold) and the [USGS Mineral Commodity Summaries](https://pubs.usgs.gov/periodicals/mcs2026/mcs2026.pdf). **Fixed supply** means the native issuance rule has a predetermined ceiling. Bitcoin’s terminal issuance is defined by its consensus rules, including [BIP 42](https://bips.dev/42/). The Zodiacs classification reflects the published supplies and renounced native mint authorities in the [registry](https://zodiacs.org/registry/zodiacs.registry.json) and dated [disclosure record](https://zodiacs.org/thesis/thesis-disclosure.json). These checks describe the twelve listed addresses; other people can create assets with the same names.
 
-### Three questions, one honest test.
+**Public verification** means that supply and transfer history can be checked against a public ledger. **Digital ownership** means control is exercised through a cryptographic wallet. **Permissionless online transfer** means an owner can send the asset over its native network without project approval. **Programmable** means the asset can participate in rules executed by software; Bitcoin supports this through Script and transaction contracts described in the [Bitcoin developer guide](https://developer.bitcoin.org/devguide/transactions.html), while Zodiacs uses its listed token standards, public registry, and [SDK](https://zodiacs.org/sdk/).
 
-It is easy to say people would hold their signs if crypto were simpler. So the complexity will be removed: one tap, clear language, and no need to understand a blockchain first. Then three ordinary questions decide what happened.
+The final two rows compare native base layers. **Settlement in seconds** refers to ordinary Solana confirmation behavior, while the Bitcoin row refers to Bitcoin’s base chain rather than Lightning. **Predictably low base-layer fees** describes Solana’s protocol fee structure, documented in [Solana’s fee guide](https://solana.com/docs/core/fees); it does not mean free transactions or guarantee a fixed fiat cost.
 
-1. **Will people claim one?** Real, unique participants rather than followers recruited for a campaign.
-2. **Will they keep it?** Still held ninety days later, after the novelty has passed.
-3. **Will ownership spread?** More broadly held, rather than gathering in the same few wallets.
-
-The thresholds and deadline were published before the test began. All three must pass for a success. The result will be published even if the answer is no. A thesis that cannot lose is not a thesis.
-
-[TEST COMMITMENT — a disclosure drawer preserves the preregistered start, thresholds, and verdict rule from thesis-test.json; #the-test is preserved.]
-
----
-
-## Part VII. What you would actually hold.
-
-A beautiful name can still be attached to a badly designed token. So the basic facts should be understandable before anyone reaches a block explorer.
-
-[PLAIN-LANGUAGE INSTRUMENT — six aggregate facts: total supply; mint authority; freeze authority; holder concentration; bridge; treasury. The complete per-sign table and every available receipt remain in a disclosure drawer; #the-instrument is preserved.]
-
-Each figure is published with its definition, date, and verification status. No adverse figure is omitted. Concentration is usually unflattering early, and it is printed anyway.
+</details>
 
 ---
 
-## Part VIII. The questions we should ask.
+## Part IV. Modern rails.
 
-A captivating story should make room for doubt. These are the objections that matter most.
+A good consumer experience makes the machinery disappear. Tap a sign. See it in a wallet. Send it to a friend. Open another app and find the same record waiting there.
 
-**Knowing your sign is not the same as wanting a token.** Correct. Recognition is the opening, not the proof. The one-tap test measures whether real people choose and keep the records.
+Solana makes that flow practical. Its network settles ordinary transfers in seconds and charges fees small enough for everyday digital actions. The native records live there. Listed representations on Base extend them to another widely used blockchain environment. The registry connects each familiar name to its published addresses so wallets and applications can identify the same twelve records.
 
-**If people wanted this, wouldn’t it already exist?** Perhaps. It may also be that the old experience was too technical. Removing that friction gives the idea a fair test; it does not guarantee the answer.
+For a person using Zodiacs, the result is more important than the architecture. There is no new account controlled by Zodiacs.org. A wallet holds the record. A public explorer shows the transaction. An app can read the open registry instead of asking a private database which sign is yours.
 
-**Who made these records official?** No one. They are candidates with a head start and a dated history. Use by independent people could give them standing. Lack of use could take the claim away.
+That opens room for experiences that feel natural to astrology consumers. A reading app can recognize the sign a person carries. A creator can make a members-only Leo release. Friends can exchange signs as birthday gifts. A profile can show the same Taurus record across different services. Developers can build these ideas from the public [software kit](https://zodiacs.org/sdk/) rather than waiting for permission.
 
-**Isn’t this still a memecoin?** The records are memetic assets. Their price can move with attention and belief. Ancient names do not remove market risk, and this essay does not promise that they will.
+[CONSUMER JOURNEY — four connected illustrated scenes follow one sign medallion through *keep it → show it → gift it → carry it*. The wallet, profile, gift, and app each use a distinct zodiac pastel while the same sign remains visually continuous.]
 
-**What does this registry sell or promise?** The registry issues nothing, sells nothing, holds nothing for anyone, and promises no yield, buyback, or roadmap. Its operator relationships and holdings are covered in the dated [plain-language disclosures](https://zodiacs.org/disclosure/).
-
-**Doesn’t one operator still control too much of the experience?** Yes. The registry, companion app, and current storytelling share an operator. The files, software kit, and archive are public so others can replace that operator — but independent use is still the stronger proof, and it has not arrived yet.
-
-**What if the story and the numbers disagree?** Trust the numbers. Prose can make a possibility vivid. Only the instrument can show what someone would actually hold.
+Your sign stays recognizable while the apps around it change.
 
 ---
 
-## Part IX. The next place the signs may live.
+## Part V. Something you can carry.
 
-The twelve signs do not need a blockchain. They survived for centuries without one, and they will survive if these records disappear tomorrow. What a public record offers is smaller and more personal: a sign you can keep, show, gift, and carry without leaving it behind every time the internet changes rooms.
+People have always carried symbols. A pendant can mark a memory. A jersey can show allegiance. A favorite card can travel from childhood into adulthood. The object matters because of the story a person attaches to it.
 
-Bitcoin taught the internet how to own. The zodiac already knew how to mean something. Zodiacs is the experiment of bringing those two ideas together — old stories, new ownership, and an honest test of whether anyone wants the combination.
+A Zodiac record belongs in that tradition. Keep your own sign. Show it on a profile. Send someone theirs on a birthday. Carry it into an app that knows how to read it. None of those actions requires a speech about blockchains. They begin with recognition: *that one is mine*.
 
-The possibility is beautiful. The outcome is not promised. If these records earn a place, people will carry them. If they do not, the public record will say so.
+The records also carry a public history. The twelve were created on 5 July 2024, with a public [creation receipt](https://zodiacs.org/disclosure/#origin), followed by public trading, a registry, dated disclosures, and an open SDK. Each step left a receipt. That continuity gives people and builders a common record to inspect and use.
 
-*Zodiacs.org — The Registry · An editorial thesis · not advice · Why Zodiacs Matter, Nº 08 · changelog in the appendix*
+[PUBLIC SCRAPBOOK — a colorful dated sequence shows the creation receipts, first public markets, registry, disclosures, SDK, and current record. Pastel stamps and a multicolor thread replace neutral technical cards. The full history, including adverse events and contemporary commentary, remains in F4’s disclosure drawer.]
+
+[FIGURE F4 — "The public record." A closed evidence drawer preserves the complete dated timeline from thesis-history.json, with every event keyed to its source and capture time.]
+
+You start with the identity you already name when someone asks, “What’s your sign?”
+
+**Find your sign. See its record. Decide what it means to you.**
+
+*Zodiacs.org — The Registry · An editorial thesis · not advice · Why Zodiacs Matter, Nº 09 · changelog in the appendix*
+
+---
+
+# Evidence & disclosures
+
+*The main essay tells the story. This section preserves the definitions, tests, risks, operator relationships, and complete receipts used to evaluate it.*
+
+<details>
+<summary>Open the complete evidence and disclosures</summary>
+
+## The public record.
+
+The complete dated history remains available, including launch material, distribution criticism, quiet periods, same-name confusion, contemporary commentary, and later registry work. Each event includes its source identifier, capture time, and artifact status in `thesis-history.json`. The visible scrapbook uses verified milestones; the F4 drawer carries the complete record.
+
+## Adoption and candidacy.
+
+No institution appointed these records as an official zodiac standard. The candidacy scoreboard measures whether unaffiliated people and builders choose them independently. Friends, paid campaigns, operator-controlled wallets, and products run by the registry operator are excluded from outside-adoption counts.
+
+[CANDIDACY EVIDENCE — render this as the preserved `<section id="the-candidacy">`. A plain-language illustrated sequence summarizes independent builders, unprompted citations, ownership distribution, market continuity, and archive continuity. The complete dated scoreboard, definitions, and exclusions remain in its disclosure drawer.]
+
+Current registry experiences include [Astrofolio](https://astrofolio.xyz/) and share an operator with Zodiacs.org. The dated [plain-language disclosures](https://zodiacs.org/disclosure/) publish operator relationships and holdings so they can be separated from independent use.
+
+## The public test.
+
+The one-tap test asks three questions: whether unique participants claim a sign, whether they still hold it ninety days later, and whether ownership spreads across more wallets. Its cohort rules, exclusions, thresholds, dates, and verdict rule were committed before measurement. All three thresholds must pass for the registered success condition.
+
+[TEST COMMITMENT — render this as the preserved `<section id="the-test">`. Show the claim → keep → spread sequence in the primary illustration. Keep the preregistered thresholds, dates, cohort rules, and verdict logic from thesis-test.json in its disclosure drawer.]
+
+## The instrument.
+
+The instrument publishes supply, mint authority, freeze authority, holder concentration, liquidity, bridge details, treasury or insider holdings, and registry continuity for each sign. Statuses are three-valued: **verified** has a receipt a stranger can check; **operator-attested** is a dated operator statement; **pending** has neither.
+
+[INSTRUMENT — render this as the preserved `<section id="the-instrument">`. The primary visual uses readable receipt cards for total supply, mint authority, freeze authority, holder concentration, bridge, and treasury. Preserve all 114 `data-field` slots, the complete per-sign table, definitions, capture times, and links in its disclosure drawer.]
+
+## Market context and risk.
+
+Zodiacs are transferable digital assets. Prices can move with attention, liquidity, concentration, and broader market conditions. Zodiac history does not remove those risks. The registry issues no new assets, holds nothing for visitors, and promises no yield, buyback, price, or roadmap.
+
+Astrology-market context remains source-labeled in evidence from [Allied Market Research](https://www.alliedmarketresearch.com/press-release/astrology-market.html), [Sensor Tower](https://sensortower.com/blog/astrology-apps-2019-revenue-downloads), and [Axios](https://www.axios.com/2021/04/14/astrology-app-co-star-raises-15-million-funding). Those figures describe astrology products and audiences; they are not attributed to the twelve records.
+
+</details>
 
 ---
 
 # Appendix — The technical record
 
-*Kept apart so the essay reads and the record verifies. Everything below is maintained with the same care as the argument above.*
-
 ## A. Reading the instrument.
 
-The complete table publishes supply, mint authority, freeze authority, holder concentration, liquidity, bridge details, treasury or insider holdings, and registry continuity for each sign. Statuses are three-valued: **verified** means a stranger can check the receipt; **operator-attested** means the operator states it, dated; **pending** means neither. Pending is never dressed as verified.
+Every aggregate and per-sign field carries a definition, capture date, and verification status. The source table includes supply, authorities, concentration, liquidity, bridge details, treasury or insider holdings, and registry continuity. Missing or operator-attested values retain those labels.
 
 ## B. Why Solana. Why Base.
 
-The native records were deployed on Solana. The practical selection factors are transaction cost, confirmation behavior, consumer wallet availability, liquidity venues, and the operator's infrastructure at deployment. Official bridged representations extend each sign to Base through listed Wormhole lock-and-mint contracts. If the bridge fails, the native Solana records stand unaffected; the bridged representations are conveniences, not the record.
+The native records were deployed on Solana. The practical selection factors were transaction cost, confirmation behavior, consumer wallet availability, liquidity venues, and the operator’s deployment infrastructure. Official listed representations extend each sign to Base through Wormhole lock-and-mint contracts. The native Solana records remain the registry’s source records; the Base representations provide additional reach.
 
 ## C. Methodology and evidence.
 
-The Pulse reads open sources on a published schedule: encyclopedia pageviews from the Wikimedia API, with a committed snapshot as fallback, and public Trends data. Pageviews measure curiosity, not bids.
+The Pulse reads open sources on a published schedule: encyclopedia pageviews from the Wikimedia API, with a committed snapshot as fallback, and public Trends data. Pageviews measure public attention. They are presented separately from asset ownership and trading measures.
 
-The candidacy scoreboard and one-tap test use committed JSON registers with definitions, capture times, exclusions, and raw captures in the published [evidence file](https://zodiacs.org/thesis/thesis-candidacy-evidence.json). Only unsolicited, unaffiliated observations count toward pass conditions. The public-history events carry post identifiers, capture times, artifact grades, and live or deleted status. The test criteria, cohort, thresholds, and dates were fixed before the test began, and the result publishes either way.
+The candidacy scoreboard and one-tap test use committed JSON registers with definitions, capture times, exclusions, and raw captures in the published [evidence file](https://zodiacs.org/thesis/thesis-candidacy-evidence.json). Only unsolicited, unaffiliated observations count toward pass conditions. Public-history events carry post identifiers, capture times, artifact grades, and live or deleted status. The test criteria, cohort, thresholds, and dates were fixed before the test began; the registered verdict follows the published rule.
 
 ## D. Verify it yourself.
 
-Each instrument row links to a checkable receipt or is labeled operator-attested or pending. The registry file is at [/registry/zodiacs.registry.json](https://zodiacs.org/registry/zodiacs.registry.json); the [SDK](https://zodiacs.org/sdk/) reads it programmatically. The [disclosure register](https://zodiacs.org/disclosure/) carries operator statements. If a claim and a receipt ever disagree, the receipt wins.
+Each instrument row links to a receipt or carries an operator-attested or pending label. The canonical file is the [Zodiacs registry](https://zodiacs.org/registry/zodiacs.registry.json); the [SDK](https://zodiacs.org/sdk/) reads it programmatically. The [disclosure register](https://zodiacs.org/disclosure/) carries dated operator statements. If a claim and its receipt disagree, use the receipt.
 
 ## E. Changelog.
 
-The essay's revision history from Nº 01 through Nº 08 is preserved. Nº 08 — *Why Zodiacs Matter* — rewrites the thesis around an ordinary person's experience of identity, gifting, and portable ownership. It replaces the technical-first figures with an illustrated almanac layer while preserving the raw evidence in disclosure drawers. It also clarifies that Solana and Base provide speed and cost, while the zodiac supplies recognition, lore, and identity. Every caveat and verifiable receipt from Nº 07 remains available.
+The revision history from Nº 01 onward is preserved.
 
-Nº 07 — *The Zodiac Standard* — rebuilt the thesis around the distinction between inherited recognition and demand, corrected the zodiac chronology, added related-party and prompted-activity exclusions, documented adverse events, and removed unsound market-sizing comparisons.
+Nº 09 — *History, Digital Ownership, and Modern Rails* — rebuilds the essay as five consumer-facing movements. It presents Zodiacs as the meeting point between the zodiac’s inherited history and lore, Bitcoin’s digital-ownership model, and Solana’s speed and cost. The Gold–Bitcoin–Zodiacs matrix now uses only checks and Xs in its body, while definitions and sources live in a dedicated evidence drawer. Methodology, adverse history, operator relationships, market risk, and test details remain available outside the main reading path.
+
+Nº 08 — *Why Zodiacs Matter* — rewrote the thesis around an ordinary person’s experience of identity, gifting, and portable ownership. It introduced the illustrated-almanac layer and separated the consumer narrative from the raw evidence.
+
+Nº 07 — *The Zodiac Standard* — rebuilt the thesis around inherited recognition, corrected the zodiac chronology, added related-party and prompted-activity exclusions, documented adverse events, and removed unsound market-sizing comparisons.

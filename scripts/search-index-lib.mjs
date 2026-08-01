@@ -77,9 +77,9 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
     path: '/thesis/',
     title: 'Why Zodiacs Matter — the Registry thesis',
-    description: 'Bitcoin made digital ownership possible. Zodiacs makes it personal — with the evidence and open questions in plain sight.',
+    description: 'Gold carries history. Bitcoin made ownership digital. Solana makes it fast. Zodiacs brings those qualities to a sign you already know.',
     kind: 'registry',
-    keywords: ['registry', 'thesis', 'record', 'disclosures', 'identity', 'ownership'],
+    keywords: ['registry', 'thesis', 'record', 'zodiac', 'history', 'identity', 'ownership', 'bitcoin', 'solana'],
   }),
   freezeCuratedEntry({
     path: '/sdk/',

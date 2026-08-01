@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "id": "privacy-trust-freshness-release-2026-08-01",
-  "reason": "Owner-authorized production privacy and trust alignment, August 1, 2026: null the analytics referrer on the generated Registry, SDK, and sign-guide surfaces; align localized privacy, methodology, assistant-consent, and unknown-birth-time wording with the same site-wide claims. Registry and SDK product behavior is otherwise unchanged, and every protected path in this release is enumerated exactly below.",
-  "baseCommit": "12b4e115cc2545af62dddbcb1e7e9ee7e8ba6e4f",
+  "id": "privacy-trust-freshness-release-2026-08-01-with-thesis-n09-v3-icons",
+  "reason": "Owner-authorized production privacy and trust alignment, August 1, 2026: null the analytics referrer on the generated Registry, SDK, and sign-guide surfaces; align localized privacy, methodology, assistant-consent, and unknown-birth-time wording with the same site-wide claims. The release also preserves the already-merged Thesis Nº 09 v3 site-icon updates from main. Registry and SDK product behavior is otherwise unchanged, and every protected path in the combined revision is enumerated exactly below.",
+  "baseCommit": "3c8c31b94500d34f57f8ce25ac9c451ba5e5a247",
   "protectedPaths": [
     "public/registry/aquarius/index.html",
     "public/registry/aries/index.html",

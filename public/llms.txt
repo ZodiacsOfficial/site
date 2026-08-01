@@ -56,7 +56,7 @@ Astrofolio is a related consumer project exploring personal Zodiac shelves, prof
 The collector's wing (the registry):
 - The Registry — the Twelve as canonical records, with address verifier: https://zodiacs.org/registry/
 - Token catalogue pages (provenance, official Solana mint, official Base representation): https://zodiacs.org/registry/aries/ … https://zodiacs.org/registry/pisces/ (same slug pattern for all twelve)
-- The thesis: https://zodiacs.org/thesis/
+- The Nº 09 thesis — zodiac history and identity meet public digital ownership and Solana performance: https://zodiacs.org/thesis/
 - Dry operator/economic-interest/provenance disclosure, including visibly pending evidence: https://zodiacs.org/disclosure/
 - The archive (+ press kit; feeds at /archive/rss.xml and /archive/feed.json): https://zodiacs.org/archive/
 - Registry JSON (CC BY 4.0): https://zodiacs.org/registry/zodiacs.registry.json
