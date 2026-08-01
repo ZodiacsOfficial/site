@@ -208,7 +208,7 @@ All share-card renderers use canonical sign WebPs, `#060709`, silver type, and l
 - Standalone iframe documents: `/embed/moon/`, `/embed/sky/`, `/embed/chart/`.
 - Script embed loader: `/assets/widgets.js`.
 - Foreign-origin/Lighthouse evidence: `tests/widgets-drive.mjs`, `tests/visual/widget-lighthouse.mjs`.
-- App icons: `/assets/app-icons/v2/favicon.svg`, `favicon-16.png`, `favicon-32.png`, `favicon-96.png`, `icon-192.png`, `icon-512.png`, `maskable-512.png`, and `apple-touch-icon.png`.
+- App icons: `/assets/app-icons/v3/favicon.svg`, `favicon-16.png`, `favicon-32.png`, `favicon-96.png`, `icon-192.png`, `icon-512.png`, `maskable-512.png`, and `apple-touch-icon.png`.
 
 ## Operator inputs and externally pending checks
 

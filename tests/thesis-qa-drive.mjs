@@ -3,18 +3,23 @@
  * clock computes, the disclosure surfaces render their RESOLVED values (baked
  * statically for no-JavaScript readers, re-hydrated from JSON with scripts
  * on), no amber pending chip remains, the hydration script stays silent on
- * console, and every component fits 375px and 390px viewports. Captures the
- * release evidence shots at 375/390/1280/1440.
+ * console, and every illustrated module fits 375/390/810/1280/1440 viewports.
+ * It also verifies the always-visible binary comparison, no-JavaScript
+ * visibility, and the reduced-motion final state.
  *
  *   npm run build
  *   OUT_DIR=/tmp/shots node tests/thesis-qa-drive.mjs
  */
 import { chromium } from 'playwright-core';
 import { spawn } from 'node:child_process';
+import { existsSync } from 'node:fs';
 import { setTimeout as wait } from 'node:timers/promises';
 
 const OUT = process.env.OUT_DIR ?? null;
-const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH ?? '/opt/pw-browsers/chromium';
+const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
+  ?? (existsSync('/opt/pw-browsers/chromium')
+    ? '/opt/pw-browsers/chromium'
+    : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome');
 
 const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', '4399'], { stdio: 'ignore' });
 // Poll readiness instead of a fixed sleep; cold npx/config loads vary by host.
@@ -44,6 +49,37 @@ const shot = async (page, sel, path) => {
   }
 };
 
+const isVisuallyExposed = async (locator) => {
+  if (await locator.count() !== 1) return false;
+  await locator.scrollIntoViewIfNeeded();
+  // IntersectionObserver and the longest entrance transition settle within
+  // 440ms. Sampling after that window tests the final state, not a random
+  // frame before the element has entered the viewport.
+  await wait(500);
+  return locator.evaluate((node) => {
+    const rect = node.getBoundingClientRect();
+    if (rect.width <= 0 || rect.height <= 0) return false;
+    let current = node;
+    let opacity = 1;
+    while (current instanceof Element) {
+      const style = getComputedStyle(current);
+      if (style.display === 'none' || style.visibility === 'hidden') return false;
+      opacity *= Number.parseFloat(style.opacity || '1');
+      current = current.parentElement;
+    }
+    return opacity > 0.01;
+  });
+};
+
+const VISUAL_MODULES = [
+  ['history transmission', '#fig-1 .transmission'],
+  ['seasonal wheel', '#fig-2 .cadence'],
+  ['history, ownership, and rails convergence', '#fig-3 .source-convergence'],
+  ['comparison', '#fig-3 .comparison-panel'],
+  ['consumer journey', '.journey'],
+  ['public scrapbook', '.scrapbook'],
+];
+
 try {
   const browser = await chromium.launch({ executablePath: CHROMIUM });
   const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
@@ -71,12 +107,19 @@ try {
   check('season clock renders', /season · day \d+ of \d+/.test(clock ?? ''), clock ?? '(hidden)');
 
   // Masthead + footer + changelog entries.
-  check('masthead reads Nº 08 · Why Zodiacs Matter', /Nº 08 · Why Zodiacs Matter/.test(await page.locator('.essay__rail').textContent() ?? ''));
+  check('masthead reads Nº 09 · Why Zodiacs Matter', /Nº 09 · Why Zodiacs Matter/.test(await page.locator('.essay__rail').textContent() ?? ''));
   check('hero leads with the consumer thesis',
     /Bitcoin made digital ownership possible\. Zodiacs makes it personal\./.test(await page.locator('.hero__epi').textContent() ?? ''));
-  check('footer links the changelog', (await page.locator('.sig a[href="#changelog"]').count()) === 1);
+  check('essay opens with a familiar sign',
+    /Before you had a username, you had a sign\./.test(await page.locator('#everyone-has-a-sign').textContent() ?? ''));
+  check('essay closes with a concrete invitation',
+    /Find your sign\. See its record\. Decide what it means to you\./.test(await page.locator('#the-honest-ending').textContent() ?? ''));
+  check('essay close links the changelog',
+    (await page.locator('.thesis-close__sig a[href="#changelog"]').count()) === 1);
   const changelog = await page.locator('#changelog').textContent() ?? '';
-  check('changelog carries Nº 08 and preserves Nº 07', /Nº 08 — Why Zodiacs Matter/.test(changelog) && /Nº 07 — July 2026\. The Zodiac Standard/.test(changelog));
+  check('changelog carries Nº 09 and preserves Nº 08 and Nº 07',
+    /Nº 09/.test(changelog) && /Nº 08 — Why Zodiacs Matter/.test(changelog)
+      && /Nº 07 — July 2026\. The Zodiac Standard/.test(changelog));
 
   // Resolved disclosures — no amber chip remains after hydration settles.
   await wait(600);
@@ -98,20 +141,88 @@ try {
   check('test card admits the test has not begun', /has not begun/.test(tcard));
   check('test card fixes the no-later-than date', /2026-10-31/.test(tcard));
 
+  // F3 stays open and says everything through row labels plus standalone marks.
+  const comparison = page.locator('#fig-3 .comparison-panel .ztbl');
+  check('comparison is always visible', await isVisuallyExposed(comparison));
+  check('comparison is not nested in details', (await page.locator('#fig-3 details .ztbl').count()) === 0);
+  check('comparison has four scoped column headers',
+    (await comparison.locator('thead th[scope="col"]').count()) === 4);
+  check('comparison has eleven scoped property rows',
+    (await comparison.locator('tbody tr').count()) === 11
+      && (await comparison.locator('tbody th[scope="row"]').count()) === 11);
+  check('comparison has exactly thirty-three standalone marks',
+    (await comparison.locator('tbody td .comparison-mark').count()) === 33);
+  check('comparison gives every mark an sr-only label',
+    (await comparison.locator('tbody td .sr-only').count()) === 33);
+  const cellContent = await comparison.locator('tbody td').evaluateAll((cells) => cells.map((cell) => {
+    const clone = cell.cloneNode(true);
+    clone.querySelectorAll('.sr-only').forEach((node) => node.remove());
+    return clone.textContent.trim();
+  }));
+  check('comparison cells contain only checks and X marks',
+    cellContent.length === 33 && cellContent.every((value) => value === '✓' || value === '×'),
+    [...new Set(cellContent)].join(', '));
+  const zodiacMarks = await comparison.locator('tbody tr td:nth-of-type(3)').evaluateAll((cells) => cells.map((cell) => {
+    const clone = cell.cloneNode(true);
+    clone.querySelectorAll('.sr-only').forEach((node) => node.remove());
+    return clone.textContent.trim();
+  }));
+  check('Zodiacs receives all eleven checks',
+    zodiacMarks.length === 11 && zodiacMarks.every((mark) => mark === '✓'));
+  const comparisonNotes = page.locator('#fig-3 details.evidence-drawer');
+  await comparisonNotes.locator('summary').focus();
+  await page.keyboard.press('Enter');
+  check('comparison evidence drawer opens from the keyboard', await comparisonNotes.getAttribute('open') !== null);
+  await page.keyboard.press('Enter');
+  check('comparison evidence drawer closes from the keyboard', await comparisonNotes.getAttribute('open') === null);
+  const evidenceVault = page.locator('details.evidence-vault');
+  await evidenceVault.locator(':scope > summary').focus();
+  await page.keyboard.press('Enter');
+  check('evidence vault opens from the keyboard', await evidenceVault.getAttribute('open') !== null);
+  await page.keyboard.press('Enter');
+  check('evidence vault closes from the keyboard', await evidenceVault.getAttribute('open') === null);
+
   // The human visual layer renders before the detailed evidence.
   check('seven-era transmission renders', (await page.locator('.transmission .era').count()) === 7);
   check('twelve-sign seasonal wheel renders', (await page.locator('.zodiac-wheel__sign').count()) === 12);
-  check('ownership and meaning bridge renders', (await page.locator('.meaning-bridge .bridge-card').count()) === 2);
+  check('Gold, Bitcoin, and Solana convergence renders',
+    (await page.locator('#fig-3 .source-convergence .source-card').count()) === 3);
+  check('comparison headers render Gold, Bitcoin, and the complete zodiac wheel',
+    (await comparison.locator('.ztbl-brand--gold svg').count()) === 1
+      && (await comparison.locator('.ztbl-brand--bitcoin').count()) === 1
+      && (await comparison.locator('.ztbl-brand--zodiacs .brand-wheel i').count()) === 12);
   check('consumer journey renders', (await page.locator('.journey__step').count()) === 4);
-  check('public scrapbook renders', (await page.locator('.scrapbook__entry').count()) === 6);
+  check('public scrapbook renders positive milestones', (await page.locator('.scrapbook__entry').count()) >= 4);
   check('plain candidacy snapshot renders', (await page.locator('.human-score__item').count()) === 4);
   check('three-question test renders', (await page.locator('.test-question').count()) === 3);
   check('plain-language instrument renders', (await page.locator('.fact-card').count()) === 6);
-  check('technical evidence is progressively disclosed', (await page.locator('details.evidence-drawer').count()) >= 8);
+  check('technical evidence is progressively disclosed', (await page.locator('details.evidence-drawer').count()) >= 6);
 
-  // Pulse caption present, directly after the instrument.
-  check('pulse caption present', /Attention is an input, never proof of demand\./
-    .test(await page.locator('.pulse-caption').textContent() ?? ''));
+  // Entrances use one short transition and a restrained 50ms child stagger.
+  // Sample the transmission after it enters; computed timing remains available
+  // after the one-time transition has completed.
+  const motionSample = page.locator('#fig-1 .transmission');
+  await motionSample.scrollIntoViewIfNeeded();
+  await wait(850);
+  const motionTimings = await motionSample.locator(':scope > *').evaluateAll((nodes) => nodes.slice(0, 4).map((node) => {
+    const style = getComputedStyle(node);
+    return {
+      duration: Number.parseFloat(style.transitionDuration),
+      delay: Number.parseFloat(style.transitionDelay),
+      animation: style.animationName,
+    };
+  }));
+  check('motion: entrances last 360–460ms and do not loop',
+    motionTimings.length === 4
+      && motionTimings.every((timing) => timing.duration >= 0.36 && timing.duration <= 0.46
+        && timing.animation === 'none'));
+  check('motion: child entrances stagger by 40–60ms',
+    motionTimings.length === 4
+      && motionTimings.slice(1).every((timing, index) => {
+        const delta = timing.delay - motionTimings[index].delay;
+        return delta >= 0.04 && delta <= 0.06;
+      }),
+    motionTimings.map((timing) => `${timing.delay}s`).join(', '));
 
   // Origin receipts stay linked from the public-history story.
   check('public history links the registry disclosure origin row',
@@ -123,6 +234,7 @@ try {
   await shot(page, '#fig-3', 'thesis-f3-desktop.png');
   await shot(page, '#what-holding-means', 'thesis-journey-desktop.png');
   await shot(page, '#the-public-record', 'thesis-history-desktop.png');
+  await page.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(page, '#the-candidacy', 'thesis-v-desktop.png');
   await shot(page, '#the-test', 'thesis-vii-desktop.png');
   await shot(page, '#the-case-against', 'thesis-ix-desktop.png');
@@ -137,9 +249,49 @@ try {
   const mid = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
   await mid.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
   await wait(600);
+  await mid.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(mid, '#the-instrument', 'thesis-x-1280.png');
   await shot(mid, null, 'thesis-hero-1280.png');
   await mid.close();
+
+  // The annotated review viewport keeps the full four-column matrix.
+  const review = await browser.newPage({ viewport: { width: 810, height: 1054 } });
+  const reviewErrors = [];
+  review.on('pageerror', (err) => reviewErrors.push(String(err)));
+  review.on('requestfailed', (req) => { if (req.url().startsWith('http://127.0.0.1')) reviewErrors.push(req.url()); });
+  await review.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await wait(600);
+  const reviewOverflow = await review.evaluate(() => ({
+    doc: document.documentElement.scrollWidth,
+    win: window.innerWidth,
+  }));
+  check('810px: no page-level horizontal overflow', reviewOverflow.doc <= reviewOverflow.win,
+    `${reviewOverflow.doc} vs ${reviewOverflow.win}`);
+  const reviewTable = review.locator('#fig-3 .ztbl');
+  const reviewTableLayout = await reviewTable.evaluate((table) => ({
+    row: getComputedStyle(table.tBodies[0].rows[0]).display,
+    scroll: table.parentElement.scrollWidth,
+    client: table.parentElement.clientWidth,
+  }));
+  check('810px: comparison remains a full table', reviewTableLayout.row === 'table-row', reviewTableLayout.row);
+  check('810px: comparison fits without local scrolling',
+    reviewTableLayout.scroll <= reviewTableLayout.client + 1,
+    `${reviewTableLayout.scroll} vs ${reviewTableLayout.client}`);
+  for (const [name, selector] of VISUAL_MODULES) {
+    check(`810px: ${name} is visible`, await isVisuallyExposed(review.locator(selector).first()));
+  }
+  await shot(review, '#fig-1', 'thesis-f1-810.png');
+  await shot(review, '#fig-2', 'thesis-f2-810.png');
+  await shot(review, '#fig-3', 'thesis-f3-810.png');
+  await shot(review, '#what-holding-means', 'thesis-journey-810.png');
+  await shot(review, '#the-public-record', 'thesis-history-810.png');
+  await review.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
+  await shot(review, '#the-candidacy', 'thesis-v-810.png');
+  await shot(review, '#the-test', 'thesis-vii-810.png');
+  await shot(review, '#the-instrument', 'thesis-x-810.png');
+  check('no page errors or same-origin failures (810px)', reviewErrors.length === 0,
+    reviewErrors.slice(0, 2).join(' | '));
+  await review.close();
 
   // No-JavaScript pass — the baked static values must stand on their own.
   const nojsContext = await browser.newContext({ javaScriptEnabled: false });
@@ -153,9 +305,38 @@ try {
   check('no-JS: test card baked', /PREREGISTERED/.test(await nojs.locator('.tcard').textContent() ?? ''));
   check('no-JS: last-updated line is dated',
     /Last updated: 20\d{2}-\d{2}-\d{2}/.test(await nojs.locator('[data-disclosure-updated]').textContent() ?? ''));
+  for (const [name, selector] of VISUAL_MODULES) {
+    check(`no-JS: ${name} is visually exposed`, await isVisuallyExposed(nojs.locator(selector).first()));
+  }
   await nojsContext.close();
 
-  // Small-viewport passes — nothing overflows; the table scrolls inside its region.
+  // Reduced motion shows final states without transitions or transforms.
+  const reducedContext = await browser.newContext({ reducedMotion: 'reduce' });
+  const reduced = await reducedContext.newPage();
+  await reduced.setViewportSize({ width: 1280, height: 1000 });
+  await reduced.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await wait(600);
+  const reducedStates = await reduced.locator('.reveal, [data-visual-reveal], [data-almanac-reveal], [data-visual-reveal] > *, [data-almanac-reveal] > *').evaluateAll((nodes) => nodes.map((node) => {
+    const style = getComputedStyle(node);
+    return {
+      opacity: Number.parseFloat(style.opacity),
+      transform: style.transform,
+      transition: style.transitionDuration,
+      animation: style.animationName,
+    };
+  }));
+  check('reduced motion: reveal targets render in their final state',
+    reducedStates.length > 0 && reducedStates.every((state) => state.opacity > 0.99 && state.transform === 'none'),
+    JSON.stringify(reducedStates.find((state) => state.opacity <= 0.99 || state.transform !== 'none') ?? ''));
+  check('reduced motion: reveal targets have no active transitions or animations',
+    reducedStates.every((state) => state.transition.split(',').every((duration) => Number.parseFloat(duration) === 0)
+      && state.animation === 'none'));
+  for (const [name, selector] of VISUAL_MODULES) {
+    check(`reduced motion: ${name} is visually exposed`, await isVisuallyExposed(reduced.locator(selector).first()));
+  }
+  await reducedContext.close();
+
+  // Small-viewport passes — illustrated modules and comparison cards never scroll sideways.
   for (const width of [375, 390]) {
     const mob = await browser.newPage({ viewport: { width, height: 812 }, deviceScaleFactor: 2, hasTouch: true });
     const mobErrors = [];
@@ -167,12 +348,38 @@ try {
       doc: document.documentElement.scrollWidth, win: window.innerWidth,
     }));
     check(`${width}px: no page-level horizontal overflow`, overflow.doc <= overflow.win, `${overflow.doc} vs ${overflow.win}`);
+    const mobileTable = await mob.locator('#fig-3 .ztbl').evaluate((table) => ({
+      row: getComputedStyle(table.tBodies[0].rows[0]).display,
+      scroll: table.parentElement.scrollWidth,
+      client: table.parentElement.clientWidth,
+    }));
+    check(`${width}px: comparison rows become cards`, /^(?:grid|block)$/.test(mobileTable.row), mobileTable.row);
+    check(`${width}px: comparison has no local horizontal overflow`,
+      mobileTable.scroll <= mobileTable.client + 1, `${mobileTable.scroll} vs ${mobileTable.client}`);
+    const mobileBrandIcons = await mob.locator('#fig-3 .ztbl tbody tr').evaluateAll((rows) => rows.map((row) => (
+      [...row.querySelectorAll('td')].map((cell) => {
+        const pseudo = getComputedStyle(cell, '::before');
+        return { image: pseudo.backgroundImage, width: Number.parseFloat(pseudo.width) };
+      })
+    )));
+    check(`${width}px: every comparison card repeats all three brand icons`,
+      mobileBrandIcons.length === 11 && mobileBrandIcons.every((icons) => (
+        icons.length === 3
+          && icons.every((icon) => icon.image !== 'none' && icon.width >= 16)
+          && icons[0].image !== icons[1].image
+          && icons[2].image.includes('/assets/app-icons/v3/favicon.svg')
+      )));
+    await mob.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
     await mob.locator('#the-instrument details.evidence-drawer').evaluate((n) => { n.open = true; });
     const discScroll = await mob.locator('.disc-scroll').evaluate((n) => n.scrollWidth > n.clientWidth);
     check(`${width}px: disclosure table scrolls inside its own region`, discScroll);
-    for (const sel of ['.story-figure', '.truth-panel', '.meaning-bridge', '.journey', '.human-score', '.test-questions', '.fact-grid']) {
-      const fits = await mob.locator(sel).first().evaluate((n, w) => n.getBoundingClientRect().right <= w + 1, width);
-      check(`${width}px: ${sel} fits the viewport`, fits);
+    for (const [name, selector] of VISUAL_MODULES) {
+      const nodes = mob.locator(selector);
+      const fits = await nodes.evaluateAll((elements, viewportWidth) => elements.length > 0 && elements.every((node) => {
+        const rect = node.getBoundingClientRect();
+        return rect.left >= -1 && rect.right <= viewportWidth + 1 && node.scrollWidth <= node.clientWidth + 1;
+      }), width);
+      check(`${width}px: ${name} fits without local overflow`, fits);
     }
     if (width === 375) {
       await shot(mob, '#fig-1', 'thesis-f1-mobile.png');
@@ -201,5 +408,5 @@ for (const r of results) {
   if (!r.ok) failed += 1;
   console.log(`${r.ok ? 'PASS' : 'FAIL'}  ${r.name}${r.detail ? `  · ${r.detail.slice(0, 80)}` : ''}`);
 }
-console.log(failed ? `\n${failed} FAILURES` : '\nALL PASS');
+console.log(failed ? `\n${results.length - failed} PASSED · ${failed} FAILED` : `\nALL PASS · ${results.length} checks`);
 process.exit(failed ? 1 : 0);

@@ -11,6 +11,7 @@ const visualRoot = dirname(fileURLToPath(import.meta.url));
 const artifactRoot = resolve(visualRoot, 'artifacts/lighthouse');
 const runCount = Number(process.env.LIGHTHOUSE_RUNS ?? 3);
 const routes = [
+  { name: 'thesis', path: '/thesis/' },
   { name: 'today', path: '/today/' },
   { name: 'horoscopes', path: '/horoscopes/' },
   { name: 'horoscope-daily', path: '/horoscopes/aries/' },
@@ -114,19 +115,9 @@ await rm(artifactRoot, { recursive: true, force: true });
 await mkdir(artifactRoot, { recursive: true });
 
 const chromePath = await findChromium();
-const chrome = await chromeLauncher.launch({
-  chromePath,
-  chromeFlags: [
-    '--headless=new',
-    '--disable-gpu',
-    ...STABLE_CHROMIUM_ARGS,
-  ],
-  logLevel: 'silent',
-});
 
 let failures = 0;
-try {
-  await withPreview({ port: Number(process.env.LIGHTHOUSE_PORT ?? 4328) }, async (baseURL) => {
+await withPreview({ port: Number(process.env.LIGHTHOUSE_PORT ?? 4328) }, async (baseURL) => {
     console.log(`Lighthouse · ${runCount} run${runCount === 1 ? '' : 's'} per route · ${baseURL}`);
     console.log('Route                         Perf  A11y   SEO     LCP       CLS       TBT');
 
@@ -134,14 +125,31 @@ try {
       const results = [];
       for (let index = 0; index < runCount; index += 1) {
         const url = `${baseURL}${route.path}`;
-        const result = await lighthouse(url, {
-          port: chrome.port,
-          logLevel: 'error',
-          output: 'json',
-          onlyCategories: ['performance', 'accessibility', 'seo'],
-          maxWaitForLoad: 45_000,
-          disableStorageReset: false,
-        }, mobileConfig);
+        // Each sample gets a fresh browser process. Reusing one process made
+        // later samples inherit renderer/benchmark drift from earlier audits,
+        // which obscured cold-load regressions instead of measuring them.
+        const chrome = await chromeLauncher.launch({
+          chromePath,
+          chromeFlags: [
+            '--headless=new',
+            '--disable-gpu',
+            ...STABLE_CHROMIUM_ARGS,
+          ],
+          logLevel: 'silent',
+        });
+        let result;
+        try {
+          result = await lighthouse(url, {
+            port: chrome.port,
+            logLevel: 'error',
+            output: 'json',
+            onlyCategories: ['performance', 'accessibility', 'seo'],
+            maxWaitForLoad: 45_000,
+            disableStorageReset: false,
+          }, mobileConfig);
+        } finally {
+          await chrome.kill();
+        }
         if (!result) throw new Error(`Lighthouse returned no result for ${url}.`);
 
         const lhr = result.lhr;
@@ -183,10 +191,7 @@ try {
         console.log('     ↳ SEO excludes only the intentional noindex audit; noindex remained active in every run.');
       }
     }
-  });
-} finally {
-  await chrome.kill();
-}
+});
 
 if (failures > 0) {
   throw new Error(

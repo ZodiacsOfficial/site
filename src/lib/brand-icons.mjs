@@ -5,7 +5,7 @@
  * icon in place: bump BRAND_ICON_VERSION so browsers, launchers, and search
  * crawlers cannot keep showing an older crop.
  */
-export const BRAND_ICON_VERSION = 'v2';
+export const BRAND_ICON_VERSION = 'v3';
 export const BRAND_ICON_BASE = `/assets/app-icons/${BRAND_ICON_VERSION}`;
 
 export const BRAND_ICON_PATHS = Object.freeze({

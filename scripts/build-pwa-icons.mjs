@@ -50,8 +50,11 @@ export async function composeWheelIcon(size, { maskable = false } = {}) {
 
 export function composeFaviconSvg() {
   const center = 32;
-  const ringRadius = 19.25;
-  const dotRadius = 3;
+  // The compact browser-tab asset needs more whitespace than the larger PWA
+  // wheel. These dimensions keep all twelve positions visually separate even
+  // after rasterization to 16px, while leaving a generous crop-safe margin.
+  const ringRadius = 19;
+  const dotRadius = 2.4;
   const dots = faviconColors.map((fill, index) => {
     const angle = -Math.PI / 2 + index * Math.PI / 6;
     const cx = (center + Math.cos(angle) * ringRadius).toFixed(3);
@@ -62,6 +65,23 @@ export function composeFaviconSvg() {
 }
 
 export async function composeFavicon(size) {
+  if (size === 16) {
+    // At 16px, antialiased circles can bridge into a partial-looking ring.
+    // Place one crisp pixel per sign instead so every position survives the
+    // browser-tab and ICO raster intact and remains visibly separate.
+    const center = 7.5;
+    const ringRadius = 5;
+    const pixels = faviconColors.map((fill, index) => {
+      const angle = -Math.PI / 2 + index * Math.PI / 6;
+      const x = Math.round(center + Math.cos(angle) * ringRadius);
+      const y = Math.round(center + Math.sin(angle) * ringRadius);
+      return `<rect x="${x}" y="${y}" width="1" height="1" fill="${fill}"/>`;
+    }).join('');
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" shape-rendering="crispEdges"><rect width="16" height="16" rx="3.5" fill="#060709"/>${pixels}</svg>`;
+    return sharp(Buffer.from(svg))
+      .png({ compressionLevel: 9, adaptiveFiltering: true })
+      .toBuffer();
+  }
   return sharp(Buffer.from(composeFaviconSvg()))
     .resize(size, size, { kernel: 'lanczos3' })
     .png({ compressionLevel: 9, adaptiveFiltering: true })
