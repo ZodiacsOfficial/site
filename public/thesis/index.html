@@ -5,15 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
-  <link
-    rel="preload"
-    as="image"
-    type="image/avif"
-    href="/assets/art/zodiac-clock-768.avif"
-    imagesrcset="/assets/art/zodiac-clock-768.avif 768w, /assets/art/zodiac-clock-960.avif 960w, /assets/art/zodiac-clock-1280.avif 1280w, /assets/art/zodiac-clock.avif 1920w"
-    imagesizes="100vw"
-    fetchpriority="high"
-  />
+  <link rel="preload" as="image" type="image/avif" href="/assets/art/zodiac-clock-768.avif" fetchpriority="high" />
   <link rel="preload" as="font" type="font/woff2" href="/fonts/eb-garamond-latin-400-normal.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/fonts/eb-garamond-latin-500-normal.woff2" crossorigin />
   <link rel="preload" as="font" type="font/woff2" href="/fonts/eb-garamond-latin-400-italic.woff2" crossorigin />
@@ -243,8 +235,9 @@
       overflow: hidden;
     }
     .hero__media {
-      position: absolute; inset: 0; z-index: -2; display: block;
+      position: absolute; inset: 0; z-index: -2;
       width: 100%; height: 100%; object-fit: cover; object-position: 28% 50%;
+      filter: saturate(0.92) brightness(0.9);
     }
     .hero__veil {
       position: absolute; inset: 0; z-index: -1; pointer-events: none;
@@ -1346,52 +1339,17 @@
   </div>
 
   <header class="hero">
-    <canvas class="hero__media" data-hero-art width="768" height="432" aria-hidden="true"></canvas>
-    <noscript>
-      <picture>
-        <source
-          type="image/avif"
-          srcset="/assets/art/zodiac-clock-768.avif 768w, /assets/art/zodiac-clock-960.avif 960w, /assets/art/zodiac-clock-1280.avif 1280w, /assets/art/zodiac-clock.avif 1920w"
-          sizes="100vw"
-        />
-        <img
-          class="hero__media"
-          src="/assets/art/zodiac-clock-1280.jpg"
-          srcset="/assets/art/zodiac-clock-1280.jpg 1280w, /assets/art/zodiac-clock.jpg 1920w"
-          sizes="100vw"
-          width="1920"
-          height="1080"
-          alt=""
-        />
-      </picture>
-    </noscript>
-    <script>
-      (function () {
-        var canvas = document.querySelector('[data-hero-art]');
-        if (!canvas || !canvas.getContext) return;
-        var artwork = new Image();
-        artwork.decoding = 'async';
-        artwork.fetchPriority = 'high';
-        artwork.onload = function () {
-          canvas.width = artwork.naturalWidth;
-          canvas.height = artwork.naturalHeight;
-          var context = canvas.getContext('2d');
-          if (context) context.drawImage(artwork, 0, 0);
-        };
-        artwork.onerror = function () {
-          artwork.onerror = null;
-          artwork.srcset = '/assets/art/zodiac-clock-1280.jpg 1280w, /assets/art/zodiac-clock.jpg 1920w';
-          artwork.src = '/assets/art/zodiac-clock-1280.jpg';
-        };
-        requestAnimationFrame(function () {
-          requestAnimationFrame(function () {
-            artwork.sizes = '100vw';
-            artwork.srcset = '/assets/art/zodiac-clock-768.avif 768w, /assets/art/zodiac-clock-960.avif 960w, /assets/art/zodiac-clock-1280.avif 1280w, /assets/art/zodiac-clock.avif 1920w';
-            artwork.src = '/assets/art/zodiac-clock-1280.avif';
-          });
-        });
-      })();
-    </script>
+    <video
+      class="hero__media"
+      muted loop playsinline
+      preload="auto"
+      poster="/assets/art/zodiac-clock-768.avif"
+      fetchpriority="high"
+      aria-hidden="true"
+      tabindex="-1"
+    >
+      <source src="/assets/art/zodiac-clock.mp4" type="video/mp4" />
+    </video>
     <div class="hero__veil" aria-hidden="true"></div>
     <div class="hero__content">
       <span class="hero__eyebrow">The Thesis <span class="g">— Nº 09</span></span>
@@ -2083,6 +2041,30 @@
   <script>
     (function () {
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)');
+      var video = document.querySelector('.hero video.hero__media');
+      if (video) {
+        var heroIsVisible = true;
+        var syncHeroPlayback = function () {
+          if (reduce.matches || !heroIsVisible) {
+            try { video.pause(); } catch (e) {}
+          } else {
+            video.play().catch(function () {});
+          }
+        };
+        if ('IntersectionObserver' in window) {
+          // Keep the ambient loop active only while the hero is on screen.
+          new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+              heroIsVisible = entry.isIntersecting;
+              syncHeroPlayback();
+            });
+          }, { threshold: 0.05 }).observe(video);
+        }
+        if (reduce.addEventListener) reduce.addEventListener('change', syncHeroPlayback);
+        else if (reduce.addListener) reduce.addListener(syncHeroPlayback);
+        syncHeroPlayback();
+      }
+
       var revealTargets = document.querySelectorAll('.reveal, [data-almanac-reveal], [data-visual-reveal]');
       document.documentElement.classList.add('motion-ready');
       if ('IntersectionObserver' in window && !reduce.matches) {
