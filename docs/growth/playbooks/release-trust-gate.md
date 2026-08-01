@@ -33,9 +33,12 @@ passing record means “ready for a human release decision,” not “publish no
 8. Inspect analytics payloads, referrers, service-side identity derivation, and
    network behavior. Confirm no persistent or cross-day visitor identity,
    birth data, chart data, raw referrer, or sensitive URL parameter is
-   collected. The sole approved exception is Plausible's disclosed,
-   site/device/day-scoped salted deduplication; its raw IP/User-Agent inputs and
-   daily identifier must never be exposed to Growth OS.
+   collected. A site release may pass its operational privacy review with
+   Plausible's disclosed, site/device/day-scoped salted deduplication when all
+   documented limits hold. This is not Growth OS measurement authorization:
+   while the provider processes IP address or User-Agent, defer the measurement
+   proposal and keep every Plausible-derived identifier, event row, and
+   aggregate out of Growth Portfolio and Analytics Events.
 9. Confirm the consumer/Collect boundary and page-velocity cap.
 10. Assign pass, pass-with-follow-up, or fail. List blockers separately.
 11. A human owner decides whether to merge and deploy.
@@ -77,8 +80,10 @@ passing record means “ready for a human release decision,” not “publish no
 - Birth calculation stays client-side.
 - No identity-level analytics, persistent/cross-day identifiers, raw sessions,
   persistent/browser fingerprinting, raw referrers, or birth fields.
-  Plausible's approved daily deduplication exception remains within the
-  conditions in [`../../ANALYTICS.md`](../../ANALYTICS.md).
+  Plausible's site-level daily deduplication exception remains within the
+  conditions in [`../../ANALYTICS.md`](../../ANALYTICS.md); any proposal to use
+  data derived through that path in Growth OS remains deferred under the
+  current runtime contract.
 - Events contain only the minimum aggregate-safe properties.
 - Baseline, success measure, owner, review date, and rollback trigger exist.
 

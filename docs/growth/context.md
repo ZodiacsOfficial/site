@@ -88,13 +88,18 @@ Growth OS must never receive or retain:
   to a person;
 - company-level visitor identification or enrichment.
 
-The sole approved provider-side exception is Plausible's disclosed aggregate
-deduplication method: it may briefly process request IP address and User-Agent
-to derive a salted site/device/day identifier. The raw inputs are not stored,
-the salt rotates and is deleted every 24 hours, no persistent or cross-day
-identity is created, and neither the daily identifier nor row-level events may
-be exposed to Growth OS. Public privacy wording must disclose this transient
-processing, and a provider-method change requires a new privacy review.
+The public site has separately accepted Plausible's disclosed aggregate
+deduplication method as a bounded operational privacy exception: the provider
+may briefly process request IP address and User-Agent to derive a salted
+site/device/day identifier, while the raw inputs are not stored and the salt is
+deleted every 24 hours. That site-level decision does not make the resulting
+measurement admissible to Growth OS. Under the current runtime contract, any
+proposal that depends on provider-side IP or User-Agent processing must be
+`DEFERRED`; no Plausible-derived identifier, event row, or aggregate may be
+promoted into Growth Portfolio or Analytics Events until an approved no-IP
+path exists or an authorized contract revision explicitly permits it. Public
+privacy wording must disclose the transient processing, and a provider-method
+change requires a new privacy review.
 
 If an input includes prohibited fields, stop, remove the fields at the source,
 and resume only with an aggregate export. Do not paste sensitive rows into a

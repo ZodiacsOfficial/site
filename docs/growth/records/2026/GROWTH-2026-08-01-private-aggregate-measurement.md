@@ -1,7 +1,7 @@
 ---
 record_id: GROWTH-2026-08-01-private-aggregate-measurement
 record_type: opportunity
-status: approved
+status: deferred
 owner: site owner
 created: 2026-08-01
 updated: 2026-08-01
@@ -37,15 +37,15 @@ risk: Referrer-query leakage until the pending fix is deployed, provider-method 
 deployment_identifier: null
 measurement_date: 2026-08-29
 result: pending
-decision: accept Plausible's bounded daily deduplication under explicit conditions, set every outbound referrer to null, and keep measurement aggregate-only
-next_action: Deploy and verify the referrer-null regression fix, disclose Plausible's transient IP/User-Agent processing, then review the minimal event contract; only Daily Action v2 may promote approved definitions.
+decision: defer Growth OS adoption while provider-side IP/User-Agent processing remains; separately accept the site's bounded daily deduplication under explicit disclosure and controls, and set every outbound referrer to null
+next_action: Deploy and verify the referrer-null regression fix, keep all Plausible-derived data out of Growth OS, and resume adoption only after an approved no-IP path or authorized runtime-contract revision.
 ---
 
 # Opportunity: Private aggregate conversion measurement
 
 ## Visitor job and problem
 
-The product has meaningful client-side actions—chart calculation, local save, compatibility, Today, sharing, calendar intent, and widget copy—and active Plausible delivery code. The current implementation mixes success events, pre-success attempts, aliases, and unused allowlist names. A raw referrer query can leave the browser, while the hosted service briefly processes IP address and User-Agent to derive a daily deduplication identifier. The referrer must be removed. Plausible's bounded daily method is accepted only because the raw inputs are not stored, its salt rotates and is deleted every 24 hours, it cannot create a persistent cross-day identity, and Growth OS receives aggregates rather than visitor records.
+The product has meaningful client-side actions—chart calculation, local save, compatibility, Today, sharing, calendar intent, and widget copy—and active Plausible delivery code. The current implementation mixes success events, pre-success attempts, aliases, and unused allowlist names. A raw referrer query can leave the browser, while the hosted service briefly processes IP address and User-Agent to derive a daily deduplication identifier. The referrer must be removed. Plausible's bounded daily method is accepted for site operation only because the raw inputs are not stored, its salt rotates and is deleted every 24 hours, and it cannot create a persistent cross-day identity. The current Growth OS runtime contract is stricter: measurement produced through provider-side IP/User-Agent processing is deferred and must not enter Growth Portfolio or Analytics Events.
 
 ## Evidence
 
@@ -53,7 +53,7 @@ The product has meaningful client-side actions—chart calculation, local save, 
 | --- | --- | --- | --- | --- |
 | Instrumentation delivery | 2026-08-01 | All inspected routes load Plausible; isolated browser interception observed attempted `pageview` and `chart_computed` POSTs to `https://plausible.io/api/event` | Live build plus remote `main` at `1c8d35a`; independent validation | Requests were aborted before delivery, so dashboard receipt and historical counts remain unknown/N/A |
 | Referrer privacy defect | 2026-08-01 | A same-origin navigation from `/?audit_query=discard#discard` caused both pageview and custom-event payloads to include `r: https://zodiacs.org/?audit_query=discard` | Isolated intercepted requests; `src/layouts/Base.astro` on remote `main` | Confirms query transmission and a one-step cross-page trail; fragment was removed by browser referrer behavior |
-| Bounded daily deduplication | 2026-08-01 | Hosted Plausible derives a site/device/day identifier from IP, User-Agent, domain, and a salt that rotates and is deleted every 24 hours | Plausible data policy and Events API documentation | Accepted only for aggregate counting: raw IP/UA are not stored, no cross-day identity is available, and the method must be disclosed and re-reviewed if it changes |
+| Bounded daily deduplication | 2026-08-01 | Hosted Plausible derives a site/device/day identifier from IP, User-Agent, domain, and a salt that rotates and is deleted every 24 hours | Plausible data policy and Events API documentation | Accepted only as a disclosed site-level operational exception; Growth OS adoption is deferred while provider-side IP/UA processing remains |
 | Chart success | 2026-08-01 | Timed and unknown-time charts render client-side and fire both `result_rendered` and `chart_computed` with only `mode` | `ChartCalculator.tsx` on remote `main`; Ploy live QA | Duplicate calls describe one product outcome; unknown-time cannot and should not be linked across events |
 | Local save | 2026-08-01 | `chart_save` fires before the attempt; `chart_saved` follows a successful local-storage write | `ChartCalculator.tsx` and `profile/store.ts` on remote `main`; Ploy live QA | Optional account sync may follow; failure paths were not deliberately induced |
 | Sharing | 2026-08-01 | Chart cards fire `chart_share` plus `share_card_downloaded`; compatibility fires the latter only; detail-link copy has no event | Share controls on remote `main`; Ploy partial live QA | `share_card_downloaded` conflates native share and download; copied links can contain private birth details and must never enter analytics |
@@ -78,11 +78,11 @@ The product has meaningful client-side actions—chart calculation, local save, 
 
 ## Proposed response
 
-The privacy resolution approved on 2026-08-01 is:
+The privacy resolution recorded on 2026-08-01 is:
 
 1. In every Plausible `transformRequest` path, set `payload.r = null`; cover the Astro layout, legacy generators, and checked-in static pages with one regression test.
-2. Accept Plausible's daily IP/User-Agent-derived deduplication only while raw inputs are not stored, the salt rotates and is deleted every 24 hours, the identifier remains site/device/day-scoped, Growth OS receives no identifier, and public privacy copy discloses the transient processing.
-3. Keep all current counts N/A until dashboard receipt, retention, and queryability are verified without sending test conversions into production.
+2. Accept Plausible's daily IP/User-Agent-derived deduplication for site operation only while raw inputs are not stored, the salt rotates and is deleted every 24 hours, the identifier remains site/device/day-scoped, and public privacy copy discloses the transient processing.
+3. Defer Growth OS adoption and keep all Plausible-derived identifiers, event rows, aggregates, and current counts out of Growth Portfolio and Analytics Events until an approved no-IP path or authorized runtime-contract revision exists.
 
 Then review this minimal event contract:
 
@@ -105,7 +105,7 @@ Then review this minimal event contract:
 
 ## Privacy threat model
 
-One confirmed live blocker remains until deployment: raw referrer queries can leave the browser. Hosted Plausible's daily identifier is a reviewed, bounded exception rather than a person-level profile; it must never be exposed to Growth OS or extended into cross-day journeys.
+One confirmed live blocker remains until deployment: raw referrer queries can leave the browser. Hosted Plausible's daily identifier is a reviewed, bounded site-level exception rather than a person-level profile; under the current Growth OS contract, neither it nor measurement derived through its processing path may enter Growth OS or be extended into cross-day journeys.
 
 The broader risk is reconstructing or linking a chart from fields that seem harmless alone. Prohibit all of the following in events, page fields, logs, retries, and dashboards:
 
@@ -145,7 +145,7 @@ Daily action-per-route-view ratios may be directional, with denominator zero rep
 ## Constraints and risks
 
 - Roadmap/wing boundary: keep this in the consumer product Growth OS; do not join it to Registry contributor or person records.
-- Privacy review: mandatory; raw referrers must be fixed before expansion. Plausible's bounded daily method is approved only under the documented conditions and must be re-reviewed if the provider changes it.
+- Privacy review: mandatory; raw referrers must be fixed before expansion. Plausible's bounded daily method is approved for site operation only under the documented conditions and must be re-reviewed if the provider changes it; Growth OS adoption remains deferred.
 - Cannibalization risk: not applicable.
 - Page-velocity impact (0 or 1): 0; this record authorizes no page change.
 - Rolling seven-day total after approval: to be computed by the canonical state writer.
@@ -159,16 +159,16 @@ Daily action-per-route-view ratios may be directional, with denominator zero rep
 - Confidence: medium.
 - Effort: medium.
 - Risks and severity: confirmed high privacy risk from referrer-query leakage until the fix is deployed; provider-drift risk if the accepted daily-deduplication boundary changes; high interpretation risk if aggregates are called user funnels; medium duplication risk until aliases are removed.
-- Review window: begin only after contract approval and clean QA.
+- Review window: begin only after an approved no-IP measurement path or authorized contract revision and clean QA.
 - Measurement date: null.
 - Guardrails: automated payload rejection, one event per success, no event on failure/cancel, no personalized link contents, and N/A rather than fabricated zeros.
 
 ## Decision
 
-- Decision: accept Plausible's bounded daily deduplication, remediate referrers, and keep this record from authorizing any expansion beyond aggregate-safe allowlisted events.
+- Decision: defer Growth OS adoption while Plausible's path uses provider-side IP/User-Agent processing; separately accept the bounded method for disclosed site operation and remediate referrers.
 - Human decision owner/date: project owner / 2026-08-01.
-- Rationale: Plausible's raw IP/User-Agent inputs are not stored, its salt rotates and is deleted every 24 hours, and its identifier cannot link a visitor across days or sites. That is acceptable for aggregate counting when disclosed; the raw referrer leak is not. Ploy's blank-endpoint conclusion and tour-trigger finding were both incorrect.
-- Next durable record: approved analytics definition or experiment record written through the sanctioned Growth OS state-writer path.
+- Rationale: Plausible's raw IP/User-Agent inputs are not stored, its salt rotates and is deleted every 24 hours, and its identifier cannot link a visitor across days or sites. That is acceptable for the public site's aggregate counting when disclosed; the raw referrer leak is not. The stricter Growth OS runtime contract still prohibits adopting a measurement path that performs provider-side IP/User-Agent processing, so Daily Action v2 must record `DEFERRED` and make no business-state mutation. Ploy's blank-endpoint conclusion and tour-trigger finding were both incorrect.
+- Next durable record: a deferred Daily Action v2 receipt; reconsider an analytics definition or experiment only after a compliant no-IP path or authorized contract revision.
 - Deployment identifier (`null` until released): null.
 - Result (`pending` until measured): pending.
 

@@ -55,9 +55,12 @@ next_action: complete checks
 
 - [ ] No visitor identity, account, raw-session, birth, chart, saved-profile,
       or raw IP field is added to an analytics payload or retained by Growth OS.
-- [ ] No persistent or cross-day IP-derived identifier exists. The approved
-      Plausible exception is limited to disclosed site/device/day deduplication;
-      raw IP/User-Agent and the daily identifier are never exposed to Growth OS.
+- [ ] No persistent or cross-day IP-derived identifier exists. The site-level
+      Plausible exception is limited to disclosed site/device/day deduplication
+      under the conditions in `ANALYTICS.md`.
+- [ ] Growth OS adoption is `DEFERRED` while the measurement path includes
+      provider-side IP/User-Agent processing; no derived identifier, event row,
+      or aggregate enters Growth Portfolio or Analytics Events.
 - [ ] Analytics referrers are `null`; canonical analytics URLs never contain
       queries or fragments.
 - [ ] Birth calculation remains client-side.
