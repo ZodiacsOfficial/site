@@ -85,11 +85,45 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
     </script>
     {props.editionDate && (
       <>
-        <script is:inline define:vars={{ editionDate: props.editionDate }}>
-          document.documentElement.setAttribute(
-            'data-edition-state',
-            editionDate === new Date().toISOString().slice(0, 10) ? 'current' : 'dated',
-          );
+        <script is:inline>
+          var editionRoot = document.documentElement;
+          var editionDate = editionRoot.getAttribute('data-edition-date');
+          var editionState = editionDate === new Date().toISOString().slice(0, 10) ? 'current' : 'dated';
+          editionRoot.setAttribute('data-edition-state', editionState);
+
+          /* EditionText keeps a dated server/no-JS fallback. On a current
+             edition, replace each span as the parser adds it so a warm-cache
+             paint can never briefly lay out the longer dated label. */
+          if (editionState === 'current' && 'MutationObserver' in window) {
+            var syncCurrentEditionText = function (node) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                var parent = node.parentElement && node.parentElement.closest('[data-edition-text]');
+                if (parent) {
+                  var parentCurrent = parent.getAttribute('data-edition-current');
+                  if (parentCurrent !== null && parent.textContent !== parentCurrent) parent.textContent = parentCurrent;
+                }
+                return;
+              }
+              if (node.nodeType !== Node.ELEMENT_NODE && node.nodeType !== Node.DOCUMENT_NODE) return;
+              var nodes = [];
+              if (node.nodeType === Node.ELEMENT_NODE && node.matches('[data-edition-text]')) nodes.push(node);
+              node.querySelectorAll('[data-edition-text]').forEach(function (match) { nodes.push(match); });
+              nodes.forEach(function (match) {
+                var current = match.getAttribute('data-edition-current');
+                if (current !== null && match.textContent !== current) match.textContent = current;
+              });
+            };
+            var editionPrepaintObserver = new MutationObserver(function (records) {
+              records.forEach(function (record) {
+                record.addedNodes.forEach(syncCurrentEditionText);
+              });
+            });
+            editionPrepaintObserver.observe(editionRoot, { childList: true, subtree: true });
+            document.addEventListener('DOMContentLoaded', function () {
+              syncCurrentEditionText(document);
+              editionPrepaintObserver.disconnect();
+            }, { once: true });
+          }
         </script>
         <style is:inline>
           [data-edition-current-only] { display: none; }
