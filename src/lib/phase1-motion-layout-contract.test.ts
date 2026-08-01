@@ -127,6 +127,15 @@ describe('Phase 1 layout and motion contract', () => {
     expect(fallback).toContain('/assets/zodiac-icons/48/${sign.slug}.avif');
   });
 
+  it('pins every Today sign-picker child to a fixed card track during hydration', async () => {
+    const today = await source('pages/today/index.astro');
+    expect(today).toMatch(/\.today-sign\s*\{[^}]*grid-template-rows:\s*34px 18px 16px;[^}]*align-content:\s*start;[^}]*block-size:\s*88px;/u);
+    expect(today).toMatch(/\.today-sign__icon\s*\{[^}]*grid-row:\s*1;/u);
+    expect(today).toMatch(/\.today-sign__name\s*\{[^}]*grid-row:\s*2;/u);
+    expect(today).toMatch(/\.today-sign__dates\s*\{[^}]*grid-row:\s*3;/u);
+    expect(today).not.toMatch(/@media \(max-width:\s*480px\)\s*\{[\s\S]*?\.today-sign\s*\{[^}]*min-height:/u);
+  });
+
   it('loads the below-reading personalization bundle only when its saved-chart fallback is visible', async () => {
     const daily = await source('pages/horoscopes/[sign]/index.astro');
     expect(daily).toContain('<DailyForYou slot="enhancement" client:visible');

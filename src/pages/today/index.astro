@@ -304,10 +304,11 @@ const sunSignLines = Object.fromEntries(
   }
   .today-sign {
     display: grid;
+    grid-template-rows: 34px 18px 16px;
     justify-items: center;
-    align-content: center;
+    align-content: start;
     min-width: 0;
-    min-height: 82px;
+    block-size: 88px;
     padding: 9px 5px;
     border: 1px solid var(--hair-1);
     border-radius: var(--r-md);
@@ -329,6 +330,7 @@ const sunSignLines = Object.fromEntries(
   }
   .today-sign__icon {
     display: block;
+    grid-row: 1;
     width: 34px;
     height: 34px;
   }
@@ -338,8 +340,9 @@ const sunSignLines = Object.fromEntries(
     height: 100%;
     object-fit: contain;
   }
-  .today-sign__name { margin-top: 6px; font-size: 12px; font-weight: 650; line-height: 1; }
+  .today-sign__name { grid-row: 2; margin-top: 6px; font-size: 12px; font-weight: 650; line-height: 1; }
   .today-sign__dates {
+    grid-row: 3;
     margin-top: 5px;
     color: var(--faint);
     font-size: 8.5px;
@@ -481,7 +484,6 @@ const sunSignLines = Object.fromEntries(
     .today-card__head { align-items: center; }
     .today-lines li { padding-left: 14px; }
     .today-sign-picker__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-    .today-sign { min-height: 76px; }
     .today-sign-readings { grid-template-columns: 1fr; }
     .today-fallback__personalize { align-items: flex-start; flex-direction: column; }
     .today-fallback__personalize .btn { width: 100%; justify-content: space-between; }
