@@ -83,6 +83,7 @@ export default function SunSignFallback({
   );
   const dailyLine = active ? sunSignLines[active.slug] ?? null : null;
   const editionLabel = editionDateLabel(editionDate);
+  const introCopy = `This is usually the zodiac sign you know from your birthday. Choose it for one clear note for the ${editionLabel} edition — no birth time needed.`;
   const allReadings = useMemo(
     () => SIGNS.map((sign) => ({
       sign,
@@ -104,10 +105,7 @@ export default function SunSignFallback({
     <div class="today-fallback">
       <div class="today-fallback__intro">
         <h2>Start with your Sun sign</h2>
-        <p>
-          This is usually the zodiac sign you know from your birthday. Choose it for one
-          clear note for the {editionLabel} edition — no birth time needed.
-        </p>
+        <p>{introCopy}</p>
         {/* Keep this line in the server layout. Revealing it after local profile
             lookup must not push the sign picker down after first paint. */}
         <p

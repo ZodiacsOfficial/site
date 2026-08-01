@@ -85,6 +85,9 @@ describe('Phase 1 layout and motion contract', () => {
     ]);
 
     expect(fallback).toContain("class={`today-fallback__status${noChartConfirmed || comparisonUnavailable ? ' is-visible' : ''}`}");
+    expect(fallback).toContain('const introCopy = `This is usually the zodiac sign');
+    expect(fallback).toContain('<p>{introCopy}</p>');
+    expect(fallback).not.toContain('clear note for the {editionLabel} edition');
     expect(brief).toContain('data-ready={streak !== null');
     expect(brief).toContain("streak > 999 ? '999+' : (streak ?? 1)");
     expect(page).toContain('grid-template-columns: minmax(4ch, auto) 29px;');
