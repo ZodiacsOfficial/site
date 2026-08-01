@@ -21,14 +21,19 @@ interface PastelSignIconProps {
 
 function PastelSignIcon({ sign, size, className }: PastelSignIconProps) {
   return (
-    <picture class={className} aria-hidden="true">
+    <picture
+      class={className}
+      aria-hidden="true"
+      style={`display:block;inline-size:${size}px;block-size:${size}px;aspect-ratio:1;contain:layout size`}
+    >
       <source srcset={`/assets/zodiac-icons/48/${sign.slug}.avif`} type="image/avif" />
       <img
         src={`/assets/zodiac-icons/48/${sign.slug}.webp`}
         width={size}
         height={size}
         alt=""
-        decoding="async"
+        decoding="sync"
+        style="display:block;width:100%;height:100%;aspect-ratio:1;object-fit:contain"
       />
     </picture>
   );

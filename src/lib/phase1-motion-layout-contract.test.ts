@@ -109,10 +109,11 @@ describe('Phase 1 layout and motion contract', () => {
     expect(program).not.toContain(':global(:root[data-dfy-saved-chart]) .program :global(.dfy) {\n    min-height:');
   });
 
-  it('reserves both picture and image geometry for every shared pastel sign icon', async () => {
-    const [icon, program] = await Promise.all([
+  it('reserves both picture and image geometry for every pastel sign icon', async () => {
+    const [icon, program, fallback] = await Promise.all([
       source('components/SignIcon.astro'),
       source('components/HoroscopeProgramPage.astro'),
+      source('islands/today/SunSignFallback.tsx'),
     ]);
     expect(icon).toContain('height: auto;');
     expect(icon).toContain('aspect-ratio: 1;');
@@ -121,6 +122,9 @@ describe('Phase 1 layout and motion contract', () => {
     expect(program).toContain('fetchPriority="high"');
     expect(program).toContain("webpOnly={surface === 'today'}");
     expect(program).toContain("decoding={surface === 'today' ? 'sync' : 'async'}");
+    expect(fallback).toContain('inline-size:${size}px;block-size:${size}px;aspect-ratio:1;contain:layout size');
+    expect(fallback).toContain('decoding="sync"');
+    expect(fallback).toContain('/assets/zodiac-icons/48/${sign.slug}.avif');
   });
 
   it('loads the below-reading personalization bundle only when its saved-chart fallback is visible', async () => {
