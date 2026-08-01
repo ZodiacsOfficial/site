@@ -1,7 +1,7 @@
 ---
 record_id: GROWTH-2026-08-01-private-aggregate-measurement
 record_type: opportunity
-status: deferred
+status: proposed
 owner: site owner
 created: 2026-08-01
 updated: 2026-08-01
@@ -35,7 +35,7 @@ confidence: medium
 effort: medium
 risk: Referrer-query leakage until the pending fix is deployed, provider-method drift, duplicate events, pre-success triggers, personalized URLs, or misleading funnel claims.
 deployment_identifier: null
-measurement_date: 2026-08-29
+measurement_date: null
 result: pending
 decision: defer Growth OS adoption while provider-side IP/User-Agent processing remains; separately accept the site's bounded daily deduplication under explicit disclosure and controls, and set every outbound referrer to null
 next_action: Deploy and verify the referrer-null regression fix, keep all Plausible-derived data out of Growth OS, and resume adoption only after an approved no-IP path or authorized runtime-contract revision.
@@ -67,7 +67,7 @@ The product has meaningful client-side actions—chart calculation, local save, 
 - Canonical URL: https://zodiacs.org/birth-chart/.
 - Owned query/intent cluster: private, anonymous aggregate product measurement.
 - Reproducible baseline: unknown/null; no current count is assumed to be zero.
-- Hypothesis: after deploying the referrer-null fix, one success event per meaningful action aggregated only by UTC day and route family is enough for release comparison without persistent identity.
+- Hypothesis: after deploying the referrer-null fix and establishing an approved no-IP measurement path or authorized runtime-contract revision, one success event per meaningful action aggregated only by UTC day and route family would be enough for release comparison without persistent identity.
 
 ## Intent and current destination
 

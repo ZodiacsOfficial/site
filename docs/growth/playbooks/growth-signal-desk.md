@@ -10,7 +10,8 @@ and which single follow-up deserves attention.
 
 - Search Console aggregate query/page data with exact windows.
 - Privacy-light page-view and action aggregates for chart completion, local
-  save, compatibility completion, sharing, and Registry wing entry.
+  save, compatibility completion, sharing, and Registry wing entry, but only
+  from a measurement path permitted by the current Growth OS runtime contract.
 - Release log, active experiments, incidents, page-velocity ledger, and known
   tracking changes.
 - Optional campaign spend and aggregate outcomes when a campaign is active.
@@ -48,10 +49,13 @@ known gaps. Do not ingest raw sessions, user IDs, emails, IPs, or birth data.
 Every numerator and denominator above is an independently aggregated count,
 never a linked visitor or session trail. Treat each ratio as directional only:
 do not label it a user funnel, unique-user or session conversion, retention,
-attribution, causal progression, or a step-to-step journey. Growth OS must not
-receive Plausible's daily deduplication identifier. If a documented denominator
-is absent, zero, or cannot be reproduced for the exact window, report the ratio
-as `N/A`, never zero or an inferred value.
+attribution, causal progression, or a step-to-step journey. While Plausible's
+measurement path performs provider-side IP/User-Agent processing, Growth OS
+must not receive any Plausible-derived identifier, event row, or aggregate;
+those measures remain `N/A` until an approved no-IP path or authorized contract
+revision exists. If a documented denominator is absent, zero, or cannot be
+reproduced for the exact window, report the ratio as `N/A`, never zero or an
+inferred value.
 
 ## Alert rules
 
