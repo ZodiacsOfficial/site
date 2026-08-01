@@ -115,12 +115,14 @@ confidence: "high | medium | low"
 effort: "small | medium | large"
 risk: "specific failure modes and severity"
 deployment_identifier: null
-measurement_date: "YYYY-MM-DD"
+measurement_date: "YYYY-MM-DD or null"
 result: "pending until measured; then observed outcome and decision"
 ```
 
-`deployment_identifier` remains `null` until a human-approved release exists;
-`result` remains `pending` until the predeclared measurement date.
+`deployment_identifier` remains `null` until a human-approved release exists.
+`measurement_date` remains `null` while measurement is deferred or no
+admissible path exists; `result` remains `pending` until a date is approved and
+the predeclared window completes.
 
 The connector-neutral durable datasets and their human owners are defined in
 the [durable state catalog](state/README.md).

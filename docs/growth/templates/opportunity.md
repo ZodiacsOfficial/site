@@ -22,7 +22,7 @@ confidence: low
 effort: medium
 risk: specific failure modes and severity
 deployment_identifier: null
-measurement_date: YYYY-MM-DD
+measurement_date: YYYY-MM-DD or null
 result: pending
 decision: pending
 next_action: validate evidence

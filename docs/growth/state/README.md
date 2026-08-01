@@ -59,7 +59,7 @@ risk: "failure modes and severity"
 owner: "human role"
 status: "proposed | approved | in-progress | released | rejected | archived"
 deployment_identifier: null
-measurement_date: "YYYY-MM-DD"
+measurement_date: "YYYY-MM-DD or null"
 result: "pending or measured outcome"
 record_location: "stable link"
 ```
