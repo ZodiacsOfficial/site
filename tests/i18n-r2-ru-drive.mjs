@@ -119,8 +119,9 @@ await withPreview({ port: 4418 }, async (baseURL) => {
 
         if (route === '/ru/' && viewport.width === 1280) {
           const desktopEnglishSeams = await page.locator('.nav__deferred').allTextContents();
-          check(desktopEnglishSeams.length === 3, `Russian desktop nav exposes ${desktopEnglishSeams.length} English-only seams; expected 3`);
+          check(desktopEnglishSeams.length === 2, `Russian desktop nav exposes ${desktopEnglishSeams.length} English-only seams; expected 2`);
           check(desktopEnglishSeams.every((value) => value.trim() === '— пока по-английски'), 'Russian desktop nav seam copy drifted');
+          check(await page.locator('.nav a[href="/registry/"]').count() === 0, 'Registry leaked back into Russian primary navigation');
           check(await page.locator('.nav__search').count() === 0, 'English-only search control leaked into Russian desktop nav');
         }
 
@@ -161,7 +162,8 @@ await withPreview({ port: 4418 }, async (baseURL) => {
     check(await mobilePage.locator('[data-mobile-menu]').isVisible(), 'mobile menu is not visible after keyboard open');
     check(await mobilePage.locator('[data-mobile-menu] a[href="/birthday/"]').count() === 0, 'deferred birthday tool leaked into Russian mobile menu');
     check(await mobilePage.locator('[data-mobile-menu] a[href="/learn/"][hreflang="en"]').count() === 1, 'Russian mobile Learn seam is not declared English');
-    check(await mobilePage.locator('[data-mobile-menu] a[href="/registry/"][hreflang="en"]').count() === 1, 'Russian mobile Registry seam is not declared English');
+    check(await mobilePage.locator('[data-mobile-menu] a[href="/registry/"]').count() === 0, 'Registry leaked back into Russian mobile navigation');
+    check(await mobilePage.locator('.footer__col a[href="/registry/"][hreflang="en"]').count() === 1, 'Russian footer Registry seam is not declared English');
     const focusOutline = await menu.evaluate((node) => getComputedStyle(node).outlineStyle);
     check(focusOutline !== 'none', 'mobile menu focus is not visible');
     await mobile.close();
