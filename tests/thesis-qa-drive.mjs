@@ -375,6 +375,18 @@ try {
     mob.on('requestfailed', (req) => { if (req.url().startsWith('http://127.0.0.1')) mobErrors.push(req.url()); });
     await mob.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
     await wait(600);
+    const heroRibbon = await mob.locator('.hero__twelve').evaluate((row) => {
+      const links = [...row.querySelectorAll('a')];
+      return {
+        count: links.length,
+        rows: new Set(links.map((link) => link.getBoundingClientRect().top.toFixed(1))).size,
+        scroll: row.scrollWidth,
+        client: row.clientWidth,
+      };
+    });
+    check(`${width}px: all twelve hero icons stay on one row`,
+      heroRibbon.count === 12 && heroRibbon.rows === 1 && heroRibbon.scroll <= heroRibbon.client + 1,
+      JSON.stringify(heroRibbon));
     const overflow = await mob.evaluate(() => ({
       doc: document.documentElement.scrollWidth, win: window.innerWidth,
     }));
