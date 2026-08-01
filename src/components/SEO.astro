@@ -22,6 +22,7 @@ import {
   ogImageForPathAndLocale,
   schemaCatalog,
 } from '../strings/seo';
+import { absoluteBrandIconUrl, BRAND_ICON_PATHS } from '../lib/brand-icons.mjs';
 
 interface Props {
   title: string;
@@ -81,7 +82,7 @@ const organization = {
   url: 'https://zodiacs.org/',
   logo: {
     '@type': 'ImageObject',
-    url: 'https://zodiacs.org/assets/app-icons/icon-512.png',
+    url: absoluteBrandIconUrl(BRAND_ICON_PATHS.icon512),
     width: 512,
     height: 512,
   },

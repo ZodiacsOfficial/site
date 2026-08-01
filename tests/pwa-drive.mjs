@@ -13,6 +13,7 @@ import { mkdtemp, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { chromium } from 'playwright-core';
+import { BRAND_ICON_PATHS } from '../src/lib/brand-icons.mjs';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
 
@@ -32,9 +33,9 @@ const expectedManifest = {
   background_color: '#060709',
   theme_color: '#060709',
   icons: [
-    { src: '/assets/app-icons/icon-192.png', sizes: '192x192', type: 'image/png', purpose: 'any' },
-    { src: '/assets/app-icons/icon-512.png', sizes: '512x512', type: 'image/png', purpose: 'any' },
-    { src: '/assets/app-icons/maskable-512.png', sizes: '512x512', type: 'image/png', purpose: 'maskable' },
+    { src: BRAND_ICON_PATHS.icon192, sizes: '192x192', type: 'image/png', purpose: 'any' },
+    { src: BRAND_ICON_PATHS.icon512, sizes: '512x512', type: 'image/png', purpose: 'any' },
+    { src: BRAND_ICON_PATHS.maskable512, sizes: '512x512', type: 'image/png', purpose: 'maskable' },
   ],
 };
 

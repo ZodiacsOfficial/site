@@ -173,9 +173,10 @@ AI astrologer chat. Needs a cost model and an owner decision first.
   decoder, vitest-covered) — REUSE it for any future share surface;
   never move birth data into query strings (fragments only, they don't
   reach servers). `share-card.ts` renders the 1080×1350 PNG client-side.
-- PWA-lite: `public/site.webmanifest` + app icons via
-  `scripts/build-app-icons.mjs`. No service worker by decision (static
-  site; stale-cache risk not worth offline value yet).
+- PWA: `public/site.webmanifest` + cache-busted app icons via
+  `npm run data:pwa-icons`. `public/sw.js` is the network-first worker
+  source; postbuild injects content-derived cache metadata via
+  `scripts/build-service-worker.mjs`.
 - Content: 283 pages live. Editorial QA sampled 15 pages at launch.
 
 ## Open items you may fold in opportunistically

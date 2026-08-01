@@ -10,6 +10,7 @@ import EditorialLine from '../components/EditorialLine.astro';
 import GlassDefs from '../components/GlassDefs.astro';
 import { ANALYTICS_EVENT_PROPS, ANALYTICS_EVENT_VALUES } from '../lib/analytics';
 import { hasDailyChartEmailProvider } from '../lib/email/daily-config';
+import { BRAND_ICON_PATHS } from '../lib/brand-icons.mjs';
 import { LOCALE_META, UI, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { RUSSIAN_RUNTIME } from '../lib/i18n/ru-runtime/server';
 
@@ -52,8 +53,6 @@ const plausibleEnabled = Boolean(plausibleScriptUrl && !props.noindex);
 const dailyEmailLifecycleEnabled = hasDailyChartEmailProvider(process.env);
 const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ? direction : undefined;
 
-// The zodiac wheel as a favicon: twelve pastel dots on the void.
-const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23060709'/%3E%3Cg%3E%3Ccircle cx='32' cy='10' r='3.4' fill='%23DE8E79'/%3E%3Ccircle cx='43' cy='12.9' r='3.4' fill='%23B9D4BE'/%3E%3Ccircle cx='51.1' cy='21' r='3.4' fill='%23B29DD0'/%3E%3Ccircle cx='54' cy='32' r='3.4' fill='%23B6D4E4'/%3E%3Ccircle cx='51.1' cy='43' r='3.4' fill='%23E0A9B4'/%3E%3Ccircle cx='43' cy='51.1' r='3.4' fill='%23B7D9B0'/%3E%3Ccircle cx='32' cy='54' r='3.4' fill='%23D3A9DE'/%3E%3Ccircle cx='21' cy='51.1' r='3.4' fill='%23B9DCE8'/%3E%3Ccircle cx='12.9' cy='43' r='3.4' fill='%23E0B080'/%3E%3Ccircle cx='10' cy='32' r='3.4' fill='%23C0DEA8'/%3E%3Ccircle cx='12.9' cy='21' r='3.4' fill='%23AE8FC9'/%3E%3Ccircle cx='21' cy='12.9' r='3.4' fill='%23A9D4C4'/%3E%3C/g%3E%3C/svg%3E";
 ---
 <!doctype html>
 <html
@@ -89,8 +88,11 @@ const FAVICON = "data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/sv
         window.dispatchEvent(new Event('zodiacs:install-prompt-ready'));
       });
     </script>
-    <link rel="icon" type="image/svg+xml" href={FAVICON} />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="icon" type="image/svg+xml" sizes="any" href={BRAND_ICON_PATHS.faviconSvg} />
+    <link rel="icon" type="image/png" sizes="16x16" href={BRAND_ICON_PATHS.favicon16} />
+    <link rel="icon" type="image/png" sizes="32x32" href={BRAND_ICON_PATHS.favicon32} />
+    <link rel="icon" type="image/png" sizes="96x96" href={BRAND_ICON_PATHS.favicon} />
+    <link rel="apple-touch-icon" sizes="180x180" href={BRAND_ICON_PATHS.appleTouch} />
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="alternate" type="application/rss+xml" title="Zodiacs.org — the sky, daily" href="/feeds/daily-sky.xml" />
     <link rel="alternate" type="application/rss+xml" title="Zodiacs.org daily horoscopes" href="/feeds/horoscopes.xml" />
