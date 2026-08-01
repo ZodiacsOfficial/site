@@ -1022,19 +1022,24 @@
     .story-figure::before { border-color: rgba(238,241,247,.045); }
     .story-figure__kicker { text-transform: none; letter-spacing: .02em; color: var(--ink-2); }
 
-    .transmission::before {
-      height: 2px; border-radius: 999px;
+    #fig-1 .story-figure {
+      background: rgba(10,12,17,.78);
+      border-color: var(--hair-2);
+      box-shadow: none;
+    }
+    #fig-1 .story-figure::before { display: none; }
+    #fig-1 .transmission::before {
+      height: 1px; border-radius: 999px;
       background: linear-gradient(90deg,#DE8E79,#B9D4BE,#B29DD0,#B6D4E4,#E0A9B4,#D3A9DE,#A9D4C4);
-      opacity: .72;
+      opacity: .34;
     }
-    .era__object {
-      background:
-        radial-gradient(circle at 34% 28%, color-mix(in srgb,var(--era) 28%,transparent), transparent 52%),
-        color-mix(in srgb,var(--era) 10%,var(--surface));
-      border-color: color-mix(in srgb,var(--era) 62%,transparent);
-      box-shadow: 0 0 0 7px #10131b, 0 14px 32px -22px var(--era);
+    #fig-1 .era__object {
+      background: var(--era);
+      border: 0;
+      color: #12151d;
+      box-shadow: 0 0 0 7px #0a0c11;
     }
-    .era__object svg { width: 32px; height: 32px; }
+    #fig-1 .era__object svg { width: 30px; height: 30px; }
 
     .zodiac-wheel::before {
       inset: 5%; border: 0;
@@ -1057,6 +1062,22 @@
       box-shadow: inset 0 1px 0 rgba(238,241,247,.06), 0 20px 44px -30px rgba(224,176,128,.7);
     }
     .zodiac-wheel__sign { filter: drop-shadow(0 9px 12px rgba(6,7,9,.52)); }
+    #fig-2 .zodiac-wheel::before,
+    #fig-2 .zodiac-wheel::after {
+      inset: 8%;
+      border: 1px solid var(--hair-2);
+      background: none;
+      -webkit-mask: none;
+      mask: none;
+      opacity: 1;
+    }
+    #fig-2 .zodiac-wheel::after { inset: 28%; border-color: var(--hair); }
+    #fig-2 .zodiac-wheel__center {
+      background: var(--bg-2);
+      border: 0;
+      box-shadow: none;
+    }
+    #fig-2 .zodiac-wheel__sign { filter: none; }
     .truth-panel { background: rgba(182,212,228,.15); }
     .truth-panel__side {
       position: relative; overflow: hidden;
@@ -1257,18 +1278,7 @@
       .ztbl tbody tr:nth-child(10) { margin-top:14px; }
       .ztbl tbody tr > * { border:0!important; }
       .ztbl tbody th { padding:11px 9px; font-size:11px; line-height:1.25; }
-      .ztbl tbody td { flex-direction:column; justify-content:center; gap:4px; padding:7px 4px; border-left:1px solid rgba(198,204,218,.07)!important; }
-      .ztbl tbody td::before {
-        content:""; display:block; width:16px; height:16px; flex:0 0 auto;
-        background-position:center; background-repeat:no-repeat; background-size:contain;
-      }
-      .ztbl tbody td:nth-of-type(1)::before {
-        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M3 13h18l-3 7H6l-3-7Zm4-9h10l3 7H4l3-7Z' fill='none' stroke='%23E0B080' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E");
-      }
-      .ztbl tbody td:nth-of-type(2)::before {
-        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle cx='12' cy='12' r='10' fill='%23DE8E79' fill-opacity='.14'/%3E%3Ctext x='12' y='16.6' text-anchor='middle' font-family='Arial,sans-serif' font-size='14' font-weight='700' fill='%23DE8E79'%3E%E2%82%BF%3C/text%3E%3C/svg%3E");
-      }
-      .ztbl tbody td:nth-of-type(3)::before { background-image:url('/assets/app-icons/v3/favicon.svg'); }
+      .ztbl tbody td { justify-content:center; padding:7px 4px; border-left:1px solid rgba(198,204,218,.07)!important; }
       .comparison-mark { font-size:21px; }
       .rail-map { grid-template-columns:1fr; }
       .journey { grid-template-columns:1fr; }
@@ -1279,6 +1289,15 @@
       .test-questions::before { top:22px; bottom:22px; left:25px; right:auto; width:1px; height:auto; }
       .evidence-vault__body { padding:0 16px 8px; }
       .thesis-close { padding:26px 18px; }
+    }
+    @media (min-width: 481px) and (max-width: 760px) {
+      #fig-1 .transmission { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 22px; }
+      #fig-1 .transmission::before { display:none; }
+      #fig-1 .era {
+        grid-template-columns:48px 1fr; column-gap:12px;
+        padding:8px 0;
+      }
+      #fig-1 .era__object { width:48px; height:48px; box-shadow:none; }
     }
     @media (prefers-reduced-motion: reduce) {
       .reveal,
@@ -1356,7 +1375,7 @@
       <h1 class="hero__title">Why Zodiacs <span class="it">Matter.</span></h1>
       <p class="hero__epi">Bitcoin made digital ownership possible. Zodiacs makes it personal.</p>
       <p class="hero__sub">
-        Before you had a username, you had a sign. Now that old answer can become something you keep, show, gift, and carry across the digital world.
+        Your sign already shows up in birthday wishes, dating profiles, gifts, and group chats. Now it can move with you across the digital world.
       </p>
       <div class="hero__twelve" aria-label="The twelve records"><a href="/registry/aries/" aria-label="Aries — registry record" style="--sign:#DE8E79"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/aries.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/taurus/" aria-label="Taurus — registry record" style="--sign:#B9D4BE"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/taurus.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/gemini/" aria-label="Gemini — registry record" style="--sign:#B29DD0"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/gemini.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/cancer/" aria-label="Cancer — registry record" style="--sign:#B6D4E4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/cancer.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/leo/" aria-label="Leo — registry record" style="--sign:#E0A9B4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/leo.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/virgo/" aria-label="Virgo — registry record" style="--sign:#B7D9B0"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/virgo.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/libra/" aria-label="Libra — registry record" style="--sign:#D3A9DE"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/libra.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/scorpio/" aria-label="Scorpio — registry record" style="--sign:#B9DCE8"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/scorpio.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/sagittarius/" aria-label="Sagittarius — registry record" style="--sign:#E0B080"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/sagittarius.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/capricorn/" aria-label="Capricorn — registry record" style="--sign:#C0DEA8"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/capricorn.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/aquarius/" aria-label="Aquarius — registry record" style="--sign:#AE8FC9"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/aquarius.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a><a href="/registry/pisces/" aria-label="Pisces — registry record" style="--sign:#A9D4C4"><img class="hero__twelve-icon" src="/assets/zodiac-icons/48/pisces.webp" width="24" height="24" alt="" aria-hidden="true" decoding="async" fetchpriority="low"></a></div>
       <p class="hero__clock" data-season-clock></p>

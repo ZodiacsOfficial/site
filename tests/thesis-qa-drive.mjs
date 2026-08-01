@@ -477,18 +477,15 @@ try {
     check(`${width}px: comparison rows become cards`, /^(?:grid|block)$/.test(mobileTable.row), mobileTable.row);
     check(`${width}px: comparison has no local horizontal overflow`,
       mobileTable.scroll <= mobileTable.client + 1, `${mobileTable.scroll} vs ${mobileTable.client}`);
-    const mobileBrandIcons = await mob.locator('#fig-3 .ztbl tbody tr').evaluateAll((rows) => rows.map((row) => (
+    const mobileBodyDecorations = await mob.locator('#fig-3 .ztbl tbody tr').evaluateAll((rows) => rows.map((row) => (
       [...row.querySelectorAll('td')].map((cell) => {
         const pseudo = getComputedStyle(cell, '::before');
-        return { image: pseudo.backgroundImage, width: Number.parseFloat(pseudo.width) };
+        return pseudo.backgroundImage;
       })
     )));
-    check(`${width}px: every comparison card repeats all three brand icons`,
-      mobileBrandIcons.length === 11 && mobileBrandIcons.every((icons) => (
-        icons.length === 3
-          && icons.every((icon) => icon.image !== 'none' && icon.width >= 16)
-          && icons[0].image !== icons[1].image
-          && icons[2].image.includes('/assets/app-icons/v3/favicon.svg')
+    check(`${width}px: comparison body cells contain marks without repeated brand icons`,
+      mobileBodyDecorations.length === 11 && mobileBodyDecorations.every((decorations) => (
+        decorations.length === 3 && decorations.every((image) => image === 'none')
       )));
     await mob.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
     await mob.locator('#the-instrument details.evidence-drawer').evaluate((n) => { n.open = true; });
