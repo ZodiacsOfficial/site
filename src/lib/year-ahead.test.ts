@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import {
   aspectEvents, assembleYearAhead, eclipseEvents, ingressEvents,
-  saturnSeasonEvents, solarReturnEvents, yearCacheFresh,
-  type IngressWindow, type YearScanCache,
+  saturnSeasonEvents, selectComingUp, solarReturnEvents, yearCacheFresh,
+  type IngressWindow, type YearAheadEvent, type YearScanCache,
 } from './year-ahead';
 import type { YearScanResult } from './engine/year-scan';
 import type { EclipseRecord } from './upcoming';
@@ -128,5 +128,47 @@ describe('cache freshness', () => {
     expect(yearCacheFresh(cache, 'v3', new Date('2026-07-10T00:00:00Z'))).toBe(true);
     expect(yearCacheFresh(cache, 'v3', new Date('2026-07-20T00:00:00Z'))).toBe(false);
     expect(yearCacheFresh(cache, 'v4', new Date('2026-07-02T00:00:00Z'))).toBe(false);
+  });
+});
+
+describe('compact coming-up selection', () => {
+  const event = (at: string, body = 'Saturn'): YearAheadEvent => ({
+    at,
+    body,
+    kind: 'aspect',
+    line: `${body} makes a test aspect to a natal point.`,
+    receipt: `${body} test receipt`,
+  });
+
+  it('caps the 7-day and 8–30-day windows independently', () => {
+    const result = selectComingUp([
+      event('2026-08-02T00:00:00.000Z'),
+      event('2026-08-03T00:00:00.000Z', 'Jupiter'),
+      event('2026-08-04T00:00:00.000Z', 'Mars'),
+      event('2026-08-12T00:00:00.000Z'),
+      event('2026-08-20T00:00:00.000Z', 'Jupiter'),
+      event('2026-08-25T00:00:00.000Z', 'Mars'),
+      event('2026-10-01T00:00:00.000Z'),
+    ], new Date('2026-08-01T00:00:00.000Z'));
+    expect(result.nextSevenDays.map((entry) => entry.at)).toEqual([
+      '2026-08-02T00:00:00.000Z',
+      '2026-08-03T00:00:00.000Z',
+    ]);
+    expect(result.daysEightToThirty.map((entry) => entry.at)).toEqual([
+      '2026-08-12T00:00:00.000Z',
+      '2026-08-20T00:00:00.000Z',
+    ]);
+    expect(result.nextLater).toBeNull();
+  });
+
+  it('shows one later event only when the first 30 days are empty', () => {
+    const result = selectComingUp([
+      event('2026-07-01T00:00:00.000Z'),
+      event('2026-09-15T00:00:00.000Z'),
+      event('2026-10-01T00:00:00.000Z'),
+    ], new Date('2026-08-01T00:00:00.000Z'));
+    expect(result.nextSevenDays).toEqual([]);
+    expect(result.daysEightToThirty).toEqual([]);
+    expect(result.nextLater?.at).toBe('2026-09-15T00:00:00.000Z');
   });
 });

@@ -7,6 +7,7 @@ const fr = {
   navTools: 'Outils',
   navLearn: 'Comprendre',
   navHoroscopes: 'Horoscopes',
+  navToday: 'Aujourd’hui · EN',
   navCollect: 'Registre',
   navSavedCharts: 'Thèmes enregistrés',
   navMenu: 'Menu',

@@ -88,6 +88,11 @@ export default function SunSignFallback({
   );
   const dailyLine = active ? sunSignLines[active.slug] ?? null : null;
   const editionLabel = editionDateLabel(editionDate);
+  const statusCopy = comparisonUnavailable
+    ? 'Your saved-chart comparison is temporarily unavailable. Your Sun sign still gives you a useful starting point.'
+    : noChartConfirmed
+      ? 'No saved chart on this device. Your Sun sign still gives you a useful starting point.'
+      : '';
   const introCopy = `This is usually the zodiac sign you know from your birthday. Choose it for one clear note for the ${editionLabel} edition — no birth time needed.`;
   const allReadings = useMemo(
     () => SIGNS.map((sign) => ({
@@ -116,10 +121,9 @@ export default function SunSignFallback({
         <p
           class={`today-fallback__status${noChartConfirmed || comparisonUnavailable ? ' is-visible' : ''}`}
           aria-hidden={noChartConfirmed || comparisonUnavailable ? undefined : 'true'}
+          aria-live="polite"
         >
-          {comparisonUnavailable
-            ? 'Your saved-chart comparison is temporarily unavailable. Your Sun sign still gives you a useful starting point.'
-            : 'No saved chart on this device. Your Sun sign still gives you a useful starting point.'}
+          {statusCopy}
         </p>
       </div>
 

@@ -8,24 +8,14 @@
  */
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { useProfile } from '../lib/hooks/useProfile';
+import { useTodayChart } from '../lib/hooks/useTodayChart';
+import { useYearAhead } from '../lib/hooks/useYearAhead';
+import { isTodayChartUsable } from '../lib/profile/today-chart';
 import { findInterAspects } from '../lib/engine/synastry';
 import { TRANSIT_ORB, transitLine } from '../lib/transits';
 import PlanetGlyph from '../components/PlanetGlyph';
 import EvidenceDisclosure from './EvidenceDisclosure';
 import { houseLine, wholeSignHouseFromAsc, type DailyBody } from '../lib/daily';
-import { type EclipseRecord } from '../lib/upcoming';
-import {
-  YEAR_AHEAD_CACHE_KEY,
-  aspectEvents,
-  assembleYearAhead,
-  eclipseEvents,
-  ingressEvents,
-  saturnSeasonEvents,
-  solarReturnEvents,
-  yearCacheFresh,
-  type IngressWindow,
-  type YearScanCache,
-} from '../lib/year-ahead';
 import { signBySlug, signForLongitude } from '../lib/signs';
 import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
@@ -35,91 +25,50 @@ import daily from '../data/daily.json';
 const SKY_HUE: Record<string, string> = Object.fromEntries(
   daily.bodies.map((b) => [b.body, signBySlug(b.sign).hue]),
 );
-import eclipsesData from '../data/eclipses.json';
-import ingressesData from '../data/ingresses.json';
 
 interface Props { locale?: Locale }
 
+const TODAY_CHART_COPY = {
+  en: { use: 'Use for Today', active: 'Used for Today', viewing: 'Viewing', selected: 'Today now uses' },
+  es: { use: 'Usar para Hoy · EN', active: 'Usada para Hoy · EN', viewing: 'Viendo', selected: 'Hoy ahora usa' },
+  pt: { use: 'Usar para Hoje · EN', active: 'Usado para Hoje · EN', viewing: 'Vendo', selected: 'Hoje agora usa' },
+  fr: { use: 'Utiliser pour Aujourd’hui · EN', active: 'Utilisé pour Aujourd’hui · EN', viewing: 'Thème affiché', selected: 'Aujourd’hui utilise maintenant' },
+  it: { use: 'Usa per Oggi · EN', active: 'Usato per Oggi · EN', viewing: 'Tema visualizzato', selected: 'Oggi ora usa' },
+  ru: { use: 'Использовать для «Сегодня» · EN', active: 'Для «Сегодня» · EN', viewing: 'Открыта карта', selected: 'Для «Сегодня» выбрана карта' },
+} as const satisfies Record<Locale, Record<'use' | 'active' | 'viewing' | 'selected', string>>;
+
 const MOVERS = new Set(['Sun', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn']);
-const ECLIPSES = (eclipsesData as { eclipses: EclipseRecord[] }).eclipses;
-const INGRESSES = (ingressesData as { windows: IngressWindow[] }).windows;
-const YEAR_MS = 366 * 86400_000;
-
-type YearCacheFile = Record<string, YearScanCache>;
-
-const readYearCache = (): YearCacheFile => {
-  try {
-    return JSON.parse(localStorage.getItem(YEAR_AHEAD_CACHE_KEY) ?? '{}') as YearCacheFile;
-  } catch {
-    return {};
-  }
-};
 
 export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
   const locale = normalizeCatalogLocale(rawLocale);
-  const { profile } = useProfile();
+  const { profile, ready: profileReady } = useProfile();
+  const {
+    chart: todayChart,
+    ready: todayChartReady,
+    selectChart: selectTodayChart,
+  } = useTodayChart(profile, profileReady);
   const charts = useMemo(
-    () => [...profile.charts].sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
+    () => profile.charts
+      .filter(isTodayChartUsable)
+      .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt)),
     [profile.charts],
   );
   const [sel, setSel] = useState<string | null>(null);
-  const [year, setYear] = useState<YearScanCache | null>(null);
-  const [yearBusy, setYearBusy] = useState(false);
+  const [chartAnnouncement, setChartAnnouncement] = useState('');
 
-  const chart = charts.find((c) => c.id === sel) ?? charts[0] ?? null;
+  useEffect(() => {
+    if (!todayChartReady) return;
+    if (sel && charts.some((candidate) => candidate.id === sel)) return;
+    setSel(todayChart?.id ?? charts[0]?.id ?? null);
+  }, [charts, sel, todayChart?.id, todayChartReady]);
+
+  const chart = charts.find((c) => c.id === sel)
+    ?? (todayChartReady ? todayChart ?? charts[0] ?? null : null);
+  const { timeline: yearTimeline, busy: yearBusy } = useYearAhead(chart);
+  const timeline = yearTimeline.slice(0, 8);
   const natalPointLabel = (body: string) => locale === 'ru'
     ? `${body === 'Moon' || body === 'Venus' ? 'натальная' : 'натальный'} ${planetLabel(locale, body)}`
     : `${t(locale, 'natal')} ${planetLabel(locale, body)}`;
-
-  // Year scan: cache first; compute (lazy engine) only on a miss or after
-  // two weeks, so repeat visits stay ephemeris-free.
-  useEffect(() => {
-    setYear(null);
-    if (!chart) return;
-    const cached = readYearCache()[chart.id];
-    if (cached && yearCacheFresh(cached, chart.summary.engineVersion, new Date())) {
-      setYear(cached);
-      return;
-    }
-    let cancelled = false;
-    setYearBusy(true);
-    (async () => {
-      try {
-        const { yearScan } = await import('../lib/engine/year-scan');
-        const bodies = chart.summary.bodies;
-        const sunLon = bodies.find((b) => b.body === 'Sun')?.lon;
-        if (sunLon == null) return;
-        const from = new Date();
-        const to = new Date(from.getTime() + YEAR_MS);
-        const scan = yearScan(
-          {
-            sunLon,
-            moonLon: bodies.find((b) => b.body === 'Moon')?.lon ?? null,
-            ascLon: chart.birth.timeKnown ? chart.summary.angles?.asc ?? null : null,
-            birthUtc: new Date(chart.summary.utcISO),
-          },
-          from,
-          to,
-        );
-        const entry: YearScanCache = {
-          engineVersion: chart.summary.engineVersion,
-          computedAt: from.toISOString(),
-          from: from.toISOString(),
-          to: to.toISOString(),
-          scan,
-        };
-        if (cancelled) return;
-        try {
-          const file = readYearCache();
-          file[chart.id] = entry;
-          localStorage.setItem(YEAR_AHEAD_CACHE_KEY, JSON.stringify(file));
-        } catch { /* cache is best-effort */ }
-        setYear(entry);
-      } catch { /* engine failed to load — the card shows the quiet line */ }
-      if (!cancelled) setYearBusy(false);
-    })();
-    return () => { cancelled = true; };
-  }, [chart?.id, chart?.summary.engineVersion]);
 
   const today = useMemo(() => {
     if (!chart) return null;
@@ -142,34 +91,6 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
     }
     return { hits, houseLines };
   }, [chart]);
-
-  // The merged twelve-month timeline: engine-scanned events from the
-  // cache, plus ingresses and eclipse hits from committed data.
-  const timeline = useMemo(() => {
-    if (!chart) return [];
-    const now = new Date();
-    const to = new Date(now.getTime() + YEAR_MS);
-    const natal = chart.summary.bodies.map(({ body, lon }) => ({ body, lon }));
-    const sunLon = natal.find((n) => n.body === 'Sun')?.lon;
-    const sunSign = sunLon != null ? signForLongitude(sunLon).slug : '';
-    const asc = chart.birth.timeKnown ? chart.summary.angles?.asc : null;
-    const risingSign = asc != null ? signForLongitude(asc).slug : null;
-    const parts = [
-      ingressEvents(INGRESSES, sunSign, risingSign, now, to),
-      eclipseEvents(ECLIPSES, natal, now, to),
-    ];
-    if (year) {
-      parts.push(
-        solarReturnEvents(year.scan),
-        aspectEvents(year.scan),
-        saturnSeasonEvents(year.scan.saturnSeasons, now, to),
-      );
-    }
-    // Keep windows still running; drop events fully in the past.
-    return assembleYearAhead(parts)
-      .filter((e) => new Date(e.endAt ?? e.at) >= now)
-      .slice(0, 8);
-  }, [chart, year]);
 
   if (!chart) {
     return (
@@ -195,20 +116,42 @@ export default function ProfileDashboard({ locale: rawLocale = 'en' }: Props) {
               {daily.date} · {moonPhaseLabel(locale, daily.moon.phase)}
             </span>
           </div>
-          {charts.length > 1 && (
-            <label class="pfd__pick">
-              <span class="mono">{t(locale, 'pfdChartPick')}</span>
-              <select
-                class="field__input"
-                value={chart.id}
-                onChange={(e) => setSel((e.target as HTMLSelectElement).value)}
+          <div class="pfd__pick-row">
+            {charts.length > 1 && (
+              <label class="pfd__pick">
+                <span class="mono">{t(locale, 'pfdChartPick')}</span>
+                <select
+                  class="field__input"
+                  value={chart.id}
+                  onChange={(event) => {
+                    const id = (event.currentTarget as HTMLSelectElement).value;
+                    const selected = charts.find((candidate) => candidate.id === id);
+                    setSel(id);
+                    if (selected) setChartAnnouncement(`${TODAY_CHART_COPY[locale].viewing} ${selected.name}.`);
+                  }}
+                >
+                  {charts.map((c) => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
+                  ))}
+                </select>
+              </label>
+            )}
+            {todayChart?.id === chart.id ? (
+              <span class="pfd__today-state">{TODAY_CHART_COPY[locale].active}</span>
+            ) : (
+              <button
+                class="pfd__today-action"
+                type="button"
+                onClick={() => {
+                  if (!selectTodayChart(chart.id)) return;
+                  setChartAnnouncement(`${TODAY_CHART_COPY[locale].selected} ${chart.name}.`);
+                }}
               >
-                {charts.map((c) => (
-                  <option key={c.id} value={c.id}>{c.name}</option>
-                ))}
-              </select>
-            </label>
-          )}
+                {TODAY_CHART_COPY[locale].use}
+              </button>
+            )}
+            <span class="sr-only" role="status" aria-live="polite">{chartAnnouncement}</span>
+          </div>
           {locale !== 'ru' && today && today.houseLines.length > 0 && (
             <ul class="pfd__lines">
               {today.houseLines.map((l) => (

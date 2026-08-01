@@ -6,6 +6,7 @@
 import { EMPTY_PROFILE, MAX_CHARTS, PROFILE_KEY } from './schema';
 import type { Profile, SavedChart } from './schema';
 import { clearChartDeletion, recordChartDeletion } from './deletions';
+import { reconcileTodayChartPreference } from './today-chart';
 
 const YEAR_AHEAD_CACHE_KEY = 'zodiacs.yearahead.v1';
 
@@ -54,7 +55,10 @@ function persist(profile: Profile, options: PersistOptions = { sync: true }): bo
 
 export function replaceProfile(profile: Profile): boolean {
   const ok = persist(profile, { sync: false });
-  if (ok) pruneYearAheadCacheExcept(new Set(profile.charts.map((chart) => chart.id)));
+  if (ok) {
+    pruneYearAheadCacheExcept(new Set(profile.charts.map((chart) => chart.id)));
+    reconcileTodayChartPreference(profile.charts);
+  }
   return ok;
 }
 
@@ -79,6 +83,9 @@ export function saveChart(
   options: { explicitName?: string } = {},
 ): 'saved' | 'updated' | 'full' | 'error' {
   const profile = loadProfile();
+  // Migrate an existing device before this write updates a timestamp. That
+  // makes the initial choice stable instead of letting a later save switch it.
+  reconcileTodayChartPreference(profile.charts);
   const explicitName = options.explicitName?.trim() || undefined;
   let existing = profile.charts.findIndex((c) => c.id === chart.id);
   if (existing < 0) {
@@ -95,6 +102,7 @@ export function saveChart(
     };
     profile.charts[existing] = updated;
     if (!persist(profile)) return 'error';
+    reconcileTodayChartPreference(profile.charts);
     clearChartDeletion(updated.id);
     return 'updated';
   }
@@ -102,6 +110,8 @@ export function saveChart(
   const inserted = explicitName ? { ...chart, name: explicitName } : chart;
   profile.charts.unshift(inserted);
   if (!persist(profile)) return 'error';
+  // The first chart becomes the Today chart. A valid existing choice remains.
+  reconcileTodayChartPreference(profile.charts);
   clearChartDeletion(inserted.id);
   return 'saved';
 }
@@ -135,10 +145,12 @@ function pruneYearAheadCacheExcept(chartIds: Set<string>): void {
 
 export function deleteChart(id: string): boolean {
   const profile = loadProfile();
+  reconcileTodayChartPreference(profile.charts);
   const existed = profile.charts.some((c) => c.id === id);
   profile.charts = profile.charts.filter((c) => c.id !== id);
   const ok = persist(profile, { sync: false });
   if (ok && existed) {
+    reconcileTodayChartPreference(profile.charts);
     pruneYearAheadCache(id);
     recordChartDeletion(id);
     queueCloudSync();
@@ -148,6 +160,7 @@ export function deleteChart(id: string): boolean {
 
 export function renameChart(id: string, name: string): boolean {
   const profile = loadProfile();
+  reconcileTodayChartPreference(profile.charts);
   const chart = profile.charts.find((c) => c.id === id);
   if (!chart) return false;
   chart.name = name;

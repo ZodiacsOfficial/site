@@ -3,6 +3,13 @@ import { describe, expect, it, vi } from 'vitest';
 import { ASSISTANT_CONTEXT } from '../api/_assistant/context';
 import { ASSISTANT_PERSONA } from '../api/_assistant/persona';
 import {
+  ASSISTANT_EVIDENCE_ASPECTS as CLIENT_EVIDENCE_ASPECTS,
+  ASSISTANT_EVIDENCE_BODIES as CLIENT_EVIDENCE_BODIES,
+} from '../src/lib/assistant/evidence';
+import {
+  ASSISTANT_EVIDENCE_ASPECT_TYPES,
+  ASSISTANT_EVIDENCE_BODY_NAMES,
+  ASSISTANT_EVIDENCE_NATAL_POINTS,
   createAssistantHandler,
   hashVisitor,
   isAllowedSiteRequest,
@@ -132,7 +139,7 @@ function dependencies(options: {
 describe('assistant request validation', () => {
   it('keeps the reviewed assistant persona byte-identical', () => {
     expect(createHash('sha256').update(ASSISTANT_PERSONA).digest('hex')).toBe(
-      '5f1593d4119a49677b094c48962d60a9efbd472bed67ff0510fbdbcf5453ca4d',
+      '663382e83455141c91ebd7a1584c7477557e248de0bc9b8f909b879cc8ee0feb',
     );
   });
 
@@ -171,6 +178,37 @@ describe('assistant request validation', () => {
       messages: [{ role: 'assistant', content: 'hello' }],
     });
     expect(parseRequestBody({ messages: [{ role: 'user', content: 'hello' }], chart: 42 })).toBeNull();
+  });
+
+  it('accepts only closed client-computed transit evidence and keeps chart IDs local', () => {
+    const messages = [{ role: 'user' as const, content: 'Why does this matter?' }];
+    const evidence = {
+      kind: 'transit' as const,
+      date: '2026-08-01',
+      transitingBody: 'Saturn',
+      aspect: 'square',
+      natalPoint: 'Moon',
+      orb: 1.24,
+    };
+    expect(parseRequestBody({ messages, evidence })).toEqual({ messages, evidence });
+    expect(parseRequestBody({ messages, evidence: { ...evidence, date: '2026-02-30' } })).toBeNull();
+    expect(parseRequestBody({ messages, evidence: { ...evidence, transitingBody: 'Comet' } })).toBeNull();
+    expect(parseRequestBody({ messages, evidence: { ...evidence, aspect: 'quincunx' } })).toBeNull();
+    expect(parseRequestBody({ messages, evidence: { ...evidence, natalPoint: 'Vertex' } })).toBeNull();
+    expect(parseRequestBody({ messages, evidence: { ...evidence, orb: Number.NaN } })).toBeNull();
+    expect(parseRequestBody({ messages, evidence: { ...evidence, orb: 3.01 } })).toBeNull();
+    expect(parseRequestBody({ messages, evidence: { ...evidence, interpretation: 'trust me' } })).toBeNull();
+    expect(parseRequestBody({ messages, evidence, chartId: 'local-only' })).toBeNull();
+  });
+
+  it('keeps the independently isolated client and server evidence vocabularies in parity', () => {
+    expect(ASSISTANT_EVIDENCE_BODY_NAMES).toEqual(CLIENT_EVIDENCE_BODIES);
+    expect(ASSISTANT_EVIDENCE_ASPECT_TYPES).toEqual(CLIENT_EVIDENCE_ASPECTS);
+    expect(ASSISTANT_EVIDENCE_NATAL_POINTS).toEqual([
+      ...CLIENT_EVIDENCE_BODIES,
+      'Ascendant',
+      'Midheaven',
+    ]);
   });
 
   it('parses the scalar shapes PostgREST may return', () => {
@@ -261,6 +299,43 @@ describe('POST /api/assistant', () => {
     expect(logs).toEqual([
       'assistant_usage input_tokens=120 cached_tokens=80 cache_creation_input_tokens=25 output_tokens=14',
     ]);
+  });
+
+  it('attaches a deterministic transit receipt without requiring chart context', async () => {
+    const modelCalls: Array<Record<string, unknown>> = [];
+    const handler = createAssistantHandler(dependencies({ modelCalls }));
+    const res = new MockResponse();
+    await handler(request({
+      messages: [{ role: 'user', content: 'Why does this matter?' }],
+      evidence: {
+        kind: 'transit',
+        date: '2026-08-01',
+        transitingBody: 'Saturn',
+        aspect: 'square',
+        natalPoint: 'Moon',
+        orb: 1.24,
+      },
+    }), res);
+
+    expect(res.statusCode).toBe(200);
+    const call = modelCalls[0] as any;
+    expect(call.messages.at(-1)).toEqual({
+      role: 'user',
+      content: [
+        { type: 'text', text: 'Why does this matter?' },
+        {
+          type: 'text',
+          text: [
+            'Client-computed transit receipt from Zodiacs.org; the server validates its shape but does not independently verify the underlying chart calculation. Repeat the supplied fields exactly when citing them, do not invent additional chart facts, and do not claim the receipt was server-verified.',
+            'Date: 2026-08-01',
+            'Transiting body: Saturn',
+            'Aspect: square',
+            'Natal point: Moon',
+            'Orb: 1.2°',
+          ].join('\n'),
+        },
+      ],
+    });
   });
 
   it('rejects non-POST, cross-origin, disabled, and invalid requests before quota work', async () => {

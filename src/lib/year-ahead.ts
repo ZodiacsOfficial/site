@@ -195,3 +195,44 @@ export function saturnSeasonEvents(
 export function assembleYearAhead(parts: YearAheadEvent[][]): YearAheadEvent[] {
   return parts.flat().sort((a, b) => a.at.localeCompare(b.at));
 }
+
+export interface ComingUpSelection {
+  nextSevenDays: YearAheadEvent[];
+  daysEightToThirty: YearAheadEvent[];
+  nextLater: YearAheadEvent | null;
+}
+
+/**
+ * Compact /today/ cut of an already assembled year-ahead timeline. This is
+ * deliberately selection-only: callers reuse the Profile computation/cache,
+ * so the daily page cannot drift into a second forecasting engine.
+ */
+export function selectComingUp(
+  events: YearAheadEvent[],
+  now: Date,
+  limitPerWindow = 2,
+): ComingUpSelection {
+  const start = now.getTime();
+  const sevenDays = start + 7 * 86_400_000;
+  const thirtyDays = start + 30 * 86_400_000;
+  const future = events
+    .filter((event) => {
+      const at = Date.parse(event.at);
+      return Number.isFinite(at) && at >= start;
+    })
+    .sort((a, b) => a.at.localeCompare(b.at));
+  const limit = Math.max(0, Math.floor(limitPerWindow));
+  const nextSevenDays = future
+    .filter((event) => Date.parse(event.at) <= sevenDays)
+    .slice(0, limit);
+  const daysEightToThirty = future
+    .filter((event) => {
+      const at = Date.parse(event.at);
+      return at > sevenDays && at <= thirtyDays;
+    })
+    .slice(0, limit);
+  const nextLater = nextSevenDays.length === 0 && daysEightToThirty.length === 0
+    ? future.find((event) => Date.parse(event.at) > thirtyDays) ?? null
+    : null;
+  return { nextSevenDays, daysEightToThirty, nextLater };
+}

@@ -41,20 +41,33 @@ const sunSignLines = Object.fromEntries(
         var profile = rawProfile ? JSON.parse(rawProfile) : null;
         var charts = profile && profile.version === 1 && Array.isArray(profile.charts)
           ? profile.charts.filter(function (chart) {
-              return chart && chart.summary && Array.isArray(chart.summary.bodies)
+              return chart && typeof chart.id === 'string' && chart.id.length > 0
+                && chart.summary && Array.isArray(chart.summary.bodies)
                 && chart.summary.bodies.some(function (body) { return Number.isFinite(body && body.lon); });
             })
           : [];
-        var latestChart = charts.reduce(function (latest, chart) {
+        var newestChart = charts.reduce(function (latest, chart) {
           if (!latest) return chart;
           var chartStamp = typeof chart.updatedAt === 'string' ? chart.updatedAt : (chart.createdAt || '');
           var latestStamp = typeof latest.updatedAt === 'string' ? latest.updatedAt : (latest.createdAt || '');
           return chartStamp > latestStamp ? chart : latest;
         }, null);
-        var hasUsableChart = latestChart !== null;
+        var rawTodayPreference = localStorage.getItem('zodiacs.today-chart.v1');
+        var todayPreference = null;
+        try { todayPreference = rawTodayPreference ? JSON.parse(rawTodayPreference) : null; } catch (error) {}
+        var selectedChart = todayPreference && todayPreference.version === 1 && typeof todayPreference.chartId === 'string'
+          ? charts.find(function (chart) { return chart.id === todayPreference.chartId; }) || null
+          : null;
+        selectedChart = selectedChart || newestChart;
+        if (selectedChart && (!todayPreference || todayPreference.chartId !== selectedChart.id)) {
+          localStorage.setItem('zodiacs.today-chart.v1', JSON.stringify({ version: 1, chartId: selectedChart.id }));
+        } else if (!selectedChart && rawTodayPreference !== null) {
+          localStorage.removeItem('zodiacs.today-chart.v1');
+        }
+        var hasUsableChart = selectedChart !== null;
         if (hasUsableChart) {
           document.documentElement.setAttribute('data-today-saved-chart', '');
-          var sun = latestChart.summary.bodies.find(function (body) {
+          var sun = selectedChart.summary.bodies.find(function (body) {
             return body && body.body === 'Sun' && Number.isFinite(body.lon);
           });
           if (sun) {
@@ -202,7 +215,14 @@ const sunSignLines = Object.fromEntries(
     grid-template-rows: auto auto;
     align-content: space-between;
   }
-  .today-returning-chart-status { margin: 0; color: var(--muted); font-size: var(--text-sm); visibility: hidden; }
+  .today-returning-chart-status {
+    min-height: 1.65em;
+    margin: 0;
+    color: var(--muted);
+    font-size: var(--text-sm);
+    line-height: 1.65;
+    visibility: hidden;
+  }
   .today-returning-chart-status.is-visible { visibility: visible; }
   .today-returning-sun-baseline { display: none; gap: 8px; }
   .today-returning-sun-baseline p { margin: 0; max-width: 58ch; }
@@ -249,6 +269,33 @@ const sunSignLines = Object.fromEntries(
     font-size: var(--text-sm);
     line-height: 1.6;
   }
+  .today-chart-picker {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 10px;
+    max-width: 420px;
+    margin-top: 13px;
+  }
+  .today-chart-picker > span {
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .today-chart-picker select {
+    min-width: 0;
+    height: 38px;
+    padding: 0 34px 0 12px;
+    border: 1px solid var(--hair-2);
+    border-radius: var(--r-md);
+    background: var(--void-1);
+    color: var(--text);
+    font: inherit;
+    font-size: var(--text-sm);
+  }
+  .today-chart-picker select:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 2px; }
   .today-lines {
     display: grid;
     gap: 0;
@@ -270,6 +317,24 @@ const sunSignLines = Object.fromEntries(
     line-height: 1.65;
     text-wrap: pretty;
   }
+  .today-lines__ask {
+    position: relative;
+    display: inline-block;
+    margin: 0 0 0 0.25em;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11.5px;
+    font-weight: 650;
+    line-height: 1.4;
+    white-space: nowrap;
+  }
+  .today-lines__ask::before { content: ''; position: absolute; inset: -14px -8px; }
+  .today-lines__ask:hover { color: var(--text); }
+  .today-lines__ask:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 3px; }
   .today-lines__receipt {
     margin: 8px 0 0;
     color: var(--faint);
@@ -282,9 +347,101 @@ const sunSignLines = Object.fromEntries(
     font-size: 12px;
     line-height: 1.7;
   }
+  .today-coming-up {
+    margin: 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .today-coming-up > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 14px;
+    cursor: pointer;
+    list-style: none;
+  }
+  .today-coming-up > summary::-webkit-details-marker { display: none; }
+  .today-coming-up > summary strong {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .today-coming-up > summary:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 3px; }
+  .today-coming-up__next {
+    display: inline-block;
+    width: clamp(108px, 28vw, 160px);
+    overflow: hidden;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    text-align: right;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .today-coming-up__body { display: grid; gap: 18px; padding-top: 18px; }
+  .today-coming-up__group { display: grid; gap: 9px; }
+  .today-coming-up__group h4 {
+    margin: 0;
+    color: var(--faint);
+    font-family: var(--font-mono);
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.13em;
+    text-transform: uppercase;
+  }
+  .today-coming-up__group ol {
+    display: grid;
+    gap: 10px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  .today-coming-up__group li {
+    display: grid;
+    grid-template-columns: minmax(66px, auto) minmax(0, 1fr);
+    gap: 12px;
+    padding: 12px 13px;
+    border: 1px solid var(--hair-1);
+    border-radius: var(--r-md);
+    background: color-mix(in oklab, var(--sign-cancer) 3%, var(--void-1));
+  }
+  .today-coming-up__group time {
+    color: var(--sign-cancer);
+    font-family: var(--font-mono);
+    font-size: 10px;
+    line-height: 1.65;
+    white-space: nowrap;
+  }
+  .today-coming-up__group p {
+    margin: 0;
+    color: var(--text-2);
+    font-size: var(--text-sm);
+    line-height: 1.6;
+  }
+  .today-coming-up__quiet,
+  .today-coming-up__privacy {
+    margin: 0;
+    color: var(--faint);
+    font-size: 12px;
+    line-height: 1.65;
+  }
+  .today-coming-up__privacy { padding-top: 2px; }
+  .today-coming-up__method {
+    display: grid;
+    gap: 8px;
+    padding-top: 16px;
+    border-top: 1px solid var(--hair-1);
+  }
+  .today-coming-up__method > strong { color: var(--text-2); font-size: var(--text-sm); }
+  .today-coming-up__method > p { margin: 0; color: var(--faint); font-size: 12px; line-height: 1.7; }
+  .today-coming-up__method ul { display: grid; gap: 6px; margin: 0; padding-left: 18px; }
+  .today-coming-up__method li { overflow-wrap: anywhere; font-family: var(--font-mono); font-size: 10.5px; }
   .today-fallback { display: grid; gap: 24px; padding-top: 24px; }
   .today-fallback__intro p { max-width: 56ch; }
   .today-fallback__intro .today-fallback__status {
+    /* The ready-state sentence wraps to two lines at its 56ch measure. Keep
+       both lines in the first-paint geometry even while the copy is hidden. */
+    min-height: 3.2em;
     margin-top: 10px;
     color: var(--faint);
     font-size: 12px;
@@ -487,6 +644,7 @@ const sunSignLines = Object.fromEntries(
     .today-sign-readings { grid-template-columns: 1fr; }
     .today-fallback__personalize { align-items: flex-start; flex-direction: column; }
     .today-fallback__personalize .btn { width: 100%; justify-content: space-between; }
+    .today-coming-up__group li { grid-template-columns: 1fr; gap: 4px; }
   }
   @media (prefers-reduced-motion: reduce) {
     .today-streak__count { animation: none; }

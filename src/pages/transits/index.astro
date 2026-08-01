@@ -2,12 +2,13 @@
 import Base from '../../layouts/Base.astro';
 import TransitTracker from '../../islands/TransitTracker.tsx';
 import PlanetGlyph from '../../components/PlanetGlyph';
-import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../lib/horoscopes';
+import { dayLabel, eventList, monthLabel, transitDisplayMonth } from '../../lib/horoscopes';
 import '../../styles/calculator.css';
 
 // The month's receipts render statically from the committed transit
 // JSON — the island handles the personal part.
-const month = latestTransitMonth();
+const transitSelection = transitDisplayMonth();
+const { month } = transitSelection;
 const events = month ? eventList(month) : [];
 const label = month ? monthLabel(month) : null;
 
@@ -74,7 +75,11 @@ const jsonLd = [
   </section>
 
   {month && (
-    <section class="section--tight container container--narrow">
+    <section
+      class="section--tight container container--narrow"
+      data-transit-month={month}
+      data-transit-status={transitSelection.status}
+    >
       <div class="section-head reveal">
         <h2>The sky in {label}</h2>
         <p>
@@ -84,6 +89,11 @@ const jsonLd = [
           Use them with the <a href="/horoscopes/">monthly horoscopes</a> or keep them as a calendar.
         </p>
       </div>
+      {transitSelection.status === 'stale' && (
+        <p class="notice trn-events__stale">
+          Current-month data is not available yet. These are the latest published dates, from {label}.
+        </p>
+      )}
       <ul class="trn-events reveal">
         {events.map((e) => (
           <li>
@@ -125,6 +135,7 @@ const jsonLd = [
   .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
 
   .trn-events { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .trn-events__stale { margin-bottom: 16px; }
   .trn-events li {
     display: flex;
     align-items: baseline;

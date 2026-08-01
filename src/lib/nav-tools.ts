@@ -7,10 +7,22 @@ interface NavTool {
 }
 
 /**
- * The eight primary calculators surfaced by the site navigation. Sublabels
+ * The daily return path and eight primary calculators surfaced by the site navigation. Sublabels
  * are reused verbatim from the existing EN/ES tool-page and tools-hub copy.
  */
 export const NAV_TOOLS = [
+  {
+    href: '/today/',
+    label: 'navToday',
+    sublabel: {
+      en: 'Your saved chart against today’s sky, plus a clear Sun-sign start.',
+      es: 'Tu carta guardada frente al cielo de hoy. Esta experiencia está en inglés.',
+      pt: 'Seu mapa salvo diante do céu de hoje. Esta experiência está em inglês.',
+      fr: 'Ton thème enregistré face au ciel du jour. Cette expérience est en anglais.',
+      it: 'Il tuo tema salvato rispetto al cielo di oggi. Questa esperienza è in inglese.',
+      ru: 'Сохранённая карта и небо сегодня. Этот раздел пока на английском.',
+    },
+  },
   {
     href: '/birth-chart/',
     label: 'birthChart',

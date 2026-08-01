@@ -4,6 +4,7 @@ import type { Chart, HouseSystem } from '../engine/types';
 import { PROFILE_DELETIONS_KEY, loadChartDeletions } from './deletions';
 import { EMPTY_PROFILE, MAX_CHARTS, PROFILE_KEY } from './schema';
 import type { SavedChart } from './schema';
+import { TODAY_CHART_PREFERENCE_KEY, parseTodayChartPreference } from './today-chart';
 import {
   deleteChart,
   loadProfile,
@@ -108,6 +109,27 @@ afterEach(() => {
 });
 
 describe('saveChart', () => {
+  it('sets the first saved chart as Today without switching on later saves', () => {
+    seedProfile([]);
+    expect(saveChart(makeChart('first'))).toBe('saved');
+    expect(parseTodayChartPreference(storage.getItem(TODAY_CHART_PREFERENCE_KEY))?.chartId)
+      .toBe('first');
+
+    expect(saveChart(makeChart('second', { lat: 14 }))).toBe('saved');
+    expect(parseTodayChartPreference(storage.getItem(TODAY_CHART_PREFERENCE_KEY))?.chartId)
+      .toBe('first');
+  });
+
+  it('migrates a legacy profile before an update can change the default', () => {
+    seedProfile([
+      makeChart('chosen', { updatedAt: '2026-07-09T00:00:00.000Z' }),
+      makeChart('other', { lat: 14, updatedAt: '2026-07-01T00:00:00.000Z' }),
+    ]);
+    expect(saveChart(makeChart('incoming', { lat: 14 }))).toBe('updated');
+    expect(parseTodayChartPreference(storage.getItem(TODAY_CHART_PREFERENCE_KEY))?.chartId)
+      .toBe('chosen');
+  });
+
   it('preserves a rename when an opened chart is saved again without an explicit name', () => {
     const existing = makeChart('kept-id', {
       name: 'Mom',
@@ -194,6 +216,18 @@ describe('saveChart', () => {
 });
 
 describe('deleteChart', () => {
+  it('moves Today to the newest remaining chart when its selection is deleted', () => {
+    seedProfile([
+      makeChart('selected', { updatedAt: '2026-07-03T00:00:00.000Z' }),
+      makeChart('fallback', { lat: 14, updatedAt: '2026-07-02T00:00:00.000Z' }),
+    ]);
+    storage.setItem(TODAY_CHART_PREFERENCE_KEY, JSON.stringify({ version: 1, chartId: 'selected' }));
+
+    expect(deleteChart('selected')).toBe(true);
+    expect(parseTodayChartPreference(storage.getItem(TODAY_CHART_PREFERENCE_KEY))?.chartId)
+      .toBe('fallback');
+  });
+
   it('prunes only the deleted chart from the year-ahead cache', () => {
     seedProfile([makeChart('remove-me'), makeChart('keep-me', { lat: 14 })]);
     storage.setItem(YEAR_AHEAD_CACHE_KEY, JSON.stringify({

@@ -6,6 +6,7 @@ const en = {
     navTools: 'Tools',
     navLearn: 'Learn',
     navHoroscopes: 'Horoscopes',
+    navToday: 'Today',
     navCollect: 'Registry',
     navSavedCharts: 'Saved charts',
     navMenu: 'Menu',

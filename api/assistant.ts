@@ -39,6 +39,36 @@ export interface ConversationMessage {
 interface AssistantRequestBody {
   messages: ConversationMessage[];
   chart?: string;
+  evidence?: AssistantEvidence;
+}
+
+export const ASSISTANT_EVIDENCE_BODY_NAMES = [
+  'Sun', 'Moon', 'Mercury', 'Venus', 'Mars', 'Jupiter', 'Saturn',
+  'Uranus', 'Neptune', 'Pluto', 'North Node', 'South Node',
+] as const;
+export const ASSISTANT_EVIDENCE_NATAL_POINTS = [
+  ...ASSISTANT_EVIDENCE_BODY_NAMES,
+  'Ascendant',
+  'Midheaven',
+] as const;
+export const ASSISTANT_EVIDENCE_ASPECT_TYPES = [
+  'conjunction', 'sextile', 'square', 'trine', 'opposition',
+] as const;
+const BODY_NAMES: ReadonlySet<string> = new Set(ASSISTANT_EVIDENCE_BODY_NAMES);
+const NATAL_POINTS: ReadonlySet<string> = new Set(ASSISTANT_EVIDENCE_NATAL_POINTS);
+const ASPECT_TYPES: ReadonlySet<string> = new Set(ASSISTANT_EVIDENCE_ASPECT_TYPES);
+const EVIDENCE_KEYS = new Set([
+  'kind', 'date', 'transitingBody', 'aspect', 'natalPoint', 'orb',
+]);
+const REQUEST_KEYS = new Set(['messages', 'chart', 'evidence']);
+
+export interface AssistantEvidence {
+  kind: 'transit';
+  date: string;
+  transitingBody: string;
+  aspect: string;
+  natalPoint: string;
+  orb: number;
 }
 
 interface Usage {
@@ -173,8 +203,47 @@ export function parseRequestBody(input: unknown): AssistantRequestBody | null {
 
   if (!body || typeof body !== 'object') return null;
   const candidate = body as Record<string, unknown>;
+  if (Object.keys(candidate).some((key) => !REQUEST_KEYS.has(key))) return null;
   if (!Array.isArray(candidate.messages) || candidate.messages.length === 0) return null;
   if (candidate.chart !== undefined && typeof candidate.chart !== 'string') return null;
+
+  let evidence: AssistantEvidence | undefined;
+  if (candidate.evidence !== undefined) {
+    if (!candidate.evidence || typeof candidate.evidence !== 'object' || Array.isArray(candidate.evidence)) {
+      return null;
+    }
+    const raw = candidate.evidence as Record<string, unknown>;
+    if (Object.keys(raw).some((key) => !EVIDENCE_KEYS.has(key)) || Object.keys(raw).length !== EVIDENCE_KEYS.size) {
+      return null;
+    }
+    if (
+      raw.kind !== 'transit'
+      || typeof raw.date !== 'string'
+      || !/^\d{4}-\d{2}-\d{2}$/.test(raw.date)
+      || Number.isNaN(Date.parse(`${raw.date}T00:00:00.000Z`))
+      || new Date(`${raw.date}T00:00:00.000Z`).toISOString().slice(0, 10) !== raw.date
+      || typeof raw.transitingBody !== 'string'
+      || !BODY_NAMES.has(raw.transitingBody)
+      || typeof raw.aspect !== 'string'
+      || !ASPECT_TYPES.has(raw.aspect)
+      || typeof raw.natalPoint !== 'string'
+      || !NATAL_POINTS.has(raw.natalPoint)
+      || typeof raw.orb !== 'number'
+      || !Number.isFinite(raw.orb)
+      || raw.orb < 0
+      || raw.orb > 3
+    ) {
+      return null;
+    }
+    evidence = {
+      kind: 'transit',
+      date: raw.date,
+      transitingBody: raw.transitingBody,
+      aspect: raw.aspect,
+      natalPoint: raw.natalPoint,
+      orb: raw.orb,
+    };
+  }
 
   const messages: ConversationMessage[] = [];
   for (const message of candidate.messages.slice(-MAX_MESSAGES)) {
@@ -186,24 +255,45 @@ export function parseRequestBody(input: unknown): AssistantRequestBody | null {
   }
 
   const chart = typeof candidate.chart === 'string' ? candidate.chart.slice(0, MAX_CHART_CHARS) : undefined;
-  return chart === undefined ? { messages } : { messages, chart };
+  return {
+    messages,
+    ...(chart === undefined ? {} : { chart }),
+    ...(evidence === undefined ? {} : { evidence }),
+  };
 }
 
 function modelMessages(body: AssistantRequestBody): Array<Record<string, unknown>> {
   const messages: Array<Record<string, unknown>> = body.messages.map((message) => ({ ...message }));
-  if (body.chart === undefined) return messages;
+  if (body.chart === undefined && body.evidence === undefined) return messages;
 
-  const chartBlock = { type: 'text', text: `Visitor's chart summary:\n${body.chart}` };
+  const contextBlocks: Array<{ type: 'text'; text: string }> = [];
+  if (body.chart !== undefined) {
+    contextBlocks.push({ type: 'text', text: `Visitor's chart summary:\n${body.chart}` });
+  }
+  if (body.evidence !== undefined) {
+    const receipt = body.evidence;
+    contextBlocks.push({
+      type: 'text',
+      text: [
+        'Client-computed transit receipt from Zodiacs.org; the server validates its shape but does not independently verify the underlying chart calculation. Repeat the supplied fields exactly when citing them, do not invent additional chart facts, and do not claim the receipt was server-verified.',
+        `Date: ${receipt.date}`,
+        `Transiting body: ${receipt.transitingBody}`,
+        `Aspect: ${receipt.aspect}`,
+        `Natal point: ${receipt.natalPoint}`,
+        `Orb: ${receipt.orb.toFixed(1)}°`,
+      ].join('\n'),
+    });
+  }
   const message = messages.at(-1);
   if (message?.role === 'user') {
     message.content = [
       { type: 'text', text: message.content },
-      chartBlock,
+      ...contextBlocks,
     ];
     return messages;
   }
 
-  messages.push({ role: 'user', content: [chartBlock] });
+  messages.push({ role: 'user', content: contextBlocks });
   return messages;
 }
 

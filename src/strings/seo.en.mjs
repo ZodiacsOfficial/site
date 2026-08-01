@@ -148,7 +148,7 @@ export const OG_EN = Object.freeze({
     { key: 'baby-zodiac', path: '/baby-zodiac/', kicker: 'Free calculator', title: 'What sign will the baby be?', sub: 'The due date’s near-certain Sun, the week’s possible Moons, and what waits for the clock.' },
     { key: 'birthday', path: '/birthday/', kicker: 'Birthday astrology', title: 'Your birthday, read closely', sub: 'Character, love, work, growth, and an exact cusp answer when the year matters.' },
     { key: 'ask', path: '/ask/', kicker: 'Grounded assistant', title: 'Ask Zodiacs', sub: 'Site, astrology, or your own chart — answered from this site’s pages, sources named.' },
-    { key: 'today', path: '/today/', kicker: 'Your daily brief', title: 'Today, against your chart', sub: 'A personal daily focus drawn from the latest chart saved on this device.' },
+    { key: 'today', path: '/today/', kicker: 'Your daily brief', title: 'Today, against your chart', sub: 'A personal daily focus drawn from the chart you chose for Today on this device.' },
   ]),
 });
 

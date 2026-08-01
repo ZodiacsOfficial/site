@@ -31,6 +31,12 @@ const sourceSchema = z.object({
     revisionTimestamp: isoInstantSchema,
   }).strict(),
   retrievedAtUtc: isoInstantSchema,
+  authoritative: z.array(z.object({
+    url: httpsUrlSchema,
+    publisher: z.string().min(1),
+    accessedAtUtc: isoDateSchema,
+    supports: z.array(z.enum(['birthDate', 'deathDate', 'birthPlace'])).min(1),
+  }).strict()).min(1).optional(),
 }).strict();
 
 const portraitSchema = z.discriminatedUnion('available', [
@@ -261,14 +267,39 @@ const personSchema = z.object({
 
 const peoplePilotSchema = z.object({
   schema: z.literal('zodiacs.phase5.people.v1'),
-  status: z.literal('Phase 5 public release — 497 indexable deceased records, 2 protected living records, 1 withdrawn'),
+  status: z.string().min(1),
+  releaseCounts: z.object({
+    reviewedSourceRecords: z.number().int().nonnegative(),
+    publishedRecords: z.number().int().nonnegative(),
+    indexableDeceasedRecords: z.number().int().nonnegative(),
+    protectedLivingRecords: z.number().int().nonnegative(),
+    historicalWithdrawals: z.number().int().nonnegative(),
+    quarantinedRecords: z.number().int().nonnegative(),
+  }).strict(),
   reviewedAtUtc: isoInstantSchema,
   sourceManifestSha256: z.string().regex(/^[a-f0-9]{64}$/u),
   sourceIndexPolicySha256: z.string().regex(/^[a-f0-9]{64}$/u),
+  sourceTrustPolicySha256: z.string().regex(/^[a-f0-9]{64}$/u),
   indexPolicyApprovedAtUtc: isoInstantSchema,
+  trustPolicyApprovedAtUtc: isoInstantSchema,
   directoryIndexable: z.boolean(),
   people: z.array(personSchema).min(20).max(500),
-}).strict();
+}).strict().superRefine((release, context) => {
+  const counts = release.releaseCounts;
+  if (counts.publishedRecords + counts.quarantinedRecords !== counts.reviewedSourceRecords
+      || counts.indexableDeceasedRecords + counts.protectedLivingRecords !== counts.publishedRecords
+      || release.people.length !== counts.publishedRecords) {
+    context.addIssue({ code: 'custom', message: 'People release counts do not reconcile' });
+  }
+  const expectedStatus = `Phase 5 public release — ${counts.publishedRecords} published records: `
+    + `${counts.indexableDeceasedRecords} indexable deceased, `
+    + `${counts.protectedLivingRecords} protected living; `
+    + `${counts.historicalWithdrawals} historical withdrawal${counts.historicalWithdrawals === 1 ? '' : 's'}; `
+    + `${counts.quarantinedRecords} quarantined`;
+  if (release.status !== expectedStatus) {
+    context.addIssue({ code: 'custom', message: 'People release status does not match its derived counts' });
+  }
+});
 
 export const PEOPLE_PILOT = peoplePilotSchema.parse(rawPeople);
 export type PersonRecord = z.infer<typeof personSchema>;

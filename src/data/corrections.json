@@ -3,6 +3,22 @@
  "launched": "2026-07-19",
  "entries": [
   {
+   "id": "people-sun-yat-sen-biographical-data",
+   "correctedAt": "2026-08-01",
+   "page": "/people/sun-yat-sen/",
+   "summary": "The Sun Yat-sen profile used corrupted birth, death, and birthplace claims from a pinned upstream revision.",
+   "before": "The profile said Sun Yat-sen was born in the Soviet Union on 12 November 1956 and died in 2025, then computed a chart from those values.",
+   "after": "The reviewed record now uses 12 November 1866 in Cuiheng, China, and 12 March 1925, supported by the Sun Yat-sen Memorial Hall. The birth time remains unknown, so the chart uses the documented noon-reference convention and omits houses and angles. The original upstream snapshot remains pinned for audit, while a Git-reviewed authoritative override controls publication."
+  },
+  {
+   "id": "people-roberto-clemente-birthplace",
+   "correctedAt": "2026-08-01",
+   "page": "/people/roberto-clemente/",
+   "summary": "The Roberto Clemente profile used Italy and its country centroid as his birthplace.",
+   "before": "The profile described Roberto Clemente as born in Italy and computed the noon-reference chart in the Europe/Rome time zone.",
+   "after": "The reviewed record now uses Carolina, Puerto Rico, supported independently by Major League Baseball and the National Baseball Hall of Fame. The chart was recomputed in America/Puerto_Rico. The birth time remains unknown, so houses and angles are still omitted."
+  },
+  {
    "id": "people-b-f-skinner-sun-sign",
    "correctedAt": "2026-07-27",
    "page": "/people/b-f-skinner/",

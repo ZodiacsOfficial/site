@@ -8,6 +8,13 @@
 import { readFile, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import {
+  applyEvidenceTrustOverride,
+  materializeTrustedPerson,
+  trustOverrideFor,
+  validatePeopleTrustPolicy,
+  validatePersonTrustFacts,
+} from '../../../../scripts/people-trust.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
@@ -23,17 +30,54 @@ function check(name, ok, detail = '') {
   if (!ok) failures.push({ name, detail });
 }
 
-const manifest = JSON.parse(await readFile(join(PILOT, 'manifest.json'), 'utf8'));
+const rawManifest = JSON.parse(await readFile(join(PILOT, 'manifest.json'), 'utf8'));
 const thresholds = JSON.parse(await readFile(join(PILOT, 'thresholds.json'), 'utf8'));
 const depth = JSON.parse(await readFile(join(PILOT, 'depth-report.json'), 'utf8'));
 const screening = JSON.parse(await readFile(join(PILOT, 'screening.json'), 'utf8'));
 const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'));
+const trustPolicy = JSON.parse(await readFile(join(PILOT, 'trust-policy.json'), 'utf8'));
+const quarantined = new Set(trustPolicy.quarantinedProfiles.map((entry) => entry.slug));
+for (const failure of validatePeopleTrustPolicy(trustPolicy, rawManifest)) {
+  check('People trust policy', false, failure);
+}
+const materializedPeople = [];
+for (const rawPerson of rawManifest.people) {
+  if (quarantined.has(rawPerson.slug)) continue;
+  const override = trustOverrideFor(trustPolicy, rawPerson.slug);
+  const rawEvidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${rawPerson.slug}.json`), 'utf8'));
+  const evidence = applyEvidenceTrustOverride(rawEvidence, override);
+  const computed = JSON.parse(await readFile(join(PILOT, 'computed', `${rawPerson.slug}.json`), 'utf8'));
+  const copy = JSON.parse(await readFile(join(PILOT, 'copy', `${rawPerson.slug}.json`), 'utf8'));
+  for (const failure of validatePersonTrustFacts({
+    slug: rawPerson.slug,
+    birthDate: evidence.birth?.time?.slice(1, 11) ?? '',
+    deathDate: evidence.death?.time?.slice(1, 11) ?? null,
+    living: evidence.living,
+    birthPlace: {
+      entity: evidence.birthPlace?.entity,
+      normalisedLabel: override?.fields.birthPlace.normalisedLabel
+        ?? rawPerson.birthPlace.normalisedLabel,
+      country: evidence.birthPlace?.country,
+      coordinates: evidence.birthPlace?.coordinates,
+    },
+  })) {
+    check('People trust facts', false, failure);
+  }
+  materializedPeople.push(materializeTrustedPerson({
+    source: rawPerson,
+    computed,
+    copy,
+    override,
+    similarity: depth.perSlugMax?.[rawPerson.slug] ?? 0,
+  }));
+}
+const manifest = { ...rawManifest, people: materializedPeople };
 const people = manifest.people;
 
 /* 1 — exactly 20 unique QIDs and slugs */
 const qids = new Set(people.map((person) => person.qid));
 const slugs = new Set(people.map((person) => person.slug));
-check('exactly 499 reviewed people', people.length === 499, `${people.length}`);
+check('exactly 499 reviewed source records', rawManifest.people.length === 499, `${rawManifest.people.length}`);
 check('unique QIDs', qids.size === people.length, `${qids.size}`);
 check('unique slugs', slugs.size === people.length, `${slugs.size}`);
 
@@ -52,8 +96,13 @@ check('all twelve Sun signs represented', missingSigns.length === 0, missingSign
    (the selection tool enforced 730 days wherever the pool allowed; the
    relaxations are recorded in selection-report.json). */
 const eraRows = [];
+const separationExceptions = new Set(trustPolicy.overrides
+  .filter((override) => (override.selectionExceptions ?? [])
+    .some((exception) => exception.gate === 'same-sign-separation'))
+  .map((override) => override.slug));
 for (const sign of SIGNS) {
   const group = (bySign[sign] ?? []).slice()
+    .filter((person) => !separationExceptions.has(person.slug))
     .sort((a, b) => a.birthDate.computedGregorianDate.localeCompare(b.birthDate.computedGregorianDate));
   let minGap = Infinity;
   let closest = '';
@@ -294,6 +343,7 @@ const PROHIBITED_SOURCE = /(astro-databank|astrotheme|astro\.com|famousbirthdays
 const evidenceUrls = people.flatMap((person) => [
   person.sources.wikidata.entityUrl,
   person.sources.wikipedia.articleUrl,
+  ...(person.sources.authoritative ?? []).map((source) => source.url),
   person.portrait.available ? person.portrait.filePage : null,
   person.portrait.available ? person.portrait.licenceUrl : null,
 ].filter(Boolean));

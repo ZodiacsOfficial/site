@@ -641,6 +641,14 @@ const onlyHoroscopes = process.argv.includes('--only-horoscopes');
 const onlyInvite = process.argv.includes('--only-compatibility-invite');
 const onlyRussian = process.argv.includes('--only-ru');
 const onlyPeople = process.argv.includes('--only-people');
+const peopleTargets = new Set((process.env.PEOPLE_SLUGS ?? '').split(',').filter(Boolean));
+const peopleToRender = peopleTargets.size > 0
+  ? PEOPLE_PILOT.filter((person) => peopleTargets.has(person.slug))
+  : PEOPLE_PILOT;
+if (peopleTargets.size > 0 && peopleToRender.length !== peopleTargets.size) {
+  throw new Error(`Unknown PEOPLE_SLUGS target: ${[...peopleTargets]
+    .filter((slug) => !peopleToRender.some((person) => person.slug === slug)).join(', ')}`);
+}
 
 let total = 0;
 let count = 0;
@@ -745,7 +753,7 @@ if (onlyRussian) {
 
 if (onlyPeople) {
   console.log('Rendering People pilot OG cards…');
-  for (const person of PEOPLE_PILOT) {
+  for (const person of peopleToRender) {
     await shoot(personCard(person), `people/${person.slug}.png`);
   }
   await writeEnglishManifest();

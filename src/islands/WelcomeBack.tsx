@@ -7,14 +7,14 @@
 import SignChip from './SignChip';
 import { NextActionCard } from '../components/NextActionCard';
 import { useProfile } from '../lib/hooks/useProfile';
+import { useTodayChart } from '../lib/hooks/useTodayChart';
 import { encodeChartLink } from '../lib/share';
 import { localizePath, normalizeCatalogLocale, t, tf, type CatalogLocale as Locale } from '../lib/i18n';
 
 export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Locale }) {
   const locale = normalizeCatalogLocale(rawLocale);
-  const { profile } = useProfile();
-  const chart = [...profile.charts]
-    .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))[0] ?? null;
+  const { profile, ready } = useProfile();
+  const { chart } = useTodayChart(profile, ready);
   const count = profile.charts.length;
 
   if (!chart) return null;
@@ -40,12 +40,10 @@ export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Loc
         houseSystem: chart.summary.houseSystem,
       })}`
     : null;
-  const nextHref = locale === 'en'
-    ? localizePath(locale, '/today/')
-    : localizePath(locale, '/transits/');
+  const nextHref = '/today/';
   const nextLabel = locale === 'en'
     ? t(locale, 'openDailyBrief')
-    : t(locale, 'todayAgainstChart');
+    : `${t(locale, 'todayAgainstChart')} · EN`;
 
   return (
     <section class="container" aria-label={t(locale, 'savedChartAria')}>
@@ -62,7 +60,7 @@ export default function WelcomeBack({ locale: rawLocale = 'en' }: { locale?: Loc
           </dl>
         )}
         primary={(
-          <a class="btn btn--primary" href={nextHref}>
+          <a class="btn btn--primary" href={nextHref} hreflang="en">
             <span>{nextLabel}</span><span class="orb" aria-hidden="true">↗</span>
           </a>
         )}

@@ -62,7 +62,6 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       { path: '/sdk/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
     ];
     for (const width of [390, 781, 1280]) {
-      let referenceGeometry = null;
       let referenceMenuVisual = null;
       for (const route of navRoutes) {
         const navPage = await newPage({ viewport: { width, height: 900 } });
@@ -101,6 +100,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             backdrop: style.backdropFilter || style.webkitBackdropFilter,
             chipHeight: chip ? chip.getBoundingClientRect().height : 0,
             chipTracking: chipStyle ? parseFloat(chipStyle.letterSpacing) : 0,
+            chipHref: chip?.getAttribute('href') ?? null,
             searchVisible: visible(search),
             searchSize: size(search),
             burgerVisible: visible(burger),
@@ -113,16 +113,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         }, { prefix: route.prefix, viewportWidth: width });
         const label = `${route.path} at ${width}px`;
         const desktopNav = width >= 820;
-        if (!referenceGeometry) {
-          referenceGeometry = geometry;
-        } else {
-          check(
-            `${label} matches the main nav width and centering`,
-            Math.abs(geometry.width - referenceGeometry.width) <= 0.75
-              && Math.abs(geometry.left - referenceGeometry.left) <= 0.5,
-            `${geometry.width}/${geometry.left} vs ${referenceGeometry.width}/${referenceGeometry.left}`,
-          );
-        }
+        check(
+          `${label} centers its contextual navigation`,
+          Math.abs(geometry.left + geometry.width / 2 - geometry.viewportWidth / 2) <= 0.5,
+          `${geometry.width}/${geometry.left} in ${geometry.viewportWidth}`,
+        );
         check(`${label} uses the 52px nav shell`, Math.abs(geometry.height - 52) <= 0.5, String(geometry.height));
         check(
           `${label} uses the shared padding and gap`,
@@ -142,10 +137,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           `${geometry.borderWidth}/${geometry.borderAlpha}/${geometry.backgroundAlpha}/${geometry.backdrop}`,
         );
         check(
-          `${label} uses the shared Registry tracking`,
+          `${label} uses the shared contextual-chip tracking`,
           Math.abs(geometry.chipTracking - (desktopNav ? 1.82 : 1.04)) <= 0.12
             && Math.abs(geometry.chipHeight - 34) <= 0.5,
           `${geometry.chipTracking}/${geometry.chipHeight}`,
+        );
+        check(
+          `${label} exposes the correct contextual primary chip`,
+          geometry.chipHref === (route.prefix === 'nav' ? '/today/' : '/registry/'),
+          String(geometry.chipHref),
         );
         if (desktopNav) {
           check(`${label} shows the full desktop lockup`, geometry.sepVisible && geometry.dimVisible);
@@ -261,7 +261,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
               signCount: element.querySelectorAll(`.${root}__sign`).length,
             };
           }, menuRoot);
-          const expectedTools = [
+          const calculatorTools = [
             ['Birth chart', '/birth-chart/', 'Birth chart. See your sun, moon, rising, planets, houses, and what they mean.'],
             ['Compatibility', '/compatibility/', 'Compatibility. Compare two charts and see where they click, clash, and grow.'],
             ['Transits', '/transits/', "Transits. See today's sky next to your chart."],
@@ -271,12 +271,18 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             ['Saturn return', '/saturn-return/', 'Saturn return. When yours hits, exactly, and what it tends to ask.'],
             ['Birthday', '/birthday/', 'Birthday. Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.'],
           ];
+          const expectedTools = route.prefix === 'nav'
+            ? [['Today', '/today/', 'Today. Your saved chart against today’s sky, plus a clear Sun-sign start.'], ...calculatorTools]
+            : calculatorTools;
+          const expectedSiteHrefs = route.prefix === 'nav'
+            ? ['/today/', '/learn/', '/horoscopes/', '/profile/']
+            : ['/learn/', '/horoscopes/', '/profile/', '/registry/'];
           check(
             `${label} uses the shared three-part mobile menu`,
             JSON.stringify(menuContract.labels.map((value) => value.toLowerCase()))
               === JSON.stringify(['the site', 'tools', 'the twelve'])
               && JSON.stringify(menuContract.siteHrefs)
-                === JSON.stringify(['/learn/', '/horoscopes/', '/profile/', '/registry/']),
+                === JSON.stringify(expectedSiteHrefs),
             JSON.stringify(menuContract),
           );
           check(

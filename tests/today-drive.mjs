@@ -89,12 +89,44 @@ const quietMobileProfile = {
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
+const todayHtml = await readFile(new URL('../dist/today/index.html', import.meta.url), 'utf8');
+check(
+  'normal Today SSR does not publish a saved-chart outage',
+  !todayHtml.includes('saved-chart comparison is temporarily unavailable'),
+);
+
+function savedChartFragment(name) {
+  const input = {
+    d: '1907-07-06',
+    t: '08:30',
+    z: 'America/Mexico_City',
+    la: 19.35,
+    lo: -99.16,
+    n: name,
+    p: 'Coyoacán, Mexico',
+  };
+  return `#c=1.${Buffer.from(JSON.stringify(input)).toString('base64url')}`;
+}
+
 async function observeLayoutShifts(page) {
   await page.addInitScript(() => {
     globalThis.__zdxLayoutShifts = [];
+    globalThis.__zdxLayoutShiftSources = [];
     new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
-        if (!entry.hadRecentInput) globalThis.__zdxLayoutShifts.push(entry.value);
+        if (!entry.hadRecentInput) {
+          globalThis.__zdxLayoutShifts.push(entry.value);
+          globalThis.__zdxLayoutShiftSources.push({
+            value: entry.value,
+            sources: (entry.sources ?? []).map((source) => ({
+              node: source.node instanceof Element
+                ? `${source.node.tagName.toLowerCase()}${source.node.id ? `#${source.node.id}` : ''}${source.node.className ? `.${String(source.node.className).trim().replace(/\s+/g, '.')}` : ''}`
+                : null,
+              previousRect: source.previousRect,
+              currentRect: source.currentRect,
+            })),
+          });
+        }
       }
     }).observe({ type: 'layout-shift', buffered: true });
   });
@@ -105,6 +137,10 @@ async function measuredCls(page) {
     requestAnimationFrame(() => requestAnimationFrame(() => resolvePaint()));
   }));
   return page.evaluate(() => globalThis.__zdxLayoutShifts.reduce((sum, value) => sum + value, 0));
+}
+
+async function measuredClsSources(page) {
+  return page.evaluate(() => globalThis.__zdxLayoutShiftSources);
 }
 
 async function inspectReturningMobile(BASE, browser, fixtureProfile, state, expectedContacts) {
@@ -132,7 +168,8 @@ async function inspectReturningMobile(BASE, browser, fixtureProfile, state, expe
       const reading = document.querySelector('.today-reading--resolved');
       const chartName = document.querySelector('.today-reading__chart-name');
       const body = reading.querySelector('.today-reading__body');
-      const bodyLast = body.querySelector('.today-lines li:last-child, .today-quiet__baseline');
+      const bodyLast = body.querySelector('.today-coming-up')
+        ?? body.querySelector('.today-lines li:last-child, .today-quiet__baseline');
       const details = reading.querySelector('.today-method-details');
       const streak = document.querySelector('.today-streak');
       const count = document.querySelector('.today-streak__count');
@@ -141,6 +178,7 @@ async function inspectReturningMobile(BASE, browser, fixtureProfile, state, expe
       const chartNameStyle = getComputedStyle(chartName);
       resolveEvidence({
         cls: globalThis.__zdxLayoutShifts.reduce((sum, value) => sum + value, 0),
+        clsSources: globalThis.__zdxLayoutShiftSources,
         pageWidth: Math.max(document.documentElement.scrollWidth, document.body.scrollWidth),
         viewportWidth: innerWidth,
         readingHeight: reading.getBoundingClientRect().height,
@@ -217,13 +255,32 @@ async function drive(BASE, browser) {
   await desktop.waitForSelector('[data-today-state="chart"]');
   const savedChartHeight = await desktop.locator('.today-reading').evaluate((node) => node.getBoundingClientRect().height);
   const savedChartCls = await measuredCls(desktop);
-  check('saved-chart hydration has exactly zero CLS', savedChartCls === 0, `${savedChartCls} · ${savedChartHeight}px reading`);
+  check(
+    'saved-chart hydration has exactly zero CLS',
+    savedChartCls === 0,
+    `${savedChartCls} · ${savedChartHeight}px reading · ${JSON.stringify(await measuredClsSources(desktop))}`,
+  );
   check('saved chart renders a real brief', await desktop.locator('.today-lines li').count() >= 2);
   check('saved chart replaces the Sun-sign baseline', await desktop.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 0);
   check('brief makes no backend requests', apiRequests === 0, `${apiRequests} requests`);
+  const comingUp = desktop.locator('.today-coming-up');
+  check(
+    'Coming Up is visible but closed by default',
+    await comingUp.isVisible() && await comingUp.evaluate((node) => !node.open),
+  );
   await desktop.context().setOffline(true);
   check('rendered brief remains available offline', await desktop.locator('.today-lines').isVisible());
   await desktop.context().setOffline(false);
+  await desktop.locator('[data-today-ask-evidence]').first().click();
+  await desktop.locator('.zassistant__panel').waitFor({ state: 'visible' });
+  check(
+    'Today opens Ask with a visible receipt but no automatic request',
+    await desktop.locator('.zassistant__evidence-chip').isVisible()
+      && await desktop.locator('.zassistant__input').inputValue() === 'Why does this matter for me?'
+      && apiRequests === 0,
+    `${apiRequests} requests`,
+  );
+  await desktop.getByRole('button', { name: 'Close assistant' }).click();
   if (OUT) await desktop.screenshot({ path: `${OUT}/today-1440.png`, fullPage: true });
   await desktop.close();
 
@@ -246,35 +303,50 @@ async function drive(BASE, browser) {
   check('failed Today island fallback has exactly zero CLS', failedMainCls === 0, String(failedMainCls));
   await failedMainIsland.close();
 
-  const failedTransits = await browser.newPage({ viewport: { width: 900, height: 1400 } });
-  await observeLayoutShifts(failedTransits);
-  const failedTransitsErrors = [];
-  failedTransits.on('pageerror', (error) => failedTransitsErrors.push(error.message));
-  await failedTransits.route('**/_astro/transits.*.js', (route) => route.abort());
-  await failedTransits.addInitScript((value) => {
+  const failedComparison = await browser.newPage({ viewport: { width: 900, height: 1400 } });
+  await observeLayoutShifts(failedComparison);
+  const failedComparisonErrors = [];
+  failedComparison.on('pageerror', (error) => failedComparisonErrors.push(error.message));
+  await failedComparison.addInitScript((value) => {
     localStorage.setItem('zodiacs.profile.v1', JSON.stringify(value));
+    // The inline hint gets the valid first read; the hydrated profile gets an
+    // empty second read. This deterministically exercises the runtime-only
+    // comparison failure without publishing outage copy in ordinary SSR.
+    const nativeGetItem = Storage.prototype.getItem;
+    let profileReads = 0;
+    Storage.prototype.getItem = function getItem(key) {
+      if (this === localStorage && key === 'zodiacs.profile.v1') {
+        profileReads += 1;
+        if (profileReads > 1) return JSON.stringify({
+          version: 1,
+          settings: { houseSystem: 'whole' },
+          charts: [],
+        });
+      }
+      return nativeGetItem.call(this, key);
+    };
   }, profile);
-  await failedTransits.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
-  await failedTransits.waitForFunction(() => (
+  await failedComparison.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  await failedComparison.waitForFunction(() => (
     document.querySelector('.today-returning-chart-status.is-visible')
       && getComputedStyle(document.querySelector('.today-returning-chart-placeholder')).display !== 'none'
   ));
   check(
-    'failed transit chunk keeps the compact Sun-sign baseline in the reserved shell',
-    await failedTransits.locator('.today-returning-chart-placeholder').isVisible()
-      && await failedTransits.locator('[data-today-chart-sun="aries"]').isVisible()
-      && !await failedTransits.locator('.today-fallback').isVisible(),
+    'runtime comparison failure keeps the compact Sun-sign baseline in the reserved shell',
+    await failedComparison.locator('.today-returning-chart-placeholder').isVisible()
+      && await failedComparison.locator('[data-today-chart-sun="aries"]').isVisible()
+      && !await failedComparison.locator('.today-fallback').isVisible(),
   );
   check(
-    'failed transit chunk explains the fallback without a broken page',
-    await failedTransits.locator('.today-returning-chart-placeholder')
+    'runtime comparison failure explains the fallback without a broken page',
+    await failedComparison.locator('.today-returning-chart-placeholder')
       .getByText('saved-chart comparison is temporarily unavailable', { exact: false }).isVisible()
-      && failedTransitsErrors.length === 0,
-    failedTransitsErrors.join(' | '),
+      && failedComparisonErrors.length === 0,
+    failedComparisonErrors.join(' | '),
   );
-  const failedTransitsCls = await measuredCls(failedTransits);
-  check('failed transit chunk has exactly zero CLS', failedTransitsCls === 0, String(failedTransitsCls));
-  await failedTransits.close();
+  const failedComparisonCls = await measuredCls(failedComparison);
+  check('runtime comparison failure has exactly zero CLS', failedComparisonCls === 0, String(failedComparisonCls));
+  await failedComparison.close();
 
   const invalidProfile = await browser.newPage({ viewport: { width: 900, height: 1000 } });
   const invalidProfileErrors = [];
@@ -296,6 +368,31 @@ async function drive(BASE, browser) {
     invalidProfileErrors.join(' | '),
   );
   await invalidProfile.close();
+
+  const missingIdProfile = await browser.newPage({ viewport: { width: 900, height: 1000 } });
+  const missingIdErrors = [];
+  missingIdProfile.on('pageerror', (error) => missingIdErrors.push(error.message));
+  await missingIdProfile.addInitScript((validProfile) => {
+    const chartWithoutId = { ...validProfile.charts[0] };
+    delete chartWithoutId.id;
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify({
+      ...validProfile,
+      charts: [chartWithoutId],
+    }));
+  }, profile);
+  await missingIdProfile.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
+  await missingIdProfile.waitForFunction(() => (
+    getComputedStyle(document.querySelector('.today-fallback')).display !== 'none'
+  ));
+  check(
+    'a body-valid chart without an ID cannot trap Today in an outage shell',
+    !await missingIdProfile.locator('html').getAttribute('data-today-saved-chart')
+      && await missingIdProfile.locator('.today-fallback').isVisible()
+      && !await missingIdProfile.locator('.today-returning-chart-status.is-visible').count()
+      && missingIdErrors.length === 0,
+    missingIdErrors.join(' | '),
+  );
+  await missingIdProfile.close();
 
   const hintedInvalidProfile = await browser.newPage({
     viewport: { width: 360, height: 1800 },
@@ -353,7 +450,11 @@ async function drive(BASE, browser) {
   await empty.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await empty.waitForSelector('[data-today-state="empty"]');
   const emptyCls = await measuredCls(empty);
-  check('empty Today hydration has exactly zero CLS', emptyCls === 0, String(emptyCls));
+  check(
+    'empty Today hydration has exactly zero CLS',
+    emptyCls === 0,
+    `${emptyCls} · ${JSON.stringify(await measuredClsSources(empty))}`,
+  );
   check('no-chart state is honest', await empty.getByText('No saved chart on this device.').isVisible());
   check('no-chart state renders all twelve sign notes', await empty.locator('#today-sun-sign-reading [data-today-sun-sign]').count() === 12);
   check(
@@ -498,6 +599,100 @@ async function drive(BASE, browser) {
   check('375px layout has no horizontal overflow', width.page <= width.viewport, `${width.page}/${width.viewport}`);
   if (OUT) await mobile.screenshot({ path: `${OUT}/today-375.png`, fullPage: true });
   await mobile.close();
+
+  const saveReturn = await browser.newPage({ viewport: { width: 900, height: 1200 } });
+  await saveReturn.goto(`${BASE}/birth-chart/${savedChartFragment('Today persistence')}`, {
+    waitUntil: 'domcontentloaded',
+  });
+  await saveReturn.locator('.calc__result').waitFor({ timeout: 30_000 });
+  await saveReturn.locator('[data-save-for-today]').click();
+  const saveName = saveReturn.getByLabel('Whose chart is this?', { exact: true });
+  await saveName.waitFor();
+  await saveName.fill('Today persistence');
+  await saveReturn.getByRole('button', { name: 'Save', exact: true }).click();
+  const todayLink = saveReturn.locator('a[data-save-for-today][href="/today/"]');
+  await todayLink.waitFor();
+  const savedSelection = await saveReturn.evaluate(() => {
+    const savedProfile = JSON.parse(localStorage.getItem('zodiacs.profile.v1'));
+    const preference = JSON.parse(localStorage.getItem('zodiacs.today-chart.v1'));
+    return {
+      chartId: savedProfile.charts[0]?.id ?? null,
+      preferenceId: preference?.chartId ?? null,
+    };
+  });
+  check(
+    'first chart save establishes the local Today identity',
+    Boolean(savedSelection.chartId) && savedSelection.preferenceId === savedSelection.chartId,
+    JSON.stringify(savedSelection),
+  );
+  await todayLink.click();
+  await saveReturn.waitForURL(`${BASE}/today/`);
+  await saveReturn.waitForSelector('[data-today-state="chart"]');
+  check(
+    'Save for Today opens the saved chart on Today',
+    await saveReturn.locator('.today-reading__chart-name').textContent() === 'Today persistence',
+  );
+  await saveReturn.reload({ waitUntil: 'networkidle' });
+  await saveReturn.waitForSelector('[data-today-state="chart"]');
+  const reloadedSelection = await saveReturn.evaluate(() => {
+    const preference = JSON.parse(localStorage.getItem('zodiacs.today-chart.v1'));
+    return preference?.chartId ?? null;
+  });
+  check(
+    'Today chart selection survives a full reload',
+    reloadedSelection === savedSelection.chartId
+      && await saveReturn.locator('.today-reading__chart-name').textContent() === 'Today persistence',
+    `${reloadedSelection}/${savedSelection.chartId}`,
+  );
+  await saveReturn.close();
+
+  const explicitSecondChart = await browser.newPage({ viewport: { width: 900, height: 1200 } });
+  await explicitSecondChart.addInitScript(({ savedProfile, selectedId }) => {
+    if (sessionStorage.getItem('zodiacs:test:second-chart-seeded') === '1') return;
+    localStorage.setItem('zodiacs.profile.v1', JSON.stringify(savedProfile));
+    localStorage.setItem('zodiacs.today-chart.v1', JSON.stringify({ version: 1, chartId: selectedId }));
+    sessionStorage.setItem('zodiacs:test:second-chart-seeded', '1');
+  }, { savedProfile: profile, selectedId: profile.charts[0].id });
+  await explicitSecondChart.goto(`${BASE}/birth-chart/${savedChartFragment('Explicit second chart')}`, {
+    waitUntil: 'domcontentloaded',
+  });
+  await explicitSecondChart.locator('.calc__result').waitFor({ timeout: 30_000 });
+  await explicitSecondChart.locator('button[data-save-for-today]').click();
+  const secondName = explicitSecondChart.getByLabel('Whose chart is this?', { exact: true });
+  await secondName.waitFor();
+  await secondName.fill('Explicit second chart');
+  await explicitSecondChart.getByRole('button', { name: 'Save', exact: true }).click();
+  const secondTodayLink = explicitSecondChart.locator('a[data-save-for-today][href="/today/"]');
+  await secondTodayLink.waitFor();
+  const secondSelection = await explicitSecondChart.evaluate(() => {
+    const savedProfile = JSON.parse(localStorage.getItem('zodiacs.profile.v1'));
+    const preference = JSON.parse(localStorage.getItem('zodiacs.today-chart.v1'));
+    const savedChart = savedProfile.charts.find((chart) => chart.name === 'Explicit second chart');
+    return { savedId: savedChart?.id ?? null, preferenceId: preference?.chartId ?? null };
+  });
+  check(
+    'an explicit Save for Today choice replaces an older Today identity',
+    Boolean(secondSelection.savedId) && secondSelection.preferenceId === secondSelection.savedId,
+    JSON.stringify(secondSelection),
+  );
+  await secondTodayLink.click();
+  await explicitSecondChart.waitForURL(`${BASE}/today/`);
+  await explicitSecondChart.waitForSelector('[data-today-state="chart"]');
+  const renderedSecondChart = await explicitSecondChart.locator('.today-reading__chart-name').textContent();
+  const renderedSecondSelection = await explicitSecondChart.evaluate(() => {
+    const savedProfile = JSON.parse(localStorage.getItem('zodiacs.profile.v1'));
+    const preference = JSON.parse(localStorage.getItem('zodiacs.today-chart.v1'));
+    return {
+      names: savedProfile.charts.map((chart) => `${chart.id}:${chart.name}`),
+      preferenceId: preference?.chartId ?? null,
+    };
+  });
+  check(
+    'the named second-chart Today handoff opens the chart it names',
+    renderedSecondChart === 'Explicit second chart',
+    `${renderedSecondChart} · ${JSON.stringify(renderedSecondSelection)}`,
+  );
+  await explicitSecondChart.close();
 
   await inspectReturningMobile(BASE, browser, threeHitMobileProfile, 'active', 3);
   await inspectReturningMobile(BASE, browser, quietMobileProfile, 'quiet', 0);

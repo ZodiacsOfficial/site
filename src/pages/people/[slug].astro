@@ -227,6 +227,18 @@ const jsonLd = [
                 {' · revision '}{person.sources.wikidata.lastrevid}
               </dd>
             </div>
+            {person.sources.authoritative?.map((source) => (
+              <div>
+                <dt>Reviewed source</dt>
+                <dd>
+                  <a href={source.url} target="_blank" rel="noopener noreferrer">
+                    {source.publisher}
+                  </a>
+                  {' · supports '}{source.supports.join(', ')}
+                  {' · accessed '}{source.accessedAtUtc}
+                </dd>
+              </div>
+            ))}
             <div><dt>Retrieved</dt><dd>{person.sources.retrievedAtUtc}</dd></div>
             <div>
               <dt>Birth date</dt>

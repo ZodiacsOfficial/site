@@ -70,7 +70,8 @@ describe('assistant site context', () => {
     expect(context).toContain('Chart calculation does not send birth fields to a chart API.');
     expect(context).toContain('optional account sync uploads only the charts a person chooses');
     expect(context).toContain('The AI assistant sends chat messages to Anthropic');
-    expect(context).toContain('placements-only chart summary only after the person explicitly chooses “Attach my chart”');
+    expect(context).toContain('one visible, removable client-computed transit receipt');
+    expect(context).toContain('full placements-only chart summary is sent only after the person explicitly chooses “Attach my chart”');
     expect(context).not.toContain('Birth details stay on the device.');
 
     expect(context).toContain('IANA/ICU history supplied by the visitor’s browser or device runtime');

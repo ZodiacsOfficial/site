@@ -4,48 +4,48 @@
   "seedRound": 1,
   "qid": "Q684020",
   "displayName": "Roberto Clemente",
-  "identity": "Baseball player · Italy · 1934–1972",
+  "identity": "Baseball player · Puerto Rico · 1934–1972",
   "title": "Roberto Clemente's birth chart",
-  "metaDescription": "Roberto Clemente's chart, computed from a sourced birth date: Sun at 24.8° Leo. Birth time unknown, so no houses or rising sign.",
-  "lede": "The Sun stands at 24.8° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
+  "metaDescription": "Roberto Clemente's chart, computed from a sourced birth date: Sun at 25.0° Leo. Birth time unknown, so no houses or rising sign.",
+  "lede": "The Sun stands at 25.0° Leo, in domicile — the planet in its own sign, running on home rules. Of everything the chart can be read for without a birth time, that is the loudest single fact in it.",
   "ledeFact": "dignity:Sun:domicile",
   "blocks": [
     {
       "key": "sun",
       "title": "Where the Sun actually stood",
       "facts": [
-        "sun-degree:24.80",
+        "sun-degree:25.00",
         "decan:leo:third"
       ],
-      "text": "Measured rather than labelled, the Sun holds 24.8° Leo: the third decan, whose classical sub-ruler is Mars. A fire sign, read here in its third face."
+      "text": "Measured rather than labelled, the Sun holds 25.0° Leo: the third decan, whose classical sub-ruler is Mars. A fire sign, read here in its third face."
     },
     {
       "key": "personal",
       "title": "Closer to the ground",
       "facts": [
-        "personal:Mercury:Leo:16.7°",
-        "personal:Venus:Leo:1.0°",
-        "personal:Mars:Cancer:22.2°"
+        "personal:Mercury:Leo:17.1°",
+        "personal:Venus:Leo:1.2°",
+        "personal:Mars:Cancer:22.4°"
       ],
-      "text": "The personal planets sit Mercury at 16.7° Leo, Venus at 1.0° Leo, Mars at 22.2° Cancer. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a water sign reads as drive that moves on certainty and current."
+      "text": "The personal planets sit Mercury at 17.1° Leo, Venus at 1.2° Leo, Mars at 22.4° Cancer. Mercury in a fire sign reads as a mind that decides at speaking speed; Venus in a fire sign reads as taste that runs toward the vivid and the immediate; Mars in a water sign reads as drive that moves on certainty and current."
     },
     {
       "key": "geometry",
       "title": "The angles that hold",
       "facts": [
-        "aspect:Sun:Saturn:opposition:0.01",
-        "aspect:Venus:Uranus:square:0.43",
-        "aspect:Mars:Jupiter:square:2.68"
+        "aspect:Venus:Uranus:square:0.18",
+        "aspect:Sun:Saturn:opposition:0.2",
+        "aspect:Mercury:Jupiter:sextile:2.47"
       ],
-      "text": "Start where the chart is tightest — the Sun opposition Saturn, 0.0° of separation. The scheme reads an opposition as a axis to walk, not a fight to win: the chart keeps both ends lit. Behind it, Venus square Uranus at 0.4°, and Mars square Jupiter at 2.7° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
+      "text": "Start where the chart is tightest — Venus square Uranus, 0.2° of separation. A square is the tradition’s engine room: two drives at cross purposes, and the friction is the horsepower. Behind it, the Sun opposition Saturn at 0.2°, and Mercury sextile Jupiter at 2.5° — both still well inside the orbs this site uses. Each angle here was measured at every hour of the civil day and held; whatever the missing clock said, this geometry was in it."
     },
     {
       "key": "figures",
       "title": "The standing structure",
       "facts": [
-        "figure:unaspected:Moon"
+        "figure:unaspected:Neptune"
       ],
-      "text": "The Moon stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
+      "text": "Neptune stands apart from every major angle the day held — the tradition reads an unaspected planet as a voice that speaks on its own schedule, unmodulated by the rest of the chart."
     },
     {
       "key": "dignity",
@@ -55,7 +55,7 @@
         "dignity:Mars:fall",
         "dignity:Saturn:domicile"
       ],
-      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Leo at 24.8° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 22.2° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aquarius at 24.8° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
+      "text": "Three planets here sit in a sign the classical scheme scores. The Sun in Leo at 25.0° is in domicile — the planet in its own sign, running on home rules; Mars in Cancer at 22.4° is in fall — the tradition’s uphill placement, strength earned rather than given; Saturn in Aquarius at 24.8° is in domicile. None of these labels is a verdict on a person; they describe how a function is situated, nothing more."
     },
     {
       "key": "shape",
@@ -75,7 +75,7 @@
         "moon-uncertain:scorpio:sagittarius"
       ],
       "uncertain": true,
-      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 13.6° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
+      "text": "The Moon crossed from Scorpio into Sagittarius during that day at the birthplace, travelling 13.7° between one midnight and the next. Which of the two it was depends entirely on the hour, and the hour is not recorded. Rather than pick the likelier half, the reading leaves the Moon open."
     }
   ],
   "birthdayLink": {
@@ -88,15 +88,15 @@
   },
   "substantiveFacts": [
     "dignity:Sun:domicile",
-    "sun-degree:24.80",
+    "sun-degree:25.00",
     "decan:leo:third",
-    "personal:Mercury:Leo:16.7°",
-    "personal:Venus:Leo:1.0°",
-    "personal:Mars:Cancer:22.2°",
-    "aspect:Sun:Saturn:opposition:0.01",
-    "aspect:Venus:Uranus:square:0.43",
-    "aspect:Mars:Jupiter:square:2.68",
-    "figure:unaspected:Moon",
+    "personal:Mercury:Leo:17.1°",
+    "personal:Venus:Leo:1.2°",
+    "personal:Mars:Cancer:22.4°",
+    "aspect:Venus:Uranus:square:0.18",
+    "aspect:Sun:Saturn:opposition:0.2",
+    "aspect:Mercury:Jupiter:sextile:2.47",
+    "figure:unaspected:Neptune",
     "dignity:Sun:domicile",
     "dignity:Mars:fall",
     "dignity:Saturn:domicile",
@@ -107,7 +107,7 @@
     "moon-uncertain:scorpio:sagittarius"
   ],
   "measurements": {
-    "originalWords": 438,
+    "originalWords": 434,
     "substantiveStatements": 17,
     "blocks": 7
   }

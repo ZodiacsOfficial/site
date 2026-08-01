@@ -20,6 +20,7 @@ describe('public trust-surface claims', () => {
       expect(copy).toMatch(/angles.*houses/s);
       expect(copy).toMatch(/Anthropic/);
       expect(copy).toMatch(/Attach my chart/);
+      expect(copy).toMatch(/client-computed transit receipt/);
       expect(copy).toMatch(/birth date.*time.*place.*coordinates/s);
       expect(copy).toMatch(/IANA\/ICU.*(?:browser|runtime)/s);
       expect(copy).toMatch(/raw IP.*user agent.*24 hours/s);
@@ -65,6 +66,8 @@ describe('public trust-surface claims', () => {
     for (const path of localeFiles('privacy')) {
       const copy = await text(path);
       expect(copy, path).toMatch(/Anthropic/);
+      expect(copy, path).toMatch(/transit|tránsito|trânsito|transito|транзит/iu);
+      expect(copy, path).toMatch(/orb|орб/iu);
       expect(copy, path).toMatch(/Plausible/);
       expect(copy, path).toMatch(/24 (?:hours|horas|heures|ore|часа)/u);
     }
@@ -72,11 +75,13 @@ describe('public trust-surface claims', () => {
     expect(assistant).toMatch(/While “Using my chart” is on, each question.*sent to Anthropic/);
     expect(assistant).toMatch(/saved name, birth date, time, place, or coordinates/);
     expect(assistant).toMatch(/does not store the conversation/);
+    expect(assistant).toMatch(/Full placements send only while “Using my chart” is on/);
   });
 
   it('keeps the runtime assistant persona aligned with the public disclosure', async () => {
     const persona = await text('api/_assistant/persona.ts');
     expect(persona).toMatch(/Chat messages are sent to Anthropic/);
+    expect(persona).toMatch(/client-computed\s+transit receipt.*date, moving body, aspect, natal point, and orb/s);
     expect(persona).toMatch(/placements-only chart\s+summary.*explicitly enables/s);
     expect(persona).toMatch(/does not store conversations/);
     expect(persona).toMatch(/salted.*identifier derived from the visitor's IP address/s);

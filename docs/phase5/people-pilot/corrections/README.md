@@ -66,6 +66,35 @@ and the actions, not the person's email or postal address.
 
 ## Operational steps
 
+### Upstream conflict or suspected corruption
+
+The cached files in `evidence/` are immutable snapshots of what the upstream
+APIs returned. Do not silently rewrite them. Record the decision in
+`trust-policy.json` instead:
+
+1. Add the slug to `quarantinedProfiles`, remove it from the index policy, and
+   remove its portrait and OG assets. The production builder then omits it
+   from the data consumed by routes, the directory, birthday links, related
+   profiles, search, the sitemap, and OG generation. A stale public asset is a
+   build failure.
+2. Verify the disputed facts against authoritative sources. Add a reviewed
+   override containing the exact date/place tuple, source URLs, access dates,
+   reason, and real review timestamp. Birth time stays unknown unless a future
+   separately approved policy permits time evidence.
+3. Regenerate only the affected artifacts with
+   `PEOPLE_SLUGS=slug-a,slug-b node tools/compute-astro.mjs` and the equivalent
+   `compose-copy.mjs` command. Review the chart, copy, source disclosure, and
+   correction-log entry in Git.
+4. Remove the quarantine only when the generated chart matches the reviewed
+   tuple and every trust/content gate passes. An override remains in the
+   policy after restoration so a later upstream refresh cannot reinstate the
+   rejected claims.
+
+Hard trust failures include invalid or future dates, death before birth,
+implausible age at death, a country used as its own birthplace, country-centroid
+coordinates, and duplicated place/country labels. They block publication; the
+pipeline does not choose a plausible replacement on its own.
+
 ### Correction
 
 1. Re-check the disputed fact against the allowed sources and record the
@@ -105,6 +134,8 @@ and the actions, not the person's email or postal address.
 
 ## Current state
 
-No requests have been received. Phase 5A publishes nothing: there is no
-`/people/` route, no sitemap entry, no search-index record and no OG
-asset, so there is nothing yet for a subject to be listed on.
+The public directory is in the conservative Phase 5C release. Subject requests
+remain recorded here, while material editorial corrections also appear in the
+site-wide correction log. The 1 August 2026 reviewed overrides for Sun Yat-sen
+and Roberto Clemente are the first upstream-conflict records under the trust
+policy; their original pinned snapshots remain available for audit.

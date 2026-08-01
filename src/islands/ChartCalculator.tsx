@@ -41,8 +41,6 @@ import { chartSignature } from '../lib/chart-signature';
 import { resolveLocalToUtc } from '../lib/time/localToUtc';
 import { houseOf } from '../lib/engine/houses';
 import { moonPhaseName } from '../lib/engine/lite';
-import { registryAuraChartAnalytics, registryAuraChartLink } from '../lib/registry-aura-entry.mjs';
-import { trackAnalytics } from '../lib/analytics';
 import { decodeChartLink, NAME_MAX } from '../lib/share';
 import type { ShareChartInput } from '../lib/share';
 import {
@@ -68,6 +66,7 @@ import {
   clearPostChartContext,
   publishPostChartContext,
 } from '../lib/profile/post-chart-context';
+import { setTodayChartIdPreference } from '../lib/profile/today-chart';
 
 type Mode = 'full' | 'moon' | 'rising';
 
@@ -151,42 +150,41 @@ const CHART_BOOK_COPY = {
   fr: { label: 'À qui appartient ce thème\u202f?', save: 'Enregistrer', skip: 'Passer' },
   it: { label: 'Di chi è questo tema?', save: 'Salva', skip: 'Salta' },
 } as const satisfies Record<ReleasedLocale, { label: string; save: string; skip: string }>;
-const REGISTRY_AURA_CHART_COPY = {
+const SAVE_FOR_TODAY_COPY = {
   en: {
-    discover: 'Your saved chart can meet the Registry records carried by a public address.',
-    discoverLink: 'Read this chart beside a public address →',
-    return: 'Your chart is saved.',
-    returnLink: 'Return to Registry Collection →',
+    save: 'Save for Today',
+    see: (name: string) => `See today for ${name}`,
+    englishTitle: '',
   },
   es: {
-    discover: 'Tu carta guardada puede encontrarse con los registros que lleva una dirección pública.',
-    discoverLink: 'Lee esta carta junto a una dirección pública →',
-    return: 'Tu carta está guardada.',
-    returnLink: 'Volver a Registry Collection →',
+    save: 'Guardar para Hoy · EN',
+    see: (name: string) => `Ver Hoy para ${name} · EN`,
+    englishTitle: 'La experiencia Today está disponible en inglés.',
   },
   pt: {
-    discover: 'Seu mapa salvo pode se encontrar com os registros associados a um endereço público.',
-    discoverLink: 'Leia este mapa ao lado de um endereço público →',
-    return: 'Seu mapa foi salvo.',
-    returnLink: 'Voltar para Registry Collection →',
+    save: 'Salvar para Hoje · EN',
+    see: (name: string) => `Ver Hoje para ${name} · EN`,
+    englishTitle: 'A experiência Today está disponível em inglês.',
   },
   fr: {
-    discover: 'Votre thème enregistré peut rencontrer les notices portées par une adresse publique.',
-    discoverLink: 'Lire ce thème à côté d’une adresse publique →',
-    return: 'Votre thème est enregistré.',
-    returnLink: 'Retourner à Registry Collection →',
+    save: 'Enregistrer pour Aujourd’hui · EN',
+    see: (name: string) => `Voir Aujourd’hui pour ${name} · EN`,
+    englishTitle: 'L’expérience Today est disponible en anglais.',
   },
   it: {
-    discover: 'Il tema salvato può incontrare i registri associati a un indirizzo pubblico.',
-    discoverLink: 'Leggi questa carta accanto a un indirizzo pubblico →',
-    return: 'Il tema è stato salvato.',
-    returnLink: 'Torna a Registry Collection →',
+    save: 'Salva per Oggi · EN',
+    see: (name: string) => `Vedi Oggi per ${name} · EN`,
+    englishTitle: 'L’esperienza Today è disponibile in inglese.',
   },
-} as const satisfies Record<ReleasedLocale, {
-  discover: string;
-  discoverLink: string;
-  return: string;
-  returnLink: string;
+  ru: {
+    save: 'Сохранить для «Сегодня» · EN',
+    see: (name: string) => `Открыть «Сегодня» для ${name} · EN`,
+    englishTitle: 'Раздел Today пока доступен на английском.',
+  },
+} as const satisfies Record<Locale, {
+  save: string;
+  see: (name: string) => string;
+  englishTitle: string;
 }>;
 const PERSON_CHART_COPY = {
   en: (name: string) => `${name}'s chart — "you" below means ${name}.`,
@@ -286,7 +284,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const detailLabels = russianCopy?.chart.detail ?? DETAIL_LABELS[releasedLocale!];
   const wheelActionCopy = russianCopy?.chart.wheelActions ?? WHEEL_ACTION_COPY[releasedLocale!];
   const chartBookCopy = russianCopy?.chart.chartBook ?? CHART_BOOK_COPY[releasedLocale!];
-  const registryAuraCopy = russianCopy?.chart.registryAura ?? REGISTRY_AURA_CHART_COPY[releasedLocale!];
+  const saveForTodayCopy = SAVE_FOR_TODAY_COPY[locale];
   const otherSubjectCopy = russianCopy
     ? {
         unnamed: russianCopy.chart.otherSubject.unnamed,
@@ -302,12 +300,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     ? russianNameTemplate(russianCopy.chart.personChartTemplate, name)
     : PERSON_CHART_COPY[releasedLocale!](name);
   const showsEnglishInterpretation = locale === 'en';
-  const registryAuraLink = typeof window === 'undefined'
-    ? null
-    : registryAuraChartLink(window.location.search, {
-        PUBLIC_REGISTRY_COLLECTION_ENABLED: import.meta.env.PUBLIC_REGISTRY_COLLECTION_ENABLED,
-        PUBLIC_REGISTRY_AURA_ENABLED: import.meta.env.PUBLIC_REGISTRY_AURA_ENABLED,
-      });
   const loadEngine = useEngine();
   const [date, setDate] = useState('');
   const [time, setTime] = useState('');
@@ -329,6 +321,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [subjectMode, setSubjectMode] = useState<SubjectMode>('self');
   const [mineHandoff, setMineHandoff] = useState<MineHandoff | null>(null);
   const [matchedName, setMatchedName] = useState<string | null>(null);
+  const [matchedChartId, setMatchedChartId] = useState<string | null>(null);
   const [savePromptOpen, setSavePromptOpen] = useState(false);
   const [saveDraft, setSaveDraft] = useState('');
   const [saveInitial, setSaveInitial] = useState('');
@@ -352,6 +345,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const saveButtonRef = useRef<HTMLButtonElement>(null);
   const saveNameRef = useRef<HTMLInputElement>(null);
   const saveOriginRef = useRef<'tour' | 'free'>('free');
+  const saveSelectsTodayRef = useRef(false);
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
   const chartContextIdRef = useRef(0);
@@ -364,6 +358,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const [announce, setAnnounce] = useState('');
   const [spotlight, setSpotlight] = useState<ChartSpotlight | null>(null);
   const selFromUrl = useRef(false);
+  const privateSelectionFromFragment = useRef<string | null>(null);
   const wheelboxRef = useRef<HTMLDivElement>(null);
   const detailPreferenceRef = useRef<'open' | 'closed' | null>(null);
   const spotlightRunRef = useRef(0);
@@ -694,11 +689,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     });
   }
 
-  // A `?sel=` deep link applies once, after the first computed scene.
+  // A public `?sel=` or private chart-fragment selection applies once, after
+  // the first computed scene. Fragment context is consumed before it can
+  // reach a request, referrer, or analytics URL.
   useEffect(() => {
     if (!scene || selFromUrl.current) return;
     selFromUrl.current = true;
-    const id = new URLSearchParams(window.location.search).get('sel');
+    const id = new URLSearchParams(window.location.search).get('sel')
+      ?? privateSelectionFromFragment.current;
+    privateSelectionFromFragment.current = null;
     const ref = id ? parseEntityId(id) : null;
     if (ref && sceneHas(scene, ref)) {
       if (ref.kind === 'body' || ref.kind === 'aspect') openDetailForSelection();
@@ -819,6 +818,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     if (mode !== 'full') return;
     const hash = window.location.hash;
     const params = new URLSearchParams(hash.slice(1));
+    privateSelectionFromFragment.current = params.get('sel');
     const nextSubjectMode = subjectModeFromHash(hash);
     const nextMineHandoff = mineHandoffFromHash(hash);
     const clearFragment = () => history.replaceState(null, '', window.location.pathname + window.location.search);
@@ -911,6 +911,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setError('');
     setSaved('idle');
     setMatchedName(null);
+    setMatchedChartId(null);
     setSavePromptOpen(false);
     setA2hsHint(null);
     setShare('idle');
@@ -1118,6 +1119,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       if (!active || contextId !== chartContextIdRef.current) return;
       const match = findMatchingChart(identity);
       setMatchedName(match?.name ?? null);
+      setMatchedChartId(match?.id ?? null);
       publishPostChartContext({
         mode: 'full',
         sunSign: sunSign?.slug ?? null,
@@ -1157,15 +1159,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     requestAnimationFrame(() => saveButtonRef.current?.focus());
   }
 
-  async function openSavePrompt(origin: 'tour' | 'free' = 'free') {
+  async function openSavePrompt(origin: 'tour' | 'free' = 'free', selectsToday = false) {
     const identity = chartIdentity();
     if (!identity || saved === 'saved') return;
     saveOriginRef.current = origin;
+    saveSelectsTodayRef.current = selectsToday;
     let currentName = matchedName;
     try {
       const { findMatchingChart } = await import('../lib/profile/store');
-      currentName = findMatchingChart(identity)?.name ?? null;
+      const match = findMatchingChart(identity);
+      currentName = match?.name ?? null;
       setMatchedName(currentName);
+      setMatchedChartId(match?.id ?? null);
     } catch { /* saving will surface an error if storage cannot load */ }
     const source: SavePrefillSource = linkName ? 'link' : currentName ? 'match' : 'auto';
     const prefill = (linkName ?? currentName ?? autoName).slice(0, NAME_MAX);
@@ -1203,6 +1208,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         track('chart_name_set', { via });
         const match = findMatchingChart(identity);
         setMatchedName(match?.name ?? explicitName ?? matchedName ?? autoName);
+        setMatchedChartId(match?.id ?? null);
+        if (saveSelectsTodayRef.current && match) setTodayChartIdPreference(match.id);
         publishPostChartContext({
           mode: 'full',
           sunSign: sunSign?.slug ?? null,
@@ -1301,6 +1308,32 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     && firstReadingLoaded
     && !tourOpen
     && (firstReading.status === 'not_started' || firstReading.status === 'in_progress');
+  const todayChartName = (matchedName ?? autoName).split('·')[0].trim() || (matchedName ?? autoName);
+  const chooseMatchedChartForToday = () => {
+    if (matchedChartId) setTodayChartIdPreference(matchedChartId);
+  };
+  const savePromptForm = (
+    <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
+      <label class="sr-only" for="chart-save-name">{chartBookCopy.label}</label>
+      <input
+        ref={saveNameRef}
+        class="field__input calc__save-name"
+        id="chart-save-name"
+        value={saveDraft}
+        maxLength={NAME_MAX}
+        onInput={(event) => setSaveDraft((event.currentTarget as HTMLInputElement).value)}
+        onKeyDown={(event) => {
+          if (event.key !== 'Escape') return;
+          event.preventDefault();
+          closeSavePrompt();
+        }}
+      />
+      <button class="btn btn--primary" type="submit">{chartBookCopy.save}</button>
+      <button class="btn btn--ghost" type="button" onClick={() => void commitSave(undefined, 'skip')}>
+        {chartBookCopy.skip}
+      </button>
+    </form>
+  );
   return (
     <div class="calc" data-subject-mode={subjectMode}>
       <form class="calc__form shell" onSubmit={compute} aria-busy={busy}>
@@ -1483,15 +1516,46 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                   )}
                 </div>
                 <div class="calc__first-reading-actions">
-                  <button class="btn btn--primary" type="button" onClick={startFirstReading} data-first-reading-start>
-                    <span>{firstReading.status === 'in_progress'
-                      ? t(locale, 'firstReadingResume')
-                      : t(locale, 'firstReadingStart')}</span>
-                    <span class="orb">→</span>
-                  </button>
-                  <button class="btn btn--ghost" type="button" onClick={dismissFirstReading} data-first-reading-dismiss>
-                    {t(locale, 'firstReadingExplore')}
-                  </button>
+                  {savePromptOpen ? savePromptForm : (
+                    <>
+                      <button class="btn btn--primary" type="button" onClick={startFirstReading} data-first-reading-start>
+                        <span>{firstReading.status === 'in_progress'
+                          ? t(locale, 'firstReadingResume')
+                          : t(locale, 'firstReadingStart')}</span>
+                        <span class="orb">→</span>
+                      </button>
+                      {saved === 'saved' ? (
+                        <a
+                          class="btn btn--ghost"
+                          href="/today/"
+                          hreflang="en"
+                          title={saveForTodayCopy.englishTitle || undefined}
+                          onClick={chooseMatchedChartForToday}
+                          data-save-for-today
+                        >
+                          <span>{saveForTodayCopy.see(todayChartName)}</span>
+                          <span class="orb">→</span>
+                        </a>
+                      ) : (
+                        <button
+                          ref={saveButtonRef}
+                          class="btn btn--ghost"
+                          type="button"
+                          onClick={() => {
+                            track('next_action_clicked', { state: 'new_chart', action: 'save' });
+                            void openSavePrompt('free', true);
+                          }}
+                          data-save-for-today
+                        >
+                          <span>{saveForTodayCopy.save}</span>
+                          <span class="orb">+</span>
+                        </button>
+                      )}
+                      <button class="calc__first-reading-explore" type="button" onClick={dismissFirstReading} data-first-reading-dismiss>
+                        {t(locale, 'firstReadingExplore')}
+                      </button>
+                    </>
+                  )}
                 </div>
               </div>
             </aside>
@@ -1782,26 +1846,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           {/* One primary action, derived from the visitor's current state. */}
           <div class="calc__actions">
             {savePromptOpen ? (
-              <form class="calc__save-prompt" onSubmit={submitSaveName} data-save-prompt>
-                <label class="sr-only" for="chart-save-name">{chartBookCopy.label}</label>
-                <input
-                  ref={saveNameRef}
-                  class="field__input calc__save-name"
-                  id="chart-save-name"
-                  value={saveDraft}
-                  maxLength={NAME_MAX}
-                  onInput={(e) => setSaveDraft((e.currentTarget as HTMLInputElement).value)}
-                  onKeyDown={(e) => {
-                    if (e.key !== 'Escape') return;
-                    e.preventDefault();
-                    closeSavePrompt();
-                  }}
-                />
-                <button class="btn btn--primary" type="submit">{chartBookCopy.save}</button>
-                <button class="btn btn--ghost" type="button" onClick={() => void commitSave(undefined, 'skip')}>
-                  {chartBookCopy.skip}
-                </button>
-              </form>
+              firstReadingPromptVisible ? null : savePromptForm
             ) : mode === 'full' ? (
               !firstReadingLoaded
                 || firstReading.status === 'not_started'
@@ -1828,11 +1873,15 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <a
                   class="btn btn--primary"
                   href="/today/"
-                  title={russianCopy?.chart.englishOnlyTitle}
-                  onClick={() => track('next_action_clicked', { state: 'saved', action: 'today' })}
+                  hreflang="en"
+                  title={saveForTodayCopy.englishTitle || undefined}
+                  onClick={() => {
+                    chooseMatchedChartForToday();
+                    track('next_action_clicked', { state: 'saved', action: 'today' });
+                  }}
                   data-primary-action="today"
                 >
-                  <span>{t(locale, 'seeTodaySky')}{russianCopy?.chart.englishOnlySuffix ?? ''}</span>
+                  <span>{saveForTodayCopy.see(todayChartName)}</span>
                   <span class="orb">→</span>
                 </a>
               )
@@ -1905,22 +1954,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 {card === 'error' && <p class="calc__error" role="alert">{t(locale, 'cardError')}</p>}
               </div>
             </details>
-          )}
-          {mode === 'full' && saved === 'saved' && registryAuraLink && (
-            <p class="calc__saved" data-registry-aura-chart-link>
-              {registryAuraLink.context === 'return'
-                ? registryAuraCopy.return
-                : registryAuraCopy.discover}{' '}
-              <a href={registryAuraLink.href} onClick={() => {
-                for (const event of registryAuraChartAnalytics(registryAuraLink.context)) {
-                  trackAnalytics(event.name, event.properties);
-                }
-              }}>
-                {registryAuraLink.context === 'return'
-                  ? registryAuraCopy.returnLink
-                  : registryAuraCopy.discoverLink}
-              </a>
-            </p>
           )}
           {a2hsHint && (
             <div class="notice calc__a2hs" role="status">
@@ -2030,20 +2063,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
             </details>
           )}
 
-          {/* The one sanctioned records bridge on a tool page: the sun
-              sign's canonical record, one quiet click into the collector's
-              wing. Records register — no market language (mirrors CollectBand). */}
-          {mode === 'full' && sunSign && (
-            <aside class="calc__record">
-              <span class="calc__record-label mono">{t(locale, 'recordLabel')}</span>
-              <span class="calc__record-text">{signName(sunSign, locale)} {t(locale, 'recordOneOfTwelve')}</span>
-              <a
-                class="calc__record-link"
-                href={`/registry/${sunSign.slug}/`}
-                title={russianCopy?.chart.englishOnlyTitle}
-              >{t(locale, 'recordViewLink')}</a>
-            </aside>
-          )}
         </div>
       )}
 

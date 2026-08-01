@@ -1,0 +1,108 @@
+{
+  "schema": "zodiacs.phase5.people-trust-policy.v1",
+  "approvedAtUtc": "2026-08-01T00:00:00Z",
+  "decision": "Fail closed on material biographical conflicts; reviewed authoritative overrides remain separate from pinned upstream evidence.",
+  "overrides": [
+    {
+      "qid": "Q8573",
+      "slug": "sun-yat-sen",
+      "reviewedAtUtc": "2026-08-01T00:00:00Z",
+      "reason": "The pinned Wikidata revision had vandalised birth, death, and birthplace claims that contradicted its own biography description and the official memorial biography.",
+      "selectionExceptions": [
+        {
+          "gate": "same-sign-separation",
+          "reason": "The authoritative correction places this record 360 days from Marie Curie. The spacing rule is a directory-diversity heuristic, not a factual publication gate, and may not override verified biographical data."
+        }
+      ],
+      "fields": {
+        "shortDescription": "Politician and physician · China · 1866–1925",
+        "birthDate": "1866-11-12",
+        "deathDate": "1925-03-12",
+        "birthdayRoute": "/birthday/november-12/",
+        "birthTimePrecision": "unknown",
+        "birthPlace": {
+          "entity": "Q588677",
+          "entityLabel": "Cuiheng",
+          "normalisedLabel": "Cuiheng, China",
+          "country": {
+            "entity": "Q148",
+            "label": "China"
+          },
+          "coordinates": {
+            "latitude": 22.444666666667,
+            "longitude": 113.53673611111,
+            "sourceEntity": "Q588677",
+            "sourceEntityLabel": "Cuiheng",
+            "wikidataPrecision": 0.00027777777777778,
+            "escalationSteps": 0,
+            "precisionDowngrade": null
+          },
+          "timeZone": "Asia/Shanghai"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://www.sunyat-sen.org/index.php/portal/list/index.html?id=226",
+          "publisher": "Sun Yat-sen Memorial Hall",
+          "accessedAtUtc": "2026-08-01",
+          "supports": ["birthDate", "deathDate", "birthPlace"]
+        }
+      ],
+      "upstreamSnapshot": {
+        "wikidataLastRevision": 2522754203,
+        "retrievedAtUtc": "2026-07-26T18:47:50.947Z"
+      }
+    },
+    {
+      "qid": "Q684020",
+      "slug": "roberto-clemente",
+      "reviewedAtUtc": "2026-08-01T00:00:00Z",
+      "reason": "The pinned Wikidata revision incorrectly used Italy and its country centroid as Roberto Clemente's birthplace.",
+      "fields": {
+        "shortDescription": "Baseball player · Puerto Rico · 1934–1972",
+        "birthDate": "1934-08-18",
+        "deathDate": "1972-12-31",
+        "birthdayRoute": "/birthday/august-18/",
+        "birthTimePrecision": "unknown",
+        "birthPlace": {
+          "entity": "Q990293",
+          "entityLabel": "Carolina",
+          "normalisedLabel": "Carolina, Puerto Rico",
+          "country": {
+            "entity": "Q30",
+            "label": "United States"
+          },
+          "coordinates": {
+            "latitude": 18.388888888889,
+            "longitude": -65.966666666667,
+            "sourceEntity": "Q990293",
+            "sourceEntityLabel": "Carolina",
+            "wikidataPrecision": 0.00027777777777778,
+            "escalationSteps": 0,
+            "precisionDowngrade": null
+          },
+          "timeZone": "America/Puerto_Rico"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://www.mlb.com/player/roberto-clemente-112391",
+          "publisher": "Major League Baseball",
+          "accessedAtUtc": "2026-08-01",
+          "supports": ["birthDate", "deathDate", "birthPlace"]
+        },
+        {
+          "url": "https://baseballhall.org/hall-of-famers/clemente-roberto",
+          "publisher": "National Baseball Hall of Fame",
+          "accessedAtUtc": "2026-08-01",
+          "supports": ["birthDate", "deathDate", "birthPlace"]
+        }
+      ],
+      "upstreamSnapshot": {
+        "wikidataLastRevision": 2508299380,
+        "retrievedAtUtc": "2026-07-26T18:47:50.947Z"
+      }
+    }
+  ],
+  "quarantinedProfiles": []
+}

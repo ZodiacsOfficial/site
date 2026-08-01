@@ -49,6 +49,17 @@ const profile = {
   }],
 };
 
+const contextualEvidence = {
+  kind: 'transit',
+  date: '2026-08-03',
+  transitingBody: 'Saturn',
+  aspect: 'trine',
+  natalPoint: 'Moon',
+  orb: 0.8,
+};
+
+const contextualQuestion = 'Why does this matter for me?';
+
 function lastQuestion(body) {
   return body.messages.at(-1)?.content ?? '';
 }
@@ -146,7 +157,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check(
       'privacy footer uses the approved copy',
       await page.locator('.zassistant__privacy').textContent()
-        === "The assistant can be wrong. Conversations aren't stored by us.",
+        === "The assistant can be wrong. Answers are generated; astrology here is symbolic, not deterministic. Conversations aren't stored by us.",
     );
 
     await input.fill('What is a trine?');
@@ -164,6 +175,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     await input.fill('What does my chart say?');
     await input.press('Enter');
+    await page.getByRole('button', { name: 'Attach my chart' }).click();
     await page.locator('.zassistant__message--assistant').filter({ hasText: '/learn/aspects/' }).nth(1).waitFor();
     const heuristicRequest = requests[1];
     check('my-chart wording attaches the newest saved chart', typeof heuristicRequest.chart === 'string'
@@ -183,10 +195,100 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check('reopening resets chart attachment to off', await chart.textContent() === 'Use my chart'
       && await chart.getAttribute('aria-pressed') === 'false');
     await chart.click();
+    await page.getByRole('button', { name: 'Attach my chart' }).click();
     await input.fill('What should I read next?');
     await input.press('Enter');
     await page.locator('.zassistant__message--assistant').filter({ hasText: '/learn/aspects/' }).nth(2).waitFor();
     check('tapping Use my chart attaches placements', typeof requests[2].chart === 'string');
+
+    await page.getByRole('button', { name: 'Close assistant' }).click();
+    const requestsBeforeContextOpen = requests.length;
+    await page.evaluate(async ({ evidence, question }) => {
+      const { openAssistant } = await import('/assets/assistant-ui.js');
+      const from = document.querySelector('[data-assistant-open][data-assistant-locale="en"]');
+      await openAssistant('en', from, {
+        evidence,
+        chartId: 'private-chart-id',
+        suggestedQuestion: question,
+      });
+    }, { evidence: contextualEvidence, question: contextualQuestion });
+    await dialog.waitFor({ state: 'visible' });
+    const evidenceChip = page.locator('.zassistant__evidence-chip');
+    const evidenceRemove = page.getByRole('button', { name: 'Remove chart evidence' });
+    check(
+      'contextual open makes no assistant request',
+      requests.length === requestsBeforeContextOpen,
+      `${requestsBeforeContextOpen} before / ${requests.length} after`,
+    );
+    check(
+      'contextual open visibly discloses the exact evidence receipt',
+      await evidenceChip.isVisible()
+        && await evidenceChip.textContent()
+          === 'Sent with your question; birth details stay private. Full placements send only while “Using my chart” is on: Saturn trine natal Moon · 0.8° orb · 2026-08-03Remove chart evidence',
+      await evidenceChip.textContent() ?? '',
+    );
+    check('contextual question is only prefilled', await input.inputValue() === contextualQuestion);
+    check('contextual evidence has a visible Remove control', await evidenceRemove.isVisible());
+
+    await evidenceRemove.click();
+    check(
+      'Remove clears the unsent evidence and its generated prefill',
+      await evidenceChip.isHidden() && await input.inputValue() === ''
+        && requests.length === requestsBeforeContextOpen,
+    );
+
+    await page.evaluate(async ({ evidence, question }) => {
+      const { openAssistant } = await import('/assets/assistant-ui.js');
+      await openAssistant('en', null, {
+        evidence,
+        chartId: 'private-chart-id',
+        suggestedQuestion: question,
+      });
+    }, { evidence: contextualEvidence, question: contextualQuestion });
+    check('reopening contextual Ask still does not send', requests.length === requestsBeforeContextOpen);
+    await input.press('Enter');
+    await page.locator('.zassistant__message--assistant')
+      .filter({ hasText: 'Read /learn/aspects/ next.' })
+      .nth(3)
+      .waitFor();
+    const contextualRequest = requests[requestsBeforeContextOpen];
+    const evidenceKeys = Object.keys(contextualRequest?.evidence ?? {}).sort();
+    check(
+      'Submit sends the exact closed six-field evidence receipt',
+      JSON.stringify(contextualRequest?.evidence) === JSON.stringify(contextualEvidence)
+        && JSON.stringify(evidenceKeys) === JSON.stringify([
+          'aspect',
+          'date',
+          'kind',
+          'natalPoint',
+          'orb',
+          'transitingBody',
+        ]),
+      JSON.stringify(contextualRequest),
+    );
+    check(
+      'chartId and full chart context never enter the contextual request',
+      !('chartId' in (contextualRequest ?? {}))
+        && !('chart' in (contextualRequest ?? {}))
+        && !JSON.stringify(contextualRequest).includes('private-chart-id'),
+      JSON.stringify(contextualRequest),
+    );
+    check('successful answer clears contextual evidence', await evidenceChip.isHidden());
+
+    const chartHandoff = page.locator('.zassistant__chart-link').last();
+    const chartHandoffHref = await chartHandoff.getAttribute('href');
+    const chartHandoffUrl = new URL(chartHandoffHref ?? '', baseURL);
+    const fragmentParams = new URLSearchParams(chartHandoffUrl.hash.slice(1));
+    check(
+      'chart handoff keeps c and sel exclusively in the URL fragment',
+      chartHandoffUrl.pathname === '/birth-chart/'
+        && chartHandoffUrl.search === ''
+        && [...fragmentParams.keys()].sort().join(',') === 'c,sel'
+        && Boolean(fragmentParams.get('c'))
+        && fragmentParams.get('sel') === 'body:Moon'
+        && !chartHandoffHref?.includes('private-chart-id'),
+      chartHandoffHref ?? '',
+    );
 
     await input.fill('[limit]');
     await input.press('Enter');
@@ -234,12 +336,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await page.goto(`${baseURL}/es/tools/`, { waitUntil: 'networkidle' });
     await page.locator('[data-assistant-open][data-assistant-locale="es"]').first().click();
     await page.locator('.zassistant__panel').waitFor({ state: 'visible' });
-    check('ES module-local strings render', await page.locator('.zassistant__title').textContent() === 'Pregunta a Zodiacs'
+    check('ES module-local strings render', await page.locator('.zassistant__title').textContent() === 'Pregúntale a Zodiacs'
       && await page.locator('.zassistant__chart-chip').textContent() === 'Usar mi carta');
     check(
       'ES privacy line is faithful',
       await page.locator('.zassistant__privacy').textContent()
-        === 'El asistente puede equivocarse. Nosotros no guardamos las conversaciones.',
+        === 'El asistente puede equivocarse. Las respuestas son generadas; aquí la astrología es simbólica, no determinista. Nosotros no guardamos las conversaciones.',
     );
     await page.getByRole('button', { name: 'Cerrar asistente' }).click();
 

@@ -1,9 +1,12 @@
 import { describe, expect, it } from 'vitest';
+import { decodeChartLink } from '../share';
 import {
+  chartHrefForAssistantEvidence,
   consumeAssistantStream,
   latestSavedChartFromJson,
   parseAssistantSseFrame,
   placementSummaryForChart,
+  selectedSavedChartFromJson,
 } from './open-assistant';
 
 function profileJson({
@@ -74,6 +77,22 @@ describe('saved-chart assistant context', () => {
     expect(summary).not.toMatch(/Secret Person|1990-04-17|08:45|Bangkok|13\.7563|100\.5018|Asia\/Bangkok/);
   });
 
+  it('uses the stable Today chart instead of a more recently updated chart', () => {
+    const selected = selectedSavedChartFromJson(
+      profileJson(),
+      JSON.stringify({ version: 1, chartId: 'older' }),
+    );
+    expect(selected?.id).toBe('older');
+  });
+
+  it('falls back safely when the stored Today chart no longer exists', () => {
+    const selected = selectedSavedChartFromJson(
+      profileJson(),
+      JSON.stringify({ version: 1, chartId: 'deleted' }),
+    );
+    expect(selected?.id).toBe('newer');
+  });
+
   it('omits angles and houses when birth time is unknown', async () => {
     const chart = latestSavedChartFromJson(profileJson({ timeKnown: false }));
     const summary = await placementSummaryForChart(chart!);
@@ -87,6 +106,33 @@ describe('saved-chart assistant context', () => {
     expect(summary).toMatch(/Sun: \d+°\d{2}′ [A-Z][a-z]+ · house \d+/);
     expect(summary).toMatch(/ASC: .* · house 1/);
     expect(summary).not.toMatch(/Secret Person|1990-04-17|08:45|Bangkok|13\.7563|100\.5018|Asia\/Bangkok/);
+  });
+
+  it('opens grounded evidence on the natal point with birth data confined to the fragment', () => {
+    const chart = latestSavedChartFromJson(profileJson())!;
+    const href = chartHrefForAssistantEvidence(chart, {
+      kind: 'transit',
+      date: '2026-08-01',
+      transitingBody: 'Saturn',
+      aspect: 'square',
+      natalPoint: 'Sun',
+      orb: 1.2,
+    }, 'en');
+    const url = new URL(href!, 'https://zodiacs.org');
+    expect(url.pathname).toBe('/birth-chart/');
+    expect(url.search).toBe('');
+    const fragment = new URLSearchParams(url.hash.slice(1));
+    expect(fragment.get('sel')).toBe('body:Sun');
+    const token = fragment.get('c');
+    expect(decodeChartLink(token!)).toMatchObject({
+      date: '1990-04-17',
+      time: '08:45',
+      timeKnown: true,
+      lat: 13.7563,
+      lon: 100.5018,
+      tz: 'Asia/Bangkok',
+      houseSystem: 'whole',
+    });
   });
 });
 

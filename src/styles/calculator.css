@@ -243,6 +243,16 @@
   gap: 10px;
 }
 .calc__first-reading-actions .btn { white-space: nowrap; }
+.calc__first-reading-explore {
+  padding: 7px 3px;
+  color: var(--muted);
+  font-size: var(--text-sm);
+  text-decoration: underline;
+  text-decoration-color: var(--hair-2);
+  text-underline-offset: 4px;
+}
+.calc__first-reading-explore:hover { color: var(--text); text-decoration-color: var(--muted); }
+.calc__first-reading-explore:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 3px; }
 @media (max-width: 559.5px) {
   .calc__first-reading-actions { display: grid; grid-template-columns: minmax(0, 1fr); }
   .calc__first-reading-actions .btn { width: 100%; }
@@ -753,35 +763,6 @@
 }
 .calc__positions-title:focus { outline: none; }
 .calc__positions-title:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; }
-
-/* Records bridge — mirrors CollectBand.astro. The sun sign's canonical
-   record, one quiet click into the collector's wing. No market language. */
-.calc__record {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 8px 16px;
-  padding: 12px 18px;
-  border: 1px solid var(--hair-1);
-  border-radius: var(--r-md);
-  background: linear-gradient(90deg, rgba(198, 204, 218, 0.04), transparent 60%);
-}
-.calc__record-label {
-  font-size: 9.5px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-.calc__record-text { font-size: 13px; color: var(--muted); }
-.calc__record-link {
-  margin-inline-start: auto;
-  font-size: 13px;
-  font-weight: 550;
-  color: var(--text-2);
-  text-decoration: none;
-  white-space: nowrap;
-}
-.calc__record-link:hover { color: var(--text); }
 
 /* The result is scrolled into view after compute; clear the fixed nav
    pill (top:14px + 52px height + safe-area) so the first line and the
@@ -1762,9 +1743,27 @@
 .pfd__head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 8px; }
 .pfd__head h2 { margin: 0; font-size: var(--text-lg); font-weight: 620; letter-spacing: -0.015em; }
 .pfd__stamp { font-size: 10.5px; letter-spacing: 0.08em; color: var(--faint); text-transform: uppercase; }
+.pfd__pick-row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; }
 .pfd__pick { display: flex; align-items: center; gap: 10px; }
 .pfd__pick .mono { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
 .pfd__pick .field__input { height: 38px; max-width: 320px; }
+.pfd__today-action,
+.pfd__today-state {
+  min-height: 34px;
+  padding: 7px 11px;
+  border-radius: var(--r-full);
+  font-size: 12px;
+  line-height: 1.35;
+}
+.pfd__today-action {
+  border: 1px solid var(--hair-2);
+  color: var(--text-2);
+  transition: border-color var(--dur-1) var(--ease), color var(--dur-1) var(--ease), transform 120ms var(--ease);
+}
+.pfd__today-action:hover { border-color: var(--hair-3); color: var(--text); }
+.pfd__today-action:active { transform: scale(0.98); }
+.pfd__today-action:focus-visible { outline: 2px solid var(--ink-0); outline-offset: 2px; }
+.pfd__today-state { display: inline-flex; align-items: center; color: var(--muted); background: rgba(198, 204, 218, 0.06); }
 .pfd__lines { margin: 0; padding: 0; list-style: none; display: grid; gap: 12px; }
 .pfd__lines p { margin: 0 0 3px; max-width: 62ch; font-size: var(--text-sm); color: var(--text-2); line-height: 1.6; }
 .pfd__receipt { font-size: 10.5px; color: var(--faint); letter-spacing: 0.05em; }
