@@ -110,6 +110,37 @@ try {
   check('masthead reads Nº 09 · Why Zodiacs Matter', /Nº 09 · Why Zodiacs Matter/.test(await page.locator('.essay__rail').textContent() ?? ''));
   check('hero leads with the consumer thesis',
     /Bitcoin made digital ownership possible\. Zodiacs makes it personal\./.test(await page.locator('.hero__epi').textContent() ?? ''));
+  const heroSignSlugs = [
+    'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+    'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+  ];
+  const heroIcons = page.locator('.hero__twelve .hero__twelve-icon');
+  const heroIconState = await heroIcons.evaluateAll((icons) => icons.map((icon) => ({
+    complete: icon.complete,
+    naturalWidth: icon.naturalWidth,
+    src: new URL(icon.currentSrc || icon.src).pathname,
+    alt: icon.getAttribute('alt'),
+  })));
+  const heroLinks = await page.locator('.hero__twelve a').evaluateAll((links) => links.map((link) => ({
+    href: new URL(link.href).pathname,
+    label: link.getAttribute('aria-label'),
+  })));
+  check('hero uses all twelve canonical pastel zodiac icons',
+    heroIconState.length === 12
+      && heroIconState.every((icon, index) => icon.complete
+        && icon.naturalWidth === 48
+        && icon.src === `/assets/zodiac-icons/48/${heroSignSlugs[index]}.webp`
+        && icon.alt === ''),
+    JSON.stringify(heroIconState));
+  check('hero pastel icons keep their registry links and accessible names',
+    heroLinks.length === 12 && heroLinks.every((link, index) => {
+      const slug = heroSignSlugs[index];
+      return link.href === `/registry/${slug}/`
+        && link.label === `${slug[0].toUpperCase()}${slug.slice(1)} — registry record`;
+    }));
+  check('hero contains no platform zodiac emoji fallback',
+    (await page.locator('.hero__twelve-glyph').count()) === 0
+      && !/[♈♉♊♋♌♍♎♏♐♑♒♓]/u.test(await page.locator('.hero__twelve').textContent() ?? ''));
   check('essay opens with a familiar sign',
     /Before you had a username, you had a sign\./.test(await page.locator('#everyone-has-a-sign').textContent() ?? ''));
   check('essay closes with a concrete invitation',
