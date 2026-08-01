@@ -1,5 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
+import EditionText from '../../components/EditionText.astro';
 import EvidenceDisclosure from '../../components/EvidenceDisclosure.astro';
 import UpcomingEventLinks from '../../components/events/UpcomingEventLinks.astro';
 import TodayBrief from '../../islands/today/TodayBrief';
@@ -7,9 +8,11 @@ import dailyData from '../../data/daily.json';
 import publicationData from '../../data/daily-publication.json';
 import type { Daily } from '../../lib/daily';
 import type { DailyPublication } from '../../lib/daily-publication';
+import { editionDateLabel } from '../../lib/edition-freshness';
 
 const daily = dailyData as Daily;
 const publication = publicationData as DailyPublication;
+const publicationLabel = editionDateLabel(publication.date);
 const sunSignLines = Object.fromEntries(
   publication.signs.map((entry) => [entry.sign, entry.todayLine.text]),
 );
@@ -18,9 +21,11 @@ const sunSignLines = Object.fromEntries(
   inlineCriticalCss
   stableTypography
   localTypography
-  title="Today — Your Daily Astrology Brief | Zodiacs.org"
-  description="Choose your Sun sign for a clear daily note, or privately compare today’s sky with a birth chart saved on this device."
+  title={`${publicationLabel} Daily Astrology Brief | Zodiacs.org`}
+  description={`Choose your Sun sign for a clear note from the ${publicationLabel} UTC edition, or privately compare that sky with a birth chart saved on this device.`}
   path="/today/"
+  imageAlt={`${publicationLabel} daily astrology brief — Zodiacs.org`}
+  editionDate={publication.date}
 >
   <script slot="head" is:inline>
     /* Local-only return-state hint. It carries no chart data: the boolean and
@@ -63,12 +68,13 @@ const sunSignLines = Object.fromEntries(
   </script>
   <section
     class="section--tight container container--narrow today-page"
+    data-edition-content="true"
     data-daily-date={publication.date}
     data-generation-mode={publication.generation.mode}
   >
     <header class="today-hero">
       <em class="kicker">Your daily brief</em>
-      <h1 class="display">Today</h1>
+      <h1 class="display"><EditionText current="Today" editionDate={publication.date} /></h1>
       <p>
         Start with the zodiac sign you know. If you have a saved birth chart,
         you’ll automatically get a more personal comparison.
@@ -84,7 +90,7 @@ const sunSignLines = Object.fromEntries(
 
     {daily.eventsCoverage === 'unavailable' && (
       <p class="today-coverage-note">
-        Today’s reading uses planetary positions only; exact-event timing
+        This edition uses planetary positions only; exact-event timing
         isn’t available for this date.
       </p>
     )}
@@ -92,7 +98,7 @@ const sunSignLines = Object.fromEntries(
     <EvidenceDisclosure
       class="today-provenance"
       variant="panel"
-      label="Behind today’s reading"
+      label="Behind this daily reading"
       description="Sky details, limitations, and editorial standards"
     >
       <p>

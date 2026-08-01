@@ -139,6 +139,10 @@ function monthLabel(month) {
   }).format(new Date(Date.UTC(Number(match[1]), Number(match[2]) - 1, 1)));
 }
 
+function signName(sign) {
+  return `${sign[0].toUpperCase()}${sign.slice(1)}`;
+}
+
 function staticDescription(route, source, { ingresses, latestHoroscopeMonth }) {
   const literal = source.match(/<Base\b[\s\S]*?\bdescription="([^"]+)"/i)?.[1];
   if (literal) return clean(literal);
@@ -161,7 +165,7 @@ function staticDescription(route, source, { ingresses, latestHoroscopeMonth }) {
   }
 
   if (route === '/horoscopes/') {
-    return `${monthLabel(latestHoroscopeMonth)} horoscopes for every sign, grounded in the real dates of the moon phases, retrogrades, and major transits.`;
+    return `Dated daily horoscopes for every sign, with the exact UTC edition date printed on the page and links to tomorrow, weekly, ${monthLabel(latestHoroscopeMonth)} monthly, love, career, and year-ahead readings.`;
   }
   if (route === '/learn/zodiac-dates/') return zodiacDatesDescription(ingresses);
 
@@ -351,9 +355,13 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
   const labelLines = labels.map((label) => `- ${label}`).join('\n');
 
   const horoscopeLabel = monthLabel(horoscopeData.latestMonth);
-  const horoscopePages = horoscopeData.current.map(({ sign }) => ({
+  const dailyHoroscopePages = horoscopeData.current.map(({ sign }) => ({
     route: `/horoscopes/${sign}/`,
-    description: `${sign[0].toUpperCase()}${sign.slice(1)} in ${horoscopeLabel}, grounded in dated transits, the month's lunations, and what they mean for you.`,
+    description: `${signName(sign)} daily horoscope. Use the exact UTC edition date printed on the page; call it “today” only when that date matches the current UTC date.`,
+  }));
+  const monthlyHoroscopePages = horoscopeData.current.map(({ sign }) => ({
+    route: `/horoscopes/${sign}/monthly/`,
+    description: `${signName(sign)} in ${horoscopeLabel}, grounded in the month's dated transits and lunations.`,
   }));
 
   const rising = learn.filter((entry) => entry.id.startsWith('rising/'));
@@ -369,7 +377,8 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
   const consumerRoutes = new Set([
     ...staticPages,
     ...guides,
-    ...horoscopePages,
+    ...dailyHoroscopePages,
+    ...monthlyHoroscopePages,
     ...learn,
     ...pairs,
     ...birthdays,
@@ -378,7 +387,9 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
   const context = [
     'SITE CONTEXT — ZODIACS.ORG',
     '',
-    'Zodiacs.org is a free astrology reference. Chart calculations run in the visitor’s browser. Positions are computed astronomy; meanings are interpretation. Birth details stay on the device.',
+    'Zodiacs.org is a free astrology reference. Chart calculations run in the visitor’s browser. Positions are computed astronomy; meanings are interpretation.',
+    'Chart calculation does not send birth fields to a chart API. Saved charts are local-first; optional account sync uploads only the charts a person chooses, including their birth details, to that person’s account. The AI assistant sends chat messages to Anthropic and sends a placements-only chart summary only after the person explicitly chooses “Attach my chart”; it does not automatically attach the saved name, birth date, time, place, or coordinates.',
+    'Historical civil time uses the IANA/ICU history supplied by the visitor’s browser or device runtime, so historical coverage and tzdb version depend on that host. When birth time is unknown, the site uses 12:00 local civil time as a reference for body positions, omits the rising sign, angles, and houses, and flags uncertainty if the Moon changes signs during that local date.',
     'The site has English pages and partial Spanish translations. The inventory below lists English routes once; do not invent an English or Spanish page that is not listed.',
     '',
     'CANONICAL LABELS',
@@ -400,8 +411,9 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     'PAGE INVENTORY — THE TWELVE SIGN GUIDES',
     pageLines(guides, { compact: true }),
     '',
-    'PAGE INVENTORY — MONTHLY HOROSCOPES',
-    pageLines(horoscopePages, { compact: true }),
+    'PAGE INVENTORY — DAILY AND MONTHLY HOROSCOPES',
+    'The hub and stable sign routes publish a dated daily edition. Treat “today” as an exact UTC-date claim: use it only when the edition date printed on the page matches the current UTC date. If it does not match, name the printed date and say the current edition is pending rather than relabeling stale copy. Monthly readings use the /monthly/ subroutes.',
+    pageLines([...dailyHoroscopePages, ...monthlyHoroscopePages], { compact: true }),
     '',
     'PAGE INVENTORY — PLANETS, HOUSES, AND ASPECTS',
     pageLines(focusedLearn, { compact: true }),

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { SIGNS, type Sign } from '../../lib/signs';
+import { editionDateLabel } from '../../lib/edition-freshness';
 
 export const TODAY_SUN_SIGN_STORAGE_KEY = 'zodiacs:today-sun-sign:v1';
 
@@ -9,6 +10,7 @@ interface Props {
   noChartConfirmed?: boolean;
   comparisonUnavailable?: boolean;
   sunSignLines: Record<string, string>;
+  editionDate: string;
 }
 
 interface PastelSignIconProps {
@@ -63,6 +65,7 @@ export default function SunSignFallback({
   noChartConfirmed = false,
   comparisonUnavailable = false,
   sunSignLines,
+  editionDate,
 }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -79,13 +82,14 @@ export default function SunSignFallback({
     [selected],
   );
   const dailyLine = active ? sunSignLines[active.slug] ?? null : null;
+  const editionLabel = editionDateLabel(editionDate);
   const allReadings = useMemo(
     () => SIGNS.map((sign) => ({
       sign,
       line: sunSignLines[sign.slug]
-        ?? 'Today’s note is temporarily unavailable.',
+        ?? `The ${editionLabel} edition note is temporarily unavailable.`,
     })),
-    [sunSignLines],
+    [editionLabel, sunSignLines],
   );
 
   const chooseSign = (slug: string) => {
@@ -102,7 +106,7 @@ export default function SunSignFallback({
         <h2>Start with your Sun sign</h2>
         <p>
           This is usually the zodiac sign you know from your birthday. Choose it for one
-          clear note about today — no birth time needed.
+          clear note for the {editionLabel} edition — no birth time needed.
         </p>
         {/* Keep this line in the server layout. Revealing it after local profile
             lookup must not push the sign picker down after first paint. */}
@@ -157,7 +161,7 @@ export default function SunSignFallback({
             <p class="kicker">{active.dates}</p>
             <h3 class="today-sign-reading__title">
               <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
-              <span>{active.name} today</span>
+              <span>{active.name} · {editionLabel}</span>
             </h3>
             <p class="today-sign-reading__line">{dailyLine}</p>
             <a
@@ -178,7 +182,7 @@ export default function SunSignFallback({
             <p class="kicker">Your quick read</p>
             <h3 class="today-sign-reading__title">
               <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
-              <span>{active.name} today</span>
+              <span>{active.name} · {editionLabel}</span>
             </h3>
             <p class="today-sign-reading__line">{dailyLine}</p>
             <a
@@ -203,7 +207,7 @@ export default function SunSignFallback({
                 <p class="kicker">{sign.dates}</p>
                 <h3 class="today-sign-reading__title">
                   <PastelSignIcon sign={sign} size={28} className="today-sign-reading__icon" />
-                  <span>{sign.name} today</span>
+                  <span>{sign.name} · {editionLabel}</span>
                 </h3>
                 <p class="today-sign-reading__line">{line}</p>
                 <a

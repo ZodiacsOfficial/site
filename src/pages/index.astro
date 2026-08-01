@@ -18,7 +18,7 @@ const faq = [
   },
   {
     q: 'How accurate are the charts?',
-    a: 'Planetary positions come from a professional-grade astronomical engine, tested automatically against NASA JPL reference data to within a few hundredths of a degree. Time zones are resolved against the complete historical database, including pre-1922 local mean time. Every chart lists its computed UTC instant, so you can check it.',
+    a: 'Planetary positions come from an astronomical engine tested automatically against NASA JPL reference data to within a few hundredths of a degree. Historical clock changes, including pre-1922 local mean time where available, use the IANA/ICU history supplied by your browser or device runtime. Every chart lists its computed UTC instant so you can check the conversion.',
   },
   {
     q: 'What happens to my birth data?',
@@ -76,6 +76,8 @@ const tools = [
   title="Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools"
   description="Free birth charts, moon signs, compatibility, horoscopes, and sign guides — accurate, private, and easy to understand."
   path="/"
+  image="/assets/og/v2/homepage.webp"
+  imageAlt="Zodiacs homepage preview with a cream celestial design, twelve pastel zodiac symbols, and the headline “Your whole chart, not just your sign.”"
   jsonLd={jsonLd}
 >
   <link

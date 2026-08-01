@@ -5,6 +5,7 @@
  */
 import type { APIRoute } from 'astro';
 import daily from '../../data/daily.json';
+import { editionDateLabel } from '../../lib/edition-freshness';
 import { signBySlug } from '../../lib/signs';
 
 const SITE = 'https://zodiacs.org';
@@ -32,11 +33,12 @@ export const GET: APIRoute = () => {
     .filter(Boolean);
 
   const description = [
+    `${editionDateLabel(daily.date)} edition.`,
     `Moon phase: ${daily.moon.phase}.`,
     daily.eventsCoverage === 'unavailable'
       ? 'Exact-event coverage is unavailable for this date; positions remain available.'
       : '',
-    eventBits.length ? `Today: ${eventBits.join('; ')}.` : '',
+    eventBits.length ? `${editionDateLabel(daily.date)}: ${eventBits.join('; ')}.` : '',
     retro.length ? `Retrograde: ${retro.join(', ')}.` : '',
     `Positions at 12:00 UTC — ${positions}.`,
   ]

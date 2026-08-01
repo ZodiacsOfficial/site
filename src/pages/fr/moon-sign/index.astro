@@ -15,7 +15,7 @@ const faq = [
   },
   {
     q: 'Pourquoi un autre site m’a-t-il donné un signe lunaire différent ?',
-    a: 'Cela vient presque toujours d’un problème de fuseau horaire : certains calculateurs convertissent mal l’heure de naissance, surtout pour les dates anciennes ou les lieux dont l’heure a changé au fil de l’histoire. Ici, nous tenons compte de tout l’historique du fuseau de ton lieu, y compris l’heure locale avant sa normalisation, et nous affichons l’instant UTC calculé pour que tu puisses le vérifier.',
+    a: 'Cela vient presque toujours d’un problème de fuseau horaire : certains calculateurs convertissent mal l’heure de naissance, surtout pour les dates anciennes ou les lieux dont l’heure a changé au fil de l’histoire. Ici, nous utilisons l’historique IANA disponible dans le navigateur ou le système de l’appareil, y compris l’heure locale avant sa normalisation lorsque ces données la fournissent, et affichons l’instant UTC calculé pour que tu puisses le vérifier.',
   },
   {
     q: 'Soleil, Lune et ascendant : quelle différence ?',

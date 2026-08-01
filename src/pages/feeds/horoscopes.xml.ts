@@ -5,6 +5,7 @@
  */
 import type { APIRoute } from 'astro';
 import horoscopeProgramData from '../../data/horoscope-program.json';
+import { datedEditionText } from '../../lib/edition-freshness';
 import type { HoroscopeProgram } from '../../lib/horoscope-program';
 import { SIGNS } from '../../lib/signs';
 
@@ -28,7 +29,7 @@ export const GET: APIRoute = () => {
       <link>${url}</link>
       <guid isPermaLink="false">${url}#${horoscopeProgram.anchorDate}</guid>
       <pubDate>${pub}</pubDate>
-      <description>${esc(reading.text)}</description>
+      <description>${esc(datedEditionText(reading.text, horoscopeProgram.anchorDate))}</description>
     </item>`;
   }).join('\n');
 

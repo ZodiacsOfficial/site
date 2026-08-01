@@ -50,7 +50,7 @@ describe('assistant site context', () => {
 
     expect(counts).toEqual({
       birthdays: 366,
-      consumerRoutes: 669,
+      consumerRoutes: 681,
       glossary: 145,
       guides: 12,
       learn: 159,
@@ -62,6 +62,28 @@ describe('assistant site context', () => {
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
     expect(context).toContain('- /learn/placements/sun-in-aries/ — What Sun in Aries means in a birth chart.');
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
+  });
+
+  it('keeps privacy, calculation, time-zone, unknown-time, and horoscope-date boundaries explicit', async () => {
+    const { context } = await generateAssistantContext();
+
+    expect(context).toContain('Chart calculation does not send birth fields to a chart API.');
+    expect(context).toContain('optional account sync uploads only the charts a person chooses');
+    expect(context).toContain('The AI assistant sends chat messages to Anthropic');
+    expect(context).toContain('placements-only chart summary only after the person explicitly chooses “Attach my chart”');
+    expect(context).not.toContain('Birth details stay on the device.');
+
+    expect(context).toContain('IANA/ICU history supplied by the visitor’s browser or device runtime');
+    expect(context).toContain('historical coverage and tzdb version depend on that host');
+    expect(context).toContain('uses 12:00 local civil time as a reference');
+    expect(context).toContain('omits the rising sign, angles, and houses');
+    expect(context).toContain('flags uncertainty if the Moon changes signs during that local date');
+
+    expect(context).toContain('PAGE INVENTORY — DAILY AND MONTHLY HOROSCOPES');
+    expect(context).toContain('Treat “today” as an exact UTC-date claim');
+    expect(context).toContain('- /horoscopes/aries/ — Aries daily horoscope.');
+    expect(context).toMatch(/- \/horoscopes\/aries\/monthly\/ — Aries in [A-Z][a-z]+ 20\d{2}/u);
+    expect(context).not.toContain('PAGE INVENTORY — MONTHLY HOROSCOPES');
   });
 
   it('stays inside the cache-size band without localized routes or consumer-banned vocabulary', async () => {

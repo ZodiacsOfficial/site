@@ -1,8 +1,8 @@
 ---
 record_id: GROWTH-2026-08-01-ploybook-delta-audit
 record_type: weekly-review
-status: proposed
-owner: unassigned
+status: approved
+owner: site owner
 created: 2026-08-01
 updated: 2026-08-01
 decision_due: null
@@ -19,8 +19,8 @@ related_records:
   - GROWTH-2026-08-01-private-aggregate-measurement
 evidence_quality: medium
 privacy_class: aggregate-only
-decision: adopt selected provider-neutral mechanics in existing playbooks; add no standalone playbooks
-next_action: Human-review and merge the Growth OS branch; keep prohibited and deferred Ploy workflows excluded.
+decision: approved by the site owner on 2026-08-01; adopt the selected provider-neutral mechanics in the existing Growth OS without adding redundant playbooks
+next_action: Merge the complete Growth OS documents, keep prohibited and deferred Ploy workflows excluded, and promote the accepted records through Daily Action v2.
 ---
 
 # Ploybook delta audit

@@ -1,8 +1,8 @@
 ---
 record_id: GROWTH-2026-08-01-answer-engine-readiness
 record_type: opportunity
-status: proposed
-owner: unassigned
+status: approved
+owner: site owner
 created: 2026-08-01
 updated: 2026-08-01
 decision_due: null
@@ -32,10 +32,10 @@ confidence: medium
 effort: medium
 risk: Over-optimizing for optional AI-discovery conventions, broadening claims, or creating duplicate entity signals.
 deployment_identifier: null
-measurement_date: null
+measurement_date: 2026-08-29
 result: pending
-decision: investigate confirmed findings before approving page changes
-next_action: Corroborate each finding, prioritize the three confirmed copy corrections, and obtain human approval before implementation.
+decision: approved by the site owner on 2026-08-01; implement the corroborated trust and machine-readable corrections through the Release & Trust Gate
+next_action: Deploy and verify the aligned public and assistant-facing claims, then promote the release receipt through Daily Action v2.
 ---
 
 # Opportunity: Answer-engine readiness

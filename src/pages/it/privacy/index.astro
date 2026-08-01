@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '16 luglio 2026';
+const updated = '1 agosto 2026';
 
 const jsonLd = [
   {
@@ -129,12 +129,16 @@ const jsonLd = [
 
       <h2>Assistente IA</h2>
       <p>
-        Quando usi l’assistente, i tuoi messaggi e, se chiedi del tuo tema, un
-        riepilogo delle posizioni calcolate vengono inviati al nostro fornitore
-        di IA, Anthropic, per generare la risposta. Non conserviamo le
-        conversazioni e il traffico dell’API non viene usato per addestrare i
-        modelli. L’assistente non allega mai il tuo nome né la data, l’ora o il
-        luogo di nascita salvati; tutto ciò che scrivi nella chat fa parte del messaggio
+        Quando usi l’assistente, i tuoi messaggi vengono inviati al nostro
+        fornitore di IA, Anthropic, per generare la risposta. Un tema salvato
+        viene incluso solo dopo che premi “Allega il mio tema”; la schermata di
+        consenso mostra il riepilogo delle sole posizioni prima dell’invio. Il
+        riepilogo accompagna ogni domanda finché “Con il mio tema” resta attivo;
+        puoi disattivarlo. Non
+        conserviamo le conversazioni; Anthropic dichiara che il traffico API non
+        viene usato per addestrare i modelli. L’assistente non allega mai il tuo
+        nome né la data, l’ora, il luogo di nascita o le coordinate salvati;
+        tutto ciò che scrivi nella chat fa parte del messaggio
         inviato. Per applicare il limite giornaliero, conserviamo un
         identificatore irreversibile derivato dal tuo indirizzo IP con
         l’aggiunta di un valore casuale e il relativo conteggio quotidiano, mai
@@ -164,7 +168,11 @@ const jsonLd = [
         tecnici per fornire le pagine e prevenire gli abusi. Non usiamo
         pubblicità né tracciamento tra siti. Contiamo le visualizzazioni di
         pagina e l’uso anonimo delle funzioni con Plausible, un servizio di
-        analisi senza cookie. Non riceve dati di nascita, indirizzi pubblici,
+        analisi senza cookie. Per non conteggiare più volte lo stesso dispositivo
+        durante un giorno, Plausible elabora brevemente l’indirizzo IP e lo user
+        agent per ricavare un identificatore limitato a questo sito, dispositivo
+        e giorno. IP e user agent grezzi non vengono conservati; il sale usato
+        per l’identificatore ruota e viene eliminato ogni 24 ore. Non riceve dati di nascita, indirizzi pubblici,
         identificatori del tema o dell’account collegato né la lista esatta dei
         segni. Gli eventi Aura includono solo categorie consentite, come l’esito
         e una fascia approssimativa del numero di segni; gli altri eventi

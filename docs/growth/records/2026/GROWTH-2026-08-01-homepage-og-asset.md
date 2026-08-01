@@ -1,8 +1,8 @@
 ---
 record_id: GROWTH-2026-08-01-homepage-og-asset
 record_type: content-brief
-status: proposed
-owner: unassigned
+status: approved
+owner: site owner
 created: 2026-08-01
 updated: 2026-08-01
 decision_due: null
@@ -14,10 +14,11 @@ related_urls:
   - https://zodiacs.org/
 related_records:
   - GROWTH-2026-08-01-ploybook-delta-audit
+  - GROWTH-2026-08-01-answer-engine-readiness
 evidence_quality: medium
 privacy_class: aggregate-only
-decision: design review required; not approved for production
-next_action: Compare with the current live homepage card, approve or reject the visual, then implement through a current-main branch and Release & Trust Gate.
+decision: approved by the site owner on 2026-08-01 for production deployment through the Release & Trust Gate
+next_action: Deploy from current main, verify the public asset and rendered social metadata, then promote the release receipt through Daily Action v2.
 ---
 
 # Content brief: Homepage Open Graph asset
@@ -28,6 +29,7 @@ next_action: Compare with the current live homepage card, approve or reject the 
 - Format: WebP.
 - Dimensions: 1200 × 630 pixels.
 - File size: 40,982 bytes.
+- SHA-256: `5c23bd24a519c408a5f6eae48d7b6e02b020b79e739bbebe4c8ab6e8d960109b`.
 - Ploy workspace asset ID: `db910950-dbaa-429e-902b-9a23bd70e6d8`.
 - Ploy automatically converted the reviewed 319 KB source render to this smaller WebP.
 
@@ -53,8 +55,8 @@ Zodiacs homepage preview with a cream celestial design, twelve pastel zodiac sym
 - Compare against the current repository-defined consumer brand tokens before approval because the inspected working branch is older than production.
 - Keep the image off navigation. No renderer route is required.
 
-## Boundaries
+## Approval and boundaries
 
-- This is a review asset, not a released site change.
-- No production file, route, metadata, domain, hosting, or deployment was changed.
+- The site owner approved this reviewed asset for production on 2026-08-01.
+- Approval does not substitute for the repository release gate or live delivery verification.
 - No private chart, birth, account, or visitor data appears in the asset.

@@ -5,6 +5,8 @@ import Faq from './Faq.astro';
 import ShareRow from './ShareRow.astro';
 import SignIcon from './SignIcon.astro';
 import UpcomingEventLinks from './events/UpcomingEventLinks.astro';
+import EditionText from './EditionText.astro';
+import { datedEditionText } from '../lib/edition-freshness';
 import { EDITOR_AUTHOR } from '../lib/editorial';
 import { SIGNS, signBySlug } from '../lib/signs';
 import type {
@@ -74,11 +76,13 @@ const ogImage = `/assets/og/v2/horoscope/${sign.slug}${meta.slug ? `-${meta.slug
 const canonicalUrl = `https://zodiacs.org${path}`;
 const hasEditorial = Astro.slots.has('editorial');
 const hasEnhancement = Astro.slots.has('enhancement');
+const editionDate = surface === 'today' ? reading.datePublished.slice(0, 10) : null;
+const displayText = (value: string) => editionDate ? datedEditionText(value, editionDate) : value;
 
 const faq = [
   {
     q: `What does this ${sign.name} ${meta.nav.toLowerCase()} horoscope cover?`,
-    a: meta.faq,
+    a: displayText(meta.faq),
   },
   {
     q: `Is this reading only for people with ${sign.name} as their Sun sign?`,
@@ -94,7 +98,7 @@ const jsonLd = [
   {
     '@type': 'Article',
     headline: `${sign.name} ${reading.title} — ${reading.label}`,
-    description: reading.description,
+    description: displayText(reading.description),
     url: canonicalUrl,
     datePublished: reading.datePublished,
     dateModified: reading.dateModified,
@@ -140,12 +144,13 @@ const skyMarkers = reading.skyStrip.markers;
   inlineCriticalCss={surface === 'today'}
   stableTypography
   title={`${sign.name} ${reading.title} — ${reading.label} | Zodiacs.org`}
-  description={reading.description}
+  description={displayText(reading.description)}
   path={path}
   image={ogImage}
   imageAlt={`${sign.name} ${meta.nav.toLowerCase()} horoscope — Zodiacs.org`}
   type="article"
   jsonLd={jsonLd}
+  editionDate={editionDate ?? undefined}
   rssFeed={{
     href: `/feeds/horoscopes/${sign.slug}.xml`,
     title: `Zodiacs.org — ${sign.name} daily horoscope`,
@@ -175,7 +180,11 @@ const skyMarkers = reading.skyStrip.markers;
       } catch (error) {}
     </script>
   )}
-  <article class="program container container--narrow" style={`--sign:${sign.hue}`}>
+  <article
+    class="program container container--narrow"
+    style={`--sign:${sign.hue}`}
+    data-edition-content={editionDate ? 'true' : undefined}
+  >
     <nav class="program__crumbs mono" aria-label="Breadcrumb">
       <a href="/horoscopes/">Horoscopes</a><span aria-hidden="true">/</span>
       {meta.slug ? (
@@ -199,7 +208,11 @@ const skyMarkers = reading.skyStrip.markers;
       <div class="program__hero-copy">
         <em class="kicker">{meta.kicker} · {reading.label}</em>
         <h1 class="display">{sign.name} {reading.title}</h1>
-        <p>{reading.description}</p>
+        <p>
+          {editionDate
+            ? <EditionText current={reading.description} editionDate={editionDate} />
+            : reading.description}
+        </p>
         <span class="program__dates mono">{sign.dates} · {sign.element} · {sign.modality} · ruled by {sign.ruler}</span>
       </div>
     </header>
@@ -217,10 +230,14 @@ const skyMarkers = reading.skyStrip.markers;
     </nav>
 
     {skyMarkers.length > 0 && (
-      <aside class="program__sky" aria-label={reading.skyStrip.label}>
+      <aside class="program__sky" aria-label={displayText(reading.skyStrip.label)}>
         <div class="program__sky-heading">
           <span class="program__sky-dot" aria-hidden="true"></span>
-          <span class="mono">{reading.skyStrip.label}</span>
+          <span class="mono">
+            {editionDate
+              ? <EditionText current={reading.skyStrip.label} editionDate={editionDate} />
+              : reading.skyStrip.label}
+          </span>
         </div>
         <div class="program__sky-markers">
           {skyMarkers.map((marker) => (
@@ -242,7 +259,9 @@ const skyMarkers = reading.skyStrip.markers;
     <section class="program__reading" aria-labelledby="reading-heading">
       <div class="program__reading-head">
         <span class="mono">The reading</span>
-        <h2 id="reading-heading">{reading.intro}</h2>
+        <h2 id="reading-heading">
+          {editionDate ? <EditionText current={reading.intro} editionDate={editionDate} /> : reading.intro}
+        </h2>
       </div>
 
       {hasEditorial && (
@@ -257,8 +276,12 @@ const skyMarkers = reading.skyStrip.markers;
         <div class="program__sections">
           {reading.sections.map((section) => (
             <section class="program__section">
-              <h3>{section.heading}</h3>
-              <p>{section.body}</p>
+              <h3>
+                {editionDate ? <EditionText current={section.heading} editionDate={editionDate} /> : section.heading}
+              </h3>
+              <p>
+                {editionDate ? <EditionText current={section.body} editionDate={editionDate} /> : section.body}
+              </p>
             </section>
           ))}
         </div>
@@ -276,7 +299,9 @@ const skyMarkers = reading.skyStrip.markers;
         <span class="program__basis-close" aria-hidden="true">−</span>
       </summary>
       <div class="program__basis-body">
-        <p>{reading.sourceNote}</p>
+        <p>
+          {editionDate ? <EditionText current={reading.sourceNote} editionDate={editionDate} /> : reading.sourceNote}
+        </p>
         {reading.sections.some((section) => section.receipt) && (
           <ul class="program__basis-receipts">
             {reading.sections.filter((section) => section.receipt).map((section) => (

@@ -1,0 +1,11 @@
+---
+import { datedEditionText } from '../lib/edition-freshness';
+
+interface Props {
+  current: string;
+  editionDate: string;
+}
+
+const { current, editionDate } = Astro.props;
+---
+<span data-edition-current-only>{current}</span><span data-edition-dated-only>{datedEditionText(current, editionDate)}</span>

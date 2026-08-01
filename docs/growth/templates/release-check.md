@@ -53,9 +53,13 @@ next_action: complete checks
 
 ## Privacy and measurement
 
-- [ ] No visitor identity, account, IP, raw-session, birth, chart, or saved-profile data is collected or transmitted.
-- [ ] No IP-derived visitor identifier is created; analytics referrers are
-      absent or origin-only and never contain paths, queries, or fragments.
+- [ ] No visitor identity, account, raw-session, birth, chart, saved-profile,
+      or raw IP field is added to an analytics payload or retained by Growth OS.
+- [ ] No persistent or cross-day IP-derived identifier exists. The approved
+      Plausible exception is limited to disclosed site/device/day deduplication;
+      raw IP/User-Agent and the daily identifier are never exposed to Growth OS.
+- [ ] Analytics referrers are `null`; canonical analytics URLs never contain
+      queries or fragments.
 - [ ] Birth calculation remains client-side.
 - [ ] Event payloads contain only documented aggregate-safe properties.
 - [ ] Baseline, primary measure, guardrails, owner, and review date exist.

@@ -8,7 +8,7 @@ const jsonLd = [
     headline: 'How zodiacs.org computes your chart',
     url: 'https://zodiacs.org/methodology/',
     datePublished: '2026-07-05T10:36:57Z',
-    dateModified: '2026-07-19T12:00:00Z',
+    dateModified: '2026-08-01T00:00:00Z',
     author: EDITOR_AUTHOR,
     publisher: { '@id': 'https://zodiacs.org/#org' },
     mainEntityOfPage: { '@type': 'WebPage', '@id': 'https://zodiacs.org/methodology/' },
@@ -19,7 +19,7 @@ const jsonLd = [
 ---
 <Base
   title="How We Compute Your Chart — Methodology & Privacy | Zodiacs.org"
-  description="The exact astronomy behind every chart on zodiacs.org: the ephemeris, house systems, historical timezone handling, accuracy testing against NASA JPL data, and the local-first privacy model."
+  description="How zodiacs.org computes a chart: ephemeris and house methods, historical timezone handling, NASA JPL accuracy tests, uncertainty rules, and local-first privacy."
   path="/methodology/"
   type="article"
   jsonLd={jsonLd}
@@ -82,8 +82,8 @@ const jsonLd = [
       <h2>Time zones</h2>
       <p>
         A birth chart is only as good as its clock conversion. We resolve your
-        birth time against the <strong>complete IANA time zone history</strong>{' '}
-        of your birthplace: daylight saving in all its regional weirdness,
+        birth time with the IANA time-zone history available in your browser's
+        <strong>host ICU data</strong>: daylight saving in all its regional weirdness,
         wartime clock changes, and pre-standardization <em>local mean time</em>{' '}
         — including offsets with seconds, like Mexico City's −6:36:36 before
         1922.
@@ -108,19 +108,25 @@ const jsonLd = [
 
       <h2>Privacy</h2>
       <p>
-        The entire calculation happens in your browser. Your birth date, time,
-        and place are not sent to a chart API, and there is no account
+        The entire chart calculation happens in your browser. Your birth date,
+        time, and place are not sent to a chart API, and there is no account
         requirement or analytics attached to birth data. Charts you save live
         in your browser's local storage first, deletable by you at any time. If
-        you choose account sync, saved charts upload to your Supabase account
-        and are protected by row-level security.
+        you choose account sync, selected saved charts and their birth details
+        upload to your Supabase account and are protected by row-level security.
+        Separately, if you press “Attach my chart” in the AI assistant, each
+        message and a placements-only summary go to Anthropic while “Using my
+        chart” remains on;
+        the assistant does not attach the saved name, birth fields, or
+        coordinates.
       </p>
 
       <h2>Honest limits</h2>
       <ul>
         <li>Chiron and the asteroids aren't included yet (the engine's remit is major bodies); they're planned via public-domain JPL data.</li>
-        <li>Unknown birth times get a noon chart: planets are exact to the day, but rising sign and houses genuinely require the clock, and we won't pretend otherwise.</li>
+        <li>When birth time is unknown, the site uses 12:00 local civil time as a reference for body positions. It omits the rising sign, angles, and houses. If the Moon changes signs during that local date, the result flags that both adjacent signs remain possible.</li>
         <li>Supported birth years: 1800–2199.</li>
+        <li>The JPL checks validate astronomical position calculations, not astrological interpretation. Interpretations here are traditional and reflective, not scientifically validated predictions.</li>
       </ul>
 
       <h2 id="daily-publication">Daily publication system</h2>

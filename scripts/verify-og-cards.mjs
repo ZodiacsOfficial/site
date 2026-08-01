@@ -95,6 +95,24 @@ async function validatePng(relativePath, { unique = true } = {}) {
   else hashes.set(hash, relativePath);
 }
 
+async function validateHomepageCard() {
+  const relativePath = 'homepage.webp';
+  try {
+    const bytes = await readFile(resolve(out, relativePath));
+    const metadata = await sharp(bytes).metadata();
+    if (metadata.format !== 'webp' || metadata.width !== 1200 || metadata.height !== 630) {
+      failures.push(
+        `${relativePath}: expected 1200x630 WebP, received ${metadata.width ?? '?'}x${metadata.height ?? '?'} ${metadata.format ?? 'unknown'}`,
+      );
+    }
+    if (bytes.byteLength > 250 * 1024) {
+      failures.push(`${relativePath}: ${(bytes.byteLength / 1024).toFixed(1)}KiB exceeds the 250KiB homepage-card budget`);
+    }
+  } catch {
+    failures.push(`${relativePath}: missing`);
+  }
+}
+
 for (const slug of signSlugs) {
   const iconPath = resolve(root, `public/assets/zodiac-icons/128/${slug}.webp`);
   try {
@@ -109,6 +127,7 @@ for (const slug of signSlugs) {
 
 for (const relativePath of expected) await validatePng(relativePath);
 await validatePng('share.png', { unique: false });
+await validateHomepageCard();
 try {
   const fallbackBytes = await readFile(resolve(out, 'share.png'));
   const fallbackHash = createHash('sha256').update(fallbackBytes).digest('hex');
@@ -191,4 +210,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
+console.log(`verify-og-cards: OK — homepage 1200x630 WebP; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);

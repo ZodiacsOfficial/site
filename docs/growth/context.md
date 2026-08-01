@@ -7,9 +7,9 @@ file narrows that truth to the decisions a growth operator needs repeatedly.
 ## Product promise
 
 zodiacs.org is a free astrology platform built around useful tools, clear
-guides, and private client-side chart calculation. Astrofolio is the optional
-local-save and future sync layer. The token registry is a separate collector's
-wing, not the consumer proposition.
+guides, and private client-side chart calculation. Saved charts are local-first;
+optional account sync is available for people who deliberately choose it. The
+token registry is a separate collector's wing, not the consumer proposition.
 
 ## Audiences and jobs
 
@@ -19,24 +19,29 @@ wing, not the consumer proposition.
 | Chart-curious visitor | Calculate a birth, moon, or rising sign | Read the result and save locally |
 | Chart-literate visitor | Inspect placements and method | Use a deeper tool or guide |
 | Returning visitor | Revisit a saved chart or forecast | Continue a personal journey without re-entry friction |
-| Collector | Inspect the registry | Enter `/collect/` deliberately |
+| Collector | Inspect the registry | Enter `/registry/` deliberately |
 
 ## Current growth priorities
 
-Follow the build order in strategy section 8:
+The strategy build order is largely shipped: sign authority; birth, moon,
+rising, compatibility, phase, return, and transit tools; local saves and
+optional sync; dated sky calendars; and transit-grounded daily and monthly
+horoscopes. Treat the live repository and production routes as authority over
+older phase language. Current operator priorities are:
 
-1. Zodiac sign authority.
-2. Birth-chart calculator and learning cluster.
-3. Moon and rising calculators and explainers.
-4. Compatibility only after a working compatibility/synastry tool exists.
-5. Houses, planets, and aspects.
-6. Moon phases and calendars.
-7. Transits and date-led tools.
-8. Horoscopes as retention content, beginning with weekly/monthly only when
-   the transit-grounded editorial pipeline and human review are ready.
+1. Keep trust, privacy, calculation, freshness, and machine-readable claims
+   consistent across every surface.
+2. Measure successful product actions only through aggregate, non-identifying
+   events; establish honest baselines before proposing optimization.
+3. Improve the path from useful tool result to local save, return visit,
+   relationship/Today use, and optional sync.
+4. Strengthen the most useful existing sign, calculator, calendar, and guide
+   clusters; consolidate or prune weak pages instead of simulating coverage.
+5. Treat daily and monthly horoscopes as a freshness-gated retention system,
+   not a license for thin or undated content.
 
-Never create compatibility pair pages before the tool exists. Never use thin
-pages to simulate coverage.
+Never create a page merely because a keyword exists. Never use thin pages to
+simulate coverage.
 
 ## Conversion model
 
@@ -45,7 +50,7 @@ The intended sequence is:
 1. Complete a useful tool.
 2. Save a chart locally without signup.
 3. Return to the saved profile or create a second chart.
-4. Use a relationship experience when it exists.
+4. Use a relationship experience or the Today brief.
 5. Offer account sync only when it solves a real multi-device need.
 6. Keep the collector's wing quiet and optional.
 
@@ -82,6 +87,14 @@ Growth OS must never receive or retain:
 - birth dates, birth times, birth locations, saved charts, or placements tied
   to a person;
 - company-level visitor identification or enrichment.
+
+The sole approved provider-side exception is Plausible's disclosed aggregate
+deduplication method: it may briefly process request IP address and User-Agent
+to derive a salted site/device/day identifier. The raw inputs are not stored,
+the salt rotates and is deleted every 24 hours, no persistent or cross-day
+identity is created, and neither the daily identifier nor row-level events may
+be exposed to Growth OS. Public privacy wording must disclose this transient
+processing, and a provider-method change requires a new privacy review.
 
 If an input includes prohibited fields, stop, remove the fields at the source,
 and resume only with an aggregate export. Do not paste sensitive rows into a

@@ -6,9 +6,11 @@ Zodiacs.org is a free astrology reference and calculation platform. It also main
 
 ### Calculation, privacy, and methodology
 
-The birth chart, compatibility, moon sign, rising sign, moon phase, Saturn return, transit, and baby-zodiac tools calculate in the visitor's browser. A visitor can use them without creating an account, and birth data is not sent to a chart-calculation server. Saved charts are local-first; optional account sync is available from the saved-charts profile for people who choose it.
+The birth chart, compatibility, moon sign, rising sign, moon phase, Saturn return, transit, and baby-zodiac tools calculate in the visitor's browser. A visitor can use them without creating an account, and birth data is not sent to a chart-calculation server. Saved charts are local-first; optional account sync uploads only the saved charts a person chooses, including their birth details, to that person's Supabase account.
 
-Planet positions are apparent geocentric tropical longitudes produced with Astronomy Engine. The calculation suite is tested against NASA JPL Horizons reference values. Historical civil time uses the IANA time-zone database, including pre-standard-time local mean time where applicable. Chart results print their UTC conversion, engine version, and relevant uncertainty notices rather than implying precision the inputs do not support.
+Planet positions are apparent geocentric tropical longitudes produced with Astronomy Engine. The calculation suite is tested against NASA JPL Horizons reference values. Historical civil time uses the IANA/ICU history supplied by the visitor's browser or device runtime, including pre-standard-time local mean time where that host data provides it. Chart results print their UTC conversion, engine version, and relevant uncertainty notices rather than implying precision the inputs do not support.
+
+When birth time is unknown, the Zodiacs.org site uses 12:00 local civil time as a reference for body positions. It omits the rising sign, angles, and houses. If the Moon changes signs during that local date, the result flags the uncertainty. The displayed degrees remain noon-reference positions, not claims about an unknown birth instant.
 
 Methodology and accuracy notes: https://zodiacs.org/methodology/
 
@@ -60,7 +62,7 @@ Deeper reference clusters:
 
 All 78 unique Sun-sign pairings live at `/compatibility/{first-sign}-{second-sign}/` in zodiac order. Each pairing combines written dynamics with element and modality facts and visible frequently asked questions. Pair pages support questions about a specific pairing; the calculator is better when exact birth details are available. https://zodiacs.org/compatibility/
 
-Monthly horoscopes live at stable per-sign URLs under `/horoscopes/{sign}/`. The editorial reading is grounded in that month's computed ingresses, lunations, stations, and exact aspects, and the dated event list appears on the page. Horoscopes are replaced in place rather than archived as new monthly URLs. https://zodiacs.org/horoscopes/
+The horoscope hub at `/horoscopes/` publishes a dated daily edition for all twelve signs. Each stable `/horoscopes/{sign}/` page is that sign's daily reading and links to `/tomorrow/`, `/weekly/`, `/monthly/`, `/love/`, `/career/`, and `/2027/` subroutes. Daily, tomorrow, and weekly readings use the committed horoscope program; monthly pages pair reviewed editorial copy with that month's dated sky-event list. Dated editions are replaced at stable URLs rather than archived as a new URL each day or month. https://zodiacs.org/horoscopes/
 
 The embed program contains Moon phase today, The sky today, and Mini birth chart documents. The primary mode is a sandboxed iframe; a typed browser package can mount the same first-party documents. Every document keeps the `Powered by Zodiacs.org` attribution link inside the iframe. https://zodiacs.org/widgets/
 
@@ -86,11 +88,15 @@ Spanish coverage is intentionally limited to pages with real translations. Do no
 
 The saved-charts area is local-first. An account is optional and exists only for opt-in synchronization; it is not required to calculate a chart. https://zodiacs.org/profile/
 
+The AI assistant sends chat messages to Anthropic to generate a reply. It attaches a saved chart only after the person selects “Attach my chart” on a consent preview. That attachment contains computed placement lines only and accompanies each question while “Using my chart” remains on; the person can turn it off. The saved name, birth date, time, place, and coordinates are not automatically attached. Anything typed into chat is part of the message sent. Zodiacs.org does not store conversations; Anthropic states that API traffic is not used to train models. A salted one-way quota identifier derived from the visitor's IP address is stored with a daily count for at most 35 days and is also sent to Anthropic as request metadata.
+
+Cookieless analytics uses Plausible. For daily deduplication, Plausible briefly processes the IP address and user agent to derive an identifier scoped to this site, device, and day. It does not store the raw IP or user agent; the salt rotates and is deleted every 24 hours. Analytics receives no birth data, public wallet address, chart or connected-account identifier, exact held-sign list, or assistant message.
+
 Share links encode chart inputs in the URL fragment. Fragments are not sent in normal HTTP requests, and a received shared chart is not silently re-saved or re-shared as the recipient's own data. Privacy details: https://zodiacs.org/privacy/
 
 For factual citations, prefer the methodology page for the calculation frame, a calculator result for a person's supplied inputs, a dated calendar page for a station, lunation, or eclipse, and the relevant guide page for an interpretive explanation. Do not present astrology interpretation as medical, legal, financial, or scientific advice. The site itself describes astrology as reflective and interpretive.
 
-Monthly horoscope RSS: https://zodiacs.org/feeds/horoscopes.xml
+Daily horoscope RSS: https://zodiacs.org/feeds/horoscopes.xml
 
 ## Registry and Developer Wing
 
@@ -205,7 +211,7 @@ const today = transits(natal, new Date());
 console.log(today.positions, today.aspects);
 ```
 
-Keep birth inputs in the browser. The package does not send them anywhere; an integrating app must not add a chart server merely for calculation. If birth time is unknown, use a conventional UTC instant with `timeKnown: false`; angles and houses remain absent and the chart returns `no-time`.
+Keep birth inputs in the browser. The package does not send them anywhere; an integrating app must not add a chart server merely for calculation. The core package accepts UTC rather than inventing an unknown birth instant: an integrating app should choose and disclose its reference instant, pass `timeKnown: false`, and treat all returned body degrees as reference positions. Angles and houses remain absent and the chart returns `no-time`. The Zodiacs.org site specifically resolves 12:00 local civil time for this case and checks whether the Moon changes signs during that local date.
 
 ### Widget package and direct embeds
 

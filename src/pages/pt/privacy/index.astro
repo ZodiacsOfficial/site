@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '16 de julho de 2026';
+const updated = '1 de agosto de 2026';
 
 const jsonLd = [
   {
@@ -125,11 +125,15 @@ const jsonLd = [
 
       <h2>Assistente de IA</h2>
       <p>
-        Quando você usa o assistente, suas mensagens e, se a pergunta for sobre
-        seu mapa, um resumo das posições calculadas são enviados ao nosso
-        provedor de IA, a Anthropic, para gerar a resposta. Não armazenamos as
-        conversas, e o tráfego da API não é usado para treinar modelos. O
-        assistente nunca anexa seu nome nem a data, a hora ou o local de
+        Quando você usa o assistente, suas mensagens são enviadas ao nosso
+        provedor de IA, a Anthropic, para gerar a resposta. Um mapa salvo só é
+        incluído depois que você pressiona “Anexar meu mapa”; a tela de
+        consentimento mostra o resumo apenas das posições antes do envio. O
+        resumo acompanha cada pergunta enquanto “Usando meu mapa” estiver ativo;
+        você pode desativá-lo. Não
+        armazenamos as conversas; a Anthropic afirma que o tráfego da API não é
+        usado para treinar modelos. O assistente nunca anexa seu nome nem a data,
+        a hora, o local de nascimento ou as coordenadas
         nascimento salvos; tudo o que você digitar no chat fará parte da
         mensagem enviada. Para aplicar o limite diário, mantemos um
         identificador unidirecional com sal derivado do seu endereço IP e a
@@ -158,7 +162,11 @@ const jsonLd = [
         entregar as páginas e prevenir abusos. Não usamos publicidade nem
         rastreamento entre sites. Contamos visualizações de páginas e o uso
         anônimo de recursos com o Plausible, um serviço de análise sem cookies.
-        Ele não recebe dados de nascimento, endereço público, identificador de
+        Para não contar repetidamente o mesmo dispositivo durante um dia, o
+        Plausible processa brevemente o endereço IP e o agente do usuário para
+        derivar um identificador limitado a este site, dispositivo e dia. O IP
+        e o agente do usuário originais não são armazenados; o sal desse
+        identificador é trocado e apagado a cada 24 horas. Ele não recebe dados de nascimento, endereço público, identificador de
         mapa ou de conta conectada nem a lista exata de signos. Os eventos do
         Aura incluem apenas categorias permitidas, como o resultado e uma faixa
         aproximada da quantidade; os outros eventos registram “um mapa foi
