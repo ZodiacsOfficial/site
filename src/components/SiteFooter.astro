@@ -27,13 +27,13 @@ const languageLinks = (routeLanguageLinks.length ? routeLanguageLinks : availabl
   meta: LOCALE_META[entry.locale],
 }));
 const FOOTER_COPY = {
-  en: { assistant: 'Ask Zodiacs', today: 'Today' },
-  es: { assistant: 'Pregúntale a Zodiacs', today: 'Hoy (en inglés)' },
-  pt: { assistant: 'Pergunte ao Zodiacs', today: 'Hoje (em inglês)' },
-  fr: { assistant: 'Demander à Zodiacs', today: 'Aujourd’hui (en anglais)' },
-  it: { assistant: 'Chiedi a Zodiacs', today: 'Oggi (in inglese)' },
-  ru: { assistant: 'Спросить Zodiacs — пока по-английски', today: 'Сегодня — пока по-английски' },
-} as const satisfies Record<Locale, { assistant: string; today: string }>;
+  en: { assistant: 'Ask Zodiacs', today: 'Today', more: 'More', people: 'People', ask: 'Ask Zodiacs', widgets: 'Widgets', feeds: 'Feeds', registry: 'Registry' },
+  es: { assistant: 'Pregúntale a Zodiacs', today: 'Hoy (en inglés)', more: 'Más', people: 'Personas · EN', ask: 'Pregunta · EN', widgets: 'Widgets · EN', feeds: 'Feeds · EN', registry: 'Registro · EN' },
+  pt: { assistant: 'Pergunte ao Zodiacs', today: 'Hoje (em inglês)', more: 'Mais', people: 'Pessoas · EN', ask: 'Pergunte · EN', widgets: 'Widgets · EN', feeds: 'Feeds · EN', registry: 'Registro · EN' },
+  fr: { assistant: 'Demander à Zodiacs', today: 'Aujourd’hui (en anglais)', more: 'Plus', people: 'Personnalités · EN', ask: 'Demander · EN', widgets: 'Widgets · EN', feeds: 'Flux · EN', registry: 'Registre · EN' },
+  it: { assistant: 'Chiedi a Zodiacs', today: 'Oggi (in inglese)', more: 'Altro', people: 'Persone · EN', ask: 'Chiedi · EN', widgets: 'Widget · EN', feeds: 'Feed · EN', registry: 'Registro · EN' },
+  ru: { assistant: 'Спросить Zodiacs — пока по-английски', today: 'Сегодня — пока по-английски', more: 'Ещё', people: 'Люди · EN', ask: 'Спросить · EN', widgets: 'Виджеты · EN', feeds: 'Ленты · EN', registry: 'Реестр · EN' },
+} as const;
 const englishSuffix = locale === 'ru' ? ' — пока по-английски' : '';
 const englishOnlyAria = locale === 'ru' ? 'Материал пока доступен по-английски' : undefined;
 const privacyHref = localizePath(locale, '/privacy/');
@@ -96,9 +96,13 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
         </div>
       </nav>
 
-      <nav class="footer__col" aria-label={t(locale, 'navCollect')}>
-        <span class="footer__label">{t(locale, 'navCollect')}</span>
-        <a href="/registry/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerRegistry')}{englishSuffix}</a>
+      <nav class="footer__col" aria-label={FOOTER_COPY[locale].more}>
+        <span class="footer__label">{FOOTER_COPY[locale].more}</span>
+        <a href="/people/" hreflang="en">{FOOTER_COPY[locale].people}</a>
+        <a href="/ask/" hreflang="en">{FOOTER_COPY[locale].ask}</a>
+        <a href="/widgets/" hreflang="en">{FOOTER_COPY[locale].widgets}</a>
+        <a href="/feeds/" hreflang="en">{FOOTER_COPY[locale].feeds}</a>
+        <a href="/registry/" hreflang="en">{FOOTER_COPY[locale].registry}</a>
         <a href="/sdk/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerSdk')}{englishSuffix}</a>
         <a href={localizePath(locale, '/disclosure/')}>{t(locale, 'footerDisclosure')}</a>
         <span class="footer__note">{t(locale, 'footerCollectNote')}</span>
@@ -138,16 +142,36 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
      summary code load only after an explicit click, from one stable bundle. */
   (function () {
     var buttons = document.querySelectorAll('[data-assistant-open]');
-    if (!buttons.length) return;
     var modulePromise;
-    function open(button) {
+    function open(button, locale, context) {
       modulePromise = modulePromise || import('/assets/assistant-ui.js');
       modulePromise.then(function (mod) {
-        mod.openAssistant(button.getAttribute('data-assistant-locale') || undefined, button);
+        mod.openAssistant(
+          locale || button.getAttribute('data-assistant-locale') || undefined,
+          button,
+          context,
+        );
       }).catch(function () {});
     }
     buttons.forEach(function (button) {
       button.addEventListener('click', function () { open(button); });
+    });
+    document.addEventListener('click', function (event) {
+      var target = event.target instanceof Element ? event.target : null;
+      var button = target && target.closest('button[data-today-ask-evidence]');
+      if (!button) return;
+      open(button, 'en', {
+        evidence: {
+          kind: 'transit',
+          date: button.getAttribute('data-evidence-date'),
+          transitingBody: button.getAttribute('data-evidence-transiting-body'),
+          aspect: button.getAttribute('data-evidence-aspect'),
+          natalPoint: button.getAttribute('data-evidence-natal-point'),
+          orb: Number(button.getAttribute('data-evidence-orb')),
+        },
+        chartId: button.getAttribute('data-evidence-chart-id'),
+        suggestedQuestion: button.getAttribute('data-evidence-question'),
+      });
     });
   })();
 </script>

@@ -17,6 +17,10 @@
 import { readFile, writeFile, mkdir, readdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
+import {
+  applyEvidenceTrustOverride,
+  trustOverrideFor,
+} from '../../../../scripts/people-trust.mjs';
 
 const HERE = dirname(fileURLToPath(import.meta.url));
 const PILOT = join(HERE, '..');
@@ -628,14 +632,26 @@ const FREEZE = process.env.FREEZE_EXISTING === '1';
    A bumped round changes every pooled pick on that one page. */
 let reseeds = {};
 try { reseeds = JSON.parse(await readFile(join(PILOT, 'reseeds.json'), 'utf8')); } catch {}
-const candidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'))
-  .filter((candidate) => candidate.role === 'pilot');
+const computedSlugs = new Set((await readdir(join(PILOT, 'computed')))
+  .filter((file) => file.endsWith('.json'))
+  .map((file) => file.replace(/\.json$/u, '')));
+const allCandidates = JSON.parse(await readFile(join(PILOT, 'candidates.json'), 'utf8'))
+  .filter((candidate) => candidate.role === 'pilot' && computedSlugs.has(candidate.slug));
+const targetSlugs = new Set((process.env.PEOPLE_SLUGS ?? '').split(',').filter(Boolean));
+const candidates = targetSlugs.size > 0
+  ? allCandidates.filter((candidate) => targetSlugs.has(candidate.slug))
+  : allCandidates;
+if (targetSlugs.size > 0 && candidates.length !== targetSlugs.size) {
+  throw new Error(`Unknown PEOPLE_SLUGS target: ${[...targetSlugs]
+    .filter((slug) => !candidates.some((candidate) => candidate.slug === slug)).join(', ')}`);
+}
+const trustPolicy = JSON.parse(await readFile(join(PILOT, 'trust-policy.json'), 'utf8'));
 await mkdir(join(PILOT, 'copy'), { recursive: true });
 const existingCopy = new Set((await readdir(join(PILOT, 'copy'))).map((file) => file.replace(/\.json$/u, '')));
 
 const pages = [];
 const bySign = {};
-for (const candidate of candidates) {
+for (const candidate of allCandidates) {
   const record = JSON.parse(await readFile(join(PILOT, 'computed', `${candidate.slug}.json`), 'utf8'));
   bySign[record.sun.sign] = bySign[record.sun.sign] ?? [];
   bySign[record.sun.sign].push(candidate.slug);
@@ -650,7 +666,12 @@ for (const candidate of candidates) {
   }
   const seedSlug = seedRound === 0 ? candidate.slug : `${candidate.slug}#${seedRound}`;
   const record = JSON.parse(await readFile(join(PILOT, 'computed', `${candidate.slug}.json`), 'utf8'));
-  const evidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
+  const rawEvidence = JSON.parse(await readFile(join(PILOT, 'evidence', `${candidate.slug}.json`), 'utf8'));
+  const trustOverride = trustOverrideFor(trustPolicy, candidate.slug);
+  const evidence = applyEvidenceTrustOverride(
+    rawEvidence,
+    trustOverride,
+  );
   const opening = lede(record, seedSlug);
   const blocks = [
     sunBlock(record, seedSlug),
@@ -671,7 +692,7 @@ for (const candidate of candidates) {
     seedRound,
     qid: record.qid,
     displayName: record.displayName,
-    identity: identityLine(evidence, record, candidate),
+    identity: trustOverride?.fields.shortDescription ?? identityLine(evidence, record, candidate),
     title: `${record.displayName}'s birth chart`,
     metaDescription: `${record.displayName}'s chart, computed from a sourced birth date: Sun at ${deg(record.sun.degree)} ${record.sun.signName}. Birth time unknown, so no houses or rising sign.`,
     lede: opening.text,
@@ -746,7 +767,7 @@ const report = {
   topPairs: matrix.slice(0, 10),
   perSlugMax,
 };
-await writeFile(join(PILOT, 'depth-report.json'), `${JSON.stringify(report, null, 2)}\n`, 'utf8');
+await writeFile(join(PILOT, 'depth-report.json'), `${JSON.stringify(report, null, 1)}\n`, 'utf8');
 
 console.log(`Composed ${FREEZE ? composed : pages.length} new pages; measured ${allPages.length} total.`);
 console.log(`Original words: min ${report.originalWords.min}, median ${report.originalWords.median}, max ${report.originalWords.max}`);

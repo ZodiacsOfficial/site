@@ -1,13 +1,12 @@
-/**
- * Horoscope helpers shared by the hub and the sign pages. The rendered
- * month is always the latest month PRESENT IN THE COLLECTION, labeled
- * from frontmatter — the wall clock never decides what displays, so a
- * stale month renders honestly instead of failing the deploy.
- */
+/** Horoscope helpers shared by the hub, sign pages, and transit receipts. */
 import { signBySlug, signName, signPrepositional } from './signs';
 import type { CatalogLocale as Locale } from './i18n';
 import { aspectLabel, planetLabel } from './i18n/astrology';
 import { formatDate } from './i18n/dates';
+import {
+  selectTransitDisplayMonth,
+  type TransitMonthSelection,
+} from './transit-month';
 
 export interface TransitEvent {
   at: string;
@@ -39,10 +38,12 @@ export function transitsFor(month: string): TransitFile | null {
   return null;
 }
 
-/** The newest committed transit month ('YYYY-MM'), or null if none. */
-export function latestTransitMonth(): string | null {
-  const months = Object.values(transitFiles).map((m) => m.default.month).sort();
-  return months.at(-1) ?? null;
+/** Select the current UTC month's receipt, or an explicitly stale fallback. */
+export function transitDisplayMonth(nowUtc = new Date()): TransitMonthSelection {
+  return selectTransitDisplayMonth(
+    Object.values(transitFiles).map((module) => module.default.month),
+    nowUtc,
+  );
 }
 
 const sn = (slug: string, locale: Locale = 'en') => signName(signBySlug(slug), locale);
@@ -167,20 +168,4 @@ export function dayLabel(iso: string, locale: Locale = 'en'): string {
   return formatDate(locale, new Date(iso), {
     month: 'short', day: 'numeric', timeZone: 'UTC',
   });
-}
-
-/** Loud, non-fatal staleness check — call once per build from the hub. */
-export function warnIfStale(latestMonth: string): void {
-  const now = new Date();
-  const current = `${now.getUTCFullYear()}-${String(now.getUTCMonth() + 1).padStart(2, '0')}`;
-  if (latestMonth < current) {
-    console.warn(
-      `\n${'='.repeat(72)}\n` +
-      `  HOROSCOPES ARE STALE: latest committed month is ${latestMonth}, ` +
-      `today is in ${current}.\n` +
-      `  Run: node scripts/build-transits.mjs ${current} and write the twelve\n` +
-      `  src/content/horoscopes/${current}-{sign}.mdx entries.\n` +
-      `${'='.repeat(72)}\n`,
-    );
-  }
 }

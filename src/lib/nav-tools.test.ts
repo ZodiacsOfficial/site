@@ -3,8 +3,9 @@ import { RELEASED_LOCALES, localizePath, t } from './i18n';
 import { NAV_TOOLS } from './nav-tools';
 
 describe('NAV_TOOLS', () => {
-  it('keeps the requested eight tools in stable order', () => {
+  it('leads with Today, then keeps the eight calculators in stable order', () => {
     expect(NAV_TOOLS.map((tool) => tool.href)).toEqual([
+      '/today/',
       '/birth-chart/',
       '/compatibility/',
       '/transits/',
@@ -26,12 +27,16 @@ describe('NAV_TOOLS', () => {
     }
 
     expect(localizePath('es', '/transits/')).toBe('/es/transits/');
+    expect(localizePath('es', '/today/')).toBe('/today/');
     expect(localizePath('es', '/birthday/')).toBe('/birthday/');
     expect(localizePath('pt', '/transits/')).toBe('/pt/transits/');
+    expect(localizePath('pt', '/today/')).toBe('/today/');
     expect(localizePath('pt', '/birthday/')).toBe('/birthday/');
     expect(localizePath('fr', '/transits/')).toBe('/fr/transits/');
+    expect(localizePath('fr', '/today/')).toBe('/today/');
     expect(localizePath('fr', '/birthday/')).toBe('/birthday/');
     expect(localizePath('it', '/transits/')).toBe('/it/transits/');
+    expect(localizePath('it', '/today/')).toBe('/today/');
     expect(localizePath('it', '/birthday/')).toBe('/birthday/');
   });
 });

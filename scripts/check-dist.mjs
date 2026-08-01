@@ -31,6 +31,11 @@ import {
 } from './search-index-lib.mjs';
 import { backstageCopyMatches } from './consumer-copy-lib.mjs';
 import {
+  RENDERED_TRANSIT_PATHS,
+  assertRenderedCurrentTransit,
+  assertRenderedToday,
+} from './live-transit-verification-lib.mjs';
+import {
   ABSENT_LOCALES,
   HREFLANG_LOCALE_POLICY,
   INACTIVE_HREFLANGS,
@@ -1286,26 +1291,28 @@ if (Number.isNaN(skyThrough.getTime())) {
 const transitFiles = (await readdir(dataRoot))
   .filter((name) => /^transits-\d{4}-\d{2}\.json$/.test(name))
   .sort();
-const latestTransitFile = transitFiles.at(-1);
 const renderMonthTransitFile = `transits-${buildMonth}.json`;
-if (!latestTransitFile) {
+if (!transitFiles.length) {
   fail('transits: no transits-YYYY-MM.json snapshot found');
+} else if (!transitFiles.includes(renderMonthTransitFile)) {
+  fail(`transits: missing current-month snapshot ${renderMonthTransitFile}`);
 } else {
-  const latestTransitMonth = latestTransitFile.slice('transits-'.length, -'.json'.length);
-  const latestTransits = JSON.parse(await readFile(resolve(dataRoot, latestTransitFile), 'utf8'));
-  if (latestTransits.month !== latestTransitMonth) {
-    fail(`${latestTransitFile}: month field is ${latestTransits.month}, expected ${latestTransitMonth}`);
+  const renderMonthTransits = JSON.parse(await readFile(resolve(dataRoot, renderMonthTransitFile), 'utf8'));
+  if (renderMonthTransits.month !== buildMonth) {
+    fail(`${renderMonthTransitFile}: month field is ${renderMonthTransits.month}, expected ${buildMonth}`);
   }
-  if (latestTransitMonth < buildMonth) {
-    fail(`${latestTransitFile}: latest transit month does not cover build month ${buildMonth}`);
+}
+
+for (const path of RENDERED_TRANSIT_PATHS) {
+  const target = targetPath(path);
+  if (!target || !(await exists(target))) {
+    fail(`transits: rendered page is missing — ${path}`);
+    continue;
   }
-  if (!transitFiles.includes(renderMonthTransitFile)) {
-    fail(`transits: missing render-month snapshot ${renderMonthTransitFile}`);
-  } else if (latestTransitFile !== renderMonthTransitFile) {
-    const renderMonthTransits = JSON.parse(await readFile(resolve(dataRoot, renderMonthTransitFile), 'utf8'));
-    if (renderMonthTransits.month !== buildMonth) {
-      fail(`${renderMonthTransitFile}: month field is ${renderMonthTransits.month}, expected ${buildMonth}`);
-    }
+  try {
+    assertRenderedCurrentTransit(await readFile(target, 'utf8'), buildMonth, path);
+  } catch (error) {
+    fail(error instanceof Error ? error.message : String(error));
   }
 }
 
@@ -1324,6 +1331,17 @@ if (!/^\d{4}-\d{2}-\d{2}$/.test(daily.date ?? '') || Number.isNaN(dailyDay.getTi
     } else {
       fail(`daily.json: ${daily.date} is ${ageDays} days old (maximum 3); CI may explicitly set ZODIACS_ALLOW_STALE_DAILY=1`);
     }
+  }
+}
+
+const renderedTodayPath = targetPath('/today/');
+if (!renderedTodayPath || !(await exists(renderedTodayPath))) {
+  fail('today: rendered page is missing');
+} else {
+  try {
+    assertRenderedToday(await readFile(renderedTodayPath, 'utf8'), daily.date, '/today/');
+  } catch (error) {
+    fail(error instanceof Error ? error.message : String(error));
   }
 }
 

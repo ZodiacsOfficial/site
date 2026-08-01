@@ -7,10 +7,18 @@
  *   node scripts/build-people-pilot.mjs
  *   node scripts/build-people-pilot.mjs --check
  */
-import { readFile, writeFile } from 'node:fs/promises';
+import { access, readFile, writeFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import {
+  applyEvidenceTrustOverride,
+  materializeTrustedPerson,
+  selectPublishablePeople,
+  trustOverrideFor,
+  validatePeopleTrustPolicy,
+  validatePersonTrustFacts,
+} from './people-trust.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const pilot = resolve(root, 'docs/phase5/people-pilot');
@@ -20,9 +28,33 @@ const checkOnly = process.argv.includes('--check');
 const manifest = JSON.parse(await readFile(resolve(pilot, 'manifest.json'), 'utf8'));
 const indexPolicyPath = resolve(pilot, 'index-policy.json');
 const indexPolicy = JSON.parse(await readFile(indexPolicyPath, 'utf8'));
+const trustPolicyPath = resolve(pilot, 'trust-policy.json');
+const trustPolicy = JSON.parse(await readFile(trustPolicyPath, 'utf8'));
+const depth = JSON.parse(await readFile(resolve(pilot, 'depth-report.json'), 'utf8'));
 const indexableProfiles = new Set(indexPolicy.indexableProfiles);
 const protectedLivingProfiles = new Set(indexPolicy.protectedLivingProfiles);
+const quarantinedProfiles = new Set(trustPolicy.quarantinedProfiles.map((entry) => entry.slug));
 const people = [];
+
+const trustPolicyFailures = validatePeopleTrustPolicy(trustPolicy, manifest);
+if (trustPolicyFailures.length > 0) {
+  throw new Error(`People trust policy failed:\n- ${trustPolicyFailures.join('\n- ')}`);
+}
+for (const slug of quarantinedProfiles) {
+  if (indexableProfiles.has(slug) || protectedLivingProfiles.has(slug)) {
+    throw new Error(`${slug}: quarantined profile remains in the publication policy`);
+  }
+  const staleAssets = [
+    resolve(root, 'public/assets/og/v2/people', `${slug}.png`),
+    resolve(root, 'public/assets/people', `${slug}.webp`),
+    resolve(root, 'public/assets/people', `${slug}-192.webp`),
+  ];
+  for (const asset of staleAssets) {
+    if (await access(asset).then(() => true).catch(() => false)) {
+      throw new Error(`${slug}: quarantined profile still has a public asset (${asset})`);
+    }
+  }
+}
 
 if (indexPolicy.schema !== 'zodiacs.phase5.people-index-policy.v1') {
   throw new Error(`Unsupported People index policy: ${indexPolicy.schema}`);
@@ -35,8 +67,8 @@ const manifestSlugs = new Set(manifest.people.map((person) => person.slug));
 for (const slug of [...indexableProfiles, ...protectedLivingProfiles]) {
   if (!manifestSlugs.has(slug)) throw new Error(`People index policy names unknown slug: ${slug}`);
 }
-if (indexableProfiles.size + protectedLivingProfiles.size !== manifestSlugs.size) {
-  throw new Error('People index policy does not partition the complete reviewed manifest');
+if (indexableProfiles.size + protectedLivingProfiles.size + quarantinedProfiles.size !== manifestSlugs.size) {
+  throw new Error('People publication and quarantine policies do not partition the complete reviewed manifest');
 }
 if (indexPolicy.directoryIndexable !== (
   indexableProfiles.size >= indexPolicy.minimumIndexableProfilesForDirectory
@@ -44,18 +76,55 @@ if (indexPolicy.directoryIndexable !== (
   throw new Error('People directory eligibility disagrees with its minimum-profile rule');
 }
 
-for (const source of manifest.people) {
+for (const rawSource of selectPublishablePeople(manifest.people, trustPolicy)) {
+  const override = trustOverrideFor(trustPolicy, rawSource.slug);
+  const rawEvidence = JSON.parse(
+    await readFile(resolve(pilot, 'evidence', `${rawSource.slug}.json`), 'utf8'),
+  );
+  const evidence = applyEvidenceTrustOverride(rawEvidence, override);
   const computed = JSON.parse(
-    await readFile(resolve(pilot, 'computed', `${source.slug}.json`), 'utf8'),
+    await readFile(resolve(pilot, 'computed', `${rawSource.slug}.json`), 'utf8'),
   );
   const copy = JSON.parse(
-    await readFile(resolve(pilot, 'copy', `${source.slug}.json`), 'utf8'),
+    await readFile(resolve(pilot, 'copy', `${rawSource.slug}.json`), 'utf8'),
   );
   const signIndex = [
     'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
     'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
   ];
 
+  const trustFailures = validatePersonTrustFacts({
+    slug: rawSource.slug,
+    birthDate: evidence.birth?.time?.slice(1, 11) ?? '',
+    deathDate: evidence.death?.time?.slice(1, 11) ?? null,
+    living: evidence.living,
+    birthPlace: {
+      entity: evidence.birthPlace?.entity,
+      normalisedLabel: override?.fields.birthPlace.normalisedLabel
+        ?? rawSource.birthPlace.normalisedLabel,
+      country: evidence.birthPlace?.country,
+      coordinates: evidence.birthPlace?.coordinates,
+    },
+  });
+  if (trustFailures.length > 0) {
+    throw new Error(`People trust gate failed:\n- ${trustFailures.join('\n- ')}`);
+  }
+  if (computed.storedDate !== evidence.birth.time.slice(1, 11)
+      || computed.qid !== rawSource.qid
+      || computed.computation.timeZone !== (override?.fields.birthPlace.timeZone
+        ?? rawSource.birthPlace.timeZone)
+      || Math.abs(computed.computation.latitude - evidence.birthPlace.coordinates.latitude) > 1e-9
+      || Math.abs(computed.computation.longitude - evidence.birthPlace.coordinates.longitude) > 1e-9) {
+    throw new Error(`${rawSource.slug}: computed chart does not match the trusted birth tuple`);
+  }
+
+  const source = materializeTrustedPerson({
+    source: rawSource,
+    computed,
+    copy,
+    override,
+    similarity: depth.perSlugMax?.[rawSource.slug] ?? 0,
+  });
   const indexEligible = indexableProfiles.has(source.slug);
   const livingProtected = protectedLivingProfiles.has(source.slug);
   if (indexEligible === livingProtected) {
@@ -88,38 +157,51 @@ for (const source of manifest.people) {
     portrait: source.portrait.available
       ? { ...source.portrait, assetPath: `/assets/people/${source.slug}.webp` }
       : source.portrait,
-    placements: computed.placements.map((placement) => ({
+    placements: source.placements.map((placement) => ({
       ...placement,
       longitude: Number((
         signIndex.indexOf(placement.sign) * 30 + placement.degree
       ).toFixed(2)),
     })),
-    aspectsStableAcrossCivilDay: computed.aspectsStableAcrossCivilDay,
-    patterns: computed.patterns,
-    copy: {
-      title: copy.title,
-      metaDescription: copy.metaDescription,
-      lede: copy.lede,
-      ledeFact: copy.ledeFact,
-      blocks: copy.blocks,
-      birthdayLink: copy.birthdayLink,
-      signLink: copy.signLink,
-      measurements: copy.measurements,
-    },
   });
 }
 
+const releaseCounts = {
+  reviewedSourceRecords: manifest.people.length,
+  publishedRecords: people.length,
+  indexableDeceasedRecords: indexableProfiles.size,
+  protectedLivingRecords: protectedLivingProfiles.size,
+  historicalWithdrawals: indexPolicy.withdrawn?.length ?? 0,
+  quarantinedRecords: quarantinedProfiles.size,
+};
+if (releaseCounts.publishedRecords + releaseCounts.quarantinedRecords
+    !== releaseCounts.reviewedSourceRecords
+    || releaseCounts.indexableDeceasedRecords + releaseCounts.protectedLivingRecords
+      !== releaseCounts.publishedRecords) {
+  throw new Error(`People release counts disagree: ${JSON.stringify(releaseCounts)}`);
+}
+const releaseStatus = `Phase 5 public release — ${releaseCounts.publishedRecords} published records: `
+  + `${releaseCounts.indexableDeceasedRecords} indexable deceased, `
+  + `${releaseCounts.protectedLivingRecords} protected living; `
+  + `${releaseCounts.historicalWithdrawals} historical withdrawal${releaseCounts.historicalWithdrawals === 1 ? '' : 's'}; `
+  + `${releaseCounts.quarantinedRecords} quarantined`;
+
 const output = `${JSON.stringify({
   schema: 'zodiacs.phase5.people.v1',
-  status: 'Phase 5 public release — 497 indexable deceased records, 2 protected living records, 1 withdrawn',
-  reviewedAtUtc: '2026-07-25T00:00:00Z',
+  status: releaseStatus,
+  releaseCounts,
+  reviewedAtUtc: people.map((person) => person.reviewedAtUtc).sort().at(-1),
   sourceManifestSha256: createHash('sha256')
     .update(await readFile(resolve(pilot, 'manifest.json')))
     .digest('hex'),
   sourceIndexPolicySha256: createHash('sha256')
     .update(await readFile(indexPolicyPath))
     .digest('hex'),
+  sourceTrustPolicySha256: createHash('sha256')
+    .update(await readFile(trustPolicyPath))
+    .digest('hex'),
   indexPolicyApprovedAtUtc: indexPolicy.approvedAtUtc,
+  trustPolicyApprovedAtUtc: trustPolicy.approvedAtUtc,
   directoryIndexable: indexPolicy.directoryIndexable,
   people: people.sort((a, b) => a.slug.localeCompare(b.slug)),
 }, null, 2)}\n`;
@@ -132,12 +214,14 @@ if (checkOnly) {
   }
   console.log(
     `people-release: OK — ${indexableProfiles.size} indexable profiles,`
-    + ` ${protectedLivingProfiles.size} protected living profiles, generated data exact`,
+    + ` ${protectedLivingProfiles.size} protected living profiles,`
+    + ` ${quarantinedProfiles.size} quarantined profiles, generated data exact`,
   );
 } else {
   await writeFile(outputPath, output, 'utf8');
   console.log(
     `people-release: wrote ${people.length} reviewed records`
-    + ` (${indexableProfiles.size} indexable) to src/data/people.json`,
+    + ` (${indexableProfiles.size} indexable, ${quarantinedProfiles.size} quarantined)`
+    + ' to src/data/people.json',
   );
 }

@@ -70,4 +70,21 @@ describe('daily publication operations', () => {
     expect(workflow).toContain("if: github.event_name == 'schedule' && success()");
     expect(workflow).toContain("if: github.event_name == 'schedule' && failure()");
   });
+
+  it('verifies every rendered monthly transit locale before notifying discovery', async () => {
+    const [workflow, liveVerifier] = await Promise.all([
+      read('.github/workflows/daily-horoscopes.yml'),
+      read('scripts/verify-live-daily.mjs'),
+    ]);
+    const live = workflow.indexOf('- name: Require exact edition in production');
+    const indexNow = workflow.indexOf('- name: Notify IndexNow');
+
+    expect(workflow.slice(live, indexNow)).toContain('node scripts/verify-live-daily.mjs');
+    expect(liveVerifier).toContain('RENDERED_TRANSIT_PATHS.map');
+    expect(liveVerifier).toContain('assertRenderedCurrentTransit(');
+    expect(liveVerifier).toContain("new URL('/today/', productionOrigin)");
+    expect(liveVerifier).toContain('assertRenderedToday(');
+    expect(liveVerifier).toContain('assertExactPublicationDate(localManifest.date, targetDate)');
+    expect(liveVerifier).toContain('transit pages render ${expectedTransitMonth}');
+  });
 });

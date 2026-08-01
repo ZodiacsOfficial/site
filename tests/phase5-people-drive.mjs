@@ -119,6 +119,13 @@ await withPreview({ port: 4425 }, async (baseURL) => {
         if (source?.portrait.available) {
           const image = inventoryPage.locator('[data-person-portrait-image]');
           await image.waitFor();
+          await image.evaluate((node) => {
+            if (node.complete) return;
+            return new Promise((resolveImage) => {
+              node.addEventListener('load', resolveImage, { once: true });
+              node.addEventListener('error', resolveImage, { once: true });
+            });
+          });
           check(
             await image.evaluate((node) => node.complete && node.naturalWidth > 0),
             `${route}: portrait did not load`,

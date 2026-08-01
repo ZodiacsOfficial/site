@@ -117,6 +117,15 @@ async function settlePage(page, { result, normalizeEventsHub, name }) {
     ]);
   }
 
+  // Full-page screenshots should include the local sign art even when the
+  // browser's native lazy-load heuristic decides an off-screen icon is too
+  // far away. Make only this known local asset family eager before sweeping.
+  await page.evaluate(() => {
+    document.querySelectorAll('img[src*="/assets/zodiac-icons/"]').forEach((image) => {
+      image.loading = 'eager';
+    });
+  });
+
   // Trigger lazy images, client:visible islands, and every reveal observer.
   await page.evaluate(async () => {
     const wait = (ms) => new Promise((resolveWait) => setTimeout(resolveWait, ms));
@@ -146,6 +155,45 @@ async function settlePage(page, { result, normalizeEventsHub, name }) {
       try { video.currentTime = 0; } catch { /* poster remains deterministic */ }
     }
   });
+  // A slow software decoder can report an image element before its final AVIF
+  // pixels reach the compositor. The sign art is both local and visually
+  // material, so require every zodiac icon to load successfully.
+  try {
+    await page.waitForFunction(
+      () => [...document.querySelectorAll('img[src*="/assets/zodiac-icons/"]')]
+        .every((image) => image.complete && image.naturalWidth > 0),
+      undefined,
+      { timeout: 60_000 },
+    );
+  } catch (error) {
+    const pending = await page.locator('img[src*="/assets/zodiac-icons/"]').evaluateAll((images) => (
+      images.flatMap((image) => {
+        const rect = image.getBoundingClientRect();
+        return !(image.complete && image.naturalWidth > 0)
+          ? [{
+              src: image.getAttribute('src'),
+              currentSrc: image.currentSrc,
+              complete: image.complete,
+              naturalWidth: image.naturalWidth,
+              rect: [rect.x, rect.y, rect.width, rect.height],
+            }]
+          : [];
+      })
+    ));
+    throw new Error(`Rendered zodiac icons did not settle: ${JSON.stringify(pending)}`, { cause: error });
+  }
+  await page.evaluate(async () => {
+    await Promise.all([...document.images].map(async (image) => {
+      if (image.complete && image.naturalWidth > 0 && typeof image.decode === 'function') {
+        await image.decode().catch(() => undefined);
+      }
+    }));
+    // Pin custom IntersectionObserver reveals to their final reader-visible
+    // state so emulation speed cannot decide whether a panel is captured.
+    document.querySelectorAll('[data-reading-reveal]').forEach((card) => {
+      card.setAttribute('data-visible', 'true');
+    });
+  });
   // After hydration is done: the live row keeps its element (the mask
   // presence check still counts it) but reads the canonical line, so the
   // day's receipt can never change how many lines it wraps to.
@@ -160,6 +208,9 @@ async function settlePage(page, { result, normalizeEventsHub, name }) {
   // the lazy-loading sweep. Wait once more so fallback metrics cannot become
   // a platform baseline by racing the final screenshot.
   await loadFonts();
+  await page.evaluate(() => new Promise((resolvePaint) => {
+    requestAnimationFrame(() => requestAnimationFrame(resolvePaint));
+  }));
   await page.waitForTimeout(100);
 }
 

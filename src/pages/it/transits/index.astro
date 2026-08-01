@@ -3,10 +3,11 @@ import Base from '../../../layouts/Base.astro';
 import Faq from '../../../components/Faq.astro';
 import TransitTracker from '../../../islands/TransitTracker';
 import PlanetGlyph from '../../../components/PlanetGlyph';
-import { dayLabel, eventList, latestTransitMonth, monthLabel } from '../../../lib/horoscopes';
+import { dayLabel, eventList, monthLabel, transitDisplayMonth } from '../../../lib/horoscopes';
 import '../../../styles/calculator.css';
 
-const month = latestTransitMonth();
+const transitSelection = transitDisplayMonth();
+const { month } = transitSelection;
 const events = month ? eventList(month, 'it') : [];
 const label = month ? monthLabel(month, 'it') : null;
 
@@ -72,11 +73,20 @@ const jsonLd = [
   </section>
 
   {month && (
-    <section class="section--tight container container--narrow">
+    <section
+      class="section--tight container container--narrow"
+      data-transit-month={month}
+      data-transit-status={transitSelection.status}
+    >
       <div class="section-head reveal">
         <h2>Il cielo di {label}</h2>
         <p>Eventi del mese calcolati dal motore: ingressi nei segni, lunazioni, stazioni e aspetti esatti. Gli orari sono in tempo universale.</p>
       </div>
+      {transitSelection.status === 'stale' && (
+        <p class="notice trn-events__stale">
+          I dati del mese corrente non sono ancora disponibili. Queste sono le date pubblicate più recenti, relative a {label}.
+        </p>
+      )}
       <ul class="trn-events reveal">
         {events.map((event) => (
           <li><span class="trn-events__date mono">{dayLabel(event.at, 'it')}</span><span class="trn-events__label"><PlanetGlyph body={event.body} hue={event.hue} size={14} class="rcpt-glyph" />{event.label}</span></li>
@@ -95,6 +105,7 @@ const jsonLd = [
   .tool-hero h1 { margin: 0 0 16px; font-size: var(--text-2xl); line-height: 1.04; }
   .tool-hero p { margin: 0; color: var(--muted); font-size: var(--text-lg); text-wrap: pretty; }
   .trn-events { margin: 0; padding: 0; list-style: none; display: grid; gap: 7px; }
+  .trn-events__stale { margin-bottom: 16px; }
   .trn-events li { display: flex; align-items: baseline; gap: 16px; padding-bottom: 7px; border-bottom: 1px solid var(--hair-1); }
   .trn-events__date { flex-shrink: 0; width: 58px; font-size: 11px; color: var(--faint); letter-spacing: 0.05em; }
   .trn-events__label { font-size: var(--text-sm); color: var(--text-2); }

@@ -5,6 +5,7 @@
 import { ASPECTS, separation } from '../engine/aspects';
 import type { AspectType } from '../engine/types';
 import type { Profile, SavedChart } from '../profile/schema';
+import { newestUsableTodayChart } from '../profile/today-chart';
 
 export const TODAY_STORAGE_KEY = 'zodiacs.today.v1';
 
@@ -38,23 +39,9 @@ export interface TodayStreak {
   lastOpenedUtcDay: string;
 }
 
-/** The most recently changed chart wins; timestamps are stored as ISO text. */
+/** Legacy fallback used while a device's stable Today preference is created. */
 export function newestSavedChart(profile: Profile): SavedChart | null {
-  return profile.charts.filter((chart) => (
-    chart != null
-    && chart.summary != null
-    && Array.isArray(chart.summary.bodies)
-    && chart.summary.bodies.some((body) => body != null && Number.isFinite(body.lon))
-  )).reduce<SavedChart | null>((latest, chart) => {
-    if (!latest) return chart;
-    const chartStamp = typeof chart.updatedAt === 'string'
-      ? chart.updatedAt
-      : (typeof chart.createdAt === 'string' ? chart.createdAt : '');
-    const latestStamp = typeof latest.updatedAt === 'string'
-      ? latest.updatedAt
-      : (typeof latest.createdAt === 'string' ? latest.createdAt : '');
-    return chartStamp > latestStamp ? chart : latest;
-  }, null);
+  return newestUsableTodayChart(profile.charts);
 }
 
 /** Bodies plus the two stored angles, when a timed chart has them. */

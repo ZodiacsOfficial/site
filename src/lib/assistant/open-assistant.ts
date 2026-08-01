@@ -8,7 +8,19 @@ import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
 import { normalizeLocale as normalizeSiteLocale, type ReleasedLocale as Locale } from '../i18n/core';
 import { PROFILE_KEY } from '../profile/schema';
+import {
+  TODAY_CHART_EVENT,
+  TODAY_CHART_PREFERENCE_KEY,
+  parseTodayChartPreference,
+} from '../profile/today-chart';
+import { encodeChartLink } from '../share';
 import { degreeInSign, signForLongitude } from '../signs';
+import {
+  assistantEvidenceLabel,
+  assistantEvidenceSelection,
+  normalizeAssistantEvidence,
+  type AssistantEvidence,
+} from './evidence';
 
 export type AssistantLocale = Locale;
 
@@ -23,7 +35,8 @@ interface StoredBody {
   retrograde: boolean;
 }
 
-interface StoredChart {
+export interface StoredChart {
+  id: string;
   updatedAt: string;
   birth: {
     date: string;
@@ -70,6 +83,10 @@ interface Copy {
   consentConfirm: string;
   consentCancel: string;
   sources: string;
+  evidence: string;
+  removeEvidence: string;
+  openInChart: string;
+  contextChanged: string;
 }
 
 const COPY: Record<AssistantLocale, Copy> = {
@@ -101,6 +118,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     consentConfirm: 'Attach my chart',
     consentCancel: 'Keep it private',
     sources: 'From this site:',
+    evidence: 'Sent with your question; birth details stay private. Full placements send only while “Using my chart” is on',
+    removeEvidence: 'Remove chart evidence',
+    openInChart: 'Open in your chart',
+    contextChanged: 'That chart context changed. Choose “Ask why this matters” again from Today.',
   },
   es: {
     title: 'Pregúntale a Zodiacs',
@@ -130,6 +151,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     consentConfirm: 'Adjuntar mi carta',
     consentCancel: 'Mantenerla privada',
     sources: 'De este sitio:',
+    evidence: 'Se enviará con tu pregunta; los datos de nacimiento siguen privados. Las posiciones completas solo se envían mientras «Usando mi carta» esté activo',
+    removeEvidence: 'Quitar evidencia de la carta',
+    openInChart: 'Abrir en tu carta',
+    contextChanged: 'El contexto de esa carta cambió. Vuelve a elegir «Preguntar por qué importa» desde Today.',
   },
   pt: {
     title: 'Pergunte ao Zodiacs',
@@ -159,6 +184,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     consentConfirm: 'Anexar meu mapa',
     consentCancel: 'Manter privado',
     sources: 'Deste site:',
+    evidence: 'Será enviada com sua pergunta; os dados de nascimento continuam privados. As posições completas só são enviadas enquanto “Usando meu mapa” estiver ativo',
+    removeEvidence: 'Remover evidência do mapa',
+    openInChart: 'Abrir no seu mapa',
+    contextChanged: 'O contexto desse mapa mudou. Escolha novamente “Perguntar por que isso importa” em Today.',
   },
   fr: {
     title: 'Pose une question à Zodiacs',
@@ -188,6 +217,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     consentConfirm: 'Joindre mon thème',
     consentCancel: 'Le garder privé',
     sources: 'Depuis ce site :',
+    evidence: 'Envoyé avec ta question ; les données de naissance restent privées. Les positions complètes ne sont envoyées que lorsque « Avec mon thème » est activé',
+    removeEvidence: 'Retirer cet élément du thème',
+    openInChart: 'Ouvrir dans ton thème',
+    contextChanged: 'Le contexte de ce thème a changé. Choisis à nouveau « Demander pourquoi » depuis Today.',
   },
   it: {
     title: 'Chiedi a Zodiacs',
@@ -217,6 +250,10 @@ const COPY: Record<AssistantLocale, Copy> = {
     consentConfirm: 'Allega il mio tema',
     consentCancel: 'Tienilo privato',
     sources: 'Da questo sito:',
+    evidence: 'Inviato con la domanda; i dati di nascita restano privati. Le posizioni complete vengono inviate solo mentre “Con il mio tema” è attivo',
+    removeEvidence: 'Rimuovi il dato del tema',
+    openInChart: 'Apri nel tuo tema',
+    contextChanged: 'Il contesto del tema è cambiato. Scegli di nuovo “Chiedi perché conta” da Today.',
   },
 };
 
@@ -238,6 +275,9 @@ let textarea: HTMLTextAreaElement | null = null;
 let sendButton: HTMLButtonElement | null = null;
 let stopButton: HTMLButtonElement | null = null;
 let chartButton: HTMLButtonElement | null = null;
+let evidenceChip: HTMLDivElement | null = null;
+let evidenceText: HTMLParagraphElement | null = null;
+let evidenceRemoveButton: HTMLButtonElement | null = null;
 let newlineHint: HTMLSpanElement | null = null;
 let privacy: HTMLParagraphElement | null = null;
 let opener: HTMLElement | null = null;
@@ -248,6 +288,9 @@ let messages: AssistantMessage[] = [];
 let savedChart: StoredChart | null = null;
 let chartEnabled = false;
 let chartSummaryPromise: Promise<string | null> | null = null;
+let activeEvidence: AssistantEvidence | null = null;
+let activeEvidenceChartId: string | null = null;
+let contextualDraft: string | null = null;
 
 class AssistantFailure extends Error {
   constructor(public code: string) {
@@ -335,7 +378,9 @@ function parseStoredChart(value: unknown): StoredChart | null {
   }
 
   const houseSystem = summary.houseSystem === 'placidus' ? 'placidus' : 'whole';
+  if (typeof candidate.id !== 'string' || !candidate.id) return null;
   return {
+    id: candidate.id,
     updatedAt: typeof candidate.updatedAt === 'string' ? candidate.updatedAt : '',
     birth: {
       date: typeof birth.date === 'string' ? birth.date : '',
@@ -347,7 +392,7 @@ function parseStoredChart(value: unknown): StoredChart | null {
   };
 }
 
-/** Newest saved chart, matching the site's returning-visitor heuristic. */
+/** Legacy fallback for devices that have not chosen a Today chart yet. */
 export function latestSavedChartFromJson(raw: string | null): StoredChart | null {
   if (!raw) return null;
   try {
@@ -362,9 +407,43 @@ export function latestSavedChartFromJson(raw: string | null): StoredChart | null
   }
 }
 
-function readLatestSavedChart(): StoredChart | null {
+/** The explicit Today chart wins; an invalid/missing choice falls back once. */
+export function selectedSavedChartFromJson(
+  rawProfile: string | null,
+  rawPreference: string | null,
+): StoredChart | null {
+  if (!rawProfile) return null;
   try {
-    return latestSavedChartFromJson(localStorage.getItem(PROFILE_KEY));
+    const profile = JSON.parse(rawProfile) as { version?: unknown; charts?: unknown };
+    if (profile?.version !== 1 || !Array.isArray(profile.charts)) return null;
+    const charts = profile.charts
+      .map(parseStoredChart)
+      .filter((chart): chart is StoredChart => chart !== null);
+    const preferredId = parseTodayChartPreference(rawPreference)?.chartId;
+    return charts.find((chart) => chart.id === preferredId)
+      ?? charts.sort((left, right) => right.updatedAt.localeCompare(left.updatedAt))[0]
+      ?? null;
+  } catch {
+    return null;
+  }
+}
+
+function readSelectedSavedChart(): StoredChart | null {
+  try {
+    const preferenceRaw = localStorage.getItem(TODAY_CHART_PREFERENCE_KEY);
+    const selected = selectedSavedChartFromJson(
+      localStorage.getItem(PROFILE_KEY),
+      preferenceRaw,
+    );
+    if (selected && parseTodayChartPreference(preferenceRaw)?.chartId !== selected.id) {
+      localStorage.setItem(TODAY_CHART_PREFERENCE_KEY, JSON.stringify({
+        version: 1,
+        chartId: selected.id,
+      }));
+    } else if (!selected && preferenceRaw !== null) {
+      localStorage.removeItem(TODAY_CHART_PREFERENCE_KEY);
+    }
+    return selected;
   } catch {
     return null;
   }
@@ -439,6 +518,35 @@ export async function placementSummaryForChart(chart: StoredChart): Promise<stri
   }
   if (!lines.length) return null;
   return `Tropical chart placements:\n${lines.join('\n')}`.slice(0, MAX_CHART_CONTEXT);
+}
+
+/**
+ * Private chart handoff for a grounded answer. Birth inputs remain in the
+ * fragment and therefore never reach the server; the query only selects the
+ * natal point that the evidence named.
+ */
+export function chartHrefForAssistantEvidence(
+  chart: StoredChart,
+  evidence: AssistantEvidence,
+  requestedLocale: AssistantLocale = 'en',
+): string | null {
+  const place = chart.birth.place;
+  if (!place) return null;
+  const prefix = requestedLocale === 'en' ? '' : `/${requestedLocale}`;
+  const token = encodeChartLink({
+    date: chart.birth.date,
+    time: chart.birth.time,
+    timeKnown: chart.birth.timeKnown,
+    lat: place.lat,
+    lon: place.lon,
+    tz: place.tz,
+    houseSystem: chart.summary.houseSystem,
+  });
+  const fragment = new URLSearchParams({
+    c: token,
+    sel: assistantEvidenceSelection(evidence),
+  });
+  return `${prefix}/birth-chart/#${fragment}`;
 }
 
 export interface ParsedAssistantFrame {
@@ -582,10 +690,36 @@ function syncChartButton(): void {
   chartButton.textContent = chartEnabled ? currentCopy().chartOn : currentCopy().chartOff;
 }
 
+function syncEvidenceChip(): void {
+  if (!evidenceChip || !evidenceText || !evidenceRemoveButton) return;
+  evidenceChip.hidden = activeEvidence === null;
+  evidenceText.textContent = activeEvidence
+    ? `${currentCopy().evidence}: ${assistantEvidenceLabel(activeEvidence)}`
+    : '';
+  evidenceRemoveButton.textContent = currentCopy().removeEvidence;
+  if (textarea) {
+    if (activeEvidence) textarea.setAttribute('aria-describedby', evidenceText.id);
+    else textarea.removeAttribute('aria-describedby');
+  }
+}
+
+function clearAssistantEvidence(clearPrefill: boolean): void {
+  activeEvidence = null;
+  activeEvidenceChartId = null;
+  if (clearPrefill && textarea && contextualDraft && textarea.value === contextualDraft) {
+    textarea.value = '';
+    syncTextareaHeight();
+    syncSendState();
+  }
+  contextualDraft = null;
+  syncEvidenceChip();
+}
+
 function setBusy(busy: boolean): void {
   activeRequest = busy ? activeRequest : null;
   panel?.setAttribute('aria-busy', String(busy));
   if (stopButton) stopButton.hidden = !busy;
+  if (evidenceRemoveButton) evidenceRemoveButton.disabled = busy;
   syncSendState();
   syncChartButton();
 }
@@ -596,7 +730,11 @@ function refreshSavedChart(): void {
   // what a later confirmation would send, so the card is withdrawn rather
   // than left to grant consent for text the visitor never saw.
   dismissPendingConsent?.();
-  savedChart = readLatestSavedChart();
+  savedChart = readSelectedSavedChart();
+  if (activeEvidence && activeEvidenceChartId !== savedChart?.id) {
+    clearAssistantEvidence(true);
+    setStatus(currentCopy().contextChanged);
+  }
   chartEnabled = false;
   chartConsented = false;
   chartSummaryPromise = null;
@@ -699,6 +837,24 @@ function appendSourcesRow(container: HTMLElement, text: string): void {
   container.append(row);
 }
 
+function appendChartEvidenceLink(
+  container: HTMLElement,
+  chart: StoredChart | null,
+  evidence: AssistantEvidence | null,
+): void {
+  if (!chart || !evidence) return;
+  const href = chartHrefForAssistantEvidence(chart, evidence, locale);
+  if (!href) return;
+  const row = document.createElement('p');
+  row.className = 'zassistant__chart-link-row';
+  const anchor = document.createElement('a');
+  anchor.className = 'zassistant__chart-link';
+  anchor.href = href;
+  anchor.textContent = `${currentCopy().openInChart} →`;
+  row.append(anchor);
+  container.append(row);
+}
+
 function questionRequestsMyChart(question: string): boolean {
   const normalized = question
     .normalize('NFD')
@@ -715,10 +871,24 @@ async function submitQuestion(): Promise<void> {
     return;
   }
 
+  if (activeEvidence) {
+    const selectedNow = readSelectedSavedChart();
+    if (!activeEvidenceChartId || selectedNow?.id !== activeEvidenceChartId) {
+      clearAssistantEvidence(true);
+      setStatus(currentCopy().contextChanged);
+      return;
+    }
+    savedChart = selectedNow;
+  }
+
   const userMessage: AssistantMessage = { role: 'user', content: question };
   const requestMessages = messages.concat(userMessage).slice(-MAX_MESSAGES);
+  const evidenceIdentity = activeEvidence;
+  const evidenceForRequest = activeEvidence ? { ...activeEvidence } : null;
+  const chartForRequest = savedChart;
   appendMessage('user', question);
   textarea.value = '';
+  contextualDraft = null;
   syncTextareaHeight();
   const assistantMessage = appendMessage('assistant', '');
   assistantMessage.article.setAttribute('aria-busy', 'true');
@@ -746,7 +916,11 @@ async function submitQuestion(): Promise<void> {
     const response = await fetch('/api/assistant', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
-      body: JSON.stringify({ messages: requestMessages, ...(chart ? { chart } : {}) }),
+      body: JSON.stringify({
+        messages: requestMessages,
+        ...(chart ? { chart } : {}),
+        ...(evidenceForRequest ? { evidence: evidenceForRequest } : {}),
+      }),
       signal: activeRequest.signal,
     });
     if (!response.ok) throw new AssistantFailure(await failureCode(response));
@@ -760,8 +934,10 @@ async function submitQuestion(): Promise<void> {
 
     renderAssistantText(assistantMessage.body, answer);
     appendSourcesRow(assistantMessage.body, answer);
+    appendChartEvidenceLink(assistantMessage.article, chartForRequest, evidenceForRequest);
     assistantMessage.article.removeAttribute('aria-busy');
     messages = [...requestMessages, { role: 'assistant' as const, content: answer }].slice(-MAX_MESSAGES);
+    if (activeEvidence === evidenceIdentity) clearAssistantEvidence(false);
     setStatus(currentCopy().complete);
     track('assistant_reply');
   } catch (error) {
@@ -811,6 +987,7 @@ function applyCopy(): void {
   if (newlineHint) newlineHint.textContent = copy.newline;
   if (privacy) privacy.textContent = copy.privacy;
   syncChartButton();
+  syncEvidenceChip();
 }
 
 function build(): void {
@@ -856,6 +1033,19 @@ function build(): void {
   intro = document.createElement('p');
   intro.className = 'zassistant__intro';
 
+  evidenceChip = document.createElement('div');
+  evidenceChip.className = 'zassistant__evidence-chip';
+  evidenceChip.hidden = true;
+  evidenceText = document.createElement('p');
+  evidenceText.id = 'zassistant-evidence';
+  evidenceText.className = 'zassistant__evidence-text mono';
+  evidenceText.setAttribute('aria-live', 'polite');
+  evidenceRemoveButton = document.createElement('button');
+  evidenceRemoveButton.type = 'button';
+  evidenceRemoveButton.className = 'zassistant__evidence-remove';
+  evidenceRemoveButton.addEventListener('click', () => clearAssistantEvidence(true));
+  evidenceChip.append(evidenceText, evidenceRemoveButton);
+
   chartButton = document.createElement('button');
   chartButton.type = 'button';
   chartButton.className = 'zassistant__chart-chip';
@@ -897,6 +1087,7 @@ function build(): void {
   textarea.autocomplete = 'off';
   textarea.spellcheck = true;
   textarea.addEventListener('input', () => {
+    contextualDraft = null;
     syncTextareaHeight();
     syncSendState();
   });
@@ -926,7 +1117,7 @@ function build(): void {
   privacy = document.createElement('p');
   privacy.className = 'zassistant__privacy';
 
-  panel.append(header, intro, chartButton, transcript, status, form, privacy);
+  panel.append(header, intro, evidenceChip, chartButton, transcript, status, form, privacy);
   root.appendChild(panel);
   document.body.appendChild(root);
 
@@ -940,25 +1131,68 @@ function build(): void {
   window.addEventListener('zodiacs:profile', () => {
     if (!activeRequest) refreshSavedChart();
   });
+  window.addEventListener(TODAY_CHART_EVENT, () => {
+    if (!activeRequest) refreshSavedChart();
+  });
 }
+
+export type AssistantOpenContext =
+  | {
+      evidence: AssistantEvidence;
+      /** Local-only binding; never included in the API payload. */
+      chartId: string;
+      suggestedQuestion?: string;
+    }
+  | {
+      evidence?: undefined;
+      chartId?: undefined;
+      suggestedQuestion?: string;
+    };
 
 /** Open the assistant dialog. Safe to call repeatedly on the same page. */
 export async function openAssistant(
   requestedLocale?: string,
   from?: HTMLElement | null,
+  context?: AssistantOpenContext,
 ): Promise<void> {
   await ensureStylesheet();
   locale = normalizeLocale(requestedLocale);
   if (!root) build();
   applyCopy();
   refreshSavedChart();
+  const requestedEvidence = normalizeAssistantEvidence(context?.evidence);
+  const suggestedQuestion = context?.suggestedQuestion?.trim().slice(0, MAX_INPUT) ?? '';
+  if (textarea && contextualDraft && textarea.value === contextualDraft) {
+    textarea.value = '';
+    syncTextareaHeight();
+    syncSendState();
+  }
+  contextualDraft = null;
+  activeEvidence = null;
+  activeEvidenceChartId = null;
+  const contextAccepted = requestedEvidence !== null
+    && typeof context?.chartId === 'string'
+    && context.chartId === savedChart?.id
+    && Boolean(textarea)
+    && !textarea!.value.trim();
+  if (contextAccepted) {
+    activeEvidence = requestedEvidence;
+    activeEvidenceChartId = context!.chartId!;
+  }
+  syncEvidenceChip();
+  if ((!requestedEvidence || contextAccepted) && suggestedQuestion && textarea && !textarea.value.trim()) {
+    textarea.value = suggestedQuestion;
+    contextualDraft = suggestedQuestion;
+    syncTextareaHeight();
+    syncSendState();
+  }
   if (root!.hidden) {
     opener = from ?? (document.activeElement as HTMLElement | null);
     previousOverflow = document.documentElement.style.overflow;
   }
   root!.hidden = false;
   document.documentElement.style.overflow = 'hidden';
-  setStatus();
+  setStatus(requestedEvidence && !contextAccepted ? currentCopy().contextChanged : '');
   textarea!.focus();
   track('assistant_open');
 }

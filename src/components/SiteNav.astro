@@ -16,13 +16,13 @@ const links = [
 interface Props { locale?: Locale }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const path = Astro.url.pathname;
-const registryLabel: Record<Locale, string> = {
-  en: 'Digital collection and registry',
-  es: 'Colección digital y registro',
-  pt: 'Coleção digital e registro',
-  fr: 'Collection numérique et registre',
-  it: 'Collezione digitale e registro',
-  ru: 'Цифровая коллекция и реестр — пока по-английски',
+const todayEnglishOnlyTitle: Record<Locale, string> = {
+  en: '',
+  es: 'Esta experiencia está disponible en inglés.',
+  pt: 'Esta experiência está disponível em inglês.',
+  fr: 'Cette expérience est disponible en anglais.',
+  it: 'Questa esperienza è disponibile in inglese.',
+  ru: 'Этот раздел пока доступен на английском.',
 };
 const openMenuLabel: Record<Locale, string> = {
   en: 'Open menu',
@@ -93,16 +93,13 @@ const visibleNavTools = locale === 'ru'
     )}
 
     <a
-      class:list={['nav__chip', { 'nav__chip--deferred': locale === 'ru' }]}
-      href="/registry/"
-      hreflang={locale === 'ru' ? 'en' : undefined}
-      aria-current={path.startsWith('/registry/') ? 'page' : undefined}
-      title={locale === 'ru' ? englishOnlyAria : undefined}
-      aria-label={locale === 'ru' ? `${t(locale, 'navCollect')}. ${englishOnlyAria}` : undefined}
+      class="nav__chip"
+      href="/today/"
+      hreflang="en"
+      aria-current={path === '/today/' ? 'page' : undefined}
+      title={todayEnglishOnlyTitle[locale] || undefined}
     >
-      {locale === 'ru' ? (
-        <><span>{t(locale, 'navCollect')}</span><small class="nav__deferred">— пока по-английски</small></>
-      ) : t(locale, 'navCollect')}
+      {t(locale, 'navToday')}
     </a>
 
     <button
@@ -124,7 +121,12 @@ const visibleNavTools = locale === 'ru'
   <div class="nav-menu tools-menu" id="tools-menu" data-tools-menu hidden>
     <div class="tools-menu__grid">
       {visibleNavTools.map((tool) => (
-        <a class="tools-menu__item" href={localizePath(locale, tool.href)}>
+        <a
+          class="tools-menu__item"
+          href={tool.href === '/today/' ? '/today/' : localizePath(locale, tool.href)}
+          hreflang={tool.href === '/today/' ? 'en' : undefined}
+          title={tool.href === '/today/' ? todayEnglishOnlyTitle[locale] || undefined : undefined}
+        >
           <span class="tools-menu__name">{t(locale, tool.label)}</span>
           <span class="tools-menu__desc">{tool.sublabel[locale]}</span>
         </a>
@@ -149,13 +151,10 @@ const visibleNavTools = locale === 'ru'
   <nav aria-label={locale === 'ru' ? 'Мобильная навигация' : 'Mobile'}>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navSite')}</span>
-      <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/learn/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
-      <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/horoscopes/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
-      <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link mobile-menu__registry" style="--i:3" href="/registry/" hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>
-        <span>{t(locale, 'navCollect')}</span>
-        <small>{registryLabel[locale]}</small>
-      </a>
+      <a class="mobile-menu__link" style="--i:0" href="/today/" hreflang="en" title={todayEnglishOnlyTitle[locale] || undefined}>{t(locale, 'navToday')}</a>
+      <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/learn/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
+      <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/horoscopes/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
+      <a class="mobile-menu__link" style="--i:3" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
     </div>
     <div class="mobile-menu__group">
       <span class="mobile-menu__label">{t(locale, 'navTools')}</span>
@@ -164,7 +163,9 @@ const visibleNavTools = locale === 'ru'
           <a
             class="mobile-menu__tool"
             style={`--i:${i}`}
-            href={localizePath(locale, tool.href)}
+            href={tool.href === '/today/' ? '/today/' : localizePath(locale, tool.href)}
+            hreflang={tool.href === '/today/' ? 'en' : undefined}
+            title={tool.href === '/today/' ? todayEnglishOnlyTitle[locale] || undefined : undefined}
             aria-label={`${t(locale, tool.label)}. ${tool.sublabel[locale]}`}
           >
             <span>{t(locale, tool.label)}</span>
@@ -259,8 +260,7 @@ const visibleNavTools = locale === 'ru'
   }
   .nav__link:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
   .nav__link[aria-current='page'] { color: var(--text); }
-  .nav__link--deferred,
-  .nav__chip--deferred {
+  .nav__link--deferred {
     flex-direction: column;
     justify-content: center;
     gap: 1px;
@@ -317,8 +317,8 @@ const visibleNavTools = locale === 'ru'
   .nav__saved.has-saves { color: var(--accent); }
   .nav__saved.has-saves:hover { color: var(--accent); }
 
-  /* A permanent door into the Registry wing. It stays compact on phones,
-     then gains the divider treatment once the desktop link row appears. */
+  /* The primary return door stays compact on phones, then gains the divider
+     treatment once the desktop link row appears. */
   .nav__chip {
     display: inline-flex;
     align-items: center;
@@ -487,17 +487,6 @@ const visibleNavTools = locale === 'ru'
     border-bottom: 1px solid var(--hair);
   }
   .mobile-menu__link:last-child { border-bottom: 0; }
-  .mobile-menu__registry {
-    display: grid;
-    gap: 5px;
-  }
-  .mobile-menu__registry small {
-    color: var(--faint);
-    font-family: var(--font-mono);
-    font-size: 9px;
-    letter-spacing: 0.04em;
-    line-height: 1.35;
-  }
   .mobile-menu__tools {
     display: grid;
     grid-template-columns: minmax(0, 1fr);

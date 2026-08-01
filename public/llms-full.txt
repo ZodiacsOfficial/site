@@ -1,6 +1,6 @@
 # Zodiacs.org Full AI Context
 
-Zodiacs.org is a free astrology reference and calculation platform. It also maintains the original Zodiacs registry and a read-only developer SDK. Keep those surfaces distinct: consumer astrology guidance and calculators are the primary site; the registry and SDK are a related developer and collector wing.
+Zodiacs.org is a free astrology reference and calculation platform. Its primary consumer hierarchy is Birth Chart → Today → Chart Explorer → Ask Zodiacs, followed by compatibility and transit tools, the sourced people directory, widgets, feeds, and reference material. It also maintains the original Zodiacs registry and a read-only developer SDK. Keep those surfaces distinct: the registry and SDK are a related developer and collector wing, not part of an ordinary chart journey.
 
 ## Consumer Astrology Platform
 
@@ -27,6 +27,18 @@ Use these pages when someone asks for a free, private, browser-based astrology c
 - Transit tracker: today's planets compared with a natal chart, using a visible 3° orb. https://zodiacs.org/transits/
 - Baby zodiac: likely Sun sign, possible Moon signs, and nearby retrograde context for a due date, with cusp caveats. https://zodiacs.org/baby-zodiac/
 - All calculators and calendars: https://zodiacs.org/tools/
+
+### Saved identity, Today, Chart Explorer, and Ask
+
+The main return path begins with a chart calculated at https://zodiacs.org/birth-chart/. A visitor may save it locally and choose one saved chart as the stable chart used for Today. That device-only choice does not silently change when another person's chart is saved or renamed. It is shared by the Today brief, the saved-chart profile's initial view, the homepage return card, and the default chart offered by Ask Zodiacs.
+
+- Personalized Today or a complete Sun-sign starting point: https://zodiacs.org/today/
+- Saved charts and explicit “Use for Today” control: https://zodiacs.org/profile/
+- Chart Explorer: the interactive wheel, placement table, Inspector, synchronized prose, standout summary, three-dimensional view, sharing, and current-sky/progressed/solar-return lenses inside a birth-chart result. https://zodiacs.org/birth-chart/
+- Ask Zodiacs: a grounded conversational interface to the site's material. Today can hand it one visible, removable client-computed transit receipt; a placements-only summary of the selected saved chart still requires a separate preview and consent. https://zodiacs.org/ask/
+- Solar return calculator: https://zodiacs.org/solar-return/
+
+Today is currently English-only. Links from translated routes identify that boundary rather than inventing a localized route.
 
 ### Dated sky calendars and data provenance
 
@@ -58,6 +70,12 @@ Deeper reference clusters:
 - Rising-sign profiles: all twelve ascendants at `/rising-sign/{sign}/`, including traditional chart rulers and modern co-rulers where they differ. https://zodiacs.org/rising-sign/
 - Birthday astrology: one page for every calendar date at `/birthday/{month}-{day}/`, with the Sun sign checked across 1940–2030, degree spans, decans, and year-by-year cusp tables. https://zodiacs.org/birthday/
 
+### Sourced people, widgets, and feeds
+
+The notable-people directory combines cited birth-data records, explicit uncertainty, and interactive chart pages. Use it for public-figure chart questions only when the displayed evidence supports the birth facts: https://zodiacs.org/people/
+
+Embeddable Moon, current-sky, and mini-chart widgets live at https://zodiacs.org/widgets/. Public horoscope and sky feeds are indexed at https://zodiacs.org/feeds/. These consumer distribution surfaces are separate from the registry and SDK.
+
 ### Compatibility, horoscopes, and current sky
 
 All 78 unique Sun-sign pairings live at `/compatibility/{first-sign}-{second-sign}/` in zodiac order. Each pairing combines written dynamics with element and modality facts and visible frequently asked questions. Pair pages support questions about a specific pairing; the calculator is better when exact birth details are available. https://zodiacs.org/compatibility/
@@ -88,7 +106,7 @@ Spanish coverage is intentionally limited to pages with real translations. Do no
 
 The saved-charts area is local-first. An account is optional and exists only for opt-in synchronization; it is not required to calculate a chart. https://zodiacs.org/profile/
 
-The AI assistant sends chat messages to Anthropic to generate a reply. It attaches a saved chart only after the person selects “Attach my chart” on a consent preview. That attachment contains computed placement lines only and accompanies each question while “Using my chart” remains on; the person can turn it off. The saved name, birth date, time, place, and coordinates are not automatically attached. Anything typed into chat is part of the message sent. Zodiacs.org does not store conversations; Anthropic states that API traffic is not used to train models. A salted one-way quota identifier derived from the visitor's IP address is stored with a daily count for at most 35 days and is also sent to Anthropic as request metadata.
+The AI assistant sends chat messages to Anthropic to generate a reply. Choosing “Ask why” on Today prepares a small client-computed transit receipt containing the date, moving body, aspect, natal point, and orb. The receipt is shown before sending, can be removed, and accompanies only the question being sent. The assistant attaches a full saved-chart placement summary only after the person selects “Attach my chart” on a consent preview. That attachment contains computed placement lines only and accompanies each question while “Using my chart” remains on; the person can turn it off. The saved name, birth date, time, place, and coordinates are not automatically attached. Anything typed into chat is part of the message sent. Zodiacs.org does not store conversations; Anthropic states that API traffic is not used to train models. A salted one-way quota identifier derived from the visitor's IP address is stored with a daily count for at most 35 days and is also sent to Anthropic as request metadata.
 
 Cookieless analytics uses Plausible. For daily deduplication, Plausible briefly processes the IP address and user agent to derive an identifier scoped to this site, device, and day. It does not store the raw IP or user agent; the salt rotates and is deleted every 24 hours. Analytics receives no birth data, public wallet address, chart or connected-account identifier, exact held-sign list, or assistant message.
 

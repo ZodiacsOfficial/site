@@ -4,6 +4,12 @@
  */
 import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
+import {
+  RENDERED_TRANSIT_PATHS,
+  assertExactPublicationDate,
+  assertRenderedCurrentTransit,
+  assertRenderedToday,
+} from './live-transit-verification-lib.mjs';
 
 function option(name, fallback) {
   const index = process.argv.indexOf(name);
@@ -14,6 +20,9 @@ const timeoutSeconds = Number(option('--timeout', '0'));
 if (!Number.isInteger(timeoutSeconds) || timeoutSeconds < 0 || timeoutSeconds > 900) {
   throw new Error(`--timeout must be an integer from 0 to 900, received ${timeoutSeconds}`);
 }
+const targetDate = process.env.TARGET_DATE ?? new Date().toISOString().slice(0, 10);
+const expectedTransitMonth = targetDate.slice(0, 7);
+const productionOrigin = new URL(endpoint).origin;
 
 const canonical = (value) => {
   if (Array.isArray(value)) return value.map(canonical);
@@ -27,6 +36,7 @@ const sha256 = (value) => createHash('sha256').update(value).digest('hex');
 const localManifest = JSON.parse(await readFile(new URL('../src/data/daily-publication-manifest.json', import.meta.url), 'utf8'));
 const localPublication = JSON.parse(await readFile(new URL('../src/data/daily-publication.json', import.meta.url), 'utf8'));
 const localHoroscopeProgram = JSON.parse(await readFile(new URL('../src/data/horoscope-program.json', import.meta.url), 'utf8'));
+assertExactPublicationDate(localManifest.date, targetDate);
 
 async function check() {
   const response = await fetch(`${endpoint}${endpoint.includes('?') ? '&' : '?'}proof=${Date.now()}`, {
@@ -58,6 +68,28 @@ async function check() {
     && sha256(canonicalJson(remote.inputs?.transitSource)) !== localManifest.facts.eventsSourceCanonicalSha256) {
     throw new Error('production transit input hash disagrees with the committed manifest');
   }
+
+  await Promise.all(RENDERED_TRANSIT_PATHS.map(async (path) => {
+    const url = new URL(path, productionOrigin);
+    url.searchParams.set('proof', String(Date.now()));
+    const pageResponse = await fetch(url, {
+      headers: { 'cache-control': 'no-cache' },
+      signal: AbortSignal.timeout(15_000),
+    });
+    if (!pageResponse.ok) {
+      throw new Error(`${path}: production page returned HTTP ${pageResponse.status}`);
+    }
+    assertRenderedCurrentTransit(await pageResponse.text(), expectedTransitMonth, path);
+  }));
+
+  const todayUrl = new URL('/today/', productionOrigin);
+  todayUrl.searchParams.set('proof', String(Date.now()));
+  const todayResponse = await fetch(todayUrl, {
+    headers: { 'cache-control': 'no-cache' },
+    signal: AbortSignal.timeout(15_000),
+  });
+  if (!todayResponse.ok) throw new Error(`/today/: production page returned HTTP ${todayResponse.status}`);
+  assertRenderedToday(await todayResponse.text(), targetDate, '/today/');
 }
 
 const deadline = Date.now() + timeoutSeconds * 1000;
@@ -65,7 +97,10 @@ let lastError;
 do {
   try {
     await check();
-    console.log(`verify-live-daily: PASS — production serves ${localManifest.date} with matching daily and horoscope inputs`);
+    console.log(
+      `verify-live-daily: PASS — production serves ${localManifest.date} with matching daily and horoscope inputs; `
+      + `Today renders ${targetDate}; transit pages render ${expectedTransitMonth}`,
+    );
     process.exit(0);
   } catch (error) {
     lastError = error;

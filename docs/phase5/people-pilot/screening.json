@@ -2086,17 +2086,18 @@
       "slug": "roberto-clemente",
       "qid": "Q684020",
       "displayName": "Roberto Clemente",
+      "role": "pilot",
       "verdict": "accepted",
       "storedDate": "1934-08-18",
       "calendarModel": "proleptic-gregorian",
       "gregorianDate": "1934-08-18",
-      "sun": "Leo 24.80°",
+      "sun": "Leo 25.00°",
       "moonUncertain": true,
       "cusp": {
         "ambiguous": false,
         "boundaryUtc": null,
-        "degreesInsideAtWindowStart": 24.3622,
-        "degreesToNextBoundaryAtWindowEnd": 4.6758
+        "degreesInsideAtWindowStart": 24.5225,
+        "degreesToNextBoundaryAtWindowEnd": 4.5154
       },
       "reasons": []
     },
@@ -2248,17 +2249,18 @@
       "slug": "sun-yat-sen",
       "qid": "Q8573",
       "displayName": "Sun Yat-sen",
+      "role": "pilot",
       "verdict": "accepted",
-      "storedDate": "1956-11-12",
+      "storedDate": "1866-11-12",
       "calendarModel": "proleptic-gregorian",
-      "gregorianDate": "1956-11-12",
-      "sun": "Scorpio 19.80°",
+      "gregorianDate": "1866-11-12",
+      "sun": "Scorpio 19.57°",
       "moonUncertain": false,
       "cusp": {
         "ambiguous": false,
         "boundaryUtc": null,
-        "degreesInsideAtWindowStart": 19.5889,
-        "degreesToNextBoundaryAtWindowEnd": 9.4048
+        "degreesInsideAtWindowStart": 19.0671,
+        "degreesToNextBoundaryAtWindowEnd": 9.9258
       },
       "reasons": []
     },

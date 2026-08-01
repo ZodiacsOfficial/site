@@ -22,6 +22,10 @@ import { fileURLToPath } from 'node:url';
 import { dirname, join } from 'node:path';
 import { createRequire } from 'node:module';
 import { findAspects } from '@zodiacs/engine/internal/math';
+import {
+  applyEvidenceTrustOverride,
+  trustOverrideFor,
+} from '../../../../scripts/people-trust.mjs';
 
 const require = createRequire(import.meta.url);
 const Astronomy = require('astronomy-engine');
@@ -218,8 +222,17 @@ const CANDIDATES_FILE = EXPANSION ? 'candidates-expansion.json' : 'candidates.js
 const EVIDENCE_DIR = EXPANSION ? 'evidence-expansion' : 'evidence';
 const COMPUTED_DIR = EXPANSION ? 'computed-expansion' : 'computed';
 const SCREENING_FILE = EXPANSION ? 'screening-expansion.json' : 'screening.json';
-const candidates = JSON.parse(await readFile(join(PILOT, CANDIDATES_FILE), 'utf8'));
+const allCandidates = JSON.parse(await readFile(join(PILOT, CANDIDATES_FILE), 'utf8'));
+const targetSlugs = new Set((process.env.PEOPLE_SLUGS ?? '').split(',').filter(Boolean));
+const candidates = targetSlugs.size > 0
+  ? allCandidates.filter((candidate) => targetSlugs.has(candidate.slug))
+  : allCandidates;
+if (targetSlugs.size > 0 && candidates.length !== targetSlugs.size) {
+  throw new Error(`Unknown PEOPLE_SLUGS target: ${[...targetSlugs]
+    .filter((slug) => !candidates.some((candidate) => candidate.slug === slug)).join(', ')}`);
+}
 const zones = EXPANSION ? {} : JSON.parse(await readFile(join(PILOT, 'timezones.json'), 'utf8'));
+const trustPolicy = JSON.parse(await readFile(join(PILOT, 'trust-policy.json'), 'utf8'));
 let tzLookup = null;
 if (EXPANSION) {
   /* Research-only dependency, deliberately outside the production
@@ -242,7 +255,9 @@ for (const candidate of candidates) {
     screening.push({ slug: candidate.slug, verdict: 'excluded', reason: 'no-evidence-record' });
     continue;
   }
-  const evidence = JSON.parse(await readFile(join(PILOT, EVIDENCE_DIR, `${candidate.slug}.json`), 'utf8'));
+  const rawEvidence = JSON.parse(await readFile(join(PILOT, EVIDENCE_DIR, `${candidate.slug}.json`), 'utf8'));
+  const override = trustOverrideFor(trustPolicy, candidate.slug);
+  const evidence = applyEvidenceTrustOverride(rawEvidence, override);
   if (evidence.status === 'no-wikidata-entity') {
     screening.push({ slug: candidate.slug, verdict: 'excluded', reasons: ['no-wikidata-entity'] });
     continue;
@@ -297,7 +312,7 @@ for (const candidate of candidates) {
     ? julianToGregorian(evidence.birth.time.slice(1, 11))
     : evidence.birth.time.slice(1, 11);
 
-  let timeZone = zones[candidate.slug] ?? null;
+  let timeZone = override?.fields.birthPlace.timeZone ?? zones[candidate.slug] ?? null;
   if (!timeZone && EXPANSION && evidence.birthPlace?.coordinates) {
     try {
       timeZone = tzLookup(evidence.birthPlace.coordinates.latitude, evidence.birthPlace.coordinates.longitude);
@@ -510,6 +525,13 @@ for (const candidate of candidates) {
   });
 }
 
+let screeningCandidates = screening;
+if (targetSlugs.size > 0) {
+  const existing = JSON.parse(await readFile(join(PILOT, SCREENING_FILE), 'utf8'));
+  const replacement = new Map(screening.map((entry) => [entry.slug, entry]));
+  screeningCandidates = existing.candidates.map((entry) => replacement.get(entry.slug) ?? entry);
+}
+
 await writeFile(
   join(PILOT, SCREENING_FILE),
   `${JSON.stringify({
@@ -517,7 +539,7 @@ await writeFile(
     generatedFrom: 'docs/phase5/people-pilot/evidence + repository ephemeris',
     julianRule: 'Option A — Julian-dated births are excluded from the Phase 5A pilot',
     cuspRule: 'excluded when a solar ingress falls inside the 24-hour UTC window of the birth date',
-    candidates: screening,
+    candidates: screeningCandidates,
   }, null, 2)}\n`,
   'utf8',
 );

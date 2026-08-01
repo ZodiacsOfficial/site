@@ -1,21 +1,22 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import dailyData from '../../data/daily.json';
 import { useProfile } from '../../lib/hooks/useProfile';
+import { useTodayChart } from '../../lib/hooks/useTodayChart';
+import { isTodayChartUsable } from '../../lib/profile/today-chart';
 import { SIGNS, signForLongitude } from '../../lib/signs';
 import {
   natalPointsForChart,
   nearestTodayContact,
-  newestSavedChart,
   recordTodayOpen,
   selectTodayContacts,
   TODAY_STORAGE_KEY,
-  type TodayContact,
 } from '../../lib/today';
 import SunSignFallback from './SunSignFallback';
 import { datedEditionText } from '../../lib/edition-freshness';
 
 type PushOptInModule = typeof import('../PushOptIn');
 type TransitsModule = typeof import('../../lib/transits');
+type ComingUpModule = typeof import('./ComingUp');
 
 interface DailyData {
   date: string;
@@ -33,28 +34,6 @@ function dateLabel(day: string): string {
   }).format(new Date(`${day}T12:00:00.000Z`));
 }
 
-function longitudeLabel(lon: number): string {
-  const sign = signForLongitude(lon);
-  const degree = ((lon % 30) + 30) % 30;
-  return `${degree.toFixed(1)}° ${sign.name}`;
-}
-
-function pointLabel(point: string): string {
-  if (point === 'Ascendant') return 'ASC';
-  if (point === 'Midheaven') return 'MC';
-  return point;
-}
-
-function contactReceipt(contact: TodayContact): string {
-  const moving = `${contact.transiting}${contact.transitingRetrograde ? ' Rx' : ''}`;
-  const natal = `${pointLabel(contact.natal)}${contact.natalRetrograde ? ' Rx' : ''}`;
-  return [
-    `${moving} ${longitudeLabel(contact.transitingLon)}`,
-    `${contact.type} natal ${natal} ${longitudeLabel(contact.natalLon)}`,
-    `${contact.orb.toFixed(1)}° from exact`,
-  ].join(' · ');
-}
-
 const WEB_PUSH_ENABLED = import.meta.env.PUBLIC_WEB_PUSH_ENABLED === '1';
 
 interface Props {
@@ -63,10 +42,13 @@ interface Props {
 
 export default function TodayBrief({ sunSignLines }: Props) {
   const { profile, ready } = useProfile();
+  const { chart, selectChart } = useTodayChart(profile, ready);
   const [streak, setStreak] = useState<number | null>(null);
   const [pushModule, setPushModule] = useState<PushOptInModule | null>(null);
   const [transitsModule, setTransitsModule] = useState<TransitsModule | null>(null);
   const [transitsFailed, setTransitsFailed] = useState(false);
+  const [chartAnnouncement, setChartAnnouncement] = useState('');
+  const [comingUpModule, setComingUpModule] = useState<ComingUpModule | null>(null);
 
   useEffect(() => {
     let returning = false;
@@ -89,7 +71,35 @@ export default function TodayBrief({ sunSignLines }: Props) {
     }).zodiacsAnalytics?.track?.('today_view', {});
   }, []);
 
-  const chart = useMemo(() => newestSavedChart(profile), [profile]);
+  useEffect(() => {
+    if (!chart || comingUpModule) return undefined;
+    let cancelled = false;
+    const load = () => {
+      void import('./ComingUp').then((module) => {
+        if (!cancelled) setComingUpModule(module);
+      }).catch(() => {});
+    };
+    const idleWindow = window as unknown as {
+      requestIdleCallback?: (callback: () => void, options?: { timeout: number }) => number;
+      cancelIdleCallback?: (handle: number) => void;
+    };
+    const requestIdle = idleWindow.requestIdleCallback;
+    const cancelIdle = idleWindow.cancelIdleCallback;
+    const handle = requestIdle
+      ? requestIdle(load, { timeout: 1_500 })
+      : window.setTimeout(load, 250);
+    return () => {
+      cancelled = true;
+      if (requestIdle) cancelIdle?.(handle);
+      else window.clearTimeout(handle);
+    };
+  }, [chart?.id, comingUpModule]);
+
+  const selectableCharts = useMemo(
+    () => profile.charts.filter(isTodayChartUsable),
+    [profile.charts],
+  );
+  const ComingUp = comingUpModule?.default;
   const chartSunSign = useMemo(() => {
     const sun = chart?.summary?.bodies?.find((body) => (
       body?.body === 'Sun' && Number.isFinite(body.lon)
@@ -162,8 +172,11 @@ export default function TodayBrief({ sunSignLines }: Props) {
                 <p
                   class={`today-returning-chart-status${comparisonUnavailable ? ' is-visible' : ''}`}
                   aria-hidden={comparisonUnavailable ? undefined : 'true'}
+                  aria-live="polite"
                 >
-                  Your saved-chart comparison is temporarily unavailable. Your Sun-sign baseline is ready below.
+                  {comparisonUnavailable
+                    ? 'Your saved-chart comparison is temporarily unavailable. Your Sun-sign baseline is ready below.'
+                    : null}
                 </p>
                 <div class="today-returning-sun-baselines" data-nosnippet>
                   {SIGNS.map((sign) => (
@@ -185,7 +198,8 @@ export default function TodayBrief({ sunSignLines }: Props) {
                 </div>
               </div>
               <p class="today-private">
-                Your saved chart and this comparison stay in this browser.
+                Your saved chart stays in this browser. If you send “Ask why,” only the
+                displayed receipt leaves it unless you separately attach placements.
               </p>
               <details class="today-method-details">
                 <summary>How this comparison works</summary>
@@ -208,17 +222,37 @@ export default function TodayBrief({ sunSignLines }: Props) {
           <div
             class={`today-reading today-reading--resolved${personalized.reading.contacts.length > 0 ? ' today-reading--active' : ' today-reading--quiet'}`}
           >
-            <div class="today-reading__head">
-              <h2 aria-label={`For ${personalized.chart.name || 'your latest chart'}`}>
-                <span>For</span>{' '}
+              <div class="today-reading__head">
+                <h2 aria-label={`For ${personalized.chart.name || 'your chart'}`}>
+                  <span>For</span>{' '}
                 <span
                   class="today-reading__chart-name"
                   title={personalized.chart.name || undefined}
                 >
-                  {personalized.chart.name || 'your latest chart'}
+                  {personalized.chart.name || 'your chart'}
                 </span>
               </h2>
               <p>A few themes from the {editionLabel} sky, compared with your saved birth chart.</p>
+              {selectableCharts.length > 1 && (
+                <label class="today-chart-picker">
+                  <span>Today chart</span>
+                  <select
+                    value={personalized.chart.id}
+                    onChange={(event) => {
+                      const id = (event.currentTarget as HTMLSelectElement).value;
+                      const selected = selectableCharts.find((candidate) => candidate.id === id);
+                      if (selected && selectChart(id)) {
+                        setChartAnnouncement(`Now reading ${selected.name || 'your chart'}.`);
+                      }
+                    }}
+                  >
+                    {selectableCharts.map((candidate) => (
+                      <option key={candidate.id} value={candidate.id}>{candidate.name}</option>
+                    ))}
+                  </select>
+                </label>
+              )}
+              <span class="sr-only" role="status" aria-live="polite">{chartAnnouncement}</span>
             </div>
 
             <div class="today-reading__body">
@@ -227,7 +261,22 @@ export default function TodayBrief({ sunSignLines }: Props) {
                   {personalized.reading.contacts.map((contact) => (
                     <li key={`${contact.transiting}-${contact.type}-${contact.natal}`}>
                       <p class="today-lines__sentence">
-                        {personalized.transits.transitLine(contact.transiting, contact.type, contact.natal)}
+                        {personalized.transits.transitLine(contact.transiting, contact.type, contact.natal)}{' '}
+                        <button
+                          class="today-lines__ask"
+                          type="button"
+                          aria-label="Ask why this matters"
+                          data-today-ask-evidence
+                          data-evidence-date={daily.date}
+                          data-evidence-transiting-body={contact.transiting}
+                          data-evidence-aspect={contact.type}
+                          data-evidence-natal-point={contact.natal}
+                          data-evidence-orb={String(contact.orb)}
+                          data-evidence-chart-id={personalized.chart.id}
+                          data-evidence-question="Why does this matter for me?"
+                        >
+                          Ask why <span aria-hidden="true">→</span>
+                        </button>
                       </p>
                     </li>
                   ))}
@@ -257,28 +306,25 @@ export default function TodayBrief({ sunSignLines }: Props) {
             </div>
 
             <p class="today-private">
-              Your saved chart and this comparison stay in this browser.
+              Your saved chart stays in this browser. If you send “Ask why,” only the
+              displayed receipt leaves it unless you separately attach placements.
             </p>
-            <details class="today-method-details">
-              <summary>How this was calculated</summary>
-              <div class="today-method-details__body">
-                <p>
-                  We compare the latest chart saved on this device with the day’s precomputed
-                  planet positions. Active contacts are major aspects within 3° of exact. The
-                  positions use a noon-UTC snapshot for the date shown.
-                </p>
-                {personalized.reading.contacts.length > 0 ? (
-                  <ul>
-                    {personalized.reading.contacts.map((contact) => (
-                      <li key={`${contact.transiting}-${contact.type}-${contact.natal}`}>
-                        {contactReceipt(contact)}
-                      </li>
-                    ))}
-                  </ul>
-                ) : personalized.reading.nearest ? (
-                  <p class="mono">Nearest contact: {contactReceipt(personalized.reading.nearest)}</p>
-                ) : null}
-              </div>
+            <details class="today-coming-up today-method-details">
+              <summary>
+                <strong>Coming up</strong>
+                <span class="today-coming-up__next">View dates</span>
+              </summary>
+              {ComingUp ? (
+                <ComingUp
+                  chart={personalized.chart}
+                  contacts={personalized.reading.contacts}
+                  nearest={personalized.reading.nearest}
+                />
+              ) : (
+                <div class="today-coming-up__body">
+                  <p class="today-coming-up__quiet">Preparing this timeline on your device…</p>
+                </div>
+              )}
             </details>
             {PushOptIn && <PushOptIn locale="en" context="today-return" />}
           </div>
