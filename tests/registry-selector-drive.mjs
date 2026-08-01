@@ -733,8 +733,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           await band.locator('.gband .rail__tick img').count() === 12,
         );
         // At rest the current sign stands proud, so touch and keyboard
-        // readers see the selection without a cursor.
-        const restWidths = await band.locator('.gband .rail__tick').evaluateAll((ticks) => {
+        // readers see the selection without a cursor. The proud size
+        // animates in; poll until it settles (bounded) before asserting.
+        const sampleRest = () => band.locator('.gband .rail__tick').evaluateAll((ticks) => {
           const current = ticks.findIndex((t) => t.getAttribute('aria-current') === 'true');
           const visualWidth = (tick) => tick.querySelector('picture').getBoundingClientRect().width;
           const hitWidths = ticks.map((tick) => tick.getBoundingClientRect().width);
@@ -744,6 +745,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             hitSpread: Math.max(...hitWidths) - Math.min(...hitWidths),
           };
         });
+        let restWidths = await sampleRest();
+        for (let attempt = 0; attempt < 25 && !(restWidths.current > restWidths.other + 1); attempt += 1) {
+          await band.waitForTimeout(150);
+          restWidths = await sampleRest();
+        }
         check(
           `band at ${label} rests with the current disc proud`,
           restWidths.current > restWidths.other + 1,
@@ -763,14 +769,25 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           // Use a real pointer move so :hover and the pointer event agree.
           // A synthetic event can leave the rail reporting :hover=false,
           // allowing its resting state to replace the test wave.
+          // The wave animates; on a loaded runner a fixed delay samples the
+          // resting state mid-flight, so poll until the dock shape settles
+          // (bounded), then assert on the final sample.
           await band.mouse.move(
             spot.x + (spot.width / 2),
             spot.y + (spot.height / 2),
           );
-          await band.waitForTimeout(420);
-          const wave = await band.locator('.gband .rail__tick').evaluateAll((ticks) => (
-            ticks.map((t) => t.querySelector('picture').getBoundingClientRect().width)
-          ));
+          await band.mouse.move(
+            spot.x + (spot.width / 2) + 1,
+            spot.y + (spot.height / 2),
+          );
+          let wave = [];
+          for (let attempt = 0; attempt < 25; attempt += 1) {
+            await band.waitForTimeout(150);
+            wave = await band.locator('.gband .rail__tick').evaluateAll((ticks) => (
+              ticks.map((t) => t.querySelector('picture').getBoundingClientRect().width)
+            ));
+            if (wave[6] > wave[5] && wave[5] > wave[4] && wave[4] > wave[0] && wave[6] > wave[0] * 1.4) break;
+          }
           check(
             `band at ${label} rail magnifies like a dock`,
             wave[6] > wave[5] && wave[5] > wave[4] && wave[4] > wave[0] && wave[6] > wave[0] * 1.4,
