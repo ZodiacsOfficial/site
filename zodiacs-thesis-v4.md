@@ -35,7 +35,7 @@ CHANGELOG v4.5 → v4.6 (owner-directed; Fable-authored):
 
 *Belief is the oldest asset.*
 
-You have a sign. Whether you believe in it is beside the point: you know what it is, and so does almost everyone you've ever met. This page is about what happened when those twelve old names met the newest kind of public record, and whether that meeting could amount to something worth holding.
+You have a sign. Whether you believe in it is beside the point: you know what it is, and so does almost everyone you've ever met. Now each of the twelve signs has something it never had before: a permanent record on a public ledger. The names are ancient. The records are two years old. Whether the names can carry the records is the whole question, and it gets argued here both ways.
 
 *Read the argument*
 
