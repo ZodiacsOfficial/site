@@ -110,6 +110,55 @@ try {
   check('masthead reads Nº 09 · Why Zodiacs Matter', /Nº 09 · Why Zodiacs Matter/.test(await page.locator('.essay__rail').textContent() ?? ''));
   check('hero leads with the consumer thesis',
     /Bitcoin made digital ownership possible\. Zodiacs makes it personal\./.test(await page.locator('.hero__epi').textContent() ?? ''));
+  const heroVideo = page.locator('.hero video.hero__media');
+  check('hero uses one ambient zodiac-clock video', (await heroVideo.count()) === 1);
+  const heroVideoStart = await heroVideo.evaluate((video) => ({
+    autoplay: video.hasAttribute('autoplay'),
+    currentTime: video.currentTime,
+    filter: getComputedStyle(video).filter,
+    loop: video.loop,
+    muted: video.muted,
+    objectFit: getComputedStyle(video).objectFit,
+    objectPosition: getComputedStyle(video).objectPosition,
+    paused: video.paused,
+    playsInline: video.playsInline,
+    poster: new URL(video.poster).pathname,
+    readyState: video.readyState,
+    source: new URL(video.currentSrc).pathname,
+  }));
+  await wait(350);
+  const heroVideoLater = await heroVideo.evaluate((video) => ({
+    currentTime: video.currentTime,
+    paused: video.paused,
+  }));
+  check('hero ambient video is loaded, looping, muted, inline, and moving',
+    heroVideoStart.readyState >= 2
+      && !heroVideoStart.autoplay
+      && heroVideoStart.loop
+      && heroVideoStart.muted
+      && heroVideoStart.playsInline
+      && heroVideoStart.poster === '/assets/art/zodiac-clock-960.avif'
+      && heroVideoStart.source === '/assets/art/zodiac-clock.mp4'
+      && !heroVideoStart.paused
+      && !heroVideoLater.paused
+      && heroVideoLater.currentTime !== heroVideoStart.currentTime,
+    JSON.stringify({ start: heroVideoStart, later: heroVideoLater }));
+  check('hero keeps the original cover crop and color treatment',
+    heroVideoStart.objectFit === 'cover'
+      && heroVideoStart.objectPosition === '28% 50%'
+      && heroVideoStart.filter === 'saturate(0.92) brightness(0.9)',
+    JSON.stringify(heroVideoStart));
+  await page.evaluate(() => window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'instant' }));
+  await wait(250);
+  const heroVideoOffscreen = await heroVideo.evaluate((video) => ({ paused: video.paused, currentTime: video.currentTime }));
+  check('hero ambient video pauses off screen', heroVideoOffscreen.paused, JSON.stringify(heroVideoOffscreen));
+  await page.evaluate(() => window.scrollTo({ top: 0, behavior: 'instant' }));
+  await wait(350);
+  const heroVideoReturned = await heroVideo.evaluate((video) => ({ paused: video.paused, currentTime: video.currentTime }));
+  check('hero ambient video resumes on screen',
+    !heroVideoReturned.paused && heroVideoReturned.currentTime > heroVideoOffscreen.currentTime,
+    JSON.stringify({ offscreen: heroVideoOffscreen, returned: heroVideoReturned }));
+  check('hero has no static artwork canvas', (await page.locator('[data-hero-art]').count()) === 0);
   const heroSignSlugs = [
     'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
     'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -325,7 +374,7 @@ try {
   await review.close();
 
   // No-JavaScript pass — the baked static values must stand on their own.
-  const nojsContext = await browser.newContext({ javaScriptEnabled: false });
+  const nojsContext = await browser.newContext({ javaScriptEnabled: false, reducedMotion: 'reduce' });
   const nojs = await nojsContext.newPage();
   await nojs.setViewportSize({ width: 1280, height: 1000 });
   await nojs.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'domcontentloaded' });
@@ -336,6 +385,13 @@ try {
   check('no-JS: test card baked', /PREREGISTERED/.test(await nojs.locator('.tcard').textContent() ?? ''));
   check('no-JS: last-updated line is dated',
     /Last updated: 20\d{2}-\d{2}-\d{2}/.test(await nojs.locator('[data-disclosure-updated]').textContent() ?? ''));
+  const nojsHeroVideo = await nojs.locator('.hero video.hero__media').evaluate((video) => ({
+    autoplay: video.hasAttribute('autoplay'),
+    paused: video.paused,
+  }));
+  check('no-JS + reduced motion: ambient hero video stays paused',
+    !nojsHeroVideo.autoplay && nojsHeroVideo.paused,
+    JSON.stringify(nojsHeroVideo));
   for (const [name, selector] of VISUAL_MODULES) {
     check(`no-JS: ${name} is visually exposed`, await isVisuallyExposed(nojs.locator(selector).first()));
   }
@@ -347,6 +403,13 @@ try {
   await reduced.setViewportSize({ width: 1280, height: 1000 });
   await reduced.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
   await wait(600);
+  const reducedHeroVideo = await reduced.locator('.hero video.hero__media').evaluate((video) => ({
+    autoplay: video.hasAttribute('autoplay'),
+    paused: video.paused,
+  }));
+  check('reduced motion: ambient hero video is paused',
+    !reducedHeroVideo.autoplay && reducedHeroVideo.paused,
+    JSON.stringify(reducedHeroVideo));
   const reducedStates = await reduced.locator('.reveal, [data-visual-reveal], [data-almanac-reveal], [data-visual-reveal] > *, [data-almanac-reveal] > *').evaluateAll((nodes) => nodes.map((node) => {
     const style = getComputedStyle(node);
     return {
@@ -366,6 +429,21 @@ try {
     check(`reduced motion: ${name} is visually exposed`, await isVisuallyExposed(reduced.locator(selector).first()));
   }
   await reducedContext.close();
+
+  // A preference change after load must stop the ambient video immediately.
+  const changingMotionContext = await browser.newContext({ reducedMotion: 'no-preference' });
+  const changingMotion = await changingMotionContext.newPage();
+  await changingMotion.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  const changingHeroVideo = changingMotion.locator('.hero video.hero__media');
+  await wait(350);
+  const beforeMotionChange = await changingHeroVideo.evaluate((video) => ({ paused: video.paused, currentTime: video.currentTime }));
+  await changingMotion.emulateMedia({ reducedMotion: 'reduce' });
+  await wait(150);
+  const afterMotionChange = await changingHeroVideo.evaluate((video) => ({ paused: video.paused, currentTime: video.currentTime }));
+  check('runtime reduced-motion change pauses the ambient hero video',
+    !beforeMotionChange.paused && afterMotionChange.paused,
+    JSON.stringify({ before: beforeMotionChange, after: afterMotionChange }));
+  await changingMotionContext.close();
 
   // Small-viewport passes — illustrated modules and comparison cards never scroll sideways.
   for (const width of [375, 390]) {

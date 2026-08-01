@@ -186,6 +186,30 @@ describe('thesis hero icon contract', () => {
   });
 });
 
+describe('thesis hero background contract', () => {
+  const hero = sliceElement(HTML, /<header\b[^>]*class=["'][^"']*\bhero\b[^"']*["'][^>]*>/i, 'header');
+
+  it('keeps the ambient zodiac-clock video and its lightweight poster', () => {
+    const videos = tagParts(hero, 'video');
+    expect(videos).toHaveLength(1);
+    expect(videos[0].attrs).toMatch(/class="hero__media"/);
+    expect(videos[0].attrs).not.toMatch(/\bautoplay\b/);
+    expect(videos[0].attrs).toMatch(/\bmuted\b/);
+    expect(videos[0].attrs).toMatch(/\bloop\b/);
+    expect(videos[0].attrs).toMatch(/\bplaysinline\b/);
+    expect(videos[0].attrs).toContain('preload="metadata"');
+    expect(videos[0].attrs).toContain('poster="/assets/art/zodiac-clock-960.avif"');
+    expect(videos[0].attrs).toContain('fetchpriority="high"');
+    expect(videos[0].inner).toContain('src="/assets/art/zodiac-clock.mp4"');
+    expect(HTML).toContain('<link rel="preload" as="image" type="image/avif" href="/assets/art/zodiac-clock-960.avif" fetchpriority="high" />');
+  });
+
+  it('does not replace the moving background with a static canvas', () => {
+    expect(hero).not.toContain('data-hero-art');
+    expect(hero).not.toMatch(/<canvas\b/i);
+  });
+});
+
 describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
   const fig3 = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-3["'][^>]*>/i, 'figure');
   const table = sliceElement(fig3, /<table\b[^>]*class=["'][^"']*\bztbl\b[^"']*["'][^>]*>/i, 'table');
