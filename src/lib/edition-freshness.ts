@@ -58,6 +58,13 @@ function replaceTextNode(node: Text, editionDate: string): void {
   if (dated !== current) node.nodeValue = dated;
 }
 
+function syncEditionText(node: Element, state: 'current' | 'dated'): boolean {
+  if (!node.matches('[data-edition-text]')) return false;
+  const value = node.getAttribute(state === 'current' ? 'data-edition-current' : 'data-edition-dated');
+  if (value !== null && node.textContent !== value) node.textContent = value;
+  return true;
+}
+
 function dateNode(node: Node, editionDate: string): void {
   if (node.nodeType === Node.TEXT_NODE) {
     replaceTextNode(node as Text, editionDate);
@@ -65,6 +72,7 @@ function dateNode(node: Node, editionDate: string): void {
   }
   if (!(node instanceof Element)) return;
   if (node.matches('script, style, noscript')) return;
+  if (syncEditionText(node, 'dated')) return;
 
   for (const attribute of ['aria-label', 'title']) {
     const value = node.getAttribute(attribute);
@@ -84,6 +92,10 @@ export function applyEditionFreshness(root: HTMLElement, now: Date = new Date())
   if (!editionDate) return null;
   const state = isCurrentUtcEdition(editionDate, now) ? 'current' : 'dated';
   root.dataset.editionState = state;
+
+  for (const node of root.ownerDocument.querySelectorAll<HTMLElement>('[data-edition-text]')) {
+    syncEditionText(node, state);
+  }
 
   for (const scope of editionScopes(root)) if (state === 'dated') dateNode(scope, editionDate);
   return state;

@@ -20,6 +20,12 @@
         .replace(/\b(for|from|on|until|through|since|before|after|by) today\b/g, '$1 ' + day)
         .replace(/\btoday\b/g, 'on ' + day);
     }
+    function editionText(node, state) {
+      if (!(node instanceof Element) || !node.matches('[data-edition-text]')) return false;
+      var value = node.getAttribute(state === 'current' ? 'data-edition-current' : 'data-edition-dated');
+      if (value !== null && node.textContent !== value) node.textContent = value;
+      return true;
+    }
     function dateNode(node) {
       if (node.nodeType === Node.TEXT_NODE) {
         if (node.parentElement && node.parentElement.closest('[data-edition-current-only]')) return;
@@ -28,6 +34,7 @@
         return;
       }
       if (!(node instanceof Element) || node.matches('script, style, noscript')) return;
+      if (editionText(node, 'dated')) return;
       ['aria-label', 'title'].forEach(function (attribute) {
         var value = node.getAttribute(attribute);
         if (!value) return;
@@ -42,6 +49,9 @@
     function update() {
       var state = isCurrent() ? 'current' : 'dated';
       root.setAttribute('data-edition-state', state);
+      document.querySelectorAll('[data-edition-text]').forEach(function (node) {
+        editionText(node, state);
+      });
       if (state === 'dated') document.querySelectorAll('[data-edition-content]').forEach(dateNode);
     }
     function setup() {

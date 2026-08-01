@@ -156,7 +156,7 @@ export default function TodayBrief({ sunSignLines }: Props) {
             <div class="today-returning-chart-placeholder today-reading" aria-label="Saved-chart fallback">
               <div class="today-reading__head">
                 <h2>For your saved chart</h2>
-                <p>{editionLabel} sky, compared with the latest chart saved on this device.</p>
+                <p>A few themes from the {editionLabel} sky, compared with your saved birth chart.</p>
               </div>
               <div class="today-reading__body today-reading__body--fallback">
                 <p

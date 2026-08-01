@@ -7,5 +7,10 @@ interface Props {
 }
 
 const { current, editionDate } = Astro.props;
+const dated = datedEditionText(current, editionDate);
 ---
-<span data-edition-current-only>{current}</span><span data-edition-dated-only>{datedEditionText(current, editionDate)}</span>
+<span
+  data-edition-text
+  data-edition-current={current}
+  data-edition-dated={dated}
+>{dated}</span>
