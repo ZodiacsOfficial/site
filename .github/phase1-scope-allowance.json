@@ -1,12 +1,11 @@
 {
   "version": 1,
-  "id": "registry-gallery-mobile-2026-07-30",
-  "reason": "Owner-approved Registry gallery release, July 30, 2026: make the sculpture rail dependable on touch screens, keep desktop hover discs inside their clipped rail, improve the return control and its supporting text, and remove the duplicate featured record when the live gallery is available. The Museum label remains the canonical detail surface and the no-WebGL fallback remains intact.",
-  "baseCommit": "4732189e65794047ac8c680f01bed525fe09bd9d",
+  "id": "thesis-consumer-story-2026-08-01",
+  "reason": "Owner-approved thesis release, August 1, 2026: update the Registry's thesis call to action so it matches the new consumer-facing Why Zodiacs Matter title. The Registry experience and behavior remain unchanged.",
+  "baseCommit": "b1fb03753afe13eba248ddc6b05214ab9586e519",
   "protectedPaths": [
     "public/assets/app.js",
-    "public/registry/index.html",
-    "scripts/registry-gallery-band.test.mjs",
+    "scripts/registry-pastel-polish.test.mjs",
     "src/app.jsx"
   ]
 }
