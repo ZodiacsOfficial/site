@@ -278,6 +278,7 @@ function renderPage() {
       transformRequest: function (payload) {
         var canonical = document.querySelector('link[rel="canonical"]');
         payload.u = canonical ? canonical.href : location.origin + location.pathname;
+        payload.r = null;
         if (payload.p && payload.p.url) delete payload.p.url;
         return payload;
       }

@@ -13,11 +13,11 @@ const faq = [
   },
   {
     q: 'Dois-je connaître mon heure de naissance exacte ?',
-    a: 'Oui, pour calculer l’ascendant et les maisons : l’ascendant change environ toutes les deux heures. Si tu ignores l’heure, nous calculons les planètes à midi ; ton Soleil et, en général, ta Lune restent précis pour cette journée. Ton acte de naissance, ton carnet de santé ou ta famille sont souvent les meilleures sources.',
+    a: 'Oui, pour calculer l’ascendant et les maisons : l’ascendant change environ toutes les deux heures. Si tu ignores l’heure, nous utilisons 12 h en heure civile locale comme référence pour les positions et omettons l’ascendant, les angles et les maisons. Si la Lune a changé de signe ce jour-là, le résultat signale l’incertitude. Ton acte de naissance, ton carnet de santé ou ta famille sont souvent les meilleures sources.',
   },
   {
     q: 'Quelle est la précision de ce calculateur ?',
-    a: 'Les positions planétaires sont calculées avec un moteur astronomique professionnel et comparées en continu aux données de référence du JPL de la NASA, avec une marge de quelques centièmes de degré. Les fuseaux horaires historiques, y compris l’heure moyenne locale avant 1922 et les changements d’heure en temps de guerre, sont traités avec la base complète de l’IANA.',
+    a: 'Les positions planétaires sont calculées avec un moteur astronomique et comparées aux données de référence du JPL de la NASA, avec une marge de quelques centièmes de degré. Les changements d’heure historiques, y compris l’heure moyenne locale avant 1922 lorsqu’elle est disponible, sont traités avec l’historique IANA fourni par le navigateur ou le système de l’appareil.',
   },
   {
     q: 'Que deviennent mes données de naissance ?',

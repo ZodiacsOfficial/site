@@ -275,6 +275,112 @@ async function inspectHubFocusRing(browser, baseURL) {
   }
 }
 
+async function inspectStaleEditionLabels(browser, baseURL) {
+  const staleInstant = new Date(`${PROGRAM.anchorDate}T12:00:00.000Z`);
+  staleInstant.setUTCDate(staleInstant.getUTCDate() + 1);
+  const editionLabel = new Intl.DateTimeFormat('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+  }).format(new Date(`${PROGRAM.anchorDate}T00:00:00.000Z`));
+  const context = await browser.newContext({
+    baseURL,
+    viewport: { width: 900, height: 1000 },
+  });
+  await context.addInitScript((fixedInstant) => {
+    const NativeDate = Date;
+    class FixedDate extends NativeDate {
+      constructor(...args) {
+        super(...(args.length ? args : [fixedInstant]));
+      }
+
+      static now() {
+        return new NativeDate(fixedInstant).getTime();
+      }
+    }
+    globalThis.Date = FixedDate;
+  }, staleInstant.toISOString());
+
+  try {
+    for (const route of [
+      { path: '/today/', scope: '.today-page', name: 'today brief' },
+      { path: '/horoscopes/', scope: '[data-edition-content]', name: 'horoscope hub' },
+      { path: '/horoscopes/aries/', scope: '.program[data-edition-content]', name: 'daily sign' },
+    ]) {
+      const page = await context.newPage();
+      try {
+        await page.goto(route.path, { waitUntil: 'networkidle' });
+        await page.waitForFunction(() => document.documentElement.dataset.editionState === 'dated');
+        await page.evaluate(() => new Promise((resolve) => {
+          requestAnimationFrame(() => requestAnimationFrame(resolve));
+        }));
+        const text = await page.locator(route.scope).innerText();
+        check(
+          `${route.name}: prior-day edition is marked dated`,
+          await page.locator('html[data-edition-state="dated"]').count() === 1,
+        );
+        check(
+          `${route.name}: prior-day edition never presents relative Today copy`,
+          !/\btoday(?:[’']s)?\b/iu.test(text) && text.includes(editionLabel),
+          text.match(/.{0,35}\btoday(?:[’']s)?\b.{0,35}/iu)?.[0] ?? 'dated copy shown',
+        );
+      } finally {
+        await page.close();
+      }
+    }
+  } finally {
+    await context.close();
+  }
+}
+
+async function inspectEditionMidnightRollover(browser, baseURL) {
+  const context = await browser.newContext({
+    baseURL,
+    viewport: { width: 900, height: 1000 },
+  });
+  const page = await context.newPage();
+  const editionLabel = new Intl.DateTimeFormat('en-US', {
+    month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+  }).format(new Date(`${PROGRAM.anchorDate}T00:00:00.000Z`));
+
+  try {
+    await page.clock.install({ time: new Date(`${PROGRAM.anchorDate}T23:59:59.500Z`) });
+    await page.goto('/today/', { waitUntil: 'networkidle' });
+    await page.waitForFunction(() => document.documentElement.dataset.editionState === 'current');
+    await page.waitForSelector('[data-today-state="empty"]');
+    await page.clock.fastForward(2_000);
+    await page.waitForFunction(() => document.documentElement.dataset.editionState === 'dated');
+    await page.locator('.today-page').evaluate((scope) => {
+      const probe = document.createElement('p');
+      probe.dataset.rolloverProbe = 'true';
+      probe.setAttribute('aria-label', 'Today’s hydrated label');
+      probe.textContent = 'Today’s hydrated note';
+      scope.append(probe);
+    });
+    await page.waitForFunction((label) => {
+      const probe = document.querySelector('[data-rollover-probe]');
+      return probe?.textContent?.includes(label)
+        && probe.getAttribute('aria-label')?.includes(label);
+    }, editionLabel);
+    const probe = page.locator('[data-rollover-probe]');
+    const [text, ariaLabel] = await Promise.all([
+      probe.innerText(),
+      probe.getAttribute('aria-label'),
+    ]);
+    check(
+      'today brief: open page changes from current to dated at UTC midnight',
+      await page.locator('html[data-edition-state="dated"]').count() === 1,
+    );
+    check(
+      'today brief: post-rollover hydrated text and labels are dated',
+      [text, ariaLabel ?? ''].every((value) => (
+        value.includes(editionLabel) && !/\btoday(?:[’']s)?\b/iu.test(value)
+      )),
+      `${text} · ${ariaLabel ?? ''}`,
+    );
+  } finally {
+    await context.close();
+  }
+}
+
 async function inspectDailyForYouChunkFailure(browser, baseURL) {
   const context = await browser.newContext({
     baseURL,
@@ -627,6 +733,8 @@ await withPreview({ port: 4409 }, async (baseURL) => {
     await inspectReturningDailyForYouMobile(browser, baseURL, QUIET_MOBILE_PROFILE, 'quiet', 0);
     await inspectDailyForYouChunkFailure(browser, baseURL);
     await inspectHubFocusRing(browser, baseURL);
+    await inspectStaleEditionLabels(browser, baseURL);
+    await inspectEditionMidnightRollover(browser, baseURL);
   } finally {
     await browser.close();
   }

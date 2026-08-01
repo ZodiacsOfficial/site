@@ -18,7 +18,7 @@ export interface ChartInput {
   latitude?: number;
   longitude?: number;
   houseSystem: HouseSystem;
-  /** True when the birth time is unknown (noon chart, no angles). */
+  /** True when the birth time is known; false means a caller-supplied reference instant and no angles. */
   timeKnown: boolean;
   flags?: ChartFlag[];
 }

@@ -85,6 +85,9 @@ describe('Phase 1 layout and motion contract', () => {
     ]);
 
     expect(fallback).toContain("class={`today-fallback__status${noChartConfirmed || comparisonUnavailable ? ' is-visible' : ''}`}");
+    expect(fallback).toContain('const introCopy = `This is usually the zodiac sign');
+    expect(fallback).toContain('<p>{introCopy}</p>');
+    expect(fallback).not.toContain('clear note for the {editionLabel} edition');
     expect(brief).toContain('data-ready={streak !== null');
     expect(brief).toContain("streak > 999 ? '999+' : (streak ?? 1)");
     expect(page).toContain('grid-template-columns: minmax(4ch, auto) 29px;');
@@ -106,10 +109,11 @@ describe('Phase 1 layout and motion contract', () => {
     expect(program).not.toContain(':global(:root[data-dfy-saved-chart]) .program :global(.dfy) {\n    min-height:');
   });
 
-  it('reserves both picture and image geometry for every shared pastel sign icon', async () => {
-    const [icon, program] = await Promise.all([
+  it('reserves both picture and image geometry for every pastel sign icon', async () => {
+    const [icon, program, fallback] = await Promise.all([
       source('components/SignIcon.astro'),
       source('components/HoroscopeProgramPage.astro'),
+      source('islands/today/SunSignFallback.tsx'),
     ]);
     expect(icon).toContain('height: auto;');
     expect(icon).toContain('aspect-ratio: 1;');
@@ -118,6 +122,18 @@ describe('Phase 1 layout and motion contract', () => {
     expect(program).toContain('fetchPriority="high"');
     expect(program).toContain("webpOnly={surface === 'today'}");
     expect(program).toContain("decoding={surface === 'today' ? 'sync' : 'async'}");
+    expect(fallback).toContain('inline-size:${size}px;block-size:${size}px;aspect-ratio:1;contain:layout size');
+    expect(fallback).toContain('decoding="sync"');
+    expect(fallback).toContain('/assets/zodiac-icons/48/${sign.slug}.avif');
+  });
+
+  it('pins every Today sign-picker child to a fixed card track during hydration', async () => {
+    const today = await source('pages/today/index.astro');
+    expect(today).toMatch(/\.today-sign\s*\{[^}]*grid-template-rows:\s*34px 18px 16px;[^}]*align-content:\s*start;[^}]*block-size:\s*88px;/u);
+    expect(today).toMatch(/\.today-sign__icon\s*\{[^}]*grid-row:\s*1;/u);
+    expect(today).toMatch(/\.today-sign__name\s*\{[^}]*grid-row:\s*2;/u);
+    expect(today).toMatch(/\.today-sign__dates\s*\{[^}]*grid-row:\s*3;/u);
+    expect(today).not.toMatch(/@media \(max-width:\s*480px\)\s*\{[\s\S]*?\.today-sign\s*\{[^}]*min-height:/u);
   });
 
   it('loads the below-reading personalization bundle only when its saved-chart fallback is visible', async () => {

@@ -8,6 +8,7 @@ import SiteFooter from '../components/SiteFooter.astro';
 import SourcesLine, { type SourceLink } from '../components/SourcesLine.astro';
 import EditorialLine from '../components/EditorialLine.astro';
 import GlassDefs from '../components/GlassDefs.astro';
+import EditionFreshnessGuard from '../components/EditionFreshnessGuard.astro';
 import { ANALYTICS_EVENT_PROPS, ANALYTICS_EVENT_VALUES } from '../lib/analytics';
 import { hasDailyChartEmailProvider } from '../lib/email/daily-config';
 import { BRAND_ICON_PATHS } from '../lib/brand-icons.mjs';
@@ -40,6 +41,8 @@ interface Props {
   stableTypography?: boolean;
   /** Use metric-matched local faces when first paint must make zero font requests. */
   localTypography?: boolean;
+  /** UTC edition rendered by a daily surface; relative wording is enabled only while current. */
+  editionDate?: string;
 }
 
 const props = Astro.props;
@@ -58,6 +61,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
 <html
   lang={LOCALE_META[locale].htmlLang}
   dir={rtlDocumentDirection(LOCALE_META[locale].dir)}
+  data-edition-date={props.editionDate || undefined}
   data-inline-critical-css={props.inlineCriticalCss ? '' : undefined}
   data-stable-typography={props.stableTypography ? '' : undefined}
   data-local-typography={props.localTypography ? '' : undefined}
@@ -79,6 +83,57 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
         }
       } catch (e) {}
     </script>
+    {props.editionDate && (
+      <>
+        <script is:inline>
+          var editionRoot = document.documentElement;
+          var editionDate = editionRoot.getAttribute('data-edition-date');
+          var editionState = editionDate === new Date().toISOString().slice(0, 10) ? 'current' : 'dated';
+          editionRoot.setAttribute('data-edition-state', editionState);
+
+          /* EditionText keeps a dated server/no-JS fallback. On a current
+             edition, replace each span as the parser adds it so a warm-cache
+             paint can never briefly lay out the longer dated label. */
+          if (editionState === 'current' && 'MutationObserver' in window) {
+            var syncCurrentEditionText = function (node) {
+              if (node.nodeType === Node.TEXT_NODE) {
+                var parent = node.parentElement && node.parentElement.closest('[data-edition-text]');
+                if (parent) {
+                  var parentCurrent = parent.getAttribute('data-edition-current');
+                  if (parentCurrent !== null && parent.textContent !== parentCurrent) parent.textContent = parentCurrent;
+                }
+                return;
+              }
+              if (node.nodeType !== Node.ELEMENT_NODE && node.nodeType !== Node.DOCUMENT_NODE) return;
+              var nodes = [];
+              if (node.nodeType === Node.ELEMENT_NODE && node.matches('[data-edition-text]')) nodes.push(node);
+              node.querySelectorAll('[data-edition-text]').forEach(function (match) { nodes.push(match); });
+              nodes.forEach(function (match) {
+                var current = match.getAttribute('data-edition-current');
+                if (current !== null && match.textContent !== current) match.textContent = current;
+              });
+            };
+            var editionPrepaintObserver = new MutationObserver(function (records) {
+              records.forEach(function (record) {
+                record.addedNodes.forEach(syncCurrentEditionText);
+              });
+            });
+            editionPrepaintObserver.observe(editionRoot, { childList: true, subtree: true });
+            document.addEventListener('DOMContentLoaded', function () {
+              syncCurrentEditionText(document);
+              editionPrepaintObserver.disconnect();
+            }, { once: true });
+          }
+        </script>
+        <style is:inline>
+          [data-edition-current-only] { display: none; }
+          [data-edition-dated-only] { display: inline; }
+          :root[data-edition-state="current"] [data-edition-current-only] { display: inline; }
+          :root[data-edition-state="current"] [data-edition-dated-only] { display: none; }
+        </style>
+      </>
+    )}
+    {props.editionDate && <EditionFreshnessGuard />}
     <script is:inline>
       // Capture Chromium's one-shot install event before calculator islands
       // hydrate. The prompt itself stays hidden until two successful charts.
@@ -165,6 +220,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
             transformRequest: function (payload) {
               var canonical = document.querySelector('link[rel="canonical"]');
               payload.u = canonical ? canonical.href : location.origin + location.pathname;
+              payload.r = null;
               if (payload.p && payload.p.url) delete payload.p.url;
               return payload;
             }

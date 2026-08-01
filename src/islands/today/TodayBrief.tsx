@@ -12,6 +12,7 @@ import {
   type TodayContact,
 } from '../../lib/today';
 import SunSignFallback from './SunSignFallback';
+import { datedEditionText } from '../../lib/edition-freshness';
 
 type PushOptInModule = typeof import('../PushOptIn');
 type TransitsModule = typeof import('../../lib/transits');
@@ -117,6 +118,13 @@ export default function TodayBrief({ sunSignLines }: Props) {
     ? { chart, reading, transits: transitsModule }
     : null;
   const streakDisplay = streak !== null && streak > 999 ? '999+' : (streak ?? 1);
+  const editionSunSignLines = useMemo(
+    () => Object.fromEntries(Object.entries(sunSignLines).map(([sign, line]) => (
+      [sign, datedEditionText(line, daily.date)]
+    ))),
+    [sunSignLines],
+  );
+  const editionLabel = dateLabel(daily.date);
 
   return (
     <section
@@ -148,7 +156,7 @@ export default function TodayBrief({ sunSignLines }: Props) {
             <div class="today-returning-chart-placeholder today-reading" aria-label="Saved-chart fallback">
               <div class="today-reading__head">
                 <h2>For your saved chart</h2>
-                <p>Today’s sky, compared with the latest chart saved on this device.</p>
+                <p>A few themes from the {editionLabel} sky, compared with your saved birth chart.</p>
               </div>
               <div class="today-reading__body today-reading__body--fallback">
                 <p
@@ -165,7 +173,7 @@ export default function TodayBrief({ sunSignLines }: Props) {
                       style={`--sign:${sign.hue}`}
                     >
                       <p class="kicker">{sign.name} Sun-sign baseline</p>
-                      <p>{sunSignLines[sign.slug]}</p>
+                      <p>{editionSunSignLines[sign.slug]}</p>
                       <a href={`/horoscopes/${sign.slug}/`}>
                         Read the full {sign.name} horoscope <span aria-hidden="true">→</span>
                       </a>
@@ -192,7 +200,8 @@ export default function TodayBrief({ sunSignLines }: Props) {
             <SunSignFallback
               noChartConfirmed={ready && !chart}
               comparisonUnavailable={comparisonUnavailable}
-              sunSignLines={sunSignLines}
+              sunSignLines={editionSunSignLines}
+              editionDate={daily.date}
             />
           </>
         ) : (
@@ -209,7 +218,7 @@ export default function TodayBrief({ sunSignLines }: Props) {
                   {personalized.chart.name || 'your latest chart'}
                 </span>
               </h2>
-              <p>A few themes from today’s sky, compared with your saved birth chart.</p>
+              <p>A few themes from the {editionLabel} sky, compared with your saved birth chart.</p>
             </div>
 
             <div class="today-reading__body">
@@ -226,13 +235,13 @@ export default function TodayBrief({ sunSignLines }: Props) {
               ) : (
                 <div class="today-quiet" data-today-quiet>
                   <p>
-                    Today looks quieter against your chart. There is less pressure to act on
+                    The {editionLabel} edition looks quieter against your chart. There is less pressure to act on
                     anything immediately.
                   </p>
                   {chartSunSign ? (
                     <section class="today-quiet__baseline" style={`--sign:${chartSunSign.hue}`}>
                       <p class="kicker">{chartSunSign.name} Sun-sign baseline</p>
-                      <p>{sunSignLines[chartSunSign.slug]}</p>
+                      <p>{editionSunSignLines[chartSunSign.slug]}</p>
                       <a href={`/horoscopes/${chartSunSign.slug}/`}>
                         Read the full {chartSunSign.name} horoscope <span aria-hidden="true">→</span>
                       </a>

@@ -27,6 +27,10 @@ describe('daily feed publication timestamps', () => {
 
     expect(feedDates(xml)).toEqual([expected, expected]);
     expect(xml).toContain('Positions at 12:00 UTC');
+    expect(xml).not.toMatch(/\bToday:/u);
+    expect(xml).toContain(new Intl.DateTimeFormat('en-US', {
+      month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+    }).format(new Date(`${daily.date}T00:00:00.000Z`)));
   });
 
   it('keeps aggregate and per-sign RSS dates aligned with Article publication dates', async () => {
@@ -40,5 +44,7 @@ describe('daily feed publication timestamps', () => {
     expect(page.datePublished).toBe(`${horoscopeProgram.anchorDate}T00:00:00.000Z`);
     expect(feedDates(aggregate)).toEqual(Array(13).fill(expected));
     expect(feedDates(sign)).toEqual([expected, expected]);
+    expect(aggregate).not.toMatch(/<description>[^<]*\btoday(?:[’']s)?\b/iu);
+    expect(sign).not.toMatch(/<item>[\s\S]*?<description>[^<]*\btoday(?:[’']s)?\b/iu);
   });
 });

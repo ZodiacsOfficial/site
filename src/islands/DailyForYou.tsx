@@ -12,6 +12,9 @@ import PlanetGlyph from '../components/PlanetGlyph';
 import EvidenceDisclosure from './EvidenceDisclosure';
 import { signBySlug, signForLongitude } from '../lib/signs';
 import daily from '../data/daily.json';
+import { editionDateLabel } from '../lib/edition-freshness';
+
+const dailyEditionLabel = editionDateLabel(daily.date);
 
 /** Each transiting body's current-sign hue, for the leading receipt glyph. */
 const SKY_HUE: Record<string, string> = Object.fromEntries(
@@ -72,7 +75,7 @@ export default function DailyForYou({
           <p class="dfy__placeholder-copy">
             {ready
               ? 'This saved-chart comparison is unavailable right now. Your complete Sun-sign reading remains ready above.'
-              : 'Your Sun-sign reading is ready above. This private saved-chart layer adds today’s closest contacts when available.'}
+              : 'Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available.'}
           </p>
           <ul class="dfy__fallback-points">
             <li>The complete daily reading remains available above.</li>
@@ -144,7 +147,7 @@ export default function DailyForYou({
         ) : (
           <>
             <div class="dfy__quiet">
-              <p>Today is quieter against this chart, with no close major contacts in the current snapshot.</p>
+              <p>The {dailyEditionLabel} edition is quieter against this chart, with no close major contacts in that snapshot.</p>
               {sunSign && (
                 <div class="dfy__quiet-baseline">
                   <strong>{sunSign.name} Sun-sign baseline</strong>

@@ -10,11 +10,7 @@ interface Props {
 
 const { date, compact = false } = Astro.props;
 const events = upcomingPublishedEvents(date);
-const start = new Date(`${date}T00:00:00.000Z`).getTime();
 const dayLabel = (anchor: string) => {
-  const difference = Math.floor((new Date(anchor).getTime() - start) / 86_400_000);
-  if (difference === 0) return 'Today';
-  if (difference === 1) return 'Tomorrow';
   return new Intl.DateTimeFormat('en-US', {
     month: 'short', day: 'numeric', timeZone: 'UTC',
   }).format(new Date(anchor));

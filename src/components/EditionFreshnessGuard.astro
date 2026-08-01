@@ -1,0 +1,83 @@
+<script is:inline>
+  (function () {
+    var root = document.documentElement;
+    var editionDate = root.getAttribute('data-edition-date');
+    if (!editionDate) return;
+
+    function label() {
+      return new Intl.DateTimeFormat('en-US', {
+        month: 'long', day: 'numeric', year: 'numeric', timeZone: 'UTC'
+      }).format(new Date(editionDate + 'T00:00:00.000Z'));
+    }
+    function dated(value) {
+      var day = label();
+      return value
+        .replace(/\bToday[’']s\b/g, 'The ' + day + ' edition’s')
+        .replace(/\btoday[’']s\b/g, 'the ' + day + ' edition’s')
+        .replace(/\bToday,/g, 'For the ' + day + ' edition,')
+        .replace(/\bToday\b/g, 'The ' + day + ' edition')
+        .replace(/\bas of today\b/g, 'as of ' + day)
+        .replace(/\b(for|from|on|until|through|since|before|after|by) today\b/g, '$1 ' + day)
+        .replace(/\btoday\b/g, 'on ' + day);
+    }
+    function editionText(node, state) {
+      if (!(node instanceof Element) || !node.matches('[data-edition-text]')) return false;
+      var value = node.getAttribute(state === 'current' ? 'data-edition-current' : 'data-edition-dated');
+      if (value !== null && node.textContent !== value) node.textContent = value;
+      return true;
+    }
+    function dateNode(node) {
+      if (node.nodeType === Node.TEXT_NODE) {
+        if (node.parentElement && node.parentElement.closest('[data-edition-current-only]')) return;
+        var next = dated(node.nodeValue || '');
+        if (next !== node.nodeValue) node.nodeValue = next;
+        return;
+      }
+      if (!(node instanceof Element) || node.matches('script, style, noscript')) return;
+      if (editionText(node, 'dated')) return;
+      ['aria-label', 'title'].forEach(function (attribute) {
+        var value = node.getAttribute(attribute);
+        if (!value) return;
+        var next = dated(value);
+        if (next !== value) node.setAttribute(attribute, next);
+      });
+      node.childNodes.forEach(dateNode);
+    }
+    function isCurrent() {
+      return editionDate === new Date().toISOString().slice(0, 10);
+    }
+    function update() {
+      var state = isCurrent() ? 'current' : 'dated';
+      root.setAttribute('data-edition-state', state);
+      document.querySelectorAll('[data-edition-text]').forEach(function (node) {
+        editionText(node, state);
+      });
+      if (state === 'dated') document.querySelectorAll('[data-edition-content]').forEach(dateNode);
+    }
+    function setup() {
+      update();
+      var observer = new MutationObserver(function (records) {
+        if (root.getAttribute('data-edition-state') !== 'dated') return;
+        records.forEach(function (record) {
+          if (record.type === 'characterData') dateNode(record.target);
+          record.addedNodes.forEach(dateNode);
+        });
+      });
+      document.querySelectorAll('[data-edition-content]').forEach(function (scope) {
+        observer.observe(scope, { childList: true, characterData: true, subtree: true });
+      });
+      function schedule() {
+        var now = new Date();
+        var next = Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1);
+        setTimeout(function () { update(); schedule(); }, Math.max(1, next - now.getTime() + 1000));
+      }
+      document.addEventListener('visibilitychange', function () {
+        if (document.visibilityState === 'visible') update();
+      });
+      window.addEventListener('pageshow', update);
+      schedule();
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setup, { once: true });
+    else setup();
+  })();
+</script>

@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import { SIGNS, type Sign } from '../../lib/signs';
+import { editionDateLabel } from '../../lib/edition-freshness';
 
 export const TODAY_SUN_SIGN_STORAGE_KEY = 'zodiacs:today-sun-sign:v1';
 
@@ -9,6 +10,7 @@ interface Props {
   noChartConfirmed?: boolean;
   comparisonUnavailable?: boolean;
   sunSignLines: Record<string, string>;
+  editionDate: string;
 }
 
 interface PastelSignIconProps {
@@ -19,14 +21,19 @@ interface PastelSignIconProps {
 
 function PastelSignIcon({ sign, size, className }: PastelSignIconProps) {
   return (
-    <picture class={className} aria-hidden="true">
+    <picture
+      class={className}
+      aria-hidden="true"
+      style={`display:block;inline-size:${size}px;block-size:${size}px;aspect-ratio:1;contain:layout size`}
+    >
       <source srcset={`/assets/zodiac-icons/48/${sign.slug}.avif`} type="image/avif" />
       <img
         src={`/assets/zodiac-icons/48/${sign.slug}.webp`}
         width={size}
         height={size}
         alt=""
-        decoding="async"
+        decoding="sync"
+        style="display:block;width:100%;height:100%;aspect-ratio:1;object-fit:contain"
       />
     </picture>
   );
@@ -63,6 +70,7 @@ export default function SunSignFallback({
   noChartConfirmed = false,
   comparisonUnavailable = false,
   sunSignLines,
+  editionDate,
 }: Props) {
   const [selected, setSelected] = useState<string | null>(null);
   const [hasInteracted, setHasInteracted] = useState(false);
@@ -79,13 +87,15 @@ export default function SunSignFallback({
     [selected],
   );
   const dailyLine = active ? sunSignLines[active.slug] ?? null : null;
+  const editionLabel = editionDateLabel(editionDate);
+  const introCopy = `This is usually the zodiac sign you know from your birthday. Choose it for one clear note for the ${editionLabel} edition — no birth time needed.`;
   const allReadings = useMemo(
     () => SIGNS.map((sign) => ({
       sign,
       line: sunSignLines[sign.slug]
-        ?? 'Today’s note is temporarily unavailable.',
+        ?? `The ${editionLabel} edition note is temporarily unavailable.`,
     })),
-    [sunSignLines],
+    [editionLabel, sunSignLines],
   );
 
   const chooseSign = (slug: string) => {
@@ -100,10 +110,7 @@ export default function SunSignFallback({
     <div class="today-fallback">
       <div class="today-fallback__intro">
         <h2>Start with your Sun sign</h2>
-        <p>
-          This is usually the zodiac sign you know from your birthday. Choose it for one
-          clear note about today — no birth time needed.
-        </p>
+        <p>{introCopy}</p>
         {/* Keep this line in the server layout. Revealing it after local profile
             lookup must not push the sign picker down after first paint. */}
         <p
@@ -157,7 +164,7 @@ export default function SunSignFallback({
             <p class="kicker">{active.dates}</p>
             <h3 class="today-sign-reading__title">
               <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
-              <span>{active.name} today</span>
+              <span>{active.name} · {editionLabel}</span>
             </h3>
             <p class="today-sign-reading__line">{dailyLine}</p>
             <a
@@ -178,7 +185,7 @@ export default function SunSignFallback({
             <p class="kicker">Your quick read</p>
             <h3 class="today-sign-reading__title">
               <PastelSignIcon sign={active} size={28} className="today-sign-reading__icon" />
-              <span>{active.name} today</span>
+              <span>{active.name} · {editionLabel}</span>
             </h3>
             <p class="today-sign-reading__line">{dailyLine}</p>
             <a
@@ -203,7 +210,7 @@ export default function SunSignFallback({
                 <p class="kicker">{sign.dates}</p>
                 <h3 class="today-sign-reading__title">
                   <PastelSignIcon sign={sign} size={28} className="today-sign-reading__icon" />
-                  <span>{sign.name} today</span>
+                  <span>{sign.name} · {editionLabel}</span>
                 </h3>
                 <p class="today-sign-reading__line">{line}</p>
                 <a

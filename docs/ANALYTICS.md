@@ -13,12 +13,36 @@ silent no-op.
 Events carry fixed enums, counters, and booleans only. No birth data, free
 text, identifiers, query strings, URL fragments, chart positions, email
 values, or wallet addresses are forwarded. The shim replaces the browser URL
-with its canonical path, drops events and property keys outside the allowlist,
-and drops string values longer than 32 characters.
+with its canonical path, always sets the outbound referrer to `null`, drops
+events and property keys outside the allowlist, and drops string values longer
+than 32 characters.
 
 Never add an event or property that could carry a birth date, time, place,
 coordinates, pasted address, or anything a visitor typed. The integration
-uses no cookies, pixels, fingerprinting, or session recording.
+uses no cookies, pixels, persistent/browser fingerprinting, or session
+recording.
+
+## Plausible daily-deduplication decision
+
+Accepted on 2026-08-01, with a deliberately narrow boundary: Plausible may
+briefly process the request IP address and User-Agent to derive a salted
+site/device/day identifier for same-day aggregate deduplication. Plausible
+states that it does not store the raw IP address or full User-Agent, rotates
+and deletes the salt every 24 hours, and cannot link the identifier across
+days or sites. Zodiacs.org and Growth OS must never receive that identifier or
+use analytics to construct visitor journeys.
+
+This is a disclosed exception for ephemeral aggregate counting, not a claim
+that analytics involves no IP processing. It remains acceptable only while:
+
+- outbound `payload.r` is `null` and the canonical URL has no query or fragment;
+- properties remain allowlisted, coarse, and free of identity or chart data;
+- no persistent, cross-day, cross-site, or operator-visible visitor ID exists;
+- the public privacy explanation describes the transient IP/User-Agent processing; and
+- a provider-method change triggers a new privacy review before deployment.
+
+Provider sources: [Plausible data policy](https://plausible.io/data-policy) and
+[Events API reference](https://plausible.io/docs/events-api).
 
 ## Directive event taxonomy
 

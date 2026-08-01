@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '16 de julio de 2026';
+const updated = '1 de agosto de 2026';
 
 const jsonLd = [
   {
@@ -128,11 +128,15 @@ const jsonLd = [
 
       <h2>Asistente de IA</h2>
       <p>
-        Cuando usas el asistente, tus mensajes de chat y, cuando preguntas por
-        tu carta, un resumen de las posiciones calculadas se envían a nuestro
-        proveedor de IA, Anthropic, para generar la respuesta. No guardamos las
-        conversaciones y el tráfico de la API no se usa para entrenar modelos.
-        El asistente nunca adjunta tu nombre, fecha, hora o lugar de nacimiento
+        Cuando usas el asistente, tus mensajes de chat se envían a nuestro
+        proveedor de IA, Anthropic, para generar la respuesta. Una carta guardada
+        solo se incluye después de que pulses «Adjuntar mi carta»; la pantalla de
+        consentimiento muestra el resumen solo de posiciones antes de enviarlo.
+        El resumen acompaña cada pregunta mientras «Usando mi carta» siga activo;
+        puedes desactivarlo.
+        No guardamos las conversaciones; Anthropic afirma que el tráfico de la
+        API no se usa para entrenar modelos. El asistente nunca adjunta tu nombre,
+        fecha, hora, lugar de nacimiento o coordenadas
         guardados; todo lo que escribas en el chat forma parte del mensaje que
         envías. Para aplicar el límite diario, conservamos un identificador
         unidireccional con sal derivado de tu dirección IP y su recuento diario,
@@ -160,8 +164,12 @@ const jsonLd = [
         de baja. Vercel aloja el sitio y puede conservar registros técnicos
         breves para entregar las páginas y prevenir abusos. No usamos
         publicidad ni seguimiento entre sitios. Contamos visitas y uso anónimo
-        de funciones con Plausible, un servicio de analítica sin cookies. No
-        recibe datos de nacimiento, direcciones públicas, identificadores de
+        de funciones con Plausible, un servicio de analítica sin cookies. Para
+        no contar repetidamente el mismo dispositivo durante un día, Plausible
+        procesa brevemente la dirección IP y el agente de usuario para derivar
+        un identificador limitado a este sitio, dispositivo y día. No almacena
+        la IP ni el agente de usuario originales; la sal del identificador rota
+        y se elimina cada 24 horas. No recibe datos de nacimiento, direcciones públicas, identificadores de
         cartas o cuentas conectadas ni la lista exacta de signos. Los eventos de
         Aura solo incluyen categorías permitidas, como el resultado y un rango
         aproximado de cantidad; los demás eventos registran «se guardó una

@@ -410,20 +410,60 @@ async function drive(BASE, browser) {
   await noJs.close();
 
   const fallbackMobile = await browser.newPage({
-    viewport: { width: 375, height: 812 },
-    deviceScaleFactor: 2,
+    // Match Lighthouse's default mobile screen so its zero-CLS contract is
+    // covered by the browser drive as well as the performance audit.
+    viewport: { width: 412, height: 823 },
+    deviceScaleFactor: 1.75,
     hasTouch: true,
   });
+  await observeLayoutShifts(fallbackMobile);
   await fallbackMobile.goto(`${BASE}/today/`, { waitUntil: 'networkidle' });
   await fallbackMobile.waitForSelector('[data-today-state="empty"]');
-  const fallbackWidth = await fallbackMobile.evaluate(() => ({
+  const fallbackEvidence = await fallbackMobile.evaluate(() => new Promise((resolveEvidence) => {
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      const cards = [...document.querySelectorAll('.today-sign')];
+      const icons = cards.map((card) => card.querySelector('.today-sign__icon'));
+      const cardRects = cards.map((card) => card.getBoundingClientRect());
+      const iconRects = icons.map((icon) => icon.getBoundingClientRect());
+      resolveEvidence({
+        cls: globalThis.__zdxLayoutShifts.reduce((sum, value) => sum + value, 0),
+        page: document.documentElement.scrollWidth,
+        viewport: innerWidth,
+        cardHeights: cardRects.map((rect) => rect.height),
+        iconSizes: iconRects.map((rect) => [rect.width, rect.height]),
+        iconInsets: iconRects.map((rect, index) => rect.top - cardRects[index].top),
+        rowPitches: cardRects.slice(3).map((rect, index) => rect.top - cardRects[index].top),
+      });
+    }));
+  }));
+  check(
+    '412px Sun-sign baseline has no horizontal overflow',
+    fallbackEvidence.page <= fallbackEvidence.viewport,
+    `${fallbackEvidence.page}/${fallbackEvidence.viewport}`,
+  );
+  check(
+    '412px Sun-sign picker hydration has exactly zero CLS',
+    fallbackEvidence.cls === 0,
+    JSON.stringify(fallbackEvidence),
+  );
+  check(
+    '412px Sun-sign picker keeps fixed card and icon geometry',
+    fallbackEvidence.cardHeights.length === 12
+      && fallbackEvidence.cardHeights.every((height) => height === 88)
+      && fallbackEvidence.iconSizes.every(([width, height]) => width === 34 && height === 34)
+      && fallbackEvidence.iconInsets.every((inset) => inset === 10)
+      && fallbackEvidence.rowPitches.every((pitch) => pitch === 96),
+    JSON.stringify(fallbackEvidence),
+  );
+  await fallbackMobile.setViewportSize({ width: 375, height: 812 });
+  const fallbackNarrowWidth = await fallbackMobile.evaluate(() => ({
     page: document.documentElement.scrollWidth,
     viewport: innerWidth,
   }));
   check(
     '375px Sun-sign baseline has no horizontal overflow',
-    fallbackWidth.page <= fallbackWidth.viewport,
-    `${fallbackWidth.page}/${fallbackWidth.viewport}`,
+    fallbackNarrowWidth.page <= fallbackNarrowWidth.viewport,
+    `${fallbackNarrowWidth.page}/${fallbackNarrowWidth.viewport}`,
   );
   if (OUT) await fallbackMobile.screenshot({ path: `${OUT}/today-empty-375.png`, fullPage: true });
   await fallbackMobile.close();

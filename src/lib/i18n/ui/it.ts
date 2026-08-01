@@ -97,7 +97,7 @@ const it = {
   noBirthTime: "Non la conosco",
   risingTimeHelp: "L’ascendente cambia ogni due ore — qui l’orario conta.",
   chartTimeHelp:
-    "Non conosci l’ora di nascita? Otterrai comunque Sole e Luna — per l’ascendente serve l’orario.",
+    "Non conosci l’ora di nascita? Vedrai un riferimento al mezzogiorno locale, senza ascendente né case; la Luna può essere incerta.",
   chartSavedDevice: "Salvato · su questo dispositivo",
   saveThisChart: "Salva questo tema",
   chartSavedStatus: "Tema salvato su questo dispositivo.",
@@ -287,7 +287,7 @@ const it = {
   polarNotice:
     "Le case Placidus non sono definite così vicino al polo, quindi questo tema usa invece le case a segno intero.",
   noTimeNotice:
-    "Senza un’ora di nascita calcoliamo a mezzogiorno: le posizioni dei pianeti sono precise per quel giorno, ma per ascendente e case serve l’orario.",
+    "Senza un’ora di nascita usiamo le 12:00 dell’ora civile locale come riferimento e omettiamo ascendente, angoli e case.",
   moonAmbiguousNotice:
     "Anche la Luna ha cambiato segno quel giorno — finché non trovi l’ora, è corretto leggere entrambi i segni vicini.",
   fromLinkNotice:

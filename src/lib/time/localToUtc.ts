@@ -1,10 +1,11 @@
 /**
- * Local birth time → UTC, honoring the full history of the IANA zone —
+ * Local birth time → UTC, honoring the history available for the IANA zone —
  * DST, wartime shifts, pre-standardization local mean time (which can
  * carry seconds, e.g. America/Mexico_City at −6:36:36 before 1922).
  *
- * The browser/Node ICU data carries the complete tzdb history, exposed
- * through Intl. Never hand-roll offsets.
+ * The browser/Node host's ICU data exposes its tzdb history through Intl.
+ * Coverage and tzdb version therefore depend on that runtime. Never hand-roll
+ * offsets.
  */
 import { TECHNICAL_OFFSET_LOCALE, TECHNICAL_WALL_LOCALE } from '../i18n/dates';
 
