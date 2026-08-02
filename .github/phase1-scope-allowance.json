@@ -1,20 +1,22 @@
 {
   "version": 1,
-  "id": "registry-consumer-explorer-technical-record-2026-08-02",
-  "reason": "Owner-authorized Registry redesign on August 2, 2026: replace the long dossier-style Registry with a short consumer sign explorer, preserve the cinematic hero and all canonical records, and move detailed market, builder, network, safety, and evidence material to the indexable technical record. The protected Registry source, generated bundle, static shells, and Registry build contracts are enumerated exactly below.",
-  "baseCommit": "f9ff582ad58d1baeafb9f104a2110fb9caca9448",
+  "id": "ask-zodiacs-chart-guide-locales-2026-08-02",
+  "reason": "Owner-authorized Ask Zodiacs restoration on August 2, 2026: add the localized chart-guide pages and update the released-locale privacy and methodology disclosures required for transient OpenAI processing, explicit chart consent, and optional 90-day account memory. The protected locale catalog and page-tree changes are enumerated exactly below.",
+  "baseCommit": "ba85ff19199751f4687e9cc28c2e05717ffb3c58",
   "protectedPaths": [
-    "public/assets/app.js",
-    "public/registry/index.html",
-    "public/registry/technical/index.html",
-    "scripts/build-app.mjs",
-    "scripts/configure-registry-aura.mjs",
-    "scripts/registry-aura-entry.test.mjs",
-    "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-consumer-entry.mjs",
-    "scripts/registry-gallery-band.test.mjs",
-    "scripts/registry-pastel-polish.test.mjs",
-    "scripts/registry-risk.test.mjs",
-    "src/app.jsx"
+    "src/lib/i18n/index.ts",
+    "src/lib/i18n/ui/build-audit.test.ts",
+    "src/pages/es/ask/index.astro",
+    "src/pages/es/methodology/index.astro",
+    "src/pages/es/privacy/index.astro",
+    "src/pages/fr/ask/index.astro",
+    "src/pages/fr/methodology/index.astro",
+    "src/pages/fr/privacy/index.astro",
+    "src/pages/it/ask/index.astro",
+    "src/pages/it/methodology/index.astro",
+    "src/pages/it/privacy/index.astro",
+    "src/pages/pt/ask/index.astro",
+    "src/pages/pt/methodology/index.astro",
+    "src/pages/pt/privacy/index.astro"
   ]
 }
