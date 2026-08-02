@@ -124,13 +124,16 @@ const jsonLd = [
       </p>
       <p>
         A página de catálogo de um signo também pode incluir um painel de
-        negociação opcional que incorpora a interface da Jupiter, uma
-        plataforma independente. O script e as solicitações do painel só
-        carregam depois que você pressiona o botão do painel; a conexão da
-        carteira, a assinatura e qualquer transação acontecem então entre você,
-        o seu software de carteira e a Jupiter, sob as políticas de privacidade
-        da própria Jupiter. O Zodiacs.org não recebe desse painel endereços de
-        carteira, saldos nem detalhes de transações.
+        negociação opcional. O painel é a nossa própria interface e pede um
+        preço à API pública da Jupiter, uma plataforma independente. Se você
+        decidir operar, o seu endereço público é enviado à Jupiter para que ela
+        monte a transação, e a transação assinada pela sua carteira volta à
+        Jupiter para ser enviada à rede; essas solicitações, e qualquer aviso
+        da carteira, seguem as políticas de privacidade da própria Jupiter. A
+        Jupiter recebe metadados comuns de uma solicitação web, como endereço
+        IP, navegador e hora. O Zodiacs.org não guarda desse painel o seu
+        endereço, saldos nem operações, e nenhum dado de nascimento ou do mapa
+        participa dele.
       </p>
 
       <h2>Assistente de IA</h2>

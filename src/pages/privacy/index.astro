@@ -127,13 +127,16 @@ const jsonLd = [
         retention practices apply.
       </p>
       <p>
-        A sign’s catalogue page can also include an optional trade panel that
-        embeds the trading interface of Jupiter, an independent venue. The
-        panel’s script and requests load only after you press its button;
-        wallet connection, signing, and any transaction then happen between
-        you, your wallet software, and Jupiter under Jupiter’s own privacy
-        terms. Zodiacs.org receives no wallet address, balance, or transaction
-        details from that panel.
+        A sign’s catalogue page can also include an optional trade panel. The
+        panel is our own interface, and it requests a price from the public
+        API of Jupiter, an independent venue. If you choose to trade, your
+        public address is sent to Jupiter so it can build the transaction, and
+        the transaction your wallet signs is returned to Jupiter to submit to
+        the network; those requests, and any wallet prompt, are governed by
+        Jupiter’s own privacy terms. Jupiter receives ordinary web-request
+        metadata, such as your IP address, browser information, and request
+        time. Zodiacs.org keeps no record of your address, balance, or trades
+        from that panel, and no birth or chart data is ever part of it.
       </p>
 
       <h2>Aura browser storage and sharing</h2>

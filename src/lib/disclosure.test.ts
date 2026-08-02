@@ -263,15 +263,24 @@ describe('registry disclosure contract', () => {
     expect(row.evidence).toContain('not proof of identity, control, or legal ownership');
   });
 
-  it('describes the embedded trade panel as venue-operated, fee-free, and not yet enabled', () => {
+  it('describes the trade panel as the site’s own interface over a venue-run trade', () => {
     const row = DISCLOSURE_ROWS.find((candidate) => candidate.id === 'trade-panel')!;
     expect(row.status).toBe('pending');
     expect(row.statement).toContain('When the trade panel is enabled');
-    expect(row.statement).toContain('only after a visitor’s click');
+    // The panel is ours; the trade is not. Both halves must stay said.
+    expect(row.statement).toContain('Zodiacs.org’s own interface');
+    expect(row.statement).toContain('Jupiter builds the transaction');
+    expect(row.statement).toContain('Jupiter submits it to the network');
+    // The site's four negations, including the two the custom panel adds.
     expect(row.statement).toContain('never holds keys or funds');
-    expect(row.statement).toContain('cannot execute or reverse a trade');
-    expect(row.statement).toContain('no referral account, platform fee, or other compensation');
+    expect(row.statement).toContain('never builds, signs, or sends a transaction');
+    expect(row.statement).toContain('cannot reverse one');
+    expect(row.statement).toContain('no referral account or platform fee');
+    expect(row.statement).toContain('receives nothing from any trade');
+    // The venue's fee is named rather than left for the visitor to discover.
+    expect(row.statement).toContain('Jupiter charges a fee of 0.10%');
     expect(row.evidence).toContain('not yet enabled');
+    expect(row.evidence).toContain('holds no signing key and calls no write endpoint of its own');
     expect(row.links.map((link) => link.href)).toEqual(['/registry/aries/', '/terms/']);
   });
 

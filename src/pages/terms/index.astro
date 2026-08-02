@@ -27,7 +27,7 @@ const jsonLd = [
       <p class="lede">
         Zodiacs.org is a free astrology reference with a Registry wing whose
         records and lookup tools are read-only; a sign’s catalogue page may
-        also embed an independent third-party trading interface. Using it
+        also offer a trade carried out by an independent venue. Using it
         means you agree to these terms. We have tried to keep them short and
         readable.
       </p>
@@ -77,15 +77,18 @@ const jsonLd = [
       <p>
         Explorer, marketplace, acquisition, and wallet-installation links lead
         to independent third parties with their own terms, fees, security, and
-        privacy practices. A sign’s catalogue page may also embed the trading
-        interface of an independent venue (currently Jupiter) directly in the
-        page; the embedded interface remains that venue’s own service and
-        loads only after your click. Zodiacs.org does not execute, broker,
-        custody, or reverse a transaction reached through those links or
-        through an embedded interface, holds no keys or funds, and receives no
-        fee or other compensation for any trade. A third-party venue — linked
-        or embedded — may ask you to connect, sign, approve a token, or submit
-        a transaction; those actions happen between you, your wallet software,
+        privacy practices. A sign’s catalogue page may also offer a trade in
+        place. That panel is our interface, but the trade is not ours: prices
+        come from the public API of an independent venue (currently Jupiter),
+        that venue builds the transaction, your own wallet software asks you
+        to approve and sign it, and the venue submits it to the network. The
+        venue charges its own fee on the trade — 0.10% at the time of
+        writing — and its own terms apply. Zodiacs.org does not execute,
+        broker, custody, or reverse a transaction reached through those links
+        or through that panel, holds no keys or funds, never builds, signs, or
+        sends a transaction, and receives no fee or other compensation for any
+        trade. A third-party venue may ask you to connect, sign, approve a
+        token, or submit a transaction; those actions happen between you, your wallet software,
         and that venue, and are outside The Cabinet of Twelve’s read-only
         flow. Blockchain transactions are often irreversible. Before acting,
         verify the domain, network, contract or mint, recipient, amount, fees,
