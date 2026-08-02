@@ -844,6 +844,21 @@
           }
     };
 
+    const SIGN_HUES = {
+      aries: '#DE8E79',
+      taurus: '#B9D4BE',
+      gemini: '#B29DD0',
+      cancer: '#B6D4E4',
+      leo: '#E0A9B4',
+      virgo: '#B7D9B0',
+      libra: '#D3A9DE',
+      scorpio: '#B9DCE8',
+      sagittarius: '#E0B080',
+      capricorn: '#C0DEA8',
+      aquarius: '#AE8FC9',
+      pisces: '#A9D4C4'
+    };
+
     const titleCase = (value) => value
       ? value.charAt(0).toUpperCase() + value.slice(1)
       : value;
@@ -866,6 +881,7 @@
         modality: titleCase(asset.metadata.modality),
         rulingPlanet: asset.metadata.rulingPlanet,
         symbol: copy.symbol || '',
+        hue: SIGN_HUES[asset.sign] || '#B9D4BE',
         archetype: asset.metadata.archetype,
         shortBio: copy.shortBio || asset.metadata.shortBio,
         representations: { solana, base }
@@ -911,6 +927,14 @@
 
     function registryProfilePath(sign) {
       return `/registry/${sign?.asset?.sign ?? 'aries'}/`;
+    }
+
+    function signDateLabel(sign) {
+      const range = parseDateRange(sign?.asset?.metadata?.dateRange);
+      if (!range) return sign?.asset?.metadata?.dateRange || '';
+      const date = (month, day) => new Date(2024, month - 1, day)
+        .toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      return `${date(range.sm, range.sd)} – ${date(range.em, range.ed)}`;
     }
 
     const ZODIAC_MARKET_PAIRS = {
@@ -1109,12 +1133,17 @@
     // @zodiacs/sdk through isOfficialZodiacAddress() etc.
     const norm = (s) => (s || '').trim();
     const eq = (a, b) => norm(a).toLowerCase() === norm(b).toLowerCase();
+    const eqRegistryAddress = (representation, candidate) => (
+      representation.chain === 'base'
+        ? eq(representation.address, candidate)
+        : norm(representation.address) === norm(candidate)
+    );
     function lookupAddress(input) {
       const q = norm(input);
       if (!q) return null;
       for (const sign of SIGNS) {
         for (const representation of sign.asset.representations) {
-          if (representation.address && eq(representation.address, q)) {
+          if (representation.address && eqRegistryAddress(representation, q)) {
             return { sign, network: representation.chain, representation };
           }
         }
@@ -1257,7 +1286,6 @@
     // horizontal overflow, and this act must run edge to edge.
     function CineHero({ sign }) {
       const videoRef = useRef(null);
-      const featuredHref = registryProfilePath(sign);
       // Shares the main site's hero footage so the wing opens on the same
       // image as zodiacs.org — one master serves every orientation (there is
       // no portrait crop of it, and the frame is composed to hold centre).
@@ -1326,24 +1354,17 @@
               </h1>
               <div className="cine__foot">
                 <p className="cine__line">
-                  Meet the twelve signs through their symbols, stories, and living traditions.
+                  Explore the twelve signs and see the official digital record for each one.
                 </p>
                 <div className="cine__cta">
-                  <a className="btn btn--primary" href={featuredHref} data-registry-browse>
-                    <span>Browse the Twelve</span>
-                    <span className="arr">↗</span>
+                  <a className="btn btn--primary" href="#official-twelve" data-registry-browse>
+                    <span>Choose your sign</span>
+                    <span className="arr">↓</span>
                   </a>
-                  {REGISTRY_AURA_ENABLED && (
-                    <a
-                      className="btn btn--ghost"
-                      href={REGISTRY_AURA_PATH}
-                      aria-label={REGISTRY_AURA_HERO_COPY.ariaLabel}
-                      data-registry-collection
-                    >
-                      <span>{REGISTRY_AURA_HERO_COPY.cta}</span>
-                      <span className="cta-arr" aria-hidden="true">→</span>
-                    </a>
-                  )}
+                  <a className="btn btn--ghost" href="#verify">
+                    <span>Check an address</span>
+                    <span className="cta-arr" aria-hidden="true">↓</span>
+                  </a>
                 </div>
               </div>
             </div>
@@ -1526,13 +1547,11 @@
           type="button"
           className={'copychip' + (copied ? ' is-copied' : '')}
           onClick={onCopy}
-          aria-label={`Copy address ${text}`}
+          aria-label={`${display || text}. Copy full address`}
           title={text}
         >
           <span className="copychip__text mono">{display || text}</span>
-          <span className="copychip__icon" aria-hidden="true">
-            {copied ? '✓' : '⧉'}
-          </span>
+          <span className="copychip__icon" aria-hidden="true" />
         </button>
       );
     }
@@ -1696,7 +1715,7 @@
 
     let galleryBundleRequested = false;
 
-    function GalleryBand({ active, setActive }) {
+    function GalleryBand({ active, setActive, consumer = false }) {
       const stageRef = useRef(null);
       // The slug the scene last announced — the guard that keeps the
       // selection loop (scene → state → scene) from echoing.
@@ -1750,7 +1769,7 @@
         <section
           ref={stageRef}
           id="gallery"
-          className="gband"
+          className={'gband' + (consumer ? ' gband--consumer' : '')}
           aria-label="The Gallery — the twelve Gold Sculptures"
           data-gallery-stage=""
           data-gallery-embed=""
@@ -1774,7 +1793,7 @@
             <h2 className="card__name" id="gcard-name" data-card-name="" />
             <p className="card__figure" data-card-figure="" />
 
-            <div className="card__market">
+            <div className="card__market" hidden={consumer}>
               <p className="card__market-state" data-market-state="">Loading market context.</p>
               <div className="card__price" data-market-price-row="" hidden>
                 <span className="card__price-value" data-market-price="" />
@@ -1881,50 +1900,65 @@
     function VerifierSection() {
       const reveal = useReveal();
       const [input, setInput] = useState('');
-      const [result, setResult] = useState(null); // null | {state, sign?, network?}
+      const [result, setResult] = useState(null);
       const onSubmit = (e) => {
         e.preventDefault();
-        const hit = lookupAddress(input);
         const query = norm(input);
         const chain = /^0x[0-9a-f]{40}$/i.test(query)
           ? 'base'
           : /^[1-9A-HJ-NP-Za-km-z]{32,44}$/.test(query) ? 'solana' : 'invalid';
-        trackAnalytics('verifier_used', { chain: hit?.network ?? chain, outcome: hit ? 'official' : 'not_found' });
-        if (!hit) { setResult({ state: 'not-found', queried: query }); return; }
-        setResult({ state: 'official-' + hit.network, sign: hit.sign, network: hit.network, queried: query });
+        if (chain === 'invalid') {
+          trackAnalytics('verifier_used', { chain, outcome: 'invalid' });
+          setResult({ state: 'invalid', queried: query });
+          return;
+        }
+        const hit = lookupAddress(query);
+        trackAnalytics('verifier_used', { chain, outcome: hit ? 'official' : 'not_found' });
+        if (!hit) {
+          setResult({ state: 'not-found', queried: query });
+          return;
+        }
+        setResult({ state: 'official', sign: hit.sign, network: hit.network, queried: query });
       };
       const onClear = () => { setInput(''); setResult(null); };
-      // Pick three "try-one" examples so the section demonstrates itself.
       const examples = ['LEO', 'CANCER', 'PISCES'].map(t => SIGNS.find(s => s.ticker === t));
+      const networkLabel = result?.network === 'base' ? 'Base' : 'Solana';
 
       return (
-        <section ref={reveal} id="verify" className="sec reveal" aria-label="Verify">
-          <div className="sec__head">
-            <span className="sec__no">Nº 02</span>
-            <span className="line" />
-            <h2 className="sec__title">Verify</h2>
+        <section ref={reveal} id="verify" className="sec consumer-verify reveal" aria-labelledby="verify-title">
+          <div className="consumer-section-head">
+            <span className="consumer-section-head__eyebrow">Check the public list</span>
+            <h2 id="verify-title">Check a Zodiac address.</h2>
           </div>
-          <p className="sec__lede">
-            Paste an address. We'll tell you which sign.
+          <p className="consumer-verify__intro">
+            Paste the mint or contract address shown by a wallet or marketplace.
+            We&rsquo;ll tell you whether it appears in the official list. Never paste a seed phrase.
+          </p>
+          <p className="consumer-verify__distinction">
+            This checks a Zodiac&rsquo;s token address, not your public wallet address.
           </p>
 
           <form className="vrf" onSubmit={onSubmit}>
-            <label className="sr-only" htmlFor="vrf-input">Address</label>
+            <label className="sr-only" htmlFor="vrf-input">Zodiac mint or contract address</label>
             <input
               id="vrf-input"
               className="vrf__input mono"
               type="text"
               autoComplete="off"
               spellCheck={false}
-              placeholder="Paste an address"
+              inputMode="text"
+              placeholder="Mint or contract address"
               value={input}
-              onChange={e => setInput(e.target.value)}
+              onChange={e => {
+                setInput(e.target.value);
+                if (result) setResult(null);
+              }}
             />
-            <button type="submit" className="vrf__submit">Verify</button>
+            <button type="submit" className="vrf__submit">Check address</button>
           </form>
 
           <div className="vrf__examples">
-            <span className="label label--mute">Try one</span>
+            <span className="label label--mute">Try an official example</span>
             {examples.map(s => (
               <button
                 key={s.ticker}
@@ -1943,36 +1977,42 @@
           </div>
 
           {result && (
-            <div className={'vrf__result vrf__result--' + result.state} role="status" aria-live="polite">
-              {result.state === 'official-base' && (
+            <div
+              className={'vrf__result vrf__result--' + result.state}
+              role="status"
+              aria-live="polite"
+              data-verifier-state={result.state}
+            >
+              {result.state === 'official' && (
                 <>
                   <div className="vrf__result-head">
                     <span className="vrf__tick">✓</span>
-                    <span>Bridged Zodiac · Base</span>
+                    <span>{`Official ${result.sign.name} address on ${networkLabel}.`}</span>
                   </div>
-                  <VrfResultBody sign={result.sign} network="base" queried={result.queried} />
-                </>
-              )}
-              {result.state === 'official-solana' && (
-                <>
-                  <div className="vrf__result-head">
-                    <span className="vrf__tick">✓</span>
-                    <span>Native Zodiac · Solana</span>
-                  </div>
-                  <VrfResultBody sign={result.sign} network="solana" queried={result.queried} />
+                  <VrfResultBody sign={result.sign} network={result.network} queried={result.queried} />
                 </>
               )}
               {result.state === 'not-found' && (
                 <>
                   <div className="vrf__result-head">
-                    <span className="vrf__cross">—</span>
-                    <span>{REGISTRY_VERIFIER_NOT_FOUND_SENTENCE}</span>
+                    <span className="vrf__cross">×</span>
+                    <span>{'This address isn’t in the official Zodiac list.'}</span>
                   </div>
                   <div className="vrf__result-meta mono">{truncateAddress(result.queried, 10, 8) || '—'}</div>
                 </>
               )}
+              {result.state === 'invalid' && (
+                <div className="vrf__result-head">
+                  <span className="vrf__cross">×</span>
+                  <span>{'That doesn’t look like a Solana or Base address.'}</span>
+                </div>
+              )}
             </div>
           )}
+
+          <p className="consumer-verify__safety">
+            Read-only: this checker never connects a wallet, requests a signature, or starts a transaction.
+          </p>
         </section>
       );
     }
@@ -1983,8 +2023,10 @@
           <div className="vrf__result-sign">
             <img
               className="vrf__result-icon"
-              src={`/assets/icons/${sign.name.toLowerCase()}.png`}
+              src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`}
               alt=""
+              width="40"
+              height="40"
               decoding="async"
             />
             <div>
@@ -3240,7 +3282,7 @@
       ];
 
       return (
-        <section ref={reveal} id="builders" className="sec builders reveal" aria-label="For Builders">
+        <section ref={reveal} id="builders-overview" className="sec builders reveal" aria-label="For Builders">
           <div className="sec__head">
             <span className="sec__no">Nº 09</span>
             <span className="line" />
@@ -3680,7 +3722,429 @@
       );
     }
 
-    function Footer() {
+    function ConsumerExplorer({ active, setActive, sign }) {
+      const reveal = useReveal();
+      const gridRef = useRef(null);
+      const [galleryOpen, setGalleryOpen] = useState(false);
+      const season = useMemo(() => currentSeason(), []);
+      const activeIndex = Math.max(0, SIGNS.findIndex(item => item.ticker === active));
+
+      const chooseIndex = (index, focus = false) => {
+        const wrapped = ((index % SIGNS.length) + SIGNS.length) % SIGNS.length;
+        const next = SIGNS[wrapped];
+        if (!next) return;
+        if (focus) {
+          gridRef.current
+            ?.querySelector(`[data-consumer-sign="${next.asset.sign}"]`)
+            ?.focus({ preventScroll: true });
+        }
+        setActive(next.ticker);
+        trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_explorer' });
+      };
+
+      const onKeyDown = (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        const gridStyle = gridRef.current ? window.getComputedStyle(gridRef.current) : null;
+        const columnCount = gridStyle?.display === 'grid'
+          ? Math.max(1, gridStyle.gridTemplateColumns.split(/\s+/).filter(Boolean).length)
+          : 1;
+        const moves = {
+          ArrowRight: activeIndex + 1,
+          ArrowLeft: activeIndex - 1,
+          ArrowDown: activeIndex + columnCount,
+          ArrowUp: activeIndex - columnCount,
+          Home: 0,
+          End: SIGNS.length - 1
+        };
+        if (!(event.key in moves)) return;
+        event.preventDefault();
+        chooseIndex(moves[event.key], true);
+      };
+
+      return (
+        <section
+          ref={reveal}
+          id="official-twelve"
+          className="consumer-explorer"
+          aria-labelledby="consumer-explorer-title"
+          style={{ '--active-sign': sign.hue }}
+        >
+          <header className="consumer-explorer__head">
+            <span className="consumer-section-head__eyebrow">The official twelve</span>
+            <h2 id="consumer-explorer-title">Find the sign you know.</h2>
+            <p>Choose any sign to see its story and official digital record.</p>
+          </header>
+
+          <div className="consumer-explorer__layout">
+            <div
+              className="consumer-signs"
+              ref={gridRef}
+              role="group"
+              aria-label="Choose a zodiac sign"
+              onKeyDown={onKeyDown}
+            >
+              {SIGNS.map((item) => {
+                const isActive = item.ticker === active;
+                return (
+                  <button
+                    key={item.ticker}
+                    id={item.asset.sign}
+                    type="button"
+                    className={'consumer-sign' + (isActive ? ' is-active' : '')}
+                    data-consumer-sign={item.asset.sign}
+                    aria-label={`${item.name}, ${signDateLabel(item)}`}
+                    aria-pressed={isActive}
+                    aria-controls="consumer-sign-preview"
+                    tabIndex={isActive ? 0 : -1}
+                    style={{ '--sign-tone': item.hue }}
+                    onClick={() => chooseIndex(item.order - 1)}
+                  >
+                    <picture className="consumer-sign__icon" aria-hidden="true">
+                      <source srcSet={`/assets/zodiac-icons/128/${item.asset.sign}.avif`} type="image/avif" />
+                      <img
+                        src={`/assets/zodiac-icons/128/${item.asset.sign}.webp`}
+                        width="56"
+                        height="56"
+                        alt=""
+                        loading={item.order > 6 ? 'lazy' : 'eager'}
+                        decoding="async"
+                      />
+                    </picture>
+                    <span className="consumer-sign__name">{item.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <article
+              id="consumer-sign-preview"
+              className="consumer-preview"
+              data-consumer-preview={sign.asset.sign}
+              aria-labelledby="consumer-preview-name"
+            >
+              <div className="consumer-preview__art" aria-hidden="true">
+                <picture>
+                  <source srcSet={`/assets/zodiac-icons/128/${sign.asset.sign}.avif`} type="image/avif" />
+                  <img
+                    key={sign.asset.sign}
+                    src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}
+                    width="128"
+                    height="128"
+                    alt=""
+                    decoding="async"
+                  />
+                </picture>
+              </div>
+              <div className="consumer-preview__body">
+                <div className="consumer-preview__eyebrow">
+                  <span>{String(sign.order).padStart(2, '0')} of 12</span>
+                  {season?.sign.ticker === sign.ticker && <span>Current season</span>}
+                </div>
+                <h3 id="consumer-preview-name" className="consumer-preview__name">{sign.name}</h3>
+                <p className="consumer-preview__dates">{signDateLabel(sign)}</p>
+                <dl className="consumer-preview__facts">
+                  <div><dt>Element</dt><dd>{sign.element}</dd></div>
+                  <div><dt>Archetype</dt><dd>{sign.archetype}</dd></div>
+                  <div><dt>Ruling planet</dt><dd>{sign.rulingPlanet}</dd></div>
+                </dl>
+                <p className="consumer-preview__lore">{sign.shortBio}</p>
+                <div className="consumer-preview__actions">
+                  <a className="btn btn--primary" href={`/${sign.asset.sign}/`}>
+                    <span>Explore {sign.name}</span><span className="arr" aria-hidden="true">→</span>
+                  </a>
+                  <a className="consumer-preview__record" href={registryProfilePath(sign)}>
+                    View official record <span aria-hidden="true">→</span>
+                  </a>
+                </div>
+              </div>
+            </article>
+          </div>
+
+          <p className="sr-only" role="status" aria-live="polite" data-consumer-live>
+            {sign.name} selected. {signDateLabel(sign)}. {sign.element}. {sign.archetype}.
+          </p>
+
+          <button
+            type="button"
+            className="consumer-gallery-toggle"
+            data-consumer-gallery-toggle
+            aria-expanded={galleryOpen}
+            aria-controls="consumer-gold-gallery"
+            onClick={() => {
+              setGalleryOpen(open => !open);
+              if (!galleryOpen) trackAnalytics('registry_gallery_opened', { source: 'consumer_explorer' });
+            }}
+          >
+            <span>{galleryOpen ? 'Close the gold gallery' : 'See the gold gallery'}</span>
+            <span aria-hidden="true">{galleryOpen ? '−' : '+'}</span>
+          </button>
+
+          {galleryOpen && (
+            <div id="consumer-gold-gallery" className="consumer-gallery" data-consumer-gallery>
+              {GALLERY_LIVE ? (
+                <GalleryBand active={active} setActive={setActive} consumer />
+              ) : (
+                <div className="consumer-gallery__fallback" aria-label="The twelve gold sculptures">
+                  {SIGNS.map(item => (
+                    <a key={item.ticker} href={registryProfilePath(item)} aria-label={`Open the ${item.name} record`}>
+                      <img
+                        src={`/assets/nuggets/thumb/${item.asset.sign}.png`}
+                        width="120"
+                        height="120"
+                        alt={`${item.name} gold sculpture`}
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span>{item.name}</span>
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
+          )}
+        </section>
+      );
+    }
+
+    function ConsumerHowItWorks() {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} id="registry" className="consumer-how reveal" aria-labelledby="consumer-how-title">
+          <header className="consumer-section-head">
+            <span className="consumer-section-head__eyebrow">One public reference</span>
+            <h2 id="consumer-how-title">What the Registry does.</h2>
+          </header>
+          <p className="consumer-how__intro">
+            The Registry is the public reference list for the twelve Zodiacs.
+            It shows which digital record belongs to each sign and where that record lives.
+          </p>
+
+          <ol id="identity" className="consumer-steps" aria-label="How to use the Registry">
+            <li>Choose a sign</li>
+            <li>Check its record</li>
+            <li>Use it in another app</li>
+          </ol>
+
+          <div className="consumer-proof" aria-label="Registry facts">
+            <span><strong>12</strong> signs</span>
+            <span><strong>Solana + Base</strong> official records</span>
+            <span><strong>Safe to browse</strong> no wallet required</span>
+          </div>
+
+          <details className="consumer-disclosure">
+            <summary>How the records work</summary>
+            <div className="consumer-disclosure__body">
+              <p>
+                Each Zodiac begins with one native Solana record. Its official Base counterpart
+                points back to that origin through Wormhole. The public registry file lists both.
+              </p>
+              <p>
+                &ldquo;Official&rdquo; means an address appears in this Registry. It is a statement
+                about this list, not approval from a government, wallet, marketplace, or exchange.
+              </p>
+              <a href="/registry/technical/#records-networks">See the records and network details</a>
+            </div>
+          </details>
+        </section>
+      );
+    }
+
+    function ConsumerPurpose() {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} id="thesis" className="consumer-purpose reveal" aria-labelledby="consumer-purpose-title">
+          {REGISTRY_AURA_ENABLED && (
+            <article className="consumer-collection" data-registry-collection>
+              <div className="consumer-collection__art" aria-hidden="true">
+                {SIGNS.slice(0, 4).map(item => (
+                  <img
+                    key={item.ticker}
+                    src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}
+                    width="36"
+                    height="36"
+                    alt=""
+                    loading="lazy"
+                    decoding="async"
+                  />
+                ))}
+              </div>
+              <small className="consumer-section-head__eyebrow">Optional collection view</small>
+              <h3>See the signs in a public wallet.</h3>
+              <p>Turn a public collection into a simple view of signs, elements, and wheel coverage.</p>
+              <a href={REGISTRY_AURA_PATH}>Open the collection view <span aria-hidden="true">→</span></a>
+            </article>
+          )}
+
+          <div className="consumer-purpose__essay">
+            <span className="consumer-section-head__eyebrow">Why keep a registry?</span>
+            <h2 id="consumer-purpose-title">Familiar names deserve a clear record.</h2>
+            <p>
+              The signs have travelled through charts, books, jewellery, newspapers, and phones.
+              Digital addresses are less familiar. A public list lets anyone check which record
+              belongs to each sign without relying on a copied name or ticker.
+            </p>
+            <a href="/thesis/">Read why Zodiacs matter <span aria-hidden="true">→</span></a>
+          </div>
+        </section>
+      );
+    }
+
+    const CONSUMER_FAQS = [
+      {
+        q: 'What is the Registry?',
+        a: 'The public reference list for the twelve Zodiacs and their official digital addresses.'
+      },
+      {
+        q: 'What does “official” mean?',
+        a: 'The address appears in this Registry. It does not mean approval from a government, wallet, marketplace, or exchange.'
+      },
+      {
+        q: 'Do I need a wallet?',
+        a: 'No. You can explore every sign and check an address without connecting anything.'
+      },
+      {
+        q: 'Can I explore any sign?',
+        a: 'Yes. Start with your own sign, visit another, or move through all twelve.'
+      },
+      {
+        q: 'Is a Zodiac a financial product?',
+        a: 'Zodiacs are digital assets, not a promise of profit. Prices can change quickly, and they can lose all market value.'
+      }
+    ];
+
+    function ConsumerFaq() {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} id="faq" className="consumer-faq reveal" aria-labelledby="consumer-faq-title">
+          <header className="consumer-section-head">
+            <span className="consumer-section-head__eyebrow">Five quick answers</span>
+            <h2 id="consumer-faq-title">Need to know.</h2>
+          </header>
+          <dl className="consumer-faq__list">
+            {CONSUMER_FAQS.map(item => (
+              <div className="consumer-faq__item" key={item.q}>
+                <dt>{item.q}</dt>
+                <dd>{item.a}</dd>
+              </div>
+            ))}
+          </dl>
+        </section>
+      );
+    }
+
+    function ConsumerClosing() {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} className="consumer-closing reveal" aria-label="Choose a sign">
+          <div className="consumer-closing__wheel" aria-hidden="true">
+            {SIGNS.map(item => (
+              <img
+                key={item.ticker}
+                src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}
+                width="32"
+                height="32"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              />
+            ))}
+          </div>
+          <h2>Your sign is waiting.</h2>
+          <p>Start with the one you already know.</p>
+          <div className="consumer-closing__actions">
+            <a className="btn btn--primary" href="#official-twelve">
+              <span>Choose your sign</span><span className="arr" aria-hidden="true">↑</span>
+            </a>
+            <a href="/registry/technical/">Open the technical record</a>
+          </div>
+        </section>
+      );
+    }
+
+    function TechnicalRecordsSection() {
+      const records = SIGNS.flatMap(sign => sign.asset.representations);
+      return (
+        <section
+          id="records-networks"
+          className="technical-group technical-records"
+          aria-labelledby="technical-records-title"
+          data-technical-records
+          data-record-count={SIGNS.length}
+          data-representation-count={records.length}
+        >
+          <header className="technical-group__head">
+            <span>01</span>
+            <div>
+              <h2 id="technical-records-title">Records and networks</h2>
+              <p>Twelve sign identities. Twenty-four official representations. One canonical public file.</p>
+            </div>
+          </header>
+
+          <div className="technical-records__table-wrap">
+            <table className="technical-records__table">
+              <caption>Official Solana and Base addresses for the twelve Zodiacs</caption>
+              <thead>
+                <tr><th scope="col">Sign</th><th scope="col">Solana · native</th><th scope="col">Base · bridged</th></tr>
+              </thead>
+              <tbody>
+                {SIGNS.map(sign => (
+                  <tr key={sign.ticker} data-technical-sign={sign.asset.sign}>
+                    <th scope="row">
+                      <img
+                        src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`}
+                        width="32"
+                        height="32"
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                      />
+                      <span>{sign.name}</span>
+                    </th>
+                    <td data-registry-address="solana" data-technical-representation="solana">
+                      <CopyChip
+                        text={sign.representations.solana.address}
+                        display={truncateAddress(sign.representations.solana.address, 7, 6)}
+                      />
+                    </td>
+                    <td data-registry-address="base" data-technical-representation="base">
+                      <CopyChip
+                        text={sign.representations.base.address}
+                        display={truncateAddress(sign.representations.base.address, 7, 6)}
+                      />
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          <div className="technical-records__notes">
+            <p>
+              Solana is the canonical origin. Each Base address is the official bridged ERC-20
+              representation recorded through Wormhole and points back to its Solana mint.
+            </p>
+            <nav aria-label="Registry record resources">
+              <a href="/registry/zodiacs.registry.json">Open registry JSON</a>
+              <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">View the SDK source</a>
+              <a href="/disclosure/#origin">Read provenance</a>
+            </nav>
+          </div>
+        </section>
+      );
+    }
+
+    function TechnicalEvidenceLinks() {
+      return (
+        <nav className="technical-evidence" aria-label="Safety and evidence resources">
+          <a href="/disclosure/"><strong>Disclosure</strong><span>Methods, relationships, and risk</span></a>
+          <a href="/archive/"><strong>Archive</strong><span>Dated public history</span></a>
+          <a href="/registry/zodiacs.registry.json"><strong>Canonical JSON</strong><span>The machine-readable record</span></a>
+          <a href="/sdk/"><strong>SDK documentation</strong><span>Read-only developer reference</span></a>
+        </nav>
+      );
+    }
+
+    function Footer({ technical = false }) {
       return (
         <footer className="ftr">
           <div className="ftr__row">
@@ -3689,12 +4153,26 @@
           </div>
         <div className="ftr__row">
           <div className="ftr__legal">
-            <a href="#registry">Registry</a>
-            <a href="#verify">Verify</a>
-            <a href="#builders">Builders</a>
+            {technical ? (
+              <>
+                <a href="/registry/">Consumer Registry</a>
+                <a href="#records-networks">Records</a>
+                <a href="#market-transparency">Market</a>
+                <a href="#onchain-access">Access</a>
+                <a href="#builders">Builders</a>
+                <a href="#security">Safety</a>
+              </>
+            ) : (
+              <>
+                <a href="#official-twelve">The Twelve</a>
+                <a href="#registry">How it works</a>
+                <a href="#verify">Check an address</a>
+                <a href="/registry/technical/">Technical record</a>
+                <a href="#thesis">Thesis</a>
+              </>
+            )}
             <a href="/sdk/">SDK</a>
             <a href="/registry/zodiacs.registry.json">Record</a>
-            <a href="#thesis">Thesis</a>
             <a href="/archive/">Archive</a>
             <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
             <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
@@ -3728,7 +4206,18 @@
     // ──────────────────────────────────────────────────────────────
     // Root
     // ──────────────────────────────────────────────────────────────
+    const LEGACY_TECHNICAL_HASHES = {
+      pulse: 'market-transparency',
+      standings: 'market-transparency',
+      'onchain-access': 'access-third-parties',
+      builders: 'builder-tools',
+      'built-with-zodiacs': 'builder-tools',
+      sdk: 'builder-tools',
+      security: 'safety-evidence'
+    };
+
     function Zodiacs() {
+      const technical = /^\/registry\/technical\/?$/.test(window.location.pathname);
       const [activeTicker, setActiveTicker] = useState(
         () => currentSeason()?.sign.ticker ?? SIGNS[0].ticker
       );
@@ -3738,7 +4227,7 @@
       );
 
       useEffect(() => {
-        trackAnalytics('registry_visit');
+        trackAnalytics(technical ? 'registry_technical_visit' : 'registry_visit');
         const onClick = (event) => {
           const link = event.target.closest?.('a[href]');
           if (!link) return;
@@ -3751,7 +4240,25 @@
         };
         document.addEventListener('click', onClick);
         return () => document.removeEventListener('click', onClick);
-      }, []);
+      }, [technical]);
+
+      useEffect(() => {
+        if (technical) return undefined;
+        const redirectLegacyHash = () => {
+          let id = '';
+          try {
+            id = decodeURIComponent(window.location.hash.slice(1));
+          } catch {
+            return;
+          }
+          const destination = LEGACY_TECHNICAL_HASHES[id];
+          if (!destination) return;
+          window.location.replace(`/registry/technical/${window.location.search}#${encodeURIComponent(destination)}`);
+        };
+        redirectLegacyHash();
+        window.addEventListener('hashchange', redirectLegacyHash);
+        return () => window.removeEventListener('hashchange', redirectLegacyHash);
+      }, [technical]);
 
       useEffect(() => {
         let cancelled = false;
@@ -3862,6 +4369,84 @@
         };
       }, []);
 
+      if (technical) {
+        return (
+          <>
+            <a href="#main" className="skip">Skip to content</a>
+            <div className="stars" aria-hidden="true" />
+            <div className="grain" aria-hidden="true" />
+            <Header />
+            <main id="main" className="zd technical-registry">
+              <header className="technical-hero">
+                <a className="technical-hero__back" href="/registry/">← Consumer Registry</a>
+                <span className="technical-hero__kicker">The complete public record</span>
+                <h1>Registry <span className="it">technical record.</span></h1>
+                <p>
+                  Addresses, networks, market methodology, third-party access,
+                  builder tools, and disclosures for the twelve Zodiacs.
+                </p>
+                <dl className="technical-hero__facts">
+                  <div><dt>12</dt><dd>signs</dd></div>
+                  <div><dt>24</dt><dd>official addresses</dd></div>
+                  <div><dt>2</dt><dd>networks</dd></div>
+                </dl>
+              </header>
+
+              <nav className="technical-nav" aria-label="Technical record sections">
+                <a href="#records-networks"><span>01</span>Records and networks</a>
+                <a href="#market-transparency"><span>02</span>Market and transparency</a>
+                <a href="#access-third-parties"><span>03</span>Access and third parties</a>
+                <a href="#builder-tools"><span>04</span>Builders</a>
+                <a href="#safety-evidence"><span>05</span>Safety and evidence</a>
+              </nav>
+
+              <TechnicalRecordsSection />
+
+              <section id="market-transparency" className="technical-group" aria-labelledby="technical-market-title">
+                <header className="technical-group__head">
+                  <span>02</span>
+                  <div><h2 id="technical-market-title">Market and transparency</h2><p>Live attention, market context, sources, and methodology.</p></div>
+                </header>
+                <PulseSection />
+                <StandingsSection />
+              </section>
+
+              <section id="access-third-parties" className="technical-group" aria-labelledby="technical-access-title">
+                <header className="technical-group__head">
+                  <span>03</span>
+                  <div><h2 id="technical-access-title">Access and third parties</h2><p>Independent interfaces and point-of-action warnings.</p></div>
+                </header>
+                <OnchainAccessSection />
+              </section>
+
+              <section id="builder-tools" className="technical-group" aria-labelledby="technical-builders-title">
+                <span id="builders" className="technical-group__legacy-anchor" aria-hidden="true" />
+                <header className="technical-group__head">
+                  <span>04</span>
+                  <div><h2 id="technical-builders-title">Builders</h2><p>SDK capabilities, examples, APIs, and product uses.</p></div>
+                </header>
+                <ForBuildersSection />
+                <BuiltWithZodiacsSection />
+                <IdentityContextSection />
+                <SdkSection />
+              </section>
+
+              <section id="safety-evidence" className="technical-group" aria-labelledby="technical-safety-title">
+                <header className="technical-group__head">
+                  <span>05</span>
+                  <div><h2 id="technical-safety-title">Safety and evidence</h2><p>Read-only posture, provenance, disclosures, archive, and full questions.</p></div>
+                </header>
+                <SecuritySection />
+                <TechnicalEvidenceLinks />
+                <FaqSection />
+              </section>
+
+              <Footer technical />
+            </main>
+          </>
+        );
+      }
+
       return (
         <>
           <a href="#main" className="skip">Skip to content</a>
@@ -3869,33 +4454,15 @@
           <div className="grain" aria-hidden="true" />
           <Header />
           <CineHero sign={sign} />
-          {GALLERY_LIVE && (
-            <GalleryBand active={activeTicker} setActive={setActiveTicker} />
-          )}
-          <div className="zd">
-            <Hero
-              sign={sign}
-              animKey={activeTicker}
-              active={activeTicker}
-              setActive={setActiveTicker}
-            />
-            <RegistrySection />
+          <main id="main" className="zd consumer-registry">
+            <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} />
+            <ConsumerHowItWorks />
             <VerifierSection />
-            <DetailPanel sign={sign} animKey={activeTicker} />
-            <Philosophy />
-            <PulseSection />
-            <StandingsSection />
-            <IdentityContextSection />
-            <OnchainAccessSection />
-            <ForBuildersSection />
-            <BuiltWithZodiacsSection />
-            <CatalogGrid active={activeTicker} setActive={setActiveTicker} />
-            <SdkSection />
-            <SecuritySection />
-            <FaqSection />
-            <Closing />
+            <ConsumerPurpose />
+            <ConsumerFaq />
+            <ConsumerClosing />
             <Footer />
-          </div>
+          </main>
         </>
       );
     }

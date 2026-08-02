@@ -2,7 +2,6 @@ import { describe, expect, it } from 'vitest';
 import {
   REGISTRY_AURA_ENTRY_COPY,
   REGISTRY_AURA_ENTRY_SLOT,
-  REGISTRY_AURA_HERO_COPY,
   REGISTRY_AURA_HERO_SLOT,
   REGISTRY_AURA_PATH,
   injectRegistryAuraLanding,
@@ -11,10 +10,15 @@ import {
   registryAuraEnabled,
   registryAuraSitemapEntry,
 } from '../src/lib/registry-aura-entry.mjs';
+import {
+  REGISTRY_CONSUMER_ENTRY_COPY,
+  consumerizeRegistryCollection,
+} from './registry-consumer-entry.mjs';
 
-const HERO = `<p class="cine__line">Meet the twelve signs through their symbols, stories, and living traditions.</p>
+const HERO = `<p class="cine__line">Explore the twelve signs and see the official digital record for each one.</p>
 <div class="cine__cta">
-<a class="btn btn--primary" href="/registry/aries/"><span>Browse the Twelve</span></a>
+<a class="btn btn--primary" href="#official-twelve"><span>Choose your sign</span></a>
+<a class="btn btn--ghost" href="#verify"><span>Check an address</span></a>
 ${REGISTRY_AURA_HERO_SLOT}
 </div>`;
 
@@ -22,11 +26,20 @@ const HTML = `<!doctype html><html><head>
 <meta name="zodiacs-registry-collection-enabled" content="0" />
 </head><body>${HERO}<div>${REGISTRY_AURA_ENTRY_SLOT}</div></body></html>`;
 
+function configure(source, env = {}) {
+  const injected = injectRegistryAuraLanding(source, env);
+  return {
+    ...injected,
+    output: consumerizeRegistryCollection(injected.output, REGISTRY_AURA_ENTRY_COPY),
+  };
+}
+
 describe('Registry Collection build flag', () => {
-  it('pins the approved Cabinet hero language', () => {
-    expect(REGISTRY_AURA_HERO_COPY).toEqual({
-      cta: 'Open the Cabinet',
-      ariaLabel: 'Open your Zodiac collection in the Cabinet of Twelve',
+  it('pins the approved optional collection language', () => {
+    expect(REGISTRY_CONSUMER_ENTRY_COPY).toEqual({
+      title: 'See the signs in a public wallet',
+      description: 'Open the Cabinet of Twelve to view the sign pattern held by a public address. No wallet connection is required.',
+      link: 'Open the Cabinet of Twelve →',
     });
   });
 
@@ -38,41 +51,37 @@ describe('Registry Collection build flag', () => {
   });
 
   it('adds and removes the no-JS landing entry idempotently', () => {
-    const on = injectRegistryAuraLanding(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
+    const on = configure(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
     expect(on).toContain('content="1"');
-    expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(2);
-    expect(on).toContain(`aria-label="${REGISTRY_AURA_HERO_COPY.ariaLabel}"`);
-    expect(on).toContain(`<span>${REGISTRY_AURA_HERO_COPY.cta}</span>`);
-    expect(on).toContain('<span class="cta-arr" aria-hidden="true">→</span>');
-    expect(on).toContain('class="btn btn--ghost"');
+    expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(1);
     expect(on).toContain('class="static-site__card static-site__card--aura"');
     expect(on).toContain('Cabinet of Twelve');
     expect(on).toContain('Dated seal');
     expect(on).toContain('The record');
-    expect(on).toContain(REGISTRY_AURA_ENTRY_COPY.description);
-    expect(on).toContain('Explore the finished sample');
-    expect(injectRegistryAuraLanding(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
+    expect(on).toContain(REGISTRY_CONSUMER_ENTRY_COPY.description);
+    expect(on).toContain('Open the Cabinet of Twelve');
+    expect(on).not.toContain('data-registry-collection-hero');
+    expect(configure(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
 
-    const off = injectRegistryAuraLanding(on, {}).output;
+    const off = configure(on, {}).output;
     expect(off).toContain('content="0"');
     expect(off).not.toContain(REGISTRY_AURA_PATH);
     expect(off).not.toContain('no wallet needed');
-    expect(injectRegistryAuraLanding(off, {}).output).toBe(off);
+    expect(configure(off, {}).output).toBe(off);
   });
 
-  it('adds the Cabinet hero action only while enabled and preserves the Aries fallback', () => {
-    const on = injectRegistryAuraLanding(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
-    expect(on).toContain('href="/registry/aries/"');
+  it('keeps the optional collection out of the hero in every flag state', () => {
+    const on = configure(HTML, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output;
+    expect(on).toContain('href="#official-twelve"');
     expect(on.match(/class="btn btn--primary"/g)).toHaveLength(1);
     expect(on.match(/class="btn btn--ghost"/g)).toHaveLength(1);
-    expect(on).toContain(REGISTRY_AURA_HERO_COPY.cta);
-    expect(injectRegistryAuraLanding(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
+    expect(on.indexOf(REGISTRY_AURA_PATH)).toBeGreaterThan(on.indexOf(REGISTRY_AURA_ENTRY_SLOT));
+    expect(configure(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
 
-    const off = injectRegistryAuraLanding(on, {}).output;
+    const off = configure(on, {}).output;
     expect(off).toBe(HTML);
     expect(off).not.toContain(REGISTRY_AURA_PATH);
-    expect(off).not.toContain(REGISTRY_AURA_HERO_COPY.cta);
-    expect(injectRegistryAuraLanding(off, {}).output).toBe(off);
+    expect(configure(off, {}).output).toBe(off);
   });
 
   it('refuses to stamp a landing page missing its build markers', () => {

@@ -51,6 +51,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   // birth-chart result sheet.
   ['/birth-chart/', '2026-07-24'],
   ['/privacy/', '2026-07-26'],
+  ['/registry/technical/', '2026-08-02'],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
   ...[
     '/disclosure/',
@@ -153,6 +154,7 @@ export const GET: APIRoute = async () => {
     { loc: '/tools/', priority: 0.8 },
     { loc: '/ask/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
+    { loc: '/registry/technical/', priority: 0.6 },
     { loc: '/learn/how-to-read-a-birth-chart/', priority: 0.8 },
     { loc: '/learn/communication/', priority: 0.8 },
     { loc: '/learn/zodiac-dates/', priority: 0.8 },
