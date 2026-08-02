@@ -43,10 +43,12 @@ describe('the gallery band on the registry hub', () => {
       "'/assets/gallery.js'",
       "classList.contains('gallery-live')",
     ]) expect(source).toContain(marker);
-    // One selector or the other, decided once by the probe — never both.
-    expect(source).toContain('{!GALLERY_LIVE && <Selector');
-    expect(source).toContain('{!GALLERY_LIVE && <FeaturedCard');
-    expect(source).toContain('{GALLERY_LIVE && (');
+    // The heavy stage is user-controlled on the consumer Registry: neither
+    // WebGL nor its fallback mounts until the gallery is opened.
+    expect(source).toContain('data-consumer-gallery-toggle');
+    expect(source).toContain('{galleryOpen && (');
+    expect(source).toContain('{GALLERY_LIVE ? (');
+    expect(source).toContain('<GalleryBand active={active} setActive={setActive} consumer />');
   });
 
   it('ships the same contract in the compiled application', async () => {
@@ -144,11 +146,13 @@ describe('the gallery band on the registry hub', () => {
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
-    // The static catalogue carries the twelve as fragment targets for the
-    // sign pages' backlinks, JavaScript or not.
+    // The static explorer keeps all twelve sign destinations useful without
+    // JavaScript while the heavy gallery remains explicitly optional.
     for (const slug of ['aries', 'virgo', 'pisces']) {
-      expect(html).toContain(`<li id="${slug}">`);
+      expect(html).toContain(`href="/registry/${slug}/" aria-label="Explore `);
     }
+    expect(source).toContain('See the gold gallery');
+    expect(html).not.toContain('?gallery=gold');
   });
 
   it('shows the wallet disc where a holder checks it', async () => {

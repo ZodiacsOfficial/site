@@ -5,28 +5,67 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
-  <meta name="zodiacs-registry-collection-enabled" content="0" />
-  <script>
-    /* Chromium paints SVG url() backdrop filters; Safari reports support but
-       renders nothing. Mark Chromium so the nav-pill lens applies only there. */
-    try { if (window.chrome && window.CSS && CSS.supports('backdrop-filter', "url('#zdx-lens-nav')")) document.documentElement.classList.add('zdx-lens'); } catch (e) {}
-  </script>
-  <script>
-    /* The gallery band mounts only where WebGL exists. Settled before first
-       paint so the page renders one selector or the other, never a flash of
-       both — same probe the gallery page itself uses. */
-    try {
-      var glProbe = document.createElement('canvas');
-      if (glProbe.getContext('webgl2') || glProbe.getContext('webgl')) {
-        document.documentElement.classList.add('gallery-live');
-      }
-    } catch (e) {}
-  </script>
-  <meta name="description" content="Choose a zodiac sign and explore its story, symbols, and official digital record." />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <meta name="zodiacs-registry-view" content="technical" />
+  <meta name="description" content="Technical records, network relationships, market methodology, developer resources, and safety evidence for the twelve official Zodiacs." />
 
-  <link rel="canonical" href="https://zodiacs.org/registry/" />
-  <link rel="alternate" type="application/rss+xml" title="Zodiacs — The Archive" href="/archive/rss.xml" />
-  <link rel="alternate" type="application/feed+json" title="Zodiacs — The Archive" href="/archive/feed.json" />
+  <link rel="canonical" href="https://zodiacs.org/registry/technical/" />
+  <link rel="alternate" type="application/json" title="Zodiacs Official Registry" href="/registry/zodiacs.registry.json" />
+
+  <meta property="og:site_name" content="Zodiacs" />
+  <meta property="og:title" content="Technical Registry — Zodiacs" />
+  <meta property="og:description" content="The addresses, networks, methodology, developer resources, and evidence behind the official Registry." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://zodiacs.org/registry/technical/" />
+  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:image:alt" content="Zodiacs — technical record for the official Registry of the Twelve." />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Technical Registry — Zodiacs" />
+  <meta name="twitter:description" content="The addresses, networks, methodology, developer resources, and evidence behind the official Registry." />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
+  <meta name="twitter:image:alt" content="Zodiacs — technical record for the official Registry of the Twelve." />
+
+  <title>Technical Registry — Zodiacs.org</title>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Zodiacs.org", "item": "https://zodiacs.org/" },
+          { "@type": "ListItem", "position": 2, "name": "The Registry", "item": "https://zodiacs.org/registry/" },
+          { "@type": "ListItem", "position": 3, "name": "Technical record", "item": "https://zodiacs.org/registry/technical/" }
+        ]
+      },
+      {
+        "@type": "WebPage",
+        "@id": "https://zodiacs.org/registry/technical/#page",
+        "url": "https://zodiacs.org/registry/technical/",
+        "name": "Technical Registry — Zodiacs.org",
+        "description": "Technical records, network relationships, market methodology, developer resources, and safety evidence for the twelve official Zodiacs.",
+        "inLanguage": "en",
+        "isPartOf": { "@id": "https://zodiacs.org/#site" },
+        "mainEntity": { "@id": "https://zodiacs.org/#registry" }
+      },
+      {
+        "@type": "Dataset",
+        "@id": "https://zodiacs.org/#registry",
+        "name": "Zodiacs Official Registry",
+        "description": "The twelve original Solana Zodiacs and their official Base representations.",
+        "url": "https://zodiacs.org/registry/zodiacs.registry.json",
+        "encodingFormat": "application/json",
+        "license": "https://creativecommons.org/licenses/by/4.0/",
+        "isAccessibleForFree": true
+      }
+    ]
+  }
+  </script>
+
   <script>
     window.plausible = window.plausible || function () {
       (window.plausible.q = window.plausible.q || []).push(arguments);
@@ -47,90 +86,13 @@
   </script>
   <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
 
-  <meta property="og:site_name" content="Zodiacs" />
-  <meta property="og:title" content="The Registry — Choose Your Sign · Zodiacs" />
-  <meta property="og:description" content="Explore the twelve signs and see the official digital record for each one." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://zodiacs.org/registry/" />
-  <!-- og:image / twitter:image use the canonical zodiacs.org host so
-       unfurlers can fetch the page-specific share image from the public site. -->
-  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
-  <meta property="og:image:width" content="1200" />
-  <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Zodiacs — the official registry of the Twelve, on Solana and Base." />
-  <meta property="og:locale" content="en_US" />
-
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="The Registry — Choose Your Sign · Zodiacs" />
-  <meta name="twitter:description" content="Explore the twelve signs and see the official digital record for each one." />
-  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
-  <meta name="twitter:image:alt" content="Zodiacs — the official registry of the Twelve." />
-
-  <title>The Registry — Choose Your Sign · Zodiacs.org</title>
-
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@graph": [
-      {
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Zodiacs.org", "item": "https://zodiacs.org/" },
-          { "@type": "ListItem", "position": 2, "name": "The Registry", "item": "https://zodiacs.org/registry/" }
-        ]
-      },
-      {
-        "@type": "WebPage",
-        "@id": "https://zodiacs.org/registry/#page",
-        "url": "https://zodiacs.org/registry/",
-        "name": "The Registry — Choose Your Sign · Zodiacs.org",
-        "description": "Choose a zodiac sign and explore its story, symbols, and official digital record.",
-        "inLanguage": "en",
-        "isPartOf": { "@id": "https://zodiacs.org/#site" }
-      },
-      {
-        "@type": "ItemList",
-        "@id": "https://zodiacs.org/registry/#the-twelve",
-        "name": "The Twelve — Zodiac catalogue",
-        "numberOfItems": 12,
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1,  "name": "Aries",       "url": "https://zodiacs.org/registry/aries/" },
-          { "@type": "ListItem", "position": 2,  "name": "Taurus",      "url": "https://zodiacs.org/registry/taurus/" },
-          { "@type": "ListItem", "position": 3,  "name": "Gemini",      "url": "https://zodiacs.org/registry/gemini/" },
-          { "@type": "ListItem", "position": 4,  "name": "Cancer",      "url": "https://zodiacs.org/registry/cancer/" },
-          { "@type": "ListItem", "position": 5,  "name": "Leo",         "url": "https://zodiacs.org/registry/leo/" },
-          { "@type": "ListItem", "position": 6,  "name": "Virgo",       "url": "https://zodiacs.org/registry/virgo/" },
-          { "@type": "ListItem", "position": 7,  "name": "Libra",       "url": "https://zodiacs.org/registry/libra/" },
-          { "@type": "ListItem", "position": 8,  "name": "Scorpio",     "url": "https://zodiacs.org/registry/scorpio/" },
-          { "@type": "ListItem", "position": 9,  "name": "Sagittarius", "url": "https://zodiacs.org/registry/sagittarius/" },
-          { "@type": "ListItem", "position": 10, "name": "Capricorn",   "url": "https://zodiacs.org/registry/capricorn/" },
-          { "@type": "ListItem", "position": 11, "name": "Aquarius",    "url": "https://zodiacs.org/registry/aquarius/" },
-          { "@type": "ListItem", "position": 12, "name": "Pisces",      "url": "https://zodiacs.org/registry/pisces/" }
-        ]
-      },
-      {
-        "@type": "Dataset",
-        "@id": "https://zodiacs.org/#registry",
-        "name": "Zodiacs Registry",
-        "description": "The twelve Zodiacs: original Solana assets with official Base counterparts.",
-        "url": "https://zodiacs.org/registry/zodiacs.registry.json",
-        "encodingFormat": "application/json",
-        "license": "https://creativecommons.org/licenses/by/4.0/",
-        "creator": { "@id": "https://zodiacs.org/#org" },
-        "isAccessibleForFree": true
-      }
-    ]
-  }
-  </script>
-
   <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/app-icons/v3/favicon.svg" />
-  <link rel="icon" type="image/png" sizes="16x16" href="/assets/app-icons/v3/favicon-16.png" />
   <link rel="icon" type="image/png" sizes="32x32" href="/assets/app-icons/v3/favicon-32.png" />
-  <link rel="icon" type="image/png" sizes="96x96" href="/assets/app-icons/v3/favicon-96.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="/assets/app-icons/v3/apple-touch-icon.png" />
   <link rel="manifest" href="/site.webmanifest" />
 
-  <style>
+  <!-- registry-shared-styles:start -->
+<style>
     @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
     @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
     @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
@@ -141,7 +103,7 @@
     @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
   </style>
 
-  <style>
+<style>
     /* ──────────────────────────────────────────────────────────────
        Zodiacs.org — Mobile landing
        Aesthetic: dark museum luxury × ancient astronomical artifact
@@ -4793,225 +4755,497 @@
       .technical-registry * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
     }
   </style>
+<!-- registry-shared-styles:end -->
+  <style data-registry-technical-shell>
+    .technical-static {
+      --technical-width: 1120px;
+      width: min(var(--technical-width), calc(100% - 40px));
+      margin: 0 auto;
+      padding: 24px 0 96px;
+      color: var(--ink, #eef1f7);
+      font-family: 'Instrument Sans', system-ui, sans-serif;
+    }
+    .technical-static__skip {
+      position: fixed;
+      inset: 10px auto auto 10px;
+      z-index: 60;
+      padding: 10px 14px;
+      background: #eef1f7;
+      color: #060709;
+      transform: translateY(-160%);
+    }
+    .technical-static__skip:focus { transform: translateY(0); }
+    .technical-static a { color: inherit; text-underline-offset: 4px; }
+    .technical-static a:focus-visible,
+    .technical-static button:focus-visible { outline: 2px solid #a9d4c4; outline-offset: 4px; }
+    .technical-static__crumbs {
+      padding: 12px 0 24px;
+      border-bottom: 1px solid var(--hair, rgba(198,204,218,.12));
+      font-size: 13px;
+      color: var(--ink-dim, #8e96ab);
+    }
+    .technical-static__crumbs ol {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .technical-static__crumbs li + li::before { content: '/'; margin-right: 8px; opacity: .5; }
+    .technical-static__hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(240px, .65fr);
+      gap: clamp(44px, 8vw, 120px);
+      align-items: end;
+      padding: clamp(72px, 10vw, 144px) 0 clamp(54px, 8vw, 104px);
+    }
+    .technical-static__eyebrow,
+    .technical-static__section-number {
+      margin: 0 0 16px;
+      font-family: var(--mono, ui-monospace, monospace);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      color: var(--ink-dim, #8e96ab);
+    }
+    .technical-static h1,
+    .technical-static h2,
+    .technical-static h3 {
+      font-family: var(--serif, Georgia, serif);
+      font-weight: 400;
+      text-wrap: balance;
+    }
+    .technical-static h1 {
+      max-width: 780px;
+      margin: 0;
+      font-size: clamp(54px, 8vw, 112px);
+      line-height: .88;
+      letter-spacing: -.045em;
+    }
+    .technical-static__lede {
+      max-width: 42ch;
+      margin: 0;
+      font-family: var(--serif, Georgia, serif);
+      font-size: clamp(19px, 2.2vw, 26px);
+      line-height: 1.45;
+      color: var(--ink-2, #c6ccda);
+      text-wrap: pretty;
+    }
+    .technical-static__index {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      display: flex;
+      gap: 7px 22px;
+      overflow-x: auto;
+      padding: 15px 0;
+      border-block: 1px solid var(--hair, rgba(198,204,218,.12));
+      background: color-mix(in srgb, var(--bg, #060709) 92%, transparent);
+      backdrop-filter: blur(16px);
+      scrollbar-width: none;
+    }
+    .technical-static__index::-webkit-scrollbar { display: none; }
+    .technical-static__index a {
+      flex: 0 0 auto;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      font-size: 13px;
+      text-decoration: none;
+      color: var(--ink-2, #c6ccda);
+    }
+    .technical-static__section {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(190px, .7fr) minmax(0, 1.3fr);
+      gap: clamp(36px, 8vw, 120px);
+      padding: clamp(72px, 9vw, 126px) 0;
+      border-bottom: 1px solid var(--hair, rgba(198,204,218,.12));
+      scroll-margin-top: 72px;
+    }
+    .technical-static__section h2 {
+      margin: 0;
+      font-size: clamp(34px, 4.5vw, 58px);
+      line-height: 1;
+      letter-spacing: -.025em;
+    }
+    .technical-static__body { min-width: 0; }
+    .technical-static__body > p {
+      max-width: 64ch;
+      margin: 0 0 20px;
+      font-size: 16px;
+      line-height: 1.75;
+      color: var(--ink-2, #c6ccda);
+      text-wrap: pretty;
+    }
+    .technical-static__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px 24px;
+      margin: 28px 0 0;
+      padding: 20px 0 0;
+      border-top: 1px solid var(--hair, rgba(198,204,218,.12));
+      font-size: 14px;
+    }
+    .technical-static__records {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0 28px;
+      margin-top: 44px;
+      border-top: 1px solid var(--hair-2, rgba(198,204,218,.22));
+    }
+    .technical-static__sign { padding: 24px 0; border-bottom: 1px solid var(--hair, rgba(198,204,218,.12)); }
+    .technical-static__sign h3 { margin: 0 0 16px; font-size: 25px; }
+    .technical-static__sign dl { margin: 0; }
+    .technical-static__record { display: grid; gap: 7px; padding: 10px 0; }
+    .technical-static__record dt { display: flex; align-items: baseline; gap: 10px; margin: 0; }
+    .technical-static__record dt span { font-size: 13px; text-transform: capitalize; }
+    .technical-static__record dt small {
+      font-family: var(--mono, ui-monospace, monospace);
+      font-size: 9px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--ink-dim, #8e96ab);
+    }
+    .technical-static__record dd { min-width: 0; margin: 0; }
+    .technical-static__record code {
+      font-family: var(--mono, ui-monospace, monospace);
+      font-size: 11px;
+      line-height: 1.5;
+      color: var(--ink-2, #c6ccda);
+      overflow-wrap: anywhere;
+    }
+    .technical-static__anchor {
+      position: relative;
+      top: -72px;
+      display: block;
+      width: 1px;
+      height: 0;
+      visibility: hidden;
+    }
+    .technical-static__footer {
+      display: flex;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 42px 0 0;
+      font-size: 13px;
+      color: var(--ink-dim, #8e96ab);
+    }
+    @media (max-width: 760px) {
+      .technical-static { width: min(100% - 32px, var(--technical-width)); padding-top: 12px; }
+      .technical-static__hero,
+      .technical-static__section { grid-template-columns: 1fr; gap: 30px; }
+      .technical-static__hero { padding-block: 60px 52px; }
+      .technical-static h1 { font-size: clamp(52px, 16vw, 78px); }
+      .technical-static__records { grid-template-columns: 1fr; }
+      .technical-static__footer { flex-direction: column; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .technical-static__skip { transition: none; }
+    }
+  </style>
 </head>
 <body>
-  <div id="root">
-    <!-- Server-rendered cinematic hero. Mirrors the mounted <CineHero/> (see
-         src/app.jsx) so the framed film, headline, and glass CTAs paint before
-         — or entirely without — the React bundle: on a slow, throttled, or
-         script-blocked phone the visitor sees THIS, not a text-only fallback.
-         React replaces #root on mount with the same .cine structure, so the
-         swap is seamless. The zero-dep script below starts playback (poster
-         stays the LCP; the film only attaches after load). -->
-    <section class="cine" aria-label="Zodiacs.org — the official registry of the Twelve">
-      <div class="cine__frame">
-        <video
-          class="cine__media"
-          data-src="/assets/hero/zodiacs-hero.mp4"
-          poster="/assets/hero/zodiacs-hero-poster.avif"
-          muted
-          loop
-          playsinline
-          preload="none"
-          aria-hidden="true"
-          tabindex="-1"
-          data-cine-video
-        ></video>
-        <div class="cine__scrim" aria-hidden="true"></div>
-        <div class="cine__content">
-          <a class="cine__eyebrow" href="/disclosure/" data-i18n="disclosure.linkLabel">The Official Registry · Est. <span data-registry-established>MMXXIV</span> · origin receipts 5 Jul 2024</a>
-          <h1 class="cine__title">Twelve signs.<br><span class="it">One register.</span></h1>
-          <div class="cine__foot">
-            <p class="cine__line">Explore the twelve signs and see the official digital record for each one.</p>
-            <div class="cine__cta">
-              <a class="btn btn--primary" href="#official-twelve" data-registry-browse><span>Choose your sign</span><span class="arr">↓</span></a>
-              <a class="btn btn--ghost" href="#verify"><span>Check an address</span><span class="cta-arr" aria-hidden="true">↓</span></a>
-              <!-- registry-collection-hero:slot -->
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-    <script>
-      // The footage animates on every screen unless the visitor prefers
-      // reduced motion. The poster stays the LCP: the film only attaches
-      // after load, so it never competes with first paint. Zero-dependency
-      // and inline so it runs even if the React/unpkg bundle never arrives.
-      (function () {
-        var v = document.querySelector('[data-cine-video]');
-        if (!v) return;
-        var play = function () {
-          if (!v.isConnected) return;
-          if (!v.src) { v.src = v.getAttribute('data-src'); v.preload = 'auto'; }
-          var p = v.play();
-          if (p && p.catch) p.catch(function () {});
-        };
-        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-          if (window.matchMedia('(min-width: 720px)').matches) {
-            play();
-          } else if (document.readyState === 'complete') {
-            play();
-          } else {
-            window.addEventListener('load', play, { once: true });
-          }
-          window.addEventListener('pageshow', function (e) { if (e.persisted) play(); });
-        }
-      })();
-    </script>
-    <main class="static-site consumer-static" id="main">
-      <nav class="static-site__nav" aria-label="Registry navigation">
-        <a href="/">Zodiacs</a>
-        <a href="#official-twelve">The twelve</a>
-        <a href="#verify">Check an address</a>
-        <a href="/registry/technical/">Technical record</a>
+  <a class="technical-static__skip" href="#main">Skip to technical record</a>
+  <div id="root" data-registry-technical-fallback>
+    <main class="technical-static" id="main">
+      <nav class="technical-static__crumbs" aria-label="Breadcrumb">
+        <ol>
+          <li><a href="/">Zodiacs.org</a></li>
+          <li><a href="/registry/">Registry</a></li>
+          <li aria-current="page">Technical record</li>
+        </ol>
       </nav>
 
-      <section class="static-site__section static-explorer" id="official-twelve">
-        <p class="static-site__eyebrow">The official twelve</p>
-        <h2>Choose the sign that feels like yours.</h2>
-        <p>Each sign has its own story and one public digital record. Start anywhere.</p>
-        <nav class="static-sign-grid" aria-label="Choose a zodiac sign">
-          <a id="aries" href="/registry/aries/" aria-label="Explore Aries"><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt="">Aries</a>
-          <a id="taurus" href="/registry/taurus/" aria-label="Explore Taurus"><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt="">Taurus</a>
-          <a id="gemini" href="/registry/gemini/" aria-label="Explore Gemini"><img src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt="">Gemini</a>
-          <a id="cancer" href="/registry/cancer/" aria-label="Explore Cancer"><img src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt="">Cancer</a>
-          <a id="leo" href="/registry/leo/" aria-label="Explore Leo"><img src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt="">Leo</a>
-          <a id="virgo" href="/registry/virgo/" aria-label="Explore Virgo"><img src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt="">Virgo</a>
-          <a id="libra" href="/registry/libra/" aria-label="Explore Libra"><img src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt="">Libra</a>
-          <a id="scorpio" href="/registry/scorpio/" aria-label="Explore Scorpio"><img src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt="">Scorpio</a>
-          <a id="sagittarius" href="/registry/sagittarius/" aria-label="Explore Sagittarius"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt="">Sagittarius</a>
-          <a id="capricorn" href="/registry/capricorn/" aria-label="Explore Capricorn"><img src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt="">Capricorn</a>
-          <a id="aquarius" href="/registry/aquarius/" aria-label="Explore Aquarius"><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt="">Aquarius</a>
-          <a id="pisces" href="/registry/pisces/" aria-label="Explore Pisces"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt="">Pisces</a>
-        </nav>
-        <article class="static-sign-preview">
-          <img src="/assets/zodiac-icons/48/leo.webp" width="96" height="96" alt="Leo pastel zodiac icon">
-          <div>
-            <p class="static-site__eyebrow">Now · Leo season</p>
-            <h3>Leo</h3>
-            <p>July 23–August 22 · Fire · The Sovereign</p>
-            <p>A sign associated with radiance, courage, play, and the wish to be seen.</p>
-            <p><a href="/registry/leo/">Explore Leo →</a> <a href="/registry/zodiacs.registry.json">View official record</a></p>
+      <header class="technical-static__hero">
+        <div>
+          <p class="technical-static__eyebrow">The Registry · Technical record</p>
+          <h1>The record behind the Twelve.</h1>
+        </div>
+        <p class="technical-static__lede">Addresses, network relationships, methodology, developer resources, and the evidence used to maintain the official Registry.</p>
+      </header>
+
+      <nav class="technical-static__index" aria-label="Technical record sections">
+        <a href="#records-networks">Records and networks</a>
+        <a href="#market-transparency">Market and transparency</a>
+        <a href="#access-third-parties">Access and third parties</a>
+        <a href="#builder-tools">Builders</a>
+        <a href="#safety-evidence">Safety and evidence</a>
+      </nav>
+
+      <section class="technical-static__section" id="records-networks">
+        <div>
+          <p class="technical-static__section-number">01 · Public record</p>
+          <h2>Records and networks</h2>
+        </div>
+        <div class="technical-static__body">
+          <p>Each sign has one canonical Solana origin and one official Base representation. The Base record points back to its Solana origin through the documented bridge relationship.</p>
+          <p>The list below is generated from the same machine-readable Registry used by the consumer explorer and SDK.</p>
+          <div class="technical-static__links">
+            <a href="/registry/zodiacs.registry.json">Open the canonical Registry JSON</a>
+            <a href="/disclosure/#origin">Read the origin receipts</a>
           </div>
+          <div class="technical-static__records" aria-label="Twelve Zodiacs and their twenty-four official representations">
+            <!-- registry-technical-records:start -->
+<article class="technical-static__sign" data-technical-sign="aries">
+          <h3><a href="/registry/aries/">Aries</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0x3ffB5282F5891Dd8c813E64059EdB0607537eC91</code></dd>
+            </div>
+          </dl>
         </article>
-      </section>
 
-      <section class="static-site__section" id="identity" aria-labelledby="registry-does-title">
-        <span id="registry" aria-hidden="true"></span>
-        <p class="static-site__eyebrow">A simple public reference</p>
-        <h2 id="registry-does-title">What the Registry does</h2>
-        <p>The Registry is the public reference list for the twelve Zodiacs. It shows which digital record belongs to each sign and where that record lives.</p>
-        <ol class="static-steps">
-          <li><strong>Choose a sign</strong></li>
-          <li><strong>Check its record</strong></li>
-          <li><strong>Use it in another app</strong></li>
-        </ol>
-        <div class="static-proof" aria-label="Registry facts">
-          <span><strong>12</strong> signs</span>
-          <span><strong>2</strong> networks · Solana + Base</span>
-          <span><strong>Read only</strong> safe to browse</span>
+        <article class="technical-static__sign" data-technical-sign="taurus">
+          <h3><a href="/registry/taurus/">Taurus</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0xd5356c6E529569c6912978433DAfb7ca72B5f09C</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="gemini">
+          <h3><a href="/registry/gemini/">Gemini</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0x8F6eb25aB4CD2F8f064f7da5E35136D4EC600b4f</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="cancer">
+          <h3><a href="/registry/cancer/">Cancer</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0xb9Fd3c3157C7b69260Ca285FbbC74F6309226378</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="leo">
+          <h3><a href="/registry/leo/">Leo</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0x4f7B4c12DE5d47314C86Ed3BA25E289aA139CF75</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="virgo">
+          <h3><a href="/registry/virgo/">Virgo</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0xAcFd97106bbE5D931aC430Be76A8E362832D48f4</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="libra">
+          <h3><a href="/registry/libra/">Libra</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0x4201eff5F419CD6EEDFb28fa240edeaFc9002204</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="scorpio">
+          <h3><a href="/registry/scorpio/">Scorpio</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0x0057C9cB6D16C2ecA808788f14d0d0c367b26676</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="sagittarius">
+          <h3><a href="/registry/sagittarius/">Sagittarius</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0xD21fAb1EB5E11AC3C281F7cF8096eCC4683eEa9c</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="capricorn">
+          <h3><a href="/registry/capricorn/">Capricorn</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0xbFB102C18FDf49f2ffCB9B3aF4522f7DC9f51018</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="aquarius">
+          <h3><a href="/registry/aquarius/">Aquarius</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0xccA7CD4F96336Fd26eF6c5F579eaC651bAC5535F</code></dd>
+            </div>
+          </dl>
+        </article>
+
+        <article class="technical-static__sign" data-technical-sign="pisces">
+          <h3><a href="/registry/pisces/">Pisces</a></h3>
+          <dl>
+            <div class="technical-static__record" data-technical-representation data-chain="solana">
+              <dt><span>solana</span><small>Canonical origin · SPL</small></dt>
+              <dd><code>3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE</code></dd>
+            </div>
+            <div class="technical-static__record" data-technical-representation data-chain="base">
+              <dt><span>base</span><small>Official representation · ERC20</small></dt>
+              <dd><code>0x43fA1855a89b7A3e07426Fa7a1B44b4187d29Daf</code></dd>
+            </div>
+          </dl>
+        </article>
+<!-- registry-technical-records:end -->
+          </div>
         </div>
-        <details><summary>How the records work</summary><p>Each sign has one native Solana record and one official representation on Base. “Official” means the address appears in the published Registry; it is a reference status, not government or marketplace approval.</p></details>
       </section>
 
-      <section class="static-site__section" id="verify">
-        <p class="static-site__eyebrow">Read-only check</p>
-        <h2>Check a Zodiac address</h2>
-        <p>Paste the mint or contract address shown by a wallet or marketplace. We’ll tell you whether it appears in the official list. Never paste a seed phrase.</p>
-        <p>This checks a Zodiac asset address—not your public wallet address. The interactive checker appears when JavaScript is available.</p>
-        <p><strong>Nothing connects, signs, or moves.</strong> You can also inspect the <a href="/registry/zodiacs.registry.json">public Registry JSON</a>.</p>
-      </section>
-
-      <section class="static-site__section static-collection-section">
-        <p class="static-site__eyebrow">Collections</p>
-        <div class="static-collection-slot">
-          <!-- registry-collection-entry:slot -->
+      <span class="technical-static__anchor" id="pulse" aria-hidden="true"></span>
+      <span class="technical-static__anchor" id="standings" aria-hidden="true"></span>
+      <section class="technical-static__section" id="market-transparency">
+        <div>
+          <p class="technical-static__section-number">02 · Measurement</p>
+          <h2>Market and transparency</h2>
+        </div>
+        <div class="technical-static__body">
+          <p>Registry identity does not depend on price. When market or attention data appears, its source, capture time, and methodology sit beside it so readers can tell the public record from outside context.</p>
+          <p>Third-party figures may be delayed, incomplete, or unavailable. They never change whether an address appears in the Registry.</p>
+          <div class="technical-static__links">
+            <a href="/thesis/">Read the cultural thesis</a>
+            <a href="/disclosure/#financial-advice">Read the financial-risk disclosure</a>
+          </div>
         </div>
       </section>
 
-      <section class="static-site__section" id="thesis">
-        <p class="static-site__eyebrow">Why keep a registry?</p>
-        <h2>A familiar symbol needs a reliable record.</h2>
-        <p>The zodiac has moved through tablets, almanacs, newspapers, and phones. A public registry gives its newest digital form a place anyone can check.</p>
-        <p><a href="/thesis/">Read why Zodiacs matter →</a></p>
-      </section>
-
-      <section class="static-site__section" id="faq">
-        <p class="static-site__eyebrow">Need to know</p>
-        <h2>Five quick answers</h2>
-        <dl class="static-faq">
-          <div><dt>What is the Registry?</dt><dd>The public reference list for the twelve official Zodiac records.</dd></div>
-          <div><dt>What does “official” mean?</dt><dd>The asset address appears in the Registry published by Zodiacs.org.</dd></div>
-          <div><dt>Do I need a wallet?</dt><dd>No. Exploring signs and checking the list are read-only.</dd></div>
-          <div><dt>Can I explore any sign?</dt><dd>Yes. Choose your own sign, a friend’s sign, or simply the one that interests you.</dd></div>
-          <div><dt>Is this financial advice?</dt><dd>No. Digital assets are speculative, can be illiquid, and can lose all value.</dd></div>
-        </dl>
-        <div class="static-closing">
-          <a class="btn btn--primary" href="#official-twelve">Choose your sign <span class="arr">↑</span></a>
-          <a href="/registry/technical/">Open the technical record →</a>
+      <span class="technical-static__anchor" id="onchain-access" aria-hidden="true"></span>
+      <section class="technical-static__section" id="access-third-parties">
+        <div>
+          <p class="technical-static__section-number">03 · Independent services</p>
+          <h2>Access and third parties</h2>
+        </div>
+        <div class="technical-static__body">
+          <p>Zodiacs.org provides a read-only reference. Wallets, explorers, marketplaces, bridges, and market-data services reached through external links operate independently and have their own prompts, terms, and risks.</p>
+          <p>Acquisition links open independently operated third-party venues. Check the destination, network, official mint, amount, and every wallet prompt before approving an action. A blockchain transaction cannot be reversed.</p>
+          <p>No purchase is required to explore the Registry or use Registry Collection. Never share a seed phrase or private key.</p>
+          <div class="technical-static__links">
+            <a href="/registry/#verify">Check a Zodiac address</a>
+            <a href="/terms/">Read the Terms</a>
+          </div>
         </div>
       </section>
 
-      <footer class="static-site__footer">
-        <a href="/privacy/">Privacy</a> ·
-        <a href="/terms/">Terms</a> ·
-        <a href="/disclosure/">Disclosure</a> ·
-        <a href="/registry/technical/">Technical record</a> ·
-        Zodiacs.org · Est. <span data-registry-established>MMXXIV</span>
+      <span class="technical-static__anchor" id="sdk" aria-hidden="true"></span>
+      <span class="technical-static__anchor" id="builders" aria-hidden="true"></span>
+      <span class="technical-static__anchor" id="built-with-zodiacs" aria-hidden="true"></span>
+      <section class="technical-static__section" id="builder-tools">
+        <div>
+          <p class="technical-static__section-number">04 · Read-only tools</p>
+          <h2>Builders</h2>
+        </div>
+        <div class="technical-static__body">
+          <p>The Zodiacs SDK reads the public Registry, recognizes official Solana and Base addresses, and carries sign metadata into wallets, galleries, profiles, and astrology products.</p>
+          <p><code>npm i @zodiacs/sdk</code></p>
+          <div class="technical-static__links">
+            <a href="/sdk/">Open the SDK guide</a>
+            <a href="https://github.com/ZodiacsOfficial/sdk" rel="noopener noreferrer">View the source on GitHub</a>
+            <a href="https://www.npmjs.com/package/@zodiacs/sdk" rel="noopener noreferrer">View the npm package</a>
+          </div>
+        </div>
+      </section>
+
+      <span class="technical-static__anchor" id="security" aria-hidden="true"></span>
+      <section class="technical-static__section" id="safety-evidence">
+        <div>
+          <p class="technical-static__section-number">05 · Receipts</p>
+          <h2>Safety and evidence</h2>
+        </div>
+        <div class="technical-static__body">
+          <p>“Official” means that an asset address appears in this Registry. It is not government, regulator, wallet, or exchange approval, and it does not prove identity, control, legal ownership, safety, value, liquidity, or future performance.</p>
+          <p>Registry checks are read-only. They do not request signatures, approvals, payments, swaps, network changes, or transactions, and they do not prove identity, control, legal ownership, safety, value, or future performance.</p>
+          <p>Digital assets are speculative, volatile, and may be illiquid. Their value can fall to zero. Operator and economic-interest statements are published as dated operator attestations, not independently verified.</p>
+          <p>Dated disclosures and the public archive preserve origin claims, operator relationships, limitations, and changes to the record.</p>
+          <div class="technical-static__links">
+            <a href="/disclosure/">Open the disclosures</a>
+            <a href="/archive/">Open the dated archive</a>
+            <a href="/privacy/">Read the Privacy policy</a>
+            <a href="/disclosure/#origin">Origin receipts — 5 Jul 2024</a>
+          </div>
+        </div>
+      </section>
+
+      <footer class="technical-static__footer">
+        <a href="/registry/">← Return to the consumer Registry</a>
+        <span>Zodiacs.org · Official Registry · Est. MMXXIV</span>
       </footer>
     </main>
   </div>
 
-  <script>
-  (function () {
-    var modulePromise;
-    document.addEventListener('click', function (event) {
-      var button = event.target.closest && event.target.closest('[data-assistant-open]');
-      if (!button) return;
-      modulePromise = modulePromise || import('/assets/assistant-ui.js');
-      modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
-    });
-  })();
-  </script>
-
-  <!-- Lens filter for the glass nav pill: capsule displacement map rides
-       inline (nothing fetched); mirrors the main site chrome. Browsers
-       without url() backdrop filters never leave the blur floor above. -->
-  <svg class="glass-defs" aria-hidden="true" focusable="false">
-    <filter id="zdx-lens-nav" color-interpolation-filters="sRGB" primitiveUnits="objectBoundingBox" x="-0.1" y="-0.2" width="1.2" height="1.4">
-      <feImage href="data:image/png;base64,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" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
-      <feDisplacementMap in="SourceGraphic" in2="map" scale="0.35" xChannelSelector="R" yChannelSelector="G" result="disp" />
-      <feGaussianBlur in="disp" stdDeviation="0.005 0.038" result="soft" />
-      <feColorMatrix in="soft" type="saturate" values="1.35" />
-    </filter>
-    <filter id="zdx-lens-cta" color-interpolation-filters="sRGB" primitiveUnits="objectBoundingBox" x="-0.1" y="-0.2" width="1.2" height="1.4">
-      <feImage href="data:image/png;base64,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" x="0" y="0" width="1" height="1" preserveAspectRatio="none" result="map" />
-      <feDisplacementMap in="SourceGraphic" in2="map" scale="0.5" xChannelSelector="R" yChannelSelector="G" result="disp" />
-      <feGaussianBlur in="disp" stdDeviation="0.009 0.038" result="soft" />
-      <feColorMatrix in="soft" type="saturate" values="1.4" result="sat" />
-      <!-- The brightness lift the hero CTAs need over the dark bottom scrim.
-           It lives here because Chromium refuses a backdrop-filter that
-           chains url() with brightness()/saturate() functions. -->
-      <feComponentTransfer in="sat">
-        <feFuncR type="linear" slope="1.16" />
-        <feFuncG type="linear" slope="1.16" />
-        <feFuncB type="linear" slope="1.16" />
-      </feComponentTransfer>
-    </filter>
-  </svg>
-
-  <!-- React stays on the CDN, pinned with Subresource Integrity. The app
-       itself is precompiled from src/app.jsx to assets/app.js by
-       scripts/build-app.mjs, so visitors never download or run a compiler. -->
   <script defer crossorigin="anonymous" referrerpolicy="no-referrer"
     src="https://unpkg.com/react@18.3.1/umd/react.production.min.js"
     integrity="sha384-DGyLxAyjq0f9SPpVevD6IgztCFlnMF6oW/XQGmfe+IsZ8TqEiDrcHkMLKI6fiB/Z"></script>
   <script defer crossorigin="anonymous" referrerpolicy="no-referrer"
     src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js"
     integrity="sha384-gTGxhz21lVGYNMcdJOyq01Edg0jhn/c22nsx0kyqP0TxaV5WVdsSH1fSDUf5YJj1"></script>
-  <!-- ?v= evicts browsers still holding a prior immutable-cached /assets/app.js;
-       the bundle now revalidates (see vercel.json). Bump if a future build must
-       reach clients before the next revalidation. -->
   <script defer src="/assets/app.js?v=z2"></script>
 </body>
 </html>

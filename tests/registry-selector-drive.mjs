@@ -337,6 +337,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const fallbackState = await fallbackPage.locator('.static-site__nav').evaluate((nav) => ({
         pageWidth: document.documentElement.scrollWidth,
         viewportWidth: innerWidth,
+        identityTarget: Boolean(document.getElementById('identity')),
+        registryTargetExplainsRegistry: Boolean(
+          document.getElementById('registry')?.closest('section')?.querySelector('#registry-does-title'),
+        ),
+        visibleCollectionSections: [...document.querySelectorAll('.static-collection-section')]
+          .filter((section) => getComputedStyle(section).display !== 'none').length,
+        deadGalleryLinks: document.querySelectorAll('a[href*="gallery=gold"]').length,
         links: [...nav.querySelectorAll('a')].map((link) => {
           const rect = link.getBoundingClientRect();
           return {
@@ -354,13 +361,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
       check(
         `Registry no-JavaScript fallback at ${width}px keeps every primary link onscreen`,
-        fallbackState.links.length === 7
+        fallbackState.links.length === 4
           && fallbackState.links.every((link) => (
             link.width > 0
             && link.left >= -1
             && link.right <= fallbackState.viewportWidth + 1
           )),
         JSON.stringify(fallbackState.links),
+      );
+      check(
+        `Registry no-JavaScript fallback at ${width}px omits disabled or inactive modes`,
+        fallbackState.identityTarget
+          && fallbackState.registryTargetExplainsRegistry
+          && fallbackState.visibleCollectionSections === 0
+          && fallbackState.deadGalleryLinks === 0,
+        JSON.stringify(fallbackState),
       );
       await fallbackPage.close();
     }
@@ -434,9 +449,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     await reducedContext.close();
 
-    // Exact review viewport: keep the task-first Registry introduction broad,
-    // compact, and reachable before the second screen while preserving the
-    // complete interactive gallery/fallback above it.
+    // Exact review viewport: the consumer journey stays compact, uses the
+    // promised six-by-two sign grid, and leaves technical material on its own
+    // route rather than in the everyday reader's scroll.
     const compactRegistry = await newPage({
       viewport: { width: 623, height: 1054 },
       reducedMotion: 'no-preference',
@@ -447,16 +462,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       if (request.url().startsWith(baseURL)) compactRegistryErrors.push(request.url());
     });
     await compactRegistry.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-    await compactRegistry.locator('[data-registry-start="sign"]').waitFor({ state: 'visible' });
+    await compactRegistry.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
     const compactRegistryLayout = await compactRegistry.evaluate(() => {
       const shell = document.querySelector('.zd');
-      const hero = document.querySelector('#main');
-      const paths = document.querySelector('.registry-paths');
-      const identity = document.querySelector('#identity');
-      const identityTitle = document.querySelector('.idctx__statement');
-      const gallery = document.querySelector('.gband');
-      const pathNodes = [...document.querySelectorAll('[data-registry-start]')];
-      const pathTops = pathNodes.map((node) => node.getBoundingClientRect().top);
+      const explorer = document.querySelector('.consumer-explorer');
+      const controls = [...document.querySelectorAll('[data-consumer-sign]')];
+      const rowTops = controls.map((node) => Math.round(node.getBoundingClientRect().top));
+      const rows = [...new Set(rowTops)];
       const box = (node) => {
         if (!node) return null;
         const rect = node.getBoundingClientRect();
@@ -474,16 +486,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         clientWidth: document.documentElement.clientWidth,
         viewportWidth: window.innerWidth,
         viewportHeight: window.innerHeight,
+        pageHeight: document.documentElement.scrollHeight,
         shell: box(shell),
-        hero: box(hero),
-        paths: box(paths),
-        identity: box(identity),
-        identityTitleSize: identityTitle ? parseFloat(getComputedStyle(identityTitle).fontSize) : null,
-        gallery: box(gallery),
-        galleryLive: document.documentElement.classList.contains('gallery-live'),
-        pathCount: pathNodes.length,
-        pathsShareRow: pathTops.length === 3 && Math.max(...pathTops) - Math.min(...pathTops) <= 2,
-        pathScrollFits: paths ? paths.scrollWidth <= paths.clientWidth + 1 : false,
+        explorer: box(explorer),
+        controlCount: controls.length,
+        rowCounts: rows.map((top) => rowTops.filter((candidate) => candidate === top).length),
+        heavySections: ['pulse', 'standings', 'onchain-access', 'builders', 'sdk', 'security']
+          .filter((id) => document.getElementById(id)),
       };
     });
     check('Registry at 623×1054 has no document overflow',
@@ -493,71 +502,45 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       compactRegistryLayout.shell
         && compactRegistryLayout.shell.width >= compactRegistryLayout.clientWidth * 0.88,
       `${compactRegistryLayout.shell?.width ?? 0}/${compactRegistryLayout.clientWidth}`);
-    check('Registry at 623×1054 presents three aligned task-first paths',
-      compactRegistryLayout.pathCount === 3
-        && compactRegistryLayout.pathsShareRow
-        && compactRegistryLayout.pathScrollFits,
-      JSON.stringify(compactRegistryLayout));
-    check('Registry at 623×1054 exposes the task-first paths before the second screen',
-      compactRegistryLayout.paths
-        && compactRegistryLayout.paths.bottom <= compactRegistryLayout.viewportHeight * 1.5,
-      `${compactRegistryLayout.paths?.bottom ?? 0}/${compactRegistryLayout.viewportHeight}`);
-    check('Registry at 623×1054 keeps the task-first introduction compact',
-      compactRegistryLayout.hero
-        && compactRegistryLayout.hero.height <= compactRegistryLayout.viewportHeight * 0.42,
-      `${compactRegistryLayout.hero?.height ?? 0}/${compactRegistryLayout.viewportHeight}`);
-    check('Registry at 623×1054 keeps identity guidance scannable',
-      compactRegistryLayout.identity
-        && compactRegistryLayout.identity.height <= compactRegistryLayout.viewportHeight
-        && compactRegistryLayout.identityTitleSize <= 50,
-      `${compactRegistryLayout.identity?.height ?? 0}/${compactRegistryLayout.identityTitleSize}`);
-    if (compactRegistryLayout.galleryLive) {
-      check('Registry at 623×1054 keeps the live gallery below half a viewport',
-        compactRegistryLayout.gallery
-          && compactRegistryLayout.gallery.height <= compactRegistryLayout.viewportHeight * 0.5,
-        `${compactRegistryLayout.gallery?.height ?? 0}/${compactRegistryLayout.viewportHeight}`);
-    } else {
-      check('Registry at 623×1054 keeps the fallback selector available',
-        await compactRegistry.locator('.strip-wrap').count() === 1);
-    }
-    const compactRegistryPaths = await compactRegistry.locator('[data-registry-start]').evaluateAll((links) => (
-      links.map((link) => ({
-        kind: link.getAttribute('data-registry-start'),
-        href: link.getAttribute('href'),
-      }))
-    ));
-    check('Registry at 623×1054 keeps all task destinations intact',
-      compactRegistryPaths.length === 3
-        && compactRegistryPaths[0].kind === 'sign'
-        && /^\/registry\/[a-z-]+\/$/.test(compactRegistryPaths[0].href ?? '')
-        && compactRegistryPaths[1].kind === 'verify'
-        && compactRegistryPaths[1].href === '#verify'
-        && compactRegistryPaths[2].kind === 'build'
-        && compactRegistryPaths[2].href === '#sdk',
-      JSON.stringify(compactRegistryPaths));
+    check('Registry at 623×1054 shows all twelve signs in a six-by-two grid',
+      compactRegistryLayout.controlCount === 12
+        && compactRegistryLayout.rowCounts.length === 2
+        && compactRegistryLayout.rowCounts.every((count) => count === 6),
+      JSON.stringify(compactRegistryLayout.rowCounts));
+    check('Registry at 623×1054 keeps the consumer journey under 7,500px',
+      compactRegistryLayout.pageHeight <= 7500,
+      String(compactRegistryLayout.pageHeight));
+    check('Registry at 623×1054 leaves technical sections off the consumer route',
+      compactRegistryLayout.heavySections.length === 0,
+      compactRegistryLayout.heavySections.join(','));
     await compactRegistry.goto(`${baseURL}/registry/#identity`, { waitUntil: 'domcontentloaded' });
     await compactRegistry.locator('#identity').waitFor({ state: 'attached' });
-    await compactRegistry.waitForTimeout(7400);
+    await compactRegistry.waitForTimeout(1200);
     const compactHashTop = await compactRegistry.locator('#identity').evaluate((node) => (
       node.getBoundingClientRect().top
     ));
-    check('Registry direct hashes realign after the dynamic gallery settles',
+    check('Registry direct consumer hashes align below the fixed navigation',
       compactHashTop >= 70 && compactHashTop <= 180,
       `${compactHashTop.toFixed(1)}px from viewport top`);
-    await compactRegistry.mouse.wheel(0, -10000);
-    await compactRegistry.waitForTimeout(150);
-    const compactHashUserScroll = await compactRegistry.evaluate(() => window.scrollY);
-    await compactRegistry.waitForTimeout(3000);
-    const compactHashSettledScroll = await compactRegistry.evaluate(() => window.scrollY);
-    check('Registry hash settling yields to intentional user scrolling',
-      compactHashUserScroll < 100
-        && Math.abs(compactHashSettledScroll - compactHashUserScroll) <= 2,
-      `${compactHashUserScroll.toFixed(1)}px → ${compactHashSettledScroll.toFixed(1)}px`);
     if (OUT) await compactRegistry.screenshot({ path: `${OUT}/registry-623.png`, fullPage: false });
     check('Registry at 623×1054 runtime is error-free',
       compactRegistryErrors.length === 0,
       compactRegistryErrors.join(' | '));
     await compactRegistry.close();
+
+    const tabletEdge = await newPage({ viewport: { width: 1020, height: 900 } });
+    await tabletEdge.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    await tabletEdge.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
+    const tabletRows = await tabletEdge.locator('[data-consumer-sign]').evaluateAll((controls) => {
+      const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
+      return [...new Set(tops)].map((top) => tops.filter((candidate) => candidate === top).length);
+    });
+    check(
+      'Registry at exactly 1020px uses the stable six-by-two tablet explorer',
+      JSON.stringify(tabletRows) === JSON.stringify([6, 6]),
+      JSON.stringify(tabletRows),
+    );
+    await tabletEdge.close();
 
     for (const width of [390, 781]) {
       for (const record of [
@@ -622,146 +605,211 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
     const desktopErrors = [];
+    const desktopGalleryRequests = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
-    await stubNoWebgl(desktop);
-    await desktop.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-    await desktop.waitForSelector('.strip__glyph');
-    check(
-      'denied WebGL renders the strip, not the band',
-      await desktop.evaluate(() => (
-        !document.documentElement.classList.contains('gallery-live')
-        && document.querySelectorAll('.gband').length === 0
-        && document.querySelectorAll('.strip-wrap').length === 1
-      )),
-    );
-
-    const desktopLayout = await desktop.locator('.strip').evaluate((element) => ({
-      display: getComputedStyle(element).display,
-      width: element.clientWidth,
-      scrollWidth: element.scrollWidth,
-      pageWidth: document.documentElement.scrollWidth,
-      viewportWidth: innerWidth,
-    }));
-    check('desktop selector is a grid', desktopLayout.display === 'grid', desktopLayout.display);
-    check(
-      'desktop exposes all signs without horizontal overflow',
-      desktopLayout.scrollWidth <= desktopLayout.width + 1,
-      `${desktopLayout.scrollWidth}/${desktopLayout.width}`,
-    );
-    check(
-      'desktop page has no horizontal overflow',
-      desktopLayout.pageWidth <= desktopLayout.viewportWidth,
-      `${desktopLayout.pageWidth}/${desktopLayout.viewportWidth}`,
-    );
-    check(
-      'desktop shows all twelve sign names',
-      await desktop.locator('.strip__name').evaluateAll((elements) => (
-        elements.length === 12
-        && elements.every((element) => getComputedStyle(element).display !== 'none')
-      )),
-    );
-
-    const seasonLabel = (await desktop.locator('.hero__season').innerText()).trim();
-    const selectedLabel = await desktop.locator('.strip__glyph[aria-pressed="true"]').getAttribute('aria-label');
-    check(
-      'initial featured sign matches the current season',
-      Boolean(selectedLabel) && seasonLabel.toLowerCase().startsWith(selectedLabel.toLowerCase()),
-      `${seasonLabel} / ${selectedLabel}`,
-    );
-    const initialFeaturedSlug = await desktop.locator('[data-featured-sign]').getAttribute('data-featured-sign');
-    const initialBrowseHref = await desktop.locator('[data-registry-browse]').getAttribute('href');
-    const initialNuggetHref = await desktop.locator('.nugget-link').getAttribute('href');
-    check(
-      'hero browse action follows the current-season featured record',
-      initialBrowseHref === `/registry/${initialFeaturedSlug}/` && initialBrowseHref === initialNuggetHref,
-      `${initialBrowseHref}/${initialNuggetHref}`,
-    );
-    const auraEnabled = await desktop.locator('meta[name="zodiacs-registry-collection-enabled"]').getAttribute('content') === '1';
-    const collectionActions = await desktop.locator('[data-registry-collection]').count();
-    check(
-      'Registry hero uses the approved reader-facing introduction',
-      (await desktop.locator('.cine__line').innerText()).trim()
-        === 'Meet the twelve signs through their symbols, stories, and living traditions.',
-    );
-    check(
-      'Cabinet hero action follows the existing build flag',
-      collectionActions === (auraEnabled ? 1 : 0),
-      `${auraEnabled ? 'on' : 'off'}/${collectionActions}`,
-    );
-    if (auraEnabled) {
-      check(
-        'enabled Cabinet hero action uses the fixed Aura route',
-        await desktop.locator('[data-registry-collection]').getAttribute('href') === '/registry/collection/',
-      );
-      const actionMaterials = await desktop.locator('.cine__cta .btn').evaluateAll((actions) => actions.map((action) => {
-        const style = getComputedStyle(action);
-        const rect = action.getBoundingClientRect();
-        return {
-          label: action.innerText.trim().replace(/\s+/g, ' '),
-          height: rect.height,
-          background: style.backgroundColor,
-          backdrop: style.backdropFilter || style.webkitBackdropFilter,
-        };
-      }));
-      check(
-        'Registry hero actions share the nav glass material and 48px geometry',
-        actionMaterials.length === 2
-          && actionMaterials.every((action) => Math.abs(action.height - 48) <= 0.5)
-          && actionMaterials[0].background === actionMaterials[1].background
-          && actionMaterials[0].backdrop === actionMaterials[1].backdrop,
-        JSON.stringify(actionMaterials),
-      );
-      check(
-        'Cabinet action uses the approved label',
-        actionMaterials[1].label === 'Open the Cabinet →',
-        actionMaterials[1].label,
-      );
-      const cabinetLine = await desktop.locator('[data-registry-collection]').evaluate((element) => {
-        const style = getComputedStyle(element, '::after');
-        return { content: style.content, display: style.display };
-      });
-      check(
-        'Cabinet hero action has no decorative underline',
-        cabinetLine.content === 'none' || cabinetLine.display === 'none',
-        JSON.stringify(cabinetLine),
-      );
-    }
-
-    await desktop.locator('[data-sign="pisces"]').click();
-    await desktop.waitForSelector('[data-featured-sign="pisces"]');
-    check('click updates the featured record', await desktop.locator('[data-featured-sign="pisces"]').count() === 1);
-    const piscesBrowseHref = await desktop.locator('[data-registry-browse]').getAttribute('href');
-    const piscesNuggetHref = await desktop.locator('.nugget-link').getAttribute('href');
-    check(
-      'hero browse action stays synchronized with the selected nugget',
-      piscesBrowseHref === '/registry/pisces/' && piscesBrowseHref === piscesNuggetHref,
-      `${piscesBrowseHref}/${piscesNuggetHref}`,
-    );
-    check(
-      'desktop status names the selected sign',
-      (await desktop.locator('.strip__status').innerText()).toLowerCase().includes('pisces'),
-    );
-
-    await desktop.locator('[data-sign="pisces"]').press('ArrowLeft');
-    await desktop.waitForSelector('[data-featured-sign="aquarius"]');
-    // The selector deliberately moves focus in requestAnimationFrame after
-    // React commits the new active button. Wait for that public focus state
-    // instead of racing the scheduled frame after the featured record swaps.
-    await desktop.locator('[data-sign="aquarius"]:focus').waitFor({
-      state: 'attached',
-      timeout: 1_000,
+    desktop.on('request', (request) => {
+      if (new URL(request.url()).pathname === '/assets/gallery.js') {
+        desktopGalleryRequests.push(request.url());
+      }
     });
-    check('ArrowLeft moves selection', await desktop.locator('[data-sign="aquarius"][aria-pressed="true"]').count() === 1);
+    await desktop.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await desktop.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
+
+    const expectedSigns = [
+      'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+      'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+    ];
+    const explorerState = await desktop.locator('[data-consumer-sign]').evaluateAll((controls) => (
+      controls.map((control) => {
+        const rect = control.getBoundingClientRect();
+        return {
+          slug: control.getAttribute('data-consumer-sign'),
+          pressed: control.getAttribute('aria-pressed'),
+          tabIndex: control.tabIndex,
+          src: control.querySelector('img')?.getAttribute('src') ?? '',
+          width: rect.width,
+          height: rect.height,
+        };
+      })
+    ));
     check(
-      'keyboard navigation moves focus with selection',
-      await desktop.locator('[data-sign="aquarius"]').evaluate((element) => element === document.activeElement),
+      'consumer explorer presents twelve pastel sign controls in zodiac order',
+      JSON.stringify(explorerState.map((item) => item.slug)) === JSON.stringify(expectedSigns)
+        && explorerState.every((item) => item.src === '/assets/zodiac-icons/128/' + item.slug + '.webp'),
+      JSON.stringify(explorerState),
+    );
+    check(
+      'consumer explorer exposes one active, roving-tabindex control',
+      explorerState.filter((item) => item.pressed === 'true').length === 1
+        && explorerState.filter((item) => item.tabIndex === 0).length === 1
+        && explorerState.every((item) => item.width >= 44 && item.height >= 44),
+      JSON.stringify(explorerState),
+    );
+    check(
+      'consumer hero uses the approved everyday actions',
+      (await desktop.locator('.cine__line').innerText()).trim()
+        === 'Explore the twelve signs and see the official digital record for each one.'
+        && await desktop.locator('.cine__cta a[href="#official-twelve"]').innerText()
+          .then((text) => text.includes('Choose your sign'))
+        && await desktop.locator('.cine__cta a[href="#verify"]').innerText()
+          .then((text) => text.includes('Check an address'))
+        && await desktop.locator('.cine__cta [data-registry-collection]').count() === 0,
+    );
+    check(
+      'consumer hero keeps the original film and poster',
+      await desktop.locator('.cine__media').evaluate((video) => (
+        video.getAttribute('poster') === '/assets/hero/zodiacs-hero-poster.avif'
+        // The preserved observer starts the visible film and promotes
+        // `preload` from the server-rendered `none` state to `auto`.
+        && ['none', 'auto'].includes(video.getAttribute('preload'))
+        && (video.currentSrc.endsWith('/assets/hero/zodiacs-hero.mp4')
+          || video.getAttribute('src')?.endsWith('/assets/hero/zodiacs-hero.mp4'))
+      )),
+    );
+    check(
+      'gold gallery stays unmounted and unloaded until requested',
+      desktopGalleryRequests.length === 0
+        && await desktop.locator('[data-consumer-gallery]').count() === 0,
+      JSON.stringify(desktopGalleryRequests),
+    );
+    const desktopDimensions = await desktop.evaluate(() => ({
+      width: document.documentElement.scrollWidth,
+      viewport: innerWidth,
+      height: document.documentElement.scrollHeight,
+      heavy: ['pulse', 'standings', 'onchain-access', 'builders', 'sdk', 'security']
+        .filter((id) => document.getElementById(id)),
+    }));
+    check(
+      'desktop consumer Registry has no horizontal overflow and stays below 6,500px',
+      desktopDimensions.width <= desktopDimensions.viewport + 1
+        && desktopDimensions.height <= 6500,
+      JSON.stringify(desktopDimensions),
+    );
+    check(
+      'market, access, and builder chapters are absent from the consumer route',
+      desktopDimensions.heavy.length === 0,
+      desktopDimensions.heavy.join(','),
     );
 
-    await desktop.locator('[data-sign="aquarius"]').press('Home');
-    await desktop.waitForSelector('[data-featured-sign="aries"]');
-    check('Home moves to the first sign', await desktop.locator('[data-sign="aries"][aria-pressed="true"]').count() === 1);
-    check('desktop runtime is error-free', desktopErrors.length === 0, desktopErrors.join(' | '));
-    if (OUT) await desktop.locator('.hero').screenshot({ path: `${OUT}/registry-selector-1126.png` });
+    const piscesControl = desktop.locator('[data-consumer-sign="pisces"]');
+    await piscesControl.scrollIntoViewIfNeeded();
+    const scrollBeforePick = await desktop.evaluate(() => scrollY);
+    await piscesControl.click();
+    await desktop.locator('[data-consumer-preview="pisces"]').waitFor({ state: 'visible' });
+    const piscesPreview = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((preview) => ({
+      text: preview.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      explore: preview.querySelector('a.btn')?.getAttribute('href'),
+      record: preview.querySelector('.consumer-preview__record')?.getAttribute('href'),
+      scrollY,
+    }));
+    check(
+      'selecting Pisces updates its complete preview without moving the page',
+      /Pisces/.test(piscesPreview.text)
+        && /Water/.test(piscesPreview.text)
+        && piscesPreview.explore === '/pisces/'
+        && piscesPreview.record === '/registry/pisces/'
+        && Math.abs(piscesPreview.scrollY - scrollBeforePick) <= 2,
+      JSON.stringify(piscesPreview),
+    );
+    check(
+      'the polite selection status announces the chosen sign',
+      (await desktop.locator('[data-consumer-live]').innerText()).includes('Pisces selected'),
+    );
+    await desktop.locator('[data-consumer-sign="pisces"]').press('ArrowLeft');
+    await desktop.locator('[data-consumer-sign="aquarius"][aria-pressed="true"]').waitFor();
+    check(
+      'consumer explorer keyboard navigation moves both selection and focus',
+      await desktop.locator('[data-consumer-sign="aquarius"]').evaluate((control) => (
+        control === document.activeElement && control.tabIndex === 0
+      )),
+    );
+    await desktop.locator('[data-consumer-sign="aquarius"]').press('Home');
+    await desktop.locator('[data-consumer-sign="aries"][aria-pressed="true"]').waitFor();
+    check(
+      'Home moves the consumer explorer to Aries',
+      await desktop.locator('[data-consumer-preview="aries"]').count() === 1,
+    );
+
+    const registry = await fetch(baseURL + '/registry/zodiacs.registry.json').then((response) => response.json());
+    const leo = registry.assets.find((asset) => asset.sign === 'leo');
+    const verifier = desktop.locator('#verify');
+    await verifier.locator('#vrf-input').fill(leo.native.address);
+    await verifier.locator('#vrf-input').press('Enter');
+    await verifier.locator('[data-verifier-state="official"]').waitFor();
+    check(
+      'verifier identifies an official native record in plain language',
+      (await verifier.locator('[data-verifier-state="official"]').innerText())
+        .includes('Official Leo address on Solana.'),
+    );
+    const base58Alphabet = new Set('123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz');
+    const solanaMutationIndex = [...leo.native.address].findIndex((character) => {
+      const toggled = character === character.toLowerCase()
+        ? character.toUpperCase()
+        : character.toLowerCase();
+      return toggled !== character && base58Alphabet.has(toggled);
+    });
+    const caseMutatedSolanaAddress = [
+      ...leo.native.address.slice(0, solanaMutationIndex),
+      leo.native.address[solanaMutationIndex] === leo.native.address[solanaMutationIndex].toLowerCase()
+        ? leo.native.address[solanaMutationIndex].toUpperCase()
+        : leo.native.address[solanaMutationIndex].toLowerCase(),
+      ...leo.native.address.slice(solanaMutationIndex + 1),
+    ].join('');
+    await verifier.locator('#vrf-input').fill(caseMutatedSolanaAddress);
+    await verifier.locator('#vrf-input').press('Enter');
+    await verifier.locator('[data-verifier-state="not-found"]').waitFor();
+    check(
+      'verifier treats Solana addresses as case-sensitive',
+      (await verifier.locator('[data-verifier-state="not-found"]').innerText())
+        .includes('This address isn’t in the official Zodiac list.'),
+    );
+    const leoBaseAddress = leo.representations.find((representation) => representation.chain === 'base').address;
+    await verifier.locator('#vrf-input').fill(leoBaseAddress.toLowerCase());
+    await verifier.locator('#vrf-input').press('Enter');
+    await verifier.locator('[data-verifier-state="official"]').waitFor();
+    check(
+      'verifier treats Base addresses as case-insensitive',
+      (await verifier.locator('[data-verifier-state="official"]').innerText())
+        .includes('Official Leo address on Base.'),
+    );
+    await verifier.locator('#vrf-input').fill('0x0000000000000000000000000000000000000001');
+    await verifier.locator('#vrf-input').press('Enter');
+    await verifier.locator('[data-verifier-state="not-found"]').waitFor();
+    check(
+      'verifier distinguishes a valid-looking unknown address',
+      (await verifier.locator('[data-verifier-state="not-found"]').innerText())
+        .includes('This address isn’t in the official Zodiac list.'),
+    );
+    await verifier.locator('#vrf-input').fill('not an address');
+    await verifier.locator('#vrf-input').press('Enter');
+    await verifier.locator('[data-verifier-state="invalid"]').waitFor();
+    check(
+      'verifier distinguishes malformed input',
+      (await verifier.locator('[data-verifier-state="invalid"]').innerText())
+        .includes('That doesn’t look like a Solana or Base address.'),
+    );
+    check(
+      'verifier states its read-only boundary beside the form',
+      (await verifier.innerText()).includes('never connects a wallet, requests a signature, or starts a transaction'),
+    );
+    const compactConsumerTargets = await desktop.locator(
+      '.vrf__example, .consumer-preview__actions > a:not(.btn), .consumer-closing__actions > a:not(.btn)',
+    ).evaluateAll((targets) => targets.map((target) => ({
+      label: target.textContent.trim(),
+      height: target.getBoundingClientRect().height,
+    })));
+    check(
+      'compact consumer controls retain 44px touch targets',
+      compactConsumerTargets.length >= 3
+        && compactConsumerTargets.every(({ height }) => height >= 44),
+      JSON.stringify(compactConsumerTargets),
+    );
+    check(
+      'consumer Registry shows exactly five quick answers',
+      await desktop.locator('#faq .consumer-faq__item').count() === 5,
+    );
+    check('desktop consumer runtime is error-free', desktopErrors.length === 0, desktopErrors.join(' | '));
+    if (OUT) await desktop.screenshot({ path: OUT + '/registry-consumer-1126.png', fullPage: false });
     await desktop.close();
 
     const mobile = await newPage({
@@ -769,317 +817,185 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       deviceScaleFactor: 2,
       hasTouch: true,
     });
-    await stubNoWebgl(mobile);
-    await mobile.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-    await mobile.waitForSelector('.strip__glyph');
-    const mobileLayout = await mobile.locator('.strip').evaluate((element) => ({
-      display: getComputedStyle(element).display,
-      width: element.clientWidth,
-      scrollWidth: element.scrollWidth,
-      namesHidden: [...element.querySelectorAll('.strip__name')]
-        .every((name) => getComputedStyle(name).display === 'none'),
-    }));
-    check('mobile keeps the swipe rail', mobileLayout.display === 'flex', mobileLayout.display);
-    check('mobile rail genuinely overflows', mobileLayout.scrollWidth > mobileLayout.width, `${mobileLayout.scrollWidth}/${mobileLayout.width}`);
-    check('mobile keeps the compact glyph-only treatment', mobileLayout.namesHidden);
-    check('mobile guidance describes real input', await mobile.getByText('Swipe or scroll to choose').isVisible());
-
-    await mobile.locator('.strip').evaluate((element) => element.scrollTo({ left: 0, behavior: 'auto' }));
-    await mobile.waitForTimeout(50);
-    check('mobile start hides the left fade', await mobile.locator('.strip__viewport.can-scroll-left').count() === 0);
-    check('mobile start shows the right fade', await mobile.locator('.strip__viewport.can-scroll-right').count() === 1);
-    await mobile.locator('.strip').evaluate((element) => element.scrollTo({ left: element.scrollWidth, behavior: 'auto' }));
-    await mobile.waitForTimeout(50);
-    check('mobile end shows the left fade', await mobile.locator('.strip__viewport.can-scroll-left').count() === 1);
-    check('mobile end hides the right fade', await mobile.locator('.strip__viewport.can-scroll-right').count() === 0);
-    if (OUT) await mobile.locator('.hero').screenshot({ path: `${OUT}/registry-selector-390.png` });
+    await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await mobile.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
+    const mobileState = await mobile.locator('[data-consumer-sign]').evaluateAll((controls) => {
+      const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
+      const rows = [...new Set(tops)];
+      return {
+        count: controls.length,
+        rowCounts: rows.map((top) => tops.filter((candidate) => candidate === top).length),
+        minTarget: Math.min(...controls.map((control) => {
+          const rect = control.getBoundingClientRect();
+          return Math.min(rect.width, rect.height);
+        })),
+        pageWidth: document.documentElement.scrollWidth,
+        viewportWidth: innerWidth,
+        pageHeight: document.documentElement.scrollHeight,
+      };
+    });
+    check(
+      'mobile explorer uses a complete four-by-three grid',
+      mobileState.count === 12
+        && mobileState.rowCounts.length === 3
+        && mobileState.rowCounts.every((count) => count === 4),
+      JSON.stringify(mobileState),
+    );
+    check(
+      'mobile consumer Registry fits without overflow and keeps 44px targets',
+      mobileState.pageWidth <= mobileState.viewportWidth + 1
+        && mobileState.pageHeight <= 7500
+        && mobileState.minTarget >= 44,
+      JSON.stringify(mobileState),
+    );
+    if (OUT) await mobile.screenshot({ path: OUT + '/registry-consumer-390.png', fullPage: false });
     await mobile.close();
 
     const reduced = await newPage({
       viewport: { width: 1126, height: 1180 },
       reducedMotion: 'reduce',
     });
-    await stubNoWebgl(reduced);
-    await reduced.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-    await reduced.waitForSelector('.strip__glyph');
-    await reduced.locator('[data-sign="libra"]').click();
-    const animationName = await reduced.locator('[data-featured-sign="libra"] .fade-key').first()
-      .evaluate((element) => getComputedStyle(element).animationName);
-    check('reduced motion swaps records without animation', animationName === 'none', animationName);
+    await reduced.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await reduced.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
+    check(
+      'reduced motion leaves the cinematic film detached',
+      await reduced.locator('.cine__media').evaluate((video) => !video.src),
+    );
+    await reduced.locator('[data-consumer-sign="libra"]').click();
+    const reducedDurations = await reduced.locator('[data-consumer-preview="libra"]')
+      .evaluate((preview) => {
+        const style = getComputedStyle(preview);
+        return {
+          animation: parseFloat(style.animationDuration) || 0,
+          transition: parseFloat(style.transitionDuration) || 0,
+        };
+      });
+    check(
+      'reduced motion swaps the consumer preview without animated travel',
+      reducedDurations.animation <= 0.02 && reducedDurations.transition <= 0.02,
+      JSON.stringify(reducedDurations),
+    );
     await reduced.close();
 
-    // ---- the gallery band: the selector wherever WebGL exists -------------
-    // CI browsers without GL take the strip path above; the band checks then
-    // record themselves as skipped rather than failing the gate.
-    // The dock wave is motion, and the scene withholds it under a reduced
-    // motion preference — which some CI browsers report by default. State the
-    // preference explicitly so this section tests the wave, not the runner.
-    for (const [label, viewport] of [
-      ['1280', { viewport: { width: 1280, height: 900 }, reducedMotion: 'no-preference' }],
-      ['390', {
-        viewport: { width: 390, height: 844 },
-        deviceScaleFactor: 2,
-        hasTouch: true,
-        reducedMotion: 'no-preference',
-      }],
-    ]) {
-      const band = await newPage(viewport);
-      const bandErrors = [];
-      band.on('pageerror', (error) => bandErrors.push(String(error)));
-      await band.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-      const bandLive = await band.evaluate(() => document.documentElement.classList.contains('gallery-live'));
-      if (!bandLive) {
-        check(`band at ${label} (skipped — this browser reports no WebGL)`, true);
-        await band.close();
-        continue;
-      }
-      check(`band at ${label} replaces the strip`, await band.evaluate(() => (
-        document.querySelectorAll('.strip-wrap').length === 0
-        && document.querySelectorAll('[data-gallery-stage][data-gallery-embed]').length === 1
-      )));
-      await band.evaluate(() => document.querySelector('.gband')?.scrollIntoView({
-        block: 'center',
-        behavior: 'instant',
-      }));
-      let bandReady = true;
-      try {
-        await band.waitForSelector('.gband.is-ready', { timeout: 30000 });
-      } catch {
-        bandReady = false;
-      }
-      check(`band at ${label} mounts the scene`, bandReady);
-      if (bandReady) {
-        check(
-          `band at ${label} rails all twelve`,
-          await band.locator('.gband .rail__tick').count() === 12,
-        );
-        check(
-          `band at ${label} rail carries the wallet discs`,
-          await band.locator('.gband .rail__tick img').count() === 12,
-        );
-        // At rest the current sign stands proud, so touch and keyboard
-        // readers see the selection without a cursor. The proud size
-        // animates in; poll until it settles (bounded) before asserting.
-        const sampleRest = () => band.locator('.gband .rail__tick').evaluateAll((ticks) => {
-          const current = ticks.findIndex((t) => t.getAttribute('aria-current') === 'true');
-          const visualWidth = (tick) => tick.querySelector('picture').getBoundingClientRect().width;
-          const hitWidths = ticks.map((tick) => tick.getBoundingClientRect().width);
-          return {
-            current: visualWidth(ticks[current]),
-            other: visualWidth(ticks[(current + 5) % ticks.length]),
-            hitSpread: Math.max(...hitWidths) - Math.min(...hitWidths),
-          };
-        });
-        let restWidths = await sampleRest();
-        for (let attempt = 0; attempt < 25 && !(restWidths.current > restWidths.other + 1); attempt += 1) {
-          await band.waitForTimeout(150);
-          restWidths = await sampleRest();
-        }
-        check(
-          `band at ${label} rests with the current disc proud`,
-          restWidths.current > restWidths.other + 1,
-          `${restWidths.current.toFixed(1)} vs ${restWidths.other.toFixed(1)}`,
-        );
-        check(
-          `band at ${label} keeps stable rail hit areas`,
-          restWidths.hitSpread <= 0.5,
-          restWidths.hitSpread.toFixed(1),
-        );
-        if (label === '1280') {
-          // The dock wave: the disc under the cursor swells most, its
-          // neighbour less, and the far end of the rail is untouched.
-          const target = band.locator('.gband .rail__tick').nth(6);
-          const spot = await target.boundingBox();
-          const rail = band.locator('.gband .rail');
-          // Use a real pointer move so :hover and the pointer event agree.
-          // A synthetic event can leave the rail reporting :hover=false,
-          // allowing its resting state to replace the test wave.
-          // The wave animates; on a loaded runner a fixed delay samples the
-          // resting state mid-flight, so poll until the dock shape settles
-          // (bounded), then assert on the final sample.
-          await band.mouse.move(
-            spot.x + (spot.width / 2),
-            spot.y + (spot.height / 2),
-          );
-          await band.mouse.move(
-            spot.x + (spot.width / 2) + 1,
-            spot.y + (spot.height / 2),
-          );
-          let wave = [];
-          for (let attempt = 0; attempt < 25; attempt += 1) {
-            await band.waitForTimeout(150);
-            wave = await band.locator('.gband .rail__tick').evaluateAll((ticks) => (
-              ticks.map((t) => t.querySelector('picture').getBoundingClientRect().width)
-            ));
-            if (wave[6] > wave[5] && wave[5] > wave[4] && wave[4] > wave[0] && wave[6] > wave[0] * 1.4) break;
-          }
-          check(
-            `band at ${label} rail magnifies like a dock`,
-            wave[6] > wave[5] && wave[5] > wave[4] && wave[4] > wave[0] && wave[6] > wave[0] * 1.4,
-            wave.map((w) => w.toFixed(0)).join(','),
-          );
-          const waveBounds = await rail.evaluate((element) => {
-            const railBox = element.getBoundingClientRect();
-            const pictureBox = element
-              .querySelector('.rail__tick[data-index="6"] picture')
-              .getBoundingClientRect();
-            return { railTop: railBox.top, pictureTop: pictureBox.top };
-          });
-          check(
-            `band at ${label} keeps the hovered disc inside the rail`,
-            waveBounds.pictureTop >= waveBounds.railTop + 1,
-            `${waveBounds.pictureTop.toFixed(1)} vs ${waveBounds.railTop.toFixed(1)}`,
-          );
-          check(
-            `band at ${label} the wave names its disc`,
-            await band.evaluate(() => {
-              const el = document.querySelector('.gband__name');
-              return Boolean(el?.classList.contains('is-visible'))
-                && Boolean(el?.classList.contains('is-rail'));
-            }),
-          );
-          await band.mouse.move(0, 0);
-          await band.waitForTimeout(420);
-
-          // The same rail under a reduced motion preference: the current sign
-          // still stands proud, but the cursor raises no wave.
-          const calm = await newPage({
-            viewport: { width: 1280, height: 900 }, reducedMotion: 'reduce',
-          });
-          await calm.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-          await calm.evaluate(() => document.querySelector('.gband')?.scrollIntoView({
-            block: 'center',
-            behavior: 'instant',
-          }));
-          try {
-            await calm.waitForSelector('.gband.is-ready', { timeout: 30000 });
-            const calmSpot = await calm.locator('.gband .rail__tick').nth(6).boundingBox();
-            await calm.mouse.move(calmSpot.x + (calmSpot.width / 2), calmSpot.y + (calmSpot.height / 2));
-            await calm.waitForTimeout(420);
-            const calmWave = await calm.locator('.gband .rail__tick').evaluateAll((ticks) => (
-              ticks.map((t) => Math.round(t.querySelector('picture').getBoundingClientRect().width))
-            ));
-            const proud = calmWave.filter((w) => w > Math.min(...calmWave) + 1).length;
-            check(
-              'band withholds the wave under reduced motion',
-              proud <= 1,
-              calmWave.join(','),
-            );
-          } catch {
-            check('band withholds the wave under reduced motion (skipped — no scene)', true);
-          }
-          await calm.close();
-        }
-        // The band opens on the seasonal sign, so the walk target is chosen
-        // relative to it — two along, wrapping — rather than a fixed tick.
-        const startIndex = Number(
-          await band.locator('.rail__tick[aria-current="true"]').getAttribute('data-index'),
-        );
-        const targetIndex = (startIndex + 2) % 12;
-        const targetTick = band.locator(`.rail__tick[data-index="${targetIndex}"]`);
-        const targetName = (await targetTick.getAttribute('aria-label')).split(',')[0];
-        await targetTick.click();
-        await band.waitForTimeout(1100);
-        check(
-          `band at ${label} rail drives the Museum label`,
-          await band.locator('[data-museum-sign]').getAttribute('data-museum-sign')
-            === targetName.toLowerCase(),
-          targetName,
-        );
-        check(
-          `band at ${label} leaves the address bar alone`,
-          await band.evaluate(() => window.location.hash === ''),
-        );
-        const openerLabel = (await band.locator('.gband__open').innerText()).trim();
-        check(
-          `band at ${label} opener names the selection`,
-          openerLabel === `View ${targetName}`,
-          openerLabel,
-        );
-        // The second press on the current tick is the keyboard door into the
-        // record: the card opens in place, the band grows for the viewing.
-        await targetTick.click();
-        let cardOpen = true;
-        try {
-          await band.waitForSelector('.gcard.is-open', { timeout: 8000 });
-        } catch {
-          cardOpen = false;
-        }
-        check(`band at ${label} opens the record in place`, cardOpen);
-        await band.evaluate((name) => { window.__bandTargetName = name; }, targetName);
-        if (cardOpen) {
-          check(
-            `band at ${label} card names the piece and its market`,
-            await band.evaluate(() => {
-              const name = document.querySelector('[data-card-name]')?.textContent;
-              const state = document.querySelector('[data-market-state]')?.textContent ?? '';
-              const risk = document.querySelector('.gcard .card__risk')?.textContent ?? '';
-              return name === window.__bandTargetName
-                && /market context/i.test(state)
-                && risk.includes('can lose all market value');
-            }),
-          );
-          check(
-            `band at ${label} grows for the viewing`,
-            await band.evaluate(() => document.querySelector('.gband')?.classList.contains('is-open')),
-          );
-          check(
-            `band at ${label} still leaves the address bar alone`,
-            await band.evaluate(() => window.location.hash === ''),
-          );
-          await band.keyboard.press('Escape');
-          await band.waitForTimeout(900);
-          check(
-            `band at ${label} Escape returns the sculpture`,
-            await band.evaluate(() => !document.querySelector('.gband')?.classList.contains('is-open')),
-          );
-          check(
-            `band at ${label} Escape immediately restores the opener`,
-            (await band.locator('.gband__open').innerText()).trim() === `View ${targetName}`,
-            (await band.locator('.gband__open').innerText()).trim(),
-          );
-        }
-        if (label === '1280') {
-          // Hover is the invitation: the figure lifts, the cursor says
-          // pointer, and the label names the piece. Where exactly the
-          // focused figure sits on the canvas shifts a few pixels with the
-          // runner's layout, so the probe sweeps likely body points and
-          // stops at the first hit rather than trusting one coordinate.
-          const box = await band.locator('.gband canvas').boundingBox();
-          if (box) {
-            let hovered = false;
-            const points = [];
-            for (const fy of [0.42, 0.5, 0.34, 0.58, 0.26]) {
-              for (const fx of [0.5, 0.46, 0.54]) points.push([fx, fy]);
-            }
-            for (const [fx, fy] of points) {
-              await band.mouse.move(box.x + (box.width * fx), box.y + (box.height * fy));
-              await band.waitForTimeout(250);
-              hovered = await band.evaluate(() => (
-                document.querySelector('.gband canvas')?.style.cursor === 'pointer'
-              ));
-              if (hovered) break;
-            }
-            check(
-              `band at ${label} hover invites the click`,
-              hovered && await band.evaluate(() => {
-                const labelEl = document.querySelector('.gband__name');
-                return Boolean(labelEl?.classList.contains('is-visible'))
-                  && /Lot/.test(labelEl?.textContent ?? '');
-              }),
-              hovered ? 'hit' : 'no point hovered',
-            );
-          }
-        }
-        check(
-          `band at ${label} removes the duplicate featured card`,
-          await band.evaluate(() => document.querySelector('#featured-sign') === null),
-        );
-      }
-      check(`band at ${label} runtime is error-free`, bandErrors.length === 0, bandErrors.join(' | '));
-      if (OUT) await band.screenshot({ path: `${OUT}/registry-band-${label}.png` });
-      await band.close();
+    const gallery = await newPage({
+      viewport: { width: 1280, height: 900 },
+      reducedMotion: 'no-preference',
+    });
+    const galleryRequests = [];
+    gallery.on('request', (request) => {
+      if (new URL(request.url()).pathname === '/assets/gallery.js') galleryRequests.push(request.url());
+    });
+    await gallery.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await gallery.locator('[data-consumer-gallery-toggle]').waitFor({ state: 'visible' });
+    check(
+      'optional gallery makes no bundle request before its control is used',
+      galleryRequests.length === 0 && await gallery.locator('[data-consumer-gallery]').count() === 0,
+    );
+    await gallery.locator('[data-consumer-gallery-toggle]').click();
+    await gallery.locator('[data-consumer-gallery]').waitFor({ state: 'visible' });
+    const galleryLive = await gallery.evaluate(() => document.documentElement.classList.contains('gallery-live'));
+    if (galleryLive) {
+      await gallery.locator('.gband.is-ready').waitFor({ state: 'visible', timeout: 30_000 });
+      check(
+        'opened WebGL gallery keeps all twelve pastel rail controls',
+        await gallery.locator('.gband .rail__tick').count() === 12
+          && await gallery.locator('.gband .rail__tick img').count() === 12,
+      );
+      check(
+        'opening the gold gallery requests its bundle exactly once',
+        galleryRequests.length === 1,
+        JSON.stringify(galleryRequests),
+      );
+    } else {
+      check(
+        'opened gallery retains a complete non-WebGL fallback',
+        await gallery.locator('.consumer-gallery__fallback a').count() === 12,
+      );
     }
+    check(
+      'opening the optional gallery does not replace the consumer explorer',
+      await gallery.locator('[data-consumer-sign]').count() === 12,
+    );
+    await gallery.locator('[data-consumer-gallery-toggle]').click();
+    check(
+      'gallery control closes the optional view and restores its accessible state',
+      await gallery.locator('[data-consumer-gallery]').count() === 0
+        && await gallery.locator('[data-consumer-gallery-toggle]').getAttribute('aria-expanded') === 'false',
+    );
+    await gallery.close();
+
+    for (const [legacyHash, destination] of [
+      ['pulse', 'market-transparency'],
+      ['standings', 'market-transparency'],
+      ['onchain-access', 'access-third-parties'],
+      ['builders', 'builder-tools'],
+      ['sdk', 'builder-tools'],
+      ['security', 'safety-evidence'],
+    ]) {
+      const legacy = await newPage({ viewport: { width: 900, height: 800 } });
+      await legacy.goto(baseURL + '/registry/#' + legacyHash, { waitUntil: 'domcontentloaded' });
+      await legacy.waitForURL('**/registry/technical/#' + destination);
+      check(
+        'legacy #' + legacyHash + ' opens its matching technical group',
+        new URL(legacy.url()).pathname === '/registry/technical/'
+          && new URL(legacy.url()).hash === '#' + destination,
+        legacy.url(),
+      );
+      await legacy.close();
+    }
+
+    const technicalRuntime = await newPage({ viewport: { width: 390, height: 844 } });
+    await technicalRuntime.goto(baseURL + '/registry/technical/', { waitUntil: 'domcontentloaded' });
+    await technicalRuntime.locator('main#main.technical-registry').waitFor({ state: 'visible' });
+    const technicalSkipHref = await technicalRuntime.locator('.technical-static__skip').getAttribute('href');
+    check(
+      'technical skip link retains a valid target after the runtime mounts',
+      technicalSkipHref === '#main'
+        && await technicalRuntime.locator(technicalSkipHref).count() === 1,
+      technicalSkipHref ?? '',
+    );
+    const technicalCaption = await technicalRuntime.locator('.technical-records__table caption')
+      .evaluate((caption) => {
+        const rect = caption.getBoundingClientRect();
+        return { width: rect.width, height: rect.height };
+      });
+    check(
+      'technical address caption stays horizontal and full-width on mobile',
+      technicalCaption.width >= 340 && technicalCaption.height <= 72,
+      JSON.stringify(technicalCaption),
+    );
+    await technicalRuntime.close();
+
+    const technicalContext = await browser.newContext({
+      viewport: { width: 390, height: 844 },
+      javaScriptEnabled: false,
+    });
+    const technical = await technicalContext.newPage();
+    await technical.goto(baseURL + '/registry/technical/', { waitUntil: 'domcontentloaded' });
+    const technicalState = await technical.evaluate(() => ({
+      signs: document.querySelectorAll('[data-technical-sign]').length,
+      representations: document.querySelectorAll('[data-technical-representation]').length,
+      groups: [
+        'records-networks',
+        'market-transparency',
+        'access-third-parties',
+        'builder-tools',
+        'safety-evidence',
+      ].filter((id) => document.getElementById(id)).length,
+      pageWidth: document.documentElement.scrollWidth,
+      viewportWidth: innerWidth,
+      checkerLinks: document.querySelectorAll('a[href="/registry/#verify"]').length,
+    }));
+    check(
+      'technical route remains complete and readable without JavaScript',
+      technicalState.signs === 12
+        && technicalState.representations === 24
+        && technicalState.groups === 5
+        && technicalState.checkerLinks >= 1
+        && technicalState.pageWidth <= technicalState.viewportWidth + 1,
+      JSON.stringify(technicalState),
+    );
+    await technicalContext.close();
   } finally {
     await browser.close();
   }

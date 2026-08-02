@@ -19,7 +19,6 @@ import {
 } from '../src/lib/registry-establishment.mjs';
 import {
   REGISTRY_AURA_ENTRY_COPY,
-  REGISTRY_AURA_HERO_COPY,
   REGISTRY_AURA_META_NAME,
   REGISTRY_AURA_PATH,
   injectRegistryAuraLanding,
@@ -31,6 +30,8 @@ const root = resolve(here, '..');
 const SRC = resolve(root, 'src/app.jsx');
 const OUT = resolve(root, 'public/assets/app.js');
 const REGISTRY_HTML = resolve(root, 'public/registry/index.html');
+const REGISTRY_DATA = resolve(root, 'public/registry/zodiacs.registry.json');
+const REGISTRY_TECHNICAL_HTML = resolve(root, 'public/registry/technical/index.html');
 
 const BABEL_VERSION = '7.26.4';
 const BABEL_URL = `https://unpkg.com/@babel/standalone@${BABEL_VERSION}/babel.min.js`;
@@ -52,6 +53,78 @@ async function getBabel() {
 const Babel = await getBabel();
 const source = await readFile(SRC, 'utf8');
 
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;')
+    .replaceAll('"', '&quot;')
+    .replaceAll("'", '&#39;');
+}
+
+function replaceGeneratedRegion(sourceHtml, name, content) {
+  const start = `<!-- ${name}:start -->`;
+  const end = `<!-- ${name}:end -->`;
+  const startIndex = sourceHtml.indexOf(start);
+  const endIndex = sourceHtml.indexOf(end);
+  if (startIndex === -1 || endIndex === -1 || endIndex < startIndex) {
+    throw new Error(`Missing or malformed generated region: ${name}`);
+  }
+
+  return [
+    sourceHtml.slice(0, startIndex + start.length),
+    content ? `\n${content.trim()}\n` : '\n',
+    sourceHtml.slice(endIndex),
+  ].join('');
+}
+
+function extractRegistryStyles(registryHtml) {
+  const styles = registryHtml.match(/<style(?:\s[^>]*)?>[\s\S]*?<\/style>/giu) ?? [];
+  if (styles.length === 0) throw new Error('Registry HTML contains no shared style blocks');
+  return styles.join('\n\n');
+}
+
+function renderTechnicalRecords(registry) {
+  const assets = Array.isArray(registry?.assets) ? registry.assets : [];
+  const officialRepresentations = (asset) => (
+    (asset.representations ?? []).filter((representation) => representation.isOfficialRepresentation === true)
+  );
+  const representations = assets.flatMap(officialRepresentations);
+  if (assets.length !== 12 || representations.length !== 24) {
+    throw new Error(
+      `Technical Registry requires 12 signs and 24 representations; found ${assets.length} and ${representations.length}`,
+    );
+  }
+
+  return assets.map((asset) => {
+    const assetRepresentations = officialRepresentations(asset);
+    const chains = new Set(assetRepresentations.map((representation) => representation.chain));
+    if (assetRepresentations.length !== 2 || !chains.has('solana') || !chains.has('base')) {
+      throw new Error(`${asset.displayName ?? asset.sign} must have official Solana and Base representations`);
+    }
+    const sign = escapeHtml(asset.sign);
+    const displayName = escapeHtml(asset.displayName);
+    const rows = assetRepresentations.map((representation) => {
+      const chain = escapeHtml(representation.chain);
+      const standard = escapeHtml(representation.tokenStandard);
+      const address = escapeHtml(representation.address);
+      const role = representation.isCanonicalOrigin ? 'Canonical origin' : 'Official representation';
+      return `
+            <div class="technical-static__record" data-technical-representation data-chain="${chain}">
+              <dt><span>${chain}</span><small>${escapeHtml(role)} · ${standard}</small></dt>
+              <dd><code>${address}</code></dd>
+            </div>`;
+    }).join('');
+
+    return `
+        <article class="technical-static__sign" data-technical-sign="${sign}">
+          <h3><a href="/registry/${sign}/">${displayName}</a></h3>
+          <dl>${rows}
+          </dl>
+        </article>`;
+  }).join('\n');
+}
+
 const { code } = Babel.transform(source, {
   presets: ['react'],
   compact: true,
@@ -70,7 +143,6 @@ const registryMeta = [
   `const REGISTRY_AURA_ENABLED=document.querySelector('meta[name="${REGISTRY_AURA_META_NAME}"]')?.content==='1';`,
   `const REGISTRY_AURA_PATH=${JSON.stringify(REGISTRY_AURA_PATH)};`,
   `const REGISTRY_AURA_ENTRY_COPY=Object.freeze(${JSON.stringify(REGISTRY_AURA_ENTRY_COPY)});`,
-  `const REGISTRY_AURA_HERO_COPY=Object.freeze(${JSON.stringify(REGISTRY_AURA_HERO_COPY)});`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
 await writeFile(OUT, output, 'utf8');
@@ -79,6 +151,24 @@ const registryHtml = await readFile(REGISTRY_HTML, 'utf8');
 const configuredRegistry = injectRegistryAuraLanding(registryHtml, process.env).output;
 if (configuredRegistry !== registryHtml) await writeFile(REGISTRY_HTML, configuredRegistry, 'utf8');
 
+const registryData = JSON.parse(await readFile(REGISTRY_DATA, 'utf8'));
+const technicalHtml = await readFile(REGISTRY_TECHNICAL_HTML, 'utf8');
+const technicalWithStyles = replaceGeneratedRegion(
+  technicalHtml,
+  'registry-shared-styles',
+  extractRegistryStyles(configuredRegistry),
+);
+const configuredTechnical = replaceGeneratedRegion(
+  technicalWithStyles,
+  'registry-technical-records',
+  renderTechnicalRecords(registryData),
+);
+if (configuredTechnical !== technicalHtml) {
+  await writeFile(REGISTRY_TECHNICAL_HTML, configuredTechnical, 'utf8');
+}
+
 const hash = createHash('sha256').update(output).digest('hex').slice(0, 12);
 console.log(`Wrote ${OUT}`);
 console.log(`  ${output.length} bytes  ·  sha256:${hash}  ·  from src/app.jsx (${source.length} bytes)`);
+console.log(`Wrote ${REGISTRY_TECHNICAL_HTML}`);
+console.log('  shared Registry styles · 12 signs · 24 official representations');

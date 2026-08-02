@@ -68,26 +68,28 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('.strip__sub { display: none; }');
   });
 
-  it('keeps one primary hero action plus one flag-gated Cabinet action and one canonical thesis section', async () => {
+  it('keeps the consumer hero task-first and moves the optional Cabinet into the purpose section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
 
     const hero = source.slice(source.indexOf('function CineHero('), source.indexOf('function Hero('));
-    expect(hero).toContain('Meet the twelve signs through their symbols, stories, and living traditions.');
+    expect(hero).toContain('Explore the twelve signs and see the official digital record for each one.');
     expect(hero.match(/className="btn btn--primary"/g)).toHaveLength(1);
     expect(hero.match(/className="btn btn--ghost"/g)).toHaveLength(1);
-    expect(hero).toContain('REGISTRY_AURA_ENABLED &&');
-    expect(hero).toContain('REGISTRY_AURA_HERO_COPY.ariaLabel');
+    expect(hero).toContain('href="#official-twelve"');
+    expect(hero).toContain('href="#verify"');
+    expect(hero).not.toContain('REGISTRY_AURA_ENABLED');
+    expect(hero).not.toContain('Open the Cabinet');
     expect(hero).toContain('data-registry-browse');
     expect(hero).not.toContain('cine__why');
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
-    expect(registry).toContain('href="/registry/aries/" data-registry-browse');
-    expect(source).not.toContain('<a className="reg__story-link" href="/thesis/">');
-    expect(registry).not.toContain('<p><a href="/thesis/">Read the Registry thesis →</a></p>');
-    expect(source).toContain('id="thesis" className="phil reveal"');
-    expect(source).toContain('Read the full thesis — why Zodiacs matter');
+    expect(registry).toContain('href="#official-twelve" data-registry-browse');
+    expect(source).toContain('id="thesis" className="consumer-purpose reveal"');
+    expect(source).toContain('REGISTRY_AURA_ENABLED &&');
+    expect(source).toContain('See the signs in a public wallet');
+    expect(source).toContain('Read why Zodiacs matter');
     expect(registry).toContain('registry-collection-hero:slot');
     expect(registry).not.toContain('cine__why');
     expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');

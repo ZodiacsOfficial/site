@@ -88,17 +88,17 @@ describe('Registry risk and trust copy', () => {
     expect(bundle).not.toContain('leading onchain apps');
   });
 
-  it('keeps the static Registry fallback precise about official status, records, and outbound services', async () => {
-    const html = compact(await readFile(resolve(root, 'public/registry/index.html'), 'utf8'));
+  it('keeps detailed risk and service boundaries in the static technical record', async () => {
+    const html = compact(await readFile(resolve(root, 'public/registry/technical/index.html'), 'utf8'));
 
     expect(html).toContain('“Official” means that an asset address appears in this Registry');
     expect(html).toContain('not government, regulator, wallet, or exchange approval');
     expect(html).toContain('value can fall to zero');
     expect(html).toContain('Acquisition links open independently operated third-party venues');
-    expect(html).toContain('No purchase is required to use Registry Collection');
-    expect(html).toContain('Verify a Zodiac');
+    expect(html).toContain('No purchase is required to explore the Registry or use Registry Collection');
+    expect(html).toContain('Check a Zodiac address');
     expect(html).toContain('Never share a seed phrase or private key');
-    expect(html).toContain('origin receipts 5 Jul 2024');
+    expect(html).toContain('Origin receipts — 5 Jul 2024');
     expect(html).toContain(
       'Operator and economic-interest statements are published as dated operator attestations, not independently verified',
     );

@@ -1018,9 +1018,8 @@ const indexablePeoplePaths = new Set(
     .map((person) => `/people/${person.slug}/`),
 );
 const sitemapPolicy = {
-  // 2420 = 2419 + /birth-chart/three-dimensions/ (2026-07-28; the gallery
-  // page later retired into the registry band the same day).
-  total: 2420 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
+  // 2421 = 2420 + the indexable /registry/technical/ public record.
+  total: 2421 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true),
   compatibilityPairs: 78,
   birthdays: 1830,
@@ -1055,6 +1054,7 @@ const indexedFamilies = [
     localized: false,
   },
   { label: 'Registry Collection', pattern: /^\/registry\/collection\/$/, expected: Number(registryAuraIndexed), localized: false },
+  { label: 'Registry technical record', pattern: /^\/registry\/technical\/$/, expected: 1, localized: false },
 ];
 
 requireExactSet(

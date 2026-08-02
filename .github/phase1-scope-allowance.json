@@ -1,11 +1,20 @@
 {
   "version": 1,
-  "id": "registry-task-first-compression-2026-08-02",
-  "reason": "Owner-authorized thesis and Registry responsive redesign on August 2, 2026: compact the illustrated Thesis modules at the exact 623px review viewport, add task-first Registry entry points, and reduce excessive mobile section width constraints and vertical spacing. The protected Registry source, generated bundle, and static shell are enumerated exactly below.",
-  "baseCommit": "01cd5663f1980b5d81cc4cebf20c00c281f7bb5e",
+  "id": "registry-consumer-explorer-technical-record-2026-08-02",
+  "reason": "Owner-authorized Registry redesign on August 2, 2026: replace the long dossier-style Registry with a short consumer sign explorer, preserve the cinematic hero and all canonical records, and move detailed market, builder, network, safety, and evidence material to the indexable technical record. The protected Registry source, generated bundle, static shells, and Registry build contracts are enumerated exactly below.",
+  "baseCommit": "f9ff582ad58d1baeafb9f104a2110fb9caca9448",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/index.html",
+    "public/registry/technical/index.html",
+    "scripts/build-app.mjs",
+    "scripts/configure-registry-aura.mjs",
+    "scripts/registry-aura-entry.test.mjs",
+    "scripts/registry-consumer-contract.test.mjs",
+    "scripts/registry-consumer-entry.mjs",
+    "scripts/registry-gallery-band.test.mjs",
+    "scripts/registry-pastel-polish.test.mjs",
+    "scripts/registry-risk.test.mjs",
     "src/app.jsx"
   ]
 }
