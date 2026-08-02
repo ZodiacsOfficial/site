@@ -56,7 +56,7 @@ describe('Registry consumer and technical information architecture', () => {
     }
   });
 
-  it('makes the consumer hero about choosing a sign and checking an address', async () => {
+  it('makes the consumer hero about choosing a token and checking an address', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
@@ -64,11 +64,11 @@ describe('Registry consumer and technical information architecture', () => {
     const visible = visibleMarkup(html);
 
     for (const value of [source, visible]) {
-      expect(value).toContain('Explore the twelve signs and see the official digital record for each one.');
-      expect(value).toContain('Choose your sign');
+      expect(value).toContain('Every sign has one official token. Explore its story, its record, and its market.');
+      expect(value).toContain('Choose a token');
       expect(value).toContain('Check an address');
     }
-    expect(visible).toMatch(/href="#official-twelve"[^>]*>[\s\S]*?Choose your sign/iu);
+    expect(visible).toMatch(/href="#official-twelve"[^>]*>[\s\S]*?Choose a token/iu);
     expect(visible).toMatch(/href="#verify"[^>]*>[\s\S]*?Check an address/iu);
     expect(visible).not.toContain('Open the Cabinet');
   });
@@ -118,7 +118,7 @@ describe('Registry consumer and technical information architecture', () => {
     const source = await read('src/app.jsx');
 
     for (const sentence of [
-      'Check a Zodiac address',
+      'Check a Zodiac token address',
       'Paste the mint or contract address shown by a wallet or marketplace.',
       'Never paste a seed phrase.',
       'Official ',
@@ -148,13 +148,54 @@ describe('Registry consumer and technical information architecture', () => {
     expect(html).toContain("if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches)");
   });
 
-  it('only requests the optional gold gallery after a reader opens it', async () => {
+  it('mounts the sculpture stage as the wide-screen explorer and keeps the bundle lazy', async () => {
     const source = await read('src/app.jsx');
-    expect(source).toContain('data-consumer-gallery-toggle');
-    expect(source).toContain('data-consumer-gallery');
+    // The stage is the selector only where WebGL is live AND the viewport is
+    // wide; phones and non-WebGL machines keep the pastel grid and never
+    // request the scene bundle.
+    expect(source).toContain("window.matchMedia('(min-width: 1021px)')");
+    expect(source).toContain('GALLERY_LIVE && window.matchMedia');
     expect(source).toContain("'/assets/gallery.js'");
-    expect(source).toContain('{galleryOpen && (');
-    expect(source).toContain('<GalleryBand active={active} setActive={setActive} consumer />');
+    expect(source).toContain('{stageMode && <GalleryBand active={active} setActive={setActive} consumer />}');
+    expect(source).not.toContain('data-consumer-gallery-toggle');
+    expect(source).toContain('RAIL_PLACEHOLDER_HTML');
+  });
+
+  it('presents the selected sign as its official token with a live quote and record-first actions', async () => {
+    const source = await read('src/app.jsx');
+    const mounted = consumerRoot(source);
+
+    expect(source).toContain('Official {sign.name} token');
+    expect(source).toContain('Native network: Solana');
+    expect(source).toContain('data-token-quote');
+    expect(source).toContain('View the {sign.name} token');
+    expect(source).toContain('Copy Solana address');
+    expect(source).toContain('Read the {sign.name} astrology guide');
+    // The primary action opens the official record; the astrology guide is
+    // a labelled tertiary link, never the primary destination.
+    expect(source).toContain('<a className="btn btn--primary" href={registryProfilePath(sign)}>');
+    expect(source).not.toMatch(/className="btn btn--primary" href=\{`\/\$\{sign\.asset\.sign\}\/`\}/u);
+    expect(mounted).toContain('<ConsumerTokensSection />');
+  });
+
+  it('lists all twelve official tokens in zodiac order with a single batched market read', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    const visible = visibleMarkup(html);
+
+    expect(source).toContain('The official token for every sign.');
+    expect(source).toContain('function loadTwelveMarketQuotes()');
+    expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
+    // Zodiac order, never a leaderboard: the strip renders SIGNS in
+    // registry order and no consumer surface sorts by performance.
+    expect(source).toContain('{SIGNS.map((item) => {');
+    expect(source).not.toMatch(/\.sort\(\(a, b\) => \(b\.marketCap/u);
+    // The static fallback carries the crawlable twelve with truncated mints.
+    expect(visible).toContain('The official token for every sign');
+    expect((visible.match(/class="static-token-list"/gu) ?? [])).toHaveLength(1);
+    expect(visible).toContain('Live prices appear with JavaScript');
   });
 
   it('publishes a useful no-JavaScript technical record from the canonical addresses', async () => {
