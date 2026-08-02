@@ -434,6 +434,131 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     await reducedContext.close();
 
+    // Exact review viewport: keep the task-first Registry introduction broad,
+    // compact, and reachable before the second screen while preserving the
+    // complete interactive gallery/fallback above it.
+    const compactRegistry = await newPage({
+      viewport: { width: 623, height: 1054 },
+      reducedMotion: 'no-preference',
+    });
+    const compactRegistryErrors = [];
+    compactRegistry.on('pageerror', (error) => compactRegistryErrors.push(String(error)));
+    compactRegistry.on('requestfailed', (request) => {
+      if (request.url().startsWith(baseURL)) compactRegistryErrors.push(request.url());
+    });
+    await compactRegistry.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    await compactRegistry.locator('[data-registry-start="sign"]').waitFor({ state: 'visible' });
+    const compactRegistryLayout = await compactRegistry.evaluate(() => {
+      const shell = document.querySelector('.zd');
+      const hero = document.querySelector('#main');
+      const paths = document.querySelector('.registry-paths');
+      const identity = document.querySelector('#identity');
+      const identityTitle = document.querySelector('.idctx__statement');
+      const gallery = document.querySelector('.gband');
+      const pathNodes = [...document.querySelectorAll('[data-registry-start]')];
+      const pathTops = pathNodes.map((node) => node.getBoundingClientRect().top);
+      const box = (node) => {
+        if (!node) return null;
+        const rect = node.getBoundingClientRect();
+        return {
+          bottom: rect.bottom,
+          height: rect.height,
+          left: rect.left,
+          right: rect.right,
+          top: rect.top,
+          width: rect.width,
+        };
+      };
+      return {
+        documentWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+        viewportWidth: window.innerWidth,
+        viewportHeight: window.innerHeight,
+        shell: box(shell),
+        hero: box(hero),
+        paths: box(paths),
+        identity: box(identity),
+        identityTitleSize: identityTitle ? parseFloat(getComputedStyle(identityTitle).fontSize) : null,
+        gallery: box(gallery),
+        galleryLive: document.documentElement.classList.contains('gallery-live'),
+        pathCount: pathNodes.length,
+        pathsShareRow: pathTops.length === 3 && Math.max(...pathTops) - Math.min(...pathTops) <= 2,
+        pathScrollFits: paths ? paths.scrollWidth <= paths.clientWidth + 1 : false,
+      };
+    });
+    check('Registry at 623×1054 has no document overflow',
+      compactRegistryLayout.documentWidth <= compactRegistryLayout.viewportWidth + 1,
+      `${compactRegistryLayout.documentWidth}/${compactRegistryLayout.viewportWidth}`);
+    check('Registry at 623×1054 uses the broad responsive content shell',
+      compactRegistryLayout.shell
+        && compactRegistryLayout.shell.width >= compactRegistryLayout.clientWidth * 0.88,
+      `${compactRegistryLayout.shell?.width ?? 0}/${compactRegistryLayout.clientWidth}`);
+    check('Registry at 623×1054 presents three aligned task-first paths',
+      compactRegistryLayout.pathCount === 3
+        && compactRegistryLayout.pathsShareRow
+        && compactRegistryLayout.pathScrollFits,
+      JSON.stringify(compactRegistryLayout));
+    check('Registry at 623×1054 exposes the task-first paths before the second screen',
+      compactRegistryLayout.paths
+        && compactRegistryLayout.paths.bottom <= compactRegistryLayout.viewportHeight * 1.5,
+      `${compactRegistryLayout.paths?.bottom ?? 0}/${compactRegistryLayout.viewportHeight}`);
+    check('Registry at 623×1054 keeps the task-first introduction compact',
+      compactRegistryLayout.hero
+        && compactRegistryLayout.hero.height <= compactRegistryLayout.viewportHeight * 0.42,
+      `${compactRegistryLayout.hero?.height ?? 0}/${compactRegistryLayout.viewportHeight}`);
+    check('Registry at 623×1054 keeps identity guidance scannable',
+      compactRegistryLayout.identity
+        && compactRegistryLayout.identity.height <= compactRegistryLayout.viewportHeight
+        && compactRegistryLayout.identityTitleSize <= 50,
+      `${compactRegistryLayout.identity?.height ?? 0}/${compactRegistryLayout.identityTitleSize}`);
+    if (compactRegistryLayout.galleryLive) {
+      check('Registry at 623×1054 keeps the live gallery below half a viewport',
+        compactRegistryLayout.gallery
+          && compactRegistryLayout.gallery.height <= compactRegistryLayout.viewportHeight * 0.5,
+        `${compactRegistryLayout.gallery?.height ?? 0}/${compactRegistryLayout.viewportHeight}`);
+    } else {
+      check('Registry at 623×1054 keeps the fallback selector available',
+        await compactRegistry.locator('.strip-wrap').count() === 1);
+    }
+    const compactRegistryPaths = await compactRegistry.locator('[data-registry-start]').evaluateAll((links) => (
+      links.map((link) => ({
+        kind: link.getAttribute('data-registry-start'),
+        href: link.getAttribute('href'),
+      }))
+    ));
+    check('Registry at 623×1054 keeps all task destinations intact',
+      compactRegistryPaths.length === 3
+        && compactRegistryPaths[0].kind === 'sign'
+        && /^\/registry\/[a-z-]+\/$/.test(compactRegistryPaths[0].href ?? '')
+        && compactRegistryPaths[1].kind === 'verify'
+        && compactRegistryPaths[1].href === '#verify'
+        && compactRegistryPaths[2].kind === 'build'
+        && compactRegistryPaths[2].href === '#sdk',
+      JSON.stringify(compactRegistryPaths));
+    await compactRegistry.goto(`${baseURL}/registry/#identity`, { waitUntil: 'domcontentloaded' });
+    await compactRegistry.locator('#identity').waitFor({ state: 'attached' });
+    await compactRegistry.waitForTimeout(7400);
+    const compactHashTop = await compactRegistry.locator('#identity').evaluate((node) => (
+      node.getBoundingClientRect().top
+    ));
+    check('Registry direct hashes realign after the dynamic gallery settles',
+      compactHashTop >= 70 && compactHashTop <= 180,
+      `${compactHashTop.toFixed(1)}px from viewport top`);
+    await compactRegistry.mouse.wheel(0, -10000);
+    await compactRegistry.waitForTimeout(150);
+    const compactHashUserScroll = await compactRegistry.evaluate(() => window.scrollY);
+    await compactRegistry.waitForTimeout(3000);
+    const compactHashSettledScroll = await compactRegistry.evaluate(() => window.scrollY);
+    check('Registry hash settling yields to intentional user scrolling',
+      compactHashUserScroll < 100
+        && Math.abs(compactHashSettledScroll - compactHashUserScroll) <= 2,
+      `${compactHashUserScroll.toFixed(1)}px → ${compactHashSettledScroll.toFixed(1)}px`);
+    if (OUT) await compactRegistry.screenshot({ path: `${OUT}/registry-623.png`, fullPage: false });
+    check('Registry at 623×1054 runtime is error-free',
+      compactRegistryErrors.length === 0,
+      compactRegistryErrors.join(' | '));
+    await compactRegistry.close();
+
     for (const width of [390, 781]) {
       for (const record of [
         { slug: 'cancer', next: 'leo', name: 'Leo' },

@@ -855,17 +855,20 @@
     .cadence__copy p,
     .bridge-card p { margin: 0; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.55; color: var(--ink-dim); }
     .truth-panel {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin: 28px 0 18px;
-      padding: 1px; background: var(--hair-2); border-radius: 18px; overflow: hidden;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 24px 0 16px;
+      padding: 0; background: transparent; overflow: visible;
     }
-    .truth-panel__side { min-height: 164px; padding: 24px; background: var(--surface); }
+    .truth-panel__side {
+      min-height: 118px; padding: 16px 42px 16px 16px; background: var(--surface);
+      border: 1px solid var(--hair); border-radius: 14px;
+    }
     .truth-panel__side:first-child { background: color-mix(in srgb, #AE8FC9 8%, var(--surface)); }
     .truth-panel__eyebrow {
-      display: block; margin-bottom: 24px; font-family: 'Instrument Sans', system-ui, sans-serif;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute);
+      display: block; margin-bottom: 10px; font-family: 'Instrument Sans', system-ui, sans-serif;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-mute);
     }
-    .truth-panel strong { display: block; font-family: var(--serif); font-size: clamp(25px, 4vw, 36px); font-weight: 400; line-height: 1; color: var(--ink); }
-    .truth-panel p { margin: 8px 0 0; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; line-height: 1.45; color: var(--ink-dim); }
+    .truth-panel strong { display: block; font-family: var(--serif); font-size: clamp(22px, 3vw, 30px); font-weight: 400; line-height: 1.05; color: var(--ink); }
+    .truth-panel p { margin: 6px 0 0; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 12.5px; line-height: 1.4; color: var(--ink-dim); }
     .evidence-drawer {
       margin: 16px 0 0; border: 1px solid var(--hair); border-radius: 14px;
       background: rgba(10,12,17,0.62); overflow: clip;
@@ -903,11 +906,11 @@
     }
     .bridge-result small { display: block; margin-top: 8px; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 13px; line-height: 1.5; color: var(--ink-dim); }
     .journey {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 30px 0;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 24px 0;
     }
-    .journey__step { min-height: 156px; padding: 18px; border: 1px solid var(--hair); border-radius: 17px; background: var(--surface); }
+    .journey__step { min-height: 132px; padding: 14px; border: 1px solid var(--hair); border-radius: 15px; background: var(--surface); }
     .journey__object {
-      width: 44px; height: 44px; display: grid; place-items: center; margin-bottom: 28px;
+      width: 40px; height: 40px; display: grid; place-items: center; margin-bottom: 16px;
       border-radius: 50%; background: color-mix(in srgb, var(--tone) 12%, var(--surface-2)); color: var(--tone);
       font-family: var(--serif); font-size: 19px;
     }
@@ -1085,15 +1088,15 @@
     }
     .truth-panel__side:last-child { background: color-mix(in srgb,#E0B080 7%,var(--surface)); }
     .truth-panel__illustration {
-      position: absolute; top: 18px; right: 20px; color: #B6D4E4;
-      font-family: var(--serif); font-size: 30px; opacity: .72;
+      position: absolute; top: 13px; right: 15px; color: #B6D4E4;
+      font-family: var(--serif); font-size: 22px; opacity: .72;
     }
     .truth-panel__side:last-child .truth-panel__illustration { color: #E0B080; }
 
     .source-convergence {
-      display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 11px;
-      margin: 0 0 18px; padding: 22px; border: 1px solid rgba(198,204,218,.14);
-      border-radius: 24px;
+      display: grid; grid-template-columns: minmax(0,1.6fr) minmax(180px,.74fr); gap: 8px 12px;
+      margin: 0 0 16px; padding: 14px; border: 1px solid rgba(198,204,218,.14);
+      border-radius: 18px;
       background:
         radial-gradient(55% 75% at 12% 6%,rgba(224,176,128,.1),transparent 72%),
         radial-gradient(55% 75% at 50% 6%,rgba(222,142,121,.09),transparent 72%),
@@ -1102,36 +1105,37 @@
       box-shadow: inset 0 1px 0 rgba(238,241,247,.055);
     }
     .source-card {
-      min-width: 0; min-height: 244px; padding: 21px; border: 1px solid var(--hair);
-      border-radius: 18px; background: rgba(15,18,26,.82);
+      grid-column:1; min-width:0; min-height:0; padding:12px;
+      display:grid; grid-template-columns:38px minmax(0,1fr); grid-template-rows:auto auto auto;
+      column-gap:12px; border: 1px solid var(--hair);
+      border-radius: 14px; background: rgba(15,18,26,.82);
       box-shadow: inset 0 1px 0 rgba(238,241,247,.035);
     }
     .source-card--gold { color: #E0B080; background: color-mix(in srgb,#E0B080 7%,var(--surface)); }
     .source-card--bitcoin { color: #DE8E79; background: color-mix(in srgb,#DE8E79 7%,var(--surface)); }
     .source-card--solana { color: #A9D4C4; background: color-mix(in srgb,#A9D4C4 7%,var(--surface)); }
     .source-card__icon {
-      width: 52px; height: 52px; display: grid; place-items: center; margin-bottom: 27px;
-      border: 1px solid color-mix(in srgb,currentColor 48%,transparent); border-radius: 15px;
+      grid-row:1 / 4; width:38px; height:38px; display:grid; place-items:center; margin:0;
+      border: 1px solid color-mix(in srgb,currentColor 48%,transparent); border-radius: 11px;
       background: color-mix(in srgb,currentColor 9%,transparent); color: inherit;
     }
-    .source-card__icon svg { width: 34px; height: 34px; }
-    .source-card__bitcoin { border-radius: 50%; font-family: 'Instrument Sans',sans-serif; font-size: 29px; font-weight: 600; }
+    .source-card__icon svg { width: 26px; height: 26px; }
+    .source-card__bitcoin { border-radius: 50%; font-family: 'Instrument Sans',sans-serif; font-size: 21px; font-weight: 600; }
     .source-card__eyebrow {
-      display: block; margin-bottom: 8px; font-family: var(--mono); font-size: 9px;
+      display:block; align-self:end; margin-bottom:3px; font-family:var(--mono); font-size:8px;
       letter-spacing: .12em; text-transform: uppercase; color: inherit;
     }
-    .source-card h3 { margin: 0 0 8px; font-family: var(--serif); font-size: 23px; font-weight: 400; line-height: 1.08; color: var(--ink); }
-    .source-card p { margin: 0; font-family: 'Instrument Sans',sans-serif; font-size: 13px; line-height: 1.52; color: var(--ink-dim); }
+    .source-card h3 { margin:0 0 3px; font-family:var(--serif); font-size:19px; font-weight:400; line-height:1.08; color:var(--ink); }
+    .source-card p { margin:0; font-family:'Instrument Sans',sans-serif; font-size:11px; line-height:1.35; color:var(--ink-dim); }
     .convergence-result {
-      grid-column: 1 / -1; position: relative; display: flex; align-items: center; justify-content: center;
-      gap: 18px; min-height: 94px; margin-top: 2px; border: 1px solid rgba(182,212,228,.2);
-      border-radius: 18px; background: linear-gradient(90deg,rgba(224,176,128,.06),rgba(182,212,228,.07),rgba(169,212,196,.06));
+      grid-column:2; grid-row:1 / 4; position:relative; display:flex; flex-direction:column;
+      align-items:center; justify-content:center; gap:12px; min-height:0; margin:0;
+      text-align:center; border:1px solid rgba(182,212,228,.2);
+      border-radius: 14px; background: linear-gradient(90deg,rgba(224,176,128,.06),rgba(182,212,228,.07),rgba(169,212,196,.06));
     }
     .convergence-result::before,
-    .convergence-result::after { content:""; position:absolute; top:-14px; width:31%; height:1px; background:linear-gradient(90deg,transparent,rgba(198,204,218,.3)); }
-    .convergence-result::before { left:7%; transform:rotate(1deg); }
-    .convergence-result::after { right:7%; transform:rotate(-1deg) scaleX(-1); }
-    .convergence-result strong { display:block; font-family:var(--serif); font-size:24px; font-weight:400; color:var(--ink); }
+    .convergence-result::after { display:none; }
+    .convergence-result strong { display:block; font-family:var(--serif); font-size:21px; font-weight:400; color:var(--ink); }
     .convergence-result span:not(.brand-wheel) { display:block; margin-top:3px; font-family:'Instrument Sans',sans-serif; font-size:12px; color:var(--ink-dim); }
     .brand-wheel { --ring-r: 20px; --dot: 6px; position: relative; display: inline-block; width: 52px; height: 52px; flex: 0 0 auto; }
     .brand-wheel i { --i:0; position:absolute; top:50%; left:50%; width:var(--dot); height:var(--dot); margin:calc(var(--dot) / -2); border-radius:50%; background:#DE8E79; transform:rotate(calc(var(--i) * 30deg)) translateY(calc(var(--ring-r) * -1)); }
@@ -1170,19 +1174,32 @@
     .comparison-sources { font-family:var(--mono)!important; font-size:10px!important; line-height:1.65!important; }
     .comparison-sources a { color:var(--ink-2); }
 
-    .rail-map { display:grid; grid-template-columns:repeat(3,1fr); gap:10px; margin:28px 0; }
-    .rail-map__item { min-width:0; padding:20px; border:1px solid color-mix(in srgb,var(--tone) 28%,transparent); border-radius:18px; background:color-mix(in srgb,var(--tone) 7%,var(--surface)); }
-    .rail-map__icon { width:48px; height:48px; display:grid; place-items:center; margin-bottom:23px; color:var(--tone); }
-    .rail-map__icon svg { width:48px; height:48px; }
-    .rail-map__item strong { display:block; font-family:var(--serif); font-size:21px; font-weight:400; color:var(--ink); }
-    .rail-map__item > span:last-child { display:block; margin-top:5px; font-family:'Instrument Sans',sans-serif; font-size:12px; line-height:1.4; color:var(--ink-dim); }
+    .rail-map {
+      display:grid; grid-template-columns:repeat(3,1fr); gap:0; margin:24px 0;
+      border:1px solid var(--hair-2); border-radius:17px; overflow:hidden;
+      background:linear-gradient(90deg,rgba(182,212,228,.035),rgba(169,212,196,.035),rgba(178,157,208,.035));
+    }
+    .rail-map__item {
+      min-width:0; padding:14px; display:grid; grid-template-columns:32px minmax(0,1fr);
+      grid-template-rows:auto auto; column-gap:10px; align-content:center;
+      border:0; border-radius:0; background:transparent;
+    }
+    .rail-map__item + .rail-map__item { border-left:1px solid var(--hair); }
+    .rail-map__icon { grid-row:1 / 3; width:32px; height:32px; display:grid; place-items:center; margin:0; color:var(--tone); }
+    .rail-map__icon svg { width:30px; height:30px; }
+    .rail-map__item strong { display:block; font-family:var(--serif); font-size:18px; font-weight:400; color:var(--ink); }
+    .rail-map__item > span:last-child { display:block; margin-top:4px; font-family:'Instrument Sans',sans-serif; font-size:11px; line-height:1.35; color:var(--ink-dim); }
 
-    .journey { position:relative; list-style:none; padding:0; gap:11px; }
-    .journey::before { content:""; position:absolute; left:8%; right:8%; top:44px; height:1px; background:linear-gradient(90deg,#DE8E79,#B6D4E4,#D3A9DE,#A9D4C4); opacity:.42; }
-    .journey__step { position:relative; background:color-mix(in srgb,var(--tone) 6%,var(--surface)); border-color:color-mix(in srgb,var(--tone) 25%,transparent); }
-    .journey__object { position:relative; width:54px; height:54px; margin-bottom:22px; border:1px solid color-mix(in srgb,var(--tone) 42%,transparent); border-radius:15px; z-index:1; }
-    .journey__object svg { width:36px; height:36px; }
-    .journey__step small { display:block; margin-bottom:8px; font-family:var(--mono); font-size:9px; color:var(--tone); }
+    .journey {
+      position:relative; list-style:none; padding:0; gap:0; overflow:hidden;
+      border:1px solid var(--hair-2); border-radius:17px; background:var(--surface);
+    }
+    .journey::before { content:""; position:absolute; left:5%; right:5%; top:34px; height:1px; background:linear-gradient(90deg,#DE8E79,#B6D4E4,#D3A9DE,#A9D4C4); opacity:.42; }
+    .journey__step { position:relative; border:0; border-radius:0; background:color-mix(in srgb,var(--tone) 4%,var(--surface)); }
+    .journey__step + .journey__step { border-left:1px solid var(--hair); }
+    .journey__object { position:relative; width:40px; height:40px; margin-bottom:14px; border:1px solid color-mix(in srgb,var(--tone) 42%,transparent); border-radius:12px; z-index:1; }
+    .journey__object svg { width:28px; height:28px; }
+    .journey__step small { display:block; margin-bottom:6px; font-family:var(--mono); font-size:8.5px; color:var(--tone); }
     .journey__step > span:not(.journey__object) { font-size:12px; }
 
     .scrapbook { list-style:none; padding:0; }
@@ -1254,9 +1271,9 @@
     html.has-js.motion-ready [data-visual-reveal].is-in > :nth-child(7) { transition-delay:300ms; }
 
     @media (max-width: 760px) {
-      .source-convergence { grid-template-columns:1fr; padding:15px; }
+      .source-convergence { grid-template-columns:minmax(0,1.6fr) minmax(150px,.74fr); padding:12px; }
       .source-card { min-height:0; }
-      .convergence-result { grid-column:1; }
+      .convergence-result { grid-column:2; grid-row:1 / 4; }
       .comparison-panel { padding:12px; overflow:hidden; }
       .ztbl, .ztbl thead, .ztbl tbody { display:block; width:100%; }
       .ztbl thead tr,
@@ -1280,17 +1297,14 @@
       .ztbl tbody th { padding:11px 9px; font-size:11px; line-height:1.25; }
       .ztbl tbody td { justify-content:center; padding:7px 4px; border-left:1px solid rgba(198,204,218,.07)!important; }
       .comparison-mark { font-size:21px; }
-      .rail-map { grid-template-columns:1fr; }
-      .journey { grid-template-columns:1fr; }
-      .journey::before { top:28px; bottom:28px; left:45px; right:auto; width:1px; height:auto; background:linear-gradient(#DE8E79,#B6D4E4,#D3A9DE,#A9D4C4); }
-      .journey__step { min-height:0; padding-left:76px; }
-      .journey__object { position:absolute; left:14px; top:17px; margin:0; }
+      .rail-map { grid-template-columns:repeat(3,minmax(0,1fr)); }
+      .journey { grid-template-columns:repeat(4,minmax(0,1fr)); }
       .scrapbook__paper { padding-right:48px; }
       .test-questions::before { top:22px; bottom:22px; left:25px; right:auto; width:1px; height:auto; }
       .evidence-vault__body { padding:0 16px 8px; }
       .thesis-close { padding:26px 18px; }
     }
-    @media (min-width: 481px) and (max-width: 760px) {
+    @media (min-width: 481px) and (max-width: 559px) {
       #fig-1 .transmission { grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px 22px; }
       #fig-1 .transmission::before { display:none; }
       #fig-1 .era {
@@ -1298,6 +1312,40 @@
         padding:8px 0;
       }
       #fig-1 .era__object { width:48px; height:48px; box-shadow:none; }
+      .truth-panel { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media (min-width: 560px) and (max-width: 760px) {
+      #fig-1 .transmission { grid-template-columns:.9fr 1.2fr 1.16fr .84fr .82fr .82fr 1.1fr; gap:6px; }
+      #fig-1 .transmission::before { display:block; top:22px; left:6%; right:6%; }
+      #fig-1 .era { display:block; text-align:center; padding:0; }
+      #fig-1 .era__object { width:44px; height:44px; margin:0 auto 9px; box-shadow:0 0 0 5px #0a0c11; }
+      #fig-1 .era__object svg { width:27px; height:27px; }
+      #fig-1 .era__name { font-size:11px; line-height:1.2; }
+      #fig-1 .era__time {
+        margin-top:4px; font-size:9.5px; line-height:1.3; letter-spacing:-.03em;
+        color:var(--ink-dim); white-space:nowrap;
+      }
+      .truth-panel { grid-template-columns:repeat(2,minmax(0,1fr)); }
+    }
+    @media (max-width: 519px) {
+      .source-convergence { grid-template-columns:1fr; padding:10px; }
+      .source-card {
+        grid-column:1; display:grid; grid-template-columns:38px minmax(0,1fr); grid-template-rows:auto auto auto;
+        column-gap:12px; padding:12px;
+      }
+      .source-card__icon { grid-row:1 / 4; margin:0; }
+      .source-card__eyebrow { align-self:end; }
+      .convergence-result { grid-column:1; grid-row:auto; min-height:70px; flex-direction:row; text-align:left; }
+      .rail-map { grid-template-columns:1fr; }
+      .rail-map__item {
+        display:grid; grid-template-columns:38px minmax(0,1fr); column-gap:12px; align-items:center;
+      }
+      .rail-map__icon { grid-row:1 / 3; margin:0; }
+      .journey { grid-template-columns:repeat(2,minmax(0,1fr)); }
+      .journey::before { display:none; }
+      .rail-map__item + .rail-map__item { border-left:0; border-top:1px solid var(--hair); }
+      .journey__step:nth-child(odd) { border-left:0; }
+      .journey__step:nth-child(n+3) { border-top:1px solid var(--hair); }
     }
     @media (prefers-reduced-motion: reduce) {
       .reveal,
@@ -1427,13 +1475,13 @@
             <div class="story-figure" aria-label="The zodiac moving through seven forms across history">
               <div class="story-figure__kicker">One shared language · many forms</div>
               <div class="transmission" data-almanac-reveal>
-                <div class="era" style="--era:#DE8E79"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M8 7h24v26H8zM13 13c3-2 5 2 8 0s5 2 7 0M13 19h14M13 25h9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="era__name">Clay tablet</span><span class="era__time">Babylon</span></div>
-                <div class="era" style="--era:#B9D4BE"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m11 24 6-8 5 5 7-9M12 12h.1M29 27h.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><span class="era__name">Star map</span><span class="era__time">Ancient world</span></div>
-                <div class="era" style="--era:#B29DD0"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M9 9c6-2 10 0 11 3 1-3 5-5 11-3v23c-6-2-10 0-11 3-1-3-5-5-11-3V9Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M20 12v23M13 16h4m-4 5h4m6-5h4m-4 5h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span><span class="era__name">Manuscript</span><span class="era__time">Hand copied</span></div>
-                <div class="era" style="--era:#B6D4E4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="8" y="10" width="24" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 16h24M14 7v6m12-6v6M13 21h4m3 0h7m-14 5h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="era__name">Almanac</span><span class="era__time">Printed</span></div>
-                <div class="era" style="--era:#E0A9B4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M8 9h24v23H8zM12 13h16M12 18h7v9h-7zm11 0h5m-5 4h5m-5 4h5m-5 4h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="era__name">Newspaper</span><span class="era__time">Syndicated</span></div>
-                <div class="era" style="--era:#D3A9DE"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="12" y="6" width="16" height="28" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="29" r="1" fill="currentColor"/><path d="M16 11h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="era__name">Phone</span><span class="era__time">Personal</span></div>
-                <div class="era" style="--era:#A9D4C4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="20" cy="9" r="1.8" fill="currentColor"/><circle cx="26" cy="11" r="1.8" fill="currentColor"/><circle cx="31" cy="16" r="1.8" fill="currentColor"/><circle cx="31" cy="23" r="1.8" fill="currentColor"/><circle cx="26" cy="29" r="1.8" fill="currentColor"/><circle cx="20" cy="31" r="1.8" fill="currentColor"/><circle cx="14" cy="29" r="1.8" fill="currentColor"/><circle cx="9" cy="23" r="1.8" fill="currentColor"/><circle cx="9" cy="16" r="1.8" fill="currentColor"/><circle cx="14" cy="11" r="1.8" fill="currentColor"/><circle cx="12" cy="26" r="1.5" fill="currentColor"/><circle cx="28" cy="26" r="1.5" fill="currentColor"/></svg></span><span class="era__name">Public record</span><span class="era__time">Portable</span></div>
+                <div class="era" style="--era:#DE8E79"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M8 7h24v26H8zM13 13c3-2 5 2 8 0s5 2 7 0M13 19h14M13 25h9" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="era__name">Clay tablet</span><span class="era__time">c. 450 BCE</span></div>
+                <div class="era" style="--era:#B9D4BE"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="m11 24 6-8 5 5 7-9M12 12h.1M29 27h.1" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></span><span class="era__name">Star map</span><span class="era__time">150 BCE–150 CE</span></div>
+                <div class="era" style="--era:#B29DD0"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M9 9c6-2 10 0 11 3 1-3 5-5 11-3v23c-6-2-10 0-11 3-1-3-5-5-11-3V9Z" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M20 12v23M13 16h4m-4 5h4m6-5h4m-4 5h4" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg></span><span class="era__name">Manuscript</span><span class="era__time">850–1150 CE</span></div>
+                <div class="era" style="--era:#B6D4E4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="8" y="10" width="24" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 16h24M14 7v6m12-6v6M13 21h4m3 0h7m-14 5h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="era__name">Almanac</span><span class="era__time">c. 1500</span></div>
+                <div class="era" style="--era:#E0A9B4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M8 9h24v23H8zM12 13h16M12 18h7v9h-7zm11 0h5m-5 4h5m-5 4h5m-5 4h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="era__name">Newspaper</span><span class="era__time">c. 1910</span></div>
+                <div class="era" style="--era:#D3A9DE"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="12" y="6" width="16" height="28" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="29" r="1" fill="currentColor"/><path d="M16 11h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="era__name">Phone</span><span class="era__time">c. 2010</span></div>
+                <div class="era" style="--era:#A9D4C4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="20" cy="9" r="1.8" fill="currentColor"/><circle cx="26" cy="11" r="1.8" fill="currentColor"/><circle cx="31" cy="16" r="1.8" fill="currentColor"/><circle cx="31" cy="23" r="1.8" fill="currentColor"/><circle cx="26" cy="29" r="1.8" fill="currentColor"/><circle cx="20" cy="31" r="1.8" fill="currentColor"/><circle cx="14" cy="29" r="1.8" fill="currentColor"/><circle cx="9" cy="23" r="1.8" fill="currentColor"/><circle cx="9" cy="16" r="1.8" fill="currentColor"/><circle cx="14" cy="11" r="1.8" fill="currentColor"/><circle cx="12" cy="26" r="1.5" fill="currentColor"/><circle cx="28" cy="26" r="1.5" fill="currentColor"/></svg></span><span class="era__name">Public record</span><span class="era__time">5 Jul 2024</span></div>
               </div>
             </div>
             <details class="evidence-drawer">

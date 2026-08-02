@@ -1369,10 +1369,55 @@
             </div>
           )}
 
+          <h2 className="hero__headline hero__headline--registry">
+            Start here.
+          </h2>
           <p className="hero__sub">
-            One record for the twelve signs. Verify what belongs, where it
-            lives, and how public blockchain records become symbolic context.
+            Open a sign, check an address, or bring the public record into
+            another app.
           </p>
+
+          <nav className="registry-paths" aria-label="Start with the Registry">
+            <a
+              className="registry-path"
+              href={registryProfilePath(sign)}
+              style={{ '--path-tone': sign.hue }}
+              data-registry-start="sign"
+            >
+              <span className="registry-path__icon" aria-hidden="true">
+                <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="34" height="34" alt="" />
+              </span>
+              <strong>Open {sign.name}</strong>
+              <small>See the selected sign&rsquo;s record</small>
+              <span className="registry-path__arrow" aria-hidden="true">→</span>
+            </a>
+            <a
+              className="registry-path"
+              href="#verify"
+              style={{ '--path-tone': '#A9D4C4' }}
+              data-registry-start="verify"
+            >
+              <span className="registry-path__icon" aria-hidden="true">
+                <svg viewBox="0 0 34 34" width="22" height="22"><circle cx="17" cy="17" r="9" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="m12.5 17 3 3 6-7" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
+              <strong>Verify</strong>
+              <small>Check a public address</small>
+              <span className="registry-path__arrow" aria-hidden="true">→</span>
+            </a>
+            <a
+              className="registry-path"
+              href="#sdk"
+              style={{ '--path-tone': '#B29DD0' }}
+              data-registry-start="build"
+            >
+              <span className="registry-path__icon" aria-hidden="true">
+                <svg viewBox="0 0 34 34" width="22" height="22"><path d="m13 11-5 6 5 6M21 11l5 6-5 6M19 8l-4 18" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg>
+              </span>
+              <strong>Build</strong>
+              <small>Use the open registry</small>
+              <span className="registry-path__arrow" aria-hidden="true">→</span>
+            </a>
+          </nav>
 
           {!GALLERY_LIVE && <Selector active={active} setActive={setActive} />}
 
@@ -3034,15 +3079,13 @@
           </div>
 
           <h2 className="idctx__statement">
-            From public records<br/>
-            <span className="it">to personal patterns.</span>
+            What the registry <span className="it">can do.</span>
           </h2>
 
           <p className="idctx__copy">
-            Verify an official Zodiac, understand the pattern formed by a
-            public collection, or carry trusted Registry facts into another
-            product. For collectors, Registry Collection shows the twelve-sign
-            pattern at a public address; a saved chart is an optional layer.
+            Verify a Zodiac, read the pattern in a public collection, or carry
+            Registry facts into another product. Add a saved birth chart later
+            if you want one.
           </p>
 
           <div className="idctx__grid">
@@ -3708,6 +3751,115 @@
         };
         document.addEventListener('click', onClick);
         return () => document.removeEventListener('click', onClick);
+      }, []);
+
+      useEffect(() => {
+        let cancelled = false;
+        let frame = 0;
+        let settleTimer = 0;
+        let resizeObserver = null;
+        let mutationObserver = null;
+        let layoutObserver = null;
+        let stopObserving = 0;
+        let realignTimers = [];
+        const currentHashId = () => {
+          try {
+            return decodeURIComponent(window.location.hash.slice(1));
+          } catch {
+            return '';
+          }
+        };
+        const alignHashTarget = () => {
+          if (cancelled) return;
+          const id = currentHashId();
+          if (!id) return;
+          document.getElementById(id)?.scrollIntoView({ block: 'start', behavior: 'instant' });
+        };
+        const queueRealignments = () => {
+          realignTimers.forEach((timer) => window.clearTimeout(timer));
+          alignHashTarget();
+          realignTimers = [250, 1000, 2500, 4500, 7000, 10000].map((delay) => (
+            window.setTimeout(alignHashTarget, delay)
+          ));
+        };
+        const scheduleAlignment = () => {
+          window.clearTimeout(settleTimer);
+          settleTimer = window.setTimeout(alignHashTarget, 120);
+        };
+        const afterLayout = () => {
+          frame = window.requestAnimationFrame(() => {
+            frame = window.requestAnimationFrame(alignHashTarget);
+          });
+        };
+        const stopObservers = () => {
+          resizeObserver?.disconnect();
+          mutationObserver?.disconnect();
+          layoutObserver?.disconnect();
+        };
+        const stopAlignmentOnInput = (event) => {
+          if (!event.isTrusted) return;
+          window.clearTimeout(settleTimer);
+          realignTimers.forEach((timer) => window.clearTimeout(timer));
+          realignTimers = [];
+          stopObservers();
+        };
+
+        if (document.fonts?.ready) {
+          document.fonts.ready.then(afterLayout);
+        } else {
+          afterLayout();
+        }
+        window.addEventListener('load', alignHashTarget, { once: true });
+
+        const shell = document.querySelector('.zd');
+        if (shell && 'ResizeObserver' in window) {
+          resizeObserver = new ResizeObserver(scheduleAlignment);
+          resizeObserver.observe(document.querySelector('.cine') ?? shell);
+          const gallery = document.querySelector('.gband');
+          if (gallery) resizeObserver.observe(gallery);
+          const initialId = currentHashId();
+          for (const child of shell.children) {
+            resizeObserver.observe(child);
+            if (initialId && child.id === initialId) break;
+          }
+        }
+        if (shell && 'MutationObserver' in window) {
+          mutationObserver = new MutationObserver(scheduleAlignment);
+          mutationObserver.observe(shell, {
+            childList: true,
+            characterData: true,
+            subtree: true,
+          });
+        }
+        if ('PerformanceObserver' in window
+          && PerformanceObserver.supportedEntryTypes?.includes('layout-shift')) {
+          layoutObserver = new PerformanceObserver((list) => {
+            if (list.getEntries().some((entry) => !entry.hadRecentInput)) scheduleAlignment();
+          });
+          layoutObserver.observe({ type: 'layout-shift', buffered: true });
+        }
+        queueRealignments();
+        window.addEventListener('hashchange', queueRealignments);
+        window.addEventListener('wheel', stopAlignmentOnInput, { passive: true });
+        window.addEventListener('touchstart', stopAlignmentOnInput, { passive: true });
+        window.addEventListener('pointerdown', stopAlignmentOnInput, { passive: true });
+        window.addEventListener('keydown', stopAlignmentOnInput);
+        stopObserving = window.setTimeout(stopObservers, 12000);
+
+        return () => {
+          cancelled = true;
+          window.cancelAnimationFrame(frame);
+          window.clearTimeout(settleTimer);
+          window.clearTimeout(stopObserving);
+          realignTimers.forEach((timer) => window.clearTimeout(timer));
+          stopObservers();
+          window.removeEventListener('load', alignHashTarget);
+          window.removeEventListener('hashchange', queueRealignments);
+          window.removeEventListener('wheel', stopAlignmentOnInput);
+          window.removeEventListener('touchstart', stopAlignmentOnInput);
+          window.removeEventListener('pointerdown', stopAlignmentOnInput);
+          window.removeEventListener('keydown', stopAlignmentOnInput);
+        };
       }, []);
 
       return (
