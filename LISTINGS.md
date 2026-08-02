@@ -72,13 +72,16 @@ Where traders already look. For each of the twelve tokens:
 3. The watchlist of the official pairs already exists:
    `https://dexscreener.com/watchlist/p2GfMO2bnsxdOCEwYTCD` — keep it in bios.
 
-**Cancer and Sagittarius have no indexed pair.** Dex Screener indexes
-pairs automatically once a liquidity pool exists on a supported DEX
-(Raydium, Orca, Meteora…). Confirm whether pools exist for these two
-mints; if not, that's a liquidity decision, not a listing form. Once a
-pool is indexed, add its pair ID to `MARKET_PAIRS` in
-`scripts/sign-data.mjs`, run `node scripts/build-sign-pages.mjs`, and the
-catalogue pages + market panels pick it up.
+**Cancer and Sagittarius have pools but no indexed pair.** Canonical
+Raydium CPMM pools exist for both — Cancer
+`DaTEcH6da4i1evZU37F9ibQirYXhLKZpKDzDno346nSW`, Sagittarius
+`7mP6WeVYBNt3eao5szsMPmuHughHjNRx26TcrgJXZRky` (recorded with the other
+ten in `scripts/thesis-disclosure-reviewed.json`, 2026-07-14 capture;
+Jupiter quotes route through both, verified 2026-08-02). The open item is
+Dex Screener pair indexing only, not liquidity. Once a pool is indexed,
+add its pair ID to `MARKET_PAIRS` in `scripts/sign-data.mjs`, run
+`node scripts/build-sign-pages.mjs`, and the catalogue pages + market
+panels pick it up.
 
 ## 2. Jupiter Verify (verified token list)
 
@@ -139,7 +142,7 @@ Base representation — link the bridge record from the registry.
 1. Jupiter Verify (fixes wallet warnings everywhere; prerequisite hygiene
    for everything else).
 2. Dex Screener token profiles (website + socials visible where traders are).
-3. Cancer / Sagittarius liquidity → pair indexing → registry-driven pages
-   pick up market context.
+3. Cancer / Sagittarius pair indexing (pools already exist) →
+   registry-driven pages pick up market context.
 4. CoinGecko, then CoinMarketCap (both favor the footprint created by 1–3).
 5. Search console submissions + IndexNow pings as content ships.

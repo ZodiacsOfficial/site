@@ -7,7 +7,7 @@
  */
 export const EN = Object.freeze({
   'disclosure.metaTitle': 'Disclosure — Zodiacs.org Registry',
-  'disclosure.metaDescription': 'Plain-language operator, economic-interest, provenance, read-only wallet-connection, Registry classification, and digital-asset risk disclosures.',
+  'disclosure.metaDescription': 'Plain-language operator, economic-interest, provenance, read-only wallet-connection, embedded-trading, Registry classification, and digital-asset risk disclosures.',
   'disclosure.kicker': 'Registry disclosure',
   'disclosure.title': 'The facts, including the unresolved ones.',
   'disclosure.intro': 'This page separates facts supported by public evidence from statements supplied by the operator. An operator attestation is dated and labeled as an attestation; it is never presented as independently verified.',
@@ -33,8 +33,12 @@ export const EN = Object.freeze({
   'disclosure.separationStatement': 'The core astrology tools remain free, contain no advertising or cross-site trackers, and can be used without the Registry. Registry Collection is an optional cross-link that reads a saved chart and one public wallet record side by side; the wallet record does not alter the chart calculation.',
   'disclosure.separationEvidence': 'The calculators compute in the browser and require no Registry interaction. Aura keeps chart computation local and sends only the selected public address through its holdings lookup.',
   'disclosure.readOnlyLabel': 'Read-only posture',
-  'disclosure.readOnlyStatement': 'The Registry lookup surfaces and @zodiacs/sdk are read-only. Registry Collection may connect to compatible wallet software only after a user click to obtain authorized public accounts; it uses one compatible address for the lookup and does not hold assets, request signatures or approvals, construct or submit transactions, or switch networks.',
+  'disclosure.readOnlyStatement': 'The Registry lookup surfaces and @zodiacs/sdk are read-only. Registry Collection may connect to compatible wallet software only after a user click to obtain authorized public accounts; it uses one compatible address for the lookup and does not hold assets, request signatures or approvals, construct or submit transactions, or switch networks. The optional embedded trading interface on catalogue pages is a separate surface with its own row below.',
   'disclosure.readOnlyEvidence': 'Aura also accepts a pasted address, forwards only the one address used for its holdings lookup, and the SDK documents and tests a read-only API surface. A connection is not proof of identity, control, or legal ownership.',
+  'disclosure.tradeLabel': 'Embedded trading interface',
+  'disclosure.tradeStatement': 'When the trade panel is enabled, a sign’s catalogue page can embed the trading interface of Jupiter, an independent third-party venue, loaded only after a visitor’s click. Zodiacs.org never holds keys or funds, cannot execute or reverse a trade, and configures no referral account, platform fee, or other compensation from Jupiter, liquidity pools, or any marketplace. Wallet connection, signing, and execution happen between the visitor, their wallet software, and the venue.',
+  'disclosure.tradeEvidence': 'The panel is not yet enabled anywhere on the site; this row states its operating rules in advance. When the panel ships, its published page code and a live catalogue page make the rules checkable, and this row moves to verified from published materials.',
+  'disclosure.linkTradeExample': 'A sign’s catalogue page',
   'disclosure.adviceLabel': 'Financial advice and solicitation',
   'disclosure.adviceStatement': 'Registry records, market context, and Registry Collection are not financial advice or a solicitation to buy, sell, or hold an asset. The Collection is a symbolic reflection, not a wallet score or price signal, and no purchase is required.',
   'disclosure.adviceEvidence': '“Official” is a Registry classification only: it means an address, contract, mint, or representation matches the Registry’s published list—not government approval, identity verification, safety, value, liquidity, or future performance. Contextual notices and the terms state the digital-asset risks.',
