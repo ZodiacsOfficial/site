@@ -1,8 +1,9 @@
 # Registry trade panel — owner risk decision
 
-Status: DRAFT — awaiting the owner's decision; flag-on is not authorized
+Status: ratified by the owner; flag-on authorized once every mandatory
+control below is satisfied
 
-Approved: [OWNER — add an ISO timestamp only when approving]
+Approved: 2026-08-02T17:28:02Z
 
 Scope: the twelve `/registry/{sign}/` catalogue pages only; Solana only; the
 Jupiter Plugin embedded in integrated mode; no referral account, platform
@@ -11,16 +12,25 @@ fee, or compensation of any kind; committed HTML always flag-off behind
 
 ## Decision
 
-[OWNER — hand-write this section when deciding. It must contain, in your own
-words: (1) whether outside counsel was consulted or knowingly waived, in the
-Phase 5C form — "The site owner has chosen not to obtain outside legal advice
-for this release. This record is therefore an owner risk decision, not a
-legal opinion and not a claim that every jurisdiction has been analysed." —
-if that is the choice; (2) an acknowledgment that `/terms/` still states the
-operator's legal identity and governing jurisdiction are unconfirmed, and
-either the confirmed entity + jurisdiction or why launch proceeds without
-them; (3) the explicit authorization to set the production flag once every
-mandatory control below is satisfied.]
+The site owner has chosen not to obtain outside legal advice for this
+release. This record is therefore an owner risk decision, not a legal
+opinion and not a claim that every jurisdiction has been analysed.
+
+The owner acknowledges that `/terms/` continues to state that the
+operator's legal identity and a chosen governing jurisdiction have not been
+confirmed in the site's published materials, and that this release does not
+resolve either. The decision to proceed rests on the boundary described
+below: the site embeds an independent venue's own interface rather than
+operating a venue, takes no custody, executes and reverses nothing, and
+receives no compensation. Applicable law still governs use of the site, and
+nothing here removes mandatory consumer rights. The Applicable law section
+of `/terms/` is to be updated, with its date, when those facts are
+confirmed.
+
+The owner authorizes setting `PUBLIC_REGISTRY_TRADE_ENABLED=1` in
+production once every mandatory control below is satisfied — including the
+merge of the panel implementation, which does not yet exist. This
+authorization covers no other surface and no other chain.
 
 ## What is being decided
 
@@ -89,26 +99,28 @@ owner's approval of this decision explicitly accepts the sharpened R1
 posture. The redesign's FAQ answer "How do I buy a zodiac token?" is worded
 flag-agnostically so it stays true in both flag states.
 
-## Fresh operator attestation (required before flag-on)
+## Fresh operator attestation (ratified 2026-08-02)
 
-The 2026-07-23 attestation predates the panel and does not address venue,
-referral, or marketplace compensation. Before the flag is set, the owner
-dates and publishes a replacement in the disclosure strings (all locales).
-Draft for the owner to edit or ratify:
+The 2026-07-23 attestation predated the panel and did not address venue,
+referral, or marketplace compensation. The owner ratified this replacement
+on 2026-08-02; it is published verbatim and dated on `/disclosure/` in
+every locale by this release, superseding the 2026-07-23 text:
 
 > "I personally control the zodiacs.org domain, repository, deployments, and
 > the Registry content published there. I do not control astrofolio.xyz, its
 > official channels, token deployment or administrative authorities,
 > treasury, liquidity, or market activity. No person, account, or
 > organization responsible for zodiacs.org also controls those Astrofolio
-> surfaces. I hold positions in one or more Registry assets. The optional
-> trade panel on catalogue pages embeds an independent venue's interface; I
-> configure no referral account, platform fee, or other compensation from
-> Jupiter, liquidity pools, or any marketplace, and zodiacs.org receives
-> nothing from any trade."
+> surfaces. I hold positions in one or more Registry assets. No referral
+> account, platform fee, or other compensation from Jupiter, any liquidity
+> pool, or any marketplace is configured for zodiacs.org, and the site
+> receives nothing from any trade reached through it."
 
-[OWNER — ratify or rewrite, then date it; the panel PR commits it into
-`src/strings/en.mjs` and the four addition catalogs with that date.]
+The compensation sentence is written in the present tense so that it states
+what is true on the day it is published — the linked venue routes that ship
+today receive no compensation either — and remains true when the embedded
+panel ships. It is an operator attestation: dated, published verbatim, and
+never presented as independently verified.
 
 ## Controls that remain mandatory
 
@@ -124,8 +136,9 @@ Draft for the owner to edit or ratify:
 4. The Cabinet (`/registry/collection/`, `src/pages/registry/collection/`)
    never gains the panel or any acquisition link; the `/registry/` hub keeps
    its `jup.ag/swap/` ban.
-5. The fresh dated attestation above and the rewritten Terms, privacy, and
-   disclosure pages are live in production before the flag is set.
+5. The ratified 2026-08-02 attestation above and the rewritten Terms,
+   privacy, and disclosure pages are live in production before the flag is
+   set. (Published by this release; verify on production after deploy.)
 6. The disclosure `Embedded trading interface` row moves from pending to
    verified only in the PR that publishes the panel code.
 7. Rollback stays one step: unset the flag and redeploy; the pages return to
