@@ -276,7 +276,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             JSON.stringify(menuContract.labels.map((value) => value.toLowerCase()))
               === JSON.stringify(['the site', 'tools', 'the twelve'])
               && JSON.stringify(menuContract.siteHrefs)
-                === JSON.stringify(['/learn/', '/horoscopes/', '/profile/', '/registry/']),
+                === JSON.stringify(['/learn/', '/horoscopes/', '/profile/', '/ask/', '/registry/']),
             JSON.stringify(menuContract),
           );
           check(

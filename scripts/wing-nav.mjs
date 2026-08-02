@@ -8,9 +8,10 @@
 // Instrument Sans links, a pastel Signs dropdown, a Registry chip, and a
 // mobile burger overlay) — in the wing's inlined-token form (no hashed bundle).
 //
-// Link set (owner-directed): Signs ▾ · Tools · Learn · Horoscopes · Saved charts
-// on the left, a "Registry ↗" chip on the right (the sanctioned entry point to
-// the wing). No Thesis/Archive/SDK in the nav — they live in the footer.
+// Link set (owner-directed): Signs ▾ · Tools · Learn · Horoscopes · Ask Zodiacs
+// · Saved charts on the left, a "Registry ↗" chip on the right (the sanctioned
+// entry point to the wing). No Thesis/Archive/SDK in the nav — they live in the
+// footer.
 //
 // Sign table mirrors src/lib/signs.ts (slug/name/glyph/dates/hue); keep in sync
 // if that file changes. The Signs items link to the consumer guides (/{slug}/).
@@ -88,6 +89,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
         <a class="wnav__link" href="/learn/">Learn</a>
         <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
+        <a class="wnav__link" href="/ask/">Ask Zodiacs</a>
         <a class="wnav__link" href="/profile/">Saved charts</a>
       </div>
       ${search}
@@ -107,7 +109,8 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/registry/" aria-current="page"><span>Registry</span><small>Digital collection and registry</small></a>
+        <a class="wnav-menu__link" style="--i:3" href="/ask/">Ask Zodiacs</a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:4" href="/registry/" aria-current="page"><span>Registry</span><small>Digital collection and registry</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>

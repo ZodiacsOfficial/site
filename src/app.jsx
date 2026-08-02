@@ -1216,6 +1216,7 @@
                 <button className="wnav__link wnav__signs-btn" type="button" aria-expanded={signsOpen} aria-controls="wnav-signs" onClick={() => setSignsOpen((v) => !v)}>Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" strokeLinejoin="round"/></svg></button>
                 <a className="wnav__link" href="/learn/">Learn</a>
                 <a className="wnav__link" href="/horoscopes/">Horoscopes</a>
+                <a className="wnav__link" href="/ask/">Ask Zodiacs</a>
                 <a className="wnav__link" href="/profile/">Saved charts</a>
               </div>
               <a className="wnav__search" href="/?search=1" aria-label="Search the site">
@@ -1246,7 +1247,8 @@
                 <a className="wnav-menu__link" style={{ '--i': 0 }} href="/learn/">Learn</a>
                 <a className="wnav-menu__link" style={{ '--i': 1 }} href="/horoscopes/">Horoscopes</a>
                 <a className="wnav-menu__link" style={{ '--i': 2 }} href="/profile/">Saved charts</a>
-                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href="/registry/" aria-current="page">
+                <a className="wnav-menu__link" style={{ '--i': 3 }} href="/ask/">Ask Zodiacs</a>
+                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 4 }} href="/registry/" aria-current="page">
                   <span>Registry</span>
                   <small>Digital collection and registry</small>
                 </a>
