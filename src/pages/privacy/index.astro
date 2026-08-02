@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 
-const updated = '1 August 2026';
+const updated = '2 August 2026';
 
 const jsonLd = [
   {
@@ -55,18 +55,31 @@ const jsonLd = [
       <h2>AI assistant</h2>
       <p>
         When you use the assistant, your chat messages are sent to our AI
-        provider, Anthropic, to generate the reply. A saved chart is included
-        only after you press “Attach my chart”; the consent screen shows the
-        placements-only summary before it is sent. That summary accompanies
-        each question while “Using my chart” remains on; you can turn it off.
-        We do not store conversations; Anthropic states that API traffic is not
-        used for model training. Your saved name, birth date, time, birthplace,
-        and coordinates are never attached by the assistant; anything you type
-        into chat is part of the message you send.
-        To enforce the daily limit, we keep a salted one-way identifier derived
-        from your IP address with its daily count, never the raw IP; quota
-        checks delete records older than 35 days. We send that same pseudonymous
-        identifier to Anthropic as request metadata.
+        provider, OpenAI, to generate the reply. A saved chart is included only
+        after you select it, turn attachment on, and approve a preview of the
+        exact placements-only payload. The saved chart's name, identifier,
+        birth date, time, birthplace, and coordinates are never included; anything
+        you type into chat is part of the message you send. Model requests use
+        <code>store: false</code>, though OpenAI's abuse-monitoring retention may
+        still apply.
+      </p>
+      <p>
+        By default, completed conversations live only in this tab's session
+        storage. They survive navigation and reloads in the tab, and clear with
+        the browser session. Signed-in people can explicitly choose “Remember
+        this conversation for 90 days.” Remembered threads contain only the
+        visible questions and completed answers, locale, title, timestamps, and
+        an optional reference to a chart they own. Their expiry is fixed at 90
+        days after creation and is never extended. You can delete one thread,
+        delete all threads, or opt out; opting out deletes every remembered
+        conversation. Failed, stopped, and partial replies are not saved.
+      </p>
+      <p>
+        For fair-use limits, we keep an HMAC pseudonym derived from request
+        network data with a daily count, never the raw IP or an account ID. Quota
+        rows retain only today and yesterday. A separate, domain-separated HMAC
+        pseudonym is sent to OpenAI as the safety identifier. Aggregate daily and monthly cost totals
+        contain no question, answer, chart data, or raw identifier.
       </p>
 
       <h2>Charts you save</h2>
@@ -175,6 +188,11 @@ const jsonLd = [
         <li>
           You can delete your account and its stored charts at any time by
           emailing <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
+        </li>
+        <li>
+          Assistant memory is a separate, unchecked choice. Remembered threads
+          expire 90 days after creation and can be deleted individually or all
+          at once without affecting your saved charts.
         </li>
       </ul>
 

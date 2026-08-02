@@ -3,11 +3,11 @@
  * TypeScript locale union never changes this release policy.
  */
 export const HREFLANG_LOCALE_POLICY = Object.freeze([
-  { locale: 'en', hreflang: 'en', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'es', hreflang: 'es', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'pt', hreflang: 'pt-BR', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'fr', hreflang: 'fr', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
-  { locale: 'it', hreflang: 'it', indexEligible: true, routeFamilies: ['core', 'programmatic'], expectedBlocks: 2051 },
+  { locale: 'en', hreflang: 'en', indexEligible: true, routeFamilies: ['core', 'programmatic', 'assistant'], expectedBlocks: 2056 },
+  { locale: 'es', hreflang: 'es', indexEligible: true, routeFamilies: ['core', 'programmatic', 'assistant'], expectedBlocks: 2056 },
+  { locale: 'pt', hreflang: 'pt-BR', indexEligible: true, routeFamilies: ['core', 'programmatic', 'assistant'], expectedBlocks: 2056 },
+  { locale: 'fr', hreflang: 'fr', indexEligible: true, routeFamilies: ['core', 'programmatic', 'assistant'], expectedBlocks: 2056 },
+  { locale: 'it', hreflang: 'it', indexEligible: true, routeFamilies: ['core', 'programmatic', 'assistant'], expectedBlocks: 2056 },
   { locale: 'ru', hreflang: 'ru', indexEligible: true, routeFamilies: ['core'], expectedBlocks: 156 },
   { locale: 'ar', hreflang: 'ar', indexEligible: false, routeFamilies: [], expectedBlocks: 0 },
 ]);
@@ -15,7 +15,7 @@ export const HREFLANG_LOCALE_POLICY = Object.freeze([
 export const X_DEFAULT_HREFLANG = Object.freeze({
   hreflang: 'x-default',
   locale: 'en',
-  expectedBlocks: 2051,
+  expectedBlocks: 2056,
 });
 
 export const ACTIVE_HREFLANGS = Object.freeze(
@@ -67,6 +67,7 @@ function canonicalPath(path) {
 
 export function hreflangRouteFamily(path) {
   const clean = canonicalPath(path);
+  if (clean === '/ask/') return 'assistant';
   if (CORE_PATHS.has(clean)) return 'core';
   if (clean === '/learn/chinese-zodiac/') return 'programmatic';
   const animal = clean.match(/^\/learn\/chinese-zodiac\/([a-z]+)\/$/)?.[1];

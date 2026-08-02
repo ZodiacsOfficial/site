@@ -9,10 +9,11 @@ import SourcesLine, { type SourceLink } from '../components/SourcesLine.astro';
 import EditorialLine from '../components/EditorialLine.astro';
 import GlassDefs from '../components/GlassDefs.astro';
 import EditionFreshnessGuard from '../components/EditionFreshnessGuard.astro';
+import AskAboutThis from '../components/AskAboutThis.astro';
 import { ANALYTICS_EVENT_PROPS, ANALYTICS_EVENT_VALUES } from '../lib/analytics';
 import { hasDailyChartEmailProvider } from '../lib/email/daily-config';
 import { BRAND_ICON_PATHS } from '../lib/brand-icons.mjs';
-import { LOCALE_META, UI, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
+import { LOCALE_META, UI, normalizeCatalogLocale, stripLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { RUSSIAN_RUNTIME } from '../lib/i18n/ru-runtime/server';
 
 interface Props {
@@ -55,6 +56,16 @@ const plausibleDomain = import.meta.env.PUBLIC_PLAUSIBLE_DOMAIN?.trim() ?? '';
 const plausibleEnabled = Boolean(plausibleScriptUrl && !props.noindex);
 const dailyEmailLifecycleEnabled = hasDailyChartEmailProvider(process.env);
 const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ? direction : undefined;
+const assistantContextPath = stripLocale(props.path);
+const assistantContextTopic = assistantContextPath.startsWith('/birth-chart/')
+  ? 'chart'
+  : assistantContextPath.startsWith('/transits/')
+    ? 'transits'
+    : assistantContextPath.startsWith('/compatibility/')
+      ? 'compatibility'
+      : assistantContextPath.startsWith('/learn/')
+        ? 'learn'
+        : null;
 
 ---
 <!doctype html>
@@ -285,6 +296,14 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
     <main id="main">
       <slot />
     </main>
+
+    {assistantContextTopic && locale !== 'ru' && (
+      <AskAboutThis
+        locale={locale}
+        path={props.path}
+        topic={assistantContextTopic}
+      />
+    )}
 
     {props.type === 'article' && <EditorialLine locale={locale} />}
     <SourcesLine sources={props.sources} locale={locale} />

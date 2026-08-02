@@ -27,13 +27,13 @@ const languageLinks = (routeLanguageLinks.length ? routeLanguageLinks : availabl
   meta: LOCALE_META[entry.locale],
 }));
 const FOOTER_COPY = {
-  en: { assistant: 'Ask Zodiacs', today: 'Today' },
-  es: { assistant: 'Pregúntale a Zodiacs', today: 'Hoy (en inglés)' },
-  pt: { assistant: 'Pergunte ao Zodiacs', today: 'Hoje (em inglês)' },
-  fr: { assistant: 'Demander à Zodiacs', today: 'Aujourd’hui (en anglais)' },
-  it: { assistant: 'Chiedi a Zodiacs', today: 'Oggi (in inglese)' },
-  ru: { assistant: 'Спросить Zodiacs — пока по-английски', today: 'Сегодня — пока по-английски' },
-} as const satisfies Record<Locale, { assistant: string; today: string }>;
+  en: { assistant: 'Ask Zodiacs', today: 'Today', assistantError: 'The quick guide did not load.', assistantLink: 'Open the full Ask page' },
+  es: { assistant: 'Pregúntale a Zodiacs', today: 'Hoy (en inglés)', assistantError: 'La guía rápida no se cargó.', assistantLink: 'Abrir la página completa' },
+  pt: { assistant: 'Pergunte ao Zodiacs', today: 'Hoje (em inglês)', assistantError: 'O guia rápido não carregou.', assistantLink: 'Abrir a página completa' },
+  fr: { assistant: 'Demander à Zodiacs', today: 'Aujourd’hui (en anglais)', assistantError: 'Le guide rapide ne s’est pas chargé.', assistantLink: 'Ouvrir la page complète' },
+  it: { assistant: 'Chiedi a Zodiacs', today: 'Oggi (in inglese)', assistantError: 'La guida rapida non si è caricata.', assistantLink: 'Apri la pagina completa' },
+  ru: { assistant: 'Спросить Zodiacs — пока по-английски', today: 'Сегодня — пока по-английски', assistantError: 'Быстрый гид не загрузился.', assistantLink: 'Открыть полную страницу' },
+} as const satisfies Record<Locale, { assistant: string; today: string; assistantError: string; assistantLink: string }>;
 const englishSuffix = locale === 'ru' ? ' — пока по-английски' : '';
 const englishOnlyAria = locale === 'ru' ? 'Материал пока доступен по-английски' : undefined;
 const privacyHref = localizePath(locale, '/privacy/');
@@ -61,6 +61,10 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
           >
             {FOOTER_COPY[locale].assistant}
           </button>
+          <p class="footer__assistant-error" data-assistant-load-error hidden>
+            {FOOTER_COPY[locale].assistantError}{' '}
+            <a href={localizePath(locale, '/ask/')}>{FOOTER_COPY[locale].assistantLink}</a>.
+          </p>
         )}
       </div>
 
@@ -140,11 +144,27 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
     var buttons = document.querySelectorAll('[data-assistant-open]');
     if (!buttons.length) return;
     var modulePromise;
+    function askFallback(button) {
+      var locale = button.getAttribute('data-assistant-locale') || 'en';
+      var href = locale === 'en' ? '/ask/' : '/' + locale + '/ask/';
+      var prefill = button.getAttribute('data-assistant-prefill');
+      if (prefill) href += '?q=' + encodeURIComponent(prefill);
+      return href;
+    }
     function open(button) {
       modulePromise = modulePromise || import('/assets/assistant-ui.js');
       modulePromise.then(function (mod) {
         mod.openAssistant(button.getAttribute('data-assistant-locale') || undefined, button);
-      }).catch(function () {});
+      }).catch(function () {
+        button.setAttribute('aria-disabled', 'true');
+        var brand = button.closest('.footer__brand');
+        var error = brand && brand.querySelector('[data-assistant-load-error]');
+        if (error) {
+          error.hidden = false;
+        } else {
+          window.location.assign(askFallback(button));
+        }
+      });
     }
     buttons.forEach(function (button) {
       button.addEventListener('click', function () { open(button); });
@@ -210,6 +230,15 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
     font-size: var(--text-sm);
   }
   .footer__assistant:hover { color: var(--text); border-color: var(--hair-3); }
+  .footer__assistant[aria-disabled='true'] { cursor: default; opacity: 0.55; }
+  .footer__assistant-error {
+    margin: 9px 0 0;
+    max-width: 30ch;
+    color: var(--muted);
+    font-size: var(--text-xs);
+    line-height: 1.5;
+  }
+  .footer__assistant-error a { color: var(--text-2); text-underline-offset: 3px; }
   .footer__col { display: flex; flex-direction: column; gap: 9px; }
   .footer__label {
     margin-bottom: 4px;

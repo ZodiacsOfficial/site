@@ -1,6 +1,6 @@
 # Zodiacs.org setup and operations
 
-Last updated: 2026-07-26
+Last updated: 2026-08-02
 
 This is the provisioning source of truth for the six-phase household-name program. It consolidates the live repository's external services, environment variables, feature flags, and scheduled jobs. It contains names and procedures only—never secrets or secret values.
 
@@ -43,7 +43,8 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 | Resend | Selected standard | Double-opt-in capture, weekly/daily email, unsubscribe-compatible delivery | Authenticate `zodiacs.org` with SPF/DKIM and use a domain sender. |
 | Google Workspace | Existing | Monitored public contact and correction mailboxes | `people@zodiacs.org` is an alternate address for the monitored `admin@zodiacs.org` account, not a separate inbox. Keep the alias active and monitor Spam as well as Inbox. |
 | Buttondown or Loops | Supported alternatives | Standalone capture only | Configure exactly one provider. Do not combine providers in one deployment. |
-| Anthropic | Existing optional integration | Ask Zodiacs; optional future Phase 1 prose build | Use server/CI-only keys. Keep daily-prose and assistant budgets independently revocable. |
+| OpenAI | Ask Zodiacs provider | Buffered, grounded Ask Zodiacs responses through `gpt-5.6-terra` | Use a dedicated server-only project key, `store: false`, atomic application budgets, and provider-side spend limits. |
+| Anthropic | Seven-day rollback only | Previous Ask Zodiacs deployment | Keep the previous deployment and key available during the observation window; do not configure automatic provider fallback. Remove both after a stable rollout. |
 | Plausible-compatible analytics | Optional, approved | Cookieless allowlisted product events | No script is emitted when unconfigured. Never send birth data, email, chart positions, wallet addresses, free text, query strings, or fragments. |
 | Web Push / VAPID | Scaffolded, off | Phase 3 opt-in notifications | Generate a VAPID pair, store subscriptions in Supabase, and enable client/server/schedule flags together only after verification. |
 | Solana/Base RPC providers | Existing optional Registry integrations | Wallet-chart and Registry Collection reads | Out of scope for this six-phase program; preserve their flags and server-only endpoints. |
@@ -149,12 +150,30 @@ The Vercel daily-email endpoints require `EMAIL_PROVIDER=resend`, distinct `RESE
 | Variable | Scope | Meaning |
 | --- | --- | --- |
 | `ASSISTANT_ENABLED` | Vercel server flag | Must equal `1`; enables model calls. Unset/off returns a disabled response. |
-| `ANTHROPIC_API_KEY` | Vercel server secret | Server-only model API key. |
-| `ASSISTANT_SALT` | Vercel server secret | Salt used to hash a visitor address for quota enforcement. Rotate deliberately because it resets hash continuity. |
-| `PUBLIC_SUPABASE_URL` | Vercel server/public config | Supabase origin used by the quota RPC. |
-| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server secret | Calls `assistant_quota_bump`; never included in the client bundle. |
+| `OPENAI_API_KEY` | Vercel server secret | Dedicated Ask Zodiacs project key. It is never included in a browser bundle. |
+| `ASSISTANT_SALT` | Vercel server secret | Secret input for pseudonymous visitor quota keys and the domain-separated OpenAI safety identifier. Rotate deliberately because it resets visitor quota continuity. |
+| `PUBLIC_SUPABASE_URL` | Vercel server/public config | Supabase origin used by the atomic quota, cost reservation, and settlement RPCs. |
+| `SUPABASE_SERVICE_ROLE_KEY` | Vercel server secret | Calls only the service-role budget RPCs from the assistant route; never include it in a client bundle. |
+| `ASSISTANT_V1_COMPAT_UNTIL` | Vercel server config during rollout | Canonical millisecond UTC ISO instant (`YYYY-MM-DDTHH:mm:ss.sssZ`) set to exactly seven days after version 2 is enabled in production. Missing, malformed, or expired values reject legacy requests without affecting version 2. |
+| `ASSISTANT_VISITOR_DAILY_LIMIT` | Vercel server config, optional | Positive integer visitor limit; defaults to `10` questions per UTC day. |
+| `ASSISTANT_DAILY_BUDGET_MICROUSD` | Vercel server config, optional | Production daily allowance in millionths of a US dollar; defaults to `3000000` ($3). |
+| `ASSISTANT_MONTHLY_BUDGET_MICROUSD` | Vercel server config, optional | Production monthly allowance in millionths of a US dollar; defaults to `100000000` ($100). |
+| `ASSISTANT_RESERVATION_MICROUSD` | Vercel server config, optional | Hard ceiling for one request's conservative cost reservation; defaults to `300000` ($0.30). Leave at the reviewed default unless pricing or input bounds change. |
 
-The current endpoint enforces five requests per minute per function instance and thirty per day through Supabase. The committed migration `20260727050000_phase6_assistant_quota.sql` supplies `assistant_quota` and the `assistant_quota_bump` definer function; apply and verify it through the reviewed live path before `ASSISTANT_ENABLED=1`.
+The endpoint also retains a five-request-per-minute per-instance burst guard. Supabase is the atomic authority for ten questions per visitor per UTC day and for the $3 daily and $100 monthly production allowances. Environment overrides may lower these launch caps but cannot raise them. The route reserves a conservative worst-case cost before OpenAI and settles it from returned usage; missing or malformed usage retains the full reservation. It fails closed when the quota store is unavailable or a reservation would exceed a limit. Alerts are emitted at 70%, 90%, and 100%; configure matching provider-dashboard limits only as a secondary backstop.
+
+Apply and verify the two existing assistant quota migrations, then
+`20260802070819_assistant_memory_and_cost_budget.sql`,
+`20260802090000_assistant_memory_storage_caps.sql`, and
+`20260802101500_assistant_memory_idempotent_save.sql` before enabling the
+route. Confirm that only `service_role` can execute
+`assistant_budget_reserve_v1` and `assistant_budget_settle_v1`, that the
+underlying quota and aggregate-cost tables are not readable from browser
+roles, and that remembered-conversation tables are browser-read-only with
+authenticated mutations limited to the reviewed RPCs. The route uses OpenAI
+Responses with `gpt-5.6-terra`, `store: false`, low reasoning effort and
+verbosity, a strict buffered result schema, a 900-token output cap, and no
+automatic SDK retry.
 
 ### Phase 1 optional model-assisted prose
 
@@ -350,9 +369,12 @@ submission the same immediate response while the database and provider work
 finishes inside the function lifecycle. Delivery receipts store the edition,
 recipient HMAC, tier, state, and provider receipt—never the raw address.
 
-Before enabling server features, add and apply committed idempotent migrations for any live-only schema not yet represented in this directory:
-
-- Assistant quota table and `assistant_quota_bump` function.
+Before enabling Ask Zodiacs, apply the committed quota migrations,
+`20260802070819_assistant_memory_and_cost_budget.sql`,
+`20260802090000_assistant_memory_storage_caps.sql`, and
+`20260802101500_assistant_memory_idempotent_save.sql` in order. Verify their
+service-role grants, browser-role denials, RLS, replay safety, retention, and
+atomic reservation behavior before setting the model-call flag.
 
 The Phase 4 migration was applied and verified through the reviewed production
 path before launch. It creates the
@@ -473,12 +495,16 @@ the canary allowlist and hourly cleanup path.
 
 ## Ask Zodiacs provisioning
 
-1. Create a dedicated Anthropic key and set a hard provider budget/alert.
-2. Apply the committed assistant-quota migration and test its atomic daily increment.
-3. Configure `ANTHROPIC_API_KEY`, `ASSISTANT_SALT`, Supabase URL, and service-role secret in Vercel server scope.
-4. Keep `ASSISTANT_ENABLED` off while running the red-team and source-link sample.
-5. Verify same-origin enforcement, per-minute and per-day limits, cancellation, disabled fallback, no conversation persistence, and chart-summary disclosure.
-6. Enable the flag only after Phase 6's DoD evidence is logged.
+1. Use a resumed paid Supabase project. Apply the two existing quota migrations, then apply `20260802070819_assistant_memory_and_cost_budget.sql`, `20260802090000_assistant_memory_storage_caps.sql`, and `20260802101500_assistant_memory_idempotent_save.sql` in order; run the SQL grant, RLS, ownership, idempotency, expiry, storage-cap, cleanup, and concurrency tests.
+2. Create a dedicated OpenAI project key, enable API billing, and configure hard provider spend limits and alerts. Do not reuse a personal or browser-visible key.
+3. Configure `OPENAI_API_KEY`, `ASSISTANT_SALT`, Supabase URL, service-role secret, and the reviewed cost-limit values in Vercel server scope.
+4. Keep `ASSISTANT_ENABLED` off while building and validating the candidate. The static `/ask/` guide, localized starters, and navigation remain useful without a model call.
+5. Verify one valid version-1 compatibility SSE request and the version-2 `status`, `answer.delta`, `guide.meta`, `error`, and `done` events. Test same-origin enforcement, complete-pair history trimming, cancellation, capability gates, moderation and crisis routes, structured-output failure, source/fact validation, and every stable public error code.
+6. Run the grounded, chart-fact, unsupported-coverage, multi-turn, transit, safety, and tone evaluation sets against the exact preview SHA. Any invented source, critical chart-fact error, or critical safety failure blocks launch.
+7. Immediately before enabling production, set `ASSISTANT_V1_COMPAT_UNTIL` to exactly seven days after the enablement instant. Enable production at ten questions per visitor per UTC day, $3 per UTC day, and $100 per UTC month. Observe provider error rate, p95 latency, cleanup, and budget alerts for seven days.
+8. Keep the previous Anthropic deployment and key available only for manual rollback during that window. Do not automatically send a failed OpenAI request to another provider. After the stable observation window, remove `ASSISTANT_V1_COMPAT_UNTIL`, the legacy bridge, the Anthropic SDK, and the Anthropic key.
+
+Session conversations live only in versioned `sessionStorage`. Signed-in users may explicitly opt into a fixed 90-day remembered thread. The opt-in-and-import RPC is atomic; only complete visible turns are stored. Remembered storage is capped in the database at 20 unexpired threads per user, 100 turns per thread, and 500 turns across the user's unexpired threads; direct browser writes are revoked and cap failures return stable `assistant_memory_limit:*` markers. Hourly cleanup removes expired threads and pseudonymous quota rows older than yesterday in bounded batches, while RLS hides expired conversation rows immediately. Turning memory off deletes all remembered conversations.
 
 ## Scheduled jobs
 

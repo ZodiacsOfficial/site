@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '1 de agosto de 2026';
+const updated = '2 de agosto de 2026';
 
 const jsonLd = [
   {
@@ -129,20 +129,30 @@ const jsonLd = [
       <h2>Asistente de IA</h2>
       <p>
         Cuando usas el asistente, tus mensajes de chat se envían a nuestro
-        proveedor de IA, Anthropic, para generar la respuesta. Una carta guardada
-        solo se incluye después de que pulses «Adjuntar mi carta»; la pantalla de
-        consentimiento muestra el resumen solo de posiciones antes de enviarlo.
-        El resumen acompaña cada pregunta mientras «Usando mi carta» siga activo;
-        puedes desactivarlo.
-        No guardamos las conversaciones; Anthropic afirma que el tráfico de la
-        API no se usa para entrenar modelos. El asistente nunca adjunta tu nombre,
-        fecha, hora, lugar de nacimiento o coordenadas
-        guardados; todo lo que escribas en el chat forma parte del mensaje que
-        envías. Para aplicar el límite diario, conservamos un identificador
-        unidireccional con sal derivado de tu dirección IP y su recuento diario,
-        nunca la IP original; las comprobaciones de cuota borran los registros
-        de más de 35 días. Enviamos ese mismo identificador seudónimo a Anthropic
-        como metadato de la solicitud.
+        proveedor de IA, OpenAI, para generar la respuesta. Una carta guardada
+        solo se incluye después de elegirla, activar el adjunto y aprobar una
+        vista previa de la carga exacta, limitada a posiciones. Nunca se incluyen
+        el nombre o identificador de la carta, la fecha, la hora, el lugar de
+        nacimiento ni las coordenadas; todo lo que escribas en el chat forma parte
+        del mensaje enviado. Las solicitudes usan <code>store: false</code>, aunque
+        puede aplicarse la retención de OpenAI para supervisar abusos.
+      </p>
+      <p>
+        Por defecto, las conversaciones completadas viven solo en el almacenamiento
+        de sesión de esta pestaña. Las personas con sesión iniciada pueden elegir
+        expresamente «Recordar esta conversación durante 90 días». Los hilos
+        recordados vencen 90 días después de crearse, sin prórroga, y se pueden
+        borrar uno a uno, todos a la vez o al desactivar la opción. Las respuestas
+        fallidas, detenidas o parciales no se guardan.
+      </p>
+      <p>
+        Para los límites de uso conservamos un seudónimo HMAC derivado de datos de
+        red con un recuento diario, nunca la IP original ni un identificador de
+        cuenta. Las filas de cuota conservan solo hoy y ayer. Se envía a OpenAI
+        un seudónimo HMAC distinto, derivado por separado con separación de dominio,
+        como identificador de seguridad; los totales agregados de coste no
+        contienen preguntas, respuestas, datos de la carta ni identificadores sin
+        procesar.
       </p>
 
       <h2>Resumen diario, calendario y notificaciones</h2>

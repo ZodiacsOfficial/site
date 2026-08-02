@@ -1,0 +1,302 @@
+---
+import Base from '../layouts/Base.astro';
+import Faq from './Faq.astro';
+import { localizePath, type ReleasedLocale } from '../lib/i18n';
+
+interface Props { locale: ReleasedLocale }
+const { locale } = Astro.props;
+
+const COPY = {
+  en: {
+    metaTitle: 'Ask Zodiacs — your chart guide',
+    metaDescription: 'Ask a reflective astrology guide grounded in Zodiacs sources and deterministic chart facts. Choose whether to attach a privacy-safe chart payload.',
+    hero: 'Your chart guide, not an oracle.',
+    lede: 'Ask what a placement means, how patterns work together, or where to read next. Zodiacs brings the chart facts; the guide helps you make sense of them without turning symbolism into certainty.',
+    loading: 'Preparing your chart guide…',
+    loadError: 'The conversation could not load. Refresh this page, or continue with the chart and Learn guides below.',
+    noJs: 'Asking needs JavaScript. The guides below remain available without it.',
+    orientation: [
+      ['Start with what you know', 'No chart is required. Ask where to begin, what the Sun, Moon, and Rising describe, which calculator to use, or how to read a chart one layer at a time.'],
+      ['Bring a chart deliberately', 'Choose the chart yourself. Attachment stays off until you inspect and approve the exact positions-only object. Unknown birth time means no Rising sign or houses.'],
+      ['Keep following the thread', 'Every supported answer can carry evidence receipts and two useful next questions. The chips only fill the composer; nothing sends until you press Ask.'],
+    ],
+    sourceKicker: 'Read the source', sourceTitle: 'The site still stands on its own.',
+    routes: ['Compute or save a chart', 'Learn astrology from the beginning', 'Understand aspects and pressure', 'See how transits are calculated', 'Read the computation method'],
+    contractKicker: 'The contract', contractTitle: 'Plain boundaries make a better guide.',
+    contract: [
+      ['Grounded.', 'Site sources and computed chart facts are evidence; the interpretation is generated and can be wrong.'],
+      ['Private by default.', 'Session conversations stay in this tab. Chart attachment requires a separate, exact preview and consent.'],
+      ['Optional memory.', 'Signed-in users can remember completed visible turns for a fixed 90 days. Failed, stopped, and partial replies are never saved.'],
+      ['Bounded.', 'Ten questions per visitor per UTC day and a controlled service budget keep the feature available without an open-ended bill.'],
+      ['Reflective.', 'Astrology is treated as symbolic language, never as diagnosis, professional advice, or a guaranteed future event.'],
+    ],
+    provider: 'Messages and selected chart facts are sent transiently to OpenAI with storage disabled. OpenAI abuse-monitoring retention may still apply.',
+    privacy: 'Read the full privacy explanation.', faqHeading: 'Ask Zodiacs, answered',
+    faq: [
+      ['Where do the answers come from?', 'Ask Zodiacs retrieves a small set of relevant sections from this site and combines them with chart facts calculated by Zodiacs. Sources and chart evidence are returned as compact receipts. If neither the site nor an attached chart supports a question, it points to nearby topics it can cover.'],
+      ['Does the model calculate my chart?', 'No. Zodiacs calculates placements, houses, aspects, and current transit contacts with its deterministic astrology engine. The model interprets those facts; it does not invent or calculate them.'],
+      ['What happens to my conversation?', 'By default, completed turns live only in session storage in this browser tab and clear with the browser session. If you are signed in, you can explicitly remember a conversation for 90 days. Its expiry is fixed, and you can delete one thread, delete all threads, or opt out at any time.'],
+      ['What is sent when I attach a chart?', 'You choose a saved chart, keep attachment off by default, and review the exact positions-only payload before consenting. Names, chart IDs, birth dates, times, places, and coordinates are never sent to OpenAI.'],
+      ['What will it not do?', 'It does not provide medical, legal, financial, or crisis advice, and it does not present astrology as a certain prediction. In those areas it keeps the astrology symbolic and points you toward appropriate real-world help.'],
+    ],
+  },
+  es: {
+    metaTitle: 'Pregunta a Zodiacs — tu guía de la carta',
+    metaDescription: 'Consulta una guía astrológica reflexiva basada en fuentes de Zodiacs y datos calculados. Tú decides si adjuntas una carta sin datos personales.',
+    hero: 'Tu guía de la carta, no un oráculo.',
+    lede: 'Pregunta qué significa una posición, cómo se relacionan los patrones o qué leer después. Zodiacs aporta los datos de la carta; la guía te ayuda a interpretarlos sin convertir el simbolismo en certeza.',
+    loading: 'Preparando tu guía de la carta…', loadError: 'La conversación no se pudo cargar. Actualiza la página o continúa con las guías de cartas y Aprender.', noJs: 'Para preguntar necesitas JavaScript. Las guías de abajo siguen disponibles sin él.',
+    orientation: [
+      ['Empieza por lo que sabes', 'No necesitas una carta. Pregunta por dónde empezar, qué describen el Sol, la Luna y el Ascendente, qué calculadora usar o cómo leer una carta capa por capa.'],
+      ['Adjunta una carta a propósito', 'Tú eliges la carta. El envío queda desactivado hasta que revisas y apruebas el objeto exacto de posiciones. Sin hora natal no hay Ascendente ni casas.'],
+      ['Sigue el hilo', 'Cada respuesta compatible puede incluir comprobantes de evidencia y dos preguntas útiles. Los botones solo rellenan el campo; nada se envía hasta que pulsas Preguntar.'],
+    ],
+    sourceKicker: 'Lee la fuente', sourceTitle: 'El sitio también funciona por sí solo.',
+    routes: ['Calcular o guardar una carta', 'Aprender astrología desde el principio', 'Entender los aspectos y la presión', 'Ver cómo se calculan los tránsitos', 'Leer el método de cálculo'],
+    contractKicker: 'El acuerdo', contractTitle: 'Los límites claros hacen una guía mejor.',
+    contract: [
+      ['Con fundamento.', 'Las fuentes del sitio y los datos calculados son evidencia; la interpretación es generada y puede equivocarse.'],
+      ['Privada por defecto.', 'Las conversaciones de sesión permanecen en esta pestaña. Adjuntar una carta exige una vista previa exacta y consentimiento aparte.'],
+      ['Memoria opcional.', 'Quienes inician sesión pueden guardar los turnos visibles y completos durante 90 días fijos. Las respuestas fallidas, detenidas o parciales nunca se guardan.'],
+      ['Limitada.', 'Diez preguntas por visitante y día UTC, junto con un presupuesto controlado, mantienen el servicio disponible.'],
+      ['Reflexiva.', 'La astrología se trata como lenguaje simbólico, nunca como diagnóstico, asesoramiento profesional o futuro garantizado.'],
+    ],
+    provider: 'Los mensajes y datos de carta elegidos se envían transitoriamente a OpenAI con el almacenamiento desactivado. Puede aplicarse retención para vigilar abusos.', privacy: 'Lee la explicación completa de privacidad.', faqHeading: 'Pregunta a Zodiacs, explicado',
+    faq: [
+      ['¿De dónde salen las respuestas?', 'Pregunta a Zodiacs recupera unas pocas secciones relevantes del sitio y las combina con datos de carta calculados por Zodiacs. Las fuentes y los datos aparecen como comprobantes compactos. Si la carta y el sitio no cubren una pregunta, propone temas cercanos compatibles.'],
+      ['¿El modelo calcula mi carta?', 'No. Zodiacs calcula posiciones, casas, aspectos y contactos de tránsitos actuales con su motor determinista. El modelo interpreta esos datos; no los inventa ni los calcula.'],
+      ['¿Qué ocurre con mi conversación?', 'Por defecto, los turnos completos viven solo en el almacenamiento de sesión de esta pestaña y se borran con la sesión del navegador. Si inicias sesión, puedes guardar explícitamente una conversación durante 90 días fijos y borrarla cuando quieras.'],
+      ['¿Qué se envía al adjuntar una carta?', 'Tú eliges una carta, mantienes el envío apagado por defecto y revisas el objeto exacto de posiciones. Nunca se envían a OpenAI nombres, IDs, fechas, horas, lugares ni coordenadas.'],
+      ['¿Qué no hará?', 'No ofrece asesoramiento médico, legal, financiero ni de crisis, y no presenta la astrología como predicción segura. En esos ámbitos mantiene el simbolismo y señala ayuda adecuada en el mundo real.'],
+    ],
+  },
+  pt: {
+    metaTitle: 'Pergunte ao Zodiacs — seu guia do mapa',
+    metaDescription: 'Converse com um guia astrológico reflexivo baseado nas fontes do Zodiacs e em fatos calculados. Você decide se anexa um mapa sem dados pessoais.',
+    hero: 'Seu guia do mapa, não um oráculo.',
+    lede: 'Pergunte o que uma posição significa, como os padrões se combinam ou o que ler depois. O Zodiacs traz os fatos do mapa; o guia ajuda a entendê-los sem transformar simbolismo em certeza.',
+    loading: 'Preparando seu guia do mapa…', loadError: 'A conversa não carregou. Atualize a página ou continue com os guias de mapas e Aprender.', noJs: 'Para perguntar, o JavaScript precisa estar ativo. Os guias abaixo continuam disponíveis sem ele.',
+    orientation: [
+      ['Comece pelo que você sabe', 'Não é preciso ter um mapa. Pergunte por onde começar, o que Sol, Lua e Ascendente descrevem, qual calculadora usar ou como ler um mapa camada por camada.'],
+      ['Anexe um mapa de propósito', 'Você escolhe o mapa. O anexo fica desligado até você revisar e aprovar o objeto exato de posições. Sem horário de nascimento, não há Ascendente nem casas.'],
+      ['Continue seguindo o fio', 'Cada resposta compatível pode trazer comprovantes de evidência e duas perguntas úteis. Os botões apenas preenchem o campo; nada é enviado até você tocar em Perguntar.'],
+    ],
+    sourceKicker: 'Leia a fonte', sourceTitle: 'O site continua completo por conta própria.',
+    routes: ['Calcular ou salvar um mapa', 'Aprender astrologia desde o começo', 'Entender aspectos e pressão', 'Ver como os trânsitos são calculados', 'Ler o método de cálculo'],
+    contractKicker: 'O acordo', contractTitle: 'Limites claros formam um guia melhor.',
+    contract: [
+      ['Com fundamento.', 'Fontes do site e fatos calculados são evidências; a interpretação é gerada e pode errar.'],
+      ['Privado por padrão.', 'Conversas da sessão ficam nesta aba. Anexar um mapa exige uma prévia exata e consentimento separado.'],
+      ['Memória opcional.', 'Usuários conectados podem guardar turnos visíveis e completos por 90 dias fixos. Respostas parciais, interrompidas ou com falha nunca são salvas.'],
+      ['Limitado.', 'Dez perguntas por visitante por dia UTC e um orçamento controlado mantêm o recurso disponível.'],
+      ['Reflexivo.', 'A astrologia é tratada como linguagem simbólica, nunca como diagnóstico, orientação profissional ou futuro garantido.'],
+    ],
+    provider: 'Mensagens e fatos selecionados do mapa são enviados temporariamente à OpenAI com o armazenamento desativado. A retenção para monitoramento de abuso ainda pode se aplicar.', privacy: 'Leia a explicação completa de privacidade.', faqHeading: 'Pergunte ao Zodiacs, explicado',
+    faq: [
+      ['De onde vêm as respostas?', 'Pergunte ao Zodiacs recupera poucas seções relevantes do site e as combina com fatos do mapa calculados pelo Zodiacs. Fontes e fatos aparecem em comprovantes compactos. Se nem o mapa nem o site sustentarem uma pergunta, ele sugere temas próximos compatíveis.'],
+      ['O modelo calcula meu mapa?', 'Não. O Zodiacs calcula posições, casas, aspectos e contatos de trânsitos atuais com seu motor determinista. O modelo interpreta esses fatos; não os inventa nem calcula.'],
+      ['O que acontece com minha conversa?', 'Por padrão, turnos completos ficam somente no armazenamento de sessão desta aba e são apagados com a sessão do navegador. Ao entrar na conta, você pode guardar explicitamente uma conversa por 90 dias fixos e apagá-la quando quiser.'],
+      ['O que é enviado ao anexar um mapa?', 'Você escolhe um mapa, mantém o anexo desligado por padrão e revisa o objeto exato de posições. Nomes, IDs, datas, horários, locais e coordenadas nunca são enviados à OpenAI.'],
+      ['O que ele não fará?', 'Não oferece aconselhamento médico, jurídico, financeiro ou de crise e não apresenta a astrologia como previsão certa. Nesses temas, mantém o simbolismo e indica ajuda adequada no mundo real.'],
+    ],
+  },
+  fr: {
+    metaTitle: 'Demander à Zodiacs — votre guide du thème',
+    metaDescription: 'Interrogez un guide astrologique réflexif fondé sur les sources de Zodiacs et des faits calculés. Vous décidez de joindre ou non un thème sans données personnelles.',
+    hero: 'Votre guide du thème, pas un oracle.',
+    lede: 'Demandez ce que signifie une position, comment les motifs s’articulent ou quoi lire ensuite. Zodiacs fournit les faits du thème ; le guide aide à leur donner du sens sans transformer le symbolisme en certitude.',
+    loading: 'Préparation de votre guide du thème…', loadError: 'La conversation n’a pas pu charger. Actualisez la page ou poursuivez avec les guides du thème et Apprendre.', noJs: 'Les questions nécessitent JavaScript. Les guides ci-dessous restent disponibles sans lui.',
+    orientation: [
+      ['Commencez par ce que vous savez', 'Aucun thème n’est requis. Demandez par où commencer, ce que décrivent le Soleil, la Lune et l’Ascendant, quel calculateur utiliser ou comment lire un thème couche par couche.'],
+      ['Joignez un thème volontairement', 'Vous choisissez le thème. La pièce jointe reste désactivée jusqu’à l’examen et l’approbation de l’objet exact des positions. Sans heure de naissance, pas d’Ascendant ni de maisons.'],
+      ['Poursuivez le fil', 'Chaque réponse étayée peut contenir des reçus de preuve et deux questions utiles. Les boutons remplissent seulement le champ ; rien ne part avant Demander.'],
+    ],
+    sourceKicker: 'Lisez la source', sourceTitle: 'Le site reste complet sans le guide.',
+    routes: ['Calculer ou enregistrer un thème', 'Apprendre l’astrologie depuis le début', 'Comprendre les aspects et la pression', 'Voir comment les transits sont calculés', 'Lire la méthode de calcul'],
+    contractKicker: 'Le contrat', contractTitle: 'Des limites claires font un meilleur guide.',
+    contract: [
+      ['Étayé.', 'Les sources du site et les faits calculés sont des preuves ; l’interprétation est générée et peut se tromper.'],
+      ['Privé par défaut.', 'Les conversations de session restent dans cet onglet. Joindre un thème exige un aperçu exact et un consentement séparé.'],
+      ['Mémoire facultative.', 'Les personnes connectées peuvent mémoriser les échanges visibles et terminés pendant 90 jours fixes. Les réponses partielles, arrêtées ou échouées ne sont jamais enregistrées.'],
+      ['Limité.', 'Dix questions par visiteur et par jour UTC, avec un budget contrôlé, maintiennent le service disponible.'],
+      ['Réflexif.', 'L’astrologie est traitée comme un langage symbolique, jamais comme diagnostic, conseil professionnel ou avenir garanti.'],
+    ],
+    provider: 'Les messages et faits du thème sélectionnés sont envoyés transitoirement à OpenAI, stockage désactivé. Une conservation liée à la surveillance des abus peut encore s’appliquer.', privacy: 'Lire l’explication complète sur la confidentialité.', faqHeading: 'Demander à Zodiacs, en clair',
+    faq: [
+      ['D’où viennent les réponses ?', 'Demander à Zodiacs récupère quelques sections pertinentes du site et les associe aux faits du thème calculés par Zodiacs. Les sources et faits apparaissent sous forme de reçus compacts. Si ni le thème ni le site ne couvrent une question, le guide propose des sujets voisins pris en charge.'],
+      ['Le modèle calcule-t-il mon thème ?', 'Non. Zodiacs calcule les positions, maisons, aspects et contacts de transits actuels avec son moteur déterministe. Le modèle interprète ces faits ; il ne les invente pas et ne les calcule pas.'],
+      ['Que devient ma conversation ?', 'Par défaut, les échanges terminés vivent uniquement dans le stockage de session de cet onglet et disparaissent avec la session du navigateur. Une personne connectée peut choisir de mémoriser une conversation pendant 90 jours fixes et la supprimer à tout moment.'],
+      ['Qu’est-ce qui est envoyé avec un thème ?', 'Vous choisissez le thème, gardez la pièce jointe désactivée par défaut et examinez l’objet exact des positions. Aucun nom, ID, date, heure, lieu ou coordonnée n’est envoyé à OpenAI.'],
+      ['Que refusera-t-il de faire ?', 'Il ne fournit aucun conseil médical, juridique, financier ou de crise et ne présente pas l’astrologie comme une prédiction certaine. Sur ces sujets, il garde l’astrologie symbolique et oriente vers une aide concrète adaptée.'],
+    ],
+  },
+  it: {
+    metaTitle: 'Chiedi a Zodiacs — la tua guida al tema',
+    metaDescription: 'Chiedi a una guida astrologica riflessiva fondata sulle fonti Zodiacs e su fatti calcolati. Decidi tu se allegare un tema senza dati personali.',
+    hero: 'La tua guida al tema, non un oracolo.',
+    lede: 'Chiedi cosa significa una posizione, come dialogano gli schemi o cosa leggere dopo. Zodiacs porta i fatti del tema; la guida aiuta a interpretarli senza trasformare il simbolismo in certezza.',
+    loading: 'Preparazione della guida al tema…', loadError: 'La conversazione non è stata caricata. Aggiorna la pagina o continua con le guide del tema e Impara.', noJs: 'Per fare domande serve JavaScript. Le guide qui sotto restano disponibili senza.',
+    orientation: [
+      ['Parti da ciò che sai', 'Non serve un tema. Chiedi da dove iniziare, cosa descrivono Sole, Luna e Ascendente, quale calcolatore usare o come leggere un tema uno strato alla volta.'],
+      ['Allega un tema consapevolmente', 'Scegli tu il tema. L’allegato resta disattivato finché non esamini e approvi l’oggetto esatto delle posizioni. Senza ora di nascita non ci sono Ascendente né case.'],
+      ['Continua a seguire il filo', 'Ogni risposta supportata può includere ricevute delle prove e due domande utili. I pulsanti compilano soltanto il campo; nulla parte finché non premi Chiedi.'],
+    ],
+    sourceKicker: 'Leggi la fonte', sourceTitle: 'Il sito resta completo anche da solo.',
+    routes: ['Calcola o salva un tema', 'Impara l’astrologia dall’inizio', 'Comprendi aspetti e pressione', 'Vedi come vengono calcolati i transiti', 'Leggi il metodo di calcolo'],
+    contractKicker: 'L’accordo', contractTitle: 'Confini chiari rendono migliore una guida.',
+    contract: [
+      ['Fondato.', 'Le fonti del sito e i fatti calcolati sono prove; l’interpretazione è generata e può sbagliare.'],
+      ['Privato per impostazione predefinita.', 'Le conversazioni di sessione restano in questa scheda. Allegare un tema richiede un’anteprima esatta e un consenso separato.'],
+      ['Memoria facoltativa.', 'Chi ha effettuato l’accesso può ricordare i turni visibili e completi per 90 giorni fissi. Risposte parziali, interrotte o fallite non vengono mai salvate.'],
+      ['Limitato.', 'Dieci domande per visitatore al giorno UTC e un budget controllato mantengono disponibile il servizio.'],
+      ['Riflessivo.', 'L’astrologia è trattata come linguaggio simbolico, mai come diagnosi, consulenza professionale o futuro garantito.'],
+    ],
+    provider: 'Messaggi e fatti selezionati del tema vengono inviati temporaneamente a OpenAI con archiviazione disattivata. Può comunque applicarsi la conservazione per il monitoraggio degli abusi.', privacy: 'Leggi la spiegazione completa sulla privacy.', faqHeading: 'Chiedi a Zodiacs, spiegato',
+    faq: [
+      ['Da dove arrivano le risposte?', 'Chiedi a Zodiacs recupera poche sezioni pertinenti del sito e le unisce ai fatti del tema calcolati da Zodiacs. Fonti e fatti tornano come ricevute compatte. Se né il tema né il sito sostengono una domanda, la guida propone argomenti vicini supportati.'],
+      ['Il modello calcola il mio tema?', 'No. Zodiacs calcola posizioni, case, aspetti e contatti dei transiti attuali con il proprio motore deterministico. Il modello interpreta questi fatti; non li inventa né li calcola.'],
+      ['Cosa succede alla conversazione?', 'Per impostazione predefinita, i turni completati vivono solo nell’archivio di sessione di questa scheda e si cancellano con la sessione del browser. Chi accede può scegliere di ricordare una conversazione per 90 giorni fissi e cancellarla in qualsiasi momento.'],
+      ['Cosa viene inviato quando allego un tema?', 'Scegli il tema, mantieni l’allegato spento per impostazione predefinita e controlli l’oggetto esatto delle posizioni. Nomi, ID, date, orari, luoghi e coordinate non vengono mai inviati a OpenAI.'],
+      ['Cosa non farà?', 'Non fornisce consulenza medica, legale, finanziaria o di crisi e non presenta l’astrologia come previsione certa. In questi ambiti mantiene il simbolismo e indica un aiuto concreto adeguato.'],
+    ],
+  },
+} as const;
+
+const copy = COPY[locale];
+const path = localizePath(locale, '/ask/');
+const faq = copy.faq.map(([q, a]) => ({ q, a }));
+const routePaths = ['/birth-chart/', '/learn/', '/learn/aspects/', '/transits/', '/methodology/'] as const;
+const jsonLd = [
+  {
+    '@type': 'WebPage', '@id': `https://zodiacs.org${path}#page`, url: `https://zodiacs.org${path}`,
+    name: copy.metaTitle, description: copy.metaDescription, inLanguage: locale,
+    isPartOf: { '@id': 'https://zodiacs.org/#site' },
+  },
+  {
+    '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: `https://zodiacs.org${localizePath(locale, '/')}` },
+      { '@type': 'ListItem', position: 2, name: 'Ask Zodiacs', item: `https://zodiacs.org${path}` },
+    ],
+  },
+  {
+    '@type': 'FAQPage', mainEntity: faq.map(({ q, a }) => ({
+      '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a },
+    })),
+  },
+];
+const assistantLocale = locale;
+---
+<Base
+  title={copy.metaTitle}
+  description={copy.metaDescription}
+  path={path}
+  locale={locale}
+  image="/assets/og/v2/tool/ask.png"
+  imageAlt={copy.metaTitle}
+  jsonLd={jsonLd}
+>
+  <div class="container ask">
+    <header class="ask__hero reveal">
+      <div class="ask__identity">
+        <em class="kicker">Ask Zodiacs</em>
+        <h1 class="display">{copy.hero}</h1>
+      </div>
+      <p class="ask__lede">{copy.lede}</p>
+    </header>
+
+    <section class="ask__experience reveal" aria-label={copy.metaTitle}>
+      <div data-assistant-embed data-assistant-locale={locale}>
+        <p class="ask__loading" role="status">{copy.loading}</p>
+      </div>
+      <p class="ask__load-error" data-assistant-embed-error hidden>{copy.loadError}</p>
+      <noscript><p class="ask__nojs">{copy.noJs}</p></noscript>
+    </section>
+
+    <aside class="ask__orientation reveal">
+      {copy.orientation.map(([heading, body], index) => (
+        <div>
+          <span class="ask__index mono">{String(index + 1).padStart(2, '0')}</span>
+          <h2>{heading}</h2>
+          <p>{body}</p>
+        </div>
+      ))}
+    </aside>
+
+    <section class="ask__routes reveal" aria-labelledby="ask-routes-title">
+      <header>
+        <em class="kicker">{copy.sourceKicker}</em>
+        <h2 id="ask-routes-title">{copy.sourceTitle}</h2>
+      </header>
+      <nav aria-label={copy.sourceTitle}>
+        {routePaths.map((route, index) => (
+          <a href={localizePath(locale, route)}><span>{copy.routes[index]}</span><span aria-hidden="true">↗</span></a>
+        ))}
+      </nav>
+    </section>
+
+    <section class="ask__contract reveal" aria-labelledby="ask-contract-title">
+      <div class="ask__contract-title">
+        <em class="kicker">{copy.contractKicker}</em>
+        <h2 id="ask-contract-title">{copy.contractTitle}</h2>
+      </div>
+      <ul>
+        {copy.contract.map(([lead, body]) => <li><strong>{lead}</strong>{' '}{body}</li>)}
+      </ul>
+      <p>{copy.provider}{' '}<a href={localizePath(locale, '/privacy/')}>{copy.privacy}</a></p>
+    </section>
+
+    <section class="reveal ask__faq"><Faq items={faq} heading={copy.faqHeading} /></section>
+  </div>
+
+  <script is:inline define:vars={{ assistantLocale }}>
+    (function () {
+      var host = document.querySelector('[data-assistant-embed]');
+      if (!host) return;
+      import('/assets/assistant-ui.js').then(function (mod) {
+        return mod.mountAssistant(host, assistantLocale);
+      }).catch(function () {
+        host.replaceChildren();
+        var error = document.querySelector('[data-assistant-embed-error]');
+        if (error) error.hidden = false;
+      });
+    })();
+  </script>
+</Base>
+
+<style>
+  .ask { display: grid; gap: clamp(36px, 6vw, 76px); max-width: 1160px; padding-block: clamp(32px, 6vw, 72px) clamp(56px, 8vw, 100px); }
+  .ask__hero { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr); gap: clamp(28px, 7vw, 92px); align-items: end; }
+  .ask__identity { display: grid; gap: 14px; }
+  .ask__hero h1 { margin: 0; max-width: 11ch; font-size: clamp(2.55rem, 1.7rem + 4.5vw, 5.5rem); line-height: 0.94; letter-spacing: -0.035em; text-wrap: balance; }
+  .ask__lede { margin: 0 0 0.3em; max-width: 48ch; color: var(--text-2); font-size: clamp(1rem, 0.92rem + 0.45vw, 1.2rem); line-height: 1.65; text-wrap: pretty; }
+  .ask__experience { min-width: 0; }
+  .ask__loading, .ask__load-error, .ask__nojs { margin: 0; padding: 28px; border: 1px solid var(--hair-2); border-radius: var(--r-lg); color: var(--muted); background: var(--void-1); }
+  .ask__orientation { display: grid; grid-template-columns: 1.2fr 1fr 0.9fr; gap: 1px; border-block: 1px solid var(--hair-1); background: var(--hair-1); }
+  .ask__orientation > div { display: grid; align-content: start; gap: 10px; min-height: 220px; padding: clamp(22px, 4vw, 36px); background: var(--void-0); }
+  .ask__index { color: var(--faint); font-size: 10px; letter-spacing: 0.12em; }
+  .ask__orientation h2 { margin: 0; font-size: var(--text-lg); line-height: 1.15; }
+  .ask__orientation p { margin: 0; color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; text-wrap: pretty; }
+  .ask__routes { display: grid; grid-template-columns: minmax(220px, 0.7fr) minmax(300px, 1.3fr); gap: clamp(32px, 7vw, 96px); align-items: start; }
+  .ask__routes header { display: grid; gap: 12px; position: sticky; top: 96px; }
+  .ask__routes h2 { margin: 0; max-width: 13ch; font-size: clamp(1.8rem, 1.45rem + 1.5vw, 2.7rem); line-height: 1.02; text-wrap: balance; }
+  .ask__routes nav { display: grid; border-top: 1px solid var(--hair-2); }
+  .ask__routes a { display: flex; justify-content: space-between; gap: 18px; padding: 18px 2px; border-bottom: 1px solid var(--hair-2); color: var(--text-2); text-decoration: none; transition: color var(--dur-2) var(--ease), padding-inline var(--dur-2) var(--ease); }
+  .ask__routes a:hover { padding-inline: 8px; color: var(--text); }
+  .ask__contract { display: grid; grid-template-columns: minmax(220px, 0.65fr) minmax(340px, 1.35fr); gap: clamp(28px, 6vw, 80px); padding: clamp(26px, 5vw, 48px); border: 1px solid var(--hair-2); border-radius: var(--r-lg); background: var(--void-1); }
+  .ask__contract-title { display: grid; align-content: start; gap: 12px; }
+  .ask__contract h2 { margin: 0; font-size: clamp(1.65rem, 1.4rem + 1vw, 2.35rem); line-height: 1.04; text-wrap: balance; }
+  .ask__contract ul { margin: 0; padding-left: 18px; display: grid; gap: 13px; }
+  .ask__contract li, .ask__contract > p { color: var(--text-2); font-size: var(--text-sm); line-height: 1.65; }
+  .ask__contract strong { color: var(--text); font-weight: 600; }
+  .ask__contract > p { grid-column: 2; margin: 0; max-width: 68ch; }
+  .ask__contract a { color: var(--text-2); text-underline-offset: 3px; }
+  .ask__faq { max-width: 860px; }
+  @media (max-width: 780px) {
+    .ask__hero, .ask__routes, .ask__contract { grid-template-columns: 1fr; }
+    .ask__hero h1 { max-width: 12ch; }
+    .ask__orientation { grid-template-columns: 1fr; }
+    .ask__orientation > div { min-height: 0; }
+    .ask__routes header { position: static; }
+    .ask__contract > p { grid-column: 1; }
+  }
+</style>

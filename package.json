@@ -93,7 +93,8 @@
     "editorial:transits:verify": "node scripts/verify-transits.mjs",
     "editorial:transits:verify-all": "node scripts/verify-transits.mjs --all",
     "test:phase6:assistant-sql": "bash scripts/test-phase6-assistant-sql.sh",
-    "test:phase6:ask": "node tests/phase6-ask-drive.mjs"
+    "test:phase6:ask": "node tests/phase6-ask-drive.mjs",
+    "test:phase6:assistant-memory-browser": "node tests/assistant-memory-drive.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.111.0",

@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '1 agosto 2026';
+const updated = '2 agosto 2026';
 
 const jsonLd = [
   {
@@ -130,22 +130,31 @@ const jsonLd = [
       <h2>Assistente IA</h2>
       <p>
         Quando usi l’assistente, i tuoi messaggi vengono inviati al nostro
-        fornitore di IA, Anthropic, per generare la risposta. Un tema salvato
-        viene incluso solo dopo che premi “Allega il mio tema”; la schermata di
-        consenso mostra il riepilogo delle sole posizioni prima dell’invio. Il
-        riepilogo accompagna ogni domanda finché “Con il mio tema” resta attivo;
-        puoi disattivarlo. Non
-        conserviamo le conversazioni; Anthropic dichiara che il traffico API non
-        viene usato per addestrare i modelli. L’assistente non allega mai il tuo
-        nome né la data, l’ora, il luogo di nascita o le coordinate salvati;
-        tutto ciò che scrivi nella chat fa parte del messaggio
-        inviato. Per applicare il limite giornaliero, conserviamo un
-        identificatore irreversibile derivato dal tuo indirizzo IP con
-        l’aggiunta di un valore casuale e il relativo conteggio quotidiano, mai
-        l’IP originale; i controlli del limite eliminano le voci più vecchie di
-        35 giorni. Lo stesso identificatore pseudonimo viene inviato ad
-        Anthropic nei metadati della
-        richiesta.
+        fornitore di IA, OpenAI, per generare la risposta. Un tema salvato viene
+        incluso solo dopo averlo scelto, aver attivato l’allegato e aver approvato
+        l’anteprima del carico esatto, limitato alle posizioni. Il nome e
+        l’identificatore del tema, la data, l’ora, il luogo di nascita e le
+        coordinate non vengono mai inclusi; tutto ciò che scrivi nella chat fa
+        parte del messaggio. Le richieste usano <code>store: false</code>, anche se
+        può ancora applicarsi la conservazione di OpenAI per il monitoraggio degli
+        abusi.
+      </p>
+      <p>
+        Per impostazione predefinita, le conversazioni completate vivono solo
+        nell’archivio di sessione di questa scheda. Chi ha effettuato l’accesso può
+        scegliere esplicitamente “Ricorda questa conversazione per 90 giorni”. I
+        thread ricordati scadono 90 giorni dopo la creazione, senza proroga, e si
+        possono eliminare singolarmente, tutti insieme o disattivando l’opzione.
+        Le risposte interrotte, parziali o non riuscite non vengono salvate.
+      </p>
+      <p>
+        Per i limiti d’uso conserviamo uno pseudonimo HMAC derivato dai dati di
+        rete con il conteggio giornaliero, mai l’IP originale né un identificatore
+        dell’account. Le righe di quota conservano solo oggi e ieri. A OpenAI viene
+        inviato uno pseudonimo HMAC distinto, derivato separatamente con separazione
+        di dominio, come identificatore di sicurezza; i totali aggregati
+        dei costi non contengono domande, risposte, dati del tema o identificatori
+        grezzi.
       </p>
 
       <h2>Riepilogo quotidiano, calendario e notifiche</h2>

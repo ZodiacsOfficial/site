@@ -1,7 +1,6 @@
 {
-  "schema": "zodiacs.phase6.grounded-eval.v1",
-  "passBar": 0.9,
-  "note": "Substantive questions a real visitor asks. An answer passes when it names at least one internal path that exists in the built site. Sampled by scripts/assistant-eval.mjs against the exact deployed candidate.",
+  "schema": "zodiacs.phase6.grounded-eval.v2",
+  "note": "Substantive questions a real visitor asks. Each sampled answer must complete the v2 stream and carry at least one server-validated guide.meta source whose committed source ID and built path both match. Run at most ten per visitor per UTC day.",
   "questions": [
     "What does it mean that my Sun is in Virgo?",
     "How do I find out my rising sign?",

@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '1 août 2026';
+const updated = '2 août 2026';
 
 const jsonLd = [
   {
@@ -133,20 +133,31 @@ const jsonLd = [
       <h2>Assistant IA</h2>
       <p>
         Lorsque tu utilises l’assistant, tes messages sont envoyés à notre
-        fournisseur d’IA, Anthropic, afin de produire la réponse. Un thème
-        enregistré n’est inclus qu’après un appui sur « Joindre mon thème » ;
-        l’écran de consentement montre le résumé limité aux positions avant son
-        envoi. Ce résumé accompagne chaque question tant que « Avec mon thème »
-        reste activé ; tu peux le désactiver. Nous ne conservons pas les conversations ; Anthropic indique que
-        le trafic de l’API ne sert pas à entraîner ses modèles. L’assistant ne
-        joint jamais ton nom, ta date, ton heure ou ton lieu de naissance, ni
-        tes coordonnées enregistrées ; tout ce que tu écris dans la
-        discussion fait partie du message envoyé. Pour appliquer la limite
-        quotidienne, nous conservons un identifiant irréversible calculé avec
-        un sel à partir de ton adresse IP et son compteur journalier, jamais l’adresse IP
-        d’origine ; les contrôles de quota effacent les entrées de plus de
-        35 jours. Ce même identifiant pseudonyme est transmis à Anthropic dans
-        les métadonnées de la demande.
+        fournisseur d’IA, OpenAI, afin de produire la réponse. Un thème enregistré
+        n’est inclus qu’après l’avoir choisi, activé la pièce jointe et approuvé
+        l’aperçu de la charge exacte, limitée aux positions. Le nom et l’identifiant
+        du thème, la date, l’heure, le lieu de naissance et les coordonnées ne sont
+        jamais inclus ; tout ce que tu écris fait partie du message. Les demandes
+        utilisent <code>store: false</code>, même si la conservation d’OpenAI pour
+        la surveillance des abus peut encore s’appliquer.
+      </p>
+      <p>
+        Par défaut, les conversations terminées vivent uniquement dans le stockage
+        de session de cet onglet. Les personnes connectées peuvent choisir
+        explicitement « Mémoriser cette conversation pendant 90 jours ». Les fils
+        mémorisés expirent 90 jours après leur création, sans prolongation, et
+        peuvent être supprimés un par un, tous ensemble ou lors du retrait du
+        consentement. Les réponses interrompues, partielles ou échouées ne sont pas
+        enregistrées.
+      </p>
+      <p>
+        Pour les limites d’usage, nous conservons un pseudonyme HMAC dérivé des
+        données réseau avec un compteur journalier, jamais l’adresse IP brute ni
+        un identifiant de compte. Les lignes de quota ne gardent qu’aujourd’hui et
+        hier. Un pseudonyme HMAC distinct, dérivé séparément avec séparation de
+        domaine, est envoyé à OpenAI comme identifiant de sécurité ; les
+        totaux de coût agrégés ne contiennent ni questions, ni réponses, ni données
+        du thème, ni identifiants bruts.
       </p>
 
       <h2>Résumé quotidien, calendrier et notifications</h2>

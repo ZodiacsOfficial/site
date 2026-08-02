@@ -40,6 +40,14 @@ const closeMenuLabel: Record<Locale, string> = {
   it: 'Chiudi menu',
   ru: 'Закрыть меню',
 };
+const askLabel: Record<Locale, string> = {
+  en: 'Ask Zodiacs',
+  es: 'Pregunta a Zodiacs',
+  pt: 'Pergunte ao Zodiacs',
+  fr: 'Demander à Zodiacs',
+  it: 'Chiedi a Zodiacs',
+  ru: 'Спросить Zodiacs',
+};
 const englishOnlyAria = locale === 'ru' ? 'Материал пока доступен по-английски' : undefined;
 const visibleNavTools = locale === 'ru'
   ? NAV_TOOLS.filter((tool) => tool.href !== '/birthday/')
@@ -74,6 +82,18 @@ const visibleNavTools = locale === 'ru'
           ) : t(locale, l.label)}
         </a>
       ))}
+      {locale !== 'ru' && (
+        <button
+          class="nav__link nav__ask"
+          type="button"
+          data-assistant-open
+          data-assistant-locale={locale}
+          data-assistant-page-path={path}
+          aria-haspopup={path === '/ask/' ? undefined : 'dialog'}
+        >
+          {askLabel[locale]}
+        </button>
+      )}
       <a class="nav__link nav__saved" href={localizePath(locale, '/profile/')} aria-current={path.startsWith(localizePath(locale, '/profile/')) ? 'page' : undefined} data-profile-glyph>{t(locale, 'navSavedCharts')}</a>
     </div>
 
@@ -152,7 +172,8 @@ const visibleNavTools = locale === 'ru'
       <a class="mobile-menu__link" style="--i:0" href={localizePath(locale, '/learn/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navLearn')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
       <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/horoscopes/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
       <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
-      <a class="mobile-menu__link mobile-menu__registry" style="--i:3" href="/registry/" hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>
+      {locale !== 'ru' && <a class="mobile-menu__link" style="--i:3" href={localizePath(locale, '/ask/')}>{askLabel[locale]}</a>}
+      <a class="mobile-menu__link mobile-menu__registry" style="--i:4" href="/registry/" hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>
         <span>{t(locale, 'navCollect')}</span>
         <small>{registryLabel[locale]}</small>
       </a>
@@ -259,6 +280,7 @@ const visibleNavTools = locale === 'ru'
   }
   .nav__link:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
   .nav__link[aria-current='page'] { color: var(--text); }
+  .nav__ask { border: 0; background: none; cursor: pointer; }
   .nav__link--deferred,
   .nav__chip--deferred {
     flex-direction: column;

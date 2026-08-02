@@ -1018,8 +1018,8 @@ const indexablePeoplePaths = new Set(
     .map((person) => `/people/${person.slug}/`),
 );
 const sitemapPolicy = {
-  // 2421 = 2420 + the indexable /registry/technical/ public record.
-  total: 2421 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
+  // 2425 = 2420 + /registry/technical/ + four localized Ask guide routes.
+  total: 2425 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
     + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true),
   compatibilityPairs: 78,
   birthdays: 1830,
@@ -1028,13 +1028,14 @@ const sitemapPolicy = {
   horoscopePages: 84,
   eventPages: publishedEventPaths.size,
   peoplePages: indexablePeoplePaths.size,
-  translatedBlocks: 2051,
+  translatedBlocks: 2056,
 };
 const indexedFamilies = [
   { label: 'compatibility pairs', pattern: /^\/compatibility\/[a-z]+-[a-z]+\/$/, expected: sitemapPolicy.compatibilityPairs, localized: false },
   { label: 'birthdays', pattern: /^\/(?:(?:es|pt|fr|it)\/)?birthday\/[a-z]+-\d{1,2}\/$/, expected: sitemapPolicy.birthdays, localized: true },
   { label: 'Chinese zodiac', pattern: /^\/(?:(?:es|pt|fr|it)\/)?learn\/chinese-zodiac(?:\/[a-z]+)?\/$/, expected: sitemapPolicy.chineseZodiac, localized: true },
   { label: 'disclosures', pattern: /^\/(?:(?:es|pt|fr|it|ru)\/)?disclosure\/$/, expected: sitemapPolicy.disclosures, localized: true },
+  { label: 'Ask guides', pattern: /^\/(?:(?:es|pt|fr|it)\/)?ask\/$/, expected: 5, localized: true },
   {
     label: 'horoscope program pages',
     pattern: /^\/horoscopes\/(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)(?:\/(?:tomorrow|weekly|monthly|love|career|2027))?\/$/,
