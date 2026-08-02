@@ -373,6 +373,88 @@ try {
     reviewErrors.slice(0, 2).join(' | '));
   await review.close();
 
+  // Exact annotated mobile/tablet viewport — the almanac modules should feel
+  // compact at 623×1054 without giving up their chronology or structure.
+  const compact = await browser.newPage({ viewport: { width: 623, height: 1054 } });
+  const compactErrors = [];
+  compact.on('pageerror', (err) => compactErrors.push(String(err)));
+  compact.on('requestfailed', (req) => {
+    if (req.url().startsWith('http://127.0.0.1')) compactErrors.push(req.url());
+  });
+  await compact.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await wait(600);
+  const compactPage = await compact.evaluate(() => ({
+    documentWidth: document.documentElement.scrollWidth,
+    viewportWidth: window.innerWidth,
+  }));
+  check('623px: no page-level horizontal overflow',
+    compactPage.documentWidth <= compactPage.viewportWidth + 1,
+    `${compactPage.documentWidth} vs ${compactPage.viewportWidth}`);
+
+  const chronology = await compact.locator('#fig-1 .era__time').allTextContents();
+  check('623px: transmission retains seven chronological anchors',
+    JSON.stringify(chronology.map((value) => value.trim())) === JSON.stringify([
+      'c. 450 BCE',
+      '150 BCE–150 CE',
+      '850–1150 CE',
+      'c. 1500',
+      'c. 1910',
+      'c. 2010',
+      '5 Jul 2024',
+    ]),
+    chronology.join(' · '));
+
+  const compactModules = [
+    ['history transmission', '#fig-1 .story-figure', 0.24],
+    ['attention summary', '.truth-panel', 0.24],
+    ['source convergence', '#fig-3 .source-convergence', 0.44],
+    ['modern rails', '.rail-map', 0.20],
+    ['consumer journey', '.journey', 0.30],
+  ];
+  for (const [name, selector, maxViewportFraction] of compactModules) {
+    const geometry = await compact.locator(selector).first().evaluate((node) => {
+      const rect = node.getBoundingClientRect();
+      return {
+        height: rect.height,
+        left: rect.left,
+        right: rect.right,
+        scrollWidth: node.scrollWidth,
+        clientWidth: node.clientWidth,
+        viewportHeight: window.innerHeight,
+        viewportWidth: window.innerWidth,
+      };
+    });
+    check(`623px: ${name} stays compact`,
+      geometry.height <= geometry.viewportHeight * maxViewportFraction,
+      `${geometry.height.toFixed(1)}px / ${(geometry.viewportHeight * maxViewportFraction).toFixed(1)}px cap`);
+    check(`623px: ${name} fits without local overflow`,
+      geometry.left >= -1
+        && geometry.right <= geometry.viewportWidth + 1
+        && geometry.scrollWidth <= geometry.clientWidth + 1,
+      JSON.stringify(geometry));
+  }
+  const compactRows = await compact.evaluate(() => {
+    const sameRow = (selector) => {
+      const tops = [...document.querySelectorAll(selector)].map((node) => node.getBoundingClientRect().top);
+      return tops.length > 0 && Math.max(...tops) - Math.min(...tops) <= 2;
+    };
+    return {
+      eras: sameRow('#fig-1 .era'),
+      rails: sameRow('.rail-map__item'),
+      journey: sameRow('.journey__step'),
+      truth: sameRow('.truth-panel__side'),
+    };
+  });
+  check('623px: compact modules use their intended horizontal summaries',
+    compactRows.eras && compactRows.rails && compactRows.journey && compactRows.truth,
+    JSON.stringify(compactRows));
+  await shot(compact, '#fig-1', 'thesis-f1-623.png');
+  await shot(compact, '#fig-3', 'thesis-f3-623.png');
+  await shot(compact, '#what-holding-means', 'thesis-journey-623.png');
+  check('no page errors or same-origin failures (623px)', compactErrors.length === 0,
+    compactErrors.slice(0, 2).join(' | '));
+  await compact.close();
+
   // No-JavaScript pass — the baked static values must stand on their own.
   const nojsContext = await browser.newContext({ javaScriptEnabled: false, reducedMotion: 'reduce' });
   const nojs = await nojsContext.newPage();
