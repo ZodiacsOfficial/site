@@ -21,6 +21,7 @@ import {
 } from './sign-data.mjs';
 import { wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mjs';
 import { brandIconLinkMarkup } from '../src/lib/brand-icons.mjs';
+import { renderTradeRegion } from '../src/trade/entry.mjs';
 import { EN, enFormat } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -160,6 +161,7 @@ function render(m) {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="zodiacs-registry-trade-enabled" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
@@ -816,6 +818,7 @@ ${beats.map((b) => `        <div class="prov__item">
         Operator and economic-interest statements remain pending confirmation;
         see the <a href="/disclosure/">Disclosure</a>.
       </p>
+      ${renderTradeRegion({ sign: m.slug, name: m.name, mint: m.solana.address, enabled: false })}
       <div class="acq__cta">
         <a class="btn" href="${esc(m.jupiter)}" rel="noopener noreferrer external nofollow">
           <span>Open Jupiter route</span><span class="arr">↗</span>

@@ -1,0 +1,76 @@
+/**
+ * Stamping for the sign pages' trade region.
+ *
+ * The committed HTML is always flag-off. A production build with
+ * PUBLIC_REGISTRY_TRADE_ENABLED=1 stamps the panel in; running the stamper
+ * again without the flag restores the committed bytes exactly, so the CI drift
+ * gate — which regenerates with no env and diffs — stays quiet.
+ *
+ * Follows the pattern of registry-aura-entry.mjs: marked region, meta marker,
+ * idempotent, reversible.
+ */
+
+export const REGISTRY_TRADE_FLAG = 'PUBLIC_REGISTRY_TRADE_ENABLED';
+export const REGISTRY_TRADE_META = 'zodiacs-registry-trade-enabled';
+
+const START = '<!-- registry-trade:start -->';
+const END = '<!-- registry-trade:end -->';
+const SLOT = /<!-- registry-trade:slot (\{.*?\}) -->/;
+
+export function registryTradeEnabled(env = {}) {
+  return env[REGISTRY_TRADE_FLAG] === '1';
+}
+
+/** The comment the generator emits, carrying everything the stamper needs. */
+export function tradeSlotComment({ sign, name, mint }) {
+  return `<!-- registry-trade:slot ${JSON.stringify({ sign, name, mint })} -->`;
+}
+
+/**
+ * Flag-off renders nothing at all — not a hidden container, not a placeholder.
+ * A visitor with the flag off gets the page exactly as it is committed.
+ */
+export function renderTradeRegion({ sign, name, mint, enabled }) {
+  const slot = tradeSlotComment({ sign, name, mint });
+  if (!enabled) return `${START}\n      ${slot}\n      ${END}`;
+  return [
+    START,
+    `      ${slot}`,
+    '      <div class="acq__trade" data-trade-panel',
+    `        data-trade-sign="${sign}" data-trade-name="${name}" data-trade-mint="${mint}">`,
+    '        <noscript>',
+    '          <p class="acq__trade-noscript">Trading here needs JavaScript. The links below open the',
+    '          venue directly.</p>',
+    '        </noscript>',
+    '      </div>',
+    END,
+  ].join('\n');
+}
+
+function metaFor(enabled) {
+  return `<meta name="${REGISTRY_TRADE_META}" content="${enabled ? '1' : '0'}" />`;
+}
+
+/**
+ * Re-render the region for the current flag state. Idempotent, and
+ * byte-reversible: inject(inject(html, on), off) === html.
+ */
+export function injectRegistryTrade(html, env = {}) {
+  const enabled = registryTradeEnabled(env);
+  const start = html.indexOf(START);
+  const end = html.indexOf(END);
+  if (start === -1 || end === -1) {
+    throw new Error('registry-trade: page is missing its trade region markers');
+  }
+  const region = html.slice(start, end + END.length);
+  const slot = region.match(SLOT);
+  if (!slot) throw new Error('registry-trade: region is missing its slot payload');
+
+  const { sign, name, mint } = JSON.parse(slot[1]);
+  const next = renderTradeRegion({ sign, name, mint, enabled });
+  const output = html.slice(0, start) + next + html.slice(end + END.length);
+
+  const meta = new RegExp(`<meta name="${REGISTRY_TRADE_META}" content="[01]" />`);
+  if (!meta.test(output)) throw new Error('registry-trade: page is missing its flag marker');
+  return { output: output.replace(meta, metaFor(enabled)), enabled };
+}
