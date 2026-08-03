@@ -3243,13 +3243,37 @@
         rgba(15,18,26,.88);
       box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
     }
-    .consumer-preview__art { display: grid; place-items: center; }
-    .consumer-preview__art img {
-      width: clamp(116px, 15vw, 178px);
+    /* The record's plate: the sign's gold sculpture on a hairline plinth,
+       with its pastel disc — the mark wallets show — seated at the corner. */
+    .consumer-preview__art {
+      position: relative;
+      display: grid;
+      place-items: end center;
+      align-self: stretch;
+      padding-bottom: 18px;
+    }
+    .consumer-preview__art::before {
+      content: '';
+      position: absolute;
+      left: 8%; right: 8%; bottom: 12px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--active-sign, #E0A9B4) 45%, var(--hair-3)) 24%, color-mix(in srgb, var(--active-sign, #E0A9B4) 45%, var(--hair-3)) 76%, transparent);
+      pointer-events: none;
+    }
+    .consumer-preview__sculpture {
+      width: clamp(150px, 17vw, 224px);
       height: auto;
       display: block;
+      filter:
+        drop-shadow(0 10px 16px rgba(10, 8, 4, 0.55))
+        drop-shadow(0 2px 5px rgba(24, 18, 8, 0.6));
+    }
+    .consumer-preview__disc img {
+      position: absolute;
+      left: 4px; bottom: 4px;
+      width: 44px; height: 44px;
       border-radius: 50%;
-      box-shadow: 0 0 0 12px color-mix(in srgb, var(--active-sign, #E0A9B4) 8%, transparent);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--active-sign, #E0A9B4) 14%, transparent), 0 4px 14px rgba(0,0,0,.45);
     }
     .consumer-preview__name {
       font-size: clamp(48px, 6vw, 72px);
@@ -3308,7 +3332,7 @@
     .consumer-quote__price {
       color: var(--ink);
       font-family: var(--mono);
-      font-size: 22px;
+      font-size: 27px;
       letter-spacing: .02em;
     }
     .consumer-quote__change {
@@ -3353,22 +3377,59 @@
     }
     .consumer-preview__actions .btn {
       min-height: 48px; height: 48px;
+      justify-content: center;
+      gap: 10px;
       border-radius: 999px;
-      padding-left: 18px;
+      padding: 0 24px;
       font-family: var(--sans);
       font-size: 14px;
       font-weight: 550;
       letter-spacing: 0;
       text-transform: none;
     }
+    .consumer-preview__actions .btn .arr { font-size: 13px; }
     .consumer-preview__actions .btn::before { display: none; }
-    .consumer-preview__actions > a:not(.btn) {
+    .consumer-preview__actions .copychip {
+      min-height: 48px; height: 48px;
       display: inline-flex;
       align-items: center;
+      gap: 9px;
+      padding: 0 20px;
+      border: 1px solid var(--hair-3);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink-2);
+      font-family: var(--sans);
+      font-size: 13px;
+    }
+    .consumer-preview__actions .copychip .copychip__text {
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+    .consumer-preview__links {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      column-gap: 24px;
+      margin-top: 2px;
+    }
+    .consumer-preview__links a {
+      text-decoration-line: underline;
+      text-decoration-style: solid;
+      text-decoration-color: var(--hair-3);
+      text-underline-offset: 4px;
+    }
+    .consumer-preview__links a:hover { text-decoration-color: var(--ink-dim); }
+    .consumer-preview__trade {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
       min-height: 44px;
       color: var(--ink-2);
       font-size: 13px;
     }
+    .consumer-preview__trade:hover { color: var(--ink); }
     /* The sculpture stage — the desktop explorer. The pastel rail paints
        immediately from inert placeholder discs; the WebGL canvas fades in
        once the scene bundle mounts and takes the rail over. */
@@ -3819,21 +3880,27 @@
       .consumer-sign { min-height: 78px; grid-template-rows: 45px auto; border-radius: 14px; font-size: 9.5px; }
       .consumer-sign img { width: 44px; height: 44px; }
       .consumer-preview {
-        grid-template-columns: 74px minmax(0, 1fr);
+        grid-template-columns: 104px minmax(0, 1fr);
         align-items: start;
         gap: 16px;
         padding: 24px 20px;
         border-radius: 24px 24px 24px 6px;
       }
-      .consumer-preview__art img { width: 70px; box-shadow: 0 0 0 7px color-mix(in srgb, var(--active-sign, #E0A9B4) 8%, transparent); }
+      .consumer-preview__art { align-self: start; padding-bottom: 12px; }
+      .consumer-preview__art::before { bottom: 7px; }
+      .consumer-preview__sculpture { width: 96px; }
+      .consumer-preview__disc img { width: 30px; height: 30px; left: 0; bottom: 0; box-shadow: 0 0 0 3px color-mix(in srgb, var(--active-sign, #E0A9B4) 14%, transparent), 0 3px 10px rgba(0,0,0,.45); }
       .consumer-preview__name { font-size: 44px; }
       .consumer-preview__lore,
       .consumer-preview__quote,
       .consumer-preview__base,
-      .consumer-preview__guide,
+      .consumer-preview__links,
       .consumer-preview__actions { grid-column: 1 / -1; }
       .consumer-preview__lore { font-size: 17px; }
       .consumer-preview__actions { margin-top: 10px; }
+      .consumer-preview__actions .btn,
+      .consumer-preview__actions .copychip { width: 100%; justify-content: center; }
+      .consumer-quote__price { font-size: 24px; }
       .consumer-token { grid-template-columns: 28px minmax(0, 1fr) auto; padding: 8px 10px; }
       .consumer-token__mint { display: none; }
       .static-token-list { columns: 1; }
@@ -3977,7 +4044,7 @@
           <a id="pisces" href="/registry/pisces/" aria-label="View the Pisces token"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt="">Pisces</a>
         </nav>
         <article class="static-sign-preview">
-          <img src="/assets/zodiac-icons/48/leo.webp" width="96" height="96" alt="Leo pastel zodiac icon">
+          <img src="/assets/nuggets/thumb/leo.png" width="96" height="96" alt="Leo gold sculpture">
           <div>
             <p class="static-site__eyebrow">Now · Leo season</p>
             <h3>Leo</h3>
@@ -3989,9 +4056,9 @@
       </section>
 
       <section class="static-site__section static-tokens" id="tokens">
-        <p class="static-site__eyebrow">One per sign</p>
-        <h2>The official token for every sign</h2>
-        <p>Twelve tokens in zodiac order — each native on Solana with an official Base counterpart. Live prices appear with JavaScript; the record stands either way.</p>
+        <p class="static-site__eyebrow">Live market</p>
+        <h2>Twelve tokens, live</h2>
+        <p>Every sign has one official token — native on Solana with an official Base counterpart. Live prices appear with JavaScript; the record stands either way.</p>
         <ol class="static-token-list">
           <li><a href="/registry/aries/">Aries</a> · ARIES · <code>GhFi…1YZv</code></li>
           <li><a href="/registry/taurus/">Taurus</a> · TAURUS · <code>Ejkk…JKMp</code></li>

@@ -3198,11 +3198,11 @@
       return (
         <section ref={reveal} id="tokens" className="consumer-tokens reveal" aria-labelledby="consumer-tokens-title">
           <header className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">One per sign</span>
-            <h2 id="consumer-tokens-title">The official token for every sign.</h2>
+            <span className="consumer-section-head__eyebrow">Live market</span>
+            <h2 id="consumer-tokens-title">Twelve tokens, live.</h2>
             <p>
-              Twelve tokens in zodiac order — each native on Solana with an official
-              Base counterpart. Open a sign to see its full record and where it trades.
+              Prices read live from the open market, in zodiac order.
+              Open any sign to see its record and where it trades.
             </p>
           </header>
           <ol ref={hostRef} className="consumer-tokens__list">
@@ -3367,10 +3367,18 @@
               aria-labelledby="consumer-preview-name"
             >
               <div className="consumer-preview__art" aria-hidden="true">
-                <picture>
+                <img
+                  key={sign.asset.sign}
+                  className="consumer-preview__sculpture"
+                  src={`/assets/sculptures/512/${sign.asset.sign}.webp`}
+                  width="512"
+                  height="512"
+                  alt=""
+                  decoding="async"
+                />
+                <picture className="consumer-preview__disc">
                   <source srcSet={`/assets/zodiac-icons/128/${sign.asset.sign}.avif`} type="image/avif" />
                   <img
-                    key={sign.asset.sign}
                     src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}
                     width="128"
                     height="128"
@@ -3406,9 +3414,14 @@
                 <p className="consumer-preview__base">
                   Also recorded on Base · <code className="mono">{truncateAddress(sign.representations.base.address, 6, 4)}</code>
                 </p>
-                <a className="consumer-preview__guide" href={`/${sign.asset.sign}/`}>
-                  Read the {sign.name} astrology guide <span aria-hidden="true">→</span>
-                </a>
+                <div className="consumer-preview__links">
+                  <a className="consumer-preview__trade" href={`${registryProfilePath(sign)}#acquire`}>
+                    Where {sign.ticker} trades <span aria-hidden="true">→</span>
+                  </a>
+                  <a className="consumer-preview__guide" href={`/${sign.asset.sign}/`}>
+                    Read the {sign.name} astrology guide <span aria-hidden="true">→</span>
+                  </a>
+                </div>
               </div>
             </article>
           </div>

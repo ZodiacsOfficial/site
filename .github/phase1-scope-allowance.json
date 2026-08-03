@@ -2,7 +2,7 @@
   "version": 1,
   "id": "registry-token-first-explorer-2026-08-03",
   "reason": "Owner-authorized consumer Registry redesign on August 3, 2026: make the landing token-first (primary action opens each sign's official record at /registry/{sign}/, astrology guide demoted to a labelled tertiary link), promote the gold-sculpture gallery to the default wide-screen explorer, add a live-price panel and a zodiac-ordered twelve-token watchlist from a single batched DexScreener read, retune the reveal rhythm, and apply head-only token-forward SEO to the twelve record pages. The protected Registry sources, generated outputs, static shells, sign-page builder, and Registry test contracts are enumerated exactly below.",
-  "baseCommit": "ba85ff19199751f4687e9cc28c2e05717ffb3c58",
+  "baseCommit": "e27f2be0c897f873a2df05aa941034aec6c9d9a7",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/aquarius/index.html",

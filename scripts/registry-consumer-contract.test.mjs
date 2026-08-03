@@ -170,6 +170,11 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('data-token-quote');
     expect(source).toContain('View the {sign.name} token');
     expect(source).toContain('Copy Solana address');
+    // The record box is a plate: the sign's gold sculpture with its pastel
+    // disc seated at the corner, and a route to where the token trades.
+    expect(source).toContain('src={`/assets/sculptures/512/${sign.asset.sign}.webp`}');
+    expect(source).toContain('Where {sign.ticker} trades');
+    expect(source).toContain('href={`${registryProfilePath(sign)}#acquire`}');
     expect(source).toContain('Read the {sign.name} astrology guide');
     // The primary action opens the official record; the astrology guide is
     // a labelled tertiary link, never the primary destination.
@@ -185,7 +190,7 @@ describe('Registry consumer and technical information architecture', () => {
     ]);
     const visible = visibleMarkup(html);
 
-    expect(source).toContain('The official token for every sign.');
+    expect(source).toContain('Twelve tokens, live.');
     expect(source).toContain('function loadTwelveMarketQuotes()');
     expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
     // Zodiac order, never a leaderboard: the strip renders SIGNS in
@@ -193,7 +198,8 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('{SIGNS.map((item) => {');
     expect(source).not.toMatch(/\.sort\(\(a, b\) => \(b\.marketCap/u);
     // The static fallback carries the crawlable twelve with truncated mints.
-    expect(visible).toContain('The official token for every sign');
+    expect(visible).toContain('Twelve tokens, live');
+    expect(visible).toContain('Every sign has one official token');
     expect((visible.match(/class="static-token-list"/gu) ?? [])).toHaveLength(1);
     expect(visible).toContain('Live prices appear with JavaScript');
   });

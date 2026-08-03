@@ -740,6 +740,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       text: preview.textContent?.replace(/\s+/g, ' ').trim() ?? '',
       record: preview.querySelector('a.btn')?.getAttribute('href'),
       recordLabel: preview.querySelector('a.btn')?.textContent?.trim() ?? '',
+      sculpture: preview.querySelector('.consumer-preview__sculpture')?.getAttribute('src'),
+      trade: preview.querySelector('.consumer-preview__trade')?.getAttribute('href'),
       guide: preview.querySelector('.consumer-preview__guide')?.getAttribute('href'),
       scrollY,
     }));
@@ -750,6 +752,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && /Native network: Solana/.test(piscesPreview.text)
         && piscesPreview.record === '/registry/pisces/'
         && /View the Pisces token/.test(piscesPreview.recordLabel)
+        && piscesPreview.sculpture === '/assets/sculptures/512/pisces.webp'
+        && piscesPreview.trade === '/registry/pisces/#acquire'
         && piscesPreview.guide === '/pisces/'
         && Math.abs(piscesPreview.scrollY - scrollBeforePick) <= 2,
       JSON.stringify(piscesPreview),
@@ -866,7 +870,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       (await verifier.innerText()).includes('never connects a wallet, requests a signature, or starts a transaction'),
     );
     const compactConsumerTargets = await desktop.locator(
-      '.vrf__example, .consumer-preview__guide, .consumer-closing__actions > a:not(.btn)',
+      '.vrf__example, .consumer-preview__trade, .consumer-preview__guide, .consumer-closing__actions > a:not(.btn)',
     ).evaluateAll((targets) => targets.map((target) => ({
       label: target.textContent.trim(),
       height: target.getBoundingClientRect().height,
