@@ -3214,17 +3214,19 @@
                   <a className="consumer-token" href={registryProfilePath(item)}>
                     <img
                       src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}
-                      width="28"
-                      height="28"
+                      width="32"
+                      height="32"
                       alt=""
                       loading="lazy"
                       decoding="async"
                     />
                     <span className="consumer-token__id">
-                      <span className="consumer-token__name">{item.name}</span>
-                      <span className="consumer-token__ticker">{item.ticker}</span>
+                      <span className="consumer-token__row">
+                        <span className="consumer-token__name">{item.name}</span>
+                        <span className="consumer-token__ticker">{item.ticker}</span>
+                      </span>
+                      <span className="consumer-token__dates">{signDateLabel(item)}</span>
                     </span>
-                    <code className="consumer-token__mint">{truncateAddress(item.representations.solana.address, 4, 4)}</code>
                     {quote ? (
                       <span className="consumer-token__quote">
                         <span className="consumer-token__price">{formatPriceUsd(quote.priceUsd)}</span>
@@ -3247,6 +3249,38 @@
             See the <a href="/disclosure/">Disclosure</a>.
           </p>
         </section>
+      );
+    }
+
+    function SeasonPulse({ season }) {
+      const [ref, inView] = useInView();
+      const batch = useTwelveQuotes(inView);
+      const quote = batch.status === 'ok' ? batch.quotes[season.sign.asset.sign] : null;
+      const changeClass = marketChangeClass(quote?.priceChange24h);
+      return (
+        <p ref={ref} className="consumer-season" data-season-pulse={season.sign.asset.sign}>
+          <img
+            src={`/assets/zodiac-icons/48/${season.sign.asset.sign}.webp`}
+            width="20"
+            height="20"
+            alt=""
+            decoding="async"
+          />
+          <span className="consumer-season__name">{season.sign.name} season</span>
+          <span className="consumer-season__sep" aria-hidden="true">·</span>
+          <span>Day {season.day} of {season.total}</span>
+          {quote && (
+            <>
+              <span className="consumer-season__sep" aria-hidden="true">·</span>
+              <span className="consumer-season__quote">
+                <span className="consumer-season__ticker">{season.sign.ticker}</span>
+                {' '}{formatPriceUsd(quote.priceUsd)}
+                <span className={'consumer-season__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
+                today
+              </span>
+            </>
+          )}
+        </p>
       );
     }
 
@@ -3313,6 +3347,7 @@
             <span className="consumer-section-head__eyebrow">The official twelve</span>
             <h2 id="consumer-explorer-title">Choose your sign. See its token.</h2>
             <p>Twelve signs, twelve official tokens. Pick one to see its record and its live market.</p>
+            {season && <SeasonPulse season={season} />}
           </header>
 
           {stageMode && <GalleryBand active={active} setActive={setActive} consumer />}
@@ -3400,8 +3435,8 @@
                   <span className="consumer-preview__ticker">{sign.ticker}</span>
                   <span className="consumer-preview__network">Native network: Solana</span>
                 </p>
-                <p className="consumer-preview__lore">{sign.shortBio}</p>
                 <TokenQuote sign={sign} />
+                <p className="consumer-preview__lore">{sign.shortBio}</p>
                 <div className="consumer-preview__actions">
                   <a className="btn btn--primary" href={registryProfilePath(sign)}>
                     <span>View the {sign.name} token</span><span className="arr" aria-hidden="true">→</span>
@@ -3506,9 +3541,8 @@
             <span className="consumer-section-head__eyebrow">Why keep a registry?</span>
             <h2 id="consumer-purpose-title">Familiar names deserve a clear record.</h2>
             <p>
-              The signs have travelled through charts, books, jewellery, newspapers, and phones.
-              Digital addresses are less familiar. A public list lets anyone check which record
-              belongs to each sign without relying on a copied name or ticker.
+              The signs have travelled through charts, jewellery, newspapers, and phones.
+              A public list lets anyone check which token is really theirs.
             </p>
             <a href="/thesis/">Read why Zodiacs matter <span aria-hidden="true">→</span></a>
           </div>
@@ -3563,19 +3597,6 @@
       const reveal = useReveal();
       return (
         <section ref={reveal} className="consumer-closing reveal" aria-label="Choose a sign">
-          <div className="consumer-closing__wheel" aria-hidden="true">
-            {SIGNS.map(item => (
-              <img
-                key={item.ticker}
-                src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}
-                width="32"
-                height="32"
-                alt=""
-                loading="lazy"
-                decoding="async"
-              />
-            ))}
-          </div>
           <h2>Your sign is waiting.</h2>
           <p>Start with the one you already know.</p>
           <div className="consumer-closing__actions">

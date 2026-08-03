@@ -3332,9 +3332,24 @@
     .consumer-quote__price {
       color: var(--ink);
       font-family: var(--mono);
-      font-size: 27px;
+      font-size: 30px;
       letter-spacing: .02em;
     }
+    .consumer-season {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 10px;
+      margin: 20px 0 0;
+      color: var(--ink-2);
+      font-size: 13px;
+    }
+    .consumer-season img { border-radius: 50%; }
+    .consumer-season__name { color: var(--ink); font-family: var(--serif); font-size: 15px; }
+    .consumer-season__sep { color: var(--ink-mute); }
+    .consumer-season__quote { display: inline-flex; align-items: center; gap: 7px; }
+    .consumer-season__ticker { color: var(--ink-dim); font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; }
+    .consumer-season__change { font-family: var(--mono); font-size: 10.5px; }
     .consumer-quote__change {
       font-family: var(--mono);
       font-size: 12px;
@@ -3469,28 +3484,45 @@
     }
     .consumer-token {
       display: grid;
-      grid-template-columns: 28px minmax(0, 1fr) auto auto;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
       align-items: center;
       gap: 14px;
-      min-height: 56px;
-      padding: 8px 14px;
+      min-height: 64px;
+      padding: 10px 16px;
       border: 1px solid transparent;
-      border-radius: 16px;
+      border-radius: 18px;
       color: var(--ink-2);
+      text-decoration: none;
       transition: background 320ms var(--ease-soft), border-color 320ms var(--ease-soft);
     }
     .consumer-token:hover { background: rgba(238,241,247,.04); border-color: var(--hair); }
     .consumer-token:active { transform: scale(0.995); }
     .consumer-sign:active img { transform: scale(1.02); }
     .consumer-token img { display: block; border-radius: 50%; }
-    .consumer-token__id { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
-    .consumer-token__name { color: var(--ink); font-family: var(--serif); font-size: 17px; }
+    .consumer-token__id { display: grid; gap: 3px; min-width: 0; }
+    .consumer-token__row { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+    .consumer-token__name { color: var(--ink); font-family: var(--serif); font-size: 17.5px; }
     .consumer-token__ticker { color: var(--ink-dim); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; }
-    .consumer-token__mint { color: var(--ink-mute); font-family: var(--mono); font-size: 10px; }
-    .consumer-token__quote { display: flex; align-items: baseline; justify-content: flex-end; gap: 10px; font-family: var(--mono); }
-    .consumer-token__price { color: var(--ink); font-size: 13px; }
+    .consumer-token__dates {
+      color: var(--ink-mute);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .consumer-token__quote { display: flex; align-items: center; justify-content: flex-end; gap: 10px; font-family: var(--mono); }
+    .consumer-token__price { color: var(--ink); font-size: 15px; }
     .consumer-token__change { font-size: 11px; }
     .consumer-token__quote--quiet { color: var(--ink-mute); font-size: 11px; }
+    /* Direction wears a quiet pill tinted from its own market colour, so a
+       glance down the list reads the day the way a trading screen does. */
+    .consumer-token__change,
+    .consumer-quote__change,
+    .consumer-season__change {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: color-mix(in srgb, currentColor 12%, transparent);
+    }
     .consumer-tokens__foot {
       max-width: 72ch;
       margin: clamp(22px, 4vw, 34px) 0 0;
@@ -3669,11 +3701,6 @@
     .consumer-faq__item dt { color: var(--ink); font-family: var(--sans); font-size: 14px; font-weight: 560; }
     .consumer-faq__item dd { margin: 0; color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
     .consumer-closing { text-align: center; border-bottom: 0; }
-    .consumer-closing__wheel {
-      display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
-      max-width: 480px; margin: 0 auto 28px;
-    }
-    .consumer-closing__wheel img { width: 30px; height: 30px; display: block; border-radius: 50%; }
     .consumer-closing h2 { max-width: 16ch; margin-inline: auto; font-size: clamp(40px, 6vw, 68px); line-height: .95; }
     .consumer-closing__actions { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 14px 24px; margin-top: 28px; }
     .consumer-closing .btn {
@@ -3901,8 +3928,6 @@
       .consumer-preview__actions .btn,
       .consumer-preview__actions .copychip { width: 100%; justify-content: center; }
       .consumer-quote__price { font-size: 24px; }
-      .consumer-token { grid-template-columns: 28px minmax(0, 1fr) auto; padding: 8px 10px; }
-      .consumer-token__mint { display: none; }
       .static-token-list { columns: 1; }
       .consumer-steps { grid-template-columns: 1fr; }
       .consumer-steps li { min-height: 72px; align-items: center; padding: 24px 32px 16px 38px; font-size: 21px; }

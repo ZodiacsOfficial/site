@@ -191,6 +191,7 @@ describe('Registry consumer and technical information architecture', () => {
     const visible = visibleMarkup(html);
 
     expect(source).toContain('Twelve tokens, live.');
+    expect(source).toContain('data-season-pulse');
     expect(source).toContain('function loadTwelveMarketQuotes()');
     expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
     // Zodiac order, never a leaderboard: the strip renders SIGNS in
