@@ -29,6 +29,34 @@ async function stubNoWebgl(page) {
   });
 }
 
+/**
+ * Consumer market reads stay hermetic: the batch token endpoint answers from
+ * a fixture so quote assertions never depend on DexScreener availability.
+ * Pass { fail: true } to exercise the unavailable state instead.
+ */
+async function mockDexscreener(page, { fail = false } = {}) {
+  await page.route('https://api.dexscreener.com/**', async (route) => {
+    if (fail) return route.abort();
+    const url = route.request().url();
+    if (!url.includes('/tokens/v1/solana/')) return route.fulfill({ json: { pairs: [] } });
+    const mints = decodeURIComponent(new URL(url).pathname.split('/').pop() ?? '').split(',');
+    return route.fulfill({
+      json: mints.map((mint, index) => ({
+        chainId: 'solana',
+        dexId: 'raydium',
+        url: 'https://dexscreener.com/solana/fixture',
+        pairAddress: `FIXTUREPAIR${index}`,
+        baseToken: { address: mint },
+        priceUsd: String((index + 1) * 0.00042),
+        priceChange: { h24: index % 3 === 0 ? 4.2 : index % 3 === 1 ? -2.1 : 0 },
+        liquidity: { usd: 250000 + index },
+        marketCap: 1000000 + index,
+        pairCreatedAt: 1721000000000,
+      })),
+    });
+  });
+}
+
 if (OUT) await mkdir(OUT, { recursive: true });
 
 await withPreview({ port: 4404 }, async (baseURL) => {
@@ -344,6 +372,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         visibleCollectionSections: [...document.querySelectorAll('.static-collection-section')]
           .filter((section) => getComputedStyle(section).display !== 'none').length,
         deadGalleryLinks: document.querySelectorAll('a[href*="gallery=gold"]').length,
+        staticTokenRows: document.querySelectorAll('.static-token-list li').length,
+        staticPriceNote: document.body.textContent?.includes('Live prices appear with JavaScript') ?? false,
         links: [...nav.querySelectorAll('a')].map((link) => {
           const rect = link.getBoundingClientRect();
           return {
@@ -376,6 +406,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && fallbackState.visibleCollectionSections === 0
           && fallbackState.deadGalleryLinks === 0,
         JSON.stringify(fallbackState),
+      );
+      check(
+        `Registry no-JavaScript fallback at ${width}px lists the twelve tokens with a plain price note`,
+        fallbackState.staticTokenRows === 12 && fallbackState.staticPriceNote,
+        JSON.stringify({ rows: fallbackState.staticTokenRows, note: fallbackState.staticPriceNote }),
       );
       await fallbackPage.close();
     }
@@ -603,7 +638,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       }
     }
 
+    // The grid explorer's own assertions run with WebGL denied — the path
+    // narrow, non-WebGL, and stage-failure readers actually get. The stage
+    // is asserted separately, on an unstubbed page.
     const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
+    await stubNoWebgl(desktop);
+    await mockDexscreener(desktop);
     const desktopErrors = [];
     const desktopGalleryRequests = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
@@ -648,9 +688,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check(
       'consumer hero uses the approved everyday actions',
       (await desktop.locator('.cine__line').innerText()).trim()
-        === 'Explore the twelve signs and see the official digital record for each one.'
+        === 'Every sign has one official token. Explore its story, its record, and its market.'
         && await desktop.locator('.cine__cta a[href="#official-twelve"]').innerText()
-          .then((text) => text.includes('Choose your sign'))
+          .then((text) => text.includes('Choose a token'))
         && await desktop.locator('.cine__cta a[href="#verify"]').innerText()
           .then((text) => text.includes('Check an address'))
         && await desktop.locator('.cine__cta [data-registry-collection]').count() === 0,
@@ -667,9 +707,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       )),
     );
     check(
-      'gold gallery stays unmounted and unloaded until requested',
+      'without WebGL the stage never mounts and its bundle is never requested',
       desktopGalleryRequests.length === 0
-        && await desktop.locator('[data-consumer-gallery]').count() === 0,
+        && await desktop.locator('.gband').count() === 0,
       JSON.stringify(desktopGalleryRequests),
     );
     const desktopDimensions = await desktop.evaluate(() => ({
@@ -698,18 +738,55 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await desktop.locator('[data-consumer-preview="pisces"]').waitFor({ state: 'visible' });
     const piscesPreview = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((preview) => ({
       text: preview.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-      explore: preview.querySelector('a.btn')?.getAttribute('href'),
-      record: preview.querySelector('.consumer-preview__record')?.getAttribute('href'),
+      record: preview.querySelector('a.btn')?.getAttribute('href'),
+      recordLabel: preview.querySelector('a.btn')?.textContent?.trim() ?? '',
+      sculpture: preview.querySelector('.consumer-preview__sculpture')?.getAttribute('src'),
+      trade: preview.querySelector('.consumer-preview__trade')?.getAttribute('href'),
+      guide: preview.querySelector('.consumer-preview__guide')?.getAttribute('href'),
       scrollY,
     }));
     check(
-      'selecting Pisces updates its complete preview without moving the page',
-      /Pisces/.test(piscesPreview.text)
-        && /Water/.test(piscesPreview.text)
-        && piscesPreview.explore === '/pisces/'
+      'selecting Pisces presents its official token and record-first actions without moving the page',
+      /Official Pisces token/.test(piscesPreview.text)
+        && /PISCES/.test(piscesPreview.text)
+        && /Native network: Solana/.test(piscesPreview.text)
         && piscesPreview.record === '/registry/pisces/'
+        && /View the Pisces token/.test(piscesPreview.recordLabel)
+        && piscesPreview.sculpture === '/assets/sculptures/512/pisces.webp'
+        && piscesPreview.trade === '/registry/pisces/#acquire'
+        && piscesPreview.guide === '/pisces/'
         && Math.abs(piscesPreview.scrollY - scrollBeforePick) <= 2,
       JSON.stringify(piscesPreview),
+    );
+    await desktop.locator('[data-token-quote="pisces"]').scrollIntoViewIfNeeded();
+    await desktop.locator('[data-token-quote="pisces"] .consumer-quote__price').waitFor({ timeout: 10_000 });
+    const piscesQuote = await desktop.locator('[data-token-quote="pisces"]').evaluate((quote) => ({
+      price: quote.querySelector('.consumer-quote__price')?.textContent ?? '',
+      change: quote.querySelector('.consumer-quote__change')?.textContent ?? '',
+      directional: Boolean(quote.querySelector(
+        '.market__change--up, .market__change--down, .market__change--flat',
+      )),
+    }));
+    check(
+      'the focused token panel quotes a live price with a signed 24h change',
+      /^\$\d/.test(piscesQuote.price)
+        && /%$/.test(piscesQuote.change)
+        && piscesQuote.directional,
+      JSON.stringify(piscesQuote),
+    );
+    const watchlist = await desktop.locator('.consumer-token').evaluateAll((rows) => rows.map((row) => ({
+      href: row.getAttribute('href'),
+      priced: Boolean(row.querySelector('.consumer-token__price')),
+    })));
+    check(
+      'the twelve-token watchlist stays in zodiac order and links every official record',
+      watchlist.length === 12
+        && watchlist.every((row, index) => row.href === '/registry/' + [
+          'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+          'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+        ][index] + '/')
+        && watchlist.every((row) => row.priced),
+      JSON.stringify(watchlist),
     );
     check(
       'the polite selection status announces the chosen sign',
@@ -793,7 +870,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       (await verifier.innerText()).includes('never connects a wallet, requests a signature, or starts a transaction'),
     );
     const compactConsumerTargets = await desktop.locator(
-      '.vrf__example, .consumer-preview__actions > a:not(.btn), .consumer-closing__actions > a:not(.btn)',
+      '.vrf__example, .consumer-preview__trade, .consumer-preview__guide, .consumer-closing__actions > a:not(.btn)',
     ).evaluateAll((targets) => targets.map((target) => ({
       label: target.textContent.trim(),
       height: target.getBoundingClientRect().height,
@@ -816,6 +893,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       viewport: { width: 390, height: 844 },
       deviceScaleFactor: 2,
       hasTouch: true,
+    });
+    await mockDexscreener(mobile);
+    const mobileGalleryRequests = [];
+    mobile.on('request', (request) => {
+      if (new URL(request.url()).pathname === '/assets/gallery.js') {
+        mobileGalleryRequests.push(request.url());
+      }
     });
     await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
     await mobile.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
@@ -848,6 +932,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && mobileState.minTarget >= 44,
       JSON.stringify(mobileState),
     );
+    await mobile.evaluate(() => new Promise((resolve) => setTimeout(resolve, 400)));
+    check(
+      'phones never request the scene bundle',
+      mobileGalleryRequests.length === 0,
+      JSON.stringify(mobileGalleryRequests),
+    );
     if (OUT) await mobile.screenshot({ path: OUT + '/registry-consumer-390.png', fullPage: false });
     await mobile.close();
 
@@ -855,6 +945,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       viewport: { width: 1126, height: 1180 },
       reducedMotion: 'reduce',
     });
+    await stubNoWebgl(reduced);
+    await mockDexscreener(reduced);
     await reduced.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
     await reduced.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
     check(
@@ -877,52 +969,65 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     await reduced.close();
 
-    const gallery = await newPage({
+    // The stage scenario runs unstubbed: where the runner offers WebGL the
+    // sculpture stage IS the explorer; otherwise the pastel grid serves and
+    // the scene bundle never loads. Both outcomes are asserted.
+    const stagePage = await newPage({
       viewport: { width: 1280, height: 900 },
       reducedMotion: 'no-preference',
     });
-    const galleryRequests = [];
-    gallery.on('request', (request) => {
-      if (new URL(request.url()).pathname === '/assets/gallery.js') galleryRequests.push(request.url());
+    await mockDexscreener(stagePage);
+    const stageRequests = [];
+    stagePage.on('request', (request) => {
+      if (new URL(request.url()).pathname === '/assets/gallery.js') stageRequests.push(request.url());
     });
-    await gallery.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
-    await gallery.locator('[data-consumer-gallery-toggle]').waitFor({ state: 'visible' });
-    check(
-      'optional gallery makes no bundle request before its control is used',
-      galleryRequests.length === 0 && await gallery.locator('[data-consumer-gallery]').count() === 0,
-    );
-    await gallery.locator('[data-consumer-gallery-toggle]').click();
-    await gallery.locator('[data-consumer-gallery]').waitFor({ state: 'visible' });
-    const galleryLive = await gallery.evaluate(() => document.documentElement.classList.contains('gallery-live'));
-    if (galleryLive) {
-      await gallery.locator('.gband.is-ready').waitFor({ state: 'visible', timeout: 30_000 });
+    await stagePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await stagePage.locator('.consumer-explorer').waitFor({ state: 'visible' });
+    const stageLive = await stagePage.evaluate(() => document.documentElement.classList.contains('gallery-live'));
+    if (stageLive) {
+      await stagePage.locator('.gband--consumer').waitFor({ state: 'attached' });
       check(
-        'opened WebGL gallery keeps all twelve pastel rail controls',
-        await gallery.locator('.gband .rail__tick').count() === 12
-          && await gallery.locator('.gband .rail__tick img').count() === 12,
+        'the sculpture stage is the wide-screen explorer and retires the grid',
+        await stagePage.locator('[data-consumer-sign]').count() === 0,
+      );
+      await stagePage.locator('.gband.is-ready').waitFor({ state: 'attached', timeout: 30_000 });
+      check(
+        'the live stage swaps its placeholder rail for twelve live ticks',
+        await stagePage.locator('.gband .rail__tick').count() === 12
+          && await stagePage.locator('.gband .rail__tick img').count() === 12
+          && await stagePage.locator('.rail__tick--placeholder').count() === 0,
       );
       check(
-        'opening the gold gallery requests its bundle exactly once',
-        galleryRequests.length === 1,
-        JSON.stringify(galleryRequests),
+        'the default-open stage requests its bundle exactly once',
+        stageRequests.length === 1,
+        JSON.stringify(stageRequests),
+      );
+      check(
+        'the rail exposes one pressed tick for the current sign',
+        await stagePage.locator('.rail__tick[aria-pressed="true"]').count() === 1,
+      );
+      const geminiTick = stagePage.locator('.rail__tick').nth(2);
+      await geminiTick.click();
+      await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
+      check(
+        'walking the rail drives the focused token panel',
+        await stagePage.locator('[data-consumer-preview="gemini"] a.btn').getAttribute('href')
+          === '/registry/gemini/',
       );
     } else {
       check(
-        'opened gallery retains a complete non-WebGL fallback',
-        await gallery.locator('.consumer-gallery__fallback a').count() === 12,
+        'without WebGL the pastel grid serves as the explorer',
+        await stagePage.locator('[data-consumer-sign]').count() === 12
+          && await stagePage.locator('.gband').count() === 0,
+      );
+      await stagePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 400)));
+      check(
+        'without WebGL the scene bundle is never requested',
+        stageRequests.length === 0,
+        JSON.stringify(stageRequests),
       );
     }
-    check(
-      'opening the optional gallery does not replace the consumer explorer',
-      await gallery.locator('[data-consumer-sign]').count() === 12,
-    );
-    await gallery.locator('[data-consumer-gallery-toggle]').click();
-    check(
-      'gallery control closes the optional view and restores its accessible state',
-      await gallery.locator('[data-consumer-gallery]').count() === 0
-        && await gallery.locator('[data-consumer-gallery-toggle]').getAttribute('aria-expanded') === 'false',
-    );
-    await gallery.close();
+    await stagePage.close();
 
     for (const [legacyHash, destination] of [
       ['pulse', 'market-transparency'],

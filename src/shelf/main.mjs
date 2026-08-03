@@ -271,6 +271,7 @@ async function mount(root, records) {
         const isCurrent = i === index;
         button.tabIndex = isCurrent ? 0 : -1;
         button.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+        button.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
       }
       // Keep a narrow rail centred without asking scrollIntoView to move the
       // page or any of the band's ancestors.
@@ -353,6 +354,7 @@ async function mount(root, records) {
     button.style.setProperty('--sign', record.hue);
     button.dataset.index = String(index);
     button.tabIndex = index === 0 ? 0 : -1;
+    button.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
     // The tick is the sign's pastel disc — the same icon wallets show for
     // the token — so the row and a holder's wallet visibly agree.
     button.innerHTML = '<picture aria-hidden="true">'
@@ -364,9 +366,12 @@ async function mount(root, records) {
       if (current() === index && state.targetOpen === 0) void openFigure(index);
       else showFigure(index);
     });
-    rail.append(button);
     return button;
   });
+  // One swap: the page's inert placeholder discs hand the rail to the live
+  // ticks without a frame of empty chrome between them.
+  rail.replaceChildren(...ticks);
+  root.classList.add('is-ready');
 
   // ---- the rail magnifies like a dock ------------------------------------
   //

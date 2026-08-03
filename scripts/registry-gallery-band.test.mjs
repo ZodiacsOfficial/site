@@ -43,12 +43,14 @@ describe('the gallery band on the registry hub', () => {
       "'/assets/gallery.js'",
       "classList.contains('gallery-live')",
     ]) expect(source).toContain(marker);
-    // The heavy stage is user-controlled on the consumer Registry: neither
-    // WebGL nor its fallback mounts until the gallery is opened.
-    expect(source).toContain('data-consumer-gallery-toggle');
-    expect(source).toContain('{galleryOpen && (');
-    expect(source).toContain('{GALLERY_LIVE ? (');
-    expect(source).toContain('<GalleryBand active={active} setActive={setActive} consumer />');
+    // The stage is the wide-screen explorer, but only where WebGL is live —
+    // narrow viewports and non-WebGL machines keep the pastel grid and the
+    // scene bundle stays IntersectionObserver-lazy either way.
+    expect(source).toContain('GALLERY_LIVE && window.matchMedia');
+    expect(source).toContain("window.matchMedia('(min-width: 1021px)')");
+    expect(source).toContain('{stageMode && <GalleryBand active={active} setActive={setActive} consumer />}');
+    expect(source).toContain('RAIL_PLACEHOLDER_HTML');
+    expect(source).not.toContain('data-consumer-gallery-toggle');
   });
 
   it('ships the same contract in the compiled application', async () => {
@@ -146,12 +148,12 @@ describe('the gallery band on the registry hub', () => {
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
-    // The static explorer keeps all twelve sign destinations useful without
-    // JavaScript while the heavy gallery remains explicitly optional.
+    // The static explorer keeps all twelve token destinations useful without
+    // JavaScript; every grid link opens the sign's official record.
     for (const slug of ['aries', 'virgo', 'pisces']) {
-      expect(html).toContain(`href="/registry/${slug}/" aria-label="Explore `);
+      expect(html).toContain(`href="/registry/${slug}/" aria-label="View the `);
     }
-    expect(source).toContain('See the gold gallery');
+    expect(source).toContain('Drag to browse · Choose a sign to open.');
     expect(html).not.toContain('?gallery=gold');
   });
 

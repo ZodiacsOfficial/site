@@ -109,16 +109,20 @@ function jsonLd(m) {
         '@type': 'WebPage',
         '@id': `${signUrl(m.slug)}#page`,
         url: signUrl(m.slug),
-        name: `${m.name} — Lot ${m.page.lot} of XII · The Official ${m.ticker} Record`,
-        description: `${m.page.epithet} Lore, provenance, the official Solana mint and Base representation, live market context, and acquisition routes for the ${m.name} Zodiac.`,
+        name: `${m.name} — Official ${m.ticker} Token · Lot ${m.page.lot} of XII`,
+        description: `${m.page.epithet} The official ${m.name} zodiac token: ${m.ticker} on Solana, official Base counterpart, provenance, live market context, and acquisition.`,
         inLanguage: 'en',
         isPartOf: { '@type': 'WebSite', name: 'Zodiacs.org', url: 'https://zodiacs.org/' },
         primaryImageOfPage: `https://zodiacs.org/assets/nuggets/${m.slug}.png`,
         about: {
           '@type': 'Thing',
-          name: `${m.name} (Zodiac record)`,
+          name: `${m.name} — official ${m.ticker} zodiac token`,
+          alternateName: [m.ticker, `${m.name} token`],
           description: m.asset.metadata.shortBio,
-          identifier: m.solana.address,
+          identifier: [
+            { '@type': 'PropertyValue', propertyID: 'solana-mint', value: m.solana.address },
+            { '@type': 'PropertyValue', propertyID: 'base-contract', value: m.base.address }
+          ],
           sameAs: `https://zodiacs.org/registry/zodiacs.registry.json`
         }
       }
@@ -159,8 +163,8 @@ function render(m) {
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
-  <title>${esc(m.name)} — Lot ${p.lot} of XII · Official ${esc(m.ticker)} Record | Zodiacs.org</title>
-  <meta name="description" content="${esc(`${p.epithet} The official ${m.name} record: lore and provenance of the sign, native Solana mint, official Base representation, live market context, and acquisition.`)}" />
+  <title>${esc(m.name)} — Official ${esc(m.ticker)} Token · Lot ${p.lot} of XII | Zodiacs.org</title>
+  <meta name="description" content="${esc(`${p.epithet} The official ${m.name} zodiac token: ${m.ticker} on Solana, official Base counterpart, provenance, live market context, and acquisition.`)}" />
   <link rel="canonical" href="${signUrl(m.slug)}" />
   <script>
     window.plausible = window.plausible || function () {
@@ -183,8 +187,8 @@ function render(m) {
   <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
 
   <meta property="og:site_name" content="Zodiacs" />
-  <meta property="og:title" content="${esc(m.name)} · Lot ${p.lot} of XII — Zodiacs" />
-  <meta property="og:description" content="${esc(`${p.epithet} Provenance from Babylon to the onchain record.`)}" />
+  <meta property="og:title" content="${esc(m.name)} · Official ${esc(m.ticker)} Token — Zodiacs" />
+  <meta property="og:description" content="${esc(`${p.epithet} The official ${m.name} zodiac token, native on Solana — provenance from Babylon to the onchain record.`)}" />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="${signUrl(m.slug)}" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
@@ -192,8 +196,8 @@ function render(m) {
   <meta property="og:image:height" content="630" />
   <meta property="og:image:alt" content="${esc(ogImageAlt)}" />
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="${esc(m.name)} · Lot ${p.lot} of XII — Zodiacs" />
-  <meta name="twitter:description" content="${esc(`${p.epithet} Provenance from Babylon to the onchain record.`)}" />
+  <meta name="twitter:title" content="${esc(m.name)} · Official ${esc(m.ticker)} Token — Zodiacs" />
+  <meta name="twitter:description" content="${esc(`${p.epithet} The official ${m.name} zodiac token, native on Solana — provenance from Babylon to the onchain record.`)}" />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry/${m.slug}.png" />
   <meta name="twitter:image:alt" content="${esc(ogImageAlt)}" />
 

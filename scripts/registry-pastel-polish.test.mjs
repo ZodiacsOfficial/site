@@ -29,7 +29,7 @@ describe('registry pastel polish', () => {
       read('public/registry/index.html'),
     ]);
 
-    expect(source).toContain('src={`/assets/zodiac-icons/48/${s.asset.sign}.webp`}');
+    expect(source).toContain('src="/assets/zodiac-icons/48/${s.asset.sign}.webp"');
     expect(source).toContain('src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}');
     expect(source).toContain('src={`/assets/zodiac-icons/48/${r.slug}.webp`}');
     expect(source).toContain('className="pulse__bar-k pulse__bar-k--sign"');
@@ -53,19 +53,22 @@ describe('registry pastel polish', () => {
       read('public/registry/index.html'),
     ]);
 
-    expect(source).toContain('className="strip__name"');
+    // The grid selector computes its own column count, so arrow keys keep
+    // working whichever responsive shape the twelve are wearing.
     expect(source).toContain("() => currentSeason()?.sign.ticker ?? SIGNS[0].ticker");
-    expect(source).toContain("if (event.key === 'ArrowDown') nextIndex = activeIndex + 6;");
-    expect(source).toContain('Swipe or scroll to choose');
+    expect(source).toContain("const columnCount = gridStyle?.display === 'grid'");
+    expect(source).toContain('ArrowDown: activeIndex + columnCount,');
+    expect(source).toContain('Drag to browse · Choose a sign to open.');
     expect(source).not.toContain('SELECTOR_CYCLE_MS');
     expect(source).not.toContain('Auto-rotating · tap to pin');
     expect(source).not.toContain('Scroll or drag to explore');
     expect(bundle).not.toContain('Auto-rotating');
     expect(bundle).not.toContain('Scroll or drag');
     expect(registry).toContain('grid-template-columns: repeat(6, minmax(0, 1fr));');
-    expect(registry).toContain('.strip__viewport.can-scroll-left::before');
-    expect(registry).toContain('.strip__viewport.can-scroll-right::after');
-    expect(registry).toContain('.strip__sub { display: none; }');
+    // The stage rail paints from inert placeholder discs until the scene
+    // bundle swaps in the live ticks; the watchlist wraps, never scrolls.
+    expect(registry).toContain('.rail__tick--placeholder');
+    expect(registry).toContain('.consumer-tokens__list');
   });
 
   it('keeps the consumer hero task-first and moves the optional Cabinet into the purpose section', async () => {
@@ -74,8 +77,8 @@ describe('registry pastel polish', () => {
       read('public/registry/index.html'),
     ]);
 
-    const hero = source.slice(source.indexOf('function CineHero('), source.indexOf('function Hero('));
-    expect(hero).toContain('Explore the twelve signs and see the official digital record for each one.');
+    const hero = source.slice(source.indexOf('function CineHero('), source.indexOf('function CopyChip('));
+    expect(hero).toContain('Every sign has one official token. Explore its story, its record, and its market.');
     expect(hero.match(/className="btn btn--primary"/g)).toHaveLength(1);
     expect(hero.match(/className="btn btn--ghost"/g)).toHaveLength(1);
     expect(hero).toContain('href="#official-twelve"');
