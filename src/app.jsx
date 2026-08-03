@@ -3179,6 +3179,11 @@
               <span className="consumer-quote__price">{formatPriceUsd(quote.priceUsd)}</span>
               <span className={'consumer-quote__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
               <span className="consumer-quote__label">Live price · 24h change</span>
+              {Number(quote.priceUsd) > 0 && (
+                <span className="consumer-quote__approx">
+                  $25 ≈ {Math.round(25 / Number(quote.priceUsd)).toLocaleString('en-US')} {sign.ticker} at this price
+                </span>
+              )}
             </>
           ) : !settled ? (
             <span className="consumer-quote__state">Reading the market…</span>
@@ -3441,6 +3446,9 @@
                   <a className="btn btn--primary" href={registryProfilePath(sign)}>
                     <span>View the {sign.name} token</span><span className="arr" aria-hidden="true">→</span>
                   </a>
+                  <a className="btn" href={`${registryProfilePath(sign)}#acquire`}>
+                    <span>Trade {sign.name}</span><span className="arr" aria-hidden="true">→</span>
+                  </a>
                   <CopyChip
                     text={sign.representations.solana.address}
                     display="Copy Solana address"
@@ -3450,9 +3458,6 @@
                   Also recorded on Base · <code className="mono">{truncateAddress(sign.representations.base.address, 6, 4)}</code>
                 </p>
                 <div className="consumer-preview__links">
-                  <a className="consumer-preview__trade" href={`${registryProfilePath(sign)}#acquire`}>
-                    Where {sign.ticker} trades <span aria-hidden="true">→</span>
-                  </a>
                   <a className="consumer-preview__guide" href={`/${sign.asset.sign}/`}>
                     Read the {sign.name} astrology guide <span aria-hidden="true">→</span>
                   </a>

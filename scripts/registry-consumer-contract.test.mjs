@@ -173,7 +173,8 @@ describe('Registry consumer and technical information architecture', () => {
     // The record box is a plate: the sign's gold sculpture with its pastel
     // disc seated at the corner, and a route to where the token trades.
     expect(source).toContain('src={`/assets/sculptures/512/${sign.asset.sign}.webp`}');
-    expect(source).toContain('Where {sign.ticker} trades');
+    expect(source).toContain('Trade {sign.name}');
+    expect(source).toContain('consumer-quote__approx');
     expect(source).toContain('href={`${registryProfilePath(sign)}#acquire`}');
     expect(source).toContain('Read the {sign.name} astrology guide');
     // The primary action opens the official record; the astrology guide is
