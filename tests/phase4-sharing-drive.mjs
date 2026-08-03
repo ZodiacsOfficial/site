@@ -459,7 +459,9 @@ async function runInvitationAndReturn(browser, baseURL) {
   const page = await context.newPage();
   watchPage(page, 'invitation');
   await page.goto(`${baseURL}/compatibility/#invite=${SESSION_HANDLE}`, { waitUntil: 'domcontentloaded' });
-  const arrival = page.locator('.syn-arrival');
+  // The arrival mounts as an aria-busy "Opening the invitation…" shell while
+  // the session exchange is in flight; read its copy only once it settles.
+  const arrival = page.locator('.syn-arrival:not([aria-busy="true"])');
   await arrival.waitFor({ state: 'visible', timeout: 30_000 });
   check('ready arrival names the inviter and positions-only boundary',
     /Frida wants to read your charts together/.test(await arrival.textContent() ?? '')
