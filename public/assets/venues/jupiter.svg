@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 28 28" role="img" aria-label="Jupiter">
-  <path d="M4 14c4.2-5.7 15.8-5.7 20 0" fill="none" stroke="#dec07a" stroke-width="1.9" stroke-linecap="round"/>
-  <path d="M5.8 18.2c4.8-3.5 11.6-3.5 16.4 0" fill="none" stroke="#dec07a" stroke-width="1.9" stroke-linecap="round" opacity=".72"/>
-  <path d="M7.8 9.8c3.8-2 8.6-2 12.4 0" fill="none" stroke="#dec07a" stroke-width="1.9" stroke-linecap="round" opacity=".72"/>
-  <circle cx="14" cy="14" r="2.4" fill="#dec07a"/>
+  <path d="M4 14c4.2-5.7 15.8-5.7 20 0" fill="none" stroke="#C6CCDA" stroke-width="1.9" stroke-linecap="round"/>
+  <path d="M5.8 18.2c4.8-3.5 11.6-3.5 16.4 0" fill="none" stroke="#C6CCDA" stroke-width="1.9" stroke-linecap="round" opacity=".72"/>
+  <path d="M7.8 9.8c3.8-2 8.6-2 12.4 0" fill="none" stroke="#C6CCDA" stroke-width="1.9" stroke-linecap="round" opacity=".72"/>
+  <circle cx="14" cy="14" r="2.4" fill="#C6CCDA"/>
 </svg>
