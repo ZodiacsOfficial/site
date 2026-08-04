@@ -738,8 +738,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await desktop.locator('[data-consumer-preview="pisces"]').waitFor({ state: 'visible' });
     const piscesPreview = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((preview) => ({
       text: preview.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-      record: preview.querySelector('a.btn')?.getAttribute('href'),
-      recordLabel: preview.querySelector('a.btn')?.textContent?.trim() ?? '',
+      record: preview.querySelector('a.btn--primary')?.getAttribute('href'),
+      recordLabel: preview.querySelector('a.btn--primary')?.textContent?.trim() ?? '',
       sculpture: preview.querySelector('.consumer-preview__sculpture')?.getAttribute('src'),
       trade: preview.querySelector('a.btn[href$="#acquire"]')?.getAttribute('href'),
       // Two things the record box deliberately no longer carries: the second
@@ -1048,7 +1048,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
       check(
         'walking the rail drives the focused token panel',
-        await stagePage.locator('[data-consumer-preview="gemini"] a.btn').getAttribute('href')
+        await stagePage.locator('[data-consumer-preview="gemini"] a.btn--primary').getAttribute('href')
           === '/registry/gemini/',
       );
 

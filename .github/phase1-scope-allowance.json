@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "id": "registry-trade-panel-2026-08-03",
-  "reason": "Owner-ratified trade panel work (risk decision approved 2026-08-02T17:28:02Z, landing access ratified by owner 2026-08-03). Adds the flag-gated trade region to the twelve catalogue pages (committed flag-off, byte-reversible); elevates the landing focused panel’s trade link to a visible action with a live $25 approximation from the price already on the page (no new third-party requests); recolours the ten venue marks from retired Warm Gilt to site ink per CLAUDE.md.",
-  "baseCommit": "2681caac5612ed5d3f2c8a9a59db0859e6be3fe4",
+  "id": "registry-trade-panel-2026-08-04",
+  "reason": "Owner-ratified trade panel work (risk decision approved 2026-08-02T17:28:02Z; landing access ratified 2026-08-03; landing consolidation ratified 2026-08-04). Adds the flag-gated trade region to the twelve catalogue pages (committed flag-off, byte-reversible) and the same flag to the Registry landing, whose wide-screen explorer is consolidated into one rectangle: the twelve-disc rail on top, the chosen sculpture spotlit beneath it, and the record and trade panel beside them. Removes the Base counterpart line and the astrology-guide link from the record box. Recolours the ten venue marks from retired Warm Gilt to site ink per CLAUDE.md.",
+  "baseCommit": "fa1585cb4fa1c3c05fa55b8961b90f468bf234a3",
   "protectedPaths": [
     "public/assets/app.js",
     "public/assets/venues/binance-wallet.svg",
@@ -29,8 +29,10 @@
     "public/registry/taurus/index.html",
     "public/registry/technical/index.html",
     "public/registry/virgo/index.html",
+    "scripts/build-app.mjs",
     "scripts/build-sign-pages.mjs",
     "scripts/registry-consumer-contract.test.mjs",
+    "scripts/registry-gallery-band.test.mjs",
     "src/app.jsx"
   ]
 }
