@@ -1,8 +1,8 @@
 {
   "version": 1,
   "id": "registry-trade-governance-2026-08-02",
-  "reason": "Owner-ratified trade governance release (2026-08-02): disclose the embedded trade panel before any panel code exists, and publish the dated operator attestation that supersedes 2026-07-23. The four locale privacy pages and the four locale addition catalogs are touched only to carry the disclosure text already written in English — additionText throws on a missing key, so the translations are a build requirement of the new disclosure row and the redated attestation, not a change to the locale trees themselves. No Registry wing file, generated bundle, sign page, or Registry builder is modified by this release.",
-  "baseCommit": "e27f2be0c897f873a2df05aa941034aec6c9d9a7",
+  "reason": "Owner-ratified trade governance release (2026-08-02): disclose the embedded trade panel before any panel code exists, and publish the dated operator attestation that supersedes 2026-07-23. The four locale privacy pages and the four locale addition catalogs are touched only to carry the disclosure text already written in English — additionText throws on a missing key, so the translations are a build requirement of the new disclosure row and the redated attestation, not a change to the locale trees themselves. No Registry wing file, generated bundle, sign page, or Registry builder is modified by this release Amended 2026-08-04 to extend the panel’s stated scope to the Registry landing explorer, whose privacy wording also states when a price is requested there.",
+  "baseCommit": "fa1585cb4fa1c3c05fa55b8961b90f468bf234a3",
   "protectedPaths": [
     "src/pages/es/privacy/index.astro",
     "src/pages/fr/privacy/index.astro",
