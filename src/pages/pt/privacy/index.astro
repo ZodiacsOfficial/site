@@ -123,9 +123,15 @@ const jsonLd = [
         privacidade próprias desses serviços se aplicam.
       </p>
       <p>
-        A página de catálogo de um signo também pode incluir um painel de
-        negociação opcional. O painel é a nossa própria interface e pede um
-        preço à API pública da Jupiter, uma plataforma independente. Se você
+        A página de catálogo de um signo e o explorador da página inicial do
+        Registo também podem incluir um painel de negociação opcional. O painel
+        é a nossa própria interface e pede um preço à API pública da Jupiter,
+        uma plataforma independente. Na página inicial o painel é mostrado sem
+        que seja preciso abri-lo, por isso esse pedido é feito assim que chega
+        ao explorador e de novo sempre que muda o montante ou o signo; o que
+        sai do seu navegador nessa altura é o montante, os dois identificadores
+        de token e os metadados comuns de um pedido web — não o seu endereço,
+        que só é enviado se escolher operar. Se você
         decidir operar, o seu endereço público é enviado à Jupiter para que ela
         monte a transação, e a transação assinada pela sua carteira volta à
         Jupiter para ser enviada à rede; essas solicitações, e qualquer aviso

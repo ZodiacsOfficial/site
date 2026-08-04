@@ -130,8 +130,15 @@ const jsonLd = [
         confidentialité s’appliquent.
       </p>
       <p>
-        La page de catalogue d’un signe peut aussi comporter un panneau de
-        négociation optionnel. Le panneau est notre propre interface et
+        La page de catalogue d’un signe et l’explorateur de la page d’accueil
+        du Registre peuvent aussi comporter un panneau de négociation
+        optionnel. Sur la page d’accueil, le panneau est affiché sans qu’on
+        l’ouvre : la demande de prix est donc faite dès que vous atteignez
+        l’explorateur, puis à chaque changement de montant ou de signe ; ce qui
+        quitte alors votre navigateur, c’est le montant, les deux identifiants
+        de jeton et les métadonnées ordinaires d’une requête web — pas votre
+        adresse, qui n’est envoyée que si vous choisissez d’opérer.
+        Le panneau est notre propre interface et
         demande un prix à l’API publique de Jupiter, une plateforme
         indépendante. Si tu choisis d’effectuer une opération, ton adresse
         publique est envoyée à Jupiter pour qu’il construise la transaction,

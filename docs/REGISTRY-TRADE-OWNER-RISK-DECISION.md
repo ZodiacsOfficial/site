@@ -5,10 +5,23 @@ control below is satisfied
 
 Approved: 2026-08-02T17:28:02Z
 
-Scope: the twelve `/registry/{sign}/` catalogue pages only; Solana only; a
-trade panel that is the site's own interface calling Jupiter's public Ultra
-API; no referral account, platform fee, or compensation of any kind;
-committed HTML always flag-off behind `PUBLIC_REGISTRY_TRADE_ENABLED`.
+Scope: the twelve `/registry/{sign}/` catalogue pages and the Registry
+landing explorer at `/registry/`; Solana only; a trade panel that is the
+site's own interface calling Jupiter's public Ultra API; no referral
+account, platform fee, or compensation of any kind; committed HTML always
+flag-off behind `PUBLIC_REGISTRY_TRADE_ENABLED`.
+
+Scope amended 2026-08-04 by owner ratification of the landing
+consolidation. The landing's wide-screen explorer became a single
+rectangle carrying the panel beside the chosen sign's record, and the
+same panel mounts in that sign's card on narrower viewports. The approval
+timestamp above, the decision below, and every mandatory control are
+unchanged and apply to the landing exactly as they apply to a catalogue
+page. One consequence is called out where it belongs: on the landing the
+panel is shown without being asked for, so it requests a price from
+Jupiter as soon as the explorer is reached rather than after a click —
+which is why the privacy pages say when that request happens, not merely
+that it can.
 
 ## Decision
 

@@ -126,9 +126,15 @@ const jsonLd = [
         aplican sus propias políticas de privacidad.
       </p>
       <p>
-        La página de catálogo de un signo puede incluir además un panel de
-        negociación opcional. El panel es nuestra propia interfaz y solicita un
-        precio a la API pública de Jupiter, una plataforma independiente. Si
+        La página de catálogo de un signo y el explorador de la portada del
+        Registro pueden incluir además un panel de negociación opcional. El
+        panel es nuestra propia interfaz y solicita un precio a la API pública
+        de Jupiter, una plataforma independiente. En la portada el panel se
+        muestra sin que haya que abrirlo, de modo que esa solicitud se hace en
+        cuanto llegas al explorador y de nuevo cada vez que cambias el importe
+        o el signo; lo que sale de tu navegador entonces es el importe, los dos
+        identificadores de token y los metadatos habituales de una solicitud
+        web, no tu dirección, que no se envía salvo que decidas operar. Si
         decides operar, tu dirección pública se envía a Jupiter para que
         construya la transacción, y la transacción que firma tu billetera
         vuelve a Jupiter para que la envíe a la red; esas solicitudes, y

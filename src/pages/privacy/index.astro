@@ -127,9 +127,15 @@ const jsonLd = [
         retention practices apply.
       </p>
       <p>
-        A sign’s catalogue page can also include an optional trade panel. The
-        panel is our own interface, and it requests a price from the public
-        API of Jupiter, an independent venue. If you choose to trade, your
+        A sign’s catalogue page and the Registry landing explorer can also
+        include an optional trade panel. The panel is our own interface, and it
+        requests a price from the public API of Jupiter, an independent venue.
+        On the landing the panel is shown rather than opened, so that request
+        is made as soon as you reach the explorer and again whenever you change
+        the amount or the sign; what leaves your browser then is the amount,
+        the two token identifiers, and ordinary web-request metadata — not your
+        address, which is not sent unless you choose to trade. If you do choose
+        to trade, your
         public address is sent to Jupiter so it can build the transaction, and
         the transaction your wallet signs is returned to Jupiter to submit to
         the network; those requests, and any wallet prompt, are governed by
