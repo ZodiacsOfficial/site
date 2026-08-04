@@ -1501,6 +1501,67 @@
 
     let galleryBundleRequested = false;
 
+    /* The trade panel's runtime, fetched at most once per page and only when
+       the panel is actually near the reader. Resolves to null if the bundle
+       cannot load, so a failed fetch leaves an empty box rather than a
+       half-built form. */
+    let tradeBundleReady = null;
+
+    function loadTradeBundle() {
+      if (tradeBundleReady) return tradeBundleReady;
+      tradeBundleReady = new Promise((resolve) => {
+        if (window.zodiacsTrade) { resolve(window.zodiacsTrade); return; }
+        const script = document.createElement('script');
+        script.src = '/assets/trade.js';
+        script.defer = true;
+        script.addEventListener('load', () => resolve(window.zodiacsTrade ?? null), { once: true });
+        script.addEventListener('error', () => resolve(null), { once: true });
+        document.body.appendChild(script);
+      });
+      return tradeBundleReady;
+    }
+
+    /* The panel itself is plain DOM, mounted into this box by the bundle. It
+       is rebuilt when the sign changes: a panel is about one token, and
+       carrying a half-typed amount across signs would be worse than clearing
+       it. */
+    function LandingTrade({ sign }) {
+      const hostRef = useRef(null);
+      useEffect(() => {
+        const host = hostRef.current;
+        if (!host) return undefined;
+        let panel = null;
+        let live = true;
+        let io = null;
+        const open = () => {
+          loadTradeBundle().then((trade) => {
+            if (!live || !trade) return;
+            panel = trade.mount(host, {
+              name: sign.name,
+              slug: sign.asset.sign,
+              mint: sign.representations.solana.address,
+              hue: sign.hue,
+              iconUrl: `/assets/zodiac-icons/128/${sign.asset.sign}.webp`,
+            });
+          });
+        };
+        if (!('IntersectionObserver' in window)) open();
+        else {
+          io = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) { open(); io.disconnect(); }
+          }, { rootMargin: '400px 0px' });
+          io.observe(host);
+        }
+        return () => {
+          live = false;
+          io?.disconnect();
+          panel?.destroy?.();
+        };
+      }, [sign]);
+
+      return <div className="consumer-trade" data-landing-trade={sign.asset.sign} ref={hostRef} />;
+    }
+
     // Inert pastel discs hold the rail's shape until the scene bundle
     // arrives and swaps in the live ticks with one replaceChildren call.
     // Rendered via dangerouslySetInnerHTML with a constant string so React
@@ -1518,7 +1579,9 @@
       // The slug the scene last announced — the guard that keeps the
       // selection loop (scene → state → scene) from echoing.
       const gallerySlug = useRef(null);
-      const slug = (SIGNS.find(s => s.ticker === active) ?? SIGNS[0]).asset.sign;
+      const sign = SIGNS.find(s => s.ticker === active) ?? SIGNS[0];
+      const slug = sign.asset.sign;
+      const season = useMemo(() => currentSeason(), []);
 
       // The scene bundle carries Three.js; it is fetched only as the band
       // approaches the viewport, and only once.
@@ -1563,6 +1626,16 @@
         node.dispatchEvent(new CustomEvent('zodiacs:gallery-focus', { detail: { slug } }));
       }, [slug]);
 
+      const railGroup = (
+        <div
+          className="rail"
+          data-gallery-rail=""
+          role="group"
+          aria-label="The twelve sculptures"
+          dangerouslySetInnerHTML={{ __html: RAIL_PLACEHOLDER_HTML }}
+        />
+      );
+
       return (
         <section
           ref={stageRef}
@@ -1572,17 +1645,30 @@
           data-gallery-stage=""
           data-gallery-embed=""
           data-gallery-initial={slug}
+          data-gallery-spotlight={consumer ? '' : undefined}
         >
+          {/* The rectangle picks with the rail at the top and shows one piece
+              large below it, so the twelve read as the choice and the chosen
+              sculpture as the answer. It deliberately does NOT wear
+              .gband__chrome: the scene measures the band it may fill by that
+              element's offsetTop, and chrome above the canvas would leave it
+              nothing. */}
+          {consumer && <div className="gband__rail-top">{railGroup}</div>}
           <div className="gband__mount" data-gallery-canvas="" />
           <p className="gband__name" data-gallery-name="" aria-hidden="true" />
-          <div className="gband__chrome">
+          {consumer && (
             <div
-              className="rail"
-              data-gallery-rail=""
-              role="group"
-              aria-label="The twelve sculptures"
-              dangerouslySetInnerHTML={{ __html: RAIL_PLACEHOLDER_HTML }}
-            />
+              id="consumer-sign-preview"
+              className="consumer-stage-panel"
+              data-consumer-preview={slug}
+              aria-labelledby="consumer-preview-name"
+            >
+              <ConsumerSignPanel sign={sign} season={season} />
+            </div>
+          )}
+          {!consumer && (
+          <div className="gband__chrome">
+            {railGroup}
             <button className="gband__open" type="button" data-gallery-open="">
               View the sculpture
             </button>
@@ -1590,6 +1676,7 @@
               Drag to browse · Choose a sign to open.
             </p>
           </div>
+          )}
 
           <aside className="gcard" data-gallery-card="" hidden aria-labelledby="gcard-name" aria-live="off">
             <button className="card__close" type="button" data-gallery-close="" aria-label="Return the sculpture">✕</button>
@@ -3289,6 +3376,45 @@
       );
     }
 
+    /* Everything the page says about the chosen sign, in one component so the
+       two selectors cannot drift apart: the sculpture rectangle shows it
+       beside the figure, and the pastel grid shows it in the card. */
+    function ConsumerSignPanel({ sign, season }) {
+      return (
+        <div className="consumer-preview__body">
+          <div className="consumer-preview__eyebrow">
+            <span>{String(sign.order).padStart(2, '0')} of 12</span>
+            {season?.sign.ticker === sign.ticker && <span>Current season</span>}
+            <span className="consumer-preview__status">Official record</span>
+          </div>
+          <h3 id="consumer-preview-name" className="consumer-preview__name">{sign.name}</h3>
+          <p className="consumer-preview__dates">{signDateLabel(sign)}</p>
+          <p className="consumer-preview__token">
+            <span>Official {sign.name} token</span>
+            <span className="consumer-preview__ticker">{sign.ticker}</span>
+            <span className="consumer-preview__network">Native network: Solana</span>
+          </p>
+          <TokenQuote sign={sign} />
+          <p className="consumer-preview__lore">{sign.shortBio}</p>
+          {REGISTRY_TRADE_ENABLED && <LandingTrade sign={sign} />}
+          <div className="consumer-preview__actions">
+            <a className="btn btn--primary" href={registryProfilePath(sign)}>
+              <span>View the {sign.name} token</span><span className="arr" aria-hidden="true">→</span>
+            </a>
+            {!REGISTRY_TRADE_ENABLED && (
+              <a className="btn" href={`${registryProfilePath(sign)}#acquire`}>
+                <span>Trade {sign.name}</span><span className="arr" aria-hidden="true">→</span>
+              </a>
+            )}
+            <CopyChip
+              text={sign.representations.solana.address}
+              display="Copy Solana address"
+            />
+          </div>
+        </div>
+      );
+    }
+
     function ConsumerExplorer({ active, setActive, sign }) {
       const reveal = useReveal();
       const gridRef = useRef(null);
@@ -3357,8 +3483,11 @@
 
           {stageMode && <GalleryBand active={active} setActive={setActive} consumer />}
 
-          <div className={'consumer-explorer__layout' + (stageMode ? ' consumer-explorer__layout--stage' : '')}>
-            {!stageMode && (
+          {/* In stage mode the rectangle carries the panel beside the
+              sculpture; the pastel grid and its card are the selector
+              everywhere else. Only one of the two is ever in the page. */}
+          {!stageMode && (
+          <div className="consumer-explorer__layout">
             <div
               className="consumer-signs"
               ref={gridRef}
@@ -3398,7 +3527,6 @@
                 );
               })}
             </div>
-            )}
 
             <article
               id="consumer-sign-preview"
@@ -3427,44 +3555,10 @@
                   />
                 </picture>
               </div>
-              <div className="consumer-preview__body">
-                <div className="consumer-preview__eyebrow">
-                  <span>{String(sign.order).padStart(2, '0')} of 12</span>
-                  {season?.sign.ticker === sign.ticker && <span>Current season</span>}
-                  <span className="consumer-preview__status">Official record</span>
-                </div>
-                <h3 id="consumer-preview-name" className="consumer-preview__name">{sign.name}</h3>
-                <p className="consumer-preview__dates">{signDateLabel(sign)}</p>
-                <p className="consumer-preview__token">
-                  <span>Official {sign.name} token</span>
-                  <span className="consumer-preview__ticker">{sign.ticker}</span>
-                  <span className="consumer-preview__network">Native network: Solana</span>
-                </p>
-                <TokenQuote sign={sign} />
-                <p className="consumer-preview__lore">{sign.shortBio}</p>
-                <div className="consumer-preview__actions">
-                  <a className="btn btn--primary" href={registryProfilePath(sign)}>
-                    <span>View the {sign.name} token</span><span className="arr" aria-hidden="true">→</span>
-                  </a>
-                  <a className="btn" href={`${registryProfilePath(sign)}#acquire`}>
-                    <span>Trade {sign.name}</span><span className="arr" aria-hidden="true">→</span>
-                  </a>
-                  <CopyChip
-                    text={sign.representations.solana.address}
-                    display="Copy Solana address"
-                  />
-                </div>
-                <p className="consumer-preview__base">
-                  Also recorded on Base · <code className="mono">{truncateAddress(sign.representations.base.address, 6, 4)}</code>
-                </p>
-                <div className="consumer-preview__links">
-                  <a className="consumer-preview__guide" href={`/${sign.asset.sign}/`}>
-                    Read the {sign.name} astrology guide <span aria-hidden="true">→</span>
-                  </a>
-                </div>
-              </div>
+              <ConsumerSignPanel sign={sign} season={season} />
             </article>
           </div>
+          )}
 
           <p className="sr-only" role="status" aria-live="polite" data-consumer-live>
             {sign.name} selected. {signDateLabel(sign)}. {sign.element}. {sign.archetype}.

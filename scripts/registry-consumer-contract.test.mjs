@@ -176,12 +176,60 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('Trade {sign.name}');
     expect(source).toContain('consumer-quote__approx');
     expect(source).toContain('href={`${registryProfilePath(sign)}#acquire`}');
-    expect(source).toContain('Read the {sign.name} astrology guide');
-    // The primary action opens the official record; the astrology guide is
-    // a labelled tertiary link, never the primary destination.
+    // The primary action opens the official record.
     expect(source).toContain('<a className="btn btn--primary" href={registryProfilePath(sign)}>');
     expect(source).not.toMatch(/className="btn btn--primary" href=\{`\/\$\{sign\.asset\.sign\}\/`\}/u);
     expect(mounted).toContain('<ConsumerTokensSection />');
+  });
+
+  it('says one thing about a sign, in one place, whichever selector is showing', async () => {
+    const source = await read('src/app.jsx');
+    // The rectangle and the pastel grid render the same component, so the two
+    // cannot drift apart. Each of these appears exactly once in the source.
+    expect(source).toContain('function ConsumerSignPanel(');
+    for (const once of [
+      'View the {sign.name} token',
+      'Copy Solana address',
+      'Official {sign.name} token',
+      '<TokenQuote sign={sign} />',
+    ]) {
+      expect(source.split(once), once).toHaveLength(2);
+    }
+  });
+
+  it('drops the second chain and the guide detour from the record box', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    // The landing is about a sign's official token on its native network. The
+    // Base counterpart is a fact of the catalogue page, not of choosing; and
+    // the astrology guide is a whole other wing.
+    expect(source).not.toContain('Also recorded on Base');
+    expect(source).not.toContain('astrology guide');
+    expect(html).not.toContain('astrology guide');
+    // Their styles go with them rather than lingering as dead selectors.
+    for (const dead of [
+      '.consumer-preview__base', '.consumer-preview__guide',
+      '.consumer-preview__links', '.consumer-preview__trade',
+    ]) {
+      expect(html, dead).not.toContain(dead);
+    }
+  });
+
+  it('keeps the trade panel behind its flag and its own lazy bundle', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    // Flag-off the landing carries the door to the catalogue page's panel;
+    // flag-on it carries the panel. Never a runtime read of the venue.
+    expect(source).toContain('REGISTRY_TRADE_ENABLED');
+    expect(source).toContain('data-landing-trade');
+    expect(source).toContain("'/assets/trade.js'");
+    expect(source).toContain("rootMargin: '400px 0px'");
+    expect(html).toContain('<meta name="zodiacs-registry-trade-enabled" content="0" />');
+    expect(html).not.toContain('/assets/trade.js');
   });
 
   it('lists all twelve official tokens in zodiac order with a single batched market read', async () => {

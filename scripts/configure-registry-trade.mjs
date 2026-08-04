@@ -12,7 +12,11 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
-import { injectRegistryTrade, registryTradeEnabled } from '../src/trade/entry.mjs';
+import {
+  injectRegistryTrade,
+  injectRegistryTradeLanding,
+  registryTradeEnabled,
+} from '../src/trade/entry.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const SIGNS = [
@@ -32,7 +36,19 @@ for (const sign of SIGNS) {
   written += 1;
 }
 
+// The landing explorer carries the panel too. Its shell holds no markup for
+// it — the panel is mounted into the chosen sign's card at runtime — so only
+// the flag is stamped here.
+const hubFile = resolve(root, 'public/registry/index.html');
+const hubSource = await readFile(hubFile, 'utf8');
+const hub = injectRegistryTradeLanding(hubSource, process.env).output;
+if (hub !== hubSource) {
+  await writeFile(hubFile, hub);
+  written += 1;
+}
+
 console.log(
   `Registry trade panel: ${enabled ? 'enabled' : 'disabled'} `
-  + `(${written} of ${SIGNS.length} page${written === 1 ? '' : 's'} rewritten)`,
+  + `(${written} of ${SIGNS.length + 1} page${written === 1 ? '' : 's'} rewritten,`
+  + ' landing included)',
 );

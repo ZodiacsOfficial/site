@@ -20,6 +20,7 @@
     "legacy:signs": "node scripts/build-sign-pages.mjs",
     "legacy:archive": "node scripts/build-archive.mjs",
     "legacy:shelf": "node scripts/build-shelf.mjs",
+    "legacy:trade": "node scripts/build-trade.mjs",
     "legacy:og": "node scripts/build-og-cards.mjs",
     "data:search-index": "vite-node --script scripts/build-search-index.mjs",
     "data:disclosure": "node scripts/build-thesis-disclosure.mjs && node scripts/bake-thesis-disclosure-static.mjs",

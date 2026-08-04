@@ -3276,22 +3276,6 @@
       letter-spacing: .16em;
       text-transform: uppercase;
     }
-    .consumer-preview__base {
-      margin: 16px 0 0;
-      color: var(--ink-dim);
-      font-size: 12px;
-    }
-    .consumer-preview__base code { font-family: var(--mono); font-size: 11px; letter-spacing: .02em; }
-    .consumer-preview__guide {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      min-height: 44px;
-      margin-top: 4px;
-      color: var(--ink-dim);
-      font-size: 12.5px;
-    }
-    .consumer-preview__guide:hover { color: var(--ink-2); }
     .consumer-preview__lore {
       max-width: 39ch;
       margin: 22px 0 0;
@@ -3336,51 +3320,67 @@
       font-size: 13px;
       letter-spacing: 0;
     }
-    .consumer-preview__links {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      column-gap: 24px;
-      margin-top: 2px;
-    }
-    .consumer-preview__links a {
-      text-decoration-line: underline;
-      text-decoration-style: solid;
-      text-decoration-color: var(--hair-3);
-      text-underline-offset: 4px;
-    }
-    .consumer-preview__links a:hover { text-decoration-color: var(--ink-dim); }
-    .consumer-preview__trade {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      min-height: 44px;
-      color: var(--ink-2);
-      font-size: 13px;
-    }
-    .consumer-preview__trade:hover { color: var(--ink); }
-    /* The sculpture stage — the desktop explorer. The pastel rail paints
-       immediately from inert placeholder discs; the WebGL canvas fades in
-       once the scene bundle mounts and takes the rail over. */
+    /* The rectangle — one plate that picks, shows, and offers. The rail runs
+       across the top, the chosen sculpture stands large on the left, and
+       everything the page has to say about that sign — record, price, and the
+       trade itself — sits beside it on the right. The pastel rail paints
+       immediately from inert placeholder discs; the WebGL canvas fades in once
+       the scene bundle mounts and takes the rail over. */
     .consumer-explorer .gband--consumer {
       position: relative; z-index: 2;
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(360px, .88fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      grid-template-areas: 'rail rail' 'art panel';
       width: 100%;
-      height: clamp(420px, 56svh, 600px);
+      height: auto;
       margin-top: clamp(36px, 5vw, 56px);
+      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
       border-radius: 26px;
       overflow: hidden;
+      background:
+        radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
+        rgba(15,18,26,.88);
+      box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
     }
+    /* The picker. Deliberately NOT .gband__chrome: the scene reads that
+       element's offsetTop as the floor of the band it may paint into, and
+       chrome above the canvas would leave it nothing to paint. */
+    .gband__rail-top {
+      grid-area: rail;
+      display: flex;
+      justify-content: center;
+      /* The dock's swell grows upward from each disc's foot, so the strip
+         carries its own headroom instead of borrowing the canvas's. */
+      padding: 22px 20px 6px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .gband--consumer .gband__mount {
+      grid-area: art;
+      position: relative;
+      inset: auto;
+      min-height: clamp(440px, 56svh, 640px);
+    }
+    /* The sign is named in full beside the sculpture, so the hover label the
+       standalone band needs would only say it twice. */
+    .gband--consumer .gband__name { display: none; }
     .gband--consumer [data-gallery-canvas] {
       opacity: 0;
       transition: opacity 700ms var(--ease-soft);
     }
     .gband--consumer.is-ready [data-gallery-canvas] { opacity: 1; }
     .rail__tick--placeholder { pointer-events: none; opacity: .55; }
-    .consumer-explorer__layout--stage {
-      grid-template-columns: minmax(0, 1fr);
-      max-width: 920px;
-      margin-inline: auto;
+    .consumer-stage-panel {
+      grid-area: panel;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: clamp(26px, 3vw, 44px);
+      border-left: 1px solid var(--hair);
+      overflow-y: auto;
     }
+    .consumer-stage-panel .consumer-preview__lore { max-width: 34ch; }
+    .consumer-trade { margin-top: 24px; }
 
     /* The watchlist — all twelve tokens in zodiac order, one glance. */
     .consumer-tokens {
@@ -3834,8 +3834,6 @@
       .consumer-preview__name { font-size: 44px; }
       .consumer-preview__lore,
       .consumer-preview__quote,
-      .consumer-preview__base,
-      .consumer-preview__links,
       .consumer-preview__actions { grid-column: 1 / -1; }
       .consumer-preview__lore { font-size: 17px; }
       .consumer-preview__actions { margin-top: 10px; }

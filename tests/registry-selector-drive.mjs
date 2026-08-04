@@ -741,8 +741,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       record: preview.querySelector('a.btn')?.getAttribute('href'),
       recordLabel: preview.querySelector('a.btn')?.textContent?.trim() ?? '',
       sculpture: preview.querySelector('.consumer-preview__sculpture')?.getAttribute('src'),
-      trade: preview.querySelector('.consumer-preview__trade')?.getAttribute('href'),
-      guide: preview.querySelector('.consumer-preview__guide')?.getAttribute('href'),
+      trade: preview.querySelector('a.btn[href$="#acquire"]')?.getAttribute('href'),
+      // Two things the record box deliberately no longer carries: the second
+      // chain, and a detour into the astrology guide.
+      base: preview.textContent?.includes('Also recorded on Base') ?? false,
+      guide: Boolean(preview.querySelector('a[href="/pisces/"]')),
       scrollY,
     }));
     check(
@@ -754,7 +757,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && /View the Pisces token/.test(piscesPreview.recordLabel)
         && piscesPreview.sculpture === '/assets/sculptures/512/pisces.webp'
         && piscesPreview.trade === '/registry/pisces/#acquire'
-        && piscesPreview.guide === '/pisces/'
+        && piscesPreview.base === false
+        && piscesPreview.guide === false
         && Math.abs(piscesPreview.scrollY - scrollBeforePick) <= 2,
       JSON.stringify(piscesPreview),
     );
@@ -870,7 +874,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       (await verifier.innerText()).includes('never connects a wallet, requests a signature, or starts a transaction'),
     );
     const compactConsumerTargets = await desktop.locator(
-      '.vrf__example, .consumer-preview__trade, .consumer-preview__guide, .consumer-closing__actions > a:not(.btn)',
+      '.vrf__example, .consumer-preview__actions a.btn, .consumer-closing__actions > a:not(.btn)',
     ).evaluateAll((targets) => targets.map((target) => ({
       label: target.textContent.trim(),
       height: target.getBoundingClientRect().height,
@@ -1006,6 +1010,39 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         'the rail exposes one pressed tick for the current sign',
         await stagePage.locator('.rail__tick[aria-pressed="true"]').count() === 1,
       );
+      // One rectangle: the rail picks along the top, the chosen sculpture
+      // stands below it, and the record sits beside them — not in a second
+      // card further down the page.
+      const shape = await stagePage.evaluate(() => {
+        const box = (sel) => {
+          const el = document.querySelector(sel);
+          return el ? el.getBoundingClientRect() : null;
+        };
+        const rail = box('.gband--consumer [data-gallery-rail]');
+        const canvas = box('.gband--consumer [data-gallery-canvas]');
+        const panel = box('.gband--consumer .consumer-stage-panel');
+        return {
+          railAboveCanvas: Boolean(rail && canvas && rail.bottom <= canvas.top + 1),
+          panelBesideCanvas: Boolean(panel && canvas && panel.left >= canvas.right - 1),
+          // The rail must not wear .gband__chrome: the scene reads that
+          // element's offsetTop as the floor of the band it may paint into.
+          chrome: document.querySelectorAll('.gband--consumer .gband__chrome').length,
+          previewInside: document.querySelectorAll('.gband--consumer [data-consumer-preview]').length,
+          previewTotal: document.querySelectorAll('[data-consumer-preview]').length,
+          flatArt: document.querySelectorAll('.consumer-preview__art').length,
+          figureHeight: canvas ? Math.round(canvas.height) : 0,
+        };
+      });
+      check(
+        'the landing consolidates into one rectangle: rail, sculpture, record',
+        shape.railAboveCanvas && shape.panelBesideCanvas
+          && shape.chrome === 0
+          && shape.previewInside === 1 && shape.previewTotal === 1
+          && shape.flatArt === 0
+          && shape.figureHeight >= 420,
+        JSON.stringify(shape),
+      );
+
       const geminiTick = stagePage.locator('.rail__tick').nth(2);
       await geminiTick.click();
       await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
@@ -1013,6 +1050,24 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         'walking the rail drives the focused token panel',
         await stagePage.locator('[data-consumer-preview="gemini"] a.btn').getAttribute('href')
           === '/registry/gemini/',
+      );
+
+      // Tapping a sculpture in the rectangle chooses it. There is nothing to
+      // draw out to — the record is already on the page beside the figure —
+      // so the card must stay shut however the canvas is used.
+      const canvasBox = await stagePage.locator('.gband--consumer [data-gallery-canvas]').boundingBox();
+      await stagePage.mouse.click(canvasBox.x + (canvasBox.width / 2), canvasBox.y + (canvasBox.height / 2));
+      await stagePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
+      check(
+        'the rectangle never draws a sculpture out over its own record',
+        await stagePage.locator('.gband.is-open').count() === 0
+          && await stagePage.locator('[data-gallery-card]:not([hidden])').count() === 0,
+      );
+
+      const stageText = await stagePage.locator('.consumer-explorer').innerText();
+      check(
+        'the rectangle drops the second chain and the guide detour',
+        !stageText.includes('Also recorded on Base') && !/astrology guide/i.test(stageText),
       );
     } else {
       check(
@@ -1028,6 +1083,111 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
     }
     await stagePage.close();
+
+    // ---- the trade panel, with its flag turned on ------------------------
+    //
+    // The committed shell is always flag-off, so the deployed state is
+    // simulated by rewriting the one meta the build stamps. Jupiter is
+    // stubbed: this drive proves the panel's wiring, not the venue's.
+    const tradeOrders = [];
+    const withTradeFlag = async (page) => {
+      await page.route('**/registry/', async (route) => {
+        if (route.request().resourceType() !== 'document') return route.continue();
+        const response = await route.fetch();
+        const body = (await response.text()).replace(
+          '<meta name="zodiacs-registry-trade-enabled" content="0" />',
+          '<meta name="zodiacs-registry-trade-enabled" content="1" />',
+        );
+        return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
+      });
+      await page.route('**/lite-api.jup.ag/**', async (route) => {
+        const url = new URL(route.request().url());
+        tradeOrders.push(Object.fromEntries(url.searchParams));
+        return route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            inputMint: url.searchParams.get('inputMint'),
+            outputMint: url.searchParams.get('outputMint'),
+            inAmount: url.searchParams.get('amount'),
+            outAmount: '347222000000',
+            priceImpactPct: '0.41',
+            feeBps: 10,
+            slippageBps: 50,
+            outUsdValue: 24.94,
+            requestId: 'drive-fixture',
+            transaction: null,
+          }),
+        });
+      });
+    };
+
+    for (const [label, width, stub] of [['rectangle', 1280, false], ['card', 1126, true]]) {
+      const tradePage = await newPage({ viewport: { width, height: 900 }, reducedMotion: 'no-preference' });
+      const tradeBundle = [];
+      tradePage.on('request', (request) => {
+        if (new URL(request.url()).pathname === '/assets/trade.js') tradeBundle.push(request.url());
+      });
+      await mockDexscreener(tradePage);
+      if (stub) await stubNoWebgl(tradePage);
+      await withTradeFlag(tradePage);
+      await tradePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await tradePage.locator('.consumer-explorer').scrollIntoViewIfNeeded();
+      await tradePage.locator('.tp').waitFor({ state: 'visible', timeout: 20_000 });
+      await tradePage.locator('.tp .out').waitFor({ state: 'visible', timeout: 20_000 });
+
+      const panel = await tradePage.evaluate(() => {
+        const tp = document.querySelector('.tp');
+        const chips = [...tp.querySelectorAll('.amts button')];
+        const methods = [...tp.querySelectorAll('.payseg button')];
+        return {
+          host: tp.closest('.consumer-stage-panel') ? 'rectangle'
+            : tp.closest('.consumer-preview') ? 'card' : 'loose',
+          amount: tp.querySelector('.pay__input')?.value,
+          chips: chips.map((b) => b.textContent),
+          pressed: chips.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.textContent),
+          receive: tp.querySelector('.out')?.textContent ?? '',
+          facts: [...tp.querySelectorAll('.fact')].map((f) => f.textContent),
+          methods: methods.map((b) => b.textContent),
+          method: methods.find((b) => b.getAttribute('aria-pressed') === 'true')?.textContent ?? '',
+          ramps: tp.querySelectorAll('.ramps li').length,
+          go: tp.querySelectorAll('.tp__go').length,
+        };
+      });
+      check(
+        `the ${label} opens the panel already showing what $25 buys`,
+        panel.host === label
+          && panel.amount === '25'
+          && panel.chips.join(' ') === '$25 $50 $100 $250'
+          && panel.pressed.join('') === '$25'
+          && /\d/.test(panel.receive)
+          && panel.facts.length === 2
+          && panel.facts.some((f) => /\$|¢/.test(f))
+          && panel.facts.some((f) => /%/.test(f)),
+        JSON.stringify(panel),
+      );
+      check(
+        `the ${label} leads with the card path and hides the wallet button behind it`,
+        /Card|Apple Pay/i.test(panel.method) && panel.ramps === 3 && panel.go === 0,
+        JSON.stringify({ method: panel.method, ramps: panel.ramps, go: panel.go }),
+      );
+
+      await tradePage.locator('.tp .payseg button').nth(1).click();
+      await tradePage.locator('.tp__go').waitFor({ state: 'visible', timeout: 10_000 });
+      check(
+        `the ${label} offers a wallet review once USDC is chosen`,
+        /review/i.test(await tradePage.locator('.tp__go').innerText())
+          && await tradePage.locator('.tp .ramps').count() === 0,
+      );
+      check(
+        `the ${label} fetches its bundle once and prices without an address`,
+        tradeBundle.length === 1
+          && tradeOrders.length > 0
+          && tradeOrders.every((q) => q.amount && q.inputMint && q.outputMint && !('taker' in q)),
+        JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length, first: tradeOrders[0] }),
+      );
+      await tradePage.close();
+    }
 
     for (const [legacyHash, destination] of [
       ['pulse', 'market-transparency'],

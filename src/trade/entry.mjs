@@ -22,27 +22,29 @@ export function registryTradeEnabled(env = {}) {
 }
 
 /** The comment the generator emits, carrying everything the stamper needs. */
-export function tradeSlotComment({ sign, name, mint }) {
-  return `<!-- registry-trade:slot ${JSON.stringify({ sign, name, mint })} -->`;
+export function tradeSlotComment({ sign, name, mint, hue }) {
+  return `<!-- registry-trade:slot ${JSON.stringify({ sign, name, mint, hue })} -->`;
 }
 
 /**
  * Flag-off renders nothing at all — not a hidden container, not a placeholder.
  * A visitor with the flag off gets the page exactly as it is committed.
  */
-export function renderTradeRegion({ sign, name, mint, enabled }) {
-  const slot = tradeSlotComment({ sign, name, mint });
+export function renderTradeRegion({ sign, name, mint, hue, enabled }) {
+  const slot = tradeSlotComment({ sign, name, mint, hue });
   if (!enabled) return `${START}\n      ${slot}\n      ${END}`;
   return [
     START,
     `      ${slot}`,
     '      <div class="acq__trade" data-trade-panel',
-    `        data-trade-sign="${sign}" data-trade-name="${name}" data-trade-mint="${mint}">`,
+    `        data-trade-sign="${sign}" data-trade-name="${name}" data-trade-mint="${mint}"`,
+    `        data-trade-hue="${hue ?? ''}">`,
     '        <noscript>',
     '          <p class="acq__trade-noscript">Trading here needs JavaScript. The links below open the',
     '          venue directly.</p>',
     '        </noscript>',
     '      </div>',
+    '      <script defer src="/assets/trade.js"></script>',
     END,
   ].join('\n');
 }
@@ -66,11 +68,24 @@ export function injectRegistryTrade(html, env = {}) {
   const slot = region.match(SLOT);
   if (!slot) throw new Error('registry-trade: region is missing its slot payload');
 
-  const { sign, name, mint } = JSON.parse(slot[1]);
-  const next = renderTradeRegion({ sign, name, mint, enabled });
+  const { sign, name, mint, hue } = JSON.parse(slot[1]);
+  const next = renderTradeRegion({ sign, name, mint, hue, enabled });
   const output = html.slice(0, start) + next + html.slice(end + END.length);
 
   const meta = new RegExp(`<meta name="${REGISTRY_TRADE_META}" content="[01]" />`);
   if (!meta.test(output)) throw new Error('registry-trade: page is missing its flag marker');
   return { output: output.replace(meta, metaFor(enabled)), enabled };
+}
+
+/**
+ * The Registry landing carries the panel too, but the shell holds no markup
+ * for it: the explorer is React, and the panel is mounted into the chosen
+ * sign's card at runtime. So the flag is the only thing to stamp here — which
+ * makes reversibility a property of the shape rather than a promise.
+ */
+export function injectRegistryTradeLanding(html, env = {}) {
+  const enabled = registryTradeEnabled(env);
+  const meta = new RegExp(`<meta name="${REGISTRY_TRADE_META}" content="[01]" />`);
+  if (!meta.test(html)) throw new Error('registry-trade: hub is missing its flag marker');
+  return { output: html.replace(meta, metaFor(enabled)), enabled };
 }
