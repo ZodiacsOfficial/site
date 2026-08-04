@@ -1043,7 +1043,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         JSON.stringify(shape),
       );
 
+      // Centre it first. The rail rides the top of the rectangle and the
+      // site's nav floats over the top of the page, so scrolling the tick
+      // just barely into view would slide it under the pill.
       const geminiTick = stagePage.locator('.rail__tick').nth(2);
+      await geminiTick.evaluate((el) => el.scrollIntoView({ block: 'center' }));
       await geminiTick.click();
       await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
       check(
@@ -1172,7 +1176,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         JSON.stringify({ method: panel.method, ramps: panel.ramps, go: panel.go }),
       );
 
-      await tradePage.locator('.tp .payseg button').nth(1).click();
+      // Park the control in the middle of the viewport rather than at its
+      // edge: the site's nav floats over the top of the page, and Playwright's
+      // own scroll-into-view would slide the button under it.
+      const usdc = tradePage.locator('.tp .payseg button').nth(1);
+      await usdc.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await usdc.click();
       await tradePage.locator('.tp__go').waitFor({ state: 'visible', timeout: 10_000 });
       check(
         `the ${label} offers a wallet review once USDC is chosen`,

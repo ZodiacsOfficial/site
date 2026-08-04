@@ -3337,7 +3337,9 @@
       margin-top: clamp(36px, 5vw, 56px);
       border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
       border-radius: 26px;
-      overflow: hidden;
+      /* clip, not hidden: hidden would make this a scroll container and the
+         sculpture below could never stick inside it. */
+      overflow: clip;
       background:
         radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
         rgba(15,18,26,.88);
@@ -3355,11 +3357,21 @@
       padding: 22px 20px 6px;
       border-bottom: 1px solid var(--hair);
     }
+    /* The sculpture keeps its own proportions rather than stretching to
+       whatever the column beside it happens to need: the camera fits the
+       figure to the box it is given, so a tall narrow box would push the
+       piece into the distance. It sticks instead, staying with the reader
+       for as long as the record beside it runs. */
     .gband--consumer .gband__mount {
       grid-area: art;
-      position: relative;
+      position: sticky;
+      /* Clear the base rule's inset:0 before setting one edge — a sticky box
+         with both top and bottom pinned obeys whichever it hits first, and a
+         stray bottom:0 would ride it up over the rail. */
       inset: auto;
-      min-height: clamp(440px, 56svh, 640px);
+      top: 84px;
+      align-self: start;
+      height: clamp(440px, 62svh, 640px);
     }
     /* The sign is named in full beside the sculpture, so the hover label the
        standalone band needs would only say it twice. */
@@ -3377,7 +3389,6 @@
       justify-content: center;
       padding: clamp(26px, 3vw, 44px);
       border-left: 1px solid var(--hair);
-      overflow-y: auto;
     }
     .consumer-stage-panel .consumer-preview__lore { max-width: 34ch; }
     .consumer-trade { margin-top: 24px; }
