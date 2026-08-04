@@ -84,9 +84,20 @@ function sliceElement(source, selectorPattern, tag) {
   return '';
 }
 
+function sliceMatchedElement(source, selectorPattern) {
+  const startMatch = source.match(selectorPattern);
+  const tag = startMatch?.[0].match(/^<([a-z][\w-]*)\b/i)?.[1];
+  return tag ? sliceElement(source, selectorPattern, tag) : '';
+}
+
 function tagParts(fragment, tag) {
   return [...fragment.matchAll(new RegExp(`<${tag}\\b([^>]*)>([\\s\\S]*?)<\\/${tag}>`, 'gi'))]
     .map((match) => ({ attrs: match[1], inner: match[2], html: match[0] }));
+}
+
+function voidTagParts(fragment, tag) {
+  return [...fragment.matchAll(new RegExp(`<${tag}\\b([^>]*)\\/?>`, 'gi'))]
+    .map((match) => ({ attrs: match[1], html: match[0] }));
 }
 
 function classedDetailsRemoved(source) {
@@ -211,9 +222,150 @@ describe('thesis hero background contract', () => {
   });
 });
 
+describe('thesis transmission and gallery contract', () => {
+  const fig1 = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-1["'][^>]*>/i, 'figure');
+  const eras = [...fig1.matchAll(
+    /<div\b([^>]*class=["'][^"']*\bera\b[^"']*["'][^>]*)>([\s\S]*?)<\/div>/gi,
+  )].map((match) => ({ attrs: match[1], inner: match[2], html: match[0] }));
+  const holding = sliceElement(
+    HTML,
+    /<section\b[^>]*\bid=["']what-holding-means["'][^>]*>/i,
+    'section',
+  );
+  const galleryTag = /<[a-z][^>]*\bdata-gallery-stage(?:=(?:"[^"]*"|'[^']*'|[^\s>]+))?[^>]*>/i;
+  const gallery = sliceMatchedElement(holding, galleryTag);
+
+  it('ends F1 with the canonical circle image and exact digital-asset copy', () => {
+    expect(eras).toHaveLength(7);
+    const finalEra = eras.at(-1);
+    const name = sliceElement(
+      finalEra?.inner ?? '',
+      /<span\b[^>]*class=["'][^"']*\bera__name\b[^"']*["'][^>]*>/i,
+      'span',
+    );
+    const time = sliceElement(
+      finalEra?.inner ?? '',
+      /<span\b[^>]*class=["'][^"']*\bera__time\b[^"']*["'][^>]*>/i,
+      'span',
+    );
+    const images = voidTagParts(finalEra?.inner ?? '', 'img');
+
+    expect(textOf(name)).toBe('Digital asset');
+    expect(textOf(time)).toBe('5 Jul 2024');
+    expect(images).toHaveLength(1);
+    expect(images[0].attrs).toMatch(/\bsrc=["']\/assets\/app-icons\/v3\/icon-192\.png["']/i);
+    expect(images[0].attrs).toMatch(/\balt=["']["']/i);
+    expect(finalEra?.inner).not.toMatch(/<svg\b/i);
+  });
+
+  it('places one gallery after the Section IV network evidence drawer', () => {
+    const allGalleryTags = [...HTML.matchAll(new RegExp(galleryTag.source, 'gi'))];
+    const sectionGalleryTags = [...holding.matchAll(new RegExp(galleryTag.source, 'gi'))];
+    const drawer = sliceElement(
+      holding,
+      /<details\b[^>]*class=["'][^"']*\bevidence-drawer\b[^"']*["'][^>]*>/i,
+      'details',
+    );
+    const drawerEnd = holding.indexOf(drawer) + drawer.length;
+    const galleryStart = holding.indexOf(gallery);
+
+    expect(holding).not.toBe('');
+    expect(drawer).not.toBe('');
+    expect(allGalleryTags).toHaveLength(1);
+    expect(sectionGalleryTags).toHaveLength(1);
+    expect(gallery).not.toBe('');
+    expect(galleryStart).toBeGreaterThanOrEqual(drawerEnd);
+  });
+
+  it('removes the gallery display labels while retaining an accessible figure and stage name', () => {
+    const galleryFigure = sliceElement(
+      holding,
+      /<figure\b[^>]*\bdata-thesis-gallery\b[^>]*>/i,
+      'figure',
+    );
+    const stageAttrs = gallery.match(/^<[a-z][^>]*>/i)?.[0] ?? '';
+    const caption = tagParts(galleryFigure, 'figcaption');
+
+    expect(galleryFigure).not.toBe('');
+    expect(caption).toHaveLength(1);
+    expect(caption[0].attrs).toMatch(/\bclass=["'][^"']*\bsr-only\b/i);
+    expect(galleryFigure).not.toMatch(/\bthesis-gallery__head\b/i);
+    expect(galleryFigure).not.toMatch(/\bgband__fallback-title\b/i);
+    expect(visibleTextOf(galleryFigure)).not.toMatch(/\bthe gallery\b|\bgold sculptures\b/i);
+    expect(stageAttrs).toMatch(/\baria-label=["'][^"']+["']/i);
+    expect(stageAttrs).not.toMatch(/\bthe gallery\b|\bgold sculptures\b/i);
+  });
+
+  it('keeps exactly twelve linked fallback records inside the gallery', () => {
+    const fallback = sliceMatchedElement(
+      gallery,
+      /<[a-z][^>]*\bdata-gallery-fallback(?:=(?:"[^"]*"|'[^']*'|[^\s>]+))?[^>]*>/i,
+    );
+    const links = tagParts(fallback, 'a')
+      .filter(({ attrs }) => /\bdata-gallery-fallback-record\b/i.test(attrs));
+    const images = voidTagParts(fallback, 'img');
+
+    expect(fallback).not.toBe('');
+    expect(links).toHaveLength(12);
+    expect(images).toHaveLength(12);
+    links.forEach(({ attrs, inner }, index) => {
+      const slug = SIGNS[index];
+      const image = voidTagParts(inner, 'img');
+      const ariaLabel = attrs.match(/\baria-label=["']([^"']*)["']/i)?.[1] ?? '';
+      const imageAlt = image[0]?.attrs.match(/\balt=["']([^"']*)["']/i)?.[1] ?? '';
+      const accessibleCopy = `${ariaLabel} ${imageAlt} ${textOf(inner)}`;
+
+      expect(attrs).toMatch(new RegExp(`\\bhref=["']/registry/${slug}/["']`, 'i'));
+      expect(image).toHaveLength(1);
+      expect(image[0].attrs).toMatch(new RegExp(
+        `\\bsrc=["']/assets/nuggets/thumb/${slug}\\.png["']`,
+        'i',
+      ));
+      expect(accessibleCopy).toMatch(new RegExp(slug, 'i'));
+    });
+  });
+
+  it('references the gallery bundle only from a viewport-lazy loader', () => {
+    const loaders = tagParts(HTML, 'script')
+      .filter(({ attrs, inner }) => /\/assets\/gallery\.js/.test(`${attrs} ${inner}`));
+
+    expect(loaders).toHaveLength(1);
+    expect(loaders[0].attrs).not.toMatch(/\bsrc=["']\/assets\/gallery\.js["']/i);
+    expect(loaders[0].inner).toContain('/assets/gallery.js');
+    expect(loaders[0].inner).toMatch(/\bIntersectionObserver\b/);
+    expect(HTML).not.toMatch(/<script\b[^>]*\bsrc=["']\/assets\/gallery\.js["'][^>]*>/i);
+  });
+});
+
 describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
   const fig3 = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-3["'][^>]*>/i, 'figure');
+  const convergence = sliceElement(
+    fig3,
+    /<div\b[^>]*class=["'][^"']*\bsource-convergence\b[^"']*["'][^>]*>/i,
+    'div',
+  );
   const table = sliceElement(fig3, /<table\b[^>]*class=["'][^"']*\bztbl\b[^"']*["'][^>]*>/i, 'table');
+
+  it('explicitly connects all three sources to the Zodiacs result', () => {
+    const links = [...convergence.matchAll(
+      /\bdata-convergence-link=["']([^"']+)["']/gi,
+    )].map((match) => match[1]);
+
+    expect(convergence).not.toBe('');
+    expect([...new Set(links)]).toEqual(['gold', 'bitcoin', 'solana']);
+    expect(links).toHaveLength(6);
+    expect(convergence).toMatch(/\bdata-convergence-connectors\b/i);
+    expect(convergence).toMatch(/\bdata-convergence-result\b/i);
+    expect(convergence).toMatch(/\brole=["']group["']/i);
+    expect(convergence).toMatch(
+      /aria-label=["']Gold, Bitcoin, and Solana combine to form Zodiacs["']/i,
+    );
+  });
+
+  it('uses a single bullion-bar mark for Gold in the diagram and table', () => {
+    expect([...fig3.matchAll(/\bdata-icon=["']gold-bar["']/gi)]).toHaveLength(2);
+    expect([...fig3.matchAll(/\bdata-gold-bar\b/gi)]).toHaveLength(2);
+  });
 
   it('is always visible rather than nested in a disclosure', () => {
     expect(fig3).not.toBe('');

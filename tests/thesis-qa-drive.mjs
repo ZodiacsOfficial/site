@@ -3,7 +3,7 @@
  * clock computes, the disclosure surfaces render their RESOLVED values (baked
  * statically for no-JavaScript readers, re-hydrated from JSON with scripts
  * on), no amber pending chip remains, the hydration script stays silent on
- * console, and every illustrated module fits 375/390/810/1280/1440 viewports.
+ * console, and every illustrated module fits 375/390/730/810/1280/1440 viewports.
  * It also verifies the always-visible binary comparison, no-JavaScript
  * visibility, and the reduced-motion final state.
  *
@@ -16,22 +16,30 @@ import { existsSync } from 'node:fs';
 import { setTimeout as wait } from 'node:timers/promises';
 
 const OUT = process.env.OUT_DIR ?? null;
+const PORT = Number.parseInt(process.env.THESIS_QA_PORT ?? '4399', 10);
+const BASE = `http://127.0.0.1:${PORT}`;
+const ZODIAC_SLUGS = [
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+];
+const ROMAN_LOTS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+const GALLERY_SELECTOR = '#what-holding-means [data-gallery-stage]';
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
   ?? (existsSync('/opt/pw-browsers/chromium')
     ? '/opt/pw-browsers/chromium'
     : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome');
 
-const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', '4399'], { stdio: 'ignore' });
+const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', String(PORT)], { stdio: 'ignore' });
 // Poll readiness instead of a fixed sleep; cold npx/config loads vary by host.
 {
   const deadline = Date.now() + 30_000;
   let up = false;
   while (!up && Date.now() < deadline) {
-    up = await fetch('http://127.0.0.1:4399/thesis/', { method: 'HEAD' })
+    up = await fetch(`${BASE}/thesis/`, { method: 'HEAD' })
       .then((r) => r.ok).catch(() => false);
     if (!up) await wait(250);
   }
-  if (!up) { preview.kill(); throw new Error('astro preview did not become ready on :4399'); }
+  if (!up) { preview.kill(); throw new Error(`astro preview did not become ready on :${PORT}`); }
 }
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
@@ -71,28 +79,49 @@ const isVisuallyExposed = async (locator) => {
   });
 };
 
+const waitForGalleryReady = async (page, timeout = 20_000) => {
+  const gallery = page.locator(GALLERY_SELECTOR);
+  if (await gallery.count() !== 1) return false;
+  await gallery.scrollIntoViewIfNeeded();
+  return page.locator(`${GALLERY_SELECTOR}.is-ready`)
+    .waitFor({ state: 'attached', timeout })
+    .then(() => true)
+    .catch(() => false);
+};
+
 const VISUAL_MODULES = [
   ['history transmission', '#fig-1 .transmission'],
   ['seasonal wheel', '#fig-2 .cadence'],
   ['history, ownership, and rails convergence', '#fig-3 .source-convergence'],
   ['comparison', '#fig-3 .comparison-panel'],
   ['consumer journey', '.journey'],
+  ['pastel zodiac gallery', GALLERY_SELECTOR],
   ['public scrapbook', '.scrapbook'],
 ];
 
 try {
   const browser = await chromium.launch({ executablePath: CHROMIUM });
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   // Script errors and same-origin load failures are page defects; external
   // fetch failures (the Pulse's live Wikimedia refresh) depend on the
   // network the drive runs on and are reported separately, not failed on.
   const errors = [];
   const external = [];
+  const galleryRequests = [];
   page.on('pageerror', (err) => errors.push(String(err)));
+  page.on('request', (req) => {
+    if (new URL(req.url()).pathname === '/assets/gallery.js') galleryRequests.push(req.url());
+  });
   page.on('requestfailed', (req) => {
     (req.url().startsWith('http://127.0.0.1') ? errors : external).push(req.url());
   });
-  await page.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
+  check('1440×900: no page-level horizontal overflow',
+    await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
+  const thesisGallery = page.locator(GALLERY_SELECTOR);
+  check('Section IV contains one gallery stage', (await thesisGallery.count()) === 1);
+  check('gallery bundle is not requested above the fold', galleryRequests.length === 0,
+    galleryRequests.join(' | '));
 
   // Anchors resolve.
   for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'worth-holding',
@@ -159,10 +188,6 @@ try {
     !heroVideoReturned.paused && heroVideoReturned.currentTime > heroVideoOffscreen.currentTime,
     JSON.stringify({ offscreen: heroVideoOffscreen, returned: heroVideoReturned }));
   check('hero has no static artwork canvas', (await page.locator('[data-hero-art]').count()) === 0);
-  const heroSignSlugs = [
-    'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-    'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-  ];
   const heroIcons = page.locator('.hero__twelve .hero__twelve-icon');
   const heroIconState = await heroIcons.evaluateAll((icons) => icons.map((icon) => ({
     complete: icon.complete,
@@ -178,12 +203,12 @@ try {
     heroIconState.length === 12
       && heroIconState.every((icon, index) => icon.complete
         && icon.naturalWidth === 48
-        && icon.src === `/assets/zodiac-icons/48/${heroSignSlugs[index]}.webp`
+        && icon.src === `/assets/zodiac-icons/48/${ZODIAC_SLUGS[index]}.webp`
         && icon.alt === ''),
     JSON.stringify(heroIconState));
   check('hero pastel icons keep their registry links and accessible names',
     heroLinks.length === 12 && heroLinks.every((link, index) => {
-      const slug = heroSignSlugs[index];
+      const slug = ZODIAC_SLUGS[index];
       return link.href === `/registry/${slug}/`
         && link.label === `${slug[0].toUpperCase()}${slug.slice(1)} — registry record`;
     }));
@@ -200,6 +225,78 @@ try {
   check('changelog carries Nº 09 and preserves Nº 08 and Nº 07',
     /Nº 09/.test(changelog) && /Nº 08 — Why Zodiacs Matter/.test(changelog)
       && /Nº 07 — July 2026\. The Zodiac Standard/.test(changelog));
+
+  // The last historical form is the branded digital asset, and the gallery
+  // upgrades its authored fallback only when the reader reaches Section IV.
+  const finalEraState = await page.locator('#fig-1 .era').last().evaluate((era) => {
+    const image = era.querySelector('.era__object img');
+    return {
+      imageCount: era.querySelectorAll('.era__object img').length,
+      imageAlt: image?.getAttribute('alt'),
+      imageSrc: image ? new URL(image.src).pathname : '',
+      label: era.querySelector('.era__name')?.textContent?.trim(),
+      date: era.querySelector('.era__time')?.textContent?.trim(),
+    };
+  });
+  check('F1 ends with the circle logo, Digital asset, and 5 Jul 2024',
+    finalEraState.imageCount === 1
+      && finalEraState.imageAlt === ''
+      && finalEraState.imageSrc === '/assets/app-icons/v3/icon-192.png'
+      && finalEraState.label === 'Digital asset'
+      && finalEraState.date === '5 Jul 2024',
+    JSON.stringify(finalEraState));
+
+  const galleryReady = await waitForGalleryReady(page);
+  check('gallery bundle loads once when Section IV approaches',
+    galleryReady && galleryRequests.length === 1,
+    `${galleryReady ? 'ready' : 'not ready'} · ${galleryRequests.length} request(s)`);
+  const railButtons = thesisGallery.locator('[data-gallery-rail]').getByRole('button');
+  const railState = await railButtons.evaluateAll((buttons) => buttons.map((button) => ({
+    current: button.getAttribute('aria-current'),
+    label: button.getAttribute('aria-label'),
+    tabIndex: button.tabIndex,
+    type: button.getAttribute('type'),
+  })));
+  check('gallery exposes twelve accessible rail controls',
+    railState.length === 12 && railState.every((control, index) => {
+      const slug = ZODIAC_SLUGS[index];
+      const name = `${slug[0].toUpperCase()}${slug.slice(1)}`;
+      return control.type === 'button'
+        && control.label === `${name}, Lot ${ROMAN_LOTS[index]} of twelve`;
+    }),
+    JSON.stringify(railState));
+  check('gallery rail has one roving current control',
+    railState.filter((control) => control.current === 'true' && control.tabIndex === 0).length === 1
+      && railState.filter((control) => control.current !== 'true' && control.tabIndex === -1).length === 11,
+    JSON.stringify(railState));
+
+  const galleryOpener = thesisGallery.locator('[data-gallery-open]');
+  await galleryOpener.focus();
+  await page.keyboard.press('Enter');
+  await page.locator(`${GALLERY_SELECTOR}.is-open [data-gallery-card]:not([hidden])`)
+    .waitFor({ state: 'attached', timeout: 5_000 }).catch(() => {});
+  const galleryOpenState = await thesisGallery.evaluate((gallery) => ({
+    cardHidden: gallery.querySelector('[data-gallery-card]')?.hidden,
+    closerFocused: document.activeElement === gallery.querySelector('[data-gallery-close]'),
+    open: gallery.classList.contains('is-open'),
+  }));
+  check('gallery opens from its keyboard control and focuses the close button',
+    galleryOpenState.open && galleryOpenState.cardHidden === false && galleryOpenState.closerFocused,
+    JSON.stringify(galleryOpenState));
+  await page.keyboard.press('Escape');
+  await page.waitForFunction((selector) => {
+    const gallery = document.querySelector(selector);
+    return gallery && !gallery.classList.contains('is-open')
+      && gallery.querySelector('[data-gallery-card]')?.hidden;
+  }, GALLERY_SELECTOR, { timeout: 5_000 }).catch(() => {});
+  const galleryClosedState = await thesisGallery.evaluate((gallery) => ({
+    cardHidden: gallery.querySelector('[data-gallery-card]')?.hidden,
+    currentFocused: document.activeElement === gallery.querySelector('[data-gallery-rail] [aria-current="true"]'),
+    open: gallery.classList.contains('is-open'),
+  }));
+  check('Escape closes the gallery card and returns focus to its current sign',
+    !galleryClosedState.open && galleryClosedState.cardHidden && galleryClosedState.currentFocused,
+    JSON.stringify(galleryClosedState));
 
   // Resolved disclosures — no amber chip remains after hydration settles.
   await wait(600);
@@ -267,6 +364,19 @@ try {
   check('twelve-sign seasonal wheel renders', (await page.locator('.zodiac-wheel__sign').count()) === 12);
   check('Gold, Bitcoin, and Solana convergence renders',
     (await page.locator('#fig-3 .source-convergence .source-card').count()) === 3);
+  const convergenceLinks = await page.locator('#fig-3 [data-convergence-link]').evaluateAll((paths) => paths.map((path) => ({
+    source: path.getAttribute('data-convergence-link'),
+    length: path.getTotalLength(),
+  })));
+  check('three color-matched paths visibly converge into Zodiacs',
+    convergenceLinks.length === 6
+      && [...new Set(convergenceLinks.map(({ source }) => source))].join(',') === 'gold,bitcoin,solana'
+      && convergenceLinks.every(({ length }) => length > 0)
+      && (await page.locator('#fig-3 [data-convergence-result]').count()) === 1);
+  check('Gold uses the bullion-bar mark in the diagram and table',
+    (await page.locator('#fig-3 [data-icon="gold-bar"] [data-gold-bar]').count()) === 2);
+  check('gallery display labels are removed',
+    (await page.locator('.thesis-gallery__head, .gband__fallback-title').count()) === 0);
   check('comparison headers render Gold, Bitcoin, and the complete zodiac wheel',
     (await comparison.locator('.ztbl-brand--gold svg').count()) === 1
       && (await comparison.locator('.ztbl-brand--bitcoin').count()) === 1
@@ -313,6 +423,7 @@ try {
   await shot(page, '#fig-2', 'thesis-f2-desktop.png');
   await shot(page, '#fig-3', 'thesis-f3-desktop.png');
   await shot(page, '#what-holding-means', 'thesis-journey-desktop.png');
+  await shot(page, GALLERY_SELECTOR, 'thesis-gallery-desktop.png');
   await shot(page, '#the-public-record', 'thesis-history-desktop.png');
   await page.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(page, '#the-candidacy', 'thesis-v-desktop.png');
@@ -327,7 +438,7 @@ try {
 
   // 1280px shots for the release evidence set.
   const mid = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
-  await mid.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await mid.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   await wait(600);
   await mid.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(mid, '#the-instrument', 'thesis-x-1280.png');
@@ -339,7 +450,7 @@ try {
   const reviewErrors = [];
   review.on('pageerror', (err) => reviewErrors.push(String(err)));
   review.on('requestfailed', (req) => { if (req.url().startsWith('http://127.0.0.1')) reviewErrors.push(req.url()); });
-  await review.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await review.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   await wait(600);
   const reviewOverflow = await review.evaluate(() => ({
     doc: document.documentElement.scrollWidth,
@@ -364,6 +475,7 @@ try {
   await shot(review, '#fig-2', 'thesis-f2-810.png');
   await shot(review, '#fig-3', 'thesis-f3-810.png');
   await shot(review, '#what-holding-means', 'thesis-journey-810.png');
+  await shot(review, GALLERY_SELECTOR, 'thesis-gallery-810.png');
   await shot(review, '#the-public-record', 'thesis-history-810.png');
   await review.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(review, '#the-candidacy', 'thesis-v-810.png');
@@ -373,6 +485,80 @@ try {
     reviewErrors.slice(0, 2).join(' | '));
   await review.close();
 
+  // Exact browser-comment viewport — F1 remains a single chronology and the
+  // newly embedded gallery contains any horizontal movement inside its rail.
+  const annotated = await browser.newPage({ viewport: { width: 730, height: 1054 } });
+  const annotatedErrors = [];
+  annotated.on('pageerror', (err) => annotatedErrors.push(String(err)));
+  annotated.on('requestfailed', (req) => {
+    if (req.url().startsWith('http://127.0.0.1')) annotatedErrors.push(req.url());
+  });
+  await annotated.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
+  const annotatedGalleryReady = await waitForGalleryReady(annotated);
+  await wait(350);
+  const annotatedLayout = await annotated.evaluate((selector) => {
+    const gallery = document.querySelector(selector);
+    const rail = gallery?.querySelector('[data-gallery-rail]');
+    const nextSection = document.querySelector('#the-public-record');
+    const galleryRect = gallery?.getBoundingClientRect();
+    const nextRect = nextSection?.getBoundingClientRect();
+    return {
+      documentWidth: document.documentElement.scrollWidth,
+      galleryBottom: galleryRect?.bottom ?? 0,
+      galleryClientWidth: gallery?.clientWidth ?? 0,
+      galleryLeft: galleryRect?.left ?? 0,
+      galleryRight: galleryRect?.right ?? 0,
+      galleryScrollWidth: gallery?.scrollWidth ?? 0,
+      nextSectionTop: nextRect?.top ?? 0,
+      railClientWidth: rail?.clientWidth ?? 0,
+      railScrollWidth: rail?.scrollWidth ?? 0,
+      viewportWidth: window.innerWidth,
+    };
+  }, GALLERY_SELECTOR);
+  check('730px: no page-level or gallery-stage horizontal overflow',
+    annotatedGalleryReady
+      && annotatedLayout.documentWidth <= annotatedLayout.viewportWidth + 1
+      && annotatedLayout.galleryLeft >= -1
+      && annotatedLayout.galleryRight <= annotatedLayout.viewportWidth + 1
+      && annotatedLayout.galleryScrollWidth <= annotatedLayout.galleryClientWidth + 1,
+    JSON.stringify(annotatedLayout));
+  check('730px: gallery precedes the next movement without overlap',
+    annotatedLayout.galleryBottom <= annotatedLayout.nextSectionTop + 1,
+    JSON.stringify(annotatedLayout));
+  check('730px: gallery rail owns any horizontal scrolling',
+    annotatedLayout.railClientWidth > 0
+      && annotatedLayout.railScrollWidth >= annotatedLayout.railClientWidth,
+    `${annotatedLayout.railScrollWidth} vs ${annotatedLayout.railClientWidth}`);
+
+  const annotatedTransmission = annotated.locator('#fig-1 .transmission');
+  await annotatedTransmission.scrollIntoViewIfNeeded();
+  await wait(300);
+  const annotatedF1 = await annotatedTransmission.evaluate((transmission) => {
+    const eras = [...transmission.querySelectorAll('.era')];
+    const image = eras.at(-1)?.querySelector('.era__object img');
+    const tops = eras.map((era) => era.offsetTop);
+    return {
+      complete: image?.complete ?? false,
+      eras: eras.length,
+      naturalWidth: image?.naturalWidth ?? 0,
+      oneRow: tops.length > 0 && Math.max(...tops) - Math.min(...tops) <= 2,
+      clientWidth: transmission.clientWidth,
+      scrollWidth: transmission.scrollWidth,
+    };
+  });
+  check('730px: F1 keeps seven eras on one row with the loaded circle logo',
+    annotatedF1.eras === 7
+      && annotatedF1.oneRow
+      && annotatedF1.complete
+      && annotatedF1.naturalWidth === 192
+      && annotatedF1.scrollWidth <= annotatedF1.clientWidth + 1,
+    JSON.stringify(annotatedF1));
+  await shot(annotated, '#fig-1', 'thesis-f1-730.png');
+  await shot(annotated, GALLERY_SELECTOR, 'thesis-gallery-730.png');
+  check('no page errors or same-origin failures (730px)', annotatedErrors.length === 0,
+    annotatedErrors.slice(0, 2).join(' | '));
+  await annotated.close();
+
   // Exact annotated mobile/tablet viewport — the almanac modules should feel
   // compact at 623×1054 without giving up their chronology or structure.
   const compact = await browser.newPage({ viewport: { width: 623, height: 1054 } });
@@ -381,7 +567,7 @@ try {
   compact.on('requestfailed', (req) => {
     if (req.url().startsWith('http://127.0.0.1')) compactErrors.push(req.url());
   });
-  await compact.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await compact.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   await wait(600);
   const compactPage = await compact.evaluate(() => ({
     documentWidth: document.documentElement.scrollWidth,
@@ -451,6 +637,7 @@ try {
   await shot(compact, '#fig-1', 'thesis-f1-623.png');
   await shot(compact, '#fig-3', 'thesis-f3-623.png');
   await shot(compact, '#what-holding-means', 'thesis-journey-623.png');
+  await shot(compact, GALLERY_SELECTOR, 'thesis-gallery-623.png');
   check('no page errors or same-origin failures (623px)', compactErrors.length === 0,
     compactErrors.slice(0, 2).join(' | '));
   await compact.close();
@@ -459,7 +646,7 @@ try {
   const nojsContext = await browser.newContext({ javaScriptEnabled: false, reducedMotion: 'reduce' });
   const nojs = await nojsContext.newPage();
   await nojs.setViewportSize({ width: 1280, height: 1000 });
-  await nojs.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'domcontentloaded' });
+  await nojs.goto(`${BASE}/thesis/`, { waitUntil: 'domcontentloaded' });
   check('no-JS: zero pending chips', (await nojs.locator('.pending-disclosure').count()) === 0);
   check('no-JS: instrument values baked',
     (await nojs.locator('#the-instrument .disc-val').count()) >= 104);
@@ -474,16 +661,37 @@ try {
   check('no-JS + reduced motion: ambient hero video stays paused',
     !nojsHeroVideo.autoplay && nojsHeroVideo.paused,
     JSON.stringify(nojsHeroVideo));
+  const nojsFallback = nojs.locator(`${GALLERY_SELECTOR} [data-gallery-fallback]`);
+  const nojsFallbackState = await nojsFallback.locator('[data-gallery-fallback-record]')
+    .evaluateAll((links) => links.map((link) => {
+      const image = link.querySelector('img');
+      return {
+        alt: image?.getAttribute('alt') ?? '',
+        href: link.getAttribute('href') ?? '',
+        src: image?.getAttribute('src') ?? '',
+      };
+    }));
+  check('no-JS: gallery exposes all twelve linked sculpture records',
+    nojsFallbackState.length === 12 && nojsFallbackState.every((record, index) => {
+      const slug = ZODIAC_SLUGS[index];
+      const name = `${slug[0].toUpperCase()}${slug.slice(1)}`;
+      return record.href === `/registry/${slug}/`
+        && record.src === `/assets/nuggets/thumb/${slug}.png`
+        && record.alt === `${name} gold sculpture`;
+    }),
+    JSON.stringify(nojsFallbackState));
+  check('no-JS: static gallery fallback is visibly exposed', await isVisuallyExposed(nojsFallback));
   for (const [name, selector] of VISUAL_MODULES) {
     check(`no-JS: ${name} is visually exposed`, await isVisuallyExposed(nojs.locator(selector).first()));
   }
+  await shot(nojs, GALLERY_SELECTOR, 'thesis-gallery-nojs.png');
   await nojsContext.close();
 
   // Reduced motion shows final states without transitions or transforms.
   const reducedContext = await browser.newContext({ reducedMotion: 'reduce' });
   const reduced = await reducedContext.newPage();
   await reduced.setViewportSize({ width: 1280, height: 1000 });
-  await reduced.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await reduced.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   await wait(600);
   const reducedHeroVideo = await reduced.locator('.hero video.hero__media').evaluate((video) => ({
     autoplay: video.hasAttribute('autoplay'),
@@ -492,6 +700,29 @@ try {
   check('reduced motion: ambient hero video is paused',
     !reducedHeroVideo.autoplay && reducedHeroVideo.paused,
     JSON.stringify(reducedHeroVideo));
+  const reducedGalleryReady = await waitForGalleryReady(reduced);
+  // The fallback's short cross-fade is allowed even under reduced motion;
+  // sample after it has settled so this detects continuing movement.
+  await wait(400);
+  const reducedGalleryState = await reduced.locator(GALLERY_SELECTOR).evaluate((gallery) => ({
+    activeAnimations: gallery.getAnimations({ subtree: true })
+      .filter((animation) => animation.playState === 'running').length,
+    bandTransition: getComputedStyle(gallery).transitionDuration,
+    mediaMatches: matchMedia('(prefers-reduced-motion: reduce)').matches,
+    pictureTransforms: [...gallery.querySelectorAll('[data-gallery-rail] picture')]
+      .map((picture) => getComputedStyle(picture).transform),
+    ready: gallery.classList.contains('is-ready'),
+  }));
+  check('reduced motion: gallery settles without scaling or active animation',
+    reducedGalleryReady
+      && reducedGalleryState.ready
+      && reducedGalleryState.mediaMatches
+      && reducedGalleryState.activeAnimations === 0
+      && reducedGalleryState.bandTransition.split(',')
+        .every((duration) => Number.parseFloat(duration) === 0)
+      && reducedGalleryState.pictureTransforms.length === 12
+      && reducedGalleryState.pictureTransforms.every((transform) => transform === 'none'),
+    JSON.stringify(reducedGalleryState));
   const reducedStates = await reduced.locator('.reveal, [data-visual-reveal], [data-almanac-reveal], [data-visual-reveal] > *, [data-almanac-reveal] > *').evaluateAll((nodes) => nodes.map((node) => {
     const style = getComputedStyle(node);
     return {
@@ -515,7 +746,7 @@ try {
   // A preference change after load must stop the ambient video immediately.
   const changingMotionContext = await browser.newContext({ reducedMotion: 'no-preference' });
   const changingMotion = await changingMotionContext.newPage();
-  await changingMotion.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await changingMotion.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   const changingHeroVideo = changingMotion.locator('.hero video.hero__media');
   await wait(350);
   const beforeMotionChange = await changingHeroVideo.evaluate((video) => ({ paused: video.paused, currentTime: video.currentTime }));
@@ -533,7 +764,7 @@ try {
     const mobErrors = [];
     mob.on('pageerror', (err) => mobErrors.push(String(err)));
     mob.on('requestfailed', (req) => { if (req.url().startsWith('http://127.0.0.1')) mobErrors.push(req.url()); });
-    await mob.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+    await mob.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
     await wait(600);
     const heroRibbon = await mob.locator('.hero__twelve').evaluate((row) => {
       const links = [...row.querySelectorAll('a')];
@@ -586,6 +817,7 @@ try {
       await shot(mob, '#fig-2', 'thesis-f2-mobile.png');
       await shot(mob, '#fig-3', 'thesis-f3-mobile.png');
       await shot(mob, '#what-holding-means', 'thesis-journey-mobile.png');
+      await shot(mob, GALLERY_SELECTOR, 'thesis-gallery-mobile.png');
       await shot(mob, '#the-public-record', 'thesis-history-mobile.png');
       await mob.locator('#the-candidacy').scrollIntoViewIfNeeded();
       await shot(mob, '#the-candidacy', 'thesis-v-mobile.png');

@@ -1043,6 +1043,324 @@
       box-shadow: 0 0 0 7px #0a0c11;
     }
     #fig-1 .era__object svg { width: 30px; height: 30px; }
+    #fig-1 .era__object--brand {
+      overflow: hidden;
+      background: #060709;
+    }
+    #fig-1 .era__object--brand img {
+      display: block;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      border-radius: inherit;
+    }
+
+    /* The Registry gallery, recast as an art-first essay plate. The stage
+       keeps the Registry's data-gallery contract while the static twelve
+       remain present until WebGL has produced a complete, usable scene. */
+    .thesis-gallery { margin: 32px 0 0; }
+    .thesis-gallery .gband {
+      --gallery-ease: cubic-bezier(.32,.72,0,1);
+      position: relative; isolation: isolate; overflow: clip;
+      width: 100%; height: clamp(420px, 62svh, 580px);
+      border: 1px solid var(--hair-2); border-radius: 22px;
+      background:
+        radial-gradient(120% 90% at 50% 32%, rgba(30,37,53,.5), transparent 70%),
+        var(--bg);
+      box-shadow: inset 0 1px 0 rgba(238,241,247,.04);
+      transition: height 480ms var(--gallery-ease);
+    }
+    .thesis-gallery .gband.is-open { height: min(92svh, 760px); }
+    .thesis-gallery .gband__mount {
+      position: absolute; inset: 0; z-index: 1; touch-action: pan-y;
+    }
+    .thesis-gallery .stage__canvas {
+      display: block; width: 100%; height: 100%; cursor: grab;
+    }
+    .thesis-gallery .stage__canvas:active { cursor: grabbing; }
+    .thesis-gallery .gband__chrome {
+      position: absolute; inset: auto 0 0; z-index: 2;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      padding: 42px 20px 16px; pointer-events: none;
+    }
+    .thesis-gallery .gband__chrome > * { pointer-events: auto; }
+    .thesis-gallery .gband__chrome::before {
+      content: ''; position: absolute; inset: -60px 0 0; z-index: -1; pointer-events: none;
+      background: linear-gradient(to bottom, rgba(6,7,9,0), rgba(6,7,9,.7) 55%, rgba(6,7,9,.92));
+    }
+    .thesis-gallery .rail {
+      --tick: 32px;
+      display: flex; align-items: flex-end; gap: 5px; padding: 6px 9px;
+      max-width: 100%; overflow-x: auto; overflow-y: visible;
+      border: 1px solid var(--hair); border-radius: 999px;
+      background: rgba(10,12,17,.6);
+      backdrop-filter: saturate(140%) blur(16px);
+      -webkit-backdrop-filter: saturate(140%) blur(16px);
+      overscroll-behavior-inline: contain; scroll-padding-inline: 9px;
+      scroll-snap-type: x proximity; scrollbar-width: none;
+      -webkit-overflow-scrolling: touch;
+    }
+    .thesis-gallery .rail::-webkit-scrollbar { display: none; }
+    .thesis-gallery .rail__tick {
+      --mag: 1;
+      flex: 0 0 auto; width: var(--tick); height: var(--tick);
+      display: grid; place-items: end center; padding: 0;
+      border: 0; border-radius: 50%; background: none; cursor: pointer;
+      color: var(--ink-mute); font-size: 15px; line-height: 1;
+      scroll-snap-align: center;
+      transition: color 180ms var(--gallery-ease);
+    }
+    .thesis-gallery .rail__tick picture {
+      display: block; line-height: 0;
+      transform: scale(var(--mag)); transform-origin: bottom center;
+      transition: transform 160ms var(--gallery-ease);
+    }
+    .thesis-gallery .rail__tick img {
+      display: block; width: 26px; height: 26px; border-radius: 50%;
+    }
+    .thesis-gallery .rail__tick:focus-visible {
+      outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px;
+    }
+    .thesis-gallery .gband__open {
+      min-height: 40px; display: inline-flex; align-items: center; gap: 7px;
+      padding: 9px 20px; border: 1px solid var(--hair-2); border-radius: 999px;
+      background: rgba(198,204,218,.09); color: var(--ink); cursor: pointer;
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 13px; font-weight: 500; line-height: 1; letter-spacing: .01em;
+      transition: background 220ms var(--ease), border-color 220ms var(--ease);
+    }
+    .thesis-gallery .gband__open:hover {
+      background: rgba(198,204,218,.15); border-color: var(--hair-3);
+    }
+    .thesis-gallery .gband__open:focus-visible {
+      outline: 2px solid var(--ink-2); outline-offset: 2px;
+    }
+    .mov .thesis-gallery .gband__hint {
+      margin: 0; max-width: min(68ch, calc(100vw - 48px));
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 12.5px; font-weight: 450; line-height: 1.45;
+      letter-spacing: .01em; color: var(--ink-dim); text-align: center;
+      text-wrap: balance;
+    }
+    .mov .thesis-gallery .gband__name {
+      position: absolute; bottom: 118px; z-index: 2; margin: 0;
+      max-width: none; transform: translateX(-50%); pointer-events: none;
+      font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.2;
+      color: var(--ink-2); opacity: 0; white-space: nowrap;
+      text-shadow: 0 1px 8px rgba(6,7,9,.9);
+      transition: opacity 260ms var(--ease);
+    }
+    .thesis-gallery .gband__name.is-visible { opacity: 1; }
+    .thesis-gallery .gband__name.is-rail { bottom: 150px; font-size: 13.5px; }
+    .thesis-gallery .gband.is-open .gband__name { opacity: 0; }
+    .thesis-gallery .gband__mount,
+    .thesis-gallery .gband__chrome {
+      opacity: 0; transition: opacity 700ms var(--ease);
+    }
+    .thesis-gallery .gband__chrome { visibility: hidden; }
+    .thesis-gallery .gband.is-ready .gband__mount,
+    .thesis-gallery .gband.is-ready .gband__chrome { opacity: 1; }
+    .thesis-gallery .gband.is-ready .gband__chrome { visibility: visible; }
+
+    .thesis-gallery .gband__fallback {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 26px clamp(18px, 4vw, 42px);
+      background:
+        radial-gradient(circle at 50% 38%, rgba(198,204,218,.1), transparent 46%),
+        linear-gradient(180deg, rgba(10,12,17,.18), rgba(6,7,9,.72));
+      opacity: 1; visibility: visible;
+      transition: opacity 260ms linear, visibility 0s linear;
+    }
+    .thesis-gallery .gband.is-ready .gband__fallback {
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transition: opacity 260ms linear, visibility 0s linear 260ms;
+    }
+    .thesis-gallery .gband__fallback-grid {
+      display: grid; grid-template-columns: repeat(6, minmax(0,1fr));
+      gap: clamp(10px, 2vw, 18px); width: min(100%, 760px); margin: 0 auto;
+    }
+    .thesis-gallery .gband__fallback-item {
+      min-width: 0; display: grid; justify-items: center; gap: 5px;
+      color: var(--ink-dim); text-decoration: none;
+      font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      font-size: 10px; line-height: 1.2;
+      transition: color 180ms var(--ease), transform 180ms var(--ease);
+    }
+    .thesis-gallery .gband__fallback-item img {
+      display: block; width: clamp(52px, 8vw, 78px); height: clamp(52px, 8vw, 78px);
+      object-fit: contain; filter: drop-shadow(0 10px 15px rgba(0,0,0,.45));
+    }
+    .thesis-gallery .gband__fallback-item:hover { color: var(--ink); transform: translateY(-2px); }
+    .thesis-gallery .gband__fallback-item:focus-visible {
+      outline: 2px solid var(--ink-2); outline-offset: 4px; border-radius: 8px;
+    }
+
+    .thesis-gallery .gcard {
+      position: absolute; z-index: 4; overflow-y: auto; overscroll-behavior: contain;
+      background: rgba(10,12,17,.88); border: 1px solid var(--hair-2);
+      backdrop-filter: saturate(150%) blur(22px);
+      -webkit-backdrop-filter: saturate(150%) blur(22px);
+      box-shadow: 0 30px 80px -30px rgba(0,0,0,.9);
+      opacity: 0; color: var(--ink);
+      font-family: var(--serif); font-size: 17px; line-height: 1.6;
+      transition: opacity 420ms var(--ease), transform 420ms var(--ease);
+      -webkit-mask-image: linear-gradient(to bottom,#000 calc(100% - 42px),rgba(0,0,0,.08));
+      mask-image: linear-gradient(to bottom,#000 calc(100% - 42px),rgba(0,0,0,.08));
+    }
+    .thesis-gallery .gcard[hidden] { display: none; }
+    .thesis-gallery .gcard.is-open { opacity: 1; transform: none; }
+    .thesis-gallery .card__close {
+      position: sticky; top: 0; z-index: 2; float: right;
+      width: 32px; height: 32px; margin-left: 14px; padding: 0;
+      display: grid; place-items: center; border-radius: 50%; cursor: pointer;
+      border: 1px solid var(--hair); background: rgba(13,16,23,.88);
+      color: var(--ink-2); font-size: 16px; line-height: 1;
+      transition: background 200ms var(--ease), color 200ms var(--ease);
+    }
+    .thesis-gallery .card__close:hover { background: rgba(198,204,218,.13); color: var(--ink); }
+    .thesis-gallery .card__close:focus-visible {
+      outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px;
+    }
+    .mov .thesis-gallery .card__lot {
+      min-height: 32px; display: flex; align-items: center; margin: 0 0 8px;
+      max-width: none; font-family: var(--mono); font-size: 10px; line-height: 1.4;
+      letter-spacing: .18em; text-transform: uppercase; color: var(--sign, var(--ink-2));
+    }
+    .thesis-gallery .card__name {
+      margin: 0; font-family: var(--serif); font-weight: 400;
+      font-size: clamp(30px,4vw,40px); line-height: 1.05;
+      letter-spacing: -.01em; text-transform: none;
+    }
+    .mov .thesis-gallery .card__figure {
+      margin: 8px 0 0; max-width: none; font-style: italic;
+      font-size: 16px; line-height: 1.5; color: var(--ink-2);
+    }
+    .thesis-gallery .card__market { display: none !important; }
+    .thesis-gallery .card__facts {
+      margin: 16px 0 0; padding: 15px 0 0; border-top: 1px solid var(--hair);
+      display: grid; grid-template-columns: auto 1fr; gap: 8px 18px;
+    }
+    .thesis-gallery .card__facts dt {
+      align-self: center; font-family: var(--mono); font-size: 9.5px;
+      letter-spacing: .14em; text-transform: uppercase; color: var(--ink-dim);
+    }
+    .thesis-gallery .card__facts dd {
+      margin: 0; font-size: 15.5px; color: var(--ink-2); text-align: right;
+    }
+    .thesis-gallery .card__records {
+      margin: 16px 0 0; padding: 15px 0 0; border-top: 1px solid var(--hair);
+      display: grid; gap: 10px;
+    }
+    .thesis-gallery .rec { display: grid; gap: 6px; }
+    .thesis-gallery .rec__head { display: flex; align-items: baseline; gap: 8px; }
+    .thesis-gallery .rec__chain { font-size: 14px; color: var(--ink); }
+    .thesis-gallery .rec__role {
+      font-family: var(--mono); font-size: 9px; letter-spacing: .1em;
+      text-transform: uppercase; color: var(--ink-dim);
+    }
+    .thesis-gallery .rec__addr {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      width: 100%; padding: 9px 12px; cursor: pointer; text-align: left;
+      border: 1px solid var(--hair); border-radius: 10px;
+      background: rgba(198,204,218,.04); color: var(--ink-2);
+      font-family: var(--mono); font-size: 12px;
+      transition: background 200ms var(--ease), border-color 200ms var(--ease);
+    }
+    .thesis-gallery .rec__addr:hover { background: rgba(198,204,218,.09); border-color: var(--hair-2); }
+    .thesis-gallery .rec__addr:focus-visible {
+      outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px;
+    }
+    .thesis-gallery .rec__value { overflow: hidden; text-overflow: ellipsis; }
+    .thesis-gallery .rec__copy {
+      flex: 0 0 auto; font-size: 9.5px; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--ink-dim);
+    }
+    .mov .thesis-gallery .rec__note {
+      margin: 0; max-width: none; font-family: var(--mono);
+      font-size: 11.5px; line-height: 1.5; color: var(--ink-dim);
+    }
+    .thesis-gallery .rec__token { display: flex; align-items: center; gap: 12px; }
+    .thesis-gallery .rec__disc {
+      width: 40px; height: 40px; border-radius: 50%; flex: 0 0 auto; display: block;
+    }
+    .thesis-gallery .rec__token-note {
+      font-family: var(--serif); font-style: italic; font-size: 13.5px; color: var(--ink-2);
+    }
+    .thesis-gallery .card__entry {
+      display: inline-flex; align-items: center; gap: 8px; margin-top: 20px;
+      padding-bottom: 3px; color: var(--ink); text-decoration: none;
+      border-bottom: 1px solid var(--hair-2); font-size: 15px;
+      transition: border-color 220ms var(--ease);
+    }
+    .thesis-gallery .card__entry:hover { border-color: var(--sign, var(--ink-2)); }
+    .thesis-gallery .card__entry:focus-visible {
+      outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 3px;
+    }
+
+    @media (min-width: 1200px) {
+      .thesis-gallery .gband.is-open .gband__chrome {
+        padding-right: calc(clamp(392px,26vw,460px) + 68px);
+      }
+      .thesis-gallery .gcard {
+        top: 50%; right: 34px; width: clamp(392px,26vw,460px);
+        max-height: min(84%,660px); padding: 26px 26px 34px;
+        border-radius: 20px; transform: translate(18px,-50%);
+      }
+      .thesis-gallery .gcard.is-open { transform: translate(0,-50%); }
+    }
+    @media (max-width: 1199.5px) {
+      .thesis-gallery .gband.is-open .gband__chrome {
+        opacity: 0; pointer-events: none; visibility: hidden;
+        transition: opacity 420ms var(--ease), visibility 0s 420ms;
+      }
+      .thesis-gallery .gcard {
+        left: 12px; right: 12px; bottom: 12px; max-height: 56%;
+        padding: 22px 20px 30px; border-radius: 20px; transform: translateY(18px);
+      }
+    }
+    @media (max-width: 640px) {
+      .thesis-gallery { margin-top: 26px; }
+      .thesis-gallery .gband { height: clamp(420px,60svh,520px); border-radius: 18px; }
+      .thesis-gallery .gband__chrome { padding: 30px 16px 12px; }
+      .mov .thesis-gallery .gband__hint {
+        max-width: min(48ch,calc(100vw - 48px)); font-size: 12px;
+      }
+      .thesis-gallery .gband__fallback-grid { grid-template-columns: repeat(4,minmax(0,1fr)); }
+    }
+    @media (max-height: 620px) { .thesis-gallery .gband__hint { display: none; } }
+    @media (pointer: coarse) {
+      .thesis-gallery .rail {
+        --tick: 44px; gap: 2px; max-width: calc(100% - 8px);
+        padding: 5px 8px; overflow-y: hidden; scroll-padding-inline: 8px;
+        scroll-snap-type: x mandatory; touch-action: pan-x pan-y;
+      }
+      .thesis-gallery .rail__tick { scroll-snap-stop: always; }
+      .thesis-gallery .rail__tick img { width: 28px; height: 28px; }
+      .thesis-gallery .gband__open { min-height: 44px; padding-inline: 22px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .thesis-gallery .gband { transition: none; }
+      .thesis-gallery .gband__mount,
+      .thesis-gallery .gband__chrome { transition: opacity 140ms linear; }
+      .thesis-gallery .gband__open {
+        transition: color 120ms linear, background-color 120ms linear, border-color 120ms linear;
+      }
+      .thesis-gallery .gband__name { transition: opacity 120ms linear; }
+      .thesis-gallery .rail__tick { opacity: .72; transition: opacity 120ms linear, color 120ms linear; }
+      .thesis-gallery .rail__tick[aria-current='true'] { opacity: 1; }
+      .thesis-gallery .rail__tick picture,
+      .thesis-gallery .gband__fallback-item { transform: none; transition: none; }
+      .thesis-gallery .gband.is-open .gband__chrome { transition: none; }
+      .thesis-gallery .gcard { transition: opacity 160ms linear; }
+    }
+    @media (prefers-reduced-motion: reduce) and (min-width: 1200px) {
+      .thesis-gallery .gcard,
+      .thesis-gallery .gcard.is-open { transform: translateY(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) and (max-width: 1199.5px) {
+      .thesis-gallery .gcard,
+      .thesis-gallery .gcard.is-open { transform: none; }
+    }
 
     .zodiac-wheel::before {
       inset: 5%; border: 0;
@@ -1094,7 +1412,8 @@
     .truth-panel__side:last-child .truth-panel__illustration { color: #E0B080; }
 
     .source-convergence {
-      display: grid; grid-template-columns: minmax(0,1.6fr) minmax(180px,.74fr); gap: 8px 12px;
+      display: grid; grid-template-columns: minmax(0,1.6fr) 58px minmax(180px,.74fr);
+      grid-template-rows: repeat(3,minmax(0,1fr)); gap: 8px 0;
       margin: 0 0 16px; padding: 14px; border: 1px solid rgba(198,204,218,.14);
       border-radius: 18px;
       background:
@@ -1127,8 +1446,24 @@
     }
     .source-card h3 { margin:0 0 3px; font-family:var(--serif); font-size:19px; font-weight:400; line-height:1.08; color:var(--ink); }
     .source-card p { margin:0; font-family:'Instrument Sans',sans-serif; font-size:11px; line-height:1.35; color:var(--ink-dim); }
+    .convergence-flow {
+      grid-column:2; grid-row:1 / 4; position:relative; min-width:0; pointer-events:none;
+    }
+    .convergence-flow svg { display:block; width:100%; height:100%; overflow:visible; }
+    .convergence-flow__mobile { display:none!important; }
+    .convergence-flow path {
+      fill:none; stroke-width:1.3; stroke-linecap:round; stroke-linejoin:round;
+      vector-effect:non-scaling-stroke;
+    }
+    .convergence-flow__gold { stroke:#E0B080; }
+    .convergence-flow__bitcoin { stroke:#DE8E79; }
+    .convergence-flow__solana { stroke:#A9D4C4; }
+    .convergence-flow__output { stroke:#B6D4E4; stroke-width:1.55!important; }
+    .convergence-flow circle {
+      fill:#0a0d13; stroke:#B6D4E4; stroke-width:1.4; vector-effect:non-scaling-stroke;
+    }
     .convergence-result {
-      grid-column:2; grid-row:1 / 4; position:relative; display:flex; flex-direction:column;
+      grid-column:3; grid-row:1 / 4; position:relative; display:flex; flex-direction:column;
       align-items:center; justify-content:center; gap:12px; min-height:0; margin:0;
       text-align:center; border:1px solid rgba(182,212,228,.2);
       border-radius: 14px; background: linear-gradient(90deg,rgba(224,176,128,.06),rgba(182,212,228,.07),rgba(169,212,196,.06));
@@ -1271,9 +1606,9 @@
     html.has-js.motion-ready [data-visual-reveal].is-in > :nth-child(7) { transition-delay:300ms; }
 
     @media (max-width: 760px) {
-      .source-convergence { grid-template-columns:minmax(0,1.6fr) minmax(150px,.74fr); padding:12px; }
+      .source-convergence { grid-template-columns:minmax(0,1.6fr) 44px minmax(150px,.74fr); padding:12px; }
       .source-card { min-height:0; }
-      .convergence-result { grid-column:2; grid-row:1 / 4; }
+      .convergence-result { grid-column:3; grid-row:1 / 4; }
       .comparison-panel { padding:12px; overflow:hidden; }
       .ztbl, .ztbl thead, .ztbl tbody { display:block; width:100%; }
       .ztbl thead tr,
@@ -1328,13 +1663,18 @@
       .truth-panel { grid-template-columns:repeat(2,minmax(0,1fr)); }
     }
     @media (max-width: 519px) {
-      .source-convergence { grid-template-columns:1fr; padding:10px; }
+      .source-convergence { grid-template-columns:1fr; grid-template-rows:auto; padding:10px; }
       .source-card {
         grid-column:1; display:grid; grid-template-columns:38px minmax(0,1fr); grid-template-rows:auto auto auto;
         column-gap:12px; padding:12px;
       }
       .source-card__icon { grid-row:1 / 4; margin:0; }
       .source-card__eyebrow { align-self:end; }
+      .convergence-flow {
+        grid-column:1; grid-row:auto; width:100%; height:50px; margin:-2px 0;
+      }
+      .convergence-flow__desktop { display:none!important; }
+      .convergence-flow__mobile { display:block!important; }
       .convergence-result { grid-column:1; grid-row:auto; min-height:70px; flex-direction:row; text-align:left; }
       .rail-map { grid-template-columns:1fr; }
       .rail-map__item {
@@ -1481,7 +1821,7 @@
                 <div class="era" style="--era:#B6D4E4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="8" y="10" width="24" height="22" rx="2" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 16h24M14 7v6m12-6v6M13 21h4m3 0h7m-14 5h7" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="era__name">Almanac</span><span class="era__time">c. 1500</span></div>
                 <div class="era" style="--era:#E0A9B4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><path d="M8 9h24v23H8zM12 13h16M12 18h7v9h-7zm11 0h5m-5 4h5m-5 4h5m-5 4h5" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span class="era__name">Newspaper</span><span class="era__time">c. 1910</span></div>
                 <div class="era" style="--era:#D3A9DE"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><rect x="12" y="6" width="16" height="28" rx="4" fill="none" stroke="currentColor" stroke-width="1.6"/><circle cx="20" cy="29" r="1" fill="currentColor"/><path d="M16 11h8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span><span class="era__name">Phone</span><span class="era__time">c. 2010</span></div>
-                <div class="era" style="--era:#A9D4C4"><span class="era__object" aria-hidden="true"><svg viewBox="0 0 40 40"><circle cx="20" cy="20" r="12" fill="none" stroke="currentColor" stroke-width="1.4"/><circle cx="20" cy="9" r="1.8" fill="currentColor"/><circle cx="26" cy="11" r="1.8" fill="currentColor"/><circle cx="31" cy="16" r="1.8" fill="currentColor"/><circle cx="31" cy="23" r="1.8" fill="currentColor"/><circle cx="26" cy="29" r="1.8" fill="currentColor"/><circle cx="20" cy="31" r="1.8" fill="currentColor"/><circle cx="14" cy="29" r="1.8" fill="currentColor"/><circle cx="9" cy="23" r="1.8" fill="currentColor"/><circle cx="9" cy="16" r="1.8" fill="currentColor"/><circle cx="14" cy="11" r="1.8" fill="currentColor"/><circle cx="12" cy="26" r="1.5" fill="currentColor"/><circle cx="28" cy="26" r="1.5" fill="currentColor"/></svg></span><span class="era__name">Public record</span><span class="era__time">5 Jul 2024</span></div>
+                <div class="era" style="--era:#A9D4C4"><span class="era__object era__object--brand" aria-hidden="true"><img src="/assets/app-icons/v3/icon-192.png" width="192" height="192" alt="" loading="lazy" decoding="async" /></span><span class="era__name">Digital asset</span><span class="era__time">5 Jul 2024</span></div>
               </div>
             </div>
             <details class="evidence-drawer">
@@ -1643,10 +1983,10 @@
           </p>
           <figure class="zfig" id="fig-3">
             <figcaption class="zfig-head"><span class="zfig-chip">F3</span> The meeting point.</figcaption>
-            <div class="source-convergence" aria-label="Gold, Bitcoin, and Solana qualities meeting in Zodiacs" data-visual-reveal>
+            <div class="source-convergence" role="group" aria-label="Gold, Bitcoin, and Solana combine to form Zodiacs" data-visual-reveal>
               <article class="source-card source-card--gold">
                 <span class="source-card__icon" aria-hidden="true">
-                  <svg viewBox="0 0 48 48"><path d="M9 29h30l-4 10H13L9 29Zm5-15h20l4 11H10l4-11Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M18 20h12" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+                  <svg viewBox="0 0 48 48" data-icon="gold-bar"><path data-gold-bar d="M9 30 15 13h18l6 17-5 6H14l-5-6Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M15 13l4 7h10l4-7M10 30h28M20 25h8" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
                 </span>
                 <span class="source-card__eyebrow">Gold</span>
                 <h3>History and lore</h3>
@@ -1666,7 +2006,23 @@
                 <h3>Speed and efficiency</h3>
                 <p>Fast confirmation, low base fees, and modern consumer-scale rails.</p>
               </article>
-              <div class="convergence-result">
+              <div class="convergence-flow" data-convergence-connectors aria-hidden="true">
+                <svg class="convergence-flow__desktop" viewBox="0 0 58 220" preserveAspectRatio="none">
+                  <path class="convergence-flow__gold" data-convergence-link="gold" d="M0 36 C31 36 22 110 43 110"/>
+                  <path class="convergence-flow__bitcoin" data-convergence-link="bitcoin" d="M0 110 H43"/>
+                  <path class="convergence-flow__solana" data-convergence-link="solana" d="M0 184 C31 184 22 110 43 110"/>
+                  <circle cx="43" cy="110" r="3.5"/>
+                  <path class="convergence-flow__output" d="M47 110 H57 M53 106 L57 110 53 114"/>
+                </svg>
+                <svg class="convergence-flow__mobile" viewBox="0 0 280 50" preserveAspectRatio="none">
+                  <path class="convergence-flow__gold" data-convergence-link="gold" d="M38 0 C38 20 105 18 137 30"/>
+                  <path class="convergence-flow__bitcoin" data-convergence-link="bitcoin" d="M140 0 V30"/>
+                  <path class="convergence-flow__solana" data-convergence-link="solana" d="M242 0 C242 20 175 18 143 30"/>
+                  <circle cx="140" cy="30" r="3.5"/>
+                  <path class="convergence-flow__output" d="M140 34 V49 M136 45 L140 49 144 45"/>
+                </svg>
+              </div>
+              <div class="convergence-result" data-convergence-result>
                 <span class="brand-wheel" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
                 <div><strong>Zodiacs</strong><span>One familiar symbol, carrying all three.</span></div>
               </div>
@@ -1680,7 +2036,7 @@
                   <thead>
                     <tr>
                       <th scope="col" id="property-col">Property</th>
-                      <th scope="col" id="gold-col"><span class="ztbl-brand ztbl-brand--gold"><svg viewBox="0 0 34 34" aria-hidden="true"><path d="M6 19h22l-3 8H9l-3-8Zm4-11h14l3 8H7l3-8Z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>Gold</span></span></th>
+                      <th scope="col" id="gold-col"><span class="ztbl-brand ztbl-brand--gold"><svg viewBox="0 0 34 34" aria-hidden="true" data-icon="gold-bar"><path data-gold-bar d="M6 22 10.5 9h13L28 22l-3.5 4.5h-15L6 22Z" fill="currentColor" fill-opacity=".12" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><path d="M10.5 9l3 5h7l3-5M7 22h20M14 18h6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Gold</span></span></th>
                       <th scope="col" id="bitcoin-col"><span class="ztbl-brand ztbl-brand--bitcoin"><i aria-hidden="true">₿</i><span>Bitcoin</span></span></th>
                       <th scope="col" id="zodiacs-col"><span class="ztbl-brand ztbl-brand--zodiacs"><span class="brand-wheel brand-wheel--small" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span><span>Zodiacs</span></span></th>
                     </tr>
@@ -1747,6 +2103,68 @@
               <p class="comparison-sources"><a href="https://solana.com/docs/core/fees" rel="noopener noreferrer">Solana fees</a> · <a href="https://solana.com/developers/guides/advanced/confirmation" rel="noopener noreferrer">Solana confirmation</a> · <a href="https://zodiacs.org/registry/zodiacs.registry.json" rel="noopener noreferrer">Zodiacs registry</a> · <a href="https://zodiacs.org/disclosure/" rel="noopener noreferrer">disclosures</a></p>
             </div>
           </details>
+          <figure class="thesis-gallery" data-thesis-gallery>
+            <figcaption class="sr-only">Explore the twelve zodiac sculptures.</figcaption>
+            <section
+              id="gallery"
+              class="gband gband--thesis"
+              aria-label="Interactive zodiac sculpture selector"
+              data-gallery-stage
+              data-gallery-embed
+              data-gallery-initial="leo"
+            >
+              <div class="gband__mount" data-gallery-canvas></div>
+              <p class="gband__name" data-gallery-name aria-hidden="true"></p>
+              <div class="gband__chrome">
+                <div class="rail" data-gallery-rail role="group" aria-label="The twelve sculptures"></div>
+                <button class="gband__open" type="button" data-gallery-open>View Leo</button>
+                <p class="gband__hint" data-gallery-hint>Drag to browse · Choose a sign to open.</p>
+              </div>
+
+              <div class="gband__fallback" data-gallery-fallback>
+                <nav class="gband__fallback-grid" aria-label="Static catalogue of the twelve sculptures">
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/aries/"><img src="/assets/nuggets/thumb/aries.png" width="120" height="120" alt="Aries gold sculpture" loading="lazy" decoding="async" /><span>Aries</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/taurus/"><img src="/assets/nuggets/thumb/taurus.png" width="120" height="120" alt="Taurus gold sculpture" loading="lazy" decoding="async" /><span>Taurus</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/gemini/"><img src="/assets/nuggets/thumb/gemini.png" width="120" height="120" alt="Gemini gold sculpture" loading="lazy" decoding="async" /><span>Gemini</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/cancer/"><img src="/assets/nuggets/thumb/cancer.png" width="120" height="120" alt="Cancer gold sculpture" loading="lazy" decoding="async" /><span>Cancer</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/leo/"><img src="/assets/nuggets/thumb/leo.png" width="120" height="120" alt="Leo gold sculpture" loading="lazy" decoding="async" /><span>Leo</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/virgo/"><img src="/assets/nuggets/thumb/virgo.png" width="120" height="120" alt="Virgo gold sculpture" loading="lazy" decoding="async" /><span>Virgo</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/libra/"><img src="/assets/nuggets/thumb/libra.png" width="120" height="120" alt="Libra gold sculpture" loading="lazy" decoding="async" /><span>Libra</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/scorpio/"><img src="/assets/nuggets/thumb/scorpio.png" width="120" height="120" alt="Scorpio gold sculpture" loading="lazy" decoding="async" /><span>Scorpio</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/sagittarius/"><img src="/assets/nuggets/thumb/sagittarius.png" width="120" height="120" alt="Sagittarius gold sculpture" loading="lazy" decoding="async" /><span>Sagittarius</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/capricorn/"><img src="/assets/nuggets/thumb/capricorn.png" width="120" height="120" alt="Capricorn gold sculpture" loading="lazy" decoding="async" /><span>Capricorn</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/aquarius/"><img src="/assets/nuggets/thumb/aquarius.png" width="120" height="120" alt="Aquarius gold sculpture" loading="lazy" decoding="async" /><span>Aquarius</span></a>
+                  <a class="gband__fallback-item" data-gallery-fallback-record href="/registry/pisces/"><img src="/assets/nuggets/thumb/pisces.png" width="120" height="120" alt="Pisces gold sculpture" loading="lazy" decoding="async" /><span>Pisces</span></a>
+                </nav>
+              </div>
+
+              <aside class="gcard" data-gallery-card hidden aria-labelledby="gcard-name" aria-live="off">
+                <button class="card__close" type="button" data-gallery-close aria-label="Return the sculpture">✕</button>
+                <p class="card__lot" data-card-lot></p>
+                <h2 class="card__name" id="gcard-name" data-card-name></h2>
+                <p class="card__figure" data-card-figure></p>
+
+                <div class="card__market" hidden aria-hidden="true">
+                  <p class="card__market-state" data-market-state>Loading market context.</p>
+                  <div class="card__price" data-market-price-row hidden>
+                    <span class="card__price-value" data-market-price></span>
+                    <span class="card__price-change" data-market-change></span>
+                  </div>
+                  <div class="card__cta" data-market-cta hidden>
+                    <a class="card__buy" data-market-jupiter rel="noopener noreferrer external nofollow"><span>Open Jupiter route</span><span aria-hidden="true">↗</span></a>
+                    <a class="card__data" data-market-dexscreener rel="noopener noreferrer external nofollow"><span>View market data</span><span aria-hidden="true">↗</span></a>
+                  </div>
+                  <dl class="card__market-grid" data-market-grid hidden></dl>
+                </div>
+
+                <dl class="card__facts" data-card-facts></dl>
+                <div class="card__records" data-card-records></div>
+                <a class="card__entry" data-card-entry href="/registry/"><span>Open catalogue entry</span><span aria-hidden="true">→</span></a>
+              </aside>
+
+              <p class="sr-only" role="status" aria-live="polite" data-gallery-live></p>
+            </section>
+          </figure>
         </section>
 
         <section class="mov reveal" id="the-public-record">
@@ -2519,6 +2937,83 @@
       hydrateWhenNeeded('/thesis/thesis-disclosure.json', 'the-instrument', '[data-disclosure-updated]');
       hydrateWhenNeeded('/thesis/thesis-candidacy.json', 'the-candidacy', null);
       hydrateWhenNeeded('/thesis/thesis-test.json', 'the-test', null);
+    })();
+  </script>
+  <script>
+    /* The gallery carries Three.js, so it joins the essay only as its plate
+       approaches the viewport. The authored sculpture grid remains the
+       complete experience when scripts, WebGL, or the bundle are unavailable. */
+    (function () {
+      var stage = document.querySelector('[data-thesis-gallery] [data-gallery-stage]');
+      if (!stage) return;
+
+      function supportsWebGL() {
+        try {
+          var canvas = document.createElement('canvas');
+          var context = canvas.getContext('webgl2') || canvas.getContext('webgl');
+          if (!context) return false;
+          var lose = context.getExtension('WEBGL_lose_context');
+          if (lose) lose.loseContext();
+          return true;
+        } catch (error) {
+          return false;
+        }
+      }
+
+      if (!supportsWebGL()) return;
+      var requested = false;
+      function loadGallery() {
+        if (requested) return;
+        requested = true;
+        var script = document.createElement('script');
+        script.src = '/assets/gallery.js';
+        script.defer = true;
+        script.dataset.thesisGalleryBundle = '';
+        document.body.appendChild(script);
+      }
+
+      if (!('IntersectionObserver' in window)) {
+        loadGallery();
+        return;
+      }
+      var observer = new IntersectionObserver(function (entries) {
+        if (entries.some(function (entry) { return entry.isIntersecting; })) {
+          observer.disconnect();
+          loadGallery();
+        }
+      }, { rootMargin: '400px 0px' });
+      observer.observe(stage);
+
+      function focusFallback() {
+        var slug = stage.dataset.galleryInitial || 'leo';
+        var links = stage.querySelectorAll('[data-gallery-fallback-record]');
+        var link = Array.prototype.find.call(links, function (item) {
+          return item.getAttribute('href') === '/registry/' + slug + '/';
+        }) || links[0];
+        if (link) link.focus({ preventScroll: true });
+      }
+
+      /* The shared scene disposes itself when a page enters the back/forward
+         cache. Reveal the durable artwork before that happens, and never leave
+         focus inside a card or canvas that has become unavailable. */
+      var restoreFallbackFocus = false;
+      window.addEventListener('pagehide', function (event) {
+        if (!event.persisted) return;
+        restoreFallbackFocus = stage.contains(document.activeElement);
+        stage.classList.remove('is-ready', 'is-open');
+        var card = stage.querySelector('[data-gallery-card]');
+        if (card) {
+          card.classList.remove('is-open');
+          card.hidden = true;
+        }
+      });
+      window.addEventListener('pageshow', function (event) {
+        if (event.persisted && restoreFallbackFocus) focusFallback();
+      });
+      stage.addEventListener('webglcontextlost', function () {
+        var shouldRestoreFocus = stage.contains(document.activeElement);
+        if (shouldRestoreFocus) window.setTimeout(focusFallback, 0);
+      }, true);
     })();
   </script>
   <svg class="glass-defs" aria-hidden="true" focusable="false">

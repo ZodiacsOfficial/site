@@ -45,7 +45,7 @@ The twelve-sign zodiac took shape in Babylonian astronomy around the fifth centu
 
 It moved from clay tablets to star maps. Scribes copied it into manuscripts. Printers placed it in almanacs. Newspapers gave it a daily column. Radio hosts read horoscopes on air. Apps turned a birth chart into something you could carry in your pocket. Every medium changed the presentation. The twelve names kept arriving intact.
 
-[FIGURE F1 — "The transmission." An illustrated almanac sequence carries one multicolor thread through a clay tablet, star map, manuscript, almanac, newspaper, phone, and public record. Each era has its own pastel halo and crafted object. Caption: *The format keeps changing. The twelve signs keep traveling.* A disclosure drawer preserves the complete dated historical timeline and sources.]
+[FIGURE F1 — "The transmission." An illustrated almanac sequence carries one multicolor thread through a clay tablet, star map, manuscript, almanac, newspaper, phone, and digital asset. Each era has its own pastel halo and crafted object. Caption: *The format keeps changing. The twelve signs keep traveling.* A disclosure drawer preserves the complete dated historical timeline and sources.]
 
 Gold has endured for a similar human reason. Long before it became a line on a market screen, people made it into rings, offerings, heirlooms, and symbols of status. Its history gives it a meaning that chemistry alone cannot explain. The zodiac also carries an inheritance: stories, symbols, rituals, and recognition gathered across generations.
 
@@ -69,7 +69,7 @@ That breakthrough was deliberately universal. One bitcoin carries the same rules
 
 Zodiacs begins with something personal. The names already mean something to people. The new step is to make each sign holdable, transferable, and independently verifiable. Bitcoin supplied the ownership model. Solana supplies fast, low-cost execution. The zodiac supplies recognition, lore, and identity.
 
-[FIGURE F3 — "The meeting point." Gold contributes illustrated layers of history and lore. Bitcoin contributes a public ledger, ownership key, and verification path. Solana contributes speed, low fees, and efficient movement. The three streams converge on a complete twelve-sign rosette labeled Zodiacs. Caption: *Old stories meet digital ownership on modern rails.*]
+[FIGURE F3 — "The meeting point." Gold contributes illustrated layers of history and lore. Bitcoin contributes a public ledger, ownership key, and verification path. Solana contributes speed, low fees, and efficient movement. Three visible, color-matched paths merge into a complete twelve-sign rosette labeled Zodiacs, making the product relationship explicit. Caption: *Old stories meet digital ownership on modern rails.*]
 
 Gold carries history and lore. Bitcoin made ownership digital. Solana makes it fast and efficient. Zodiacs brings those qualities to a sign people already know.
 
