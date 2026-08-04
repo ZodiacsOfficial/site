@@ -78,7 +78,8 @@ describe('Registry consumer and technical information architecture', () => {
     const mounted = consumerRoot(source);
 
     expect(source).toContain('id="official-twelve"');
-    expect(source).toContain('className="consumer-explorer"');
+    // In stage mode the section is also the page's opening scene.
+    expect(source).toContain("'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')");
     expect(source).toContain('data-consumer-sign=');
     expect(source).toContain('aria-pressed={isActive}');
     expect(source).toContain('tabIndex={isActive ? 0 : -1}');
@@ -215,6 +216,24 @@ describe('Registry consumer and technical information architecture', () => {
     ]) {
       expect(html, dead).not.toContain(dead);
     }
+  });
+
+  it('opens on the gallery itself where the stage is live, film hero standing down', async () => {
+    const source = await read('src/app.jsx');
+    // One hero per page: the stage or the film, never both stacked.
+    expect(source).toContain('{!stageMode && <CineHero sign={sign} />}');
+    expect(source).toContain('className="stage-hero__title"');
+    // The placard says what a museum label says — name, dates, price — and
+    // holds the two doors; everything longer waits in the sheet.
+    expect(source).toContain('className="stage-placard"');
+    expect(source).toContain('function PlacardQuote(');
+    expect(source).toContain('<span>The record</span>');
+    // The sheet is a dialog portalled above the floating nav, and closing it
+    // returns focus to the pill that opened it.
+    expect(source).toContain('ReactDOM.createPortal');
+    expect(source).toContain('aria-modal="true"');
+    expect(source).toContain("if (event.key === 'Escape') setSheetOpen(false);");
+    expect(source).toContain('tradePillRef.current?.focus({ preventScroll: true });');
   });
 
   it('keeps the trade panel behind its flag and its own lazy bundle', async () => {

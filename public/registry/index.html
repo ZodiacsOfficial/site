@@ -3413,61 +3413,83 @@
       font-size: 13px;
       letter-spacing: 0;
     }
-    /* The rectangle — one plate that picks, shows, and offers. The rail runs
-       across the top, the chosen sculpture stands large on the left, and
-       everything the page has to say about that sign — record, price, and the
-       trade itself — sits beside it on the right. The pastel rail paints
-       immediately from inert placeholder discs; the WebGL canvas fades in once
-       the scene bundle mounts and takes the rail over. */
-    .consumer-explorer .gband--consumer {
+    /* The stage — the page's opening scene on wide screens. The film hero
+       stands down and the gallery carries the headline itself: eyebrow and
+       title at the top, the twelve discs beneath them, the chosen sculpture
+       standing large in the void, and a museum placard at its feet holding
+       exactly what a label should — name, dates, price, and two doors. The
+       pastel rail paints immediately from inert placeholder discs; the WebGL
+       canvas fades in once the scene bundle mounts and takes the rail over. */
+    .consumer-explorer--stage {
+      display: flex;
+      flex-direction: column;
+      min-height: 100svh;
+      padding: 0;
+      border-bottom: 1px solid var(--hair-2);
+      /* The opening scene runs edge to edge: break out of the 1180px column
+         the rest of the registry reads in. */
+      width: 100vw;
+      margin-inline: calc(50% - 50vw);
+    }
+    .stage-hero__head {
       position: relative; z-index: 2;
-      display: grid;
-      grid-template-columns: minmax(0, 1.12fr) minmax(360px, .88fr);
-      grid-template-rows: auto minmax(0, 1fr);
-      grid-template-areas: 'rail rail' 'art panel';
+      padding: clamp(96px, 13vh, 140px) 24px 0;
+      text-align: center;
+    }
+    .stage-hero__eyebrow {
+      display: inline-block;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .stage-hero__eyebrow:hover { color: var(--ink-2); }
+    .stage-hero__title {
+      margin: 14px 0 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(44px, 5.2vw, 74px);
+      line-height: 1.04;
+      letter-spacing: -.012em;
+      color: var(--ink);
+    }
+    .stage-hero__title .it { font-style: italic; color: var(--ink-2); }
+    .stage-hero__line {
+      max-width: 62ch;
+      margin: 14px auto 0;
+      color: var(--ink-dim);
+      font-size: 14.5px;
+      line-height: 1.6;
+    }
+    .stage-hero__verify { color: var(--ink-2); white-space: nowrap; }
+    .stage-hero__verify:hover { color: var(--ink); }
+    .consumer-explorer--stage .gband--consumer {
+      position: relative; z-index: 1;
+      display: flex;
+      flex-direction: column;
+      flex: 1 1 auto;
+      min-height: 0;
       width: 100%;
-      height: auto;
-      margin-top: clamp(36px, 5vw, 56px);
-      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
-      border-radius: 26px;
-      /* clip, not hidden: hidden would make this a scroll container and the
-         sculpture below could never stick inside it. */
-      overflow: clip;
-      background:
-        radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
-        rgba(15,18,26,.88);
-      box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
     }
     /* The picker. Deliberately NOT .gband__chrome: the scene reads that
        element's offsetTop as the floor of the band it may paint into, and
        chrome above the canvas would leave it nothing to paint. */
     .gband__rail-top {
-      grid-area: rail;
       display: flex;
       justify-content: center;
       /* The dock's swell grows upward from each disc's foot, so the strip
          carries its own headroom instead of borrowing the canvas's. */
-      padding: 22px 20px 6px;
-      border-bottom: 1px solid var(--hair);
+      padding: 26px 20px 4px;
     }
-    /* The sculpture keeps its own proportions rather than stretching to
-       whatever the column beside it happens to need: the camera fits the
-       figure to the box it is given, so a tall narrow box would push the
-       piece into the distance. It sticks instead, staying with the reader
-       for as long as the record beside it runs. */
     .gband--consumer .gband__mount {
-      grid-area: art;
-      position: sticky;
-      /* Clear the base rule's inset:0 before setting one edge — a sticky box
-         with both top and bottom pinned obeys whichever it hits first, and a
-         stray bottom:0 would ride it up over the rail. */
+      position: relative;
       inset: auto;
-      top: 84px;
-      align-self: start;
-      height: clamp(440px, 62svh, 640px);
+      flex: 1 1 auto;
+      min-height: 420px;
     }
-    /* The sign is named in full beside the sculpture, so the hover label the
-       standalone band needs would only say it twice. */
+    /* The placard names the piece in full, so the hover label the standalone
+       band needs would only say it twice. */
     .gband--consumer .gband__name { display: none; }
     .gband--consumer [data-gallery-canvas] {
       opacity: 0;
@@ -3475,15 +3497,103 @@
     }
     .gband--consumer.is-ready [data-gallery-canvas] { opacity: 1; }
     .rail__tick--placeholder { pointer-events: none; opacity: .55; }
-    .consumer-stage-panel {
-      grid-area: panel;
+    /* The museum label. One line of identity in front of the plinth; the
+       glass keeps the sculpture present behind it. */
+    .stage-placard {
+      position: absolute;
+      left: 50%; bottom: clamp(22px, 4.5vh, 44px);
+      transform: translateX(-50%);
+      z-index: 3;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: clamp(26px, 3vw, 44px);
-      border-left: 1px solid var(--hair);
+      align-items: center;
+      gap: 18px;
+      max-width: min(92vw, 860px);
+      padding: 10px 12px 10px 26px;
+      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 30%, var(--hair-2));
+      border-radius: 999px;
+      background: rgba(10,12,17,.66);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
     }
-    .consumer-stage-panel .consumer-preview__lore { max-width: 34ch; }
+    .stage-placard__name {
+      font-family: var(--serif);
+      font-size: 27px;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .stage-placard__dates,
+    .stage-placard__quote {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .stage-placard__price { color: var(--ink-2); font-size: 13px; letter-spacing: .02em; }
+    .stage-placard__price--waiting { color: var(--ink-dim); }
+    .stage-placard__change { font-size: 11px; }
+    .stage-placard__actions { display: inline-flex; align-items: center; gap: 10px; }
+    .stage-placard .stage-placard__pill {
+      min-height: 44px; height: 44px;
+      padding: 0 20px;
+      justify-content: center;
+      border-radius: 999px;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .stage-placard .stage-placard__pill::before { display: none; }
+    /* The trade sheet — the panel slides in over the stage; the sculpture
+       stays where it is, dimmed but present, and the page never navigates. */
+    /* Above the floating nav (z 60): a modal owns the whole screen. */
+    .stage-sheet { position: fixed; inset: 0; z-index: 90; }
+    .stage-sheet__scrim {
+      position: absolute; inset: 0;
+      background: rgba(6,7,9,.68);
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+      animation: sheet-scrim 260ms var(--ease-soft) both;
+    }
+    .stage-sheet__panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: min(480px, 94vw);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: clamp(24px, 4vh, 44px) clamp(22px, 2.6vw, 40px) 44px;
+      border-left: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 30%, var(--hair-2));
+      background:
+        radial-gradient(90% 60% at 100% 0%, color-mix(in srgb, var(--active-sign, #E0A9B4) 12%, transparent), transparent 64%),
+        rgba(12,14,20,.985);
+      animation: sheet-slide 340ms var(--ease-soft) both;
+    }
+    .stage-sheet__close {
+      position: sticky; top: 0;
+      float: right;
+      width: 40px; height: 40px;
+      margin: -6px -6px 0 0;
+      border: 1px solid var(--hair-2);
+      border-radius: 50%;
+      background: rgba(10,12,17,.8);
+      color: var(--ink-2);
+      font-size: 14px;
+      cursor: pointer;
+    }
+    .stage-sheet__close:hover { color: var(--ink); border-color: var(--hair-3); }
+    .stage-sheet .consumer-preview__name { font-size: 40px; }
+    .stage-sheet .consumer-preview__lore { max-width: 40ch; }
+    @keyframes sheet-scrim { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes sheet-slide {
+      from { opacity: 0; transform: translateX(28px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .stage-sheet__scrim, .stage-sheet__panel { animation: none; }
+    }
     .consumer-trade { margin-top: 24px; }
 
     /* The watchlist — all twelve tokens in zodiac order, one glance. */

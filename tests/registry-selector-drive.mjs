@@ -1010,20 +1010,26 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         'the rail exposes one pressed tick for the current sign',
         await stagePage.locator('.rail__tick[aria-pressed="true"]').count() === 1,
       );
-      // One rectangle: the rail picks along the top, the chosen sculpture
-      // stands below it, and the record sits beside them — not in a second
-      // card further down the page.
+      // One opening scene: the film hero stands down, the headline rides the
+      // stage, the rail picks beneath it, the chosen sculpture stands large,
+      // and the placard at its feet says name, dates, price — nothing more.
       const shape = await stagePage.evaluate(() => {
         const box = (sel) => {
           const el = document.querySelector(sel);
           return el ? el.getBoundingClientRect() : null;
         };
+        const head = box('.stage-hero__head');
         const rail = box('.gband--consumer [data-gallery-rail]');
         const canvas = box('.gband--consumer [data-gallery-canvas]');
-        const panel = box('.gband--consumer .consumer-stage-panel');
+        const placard = box('.stage-placard');
         return {
+          filmHero: document.querySelectorAll('.cine').length,
+          h1: document.querySelectorAll('h1').length,
+          headAboveRail: Boolean(head && rail && head.bottom <= rail.top + 1),
           railAboveCanvas: Boolean(rail && canvas && rail.bottom <= canvas.top + 1),
-          panelBesideCanvas: Boolean(panel && canvas && panel.left >= canvas.right - 1),
+          placardOverCanvas: Boolean(placard && canvas
+            && placard.top > canvas.top && placard.bottom <= canvas.bottom + 1),
+          fullBleed: Boolean(canvas && canvas.width >= innerWidth - 2),
           // The rail must not wear .gband__chrome: the scene reads that
           // element's offsetTop as the floor of the band it may paint into.
           chrome: document.querySelectorAll('.gband--consumer .gband__chrome').length,
@@ -1034,8 +1040,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       });
       check(
-        'the landing consolidates into one rectangle: rail, sculpture, record',
-        shape.railAboveCanvas && shape.panelBesideCanvas
+        'the stage is the opening scene: headline, rail, sculpture, placard',
+        shape.filmHero === 0 && shape.h1 === 1
+          && shape.headAboveRail && shape.railAboveCanvas && shape.placardOverCanvas
+          && shape.fullBleed
           && shape.chrome === 0
           && shape.previewInside === 1 && shape.previewTotal === 1
           && shape.flatArt === 0
@@ -1050,27 +1058,37 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await geminiTick.evaluate((el) => el.scrollIntoView({ block: 'center' }));
       await geminiTick.click();
       await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
+      const geminiPlacard = await stagePage.locator('[data-consumer-preview="gemini"]').evaluate((placard) => ({
+        name: placard.querySelector('.stage-placard__name')?.textContent,
+        trade: placard.querySelector('a.btn--primary, button.btn--primary') !== null,
+        tradeHref: placard.querySelector('a.btn--primary')?.getAttribute('href') ?? null,
+        record: placard.querySelector('a.btn--ghost')?.getAttribute('href'),
+      }));
       check(
-        'walking the rail drives the focused token panel',
-        await stagePage.locator('[data-consumer-preview="gemini"] a.btn--primary').getAttribute('href')
-          === '/registry/gemini/',
+        'walking the rail drives the placard',
+        geminiPlacard.name === 'Gemini'
+          && geminiPlacard.trade
+          // Flag-off the trade pill is the door to the catalogue page's panel.
+          && (geminiPlacard.tradeHref === null || geminiPlacard.tradeHref === '/registry/gemini/#acquire')
+          && geminiPlacard.record === '/registry/gemini/',
+        JSON.stringify(geminiPlacard),
       );
 
-      // Tapping a sculpture in the rectangle chooses it. There is nothing to
-      // draw out to — the record is already on the page beside the figure —
-      // so the card must stay shut however the canvas is used.
+      // Tapping a sculpture on the stage chooses it. There is nothing to
+      // draw out to — the placard is already at its feet — so the card must
+      // stay shut however the canvas is used.
       const canvasBox = await stagePage.locator('.gband--consumer [data-gallery-canvas]').boundingBox();
       await stagePage.mouse.click(canvasBox.x + (canvasBox.width / 2), canvasBox.y + (canvasBox.height / 2));
       await stagePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
       check(
-        'the rectangle never draws a sculpture out over its own record',
+        'the stage never draws a sculpture out over its own placard',
         await stagePage.locator('.gband.is-open').count() === 0
           && await stagePage.locator('[data-gallery-card]:not([hidden])').count() === 0,
       );
 
       const stageText = await stagePage.locator('.consumer-explorer').innerText();
       check(
-        'the rectangle drops the second chain and the guide detour',
+        'the stage drops the second chain and the guide detour',
         !stageText.includes('Also recorded on Base') && !/astrology guide/i.test(stageText),
       );
     } else {
@@ -1126,17 +1144,35 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       });
     };
 
-    for (const [label, width, stub] of [['rectangle', 1280, false], ['card', 1126, true]]) {
+    for (const [label, width, stub] of [['sheet', 1280, false], ['card', 1126, true]]) {
       const tradePage = await newPage({ viewport: { width, height: 900 }, reducedMotion: 'no-preference' });
       const tradeBundle = [];
       tradePage.on('request', (request) => {
         if (new URL(request.url()).pathname === '/assets/trade.js') tradeBundle.push(request.url());
       });
+      const ordersBefore = tradeOrders.length;
       await mockDexscreener(tradePage);
       if (stub) await stubNoWebgl(tradePage);
       await withTradeFlag(tradePage);
       await tradePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
-      await tradePage.locator('.consumer-explorer').scrollIntoViewIfNeeded();
+
+      if (label === 'sheet') {
+        // The stage keeps commerce behind intent: no bundle, no venue
+        // request, and no panel until the placard's pill is pressed.
+        await tradePage.locator('.stage-placard').waitFor({ state: 'visible', timeout: 20_000 });
+        await tradePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 600)));
+        check(
+          'the stage asks Jupiter nothing until the trade is opened',
+          tradeBundle.length === 0
+            && tradeOrders.length === ordersBefore
+            && await tradePage.locator('.tp').count() === 0,
+          JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length - ordersBefore }),
+        );
+        await tradePage.locator('button.stage-placard__pill').click();
+        await tradePage.locator('.stage-sheet').waitFor({ state: 'visible', timeout: 10_000 });
+      } else {
+        await tradePage.locator('.consumer-explorer').scrollIntoViewIfNeeded();
+      }
       await tradePage.locator('.tp').waitFor({ state: 'visible', timeout: 20_000 });
       await tradePage.locator('.tp .out').waitFor({ state: 'visible', timeout: 20_000 });
 
@@ -1145,7 +1181,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         const chips = [...tp.querySelectorAll('.amts button')];
         const methods = [...tp.querySelectorAll('.payseg button')];
         return {
-          host: tp.closest('.consumer-stage-panel') ? 'rectangle'
+          host: tp.closest('.stage-sheet') ? 'sheet'
             : tp.closest('.consumer-preview') ? 'card' : 'loose',
           amount: tp.querySelector('.pay__input')?.value,
           chips: chips.map((b) => b.textContent),
@@ -1191,10 +1227,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       check(
         `the ${label} fetches its bundle once and prices without an address`,
         tradeBundle.length === 1
-          && tradeOrders.length > 0
+          && tradeOrders.length > ordersBefore
           && tradeOrders.every((q) => q.amount && q.inputMint && q.outputMint && !('taker' in q)),
-        JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length, first: tradeOrders[0] }),
+        JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length, first: tradeOrders[ordersBefore] }),
       );
+
+      if (label === 'sheet') {
+        // Escape closes the sheet and the stage is exactly as it was.
+        await tradePage.keyboard.press('Escape');
+        await tradePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 300)));
+        check(
+          'escape returns the stage from the sheet untouched',
+          await tradePage.locator('.stage-sheet').count() === 0
+            && await tradePage.locator('.stage-placard').count() === 1,
+        );
+      }
       await tradePage.close();
     }
 

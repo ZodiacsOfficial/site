@@ -1574,6 +1574,30 @@
       + '</picture></span>'
     )).join('');
 
+    /* The placard's price: one number and its day, small enough to sit on a
+       museum label. Reads from the same single batched market call the rest
+       of the page shares. */
+    function PlacardQuote({ sign }) {
+      const [ref, inView] = useInView();
+      const batch = useTwelveQuotes(inView);
+      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
+      const changeClass = marketChangeClass(quote?.priceChange24h);
+      return (
+        <span ref={ref} className="stage-placard__quote">
+          {quote ? (
+            <>
+              <span className="stage-placard__price">{formatPriceUsd(quote.priceUsd)}</span>
+              <span className={'stage-placard__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
+            </>
+          ) : (
+            <span className="stage-placard__price stage-placard__price--waiting">
+              {batch.status === 'ok' ? 'Not indexed' : 'Live price…'}
+            </span>
+          )}
+        </span>
+      );
+    }
+
     function GalleryBand({ active, setActive, consumer = false }) {
       const stageRef = useRef(null);
       // The slug the scene last announced — the guard that keeps the
@@ -1582,6 +1606,24 @@
       const sign = SIGNS.find(s => s.ticker === active) ?? SIGNS[0];
       const slug = sign.asset.sign;
       const season = useMemo(() => currentSeason(), []);
+      // The trade sheet: the panel slides in over the stage on request and
+      // the sculpture stays where it is, dimmed behind the scrim. Closing
+      // returns focus to the pill that opened it.
+      const [sheetOpen, setSheetOpen] = useState(false);
+      const tradePillRef = useRef(null);
+      const sheetCloseRef = useRef(null);
+      useEffect(() => {
+        if (!sheetOpen) return undefined;
+        sheetCloseRef.current?.focus({ preventScroll: true });
+        const onKey = (event) => {
+          if (event.key === 'Escape') setSheetOpen(false);
+        };
+        document.addEventListener('keydown', onKey);
+        return () => {
+          document.removeEventListener('keydown', onKey);
+          tradePillRef.current?.focus({ preventScroll: true });
+        };
+      }, [sheetOpen]);
 
       // The scene bundle carries Three.js; it is fetched only as the band
       // approaches the viewport, and only once.
@@ -1647,9 +1689,9 @@
           data-gallery-initial={slug}
           data-gallery-spotlight={consumer ? '' : undefined}
         >
-          {/* The rectangle picks with the rail at the top and shows one piece
+          {/* The stage picks with the rail at the top and shows one piece
               large below it, so the twelve read as the choice and the chosen
-              sculpture as the answer. It deliberately does NOT wear
+              sculpture as the answer. The rail deliberately does NOT wear
               .gband__chrome: the scene measures the band it may fill by that
               element's offsetTop, and chrome above the canvas would leave it
               nothing. */}
@@ -1659,12 +1701,58 @@
           {consumer && (
             <div
               id="consumer-sign-preview"
-              className="consumer-stage-panel"
+              className="stage-placard"
               data-consumer-preview={slug}
-              aria-labelledby="consumer-preview-name"
+              aria-labelledby="stage-placard-name"
             >
-              <ConsumerSignPanel sign={sign} season={season} />
+              <span id="stage-placard-name" className="stage-placard__name">{sign.name}</span>
+              <span className="stage-placard__dates">{signDateLabel(sign)}</span>
+              <PlacardQuote sign={sign} />
+              <span className="stage-placard__actions">
+                {REGISTRY_TRADE_ENABLED ? (
+                  <button
+                    ref={tradePillRef}
+                    type="button"
+                    className="btn btn--primary stage-placard__pill"
+                    onClick={() => setSheetOpen(true)}
+                  >
+                    <span>Trade {sign.name}</span>
+                  </button>
+                ) : (
+                  <a className="btn btn--primary stage-placard__pill" href={`${registryProfilePath(sign)}#acquire`}>
+                    <span>Trade {sign.name}</span>
+                  </a>
+                )}
+                <a className="btn btn--ghost stage-placard__pill" href={registryProfilePath(sign)}>
+                  <span>The record</span>
+                </a>
+              </span>
             </div>
+          )}
+          {/* Portalled to the body: the sheet must stand above the floating
+              nav, and everything inside main sits in a lower stacking
+              context than the nav does. */}
+          {consumer && REGISTRY_TRADE_ENABLED && sheetOpen && ReactDOM.createPortal(
+            <div
+              className="stage-sheet"
+              role="dialog"
+              aria-modal="true"
+              aria-label={`Trade ${sign.name}`}
+              style={{ '--active-sign': sign.hue }}
+            >
+              <div className="stage-sheet__scrim" onClick={() => setSheetOpen(false)} aria-hidden="true" />
+              <div className="stage-sheet__panel">
+                <button
+                  ref={sheetCloseRef}
+                  type="button"
+                  className="stage-sheet__close"
+                  onClick={() => setSheetOpen(false)}
+                  aria-label="Close the trade sheet"
+                >✕</button>
+                <ConsumerSignPanel sign={sign} season={season} />
+              </div>
+            </div>,
+            document.body,
           )}
           {!consumer && (
           <div className="gband__chrome">
@@ -3415,12 +3503,11 @@
       );
     }
 
-    function ConsumerExplorer({ active, setActive, sign }) {
-      const reveal = useReveal();
-      const gridRef = useRef(null);
-      // The sculpture stage is the desktop selector wherever WebGL is
-      // live; phones, tablets, and no-WebGL machines keep the pastel
-      // grid and never pay for the scene bundle.
+    /* The sculpture stage is the desktop opening wherever WebGL is live;
+       phones, tablets, and no-WebGL machines keep the film hero and the
+       pastel grid, and never pay for the scene bundle. Lifted to the root
+       because the answer decides which hero the page wears. */
+    function useStageMode() {
       const [stageMode, setStageMode] = useState(
         () => GALLERY_LIVE && window.matchMedia('(min-width: 1021px)').matches
       );
@@ -3431,6 +3518,12 @@
         query.addEventListener?.('change', onChange);
         return () => query.removeEventListener?.('change', onChange);
       }, []);
+      return stageMode;
+    }
+
+    function ConsumerExplorer({ active, setActive, sign, stageMode }) {
+      const reveal = useReveal();
+      const gridRef = useRef(null);
       const season = useMemo(() => currentSeason(), []);
       const activeIndex = Math.max(0, SIGNS.findIndex(item => item.ticker === active));
 
@@ -3470,22 +3563,41 @@
         <section
           ref={reveal}
           id="official-twelve"
-          className="consumer-explorer"
+          className={'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')}
           aria-labelledby="consumer-explorer-title"
           style={{ '--active-sign': sign.hue }}
         >
+          {/* In stage mode this section IS the page's opening: the film hero
+              stands down and the gallery carries the headline itself. */}
+          {stageMode && (
+          <header className="stage-hero__head">
+            <a className="stage-hero__eyebrow" href="/disclosure/">
+              The Official Registry · Est. {REGISTRY_ESTABLISHED}
+              {!REGISTRY_ESTABLISHMENT_PROVENANCE_URL && ' · provenance pending'}
+            </a>
+            <h1 id="consumer-explorer-title" className="stage-hero__title">
+              Twelve signs. <span className="it">One register.</span>
+            </h1>
+            <p className="stage-hero__line">
+              Every sign has one official token. Explore its story, its record, and its market.
+              {' '}<a className="stage-hero__verify" href="#verify">Check an address ↓</a>
+            </p>
+          </header>
+          )}
+          {!stageMode && (
           <header className="consumer-explorer__head">
             <span className="consumer-section-head__eyebrow">The official twelve</span>
             <h2 id="consumer-explorer-title">Choose your sign. See its token.</h2>
             <p>Twelve signs, twelve official tokens. Pick one to see its record and its live market.</p>
             {season && <SeasonPulse season={season} />}
           </header>
+          )}
 
           {stageMode && <GalleryBand active={active} setActive={setActive} consumer />}
 
-          {/* In stage mode the rectangle carries the panel beside the
-              sculpture; the pastel grid and its card are the selector
-              everywhere else. Only one of the two is ever in the page. */}
+          {/* In stage mode the stage above carries the placard and the trade
+              sheet; the pastel grid and its card are the selector everywhere
+              else. Only one of the two is ever in the page. */}
           {!stageMode && (
           <div className="consumer-explorer__layout">
             <div
@@ -3872,6 +3984,8 @@
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]
       );
+      // Which hero the page wears: the film, or the gallery itself.
+      const stageMode = useStageMode();
 
       useEffect(() => {
         trackAnalytics(technical ? 'registry_technical_visit' : 'registry_visit');
@@ -4100,9 +4214,11 @@
           <div className="stars" aria-hidden="true" />
           <div className="grain" aria-hidden="true" />
           <Header />
-          <CineHero sign={sign} />
+          {/* On the stage path the explorer IS the opening scene — the film
+              hero stands down rather than stacking two heroes. */}
+          {!stageMode && <CineHero sign={sign} />}
           <main id="main" className="zd consumer-registry">
-            <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} />
+            <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
             <ConsumerTokensSection />
             <ConsumerHowItWorks />
             <VerifierSection />
