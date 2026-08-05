@@ -695,7 +695,8 @@
        set by the inline <head> script); every other browser keeps the
        frosted blur floor. ── */
     .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-    html.zdx-lens .cine__cta .btn {
+    html.zdx-lens .cine__cta .btn,
+    html.zdx-lens .stage-placard__pill {
       background: rgba(10, 12, 17, 0.56);
       backdrop-filter: url(#zdx-lens-nav);
       -webkit-backdrop-filter: url(#zdx-lens-nav);
@@ -704,7 +705,8 @@
         inset 0 -1px 0 rgba(238,241,247,0.04),
         0 12px 32px -14px rgba(0,0,0,0.7);
     }
-    html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.66); }
+    html.zdx-lens .cine__cta .btn:hover,
+    html.zdx-lens .stage-placard__pill:hover { background: rgba(10, 12, 17, 0.66); }
     /* The unified nav pill refracts the footage on Chromium too — parity with
        the main site's nav (SiteNav.astro: html.zdx-lens .nav-wrap .nav). The
        #zdx-lens-nav defs + the .zdx-lens gate live on this hub page only, so
@@ -732,7 +734,8 @@
         inset 0 10px 22px -16px rgba(255,255,255,0.10),
         0 14px 34px -14px rgba(0,0,0,0.72);
     }
-    html:not(.zdx-lens) .cine__cta .btn {
+    html:not(.zdx-lens) .cine__cta .btn,
+    html:not(.zdx-lens) .stage-placard__pill {
       background: rgba(10, 12, 17, 0.58);
       backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
       -webkit-backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
@@ -3483,6 +3486,44 @@
       box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
       transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
     }
+    /* Below the stage breakpoint the plate is the whole opening screen. */
+    .consumer-explorer:not(.consumer-explorer--stage) {
+      display: block;
+      padding: clamp(76px, 11vh, 104px) 16px clamp(32px, 5vh, 56px);
+      border-bottom: 0;
+      background: none;
+      width: 100vw;
+      margin-inline: calc(50% - 50vw);
+    }
+    .consumer-explorer .gband--flat {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 1400px;
+      height: clamp(560px, 92svh, 980px);
+      margin-inline: auto;
+      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
+      border-radius: 26px;
+      overflow: clip;
+      background:
+        radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
+        rgba(15,18,26,.88);
+      box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
+      transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
+    }
+    /* Twelve discs will not fit across a phone, so the rail scrolls. */
+    .gband--flat .rail {
+      /* The flat plate is what touch gets, so every disc is a 44px target
+         rather than the 32px the pointer-driven stage can afford. */
+      --tick: 44px;
+      max-width: calc(100% - 24px);
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+    }
+    .gband--flat .rail::-webkit-scrollbar { display: none; }
+    .gband--flat .rail__tick[aria-pressed='true'] { color: var(--ink); }
+    .gband--flat .rail__tick[aria-pressed='true'] picture { transform: scale(1.22); }
     /* The picker. Deliberately NOT .gband__chrome: the scene reads that
        element's offsetTop as the floor of the band it may paint into, and
        chrome above the canvas would leave it nothing to paint. */
@@ -3508,6 +3549,87 @@
     }
     .gband--consumer.is-ready [data-gallery-canvas] { opacity: 1; }
     .rail__tick--placeholder { pointer-events: none; opacity: .55; }
+    /* The flat plate — the same room for anyone whose machine cannot paint
+       the scene. The twelve are the renders the sculptures were traced from,
+       on a rail you swipe: the piece in the middle is the one being offered,
+       and choosing it opens its trade. No Three.js is fetched here, ever. */
+    .stage-carousel {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      align-items: stretch;
+    }
+    .stage-carousel__track {
+      list-style: none;
+      margin: 0;
+      padding: 0 calc(50% - (var(--slide-w) / 2));
+      width: 100%;
+      display: flex;
+      align-items: center;
+      gap: clamp(12px, 3vw, 40px);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .stage-carousel__track::-webkit-scrollbar { display: none; }
+    .stage-carousel {
+      /* The render carries its own air, so the slide runs wider than the
+         sculpture inside it — this is the size that makes the piece read. */
+      --slide-w: clamp(240px, 80vw, 460px);
+    }
+    .stage-carousel__slide {
+      flex: 0 0 var(--slide-w);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      display: flex;
+      justify-content: center;
+    }
+    .stage-carousel__figure {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 0 0 26px;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      /* The room recedes either side of the piece on offer, the same fall-off
+         the lit scene gives its neighbours. */
+      opacity: .34;
+      transform: scale(.72);
+      transform-origin: bottom center;
+      transition: opacity 420ms var(--ease-soft), transform 420ms var(--ease-soft);
+    }
+    .stage-carousel__slide.is-active .stage-carousel__figure { opacity: 1; transform: scale(1); }
+    .stage-carousel__art {
+      position: relative; z-index: 1;
+      display: block;
+      width: 100%; height: auto;
+      filter: drop-shadow(0 24px 34px rgba(0,0,0,.55));
+    }
+    /* The plinth the render was lit on, and the pool of its own colour. */
+    .stage-carousel__plinth {
+      position: absolute; left: 50%; bottom: 16px;
+      width: 62%; height: 16px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(6,7,9,.85), transparent 78%);
+    }
+    .stage-carousel__slide.is-active .stage-carousel__figure::before {
+      content: '';
+      position: absolute; left: 50%; bottom: 4%;
+      width: 116%; aspect-ratio: 1;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(closest-side, color-mix(in srgb, var(--slide-sign, #E0A9B4) 26%, transparent), transparent 72%);
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .stage-carousel__figure { transition: none; }
+      .stage-carousel__track { scroll-behavior: auto; }
+    }
     /* The museum label. One line of identity in front of the plinth; the
        glass keeps the sculpture present behind it. */
     .stage-placard {
@@ -3561,6 +3683,15 @@
       text-transform: none;
     }
     .stage-placard .stage-placard__pill::before { display: none; }
+    /* The placard's pills are the Registry's hero actions now. Their liquid
+       glass is the shared recipe above — this rule only sets the border and
+       drops the museum arrow. */
+    .stage-placard .stage-placard__pill {
+      border-color: rgba(238,241,247,0.28);
+      color: var(--ink);
+    }
+    .stage-placard .stage-placard__pill:hover { border-color: rgba(238,241,247,0.34); }
+    .stage-placard .btn--ghost.stage-placard__pill::after { content: none; }
     /* The trade sheet — the panel slides in over the stage; the sculpture
        stays where it is, dimmed but present, and the page never navigates. */
     /* Above the floating nav (z 60): a modal owns the whole screen. */
@@ -3609,6 +3740,25 @@
       font-size: 13px;
     }
     .stage-sheet__record:hover { color: var(--ink-2); }
+    /* On a phone the panel rises from the bottom edge — the gesture every
+       wallet and checkout already taught the reader. */
+    @media (max-width: 640px) {
+      .stage-sheet__panel {
+        inset: auto 0 0 0;
+        width: 100%;
+        max-height: 92svh;
+        border-left: 0;
+        border-top: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 30%, var(--hair-2));
+        border-radius: 22px 22px 0 0;
+        padding: 18px 18px 34px;
+        animation: sheet-rise 320ms var(--ease-soft) both;
+      }
+      .stage-sheet__close { margin: -2px -2px 0 0; }
+    }
+    @keyframes sheet-rise {
+      from { opacity: 0; transform: translateY(34px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     @keyframes sheet-scrim { from { opacity: 0; } to { opacity: 1; } }
     @keyframes sheet-slide {
       from { opacity: 0; transform: translateX(28px); }
@@ -3618,6 +3768,29 @@
       .stage-sheet__scrim, .stage-sheet__panel { animation: none; }
     }
     .consumer-trade { margin-top: 24px; }
+    @media (max-width: 700px) {
+      .stage-hero__head { padding: clamp(22px, 3.5vh, 34px) 18px 0; }
+      .stage-hero__title { font-size: clamp(30px, 8vw, 44px); }
+      .stage-hero__line { font-size: 13px; max-width: 40ch; }
+      .gband__rail-top { padding: 14px 12px 2px; }
+      .stage-placard {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 10px;
+        max-width: calc(100% - 24px);
+        padding: 12px 14px;
+        border-radius: 22px;
+      }
+      .stage-placard__name { font-size: 22px; }
+      .stage-placard__actions { width: 100%; justify-content: center; }
+      .stage-placard .stage-placard__pill { flex: 1 1 auto; white-space: nowrap; }
+      .stage-placard { width: calc(100% - 24px); }
+    }
+    @media (max-width: 480px) {
+      /* The dates are on the record a tap away; the placard keeps the name,
+         the price, and the two doors. */
+      .stage-placard__dates { display: none; }
+    }
 
     /* The watchlist — all twelve tokens in zodiac order, one glance. */
     .consumer-tokens {

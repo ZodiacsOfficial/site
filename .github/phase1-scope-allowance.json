@@ -1,7 +1,7 @@
 {
   "version": 1,
-  "id": "registry-trade-panel-2026-08-05b",
-  "reason": "Owner-ratified trade panel work (risk decision approved 2026-08-02T17:28:02Z; landing access ratified 2026-08-03; landing consolidation ratified 2026-08-04). Adds the flag-gated trade region to the twelve catalogue pages (committed flag-off, byte-reversible) and the same flag to the Registry landing, whose wide-screen explorer is consolidated into the page’s opening scene: headline over the stage, the twelve-disc rail, the chosen sculpture spotlit with a placard at its feet (name, dates, live price), and the record and trade panel in a side sheet opened from the placard — the film hero stands down on the stage path. Removes the Base counterpart line and the astrology-guide link from the record box. The stage is framed as one plate whose headline is the page headline; the trade sheet opens directly on the panel; and the card path becomes one alphabetical, branded list of four ways to pay with fomo folded in rather than headlined. Venue and payment marks are ink-recoloured single-colour masks with provenance recorded in docs/VENUE-MARKS.md.",
+  "id": "registry-trade-panel-2026-08-05c",
+  "reason": "Owner-ratified trade panel work (risk decision approved 2026-08-02T17:28:02Z; landing access ratified 2026-08-03; landing consolidation ratified 2026-08-04). Adds the flag-gated trade region to the twelve catalogue pages (committed flag-off, byte-reversible) and the same flag to the Registry landing, whose wide-screen explorer is consolidated into the page’s opening scene: headline over the stage, the twelve-disc rail, the chosen sculpture spotlit with a placard at its feet (name, dates, live price), and the record and trade panel in a side sheet opened from the placard — the film hero stands down on the stage path. Removes the Base counterpart line and the astrology-guide link from the record box. The stage is framed as one plate whose headline is the page headline; the trade sheet opens directly on the panel; and the card path becomes one alphabetical, branded list of four ways to pay with fomo folded in rather than headlined. Venue and payment marks are ink-recoloured single-colour masks with provenance recorded in docs/VENUE-MARKS.md. Iteration 4 makes the plate the explorer at every width: the film hero and the pastel grid retire, machines without WebGL get the same twelve sculptures as a scroll-snap carousel of their 512px renders, choosing the piece on offer opens the trade, and the panel rises as a bottom sheet on a phone.",
   "baseCommit": "362a5a9c2c4b2aedcea46b8fadb55ff87b35176a",
   "protectedPaths": [
     "public/assets/app.js",
@@ -36,6 +36,7 @@
     "scripts/build-sign-pages.mjs",
     "scripts/registry-consumer-contract.test.mjs",
     "scripts/registry-gallery-band.test.mjs",
+    "scripts/registry-pastel-polish.test.mjs",
     "src/app.jsx"
   ]
 }

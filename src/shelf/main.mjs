@@ -625,9 +625,21 @@ async function mount(root, records) {
       // deliver pointerup before it emits pointercancel for native scrolling.
       if (finished.touchIntent === 'vertical') return;
       const index = scene.pick(event.clientX, event.clientY);
-      // In the rectangle a tap chooses, it does not open: the record is
-      // already beside the sculpture, and there is nothing to draw out to.
-      if (spotlight) { if (index >= 0) showFigure(index); return; }
+      // On the plate a tap on the piece already being offered asks to buy it;
+      // a tap on any other piece turns the row to it. Nothing is drawn out —
+      // the record is on the page, and the page decides what "buy" opens.
+      if (spotlight) {
+        if (index < 0) return;
+        if (index === current()) {
+          root.dispatchEvent(new CustomEvent('zodiacs:gallery-trade', {
+            detail: { slug: records[index].slug },
+            bubbles: true,
+          }));
+        } else {
+          showFigure(index);
+        }
+        return;
+      }
       if (index >= 0) {
         // One gesture, one meaning: a sculpture opens its record — front,
         // side, it makes no difference. Tapping the piece already on display

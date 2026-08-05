@@ -120,8 +120,14 @@ describe('the gallery band on the registry hub', () => {
     expect(html).toContain('.gband__rail-top {');
     const opens = app.indexOf('function GalleryBand(');
     const rectangle = app.slice(opens, app.indexOf('</section>', opens));
-    expect(rectangle).toContain('{consumer && <div className="gband__rail-top">');
+    expect(rectangle).toContain('<div className="gband__rail-top">');
     expect(rectangle).toContain('{!consumer && (\n          <div className="gband__chrome">');
+    // Choosing the piece already on offer asks to buy it; the page decides
+    // what that opens, so the scene never navigates.
+    const scene = await read('src/shelf/main.mjs');
+    expect(scene).toContain("root.dispatchEvent(new CustomEvent('zodiacs:gallery-trade'");
+    expect(scene).not.toContain('location.assign');
+    expect(app).toContain("node.addEventListener('zodiacs:gallery-trade', onTrade);");
   });
 
   it('does not commit a touch gesture after the browser cancels it', async () => {

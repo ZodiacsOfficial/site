@@ -138,8 +138,10 @@ describe('Registry consumer and technical information architecture', () => {
       read('public/registry/index.html'),
     ]);
 
-    expect(source).toContain("src: '/assets/hero/zodiacs-hero.mp4'");
-    expect(source).toContain("poster: '/assets/hero/zodiacs-hero-poster.avif'");
+    // The rendered page opens on the gallery at every width, so the film is
+    // the no-JS shell's hero alone — and it still must not autoplay for a
+    // reader who asked for stillness.
+    expect(source).not.toContain("src: '/assets/hero/zodiacs-hero.mp4'");
     expect(source).toContain("window.matchMedia('(prefers-reduced-motion: reduce)').matches");
     expect(source).toContain('new IntersectionObserver');
     expect(html).toContain('data-src="/assets/hero/zodiacs-hero.mp4"');
@@ -162,40 +164,43 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
   });
 
-  it('presents the selected sign as its official token with a live quote and record-first actions', async () => {
+  it('presents the selected sign on a placard: name, dates, price, two doors', async () => {
     const source = await read('src/app.jsx');
     const mounted = consumerRoot(source);
 
-    expect(source).toContain('Official {sign.name} token');
-    expect(source).toContain('Native network: Solana');
-    expect(source).toContain('data-token-quote');
-    expect(source).toContain('View the {sign.name} token');
-    expect(source).toContain('Copy Solana address');
-    // The record box is a plate: the sign's gold sculpture with its pastel
-    // disc seated at the corner, and a route to where the token trades.
-    expect(source).toContain('src={`/assets/sculptures/512/${sign.asset.sign}.webp`}');
-    expect(source).toContain('Trade {sign.name}');
-    expect(source).toContain('consumer-quote__approx');
-    expect(source).toContain('href={`${registryProfilePath(sign)}#acquire`}');
-    // The primary action opens the official record.
-    expect(source).toContain('<a className="btn btn--primary" href={registryProfilePath(sign)}>');
-    expect(source).not.toMatch(/className="btn btn--primary" href=\{`\/\$\{sign\.asset\.sign\}\/`\}/u);
+    const placard = source.slice(
+      source.indexOf('className="stage-placard"'),
+      source.indexOf('className="stage-sheet"'),
+    );
+    expect(placard).toContain('className="stage-placard__name"');
+    expect(placard).toContain('{signDateLabel(sign)}');
+    expect(placard).toContain('<PlacardQuote sign={sign} />');
+    expect(placard).toContain('Trade {sign.name}');
+    expect(placard).toContain('<span>The record</span>');
+    expect(placard).toContain('href={registryProfilePath(sign)}');
+    // Flag-off the pill is the door to the catalogue page's own panel.
+    expect(placard).toContain('href={`${registryProfilePath(sign)}#acquire`}');
     expect(mounted).toContain('<ConsumerTokensSection />');
   });
 
-  it('says one thing about a sign, in one place, whichever selector is showing', async () => {
+  it('says one thing about a sign, in one place, at every width', async () => {
     const source = await read('src/app.jsx');
-    // The rectangle and the pastel grid render the same component, so the two
-    // cannot drift apart. Each of these appears exactly once in the source.
-    expect(source).toContain('function ConsumerSignPanel(');
+    // Both flavours of the plate render the same head, placard and sheet —
+    // only the artwork differs — so the two cannot drift apart.
+    expect(source).toContain('function GalleryBand({ active, setActive, consumer = false, carousel = false })');
     for (const once of [
-      'View the {sign.name} token',
-      'Copy Solana address',
-      'Official {sign.name} token',
-      '<TokenQuote sign={sign} />',
+      'className="stage-placard"',
+      'className="stage-hero__head"',
+      '<PlacardQuote sign={sign} />',
     ]) {
       expect(source.split(once), once).toHaveLength(2);
     }
+    // Twice only because the pill has a flag-on and a flag-off face.
+    expect(source.split('Trade {sign.name}')).toHaveLength(3);
+    // The record card and its quote are gone; the placard carries the price.
+    expect(source).not.toContain('function ConsumerSignPanel(');
+    expect(source).not.toContain('data-token-quote');
+    expect(source).not.toContain('className="consumer-preview"');
   });
 
   it('drops the second chain and the guide detour from the record box', async () => {
@@ -220,8 +225,11 @@ describe('Registry consumer and technical information architecture', () => {
 
   it('opens on the gallery itself where the stage is live, film hero standing down', async () => {
     const source = await read('src/app.jsx');
-    // One hero per page: the stage or the film, never both stacked.
-    expect(source).toContain('{!stageMode && <CineHero sign={sign} />}');
+    // One hero, one headline, at every width: the film is retired from the
+    // rendered page and the plate opens it instead.
+    expect(source).not.toContain('<CineHero');
+    expect(source).toContain('{stageMode && <GalleryBand active={active} setActive={setActive} consumer />}');
+    expect(source).toContain('{!stageMode && <GalleryBand active={active} setActive={setActive} consumer carousel />}');
     expect(source).toContain('className="stage-hero__title"');
     // The placard says what a museum label says — name, dates, price — and
     // holds the two doors; everything longer waits in the sheet.
@@ -277,7 +285,6 @@ describe('Registry consumer and technical information architecture', () => {
     const visible = visibleMarkup(html);
 
     expect(source).toContain('Twelve tokens, live.');
-    expect(source).toContain('data-season-pulse');
     expect(source).toContain('function loadTwelveMarketQuotes()');
     expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
     // Zodiac order, never a leaderboard: the strip renders SIGNS in
