@@ -6,6 +6,7 @@ export const REGISTRY_AURA_RETURN_KEY = 'registry-collection';
 export const REGISTRY_AURA_META_NAME = 'zodiacs-registry-collection-enabled';
 export const REGISTRY_AURA_ENTRY_SLOT = '<!-- registry-collection-entry:slot -->';
 export const REGISTRY_AURA_HERO_SLOT = '<!-- registry-collection-hero:slot -->';
+export const REGISTRY_AURA_THESIS_SLOT = '<!-- registry-collection-thesis:slot -->';
 
 export const REGISTRY_AURA_ENTRY_COPY = Object.freeze({
   title: 'The Cabinet of Twelve',
@@ -24,6 +25,9 @@ const ENTRY_REGION = /<!-- registry-collection-entry:slot -->(?:\n[ \t]*<!-- reg
 const HERO_START = '<!-- registry-collection-hero:start -->';
 const HERO_END = '<!-- registry-collection-hero:end -->';
 const HERO_REGION = /<!-- registry-collection-hero:slot -->(?:\n[ \t]*<!-- registry-collection-hero:start -->[\s\S]*?<!-- registry-collection-hero:end -->)?/;
+const THESIS_START = '<!-- registry-collection-thesis:start -->';
+const THESIS_END = '<!-- registry-collection-thesis:end -->';
+const THESIS_REGION = /<!-- registry-collection-thesis:slot -->(?:\n[ \t]*<!-- registry-collection-thesis:start -->[\s\S]*?<!-- registry-collection-thesis:end -->)?/;
 const META = /<meta name="zodiacs-registry-collection-enabled" content="(?:0|1)" \/>/;
 
 export function registryAuraEnabled(env = {}) {
@@ -82,6 +86,12 @@ function renderNoJsHeroAction() {
               ${HERO_END}`;
 }
 
+function renderThesisAction() {
+  return `${THESIS_START}
+              <a class="thesis-close__action" data-thesis-cta="collection" href="${REGISTRY_AURA_PATH}"><span><strong>View a wallet collection</strong><small>Read-only · no signing</small></span><span class="thesis-close__arrow" aria-hidden="true">↗</span></a>
+              ${THESIS_END}`;
+}
+
 export function injectRegistryAuraLanding(source, env = {}) {
   if (!META.test(source)) {
     throw new Error(`Missing ${REGISTRY_AURA_META_NAME} build marker`);
@@ -106,6 +116,22 @@ export function injectRegistryAuraLanding(source, env = {}) {
     output = output.replace(
       REGISTRY_AURA_ENTRY_SLOT,
       `${REGISTRY_AURA_ENTRY_SLOT}\n          ${renderNoJsEntry()}`,
+    );
+  }
+  return { output, enabled };
+}
+
+export function injectRegistryAuraThesis(source, env = {}) {
+  if (!source.includes(REGISTRY_AURA_THESIS_SLOT)) {
+    throw new Error('Missing Registry Collection thesis slot');
+  }
+
+  const enabled = registryAuraEnabled(env);
+  let output = source.replace(THESIS_REGION, REGISTRY_AURA_THESIS_SLOT);
+  if (enabled) {
+    output = output.replace(
+      REGISTRY_AURA_THESIS_SLOT,
+      `${REGISTRY_AURA_THESIS_SLOT}\n              ${renderThesisAction()}`,
     );
   }
   return { output, enabled };

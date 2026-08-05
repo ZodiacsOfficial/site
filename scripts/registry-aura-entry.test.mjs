@@ -4,7 +4,9 @@ import {
   REGISTRY_AURA_ENTRY_SLOT,
   REGISTRY_AURA_HERO_SLOT,
   REGISTRY_AURA_PATH,
+  REGISTRY_AURA_THESIS_SLOT,
   injectRegistryAuraLanding,
+  injectRegistryAuraThesis,
   registryAuraChartAnalytics,
   registryAuraChartLink,
   registryAuraEnabled,
@@ -25,6 +27,10 @@ ${REGISTRY_AURA_HERO_SLOT}
 const HTML = `<!doctype html><html><head>
 <meta name="zodiacs-registry-collection-enabled" content="0" />
 </head><body>${HERO}<div>${REGISTRY_AURA_ENTRY_SLOT}</div></body></html>`;
+
+const THESIS = `<!doctype html><html><body><div class="thesis-close__actions">
+${REGISTRY_AURA_THESIS_SLOT}
+</div></body></html>`;
 
 function configure(source, env = {}) {
   const injected = injectRegistryAuraLanding(source, env);
@@ -84,6 +90,21 @@ describe('Registry Collection build flag', () => {
     expect(configure(off, {}).output).toBe(off);
   });
 
+  it('adds and removes the thesis Collection action idempotently', () => {
+    const on = injectRegistryAuraThesis(THESIS, { PUBLIC_REGISTRY_COLLECTION_ENABLED: '1' }).output;
+    expect(on.match(new RegExp(`href="${REGISTRY_AURA_PATH}"`, 'g'))).toHaveLength(1);
+    expect(on).toContain('class="thesis-close__action" data-thesis-cta="collection"');
+    expect(on).toContain('<strong>View a wallet collection</strong>');
+    expect(on).toContain('<small>Read-only · no signing</small>');
+    expect(on).toContain('class="thesis-close__arrow" aria-hidden="true">↗</span>');
+    expect(injectRegistryAuraThesis(on, { PUBLIC_REGISTRY_COLLECTION_ENABLED: '1' }).output).toBe(on);
+
+    const off = injectRegistryAuraThesis(on, {}).output;
+    expect(off).toBe(THESIS);
+    expect(off).not.toContain(REGISTRY_AURA_PATH);
+    expect(injectRegistryAuraThesis(off, {}).output).toBe(off);
+  });
+
   it('refuses to stamp a landing page missing its build markers', () => {
     const withoutMeta = HTML.replace('<meta name="zodiacs-registry-collection-enabled" content="0" />', '');
     expect(() => injectRegistryAuraLanding(withoutMeta, {})).toThrow(/marker/i);
@@ -93,6 +114,8 @@ describe('Registry Collection build flag', () => {
 
     const withoutHero = HTML.replace(REGISTRY_AURA_HERO_SLOT, '');
     expect(() => injectRegistryAuraLanding(withoutHero, {})).toThrow(/hero slot/i);
+
+    expect(() => injectRegistryAuraThesis('<!doctype html><html></html>', {})).toThrow(/thesis slot/i);
   });
 
   it('allows only the named chart return context and always uses the fixed Collection path', () => {
