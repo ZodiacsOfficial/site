@@ -3971,6 +3971,16 @@
         padding: 24px 20px;
         border-radius: 24px 24px 24px 6px;
       }
+      /* A card carrying the trade panel stacks instead: an amount field, four
+         ways to pay and their notes cannot share a row with the sculpture on
+         a phone. The record-only card — what ships with the flag off — keeps
+         the plate-beside-text layout it has always had. */
+      .consumer-preview:has(.consumer-trade) {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: start;
+      }
+      .consumer-preview:has(.consumer-trade) .consumer-preview__art { padding-bottom: 20px; }
+      .consumer-preview:has(.consumer-trade) .consumer-preview__body { width: 100%; }
       .consumer-preview__art { align-self: start; padding-bottom: 12px; }
       .consumer-preview__art::before { bottom: 7px; }
       .consumer-preview__sculpture { width: 96px; }

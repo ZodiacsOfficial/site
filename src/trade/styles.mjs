@@ -177,10 +177,24 @@ export const TP_CSS = `
 .tp .after li::before { content: '·'; position: absolute; left: 4px; color: var(--tp-dim); }
 .tp .note { margin: 16px 0 0; color: var(--tp-dim); font-size: 11.5px; line-height: 1.5; }
 
-@container (max-width: 340px) {
+@container (max-width: 380px) {
   .tp { padding: 16px; }
   .tp .pay__input { font-size: 26px; }
   .tp .out { font-size: 22px; }
+  .tp .payseg button { flex-basis: 100%; }
+  /* Name over note rather than name beside note: a six-word line has nowhere
+     to go on a phone once the mark and the arrow have taken their room. */
+  .tp .ramp {
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 4px 12px;
+    padding: 10px 2px;
+  }
+  /* Explicit order so the arrow stays on the name's line and only the note
+     wraps beneath it — left to itself it would land on a third line alone. */
+  .tp .ramp__who { order: 1; flex: 1 1 auto; }
+  .tp .ramps .go { order: 2; }
+  .tp .ramp__note { order: 3; flex-basis: 100%; text-align: left; }
 }
 
 /* The wallet chooser, only ever raised when more than one is installed. */
