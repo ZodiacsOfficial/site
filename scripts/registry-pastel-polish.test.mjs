@@ -87,7 +87,6 @@ describe('registry pastel polish', () => {
       source.indexOf('className="gband__rail-top"'),
     );
     expect(head).toContain('Every sign has one official token. Explore its story, its record, and its market.');
-    expect(head).toContain('href="#verify"');
     expect(head).not.toContain('REGISTRY_AURA_ENABLED');
     expect(head).not.toContain('Open the Cabinet');
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");

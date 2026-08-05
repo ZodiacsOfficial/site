@@ -1818,10 +1818,6 @@
                 <p className="stage-hero__line">
                   Every sign has one official token. Explore its story, its record, and its market.
                 </p>
-                {/* Its own line, in words a first-time visitor can act on: the
-                    tool answers "is this the real one?", which "check an
-                    address" never said to anyone who had not already read it. */}
-                <a className="stage-hero__verify" href="#verify">Check a token is official ↓</a>
               </header>
           )}
           {consumer && (
@@ -3824,7 +3820,7 @@
               <>
                 <a href="#official-twelve">The Twelve</a>
                 <a href="#registry">How it works</a>
-                <a href="#verify">Check a token is official</a>
+                <a href="#verify">Verify a token</a>
                 <a href="/registry/technical/">Technical record</a>
                 <a href="#thesis">Thesis</a>
               </>

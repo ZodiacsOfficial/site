@@ -689,8 +689,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await desktop.locator('.cine').count() === 0
         && await desktop.locator('h1.stage-hero__title').count() === 1
         && (await desktop.locator('.stage-hero__line').innerText()).trim()
-          .startsWith('Every sign has one official token. Explore its story, its record, and its market.')
-        && await desktop.locator('.stage-hero__verify[href="#verify"]').count() === 1,
+          .startsWith('Every sign has one official token. Explore its story, its record, and its market.'),
     );
     check(
       'the carousel shows the twelve gold sculptures where the scene cannot',
