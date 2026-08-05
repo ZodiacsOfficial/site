@@ -18,10 +18,12 @@ same panel mounts in that sign's card on narrower viewports. The approval
 timestamp above, the decision below, and every mandatory control are
 unchanged and apply to the landing exactly as they apply to a catalogue
 page. One consequence is called out where it belongs: on the landing the
-panel opens from a sign's placard on large screens and sits in the
-sign's card on small ones, so a price is requested from Jupiter when the
-panel is shown — which is why the privacy pages say when that request
-happens, not merely that it can.
+panel opens only when the visitor asks for it — from a sign's pill or by
+choosing the sculpture on show — at every screen size, so a price is
+requested from Jupiter only then, which is why the privacy pages say
+when that request happens rather than merely that it can. Nothing is
+requested from any venue, and no panel code is fetched, before that
+choice.
 
 ## Decision
 
