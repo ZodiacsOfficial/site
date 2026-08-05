@@ -26,10 +26,14 @@ const ROW_IDS = [
   'origin',
   'separation',
   'read-only',
+  'trade-panel',
   'financial-advice',
 ] as const;
 const ATTESTED_IDS = ['operator', 'economic-interest'] as const;
 const VERIFIED_IDS = ['origin', 'separation', 'read-only', 'financial-advice'] as const;
+// The embedded trade panel is disclosed ahead of launch and stays on the
+// pending chip until its public code ships and the row can be verified.
+const PENDING_IDS = ['trade-panel'] as const;
 const ROUTE_TEXT_KEYS = [
   'metaTitle',
   'metaDescription',
@@ -62,6 +66,10 @@ const ROUTE_TEXT_KEYS = [
   'readOnlyLabel',
   'readOnlyStatement',
   'readOnlyEvidence',
+  'tradeLabel',
+  'tradeStatement',
+  'tradeEvidence',
+  'linkTradeExample',
   'adviceLabel',
   'adviceStatement',
   'adviceEvidence',
@@ -219,8 +227,9 @@ describe('registry disclosure contract', () => {
       expect(text).not.toMatch(/did not authorize|declined/i);
       expect(text).not.toMatch(/evenly distributed/i);
     }
-    // No row is pending, and no operator scaffolding remains.
-    expect(DISCLOSURE_ROWS.some((row) => row.status === 'pending')).toBe(false);
+    // Only the pre-launch trade row is pending, and no operator scaffolding remains.
+    expect(DISCLOSURE_ROWS.filter((row) => row.status === 'pending').map((row) => row.id))
+      .toEqual([...PENDING_IDS]);
     expect(DISCLOSURE_ROWS.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR'))).toBe(true);
   });
 
@@ -252,6 +261,27 @@ describe('registry disclosure contract', () => {
     expect(row.statement).not.toContain('do not connect wallets');
     expect(row.evidence).toContain('forwards only the one address used for its holdings lookup');
     expect(row.evidence).toContain('not proof of identity, control, or legal ownership');
+  });
+
+  it('describes the trade panel as the site’s own interface over a venue-run trade', () => {
+    const row = DISCLOSURE_ROWS.find((candidate) => candidate.id === 'trade-panel')!;
+    expect(row.status).toBe('pending');
+    expect(row.statement).toContain('When the trade panel is enabled');
+    // The panel is ours; the trade is not. Both halves must stay said.
+    expect(row.statement).toContain('Zodiacs.org’s own interface');
+    expect(row.statement).toContain('Jupiter builds the transaction');
+    expect(row.statement).toContain('Jupiter submits it to the network');
+    // The site's four negations, including the two the custom panel adds.
+    expect(row.statement).toContain('never holds keys or funds');
+    expect(row.statement).toContain('never builds, signs, or sends a transaction');
+    expect(row.statement).toContain('cannot reverse one');
+    expect(row.statement).toContain('no referral account or platform fee');
+    expect(row.statement).toContain('receives nothing from any trade');
+    // The venue's fee is named rather than left for the visitor to discover.
+    expect(row.statement).toContain('Jupiter charges a fee of 0.10%');
+    expect(row.evidence).toContain('not yet enabled');
+    expect(row.evidence).toContain('holds no signing key and calls no write endpoint of its own');
+    expect(row.links.map((link) => link.href)).toEqual(['/registry/aries/', '/terms/']);
   });
 
   it('defines official as a Registry classification without implying safety or value', () => {
@@ -330,7 +360,7 @@ describe('registry disclosure contract', () => {
     expect(source).toMatch(/\.status-chip--operator-attested\s*\{[\s\S]*color:\s*#B6D4E4;/);
   });
 
-  it('keeps the six-row contract and receipt links localized in every catalog', () => {
+  it('keeps the seven-row contract and receipt links localized in every catalog', () => {
     for (const locale of RELEASED_LOCALES) {
       const rows = disclosureRows(locale);
       expect(rows.map((row) => row.id), locale).toEqual(ROW_IDS);
@@ -338,7 +368,8 @@ describe('registry disclosure contract', () => {
         .toEqual([...ATTESTED_IDS]);
       expect(rows.filter((row) => row.status === 'verified').map((row) => row.id), locale)
         .toEqual([...VERIFIED_IDS]);
-      expect(rows.some((row) => row.status === 'pending'), locale).toBe(false);
+      expect(rows.filter((row) => row.status === 'pending').map((row) => row.id), locale)
+        .toEqual([...PENDING_IDS]);
       expect(rows.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR')), locale)
         .toBe(true);
 
@@ -380,7 +411,7 @@ describe('registry disclosure contract', () => {
       ] as const) {
         expect(html, `${locale}:disclosure.${key}`).toContain(disclosureText(locale, key));
       }
-      expect(html.match(/class="[^"]*status-chip--pending[^"]*"/g), locale).toBeNull();
+      expect(html.match(/class="[^"]*status-chip--pending[^"]*"/g), locale).toHaveLength(1);
       expect(html.match(/class="[^"]*status-chip--operator-attested[^"]*"/g), locale).toHaveLength(2);
       expect(html.match(/class="[^"]*status-chip--verified[^"]*"/g), locale).toHaveLength(4);
       expect(html.match(/class="[^"]*establishment__pending[^"]*"/g), locale).toBeNull();

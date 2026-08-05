@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '1 de agosto de 2026';
+const updated = '2 de agosto de 2026';
 
 const jsonLd = [
   {
@@ -121,6 +121,26 @@ const jsonLd = [
         comuns de uma solicitação web, como endereço IP, data, hora, navegador e
         a página de origem permitida pela política do navegador; as políticas de
         privacidade próprias desses serviços se aplicam.
+      </p>
+      <p>
+        A página de catálogo de um signo e o explorador da página inicial do
+        Registo também podem incluir um painel de negociação opcional. O painel
+        é a nossa própria interface e pede um preço à API pública da Jupiter,
+        uma plataforma independente. Na página inicial o painel só abre
+        quando o pede — a partir da pastilha de um signo ou escolhendo a
+        escultura exposta — em qualquer tamanho de ecrã, por isso esse pedido é
+        feito quando o abre e de novo sempre que muda o montante ou o signo; o que
+        sai do seu navegador nessa altura é o montante, os dois identificadores
+        de token e os metadados comuns de um pedido web — não o seu endereço,
+        que só é enviado se escolher operar. Se você
+        decidir operar, o seu endereço público é enviado à Jupiter para que ela
+        monte a transação, e a transação assinada pela sua carteira volta à
+        Jupiter para ser enviada à rede; essas solicitações, e qualquer aviso
+        da carteira, seguem as políticas de privacidade da própria Jupiter. A
+        Jupiter recebe metadados comuns de uma solicitação web, como endereço
+        IP, navegador e hora. O Zodiacs.org não guarda desse painel o seu
+        endereço, saldos nem operações, e nenhum dado de nascimento ou do mapa
+        participa dele.
       </p>
 
       <h2>Assistente de IA</h2>
