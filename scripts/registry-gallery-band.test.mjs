@@ -91,6 +91,45 @@ describe('the gallery band on the registry hub', () => {
     expect(scene).toContain('setHover(scene.pick(');
   });
 
+  it('shows one piece rather than a shelf when it is the landing’s rectangle', async () => {
+    const [app, scene, layout] = await Promise.all([
+      read('src/app.jsx'), read('src/shelf/main.mjs'), read('src/shelf/layout.mjs'),
+    ]);
+    // Read once at mount, not per selection: the rectangle is not a mode the
+    // reader can leave, and the event contract stays exactly as it was.
+    expect(app).toContain('data-gallery-spotlight');
+    expect(scene).toContain("root.hasAttribute('data-gallery-spotlight')");
+    expect(layout).toContain('export const SPOTLIGHT_STAGE');
+    expect(layout).toContain('export const SPOTLIGHT_VITRINE');
+    // Nothing is ever drawn out of it — the record is already on the page
+    // beside the figure — so the card and the open pose stay unreachable.
+    expect(scene).toContain('if (spotlight) { showFigure(index); return; }');
+    const opens = scene.indexOf('async function openFigure(');
+    expect(scene.slice(opens, scene.indexOf('\n  }\n', opens)))
+      .toContain('if (spotlight) return;');
+  });
+
+  it('keeps the rectangle’s rail out of the band the scene measures', async () => {
+    const [app, html] = await Promise.all([
+      read('src/app.jsx'), read('public/registry/index.html'),
+    ]);
+    // bandRects() treats .gband__chrome's offsetTop as the FLOOR of the band
+    // it may paint into, so chrome above the canvas would leave the figures a
+    // 140px strip. The rectangle's rail wears its own class for that reason.
+    expect(app).toContain('className="gband__rail-top"');
+    expect(html).toContain('.gband__rail-top {');
+    const opens = app.indexOf('function GalleryBand(');
+    const rectangle = app.slice(opens, app.indexOf('</section>', opens));
+    expect(rectangle).toContain('<div className="gband__rail-top">');
+    expect(rectangle).toContain('{!consumer && (\n          <div className="gband__chrome">');
+    // Choosing the piece already on offer asks to buy it; the page decides
+    // what that opens, so the scene never navigates.
+    const scene = await read('src/shelf/main.mjs');
+    expect(scene).toContain("root.dispatchEvent(new CustomEvent('zodiacs:gallery-trade'");
+    expect(scene).not.toContain('location.assign');
+    expect(app).toContain("node.addEventListener('zodiacs:gallery-trade', onTrade);");
+  });
+
   it('does not commit a touch gesture after the browser cancels it', async () => {
     const scene = await read('src/shelf/main.mjs');
 

@@ -1369,106 +1369,6 @@
         </>
       );
     }
-
-    // ---- Cinematic opening — full-bleed ambient film ------------------------
-    // The first viewport: the registry's own film (a slow macro pan
-    // across a painted astronomical dial, palindrome-looped) under a
-    // quiet wordmark. Poster paints first; the film pauses off-screen
-    // and stands down entirely for reduced motion or data-saver.
-    // Portrait phones get a baked 9:16 crop; everything else the
-    // landscape master. Lives outside the .zd shell — the shell clips
-    // horizontal overflow, and this act must run edge to edge.
-    function CineHero({ sign }) {
-      const videoRef = useRef(null);
-      // Shares the main site's hero footage so the wing opens on the same
-      // image as zodiacs.org — one master serves every orientation (there is
-      // no portrait crop of it, and the frame is composed to hold centre).
-      const media = useMemo(() => ({
-        src: '/assets/hero/zodiacs-hero.mp4',
-        poster: '/assets/hero/zodiacs-hero-poster.avif'
-      }), []);
-      useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return undefined;
-        // Poster stands in for reduced-motion — never attach or play the film.
-        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return undefined;
-        // Mirror the main site's hero (index.astro): an explicit muted play()
-        // rather than the `autoplay` attribute — mobile Safari / Low-Power /
-        // Data-Saver routinely ignore autoplay but honour a scripted play on a
-        // muted, inline video. The film only attaches on first play so the
-        // poster wins first paint; no `saveData` stand-down (the poster is
-        // already the light path, and the owner wants the film to animate).
-        const play = () => {
-          if (!video.isConnected) return;
-          if (!video.src) { video.src = media.src; video.preload = 'auto'; }
-          const p = video.play();
-          if (p && p.catch) p.catch(() => {});
-        };
-        // The observer fires on mount (the hero opens on screen), so it both
-        // starts the opening playback and pauses the full-bleed film when it
-        // scrolls away — resuming when it returns.
-        let io;
-        if ('IntersectionObserver' in window) {
-          io = new IntersectionObserver(([entry]) => {
-            if (entry.isIntersecting) play();
-            else { try { video.pause(); } catch { /* poster stands in */ } }
-          }, { threshold: 0.05 });
-          io.observe(video);
-        } else {
-          play();
-        }
-        // Restore playback after a bfcache back/forward (pageshow.persisted).
-        const onShow = (e) => { if (e.persisted) play(); };
-        window.addEventListener('pageshow', onShow);
-        return () => { window.removeEventListener('pageshow', onShow); if (io) io.disconnect(); };
-      }, [media.src]);
-      return (
-        <section className="cine" aria-label="Zodiacs.org — the official registry of the Twelve">
-          <div className="cine__frame">
-            <video
-              ref={videoRef}
-              className="cine__media"
-              muted
-              loop
-              playsInline
-              preload="none"
-              poster={media.poster}
-              aria-hidden="true"
-              tabIndex={-1}
-            />
-            <div className="cine__scrim" aria-hidden="true" />
-            <div className="cine__content">
-              <a className="cine__eyebrow" href="/disclosure/">
-                The Official Registry · Est. {REGISTRY_ESTABLISHED}
-                {!REGISTRY_ESTABLISHMENT_PROVENANCE_URL && ' · provenance pending'}
-              </a>
-              <h1 className="cine__title">
-                Twelve signs.<br/>
-                <span className="it">One register.</span>
-              </h1>
-              <div className="cine__foot">
-                <p className="cine__line">
-                  Every sign has one official token. Explore its story, its record, and its market.
-                </p>
-                <div className="cine__cta">
-                  <a className="btn btn--primary" href="#official-twelve" data-registry-browse>
-                    <span>Choose a token</span>
-                    <span className="arr">↓</span>
-                  </a>
-                  <a className="btn btn--ghost" href="#verify">
-                    <span>Check an address</span>
-                    <span className="cta-arr" aria-hidden="true">↓</span>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      );
-    }
-
-    /* Read-only copy chip — visible as a monospace truncated address;
-       click copies the full address to clipboard and flashes "Copied". */
     function CopyChip({ text, display }) {
       const [copied, setCopied] = useState(false);
       const onCopy = useCallback(() => {
@@ -1501,6 +1401,67 @@
 
     let galleryBundleRequested = false;
 
+    /* The trade panel's runtime, fetched at most once per page and only when
+       the panel is actually near the reader. Resolves to null if the bundle
+       cannot load, so a failed fetch leaves an empty box rather than a
+       half-built form. */
+    let tradeBundleReady = null;
+
+    function loadTradeBundle() {
+      if (tradeBundleReady) return tradeBundleReady;
+      tradeBundleReady = new Promise((resolve) => {
+        if (window.zodiacsTrade) { resolve(window.zodiacsTrade); return; }
+        const script = document.createElement('script');
+        script.src = '/assets/trade.js';
+        script.defer = true;
+        script.addEventListener('load', () => resolve(window.zodiacsTrade ?? null), { once: true });
+        script.addEventListener('error', () => resolve(null), { once: true });
+        document.body.appendChild(script);
+      });
+      return tradeBundleReady;
+    }
+
+    /* The panel itself is plain DOM, mounted into this box by the bundle. It
+       is rebuilt when the sign changes: a panel is about one token, and
+       carrying a half-typed amount across signs would be worse than clearing
+       it. */
+    function LandingTrade({ sign }) {
+      const hostRef = useRef(null);
+      useEffect(() => {
+        const host = hostRef.current;
+        if (!host) return undefined;
+        let panel = null;
+        let live = true;
+        let io = null;
+        const open = () => {
+          loadTradeBundle().then((trade) => {
+            if (!live || !trade) return;
+            panel = trade.mount(host, {
+              name: sign.name,
+              slug: sign.asset.sign,
+              mint: sign.representations.solana.address,
+              hue: sign.hue,
+              iconUrl: `/assets/zodiac-icons/128/${sign.asset.sign}.webp`,
+            });
+          });
+        };
+        if (!('IntersectionObserver' in window)) open();
+        else {
+          io = new IntersectionObserver(([entry]) => {
+            if (entry.isIntersecting) { open(); io.disconnect(); }
+          }, { rootMargin: '400px 0px' });
+          io.observe(host);
+        }
+        return () => {
+          live = false;
+          io?.disconnect();
+          panel?.destroy?.();
+        };
+      }, [sign]);
+
+      return <div className="consumer-trade" data-landing-trade={sign.asset.sign} ref={hostRef} />;
+    }
+
     // Inert pastel discs hold the rail's shape until the scene bundle
     // arrives and swaps in the live ticks with one replaceChildren call.
     // Rendered via dangerouslySetInnerHTML with a constant string so React
@@ -1513,18 +1474,263 @@
       + '</picture></span>'
     )).join('');
 
-    function GalleryBand({ active, setActive, consumer = false }) {
+    /* The placard's price: one number and its day, small enough to sit on a
+       museum label. Reads from the same single batched market call the rest
+       of the page shares. */
+    function PlacardQuote({ sign }) {
+      const [ref, inView] = useInView();
+      const batch = useTwelveQuotes(inView);
+      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
+      const changeClass = marketChangeClass(quote?.priceChange24h);
+      return (
+        <span ref={ref} className="stage-placard__quote">
+          {quote ? (
+            <>
+              <span className="stage-placard__price">{formatPriceUsd(quote.priceUsd)}</span>
+              {formatPercent(quote.priceChange24h) !== '—' && (
+                <span className={'stage-placard__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
+              )}
+            </>
+          ) : (
+            <span className="stage-placard__price stage-placard__price--waiting">
+              {batch.status === 'ok' ? 'Not indexed' : 'Live price…'}
+            </span>
+          )}
+        </span>
+      );
+    }
+
+    /* The twelve pastel discs as a rail rather than a grid: the same picker
+       at every width, scrolling sideways where it cannot fit. Keyboard
+       contract matches the grid it replaces — roving tabindex, arrows walk
+       the row, Home and End jump to the ends. */
+    function DiscRail({ active, setActive }) {
+      const railRef = useRef(null);
+      const activeIndex = Math.max(0, SIGNS.findIndex(item => item.ticker === active));
+
+      const choose = (index, focus = false) => {
+        const wrapped = ((index % SIGNS.length) + SIGNS.length) % SIGNS.length;
+        const next = SIGNS[wrapped];
+        if (!next) return;
+        if (focus) {
+          railRef.current
+            ?.querySelector(`[data-consumer-sign="${next.asset.sign}"]`)
+            ?.focus({ preventScroll: true });
+        }
+        setActive(next.ticker);
+        trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_explorer' });
+      };
+
+      const onKeyDown = (event) => {
+        if (event.altKey || event.ctrlKey || event.metaKey) return;
+        const moves = {
+          ArrowRight: activeIndex + 1,
+          ArrowLeft: activeIndex - 1,
+          Home: 0,
+          End: SIGNS.length - 1
+        };
+        if (!(event.key in moves)) return;
+        event.preventDefault();
+        choose(moves[event.key], true);
+      };
+
+      // Keep the chosen disc in view when the rail is wider than the plate.
+      useEffect(() => {
+        const disc = railRef.current?.querySelector('[aria-pressed="true"]');
+        disc?.scrollIntoView({ inline: 'center', block: 'nearest' });
+      }, [active]);
+
+      return (
+        <div
+          className="rail"
+          ref={railRef}
+          role="group"
+          aria-label="The twelve sculptures"
+          onKeyDown={onKeyDown}
+        >
+          {SIGNS.map((item) => {
+            const isActive = item.ticker === active;
+            return (
+              <button
+                key={item.ticker}
+                id={item.asset.sign}
+                type="button"
+                className={'rail__tick' + (isActive ? ' is-active' : '')}
+                data-consumer-sign={item.asset.sign}
+                aria-label={`${item.name}, ${signDateLabel(item)}`}
+                aria-pressed={isActive}
+                aria-controls="consumer-sign-preview"
+                tabIndex={isActive ? 0 : -1}
+                style={{ '--sign': item.hue }}
+                onClick={() => choose(item.order - 1)}
+              >
+                <picture aria-hidden="true">
+                  <source srcSet={`/assets/zodiac-icons/48/${item.asset.sign}.avif`} type="image/avif" />
+                  <img
+                    src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}
+                    width="26"
+                    height="26"
+                    alt=""
+                    loading={item.order > 6 ? 'lazy' : 'eager'}
+                    decoding="async"
+                  />
+                </picture>
+              </button>
+            );
+          })}
+        </div>
+      );
+    }
+
+    /* The gallery for machines without WebGL — phones, tablets, and any
+       desktop whose browser cannot paint the scene. The same twelve gold
+       sculptures, as the renders they were traced from, on a scroll-snap
+       rail: swipe to walk the room, and the piece in the middle is the one
+       being offered. Nobody here pays for Three.js. */
+    function SculptureCarousel({ active, setActive, onOpen }) {
+      const trackRef = useRef(null);
+      // The slug the scroll last announced — the same echo guard the scene
+      // uses, so selection cannot loop between the rail and the track.
+      const scrolledSlug = useRef(null);
+      const activeIndex = Math.max(0, SIGNS.findIndex(item => item.ticker === active));
+
+      // Page → track: any other selector centres the matching sculpture.
+      useEffect(() => {
+        const track = trackRef.current;
+        const slide = track?.children?.[activeIndex];
+        if (!track || !slide) return;
+        if (scrolledSlug.current === SIGNS[activeIndex].asset.sign) return;
+        const motion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        slide.scrollIntoView({ inline: 'center', block: 'nearest', behavior: motion ? 'instant' : 'smooth' });
+      }, [activeIndex]);
+
+      // Track → page: whatever settles in the middle becomes the selection.
+      useEffect(() => {
+        const track = trackRef.current;
+        if (!track) return undefined;
+        let timer = 0;
+        const settle = () => {
+          const middle = track.scrollLeft + (track.clientWidth / 2);
+          let nearest = 0;
+          let best = Infinity;
+          for (let i = 0; i < track.children.length; i += 1) {
+            const slide = track.children[i];
+            const centre = slide.offsetLeft + (slide.offsetWidth / 2);
+            const gap = Math.abs(centre - middle);
+            if (gap < best) { best = gap; nearest = i; }
+          }
+          const next = SIGNS[nearest];
+          if (!next || next.ticker === active) return;
+          scrolledSlug.current = next.asset.sign;
+          setActive(next.ticker);
+        };
+        const onScroll = () => {
+          window.clearTimeout(timer);
+          timer = window.setTimeout(settle, 90);
+        };
+        track.addEventListener('scroll', onScroll, { passive: true });
+        return () => { window.clearTimeout(timer); track.removeEventListener('scroll', onScroll); };
+      }, [active, setActive]);
+
+      return (
+        <div className="stage-carousel" data-gallery-carousel="">
+          <ul className="stage-carousel__track" ref={trackRef}>
+            {SIGNS.map((item, index) => {
+              const isActive = item.ticker === active;
+              const near = Math.abs(index - activeIndex) <= 1;
+              const art = (
+                <>
+                  <img
+                    className="stage-carousel__art"
+                    src={`/assets/sculptures/512/${item.asset.sign}.webp`}
+                    width="512"
+                    height="512"
+                    alt=""
+                    loading={near ? 'eager' : 'lazy'}
+                    decoding="async"
+                  />
+                  <span className="stage-carousel__plinth" aria-hidden="true" />
+                </>
+              );
+              return (
+                <li
+                  key={item.ticker}
+                  className={'stage-carousel__slide' + (isActive ? ' is-active' : '')}
+                  style={{ '--slide-sign': item.hue }}
+                >
+                  {isActive ? (
+                    REGISTRY_TRADE_ENABLED ? (
+                      <button
+                        type="button"
+                        className="stage-carousel__figure"
+                        data-carousel-open={item.asset.sign}
+                        aria-label={`Trade ${item.name}`}
+                        onClick={onOpen}
+                      >{art}</button>
+                    ) : (
+                      <a
+                        className="stage-carousel__figure"
+                        data-carousel-open={item.asset.sign}
+                        href={registryProfilePath(item)}
+                        aria-label={`View the ${item.name} record`}
+                      >{art}</a>
+                    )
+                  ) : (
+                    <button
+                      type="button"
+                      className="stage-carousel__figure"
+                      aria-label={`Show ${item.name}`}
+                      onClick={() => setActive(item.ticker)}
+                    >{art}</button>
+                  )}
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+      );
+    }
+
+    function GalleryBand({ active, setActive, consumer = false, carousel = false }) {
       const stageRef = useRef(null);
       // The slug the scene last announced — the guard that keeps the
       // selection loop (scene → state → scene) from echoing.
       const gallerySlug = useRef(null);
-      const slug = (SIGNS.find(s => s.ticker === active) ?? SIGNS[0]).asset.sign;
+      const sign = SIGNS.find(s => s.ticker === active) ?? SIGNS[0];
+      const slug = sign.asset.sign;
+      const season = useMemo(() => currentSeason(), []);
+      // The trade sheet: the panel slides in over the stage on request and
+      // the sculpture stays where it is, dimmed behind the scrim. Closing
+      // returns focus to the pill that opened it.
+      const [sheetOpen, setSheetOpen] = useState(false);
+      const tradePillRef = useRef(null);
+      const sheetCloseRef = useRef(null);
+      useEffect(() => {
+        if (!sheetOpen) return undefined;
+        sheetCloseRef.current?.focus({ preventScroll: true });
+        const onKey = (event) => {
+          if (event.key === 'Escape') setSheetOpen(false);
+        };
+        document.addEventListener('keydown', onKey);
+        return () => {
+          document.removeEventListener('keydown', onKey);
+          tradePillRef.current?.focus({ preventScroll: true });
+        };
+      }, [sheetOpen]);
+
+      /* What choosing a sculpture means. Flag-on it opens the trade where the
+         reader already is; flag-off it opens the sign's record, so the piece
+         is never inert. */
+      const openTrade = () => {
+        if (REGISTRY_TRADE_ENABLED) setSheetOpen(true);
+        else window.location.href = registryProfilePath(sign);
+      };
 
       // The scene bundle carries Three.js; it is fetched only as the band
-      // approaches the viewport, and only once.
+      // approaches the viewport, and only once. The carousel never asks.
       useEffect(() => {
         const node = stageRef.current;
-        if (!node) return undefined;
+        if (!node || carousel) return undefined;
         const inject = () => {
           if (galleryBundleRequested) return;
           galleryBundleRequested = true;
@@ -1544,7 +1750,7 @@
       // Scene → page: walking the row selects the sign everywhere below.
       useEffect(() => {
         const node = stageRef.current;
-        if (!node) return undefined;
+        if (!node || carousel) return undefined;
         const onSign = (event) => {
           const next = event?.detail?.slug;
           if (!next) return;
@@ -1559,30 +1765,139 @@
       // Page → scene: any other selector turns the row to match.
       useEffect(() => {
         const node = stageRef.current;
-        if (!node || gallerySlug.current === slug) return;
+        if (!node || carousel || gallerySlug.current === slug) return;
         node.dispatchEvent(new CustomEvent('zodiacs:gallery-focus', { detail: { slug } }));
       }, [slug]);
+
+      // Scene → page: choosing the piece already on offer opens its trade,
+      // the same gesture the carousel gives a phone.
+      useEffect(() => {
+        const node = stageRef.current;
+        if (!node || carousel) return undefined;
+        const onTrade = () => openTrade();
+        node.addEventListener('zodiacs:gallery-trade', onTrade);
+        return () => node.removeEventListener('zodiacs:gallery-trade', onTrade);
+      });
+
+      const railGroup = (
+        <div
+          className="rail"
+          data-gallery-rail=""
+          role="group"
+          aria-label="The twelve sculptures"
+          dangerouslySetInnerHTML={{ __html: RAIL_PLACEHOLDER_HTML }}
+        />
+      );
 
       return (
         <section
           ref={stageRef}
           id="gallery"
-          className={'gband' + (consumer ? ' gband--consumer' : '')}
+          className={'gband' + (consumer ? ' gband--consumer' : '') + (carousel ? ' gband--flat' : '')}
           aria-label="The Gallery — the twelve Gold Sculptures"
-          data-gallery-stage=""
-          data-gallery-embed=""
-          data-gallery-initial={slug}
+          data-gallery-stage={carousel ? undefined : ''}
+          data-gallery-embed={carousel ? undefined : ''}
+          data-gallery-initial={carousel ? undefined : slug}
+          data-gallery-spotlight={consumer && !carousel ? '' : undefined}
         >
-          <div className="gband__mount" data-gallery-canvas="" />
+          {/* The stage picks with the rail at the top and shows one piece
+              large below it, so the twelve read as the choice and the chosen
+              sculpture as the answer. The rail deliberately does NOT wear
+              .gband__chrome: the scene measures the band it may fill by that
+              element's offsetTop, and chrome above the canvas would leave it
+              nothing. */}
+          {consumer && (
+              <header className="stage-hero__head">
+                <a className="stage-hero__eyebrow" href="/disclosure/">
+                  The Official Registry · Est. {REGISTRY_ESTABLISHED}
+                  {!REGISTRY_ESTABLISHMENT_PROVENANCE_URL && ' · provenance pending'}
+                </a>
+                <h1 id="consumer-explorer-title" className="stage-hero__title">
+                  Twelve signs.<br /><span className="it">One register.</span>
+                </h1>
+                <p className="stage-hero__line">
+                  Every sign has one official token. Explore its story, its record, and its market.
+                </p>
+              </header>
+          )}
+          {consumer && (
+            <div className="gband__rail-top">
+              {carousel ? <DiscRail active={active} setActive={setActive} /> : railGroup}
+            </div>
+          )}
+          {carousel
+            ? <SculptureCarousel active={active} setActive={setActive} onOpen={openTrade} />
+            : <div className="gband__mount" data-gallery-canvas="" />}
           <p className="gband__name" data-gallery-name="" aria-hidden="true" />
-          <div className="gband__chrome">
+          {consumer && (
             <div
-              className="rail"
-              data-gallery-rail=""
-              role="group"
-              aria-label="The twelve sculptures"
-              dangerouslySetInnerHTML={{ __html: RAIL_PLACEHOLDER_HTML }}
-            />
+              id="consumer-sign-preview"
+              className="stage-placard"
+              data-consumer-preview={slug}
+              aria-labelledby="stage-placard-name"
+            >
+              <span className="stage-placard__who">
+                <span id="stage-placard-name" className="stage-placard__name">{sign.name}</span>
+                <span className="stage-placard__meta">
+                  <span className="stage-placard__dates">{signDateLabel(sign)}</span>
+                  <PlacardQuote sign={sign} />
+                </span>
+              </span>
+              <span className="stage-placard__actions">
+                {REGISTRY_TRADE_ENABLED ? (
+                  <button
+                    ref={tradePillRef}
+                    type="button"
+                    className="btn btn--primary stage-placard__pill"
+                    onClick={openTrade}
+                  >
+                    <span>Trade {sign.name}</span>
+                  </button>
+                ) : (
+                  <a className="btn btn--primary stage-placard__pill" href={`${registryProfilePath(sign)}#acquire`}>
+                    <span>Trade {sign.name}</span>
+                  </a>
+                )}
+                <a className="btn btn--ghost stage-placard__pill" href={registryProfilePath(sign)}>
+                  <span>The record</span>
+                </a>
+              </span>
+            </div>
+          )}
+          {/* Portalled to the body: the sheet must stand above the floating
+              nav, and everything inside main sits in a lower stacking
+              context than the nav does. */}
+          {consumer && REGISTRY_TRADE_ENABLED && sheetOpen && ReactDOM.createPortal(
+            <div
+              className="stage-sheet"
+              role="dialog"
+              aria-modal="true"
+              aria-label={`Trade ${sign.name}`}
+              style={{ '--active-sign': sign.hue }}
+            >
+              <div className="stage-sheet__scrim" onClick={() => setSheetOpen(false)} aria-hidden="true" />
+              <div className="stage-sheet__panel">
+                <button
+                  ref={sheetCloseRef}
+                  type="button"
+                  className="stage-sheet__close"
+                  onClick={() => setSheetOpen(false)}
+                  aria-label="Close the trade sheet"
+                >✕</button>
+                {/* The panel introduces itself — disc, name, and the venue it
+                    trades through — so repeating the record above it would
+                    push the thing the reader opened below the fold. */}
+                <LandingTrade sign={sign} />
+                <a className="stage-sheet__record" href={registryProfilePath(sign)}>
+                  The full record <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </div>,
+            document.body,
+          )}
+          {!consumer && (
+          <div className="gband__chrome">
+            {railGroup}
             <button className="gband__open" type="button" data-gallery-open="">
               View the sculpture
             </button>
@@ -1590,6 +1905,7 @@
               Drag to browse · Choose a sign to open.
             </p>
           </div>
+          )}
 
           <aside className="gcard" data-gallery-card="" hidden aria-labelledby="gcard-name" aria-live="off">
             <button className="card__close" type="button" data-gallery-close="" aria-label="Return the sculpture">✕</button>
@@ -3159,38 +3475,6 @@
         </section>
       );
     }
-
-    function TokenQuote({ sign }) {
-      const [ref, inView] = useInView();
-      const batch = useTwelveQuotes(inView);
-      // If the one batch call fails, the focused sign still tries its own
-      // pinned pair before the panel settles for "unavailable".
-      const { state: single } = useMarketContext(sign, inView && batch.status === 'unavailable');
-      const quote = batch.status === 'ok'
-        ? batch.quotes[sign.asset.sign]
-        : single.status === 'ok' ? single.pair : null;
-      const settled = batch.status === 'ok'
-        || (batch.status === 'unavailable' && single.status !== 'loading' && single.status !== 'idle');
-      const changeClass = marketChangeClass(quote?.priceChange24h);
-      return (
-        <p ref={ref} className="consumer-preview__quote" data-token-quote={sign.asset.sign}>
-          {quote ? (
-            <>
-              <span className="consumer-quote__price">{formatPriceUsd(quote.priceUsd)}</span>
-              <span className={'consumer-quote__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
-              <span className="consumer-quote__label">Live price · 24h change</span>
-            </>
-          ) : !settled ? (
-            <span className="consumer-quote__state">Reading the market…</span>
-          ) : batch.status === 'ok' ? (
-            <span className="consumer-quote__state">Not indexed. The record stands regardless.</span>
-          ) : (
-            <span className="consumer-quote__state">Market data unavailable. The record stands in the Registry.</span>
-          )}
-        </p>
-      );
-    }
-
     function ConsumerTokensSection() {
       const reveal = useReveal();
       const [hostRef, inView] = useInView('240px 0px 240px 0px');
@@ -3251,45 +3535,7 @@
         </section>
       );
     }
-
-    function SeasonPulse({ season }) {
-      const [ref, inView] = useInView();
-      const batch = useTwelveQuotes(inView);
-      const quote = batch.status === 'ok' ? batch.quotes[season.sign.asset.sign] : null;
-      const changeClass = marketChangeClass(quote?.priceChange24h);
-      return (
-        <p ref={ref} className="consumer-season" data-season-pulse={season.sign.asset.sign}>
-          <img
-            src={`/assets/zodiac-icons/48/${season.sign.asset.sign}.webp`}
-            width="20"
-            height="20"
-            alt=""
-            decoding="async"
-          />
-          <span className="consumer-season__name">{season.sign.name} season</span>
-          <span className="consumer-season__sep" aria-hidden="true">·</span>
-          <span>Day {season.day} of {season.total}</span>
-          {quote && (
-            <>
-              <span className="consumer-season__sep" aria-hidden="true">·</span>
-              <span className="consumer-season__quote">
-                <span className="consumer-season__ticker">{season.sign.ticker}</span>
-                {' '}{formatPriceUsd(quote.priceUsd)}
-                <span className={'consumer-season__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
-                today
-              </span>
-            </>
-          )}
-        </p>
-      );
-    }
-
-    function ConsumerExplorer({ active, setActive, sign }) {
-      const reveal = useReveal();
-      const gridRef = useRef(null);
-      // The sculpture stage is the desktop selector wherever WebGL is
-      // live; phones, tablets, and no-WebGL machines keep the pastel
-      // grid and never pay for the scene bundle.
+    function useStageMode() {
       const [stageMode, setStageMode] = useState(
         () => GALLERY_LIVE && window.matchMedia('(min-width: 1021px)').matches
       );
@@ -3300,166 +3546,26 @@
         query.addEventListener?.('change', onChange);
         return () => query.removeEventListener?.('change', onChange);
       }, []);
-      const season = useMemo(() => currentSeason(), []);
-      const activeIndex = Math.max(0, SIGNS.findIndex(item => item.ticker === active));
+      return stageMode;
+    }
 
-      const chooseIndex = (index, focus = false) => {
-        const wrapped = ((index % SIGNS.length) + SIGNS.length) % SIGNS.length;
-        const next = SIGNS[wrapped];
-        if (!next) return;
-        if (focus) {
-          gridRef.current
-            ?.querySelector(`[data-consumer-sign="${next.asset.sign}"]`)
-            ?.focus({ preventScroll: true });
-        }
-        setActive(next.ticker);
-        trackAnalytics('registry_sign_selected', { sign: next.asset.sign, source: 'consumer_explorer' });
-      };
-
-      const onKeyDown = (event) => {
-        if (event.altKey || event.ctrlKey || event.metaKey) return;
-        const gridStyle = gridRef.current ? window.getComputedStyle(gridRef.current) : null;
-        const columnCount = gridStyle?.display === 'grid'
-          ? Math.max(1, gridStyle.gridTemplateColumns.split(/\s+/).filter(Boolean).length)
-          : 1;
-        const moves = {
-          ArrowRight: activeIndex + 1,
-          ArrowLeft: activeIndex - 1,
-          ArrowDown: activeIndex + columnCount,
-          ArrowUp: activeIndex - columnCount,
-          Home: 0,
-          End: SIGNS.length - 1
-        };
-        if (!(event.key in moves)) return;
-        event.preventDefault();
-        chooseIndex(moves[event.key], true);
-      };
+    function ConsumerExplorer({ active, setActive, sign, stageMode }) {
+      const reveal = useReveal();
 
       return (
         <section
           ref={reveal}
           id="official-twelve"
-          className="consumer-explorer"
+          className={'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')}
           aria-labelledby="consumer-explorer-title"
           style={{ '--active-sign': sign.hue }}
         >
-          <header className="consumer-explorer__head">
-            <span className="consumer-section-head__eyebrow">The official twelve</span>
-            <h2 id="consumer-explorer-title">Choose your sign. See its token.</h2>
-            <p>Twelve signs, twelve official tokens. Pick one to see its record and its live market.</p>
-            {season && <SeasonPulse season={season} />}
-          </header>
-
+          {/* This section IS the page's opening at every width. Where WebGL
+              is live and the viewport is wide the plate holds the scene;
+              everywhere else it holds the same twelve sculptures as a
+              scroll-snap carousel. One picker, one placard, one door. */}
           {stageMode && <GalleryBand active={active} setActive={setActive} consumer />}
-
-          <div className={'consumer-explorer__layout' + (stageMode ? ' consumer-explorer__layout--stage' : '')}>
-            {!stageMode && (
-            <div
-              className="consumer-signs"
-              ref={gridRef}
-              role="group"
-              aria-label="Choose a zodiac sign"
-              onKeyDown={onKeyDown}
-            >
-              {SIGNS.map((item) => {
-                const isActive = item.ticker === active;
-                return (
-                  <button
-                    key={item.ticker}
-                    id={item.asset.sign}
-                    type="button"
-                    className={'consumer-sign' + (isActive ? ' is-active' : '')}
-                    data-consumer-sign={item.asset.sign}
-                    aria-label={`${item.name}, ${signDateLabel(item)}`}
-                    aria-pressed={isActive}
-                    aria-controls="consumer-sign-preview"
-                    tabIndex={isActive ? 0 : -1}
-                    style={{ '--sign-tone': item.hue }}
-                    onClick={() => chooseIndex(item.order - 1)}
-                  >
-                    <picture className="consumer-sign__icon" aria-hidden="true">
-                      <source srcSet={`/assets/zodiac-icons/128/${item.asset.sign}.avif`} type="image/avif" />
-                      <img
-                        src={`/assets/zodiac-icons/128/${item.asset.sign}.webp`}
-                        width="56"
-                        height="56"
-                        alt=""
-                        loading={item.order > 6 ? 'lazy' : 'eager'}
-                        decoding="async"
-                      />
-                    </picture>
-                    <span className="consumer-sign__name">{item.name}</span>
-                  </button>
-                );
-              })}
-            </div>
-            )}
-
-            <article
-              id="consumer-sign-preview"
-              className="consumer-preview"
-              data-consumer-preview={sign.asset.sign}
-              aria-labelledby="consumer-preview-name"
-            >
-              <div className="consumer-preview__art" aria-hidden="true">
-                <img
-                  key={sign.asset.sign}
-                  className="consumer-preview__sculpture"
-                  src={`/assets/sculptures/512/${sign.asset.sign}.webp`}
-                  width="512"
-                  height="512"
-                  alt=""
-                  decoding="async"
-                />
-                <picture className="consumer-preview__disc">
-                  <source srcSet={`/assets/zodiac-icons/128/${sign.asset.sign}.avif`} type="image/avif" />
-                  <img
-                    src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}
-                    width="128"
-                    height="128"
-                    alt=""
-                    decoding="async"
-                  />
-                </picture>
-              </div>
-              <div className="consumer-preview__body">
-                <div className="consumer-preview__eyebrow">
-                  <span>{String(sign.order).padStart(2, '0')} of 12</span>
-                  {season?.sign.ticker === sign.ticker && <span>Current season</span>}
-                  <span className="consumer-preview__status">Official record</span>
-                </div>
-                <h3 id="consumer-preview-name" className="consumer-preview__name">{sign.name}</h3>
-                <p className="consumer-preview__dates">{signDateLabel(sign)}</p>
-                <p className="consumer-preview__token">
-                  <span>Official {sign.name} token</span>
-                  <span className="consumer-preview__ticker">{sign.ticker}</span>
-                  <span className="consumer-preview__network">Native network: Solana</span>
-                </p>
-                <TokenQuote sign={sign} />
-                <p className="consumer-preview__lore">{sign.shortBio}</p>
-                <div className="consumer-preview__actions">
-                  <a className="btn btn--primary" href={registryProfilePath(sign)}>
-                    <span>View the {sign.name} token</span><span className="arr" aria-hidden="true">→</span>
-                  </a>
-                  <CopyChip
-                    text={sign.representations.solana.address}
-                    display="Copy Solana address"
-                  />
-                </div>
-                <p className="consumer-preview__base">
-                  Also recorded on Base · <code className="mono">{truncateAddress(sign.representations.base.address, 6, 4)}</code>
-                </p>
-                <div className="consumer-preview__links">
-                  <a className="consumer-preview__trade" href={`${registryProfilePath(sign)}#acquire`}>
-                    Where {sign.ticker} trades <span aria-hidden="true">→</span>
-                  </a>
-                  <a className="consumer-preview__guide" href={`/${sign.asset.sign}/`}>
-                    Read the {sign.name} astrology guide <span aria-hidden="true">→</span>
-                  </a>
-                </div>
-              </div>
-            </article>
-          </div>
+          {!stageMode && <GalleryBand active={active} setActive={setActive} consumer carousel />}
 
           <p className="sr-only" role="status" aria-live="polite" data-consumer-live>
             {sign.name} selected. {signDateLabel(sign)}. {sign.element}. {sign.archetype}.
@@ -3714,7 +3820,7 @@
               <>
                 <a href="#official-twelve">The Twelve</a>
                 <a href="#registry">How it works</a>
-                <a href="#verify">Check an address</a>
+                <a href="#verify">Verify a token</a>
                 <a href="/registry/technical/">Technical record</a>
                 <a href="#thesis">Thesis</a>
               </>
@@ -3773,6 +3879,8 @@
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]
       );
+      // Which hero the page wears: the film, or the gallery itself.
+      const stageMode = useStageMode();
 
       useEffect(() => {
         trackAnalytics(technical ? 'registry_technical_visit' : 'registry_visit');
@@ -4001,9 +4109,8 @@
           <div className="stars" aria-hidden="true" />
           <div className="grain" aria-hidden="true" />
           <Header />
-          <CineHero sign={sign} />
           <main id="main" className="zd consumer-registry">
-            <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} />
+            <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
             <ConsumerTokensSection />
             <ConsumerHowItWorks />
             <VerifierSection />

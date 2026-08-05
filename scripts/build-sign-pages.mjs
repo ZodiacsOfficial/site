@@ -19,8 +19,9 @@ import {
   SIGN_PAGES, MARKET_PAIRS, CHANNELS, SIGN_ORDER,
   jupiterSwapUrl, dexscreenerUrl
 } from './sign-data.mjs';
-import { wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mjs';
+import { NAV_SIGNS, wingNavHtml, wingNavCss, wingNavScript } from './wing-nav.mjs';
 import { brandIconLinkMarkup } from '../src/lib/brand-icons.mjs';
+import { renderTradeRegion } from '../src/trade/entry.mjs';
 import { EN, enFormat } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -65,6 +66,9 @@ function pageModel(slug) {
     order: idx + 1,
     prev: { slug: prev, name: assetFor(prev).displayName, lot: SIGN_PAGES[prev].lot },
     next: { slug: next, name: assetFor(next).displayName, lot: SIGN_PAGES[next].lot },
+    // The sign's pastel — the panel tints itself with it, the same way the
+    // rail's disc and the page's accents do.
+    hue: NAV_SIGNS.find((s) => s.slug === slug)?.hue ?? null,
     pair: MARKET_PAIRS[slug] || null,
     jupiter: jupiterSwapUrl(solana.address),
     dexscreener: dexscreenerUrl(slug, solana.address)
@@ -160,6 +164,7 @@ function render(m) {
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <meta name="zodiacs-registry-trade-enabled" content="0" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
@@ -816,6 +821,7 @@ ${beats.map((b) => `        <div class="prov__item">
         Operator and economic-interest statements remain pending confirmation;
         see the <a href="/disclosure/">Disclosure</a>.
       </p>
+      ${renderTradeRegion({ sign: m.slug, name: m.name, mint: m.solana.address, hue: m.hue, enabled: false })}
       <div class="acq__cta">
         <a class="btn" href="${esc(m.jupiter)}" rel="noopener noreferrer external nofollow">
           <span>Open Jupiter route</span><span class="arr">↗</span>

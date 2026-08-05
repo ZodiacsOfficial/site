@@ -23,6 +23,7 @@ import {
   REGISTRY_AURA_PATH,
   injectRegistryAuraLanding,
 } from '../src/lib/registry-aura-entry.mjs';
+import { REGISTRY_TRADE_META, injectRegistryTradeLanding } from '../src/trade/entry.mjs';
 import { EN } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -143,12 +144,19 @@ const registryMeta = [
   `const REGISTRY_AURA_ENABLED=document.querySelector('meta[name="${REGISTRY_AURA_META_NAME}"]')?.content==='1';`,
   `const REGISTRY_AURA_PATH=${JSON.stringify(REGISTRY_AURA_PATH)};`,
   `const REGISTRY_AURA_ENTRY_COPY=Object.freeze(${JSON.stringify(REGISTRY_AURA_ENTRY_COPY)});`,
+  `const REGISTRY_TRADE_ENABLED=document.querySelector('meta[name="${REGISTRY_TRADE_META}"]')?.content==='1';`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
 await writeFile(OUT, output, 'utf8');
 
 const registryHtml = await readFile(REGISTRY_HTML, 'utf8');
-const configuredRegistry = injectRegistryAuraLanding(registryHtml, process.env).output;
+// Both flags stamp the same shell, so they are chained rather than run side by
+// side: each owns a disjoint marker, and neither can be written from a copy of
+// the file the other has already changed.
+const configuredRegistry = injectRegistryTradeLanding(
+  injectRegistryAuraLanding(registryHtml, process.env).output,
+  process.env,
+).output;
 if (configuredRegistry !== registryHtml) await writeFile(REGISTRY_HTML, configuredRegistry, 'utf8');
 
 const registryData = JSON.parse(await readFile(REGISTRY_DATA, 'utf8'));

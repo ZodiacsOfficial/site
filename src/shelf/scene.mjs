@@ -13,8 +13,9 @@
 import * as THREE from 'three';
 
 import {
-  GALLERY, VITRINE, emphasis, figurePose, fitScales, floorY, isVisible,
-  lerpContent, lerpRect, rowContent, stageContent, vitrineFrame,
+  GALLERY, SPOTLIGHT_STAGE, SPOTLIGHT_VITRINE, VITRINE, emphasis, figurePose,
+  fitScales, floorY, isVisible, lerpContent, lerpRect, rowContent, stageContent,
+  vitrineFrame,
 } from './layout.mjs';
 import { paintPlinth, paintReverse, loadSculpture } from './textures.mjs';
 import geometryData from './figures.geometry.json';
@@ -350,7 +351,7 @@ export function createScene(canvas, records) {
     bands = { row, stage };
   }
 
-  function placeCamera(open, opened, zoom) {
+  function placeCamera(open, opened, zoom, vitrine = VITRINE) {
     const content = lerpContent(
       rowContent(GALLERY, tallest),
       stageContent(opened.scale, opened.aspect),
@@ -359,8 +360,8 @@ export function createScene(canvas, records) {
     const rect = lerpRect(bandFor('row'), bandFor('stage'), open);
     // A figure under examination gets more air than the row does, and pinching
     // in takes some of it back.
-    const margin = THREE.MathUtils.lerp(VITRINE.rowMargin, VITRINE.stageMargin, open)
-      - (zoom * VITRINE.zoomGain * open);
+    const margin = THREE.MathUtils.lerp(vitrine.rowMargin, vitrine.stageMargin, open)
+      - (zoom * vitrine.zoomGain * open);
 
     const frame = vitrineFrame({
       canvasWidth: canvasSize.width,
@@ -368,7 +369,7 @@ export function createScene(canvas, records) {
       rect,
       content,
       margin,
-    });
+    }, vitrine);
 
     aim.set(0, content.centerY, content.centerZ)
       .addScaledVector(RIGHT, frame.panX)
@@ -388,6 +389,10 @@ export function createScene(canvas, records) {
    */
   function layout(state) {
     const { focus, openIndex, open, yaw, pitch, zoom } = state;
+    // The consumer rectangle offers one piece rather than a shelf, so its
+    // fall-off is steeper and its camera stands closer. Left undefined, the
+    // emphasis keeps its own default and the row is unchanged.
+    const profile = state.spotlight ? SPOTLIGHT_STAGE : undefined;
     const opened = figures[openIndex]
       ?? figures[Math.min(figures.length - 1, Math.max(0, Math.round(focus)))];
     const stage = { x: 0, y: -opened.scale / 2, z: VITRINE.stageZ };
@@ -412,7 +417,7 @@ export function createScene(canvas, records) {
       // The spotlight: the piece the row is offering stands at full size and
       // full strength, and the others step back into the dark. A figure being
       // examined keeps the focus treatment however the row has slid behind it.
-      const spot = emphasis(drawn > 0 ? 0 : pose.distance);
+      const spot = emphasis(drawn > 0 ? 0 : pose.distance, profile);
 
       // The lift that says a sculpture opens: hovered pieces rise a little
       // and step forward, the bookshelf gesture.
@@ -469,7 +474,7 @@ export function createScene(canvas, records) {
     );
     offer.intensity = 7 - (open * 2.6);
 
-    placeCamera(open, opened, zoom);
+    placeCamera(open, opened, zoom, state.spotlight ? SPOTLIGHT_VITRINE : VITRINE);
     return hoverSettling;
   }
 

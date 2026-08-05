@@ -448,7 +448,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     for (const lens of [false, true]) {
       const [homeActions, registryActions] = await Promise.all([
         material(homeMaterialPage, '.hero__ctas .btn', lens),
-        material(registryMaterialPage, '.cine__cta .btn', lens),
+        material(registryMaterialPage, '.stage-placard__pill', lens),
       ]);
       check(
         `homepage hero actions match the Registry glass material (${lens ? 'lens' : 'iOS fallback'})`,
@@ -537,10 +537,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       compactRegistryLayout.shell
         && compactRegistryLayout.shell.width >= compactRegistryLayout.clientWidth * 0.88,
       `${compactRegistryLayout.shell?.width ?? 0}/${compactRegistryLayout.clientWidth}`);
-    check('Registry at 623×1054 shows all twelve signs in a six-by-two grid',
+    check('Registry at 623×1054 offers all twelve signs on one rail',
       compactRegistryLayout.controlCount === 12
-        && compactRegistryLayout.rowCounts.length === 2
-        && compactRegistryLayout.rowCounts.every((count) => count === 6),
+        && compactRegistryLayout.rowCounts.length === 1,
       JSON.stringify(compactRegistryLayout.rowCounts));
     check('Registry at 623×1054 keeps the consumer journey under 7,500px',
       compactRegistryLayout.pageHeight <= 7500,
@@ -571,8 +570,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       return [...new Set(tops)].map((top) => tops.filter((candidate) => candidate === top).length);
     });
     check(
-      'Registry at exactly 1020px uses the stable six-by-two tablet explorer',
-      JSON.stringify(tabletRows) === JSON.stringify([6, 6]),
+      'Registry one pixel under the stage breakpoint still rails the twelve',
+      JSON.stringify(tabletRows) === JSON.stringify([12]),
       JSON.stringify(tabletRows),
     );
     await tabletEdge.close();
@@ -675,7 +674,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check(
       'consumer explorer presents twelve pastel sign controls in zodiac order',
       JSON.stringify(explorerState.map((item) => item.slug)) === JSON.stringify(expectedSigns)
-        && explorerState.every((item) => item.src === '/assets/zodiac-icons/128/' + item.slug + '.webp'),
+        && explorerState.every((item) => item.src === '/assets/zodiac-icons/48/' + item.slug + '.webp'),
       JSON.stringify(explorerState),
     );
     check(
@@ -686,30 +685,23 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       JSON.stringify(explorerState),
     );
     check(
-      'consumer hero uses the approved everyday actions',
-      (await desktop.locator('.cine__line').innerText()).trim()
-        === 'Every sign has one official token. Explore its story, its record, and its market.'
-        && await desktop.locator('.cine__cta a[href="#official-twelve"]').innerText()
-          .then((text) => text.includes('Choose a token'))
-        && await desktop.locator('.cine__cta a[href="#verify"]').innerText()
-          .then((text) => text.includes('Check an address'))
-        && await desktop.locator('.cine__cta [data-registry-collection]').count() === 0,
+      'the plate opens the page without WebGL, carrying the same headline',
+      await desktop.locator('.cine').count() === 0
+        && await desktop.locator('h1.stage-hero__title').count() === 1
+        && (await desktop.locator('.stage-hero__line').innerText()).trim()
+          .startsWith('Every sign has one official token. Explore its story, its record, and its market.'),
     );
     check(
-      'consumer hero keeps the original film and poster',
-      await desktop.locator('.cine__media').evaluate((video) => (
-        video.getAttribute('poster') === '/assets/hero/zodiacs-hero-poster.avif'
-        // The preserved observer starts the visible film and promotes
-        // `preload` from the server-rendered `none` state to `auto`.
-        && ['none', 'auto'].includes(video.getAttribute('preload'))
-        && (video.currentSrc.endsWith('/assets/hero/zodiacs-hero.mp4')
-          || video.getAttribute('src')?.endsWith('/assets/hero/zodiacs-hero.mp4'))
-      )),
+      'the carousel shows the twelve gold sculptures where the scene cannot',
+      await desktop.locator('.stage-carousel__slide').count() === 12
+        && await desktop.locator('.stage-carousel__slide.is-active .stage-carousel__art')
+          .getAttribute('src') === '/assets/sculptures/512/leo.webp',
     );
     check(
-      'without WebGL the stage never mounts and its bundle is never requested',
+      'without WebGL the scene never mounts and its bundle is never requested',
       desktopGalleryRequests.length === 0
-        && await desktop.locator('.gband').count() === 0,
+        && await desktop.locator('[data-gallery-canvas]').count() === 0
+        && await desktop.locator('.gband--flat').count() === 1,
       JSON.stringify(desktopGalleryRequests),
     );
     const desktopDimensions = await desktop.evaluate(() => ({
@@ -736,43 +728,47 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const scrollBeforePick = await desktop.evaluate(() => scrollY);
     await piscesControl.click();
     await desktop.locator('[data-consumer-preview="pisces"]').waitFor({ state: 'visible' });
-    const piscesPreview = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((preview) => ({
-      text: preview.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-      record: preview.querySelector('a.btn')?.getAttribute('href'),
-      recordLabel: preview.querySelector('a.btn')?.textContent?.trim() ?? '',
-      sculpture: preview.querySelector('.consumer-preview__sculpture')?.getAttribute('src'),
-      trade: preview.querySelector('.consumer-preview__trade')?.getAttribute('href'),
-      guide: preview.querySelector('.consumer-preview__guide')?.getAttribute('href'),
+    const piscesPlacard = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((placard) => ({
+      text: placard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      name: placard.querySelector('.stage-placard__name')?.textContent ?? '',
+      record: placard.querySelector('a.btn--ghost')?.getAttribute('href'),
+      trade: placard.querySelector('a.btn--primary')?.getAttribute('href'),
+      price: placard.querySelector('.stage-placard__price')?.textContent ?? '',
+      // Two things the placard deliberately does not carry: the second chain,
+      // and a detour into the astrology guide.
+      base: placard.textContent?.includes('Also recorded on Base') ?? false,
+      guide: Boolean(placard.querySelector('a[href="/pisces/"]')),
       scrollY,
     }));
     check(
-      'selecting Pisces presents its official token and record-first actions without moving the page',
-      /Official Pisces token/.test(piscesPreview.text)
-        && /PISCES/.test(piscesPreview.text)
-        && /Native network: Solana/.test(piscesPreview.text)
-        && piscesPreview.record === '/registry/pisces/'
-        && /View the Pisces token/.test(piscesPreview.recordLabel)
-        && piscesPreview.sculpture === '/assets/sculptures/512/pisces.webp'
-        && piscesPreview.trade === '/registry/pisces/#acquire'
-        && piscesPreview.guide === '/pisces/'
-        && Math.abs(piscesPreview.scrollY - scrollBeforePick) <= 2,
-      JSON.stringify(piscesPreview),
+      'selecting Pisces relabels the placard without moving the page',
+      piscesPlacard.name === 'Pisces'
+        && piscesPlacard.record === '/registry/pisces/'
+        && piscesPlacard.trade === '/registry/pisces/#acquire'
+        && piscesPlacard.base === false
+        && piscesPlacard.guide === false
+        && Math.abs(piscesPlacard.scrollY - scrollBeforePick) <= 2,
+      JSON.stringify(piscesPlacard),
     );
-    await desktop.locator('[data-token-quote="pisces"]').scrollIntoViewIfNeeded();
-    await desktop.locator('[data-token-quote="pisces"] .consumer-quote__price').waitFor({ timeout: 10_000 });
-    const piscesQuote = await desktop.locator('[data-token-quote="pisces"]').evaluate((quote) => ({
-      price: quote.querySelector('.consumer-quote__price')?.textContent ?? '',
-      change: quote.querySelector('.consumer-quote__change')?.textContent ?? '',
-      directional: Boolean(quote.querySelector(
+    check(
+      'choosing a sign turns the carousel to its sculpture',
+      await desktop.locator('.stage-carousel__slide.is-active .stage-carousel__art')
+        .getAttribute('src') === '/assets/sculptures/512/pisces.webp',
+    );
+    await desktop.locator('.stage-placard__price').waitFor({ timeout: 15_000 });
+    const placardQuote = await desktop.locator('.stage-placard').evaluate((placard) => ({
+      price: placard.querySelector('.stage-placard__price')?.textContent ?? '',
+      change: placard.querySelector('.stage-placard__change')?.textContent ?? '',
+      directional: Boolean(placard.querySelector(
         '.market__change--up, .market__change--down, .market__change--flat',
       )),
     }));
     check(
-      'the focused token panel quotes a live price with a signed 24h change',
-      /^\$\d/.test(piscesQuote.price)
-        && /%$/.test(piscesQuote.change)
-        && piscesQuote.directional,
-      JSON.stringify(piscesQuote),
+      'the placard quotes a live price with a signed 24h change',
+      /^\$\d/.test(placardQuote.price)
+        && /%$/.test(placardQuote.change)
+        && placardQuote.directional,
+      JSON.stringify(placardQuote),
     );
     const watchlist = await desktop.locator('.consumer-token').evaluateAll((rows) => rows.map((row) => ({
       href: row.getAttribute('href'),
@@ -870,7 +866,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       (await verifier.innerText()).includes('never connects a wallet, requests a signature, or starts a transaction'),
     );
     const compactConsumerTargets = await desktop.locator(
-      '.vrf__example, .consumer-preview__trade, .consumer-preview__guide, .consumer-closing__actions > a:not(.btn)',
+      '.vrf__example, .consumer-preview__actions a.btn, .consumer-closing__actions > a:not(.btn)',
     ).evaluateAll((targets) => targets.map((target) => ({
       label: target.textContent.trim(),
       height: target.getBoundingClientRect().height,
@@ -919,10 +915,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       };
     });
     check(
-      'mobile explorer uses a complete four-by-three grid',
-      mobileState.count === 12
-        && mobileState.rowCounts.length === 3
-        && mobileState.rowCounts.every((count) => count === 4),
+      'mobile explorer rails all twelve signs in one row',
+      mobileState.count === 12 && mobileState.rowCounts.length === 1,
       JSON.stringify(mobileState),
     );
     check(
@@ -950,20 +944,20 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await reduced.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
     await reduced.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
     check(
-      'reduced motion leaves the cinematic film detached',
-      await reduced.locator('.cine__media').evaluate((video) => !video.src),
+      'reduced motion leaves no film attached to the rendered page',
+      await reduced.locator('.cine__media').count() === 0,
     );
     await reduced.locator('[data-consumer-sign="libra"]').click();
-    const reducedDurations = await reduced.locator('[data-consumer-preview="libra"]')
-      .evaluate((preview) => {
-        const style = getComputedStyle(preview);
+    const reducedDurations = await reduced.locator('.stage-carousel__slide.is-active .stage-carousel__figure')
+      .evaluate((figure) => {
+        const style = getComputedStyle(figure);
         return {
           animation: parseFloat(style.animationDuration) || 0,
           transition: parseFloat(style.transitionDuration) || 0,
         };
       });
     check(
-      'reduced motion swaps the consumer preview without animated travel',
+      'reduced motion turns the carousel without animated travel',
       reducedDurations.animation <= 0.02 && reducedDurations.transition <= 0.02,
       JSON.stringify(reducedDurations),
     );
@@ -1006,13 +1000,89 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         'the rail exposes one pressed tick for the current sign',
         await stagePage.locator('.rail__tick[aria-pressed="true"]').count() === 1,
       );
+      // One opening scene: the film hero stands down, the headline rides the
+      // stage, the rail picks beneath it, the chosen sculpture stands large,
+      // and the placard at its feet says name, dates, price — nothing more.
+      const shape = await stagePage.evaluate(() => {
+        const box = (sel) => {
+          const el = document.querySelector(sel);
+          return el ? el.getBoundingClientRect() : null;
+        };
+        const head = box('.stage-hero__head');
+        const plate = box('.gband--consumer');
+        const rail = box('.gband--consumer [data-gallery-rail]');
+        const canvas = box('.gband--consumer [data-gallery-canvas]');
+        const placard = box('.stage-placard');
+        return {
+          filmHero: document.querySelectorAll('.cine').length,
+          h1: document.querySelectorAll('h1').length,
+          headAboveRail: Boolean(head && rail && head.bottom <= rail.top + 1),
+          railAboveCanvas: Boolean(rail && canvas && rail.bottom <= canvas.top + 1),
+          placardOverCanvas: Boolean(placard && canvas
+            && placard.top > canvas.top && placard.bottom <= canvas.bottom + 1),
+          plateFramed: Boolean(plate && plate.width < innerWidth - 40 && plate.width <= 1402),
+          plateRadius: plate ? getComputedStyle(document.querySelector('.gband--consumer')).borderTopLeftRadius : '',
+          headInsidePlate: Boolean(head && plate && head.top >= plate.top - 1 && head.bottom <= plate.bottom + 1),
+          // The rail must not wear .gband__chrome: the scene reads that
+          // element's offsetTop as the floor of the band it may paint into.
+          chrome: document.querySelectorAll('.gband--consumer .gband__chrome').length,
+          previewInside: document.querySelectorAll('.gband--consumer [data-consumer-preview]').length,
+          previewTotal: document.querySelectorAll('[data-consumer-preview]').length,
+          flatArt: document.querySelectorAll('.consumer-preview__art').length,
+          figureHeight: canvas ? Math.round(canvas.height) : 0,
+        };
+      });
+      check(
+        'the plate frames the opening scene: headline, rail, sculpture, placard',
+        shape.filmHero === 0 && shape.h1 === 1
+          && shape.headAboveRail && shape.railAboveCanvas && shape.placardOverCanvas
+          && shape.plateFramed && shape.plateRadius.startsWith('26') && shape.headInsidePlate
+          && shape.chrome === 0
+          && shape.previewInside === 1 && shape.previewTotal === 1
+          && shape.flatArt === 0
+          && shape.figureHeight >= 380,
+        JSON.stringify(shape),
+      );
+
+      // Centre it first. The rail rides the top of the rectangle and the
+      // site's nav floats over the top of the page, so scrolling the tick
+      // just barely into view would slide it under the pill.
       const geminiTick = stagePage.locator('.rail__tick').nth(2);
+      await geminiTick.evaluate((el) => el.scrollIntoView({ block: 'center' }));
       await geminiTick.click();
       await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
+      const geminiPlacard = await stagePage.locator('[data-consumer-preview="gemini"]').evaluate((placard) => ({
+        name: placard.querySelector('.stage-placard__name')?.textContent,
+        trade: placard.querySelector('a.btn--primary, button.btn--primary') !== null,
+        tradeHref: placard.querySelector('a.btn--primary')?.getAttribute('href') ?? null,
+        record: placard.querySelector('a.btn--ghost')?.getAttribute('href'),
+      }));
       check(
-        'walking the rail drives the focused token panel',
-        await stagePage.locator('[data-consumer-preview="gemini"] a.btn').getAttribute('href')
-          === '/registry/gemini/',
+        'walking the rail drives the placard',
+        geminiPlacard.name === 'Gemini'
+          && geminiPlacard.trade
+          // Flag-off the trade pill is the door to the catalogue page's panel.
+          && (geminiPlacard.tradeHref === null || geminiPlacard.tradeHref === '/registry/gemini/#acquire')
+          && geminiPlacard.record === '/registry/gemini/',
+        JSON.stringify(geminiPlacard),
+      );
+
+      // Tapping a sculpture on the stage chooses it. There is nothing to
+      // draw out to — the placard is already at its feet — so the card must
+      // stay shut however the canvas is used.
+      const canvasBox = await stagePage.locator('.gband--consumer [data-gallery-canvas]').boundingBox();
+      await stagePage.mouse.click(canvasBox.x + (canvasBox.width / 2), canvasBox.y + (canvasBox.height / 2));
+      await stagePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
+      check(
+        'the stage never draws a sculpture out over its own placard',
+        await stagePage.locator('.gband.is-open').count() === 0
+          && await stagePage.locator('[data-gallery-card]:not([hidden])').count() === 0,
+      );
+
+      const stageText = await stagePage.locator('.consumer-explorer').innerText();
+      check(
+        'the stage drops the second chain and the guide detour',
+        !stageText.includes('Also recorded on Base') && !/astrology guide/i.test(stageText),
       );
     } else {
       check(
@@ -1028,6 +1098,190 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
     }
     await stagePage.close();
+
+    // ---- the trade panel, with its flag turned on ------------------------
+    //
+    // The committed shell is always flag-off, so the deployed state is
+    // simulated by rewriting the one meta the build stamps. Jupiter is
+    // stubbed: this drive proves the panel's wiring, not the venue's.
+    const tradeOrders = [];
+    const withTradeFlag = async (page) => {
+      await page.route('**/registry/', async (route) => {
+        if (route.request().resourceType() !== 'document') return route.continue();
+        const response = await route.fetch();
+        const body = (await response.text()).replace(
+          '<meta name="zodiacs-registry-trade-enabled" content="0" />',
+          '<meta name="zodiacs-registry-trade-enabled" content="1" />',
+        );
+        return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
+      });
+      await page.route('**/lite-api.jup.ag/**', async (route) => {
+        const url = new URL(route.request().url());
+        tradeOrders.push(Object.fromEntries(url.searchParams));
+        return route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            inputMint: url.searchParams.get('inputMint'),
+            outputMint: url.searchParams.get('outputMint'),
+            inAmount: url.searchParams.get('amount'),
+            outAmount: '347222000000',
+            priceImpactPct: '0.41',
+            feeBps: 10,
+            slippageBps: 50,
+            outUsdValue: 24.94,
+            requestId: 'drive-fixture',
+            transaction: null,
+          }),
+        });
+      });
+    };
+
+    // Every width now opens the panel the same way: from the placard's pill
+    // or by choosing the sculpture on offer. Nothing is fetched before that.
+    for (const [label, width, height, stub, via] of [
+      ['sheet', 1280, 900, false, 'pill'],
+      ['flat', 1126, 1000, true, 'pill'],
+      ['pocket', 390, 844, true, 'statue'],
+    ]) {
+      const tradePage = await newPage({
+        viewport: { width, height },
+        reducedMotion: 'no-preference',
+        isMobile: width < 500,
+        hasTouch: width < 500,
+      });
+      const tradeBundle = [];
+      tradePage.on('request', (request) => {
+        if (new URL(request.url()).pathname === '/assets/trade.js') tradeBundle.push(request.url());
+      });
+      const ordersBefore = tradeOrders.length;
+      await mockDexscreener(tradePage);
+      if (stub) await stubNoWebgl(tradePage);
+      await withTradeFlag(tradePage);
+      await tradePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await tradePage.locator('.stage-placard').waitFor({ state: 'visible', timeout: 20_000 });
+      await tradePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
+      check(
+        `the ${label} asks Jupiter nothing until the trade is opened`,
+        tradeBundle.length === 0
+          && tradeOrders.length === ordersBefore
+          && await tradePage.locator('.tp').count() === 0,
+        JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length - ordersBefore }),
+      );
+
+      if (via === 'statue') {
+        const statue = tradePage.locator('.stage-carousel__slide.is-active .stage-carousel__figure');
+        await statue.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+        await statue.click();
+      } else {
+        await tradePage.locator('button.stage-placard__pill').click();
+      }
+      await tradePage.locator('.stage-sheet').waitFor({ state: 'visible', timeout: 10_000 });
+      await tradePage.locator('.tp').waitFor({ state: 'visible', timeout: 20_000 });
+      await tradePage.locator('.tp .out').waitFor({ state: 'visible', timeout: 20_000 });
+
+      const ceiling = await tradePage.evaluate(() => {
+        const sheet = document.querySelector('.stage-sheet__panel');
+        const tp = sheet.querySelector('.tp');
+        const box = sheet.getBoundingClientRect();
+        return {
+          lore: sheet.querySelectorAll('.consumer-preview__lore').length,
+          quote: sheet.querySelectorAll('[data-token-quote]').length,
+          record: sheet.querySelector('.stage-sheet__record')?.getAttribute('href'),
+          // How far down the sheet the reader must look to find the trade.
+          panelTop: tp ? Math.round(tp.getBoundingClientRect().top - box.top) : -1,
+          // On a phone the panel rises from the bottom edge and owns the width.
+          fromBottom: Math.round(innerHeight - box.bottom),
+          widthShare: box.width / innerWidth,
+        };
+      });
+      check(
+        `the ${label} opens on the panel rather than on a second copy of the record`,
+        ceiling.lore === 0 && ceiling.quote === 0
+          && ceiling.record === '/registry/leo/'
+          && ceiling.panelTop >= 0 && ceiling.panelTop <= 120,
+        JSON.stringify(ceiling),
+      );
+      if (label === 'pocket') {
+        check(
+          'the pocket panel rises from the bottom edge and owns the width',
+          ceiling.fromBottom <= 1 && ceiling.widthShare >= 0.99,
+          JSON.stringify(ceiling),
+        );
+      }
+
+      const panel = await tradePage.evaluate(() => {
+        const tp = document.querySelector('.tp');
+        const chips = [...tp.querySelectorAll('.amts button')];
+        const methods = [...tp.querySelectorAll('.payseg button')];
+        return {
+          host: tp.closest('.stage-sheet') ? 'sheet' : 'loose',
+          amount: tp.querySelector('.pay__input')?.value,
+          chips: chips.map((b) => b.textContent),
+          pressed: chips.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.textContent),
+          receive: tp.querySelector('.out')?.textContent ?? '',
+          facts: [...tp.querySelectorAll('.fact')].map((f) => f.textContent),
+          method: methods.find((b) => b.getAttribute('aria-pressed') === 'true')?.textContent ?? '',
+          ramps: tp.querySelectorAll('.ramps li').length,
+          rampNames: [...tp.querySelectorAll('.ramp__name')].map((n) => n.textContent),
+          fomoRow: [...tp.querySelectorAll('.ramp')]
+            .find((r) => /fomo/i.test(r.textContent))?.textContent.replace(/\s+/g, ' ').trim() ?? '',
+          applePayBadge: tp.querySelectorAll('.tp__mark.ap').length,
+          marks: tp.querySelectorAll('.ramps .tp__mark').length,
+          go: tp.querySelectorAll('.tp__go').length,
+          heroButton: tp.querySelectorAll('.route__go, .route__t').length,
+        };
+      });
+      check(
+        `the ${label} opens the panel already showing what $25 buys`,
+        panel.host === 'sheet'
+          && panel.amount === '25'
+          && panel.chips.join(' ') === '$25 $50 $100 $250'
+          && panel.pressed.join('') === '$25'
+          && /\d/.test(panel.receive)
+          && panel.facts.length === 2
+          && panel.facts.some((f) => /\$|¢/.test(f))
+          && panel.facts.some((f) => /%/.test(f)),
+        JSON.stringify(panel),
+      );
+      check(
+        `the ${label} lists four ways to pay, branded, alphabetical, none ranked`,
+        /Card|Apple Pay/i.test(panel.method)
+          && panel.ramps === 4 && panel.go === 0
+          && panel.rampNames.join(' · ') === 'Coinbase · fomo · MoonPay · Ramp Network'
+          && panel.heroButton === 0
+          && panel.applePayBadge === 1
+          && /Apple Pay/.test(panel.fomoRow)
+          && panel.marks >= 4,
+        JSON.stringify({ names: panel.rampNames, method: panel.method, marks: panel.marks }),
+      );
+
+      const usdc = tradePage.locator('.tp .payseg button').nth(1);
+      await usdc.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await usdc.click();
+      await tradePage.locator('.tp__go').waitFor({ state: 'visible', timeout: 10_000 });
+      check(
+        `the ${label} offers a wallet review once USDC is chosen`,
+        /review/i.test(await tradePage.locator('.tp__go').innerText())
+          && await tradePage.locator('.tp .ramps').count() === 0,
+      );
+      check(
+        `the ${label} fetches its bundle once and prices without an address`,
+        tradeBundle.length === 1
+          && tradeOrders.length > ordersBefore
+          && tradeOrders.every((q) => q.amount && q.inputMint && q.outputMint && !('taker' in q)),
+        JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length - ordersBefore }),
+      );
+
+      await tradePage.keyboard.press('Escape');
+      await tradePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 300)));
+      check(
+        `escape returns the ${label} from the sheet untouched`,
+        await tradePage.locator('.stage-sheet').count() === 0
+          && await tradePage.locator('.stage-placard').count() === 1,
+      );
+      await tradePage.close();
+    }
 
     for (const [legacyHash, destination] of [
       ['pulse', 'market-transparency'],

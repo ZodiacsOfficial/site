@@ -41,6 +41,10 @@ async function mount(root, records) {
   const hint = root.querySelector('[data-gallery-hint]');
   const live = root.querySelector('[data-gallery-live]');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // The consumer rectangle shows one piece rather than a shelf to open: the
+  // record it would draw out is already beside it on the page. Read once — the
+  // rectangle is not a mode the reader can leave.
+  const spotlight = root.hasAttribute('data-gallery-spotlight');
 
   const nameLabel = root.querySelector('[data-gallery-name]');
 
@@ -81,6 +85,7 @@ async function mount(root, records) {
     pitch: 0, targetPitch: 0,
     zoom: 0, targetZoom: 0,
     hover: -1,
+    spotlight,
   };
 
   const card = createCard(root, { onClose: () => closeFigure() });
@@ -286,6 +291,10 @@ async function mount(root, records) {
   // ---- drawing a figure out and returning it ---------------------------
 
   async function openFigure(index, { takeFocus = true } = {}) {
+    // Nothing is ever drawn out of the rectangle. Guarding here rather than at
+    // each caller makes it a property of the mode instead of a promise every
+    // future call site has to keep.
+    if (spotlight) return;
     const record = records[index];
     handTurned = false;
     setHover(-1);
@@ -363,6 +372,7 @@ async function mount(root, records) {
       + ' alt="" loading="lazy" decoding="async"/></picture>';
     button.setAttribute('aria-label', `${record.name}, Lot ${record.lot} of twelve`);
     button.addEventListener('click', () => {
+      if (spotlight) { showFigure(index); return; }
       if (current() === index && state.targetOpen === 0) void openFigure(index);
       else showFigure(index);
     });
@@ -615,6 +625,21 @@ async function mount(root, records) {
       // deliver pointerup before it emits pointercancel for native scrolling.
       if (finished.touchIntent === 'vertical') return;
       const index = scene.pick(event.clientX, event.clientY);
+      // On the plate a tap on the piece already being offered asks to buy it;
+      // a tap on any other piece turns the row to it. Nothing is drawn out —
+      // the record is on the page, and the page decides what "buy" opens.
+      if (spotlight) {
+        if (index < 0) return;
+        if (index === current()) {
+          root.dispatchEvent(new CustomEvent('zodiacs:gallery-trade', {
+            detail: { slug: records[index].slug },
+            bubbles: true,
+          }));
+        } else {
+          showFigure(index);
+        }
+        return;
+      }
       if (index >= 0) {
         // One gesture, one meaning: a sculpture opens its record — front,
         // side, it makes no difference. Tapping the piece already on display
@@ -753,7 +778,12 @@ async function mount(root, records) {
   // A slug in the hash is a request to view that piece: bring the band into
   // view and put the record on display. The static catalogue carries the
   // same ids for readers without JavaScript.
-  if (asked >= 0) {
+  if (asked >= 0 && spotlight) {
+    // The rectangle is already standing in front of the asked-for piece —
+    // seeded before the first frame — so arrival only has to bring it into
+    // view. There is no record to open: it is on the page beside the figure.
+    root.scrollIntoView({ block: 'center', behavior: 'instant' });
+  } else if (asked >= 0) {
     root.scrollIntoView({ block: 'center', behavior: 'instant' });
     void openFigure(asked, { takeFocus: false });
   }

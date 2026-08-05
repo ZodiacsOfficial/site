@@ -65,11 +65,15 @@ describe('Registry consumer and technical information architecture', () => {
 
     for (const value of [source, visible]) {
       expect(value).toContain('Every sign has one official token. Explore its story, its record, and its market.');
-      expect(value).toContain('Choose a token');
-      expect(value).toContain('Check an address');
+      // The verifier is reachable in plain words. "Check an address" named
+      // the mechanism, and "Check a token is official" dropped its "that".
+      expect(value).toContain('Verify a token');
+      expect(value).not.toContain('Check an address');
+      expect(value).not.toContain('Check a token is official');
     }
+    expect(visible).toContain('Choose a token');
     expect(visible).toMatch(/href="#official-twelve"[^>]*>[\s\S]*?Choose a token/iu);
-    expect(visible).toMatch(/href="#verify"[^>]*>[\s\S]*?Check an address/iu);
+    expect(visible).toMatch(/href="#verify"[^>]*>[\s\S]*?Verify a token/iu);
     expect(visible).not.toContain('Open the Cabinet');
   });
 
@@ -78,7 +82,8 @@ describe('Registry consumer and technical information architecture', () => {
     const mounted = consumerRoot(source);
 
     expect(source).toContain('id="official-twelve"');
-    expect(source).toContain('className="consumer-explorer"');
+    // In stage mode the section is also the page's opening scene.
+    expect(source).toContain("'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')");
     expect(source).toContain('data-consumer-sign=');
     expect(source).toContain('aria-pressed={isActive}');
     expect(source).toContain('tabIndex={isActive ? 0 : -1}');
@@ -137,8 +142,10 @@ describe('Registry consumer and technical information architecture', () => {
       read('public/registry/index.html'),
     ]);
 
-    expect(source).toContain("src: '/assets/hero/zodiacs-hero.mp4'");
-    expect(source).toContain("poster: '/assets/hero/zodiacs-hero-poster.avif'");
+    // The rendered page opens on the gallery at every width, so the film is
+    // the no-JS shell's hero alone — and it still must not autoplay for a
+    // reader who asked for stillness.
+    expect(source).not.toContain("src: '/assets/hero/zodiacs-hero.mp4'");
     expect(source).toContain("window.matchMedia('(prefers-reduced-motion: reduce)').matches");
     expect(source).toContain('new IntersectionObserver');
     expect(html).toContain('data-src="/assets/hero/zodiacs-hero.mp4"');
@@ -161,26 +168,117 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
   });
 
-  it('presents the selected sign as its official token with a live quote and record-first actions', async () => {
+  it('presents the selected sign on a placard: name, dates, price, two doors', async () => {
     const source = await read('src/app.jsx');
     const mounted = consumerRoot(source);
 
-    expect(source).toContain('Official {sign.name} token');
-    expect(source).toContain('Native network: Solana');
-    expect(source).toContain('data-token-quote');
-    expect(source).toContain('View the {sign.name} token');
-    expect(source).toContain('Copy Solana address');
-    // The record box is a plate: the sign's gold sculpture with its pastel
-    // disc seated at the corner, and a route to where the token trades.
-    expect(source).toContain('src={`/assets/sculptures/512/${sign.asset.sign}.webp`}');
-    expect(source).toContain('Where {sign.ticker} trades');
-    expect(source).toContain('href={`${registryProfilePath(sign)}#acquire`}');
-    expect(source).toContain('Read the {sign.name} astrology guide');
-    // The primary action opens the official record; the astrology guide is
-    // a labelled tertiary link, never the primary destination.
-    expect(source).toContain('<a className="btn btn--primary" href={registryProfilePath(sign)}>');
-    expect(source).not.toMatch(/className="btn btn--primary" href=\{`\/\$\{sign\.asset\.sign\}\/`\}/u);
+    const placard = source.slice(
+      source.indexOf('className="stage-placard"'),
+      source.indexOf('className="stage-sheet"'),
+    );
+    expect(placard).toContain('className="stage-placard__name"');
+    expect(placard).toContain('{signDateLabel(sign)}');
+    expect(placard).toContain('<PlacardQuote sign={sign} />');
+    expect(placard).toContain('Trade {sign.name}');
+    expect(placard).toContain('<span>The record</span>');
+    expect(placard).toContain('href={registryProfilePath(sign)}');
+    // Flag-off the pill is the door to the catalogue page's own panel.
+    expect(placard).toContain('href={`${registryProfilePath(sign)}#acquire`}');
     expect(mounted).toContain('<ConsumerTokensSection />');
+  });
+
+  it('says one thing about a sign, in one place, at every width', async () => {
+    const source = await read('src/app.jsx');
+    // Both flavours of the plate render the same head, placard and sheet —
+    // only the artwork differs — so the two cannot drift apart.
+    expect(source).toContain('function GalleryBand({ active, setActive, consumer = false, carousel = false })');
+    for (const once of [
+      'className="stage-placard"',
+      'className="stage-hero__head"',
+      '<PlacardQuote sign={sign} />',
+    ]) {
+      expect(source.split(once), once).toHaveLength(2);
+    }
+    // Twice only because the pill has a flag-on and a flag-off face.
+    expect(source.split('Trade {sign.name}')).toHaveLength(3);
+    // The record card and its quote are gone; the placard carries the price.
+    expect(source).not.toContain('function ConsumerSignPanel(');
+    expect(source).not.toContain('data-token-quote');
+    expect(source).not.toContain('className="consumer-preview"');
+  });
+
+  it('drops the second chain and the guide detour from the record box', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    // The landing is about a sign's official token on its native network. The
+    // Base counterpart is a fact of the catalogue page, not of choosing; and
+    // the astrology guide is a whole other wing.
+    expect(source).not.toContain('Also recorded on Base');
+    expect(source).not.toContain('astrology guide');
+    expect(html).not.toContain('astrology guide');
+    // Their styles go with them rather than lingering as dead selectors.
+    for (const dead of [
+      '.consumer-preview__base', '.consumer-preview__guide',
+      '.consumer-preview__links', '.consumer-preview__trade',
+    ]) {
+      expect(html, dead).not.toContain(dead);
+    }
+  });
+
+  it('opens on the gallery itself where the stage is live, film hero standing down', async () => {
+    const source = await read('src/app.jsx');
+    // One hero, one headline, at every width: the film is retired from the
+    // rendered page and the plate opens it instead.
+    expect(source).not.toContain('<CineHero');
+    expect(source).toContain('{stageMode && <GalleryBand active={active} setActive={setActive} consumer />}');
+    expect(source).toContain('{!stageMode && <GalleryBand active={active} setActive={setActive} consumer carousel />}');
+    expect(source).toContain('className="stage-hero__title"');
+    // The placard says what a museum label says — name, dates, price — and
+    // holds the two doors; everything longer waits in the sheet.
+    expect(source).toContain('className="stage-placard"');
+    expect(source).toContain('function PlacardQuote(');
+    expect(source).toContain('<span>The record</span>');
+    // The sheet is a dialog portalled above the floating nav, and closing it
+    // returns focus to the pill that opened it.
+    expect(source).toContain('ReactDOM.createPortal');
+    expect(source).toContain('aria-modal="true"');
+    expect(source).toContain("if (event.key === 'Escape') setSheetOpen(false);");
+    expect(source).toContain('tradePillRef.current?.focus({ preventScroll: true });');
+    // The headline belongs to the plate, not to the page around it.
+    const plate = source.slice(source.indexOf('function GalleryBand('), source.indexOf('</section>', source.indexOf('function GalleryBand(')));
+    expect(plate).toContain('className="stage-hero__head"');
+    expect(plate).toContain('className="gband__rail-top"');
+  });
+
+  it('opens the sheet on the thing the reader asked for', async () => {
+    const source = await read('src/app.jsx');
+    const sheet = source.slice(
+      source.indexOf('className="stage-sheet__panel"'),
+      source.indexOf('document.body,'),
+    );
+    // The panel names itself — disc, sign, and the venue it trades through —
+    // so a second identity block above it would only push the trade down.
+    expect(sheet).toContain('<LandingTrade sign={sign} />');
+    expect(sheet).not.toContain('ConsumerSignPanel');
+    expect(sheet).toContain('className="stage-sheet__record"');
+    expect(sheet).toContain('The full record');
+  });
+
+  it('keeps the trade panel behind its flag and its own lazy bundle', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    // Flag-off the landing carries the door to the catalogue page's panel;
+    // flag-on it carries the panel. Never a runtime read of the venue.
+    expect(source).toContain('REGISTRY_TRADE_ENABLED');
+    expect(source).toContain('data-landing-trade');
+    expect(source).toContain("'/assets/trade.js'");
+    expect(source).toContain("rootMargin: '400px 0px'");
+    expect(html).toContain('<meta name="zodiacs-registry-trade-enabled" content="0" />');
+    expect(html).not.toContain('/assets/trade.js');
   });
 
   it('lists all twelve official tokens in zodiac order with a single batched market read', async () => {
@@ -191,7 +289,6 @@ describe('Registry consumer and technical information architecture', () => {
     const visible = visibleMarkup(html);
 
     expect(source).toContain('Twelve tokens, live.');
-    expect(source).toContain('data-season-pulse');
     expect(source).toContain('function loadTwelveMarketQuotes()');
     expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
     // Zodiac order, never a leaderboard: the strip renders SIGNS in
