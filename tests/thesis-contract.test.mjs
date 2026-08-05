@@ -35,10 +35,10 @@ const SIGNS = [
 ];
 
 const KEY_COPY = [
-  'Bitcoin made digital ownership possible. Zodiacs makes it personal.',
+  'Bitcoin proved digital ownership could be public and self-custodied. Zodiacs makes it personal.',
   'Before you had a username, you had a sign.',
-  'Gold carries history and lore. Bitcoin made ownership digital. Solana makes it fast and efficient. Zodiacs brings those qualities to a sign people already know.',
-  'Find your sign. See its record. Decide what it means to you.',
+  'Gold provides the sculptural language. Bitcoin made ownership digital. Solana makes it fast and efficient. Zodiacs brings those qualities to a sign people already know.',
+  'Choose your sign. See the digital asset. Decide what it means to you.',
 ];
 
 function decodeEntities(value) {
@@ -111,8 +111,7 @@ function visibleEssayText() {
   let essay = sliceElement(HTML, /<article\b[^>]*\bid=["']essay["'][^>]*>/i, 'article');
   const evidenceVault = essay.search(/<details\b[^>]*class=["'][^"']*\bevidence-vault\b/i);
   if (evidenceVault !== -1) essay = essay.slice(0, evidenceVault);
-  essay = classedDetailsRemoved(essay)
-    .replace(/<section\b[^>]*\bid=["']changelog["'][^>]*>[\s\S]*?<\/section>/gi, ' ');
+  essay = classedDetailsRemoved(essay);
   return visibleTextOf(essay).toLowerCase();
 }
 
@@ -154,10 +153,7 @@ describe('thesis Nº 09 editorial contract', () => {
       'whether people choose these particular records is still unproven',
       'none of it transfers to a token automatically',
       'this is not a replacement for bitcoin',
-      'still has to be earned',
-      'what still has to be earned',
       'a young record with nothing hidden',
-      'independent adoption has not arrived',
       'the questions we should ask',
       'the possibility is beautiful',
       'the outcome is not promised',
@@ -166,6 +162,39 @@ describe('thesis Nº 09 editorial contract', () => {
     for (const phrase of rejected) {
       expect(visible, `visible essay still contains: ${phrase}`).not.toContain(phrase);
     }
+  });
+});
+
+describe('thesis publication metadata contract', () => {
+  const hero = sliceElement(HTML, /<header\b[^>]*class=["'][^"']*\bhero\b[^"']*["'][^>]*>/i, 'header');
+
+  it('keeps the visible publication dates exact and machine-readable', () => {
+    const dates = tagParts(hero, 'time').map(({ attrs, inner }) => ({
+      datetime: attrs.match(/\bdatetime=["']([^"']+)["']/i)?.[1] ?? '',
+      label: textOf(inner),
+    }));
+
+    expect(dates).toEqual([
+      { datetime: '2026-08-01', label: 'Published 1 Aug 2026' },
+      { datetime: '2026-08-05', label: 'Updated 5 Aug 2026' },
+    ]);
+    expect(textOf(hero)).toContain('Evidence checked 31 Jul 2026');
+  });
+
+  it('publishes valid Article JSON-LD with matching canonical dates', () => {
+    const jsonLd = tagParts(HTML, 'script')
+      .filter(({ attrs }) => /\btype=["']application\/ld\+json["']/i.test(attrs));
+    expect(jsonLd).toHaveLength(1);
+
+    const data = JSON.parse(jsonLd[0].inner);
+    const article = data['@graph']?.find((entry) => entry['@type'] === 'Article');
+    expect(article).toMatchObject({
+      '@id': 'https://zodiacs.org/thesis/#article',
+      headline: 'Why Zodiacs Matter',
+      url: 'https://zodiacs.org/thesis/',
+      datePublished: '2026-08-01',
+      dateModified: '2026-08-05',
+    });
   });
 });
 
@@ -179,9 +208,10 @@ describe('thesis hero icon contract', () => {
   it('uses the twelve canonical pastel icons in registry order', () => {
     const links = tagParts(heroIcons, 'a');
     expect(links).toHaveLength(12);
+    expect(heroIcons).toMatch(/aria-label=["']The twelve digital assets["']/i);
     links.forEach(({ attrs, inner }, index) => {
       const slug = SIGNS[index];
-      const label = `${slug[0].toUpperCase()}${slug.slice(1)} — registry record`;
+      const label = `${slug[0].toUpperCase()}${slug.slice(1)} — digital asset`;
       expect(attrs).toMatch(new RegExp(`\\bhref=["']/registry/${slug}/["']`, 'i'));
       expect(attrs).toContain(`aria-label="${label}"`);
       expect(inner).toContain(`src="/assets/zodiac-icons/48/${slug}.webp"`);
@@ -219,6 +249,117 @@ describe('thesis hero background contract', () => {
   it('does not replace the moving background with a static canvas', () => {
     expect(hero).not.toContain('data-hero-art');
     expect(hero).not.toMatch(/<canvas\b/i);
+  });
+});
+
+describe('thesis feedback simplification contract', () => {
+  const partTwo = sliceElement(
+    HTML,
+    /<section\b[^>]*\bid=["']where-the-signs-come-from["'][^>]*>/i,
+    'section',
+  );
+  const fig2 = sliceElement(partTwo, /<figure\b[^>]*\bid=["']fig-2["'][^>]*>/i, 'figure');
+  const audienceEvidence = sliceElement(
+    partTwo,
+    /<details\b[^>]*class=["'][^"']*\bevidence-drawer\b[^"']*["'][^>]*>\s*<summary\b[^>]*>Audience &amp; attention evidence<\/summary>/i,
+    'details',
+  );
+  const publicRecord = sliceElement(
+    HTML,
+    /<section\b[^>]*\bid=["']the-public-record["'][^>]*>/i,
+    'section',
+  );
+  const close = sliceElement(
+    HTML,
+    /<div\b[^>]*\bid=["']the-honest-ending["'][^>]*>/i,
+    'div',
+  );
+
+  it('merges the Part II audience and attention material into one evidence drawer', () => {
+    const drawers = [...partTwo.matchAll(
+      /<details\b[^>]*class=["'][^"']*\bevidence-drawer\b[^"']*["'][^>]*>/gi,
+    )];
+
+    expect(drawers).toHaveLength(2);
+    expect(fig2).not.toMatch(/<details\b/i);
+    expect(audienceEvidence).not.toBe('');
+    expect(textOf(tagParts(audienceEvidence, 'summary')[0]?.inner ?? ''))
+      .toBe('Audience & attention evidence');
+    expect(audienceEvidence).toMatch(/class=["'][^"']*\bstats\b/i);
+    expect([...audienceEvidence.matchAll(/\bdata-pulse(?:\s|>|=)/gi)]).toHaveLength(1);
+    expect(audienceEvidence).toMatch(/Live and committed data/i);
+    expect(partTwo.indexOf(audienceEvidence)).toBeGreaterThan(partTwo.indexOf(fig2));
+    expect(partTwo).not.toMatch(/\btruth-panel\b/i);
+  });
+
+  it('compresses the public history to exactly four consequential milestones', () => {
+    const scrapbook = sliceElement(
+      publicRecord,
+      /<ol\b[^>]*class=["'][^"']*\bscrapbook\b[^"']*\bscrapbook--compact\b[^"']*["'][^>]*>/i,
+      'ol',
+    );
+    expect(scrapbook).not.toBe('');
+    expect(tagParts(scrapbook, 'li')).toHaveLength(4);
+    expect(scrapbook).toMatch(/aria-label=["']Four public milestones for the twelve digital assets["']/i);
+    expect(textOf(scrapbook)).toMatch(/Twelve digital assets created.*Public trading begins.*One registry connects them.*Open to inspect and build on/i);
+  });
+
+  it('keeps the committed closing state fail-closed with catalogue and copy actions', () => {
+    const links = tagParts(close, 'a');
+    const buttons = tagParts(close, 'button');
+
+    expect(links).toHaveLength(1);
+    expect(links[0].attrs).toMatch(/\bdata-thesis-cta=["']catalogue["']/i);
+    expect(links[0].attrs).toMatch(/\bhref=["']\/registry\/["']/i);
+    expect(buttons).toHaveLength(1);
+    expect(buttons[0].attrs).toMatch(/\btype=["']button["']/i);
+    expect(buttons[0].attrs).toMatch(/\bdata-thesis-copy-link\b/i);
+    expect(buttons[0].inner).toMatch(/\bdata-thesis-copy-label\b/i);
+    expect(close).toMatch(/<span\b(?=[^>]*\bdata-thesis-share-status\b)(?=[^>]*\baria-live=["']polite["'])[^>]*>/i);
+    expect([...close.matchAll(/registry-collection-thesis:slot/g)]).toHaveLength(1);
+    expect(close).not.toMatch(/\bdata-thesis-cta=["']collection["']/i);
+    expect(HTML).not.toMatch(/href=["']\/registry\/collection\/?["']/i);
+    expect(close).not.toMatch(/href=["']#the-twelve["']|href=["']\/registry\/#verify["']/i);
+  });
+
+  it('uses digital-asset language on the public milestone and closing actions', () => {
+    expect(textOf(publicRecord)).toContain('Twelve digital assets created.');
+    expect(textOf(close)).toContain('Choose your sign. See the digital asset. Decide what it means to you.');
+    expect(textOf(close)).toContain('Open the twelve digital assets');
+  });
+
+  it('publishes no changelog section or changelog link', () => {
+    expect(HTML).not.toMatch(/<section\b[^>]*\bid=["']changelog["']/i);
+    expect(HTML).not.toMatch(/<a\b[^>]*\bhref=["']#changelog["']/i);
+  });
+});
+
+describe('thesis catalogue icon contract', () => {
+  const catalogue = sliceElement(
+    HTML,
+    /<section\b[^>]*\bid=["']the-twelve["'][^>]*>/i,
+    'section',
+  );
+
+  it('uses the twelve official pastel icons in registry order', () => {
+    const links = tagParts(catalogue, 'a');
+    expect(links).toHaveLength(12);
+    links.forEach(({ attrs, inner }, index) => {
+      const slug = SIGNS[index];
+      const images = voidTagParts(inner, 'img');
+      const sources = voidTagParts(inner, 'source');
+      expect(attrs).toMatch(new RegExp(`\\bhref=["']/registry/${slug}/["']`, 'i'));
+      expect(images).toHaveLength(1);
+      expect(sources).toHaveLength(1);
+      expect(images[0].attrs).toContain(`src="/assets/zodiac-icons/48/${slug}.webp"`);
+      expect(sources[0].attrs).toContain(`srcset="/assets/zodiac-icons/48/${slug}.avif"`);
+      expect(images[0].attrs).toMatch(/\bwidth="48"\s+height="48"/);
+      expect(images[0].attrs).toMatch(/\balt=""/);
+      expect(images[0].attrs).toMatch(/\baria-hidden="true"/);
+      expect(textOf(inner)).toBe(`${slug[0].toUpperCase()}${slug.slice(1)}`);
+    });
+    expect(catalogue).not.toMatch(/\baf-glyph\b|\/assets\/astrofolio\//i);
+    expect(textOf(catalogue)).toContain('lore, provenance & the listed digital asset.');
   });
 });
 
@@ -337,6 +478,66 @@ describe('thesis transmission and gallery contract', () => {
   });
 });
 
+describe('thesis real-use proof and honest-limitation contract', () => {
+  const holding = sliceElement(
+    HTML,
+    /<section\b[^>]*\bid=["']what-holding-means["'][^>]*>/i,
+    'section',
+  );
+  const proof = sliceElement(
+    holding,
+    /<aside\b[^>]*\bdata-real-use-proof\b[^>]*>/i,
+    'aside',
+  );
+  const publicRecord = sliceElement(
+    HTML,
+    /<section\b[^>]*\bid=["']the-public-record["'][^>]*>/i,
+    'section',
+  );
+  const limitation = sliceElement(
+    publicRecord,
+    /<aside\b[^>]*\bdata-honest-limitation\b[^>]*>/i,
+    'aside',
+  );
+
+  it('shows one three-link Leo proof using the same exact mint', () => {
+    const mint = '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm';
+    const links = tagParts(proof, 'a');
+    const hrefs = links.map(({ attrs }) => (
+      attrs.match(/\bhref=["']([^"']+)["']/i)?.[1] ?? ''
+    ));
+
+    expect([...HTML.matchAll(/\bdata-real-use-proof\b/g)]).toHaveLength(1);
+    expect(proof).not.toBe('');
+    expect(proof).toMatch(/\baria-labelledby=["']proof-loop-title["']/i);
+    expect(proof).toMatch(/<h3\b[^>]*\bid=["']proof-loop-title["'][^>]*>Leo matches across Registry, explorer, and wallet\.<\/h3>/i);
+    expect(hrefs).toEqual([
+      '/registry/leo/',
+      `https://explorer.solana.com/address/${mint}`,
+      `https://www.solflare.com/prices/leo/${mint}/`,
+    ]);
+    links.slice(1).forEach(({ attrs }) => {
+      expect(attrs).toMatch(/\brel=["'][^"']*\bnoopener\b[^"']*\bnoreferrer\b[^"']*["']/i);
+    });
+    expect(tagParts(proof, 'code').map(({ inner }) => textOf(inner))).toEqual([mint]);
+    expect(textOf(proof)).toContain('Check one exact mint independently across three public surfaces.');
+    expect(textOf(proof)).toContain('Solflare is a third-party wallet surface. This demonstrates wallet recognition of the mint; it does not show that Solflare consumes the Zodiacs Registry or SDK.');
+  });
+
+  it('keeps exactly one honest limitation in the visible essay', () => {
+    const visible = visibleEssayText();
+    const exactLimitation = 'Independent adoption has not yet arrived. That standing will exist only if people and builders choose these assets when they could choose anything else.';
+
+    expect([...HTML.matchAll(/\bdata-honest-limitation\b/g)]).toHaveLength(1);
+    expect(limitation).not.toBe('');
+    expect(limitation).not.toMatch(/<details\b/i);
+    expect(textOf(limitation)).toContain('What remains unproven');
+    expect(textOf(limitation)).toContain('The assets are listed and transferable. Their broader standing still has to be earned.');
+    expect(textOf(limitation)).toContain(exactLimitation);
+    expect((visible.match(/independent adoption has not yet arrived\./g) ?? [])).toHaveLength(1);
+  });
+});
+
 describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
   const fig3 = sliceElement(HTML, /<figure\b[^>]*\bid=["']fig-3["'][^>]*>/i, 'figure');
   const convergence = sliceElement(
@@ -388,6 +589,7 @@ describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
     expect(columnHeaders.every(({ attrs }) => /\bscope=["']col["']/i.test(attrs))).toBe(true);
     expect(columnHeaders.map(({ inner }) => textOf(inner))).toEqual(['Property', 'Gold', '₿ Bitcoin', 'Zodiacs']);
     expect(rows).toHaveLength(11);
+    expect(textOf(tagParts(table, 'caption')[0]?.inner ?? '')).toMatch(/eleven yes-or-no properties/i);
     expect(rows.map(({ inner }) => textOf(tagParts(inner, 'th')[0]?.inner ?? '')))
       .toEqual(MATRIX.map(([property]) => property));
     for (const { inner } of rows) {
@@ -423,7 +625,7 @@ describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
     });
 
     expect(actual).toEqual(MATRIX);
-    expect(actual.every((row) => row[3] === '✓'), 'every Zodiacs property should be checked').toBe(true);
+    expect(actual.every((row) => row[3] === '✓')).toBe(true);
   });
 
   it('keeps explanations and sources outside the matrix', () => {
@@ -432,6 +634,59 @@ describe('Gold, Bitcoin, and Zodiacs comparison contract', () => {
     )?.[0] ?? '';
     expect(textOf(measurementDrawer)).toMatch(/How this comparison is measured/i);
     expect(visibleTextOf(table)).not.toMatch(/\b(?:yes|no|limited|unproven)\b/i);
+  });
+});
+
+describe('thesis evidence-vault and sharing contract', () => {
+  const vault = sliceElement(
+    HTML,
+    /<details\b[^>]*class=["'][^"']*\bevidence-vault\b[^"']*["'][^>]*>/i,
+    'details',
+  );
+  const close = sliceElement(
+    HTML,
+    /<div\b[^>]*\bid=["']the-honest-ending["'][^>]*>/i,
+    'div',
+  );
+
+  it('keeps the complete appendix inside the evidence vault and closes afterward', () => {
+    const appendixIds = [
+      'appendix',
+      'reading-the-instrument',
+      'why-solana-why-base',
+      'methodology',
+      'verify',
+    ];
+
+    expect(vault).not.toBe('');
+    for (const id of appendixIds) {
+      expect([...HTML.matchAll(new RegExp(`\\bid=["']${id}["']`, 'gi'))]).toHaveLength(1);
+      expect(vault).toMatch(new RegExp(`<section\\b[^>]*\\bid=["']${id}["']`, 'i'));
+    }
+
+    const vaultEnd = HTML.indexOf(vault) + vault.length;
+    const closeStart = HTML.indexOf(close);
+    expect(close).not.toBe('');
+    expect(closeStart).toBeGreaterThanOrEqual(vaultEnd);
+    expect(vault).not.toContain('id="the-honest-ending"');
+  });
+
+  it('opens collapsed evidence for deep links and wires canonical-link copying', () => {
+    const behavior = tagParts(HTML, 'script')
+      .filter(({ inner }) => inner.includes('function exposeHashTarget()'));
+
+    expect(behavior).toHaveLength(1);
+    expect(behavior[0].inner).toContain("location.hash.slice(1)");
+    expect(behavior[0].inner).toContain('document.getElementById(decodeURIComponent(id))');
+    expect(behavior[0].inner).toContain("node.tagName === 'DETAILS'");
+    expect(behavior[0].inner).toContain('details.open = true');
+    expect(behavior[0].inner).toContain("window.addEventListener('hashchange', exposeHashTarget)");
+    expect(behavior[0].inner).toContain("document.querySelector('[data-thesis-copy-link]')");
+    expect(behavior[0].inner).toContain("document.querySelector('[data-thesis-share-status]')");
+    expect(behavior[0].inner).toContain("document.querySelector('link[rel=\"canonical\"]')");
+    expect(behavior[0].inner).toContain('navigator.clipboard.writeText(url)');
+    expect(behavior[0].inner).toContain("button.addEventListener('click'");
+    expect(behavior[0].inner).toContain("document.execCommand('copy')");
   });
 });
 

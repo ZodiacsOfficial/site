@@ -1,16 +1,12 @@
 {
   "version": 1,
-  "id": "registry-trade-governance-2026-08-05",
-  "reason": "Owner-ratified trade governance release (2026-08-02): disclose the embedded trade panel before any panel code exists, and publish the dated operator attestation that supersedes 2026-07-23. The four locale privacy pages and the four locale addition catalogs are touched only to carry the disclosure text already written in English — additionText throws on a missing key, so the translations are a build requirement of the new disclosure row and the redated attestation, not a change to the locale trees themselves. No Registry wing file, generated bundle, sign page, or Registry builder is modified by this release Amended 2026-08-04 to extend the panel’s stated scope to the Registry landing explorer, whose privacy wording also states when a price is requested there. Amended again 2026-08-05: the explorer is one plate at every width and the panel opens only on the visitor’s choice, so the disclosure states quote-on-open universally.",
-  "baseCommit": "1da96edeb72b74e59627ff181a84d0fb4ed0a536",
+  "id": "thesis-digital-assets-2026-08-05",
+  "reason": "Owner-approved thesis release (2026-08-05): extend the existing fail-closed Registry Collection entry contract to the thesis closing actions. The four protected files are changed only to inject or test that optional build-time link alongside the existing Registry landing entry; the Collection URL remains absent from thesis markup, focus order, and crawler-visible output unless the established Registry Collection flag is enabled. No Registry route, asset record, public API, schema, sign page, wallet behavior, or Collection experience is otherwise changed.",
+  "baseCommit": "4fbe416f533e76f2417d5477b3dad486438b34bf",
   "protectedPaths": [
-    "src/pages/es/privacy/index.astro",
-    "src/pages/fr/privacy/index.astro",
-    "src/pages/it/privacy/index.astro",
-    "src/pages/pt/privacy/index.astro",
-    "src/strings/additions.es.mjs",
-    "src/strings/additions.fr.mjs",
-    "src/strings/additions.it.mjs",
-    "src/strings/additions.pt.mjs"
+    "scripts/build-app.mjs",
+    "scripts/configure-registry-aura.mjs",
+    "scripts/registry-aura-entry.test.mjs",
+    "src/lib/registry-aura-entry.mjs"
   ]
 }
