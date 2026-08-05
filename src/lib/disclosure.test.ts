@@ -30,10 +30,10 @@ const ROW_IDS = [
   'financial-advice',
 ] as const;
 const ATTESTED_IDS = ['operator', 'economic-interest'] as const;
-const VERIFIED_IDS = ['origin', 'separation', 'read-only', 'financial-advice'] as const;
-// The embedded trade panel is disclosed ahead of launch and stays on the
-// pending chip until its public code ships and the row can be verified.
-const PENDING_IDS = ['trade-panel'] as const;
+const VERIFIED_IDS = ['origin', 'separation', 'read-only', 'trade-panel', 'financial-advice'] as const;
+// The trade panel shipped and its served page code makes the row checkable,
+// so nothing is pending. The chip machinery stays for future rows.
+const PENDING_IDS = [] as const;
 const ROUTE_TEXT_KEYS = [
   'metaTitle',
   'metaDescription',
@@ -227,7 +227,7 @@ describe('registry disclosure contract', () => {
       expect(text).not.toMatch(/did not authorize|declined/i);
       expect(text).not.toMatch(/evenly distributed/i);
     }
-    // Only the pre-launch trade row is pending, and no operator scaffolding remains.
+    // Nothing is pending now the panel has shipped; no operator scaffolding remains.
     expect(DISCLOSURE_ROWS.filter((row) => row.status === 'pending').map((row) => row.id))
       .toEqual([...PENDING_IDS]);
     expect(DISCLOSURE_ROWS.every((row) => !`${row.statement} ${row.evidence}`.includes('[OPERATOR'))).toBe(true);
@@ -265,7 +265,7 @@ describe('registry disclosure contract', () => {
 
   it('describes the trade panel as the site’s own interface over a venue-run trade', () => {
     const row = DISCLOSURE_ROWS.find((candidate) => candidate.id === 'trade-panel')!;
-    expect(row.status).toBe('pending');
+    expect(row.status).toBe('verified');
     expect(row.statement).toContain('When the trade panel is enabled');
     // The panel is ours; the trade is not. Both halves must stay said.
     expect(row.statement).toContain('Zodiacs.org’s own interface');
@@ -279,7 +279,8 @@ describe('registry disclosure contract', () => {
     expect(row.statement).toContain('receives nothing from any trade');
     // The venue's fee is named rather than left for the visitor to discover.
     expect(row.statement).toContain('Jupiter charges a fee of 0.10%');
-    expect(row.evidence).toContain('not yet enabled');
+    expect(row.evidence).toContain('enabled by an operator switch');
+    expect(row.evidence).not.toContain('not yet enabled');
     expect(row.evidence).toContain('holds no signing key and calls no write endpoint of its own');
     expect(row.links.map((link) => link.href)).toEqual(['/registry/aries/', '/terms/']);
   });
@@ -411,9 +412,9 @@ describe('registry disclosure contract', () => {
       ] as const) {
         expect(html, `${locale}:disclosure.${key}`).toContain(disclosureText(locale, key));
       }
-      expect(html.match(/class="[^"]*status-chip--pending[^"]*"/g), locale).toHaveLength(1);
+      expect(html.match(/class="[^"]*status-chip--pending[^"]*"/g), locale).toBeNull();
       expect(html.match(/class="[^"]*status-chip--operator-attested[^"]*"/g), locale).toHaveLength(2);
-      expect(html.match(/class="[^"]*status-chip--verified[^"]*"/g), locale).toHaveLength(4);
+      expect(html.match(/class="[^"]*status-chip--verified[^"]*"/g), locale).toHaveLength(5);
       expect(html.match(/class="[^"]*establishment__pending[^"]*"/g), locale).toBeNull();
       expect(html, locale).toContain(`href="${REGISTRY_ESTABLISHMENT_PROVENANCE_URL}"`);
       expect(html, locale).toContain(disclosureText(locale, 'establishedProvenance'));

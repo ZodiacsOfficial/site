@@ -121,7 +121,7 @@ export function disclosureRows(locale: Locale): readonly DisclosureRow[] {
     id: 'trade-panel',
     label: disclosureText(locale, 'tradeLabel'),
     statement: disclosureText(locale, 'tradeStatement'),
-    status: 'pending',
+    status: 'verified',
     evidence: disclosureText(locale, 'tradeEvidence'),
     links: [
       { label: disclosureText(locale, 'linkTradeExample'), href: '/registry/aries/' },
