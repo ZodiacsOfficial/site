@@ -65,11 +65,14 @@ describe('Registry consumer and technical information architecture', () => {
 
     for (const value of [source, visible]) {
       expect(value).toContain('Every sign has one official token. Explore its story, its record, and its market.');
-      expect(value).toContain('Choose a token');
-      expect(value).toContain('Check an address');
+      // The verifier is named by what it answers. "Check an address" only
+      // meant something to a reader who already knew what the tool was.
+      expect(value).toContain('Check a token is official');
+      expect(value).not.toContain('Check an address');
     }
+    expect(visible).toContain('Choose a token');
     expect(visible).toMatch(/href="#official-twelve"[^>]*>[\s\S]*?Choose a token/iu);
-    expect(visible).toMatch(/href="#verify"[^>]*>[\s\S]*?Check an address/iu);
+    expect(visible).toMatch(/href="#verify"[^>]*>[\s\S]*?Check a token is official/iu);
     expect(visible).not.toContain('Open the Cabinet');
   });
 

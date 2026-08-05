@@ -1487,7 +1487,9 @@
           {quote ? (
             <>
               <span className="stage-placard__price">{formatPriceUsd(quote.priceUsd)}</span>
-              <span className={'stage-placard__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
+              {formatPercent(quote.priceChange24h) !== '—' && (
+                <span className={'stage-placard__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
+              )}
             </>
           ) : (
             <span className="stage-placard__price stage-placard__price--waiting">
@@ -1811,12 +1813,15 @@
                   {!REGISTRY_ESTABLISHMENT_PROVENANCE_URL && ' · provenance pending'}
                 </a>
                 <h1 id="consumer-explorer-title" className="stage-hero__title">
-                  Twelve signs. <span className="it">One register.</span>
+                  Twelve signs.<br /><span className="it">One register.</span>
                 </h1>
                 <p className="stage-hero__line">
                   Every sign has one official token. Explore its story, its record, and its market.
-                  {' '}<a className="stage-hero__verify" href="#verify">Check an address ↓</a>
                 </p>
+                {/* Its own line, in words a first-time visitor can act on: the
+                    tool answers "is this the real one?", which "check an
+                    address" never said to anyone who had not already read it. */}
+                <a className="stage-hero__verify" href="#verify">Check a token is official ↓</a>
               </header>
           )}
           {consumer && (
@@ -1835,9 +1840,13 @@
               data-consumer-preview={slug}
               aria-labelledby="stage-placard-name"
             >
-              <span id="stage-placard-name" className="stage-placard__name">{sign.name}</span>
-              <span className="stage-placard__dates">{signDateLabel(sign)}</span>
-              <PlacardQuote sign={sign} />
+              <span className="stage-placard__who">
+                <span id="stage-placard-name" className="stage-placard__name">{sign.name}</span>
+                <span className="stage-placard__meta">
+                  <span className="stage-placard__dates">{signDateLabel(sign)}</span>
+                  <PlacardQuote sign={sign} />
+                </span>
+              </span>
               <span className="stage-placard__actions">
                 {REGISTRY_TRADE_ENABLED ? (
                   <button
@@ -3815,7 +3824,7 @@
               <>
                 <a href="#official-twelve">The Twelve</a>
                 <a href="#registry">How it works</a>
-                <a href="#verify">Check an address</a>
+                <a href="#verify">Check a token is official</a>
                 <a href="/registry/technical/">Technical record</a>
                 <a href="#thesis">Thesis</a>
               </>

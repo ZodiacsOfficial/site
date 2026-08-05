@@ -3347,32 +3347,48 @@
     }
     .stage-hero__eyebrow {
       display: inline-block;
-      color: var(--ink-dim);
+      color: var(--ink-mute);
       font-family: var(--mono);
-      font-size: 10px;
+      font-size: 9.5px;
       letter-spacing: .22em;
       text-transform: uppercase;
+      /* It is a link, but a rule under a mono-caps line directly above the
+         title reads as a mistake — so the underline waits for intent. */
+      text-decoration: none;
     }
-    .stage-hero__eyebrow:hover { color: var(--ink-2); }
+    .stage-hero__eyebrow:hover { color: var(--ink-2); text-decoration: underline; }
     .stage-hero__title {
-      margin: 14px 0 0;
+      /* Two lines: the roman states, the italic answers. Set as one line the
+         device disappears and the title runs to both edges of the plate. */
+      margin: 18px 0 0;
       font-family: var(--serif);
       font-weight: 400;
-      font-size: clamp(36px, 3.9vw, 58px);
-      line-height: 1.04;
-      letter-spacing: -.012em;
+      font-size: clamp(38px, 4.1vw, 60px);
+      line-height: 1.02;
+      letter-spacing: -.014em;
       color: var(--ink);
+      text-wrap: balance;
     }
     .stage-hero__title .it { font-style: italic; color: var(--ink-2); }
     .stage-hero__line {
-      max-width: 62ch;
-      margin: 14px auto 0;
+      max-width: 54ch;
+      margin: 18px auto 0;
       color: var(--ink-dim);
       font-size: 14.5px;
       line-height: 1.6;
     }
-    .stage-hero__verify { color: var(--ink-2); white-space: nowrap; }
-    .stage-hero__verify:hover { color: var(--ink); }
+    .stage-hero__verify {
+      display: inline-flex;
+      align-items: center;
+      min-height: 44px;
+      margin-top: 2px;
+      color: var(--ink-dim);
+      font-size: 12.5px;
+      letter-spacing: .01em;
+      white-space: nowrap;
+      text-decoration: none;
+    }
+    .stage-hero__verify:hover { color: var(--ink-2); text-decoration: underline; }
     /* The plate. One framed room holding the headline, the twelve, the piece
        on show, and its label — wearing the chosen sign's pastel on its edge
        and in the light at its shoulder, and changing colour as you walk. */
@@ -3427,10 +3443,33 @@
       overflow-x: auto;
       scroll-snap-type: x proximity;
       scrollbar-width: none;
+      /* No pill. Twelve discs never fit a phone, and a hard rounded edge
+         slicing circles in half reads as broken rather than as more. They
+         dissolve at both ends instead, which is what "keep going" looks
+         like. */
+      border: 0;
+      background: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      padding: 8px 2px;
+      gap: 8px;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent);
     }
     .gband--flat .rail::-webkit-scrollbar { display: none; }
-    .gband--flat .rail__tick[aria-pressed='true'] { color: var(--ink); }
-    .gband--flat .rail__tick[aria-pressed='true'] picture { transform: scale(1.22); }
+    /* The room dims around the sign you are on, so the choice is legible at
+       a glance among eleven equally bright pastels. */
+    .gband--flat .rail__tick { opacity: .58; transition: opacity 260ms var(--ease-soft); }
+    .gband--flat .rail__tick[aria-pressed='true'] { opacity: 1; color: var(--ink); }
+    .gband--flat .rail__tick[aria-pressed='true'] picture { transform: scale(1.16); }
+    .gband--flat .rail__tick[aria-pressed='true'] img {
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--sign, #E0A9B4) 62%, transparent),
+        0 0 0 6px color-mix(in srgb, var(--sign, #E0A9B4) 16%, transparent);
+    }
+    .gband--flat .rail__tick:hover { opacity: .82; }
+    @media (hover: none) { .gband--flat .rail__tick:hover { opacity: .58; } }
+    .gband--flat .rail__tick[aria-pressed='true']:hover { opacity: 1; }
     /* The picker. Deliberately NOT .gband__chrome: the scene reads that
        element's offsetTop as the floor of the band it may paint into, and
        chrome above the canvas would leave it nothing to paint. */
@@ -3470,10 +3509,13 @@
     .stage-carousel__track {
       list-style: none;
       margin: 0;
-      padding: 0 calc(50% - (var(--slide-w) / 2));
+      /* The light falls from above and the piece stands on the floor of the
+         room, just clear of its label — the same composition the lit scene
+         gives it on a desktop. */
+      padding: 0 calc(50% - (var(--slide-w) / 2)) clamp(72px, 11vh, 104px);
       width: 100%;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       gap: clamp(12px, 3vw, 40px);
       overflow-x: auto;
       overscroll-behavior-x: contain;
@@ -3485,7 +3527,7 @@
     .stage-carousel {
       /* The render carries its own air, so the slide runs wider than the
          sculpture inside it — this is the size that makes the piece read. */
-      --slide-w: clamp(240px, 80vw, 460px);
+      --slide-w: clamp(260px, 86vw, 460px);
     }
     .stage-carousel__slide {
       flex: 0 0 var(--slide-w);
@@ -3557,9 +3599,20 @@
       box-shadow: 0 18px 60px -38px color-mix(in srgb, var(--active-sign, #E0A9B4) 55%, transparent);
       transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
     }
+    /* The label reads name first, then the small print under it — set on one
+       line the serif name and the mono price run together as a single string. */
+    .stage-placard__who {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      min-width: 0;
+    }
+    .stage-placard__meta { display: inline-flex; align-items: baseline; gap: 12px; }
     .stage-placard__name {
       font-family: var(--serif);
       font-size: 27px;
+      line-height: 1.05;
       color: var(--ink);
       white-space: nowrap;
     }
@@ -3597,6 +3650,11 @@
       border-color: rgba(238,241,247,0.28);
       color: var(--ink);
     }
+    /* Both pills keep the shared glass — the trade holds the hero's exact
+       material, and the record steps back in edge and ink so the primary
+       leads without either of them leaving the family. */
+    .stage-placard .btn--ghost.stage-placard__pill { color: var(--ink-dim); border-color: rgba(238,241,247,0.14); }
+    .stage-placard .btn--ghost.stage-placard__pill:hover { color: var(--ink-2); }
     .stage-placard .stage-placard__pill:hover { border-color: rgba(238,241,247,0.34); }
     .stage-placard .btn--ghost.stage-placard__pill::after { content: none; }
     /* The trade sheet — the panel slides in over the stage; the sculpture
@@ -3677,9 +3735,12 @@
     .consumer-trade { margin-top: 24px; }
     @media (max-width: 700px) {
       .stage-hero__head { padding: clamp(22px, 3.5vh, 34px) 18px 0; }
-      .stage-hero__title { font-size: clamp(30px, 8vw, 44px); }
-      .stage-hero__line { font-size: 13px; max-width: 40ch; }
-      .gband__rail-top { padding: 14px 12px 2px; }
+      .stage-hero__title { font-size: clamp(34px, 9.2vw, 46px); margin-top: 12px; }
+      /* The twelve discs and the sculpture teach the page faster than a
+         sentence does, and the room they need is worth more than it is. */
+      .stage-hero__line { display: none; }
+      .stage-hero__verify { margin-top: 6px; font-size: 12px; }
+      .gband__rail-top { padding: 10px 12px 0; }
       .stage-placard {
         flex-wrap: wrap;
         justify-content: center;
