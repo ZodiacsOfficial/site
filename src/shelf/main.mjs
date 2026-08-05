@@ -5,9 +5,9 @@
 // and the disc strip serves as the selector instead.
 
 import {
-  DOCK, GALLERY, approach, clampFocus, dockMagnify, embedBand, nearestIndex,
+  DOCK, GALLERY, TURNTABLE, approach, clampFocus, dockMagnify, embedBand, nearestIndex,
   shortestTurn, signFromHash, wheelToFocusDelta, dragToFocusDelta, dragIntent,
-  flingCarry,
+  flingCarry, turntableActive,
 } from './layout.mjs';
 import { createScene } from './scene.mjs';
 import { createCard } from './card.mjs';
@@ -144,9 +144,58 @@ async function mount(root, records) {
 
   // A piece on display turns slowly, as on a dealer's turntable, until the
   // reader takes it in hand — then it is theirs to aim. Reduced motion
-  // disables the turntable outright.
-  const TURNTABLE_RATE = 0.22;
+  // disables the turntable outright. The Registry spotlight is already the
+  // display pose, so it receives the same turntable without opening a card.
+  const TURNTABLE_RATE = spotlight ? TURNTABLE.spotlightRate : TURNTABLE.openedRate;
   let handTurned = false;
+  let stageVisible = true;
+  let externallyPaused = root.hasAttribute('data-gallery-paused');
+  let turnResumeTimer = 0;
+  let forcedTurnResume = false;
+
+  function syncRotationState(explicit = null) {
+    if (!spotlight) return;
+    const next = explicit
+      ?? (state.reducedMotion ? 'manual' : handTurned ? 'held' : 'ambient');
+    if (root.dataset.galleryRotation !== next) root.dataset.galleryRotation = next;
+  }
+
+  syncRotationState();
+
+  function clearTurnResume({ clearForced = false } = {}) {
+    window.clearTimeout(turnResumeTimer);
+    turnResumeTimer = 0;
+    if (clearForced) forcedTurnResume = false;
+  }
+
+  function scheduleTurnResume({ force = false } = {}) {
+    if (force) forcedTurnResume = true;
+    clearTurnResume();
+    if ((!spotlight && !forcedTurnResume) || state.reducedMotion || !handTurned) return;
+    turnResumeTimer = window.setTimeout(() => {
+      turnResumeTimer = 0;
+      forcedTurnResume = false;
+      handTurned = false;
+      syncRotationState();
+      invalidate();
+    }, TURNTABLE.resumeAfter);
+  }
+
+  function resetSpotlightTurn(index, { immediate = false } = {}) {
+    if (!spotlight) return;
+    handTurned = false;
+    clearTurnResume({ clearForced: true });
+    state.targetYaw = shortestTurn(state.yaw, 0);
+    state.targetPitch = 0;
+    state.targetZoom = 0;
+    if (immediate || state.reducedMotion) {
+      state.yaw = state.targetYaw;
+      state.pitch = state.targetPitch;
+      state.zoom = state.targetZoom;
+    }
+    syncRotationState();
+    void scene.refine(index).then((changed) => { if (changed) invalidate(); });
+  }
 
   // ---- the frame loop --------------------------------------------------
   // Nothing is drawn unless something is still moving; the gallery at rest
@@ -211,8 +260,19 @@ async function mount(root, records) {
     if (disposed) return;
     const dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016);
     last = now;
-    const turning = state.targetOpen === 1 && state.open > 0.98
-      && !handTurned && !state.reducedMotion && !drag;
+    const turning = turntableActive({
+      spotlight,
+      open: state.open,
+      targetOpen: state.targetOpen,
+      switchFrom: state.switchFrom,
+      focus: state.focus,
+      targetFocus: state.targetFocus,
+      stageVisible,
+      paused: externallyPaused,
+      handTurned,
+      reducedMotion: state.reducedMotion,
+      dragging: Boolean(drag) || pointers.size > 0,
+    });
     if (turning) {
       state.yaw += TURNTABLE_RATE * dt;
       state.targetYaw = state.yaw;
@@ -233,13 +293,49 @@ async function mount(root, records) {
     raf = requestAnimationFrame(frame);
   }
 
+  // The spotlight otherwise has a perpetual frame loop. Keep the museum
+  // turntable alive only while its room is near the viewport.
+  const visibilityObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(([entry]) => {
+      stageVisible = entry.isIntersecting;
+      if (stageVisible) invalidate();
+    }, { rootMargin: '120px 0px' })
+    : null;
+  visibilityObserver?.observe(root);
+
+  const pauseTurntable = () => { externallyPaused = true; };
+  const resumeTurntable = () => {
+    externallyPaused = false;
+    invalidate();
+  };
+  root.addEventListener('zodiacs:gallery-pause', pauseTurntable);
+  root.addEventListener('zodiacs:gallery-resume', resumeTurntable);
+
   // ---- position along the row ------------------------------------------
 
   let snapTimer = 0;
-  function scheduleSnap() {
+  let snapFromIndex = -1;
+  function clearSnap() {
+    window.clearTimeout(snapTimer);
+    snapTimer = 0;
+    snapFromIndex = -1;
+  }
+  function scheduleSnap(fromIndex = current()) {
+    if (snapFromIndex < 0) {
+      snapFromIndex = fromIndex;
+      if (spotlight) clearTurnResume();
+    }
     window.clearTimeout(snapTimer);
     snapTimer = window.setTimeout(() => {
+      snapTimer = 0;
+      const previous = snapFromIndex;
+      snapFromIndex = -1;
       state.targetFocus = nearestIndex(state.targetFocus, count);
+      if (spotlight && current() !== previous) resetSpotlightTurn(current());
+      else {
+        syncRotationState();
+        scheduleTurnResume();
+      }
       syncChrome();
       invalidate();
     }, 140);
@@ -247,6 +343,7 @@ async function mount(root, records) {
 
   function focusFigure(index, { announce = true, immediate = false } = {}) {
     const target = clampFocus(index, count);
+    const previous = current();
     const visualIndex = state.switchFrom >= 0 && state.switchProgress < 0.5
       ? state.switchFrom
       : nearestIndex(state.focus, count);
@@ -268,7 +365,12 @@ async function mount(root, records) {
       state.switchFrom = -1;
       state.switchProgress = 1;
     }
-    window.clearTimeout(snapTimer);
+    if (spotlight && target !== previous) {
+      // Every newly chosen cast arrives face-first, then begins its own quiet
+      // turn. Returning by the shortest path avoids unwinding a hand turn.
+      resetSpotlightTurn(target, { immediate });
+    }
+    clearSnap();
     syncChrome();
     if (announce) speak(`${records[current()].name}, Lot ${records[current()].lot}`);
     invalidate();
@@ -352,11 +454,12 @@ async function mount(root, records) {
     // future call site has to keep.
     if (spotlight) return;
     const record = records[index];
+    clearTurnResume({ clearForced: true });
     handTurned = false;
     setHover(-1);
     // One gesture: a side figure swings to the front as it is drawn out.
     state.targetFocus = clampFocus(index, count);
-    window.clearTimeout(snapTimer);
+    clearSnap();
     state.openIndex = index;
     state.targetOpen = 1;
     state.targetYaw = 0;
@@ -569,16 +672,54 @@ async function mount(root, records) {
 
   canvas.addEventListener('pointerleave', () => setHover(-1));
 
+  function restoreGesture(cancelled, { settleTurn = false } = {}) {
+    if (cancelled.mode === 'rotate') {
+      // A cancelled turn returns to the exact target it found. Keep ambient
+      // motion out until that restoration has settled, then resume quietly.
+      handTurned = settleTurn ? true : cancelled.handTurned;
+      state.targetYaw = cancelled.yaw;
+      state.targetPitch = cancelled.pitch;
+      state.targetZoom = cancelled.zoom;
+    } else {
+      state.targetFocus = cancelled.focus;
+      if (spotlight) handTurned = cancelled.handTurned;
+      syncChrome();
+    }
+    syncRotationState();
+    scheduleTurnResume({ force: settleTurn });
+    invalidate();
+  }
+
   canvas.addEventListener('pointerdown', (event) => {
     // Mouse and pen keep their existing capture contract. Touch waits until
     // horizontal intent is clear so a vertical page scroll remains native.
     if (event.pointerType !== 'touch') canvas.setPointerCapture(event.pointerId);
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (pointers.size === 2) {
+      if (spotlight && drag) {
+        const interrupted = drag;
+        drag = null;
+        pinch = 0;
+        restoreGesture(interrupted, { settleTurn: interrupted.mode === 'rotate' });
+        return;
+      }
       const [a, b] = [...pointers.values()];
       pinch = Math.hypot(a.x - b.x, a.y - b.y);
       drag = null;
       return;
+    }
+    // A third contact never starts a replacement gesture while two pointers
+    // already own the canvas.
+    if (pointers.size > 2) {
+      pointers.delete(event.pointerId);
+      return;
+    }
+    const gestureMode = state.targetOpen > 0
+      || (spotlight && scene.pick(event.clientX, event.clientY) === current())
+      ? 'rotate'
+      : 'browse';
+    if (spotlight || gestureMode === 'rotate') {
+      clearTurnResume({ clearForced: gestureMode === 'rotate' });
     }
     drag = {
       id: event.pointerId,
@@ -590,6 +731,8 @@ async function mount(root, records) {
       yaw: state.targetYaw,
       pitch: state.targetPitch,
       zoom: state.targetZoom,
+      handTurned,
+      mode: gestureMode,
       pointerType: event.pointerType,
       touchIntent: 'pending',
       velocity: 0,
@@ -636,14 +779,16 @@ async function mount(root, records) {
         return;
       }
       drag.moved = true;
-      window.clearTimeout(snapTimer);
+      clearSnap();
       setHover(-1);
     }
 
-    if (state.targetOpen > 0) {
+    if (drag.mode === 'rotate') {
       // A figure drawn out turns in the hand — right around, as often as the
-      // reader likes. The row stays where it is, and the turntable yields.
+      // reader likes. The Registry spotlight is already drawn forward, so
+      // the same gesture turns it without changing the selected sign.
       handTurned = true;
+      syncRotationState('dragging');
       state.targetYaw = drag.yaw + (dx / 190);
       // A touch keeps vertical movement available to the page; mouse and pen
       // retain the full two-axis inspection.
@@ -675,11 +820,24 @@ async function mount(root, records) {
   function endPointer(event) {
     pointers.delete(event.pointerId);
     if (pointers.size < 2) pinch = 0;
-    if (!drag || drag.id !== event.pointerId) return;
+    if (!drag || drag.id !== event.pointerId) {
+      if (pointers.size === 0) {
+        syncRotationState();
+        scheduleTurnResume();
+        invalidate();
+      }
+      return;
+    }
     const finished = drag;
     drag = null;
 
     if (!finished.moved) {
+      if (spotlight) {
+        handTurned = finished.handTurned;
+        syncRotationState();
+        scheduleTurnResume();
+        invalidate();
+      }
       // A vertical touch belongs to the page, even if the browser happens to
       // deliver pointerup before it emits pointercancel for native scrolling.
       if (finished.touchIntent === 'vertical') return;
@@ -688,8 +846,9 @@ async function mount(root, records) {
       // kept on the labelled Trade control, so a second tap never changes its
       // meaning beneath the reader.
       if (spotlight) {
-        if (index < 0) return;
+        if (index < 0) { invalidate(); return; }
         if (index !== current()) showFigure(index);
+        else invalidate();
         return;
       }
       if (index >= 0) {
@@ -708,13 +867,23 @@ async function mount(root, records) {
       return;
     }
 
-    if (state.targetOpen > 0) return;
+    if (finished.mode === 'rotate') {
+      syncRotationState();
+      scheduleTurnResume();
+      return;
+    }
     // Carry the throw a little, then settle on a figure.
     const idleMs = Math.max(0, event.timeStamp - finished.lastMove);
     const carried = motion.matches ? 0 : flingCarry(finished.velocity, idleMs);
+    const previous = nearestIndex(finished.focus, count);
     state.targetFocus = nearestIndex(
       clampFocus(state.targetFocus + carried, count), count,
     );
+    if (spotlight && current() !== previous) resetSpotlightTurn(current());
+    else {
+      syncRotationState();
+      scheduleTurnResume();
+    }
     syncChrome();
     speak(`${records[current()].name}, Lot ${records[current()].lot}`);
     invalidate();
@@ -723,20 +892,19 @@ async function mount(root, records) {
   function cancelPointer(event) {
     pointers.delete(event.pointerId);
     if (pointers.size < 2) pinch = 0;
-    if (drag?.id !== event.pointerId) return;
+    if (drag?.id !== event.pointerId) {
+      if (pointers.size === 0) {
+        syncRotationState();
+        scheduleTurnResume();
+        invalidate();
+      }
+      return;
+    }
     const cancelled = drag;
     drag = null;
     // Cancellation is not a release. Put the row or sculpture back exactly
     // where this gesture found it, without picking, snapping, or momentum.
-    if (state.targetOpen > 0) {
-      state.targetYaw = cancelled.yaw;
-      state.targetPitch = cancelled.pitch;
-      state.targetZoom = cancelled.zoom;
-    } else {
-      state.targetFocus = cancelled.focus;
-      syncChrome();
-    }
-    invalidate();
+    restoreGesture(cancelled, { settleTurn: cancelled.mode === 'rotate' });
   }
 
   canvas.addEventListener('pointerup', endPointer);
@@ -763,9 +931,10 @@ async function mount(root, records) {
     const atEnd = state.targetFocus >= count - 1.002 && delta > 0;
     if (atStart || atEnd) return;
     event.preventDefault();
+    const previous = current();
     state.targetFocus = clampFocus(state.targetFocus + delta, count);
     syncChrome();
-    scheduleSnap();
+    scheduleSnap(previous);
     invalidate();
   }, { passive: false });
 
@@ -797,6 +966,9 @@ async function mount(root, records) {
       state.pitch = state.targetPitch;
       state.zoom = state.targetZoom;
     }
+    if (state.reducedMotion) clearTurnResume();
+    else scheduleTurnResume();
+    syncRotationState();
     invalidate();
   };
   motion.addEventListener?.('change', onMotionChange);
@@ -835,8 +1007,13 @@ async function mount(root, records) {
     if (disposed) return;
     disposed = true;
     if (raf) cancelAnimationFrame(raf);
+    clearTurnResume({ clearForced: true });
+    clearSnap();
     observer.disconnect();
+    visibilityObserver?.disconnect();
     motion.removeEventListener?.('change', onMotionChange);
+    root.removeEventListener('zodiacs:gallery-pause', pauseTurntable);
+    root.removeEventListener('zodiacs:gallery-resume', resumeTurntable);
     scene.dispose();
   }
   window.addEventListener('pagehide', teardown, { once: true });
@@ -871,6 +1048,7 @@ async function mount(root, records) {
   // The plates arrive after the room does: each figure stands in its own metal
   // until its photograph is laid on, nearest the front first.
   void scene.dressRow(start, invalidate);
+  if (spotlight) void scene.refine(start).then((changed) => { if (changed) invalidate(); });
 }
 
 export { GALLERY };

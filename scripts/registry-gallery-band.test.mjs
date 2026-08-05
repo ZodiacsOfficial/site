@@ -148,6 +148,56 @@ describe('the gallery band on the registry hub', () => {
       .toContain('if (spotlight) return;');
   });
 
+  it('turns the Registry spotlight with the Thesis engine, then yields to the hand', async () => {
+    const [app, driver, renderer, appBundle, sceneBundle] = await Promise.all([
+      read('src/app.jsx'),
+      read('src/shelf/main.mjs'),
+      read('src/shelf/scene.mjs'),
+      read('public/assets/app.js'),
+      read('public/assets/gallery.js'),
+    ]);
+
+    // Rotation is a display treatment only: the spotlight never opens the
+    // Thesis card or changes the selected sign when the focused cast is held.
+    expect(driver).toContain('turntableActive({');
+    expect(driver).toContain("? 'rotate'\n      : 'browse'");
+    expect(driver).toContain("if (drag.mode === 'rotate')");
+    expect(driver).toContain("if (finished.mode === 'rotate')");
+    expect(renderer).toContain('state.spotlight ? pose.prominence : 0');
+    expect(renderer).toContain('pitch * inspected');
+    expect(renderer).toContain('THREE.MathUtils.lerp(pose.rotationY, yaw, inspected)');
+    expect(driver).toContain('function resetSpotlightTurn(index, { immediate = false } = {})');
+    expect(driver).toContain('resetSpotlightTurn(target, { immediate });');
+    expect(driver).toContain('current() !== previous) resetSpotlightTurn(current())');
+    expect(driver).toContain('dragging: Boolean(drag) || pointers.size > 0');
+    expect(driver).toContain('pointers.delete(event.pointerId);');
+    expect(driver).toContain('restoreGesture(interrupted, { settleTurn: interrupted.mode');
+    expect(driver).toContain('handTurned = finished.handTurned;');
+    expect(driver).toContain('scheduleTurnResume({ force: settleTurn });');
+    expect(driver).toContain('let forcedTurnResume = false;');
+    expect(driver).toContain('function clearSnap()');
+    expect(driver).toContain('clearTurnResume({ clearForced: gestureMode === \'rotate\' });');
+
+    // It costs no frames offscreen or behind acquisition, never autoplays for
+    // reduced motion, and resumes only after a deliberate inspection pause.
+    expect(driver).toContain("root.hasAttribute('data-gallery-paused')");
+    expect(driver).toContain("new IntersectionObserver(([entry]) =>");
+    expect(driver).toContain('TURNTABLE.resumeAfter');
+    expect(driver).toContain("state.reducedMotion ? 'manual'");
+    expect(app).toContain('data-gallery-paused=');
+    expect(app).toContain("carousel || sheetVisible ? 'zodiacs:gallery-pause'");
+    expect(app).toContain('zodiacs:gallery-pause');
+    expect(app).toContain('data-gallery-turn-hint');
+
+    // Generated output is part of the production contract.
+    for (const marker of ['galleryRotation', 'zodiacs:gallery-pause']) {
+      expect(sceneBundle).toContain(marker);
+    }
+    for (const marker of ['data-gallery-paused', 'gband__turn-hint', 'Drag to turn']) {
+      expect(appBundle).toContain(marker);
+    }
+  });
+
   it('keeps the rectangle’s rail out of the band the scene measures', async () => {
     const [app, html] = await Promise.all([
       read('src/app.jsx'), read('public/registry/index.html'),

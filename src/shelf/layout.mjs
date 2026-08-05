@@ -294,6 +294,34 @@ export const DOCK = Object.freeze({
   rest: 0.28,
 });
 
+// The opened Thesis sculpture turns like a dealer's turntable. The Registry
+// spotlight is always on display, so its perpetual version is deliberately
+// slower and yields for a short inspection pause after direct manipulation.
+export const TURNTABLE = Object.freeze({
+  openedRate: 0.22,
+  spotlightRate: 0.12,
+  resumeAfter: 2400,
+});
+
+export function turntableActive({
+  spotlight,
+  open,
+  targetOpen,
+  switchFrom,
+  focus,
+  targetFocus,
+  stageVisible,
+  paused,
+  handTurned,
+  reducedMotion,
+  dragging,
+}) {
+  if (!stageVisible || paused || handTurned || reducedMotion || dragging) return false;
+  return spotlight
+    ? switchFrom < 0 && Math.abs(focus - targetFocus) < 0.0005
+    : targetOpen === 1 && open > 0.98;
+}
+
 /** Magnification for a tick `distance` ticks from the cursor. */
 export function dockMagnify(distance, dock = DOCK) {
   const away = Math.abs(distance) / dock.spread;

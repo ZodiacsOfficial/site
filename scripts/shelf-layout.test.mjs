@@ -7,6 +7,7 @@ import {
   SPOTLIGHT,
   SPOTLIGHT_STAGE,
   SPOTLIGHT_VITRINE,
+  TURNTABLE,
   VITRINE,
   angleStep,
   approach,
@@ -30,12 +31,56 @@ import {
   shortestTurn,
   signFromHash,
   stageContent,
+  turntableActive,
   vitrineFrame,
   wheelToFocusDelta,
 } from '../src/shelf/layout.mjs';
 import { figureOf, readFigures, classification } from '../src/shelf/figures.mjs';
 
 const COUNT = 12;
+
+describe('turntable policy', () => {
+  const ready = {
+    spotlight: true,
+    open: 0,
+    targetOpen: 0,
+    switchFrom: -1,
+    focus: 4,
+    targetFocus: 4,
+    stageVisible: true,
+    paused: false,
+    handTurned: false,
+    reducedMotion: false,
+    dragging: false,
+  };
+
+  it('turns the settled Registry spotlight without opening a card', () => {
+    expect(turntableActive(ready)).toBe(true);
+    expect(TURNTABLE.spotlightRate).toBeLessThan(TURNTABLE.openedRate);
+    expect(TURNTABLE.resumeAfter).toBe(2400);
+  });
+
+  it('preserves the Thesis opened-sculpture turntable', () => {
+    expect(turntableActive({
+      ...ready,
+      spotlight: false,
+      open: 1,
+      targetOpen: 1,
+    })).toBe(true);
+  });
+
+  it.each([
+    ['offscreen', { stageVisible: false }],
+    ['behind the purchase sheet', { paused: true }],
+    ['under the hand', { dragging: true }],
+    ['held after a hand turn', { handTurned: true }],
+    ['under reduced motion', { reducedMotion: true }],
+    ['during a sign handoff', { switchFrom: 3 }],
+    ['while focus is settling', { focus: 3.9 }],
+  ])('stops %s', (_label, change) => {
+    expect(turntableActive({ ...ready, ...change })).toBe(false);
+  });
+});
 
 describe('gallery geometry', () => {
   it('sets the focused figure at the origin, square to the camera', () => {
