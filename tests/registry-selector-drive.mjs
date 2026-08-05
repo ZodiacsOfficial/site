@@ -57,6 +57,20 @@ async function mockDexscreener(page, { fail = false } = {}) {
   });
 }
 
+/** The Cabinet is deployment-flagged. Enable it on visual consumer pages so
+ * this gate exercises the same purpose card the public Registry ships. */
+async function withCollectionFlag(page) {
+  await page.route('**/registry/', async (route) => {
+    if (route.request().resourceType() !== 'document') return route.continue();
+    const response = await route.fetch();
+    const body = (await response.text()).replace(
+      '<meta name="zodiacs-registry-collection-enabled" content="0" />',
+      '<meta name="zodiacs-registry-collection-enabled" content="1" />',
+    );
+    return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
+  });
+}
+
 if (OUT) await mkdir(OUT, { recursive: true });
 
 await withPreview({ port: 4404 }, async (baseURL) => {
@@ -643,6 +657,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
     await stubNoWebgl(desktop);
     await mockDexscreener(desktop);
+    await withCollectionFlag(desktop);
     const desktopErrors = [];
     const desktopGalleryRequests = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
@@ -692,17 +707,18 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           .startsWith('Every sign has one official token. Explore its story, its record, and its market.'),
     );
     check(
-      'the carousel shows the twelve gold sculptures where the scene cannot',
-      await desktop.locator('.stage-carousel__slide').count() === 12
+      'the fallback stage shows one synchronized gold sculpture where the scene cannot',
+      await desktop.locator('.stage-carousel__slide').count() === 1
         && await desktop.locator('.stage-carousel__slide.is-active .stage-carousel__art')
           .getAttribute('src') === '/assets/sculptures/512/leo.webp',
     );
     check(
-      'without WebGL the scene never mounts and its bundle is never requested',
+      'without WebGL the preserved scene mount stays inert and its bundle is never requested',
       desktopGalleryRequests.length === 0
-        && await desktop.locator('[data-gallery-canvas]').count() === 0
+        && await desktop.locator('[data-gallery-canvas] canvas').count() === 0
+        && await desktop.locator('[data-gallery-canvas][hidden]').count() === 1
         && await desktop.locator('.gband--flat').count() === 1,
-      JSON.stringify(desktopGalleryRequests),
+      JSON.stringify({ requests: desktopGalleryRequests }),
     );
     const desktopDimensions = await desktop.evaluate(() => ({
       width: document.documentElement.scrollWidth,
@@ -881,62 +897,303 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       'consumer Registry shows exactly five quick answers',
       await desktop.locator('#faq .consumer-faq__item').count() === 5,
     );
+    const purposeArt = await desktop.locator('#thesis').evaluate((section) => {
+      const collection = section.querySelector('.consumer-collection__link');
+      const thesis = section.querySelector('.consumer-thesis__link');
+      const thesisImage = thesis?.querySelector('img');
+      return {
+        collectionHref: collection?.getAttribute('href') ?? '',
+        seats: collection?.querySelectorAll('.consumer-cabinet__seat').length ?? 0,
+        filledSeats: collection?.querySelectorAll('.consumer-cabinet__seat.is-filled').length ?? 0,
+        seatImages: [...(collection?.querySelectorAll('.consumer-cabinet__seat.is-filled img') || [])]
+          .map((image) => image.getAttribute('src') ?? ''),
+        thesisHref: thesis?.getAttribute('href') ?? '',
+        thesisImage: thesisImage?.getAttribute('src') ?? '',
+        thesisAlt: thesisImage?.getAttribute('alt') ?? '',
+      };
+    });
+    check(
+      'collection and thesis links preview the artwork found at their destinations',
+      purposeArt.collectionHref === '/registry/collection/'
+        && purposeArt.seats === 12
+        && purposeArt.filledSeats === 5
+        && purposeArt.seatImages.length === 5
+        && purposeArt.seatImages.filter((src) => src.startsWith('/assets/cabinet-materials/')).length === 3
+        && purposeArt.seatImages.filter((src) => src.startsWith('/assets/zodiac-icons/')).length === 2
+        && purposeArt.thesisHref === '/thesis/'
+        && purposeArt.thesisImage.includes('/assets/art/zodiac-clock-')
+        && purposeArt.thesisAlt.length > 0,
+      JSON.stringify(purposeArt),
+    );
     check('desktop consumer runtime is error-free', desktopErrors.length === 0, desktopErrors.join(' | '));
     if (OUT) await desktop.screenshot({ path: OUT + '/registry-consumer-1126.png', fullPage: false });
     await desktop.close();
 
-    const mobile = await newPage({
-      viewport: { width: 390, height: 844 },
-      deviceScaleFactor: 2,
-      hasTouch: true,
-    });
-    await mockDexscreener(mobile);
-    const mobileGalleryRequests = [];
-    mobile.on('request', (request) => {
-      if (new URL(request.url()).pathname === '/assets/gallery.js') {
-        mobileGalleryRequests.push(request.url());
+    // The sculpture renders have very different visible silhouettes. Check
+    // every sign at the three narrow widths that previously let the tall
+    // pieces run behind the placard. Measure the non-transparent sculpture
+    // pixels rather than the square WebP canvas: the source art intentionally
+    // contains optical padding and the visitor only perceives the silhouette.
+    for (const [width, height] of [[320, 568], [360, 640], [390, 844]]) {
+      const mobile = await newPage({
+        viewport: { width, height },
+        deviceScaleFactor: 2,
+        hasTouch: true,
+      });
+      await mockDexscreener(mobile);
+      await withCollectionFlag(mobile);
+      const mobileGalleryRequests = [];
+      mobile.on('request', (request) => {
+        if (new URL(request.url()).pathname === '/assets/gallery.js') {
+          mobileGalleryRequests.push(request.url());
+        }
+      });
+      await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await mobile.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
+      const mobileState = await mobile.locator('[data-consumer-sign]').evaluateAll((controls) => {
+        const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
+        const rows = [...new Set(tops)];
+        return {
+          count: controls.length,
+          rowCounts: rows.map((top) => tops.filter((candidate) => candidate === top).length),
+          minTarget: Math.min(...controls.map((control) => {
+            const rect = control.getBoundingClientRect();
+            return Math.min(rect.width, rect.height);
+          })),
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+          pageHeight: document.documentElement.scrollHeight,
+        };
+      });
+      const label = `${width}×${height}`;
+      check(
+        `mobile explorer at ${label} rails all twelve signs in one row`,
+        mobileState.count === 12 && mobileState.rowCounts.length === 1,
+        JSON.stringify(mobileState),
+      );
+      check(
+        `mobile Registry at ${label} has no horizontal overflow and keeps 44px targets`,
+        mobileState.pageWidth <= mobileState.viewportWidth + 1
+          && mobileState.pageHeight <= 7500
+          && mobileState.minTarget >= 44,
+        JSON.stringify(mobileState),
+      );
+
+      const sculptureGeometry = [];
+      for (const slug of expectedSigns) {
+        await mobile.locator(`[data-consumer-sign="${slug}"]`).click();
+        await mobile.locator(`[data-consumer-preview="${slug}"]`).waitFor({ state: 'visible' });
+        await mobile.waitForFunction((selected) => {
+          const slide = document.querySelector('.stage-carousel__slide.is-active');
+          const image = slide?.querySelector('.stage-carousel__art');
+          return image?.getAttribute('src')?.endsWith(`/${selected}.webp`)
+            && image.complete && image.naturalWidth > 0;
+        }, slug);
+        // Measure the resting sculpture, not a frame of its 240ms entrance.
+        // The collision guarantee is about where the artwork comes to rest.
+        await mobile.locator('.stage-carousel__slide.is-active .stage-carousel__art')
+          .evaluate(async (image) => {
+            await Promise.all(image.getAnimations().map((animation) => animation.finished.catch(() => {})));
+            await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          });
+        sculptureGeometry.push(await mobile.evaluate(async (selected) => {
+          const rect = (selector) => {
+            const node = document.querySelector(selector);
+            if (!node) return null;
+            const box = node.getBoundingClientRect();
+            return {
+              top: box.top,
+              right: box.right,
+              bottom: box.bottom,
+              left: box.left,
+              width: box.width,
+              height: box.height,
+            };
+          };
+          const artNode = document.querySelector('.stage-carousel__slide.is-active .stage-carousel__art');
+          const art = rect('.stage-carousel__slide.is-active .stage-carousel__art');
+          const carousel = rect('.stage-carousel');
+          const placard = rect('.stage-placard');
+          const plate = rect('.gband--flat');
+          let visibleArt = null;
+          if (artNode instanceof HTMLImageElement && artNode.naturalWidth > 0 && art) {
+            const alphaCanvas = document.createElement('canvas');
+            alphaCanvas.width = artNode.naturalWidth;
+            alphaCanvas.height = artNode.naturalHeight;
+            const context = alphaCanvas.getContext('2d', { willReadFrequently: true });
+            context.drawImage(artNode, 0, 0);
+            const pixels = context.getImageData(0, 0, alphaCanvas.width, alphaCanvas.height).data;
+            let minX = alphaCanvas.width;
+            let minY = alphaCanvas.height;
+            let maxX = -1;
+            let maxY = -1;
+            for (let y = 0; y < alphaCanvas.height; y += 1) {
+              for (let x = 0; x < alphaCanvas.width; x += 1) {
+                if (pixels[((y * alphaCanvas.width) + x) * 4 + 3] > 8) {
+                  minX = Math.min(minX, x);
+                  minY = Math.min(minY, y);
+                  maxX = Math.max(maxX, x);
+                  maxY = Math.max(maxY, y);
+                }
+              }
+            }
+            if (maxX >= minX && maxY >= minY) {
+              visibleArt = {
+                top: art.top + ((minY / alphaCanvas.height) * art.height),
+                right: art.left + (((maxX + 1) / alphaCanvas.width) * art.width),
+                bottom: art.top + (((maxY + 1) / alphaCanvas.height) * art.height),
+                left: art.left + ((minX / alphaCanvas.width) * art.width),
+              };
+            }
+          }
+          const pressed = document.querySelector('[data-consumer-sign][aria-pressed="true"]')
+            ?.getAttribute('data-consumer-sign');
+          const preview = document.querySelector('[data-consumer-preview]')
+            ?.getAttribute('data-consumer-preview');
+          const asset = document.querySelector('.stage-carousel__slide.is-active .stage-carousel__art')
+            ?.getAttribute('src') ?? '';
+          return {
+            slug: selected,
+            art,
+            visibleArt,
+            carousel,
+            placard,
+            plate,
+            pressed,
+            preview,
+            asset,
+            activeSlides: document.querySelectorAll('.stage-carousel__slide.is-active').length,
+            clearance: visibleArt && placard ? placard.top - visibleArt.bottom : -Infinity,
+            pageWidth: document.documentElement.scrollWidth,
+            viewportWidth: innerWidth,
+          };
+        }, slug));
       }
+      const brokenSculptures = sculptureGeometry.filter((item) => (
+        !item.art || !item.visibleArt || !item.carousel || !item.placard || !item.plate
+        || item.activeSlides !== 1
+        || item.pressed !== item.slug
+        || item.preview !== item.slug
+        || !item.asset.endsWith(`/${item.slug}.webp`)
+        || item.clearance < 15
+        || item.visibleArt.top < item.carousel.top - 1
+        || item.visibleArt.left < item.plate.left - 1
+        || item.visibleArt.right > item.plate.right + 1
+        || item.placard.left < item.plate.left - 1
+        || item.placard.right > item.plate.right + 1
+        || item.pageWidth > item.viewportWidth + 1
+      ));
+      check(
+        `all twelve sculptures at ${label} stay synchronized and clear the placard by 16px`,
+        brokenSculptures.length === 0,
+        JSON.stringify(brokenSculptures),
+      );
+      await mobile.evaluate(() => new Promise((resolve) => setTimeout(resolve, 400)));
+      check(
+        `phones at ${label} never request the scene bundle`,
+        mobileGalleryRequests.length === 0,
+        JSON.stringify(mobileGalleryRequests),
+      );
+      if (OUT && width === 390) {
+        await mobile.screenshot({ path: OUT + '/registry-consumer-390.png', fullPage: false });
+      }
+      await mobile.close();
+    }
+
+    // Loading narrow and then crossing the stage breakpoint used to leave an
+    // empty mount because the gallery script only inspected the first DOM.
+    // Exercise the complete mobile → desktop → mobile → desktop cycle.
+    const responsiveStage = await newPage({ viewport: { width: 390, height: 844 } });
+    await mockDexscreener(responsiveStage);
+    const responsiveStageRequests = [];
+    const responsiveStageErrors = [];
+    responsiveStage.on('request', (request) => {
+      if (new URL(request.url()).pathname === '/assets/gallery.js') responsiveStageRequests.push(request.url());
     });
-    await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
-    await mobile.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
-    const mobileState = await mobile.locator('[data-consumer-sign]').evaluateAll((controls) => {
-      const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
-      const rows = [...new Set(tops)];
-      return {
-        count: controls.length,
-        rowCounts: rows.map((top) => tops.filter((candidate) => candidate === top).length),
-        minTarget: Math.min(...controls.map((control) => {
-          const rect = control.getBoundingClientRect();
-          return Math.min(rect.width, rect.height);
-        })),
-        pageWidth: document.documentElement.scrollWidth,
-        viewportWidth: innerWidth,
-        pageHeight: document.documentElement.scrollHeight,
-      };
-    });
+    responsiveStage.on('pageerror', (error) => responsiveStageErrors.push(String(error)));
+    await responsiveStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
+    const responsiveStageLive = await responsiveStage.evaluate(() => (
+      document.documentElement.classList.contains('gallery-live')
+    ));
+    if (responsiveStageLive) {
+      const cycleSelections = [
+        { slug: 'gemini', name: 'Gemini', index: 2 },
+        { slug: 'scorpio', name: 'Scorpio', index: 7 },
+      ];
+      for (let cycle = 1; cycle <= 2; cycle += 1) {
+        await responsiveStage.setViewportSize({ width: 1280, height: 900 });
+        const liveBand = responsiveStage.locator('.gband--consumer[data-gallery-stage]');
+        await liveBand.waitFor({ state: 'visible' });
+        await liveBand.locator('.stage__canvas').waitFor({ state: 'attached', timeout: 30_000 });
+        await liveBand.locator('button.rail__tick').first().waitFor({ state: 'visible', timeout: 30_000 });
+        const liveShape = await liveBand.evaluate((band) => {
+          const canvas = band.querySelector('.stage__canvas');
+          const box = canvas?.getBoundingClientRect();
+          const tickButtons = [...band.querySelectorAll('button.rail__tick')];
+          return {
+            ready: band.classList.contains('is-ready'),
+            canvases: band.querySelectorAll('.stage__canvas').length,
+            tickButtons: tickButtons.length,
+            enabledTicks: tickButtons.filter((tick) => !tick.disabled).length,
+            tickImages: band.querySelectorAll('button.rail__tick img').length,
+            placeholders: band.querySelectorAll('.rail__tick--placeholder').length,
+            canvasWidth: box?.width ?? 0,
+            canvasHeight: box?.height ?? 0,
+          };
+        });
+        check(
+          `responsive gallery cycle ${cycle} mounts one usable desktop stage`,
+          liveShape.ready && liveShape.canvases === 1
+            && liveShape.tickButtons === 12 && liveShape.enabledTicks === 12
+            && liveShape.tickImages === 12 && liveShape.placeholders === 0
+            && liveShape.canvasWidth > 0 && liveShape.canvasHeight >= 360,
+          JSON.stringify(liveShape),
+        );
+        const selection = cycleSelections[cycle - 1];
+        const liveTick = liveBand.locator('button.rail__tick').nth(selection.index);
+        await liveTick.click();
+        const livePlacard = liveBand.locator(`[data-consumer-preview="${selection.slug}"]`);
+        await livePlacard.waitFor({ state: 'visible' });
+        check(
+          `responsive gallery cycle ${cycle} keeps its rail interactive`,
+          await liveTick.getAttribute('aria-pressed') === 'true'
+            && (await livePlacard.locator('.stage-placard__name').innerText()).trim() === selection.name,
+        );
+        await responsiveStage.setViewportSize({ width: 390, height: 844 });
+        await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
+        check(
+          `responsive gallery cycle ${cycle} restores the mobile carousel`,
+          await responsiveStage.locator('.stage-carousel__slide').count() === 1
+            && await responsiveStage.locator('[data-consumer-sign]').count() === 12
+            && await responsiveStage.locator('[data-gallery-stage]').count() === 0,
+        );
+      }
+      check(
+        'responsive gallery loads its scene bundle once across remounts',
+        responsiveStageRequests.length === 1,
+        JSON.stringify(responsiveStageRequests),
+      );
+    } else {
+      await responsiveStage.setViewportSize({ width: 1280, height: 900 });
+      await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
+      check(
+        'non-WebGL responsive fallback remains a complete carousel',
+        await responsiveStage.locator('.stage-carousel__slide').count() === 1
+          && await responsiveStage.locator('[data-consumer-sign]').count() === 12
+          && responsiveStageRequests.length === 0,
+        JSON.stringify(responsiveStageRequests),
+      );
+    }
     check(
-      'mobile explorer rails all twelve signs in one row',
-      mobileState.count === 12 && mobileState.rowCounts.length === 1,
-      JSON.stringify(mobileState),
+      'responsive gallery mode changes are runtime-error free',
+      responsiveStageErrors.length === 0,
+      responsiveStageErrors.join(' | '),
     );
-    check(
-      'mobile consumer Registry fits without overflow and keeps 44px targets',
-      mobileState.pageWidth <= mobileState.viewportWidth + 1
-        && mobileState.pageHeight <= 7500
-        && mobileState.minTarget >= 44,
-      JSON.stringify(mobileState),
-    );
-    await mobile.evaluate(() => new Promise((resolve) => setTimeout(resolve, 400)));
-    check(
-      'phones never request the scene bundle',
-      mobileGalleryRequests.length === 0,
-      JSON.stringify(mobileGalleryRequests),
-    );
-    if (OUT) await mobile.screenshot({ path: OUT + '/registry-consumer-390.png', fullPage: false });
-    await mobile.close();
+    await responsiveStage.close();
 
     const reduced = await newPage({
-      viewport: { width: 1126, height: 1180 },
+      viewport: { width: 390, height: 844 },
       reducedMotion: 'reduce',
     });
     await stubNoWebgl(reduced);
@@ -948,6 +1205,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await reduced.locator('.cine__media').count() === 0,
     );
     await reduced.locator('[data-consumer-sign="libra"]').click();
+    await reduced.waitForFunction(() => {
+      const image = document.querySelector('.stage-carousel__slide.is-active .stage-carousel__art');
+      return image?.complete && image.naturalWidth > 0;
+    });
     const reducedDurations = await reduced.locator('.stage-carousel__slide.is-active .stage-carousel__figure')
       .evaluate((figure) => {
         const style = getComputedStyle(figure);
@@ -960,6 +1221,35 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       'reduced motion turns the carousel without animated travel',
       reducedDurations.animation <= 0.02 && reducedDurations.transition <= 0.02,
       JSON.stringify(reducedDurations),
+    );
+    const reducedFit = await reduced.locator('.stage-carousel__slide.is-active .stage-carousel__art')
+      .evaluate((image) => {
+        const art = image.getBoundingClientRect();
+        const placard = document.querySelector('.stage-placard')?.getBoundingClientRect();
+        const alphaCanvas = document.createElement('canvas');
+        alphaCanvas.width = image.naturalWidth;
+        alphaCanvas.height = image.naturalHeight;
+        const context = alphaCanvas.getContext('2d', { willReadFrequently: true });
+        context.drawImage(image, 0, 0);
+        const pixels = context.getImageData(0, 0, alphaCanvas.width, alphaCanvas.height).data;
+        let maxY = -1;
+        for (let y = 0; y < alphaCanvas.height; y += 1) {
+          for (let x = 0; x < alphaCanvas.width; x += 1) {
+            if (pixels[((y * alphaCanvas.width) + x) * 4 + 3] > 8) maxY = y;
+          }
+        }
+        const visibleBottom = maxY < 0
+          ? Infinity
+          : art.top + (((maxY + 1) / alphaCanvas.height) * art.height);
+        return {
+          transform: getComputedStyle(image).transform,
+          clearance: placard ? placard.top - visibleBottom : -Infinity,
+        };
+      });
+    check(
+      'reduced motion preserves optical fitting and mobile placard clearance',
+      reducedFit.transform !== 'none' && reducedFit.clearance >= 15,
+      JSON.stringify(reducedFit),
     );
     await reduced.close();
 
@@ -1018,8 +1308,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           h1: document.querySelectorAll('h1').length,
           headAboveRail: Boolean(head && rail && head.bottom <= rail.top + 1),
           railAboveCanvas: Boolean(rail && canvas && rail.bottom <= canvas.top + 1),
-          placardOverCanvas: Boolean(placard && canvas
-            && placard.top > canvas.top && placard.bottom <= canvas.bottom + 1),
+          canvasAbovePlacard: Boolean(placard && canvas
+            && canvas.bottom <= placard.top + 1),
           plateFramed: Boolean(plate && plate.width < innerWidth - 40 && plate.width <= 1402),
           plateRadius: plate ? getComputedStyle(document.querySelector('.gband--consumer')).borderTopLeftRadius : '',
           headInsidePlate: Boolean(head && plate && head.top >= plate.top - 1 && head.bottom <= plate.bottom + 1),
@@ -1035,7 +1325,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       check(
         'the plate frames the opening scene: headline, rail, sculpture, placard',
         shape.filmHero === 0 && shape.h1 === 1
-          && shape.headAboveRail && shape.railAboveCanvas && shape.placardOverCanvas
+          && shape.headAboveRail && shape.railAboveCanvas && shape.canvasAbovePlacard
           && shape.plateFramed && shape.plateRadius.startsWith('26') && shape.headInsidePlate
           && shape.chrome === 0
           && shape.previewInside === 1 && shape.previewTotal === 1
@@ -1137,12 +1427,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       });
     };
 
-    // Every width now opens the panel the same way: from the placard's pill
-    // or by choosing the sculpture on offer. Nothing is fetched before that.
-    for (const [label, width, height, stub, via] of [
-      ['sheet', 1280, 900, false, 'pill'],
-      ['flat', 1126, 1000, true, 'pill'],
-      ['pocket', 390, 844, true, 'statue'],
+    // Trading is a deliberate placard action at every width. The sculpture
+    // remains a selector, while the modal owns focus and scroll only after
+    // the explicit Trade pill is pressed.
+    for (const [label, width, height, stub] of [
+      ['sheet', 1280, 900, false],
+      ['flat', 1126, 1000, true],
+      ['pocket-320', 320, 568, true],
+      ['pocket-360', 360, 640, true],
+      ['pocket-390', 390, 844, true],
     ]) {
       const tradePage = await newPage({
         viewport: { width, height },
@@ -1169,13 +1462,19 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length - ordersBefore }),
       );
 
-      if (via === 'statue') {
+      const mobileSheet = width < 500;
+      if (mobileSheet) {
         const statue = tradePage.locator('.stage-carousel__slide.is-active .stage-carousel__figure');
         await statue.evaluate((el) => el.scrollIntoView({ block: 'center' }));
         await statue.click();
-      } else {
-        await tradePage.locator('button.stage-placard__pill').click();
+        await tradePage.waitForTimeout(100);
+        check(
+          `the ${label} sculpture selects without opening a purchase sheet`,
+          await tradePage.locator('.stage-sheet').count() === 0,
+        );
       }
+      const tradePill = tradePage.locator('button.stage-placard__pill');
+      await tradePill.click();
       await tradePage.locator('.stage-sheet').waitFor({ state: 'visible', timeout: 10_000 });
       await tradePage.locator('.tp').waitFor({ state: 'visible', timeout: 20_000 });
       await tradePage.locator('.tp .out').waitFor({ state: 'visible', timeout: 20_000 });
@@ -1193,6 +1492,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           // On a phone the panel rises from the bottom edge and owns the width.
           fromBottom: Math.round(innerHeight - box.bottom),
           widthShare: box.width / innerWidth,
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
         };
       });
       check(
@@ -1202,22 +1503,47 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && ceiling.panelTop >= 0 && ceiling.panelTop <= 120,
         JSON.stringify(ceiling),
       );
-      if (label === 'pocket') {
+      if (mobileSheet) {
         check(
-          'the pocket panel rises from the bottom edge and owns the width',
-          ceiling.fromBottom <= 1 && ceiling.widthShare >= 0.99,
+          `the ${label} panel rises from the bottom edge and owns the width`,
+          ceiling.fromBottom <= 1 && ceiling.widthShare >= 0.99
+            && ceiling.pageWidth <= ceiling.viewportWidth + 1,
           JSON.stringify(ceiling),
         );
       }
 
       const panel = await tradePage.evaluate(() => {
         const tp = document.querySelector('.tp');
+        const host = tp.closest('.consumer-trade');
+        const sheet = tp.closest('.stage-sheet__panel');
+        const close = sheet.querySelector('.stage-sheet__close');
         const chips = [...tp.querySelectorAll('.amts button')];
         const methods = [...tp.querySelectorAll('.payseg button')];
+        const box = (node) => {
+          const rect = node?.getBoundingClientRect();
+          return rect ? {
+            top: rect.top,
+            right: rect.right,
+            bottom: rect.bottom,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height,
+          } : null;
+        };
+        const body = sheet.querySelector('.stage-sheet__body');
+        const bodyStyle = getComputedStyle(body);
+        const contentWidth = body.clientWidth
+          - parseFloat(bodyStyle.paddingLeft)
+          - parseFloat(bodyStyle.paddingRight);
+        let background = document.querySelector('main#main');
+        while (background?.parentElement && background.parentElement !== document.body) {
+          background = background.parentElement;
+        }
         return {
           host: tp.closest('.stage-sheet') ? 'sheet' : 'loose',
           amount: tp.querySelector('.pay__input')?.value,
           chips: chips.map((b) => b.textContent),
+          chipHeights: chips.map((b) => b.getBoundingClientRect().height),
           pressed: chips.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.textContent),
           receive: tp.querySelector('.out')?.textContent ?? '',
           facts: [...tp.querySelectorAll('.fact')].map((f) => f.textContent),
@@ -1230,6 +1556,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           marks: tp.querySelectorAll('.ramps .tp__mark').length,
           go: tp.querySelectorAll('.tp__go').length,
           heroButton: tp.querySelectorAll('.route__go, .route__t').length,
+          sheet: box(sheet),
+          bodyBox: box(body),
+          hostBox: box(host),
+          tpBox: box(tp),
+          closeBox: box(close),
+          contentWidth,
+          sheetScrollWidth: sheet.scrollWidth,
+          sheetClientWidth: sheet.clientWidth,
+          bodyOverflow: getComputedStyle(document.body).overflow,
+          backgroundInert: Boolean(background?.inert),
+          focusInside: Boolean(document.activeElement?.closest('.stage-sheet')),
         };
       });
       check(
@@ -1241,8 +1578,64 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && /\d/.test(panel.receive)
           && panel.facts.length === 2
           && panel.facts.some((f) => /\$|¢/.test(f))
-          && panel.facts.some((f) => /%/.test(f)),
+          && panel.facts.some((f) => /%/.test(f))
+          && panel.chipHeights.every((height) => height >= 44),
         JSON.stringify(panel),
+      );
+      check(
+        `the ${label} uses one full-width trade surface without close-button collision`,
+        panel.bodyBox && panel.hostBox && panel.tpBox && panel.closeBox
+          && panel.hostBox.width >= panel.contentWidth - 1
+          && panel.tpBox.width >= panel.hostBox.width - 1
+          && panel.closeBox.bottom <= panel.hostBox.top + 1
+          && panel.sheetScrollWidth <= panel.sheetClientWidth + 1,
+        JSON.stringify({
+          sheet: panel.sheet,
+          body: panel.bodyBox,
+          host: panel.hostBox,
+          trade: panel.tpBox,
+          close: panel.closeBox,
+          contentWidth: panel.contentWidth,
+          scrollWidth: panel.sheetScrollWidth,
+          clientWidth: panel.sheetClientWidth,
+        }),
+      );
+      check(
+        `the ${label} sheet owns focus and locks the background`,
+        panel.focusInside && panel.backgroundInert && panel.bodyOverflow === 'hidden',
+        JSON.stringify({
+          focusInside: panel.focusInside,
+          backgroundInert: panel.backgroundInert,
+          bodyOverflow: panel.bodyOverflow,
+        }),
+      );
+
+      // From the first focusable control, Shift+Tab must wrap to the last
+      // control rather than escape behind the scrim; Tab then wraps back.
+      const focusableCount = await tradePage.evaluate(() => {
+        const dialog = document.querySelector('.stage-sheet');
+        const focusable = [...dialog.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        )].filter((node) => {
+          const style = getComputedStyle(node);
+          const box = node.getBoundingClientRect();
+          return style.visibility !== 'hidden' && style.display !== 'none' && box.width > 0 && box.height > 0;
+        });
+        focusable[0]?.focus();
+        return focusable.length;
+      });
+      await tradePage.keyboard.press('Shift+Tab');
+      const wrappedToLast = await tradePage.evaluate(() => (
+        document.activeElement?.classList.contains('stage-sheet__record') ?? false
+      ));
+      await tradePage.keyboard.press('Tab');
+      const wrappedToFirst = await tradePage.evaluate(() => (
+        document.activeElement?.classList.contains('stage-sheet__close') ?? false
+      ));
+      check(
+        `the ${label} traps keyboard focus in both directions`,
+        focusableCount >= 3 && wrappedToLast && wrappedToFirst,
+        JSON.stringify({ count: focusableCount, wrappedToLast, wrappedToFirst }),
       );
       check(
         `the ${label} lists four ways to pay, branded, alphabetical, none ranked`,
@@ -1274,11 +1667,29 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
 
       await tradePage.keyboard.press('Escape');
-      await tradePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 300)));
+      // The closing state remains mounted long enough to animate out.
+      const exitWasPresent = await tradePage.locator('.stage-sheet').count() === 1;
+      await tradePage.locator('.stage-sheet').waitFor({ state: 'detached', timeout: 3_000 });
+      const restored = await tradePage.evaluate(() => {
+        let background = document.querySelector('main#main');
+        while (background?.parentElement && background.parentElement !== document.body) {
+          background = background.parentElement;
+        }
+        return {
+          bodyOverflow: getComputedStyle(document.body).overflow,
+          backgroundInert: Boolean(background?.inert),
+          focus: document.activeElement?.classList.contains('stage-placard__pill') ?? false,
+        };
+      });
       check(
         `escape returns the ${label} from the sheet untouched`,
-        await tradePage.locator('.stage-sheet').count() === 0
-          && await tradePage.locator('.stage-placard').count() === 1,
+        exitWasPresent
+          && await tradePage.locator('.stage-sheet').count() === 0
+          && await tradePage.locator('.stage-placard').count() === 1
+          && restored.bodyOverflow !== 'hidden'
+          && restored.backgroundInert === false
+          && restored.focus,
+        JSON.stringify({ exitWasPresent, restored }),
       );
       await tradePage.close();
     }

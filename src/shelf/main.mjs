@@ -76,8 +76,15 @@ async function mount(root, records) {
   const start = Math.max(0, seeded);
 
   const state = {
-    focus: asked >= 0 ? asked : motion.matches ? start : start - 1.4,
+    // The first painted sculpture must agree with the host's selected record.
+    // Arrival choreography belongs to the page around the canvas, not to a
+    // trip through unrelated signs inside it.
+    focus: start,
     targetFocus: start,
+    // A distant selector jump dips the current piece out and the destination
+    // in, rather than driving the camera past every sign between them.
+    switchFrom: -1,
+    switchProgress: 1,
     open: 0,
     targetOpen: 0,
     openIndex: -1,
@@ -86,6 +93,7 @@ async function mount(root, records) {
     zoom: 0, targetZoom: 0,
     hover: -1,
     spotlight,
+    reducedMotion: motion.matches,
   };
 
   const card = createCard(root, { onClose: () => closeFigure() });
@@ -148,8 +156,16 @@ async function mount(root, records) {
   let last = 0;
   let disposed = false;
 
+  // Exponential response for gestures that move through adjacent pieces.
+  // At 15/s the visible travel is about 98% complete inside 260ms. Distant
+  // choices use the shorter, non-spatial handoff below instead.
+  const FOCUS_RESPONSE = 15;
+  const TURN_RESPONSE = 14;
+  const DIRECT_SWITCH_SECONDS = 0.22;
+
   function settled() {
     return Math.abs(state.focus - state.targetFocus) < 0.0005
+      && state.switchFrom < 0
       && Math.abs(state.open - state.targetOpen) < 0.0005
       && Math.abs(state.yaw - state.targetYaw) < 0.0005
       && Math.abs(state.pitch - state.targetPitch) < 0.0005
@@ -157,13 +173,29 @@ async function mount(root, records) {
   }
 
   function step(dt) {
-    const fast = motion.matches ? 200 : 9;
-    const turn = motion.matches ? 200 : 12;
-    state.focus = approach(state.focus, state.targetFocus, fast, dt);
-    state.open = approach(state.open, state.targetOpen, motion.matches ? 200 : 7.5, dt);
-    state.yaw = approach(state.yaw, state.targetYaw, turn, dt);
-    state.pitch = approach(state.pitch, state.targetPitch, turn, dt);
-    state.zoom = approach(state.zoom, state.targetZoom, turn, dt);
+    if (state.reducedMotion) {
+      state.focus = state.targetFocus;
+      state.switchFrom = -1;
+      state.switchProgress = 1;
+      state.open = state.targetOpen;
+      state.yaw = state.targetYaw;
+      state.pitch = state.targetPitch;
+      state.zoom = state.targetZoom;
+      return false;
+    }
+
+    state.focus = approach(state.focus, state.targetFocus, FOCUS_RESPONSE, dt);
+    state.open = approach(state.open, state.targetOpen, 9, dt);
+    state.yaw = approach(state.yaw, state.targetYaw, TURN_RESPONSE, dt);
+    state.pitch = approach(state.pitch, state.targetPitch, TURN_RESPONSE, dt);
+    state.zoom = approach(state.zoom, state.targetZoom, TURN_RESPONSE, dt);
+    if (state.switchFrom >= 0) {
+      state.switchProgress = Math.min(
+        1,
+        state.switchProgress + (dt / DIRECT_SWITCH_SECONDS),
+      );
+      if (state.switchProgress >= 1) state.switchFrom = -1;
+    }
     if (settled()) {
       state.focus = state.targetFocus;
       state.open = state.targetOpen;
@@ -180,14 +212,17 @@ async function mount(root, records) {
     const dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016);
     last = now;
     const turning = state.targetOpen === 1 && state.open > 0.98
-      && !handTurned && !motion.matches && !drag;
+      && !handTurned && !state.reducedMotion && !drag;
     if (turning) {
       state.yaw += TURNTABLE_RATE * dt;
       state.targetYaw = state.yaw;
     }
-    const settling = scene.layout(state);
+    // Advance first so reduced-motion input paints its destination on this
+    // frame rather than briefly rendering the old state and then stopping.
+    const stateMoving = step(dt);
+    const settling = scene.layout(state, dt);
     scene.render();
-    const moving = step(dt) || turning || settling;
+    const moving = stateMoving || turning || settling;
     raf = moving ? requestAnimationFrame(frame) : 0;
     if (!moving) last = 0;
   }
@@ -210,8 +245,29 @@ async function mount(root, records) {
     }, 140);
   }
 
-  function focusFigure(index, { announce = true } = {}) {
-    state.targetFocus = clampFocus(index, count);
+  function focusFigure(index, { announce = true, immediate = false } = {}) {
+    const target = clampFocus(index, count);
+    const visualIndex = state.switchFrom >= 0 && state.switchProgress < 0.5
+      ? state.switchFrom
+      : nearestIndex(state.focus, count);
+    const distant = spotlight && Math.abs(target - visualIndex) > 1;
+
+    state.targetFocus = target;
+    if (immediate || state.reducedMotion) {
+      state.focus = target;
+      state.switchFrom = -1;
+      state.switchProgress = 1;
+    } else if (distant) {
+      // Hold both endpoints at the centre of the room and hand the light from
+      // one to the other. The scene owns the opacity curve; focus can already
+      // become the destination without revealing intervening sculptures.
+      state.focus = target;
+      state.switchFrom = visualIndex;
+      state.switchProgress = 0;
+    } else {
+      state.switchFrom = -1;
+      state.switchProgress = 1;
+    }
     window.clearTimeout(snapTimer);
     syncChrome();
     if (announce) speak(`${records[current()].name}, Lot ${records[current()].lot}`);
@@ -321,8 +377,8 @@ async function mount(root, records) {
   }
 
   /** Walking the rail with a piece already on display swaps the piece. */
-  function showFigure(index) {
-    focusFigure(index, { announce: state.targetOpen === 0 });
+  function showFigure(index, { immediate = false } = {}) {
+    focusFigure(index, { announce: state.targetOpen === 0, immediate });
     if (state.targetOpen > 0 && index !== state.openIndex) {
       void openFigure(index, { takeFocus: false });
     }
@@ -382,6 +438,7 @@ async function mount(root, records) {
   // ticks without a frame of empty chrome between them.
   rail.replaceChildren(...ticks);
   root.classList.add('is-ready');
+  root.dispatchEvent(new CustomEvent('zodiacs:gallery-ready', { bubbles: true }));
 
   // ---- the rail magnifies like a dock ------------------------------------
   //
@@ -440,7 +497,9 @@ async function mount(root, records) {
     if (next === null) return;
     event.preventDefault();
     const index = clampFocus(next, count);
-    showFigure(index);
+    // Keyboard navigation is high-frequency and should feel as direct as the
+    // focus ring itself. It keeps selection feedback but skips spatial travel.
+    showFigure(index, { immediate: true });
     ticks[index].focus({ preventScroll: true });
   });
 
@@ -625,19 +684,12 @@ async function mount(root, records) {
       // deliver pointerup before it emits pointercancel for native scrolling.
       if (finished.touchIntent === 'vertical') return;
       const index = scene.pick(event.clientX, event.clientY);
-      // On the plate a tap on the piece already being offered asks to buy it;
-      // a tap on any other piece turns the row to it. Nothing is drawn out —
-      // the record is on the page, and the page decides what "buy" opens.
+      // On the plate a sculpture has one meaning: select that sign. Buying is
+      // kept on the labelled Trade control, so a second tap never changes its
+      // meaning beneath the reader.
       if (spotlight) {
         if (index < 0) return;
-        if (index === current()) {
-          root.dispatchEvent(new CustomEvent('zodiacs:gallery-trade', {
-            detail: { slug: records[index].slug },
-            bubbles: true,
-          }));
-        } else {
-          showFigure(index);
-        }
+        if (index !== current()) showFigure(index);
         return;
       }
       if (index >= 0) {
@@ -734,7 +786,20 @@ async function mount(root, records) {
   observer.observe(card.element);
   resize();
 
-  motion.addEventListener?.('change', invalidate);
+  const onMotionChange = () => {
+    state.reducedMotion = motion.matches;
+    if (state.reducedMotion) {
+      state.focus = state.targetFocus;
+      state.switchFrom = -1;
+      state.switchProgress = 1;
+      state.open = state.targetOpen;
+      state.yaw = state.targetYaw;
+      state.pitch = state.targetPitch;
+      state.zoom = state.targetZoom;
+    }
+    invalidate();
+  };
+  motion.addEventListener?.('change', onMotionChange);
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && raf) {
@@ -751,7 +816,19 @@ async function mount(root, records) {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
     root.classList.remove('is-ready', 'is-open');
+    root.dispatchEvent(new CustomEvent('zodiacs:gallery-unready', { bubbles: true }));
     card.close();
+  });
+
+  // Three restores its renderer resources after a recoverable context loss.
+  // Restore the presentation contract with them; otherwise a context lost
+  // while the canvas is hidden on mobile leaves a healthy returned canvas at
+  // opacity zero for the rest of the page lifetime.
+  canvas.addEventListener('webglcontextrestored', () => {
+    root.classList.add('is-ready');
+    root.dispatchEvent(new CustomEvent('zodiacs:gallery-ready', { bubbles: true }));
+    resize();
+    invalidate();
   });
 
   function teardown() {
@@ -759,6 +836,7 @@ async function mount(root, records) {
     disposed = true;
     if (raf) cancelAnimationFrame(raf);
     observer.disconnect();
+    motion.removeEventListener?.('change', onMotionChange);
     scene.dispose();
   }
   window.addEventListener('pagehide', teardown, { once: true });

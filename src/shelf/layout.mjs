@@ -249,9 +249,15 @@ export const SPOTLIGHT = Object.freeze({
  */
 export const SPOTLIGHT_STAGE = Object.freeze({
   focus: 1,
-  near: 0.52,
-  far: 0.36,
-  dim: 0.34,
+  near: 0.5,
+  far: 0.3,
+  dim: 0.26,
+  // The landing is a presentation of one object, not a miniature catalogue.
+  // Keep only its immediate context in the room and give the offered piece a
+  // little more lift and depth than the general-purpose shelf.
+  visibleSpan: 1.35,
+  lift: 0.09,
+  out: 0.12,
 });
 
 const smoothstep = (t) => t * t * (3 - (2 * t));
@@ -335,7 +341,7 @@ export const VITRINE = Object.freeze({
 /**
  * The rig for the consumer rectangle. The row's own box is about 1.9 units
  * tall, so `minWorldHeight` — not the margin — is what actually decides how
- * large a figure lands there: the camera resolves 2.5 units across the canvas
+ * large a figure lands there: the camera resolves 2.35 units across the canvas
  * instead of 3, which is the difference between a sculpture on a shelf and a
  * sculpture being shown to you. Both are kept honest by the same clamp, so a
  * cramped viewport still cannot push the row into the reader's face.
@@ -347,7 +353,7 @@ export const SPOTLIGHT_VITRINE = Object.freeze({
   stageMargin: VITRINE.stageMargin,
   zoomGain: VITRINE.zoomGain,
   stageZ: VITRINE.stageZ,
-  minWorldHeight: 2.5,
+  minWorldHeight: 2.35,
   maxWorldHeight: VITRINE.maxWorldHeight,
 });
 

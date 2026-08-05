@@ -48,7 +48,7 @@ describe('the gallery band on the registry hub', () => {
     // scene bundle stays IntersectionObserver-lazy either way.
     expect(source).toContain('GALLERY_LIVE && window.matchMedia');
     expect(source).toContain("window.matchMedia('(min-width: 1021px)')");
-    expect(source).toContain('{stageMode && <GalleryBand active={active} setActive={setActive} consumer />}');
+    expect(source).toContain('carousel={!stageMode}');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
     expect(source).not.toContain('data-consumer-gallery-toggle');
   });
@@ -66,6 +66,45 @@ describe('the gallery band on the registry hub', () => {
     // The pastel-polish bans hold for the band's copy too.
     expect(bundle).not.toContain('Auto-rotating');
     expect(bundle).not.toContain('Scroll or drag');
+  });
+
+  it('keeps scene readiness declarative across breakpoints and context recovery', async () => {
+    const [app, scene, appBundle, sceneBundle] = await Promise.all([
+      read('src/app.jsx'),
+      read('src/shelf/main.mjs'),
+      read('public/assets/app.js'),
+      read('public/assets/gallery.js'),
+    ]);
+
+    // React owns the section's class list, so readiness must be state rather
+    // than a one-shot effect that a later mobile/desktop render can erase.
+    expect(app).toContain('const [galleryReady, setGalleryReady] = useState(false);');
+    expect(app).toContain("node.addEventListener('zodiacs:gallery-ready', onReady)");
+    expect(app).toContain("node.addEventListener('zodiacs:gallery-unready', onUnready)");
+    expect(app).toContain("+ (!carousel && galleryReady ? ' is-ready' : '')");
+    // The scene also owns the interactive desktop rail children. Hide that
+    // exact node on mobile instead of unmounting it, or a second desktop
+    // render can only recreate the inert placeholder spans.
+    expect(app).toContain('data-gallery-desktop-rail=""');
+    expect(app).toContain('hidden={consumer && carousel}');
+    expect(app).toContain('{railGroup}');
+    expect(app).toContain('{carousel && <DiscRail active={active} setActive={setActive} />}');
+    expect(app).not.toContain('carousel ? <DiscRail active={active} setActive={setActive} /> : railGroup');
+
+    // The scene announces the initial successful mount, hides a genuinely
+    // lost context, and announces Three's recovered renderer before repaint.
+    const lost = scene.indexOf("canvas.addEventListener('webglcontextlost'");
+    const restored = scene.indexOf("canvas.addEventListener('webglcontextrestored'");
+    expect(scene.slice(0, lost)).toContain("'zodiacs:gallery-ready'");
+    expect(scene.slice(lost, restored)).toContain("'zodiacs:gallery-unready'");
+    expect(scene.slice(restored)).toContain("'zodiacs:gallery-ready'");
+
+    // Both generated bundles ship the event contract; a source-only fix
+    // would leave the deployed Registry with the second-cycle regression.
+    for (const marker of ['zodiacs:gallery-ready', 'zodiacs:gallery-unready']) {
+      expect(appBundle).toContain(marker);
+      expect(sceneBundle).toContain(marker);
+    }
   });
 
   it('probes WebGL before first paint and dresses the live page', async () => {
@@ -122,12 +161,14 @@ describe('the gallery band on the registry hub', () => {
     const rectangle = app.slice(opens, app.indexOf('</section>', opens));
     expect(rectangle).toContain('<div className="gband__rail-top">');
     expect(rectangle).toContain('{!consumer && (\n          <div className="gband__chrome">');
-    // Choosing the piece already on offer asks to buy it; the page decides
-    // what that opens, so the scene never navigates.
+    // The sculpture keeps one interaction meaning: it selects. Acquisition
+    // remains the explicit placard action, so the scene never navigates or
+    // emits a hidden trade request.
     const scene = await read('src/shelf/main.mjs');
-    expect(scene).toContain("root.dispatchEvent(new CustomEvent('zodiacs:gallery-trade'");
+    expect(scene).not.toContain('zodiacs:gallery-trade');
     expect(scene).not.toContain('location.assign');
-    expect(app).toContain("node.addEventListener('zodiacs:gallery-trade', onTrade);");
+    expect(app).not.toContain('zodiacs:gallery-trade');
+    expect(scene).toContain('if (index !== current()) showFigure(index);');
   });
 
   it('does not commit a touch gesture after the browser cancels it', async () => {
