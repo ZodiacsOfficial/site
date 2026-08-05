@@ -20,6 +20,8 @@ export const TP_CSS = `
   --tp-red: #D4603F;
   container-type: inline-size;
   display: block;
+  width: 100%;
+  min-width: 0;
   margin: 0;
   padding: 20px;
   border: 1px solid color-mix(in srgb, var(--tp-sign, #C6CCDA) 30%, var(--tp-hair));
@@ -35,8 +37,27 @@ export const TP_CSS = `
 }
 .tp *, .tp *::before, .tp *::after { box-sizing: border-box; }
 
-.tp__head { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
-.tp__disc { width: 34px; height: 34px; border-radius: 50%; display: block; flex: none; }
+/* The landing-page sheet is already the machined outer surface. Flatten the
+   portable panel inside it so the checkout reads as one object, and clear the
+   sheet's close affordance in older shells where it was floated. Catalogue
+   pages still get the bordered standalone panel above. */
+.stage-sheet .consumer-trade {
+  display: flow-root;
+  clear: both;
+  width: 100%;
+  min-width: 0;
+}
+.stage-sheet .tp {
+  width: 100%;
+  max-width: none;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.tp__head { display: flex; align-items: center; gap: 11px; margin-bottom: 20px; }
+.tp__disc { width: 36px; height: 36px; border-radius: 50%; display: block; flex: none; }
 .tp__who { display: flex; flex-direction: column; min-width: 0; }
 .tp__name { color: var(--tp-ink); font-size: 15px; font-weight: 600; }
 .tp__sub { color: var(--tp-dim); font-size: 12px; }
@@ -54,7 +75,7 @@ export const TP_CSS = `
 }
 .tp .pay, .tp .get {
   display: flex; align-items: baseline; gap: 8px;
-  min-height: 62px; padding: 12px 16px;
+  min-height: 64px; padding: 12px 16px;
   border: 1px solid var(--tp-hair-2); border-radius: 14px;
   background: rgba(6,7,9,.5);
 }
@@ -67,19 +88,31 @@ export const TP_CSS = `
   font-size: 30px; letter-spacing: -.01em;
 }
 .tp .pay__input:focus { outline: none; }
-.tp .pay:focus-within { border-color: color-mix(in srgb, var(--tp-sign, #C6CCDA) 62%, transparent); }
+.tp .pay:focus-within {
+  border-color: color-mix(in srgb, var(--tp-sign, #C6CCDA) 66%, transparent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tp-sign, #C6CCDA) 10%, transparent);
+}
 .tp .unit { color: var(--tp-dim); font-size: 13px; flex: none; }
 .tp .sub { margin: 7px 0 0; color: var(--tp-dim); font-size: 12px; }
 
-.tp .amts { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+.tp .amts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
 .tp .amts button {
-  min-height: 38px; padding: 0 16px;
-  border: 1px solid var(--tp-hair-2); border-radius: 999px;
+  min-width: 0; min-height: 44px; padding: 0 10px;
+  border: 1px solid var(--tp-hair-2); border-radius: 12px;
   background: transparent; color: var(--tp-ink-2);
   font-family: inherit; font-size: 13px; cursor: pointer;
-  transition: border-color 220ms ease, color 220ms ease, background 220ms ease;
+  transition:
+    transform 140ms cubic-bezier(.23,1,.32,1),
+    border-color 220ms cubic-bezier(.23,1,.32,1),
+    color 220ms cubic-bezier(.23,1,.32,1),
+    background 220ms cubic-bezier(.23,1,.32,1);
 }
-.tp .amts button:hover { color: var(--tp-ink); border-color: var(--tp-hair-3); }
+.tp .amts button:active { transform: scale(.98); }
 .tp .amts button[aria-pressed='true'] {
   color: var(--tp-ink);
   border-color: color-mix(in srgb, var(--tp-sign, #C6CCDA) 70%, transparent);
@@ -111,15 +144,23 @@ export const TP_CSS = `
 .tp .warn[hidden], .tp .err[hidden], .tp .after[hidden] { display: none; }
 
 .tp .payq { margin: 20px 0 0; }
-.tp .payseg { display: flex; flex-wrap: wrap; gap: 8px; }
+.tp .payseg {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
 .tp .payseg button {
-  flex: 1 1 auto; min-height: 44px; padding: 0 14px;
+  min-width: 0; min-height: 48px; padding: 8px 12px;
   border: 1px solid var(--tp-hair-2); border-radius: 12px;
   background: transparent; color: var(--tp-ink-2);
-  font-family: inherit; font-size: 13px; cursor: pointer;
-  transition: border-color 220ms ease, color 220ms ease, background 220ms ease;
+  font-family: inherit; font-size: 13px; line-height: 1.25; cursor: pointer;
+  transition:
+    transform 140ms cubic-bezier(.23,1,.32,1),
+    border-color 220ms cubic-bezier(.23,1,.32,1),
+    color 220ms cubic-bezier(.23,1,.32,1),
+    background 220ms cubic-bezier(.23,1,.32,1);
 }
-.tp .payseg button:hover { color: var(--tp-ink); border-color: var(--tp-hair-3); }
+.tp .payseg button:active { transform: scale(.985); }
 .tp .payseg button[aria-pressed='true'] {
   color: var(--tp-ink);
   border-color: color-mix(in srgb, var(--tp-sign, #C6CCDA) 70%, transparent);
@@ -133,9 +174,11 @@ export const TP_CSS = `
   border: 0; border-radius: 999px;
   background: var(--tp-ink); color: #060709;
   font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
-  transition: opacity 220ms ease;
+  transition:
+    transform 140ms cubic-bezier(.23,1,.32,1),
+    opacity 220ms cubic-bezier(.23,1,.32,1);
 }
-.tp__go:hover { opacity: .9; }
+.tp__go:active:not(:disabled) { transform: scale(.985); }
 .tp__go:disabled { opacity: .42; cursor: default; }
 .tp .nowallet { margin: 10px 0 0; color: var(--tp-dim); font-size: 12px; text-align: center; }
 
@@ -145,18 +188,27 @@ export const TP_CSS = `
 .tp .ramps li:first-child { border-top: 0; }
 .tp .ramp {
   display: flex; align-items: center; gap: 12px;
-  min-height: 52px; padding: 6px 2px;
+  min-height: 50px; padding: 7px 2px;
   color: var(--tp-ink-2); text-decoration: none;
-  transition: color 200ms ease;
+  transition: color 200ms cubic-bezier(.23,1,.32,1);
 }
-.tp .ramp:hover { color: var(--tp-ink); }
 .tp .ramp__who { display: inline-flex; align-items: center; gap: 8px; flex: none; }
 .tp .ramp__name { font-size: 14px; color: inherit; }
 .tp .ramp__note {
   flex: 1 1 auto; min-width: 0;
   color: var(--tp-dim); font-size: 12px; text-align: right;
 }
-.tp .ramps .go { color: var(--tp-dim); font-size: 11px; flex: none; }
+.tp .ramps .go {
+  display: inline-grid; place-items: center;
+  width: 26px; height: 26px; flex: none;
+  border-radius: 50%;
+  background: rgba(198,204,218,.06);
+  color: var(--tp-dim); font-size: 11px;
+  transition:
+    transform 180ms cubic-bezier(.23,1,.32,1),
+    background 180ms cubic-bezier(.23,1,.32,1),
+    color 180ms cubic-bezier(.23,1,.32,1);
+}
 /* Brand marks are single-colour masks: currentColor does not reach an <img>. */
 .tp__mark {
   display: inline-block; height: 21px;
@@ -175,13 +227,26 @@ export const TP_CSS = `
 .tp .after { list-style: none; margin: 14px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
 .tp .after li { padding-left: 16px; position: relative; color: var(--tp-ink-2); font-size: 13px; }
 .tp .after li::before { content: '·'; position: absolute; left: 4px; color: var(--tp-dim); }
-.tp .note { margin: 16px 0 0; color: var(--tp-dim); font-size: 11.5px; line-height: 1.5; }
+.tp .note {
+  margin: 16px 0 0;
+  padding-top: 14px;
+  border-top: 1px solid var(--tp-hair);
+  color: var(--tp-dim);
+  font-size: 11.5px;
+  line-height: 1.55;
+}
 
-@container (max-width: 380px) {
+.tp button:focus-visible, .tp a:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--tp-sign, #C6CCDA) 74%, white);
+  outline-offset: 3px;
+}
+
+@container (max-width: 340px) {
   .tp { padding: 16px; }
   .tp .pay__input { font-size: 26px; }
   .tp .out { font-size: 22px; }
-  .tp .payseg button { flex-basis: 100%; }
+  .tp .amts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tp .payseg { grid-template-columns: 1fr; }
   /* Name over note rather than name beside note: a six-word line has nowhere
      to go on a phone once the mark and the arrow have taken their room. */
   .tp .ramp {
@@ -199,7 +264,7 @@ export const TP_CSS = `
 
 /* The wallet chooser, only ever raised when more than one is installed. */
 .tp-pick {
-  position: fixed; inset: 0; z-index: 9999;
+  position: fixed; inset: 0; z-index: 110;
   display: flex; align-items: center; justify-content: center;
   padding: 20px; background: rgba(6,7,9,.72);
 }
@@ -220,7 +285,29 @@ export const TP_CSS = `
   border: 1px solid rgba(198,204,218,.22); border-radius: 12px;
   background: transparent; color: #C6CCDA;
   font-family: inherit; font-size: 14px; cursor: pointer;
+  transition:
+    transform 140ms cubic-bezier(.23,1,.32,1),
+    border-color 200ms cubic-bezier(.23,1,.32,1),
+    color 200ms cubic-bezier(.23,1,.32,1);
 }
-.tp-pick__w:hover, .tp-pick__x:hover { color: #EEF1F7; border-color: rgba(198,204,218,.42); }
+.tp-pick__w:active, .tp-pick__x:active { transform: scale(.985); }
+.tp-pick__w:focus-visible, .tp-pick__x:focus-visible { outline: 2px solid #C6CCDA; outline-offset: 3px; }
 .tp-pick__x { justify-content: center; margin-bottom: 0; color: #8E96AB; }
+
+@media (hover: hover) and (pointer: fine) {
+  .tp .amts button:hover,
+  .tp .payseg button:hover { color: var(--tp-ink); border-color: var(--tp-hair-3); }
+  .tp .ramp:hover { color: var(--tp-ink); }
+  .tp .ramp:hover .go {
+    transform: translate(1px,-1px);
+    background: rgba(198,204,218,.10);
+    color: var(--tp-ink);
+  }
+  .tp__go:hover { opacity: .9; }
+  .tp-pick__w:hover, .tp-pick__x:hover { color: #EEF1F7; border-color: rgba(198,204,218,.42); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tp *, .tp-pick * { transition-duration: 0.01ms !important; }
+}
 `;

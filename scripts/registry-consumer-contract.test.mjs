@@ -146,7 +146,7 @@ describe('Registry consumer and technical information architecture', () => {
     // the no-JS shell's hero alone — and it still must not autoplay for a
     // reader who asked for stillness.
     expect(source).not.toContain("src: '/assets/hero/zodiacs-hero.mp4'");
-    expect(source).toContain("window.matchMedia('(prefers-reduced-motion: reduce)').matches");
+    expect(html).toContain('@media (prefers-reduced-motion: reduce)');
     expect(source).toContain('new IntersectionObserver');
     expect(html).toContain('data-src="/assets/hero/zodiacs-hero.mp4"');
     expect(html).toContain('poster="/assets/hero/zodiacs-hero-poster.avif"');
@@ -163,7 +163,7 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain("window.matchMedia('(min-width: 1021px)')");
     expect(source).toContain('GALLERY_LIVE && window.matchMedia');
     expect(source).toContain("'/assets/gallery.js'");
-    expect(source).toContain('{stageMode && <GalleryBand active={active} setActive={setActive} consumer />}');
+    expect(source).toContain('carousel={!stageMode}');
     expect(source).not.toContain('data-consumer-gallery-toggle');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
   });
@@ -199,8 +199,8 @@ describe('Registry consumer and technical information architecture', () => {
     ]) {
       expect(source.split(once), once).toHaveLength(2);
     }
-    // Twice only because the pill has a flag-on and a flag-off face.
-    expect(source.split('Trade {sign.name}')).toHaveLength(3);
+    // The flag-on and flag-off pill faces plus the dialog's accessible title.
+    expect(source.split('Trade {sign.name}')).toHaveLength(4);
     // The record card and its quote are gone; the placard carries the price.
     expect(source).not.toContain('function ConsumerSignPanel(');
     expect(source).not.toContain('data-token-quote');
@@ -232,8 +232,7 @@ describe('Registry consumer and technical information architecture', () => {
     // One hero, one headline, at every width: the film is retired from the
     // rendered page and the plate opens it instead.
     expect(source).not.toContain('<CineHero');
-    expect(source).toContain('{stageMode && <GalleryBand active={active} setActive={setActive} consumer />}');
-    expect(source).toContain('{!stageMode && <GalleryBand active={active} setActive={setActive} consumer carousel />}');
+    expect(source).toContain('carousel={!stageMode}');
     expect(source).toContain('className="stage-hero__title"');
     // The placard says what a museum label says — name, dates, price — and
     // holds the two doors; everything longer waits in the sheet.
@@ -244,7 +243,10 @@ describe('Registry consumer and technical information architecture', () => {
     // returns focus to the pill that opened it.
     expect(source).toContain('ReactDOM.createPortal');
     expect(source).toContain('aria-modal="true"');
-    expect(source).toContain("if (event.key === 'Escape') setSheetOpen(false);");
+    expect(source).toContain("if (event.key === 'Escape') {");
+    expect(source).toContain('closeSheet();');
+    expect(source).toContain('entry.node.inert = true;');
+    expect(source).toContain("body.style.position = 'fixed';");
     expect(source).toContain('tradePillRef.current?.focus({ preventScroll: true });');
     // The headline belongs to the plate, not to the page around it.
     const plate = source.slice(source.indexOf('function GalleryBand('), source.indexOf('</section>', source.indexOf('function GalleryBand(')));

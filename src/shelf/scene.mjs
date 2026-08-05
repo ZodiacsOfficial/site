@@ -387,14 +387,34 @@ export function createScene(canvas, records) {
    * every contour down its length, and a shallow cast seen at an angle reads
    * as a flight of steps.
    */
-  function layout(state) {
+  function layout(state, dt = 1 / 60) {
     const { focus, openIndex, open, yaw, pitch, zoom } = state;
     // The consumer rectangle offers one piece rather than a shelf, so its
     // fall-off is steeper and its camera stands closer. Left undefined, the
     // emphasis keeps its own default and the row is unchanged.
     const profile = state.spotlight ? SPOTLIGHT_STAGE : undefined;
+    const targetIndex = Math.min(figures.length - 1, Math.max(0, Math.round(focus)));
+    const switching = state.spotlight
+      && Number.isInteger(state.switchFrom)
+      && state.switchFrom >= 0
+      && state.switchFrom !== targetIndex
+      && open === 0;
+    const switchProgress = THREE.MathUtils.smoothstep(
+      Number.isFinite(state.switchProgress) ? state.switchProgress : 1,
+      0,
+      1,
+    );
+    // Do not superimpose two intricate gold silhouettes. The source yields
+    // its light in the first half and the destination receives it in the
+    // second, a short museum-light handoff with no intervening sculptures.
+    const sourceLight = switchProgress < 0.5
+      ? 1 - THREE.MathUtils.smoothstep(switchProgress * 2, 0, 1)
+      : 0;
+    const targetLight = switchProgress > 0.5
+      ? THREE.MathUtils.smoothstep((switchProgress - 0.5) * 2, 0, 1)
+      : 0;
     const opened = figures[openIndex]
-      ?? figures[Math.min(figures.length - 1, Math.max(0, Math.round(focus)))];
+      ?? figures[targetIndex];
     const stage = { x: 0, y: -opened.scale / 2, z: VITRINE.stageZ };
     // One piece in a pool of light; the rest of the room goes quiet.
     const dimmed = 1 - (open * 0.94);
@@ -404,8 +424,27 @@ export function createScene(canvas, records) {
 
     for (let i = 0; i < figures.length; i += 1) {
       const figure = figures[i];
-      const pose = figurePose(i, focus, GALLERY);
-      const visible = isVisible(i, focus) || (open > 0 && i === openIndex);
+      let pose = figurePose(i, focus, GALLERY);
+      let switchOpacity = 1;
+      if (switching) {
+        if (i === state.switchFrom) {
+          pose = figurePose(i, state.switchFrom, GALLERY);
+          switchOpacity = sourceLight;
+        } else if (i === targetIndex) {
+          switchOpacity = targetLight;
+        } else {
+          switchOpacity = 0;
+        }
+      }
+      if (state.spotlight) {
+        pose.y += profile.lift * pose.prominence;
+        pose.z += profile.out * pose.prominence;
+      }
+      const visible = switching
+        ? switchOpacity > 0.001
+        : state.spotlight
+          ? Math.abs(pose.distance) <= profile.visibleSpan
+          : isVisible(i, focus) || (open > 0 && i === openIndex);
       figure.mesh.visible = visible;
       figure.plinth.visible = visible;
       figure.shadow.visible = visible;
@@ -421,8 +460,10 @@ export function createScene(canvas, records) {
 
       // The lift that says a sculpture opens: hovered pieces rise a little
       // and step forward, the bookshelf gesture.
-      const hoverTarget = i === state.hover && drawn === 0 ? 1 : 0;
-      const eased = figure.hover + ((hoverTarget - figure.hover) * 0.22);
+      const hoverTarget = !switching && i === state.hover && drawn === 0 ? 1 : 0;
+      const eased = state.reducedMotion
+        ? hoverTarget
+        : THREE.MathUtils.damp(figure.hover, hoverTarget, 18, dt);
       figure.hover = Math.abs(eased - hoverTarget) < 0.004 ? hoverTarget : eased;
       if (figure.hover !== hoverTarget) hoverSettling = true;
       const lift = figure.hover * (1 - open);
@@ -445,7 +486,7 @@ export function createScene(canvas, records) {
       figure.proxy.scale.setScalar(scale);
       figure.proxy.updateMatrixWorld(true);
 
-      const opacity = (i === openIndex ? 1 : dimmed) * spot.opacity;
+      const opacity = (i === openIndex ? 1 : dimmed) * spot.opacity * switchOpacity;
       for (const material of figure.materials) material.opacity = opacity;
 
       // The plinth stays in the row; only the figure is lifted off it. It

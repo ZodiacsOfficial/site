@@ -141,7 +141,7 @@ export function panelView({ state = 'idle', payMethod = 'card', sign, amount = '
     payMethod,
     heading: `${sign.name}`,
     subheading: `The official ${sign.name} token`,
-    venue: 'Bought through Jupiter',
+    venue: 'Quote via Jupiter',
     payLabel: 'You pay',
     payUnit: 'USDC',
     payHint: 'US dollars, held as USDC',

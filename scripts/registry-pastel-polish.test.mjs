@@ -94,7 +94,7 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('href="#official-twelve" data-registry-browse');
     expect(source).toContain('id="thesis" className="consumer-purpose reveal"');
     expect(source).toContain('REGISTRY_AURA_ENABLED &&');
-    expect(source).toContain('See the signs in a public wallet');
+    expect(source).toContain('See occupied signs, material editions, and wheel coverage for any public wallet.');
     expect(source).toContain('Read why Zodiacs matter');
     expect(registry).toContain('registry-collection-hero:slot');
     expect(registry).not.toContain('cine__why');
