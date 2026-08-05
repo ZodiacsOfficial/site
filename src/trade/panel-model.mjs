@@ -24,16 +24,24 @@ export const ZODIAC_DECIMALS = 6;
 export const AMOUNT_PRESETS = Object.freeze(['25', '50', '100', '250']);
 
 /**
- * Listed alphabetically and never ranked — the Registry refuses ranked lists
- * elsewhere, and the site takes nothing from any of these.
+ * Where a visitor with no USDC can start, listed alphabetically and never
+ * ranked — the Registry refuses ranked lists elsewhere, and the site takes
+ * nothing from any of these.
+ *
+ * fomo sits in the list rather than above it. It is the one route that never
+ * asks anyone to hold USDC, which is worth saying; it is not worth giving a
+ * company most people have never heard of a headline and a paragraph. Each
+ * note says what the company does in the fewest words that survive a glance.
  */
-export const ON_RAMPS = Object.freeze([
-  { name: 'Coinbase', href: 'https://www.coinbase.com/', wordmark: true, applePay: false,
-    note: 'Converts dollars to USDC with no spread or trading fee.' },
-  { name: 'MoonPay', href: 'https://www.moonpay.com/', wordmark: false, applePay: false,
-    note: 'Cards and bank transfer, USDC on Solana, around 160 countries.' },
-  { name: 'Ramp Network', href: 'https://rampnetwork.com/', wordmark: false, applePay: true,
-    note: 'Cards, Apple Pay, Google Pay and bank transfer.' },
+export const PAY_WAYS = Object.freeze([
+  { name: 'Coinbase', mark: 'coinbase', href: 'https://www.coinbase.com/',
+    note: 'Dollars to USDC, no trading fee.' },
+  { name: 'fomo', mark: 'fomo', href: 'https://fomo.family/', applePay: true,
+    note: 'Apple Pay, trades in the app.' },
+  { name: 'MoonPay', mark: 'moonpay', href: 'https://www.moonpay.com/',
+    note: 'Cards and bank transfer.' },
+  { name: 'Ramp Network', mark: 'ramp', href: 'https://rampnetwork.com/',
+    note: 'Cards, Apple Pay, Google Pay.' },
 ]);
 
 /** Money, in the smallest unit a person would actually say out loud. */
@@ -144,14 +152,7 @@ export function panelView({ state = 'idle', payMethod = 'card', sign, amount = '
       { id: 'card', label: 'Card or Apple Pay' },
       { id: 'usdc', label: 'USDC I already have' },
     ],
-    onRamps: ON_RAMPS,
-    quickRoute: {
-      kicker: 'Quickest — no USDC needed',
-      title: 'Use an app that takes Apple Pay',
-      body: `Apps like fomo let you add money with Apple Pay and trade Solana tokens in the app, so you `
-        + `never touch USDC yourself. You would buy ${sign.name} there rather than here.`,
-      href: 'https://fomo.family/',
-    },
+    payWays: PAY_WAYS,
     note: closingNote(payMethod),
     showQuote: false,
     showAction: state !== 'done',

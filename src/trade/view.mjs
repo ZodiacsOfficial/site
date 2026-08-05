@@ -195,7 +195,7 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
     action.replaceChildren();
     if (view.showAction && !view.error) {
       if (cardPath) {
-        action.append(buildRoutes(view, marks));
+        action.append(buildPayWays(view, marks));
       } else {
         go.textContent = view.actionLabel;
         go.disabled = Boolean(view.actionDisabled);
@@ -207,47 +207,39 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
     methods.hidden = payq.hidden;
   }
 
-  function buildRoutes(view, marks) {
+  /**
+   * One scannable list: mark, name, what the company does. No headline route,
+   * no paragraphs — the marks do the recognising, and every row is the same
+   * shape so the eye can compare them.
+   */
+  function buildPayWays(view, marks) {
     routes.replaceChildren();
-    const first = el('div', 'route route--first');
-    first.append(
-      el('p', 'route__k', view.quickRoute.kicker),
-      el('p', 'route__t', view.quickRoute.title),
-      el('p', 'route__d', view.quickRoute.body),
-    );
-    const open = externalLink(view.quickRoute.href, 'Open fomo ↗');
-    open.className = 'route__go';
-    first.append(open);
-
-    const second = el('div', 'route');
-    second.append(el('p', 'route__k', 'Or buy USDC first, then swap here'));
     const list = el('ul', 'ramps');
-    for (const ramp of view.onRamps) {
+    for (const way of view.payWays) {
       const li = el('li');
-      const key = ramp.name.split(' ')[0].toLowerCase();
-      const link = externalLink(ramp.href, '');
-      link.setAttribute('aria-label', ramp.name);
-      const hasMark = Boolean(marks[key]);
-      if (hasMark) link.append(markSpan(marks[key], ramp.wordmark ? 84 : 21));
-      // A wordmark carries the name itself, but only if its mark actually
-      // arrived — otherwise the link would render empty.
-      if (!ramp.wordmark || !hasMark) link.append(document.createTextNode(ramp.name));
-      link.append(el('span', 'go', '↗'));
-      li.append(link);
-      if (ramp.applePay && marks.applepay) {
-        const badge = el('span', 'ap');
-        const m = markSpan(marks.applepay, 34);
-        m.setAttribute('role', 'img');
-        m.setAttribute('aria-label', 'Apple Pay');
-        m.removeAttribute('aria-hidden');
-        badge.append(m);
-        li.append(badge);
+      const link = externalLink(way.href, '');
+      link.className = 'ramp';
+      link.setAttribute('aria-label', `${way.name} — opens in a new tab`);
+
+      const badge = el('span', 'ramp__who');
+      // The mark identifies the company; the name is always there too, so a
+      // mark that failed to load never leaves an unreadable row.
+      if (marks[way.mark]) badge.append(markSpan(marks[way.mark], 22));
+      badge.append(el('span', 'ramp__name', way.name));
+      if (way.applePay && marks.applepay) {
+        const ap = markSpan(marks.applepay, 36);
+        ap.className = 'tp__mark ap';
+        ap.setAttribute('role', 'img');
+        ap.setAttribute('aria-label', 'Apple Pay');
+        ap.removeAttribute('aria-hidden');
+        badge.append(ap);
       }
-      li.append(el('span', null, ramp.note));
+
+      link.append(badge, el('span', 'ramp__note', way.note), el('span', 'go', '↗'));
+      li.append(link);
       list.append(li);
     }
-    second.append(list);
-    routes.append(first, second);
+    routes.append(list);
     return routes;
   }
 

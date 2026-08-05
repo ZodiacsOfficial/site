@@ -139,31 +139,24 @@ export const TP_CSS = `
 .tp__go:disabled { opacity: .42; cursor: default; }
 .tp .nowallet { margin: 10px 0 0; color: var(--tp-dim); font-size: 12px; text-align: center; }
 
-.tp .route { padding: 14px 0; border-top: 1px solid var(--tp-hair); }
-.tp .route--first { border-top: 0; padding-top: 0; }
-.tp .route__k {
-  margin: 0 0 6px; color: var(--tp-dim);
-  font-family: ui-monospace, 'JetBrains Mono', monospace;
-  font-size: 9.5px; letter-spacing: .14em; text-transform: uppercase;
+/* Four ways to pay, one row each: mark, name, what the company does. */
+.tp .ramps { list-style: none; margin: 0; padding: 0; }
+.tp .ramps li { border-top: 1px solid var(--tp-hair); }
+.tp .ramps li:first-child { border-top: 0; }
+.tp .ramp {
+  display: flex; align-items: center; gap: 12px;
+  min-height: 52px; padding: 6px 2px;
+  color: var(--tp-ink-2); text-decoration: none;
+  transition: color 200ms ease;
 }
-.tp .route__t { margin: 0; color: var(--tp-ink); font-size: 15px; font-weight: 600; }
-.tp .route__d { margin: 5px 0 0; color: var(--tp-dim); font-size: 12.5px; }
-.tp .route__go {
-  display: flex; align-items: center; justify-content: center; gap: 8px;
-  margin-top: 12px; min-height: 52px; padding: 0 20px;
-  border-radius: 999px; background: var(--tp-ink); color: #060709;
-  font-size: 15px; font-weight: 600; text-decoration: none;
+.tp .ramp:hover { color: var(--tp-ink); }
+.tp .ramp__who { display: inline-flex; align-items: center; gap: 8px; flex: none; }
+.tp .ramp__name { font-size: 14px; color: inherit; }
+.tp .ramp__note {
+  flex: 1 1 auto; min-width: 0;
+  color: var(--tp-dim); font-size: 12px; text-align: right;
 }
-.tp .route__go:hover { opacity: .9; }
-
-.tp .ramps { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
-.tp .ramps li { display: flex; align-items: center; gap: 10px; min-height: 44px; color: var(--tp-dim); font-size: 12px; }
-.tp .ramps a {
-  display: inline-flex; align-items: center; gap: 7px;
-  color: var(--tp-ink-2); font-size: 13.5px; text-decoration: none; flex: none;
-}
-.tp .ramps a:hover { color: var(--tp-ink); }
-.tp .ramps .go { color: var(--tp-dim); font-size: 11px; }
+.tp .ramps .go { color: var(--tp-dim); font-size: 11px; flex: none; }
 /* Brand marks are single-colour masks: currentColor does not reach an <img>. */
 .tp__mark {
   display: inline-block; height: 21px;
@@ -171,8 +164,8 @@ export const TP_CSS = `
   mask-repeat: no-repeat; mask-position: center; mask-size: contain;
   -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; -webkit-mask-size: contain;
 }
-.tp .ap { display: inline-flex; align-items: center; color: var(--tp-ink-2); }
-.tp .ap .tp__mark { height: 15px; }
+/* The Apple Pay lockup rides beside the name of a provider that takes it. */
+.tp__mark.ap { height: 15px; opacity: .9; }
 
 .tp .err {
   margin: 14px 0 0; padding: 11px 13px;

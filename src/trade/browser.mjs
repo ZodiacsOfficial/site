@@ -20,6 +20,19 @@ import { mountTradePanel } from './view.mjs';
 
 const STYLE_MARK = 'data-tp-styles';
 
+/**
+ * The marks the pay list wears. Rendered as CSS masks filled with ink — see
+ * docs/VENUE-MARKS.md for where each one came from and which are ours. A
+ * missing file costs nothing: the row still carries the company's name.
+ */
+const MARKS = Object.freeze({
+  coinbase: '/assets/venues/coinbase.svg',
+  fomo: '/assets/venues/fomo.svg',
+  moonpay: '/assets/venues/moonpay.svg',
+  ramp: '/assets/venues/ramp.svg',
+  applepay: '/assets/venues/applepay.svg',
+});
+
 function ensureStyles() {
   if (document.querySelector(`[${STYLE_MARK}]`)) return;
   const style = document.createElement('style');
@@ -40,6 +53,7 @@ export function mount(host, sign) {
     host,
     sign,
     deps: { fetchOrder, executeOrder, wallet },
+    marks: MARKS,
   });
   return {
     controller: panel.controller,

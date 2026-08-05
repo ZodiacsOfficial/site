@@ -3421,11 +3421,10 @@
        pastel rail paints immediately from inert placeholder discs; the WebGL
        canvas fades in once the scene bundle mounts and takes the rail over. */
     .consumer-explorer--stage {
-      display: flex;
-      flex-direction: column;
-      min-height: 100svh;
-      padding: 0;
-      border-bottom: 1px solid var(--hair-2);
+      display: block;
+      padding: clamp(84px, 10vh, 120px) 24px clamp(44px, 6vh, 72px);
+      border-bottom: 0;
+      background: none;
       /* The opening scene runs edge to edge: break out of the 1180px column
          the rest of the registry reads in. */
       width: 100vw;
@@ -3433,7 +3432,7 @@
     }
     .stage-hero__head {
       position: relative; z-index: 2;
-      padding: clamp(96px, 13vh, 140px) 24px 0;
+      padding: clamp(30px, 4.5vh, 52px) 24px 0;
       text-align: center;
     }
     .stage-hero__eyebrow {
@@ -3449,7 +3448,7 @@
       margin: 14px 0 0;
       font-family: var(--serif);
       font-weight: 400;
-      font-size: clamp(44px, 5.2vw, 74px);
+      font-size: clamp(36px, 3.9vw, 58px);
       line-height: 1.04;
       letter-spacing: -.012em;
       color: var(--ink);
@@ -3464,13 +3463,25 @@
     }
     .stage-hero__verify { color: var(--ink-2); white-space: nowrap; }
     .stage-hero__verify:hover { color: var(--ink); }
+    /* The plate. One framed room holding the headline, the twelve, the piece
+       on show, and its label — wearing the chosen sign's pastel on its edge
+       and in the light at its shoulder, and changing colour as you walk. */
     .consumer-explorer--stage .gband--consumer {
       position: relative; z-index: 1;
       display: flex;
       flex-direction: column;
-      flex: 1 1 auto;
-      min-height: 0;
       width: 100%;
+      max-width: 1400px;
+      height: clamp(620px, 88svh, 980px);
+      margin-inline: auto;
+      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
+      border-radius: 26px;
+      overflow: clip;
+      background:
+        radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
+        rgba(15,18,26,.88);
+      box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
+      transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
     }
     /* The picker. Deliberately NOT .gband__chrome: the scene reads that
        element's offsetTop as the floor of the band it may paint into, and
@@ -3480,13 +3491,13 @@
       justify-content: center;
       /* The dock's swell grows upward from each disc's foot, so the strip
          carries its own headroom instead of borrowing the canvas's. */
-      padding: 26px 20px 4px;
+      padding: 18px 20px 2px;
     }
     .gband--consumer .gband__mount {
       position: relative;
       inset: auto;
       flex: 1 1 auto;
-      min-height: 420px;
+      min-height: 360px;
     }
     /* The placard names the piece in full, so the hover label the standalone
        band needs would only say it twice. */
@@ -3501,7 +3512,7 @@
        glass keeps the sculpture present behind it. */
     .stage-placard {
       position: absolute;
-      left: 50%; bottom: clamp(22px, 4.5vh, 44px);
+      left: 50%; bottom: clamp(20px, 3.5vh, 36px);
       transform: translateX(-50%);
       z-index: 3;
       display: flex;
@@ -3514,6 +3525,8 @@
       background: rgba(10,12,17,.66);
       -webkit-backdrop-filter: blur(14px);
       backdrop-filter: blur(14px);
+      box-shadow: 0 18px 60px -38px color-mix(in srgb, var(--active-sign, #E0A9B4) 55%, transparent);
+      transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
     }
     .stage-placard__name {
       font-family: var(--serif);
@@ -3584,8 +3597,18 @@
       cursor: pointer;
     }
     .stage-sheet__close:hover { color: var(--ink); border-color: var(--hair-3); }
-    .stage-sheet .consumer-preview__name { font-size: 40px; }
-    .stage-sheet .consumer-preview__lore { max-width: 40ch; }
+    .stage-sheet .consumer-trade { margin-top: 30px; }
+    .stage-sheet__record {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 44px;
+      margin-top: 18px;
+      color: var(--ink-dim);
+      font-size: 13px;
+    }
+    .stage-sheet__record:hover { color: var(--ink-2); }
     @keyframes sheet-scrim { from { opacity: 0; } to { opacity: 1; } }
     @keyframes sheet-slide {
       from { opacity: 0; transform: translateX(28px); }

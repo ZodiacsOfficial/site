@@ -1695,6 +1695,21 @@
               .gband__chrome: the scene measures the band it may fill by that
               element's offsetTop, and chrome above the canvas would leave it
               nothing. */}
+          {consumer && (
+              <header className="stage-hero__head">
+                <a className="stage-hero__eyebrow" href="/disclosure/">
+                  The Official Registry · Est. {REGISTRY_ESTABLISHED}
+                  {!REGISTRY_ESTABLISHMENT_PROVENANCE_URL && ' · provenance pending'}
+                </a>
+                <h1 id="consumer-explorer-title" className="stage-hero__title">
+                  Twelve signs. <span className="it">One register.</span>
+                </h1>
+                <p className="stage-hero__line">
+                  Every sign has one official token. Explore its story, its record, and its market.
+                  {' '}<a className="stage-hero__verify" href="#verify">Check an address ↓</a>
+                </p>
+              </header>
+          )}
           {consumer && <div className="gband__rail-top">{railGroup}</div>}
           <div className="gband__mount" data-gallery-canvas="" />
           <p className="gband__name" data-gallery-name="" aria-hidden="true" />
@@ -1749,7 +1764,13 @@
                   onClick={() => setSheetOpen(false)}
                   aria-label="Close the trade sheet"
                 >✕</button>
-                <ConsumerSignPanel sign={sign} season={season} />
+                {/* The panel introduces itself — disc, name, and the venue it
+                    trades through — so repeating the record above it would
+                    push the thing the reader opened below the fold. */}
+                <LandingTrade sign={sign} />
+                <a className="stage-sheet__record" href={registryProfilePath(sign)}>
+                  The full record <span aria-hidden="true">→</span>
+                </a>
               </div>
             </div>,
             document.body,
@@ -3569,21 +3590,6 @@
         >
           {/* In stage mode this section IS the page's opening: the film hero
               stands down and the gallery carries the headline itself. */}
-          {stageMode && (
-          <header className="stage-hero__head">
-            <a className="stage-hero__eyebrow" href="/disclosure/">
-              The Official Registry · Est. {REGISTRY_ESTABLISHED}
-              {!REGISTRY_ESTABLISHMENT_PROVENANCE_URL && ' · provenance pending'}
-            </a>
-            <h1 id="consumer-explorer-title" className="stage-hero__title">
-              Twelve signs. <span className="it">One register.</span>
-            </h1>
-            <p className="stage-hero__line">
-              Every sign has one official token. Explore its story, its record, and its market.
-              {' '}<a className="stage-hero__verify" href="#verify">Check an address ↓</a>
-            </p>
-          </header>
-          )}
           {!stageMode && (
           <header className="consumer-explorer__head">
             <span className="consumer-section-head__eyebrow">The official twelve</span>

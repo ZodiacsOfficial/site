@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   AMOUNT_PRESETS,
-  ON_RAMPS,
+  PAY_WAYS,
   afterPurchase,
   closingNote,
   errorCopy,
@@ -123,15 +123,27 @@ describe('errors say what to do next', () => {
   });
 });
 
-describe('the on-ramp list', () => {
+describe('the ways to pay', () => {
   it('is alphabetical and carries no ranking', () => {
-    const names = ON_RAMPS.map((r) => r.name);
-    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b)));
+    const names = PAY_WAYS.map((w) => w.name);
+    expect(names).toEqual([...names].sort((a, b) => a.localeCompare(b, 'en', { sensitivity: 'base' })));
     expect(names).not.toContain('Transak');
+    // fomo sits in the list rather than above it: a headline and a paragraph
+    // for one company is a ranking, whatever the copy says.
+    expect(names).toContain('fomo');
   });
 
   it('badges Apple Pay only where it was verified', () => {
-    expect(ON_RAMPS.filter((r) => r.applePay).map((r) => r.name)).toEqual(['Ramp Network']);
+    expect(PAY_WAYS.filter((w) => w.applePay).map((w) => w.name)).toEqual(['fomo']);
+  });
+
+  it('says what each company does in words that survive a glance', () => {
+    for (const way of PAY_WAYS) {
+      expect(way.note.split(/\s+/).length, way.name).toBeLessThanOrEqual(6);
+      expect(way.note, way.name).toMatch(/\.$/);
+      expect(way.mark, way.name).toMatch(/^[a-z]+$/);
+      expect(way.href, way.name).toMatch(/^https:\/\//);
+    }
   });
 });
 

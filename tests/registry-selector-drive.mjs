@@ -1019,6 +1019,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           return el ? el.getBoundingClientRect() : null;
         };
         const head = box('.stage-hero__head');
+        const plate = box('.gband--consumer');
         const rail = box('.gband--consumer [data-gallery-rail]');
         const canvas = box('.gband--consumer [data-gallery-canvas]');
         const placard = box('.stage-placard');
@@ -1029,7 +1030,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           railAboveCanvas: Boolean(rail && canvas && rail.bottom <= canvas.top + 1),
           placardOverCanvas: Boolean(placard && canvas
             && placard.top > canvas.top && placard.bottom <= canvas.bottom + 1),
-          fullBleed: Boolean(canvas && canvas.width >= innerWidth - 2),
+          plateFramed: Boolean(plate && plate.width < innerWidth - 40 && plate.width <= 1402),
+          plateRadius: plate ? getComputedStyle(document.querySelector('.gband--consumer')).borderTopLeftRadius : '',
+          headInsidePlate: Boolean(head && plate && head.top >= plate.top - 1 && head.bottom <= plate.bottom + 1),
           // The rail must not wear .gband__chrome: the scene reads that
           // element's offsetTop as the floor of the band it may paint into.
           chrome: document.querySelectorAll('.gband--consumer .gband__chrome').length,
@@ -1040,14 +1043,14 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       });
       check(
-        'the stage is the opening scene: headline, rail, sculpture, placard',
+        'the plate frames the opening scene: headline, rail, sculpture, placard',
         shape.filmHero === 0 && shape.h1 === 1
           && shape.headAboveRail && shape.railAboveCanvas && shape.placardOverCanvas
-          && shape.fullBleed
+          && shape.plateFramed && shape.plateRadius.startsWith('26') && shape.headInsidePlate
           && shape.chrome === 0
           && shape.previewInside === 1 && shape.previewTotal === 1
           && shape.flatArt === 0
-          && shape.figureHeight >= 420,
+          && shape.figureHeight >= 380,
         JSON.stringify(shape),
       );
 
@@ -1176,6 +1179,27 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await tradePage.locator('.tp').waitFor({ state: 'visible', timeout: 20_000 });
       await tradePage.locator('.tp .out').waitFor({ state: 'visible', timeout: 20_000 });
 
+      if (label === 'sheet') {
+        const ceiling = await tradePage.evaluate(() => {
+          const sheet = document.querySelector('.stage-sheet__panel');
+          const tp = sheet.querySelector('.tp');
+          return {
+            lore: sheet.querySelectorAll('.consumer-preview__lore').length,
+            quote: sheet.querySelectorAll('[data-token-quote]').length,
+            record: sheet.querySelector('.stage-sheet__record')?.getAttribute('href'),
+            // How far down the sheet the reader has to look to find the trade.
+            panelTop: tp ? Math.round(tp.getBoundingClientRect().top - sheet.getBoundingClientRect().top) : -1,
+          };
+        });
+        check(
+          'the sheet opens on the panel rather than on a second copy of the record',
+          ceiling.lore === 0 && ceiling.quote === 0
+            && ceiling.record === '/registry/leo/'
+            && ceiling.panelTop >= 0 && ceiling.panelTop <= 120,
+          JSON.stringify(ceiling),
+        );
+      }
+
       const panel = await tradePage.evaluate(() => {
         const tp = document.querySelector('.tp');
         const chips = [...tp.querySelectorAll('.amts button')];
@@ -1191,7 +1215,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           methods: methods.map((b) => b.textContent),
           method: methods.find((b) => b.getAttribute('aria-pressed') === 'true')?.textContent ?? '',
           ramps: tp.querySelectorAll('.ramps li').length,
+          rampNames: [...tp.querySelectorAll('.ramp__name')].map((n) => n.textContent),
+          fomoRow: [...tp.querySelectorAll('.ramp')]
+            .find((r) => /fomo/i.test(r.textContent))?.textContent.replace(/\s+/g, ' ').trim() ?? '',
+          applePayBadge: tp.querySelectorAll('.tp__mark.ap').length,
+          marks: tp.querySelectorAll('.ramps .tp__mark').length,
           go: tp.querySelectorAll('.tp__go').length,
+          heroButton: tp.querySelectorAll('.route__go, .route__t').length,
         };
       });
       check(
@@ -1208,8 +1238,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
       check(
         `the ${label} leads with the card path and hides the wallet button behind it`,
-        /Card|Apple Pay/i.test(panel.method) && panel.ramps === 3 && panel.go === 0,
+        /Card|Apple Pay/i.test(panel.method) && panel.ramps === 4 && panel.go === 0,
         JSON.stringify({ method: panel.method, ramps: panel.ramps, go: panel.go }),
+      );
+      check(
+        `the ${label} lists four ways to pay, branded, alphabetical, none ranked`,
+        panel.rampNames.join(' · ') === 'Coinbase · fomo · MoonPay · Ramp Network'
+          && panel.heroButton === 0
+          && panel.applePayBadge === 1
+          && /Apple Pay/.test(panel.fomoRow)
+          && panel.marks >= 4,
+        JSON.stringify({ names: panel.rampNames, hero: panel.heroButton, marks: panel.marks, fomo: panel.fomoRow }),
       );
 
       // Park the control in the middle of the viewport rather than at its

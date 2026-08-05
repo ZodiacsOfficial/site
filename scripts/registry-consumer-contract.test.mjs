@@ -234,6 +234,24 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('aria-modal="true"');
     expect(source).toContain("if (event.key === 'Escape') setSheetOpen(false);");
     expect(source).toContain('tradePillRef.current?.focus({ preventScroll: true });');
+    // The headline belongs to the plate, not to the page around it.
+    const plate = source.slice(source.indexOf('function GalleryBand('), source.indexOf('</section>', source.indexOf('function GalleryBand(')));
+    expect(plate).toContain('className="stage-hero__head"');
+    expect(plate).toContain('className="gband__rail-top"');
+  });
+
+  it('opens the sheet on the thing the reader asked for', async () => {
+    const source = await read('src/app.jsx');
+    const sheet = source.slice(
+      source.indexOf('className="stage-sheet__panel"'),
+      source.indexOf('document.body,'),
+    );
+    // The panel names itself — disc, sign, and the venue it trades through —
+    // so a second identity block above it would only push the trade down.
+    expect(sheet).toContain('<LandingTrade sign={sign} />');
+    expect(sheet).not.toContain('ConsumerSignPanel');
+    expect(sheet).toContain('className="stage-sheet__record"');
+    expect(sheet).toContain('The full record');
   });
 
   it('keeps the trade panel behind its flag and its own lazy bundle', async () => {
