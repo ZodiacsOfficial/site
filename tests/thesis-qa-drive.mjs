@@ -35,7 +35,7 @@ const COMPARISON_ROWS = [
   ['Permissionless online transfer', ['×', '✓', '✓']],
   ['Programmable', ['×', '✓', '✓']],
   ['Base-layer settlement in seconds', ['×', '×', '✓']],
-  ['Predictably low base-layer fees', ['×', '×', '✓']],
+  ['Everyday identity in profiles and conversation', ['×', '×', '✓']],
 ];
 const LEO_MINT = '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm';
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
@@ -142,15 +142,15 @@ try {
   check('1440×900: no page-level horizontal overflow',
     await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
   const thesisGallery = page.locator(GALLERY_SELECTOR);
-  check('Section IV contains one gallery stage', (await thesisGallery.count()) === 1);
+  check('Section V contains one gallery stage', (await thesisGallery.count()) === 1);
   check('gallery bundle is not requested above the fold', galleryRequests.length === 0,
     galleryRequests.join(' | '));
 
   // Anchors resolve.
-  for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'worth-holding',
-    'pulse', 'the-candidacy', 'what-holding-means', 'the-public-record', 'the-test',
-    'why-solana-why-base', 'the-case-against', 'the-instrument', 'the-honest-ending',
-    'appendix', 'essay']) {
+  for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'attention',
+    'worth-holding', 'pulse', 'the-candidacy', 'what-holding-means', 'the-public-record',
+    'the-conclusion', 'the-test', 'why-solana-why-base', 'the-case-against',
+    'the-instrument', 'the-honest-ending', 'appendix', 'essay']) {
     check(`anchor #${id} resolves`, (await page.locator(`[id="${id}"]`).count()) === 1);
   }
 
@@ -160,8 +160,9 @@ try {
 
   // Masthead + footer.
   check('masthead reads Nº 09 · Why Zodiacs Matter', /Nº 09 · Why Zodiacs Matter/.test(await page.locator('.essay__rail').textContent() ?? ''));
-  check('hero leads with the consumer thesis',
-    /Bitcoin proved digital ownership could be public and self-custodied\. Zodiacs makes it personal\./.test(await page.locator('.hero__epi').textContent() ?? ''));
+  check('hero keeps one concise consumer subheader',
+    (await page.locator('.hero__epi').count()) === 0
+      && /Your sign already shows up in birthday wishes/.test(await page.locator('.hero__sub').textContent() ?? ''));
   const heroVideo = page.locator('.hero video.hero__media');
   check('hero uses one ambient zodiac-clock video', (await heroVideo.count()) === 1);
   const heroVideoStart = await heroVideo.evaluate((video) => ({
@@ -322,15 +323,15 @@ try {
     (await page.locator('#changelog, a[href="#changelog"]').count()) === 0);
   check('removed attention summary cards stay out of the essay',
     (await page.locator('.truth-panel').count()) === 0);
-  const attentionDrawer = page.locator('#where-the-signs-come-from > details.evidence-drawer');
-  check('Part II has one merged audience and attention drawer',
+  const attentionDrawer = page.locator('#attention > details.evidence-drawer');
+  check('Part III has one merged audience and attention drawer',
     (await attentionDrawer.count()) === 1
       && (await attentionDrawer.locator(':scope > summary').textContent())?.trim() === 'Audience & attention evidence'
       && (await attentionDrawer.locator('.stats').count()) === 1
       && (await attentionDrawer.locator('#pulse').count()) === 1);
   await attentionDrawer.locator(':scope > summary').focus();
   await page.keyboard.press('Enter');
-  check('merged Part II drawer exposes both audience figures and the Pulse',
+  check('merged Part III drawer exposes both audience figures and the Pulse',
     await attentionDrawer.getAttribute('open') !== null
       && await isVisuallyExposed(attentionDrawer.locator('.stats'))
       && await isVisuallyExposed(attentionDrawer.locator('#pulse')));
@@ -429,7 +430,7 @@ try {
   check('test card admits the test has not begun', /has not begun/.test(tcard));
   check('test card fixes the no-later-than date', /2026-10-31/.test(tcard));
 
-  // F3 stays open and uses the original eleven-property comparison.
+  // F3 stays open and uses the current eleven-property comparison.
   const comparison = page.locator('#fig-3 .comparison-panel .ztbl');
   check('comparison is always visible', await isVisuallyExposed(comparison));
   check('comparison is not nested in details', (await page.locator('#fig-3 details .ztbl').count()) === 0);
@@ -461,11 +462,11 @@ try {
       return clone.textContent.trim();
     })));
   }
-  check('comparison uses the exact original yes-or-no matrix',
+  check('comparison uses the exact yes-or-no matrix',
     JSON.stringify(rowMarks) === JSON.stringify(COMPARISON_ROWS.map(([, marks]) => marks)),
     JSON.stringify(rowMarks));
   const zodiacsMarks = rowMarks.map((row) => row[2]);
-  check('Zodiacs is checked on all eleven original properties',
+  check('Zodiacs is checked on all eleven properties',
     zodiacsMarks.length === 11 && zodiacsMarks.every((mark) => mark === '✓'),
     JSON.stringify(zodiacsMarks));
   const comparisonNotes = page.locator('#fig-3 details.evidence-drawer');
