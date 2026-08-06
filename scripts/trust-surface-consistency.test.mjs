@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto';
 import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -129,17 +128,17 @@ describe('repository operating claims', () => {
 });
 
 describe('homepage social card', () => {
-  it('wires the reviewed byte-exact 1200x630 WebP into homepage metadata', async () => {
-    const [page, seo, bytes] = await Promise.all([
+  it('leaves the homepage on the void fallback card', async () => {
+    const [page, seo] = await Promise.all([
       text('src/pages/index.astro'),
       text('src/components/SEO.astro'),
-      readFile(resolve(root, 'public/assets/og/v2/homepage.webp')),
     ]);
-    expect(page).toContain('image="/assets/og/v2/homepage.webp"');
-    expect(page).toMatch(/imageAlt="[^"]*Your whole chart, not just your sign/);
+    // No explicit image prop: SEO.astro falls back to /assets/og/v2/share.png,
+    // the void card the rest of the site shares.
+    expect(page).not.toMatch(/^\s*image=/mu);
+    expect(seo).toContain("explicitImage ?? catalogImage ?? '/assets/og/v2/share.png'");
     expect(seo).toContain('<meta property="og:image:type" content={imageType} />');
     expect(seo).toContain('<meta name="twitter:image" content={imageUrl} />');
-    expect(createHash('sha256').update(bytes).digest('hex'))
-      .toBe('5c23bd24a519c408a5f6eae48d7b6e02b020b79e739bbebe4c8ab6e8d960109b');
+    await expect(readFile(resolve(root, 'public/assets/og/v2/homepage.webp'))).rejects.toThrow();
   });
 });
