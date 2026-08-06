@@ -1,4 +1,7 @@
 .DS_Store
+# Both forms: the directory, and a symlink named node_modules (a machine-local
+# one was tracked here once, and the trailing-slash rule doesn't match a link).
+node_modules
 node_modules/
 dist/
 build/
