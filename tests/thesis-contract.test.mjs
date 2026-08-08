@@ -18,15 +18,25 @@ const MATRIX = [
   ['Permissionless online transfer', '×', '✓', '✓'],
   ['Programmable', '×', '✓', '✓'],
   ['Base-layer settlement in seconds', '×', '×', '✓'],
-  ['Predictably low base-layer fees', '×', '×', '✓'],
+  ['Everyday identity in profiles and conversation', '×', '×', '✓'],
 ];
 
-const MOVEMENTS = [
+const MANUSCRIPT_MOVEMENTS = [
   'The sign you already carry',
   'A story that survived every medium',
   'Ownership becomes personal',
   'Modern rails',
   'Something you can carry',
+];
+
+const HTML_MOVEMENTS = [
+  'The sign you already carry',
+  'A story that survived every medium',
+  'Attention is the internet’s first currency',
+  'Ownership becomes personal',
+  'Modern rails',
+  'Something you can carry',
+  'The next medium is ownership',
 ];
 
 const SIGNS = [
@@ -116,12 +126,12 @@ function visibleEssayText() {
 }
 
 describe('thesis Nº 09 editorial contract', () => {
-  it('keeps the edition, five movements, and central consumer copy in sync', () => {
+  it('keeps the edition, current essay movements, and source manuscript intact', () => {
     const htmlText = textOf(HTML).toLowerCase();
     const manuscriptText = MANUSCRIPT.replace(/[*_#>`]/g, ' ').replace(/\s+/g, ' ').toLowerCase();
     const htmlMovements = tagParts(HTML, 'h2')
       .filter(({ attrs }) => /class=["'][^"']*\bmov__title\b/i.test(attrs))
-      .slice(0, 5)
+      .slice(0, 7)
       .map(({ inner }) => textOf(inner).replace(/\.$/, ''));
     const manuscriptMovements = [...MANUSCRIPT.matchAll(/^## Part [IVX]+\.\s+(.+)$/gm)]
       .slice(0, 5)
@@ -129,11 +139,13 @@ describe('thesis Nº 09 editorial contract', () => {
 
     expect(htmlText).toContain('nº 09');
     expect(manuscriptText).toContain('nº 09');
-    expect(htmlMovements).toEqual(MOVEMENTS);
-    expect(manuscriptMovements).toEqual(MOVEMENTS);
-    for (const phrase of [...MOVEMENTS, ...KEY_COPY]) {
-      expect(htmlText, `HTML is missing: ${phrase}`).toContain(phrase.toLowerCase());
+    expect(htmlMovements).toEqual(HTML_MOVEMENTS);
+    expect(manuscriptMovements).toEqual(MANUSCRIPT_MOVEMENTS);
+    for (const phrase of KEY_COPY) {
       expect(manuscriptText, `manuscript is missing: ${phrase}`).toContain(phrase.toLowerCase());
+    }
+    for (const phrase of HTML_MOVEMENTS) {
+      expect(htmlText, `HTML is missing: ${phrase}`).toContain(phrase.toLowerCase());
     }
   });
 
@@ -253,14 +265,14 @@ describe('thesis hero background contract', () => {
 });
 
 describe('thesis feedback simplification contract', () => {
-  const partTwo = sliceElement(
+  const attention = sliceElement(
     HTML,
-    /<section\b[^>]*\bid=["']where-the-signs-come-from["'][^>]*>/i,
+    /<section\b[^>]*\bid=["']attention["'][^>]*>/i,
     'section',
   );
-  const fig2 = sliceElement(partTwo, /<figure\b[^>]*\bid=["']fig-2["'][^>]*>/i, 'figure');
+  const fig2 = sliceElement(attention, /<figure\b[^>]*\bid=["']fig-2["'][^>]*>/i, 'figure');
   const audienceEvidence = sliceElement(
-    partTwo,
+    attention,
     /<details\b[^>]*class=["'][^"']*\bevidence-drawer\b[^"']*["'][^>]*>\s*<summary\b[^>]*>Audience &amp; attention evidence<\/summary>/i,
     'details',
   );
@@ -275,12 +287,12 @@ describe('thesis feedback simplification contract', () => {
     'div',
   );
 
-  it('merges the Part II audience and attention material into one evidence drawer', () => {
-    const drawers = [...partTwo.matchAll(
+  it('merges the Part III audience and attention material into one evidence drawer', () => {
+    const drawers = [...attention.matchAll(
       /<details\b[^>]*class=["'][^"']*\bevidence-drawer\b[^"']*["'][^>]*>/gi,
     )];
 
-    expect(drawers).toHaveLength(2);
+    expect(drawers).toHaveLength(1);
     expect(fig2).not.toMatch(/<details\b/i);
     expect(audienceEvidence).not.toBe('');
     expect(textOf(tagParts(audienceEvidence, 'summary')[0]?.inner ?? ''))
@@ -288,8 +300,8 @@ describe('thesis feedback simplification contract', () => {
     expect(audienceEvidence).toMatch(/class=["'][^"']*\bstats\b/i);
     expect([...audienceEvidence.matchAll(/\bdata-pulse(?:\s|>|=)/gi)]).toHaveLength(1);
     expect(audienceEvidence).toMatch(/Live and committed data/i);
-    expect(partTwo.indexOf(audienceEvidence)).toBeGreaterThan(partTwo.indexOf(fig2));
-    expect(partTwo).not.toMatch(/\btruth-panel\b/i);
+    expect(attention.indexOf(audienceEvidence)).toBeGreaterThan(attention.indexOf(fig2));
+    expect(attention).not.toMatch(/\btruth-panel\b/i);
   });
 
   it('compresses the public history to exactly four consequential milestones', () => {
@@ -324,7 +336,7 @@ describe('thesis feedback simplification contract', () => {
 
   it('uses digital-asset language on the public milestone and closing actions', () => {
     expect(textOf(publicRecord)).toContain('Twelve digital assets created.');
-    expect(textOf(close)).toContain('Choose your sign. See the digital asset. Decide what it means to you.');
+    expect(textOf(close)).toContain('Choose the sign you already carry.');
     expect(textOf(close)).toContain('Open the twelve digital assets');
   });
 

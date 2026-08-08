@@ -211,22 +211,22 @@ describe('independent copy verifier', () => {
         candidate.passages.flatMap((passage) => passage.evidenceRefs)
       ))
     )));
-    const aspect = tampered.evidence.find((receipt) => (
+    const skyEvent = tampered.evidence.find((receipt) => (
       referencedIds.has(String(receipt.id))
       && receipt.kind === 'sky-event'
-      && receipt.eventKind === 'aspect'
+      && typeof receipt.sign === 'string'
     ));
 
     expect(moon).toBeDefined();
     expect(signedBody).toBeDefined();
     expect(derived).toBeDefined();
-    expect(aspect).toBeDefined();
-    if (!moon || !signedBody || !derived || !aspect) return;
+    expect(skyEvent).toBeDefined();
+    if (!moon || !signedBody || !derived || !skyEvent) return;
 
     moon.moonPhase = moon.moonPhase === 'Full Moon' ? 'New Moon' : 'Full Moon';
     signedBody.sign = signedBody.sign === 'aries' ? 'taurus' : 'aries';
     derived.house = (Number(derived.house) % 12) + 1;
-    aspect.eventType = aspect.eventType === 'square' ? 'trine' : 'square';
+    skyEvent.sign = skyEvent.sign === 'aries' ? 'taurus' : 'aries';
 
     const ids = ruleIds(verifyHoroscopeProgramCopy(tampered));
     expect(ids).toContain('COPY-EVIDENCE-CLAIM');
