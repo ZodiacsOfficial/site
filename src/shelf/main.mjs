@@ -582,6 +582,7 @@ async function mount(root, records) {
   }
 
   rail.addEventListener('pointermove', (event) => {
+    root.dataset.galleryInput = 'pointer';
     // A wave that follows the cursor is motion; reduced motion keeps only the
     // resting magnification, which is affordance rather than animation. Read
     // at event time, so a reader who changes the preference is obeyed without
@@ -602,8 +603,13 @@ async function mount(root, records) {
     const index = clampFocus(next, count);
     // Keyboard navigation is high-frequency and should feel as direct as the
     // focus ring itself. It keeps selection feedback but skips spatial travel.
+    root.dataset.galleryInput = 'keyboard';
     showFigure(index, { immediate: true });
     ticks[index].focus({ preventScroll: true });
+  });
+
+  rail.addEventListener('pointerdown', () => {
+    root.dataset.galleryInput = 'pointer';
   });
 
   opener?.addEventListener('click', () => toggle(current()));
@@ -691,6 +697,7 @@ async function mount(root, records) {
   }
 
   canvas.addEventListener('pointerdown', (event) => {
+    root.dataset.galleryInput = 'pointer';
     // Mouse and pen keep their existing capture contract. Touch waits until
     // horizontal intent is clear so a vertical page scroll remains native.
     if (event.pointerType !== 'touch') canvas.setPointerCapture(event.pointerId);
@@ -777,6 +784,20 @@ async function mount(root, records) {
         }
       } else if (Math.hypot(dx, dy) < 5) {
         return;
+      }
+      // Intent is committed now, not on raw pointer-down: taps and vertical
+      // page scrolling remain observationally inert. A real re-grab begins
+      // at the pose currently on screen and interrupts residual damping.
+      if (drag.mode === 'rotate') {
+        state.targetYaw = state.yaw;
+        state.targetPitch = state.pitch;
+        state.targetZoom = state.zoom;
+        drag.yaw = state.yaw;
+        drag.pitch = state.pitch;
+        drag.zoom = state.zoom;
+      } else {
+        state.targetFocus = state.focus;
+        drag.focus = state.focus;
       }
       drag.moved = true;
       clearSnap();
@@ -918,8 +939,8 @@ async function mount(root, records) {
       invalidate();
       return;
     }
-    // Mid-page, a vertical wheel is the page scrolling past — only a
-    // sideways wheel walks the row.
+    // A vertical wheel belongs to the page. Horizontal trackpad input walks
+    // the row, while drag/swipe remains the direct manipulation gesture.
     if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
     // Firefox reports wheel deltas in lines, and some setups in pages; both
     // would crawl if read as pixels.

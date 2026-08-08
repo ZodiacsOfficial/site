@@ -155,17 +155,39 @@ describe('Registry consumer and technical information architecture', () => {
     expect(html).toContain("if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches)");
   });
 
-  it('mounts the sculpture stage as the wide-screen explorer and keeps the bundle lazy', async () => {
+  it('mounts the sculpture stage on every capable viewport and keeps the bundle lazy', async () => {
     const source = await read('src/app.jsx');
-    // The stage is the selector only where WebGL is live AND the viewport is
-    // wide; phones and non-WebGL machines keep the pastel grid and never
-    // request the scene bundle.
-    expect(source).toContain("window.matchMedia('(min-width: 1021px)')");
-    expect(source).toContain('GALLERY_LIVE && window.matchMedia');
+    // Phones and desktops share the real stage whenever WebGL exists. The
+    // flat carousel is now a capability fallback, not a width breakpoint.
+    expect(source).toContain('return GALLERY_LIVE;');
+    expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
     expect(source).toContain("'/assets/gallery.js'");
     expect(source).toContain('carousel={!stageMode}');
     expect(source).not.toContain('data-consumer-gallery-toggle');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
+  });
+
+  it('shows the current season with a live price and DST-safe countdown', async () => {
+    const [source, html, bundle] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+      read('public/assets/app.js'),
+    ]);
+
+    for (const marker of [
+      'function SeasonNow({ season })',
+      '<SeasonNow season={season} />',
+      'Now in season',
+      "remaining === 1 ? '' : 's'",
+      'Date.UTC(year, month - 1, day)',
+      'remaining: Math.max(0, total - day)',
+      'useTwelveQuotes(Boolean(season))',
+    ]) expect(source).toContain(marker);
+    expect(html).toContain('.season-now {');
+    expect(html).toContain('.season-now__progress > span');
+    for (const marker of ['season-now', 'Now in season', 'remaining']) {
+      expect(bundle).toContain(marker);
+    }
   });
 
   it('presents the selected sign on a placard: name, dates, price, two doors', async () => {

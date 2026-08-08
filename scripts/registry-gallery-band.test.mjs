@@ -43,11 +43,10 @@ describe('the gallery band on the registry hub', () => {
       "'/assets/gallery.js'",
       "classList.contains('gallery-live')",
     ]) expect(source).toContain(marker);
-    // The stage is the wide-screen explorer, but only where WebGL is live —
-    // narrow viewports and non-WebGL machines keep the pastel grid and the
-    // scene bundle stays IntersectionObserver-lazy either way.
-    expect(source).toContain('GALLERY_LIVE && window.matchMedia');
-    expect(source).toContain("window.matchMedia('(min-width: 1021px)')");
+    // Capable phones keep the same live stage as desktop. Only a missing
+    // WebGL probe falls back to the flat carousel; loading remains lazy.
+    expect(source).toContain('return GALLERY_LIVE;');
+    expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
     expect(source).toContain('carousel={!stageMode}');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
     expect(source).not.toContain('data-consumer-gallery-toggle');
@@ -121,8 +120,9 @@ describe('the gallery band on the registry hub', () => {
     // section anchors; a slug is read on arrival only.
     expect(scene).not.toContain('replaceState');
     expect(scene).toContain('signFromHash(window.location.hash');
-    // A vertical wheel over the band is the page scrolling past.
-    expect(scene).toContain('Math.abs(event.deltaX) <= Math.abs(event.deltaY)');
+    // Vertical wheel input remains page scrolling; horizontal trackpad input
+    // and direct drag/swipe walk the sculpture row.
+    expect(scene).toContain('if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;');
     // A sculpture opens its record in place — never a navigation.
     expect(scene).not.toContain('location.assign');
     expect(scene).toContain('void openFigure(index)');
@@ -177,6 +177,26 @@ describe('the gallery band on the registry hub', () => {
     expect(driver).toContain('let forcedTurnResume = false;');
     expect(driver).toContain('function clearSnap()');
     expect(driver).toContain('clearTurnResume({ clearForced: gestureMode === \'rotate\' });');
+    // Re-grabbing is interruptible: every new gesture owns the pose actually
+    // on screen instead of continuing toward an earlier damping target.
+    for (const marker of [
+      'state.targetFocus = state.focus;',
+      'state.targetYaw = state.yaw;',
+      'state.targetPitch = state.pitch;',
+      'state.targetZoom = state.zoom;',
+    ]) expect(driver).toContain(marker);
+    const pointerDown = driver.slice(
+      driver.indexOf("canvas.addEventListener('pointerdown'"),
+      driver.indexOf("canvas.addEventListener('pointermove'"),
+    );
+    const pointerMove = driver.slice(
+      driver.indexOf("canvas.addEventListener('pointermove'"),
+      driver.indexOf('function endPointer'),
+    );
+    expect(pointerDown).not.toContain('state.targetFocus = state.focus;');
+    expect(pointerMove).toContain("drag.touchIntent !== 'horizontal'");
+    expect(pointerMove.indexOf("drag.touchIntent !== 'horizontal'"))
+      .toBeLessThan(pointerMove.indexOf('state.targetFocus = state.focus;'));
 
     // It costs no frames offscreen or behind acquisition, never autoplays for
     // reduced motion, and resumes only after a deliberate inspection pause.
@@ -326,6 +346,11 @@ describe('the gallery band on the registry hub', () => {
     // The resting magnification is affordance, not animation: the current
     // sign stands proud for touch and keyboard readers who raise no wave.
     expect(scene).toContain('1 + DOCK.rest');
+    // Keyboard selection snaps both the sculpture and its disc; pointer input
+    // restores the dock transition for direct manipulation.
+    expect(scene).toContain("root.dataset.galleryInput = 'keyboard';");
+    expect(scene).toContain("root.dataset.galleryInput = 'pointer';");
+    expect(html).toContain(".gband[data-gallery-input='keyboard'] .rail__tick picture { transition: none; }");
     // And the wave itself is withheld while a reader asks for less motion,
     // read at event time rather than latched at mount.
     expect(scene).toContain(
