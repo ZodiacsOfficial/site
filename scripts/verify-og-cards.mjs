@@ -95,21 +95,16 @@ async function validatePng(relativePath, { unique = true } = {}) {
   else hashes.set(hash, relativePath);
 }
 
+// The homepage shares the void fallback card. A separate homepage asset was
+// tried once in a light cream palette and read as a different site next to the
+// dark surfaces, so the card is not allowed back without a void render.
 async function validateHomepageCard() {
   const relativePath = 'homepage.webp';
   try {
-    const bytes = await readFile(resolve(out, relativePath));
-    const metadata = await sharp(bytes).metadata();
-    if (metadata.format !== 'webp' || metadata.width !== 1200 || metadata.height !== 630) {
-      failures.push(
-        `${relativePath}: expected 1200x630 WebP, received ${metadata.width ?? '?'}x${metadata.height ?? '?'} ${metadata.format ?? 'unknown'}`,
-      );
-    }
-    if (bytes.byteLength > 250 * 1024) {
-      failures.push(`${relativePath}: ${(bytes.byteLength / 1024).toFixed(1)}KiB exceeds the 250KiB homepage-card budget`);
-    }
+    await readFile(resolve(out, relativePath));
+    failures.push(`${relativePath}: off-system homepage card — the homepage uses the void share.png fallback`);
   } catch {
-    failures.push(`${relativePath}: missing`);
+    // Absent, as expected.
   }
 }
 
@@ -210,4 +205,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — homepage 1200x630 WebP; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
+console.log(`verify-og-cards: OK — homepage on the void share.png fallback; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
