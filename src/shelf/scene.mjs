@@ -451,6 +451,12 @@ export function createScene(canvas, records) {
       if (!visible) continue;
 
       const drawn = i === openIndex ? open : 0;
+      // The consumer spotlight is already the inspection pose: apply yaw and
+      // pitch directly to its focused cast without drawing out the record
+      // card. Other embeds keep the existing open-transition interpolation.
+      const inspected = drawn > 0
+        ? drawn
+        : state.spotlight ? pose.prominence : 0;
       const recede = i === openIndex ? 0 : open * 0.6;
 
       // The spotlight: the piece the row is offering stands at full size and
@@ -475,8 +481,8 @@ export function createScene(canvas, records) {
         THREE.MathUtils.lerp(pose.z - recede + (lift * 0.16), stage.z, drawn),
       );
       figure.mesh.rotation.set(
-        pitch * drawn,
-        THREE.MathUtils.lerp(pose.rotationY, yaw, drawn),
+        pitch * inspected,
+        THREE.MathUtils.lerp(pose.rotationY, yaw, inspected),
         0,
       );
       figure.mesh.scale.setScalar(scale);

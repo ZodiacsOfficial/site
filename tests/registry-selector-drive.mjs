@@ -1150,6 +1150,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             && liveShape.canvasWidth > 0 && liveShape.canvasHeight >= 360,
           JSON.stringify(liveShape),
         );
+        check(
+          `responsive gallery cycle ${cycle} resumes the desktop turntable`,
+          await liveBand.getAttribute('data-gallery-paused') === null,
+        );
         const selection = cycleSelections[cycle - 1];
         const liveTick = liveBand.locator('button.rail__tick').nth(selection.index);
         await liveTick.click();
@@ -1166,7 +1170,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           `responsive gallery cycle ${cycle} restores the mobile carousel`,
           await responsiveStage.locator('.stage-carousel__slide').count() === 1
             && await responsiveStage.locator('[data-consumer-sign]').count() === 12
-            && await responsiveStage.locator('[data-gallery-stage]').count() === 0,
+            && await responsiveStage.locator('[data-gallery-stage]').count() === 0
+            && await responsiveStage.locator('.gband--flat').getAttribute('data-gallery-paused') !== null,
         );
       }
       check(
@@ -1357,16 +1362,117 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         JSON.stringify(geminiPlacard),
       );
 
+      const liveStage = stagePage.locator('.gband--consumer');
+      const liveCanvas = liveStage.locator('.stage__canvas');
+      await stagePage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'ambient'
+      ));
+      await stagePage.waitForTimeout(900);
+      const ambientFrameA = await liveCanvas.screenshot();
+      await stagePage.waitForTimeout(500);
+      const ambientFrameB = await liveCanvas.screenshot();
+      const turnHint = (await liveStage.locator('[data-gallery-turn-hint]').innerText())
+        .replace(/\s+/g, ' ').trim();
+      check(
+        'the Registry spotlight turns quietly on its Thesis turntable',
+        !ambientFrameA.equals(ambientFrameB)
+      && turnHint.toLowerCase().includes('drag to turn'),
+        JSON.stringify({ framesEqual: ambientFrameA.equals(ambientFrameB), turnHint }),
+      );
+
+      // Find the cast rather than assuming its silhouette fills the centre:
+      // Gemini has a deliberate gap between the twins. Hover picking exposes
+      // the same proxy the real drag uses.
+      const canvasBox = await liveCanvas.boundingBox();
+      let sculpturePoint = null;
+      for (const xShare of [0.5, 0.44, 0.56, 0.38, 0.62]) {
+        for (const yShare of [0.48, 0.58, 0.38, 0.68]) {
+          const point = {
+            x: canvasBox.x + (canvasBox.width * xShare),
+            y: canvasBox.y + (canvasBox.height * yShare),
+          };
+          await stagePage.mouse.move(point.x, point.y);
+          await stagePage.waitForTimeout(20);
+          if (await liveCanvas.evaluate((canvas) => canvas.style.cursor === 'pointer')) {
+            sculpturePoint = point;
+            break;
+          }
+        }
+        if (sculpturePoint) break;
+      }
+      check('the spotlight cast exposes a direct-manipulation hit area', Boolean(sculpturePoint));
+      if (sculpturePoint) {
+        const dragX = sculpturePoint.x > canvasBox.x + (canvasBox.width * 0.65) ? -120 : 120;
+        await stagePage.mouse.move(sculpturePoint.x, sculpturePoint.y);
+        await stagePage.mouse.down();
+        await stagePage.mouse.move(sculpturePoint.x + dragX, sculpturePoint.y - 18, { steps: 5 });
+        await stagePage.mouse.up();
+        await stagePage.waitForFunction(() => (
+          document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'held'
+        ));
+        await stagePage.waitForTimeout(800);
+        const heldFrameA = await liveCanvas.screenshot();
+        await stagePage.waitForTimeout(500);
+        const heldFrameB = await liveCanvas.screenshot();
+        const heldState = await liveStage.evaluate((band) => ({
+          rotation: band.dataset.galleryRotation,
+          pressed: band.querySelector('.rail__tick[aria-pressed="true"]')?.dataset.index,
+          preview: band.querySelector('[data-consumer-preview]')?.dataset.consumerPreview,
+          open: band.classList.contains('is-open'),
+          card: band.querySelectorAll('[data-gallery-card]:not([hidden])').length,
+        }));
+        check(
+          'dragging turns the sculpture without changing its sign or opening a card',
+          heldState.rotation === 'held'
+            && heldState.pressed === '2'
+            && heldState.preview === 'gemini'
+            && !heldState.open
+            && heldState.card === 0
+            && heldFrameA.equals(heldFrameB),
+          JSON.stringify({ ...heldState, framesEqual: heldFrameA.equals(heldFrameB) }),
+        );
+        // A no-move press during the inspection pause interrupts the timer,
+        // then must re-arm it instead of leaving the cast held forever.
+        await stagePage.mouse.move(sculpturePoint.x, sculpturePoint.y);
+        await stagePage.mouse.down();
+        await stagePage.waitForTimeout(80);
+        await stagePage.mouse.up();
+        check(
+          'a held sculpture survives a tap and still schedules its quiet return',
+          await liveStage.getAttribute('data-gallery-rotation') === 'held',
+        );
+        await stagePage.waitForFunction(() => (
+          document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'ambient'
+        ), null, { timeout: 4_000 });
+        const resumedFrameA = await liveCanvas.screenshot();
+        await stagePage.waitForTimeout(500);
+        const resumedFrameB = await liveCanvas.screenshot();
+        check(
+          'the quiet turntable resumes after the inspection pause',
+          !resumedFrameA.equals(resumedFrameB),
+        );
+      }
+
       // Tapping a sculpture on the stage chooses it. There is nothing to
       // draw out to — the placard is already at its feet — so the card must
       // stay shut however the canvas is used.
-      const canvasBox = await stagePage.locator('.gband--consumer [data-gallery-canvas]').boundingBox();
-      await stagePage.mouse.click(canvasBox.x + (canvasBox.width / 2), canvasBox.y + (canvasBox.height / 2));
+      const mountBox = await stagePage.locator('.gband--consumer [data-gallery-canvas]').boundingBox();
+      await stagePage.mouse.move(mountBox.x + (mountBox.width / 2), mountBox.y + (mountBox.height / 2));
+      await stagePage.mouse.down();
+      await stagePage.waitForTimeout(80);
+      await stagePage.mouse.up();
       await stagePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
       check(
         'the stage never draws a sculpture out over its own placard',
         await stagePage.locator('.gband.is-open').count() === 0
           && await stagePage.locator('[data-gallery-card]:not([hidden])').count() === 0,
+      );
+      const tappedFrameA = await liveCanvas.screenshot();
+      await stagePage.waitForTimeout(500);
+      const tappedFrameB = await liveCanvas.screenshot();
+      check(
+        'a tap never stalls the Registry turntable',
+        !tappedFrameA.equals(tappedFrameB),
       );
 
       const stageText = await stagePage.locator('.consumer-explorer').innerText();
@@ -1388,6 +1494,34 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
     }
     await stagePage.close();
+
+    const reducedStage = await newPage({
+      viewport: { width: 1280, height: 900 },
+      reducedMotion: 'reduce',
+    });
+    await mockDexscreener(reducedStage);
+    await reducedStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    const reducedStageLive = await reducedStage.evaluate(() => (
+      document.documentElement.classList.contains('gallery-live')
+    ));
+    if (reducedStageLive) {
+      const band = reducedStage.locator('.gband--consumer');
+      const canvas = band.locator('.stage__canvas');
+      await canvas.waitFor({ state: 'visible', timeout: 30_000 });
+      await reducedStage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'manual'
+      ));
+      await reducedStage.waitForTimeout(1400);
+      const quietFrameA = await canvas.screenshot();
+      await reducedStage.waitForTimeout(500);
+      const quietFrameB = await canvas.screenshot();
+      check(
+        'reduced motion keeps the WebGL spotlight still until the reader moves it',
+        quietFrameA.equals(quietFrameB)
+          && await band.getAttribute('data-gallery-rotation') === 'manual',
+      );
+    }
+    await reducedStage.close();
 
     // ---- the trade panel, with its flag turned on ------------------------
     //

@@ -1879,6 +1879,17 @@
         node.dispatchEvent(new CustomEvent('zodiacs:gallery-focus', { detail: { slug } }));
       }, [slug, carousel]);
 
+      // A purchase sheet visually owns the stage. Pause the decorative
+      // turntable while it is open, then resume when the sculpture is visible
+      // again; direct rotation state remains inside the scene bundle.
+      useEffect(() => {
+        const node = stageRef.current;
+        if (!node) return;
+        node.dispatchEvent(new CustomEvent(
+          carousel || sheetVisible ? 'zodiacs:gallery-pause' : 'zodiacs:gallery-resume'
+        ));
+      }, [carousel, sheetVisible]);
+
       const railGroup = (
         <div
           className="rail"
@@ -1904,6 +1915,7 @@
           data-gallery-embed={carousel ? undefined : ''}
           data-gallery-initial={slug}
           data-gallery-spotlight={consumer && !carousel ? '' : undefined}
+          data-gallery-paused={consumer && (carousel || sheetVisible) ? '' : undefined}
         >
           {/* The stage picks with the rail at the top and shows one piece
               large below it, so the twelve read as the choice and the chosen
@@ -1947,6 +1959,12 @@
             </picture>
           )}
           <div className="gband__mount" data-gallery-canvas="" hidden={carousel} />
+          {consumer && !carousel && (
+            <p className="gband__turn-hint" data-gallery-turn-hint="" aria-hidden="true">
+              <span className="gband__turn-mark">↔</span>
+              <span>Drag to turn</span>
+            </p>
+          )}
           {carousel && <SculptureCarousel active={active} setActive={setActive} />}
           <p className="gband__name" data-gallery-name="" aria-hidden="true" />
           {consumer && (

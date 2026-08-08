@@ -35,7 +35,7 @@ const SECOND_LONGITUDES = [
   256.1, 340.2, 265.4, 277.1, 300.3, 188.8,
   112.4, 280.2, 284.7, 228.9, 129.1, 309.1,
 ];
-const EXPIRES_AT = '2026-08-07T00:00:00.000Z';
+const EXPIRES_AT = '2099-08-07T00:00:00.000Z';
 const results = [];
 const browserErrors = [];
 const unexpectedRequests = [];

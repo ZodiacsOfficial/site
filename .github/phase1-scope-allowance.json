@@ -1,12 +1,13 @@
 {
   "version": 1,
-  "id": "thesis-digital-assets-2026-08-05",
-  "reason": "Owner-approved thesis release (2026-08-05): extend the existing fail-closed Registry Collection entry contract to the thesis closing actions. The four protected files are changed only to inject or test that optional build-time link alongside the existing Registry landing entry; the Collection URL remains absent from thesis markup, focus order, and crawler-visible output unless the established Registry Collection flag is enabled. No Registry route, asset record, public API, schema, sign page, wallet behavior, or Collection experience is otherwise changed.",
-  "baseCommit": "4fbe416f533e76f2417d5477b3dad486438b34bf",
+  "id": "registry-sculpture-turntable-2026-08-08",
+  "reason": "Owner-approved Registry release (2026-08-08): add the bounded sculpture turntable interaction and its generated Registry outputs. The allowance is limited to the five protected files in this pull request; it does not authorize changes to Registry APIs, wallet behavior, SDK pages, sign guides, locale trees, or Collection availability.",
+  "baseCommit": "8daedb619bd27a684e8962c0d75f84284dfd8cff",
   "protectedPaths": [
-    "scripts/build-app.mjs",
-    "scripts/configure-registry-aura.mjs",
-    "scripts/registry-aura-entry.test.mjs",
-    "src/lib/registry-aura-entry.mjs"
+    "public/assets/app.js",
+    "public/registry/index.html",
+    "public/registry/technical/index.html",
+    "scripts/registry-gallery-band.test.mjs",
+    "src/app.jsx"
   ]
 }
