@@ -625,7 +625,7 @@ async function writeEnglishManifest() {
     width: 1200,
     height: 630,
     iconSource: '/assets/zodiac-icons/128/{sign}.webp',
-    fallback: '/assets/og/v2/share.png',
+    fallback: '/assets/og/v2/share-black-202608.png',
     requiredCards: englishRequiredCards(),
   }, null, 2)}\n`);
 }

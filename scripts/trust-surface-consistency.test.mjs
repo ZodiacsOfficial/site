@@ -129,17 +129,17 @@ describe('repository operating claims', () => {
 });
 
 describe('homepage social card', () => {
-  it('wires the reviewed byte-exact 1200x630 WebP into homepage metadata', async () => {
+  it('wires the reviewed byte-exact black 1200x630 card into homepage metadata', async () => {
     const [page, seo, bytes] = await Promise.all([
       text('src/pages/index.astro'),
       text('src/components/SEO.astro'),
-      readFile(resolve(root, 'public/assets/og/v2/homepage.webp')),
+      readFile(resolve(root, 'public/assets/og/v2/share-black-202608.png')),
     ]);
-    expect(page).toContain('image="/assets/og/v2/homepage.webp"');
-    expect(page).toMatch(/imageAlt="[^"]*Your whole chart, not just your sign/);
+    expect(page).toContain('image="/assets/og/v2/share-black-202608.png"');
+    expect(page).toMatch(/imageAlt="[^"]*ring of twelve pastel zodiac colors/);
     expect(seo).toContain('<meta property="og:image:type" content={imageType} />');
     expect(seo).toContain('<meta name="twitter:image" content={imageUrl} />');
     expect(createHash('sha256').update(bytes).digest('hex'))
-      .toBe('5c23bd24a519c408a5f6eae48d7b6e02b020b79e739bbebe4c8ab6e8d960109b');
+      .toBe('218da428202a72fb0bc5f454c99fdd11eb57647379c18d617e44b7a0d4431570');
   });
 });
