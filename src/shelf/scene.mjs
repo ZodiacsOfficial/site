@@ -562,7 +562,12 @@ export function createScene(canvas, records) {
 
   function resize(width, height, dpr) {
     canvasSize = { width, height };
-    renderer.setPixelRatio(Math.min(2, dpr));
+    // A phone now keeps the live turntable instead of falling back to a flat
+    // render. Cap its fill-rate a little lower so the sculpture stays crisp
+    // without asking a high-density display to shade four pixels for every
+    // CSS pixel while the reader drags it.
+    const pixelRatioCap = width < 700 ? 1.5 : 2;
+    renderer.setPixelRatio(Math.min(pixelRatioCap, dpr));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();

@@ -498,8 +498,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     await reducedContext.close();
 
-    // Exact review viewport: the consumer journey stays compact, uses the
-    // promised six-by-two sign grid, and leaves technical material on its own
+    // Exact review viewport: the consumer journey stays compact, keeps all
+    // twelve choices on one rail, and leaves technical material on its own
     // route rather than in the everyday reader's scroll.
     const compactRegistry = await newPage({
       viewport: { width: 623, height: 1054 },
@@ -511,11 +511,23 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       if (request.url().startsWith(baseURL)) compactRegistryErrors.push(request.url());
     });
     await compactRegistry.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-    await compactRegistry.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
-    const compactRegistryLayout = await compactRegistry.evaluate(() => {
+    const compactRegistryLive = await compactRegistry.evaluate(() => (
+      document.documentElement.classList.contains('gallery-live')
+    ));
+    const compactControls = compactRegistryLive
+      ? compactRegistry.locator('.gband--consumer button.rail__tick')
+      : compactRegistry.locator('[data-consumer-sign]');
+    await compactControls.first().waitFor({ state: 'visible', timeout: 30_000 });
+    if (compactRegistryLive) {
+      await compactRegistry.locator('.gband--consumer .stage__canvas')
+        .waitFor({ state: 'visible', timeout: 30_000 });
+    }
+    const compactRegistryLayout = await compactRegistry.evaluate((live) => {
       const shell = document.querySelector('.zd');
       const explorer = document.querySelector('.consumer-explorer');
-      const controls = [...document.querySelectorAll('[data-consumer-sign]')];
+      const controls = [...document.querySelectorAll(
+        live ? '.gband--consumer button.rail__tick' : '[data-consumer-sign]',
+      )];
       const rowTops = controls.map((node) => Math.round(node.getBoundingClientRect().top));
       const rows = [...new Set(rowTops)];
       const box = (node) => {
@@ -540,10 +552,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         explorer: box(explorer),
         controlCount: controls.length,
         rowCounts: rows.map((top) => rowTops.filter((candidate) => candidate === top).length),
+        liveStage: document.querySelectorAll('.gband--consumer[data-gallery-stage]').length,
+        flatStage: document.querySelectorAll('.gband--flat').length,
+        canvases: document.querySelectorAll('.gband--consumer .stage__canvas').length,
         heavySections: ['pulse', 'standings', 'onchain-access', 'builders', 'sdk', 'security']
           .filter((id) => document.getElementById(id)),
       };
-    });
+    }, compactRegistryLive);
     check('Registry at 623×1054 has no document overflow',
       compactRegistryLayout.documentWidth <= compactRegistryLayout.viewportWidth + 1,
       `${compactRegistryLayout.documentWidth}/${compactRegistryLayout.viewportWidth}`);
@@ -553,8 +568,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       `${compactRegistryLayout.shell?.width ?? 0}/${compactRegistryLayout.clientWidth}`);
     check('Registry at 623×1054 offers all twelve signs on one rail',
       compactRegistryLayout.controlCount === 12
-        && compactRegistryLayout.rowCounts.length === 1,
-      JSON.stringify(compactRegistryLayout.rowCounts));
+        && compactRegistryLayout.rowCounts.length === 1
+        && (compactRegistryLive
+          ? compactRegistryLayout.liveStage === 1
+            && compactRegistryLayout.flatStage === 0
+            && compactRegistryLayout.canvases === 1
+          : compactRegistryLayout.liveStage === 0
+            && compactRegistryLayout.flatStage === 1
+            && compactRegistryLayout.canvases === 0),
+      JSON.stringify(compactRegistryLayout));
     check('Registry at 623×1054 keeps the consumer journey under 7,500px',
       compactRegistryLayout.pageHeight <= 7500,
       String(compactRegistryLayout.pageHeight));
@@ -578,15 +600,28 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const tabletEdge = await newPage({ viewport: { width: 1020, height: 900 } });
     await tabletEdge.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-    await tabletEdge.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
-    const tabletRows = await tabletEdge.locator('[data-consumer-sign]').evaluateAll((controls) => {
+    const tabletStageLive = await tabletEdge.evaluate(() => (
+      document.documentElement.classList.contains('gallery-live')
+    ));
+    const tabletControls = tabletStageLive
+      ? tabletEdge.locator('.gband--consumer button.rail__tick')
+      : tabletEdge.locator('[data-consumer-sign]');
+    await tabletControls.first().waitFor({ state: 'visible', timeout: 30_000 });
+    if (tabletStageLive) {
+      await tabletEdge.locator('.gband--consumer .stage__canvas')
+        .waitFor({ state: 'visible', timeout: 30_000 });
+    }
+    const tabletRows = await tabletControls.evaluateAll((controls) => {
       const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
       return [...new Set(tops)].map((top) => tops.filter((candidate) => candidate === top).length);
     });
     check(
-      'Registry one pixel under the stage breakpoint still rails the twelve',
-      JSON.stringify(tabletRows) === JSON.stringify([12]),
-      JSON.stringify(tabletRows),
+      'Registry at 1020px keeps all twelve choices on the active stage rail',
+      JSON.stringify(tabletRows) === JSON.stringify([12])
+        && await tabletEdge.locator(tabletStageLive
+          ? '.gband--consumer[data-gallery-stage]'
+          : '.gband--flat').count() === 1,
+      JSON.stringify({ rows: tabletRows, live: tabletStageLive }),
     );
     await tabletEdge.close();
 
@@ -949,6 +984,139 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         }
       });
       await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      const label = `${width}×${height}`;
+      const mobileStageLive = await mobile.evaluate(() => (
+        document.documentElement.classList.contains('gallery-live')
+      ));
+
+      // A capable phone keeps the same real turntable as desktop. Exercise
+      // every rail control here: this catches both breakpoint regressions
+      // that silently swap the scene for a flat render and scene/page state
+      // drift after several selections.
+      if (mobileStageLive) {
+        const liveBand = mobile.locator('.gband--consumer[data-gallery-stage]');
+        await liveBand.waitFor({ state: 'visible' });
+        await liveBand.locator('.stage__canvas').waitFor({ state: 'visible', timeout: 30_000 });
+        await liveBand.locator('button.rail__tick').first().waitFor({ state: 'visible', timeout: 30_000 });
+        await mobile.waitForFunction(() => (
+          document.querySelector('.gband--consumer')?.classList.contains('is-ready')
+          && document.querySelectorAll('.gband--consumer button.rail__tick').length === 12
+        ), null, { timeout: 30_000 });
+        await mobile.waitForTimeout(400);
+
+        const liveMobileState = await liveBand.evaluate((band) => {
+          const rect = (selector) => {
+            const node = band.querySelector(selector);
+            if (!node) return null;
+            const box = node.getBoundingClientRect();
+            return {
+              top: box.top,
+              right: box.right,
+              bottom: box.bottom,
+              left: box.left,
+              width: box.width,
+              height: box.height,
+            };
+          };
+          const ticks = [...band.querySelectorAll('button.rail__tick')];
+          const tickTops = ticks.map((tick) => Math.round(tick.getBoundingClientRect().top));
+          const canvas = rect('.stage__canvas');
+          const placard = rect('.stage-placard');
+          const plate = band.getBoundingClientRect();
+          return {
+            ready: band.classList.contains('is-ready'),
+            stageCount: document.querySelectorAll('.gband--consumer[data-gallery-stage]').length,
+            flatCount: document.querySelectorAll('.gband--flat').length,
+            carouselSlides: document.querySelectorAll('.stage-carousel__slide').length,
+            canvases: band.querySelectorAll('.stage__canvas').length,
+            tickButtons: ticks.length,
+            enabledTicks: ticks.filter((tick) => !tick.disabled).length,
+            tickImages: band.querySelectorAll('button.rail__tick img').length,
+            tickRows: new Set(tickTops).size,
+            minTarget: Math.min(...ticks.map((tick) => {
+              const box = tick.getBoundingClientRect();
+              return Math.min(box.width, box.height);
+            })),
+            canvas,
+            placard,
+            plate: {
+              top: plate.top,
+              right: plate.right,
+              bottom: plate.bottom,
+              left: plate.left,
+            },
+            clearance: canvas && placard ? placard.top - canvas.bottom : -Infinity,
+            pageWidth: document.documentElement.scrollWidth,
+            viewportWidth: innerWidth,
+            pageHeight: document.documentElement.scrollHeight,
+          };
+        });
+        check(
+          `WebGL phone at ${label} keeps one live scene and all twelve rail buttons`,
+          liveMobileState.ready
+            && liveMobileState.stageCount === 1
+            && liveMobileState.flatCount === 0
+            && liveMobileState.carouselSlides === 0
+            && liveMobileState.canvases === 1
+            && liveMobileState.tickButtons === 12
+            && liveMobileState.enabledTicks === 12
+            && liveMobileState.tickImages === 12
+            && liveMobileState.tickRows === 1,
+          JSON.stringify(liveMobileState),
+        );
+        check(
+          `WebGL phone at ${label} fits the canvas above the placard without page overflow`,
+          Boolean(liveMobileState.canvas && liveMobileState.placard)
+            && liveMobileState.canvas.width > 0
+            && liveMobileState.canvas.height >= 200
+            && liveMobileState.clearance >= 0
+            && liveMobileState.canvas.left >= liveMobileState.plate.left - 1
+            && liveMobileState.canvas.right <= liveMobileState.plate.right + 1
+            && liveMobileState.placard.left >= liveMobileState.plate.left - 1
+            && liveMobileState.placard.right <= liveMobileState.plate.right + 1
+            && liveMobileState.pageWidth <= liveMobileState.viewportWidth + 1
+            && liveMobileState.pageHeight <= 7500
+            && liveMobileState.minTarget >= 44,
+          JSON.stringify(liveMobileState),
+        );
+
+        const liveSelections = [];
+        for (const [index, slug] of expectedSigns.entries()) {
+          const tick = liveBand.locator('button.rail__tick').nth(index);
+          await tick.click();
+          await mobile.waitForFunction(({ selected, selectedIndex }) => {
+            const ticks = [...document.querySelectorAll('.gband--consumer button.rail__tick')];
+            const preview = document.querySelector('.gband--consumer [data-consumer-preview]');
+            return ticks[selectedIndex]?.getAttribute('aria-pressed') === 'true'
+              && preview?.getAttribute('data-consumer-preview') === selected;
+          }, { selected: slug, selectedIndex: index });
+          liveSelections.push({
+            slug,
+            pressed: await tick.getAttribute('aria-pressed'),
+            preview: await liveBand.locator('[data-consumer-preview]').getAttribute('data-consumer-preview'),
+          });
+        }
+        check(
+          `all twelve live rail choices at ${label} keep the sculpture placard synchronized`,
+          liveSelections.every((item) => item.pressed === 'true' && item.preview === item.slug),
+          JSON.stringify(liveSelections),
+        );
+        await mobile.waitForTimeout(400);
+        check(
+          `WebGL phone at ${label} requests the scene bundle exactly once`,
+          mobileGalleryRequests.length === 1,
+          JSON.stringify(mobileGalleryRequests),
+        );
+        if (OUT && width === 390) {
+          await mobile.screenshot({ path: OUT + '/registry-consumer-390.png', fullPage: false });
+        }
+        await mobile.close();
+        continue;
+      }
+
+      // A phone whose pre-paint probe cannot create WebGL receives the
+      // bounded one-image carousel. Keep the silhouette/placard collision
+      // checks below as the explicit fallback contract.
       await mobile.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
       const mobileState = await mobile.locator('[data-consumer-sign]').evaluateAll((controls) => {
         const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
@@ -965,7 +1133,6 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           pageHeight: document.documentElement.scrollHeight,
         };
       });
-      const label = `${width}×${height}`;
       check(
         `mobile explorer at ${label} rails all twelve signs in one row`,
         mobileState.count === 12 && mobileState.rowCounts.length === 1,
@@ -1090,7 +1257,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
       await mobile.evaluate(() => new Promise((resolve) => setTimeout(resolve, 400)));
       check(
-        `phones at ${label} never request the scene bundle`,
+        `non-WebGL phones at ${label} never request the scene bundle`,
         mobileGalleryRequests.length === 0,
         JSON.stringify(mobileGalleryRequests),
       );
@@ -1100,9 +1267,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await mobile.close();
     }
 
-    // Loading narrow and then crossing the stage breakpoint used to leave an
-    // empty mount because the gallery script only inspected the first DOM.
-    // Exercise the complete mobile → desktop → mobile → desktop cycle.
+    // The capable-WebGL stage is now width-independent. Exercise the complete
+    // mobile → desktop → mobile → desktop cycle and prove that viewport
+    // changes preserve the same canvas, selection, and single bundle load.
     const responsiveStage = await newPage({ viewport: { width: 390, height: 844 } });
     await mockDexscreener(responsiveStage);
     const responsiveStageRequests = [];
@@ -1112,80 +1279,132 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     responsiveStage.on('pageerror', (error) => responsiveStageErrors.push(String(error)));
     await responsiveStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
-    await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
     const responsiveStageLive = await responsiveStage.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
     if (responsiveStageLive) {
+      const liveBand = responsiveStage.locator('.gband--consumer[data-gallery-stage]');
+      await liveBand.waitFor({ state: 'visible' });
+      await liveBand.locator('.stage__canvas').waitFor({ state: 'visible', timeout: 30_000 });
+      await liveBand.locator('button.rail__tick').first().waitFor({ state: 'visible', timeout: 30_000 });
+      await responsiveStage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.classList.contains('is-ready')
+        && document.querySelectorAll('.gband--consumer button.rail__tick').length === 12
+      ), null, { timeout: 30_000 });
+      await responsiveStage.evaluate(() => {
+        window.__registryResponsiveCanvas = document.querySelector('.gband--consumer .stage__canvas');
+      });
+
+      const readResponsiveShape = () => liveBand.evaluate((band) => {
+        const canvas = band.querySelector('.stage__canvas');
+        const box = canvas?.getBoundingClientRect();
+        const tickButtons = [...band.querySelectorAll('button.rail__tick')];
+        return {
+          ready: band.classList.contains('is-ready'),
+          sameCanvas: window.__registryResponsiveCanvas === canvas,
+          stages: document.querySelectorAll('.gband--consumer[data-gallery-stage]').length,
+          flats: document.querySelectorAll('.gband--flat').length,
+          carousels: document.querySelectorAll('.stage-carousel__slide').length,
+          canvases: band.querySelectorAll('.stage__canvas').length,
+          tickButtons: tickButtons.length,
+          enabledTicks: tickButtons.filter((tick) => !tick.disabled).length,
+          tickImages: band.querySelectorAll('button.rail__tick img').length,
+          placeholders: band.querySelectorAll('.rail__tick--placeholder').length,
+          canvasWidth: box?.width ?? 0,
+          canvasHeight: box?.height ?? 0,
+          selectedIndex: tickButtons.findIndex((tick) => tick.getAttribute('aria-pressed') === 'true'),
+          preview: band.querySelector('[data-consumer-preview]')
+            ?.getAttribute('data-consumer-preview') ?? '',
+        };
+      });
+      const initialMobileShape = await readResponsiveShape();
+      check(
+        'responsive WebGL gallery opens on mobile as one usable live stage',
+        initialMobileShape.ready && initialMobileShape.sameCanvas
+          && initialMobileShape.stages === 1 && initialMobileShape.flats === 0
+          && initialMobileShape.carousels === 0 && initialMobileShape.canvases === 1
+          && initialMobileShape.tickButtons === 12 && initialMobileShape.enabledTicks === 12
+          && initialMobileShape.tickImages === 12 && initialMobileShape.placeholders === 0
+          && initialMobileShape.canvasWidth > 0 && initialMobileShape.canvasHeight >= 200,
+        JSON.stringify(initialMobileShape),
+      );
+
       const cycleSelections = [
         { slug: 'gemini', name: 'Gemini', index: 2 },
         { slug: 'scorpio', name: 'Scorpio', index: 7 },
       ];
       for (let cycle = 1; cycle <= 2; cycle += 1) {
-        await responsiveStage.setViewportSize({ width: 1280, height: 900 });
-        const liveBand = responsiveStage.locator('.gband--consumer[data-gallery-stage]');
-        await liveBand.waitFor({ state: 'visible' });
-        await liveBand.locator('.stage__canvas').waitFor({ state: 'attached', timeout: 30_000 });
-        await liveBand.locator('button.rail__tick').first().waitFor({ state: 'visible', timeout: 30_000 });
-        const liveShape = await liveBand.evaluate((band) => {
-          const canvas = band.querySelector('.stage__canvas');
-          const box = canvas?.getBoundingClientRect();
-          const tickButtons = [...band.querySelectorAll('button.rail__tick')];
-          return {
-            ready: band.classList.contains('is-ready'),
-            canvases: band.querySelectorAll('.stage__canvas').length,
-            tickButtons: tickButtons.length,
-            enabledTicks: tickButtons.filter((tick) => !tick.disabled).length,
-            tickImages: band.querySelectorAll('button.rail__tick img').length,
-            placeholders: band.querySelectorAll('.rail__tick--placeholder').length,
-            canvasWidth: box?.width ?? 0,
-            canvasHeight: box?.height ?? 0,
-          };
-        });
-        check(
-          `responsive gallery cycle ${cycle} mounts one usable desktop stage`,
-          liveShape.ready && liveShape.canvases === 1
-            && liveShape.tickButtons === 12 && liveShape.enabledTicks === 12
-            && liveShape.tickImages === 12 && liveShape.placeholders === 0
-            && liveShape.canvasWidth > 0 && liveShape.canvasHeight >= 360,
-          JSON.stringify(liveShape),
-        );
-        check(
-          `responsive gallery cycle ${cycle} resumes the desktop turntable`,
-          await liveBand.getAttribute('data-gallery-paused') === null,
-        );
         const selection = cycleSelections[cycle - 1];
         const liveTick = liveBand.locator('button.rail__tick').nth(selection.index);
         await liveTick.click();
-        const livePlacard = liveBand.locator(`[data-consumer-preview="${selection.slug}"]`);
-        await livePlacard.waitFor({ state: 'visible' });
+        await responsiveStage.waitForFunction(({ slug, index }) => {
+          const band = document.querySelector('.gband--consumer');
+          const ticks = [...(band?.querySelectorAll('button.rail__tick') || [])];
+          return ticks[index]?.getAttribute('aria-pressed') === 'true'
+            && band?.querySelector('[data-consumer-preview]')
+              ?.getAttribute('data-consumer-preview') === slug;
+        }, { slug: selection.slug, index: selection.index });
+        const mobileSelectionShape = await readResponsiveShape();
         check(
-          `responsive gallery cycle ${cycle} keeps its rail interactive`,
-          await liveTick.getAttribute('aria-pressed') === 'true'
-            && (await livePlacard.locator('.stage-placard__name').innerText()).trim() === selection.name,
+          `responsive gallery cycle ${cycle} selects ${selection.name} on mobile`,
+          mobileSelectionShape.sameCanvas
+            && mobileSelectionShape.selectedIndex === selection.index
+            && mobileSelectionShape.preview === selection.slug,
+          JSON.stringify(mobileSelectionShape),
         );
-        await responsiveStage.setViewportSize({ width: 390, height: 844 });
-        await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
+
+        await responsiveStage.setViewportSize({ width: 1280, height: 900 });
+        await responsiveStage.waitForFunction(() => innerWidth === 1280);
+        await responsiveStage.waitForTimeout(120);
+        const desktopShape = await readResponsiveShape();
         check(
-          `responsive gallery cycle ${cycle} restores the mobile carousel`,
-          await responsiveStage.locator('.stage-carousel__slide').count() === 1
-            && await responsiveStage.locator('[data-consumer-sign]').count() === 12
-            && await responsiveStage.locator('[data-gallery-stage]').count() === 0
-            && await responsiveStage.locator('.gband--flat').getAttribute('data-gallery-paused') !== null,
+          `responsive gallery cycle ${cycle} keeps the same selected live stage on desktop`,
+          desktopShape.ready && desktopShape.sameCanvas
+            && desktopShape.stages === 1 && desktopShape.flats === 0
+            && desktopShape.carousels === 0 && desktopShape.canvases === 1
+            && desktopShape.tickButtons === 12 && desktopShape.enabledTicks === 12
+            && desktopShape.selectedIndex === selection.index
+            && desktopShape.preview === selection.slug
+            && desktopShape.canvasWidth > 0 && desktopShape.canvasHeight >= 300
+            && await liveBand.getAttribute('data-gallery-paused') === null,
+          JSON.stringify(desktopShape),
+        );
+
+        await responsiveStage.setViewportSize({ width: 390, height: 844 });
+        await responsiveStage.waitForFunction(() => innerWidth === 390);
+        await responsiveStage.waitForTimeout(120);
+        const returnedMobileShape = await readResponsiveShape();
+        check(
+          `responsive gallery cycle ${cycle} retains ${selection.name} when it returns to mobile`,
+          returnedMobileShape.ready && returnedMobileShape.sameCanvas
+            && returnedMobileShape.stages === 1 && returnedMobileShape.flats === 0
+            && returnedMobileShape.carousels === 0 && returnedMobileShape.canvases === 1
+            && returnedMobileShape.tickButtons === 12
+            && returnedMobileShape.selectedIndex === selection.index
+            && returnedMobileShape.preview === selection.slug
+            && returnedMobileShape.canvasWidth > 0 && returnedMobileShape.canvasHeight >= 200,
+          JSON.stringify(returnedMobileShape),
         );
       }
+      await responsiveStage.waitForTimeout(400);
       check(
-        'responsive gallery loads its scene bundle once across remounts',
+        'responsive gallery loads its scene bundle once across viewport changes',
         responsiveStageRequests.length === 1,
         JSON.stringify(responsiveStageRequests),
       );
     } else {
+      await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
+      await responsiveStage.locator('[data-consumer-sign="scorpio"]').click();
+      await responsiveStage.locator('[data-consumer-preview="scorpio"]').waitFor({ state: 'visible' });
       await responsiveStage.setViewportSize({ width: 1280, height: 900 });
       await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
       check(
-        'non-WebGL responsive fallback remains a complete carousel',
+        'non-WebGL responsive fallback remains a complete selected carousel',
         await responsiveStage.locator('.stage-carousel__slide').count() === 1
           && await responsiveStage.locator('[data-consumer-sign]').count() === 12
+          && await responsiveStage.locator('[data-consumer-sign="scorpio"]').getAttribute('aria-pressed') === 'true'
+          && await responsiveStage.locator('[data-consumer-preview="scorpio"]').count() === 1
+          && await responsiveStage.locator('[data-gallery-stage]').count() === 0
           && responsiveStageRequests.length === 0,
         JSON.stringify(responsiveStageRequests),
       );
@@ -1335,7 +1554,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && shape.chrome === 0
           && shape.previewInside === 1 && shape.previewTotal === 1
           && shape.flatArt === 0
-          && shape.figureHeight >= 380,
+          && shape.figureHeight >= 300,
         JSON.stringify(shape),
       );
 

@@ -932,7 +932,8 @@
     // Current zodiac season, derived from registry dateRange metadata
     // ("MM-DD to MM-DD"). Capricorn wraps the year boundary. Visitor-local
     // time; the registry range is the source of truth, not astronomical
-    // ingress.
+    // ingress. Calendar ordinals are compared in UTC so daylight-saving
+    // changes cannot make a season one day too short or long.
     function parseDateRange(range) {
       const m = /^(\d{2})-(\d{2}) to (\d{2})-(\d{2})$/.exec(range || '');
       return m ? { sm: +m[1], sd: +m[2], em: +m[3], ed: +m[4] } : null;
@@ -949,19 +950,44 @@
           ? (md >= start && md <= end)
           : (md >= start || md <= end);
         if (!inSeason) continue;
-        let seasonStart = new Date(now.getFullYear(), r.sm - 1, r.sd);
-        if (seasonStart > now) {
-          seasonStart = new Date(now.getFullYear() - 1, r.sm - 1, r.sd);
-        }
-        let seasonEnd = new Date(seasonStart.getFullYear(), r.em - 1, r.ed);
-        if (seasonEnd < seasonStart) {
-          seasonEnd = new Date(seasonStart.getFullYear() + 1, r.em - 1, r.ed);
-        }
-        const day = Math.floor((now - seasonStart) / 86400000) + 1;
-        const total = Math.floor((seasonEnd - seasonStart) / 86400000) + 1;
-        return { sign, day, total };
+        const wraps = start > end;
+        const startYear = wraps && md <= end ? now.getFullYear() - 1 : now.getFullYear();
+        const endYear = startYear + (wraps ? 1 : 0);
+        const ordinal = (year, month, day) => Date.UTC(year, month - 1, day);
+        const today = ordinal(now.getFullYear(), now.getMonth() + 1, now.getDate());
+        const seasonStart = ordinal(startYear, r.sm, r.sd);
+        const seasonEnd = ordinal(endYear, r.em, r.ed);
+        const day = Math.round((today - seasonStart) / 86400000) + 1;
+        const total = Math.round((seasonEnd - seasonStart) / 86400000) + 1;
+        return {
+          sign,
+          day,
+          total,
+          remaining: Math.max(0, total - day),
+          ends: new Date(endYear, r.em - 1, r.ed)
+        };
       }
       return null;
+    }
+
+    function useCurrentSeason() {
+      const [season, setSeason] = useState(() => currentSeason());
+      useEffect(() => {
+        let timer = 0;
+        const schedule = () => {
+          const now = new Date();
+          const nextDay = new Date(
+            now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 2
+          );
+          timer = window.setTimeout(() => {
+            setSeason(currentSeason());
+            schedule();
+          }, Math.max(1000, nextDay.getTime() - now.getTime()));
+        };
+        schedule();
+        return () => window.clearTimeout(timer);
+      }, []);
+      return season;
     }
 
     function registryProfilePath(sign) {
@@ -1511,6 +1537,68 @@
       + '</picture></span>'
     )).join('');
 
+    /* A small instrument for the sky the visitor is actually in. It belongs
+       with the opening gallery rather than in the market list below: the
+       season explains why this particular sculpture is waiting on arrival,
+       while the live quote and countdown make that context useful now. */
+    function SeasonNow({ season }) {
+      const batch = useTwelveQuotes(Boolean(season));
+      if (!season) return null;
+      const { sign, day, total, remaining, ends } = season;
+      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
+      const change = formatPercent(quote?.priceChange24h);
+      const changeClass = marketChangeClass(quote?.priceChange24h);
+      const endLabel = ends.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
+      const remainingLabel = remaining === 0
+        ? 'Final day'
+        : `${remaining} day${remaining === 1 ? '' : 's'} remaining`;
+      const progress = total > 0 ? day / total : 1;
+      const price = quote
+        ? formatPriceUsd(quote.priceUsd)
+        : batch.status === 'ok' ? 'Not indexed' : batch.status === 'unavailable' ? 'Unavailable' : 'Loading…';
+
+      return (
+        <aside
+          className="season-now"
+          style={{ '--season-sign': sign.hue }}
+          aria-label={`${sign.name} season. ${remainingLabel}. ${sign.ticker} price ${price}.`}
+        >
+          <span className="season-now__identity">
+            <picture aria-hidden="true">
+              <source srcSet={`/assets/zodiac-icons/48/${sign.asset.sign}.avif`} type="image/avif" />
+              <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="34" height="34" alt="" decoding="async" />
+            </picture>
+            <span>
+              <span className="season-now__kicker">Now in season</span>
+              <strong>{sign.name}</strong>
+            </span>
+          </span>
+          <span className="season-now__market" title="Live USD market data from DexScreener">
+            <span className="season-now__kicker">{sign.ticker} price</span>
+            <span className="season-now__market-row">
+              <strong>{price}</strong>
+              {quote && change !== '—' && (
+                <span className={'season-now__change' + changeClass}>{change}</span>
+              )}
+            </span>
+          </span>
+          <span className="season-now__countdown">
+            <span className="season-now__kicker">Season closes</span>
+            <strong>{remainingLabel}</strong>
+            <span className="season-now__ends">Ends {endLabel}</span>
+          </span>
+          <span
+            className="season-now__progress"
+            role="progressbar"
+            aria-label={`${sign.name} season progress`}
+            aria-valuemin="1"
+            aria-valuemax={total}
+            aria-valuenow={day}
+          ><span style={{ transform: `scaleX(${progress})` }} /></span>
+        </aside>
+      );
+    }
+
     /* The placard's price: one number and its day, small enough to sit on a
        museum label. Reads from the same single batched market call the rest
        of the page shares. */
@@ -1716,7 +1804,7 @@
       const gallerySlug = useRef(null);
       const sign = SIGNS.find(s => s.ticker === active) ?? SIGNS[0];
       const slug = sign.asset.sign;
-      const season = useMemo(() => currentSeason(), []);
+      const season = useCurrentSeason();
       // The trade sheet: the panel slides in over the stage on request and
       // the sculpture stays where it is, dimmed behind the scrim. Closing
       // returns focus to the pill that opened it.
@@ -1935,6 +2023,7 @@
                 <p className="stage-hero__line">
                   Every sign has one official token. Explore its story, its record, and its market.
                 </p>
+                <SeasonNow season={season} />
               </header>
           )}
           {consumer && (
@@ -3685,17 +3774,10 @@
       );
     }
     function useStageMode() {
-      const [stageMode, setStageMode] = useState(
-        () => GALLERY_LIVE && window.matchMedia('(min-width: 1021px)').matches
-      );
-      useEffect(() => {
-        if (!GALLERY_LIVE) return undefined;
-        const query = window.matchMedia('(min-width: 1021px)');
-        const onChange = () => setStageMode(query.matches);
-        query.addEventListener?.('change', onChange);
-        return () => query.removeEventListener?.('change', onChange);
-      }, []);
-      return stageMode;
+      // The original Registry gallery worked at every width. Keep the real
+      // turntable on phones as well as desktops whenever WebGL exists; the
+      // bounded image carousel remains the no-WebGL fallback only.
+      return GALLERY_LIVE;
     }
 
     function ConsumerExplorer({ active, setActive, sign, stageMode }) {
@@ -3709,10 +3791,9 @@
           aria-labelledby="consumer-explorer-title"
           style={{ '--active-sign': sign.hue }}
         >
-          {/* This section IS the page's opening at every width. Where WebGL
-              is live and the viewport is wide the plate holds the scene;
-              everywhere else it holds the same twelve sculptures as a
-              scroll-snap carousel. One picker, one placard, one door. */}
+          {/* This section IS the page's opening at every width. WebGL keeps
+              the original interactive gallery on desktop and mobile; only
+              machines that cannot paint it receive the image carousel. */}
           <GalleryBand
             active={active}
             setActive={setActive}
