@@ -190,6 +190,32 @@ describe('Registry consumer and technical information architecture', () => {
     }
   });
 
+  it('lets the season materialize inside the scene without another framed card', async () => {
+    const html = await read('public/registry/index.html');
+    const materialPass = html.slice(html.indexOf('Registry material pass'));
+    const seasonRule = materialPass.slice(
+      materialPass.indexOf('.season-now {'),
+      materialPass.indexOf('.season-now::before'),
+    );
+    const railRule = materialPass.slice(
+      materialPass.indexOf('.gband--consumer .rail {'),
+      materialPass.indexOf('.gband--consumer .rail__tick img'),
+    );
+
+    expect(seasonRule).toContain('border: 0;');
+    expect(seasonRule).toContain('border-radius: 0;');
+    expect(seasonRule).toContain('background: transparent;');
+    expect(seasonRule).toContain('opacity: 1;');
+    expect(seasonRule).toContain('opacity 240ms cubic-bezier(0.23, 1, 0.32, 1) 50ms');
+    expect(seasonRule).toContain('transform 280ms cubic-bezier(0.23, 1, 0.32, 1) 50ms');
+    expect(materialPass).toMatch(/@starting-style \{\s*\.season-now \{\s*opacity: 0;\s*transform: translateY\(7px\);/u);
+    expect(materialPass).toMatch(/@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?\.consumer-registry \.season-now \{[\s\S]*?transition-property: opacity !important;/u);
+    expect(railRule).toContain('border: 0;');
+    expect(railRule).toContain('border-radius: 0;');
+    expect(railRule).toContain('background: transparent;');
+    expect(railRule).toContain('backdrop-filter: none;');
+  });
+
   it('presents the selected sign on a placard: name, dates, price, two doors', async () => {
     const source = await read('src/app.jsx');
     const mounted = consumerRoot(source);
@@ -327,8 +353,23 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain("if (indexedPairs === 0) return unavailableMarketContext('no-pair');");
     expect(source).toContain('const MARKET_REFRESH_MS = 120_000;');
     expect(source).toContain('Share snapshot');
+    expect(source).toContain('function MarketSocialIcon({ network })');
+    expect(source).toContain("['x', 'X']");
+    expect(source).toContain("['telegram', 'Telegram']");
+    expect(source).toContain("['whatsapp', 'WhatsApp']");
+    expect(source).toContain("new URL('https://x.com/intent/post')");
+    expect(source).toContain("new URL('https://t.me/share/url')");
+    expect(source).toContain("new URL('https://wa.me/')");
+    expect(source).toContain('aria-label={`Share on ${label}`}');
+    expect(source).not.toContain('Post to X');
     expect(source).toContain("url.searchParams.set('rank', rankBy)");
     expect(source).toContain("url.searchParams.set('sign', activeSign.asset.sign)");
+    expect(source).toContain('aria-label={`Show ${item.name} sculpture in the gallery`}');
+    expect(source).toContain('setGalleryFocusRequest({ slug: item.asset.sign, index: item.order - 1 });');
+    expect(source).toContain('document.querySelector(`[data-consumer-sign="${galleryFocusRequest.slug}"]`)');
+    expect(source).toContain('document.querySelector(`[data-gallery-rail] .rail__tick[data-index="${galleryFocusRequest.index}"]`)');
+    expect(source).toContain('innerFrame = window.requestAnimationFrame(() => {');
+    expect(source).toContain('destination.focus({ preventScroll: true });');
     expect(source).toContain("shared.searchParams.set('outlook', horizon)");
     expect(source).toContain("edition.date === utcToday");
     // The static fallback carries the crawlable twelve with truncated mints.
@@ -336,6 +377,18 @@ describe('Registry consumer and technical information architecture', () => {
     expect(visible).toContain('The interactive edition ranks the twelve');
     expect((visible.match(/class="static-token-list"/gu) ?? [])).toHaveLength(1);
     expect(visible).toContain('Live figures and sharing appear with JavaScript');
+  });
+
+  it('removes the directional-price aside from the auditable outlook', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    const visible = visibleMarkup(html);
+
+    expect(source).not.toContain('className="outlook-challenge"');
+    expect(source).not.toContain('Why no price arrow?');
+    expect(visible).not.toContain('Why no price arrow?');
   });
 
   it('publishes a useful no-JavaScript technical record from the canonical addresses', async () => {

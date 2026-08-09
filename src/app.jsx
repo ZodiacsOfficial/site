@@ -2403,7 +2403,7 @@
               {result.state === 'official' && (
                 <>
                   <div className="vrf__result-head">
-                    <span className="vrf__tick">✓</span>
+                    <span className="vrf__tick" aria-hidden="true">✓</span>
                     <span>{`Official ${result.sign.name} address on ${networkLabel}.`}</span>
                   </div>
                   <VrfResultBody sign={result.sign} network={result.network} queried={result.queried} />
@@ -2412,7 +2412,7 @@
               {result.state === 'not-found' && (
                 <>
                   <div className="vrf__result-head">
-                    <span className="vrf__cross">×</span>
+                    <span className="vrf__cross" aria-hidden="true">×</span>
                     <span>{'This address isn’t in the official Zodiac list.'}</span>
                   </div>
                   <div className="vrf__result-meta mono">{truncateAddress(result.queried, 10, 8) || '—'}</div>
@@ -2420,7 +2420,7 @@
               )}
               {result.state === 'invalid' && (
                 <div className="vrf__result-head">
-                  <span className="vrf__cross">×</span>
+                  <span className="vrf__cross" aria-hidden="true">×</span>
                   <span>{'That doesn’t look like a Solana or Base address.'}</span>
                 </div>
               )}
@@ -3841,6 +3841,35 @@
       change: { label: '24h move', short: '24H', field: 'priceChange24h' },
     });
 
+    function MarketSocialIcon({ network }) {
+      if (network === 'x') {
+        return (
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117L17.083 19.77Z" />
+          </svg>
+        );
+      }
+      if (network === 'telegram') {
+        return (
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M21.54 3.18 18.4 19.02c-.24 1.12-.86 1.39-1.75.87l-4.78-3.52-2.31 2.22c-.25.26-.47.47-.96.47l.34-4.87 8.87-8.01c.39-.34-.08-.53-.6-.19L6.25 12.9l-4.72-1.47c-1.03-.32-1.04-1.03.21-1.52L20.2 2.8c.86-.31 1.61.2 1.34.38Z" />
+          </svg>
+        );
+      }
+      if (network === 'whatsapp') {
+        return (
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <path d="M12.04 2a9.84 9.84 0 0 0-8.42 14.92L2.05 22l5.2-1.52A9.9 9.9 0 1 0 12.04 2Zm0 17.94a8.07 8.07 0 0 1-4.12-1.13l-.3-.18-3.08.9.92-3-.2-.31a8.08 8.08 0 1 1 6.78 3.72Zm4.43-6.04c-.24-.12-1.43-.71-1.66-.79-.22-.08-.38-.12-.55.12-.16.24-.62.79-.76.95-.14.16-.28.18-.52.06-.24-.12-1.02-.38-1.94-1.2a7.3 7.3 0 0 1-1.34-1.67c-.14-.24-.02-.37.1-.49.11-.11.24-.28.36-.42.12-.14.16-.24.24-.4.08-.16.04-.3-.02-.42-.06-.12-.55-1.32-.75-1.81-.2-.48-.4-.41-.55-.42h-.47c-.16 0-.42.06-.65.3-.22.24-.85.83-.85 2.03s.87 2.36.99 2.52c.12.16 1.72 2.63 4.17 3.69.58.25 1.04.4 1.39.51.58.19 1.12.16 1.54.1.47-.07 1.43-.59 1.64-1.15.2-.57.2-1.05.14-1.15-.06-.1-.22-.16-.47-.28Z" />
+          </svg>
+        );
+      }
+      return (
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M12 3v11m0-11 4 4m-4-4L8 7M5 11v8h14v-8" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+        </svg>
+      );
+    }
+
     function ConsumerMarketSection({ active, setActive, personalSlug, setPersonalSlug }) {
       const reveal = useReveal();
       const [hostRef, inView] = useInView('360px 0px 360px 0px');
@@ -3855,6 +3884,7 @@
       const [rankBy, setRankBy] = useState(initialRank);
       const [retryKey, setRetryKey] = useState(0);
       const [shareState, setShareState] = useState('');
+      const [galleryFocusRequest, setGalleryFocusRequest] = useState(null);
       const batch = useTwelveQuotes(inView, retryKey);
       const season = useCurrentSeason();
 
@@ -3892,6 +3922,24 @@
           }) + ' UTC'
         : '';
       const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
+      useEffect(() => {
+        if (!galleryFocusRequest) return undefined;
+        let outerFrame = 0;
+        let innerFrame = 0;
+        outerFrame = window.requestAnimationFrame(() => {
+          innerFrame = window.requestAnimationFrame(() => {
+            const destination = document.querySelector(`[data-consumer-sign="${galleryFocusRequest.slug}"]`)
+              ?? document.querySelector(`[data-gallery-rail] .rail__tick[data-index="${galleryFocusRequest.index}"]`);
+            if (!destination) return;
+            destination.focus({ preventScroll: true });
+            setGalleryFocusRequest(current => current === galleryFocusRequest ? null : current);
+          });
+        });
+        return () => {
+          window.cancelAnimationFrame(outerFrame);
+          window.cancelAnimationFrame(innerFrame);
+        };
+      }, [galleryFocusRequest]);
       const metricCoverage = rows.filter(
         row => toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]) !== null,
       ).length;
@@ -3934,18 +3982,32 @@
           setShareState('Snapshot copied.');
           trackAnalytics('registry_market_shared', { rank: rankBy, destination: 'clipboard' });
         } catch (error) {
-          setShareState('Could not share. Try Post to X.');
+          setShareState('Could not share. Choose a social destination.');
         }
       };
-      const postToX = () => {
-        const intent = new URL('https://x.com/intent/post');
-        intent.searchParams.set('text', shareCopy());
-        intent.searchParams.set('url', shareUrl());
+      const openSocial = (destination) => {
+        const snapshot = shareCopy();
+        const url = shareUrl();
+        let intent;
+        if (destination === 'telegram') {
+          intent = new URL('https://t.me/share/url');
+          intent.searchParams.set('url', url);
+          intent.searchParams.set('text', snapshot);
+        } else if (destination === 'whatsapp') {
+          intent = new URL('https://wa.me/');
+          intent.searchParams.set('text', `${snapshot}\n${url}`);
+        } else {
+          intent = new URL('https://x.com/intent/post');
+          intent.searchParams.set('text', snapshot);
+          intent.searchParams.set('url', url);
+        }
         window.open(intent.toString(), '_blank', 'noopener,noreferrer');
-        setShareState('X composer opened.');
-        trackAnalytics('registry_market_shared', { rank: rankBy, destination: 'x' });
+        const label = destination === 'telegram' ? 'Telegram' : destination === 'whatsapp' ? 'WhatsApp' : 'X';
+        setShareState(`${label} share opened.`);
+        trackAnalytics('registry_market_shared', { rank: rankBy, destination });
       };
       const showInGallery = (item) => {
+        setGalleryFocusRequest({ slug: item.asset.sign, index: item.order - 1 });
         setActive(item.ticker);
         const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
         document.getElementById('official-twelve')?.scrollIntoView({
@@ -4005,16 +4067,37 @@
                   <button
                     key={key}
                     type="button"
+                    className="market-glass"
                     aria-pressed={rankBy === key}
                     onClick={() => setRankBy(key)}
                   >{option.short}</button>
                 ))}
               </div>
               <div className="market-board__share">
-                <button type="button" onClick={copyShare} disabled={!shareReady}>Share snapshot</button>
-                <button type="button" onClick={postToX} disabled={!shareReady}>Post to X ↗</button>
+                <button className="market-glass market-board__share-primary" type="button" onClick={copyShare} disabled={!shareReady}>
+                  <MarketSocialIcon network="share" /><span>Share snapshot</span>
+                </button>
+                <div className="market-board__socials" role="group" aria-label="Share this snapshot on social media">
+                  {[
+                    ['x', 'X'],
+                    ['telegram', 'Telegram'],
+                    ['whatsapp', 'WhatsApp'],
+                  ].map(([network, label]) => (
+                    <button
+                      className="market-glass market-board__social"
+                      key={network}
+                      type="button"
+                      aria-label={`Share on ${label}`}
+                      title={`Share on ${label}`}
+                      disabled={!shareReady}
+                      onClick={() => openSocial(network)}
+                    ><MarketSocialIcon network={network} /></button>
+                  ))}
+                </div>
               </div>
             </div>
+
+            <p className="market-board__share-state" role="status" aria-live="polite">{shareState}</p>
 
             <div className="market-board__meta">
               <span>Ranked by {MARKET_RANKS[rankBy].label}</span>
@@ -4055,15 +4138,27 @@
                       <span className="market-row__metric market-row__metric--cap"><small>Market cap</small><strong>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</strong></span>
                       <span className="market-row__metric market-row__metric--liq"><small>Liquidity</small><strong>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</strong></span>
                       <span className="market-row__actions">
-                        <button className="market-row__view" type="button" onClick={() => showInGallery(item)}>Sculpture</button>
-                        <a href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>↗</a>
+                        <button
+                          className="market-row__view market-glass"
+                          type="button"
+                          aria-label={`Show ${item.name} sculpture in the gallery`}
+                          onClick={() => showInGallery(item)}
+                        >
+                          <span className="market-row__view-disc" aria-hidden="true">
+                            <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="20" height="20" alt="" loading="lazy" decoding="async" />
+                          </span>
+                          <span>View sculpture</span>
+                          <span className="market-row__action-orb" aria-hidden="true">↑</span>
+                        </button>
+                        <a className="market-row__record market-glass" href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>
+                          <span className="market-row__record-label">Record</span>
+                          <span className="market-row__action-orb" aria-hidden="true">↗</span>
+                        </a>
                       </span>
                     </li>
                   );
                 })}
             </ol>
-
-            <p className="market-board__share-state" role="status" aria-live="polite">{shareState}</p>
           </div>
 
           <p className="consumer-market__foot">
@@ -4305,15 +4400,6 @@
             )}
           </div>
 
-          <div className="outlook-challenge">
-            <span>Why no price arrow?</span>
-            <p>
-              An upward arrow before calibration would be theater, not research. Version 1
-              publishes symbolic attention, tone, and volatility hypotheses; directional
-              price and liquidity calls unlock only if a timestamped history beats the
-              disclosed non-astrological baselines. Astrology is the hypothesis—not the proof.
-            </p>
-          </div>
         </section>
       );
     }
@@ -4367,22 +4453,36 @@
 
           <ol id="identity" className="consumer-steps" aria-label="How to use the Registry">
             <li>
-              <span className="consumer-step__visual consumer-step__disc" aria-hidden="true">
-                <img src="/assets/zodiac-icons/48/leo.webp" width="32" height="32" alt="" />
+              <span className="consumer-step__visual consumer-step__constellation" aria-hidden="true">
+                {['aries', 'leo', 'pisces'].map((slug, index) => (
+                  <img key={slug} className={index === 1 ? 'is-primary' : ''} src={`/assets/zodiac-icons/48/${slug}.webp`} width="38" height="38" alt="" />
+                ))}
               </span>
-              <span>Choose a token</span>
+              <span className="consumer-step__copy">
+                <strong>Choose a sign</strong>
+                <small>Start with the pastel disc you already recognize.</small>
+              </span>
             </li>
             <li>
               <span className="consumer-step__visual consumer-step__record" aria-hidden="true">
-                <i /><code>GhFi…1YZv</code>
+                <img src="/assets/zodiac-icons/48/leo.webp" width="30" height="30" alt="" />
+                <code>8Cd7…b8Qm</code>
               </span>
-              <span>Check its official record</span>
+              <span className="consumer-step__copy">
+                <strong>Match the address</strong>
+                <small>The record—not the name or ticker—proves which token is official.</small>
+              </span>
             </li>
             <li>
-              <span className="consumer-step__visual consumer-step__cabinet" aria-hidden="true">
-                <i /><i /><i />
+              <span className="consumer-step__visual consumer-step__recognition" aria-hidden="true">
+                <span><img src="/assets/zodiac-icons/48/leo.webp" width="28" height="28" alt="" /></span>
+                <i>→</i>
+                <span><img src="/assets/zodiac-icons/48/leo.webp" width="28" height="28" alt="" /></span>
               </span>
-              <span>Recognize it in another app</span>
+              <span className="consumer-step__copy">
+                <strong>Recognize it anywhere</strong>
+                <small>The same pastel identity follows the record into wallets and apps.</small>
+              </span>
             </li>
           </ol>
 
@@ -4412,7 +4512,16 @@
 
     function ConsumerPurpose() {
       const reveal = useReveal();
-      const cabinetMaterials = ['bronze', null, 'silver', null, 'gold'];
+      // This is the same curator's sample shown inside the real Cabinet:
+      // Aries Crown Gold, Cancer pastel, Leo bronze, Scorpio silver, and
+      // Aquarius Gold. The landing preview must never invent another set.
+      const cabinetSample = Object.freeze({
+        aries: { finish: 'crown', numeral: 'V', count: '×12' },
+        cancer: { finish: 'pastel', numeral: 'I' },
+        leo: { finish: 'bronze', numeral: 'II' },
+        scorpio: { finish: 'silver', numeral: 'III' },
+        aquarius: { finish: 'gold', numeral: 'IV', count: '×3' },
+      });
       return (
         <section ref={reveal} id="thesis" className="consumer-purpose reveal" aria-labelledby="consumer-purpose-title">
           {REGISTRY_AURA_ENABLED && (
@@ -4427,23 +4536,29 @@
                   <div className="consumer-cabinet">
                     <div className="consumer-cabinet__seats">
                       {SIGNS.map((item, index) => {
-                        const material = cabinetMaterials[index];
-                        const occupied = index < cabinetMaterials.length;
-                        const imagePath = material
-                          ? `/assets/cabinet-materials/${material}/${item.asset.sign}`
+                        const edition = cabinetSample[item.asset.sign];
+                        const occupied = Boolean(edition);
+                        const sculpture = edition?.finish === 'gold' || edition?.finish === 'crown';
+                        const imagePath = sculpture
+                          ? `/assets/cabinet-materials/gold/${item.asset.sign}`
                           : `/assets/zodiac-icons/128/${item.asset.sign}`;
                         return (
                           <span
                             key={item.ticker}
-                            className={'consumer-cabinet__seat' + (occupied ? ' is-filled' : ' is-empty')}
+                            className={'consumer-cabinet__seat' + (occupied ? ` is-filled is-${edition.finish}` : ' is-empty')}
                             style={{ '--seat-i': index }}
+                            data-cabinet-sample-finish={edition?.finish}
                           >
                             <span className="consumer-cabinet__number">{String(index + 1).padStart(2, '0')}</span>
                             {occupied ? (
-                              <picture>
-                                <source srcSet={`${imagePath}.avif`} type="image/avif" />
-                                <img src={`${imagePath}.webp`} width="128" height="128" alt="" loading="lazy" decoding="async" />
-                              </picture>
+                              <>
+                                <picture>
+                                  <source srcSet={`${imagePath}.avif`} type="image/avif" />
+                                  <img src={`${imagePath}.webp`} width="128" height="128" alt="" loading="lazy" decoding="async" />
+                                </picture>
+                                <span className="consumer-cabinet__edition">{edition.numeral}</span>
+                                {edition.count && <span className="consumer-cabinet__count">{edition.count}</span>}
+                              </>
                             ) : <span className="consumer-cabinet__glyph">{item.symbol}</span>}
                           </span>
                         );
