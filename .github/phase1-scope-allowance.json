@@ -2,7 +2,7 @@
   "version": 1,
   "id": "ask-zodiacs-chart-guide-locales-2026-08-02",
   "reason": "Owner-authorized Ask Zodiacs restoration on August 2, 2026: add the localized chart-guide pages, update the released-locale privacy and methodology disclosures required for transient OpenAI processing and optional 90-day account memory, and keep the Ask Zodiacs navigation entry consistent across the generated Registry and SDK shells. The protected locale, Registry, SDK, and generated-output changes are enumerated exactly below.",
-  "baseCommit": "9c3be85c47c8869709f79e215412200c938903c3",
+  "baseCommit": "de112e7d4ccdae743f24671c3dc2c8c4e629df9c",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/aquarius/index.html",
