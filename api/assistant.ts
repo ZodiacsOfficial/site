@@ -4,7 +4,7 @@ import { createHmac, randomUUID } from 'node:crypto';
 import {
   budgetAlertLevel,
   budgetConfig,
-  estimateTerraCostMicrousd,
+  estimateLunaCostMicrousd,
   parseQuotaCount,
   parseQuotaResult,
   reserveAssistantBudget,
@@ -541,7 +541,7 @@ export function createAssistantHandler(overrides: Partial<HandlerDependencies> =
             return;
           }
           const actualMicrousd = generated.usage
-            ? estimateTerraCostMicrousd(generated.usage)
+            ? estimateLunaCostMicrousd(generated.usage)
             : reservedMicrousd;
           if (!generated.usage) {
             dependencies.log(`assistant_event request_id=${requestId} stage=provider code=usage_missing`);

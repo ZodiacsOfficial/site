@@ -255,8 +255,8 @@ function nonNegativeFinite(value: unknown): number {
   return typeof value === 'number' && Number.isFinite(value) && value > 0 ? value : 0;
 }
 
-/** GPT-5.6 Terra standard rates, expressed as microdollars per token. */
-export function estimateTerraCostMicrousd(usage: OpenAIUsage): number {
+/** GPT-5.6 Luna standard rates, expressed as microdollars per token. */
+export function estimateLunaCostMicrousd(usage: OpenAIUsage): number {
   const input = nonNegativeFinite(usage.input_tokens);
   const cached = Math.min(input, nonNegativeFinite(usage.input_tokens_details?.cached_tokens));
   const uncached = input - cached;
@@ -265,23 +265,23 @@ export function estimateTerraCostMicrousd(usage: OpenAIUsage): number {
     nonNegativeFinite(usage.cache_write_tokens),
     nonNegativeFinite(usage.input_tokens_details?.cache_write_tokens),
   );
-  // $2/M uncached input, $0.20/M cached input, $12/M output.
-  // Cache writes are $2.50/M (1.25x). Treat a reported write count as
+  // $0.20/M uncached input, $0.02/M cached input, $1.20/M output.
+  // Cache writes are $0.25/M (1.25x). Treat a reported write count as
   // additional even if the provider also includes it in input_tokens; that
   // deliberately overcounts instead of risking an under-settlement.
-  return Math.ceil((uncached * 2) + (cached * 0.2) + (cacheWrites * 2.5) + (output * 12));
+  return Math.ceil((uncached * 0.2) + (cached * 0.02) + (cacheWrites * 0.25) + (output * 1.2));
 }
 
 export function requestCostUpperBoundMicrousd(serializedRequestBytes: number, maxOutputTokens: number): number {
   if (!Number.isSafeInteger(serializedRequestBytes) || serializedRequestBytes < 0) return Number.MAX_SAFE_INTEGER;
   if (!Number.isSafeInteger(maxOutputTokens) || maxOutputTokens < 0) return Number.MAX_SAFE_INTEGER;
   // Every UTF-8 byte is conservatively treated as both an uncached input
-  // token ($2/M) and an additionally reported cache-write token ($2.50/M),
+  // token ($0.20/M) and an additionally reported cache-write token ($0.25/M),
   // matching the deliberately overcounting settlement estimator above.
-  // The route's bounded request stays far below Terra's 272K long-context
+  // The route's bounded request stays far below Luna's 272K long-context
   // tier; fail closed rather than use this formula beyond that threshold.
   if (serializedRequestBytes > 272_000) return Number.MAX_SAFE_INTEGER;
-  return Math.ceil((serializedRequestBytes * 4.5) + (maxOutputTokens * 12));
+  return Math.ceil((serializedRequestBytes * 0.45) + (maxOutputTokens * 1.2));
 }
 
 export function budgetAlertLevel(reservation: BudgetReservation, config: BudgetConfig): 0 | 70 | 90 | 100 {

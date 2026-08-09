@@ -179,7 +179,7 @@ New work reuses these tokens. It introduces no new decorative color, chrome lang
 ### Phase 6 — Ask Zodiacs
 
 - `/ask/` is the full guided experience and the isolated server endpoint remains outside the browser bundle. Navigation and contextual “Ask about this” actions only prefill; they never send automatically.
-- OpenAI Responses uses `gpt-5.6-terra`, `store: false`, low reasoning and verbosity, a 900-token cap, no retry layer, and a strict buffered result. Anthropic remains a manual seven-day rollback deployment only.
+- OpenAI Responses uses `gpt-5.6-luna`, `store: false`, low reasoning and verbosity, a 900-token cap, no retry layer, and a strict buffered result. Anthropic remains a manual seven-day rollback deployment only.
 - A chart is attached only after explicit local selection and exact-payload preview. Only the compact positions token, retrograde-body names, and optional cusps cross the boundary. Saved names, chart IDs, birth inputs, places, times, and coordinates never do. The deterministic engine calculates placements, houses, natal aspects, and current transits; the model interprets facts rather than calculating them.
 - Retrieval uses a committed 500–900-character knowledge index with deterministic BM25-style selection, at most six chunks and two per page. Source and fact IDs are validated server-side; unsupported questions return a clear no-coverage guide rather than invented material.
 - Session memory uses versioned `sessionStorage` only. An authenticated user may atomically opt in and import completed visible turns into owner-only Supabase memory with a fixed 90-day expiry, explicit delete controls, immediate expired-row hiding, and hourly bounded cleanup.
@@ -603,6 +603,15 @@ The prior release cutover is superseded; the current hardening candidate must es
 Keep clean data and route seams for these; do not implement them inside this program.
 
 ## Change log
+
+### 2026-08-10 — Phase 6 Luna cost migration
+
+- Switched the candidate generation model from `gpt-5.6-terra` to
+  `gpt-5.6-luna` for the cost-sensitive public guide workload.
+- Repriced atomic reservations and usage settlement to Luna's standard token
+  rates. The exact-preview grounded, guided, and red-team evaluations remain
+  required before launch because the model-quality evidence must match the
+  deployed model.
 
 ### 2026-08-02 — Phase 6 chart-guide restoration candidate
 

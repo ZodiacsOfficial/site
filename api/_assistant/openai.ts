@@ -5,7 +5,7 @@ import {
 } from './contracts.js';
 import type { OpenAIUsage } from './budget.js';
 
-export const OPENAI_MODEL = 'gpt-5.6-terra';
+export const OPENAI_MODEL = 'gpt-5.6-luna';
 export const OPENAI_MAX_OUTPUT_TOKENS = 900;
 const OPENAI_RESPONSES_URL = 'https://api.openai.com/v1/responses';
 const OPENAI_MODERATIONS_URL = 'https://api.openai.com/v1/moderations';

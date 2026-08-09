@@ -3,7 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 import {
   budgetAlertLevel,
   budgetConfig,
-  estimateTerraCostMicrousd,
+  estimateLunaCostMicrousd,
   parseBudgetReservation,
   parseQuotaCount,
   parseQuotaResult,
@@ -569,14 +569,14 @@ describe('safety routing', () => {
 });
 
 describe('OpenAI Responses and cost controls', () => {
-  it('builds one buffered, non-stored strict Terra request', () => {
+  it('builds one buffered, non-stored strict Luna request', () => {
     const payload = buildResponsesRequest({
       instructions: 'trusted instructions',
       messages: [{ role: 'user', content: 'question' }],
       safetyIdentifier: 'safe-pseudonym',
     });
     expect(payload).toMatchObject({
-      model: 'gpt-5.6-terra',
+      model: 'gpt-5.6-luna',
       store: false,
       max_output_tokens: 900,
       reasoning: { effort: 'low' },
@@ -635,19 +635,19 @@ describe('OpenAI Responses and cost controls', () => {
     expect(aborted).toEqual({ kind: 'aborted', status: 0 });
   });
 
-  it('uses current Terra rates and a conservative full-request reservation', () => {
-    expect(estimateTerraCostMicrousd({
+  it('uses current Luna rates and a conservative full-request reservation', () => {
+    expect(estimateLunaCostMicrousd({
       input_tokens: 100,
       output_tokens: 10,
       input_tokens_details: { cached_tokens: 20 },
-    })).toBe(284);
-    expect(estimateTerraCostMicrousd({
+    })).toBe(29);
+    expect(estimateLunaCostMicrousd({
       input_tokens: 100,
       output_tokens: 10,
       cache_write_tokens: 10,
       input_tokens_details: { cached_tokens: 20, cache_write_tokens: 8 },
-    })).toBe(309);
-    expect(requestCostUpperBoundMicrousd(1_000, 900)).toBe(15_300);
+    })).toBe(31);
+    expect(requestCostUpperBoundMicrousd(1_000, 900)).toBe(1_530);
     expect(requestCostUpperBoundMicrousd(272_001, 900)).toBe(Number.MAX_SAFE_INTEGER);
   });
 
@@ -748,7 +748,7 @@ describe('POST /api/assistant', () => {
       monthly_limit_microusd: 100_000_000,
     });
     expect(reserve.reserved_microusd).toEqual(expect.any(Number));
-    expect(reserve.reserved_microusd).toBeGreaterThan(10_800);
+    expect(reserve.reserved_microusd).toBeGreaterThan(1_080);
     expect(reserve.reserved_microusd).toBeLessThanOrEqual(300_000);
     expect(calls[0]?.init?.headers).toMatchObject({ apikey: ENV.SUPABASE_SERVICE_ROLE_KEY });
     expect(calls[0]?.init?.headers).not.toHaveProperty('Authorization');
@@ -760,7 +760,7 @@ describe('POST /api/assistant', () => {
     });
     const model = jsonBody(calls[2]);
     expect(model).toMatchObject({
-      model: 'gpt-5.6-terra',
+      model: 'gpt-5.6-luna',
       store: false,
       max_output_tokens: 900,
       reasoning: { effort: 'low' },
@@ -768,7 +768,7 @@ describe('POST /api/assistant', () => {
       safety_identifier: safetyIdentifier(ENV.ASSISTANT_SALT, expectedVisitor),
     });
     expect(model.input).toEqual(v2Body().messages);
-    expect(jsonBody(calls[3])).toEqual({ reservation_id: REQUEST_ID, actual_microusd: 284 });
+    expect(jsonBody(calls[3])).toEqual({ reservation_id: REQUEST_ID, actual_microusd: 29 });
 
     const observable = JSON.stringify({ calls, logs, output: res.text });
     expect(observable).not.toContain('203.0.113.42');

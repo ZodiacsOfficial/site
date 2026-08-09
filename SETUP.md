@@ -43,7 +43,7 @@ Do not put credentials in `.env` files that can be committed, Markdown, fixtures
 | Resend | Selected standard | Double-opt-in capture, weekly/daily email, unsubscribe-compatible delivery | Authenticate `zodiacs.org` with SPF/DKIM and use a domain sender. |
 | Google Workspace | Existing | Monitored public contact and correction mailboxes | `people@zodiacs.org` is an alternate address for the monitored `admin@zodiacs.org` account, not a separate inbox. Keep the alias active and monitor Spam as well as Inbox. |
 | Buttondown or Loops | Supported alternatives | Standalone capture only | Configure exactly one provider. Do not combine providers in one deployment. |
-| OpenAI | Ask Zodiacs provider | Buffered, grounded Ask Zodiacs responses through `gpt-5.6-terra` | Use a dedicated server-only project key, `store: false`, atomic application budgets, and provider-side spend limits. |
+| OpenAI | Ask Zodiacs provider | Buffered, grounded Ask Zodiacs responses through `gpt-5.6-luna` | Use a dedicated server-only project key, `store: false`, atomic application budgets, and provider-side spend limits. |
 | Anthropic | Seven-day rollback only | Previous Ask Zodiacs deployment | Keep the previous deployment and key available during the observation window; do not configure automatic provider fallback. Remove both after a stable rollout. |
 | Plausible-compatible analytics | Optional, approved | Cookieless allowlisted product events | No script is emitted when unconfigured. Never send birth data, email, chart positions, wallet addresses, free text, query strings, or fragments. |
 | Web Push / VAPID | Scaffolded, off | Phase 3 opt-in notifications | Generate a VAPID pair, store subscriptions in Supabase, and enable client/server/schedule flags together only after verification. |
@@ -175,7 +175,7 @@ route. Confirm that only `service_role` can execute
 underlying quota and aggregate-cost tables are not readable from browser
 roles, and that remembered-conversation tables are browser-read-only with
 authenticated mutations limited to the reviewed RPCs. The route uses OpenAI
-Responses with `gpt-5.6-terra`, `store: false`, low reasoning effort and
+Responses with `gpt-5.6-luna`, `store: false`, low reasoning effort and
 verbosity, a strict buffered result schema, a 900-token output cap, and no
 automatic SDK retry.
 
