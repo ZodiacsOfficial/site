@@ -816,12 +816,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       JSON.stringify(explorerState),
     );
     check(
-      'the sculpture-led stage opens under one visible Zodiac Markets masthead',
+      'the sculpture-led stage opens under one visible Astrofolio masthead',
       await desktop.locator('.cine').count() === 0
         && await desktop.locator('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').count() === 0
         && await desktop.locator('h1').count() === 1
         && await desktop.locator('.consumer-masthead > h1').isVisible()
-        && (await desktop.locator('.consumer-masthead > h1').innerText()).replace(/\s+/g, ' ').trim() === 'Zodiac Markets'
+        && (await desktop.locator('.consumer-masthead > h1').innerText()).replace(/\s+/g, ' ').trim() === 'Astrofolio'
         && !((await desktop.locator('.consumer-masthead > h1').getAttribute('class')) ?? '').includes('sr-only')
         && await desktop.locator('#official-twelve').getAttribute('aria-labelledby') === 'consumer-explorer-title',
     );
@@ -1560,8 +1560,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       });
       check(
-        `the bare Zodiac Markets masthead at ${label} is visible below navigation without overflow`,
-        mobileMasthead.text === 'Zodiac Markets'
+        `the bare Astrofolio masthead at ${label} is visible below navigation without overflow`,
+        mobileMasthead.text === 'Astrofolio'
           && mobileMasthead.visible
           && mobileMasthead.direct
           && mobileMasthead.top >= mobileMasthead.navBottom - 1

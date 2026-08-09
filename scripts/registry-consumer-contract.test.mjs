@@ -90,7 +90,7 @@ describe('Registry consumer and technical information architecture', () => {
 
     expect(source).toContain('id="official-twelve"');
     expect(explorer).toContain('<header className="consumer-masthead">');
-    expect(source).toContain('<h1 id="consumer-explorer-title">Zodiac <span className="it">Markets</span></h1>');
+    expect(source).toContain('<h1 id="consumer-explorer-title">Astrofolio</h1>');
     expect(source).toContain('aria-labelledby="consumer-explorer-title"');
     expect(source.split('<h1 id="consumer-explorer-title"'), 'consumer Registry h1').toHaveLength(2);
     expect(explorer).not.toMatch(/<h1[^>]*className="[^"]*sr-only/u);

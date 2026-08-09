@@ -4485,7 +4485,7 @@
         >
           <header className="consumer-masthead">
             <span className="consumer-masthead__eyebrow">Official token registry</span>
-            <h1 id="consumer-explorer-title">Zodiac <span className="it">Markets</span></h1>
+            <h1 id="consumer-explorer-title">Astrofolio</h1>
             <p>Live prices, liquidity, season, and sky signals for the twelve official tokens.</p>
           </header>
           {/* This section IS the page's opening at every width. WebGL keeps
