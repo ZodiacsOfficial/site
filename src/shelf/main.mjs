@@ -5,9 +5,9 @@
 // and the disc strip serves as the selector instead.
 
 import {
-  DOCK, GALLERY, approach, clampFocus, dockMagnify, embedBand, nearestIndex,
+  DOCK, GALLERY, TURNTABLE, approach, clampFocus, dockMagnify, embedBand, nearestIndex,
   shortestTurn, signFromHash, wheelToFocusDelta, dragToFocusDelta, dragIntent,
-  flingCarry,
+  flingCarry, turntableActive,
 } from './layout.mjs';
 import { createScene } from './scene.mjs';
 import { createCard } from './card.mjs';
@@ -41,6 +41,10 @@ async function mount(root, records) {
   const hint = root.querySelector('[data-gallery-hint]');
   const live = root.querySelector('[data-gallery-live]');
   const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  // The consumer rectangle shows one piece rather than a shelf to open: the
+  // record it would draw out is already beside it on the page. Read once — the
+  // rectangle is not a mode the reader can leave.
+  const spotlight = root.hasAttribute('data-gallery-spotlight');
 
   const nameLabel = root.querySelector('[data-gallery-name]');
 
@@ -72,8 +76,15 @@ async function mount(root, records) {
   const start = Math.max(0, seeded);
 
   const state = {
-    focus: asked >= 0 ? asked : motion.matches ? start : start - 1.4,
+    // The first painted sculpture must agree with the host's selected record.
+    // Arrival choreography belongs to the page around the canvas, not to a
+    // trip through unrelated signs inside it.
+    focus: start,
     targetFocus: start,
+    // A distant selector jump dips the current piece out and the destination
+    // in, rather than driving the camera past every sign between them.
+    switchFrom: -1,
+    switchProgress: 1,
     open: 0,
     targetOpen: 0,
     openIndex: -1,
@@ -81,6 +92,8 @@ async function mount(root, records) {
     pitch: 0, targetPitch: 0,
     zoom: 0, targetZoom: 0,
     hover: -1,
+    spotlight,
+    reducedMotion: motion.matches,
   };
 
   const card = createCard(root, { onClose: () => closeFigure() });
@@ -131,9 +144,58 @@ async function mount(root, records) {
 
   // A piece on display turns slowly, as on a dealer's turntable, until the
   // reader takes it in hand — then it is theirs to aim. Reduced motion
-  // disables the turntable outright.
-  const TURNTABLE_RATE = 0.22;
+  // disables the turntable outright. The Registry spotlight is already the
+  // display pose, so it receives the same turntable without opening a card.
+  const TURNTABLE_RATE = spotlight ? TURNTABLE.spotlightRate : TURNTABLE.openedRate;
   let handTurned = false;
+  let stageVisible = true;
+  let externallyPaused = root.hasAttribute('data-gallery-paused');
+  let turnResumeTimer = 0;
+  let forcedTurnResume = false;
+
+  function syncRotationState(explicit = null) {
+    if (!spotlight) return;
+    const next = explicit
+      ?? (state.reducedMotion ? 'manual' : handTurned ? 'held' : 'ambient');
+    if (root.dataset.galleryRotation !== next) root.dataset.galleryRotation = next;
+  }
+
+  syncRotationState();
+
+  function clearTurnResume({ clearForced = false } = {}) {
+    window.clearTimeout(turnResumeTimer);
+    turnResumeTimer = 0;
+    if (clearForced) forcedTurnResume = false;
+  }
+
+  function scheduleTurnResume({ force = false } = {}) {
+    if (force) forcedTurnResume = true;
+    clearTurnResume();
+    if ((!spotlight && !forcedTurnResume) || state.reducedMotion || !handTurned) return;
+    turnResumeTimer = window.setTimeout(() => {
+      turnResumeTimer = 0;
+      forcedTurnResume = false;
+      handTurned = false;
+      syncRotationState();
+      invalidate();
+    }, TURNTABLE.resumeAfter);
+  }
+
+  function resetSpotlightTurn(index, { immediate = false } = {}) {
+    if (!spotlight) return;
+    handTurned = false;
+    clearTurnResume({ clearForced: true });
+    state.targetYaw = shortestTurn(state.yaw, 0);
+    state.targetPitch = 0;
+    state.targetZoom = 0;
+    if (immediate || state.reducedMotion) {
+      state.yaw = state.targetYaw;
+      state.pitch = state.targetPitch;
+      state.zoom = state.targetZoom;
+    }
+    syncRotationState();
+    void scene.refine(index).then((changed) => { if (changed) invalidate(); });
+  }
 
   // ---- the frame loop --------------------------------------------------
   // Nothing is drawn unless something is still moving; the gallery at rest
@@ -143,8 +205,16 @@ async function mount(root, records) {
   let last = 0;
   let disposed = false;
 
+  // Exponential response for gestures that move through adjacent pieces.
+  // At 15/s the visible travel is about 98% complete inside 260ms. Distant
+  // choices use the shorter, non-spatial handoff below instead.
+  const FOCUS_RESPONSE = 15;
+  const TURN_RESPONSE = 14;
+  const DIRECT_SWITCH_SECONDS = 0.22;
+
   function settled() {
     return Math.abs(state.focus - state.targetFocus) < 0.0005
+      && state.switchFrom < 0
       && Math.abs(state.open - state.targetOpen) < 0.0005
       && Math.abs(state.yaw - state.targetYaw) < 0.0005
       && Math.abs(state.pitch - state.targetPitch) < 0.0005
@@ -152,13 +222,29 @@ async function mount(root, records) {
   }
 
   function step(dt) {
-    const fast = motion.matches ? 200 : 9;
-    const turn = motion.matches ? 200 : 12;
-    state.focus = approach(state.focus, state.targetFocus, fast, dt);
-    state.open = approach(state.open, state.targetOpen, motion.matches ? 200 : 7.5, dt);
-    state.yaw = approach(state.yaw, state.targetYaw, turn, dt);
-    state.pitch = approach(state.pitch, state.targetPitch, turn, dt);
-    state.zoom = approach(state.zoom, state.targetZoom, turn, dt);
+    if (state.reducedMotion) {
+      state.focus = state.targetFocus;
+      state.switchFrom = -1;
+      state.switchProgress = 1;
+      state.open = state.targetOpen;
+      state.yaw = state.targetYaw;
+      state.pitch = state.targetPitch;
+      state.zoom = state.targetZoom;
+      return false;
+    }
+
+    state.focus = approach(state.focus, state.targetFocus, FOCUS_RESPONSE, dt);
+    state.open = approach(state.open, state.targetOpen, 9, dt);
+    state.yaw = approach(state.yaw, state.targetYaw, TURN_RESPONSE, dt);
+    state.pitch = approach(state.pitch, state.targetPitch, TURN_RESPONSE, dt);
+    state.zoom = approach(state.zoom, state.targetZoom, TURN_RESPONSE, dt);
+    if (state.switchFrom >= 0) {
+      state.switchProgress = Math.min(
+        1,
+        state.switchProgress + (dt / DIRECT_SWITCH_SECONDS),
+      );
+      if (state.switchProgress >= 1) state.switchFrom = -1;
+    }
     if (settled()) {
       state.focus = state.targetFocus;
       state.open = state.targetOpen;
@@ -174,15 +260,29 @@ async function mount(root, records) {
     if (disposed) return;
     const dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016);
     last = now;
-    const turning = state.targetOpen === 1 && state.open > 0.98
-      && !handTurned && !motion.matches && !drag;
+    const turning = turntableActive({
+      spotlight,
+      open: state.open,
+      targetOpen: state.targetOpen,
+      switchFrom: state.switchFrom,
+      focus: state.focus,
+      targetFocus: state.targetFocus,
+      stageVisible,
+      paused: externallyPaused,
+      handTurned,
+      reducedMotion: state.reducedMotion,
+      dragging: Boolean(drag) || pointers.size > 0,
+    });
     if (turning) {
       state.yaw += TURNTABLE_RATE * dt;
       state.targetYaw = state.yaw;
     }
-    const settling = scene.layout(state);
+    // Advance first so reduced-motion input paints its destination on this
+    // frame rather than briefly rendering the old state and then stopping.
+    const stateMoving = step(dt);
+    const settling = scene.layout(state, dt);
     scene.render();
-    const moving = step(dt) || turning || settling;
+    const moving = stateMoving || turning || settling;
     raf = moving ? requestAnimationFrame(frame) : 0;
     if (!moving) last = 0;
   }
@@ -193,21 +293,84 @@ async function mount(root, records) {
     raf = requestAnimationFrame(frame);
   }
 
+  // The spotlight otherwise has a perpetual frame loop. Keep the museum
+  // turntable alive only while its room is near the viewport.
+  const visibilityObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(([entry]) => {
+      stageVisible = entry.isIntersecting;
+      if (stageVisible) invalidate();
+    }, { rootMargin: '120px 0px' })
+    : null;
+  visibilityObserver?.observe(root);
+
+  const pauseTurntable = () => { externallyPaused = true; };
+  const resumeTurntable = () => {
+    externallyPaused = false;
+    invalidate();
+  };
+  root.addEventListener('zodiacs:gallery-pause', pauseTurntable);
+  root.addEventListener('zodiacs:gallery-resume', resumeTurntable);
+
   // ---- position along the row ------------------------------------------
 
   let snapTimer = 0;
-  function scheduleSnap() {
+  let snapFromIndex = -1;
+  function clearSnap() {
+    window.clearTimeout(snapTimer);
+    snapTimer = 0;
+    snapFromIndex = -1;
+  }
+  function scheduleSnap(fromIndex = current()) {
+    if (snapFromIndex < 0) {
+      snapFromIndex = fromIndex;
+      if (spotlight) clearTurnResume();
+    }
     window.clearTimeout(snapTimer);
     snapTimer = window.setTimeout(() => {
+      snapTimer = 0;
+      const previous = snapFromIndex;
+      snapFromIndex = -1;
       state.targetFocus = nearestIndex(state.targetFocus, count);
+      if (spotlight && current() !== previous) resetSpotlightTurn(current());
+      else {
+        syncRotationState();
+        scheduleTurnResume();
+      }
       syncChrome();
       invalidate();
     }, 140);
   }
 
-  function focusFigure(index, { announce = true } = {}) {
-    state.targetFocus = clampFocus(index, count);
-    window.clearTimeout(snapTimer);
+  function focusFigure(index, { announce = true, immediate = false } = {}) {
+    const target = clampFocus(index, count);
+    const previous = current();
+    const visualIndex = state.switchFrom >= 0 && state.switchProgress < 0.5
+      ? state.switchFrom
+      : nearestIndex(state.focus, count);
+    const distant = spotlight && Math.abs(target - visualIndex) > 1;
+
+    state.targetFocus = target;
+    if (immediate || state.reducedMotion) {
+      state.focus = target;
+      state.switchFrom = -1;
+      state.switchProgress = 1;
+    } else if (distant) {
+      // Hold both endpoints at the centre of the room and hand the light from
+      // one to the other. The scene owns the opacity curve; focus can already
+      // become the destination without revealing intervening sculptures.
+      state.focus = target;
+      state.switchFrom = visualIndex;
+      state.switchProgress = 0;
+    } else {
+      state.switchFrom = -1;
+      state.switchProgress = 1;
+    }
+    if (spotlight && target !== previous) {
+      // Every newly chosen cast arrives face-first, then begins its own quiet
+      // turn. Returning by the shortest path avoids unwinding a hand turn.
+      resetSpotlightTurn(target, { immediate });
+    }
+    clearSnap();
     syncChrome();
     if (announce) speak(`${records[current()].name}, Lot ${records[current()].lot}`);
     invalidate();
@@ -271,6 +434,7 @@ async function mount(root, records) {
         const isCurrent = i === index;
         button.tabIndex = isCurrent ? 0 : -1;
         button.setAttribute('aria-current', isCurrent ? 'true' : 'false');
+        button.setAttribute('aria-pressed', isCurrent ? 'true' : 'false');
       }
       // Keep a narrow rail centred without asking scrollIntoView to move the
       // page or any of the band's ancestors.
@@ -285,12 +449,17 @@ async function mount(root, records) {
   // ---- drawing a figure out and returning it ---------------------------
 
   async function openFigure(index, { takeFocus = true } = {}) {
+    // Nothing is ever drawn out of the rectangle. Guarding here rather than at
+    // each caller makes it a property of the mode instead of a promise every
+    // future call site has to keep.
+    if (spotlight) return;
     const record = records[index];
+    clearTurnResume({ clearForced: true });
     handTurned = false;
     setHover(-1);
     // One gesture: a side figure swings to the front as it is drawn out.
     state.targetFocus = clampFocus(index, count);
-    window.clearTimeout(snapTimer);
+    clearSnap();
     state.openIndex = index;
     state.targetOpen = 1;
     state.targetYaw = 0;
@@ -311,8 +480,8 @@ async function mount(root, records) {
   }
 
   /** Walking the rail with a piece already on display swaps the piece. */
-  function showFigure(index) {
-    focusFigure(index, { announce: state.targetOpen === 0 });
+  function showFigure(index, { immediate = false } = {}) {
+    focusFigure(index, { announce: state.targetOpen === 0, immediate });
     if (state.targetOpen > 0 && index !== state.openIndex) {
       void openFigure(index, { takeFocus: false });
     }
@@ -353,6 +522,7 @@ async function mount(root, records) {
     button.style.setProperty('--sign', record.hue);
     button.dataset.index = String(index);
     button.tabIndex = index === 0 ? 0 : -1;
+    button.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
     // The tick is the sign's pastel disc — the same icon wallets show for
     // the token — so the row and a holder's wallet visibly agree.
     button.innerHTML = '<picture aria-hidden="true">'
@@ -361,12 +531,17 @@ async function mount(root, records) {
       + ' alt="" loading="lazy" decoding="async"/></picture>';
     button.setAttribute('aria-label', `${record.name}, Lot ${record.lot} of twelve`);
     button.addEventListener('click', () => {
+      if (spotlight) { showFigure(index); return; }
       if (current() === index && state.targetOpen === 0) void openFigure(index);
       else showFigure(index);
     });
-    rail.append(button);
     return button;
   });
+  // One swap: the page's inert placeholder discs hand the rail to the live
+  // ticks without a frame of empty chrome between them.
+  rail.replaceChildren(...ticks);
+  root.classList.add('is-ready');
+  root.dispatchEvent(new CustomEvent('zodiacs:gallery-ready', { bubbles: true }));
 
   // ---- the rail magnifies like a dock ------------------------------------
   //
@@ -407,6 +582,7 @@ async function mount(root, records) {
   }
 
   rail.addEventListener('pointermove', (event) => {
+    root.dataset.galleryInput = 'pointer';
     // A wave that follows the cursor is motion; reduced motion keeps only the
     // resting magnification, which is affordance rather than animation. Read
     // at event time, so a reader who changes the preference is obeyed without
@@ -425,8 +601,15 @@ async function mount(root, records) {
     if (next === null) return;
     event.preventDefault();
     const index = clampFocus(next, count);
-    showFigure(index);
+    // Keyboard navigation is high-frequency and should feel as direct as the
+    // focus ring itself. It keeps selection feedback but skips spatial travel.
+    root.dataset.galleryInput = 'keyboard';
+    showFigure(index, { immediate: true });
     ticks[index].focus({ preventScroll: true });
+  });
+
+  rail.addEventListener('pointerdown', () => {
+    root.dataset.galleryInput = 'pointer';
   });
 
   opener?.addEventListener('click', () => toggle(current()));
@@ -495,16 +678,55 @@ async function mount(root, records) {
 
   canvas.addEventListener('pointerleave', () => setHover(-1));
 
+  function restoreGesture(cancelled, { settleTurn = false } = {}) {
+    if (cancelled.mode === 'rotate') {
+      // A cancelled turn returns to the exact target it found. Keep ambient
+      // motion out until that restoration has settled, then resume quietly.
+      handTurned = settleTurn ? true : cancelled.handTurned;
+      state.targetYaw = cancelled.yaw;
+      state.targetPitch = cancelled.pitch;
+      state.targetZoom = cancelled.zoom;
+    } else {
+      state.targetFocus = cancelled.focus;
+      if (spotlight) handTurned = cancelled.handTurned;
+      syncChrome();
+    }
+    syncRotationState();
+    scheduleTurnResume({ force: settleTurn });
+    invalidate();
+  }
+
   canvas.addEventListener('pointerdown', (event) => {
+    root.dataset.galleryInput = 'pointer';
     // Mouse and pen keep their existing capture contract. Touch waits until
     // horizontal intent is clear so a vertical page scroll remains native.
     if (event.pointerType !== 'touch') canvas.setPointerCapture(event.pointerId);
     pointers.set(event.pointerId, { x: event.clientX, y: event.clientY });
     if (pointers.size === 2) {
+      if (spotlight && drag) {
+        const interrupted = drag;
+        drag = null;
+        pinch = 0;
+        restoreGesture(interrupted, { settleTurn: interrupted.mode === 'rotate' });
+        return;
+      }
       const [a, b] = [...pointers.values()];
       pinch = Math.hypot(a.x - b.x, a.y - b.y);
       drag = null;
       return;
+    }
+    // A third contact never starts a replacement gesture while two pointers
+    // already own the canvas.
+    if (pointers.size > 2) {
+      pointers.delete(event.pointerId);
+      return;
+    }
+    const gestureMode = state.targetOpen > 0
+      || (spotlight && scene.pick(event.clientX, event.clientY) === current())
+      ? 'rotate'
+      : 'browse';
+    if (spotlight || gestureMode === 'rotate') {
+      clearTurnResume({ clearForced: gestureMode === 'rotate' });
     }
     drag = {
       id: event.pointerId,
@@ -516,6 +738,8 @@ async function mount(root, records) {
       yaw: state.targetYaw,
       pitch: state.targetPitch,
       zoom: state.targetZoom,
+      handTurned,
+      mode: gestureMode,
       pointerType: event.pointerType,
       touchIntent: 'pending',
       velocity: 0,
@@ -561,15 +785,31 @@ async function mount(root, records) {
       } else if (Math.hypot(dx, dy) < 5) {
         return;
       }
+      // Intent is committed now, not on raw pointer-down: taps and vertical
+      // page scrolling remain observationally inert. A real re-grab begins
+      // at the pose currently on screen and interrupts residual damping.
+      if (drag.mode === 'rotate') {
+        state.targetYaw = state.yaw;
+        state.targetPitch = state.pitch;
+        state.targetZoom = state.zoom;
+        drag.yaw = state.yaw;
+        drag.pitch = state.pitch;
+        drag.zoom = state.zoom;
+      } else {
+        state.targetFocus = state.focus;
+        drag.focus = state.focus;
+      }
       drag.moved = true;
-      window.clearTimeout(snapTimer);
+      clearSnap();
       setHover(-1);
     }
 
-    if (state.targetOpen > 0) {
+    if (drag.mode === 'rotate') {
       // A figure drawn out turns in the hand — right around, as often as the
-      // reader likes. The row stays where it is, and the turntable yields.
+      // reader likes. The Registry spotlight is already drawn forward, so
+      // the same gesture turns it without changing the selected sign.
       handTurned = true;
+      syncRotationState('dragging');
       state.targetYaw = drag.yaw + (dx / 190);
       // A touch keeps vertical movement available to the page; mouse and pen
       // retain the full two-axis inspection.
@@ -601,15 +841,37 @@ async function mount(root, records) {
   function endPointer(event) {
     pointers.delete(event.pointerId);
     if (pointers.size < 2) pinch = 0;
-    if (!drag || drag.id !== event.pointerId) return;
+    if (!drag || drag.id !== event.pointerId) {
+      if (pointers.size === 0) {
+        syncRotationState();
+        scheduleTurnResume();
+        invalidate();
+      }
+      return;
+    }
     const finished = drag;
     drag = null;
 
     if (!finished.moved) {
+      if (spotlight) {
+        handTurned = finished.handTurned;
+        syncRotationState();
+        scheduleTurnResume();
+        invalidate();
+      }
       // A vertical touch belongs to the page, even if the browser happens to
       // deliver pointerup before it emits pointercancel for native scrolling.
       if (finished.touchIntent === 'vertical') return;
       const index = scene.pick(event.clientX, event.clientY);
+      // On the plate a sculpture has one meaning: select that sign. Buying is
+      // kept on the labelled Trade control, so a second tap never changes its
+      // meaning beneath the reader.
+      if (spotlight) {
+        if (index < 0) { invalidate(); return; }
+        if (index !== current()) showFigure(index);
+        else invalidate();
+        return;
+      }
       if (index >= 0) {
         // One gesture, one meaning: a sculpture opens its record — front,
         // side, it makes no difference. Tapping the piece already on display
@@ -626,13 +888,23 @@ async function mount(root, records) {
       return;
     }
 
-    if (state.targetOpen > 0) return;
+    if (finished.mode === 'rotate') {
+      syncRotationState();
+      scheduleTurnResume();
+      return;
+    }
     // Carry the throw a little, then settle on a figure.
     const idleMs = Math.max(0, event.timeStamp - finished.lastMove);
     const carried = motion.matches ? 0 : flingCarry(finished.velocity, idleMs);
+    const previous = nearestIndex(finished.focus, count);
     state.targetFocus = nearestIndex(
       clampFocus(state.targetFocus + carried, count), count,
     );
+    if (spotlight && current() !== previous) resetSpotlightTurn(current());
+    else {
+      syncRotationState();
+      scheduleTurnResume();
+    }
     syncChrome();
     speak(`${records[current()].name}, Lot ${records[current()].lot}`);
     invalidate();
@@ -641,20 +913,19 @@ async function mount(root, records) {
   function cancelPointer(event) {
     pointers.delete(event.pointerId);
     if (pointers.size < 2) pinch = 0;
-    if (drag?.id !== event.pointerId) return;
+    if (drag?.id !== event.pointerId) {
+      if (pointers.size === 0) {
+        syncRotationState();
+        scheduleTurnResume();
+        invalidate();
+      }
+      return;
+    }
     const cancelled = drag;
     drag = null;
     // Cancellation is not a release. Put the row or sculpture back exactly
     // where this gesture found it, without picking, snapping, or momentum.
-    if (state.targetOpen > 0) {
-      state.targetYaw = cancelled.yaw;
-      state.targetPitch = cancelled.pitch;
-      state.targetZoom = cancelled.zoom;
-    } else {
-      state.targetFocus = cancelled.focus;
-      syncChrome();
-    }
-    invalidate();
+    restoreGesture(cancelled, { settleTurn: cancelled.mode === 'rotate' });
   }
 
   canvas.addEventListener('pointerup', endPointer);
@@ -668,8 +939,8 @@ async function mount(root, records) {
       invalidate();
       return;
     }
-    // Mid-page, a vertical wheel is the page scrolling past — only a
-    // sideways wheel walks the row.
+    // A vertical wheel belongs to the page. Horizontal trackpad input walks
+    // the row, while drag/swipe remains the direct manipulation gesture.
     if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
     // Firefox reports wheel deltas in lines, and some setups in pages; both
     // would crawl if read as pixels.
@@ -681,9 +952,10 @@ async function mount(root, records) {
     const atEnd = state.targetFocus >= count - 1.002 && delta > 0;
     if (atStart || atEnd) return;
     event.preventDefault();
+    const previous = current();
     state.targetFocus = clampFocus(state.targetFocus + delta, count);
     syncChrome();
-    scheduleSnap();
+    scheduleSnap(previous);
     invalidate();
   }, { passive: false });
 
@@ -704,7 +976,23 @@ async function mount(root, records) {
   observer.observe(card.element);
   resize();
 
-  motion.addEventListener?.('change', invalidate);
+  const onMotionChange = () => {
+    state.reducedMotion = motion.matches;
+    if (state.reducedMotion) {
+      state.focus = state.targetFocus;
+      state.switchFrom = -1;
+      state.switchProgress = 1;
+      state.open = state.targetOpen;
+      state.yaw = state.targetYaw;
+      state.pitch = state.targetPitch;
+      state.zoom = state.targetZoom;
+    }
+    if (state.reducedMotion) clearTurnResume();
+    else scheduleTurnResume();
+    syncRotationState();
+    invalidate();
+  };
+  motion.addEventListener?.('change', onMotionChange);
 
   document.addEventListener('visibilitychange', () => {
     if (document.hidden && raf) {
@@ -721,14 +1009,32 @@ async function mount(root, records) {
     if (raf) cancelAnimationFrame(raf);
     raf = 0;
     root.classList.remove('is-ready', 'is-open');
+    root.dispatchEvent(new CustomEvent('zodiacs:gallery-unready', { bubbles: true }));
     card.close();
+  });
+
+  // Three restores its renderer resources after a recoverable context loss.
+  // Restore the presentation contract with them; otherwise a context lost
+  // while the canvas is hidden on mobile leaves a healthy returned canvas at
+  // opacity zero for the rest of the page lifetime.
+  canvas.addEventListener('webglcontextrestored', () => {
+    root.classList.add('is-ready');
+    root.dispatchEvent(new CustomEvent('zodiacs:gallery-ready', { bubbles: true }));
+    resize();
+    invalidate();
   });
 
   function teardown() {
     if (disposed) return;
     disposed = true;
     if (raf) cancelAnimationFrame(raf);
+    clearTurnResume({ clearForced: true });
+    clearSnap();
     observer.disconnect();
+    visibilityObserver?.disconnect();
+    motion.removeEventListener?.('change', onMotionChange);
+    root.removeEventListener('zodiacs:gallery-pause', pauseTurntable);
+    root.removeEventListener('zodiacs:gallery-resume', resumeTurntable);
     scene.dispose();
   }
   window.addEventListener('pagehide', teardown, { once: true });
@@ -748,7 +1054,12 @@ async function mount(root, records) {
   // A slug in the hash is a request to view that piece: bring the band into
   // view and put the record on display. The static catalogue carries the
   // same ids for readers without JavaScript.
-  if (asked >= 0) {
+  if (asked >= 0 && spotlight) {
+    // The rectangle is already standing in front of the asked-for piece —
+    // seeded before the first frame — so arrival only has to bring it into
+    // view. There is no record to open: it is on the page beside the figure.
+    root.scrollIntoView({ block: 'center', behavior: 'instant' });
+  } else if (asked >= 0) {
     root.scrollIntoView({ block: 'center', behavior: 'instant' });
     void openFigure(asked, { takeFocus: false });
   }
@@ -758,6 +1069,7 @@ async function mount(root, records) {
   // The plates arrive after the room does: each figure stands in its own metal
   // until its photograph is laid on, nearest the front first.
   void scene.dressRow(start, invalidate);
+  if (spotlight) void scene.refine(start).then((changed) => { if (changed) invalidate(); });
 }
 
 export { GALLERY };

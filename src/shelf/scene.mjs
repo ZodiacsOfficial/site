@@ -13,8 +13,9 @@
 import * as THREE from 'three';
 
 import {
-  GALLERY, VITRINE, emphasis, figurePose, fitScales, floorY, isVisible,
-  lerpContent, lerpRect, rowContent, stageContent, vitrineFrame,
+  GALLERY, SPOTLIGHT_STAGE, SPOTLIGHT_VITRINE, VITRINE, emphasis, figurePose,
+  fitScales, floorY, isVisible, lerpContent, lerpRect, rowContent, stageContent,
+  vitrineFrame,
 } from './layout.mjs';
 import { paintPlinth, paintReverse, loadSculpture } from './textures.mjs';
 import geometryData from './figures.geometry.json';
@@ -350,7 +351,7 @@ export function createScene(canvas, records) {
     bands = { row, stage };
   }
 
-  function placeCamera(open, opened, zoom) {
+  function placeCamera(open, opened, zoom, vitrine = VITRINE) {
     const content = lerpContent(
       rowContent(GALLERY, tallest),
       stageContent(opened.scale, opened.aspect),
@@ -359,8 +360,8 @@ export function createScene(canvas, records) {
     const rect = lerpRect(bandFor('row'), bandFor('stage'), open);
     // A figure under examination gets more air than the row does, and pinching
     // in takes some of it back.
-    const margin = THREE.MathUtils.lerp(VITRINE.rowMargin, VITRINE.stageMargin, open)
-      - (zoom * VITRINE.zoomGain * open);
+    const margin = THREE.MathUtils.lerp(vitrine.rowMargin, vitrine.stageMargin, open)
+      - (zoom * vitrine.zoomGain * open);
 
     const frame = vitrineFrame({
       canvasWidth: canvasSize.width,
@@ -368,7 +369,7 @@ export function createScene(canvas, records) {
       rect,
       content,
       margin,
-    });
+    }, vitrine);
 
     aim.set(0, content.centerY, content.centerZ)
       .addScaledVector(RIGHT, frame.panX)
@@ -386,10 +387,34 @@ export function createScene(canvas, records) {
    * every contour down its length, and a shallow cast seen at an angle reads
    * as a flight of steps.
    */
-  function layout(state) {
+  function layout(state, dt = 1 / 60) {
     const { focus, openIndex, open, yaw, pitch, zoom } = state;
+    // The consumer rectangle offers one piece rather than a shelf, so its
+    // fall-off is steeper and its camera stands closer. Left undefined, the
+    // emphasis keeps its own default and the row is unchanged.
+    const profile = state.spotlight ? SPOTLIGHT_STAGE : undefined;
+    const targetIndex = Math.min(figures.length - 1, Math.max(0, Math.round(focus)));
+    const switching = state.spotlight
+      && Number.isInteger(state.switchFrom)
+      && state.switchFrom >= 0
+      && state.switchFrom !== targetIndex
+      && open === 0;
+    const switchProgress = THREE.MathUtils.smoothstep(
+      Number.isFinite(state.switchProgress) ? state.switchProgress : 1,
+      0,
+      1,
+    );
+    // Do not superimpose two intricate gold silhouettes. The source yields
+    // its light in the first half and the destination receives it in the
+    // second, a short museum-light handoff with no intervening sculptures.
+    const sourceLight = switchProgress < 0.5
+      ? 1 - THREE.MathUtils.smoothstep(switchProgress * 2, 0, 1)
+      : 0;
+    const targetLight = switchProgress > 0.5
+      ? THREE.MathUtils.smoothstep((switchProgress - 0.5) * 2, 0, 1)
+      : 0;
     const opened = figures[openIndex]
-      ?? figures[Math.min(figures.length - 1, Math.max(0, Math.round(focus)))];
+      ?? figures[targetIndex];
     const stage = { x: 0, y: -opened.scale / 2, z: VITRINE.stageZ };
     // One piece in a pool of light; the rest of the room goes quiet.
     const dimmed = 1 - (open * 0.94);
@@ -399,25 +424,52 @@ export function createScene(canvas, records) {
 
     for (let i = 0; i < figures.length; i += 1) {
       const figure = figures[i];
-      const pose = figurePose(i, focus, GALLERY);
-      const visible = isVisible(i, focus) || (open > 0 && i === openIndex);
+      let pose = figurePose(i, focus, GALLERY);
+      let switchOpacity = 1;
+      if (switching) {
+        if (i === state.switchFrom) {
+          pose = figurePose(i, state.switchFrom, GALLERY);
+          switchOpacity = sourceLight;
+        } else if (i === targetIndex) {
+          switchOpacity = targetLight;
+        } else {
+          switchOpacity = 0;
+        }
+      }
+      if (state.spotlight) {
+        pose.y += profile.lift * pose.prominence;
+        pose.z += profile.out * pose.prominence;
+      }
+      const visible = switching
+        ? switchOpacity > 0.001
+        : state.spotlight
+          ? Math.abs(pose.distance) <= profile.visibleSpan
+          : isVisible(i, focus) || (open > 0 && i === openIndex);
       figure.mesh.visible = visible;
       figure.plinth.visible = visible;
       figure.shadow.visible = visible;
       if (!visible) continue;
 
       const drawn = i === openIndex ? open : 0;
+      // The consumer spotlight is already the inspection pose: apply yaw and
+      // pitch directly to its focused cast without drawing out the record
+      // card. Other embeds keep the existing open-transition interpolation.
+      const inspected = drawn > 0
+        ? drawn
+        : state.spotlight ? pose.prominence : 0;
       const recede = i === openIndex ? 0 : open * 0.6;
 
       // The spotlight: the piece the row is offering stands at full size and
       // full strength, and the others step back into the dark. A figure being
       // examined keeps the focus treatment however the row has slid behind it.
-      const spot = emphasis(drawn > 0 ? 0 : pose.distance);
+      const spot = emphasis(drawn > 0 ? 0 : pose.distance, profile);
 
       // The lift that says a sculpture opens: hovered pieces rise a little
       // and step forward, the bookshelf gesture.
-      const hoverTarget = i === state.hover && drawn === 0 ? 1 : 0;
-      const eased = figure.hover + ((hoverTarget - figure.hover) * 0.22);
+      const hoverTarget = !switching && i === state.hover && drawn === 0 ? 1 : 0;
+      const eased = state.reducedMotion
+        ? hoverTarget
+        : THREE.MathUtils.damp(figure.hover, hoverTarget, 18, dt);
       figure.hover = Math.abs(eased - hoverTarget) < 0.004 ? hoverTarget : eased;
       if (figure.hover !== hoverTarget) hoverSettling = true;
       const lift = figure.hover * (1 - open);
@@ -429,8 +481,8 @@ export function createScene(canvas, records) {
         THREE.MathUtils.lerp(pose.z - recede + (lift * 0.16), stage.z, drawn),
       );
       figure.mesh.rotation.set(
-        pitch * drawn,
-        THREE.MathUtils.lerp(pose.rotationY, yaw, drawn),
+        pitch * inspected,
+        THREE.MathUtils.lerp(pose.rotationY, yaw, inspected),
         0,
       );
       figure.mesh.scale.setScalar(scale);
@@ -440,7 +492,7 @@ export function createScene(canvas, records) {
       figure.proxy.scale.setScalar(scale);
       figure.proxy.updateMatrixWorld(true);
 
-      const opacity = (i === openIndex ? 1 : dimmed) * spot.opacity;
+      const opacity = (i === openIndex ? 1 : dimmed) * spot.opacity * switchOpacity;
       for (const material of figure.materials) material.opacity = opacity;
 
       // The plinth stays in the row; only the figure is lifted off it. It
@@ -469,7 +521,7 @@ export function createScene(canvas, records) {
     );
     offer.intensity = 7 - (open * 2.6);
 
-    placeCamera(open, opened, zoom);
+    placeCamera(open, opened, zoom, state.spotlight ? SPOTLIGHT_VITRINE : VITRINE);
     return hoverSettling;
   }
 
@@ -510,7 +562,12 @@ export function createScene(canvas, records) {
 
   function resize(width, height, dpr) {
     canvasSize = { width, height };
-    renderer.setPixelRatio(Math.min(2, dpr));
+    // A phone now keeps the live turntable instead of falling back to a flat
+    // render. Cap its fill-rate a little lower so the sculpture stays crisp
+    // without asking a high-density display to shade four pixels for every
+    // CSS pixel while the reader drags it.
+    const pixelRatioCap = width < 700 ? 1.5 : 2;
+    renderer.setPixelRatio(Math.min(pixelRatioCap, dpr));
     renderer.setSize(width, height, false);
     camera.aspect = width / height;
     camera.updateProjectionMatrix();

@@ -53,6 +53,13 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ['/privacy/', '2026-07-26'],
   ['/registry/technical/', '2026-08-02'],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
+  ['/thesis/', '2026-08-05'],
+  // Registry redesign — token-first landing plus head-only record upgrades.
+  ['/registry/', '2026-08-03'],
+  ...[
+    'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+    'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+  ].map((sign) => [`/registry/${sign}/`, '2026-08-03'] as const),
   ...[
     '/disclosure/',
     ...CHINESE_ZODIAC_PATHS,

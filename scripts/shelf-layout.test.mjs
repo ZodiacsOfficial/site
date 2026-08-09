@@ -5,6 +5,9 @@ import {
   DOCK,
   GALLERY,
   SPOTLIGHT,
+  SPOTLIGHT_STAGE,
+  SPOTLIGHT_VITRINE,
+  TURNTABLE,
   VITRINE,
   angleStep,
   approach,
@@ -28,12 +31,56 @@ import {
   shortestTurn,
   signFromHash,
   stageContent,
+  turntableActive,
   vitrineFrame,
   wheelToFocusDelta,
 } from '../src/shelf/layout.mjs';
 import { figureOf, readFigures, classification } from '../src/shelf/figures.mjs';
 
 const COUNT = 12;
+
+describe('turntable policy', () => {
+  const ready = {
+    spotlight: true,
+    open: 0,
+    targetOpen: 0,
+    switchFrom: -1,
+    focus: 4,
+    targetFocus: 4,
+    stageVisible: true,
+    paused: false,
+    handTurned: false,
+    reducedMotion: false,
+    dragging: false,
+  };
+
+  it('turns the settled Registry spotlight without opening a card', () => {
+    expect(turntableActive(ready)).toBe(true);
+    expect(TURNTABLE.spotlightRate).toBeLessThan(TURNTABLE.openedRate);
+    expect(TURNTABLE.resumeAfter).toBe(2400);
+  });
+
+  it('preserves the Thesis opened-sculpture turntable', () => {
+    expect(turntableActive({
+      ...ready,
+      spotlight: false,
+      open: 1,
+      targetOpen: 1,
+    })).toBe(true);
+  });
+
+  it.each([
+    ['offscreen', { stageVisible: false }],
+    ['behind the purchase sheet', { paused: true }],
+    ['under the hand', { dragging: true }],
+    ['held after a hand turn', { handTurned: true }],
+    ['under reduced motion', { reducedMotion: true }],
+    ['during a sign handoff', { switchFrom: 3 }],
+    ['while focus is settling', { focus: 3.9 }],
+  ])('stops %s', (_label, change) => {
+    expect(turntableActive({ ...ready, ...change })).toBe(false);
+  });
+});
 
 describe('gallery geometry', () => {
   it('sets the focused figure at the origin, square to the camera', () => {
@@ -332,6 +379,67 @@ describe('the spotlight', () => {
     expect(emphasis(2).opacity).toBeCloseTo(SPOTLIGHT.dim, 12);
     expect(emphasis(1).opacity).toBeLessThan(1);
     expect(emphasis(1).opacity).toBeGreaterThan(SPOTLIGHT.dim);
+  });
+});
+
+describe('the spotlight the rectangle wears', () => {
+  it('keeps the offered piece whole and takes the room back harder', () => {
+    // Full size at the focus either way: above 1 the piece outgrows the box
+    // the camera frames, and the head is the first thing to leave.
+    expect(SPOTLIGHT_STAGE.focus).toBe(1);
+    expect(emphasis(0, SPOTLIGHT_STAGE).scale).toBeCloseTo(1, 12);
+    // Everything else recedes further than it does on the shelf.
+    for (const distance of [1, 2, 4]) {
+      expect(emphasis(distance, SPOTLIGHT_STAGE).scale)
+        .toBeLessThan(emphasis(distance, SPOTLIGHT).scale);
+      expect(emphasis(distance, SPOTLIGHT_STAGE).opacity)
+        .toBeLessThan(emphasis(distance, SPOTLIGHT).opacity);
+    }
+  });
+
+  it('recedes smoothly there too', () => {
+    let previous = emphasis(0, SPOTLIGHT_STAGE).scale;
+    for (let distance = 0.02; distance <= 4; distance += 0.02) {
+      const { scale, opacity } = emphasis(distance, SPOTLIGHT_STAGE);
+      expect(scale).toBeLessThanOrEqual(previous + 1e-9);
+      expect(previous - scale).toBeLessThan(0.02);
+      expect(opacity).toBeGreaterThanOrEqual(SPOTLIGHT_STAGE.dim - 1e-9);
+      previous = scale;
+    }
+  });
+
+  it('stands the camera closer without changing the lens', () => {
+    // The row's own box is short enough that the floor — not the margin — is
+    // what decides how large a figure lands, so the floor is the real lever.
+    const row = rowContent(GALLERY, GALLERY.height);
+    const view = {
+      canvasWidth: 720, canvasHeight: 560,
+      rect: { x: 0, y: 0, width: 720, height: 560 },
+      content: row,
+    };
+    const shelf = vitrineFrame({ ...view, margin: VITRINE.rowMargin });
+    const rectangle = vitrineFrame(
+      { ...view, margin: SPOTLIGHT_VITRINE.rowMargin }, SPOTLIGHT_VITRINE,
+    );
+    expect(row.height * VITRINE.rowMargin).toBeLessThan(VITRINE.minWorldHeight);
+    expect(shelf.worldHeight).toBeCloseTo(VITRINE.minWorldHeight, 12);
+    expect(rectangle.worldHeight).toBeCloseTo(SPOTLIGHT_VITRINE.minWorldHeight, 12);
+    // Same fov, so a smaller world height is simply a nearer camera — and the
+    // figure covers proportionally more of the canvas.
+    expect(SPOTLIGHT_VITRINE.fov).toBe(VITRINE.fov);
+    expect(rectangle.distance).toBeLessThan(shelf.distance);
+    expect(shelf.worldHeight / rectangle.worldHeight).toBeGreaterThan(1.15);
+  });
+
+  it('keeps the clamp that stops a cramped viewport shouting', () => {
+    expect(SPOTLIGHT_VITRINE.maxWorldHeight).toBe(VITRINE.maxWorldHeight);
+    const squeezed = vitrineFrame({
+      canvasWidth: 400, canvasHeight: 200,
+      rect: { x: 0, y: 0, width: 400, height: 40 },
+      content: rowContent(GALLERY, GALLERY.height),
+      margin: SPOTLIGHT_VITRINE.rowMargin,
+    }, SPOTLIGHT_VITRINE);
+    expect(squeezed.worldHeight).toBeLessThanOrEqual(SPOTLIGHT_VITRINE.maxWorldHeight);
   });
 });
 

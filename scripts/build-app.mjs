@@ -22,7 +22,9 @@ import {
   REGISTRY_AURA_META_NAME,
   REGISTRY_AURA_PATH,
   injectRegistryAuraLanding,
+  injectRegistryAuraThesis,
 } from '../src/lib/registry-aura-entry.mjs';
+import { REGISTRY_TRADE_META, injectRegistryTradeLanding } from '../src/trade/entry.mjs';
 import { EN } from '../src/strings/en.mjs';
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -30,6 +32,7 @@ const root = resolve(here, '..');
 const SRC = resolve(root, 'src/app.jsx');
 const OUT = resolve(root, 'public/assets/app.js');
 const REGISTRY_HTML = resolve(root, 'public/registry/index.html');
+const THESIS_HTML = resolve(root, 'public/thesis/index.html');
 const REGISTRY_DATA = resolve(root, 'public/registry/zodiacs.registry.json');
 const REGISTRY_TECHNICAL_HTML = resolve(root, 'public/registry/technical/index.html');
 
@@ -143,13 +146,26 @@ const registryMeta = [
   `const REGISTRY_AURA_ENABLED=document.querySelector('meta[name="${REGISTRY_AURA_META_NAME}"]')?.content==='1';`,
   `const REGISTRY_AURA_PATH=${JSON.stringify(REGISTRY_AURA_PATH)};`,
   `const REGISTRY_AURA_ENTRY_COPY=Object.freeze(${JSON.stringify(REGISTRY_AURA_ENTRY_COPY)});`,
+  `const REGISTRY_TRADE_ENABLED=document.querySelector('meta[name="${REGISTRY_TRADE_META}"]')?.content==='1';`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
-await writeFile(OUT, output, 'utf8');
+const [registryHtml, thesisHtml] = await Promise.all([
+  readFile(REGISTRY_HTML, 'utf8'),
+  readFile(THESIS_HTML, 'utf8'),
+]);
+// Both Registry flags stamp the same shell, so they are chained: each owns a
+// disjoint marker and neither can overwrite the other's configured output.
+const configuredRegistry = injectRegistryTradeLanding(
+  injectRegistryAuraLanding(registryHtml, process.env).output,
+  process.env,
+).output;
+const configuredThesis = injectRegistryAuraThesis(thesisHtml, process.env).output;
 
-const registryHtml = await readFile(REGISTRY_HTML, 'utf8');
-const configuredRegistry = injectRegistryAuraLanding(registryHtml, process.env).output;
-if (configuredRegistry !== registryHtml) await writeFile(REGISTRY_HTML, configuredRegistry, 'utf8');
+await Promise.all([
+  writeFile(OUT, output, 'utf8'),
+  configuredRegistry !== registryHtml ? writeFile(REGISTRY_HTML, configuredRegistry, 'utf8') : null,
+  configuredThesis !== thesisHtml ? writeFile(THESIS_HTML, configuredThesis, 'utf8') : null,
+]);
 
 const registryData = JSON.parse(await readFile(REGISTRY_DATA, 'utf8'));
 const technicalHtml = await readFile(REGISTRY_TECHNICAL_HTML, 'utf8');

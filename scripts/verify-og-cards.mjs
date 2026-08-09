@@ -4,7 +4,7 @@
  * Generation is intentionally an explicit data task because it needs
  * Chromium. Every normal build still verifies the committed output: required
  * coverage, dimensions, byte-level uniqueness, manifest drift, canonical icon
- * sources, and the frozen global fallback.
+ * sources, and the cache-busted global fallback.
  */
 import { createHash } from 'node:crypto';
 import { readFile, readdir, stat } from 'node:fs/promises';
@@ -20,6 +20,7 @@ import {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'public/assets/og/v2');
+const homepageCard = 'share-pastel-wheel-20260809.png';
 const russianOut = resolve(out, 'ru');
 const eventsPublication = JSON.parse(
   await readFile(resolve(root, 'src/data/events-publication.json'), 'utf8'),
@@ -95,21 +96,16 @@ async function validatePng(relativePath, { unique = true } = {}) {
   else hashes.set(hash, relativePath);
 }
 
+// The homepage shares the void fallback card. A separate homepage asset was
+// tried once in a light cream palette and read as a different site next to the
+// dark surfaces, so the card is not allowed back without a void render.
 async function validateHomepageCard() {
   const relativePath = 'homepage.webp';
   try {
-    const bytes = await readFile(resolve(out, relativePath));
-    const metadata = await sharp(bytes).metadata();
-    if (metadata.format !== 'webp' || metadata.width !== 1200 || metadata.height !== 630) {
-      failures.push(
-        `${relativePath}: expected 1200x630 WebP, received ${metadata.width ?? '?'}x${metadata.height ?? '?'} ${metadata.format ?? 'unknown'}`,
-      );
-    }
-    if (bytes.byteLength > 250 * 1024) {
-      failures.push(`${relativePath}: ${(bytes.byteLength / 1024).toFixed(1)}KiB exceeds the 250KiB homepage-card budget`);
-    }
+    await readFile(resolve(out, relativePath));
+    failures.push(`${relativePath}: off-system homepage card — the homepage uses the void share.png fallback`);
   } catch {
-    failures.push(`${relativePath}: missing`);
+    // Absent, as expected.
   }
 }
 
@@ -127,6 +123,7 @@ for (const slug of signSlugs) {
 
 for (const relativePath of expected) await validatePng(relativePath);
 await validatePng('share.png', { unique: false });
+await validatePng(homepageCard, { unique: false });
 await validateHomepageCard();
 try {
   const fallbackBytes = await readFile(resolve(out, 'share.png'));
@@ -142,6 +139,9 @@ try {
   if (manifest.width !== 1200 || manifest.height !== 630) failures.push('manifest.json: invalid dimensions');
   if (manifest.iconSource !== '/assets/zodiac-icons/128/{sign}.webp') {
     failures.push('manifest.json: canonical icon source drifted');
+  }
+  if (manifest.fallback !== `/assets/og/v2/${homepageCard}`) {
+    failures.push('manifest.json: homepage fallback drifted');
   }
   if (JSON.stringify(manifest.requiredCards) !== JSON.stringify(expected)) {
     failures.push('manifest.json: required card list drifted; rerun npm run data:og');
@@ -210,4 +210,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — homepage 1200x630 WebP; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
+console.log(`verify-og-cards: OK — homepage on the cache-busted void card; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);

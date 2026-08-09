@@ -29,8 +29,8 @@ describe('registry pastel polish', () => {
       read('public/registry/index.html'),
     ]);
 
-    expect(source).toContain('src={`/assets/zodiac-icons/48/${s.asset.sign}.webp`}');
-    expect(source).toContain('src={`/assets/zodiac-icons/128/${sign.asset.sign}.webp`}');
+    expect(source).toContain('src="/assets/zodiac-icons/48/${s.asset.sign}.webp"');
+    expect(source).toContain('src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}');
     expect(source).toContain('src={`/assets/zodiac-icons/48/${r.slug}.webp`}');
     expect(source).toContain('className="pulse__bar-k pulse__bar-k--sign"');
     const standings = source.slice(
@@ -53,42 +53,48 @@ describe('registry pastel polish', () => {
       read('public/registry/index.html'),
     ]);
 
-    expect(source).toContain('className="strip__name"');
+    // The disc rail walks with the arrow keys and keeps a roving tabstop,
+    // the contract the pastel grid it replaced always had.
     expect(source).toContain("() => currentSeason()?.sign.ticker ?? SIGNS[0].ticker");
-    expect(source).toContain("if (event.key === 'ArrowDown') nextIndex = activeIndex + 6;");
-    expect(source).toContain('Swipe or scroll to choose');
+    expect(source).toContain('ArrowRight: activeIndex + 1,');
+    expect(source).toContain('ArrowLeft: activeIndex - 1,');
+    expect(source).toContain('End: SIGNS.length - 1');
+    expect(source).toContain('tabIndex={isActive ? 0 : -1}');
+    expect(source).toContain('Drag to browse · Choose a sign to open.');
     expect(source).not.toContain('SELECTOR_CYCLE_MS');
     expect(source).not.toContain('Auto-rotating · tap to pin');
     expect(source).not.toContain('Scroll or drag to explore');
     expect(bundle).not.toContain('Auto-rotating');
     expect(bundle).not.toContain('Scroll or drag');
-    expect(registry).toContain('grid-template-columns: repeat(6, minmax(0, 1fr));');
-    expect(registry).toContain('.strip__viewport.can-scroll-left::before');
-    expect(registry).toContain('.strip__viewport.can-scroll-right::after');
-    expect(registry).toContain('.strip__sub { display: none; }');
+    // The stage rail paints from inert placeholder discs until the scene
+    // bundle swaps in the live ticks; the watchlist wraps, never scrolls.
+    expect(registry).toContain('.rail__tick--placeholder');
+    expect(registry).toContain('.consumer-tokens__list');
   });
 
-  it('keeps the consumer hero task-first and moves the optional Cabinet into the purpose section', async () => {
+  it('opens on the plate and keeps the optional Cabinet in the purpose section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
 
-    const hero = source.slice(source.indexOf('function CineHero('), source.indexOf('function Hero('));
-    expect(hero).toContain('Explore the twelve signs and see the official digital record for each one.');
-    expect(hero.match(/className="btn btn--primary"/g)).toHaveLength(1);
-    expect(hero.match(/className="btn btn--ghost"/g)).toHaveLength(1);
-    expect(hero).toContain('href="#official-twelve"');
-    expect(hero).toContain('href="#verify"');
-    expect(hero).not.toContain('REGISTRY_AURA_ENABLED');
-    expect(hero).not.toContain('Open the Cabinet');
-    expect(hero).toContain('data-registry-browse');
-    expect(hero).not.toContain('cine__why');
+    // The film hero is retired: the gallery itself is the opening scene at
+    // every width, so the page has one hero and one headline.
+    expect(source).not.toContain('function CineHero(');
+    expect(source).not.toContain('className="cine__frame"');
+    const head = source.slice(
+      source.indexOf('className="stage-hero__head"'),
+      source.indexOf('className="gband__rail-top"'),
+    );
+    expect(head).toContain('Every sign has one official token. Explore its story, its record, and its market.');
+    expect(head).not.toContain('REGISTRY_AURA_ENABLED');
+    expect(head).not.toContain('Open the Cabinet');
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
+    // The no-JS shell keeps its own hero and its own browse anchor.
     expect(registry).toContain('href="#official-twelve" data-registry-browse');
     expect(source).toContain('id="thesis" className="consumer-purpose reveal"');
     expect(source).toContain('REGISTRY_AURA_ENABLED &&');
-    expect(source).toContain('See the signs in a public wallet');
+    expect(source).toContain('See occupied signs, material editions, and wheel coverage for any public wallet.');
     expect(source).toContain('Read why Zodiacs matter');
     expect(registry).toContain('registry-collection-hero:slot');
     expect(registry).not.toContain('cine__why');

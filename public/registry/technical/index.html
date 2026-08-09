@@ -602,7 +602,8 @@
        set by the inline <head> script); every other browser keeps the
        frosted blur floor. ── */
     .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-    html.zdx-lens .cine__cta .btn {
+    html.zdx-lens .cine__cta .btn,
+    html.zdx-lens .stage-placard__pill {
       background: rgba(10, 12, 17, 0.56);
       backdrop-filter: url(#zdx-lens-nav);
       -webkit-backdrop-filter: url(#zdx-lens-nav);
@@ -611,7 +612,8 @@
         inset 0 -1px 0 rgba(238,241,247,0.04),
         0 12px 32px -14px rgba(0,0,0,0.7);
     }
-    html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.66); }
+    html.zdx-lens .cine__cta .btn:hover,
+    html.zdx-lens .stage-placard__pill:hover { background: rgba(10, 12, 17, 0.66); }
     /* The unified nav pill refracts the footage on Chromium too — parity with
        the main site's nav (SiteNav.astro: html.zdx-lens .nav-wrap .nav). The
        #zdx-lens-nav defs + the .zdx-lens gate live on this hub page only, so
@@ -639,7 +641,8 @@
         inset 0 10px 22px -16px rgba(255,255,255,0.10),
         0 14px 34px -14px rgba(0,0,0,0.72);
     }
-    html:not(.zdx-lens) .cine__cta .btn {
+    html:not(.zdx-lens) .cine__cta .btn,
+    html:not(.zdx-lens) .stage-placard__pill {
       background: rgba(10, 12, 17, 0.58);
       backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
       -webkit-backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
@@ -684,133 +687,6 @@
       }
     }
 
-    /* ── Hero ──────────────────────────────────────────────────── */
-
-    .hero {
-      padding: 32px 20px 38px;
-      position: relative;
-    }
-    .hero::before {
-      content: "";
-      position: absolute; inset: -40px 0 0 0;
-      background:
-        radial-gradient(60% 40% at 50% 0%, rgba(198,204,218,0.10), transparent 65%),
-        radial-gradient(80% 35% at 30% 12%, rgba(198,204,218,0.04), transparent 70%);
-      pointer-events: none;
-    }
-
-    /* Eyebrow pill badge — rule: microscopic pill before H1 */
-    .hero__eyebrow {
-      display: inline-flex; align-items: center; gap: 10px;
-      margin-bottom: 14px;
-      padding: 6px 12px 6px 8px;
-      background: rgba(198,204,218,0.05);
-      border: 1px solid var(--hair-2);
-      border-radius: 999px;
-    }
-    .hero__eyebrow .pulse-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--live);
-      flex: 0 0 auto;
-      box-shadow:
-        0 0 0 0 rgba(95,160,140, 0.55);
-      animation: live-pulse 2.4s cubic-bezier(0.32, 0.72, 0, 1) infinite;
-    }
-    /* Box-shadow only — never transform — so the dot stays still while
-       the ring expands outward. transform: scale on a flex child can
-       read as vertical bob even though it's center-pivoted. */
-    @keyframes live-pulse {
-      0%   { box-shadow: 0 0 0 0   rgba(95,160,140, 0.55), 0 0 4px 0 rgba(95,160,140, 0.0); }
-      55%  { box-shadow: 0 0 0 7px rgba(95,160,140, 0.0),  0 0 10px 2px rgba(95,160,140, 0.42); }
-      100% { box-shadow: 0 0 0 0   rgba(95,160,140, 0.0),  0 0 4px 0 rgba(95,160,140, 0.0); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hero__eyebrow .pulse-dot { animation: none; box-shadow: 0 0 6px rgba(95,160,140, 0.55); }
-    }
-    /* Season notation — a quiet catalogue line under the eyebrow pill */
-    .hero__season {
-      margin: -7px 2px 14px;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-    }
-    .hero__headline {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: 48px;
-      line-height: 0.98;
-      letter-spacing: -0.012em;
-      color: var(--ink);
-      margin: 0 0 22px;
-      text-wrap: balance;
-    }
-    .hero__headline .it {
-      font-style: italic;
-      color: var(--gold-bright);
-      font-weight: 400;
-    }
-    .hero__sub {
-      font-family: var(--serif);
-      font-size: 17px;
-      line-height: 1.55;
-      color: var(--ink-2);
-      max-width: 34ch;
-      margin: 0 0 18px;
-      font-weight: 400;
-      text-wrap: pretty;
-    }
-    .hero__headline--registry {
-      max-width: 15ch;
-      margin-bottom: 10px;
-      font-size: clamp(34px, 6.5vw, 42px);
-      line-height: .98;
-    }
-    .registry-paths {
-      display:grid; grid-template-columns:repeat(3,minmax(0,1fr));
-      border:1px solid var(--hair-2); border-radius:18px; overflow:hidden;
-      background:rgba(10,12,17,.58);
-    }
-    .registry-path {
-      min-width:0; min-height:96px; padding:12px;
-      display:grid; grid-template-columns:34px minmax(0,1fr); grid-template-rows:auto auto;
-      column-gap:10px; align-content:center; position:relative;
-      color:var(--ink); text-decoration:none; border-bottom:0;
-      background:color-mix(in srgb,var(--path-tone) 5%,transparent);
-      transition:background 240ms var(--ease), color 240ms var(--ease);
-    }
-    .registry-path + .registry-path { border-left:1px solid var(--hair); }
-    .registry-path:hover,
-    .registry-path:focus-visible { background:color-mix(in srgb,var(--path-tone) 11%,transparent); }
-    .registry-path:focus-visible { outline:2px solid var(--path-tone); outline-offset:-3px; }
-    .registry-path__icon {
-      grid-row:1 / 3; width:34px; height:34px; display:grid; place-items:center;
-      align-self:start; border-radius:50%; color:var(--path-tone);
-      border:1px solid color-mix(in srgb,var(--path-tone) 44%,transparent);
-      background:color-mix(in srgb,var(--path-tone) 9%,transparent);
-      font-family:var(--mono); font-size:13px;
-    }
-    .registry-path__icon img { width:100%; height:100%; display:block; border-radius:50%; }
-    .registry-path strong { font-family:'Instrument Sans',system-ui,sans-serif; font-size:13px; font-weight:580; line-height:1.2; }
-    .registry-path small { margin-top:4px; padding-right:12px; font-family:'Instrument Sans',system-ui,sans-serif; font-size:10.5px; line-height:1.3; color:var(--ink-dim); }
-    .registry-path__arrow { position:absolute; right:10px; bottom:10px; color:var(--path-tone); font-family:var(--mono); font-size:11px; }
-    @media (max-width: 479px) {
-      .registry-paths { grid-template-columns:1fr; }
-      .registry-path { min-height:68px; padding:11px 13px; }
-      .registry-path + .registry-path { border-left:0; border-top:1px solid var(--hair); }
-    }
-    .hero__cta {
-      display: flex; flex-direction: column; gap: 12px;
-      margin-bottom: 48px;
-    }
-    /* Below-card variant — sits between FeaturedCard and DetailPanel.
-       Inherits flex layout from .hero__cta but supplies its own gutter
-       so it doesn't double up with the card's bottom margin. */
-    .hero__cta--below {
-      padding: 32px 20px 8px;
-      margin: 0;
-    }
     /* Primary CTA — button-in-button architecture per skill rules */
     .btn {
       position: relative;
@@ -923,78 +799,6 @@
     .card__corner--bl { bottom: 4px; left: 4px;  border-width: 0 0 1px 1px; }
     .card__corner--br { bottom: 4px; right: 4px; border-width: 0 1px 1px 0; }
 
-    /* Museum-plinth stage: tall, restrained, no gold "spotlight" glow.
-       Figure bottom-aligns to a hairline plinth and casts a soft dark
-       contact shadow into the card surface. */
-    .glyph-stage {
-      position: relative;
-      height: 340px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      margin: 8px 0 14px;
-      padding: 12px 0 26px;
-      isolation: isolate;
-      overflow: hidden;
-    }
-    /* Soft floor fade — the lower portion of the stage darkens almost
-       imperceptibly, anchoring the figure. */
-    .glyph-stage::before {
-      content: "";
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 42%;
-      background:
-        linear-gradient(180deg,
-          transparent 0%,
-          rgba(0,0,0,0.10) 60%,
-          rgba(0,0,0,0.22) 100%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    /* Plinth hairline — single gold thread the figure stands on. */
-    .glyph-stage::after {
-      content: "";
-      position: absolute;
-      left: 14%; right: 14%; bottom: 18px;
-      height: 1px;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(198,204,218,0.55) 22%,
-        rgba(198,204,218,0.55) 78%,
-        transparent 100%);
-      pointer-events: none;
-      z-index: 0;
-    }
-    .glyph-stage .nugget-link {
-      position: relative;
-      z-index: 1;
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .glyph-stage .nugget-link:hover .nugget { transform: translateY(-3px); }
-    .glyph-stage .nugget-link:focus-visible {
-      outline: 1px solid var(--gold);
-      outline-offset: -1px;
-    }
-    .glyph-stage .nugget {
-      position: relative;
-      z-index: 1;
-      width: auto;
-      height: auto;
-      max-width: 88%;
-      max-height: 100%;
-      object-fit: contain;
-      /* Bronze-tinted contact shadow reads warmer on dark surface than pure black. */
-      filter:
-        drop-shadow(0 6px 10px rgba(20, 14, 6, 0.55))
-        drop-shadow(0 2px 4px rgba(36, 26, 12, 0.65));
-      transition: opacity 320ms var(--ease), transform 320ms var(--ease), filter 320ms var(--ease);
-    }
-    .glyph--enter { opacity: 0; transform: translateY(6px) scale(0.985); filter: blur(2px); }
 
     .card__name {
       font-family: var(--serif);
@@ -1170,49 +974,6 @@
       color: var(--ink-mute);
     }
 
-    /* ── Registry section ────────────────────────────────────── */
-    .reg__facts {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1px;
-      background: var(--hair);
-      border: 1px solid var(--hair);
-      margin-bottom: 24px;
-    }
-    .reg__fact {
-      background: var(--bg);
-      padding: 18px 16px;
-    }
-    .reg__fact-k {
-      font-family: var(--serif);
-      font-size: 28px;
-      line-height: 1;
-      color: var(--gold-bright);
-      letter-spacing: -0.01em;
-    }
-    .reg__fact-v {
-      margin-top: 6px;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-    }
-    .reg__meta {
-      margin: 0;
-      border-top: 1px solid var(--hair);
-    }
-    .reg__meta .ext {
-      font-family: var(--mono);
-      font-size: 11.5px;
-      color: var(--gold);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(198,204,218,0.32);
-    }
-    .reg__meta .ext:hover {
-      color: var(--gold-bright);
-      border-bottom-color: var(--gold);
-    }
     /* ── Identity context ───────────────────────────────────── */
     .idctx {
       position: relative;
@@ -1873,245 +1634,9 @@
       margin: 0;
     }
 
-    /* ── Catalog (Official 12) ───────────────────────────────── */
-    .cat__head {
-      display: flex; justify-content: space-between; align-items: center;
-      gap: 8px;
-    }
-    .cat__badge {
-      font-size: 8.5px !important;
-      letter-spacing: 0.20em;
-    }
-    .cat__sym--button {
-      display: block;
-      background: transparent;
-      border: 0;
-      padding: 0;
-      width: 100%;
-      cursor: pointer;
-      text-decoration: none;
-    }
-    .cat__addr {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 10px;
-      margin-top: 4px;
-      padding-top: 10px;
-      border-top: 1px solid var(--hair);
-    }
-    .cat__addr-k {
-      font-family: var(--mono);
-      font-size: 8.5px;
-      letter-spacing: 0.20em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-    }
-    .cat__addr .copychip {
-      padding: 4px 8px;
-      font-size: 10.5px;
-    }
-    /* Catalogue entry link — quiet row at the foot of each catalog card,
-       leading to the sign's dedicated lot page. */
-    .cat__entry {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 8px;
-      margin-top: 2px;
-      padding-top: 10px;
-      border-top: 1px solid var(--hair);
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color 320ms var(--ease);
-    }
-    .cat__entry:hover { color: var(--gold-bright); }
-    .cat__entry-arr {
-      color: var(--gold);
-      transition: transform 420ms var(--ease);
-    }
-    .cat__entry:hover .cat__entry-arr { transform: translateX(3px); }
-
-    /* ── Selector strip — line-art glyphs, halo on active ─────── */
-
-    .strip-wrap {
-      padding: 22px 0 22px;
-      border-top: 1px solid var(--hair);
-      border-bottom: 1px solid var(--hair);
-      background:
-        linear-gradient(180deg,
-          rgba(0,0,0,0.5) 0%,
-          rgba(0,0,0,0.7) 50%,
-          rgba(0,0,0,0.5) 100%);
-      position: relative;
-    }
-    .strip__head { display: none; }
-    .strip__viewport { position: relative; }
-    .strip__viewport::before,
-    .strip__viewport::after {
-      content: "";
-      position: absolute; top: 0; bottom: 0;
-      width: 44px;
-      pointer-events: none;
-      z-index: 2;
-      opacity: 0;
-      transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    .strip__viewport::before {
-      left: 0;
-      background: linear-gradient(90deg,
-        rgba(6,7,9,0.98) 0%,
-        rgba(6,7,9,0.76) 42%,
-        transparent 100%);
-    }
-    .strip__viewport::after {
-      right: 0;
-      background: linear-gradient(270deg,
-        rgba(6,7,9,0.98) 0%,
-        rgba(6,7,9,0.76) 42%,
-        transparent 100%);
-    }
-    .strip__viewport.can-scroll-left::before,
-    .strip__viewport.can-scroll-right::after { opacity: 1; }
-
-    .strip {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      padding: 8px 24px 10px;
-      overflow-x: auto;
-      scroll-snap-type: x proximity;
-      scrollbar-width: none;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior-x: contain;
-    }
-    .strip::-webkit-scrollbar { display: none; }
-
-    /* Pastel sign discs — quiet by default, fully present when selected. */
-    .strip__glyph {
-      flex: 0 0 auto;
-      position: relative;
-      width: 38px; height: 38px;
-      display: grid; place-items: center;
-      border-radius: 50%;
-      background: transparent;
-      border: 0;
-      padding: 0;
-      cursor: pointer;
-      scroll-snap-align: center;
-      transition: transform 140ms cubic-bezier(0.23, 1, 0.32, 1);
-    }
-    /* Tight cool spotlight on the active disc — contained halo, no
-       breathing scale, no spill onto neighbours. Crossfade is handled
-       by the opacity transition: when .is-active migrates elsewhere,
-       this fades to 0 over 720ms while the new one fades in. */
-    .strip__glyph::before {
-      content: "";
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      background:
-        radial-gradient(50% 50% at 50% 50%,
-          rgba(238, 241, 247, 0.22) 0%,
-          rgba(198, 204, 218, 0.10) 45%,
-          rgba(198, 204, 218, 0.03) 75%,
-          transparent 100%);
-      opacity: 0;
-      pointer-events: none;
-      z-index: 0;
-      transition: opacity 180ms ease;
-    }
-    .strip__glyph img {
-      position: relative;
-      z-index: 1;
-      width: 28px; height: 28px;
-      object-fit: contain;
-      border-radius: 50%;
-      opacity: 0.76;
-      filter: brightness(0.92);
-      transition: opacity 180ms ease, filter 180ms ease;
-    }
-    .strip__icon { display: block; }
-    .strip__name { display: none; }
-    @media (hover: hover) and (pointer: fine) {
-      .strip__glyph:hover img { opacity: 0.92; filter: brightness(1.02); }
-    }
-    .strip__glyph:active { transform: scale(0.92); }
-
-    .strip__glyph.is-active::before {
-      opacity: 1;
-    }
-    .strip__glyph.is-active img {
-      opacity: 1;
-      filter:
-        saturate(1.04) brightness(1.06)
-        drop-shadow(0 0 5px rgba(238, 241, 247, 0.28));
-    }
-
-    .strip__sub {
-      margin-top: 6px;
-      display: flex; align-items: center; justify-content: center;
-      gap: 14px;
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.28em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      transition: color 420ms var(--ease);
-    }
 
     /* ── Museum label / detail panel ───────────────────────────── */
 
-    .detail {
-      border: 1px solid var(--hair-2);
-      background:
-        linear-gradient(180deg, rgba(198,204,218,0.03), transparent 40%),
-        var(--surface);
-      padding: 22px 20px 24px;
-    }
-    .detail__name {
-      font-family: var(--serif);
-      font-size: 30px;
-      font-style: italic;
-      font-weight: 400;
-      color: var(--ink);
-      margin: 4px 0 4px;
-      line-height: 1;
-    }
-    .detail__ticker {
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.26em;
-      color: var(--gold);
-    }
-    .detail__symbol {
-      float: right;
-      width: 56px; height: 56px;
-      object-fit: contain;
-      border-radius: 50%;
-      margin: -4px 0 0 14px;
-      filter:
-        drop-shadow(0 0 14px rgba(198,204,218,0.32))
-        drop-shadow(0 1px 2px rgba(0,0,0,0.5));
-      transition: filter 320ms var(--ease), transform 320ms var(--ease);
-    }
-    /* Clickable glyph — routes to the sign's catalogue entry */
-    .detail__symbol-link { float: right; display: block; }
-    .detail__symbol-link .detail__symbol { float: none; }
-    .detail__symbol-link:hover .detail__symbol {
-      transform: scale(1.05);
-      filter:
-        drop-shadow(0 0 20px rgba(198,204,218,0.5))
-        drop-shadow(0 1px 2px rgba(0,0,0,0.5));
-    }
-
-    .detail__shelf {
-      display: inline-flex; align-items: center; gap: 8px;
-      color: var(--ink-2); text-decoration: none;
-      transition: color 320ms var(--ease);
-    }
-    .detail__shelf-icon { display: block; width: 20px; height: 20px; }
-    .detail__shelf:hover { color: var(--gold-bright); }
     .detail__rows {
       margin-top: 18px;
       border-top: 1px solid var(--hair);
@@ -2143,391 +1668,6 @@
       color: var(--ink-2);
       letter-spacing: 0.04em;
     }
-    .detail__bio {
-      margin-top: 18px;
-      padding: 16px 18px;
-      border: 1px solid var(--hair);
-      border-left: 1px solid var(--hair-3);
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 15.5px;
-      line-height: 1.6;
-      color: var(--ink-2);
-      background: rgba(255,255,255,0.01);
-    }
-    /* Catalogue entry link — leads from the museum label to the sign's
-       dedicated lot page (lore, provenance, acquisition). */
-    .detail__entry {
-      display: flex; align-items: center; justify-content: space-between;
-      gap: 12px;
-      margin-top: 14px;
-      padding: 13px 14px;
-      border: 1px solid var(--hair-2);
-      background: rgba(198,204,218,0.04);
-      font-family: var(--mono);
-      font-size: 10px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-2);
-      text-decoration: none;
-      transition: color 320ms var(--ease), border-color 320ms var(--ease), background 320ms var(--ease);
-    }
-    .detail__entry:hover {
-      color: var(--gold-bright);
-      border-color: var(--gold);
-      background: rgba(198,204,218,0.08);
-    }
-    .detail__entry-arr {
-      color: var(--gold);
-      transition: transform 420ms var(--ease);
-    }
-    .detail__entry:hover .detail__entry-arr { transform: translateX(3px); }
-
-    .market {
-      position: relative;
-      margin-top: 18px;
-      border: 1px solid var(--hair);
-      background:
-        linear-gradient(180deg, rgba(198,204,218,0.025), transparent 62%),
-        rgba(14,10,7,0.52);
-    }
-    /* Top-right corner mark — quietly signals "secondary panel" without
-       a heavy header. Mirrors the museum-label corner brackets but only
-       on one corner so the panel stays subordinate to the detail above. */
-    .market::after {
-      content: "";
-      position: absolute;
-      top: 0; right: 0;
-      width: 10px; height: 10px;
-      border-top: 1px solid var(--hair-3);
-      border-right: 1px solid var(--hair-3);
-      opacity: 0.7;
-      pointer-events: none;
-    }
-    .market__head {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 14px;
-      padding: 15px 16px 13px;
-      border-bottom: 1px solid var(--hair);
-    }
-    .market__label {
-      display: block;
-      margin-bottom: 6px;
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-      color: var(--ink-dim);
-    }
-    .market__copy,
-    .market__state {
-      margin: 0;
-      font-family: var(--serif);
-      font-size: 13.5px;
-      line-height: 1.45;
-      color: var(--ink-dim);
-      text-wrap: pretty;
-    }
-    .market__state {
-      font-style: italic;
-      color: var(--ink-mute);
-    }
-    .market__state::before {
-      content: "—";
-      margin-right: 8px;
-      color: var(--ink-mute);
-      font-style: normal;
-    }
-    .market__source {
-      flex: 0 0 auto;
-      margin-top: 1px;
-      font-family: var(--mono);
-      font-size: 8.5px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-    }
-    .market__source:hover {
-      color: var(--gold-bright);
-      border-bottom-color: var(--hair-3);
-    }
-    .market__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-    }
-    .market__cell {
-      min-height: 72px;
-      padding: 13px 14px 12px;
-      border-bottom: 1px solid var(--hair);
-    }
-    .market__cell:nth-child(odd) {
-      border-right: 1px solid var(--hair);
-    }
-    .market__cell:nth-last-child(-n + 2) {
-      border-bottom: 0;
-    }
-    .market__k {
-      margin-bottom: 7px;
-      font-family: var(--mono);
-      font-size: 8.5px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--ink-mute);
-    }
-    .market__v {
-      font-family: var(--serif);
-      font-size: 15px;
-      line-height: 1.15;
-      color: var(--ink-2);
-      font-style: italic;
-    }
-    .market__v--mono {
-      font-family: var(--mono);
-      font-style: normal;
-      font-size: 11.5px;
-      letter-spacing: 0.03em;
-    }
-    .market__body {
-      padding: 15px 16px 16px;
-    }
-
-    /* ── Philosophy — asymmetric pull-quote layout ────────────── */
-
-    .phil {
-      padding: 96px 20px 88px;
-      background:
-        radial-gradient(80% 60% at 30% 0%, rgba(62,99,120,0.07), transparent 60%),
-        linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 100%);
-      border-top: 1px solid var(--hair);
-      border-bottom: 1px solid var(--hair);
-      position: relative;
-      isolation: isolate;
-    }
-    /* The astronomical clock — quiet backdrop behind the thesis */
-    .phil::before {
-      content: "";
-      position: absolute; inset: 0;
-      z-index: -1;
-      background-image: url('/assets/art/zodiac-clock-1280.jpg');
-      background-size: cover;
-      background-position: 30% 36%;
-      opacity: 0.14;
-      pointer-events: none;
-      -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 70%, transparent 100%);
-      mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 70%, transparent 100%);
-    }
-    .phil__sup {
-      display: flex; align-items: center; gap: 12px;
-      margin-bottom: 28px;
-      padding-right: 12%;
-    }
-    .phil__sup .line { flex: 1; height: 1px; background: var(--hair); }
-    .phil__body {
-      font-family: var(--serif);
-      font-size: 22px;
-      line-height: 1.45;
-      color: var(--ink);
-      letter-spacing: -0.005em;
-      max-width: 30ch;
-      text-wrap: pretty;
-    }
-    .phil__body .dc {
-      font-family: var(--serif);
-      float: left;
-      font-size: 76px;
-      line-height: 0.78;
-      color: var(--gold-bright);
-      padding: 8px 14px 0 0;
-      font-style: italic;
-      text-shadow: 0 0 18px rgba(198,204,218,0.25);
-    }
-    .phil__sig {
-      margin-top: 36px;
-      margin-left: 28%;
-      padding-top: 16px;
-      border-top: 1px solid var(--hair);
-      display: flex; justify-content: space-between; align-items: baseline;
-      font-family: var(--mono); font-size: 10px;
-      letter-spacing: 0.22em; color: var(--ink-mute);
-      text-transform: uppercase;
-    }
-    .phil__more {
-      margin-top: 30px;
-      display: flex; justify-content: space-between; align-items: center; gap: 12px;
-      max-width: 560px;
-      border: 1px solid var(--hair-2);
-      padding: 16px 16px;
-      text-decoration: none;
-      font-family: var(--mono); font-size: 10px; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--ink-2);
-      background: rgba(10,7,5, 0.55);
-      transition: border-color 320ms var(--ease), color 320ms var(--ease);
-    }
-    .phil__more:hover { border-color: var(--gold); color: var(--gold-bright); }
-    .phil__more-arr { color: var(--gold); transition: transform 420ms var(--ease); }
-    .phil__more:hover .phil__more-arr { transform: translateX(3px); }
-
-    /* ── Twelve signs catalog ──────────────────────────────────── */
-
-    .cat {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .cat__item {
-      position: relative;
-      background: var(--surface);
-      border: 1px solid var(--hair);
-      padding: 14px 12px 12px;
-      text-align: left;
-      transition:
-        border-color 420ms var(--ease),
-        background 420ms var(--ease),
-        box-shadow 420ms var(--ease),
-        transform 220ms var(--ease);
-      display: flex; flex-direction: column; gap: 8px;
-    }
-    .cat__item:hover {
-      border-color: var(--hair-2);
-      transform: translateY(-2px);
-      box-shadow: 0 14px 26px -18px rgba(0,0,0,0.7);
-    }
-    .cat__item:active { transform: scale(0.98); }
-    .cat__item:first-child { margin-top: 0; }
-    .cat__item:nth-child(2) { margin-top: 0; }
-    .cat__item.is-active {
-      border-color: var(--gold);
-      background: linear-gradient(180deg, rgba(198,204,218,0.05), transparent 60%), var(--surface-2);
-      box-shadow: 0 0 0 1px rgba(198,204,218,0.2), 0 0 24px -8px rgba(198,204,218,0.35);
-    }
-    .cat__no {
-      font-family: var(--display);
-      font-weight: 500;
-      font-size: 9px;
-      letter-spacing: 0.14em;
-      color: var(--ink-mute);
-    }
-    .cat__sym {
-      position: relative;
-      height: 130px;
-      display: flex; align-items: flex-end; justify-content: center;
-      margin: 4px 0 10px;
-      padding: 6px 0 16px;
-      overflow: hidden;
-      isolation: isolate;
-    }
-    .cat__sym::before {
-      content: "";
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 38%;
-      background: linear-gradient(180deg,
-        transparent 0%,
-        rgba(0,0,0,0.10) 60%,
-        rgba(0,0,0,0.22) 100%);
-      z-index: 0;
-      pointer-events: none;
-    }
-    .cat__sym::after {
-      content: "";
-      position: absolute;
-      left: 16%; right: 16%; bottom: 10px;
-      height: 1px;
-      background: linear-gradient(90deg,
-        transparent 0%,
-        rgba(198,204,218,0.42) 22%,
-        rgba(198,204,218,0.42) 78%,
-        transparent 100%);
-      z-index: 0;
-      pointer-events: none;
-    }
-    .cat__sym img {
-      position: relative; z-index: 1;
-      width: auto;
-      height: 100%;
-      max-width: 92%;
-      object-fit: contain;
-      filter:
-        drop-shadow(0 4px 6px rgba(20, 14, 6, 0.5))
-        drop-shadow(0 1px 2px rgba(36, 26, 12, 0.6));
-      transition: transform 420ms var(--ease), filter 320ms var(--ease);
-    }
-    .cat__item:hover .cat__sym img,
-    .cat__item.is-active .cat__sym img {
-      transform: scale(1.04);
-      filter:
-        drop-shadow(0 5px 8px rgba(20, 14, 6, 0.6))
-        drop-shadow(0 2px 3px rgba(36, 26, 12, 0.7));
-    }
-    .cat__name {
-      font-family: var(--serif);
-      font-style: italic;
-      font-size: 22px;
-      color: var(--ink);
-      line-height: 1;
-      margin: 4px 0 0;
-    }
-    .cat__tk {
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.22em;
-      color: var(--gold);
-    }
-    .cat__meta {
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.14em;
-      color: var(--ink-mute);
-      text-transform: uppercase;
-      margin-top: 4px;
-    }
-    /* Glyph rail — every icon opens its catalogue entry */
-    .cat__lots {
-      margin-top: 24px;
-      display: grid;
-      grid-template-columns: repeat(6, 1fr);
-      gap: 8px;
-    }
-    .cat__lot {
-      display: grid; place-items: center;
-      aspect-ratio: 1;
-      border: 1px solid var(--hair);
-      background: var(--surface);
-      transition:
-        border-color 320ms var(--ease),
-        background 320ms var(--ease),
-        transform 220ms var(--ease);
-    }
-    .cat__lot img {
-      width: 54%; height: 54%;
-      object-fit: contain;
-      opacity: 0.8;
-      transition: opacity 320ms var(--ease), transform 420ms var(--ease);
-    }
-    .cat__lot:hover {
-      border-color: var(--hair-3);
-      background: var(--surface-2);
-      transform: translateY(-2px);
-    }
-    .cat__lot:active { transform: scale(0.96); }
-    .cat__lot:hover img { opacity: 1; transform: scale(1.07); }
-    .cat__lots-note {
-      margin: 12px 0 0;
-      font-family: var(--mono); font-size: 9px;
-      letter-spacing: 0.2em; text-transform: uppercase;
-      color: var(--ink-mute);
-    }
-    .cat__shelf-link {
-      color: var(--ink-2); text-decoration: none;
-      border-bottom: 1px solid var(--hair-2);
-    }
-    .cat__shelf-link:hover { color: var(--ink); }
-    /* (.cat__price retired: catalog cards no longer show financial data.
-       Address row is now rendered by .cat__addr — see new-section CSS.) */
 
     /* ── The Pulse — attention instrument ───────────────────── */
     .pulse__statement {
@@ -3160,44 +2300,6 @@
       max-width: 52ch;
     }
 
-    /* ── Closing ───────────────────────────────────────────────── */
-
-    .close {
-      padding: 112px 20px 96px;
-      text-align: center;
-      position: relative;
-      background:
-        radial-gradient(60% 50% at 50% 0%, rgba(198,204,218,0.10), transparent 70%),
-        var(--bg);
-    }
-    .close__sigil {
-      font-family: var(--serif);
-      color: var(--gold);
-      font-size: 22px;
-      letter-spacing: 1.2em;
-      padding-left: 1.2em;
-      opacity: 0.65;
-      margin-bottom: 28px;
-      font-variant-emoji: text;
-    }
-    .close__head {
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: 34px;
-      line-height: 1.1;
-      color: var(--ink);
-      margin: 0 0 14px;
-      text-wrap: balance;
-    }
-    .close__head .it { font-style: italic; color: var(--gold-bright); }
-    .close__sub {
-      font-family: var(--serif);
-      font-size: 16px;
-      color: var(--ink-2);
-      max-width: 28ch;
-      margin: 0 auto 32px;
-      line-height: 1.5;
-    }
 
     /* ── Footer ────────────────────────────────────────────────── */
 
@@ -3447,12 +2549,12 @@
     /* Scroll-driven entry — IntersectionObserver-controlled */
     .reveal {
       opacity: 0;
-      transform: translateY(18px);
+      transform: translateY(12px);
       filter: blur(6px);
       transition:
-        opacity 900ms var(--ease),
-        transform 900ms var(--ease),
-        filter 900ms var(--ease);
+        opacity 600ms var(--ease),
+        transform 600ms var(--ease),
+        filter 600ms var(--ease);
       will-change: opacity, transform, filter;
     }
     .reveal.is-in {
@@ -3472,10 +2574,7 @@
 
     /* ── Compact width tweaks (≤ 380px / iPhone SE-ish) ────────── */
     @media (max-width: 380px) {
-      .hero__headline { font-size: 38px; }
-      .glyph-stage { height: 300px; padding: 8px 0 22px; }
       .card__name { font-size: 32px; }
-      .close__head { font-size: 30px; }
     }
 
     /* ── Desktop — editorial expansion (≥ 1020px) ────────────────
@@ -3493,128 +2592,6 @@
         box-shadow: 0 0 0 1px var(--hair) inset;
       }
 
-      /* Hero — words left, artifact right */
-      .hero {
-        display: grid;
-        grid-template-columns: minmax(0, 1.04fr) minmax(0, 0.96fr);
-        column-gap: 84px;
-        align-items: start;
-        padding: 104px 72px 100px;
-      }
-      .hero > * { grid-column: 1; min-width: 0; }
-      .hero > .card { grid-column: 2; grid-row: 1 / span 5; align-self: start; }
-      html.gallery-live .hero {
-        grid-template-columns: minmax(260px, .62fr) minmax(0, 1.38fr);
-        column-gap: 48px;
-        align-items: center;
-        padding: 58px 72px 62px;
-      }
-      html.gallery-live .hero > * { grid-column: 1; }
-      html.gallery-live .registry-paths {
-        grid-column: 2;
-        grid-row: 1 / span 4;
-        align-self: center;
-      }
-      html.gallery-live .hero__headline--registry {
-        max-width: 12ch;
-        margin-bottom: 12px;
-        font-size: clamp(42px, 4.2vw, 58px);
-        line-height: .96;
-      }
-      html.gallery-live .hero__sub {
-        max-width: 30ch;
-        margin-bottom: 0;
-      }
-      .hero__eyebrow { justify-self: start; }
-      .hero__headline { font-size: clamp(64px, 6.4vw, 86px); margin-bottom: 26px; }
-      .hero__sub { font-size: 19px; max-width: 42ch; margin-bottom: 40px; }
-      .glyph-stage { height: 400px; }
-
-      /* Desktop gets a complete catalogue index, not a clipped mobile rail.
-         Every sign stays visible and directly selectable; no scroll-jail,
-         decorative arrows, or hidden choices. */
-      .strip-wrap {
-        align-self: start;
-        padding: 18px 0 16px;
-        border-color: var(--hair-2);
-        background: transparent;
-      }
-      .strip__head {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        gap: 16px;
-        margin-bottom: 14px;
-        font-family: var(--mono);
-        font-size: 9px;
-        letter-spacing: 0.22em;
-        text-transform: uppercase;
-        color: var(--ink-mute);
-      }
-      .strip__status {
-        color: var(--ink-2);
-        letter-spacing: 0.16em;
-        white-space: nowrap;
-      }
-      .strip__viewport::before,
-      .strip__viewport::after { display: none; }
-      .strip {
-        display: grid;
-        grid-template-columns: repeat(6, minmax(0, 1fr));
-        gap: 8px;
-        padding: 0;
-        overflow: visible;
-        scroll-snap-type: none;
-      }
-      .strip__glyph {
-        width: 100%;
-        height: 68px;
-        grid-template-rows: 34px auto;
-        align-content: center;
-        gap: 5px;
-        border: 1px solid transparent;
-        border-radius: 2px;
-        transition:
-          transform 140ms cubic-bezier(0.23, 1, 0.32, 1),
-          border-color 180ms ease,
-          background-color 180ms ease;
-      }
-      .strip__glyph::before {
-        inset: auto;
-        top: 5px;
-        left: 50%;
-        width: 40px;
-        height: 40px;
-        transform: translateX(-50%);
-      }
-      .strip__glyph img { width: 30px; height: 30px; }
-      .strip__name {
-        display: block;
-        position: relative;
-        z-index: 1;
-        overflow: hidden;
-        font-family: var(--mono);
-        font-size: 8px;
-        letter-spacing: 0.08em;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        color: var(--ink-dim);
-      }
-      .strip__glyph.is-active {
-        border-color: var(--hair-2);
-        background: rgba(238,241,247,0.055);
-        box-shadow: inset 0 1px 0 rgba(238,241,247,0.08);
-      }
-      .strip__glyph.is-active .strip__name { color: var(--ink); }
-      .strip__sub { display: none; }
-
-      .hero__cta--below {
-        flex-direction: row;
-        justify-content: center;
-        gap: 18px;
-        padding: 0 72px 36px;
-      }
-      .hero__cta--below .btn { min-width: 300px; }
 
       /* Sections — editorial split: sticky № rail left, content right */
       .sec {
@@ -3640,7 +2617,6 @@
       .sec__lede { font-size: 19.5px; max-width: 56ch; }
       .sec > .btn { justify-self: start; max-width: 460px; }
 
-      .reg__facts { grid-template-columns: repeat(4, 1fr); }
 
       .idctx__statement,
       .builders__statement,
@@ -3653,12 +2629,8 @@
       .pulse__cell--wide { grid-column: 1 / -1; }
       .pulse__bar { grid-template-columns: 120px 1fr 40px; }
 
-      .detail__bio { max-width: 62ch; }
       .faq__a { max-width: 64ch; }
 
-      .cat { grid-template-columns: repeat(3, 1fr); gap: 12px; }
-      .cat__sym { height: 150px; }
-      .cat__lots { grid-template-columns: repeat(12, 1fr); }
 
       /* Venue rail becomes a grid — no horizontal scroll on desktop */
       .access__rail-wrap { margin: 0 0 22px; }
@@ -3674,14 +2646,7 @@
       .access__rail .access__card { width: auto; }
 
       /* Editorial set pieces — scale up, keep their asymmetry */
-      .phil { padding: 148px max(72px, calc((100% - 820px) / 2)) 140px; }
-      .phil__body { font-size: 30px; max-width: 34ch; }
-      .phil__body .dc { font-size: 100px; }
 
-      .close { padding: 168px 72px 148px; }
-      .close__head { font-size: 54px; }
-      .close__sub { font-size: 19px; max-width: 36ch; }
-      .close .btn { max-width: 460px; margin-inline: auto; }
 
       .ftr { padding: 48px 72px 64px; }
 
@@ -3748,6 +2713,7 @@
       transform: scale(var(--mag)); transform-origin: bottom center;
       transition: transform 160ms var(--ease-soft);
     }
+    .gband[data-gallery-input='keyboard'] .rail__tick picture { transition: none; }
     .gband .rail__tick:focus-visible { outline: 2px solid var(--sign, var(--ink-2)); outline-offset: 2px; }
     .gband .rail__tick picture { display: block; line-height: 0; }
     .gband .rail__tick img { width: 26px; height: 26px; border-radius: 50%; display: block; }
@@ -4097,7 +3063,7 @@
 
     .consumer-explorer {
       position: relative;
-      padding: clamp(60px, 8vw, 96px) clamp(20px, 6vw, 72px) clamp(68px, 8vw, 102px);
+      padding: clamp(44px, 6vw, 72px) clamp(20px, 6vw, 72px) clamp(48px, 6.5vw, 84px);
       overflow: clip;
       border-bottom: 1px solid var(--hair-2);
       background:
@@ -4138,33 +3104,17 @@
       margin-top: clamp(42px, 6vw, 68px);
     }
     .consumer-signs {
-      position: relative;
-      width: min(100%, 430px);
-      aspect-ratio: 1;
-      margin-inline: auto;
-      border-radius: 50%;
-      background:
-        radial-gradient(circle at center, transparent 0 29%, var(--hair) 29.2% 29.6%, transparent 29.8% 46%, var(--hair-2) 46.2% 46.6%, transparent 46.8%),
-        radial-gradient(circle at center, color-mix(in srgb, var(--active-sign, #E0A9B4) 8%, transparent), transparent 58%);
-    }
-    .consumer-signs::after {
-      content: 'THE TWELVE';
-      position: absolute; inset: 0;
-      display: grid; place-items: center;
-      color: var(--ink-mute);
-      font-family: var(--mono);
-      font-size: 9px;
-      letter-spacing: .34em;
-      pointer-events: none;
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 8px;
+      width: 100%;
     }
     .consumer-sign {
-      position: absolute;
-      left: 50%; top: 50%;
       display: grid;
       grid-template-rows: 54px auto;
       place-items: center;
       gap: 5px;
-      width: 82px; min-height: 82px;
+      width: 100%; min-height: 84px;
       padding: 4px;
       color: var(--ink-dim);
       border: 0;
@@ -4173,8 +3123,7 @@
       font-family: var(--sans);
       font-size: 11px;
       cursor: pointer;
-      transform: translate(-50%, -50%);
-      transition: color 380ms var(--ease-soft), background 380ms var(--ease-soft), transform 380ms var(--ease-soft);
+      transition: color 380ms var(--ease-soft), background 380ms var(--ease-soft);
     }
     .consumer-sign img {
       width: 52px; height: 52px;
@@ -4190,22 +3139,9 @@
       transform: scale(1.1);
       box-shadow: 0 0 0 7px color-mix(in srgb, var(--sign-tone, #fff) 16%, transparent);
     }
-    .consumer-sign:nth-child(1)  { left: 50%; top: 5%; }
-    .consumer-sign:nth-child(2)  { left: 73%; top: 11%; }
-    .consumer-sign:nth-child(3)  { left: 89%; top: 28%; }
-    .consumer-sign:nth-child(4)  { left: 95%; top: 50%; }
-    .consumer-sign:nth-child(5)  { left: 89%; top: 72%; }
-    .consumer-sign:nth-child(6)  { left: 73%; top: 89%; }
-    .consumer-sign:nth-child(7)  { left: 50%; top: 95%; }
-    .consumer-sign:nth-child(8)  { left: 27%; top: 89%; }
-    .consumer-sign:nth-child(9)  { left: 11%; top: 72%; }
-    .consumer-sign:nth-child(10) { left: 5%; top: 50%; }
-    .consumer-sign:nth-child(11) { left: 11%; top: 28%; }
-    .consumer-sign:nth-child(12) { left: 27%; top: 11%; }
 
     .consumer-preview {
       position: relative;
-      min-height: 430px;
       display: grid;
       grid-template-columns: minmax(120px, .42fr) minmax(0, .58fr);
       align-items: center;
@@ -4219,13 +3155,37 @@
         rgba(15,18,26,.88);
       box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
     }
-    .consumer-preview__art { display: grid; place-items: center; }
-    .consumer-preview__art img {
-      width: clamp(116px, 15vw, 178px);
+    /* The record's plate: the sign's gold sculpture on a hairline plinth,
+       with its pastel disc — the mark wallets show — seated at the corner. */
+    .consumer-preview__art {
+      position: relative;
+      display: grid;
+      place-items: end center;
+      align-self: stretch;
+      padding-bottom: 18px;
+    }
+    .consumer-preview__art::before {
+      content: '';
+      position: absolute;
+      left: 8%; right: 8%; bottom: 12px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--active-sign, #E0A9B4) 45%, var(--hair-3)) 24%, color-mix(in srgb, var(--active-sign, #E0A9B4) 45%, var(--hair-3)) 76%, transparent);
+      pointer-events: none;
+    }
+    .consumer-preview__sculpture {
+      width: clamp(150px, 17vw, 224px);
       height: auto;
       display: block;
+      filter:
+        drop-shadow(0 10px 16px rgba(10, 8, 4, 0.55))
+        drop-shadow(0 2px 5px rgba(24, 18, 8, 0.6));
+    }
+    .consumer-preview__disc img {
+      position: absolute;
+      left: 4px; bottom: 4px;
+      width: 44px; height: 44px;
       border-radius: 50%;
-      box-shadow: 0 0 0 12px color-mix(in srgb, var(--active-sign, #E0A9B4) 8%, transparent);
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--active-sign, #E0A9B4) 14%, transparent), 0 4px 14px rgba(0,0,0,.45);
     }
     .consumer-preview__name {
       font-size: clamp(48px, 6vw, 72px);
@@ -4238,8 +3198,7 @@
       flex-wrap: wrap;
       gap: 5px 12px;
     }
-    .consumer-preview__dates,
-    .consumer-preview__facts {
+    .consumer-preview__dates {
       margin: 12px 0 0;
       color: var(--ink-dim);
       font-family: var(--mono);
@@ -4248,24 +3207,78 @@
       line-height: 1.5;
       text-transform: uppercase;
     }
-    .consumer-preview__facts {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 16px;
+    .consumer-preview__status {
+      padding: 3px 9px;
+      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 42%, var(--hair));
+      border-radius: 999px;
+      color: var(--ink-2);
     }
-    .consumer-preview__facts div { min-width: 0; }
-    .consumer-preview__facts dt { color: var(--ink-mute); font-size: 7.5px; }
-    .consumer-preview__facts dd {
-      margin: 4px 0 0;
-      overflow: hidden;
+    .consumer-preview__token {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 6px 14px;
+      margin: 14px 0 0;
       color: var(--ink-2);
       font-family: var(--sans);
-      font-size: 11px;
-      letter-spacing: 0;
-      text-overflow: ellipsis;
-      text-transform: none;
-      white-space: nowrap;
+      font-size: 13.5px;
+    }
+    .consumer-preview__ticker {
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .08em;
+    }
+    .consumer-preview__network {
+      color: var(--ink-dim);
+      font-size: 12px;
+    }
+    .consumer-preview__quote {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      gap: 8px 14px;
+      min-height: 30px;
+      margin: 18px 0 0;
+    }
+    .consumer-quote__price {
+      color: var(--ink);
+      font-family: var(--mono);
+      font-size: 30px;
+      letter-spacing: .02em;
+    }
+    .consumer-season {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 10px;
+      margin: 20px 0 0;
+      color: var(--ink-2);
+      font-size: 13px;
+    }
+    .consumer-season img { border-radius: 50%; }
+    .consumer-season__name { color: var(--ink); font-family: var(--serif); font-size: 15px; }
+    .consumer-season__sep { color: var(--ink-mute); }
+    .consumer-season__quote { display: inline-flex; align-items: center; gap: 7px; }
+    .consumer-season__ticker { color: var(--ink-dim); font-family: var(--mono); font-size: 10.5px; letter-spacing: .08em; }
+    .consumer-season__change { font-family: var(--mono); font-size: 10.5px; }
+    .consumer-quote__change {
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    .consumer-quote__approx {
+      display: block;
+      margin-top: 7px;
+      color: var(--ink-2);
+      font-size: 13.5px;
+    }
+    .consumer-quote__label,
+    .consumer-quote__state {
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
     .consumer-preview__lore {
       max-width: 39ch;
@@ -4281,39 +3294,634 @@
     }
     .consumer-preview__actions .btn {
       min-height: 48px; height: 48px;
+      justify-content: center;
+      gap: 10px;
       border-radius: 999px;
-      padding-left: 18px;
+      padding: 0 24px;
       font-family: var(--sans);
       font-size: 14px;
       font-weight: 550;
       letter-spacing: 0;
       text-transform: none;
     }
+    .consumer-preview__actions .btn .arr { font-size: 13px; }
     .consumer-preview__actions .btn::before { display: none; }
-    .consumer-preview__actions > a:not(.btn) {
+    .consumer-preview__actions .copychip {
+      min-height: 48px; height: 48px;
       display: inline-flex;
       align-items: center;
-      min-height: 44px;
-      color: var(--ink-2);
-      font-size: 13px;
-    }
-    .consumer-gallery-toggle {
-      position: relative; z-index: 1;
-      min-height: 44px;
-      display: inline-flex; align-items: center; gap: 9px;
-      margin: 28px 0 0 auto;
-      padding: 0;
-      color: var(--ink-2);
-      border: 0;
+      gap: 9px;
+      padding: 0 20px;
+      border: 1px solid var(--hair-3);
+      border-radius: 999px;
       background: transparent;
+      color: var(--ink-2);
       font-family: var(--sans);
       font-size: 13px;
+    }
+    .consumer-preview__actions .copychip .copychip__text {
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing: 0;
+    }
+    /* The stage — the page's opening scene on wide screens. The film hero
+       stands down and the gallery carries the headline itself: eyebrow and
+       title at the top, the twelve discs beneath them, the chosen sculpture
+       standing large in the void, and a museum placard at its feet holding
+       exactly what a label should — name, dates, price, and two doors. The
+       pastel rail paints immediately from inert placeholder discs; the WebGL
+       canvas fades in once the scene bundle mounts and takes the rail over. */
+    .consumer-explorer--stage {
+      display: block;
+      padding: clamp(84px, 10vh, 120px) 24px clamp(44px, 6vh, 72px);
+      border-bottom: 0;
+      background: none;
+      /* The opening scene runs edge to edge: break out of the 1180px column
+         the rest of the registry reads in. */
+      width: 100vw;
+      margin-inline: calc(50% - 50vw);
+    }
+    .stage-hero__head {
+      position: relative; z-index: 2;
+      padding: clamp(30px, 4.5vh, 52px) 24px 0;
+      text-align: center;
+    }
+    .stage-hero__eyebrow {
+      display: inline-block;
+      color: var(--ink-mute);
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      /* It is a link, but a rule under a mono-caps line directly above the
+         title reads as a mistake — so the underline waits for intent. */
+      text-decoration: none;
+    }
+    .stage-hero__eyebrow:hover { color: var(--ink-2); text-decoration: underline; }
+    .stage-hero__title {
+      /* Two lines: the roman states, the italic answers. Set as one line the
+         device disappears and the title runs to both edges of the plate. */
+      margin: 18px 0 0;
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(38px, 4.1vw, 60px);
+      line-height: 1.02;
+      letter-spacing: -.014em;
+      color: var(--ink);
+      text-wrap: balance;
+    }
+    .stage-hero__title .it { font-style: italic; color: var(--ink-2); }
+    .stage-hero__line {
+      max-width: 54ch;
+      margin: 18px auto 0;
+      color: var(--ink-dim);
+      font-size: 14.5px;
+      line-height: 1.6;
+    }
+    /* The live season is an instrument, not a promotional badge: identity,
+       market context and time remaining sit together in one quiet readout. */
+    .season-now {
+      --season-sign: var(--active-sign, #E0A9B4);
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(180px, 1.2fr) minmax(150px, 1fr) minmax(170px, 1fr);
+      align-items: center;
+      width: min(720px, calc(100% - 40px));
+      margin: 20px auto 0;
+      padding: 10px 12px 12px;
+      overflow: hidden;
+      border: 1px solid color-mix(in srgb, var(--season-sign) 28%, var(--hair-2));
+      border-radius: 15px;
+      background:
+        radial-gradient(90% 180% at 0% 50%, color-mix(in srgb, var(--season-sign) 10%, transparent), transparent 72%),
+        rgba(7,9,13,.52);
+      color: var(--ink-2);
+      text-align: left;
+      box-shadow: inset 0 1px 0 rgba(238,241,247,.035);
+    }
+    .season-now__identity,
+    .season-now__market,
+    .season-now__countdown { min-width: 0; }
+    .season-now__identity {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+    .season-now__identity picture,
+    .season-now__identity img {
+      display: block;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+    }
+    .season-now__identity img {
+      box-shadow: 0 0 0 5px color-mix(in srgb, var(--season-sign) 11%, transparent);
+    }
+    .season-now__identity > span,
+    .season-now__market,
+    .season-now__countdown {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .season-now__market,
+    .season-now__countdown {
+      min-height: 34px;
+      justify-content: center;
+      padding-left: 20px;
+      border-left: 1px solid var(--hair);
+    }
+    .season-now__kicker {
+      color: var(--ink-mute);
+      font-family: var(--mono);
+      font-size: 7.5px;
+      letter-spacing: .17em;
+      line-height: 1.3;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .season-now strong { font-weight: 500; }
+    .season-now__identity strong {
+      color: var(--ink);
+      font-family: var(--serif);
+      font-size: 18px;
+      line-height: 1.05;
+    }
+    .season-now__market-row {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      min-width: 0;
+    }
+    .season-now__market-row strong,
+    .season-now__countdown strong {
+      color: var(--ink-2);
+      font-family: var(--mono);
+      font-size: 11px;
+      line-height: 1.35;
+      white-space: nowrap;
+    }
+    .season-now__change {
+      font-family: var(--mono);
+      font-size: 9px;
+      white-space: nowrap;
+    }
+    .season-now__ends {
+      color: var(--ink-mute);
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .season-now__progress {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 0;
+      height: 1px;
+      overflow: hidden;
+      background: rgba(198,204,218,.07);
+    }
+    .season-now__progress > span {
+      display: block;
+      width: 100%;
+      height: 100%;
+      transform-origin: left center;
+      background: linear-gradient(90deg, color-mix(in srgb, var(--season-sign) 62%, var(--ink-dim)), var(--season-sign));
+      transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    /* The plate. One framed room holding the headline, the twelve, the piece
+       on show, and its label — wearing the chosen sign's pastel on its edge
+       and in the light at its shoulder, and changing colour as you walk. */
+    .consumer-explorer--stage .gband--consumer {
+      position: relative; z-index: 1;
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 1400px;
+      height: clamp(620px, 88svh, 980px);
+      margin-inline: auto;
+      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
+      border-radius: 26px;
+      overflow: clip;
+      background:
+        radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
+        rgba(15,18,26,.88);
+      box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
+      transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
+    }
+    /* Below the stage breakpoint the plate is the whole opening screen. */
+    .consumer-explorer:not(.consumer-explorer--stage) {
+      display: block;
+      padding: clamp(76px, 11vh, 104px) 16px clamp(32px, 5vh, 56px);
+      border-bottom: 0;
+      background: none;
+      width: 100vw;
+      margin-inline: calc(50% - 50vw);
+    }
+    .consumer-explorer .gband--flat {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      max-width: 1400px;
+      height: clamp(560px, 92svh, 980px);
+      margin-inline: auto;
+      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 34%, var(--hair));
+      border-radius: 26px;
+      overflow: clip;
+      background:
+        radial-gradient(78% 92% at 14% 6%, color-mix(in srgb, var(--active-sign, #E0A9B4) 15%, transparent), transparent 66%),
+        rgba(15,18,26,.88);
+      box-shadow: 0 28px 80px -54px color-mix(in srgb, var(--active-sign, #E0A9B4) 58%, transparent);
+      transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
+    }
+    /* Twelve discs will not fit across a phone, so the rail scrolls. */
+    .gband--flat .rail {
+      /* The flat plate is what touch gets, so every disc is a 44px target
+         rather than the 32px the pointer-driven stage can afford. */
+      --tick: 44px;
+      max-width: calc(100% - 24px);
+      overflow-x: auto;
+      scroll-snap-type: x proximity;
+      scrollbar-width: none;
+      /* No pill. Twelve discs never fit a phone, and a hard rounded edge
+         slicing circles in half reads as broken rather than as more. They
+         dissolve at both ends instead, which is what "keep going" looks
+         like. */
+      border: 0;
+      background: none;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      padding: 8px 2px;
+      gap: 8px;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 11%, #000 89%, transparent);
+    }
+    .gband--flat .rail::-webkit-scrollbar { display: none; }
+    /* The room dims around the sign you are on, so the choice is legible at
+       a glance among eleven equally bright pastels. */
+    .gband--flat .rail__tick { opacity: .58; transition: opacity 260ms var(--ease-soft); }
+    .gband--flat .rail__tick[aria-pressed='true'] { opacity: 1; color: var(--ink); }
+    .gband--flat .rail__tick[aria-pressed='true'] picture { transform: scale(1.16); }
+    .gband--flat .rail__tick[aria-pressed='true'] img {
+      box-shadow:
+        0 0 0 2px color-mix(in srgb, var(--sign, #E0A9B4) 62%, transparent),
+        0 0 0 6px color-mix(in srgb, var(--sign, #E0A9B4) 16%, transparent);
+    }
+    .gband--flat .rail__tick:hover { opacity: .82; }
+    @media (hover: none) { .gband--flat .rail__tick:hover { opacity: .58; } }
+    .gband--flat .rail__tick[aria-pressed='true']:hover { opacity: 1; }
+    /* The picker. Deliberately NOT .gband__chrome: the scene reads that
+       element's offsetTop as the floor of the band it may paint into, and
+       chrome above the canvas would leave it nothing to paint. */
+    .gband__rail-top {
+      display: flex;
+      justify-content: center;
+      /* The dock's swell grows upward from each disc's foot, so the strip
+         carries its own headroom instead of borrowing the canvas's. */
+      padding: 18px 20px 2px;
+    }
+    .gband--consumer .gband__mount {
+      position: relative;
+      inset: auto;
+      flex: 1 1 auto;
+      min-height: 360px;
+    }
+    /* The placard names the piece in full, so the hover label the standalone
+       band needs would only say it twice. */
+    .gband--consumer .gband__name { display: none; }
+    .gband--consumer [data-gallery-canvas] {
+      opacity: 0;
+      transition: opacity 700ms var(--ease-soft);
+    }
+    .gband--consumer.is-ready [data-gallery-canvas] { opacity: 1; }
+    .rail__tick--placeholder { pointer-events: none; opacity: .55; }
+    /* The flat plate — the same room for anyone whose machine cannot paint
+       the scene. The twelve are the renders the sculptures were traced from,
+       on a rail you swipe: the piece in the middle is the one being offered,
+       and choosing it opens its trade. No Three.js is fetched here, ever. */
+    .stage-carousel {
+      position: relative;
+      flex: 1 1 auto;
+      min-height: 0;
+      display: flex;
+      align-items: stretch;
+    }
+    .stage-carousel__track {
+      list-style: none;
+      margin: 0;
+      /* The light falls from above and the piece stands on the floor of the
+         room, just clear of its label — the same composition the lit scene
+         gives it on a desktop. */
+      padding: 0 calc(50% - (var(--slide-w) / 2)) clamp(72px, 11vh, 104px);
+      width: 100%;
+      display: flex;
+      align-items: flex-end;
+      gap: clamp(12px, 3vw, 40px);
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .stage-carousel__track::-webkit-scrollbar { display: none; }
+    .stage-carousel {
+      /* The render carries its own air, so the slide runs wider than the
+         sculpture inside it — this is the size that makes the piece read. */
+      --slide-w: clamp(260px, 86vw, 460px);
+    }
+    .stage-carousel__slide {
+      flex: 0 0 var(--slide-w);
+      scroll-snap-align: center;
+      scroll-snap-stop: always;
+      display: flex;
+      justify-content: center;
+    }
+    .stage-carousel__figure {
+      position: relative;
+      display: block;
+      width: 100%;
+      padding: 0 0 26px;
+      border: 0;
+      background: none;
+      cursor: pointer;
+      /* The room recedes either side of the piece on offer, the same fall-off
+         the lit scene gives its neighbours. */
+      opacity: .34;
+      transform: scale(.72);
+      transform-origin: bottom center;
+      transition: opacity 420ms var(--ease-soft), transform 420ms var(--ease-soft);
+    }
+    .stage-carousel__slide.is-active .stage-carousel__figure { opacity: 1; transform: scale(1); }
+    .stage-carousel__art {
+      position: relative; z-index: 1;
+      display: block;
+      width: 100%; height: auto;
+      filter: drop-shadow(0 24px 34px rgba(0,0,0,.55));
+    }
+    /* The plinth the render was lit on, and the pool of its own colour. */
+    .stage-carousel__plinth {
+      position: absolute; left: 50%; bottom: 16px;
+      width: 62%; height: 16px;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(closest-side, rgba(6,7,9,.85), transparent 78%);
+    }
+    .stage-carousel__slide.is-active .stage-carousel__figure::before {
+      content: '';
+      position: absolute; left: 50%; bottom: 4%;
+      width: 116%; aspect-ratio: 1;
+      transform: translateX(-50%);
+      border-radius: 50%;
+      background: radial-gradient(closest-side, color-mix(in srgb, var(--slide-sign, #E0A9B4) 26%, transparent), transparent 72%);
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .stage-carousel__figure { transition: none; }
+      .stage-carousel__track { scroll-behavior: auto; }
+    }
+    /* The museum label. One line of identity in front of the plinth; the
+       glass keeps the sculpture present behind it. */
+    .stage-placard {
+      position: absolute;
+      left: 50%; bottom: clamp(20px, 3.5vh, 36px);
+      transform: translateX(-50%);
+      z-index: 3;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      max-width: min(92vw, 860px);
+      padding: 10px 12px 10px 26px;
+      border: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 30%, var(--hair-2));
+      border-radius: 999px;
+      background: rgba(10,12,17,.66);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+      box-shadow: 0 18px 60px -38px color-mix(in srgb, var(--active-sign, #E0A9B4) 55%, transparent);
+      transition: border-color 420ms var(--ease-soft), box-shadow 420ms var(--ease-soft);
+    }
+    /* The label reads name first, then the small print under it — set on one
+       line the serif name and the mono price run together as a single string. */
+    .stage-placard__who {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 2px;
+      min-width: 0;
+    }
+    .stage-placard__meta { display: inline-flex; align-items: baseline; gap: 12px; }
+    .stage-placard__name {
+      font-family: var(--serif);
+      font-size: 27px;
+      line-height: 1.05;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+    .stage-placard__dates,
+    .stage-placard__quote {
+      display: inline-flex;
+      align-items: baseline;
+      gap: 8px;
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .stage-placard__price { color: var(--ink-2); font-size: 13px; letter-spacing: .02em; }
+    .stage-placard__price--waiting { color: var(--ink-dim); }
+    .stage-placard__change { font-size: 11px; }
+    .stage-placard__actions { display: inline-flex; align-items: center; gap: 10px; }
+    .stage-placard .stage-placard__pill {
+      min-height: 44px; height: 44px;
+      padding: 0 20px;
+      justify-content: center;
+      border-radius: 999px;
+      font-family: var(--sans);
+      font-size: 13.5px;
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .stage-placard .stage-placard__pill::before { display: none; }
+    /* The placard's pills are the Registry's hero actions now. Their liquid
+       glass is the shared recipe above — this rule only sets the border and
+       drops the museum arrow. */
+    .stage-placard .stage-placard__pill {
+      border-color: rgba(238,241,247,0.28);
+      color: var(--ink);
+    }
+    /* Both pills keep the shared glass — the trade holds the hero's exact
+       material, and the record steps back in edge and ink so the primary
+       leads without either of them leaving the family. */
+    .stage-placard .btn--ghost.stage-placard__pill { color: var(--ink-dim); border-color: rgba(238,241,247,0.14); }
+    .stage-placard .btn--ghost.stage-placard__pill:hover { color: var(--ink-2); }
+    .stage-placard .stage-placard__pill:hover { border-color: rgba(238,241,247,0.34); }
+    .stage-placard .btn--ghost.stage-placard__pill::after { content: none; }
+    /* The trade sheet — the panel slides in over the stage; the sculpture
+       stays where it is, dimmed but present, and the page never navigates. */
+    /* Above the floating nav (z 60): a modal owns the whole screen. */
+    .stage-sheet { position: fixed; inset: 0; z-index: 90; }
+    .stage-sheet__scrim {
+      position: absolute; inset: 0;
+      background: rgba(6,7,9,.68);
+      -webkit-backdrop-filter: blur(3px);
+      backdrop-filter: blur(3px);
+      animation: sheet-scrim 260ms var(--ease-soft) both;
+    }
+    .stage-sheet__panel {
+      position: absolute; top: 0; right: 0; bottom: 0;
+      width: min(480px, 94vw);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: clamp(24px, 4vh, 44px) clamp(22px, 2.6vw, 40px) 44px;
+      border-left: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 30%, var(--hair-2));
+      background:
+        radial-gradient(90% 60% at 100% 0%, color-mix(in srgb, var(--active-sign, #E0A9B4) 12%, transparent), transparent 64%),
+        rgba(12,14,20,.985);
+      animation: sheet-slide 340ms var(--ease-soft) both;
+    }
+    .stage-sheet__close {
+      position: sticky; top: 0;
+      float: right;
+      width: 40px; height: 40px;
+      margin: -6px -6px 0 0;
+      border: 1px solid var(--hair-2);
+      border-radius: 50%;
+      background: rgba(10,12,17,.8);
+      color: var(--ink-2);
+      font-size: 14px;
       cursor: pointer;
     }
-    .consumer-gallery-toggle::after { content: '→'; color: var(--active-sign, var(--gold)); }
-    .consumer-gallery { position: relative; z-index: 2; margin-top: 24px; }
-    .consumer-gallery .gband,
-    .gband--consumer { width: 100%; height: min(68svh, 620px); border-radius: 26px; overflow: hidden; }
+    .stage-sheet__close:hover { color: var(--ink); border-color: var(--hair-3); }
+    .stage-sheet .consumer-trade { margin-top: 30px; }
+    .stage-sheet__record {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      min-height: 44px;
+      margin-top: 18px;
+      color: var(--ink-dim);
+      font-size: 13px;
+    }
+    .stage-sheet__record:hover { color: var(--ink-2); }
+    /* On a phone the panel rises from the bottom edge — the gesture every
+       wallet and checkout already taught the reader. */
+    @media (max-width: 640px) {
+      .stage-sheet__panel {
+        inset: auto 0 0 0;
+        width: 100%;
+        max-height: 92svh;
+        border-left: 0;
+        border-top: 1px solid color-mix(in srgb, var(--active-sign, #E0A9B4) 30%, var(--hair-2));
+        border-radius: 22px 22px 0 0;
+        padding: 18px 18px 34px;
+        animation: sheet-rise 320ms var(--ease-soft) both;
+      }
+      .stage-sheet__close { margin: -2px -2px 0 0; }
+    }
+    @keyframes sheet-rise {
+      from { opacity: 0; transform: translateY(34px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes sheet-scrim { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes sheet-slide {
+      from { opacity: 0; transform: translateX(28px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .stage-sheet__scrim, .stage-sheet__panel { animation: none; }
+    }
+    .consumer-trade { margin-top: 24px; }
+    @media (max-width: 700px) {
+      .stage-hero__head { padding: clamp(22px, 3.5vh, 34px) 18px 0; }
+      .stage-hero__title { font-size: clamp(34px, 9.2vw, 46px); margin-top: 12px; }
+      /* The twelve discs and the sculpture teach the page faster than a
+         sentence does, and the room they need is worth more than it is. */
+      .stage-hero__line { display: none; }
+      .gband__rail-top { padding: 10px 12px 0; }
+      .stage-placard {
+        flex-wrap: wrap;
+        justify-content: center;
+        row-gap: 10px;
+        max-width: calc(100% - 24px);
+        padding: 12px 14px;
+        border-radius: 22px;
+      }
+      .stage-placard__name { font-size: 22px; }
+      .stage-placard__actions { width: 100%; justify-content: center; }
+      .stage-placard .stage-placard__pill { flex: 1 1 auto; white-space: nowrap; }
+      .stage-placard { width: calc(100% - 24px); }
+    }
+    @media (max-width: 480px) {
+      /* The dates are on the record a tap away; the placard keeps the name,
+         the price, and the two doors. */
+      .stage-placard__dates { display: none; }
+    }
+
+    /* The watchlist — all twelve tokens in zodiac order, one glance. */
+    .consumer-tokens {
+      position: relative;
+      padding: clamp(44px, 6vw, 72px) clamp(20px, 6vw, 72px) clamp(48px, 6vw, 80px);
+      border-bottom: 1px solid var(--hair-2);
+    }
+    .consumer-tokens__list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px 28px;
+      margin: clamp(26px, 4vw, 38px) 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .consumer-token {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 14px;
+      min-height: 64px;
+      padding: 10px 16px;
+      border: 1px solid transparent;
+      border-radius: 18px;
+      color: var(--ink-2);
+      text-decoration: none;
+      transition: background 320ms var(--ease-soft), border-color 320ms var(--ease-soft);
+    }
+    .consumer-token:hover { background: rgba(238,241,247,.04); border-color: var(--hair); }
+    .consumer-token:active { transform: scale(0.995); }
+    .consumer-sign:active img { transform: scale(1.02); }
+    .consumer-token img { display: block; border-radius: 50%; }
+    .consumer-token__id { display: grid; gap: 3px; min-width: 0; }
+    .consumer-token__row { display: flex; align-items: baseline; gap: 10px; min-width: 0; }
+    .consumer-token__name { color: var(--ink); font-family: var(--serif); font-size: 17.5px; }
+    .consumer-token__ticker { color: var(--ink-dim); font-family: var(--mono); font-size: 10px; letter-spacing: .08em; }
+    .consumer-token__dates {
+      color: var(--ink-mute);
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .consumer-token__quote { display: flex; align-items: center; justify-content: flex-end; gap: 10px; font-family: var(--mono); }
+    .consumer-token__price { color: var(--ink); font-size: 15px; }
+    .consumer-token__change { font-size: 11px; }
+    .consumer-token__quote--quiet { color: var(--ink-mute); font-size: 11px; }
+    /* Direction wears a quiet pill tinted from its own market colour, so a
+       glance down the list reads the day the way a trading screen does. */
+    .consumer-token__change,
+    .consumer-quote__change,
+    .consumer-season__change {
+      padding: 3px 9px;
+      border-radius: 999px;
+      background: color-mix(in srgb, currentColor 12%, transparent);
+    }
+    .consumer-tokens__foot {
+      max-width: 72ch;
+      margin: clamp(22px, 4vw, 34px) 0 0;
+      color: var(--ink-mute);
+      font-size: 12px;
+      line-height: 1.6;
+    }
 
     .consumer-how,
     .consumer-verify,
@@ -4321,12 +3929,12 @@
     .consumer-faq,
     .consumer-closing {
       position: relative;
-      padding: clamp(56px, 7vw, 86px) clamp(20px, 6vw, 72px);
+      padding: clamp(40px, 5.5vw, 64px) clamp(20px, 6vw, 72px);
       border-bottom: 1px solid var(--hair-2);
     }
     .consumer-registry .sec {
       display: block;
-      padding: clamp(56px, 7vw, 86px) clamp(20px, 6vw, 72px);
+      padding: clamp(40px, 5.5vw, 64px) clamp(20px, 6vw, 72px);
     }
     .consumer-how > p,
     .consumer-verify__intro,
@@ -4485,11 +4093,6 @@
     .consumer-faq__item dt { color: var(--ink); font-family: var(--sans); font-size: 14px; font-weight: 560; }
     .consumer-faq__item dd { margin: 0; color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
     .consumer-closing { text-align: center; border-bottom: 0; }
-    .consumer-closing__wheel {
-      display: flex; justify-content: center; flex-wrap: wrap; gap: 6px;
-      max-width: 480px; margin: 0 auto 28px;
-    }
-    .consumer-closing__wheel img { width: 30px; height: 30px; display: block; border-radius: 50%; }
     .consumer-closing h2 { max-width: 16ch; margin-inline: auto; font-size: clamp(40px, 6vw, 68px); line-height: .95; }
     .consumer-closing__actions { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 14px 24px; margin-top: 28px; }
     .consumer-closing .btn {
@@ -4550,6 +4153,20 @@
     .static-proof strong { color: var(--ink); }
     .consumer-static details { margin-top: 26px; border-block: 1px solid var(--hair); }
     .consumer-static summary { min-height: 52px; display: flex; align-items: center; cursor: pointer; font-family: var(--sans); color: var(--ink-2); }
+    .static-token-list {
+      columns: 2;
+      column-gap: 32px;
+      margin: 18px 0 0;
+      padding: 0;
+      list-style: none;
+    }
+    .static-token-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--hair);
+      break-inside: avoid;
+      font-size: 14px;
+    }
+    .static-token-list code { color: var(--ink-dim); font-family: var(--mono); font-size: 12px; }
     .static-collection-slot:empty,
     .static-collection-slot:not(:has(article)) { display: none; }
     .static-collection-section:not(:has(article)) { display: none; }
@@ -4659,18 +4276,7 @@
 
     @media (max-width: 1020px) {
       .consumer-explorer__layout { grid-template-columns: 1fr; gap: 38px; }
-      .consumer-signs {
-        width: 100%; aspect-ratio: auto;
-        display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 8px;
-        background: transparent;
-      }
-      .consumer-signs::after { display: none; }
-      .consumer-sign {
-        position: static;
-        width: 100%; min-height: 84px;
-        transform: none !important;
-      }
-      .consumer-preview { min-height: 0; }
+      .consumer-tokens__list { grid-template-columns: 1fr; gap: 4px; }
       .consumer-verify { grid-template-columns: 1fr !important; }
       .consumer-verify > * { grid-column: 1 !important; grid-row: auto !important; }
       .consumer-verify > .vrf { margin-top: 26px; }
@@ -4693,20 +4299,36 @@
       .consumer-sign { min-height: 78px; grid-template-rows: 45px auto; border-radius: 14px; font-size: 9.5px; }
       .consumer-sign img { width: 44px; height: 44px; }
       .consumer-preview {
-        grid-template-columns: 74px minmax(0, 1fr);
+        grid-template-columns: 104px minmax(0, 1fr);
         align-items: start;
         gap: 16px;
         padding: 24px 20px;
         border-radius: 24px 24px 24px 6px;
       }
-      .consumer-preview__art img { width: 70px; box-shadow: 0 0 0 7px color-mix(in srgb, var(--active-sign, #E0A9B4) 8%, transparent); }
+      /* A card carrying the trade panel stacks instead: an amount field, four
+         ways to pay and their notes cannot share a row with the sculpture on
+         a phone. The record-only card — what ships with the flag off — keeps
+         the plate-beside-text layout it has always had. */
+      .consumer-preview:has(.consumer-trade) {
+        grid-template-columns: minmax(0, 1fr);
+        justify-items: start;
+      }
+      .consumer-preview:has(.consumer-trade) .consumer-preview__art { padding-bottom: 20px; }
+      .consumer-preview:has(.consumer-trade) .consumer-preview__body { width: 100%; }
+      .consumer-preview__art { align-self: start; padding-bottom: 12px; }
+      .consumer-preview__art::before { bottom: 7px; }
+      .consumer-preview__sculpture { width: 96px; }
+      .consumer-preview__disc img { width: 30px; height: 30px; left: 0; bottom: 0; box-shadow: 0 0 0 3px color-mix(in srgb, var(--active-sign, #E0A9B4) 14%, transparent), 0 3px 10px rgba(0,0,0,.45); }
       .consumer-preview__name { font-size: 44px; }
       .consumer-preview__lore,
+      .consumer-preview__quote,
       .consumer-preview__actions { grid-column: 1 / -1; }
-      .consumer-preview__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .consumer-preview__lore { font-size: 17px; }
       .consumer-preview__actions { margin-top: 10px; }
-      .consumer-gallery-toggle { margin-top: 18px; }
+      .consumer-preview__actions .btn,
+      .consumer-preview__actions .copychip { width: 100%; justify-content: center; }
+      .consumer-quote__price { font-size: 24px; }
+      .static-token-list { columns: 1; }
       .consumer-steps { grid-template-columns: 1fr; }
       .consumer-steps li { min-height: 72px; align-items: center; padding: 24px 32px 16px 38px; font-size: 21px; }
       .consumer-steps li::before { top: 29px; }
@@ -4746,6 +4368,750 @@
       .static-steps { grid-template-columns: 1fr; }
       .static-faq div { grid-template-columns: 1fr; gap: 6px; }
     }
+    /* ── Registry visual polish · August 2026 ─────────────────────
+       One coherent museum stage, one acquisition surface, and owned artwork
+       carrying the editorial sections below it. */
+    .consumer-explorer--stage,
+    .consumer-explorer:not(.consumer-explorer--stage) {
+      width: calc(100% + 32px);
+      margin-inline: -16px;
+    }
+    .consumer-explorer--stage .gband--consumer,
+    .consumer-explorer .gband--flat {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
+      overflow: hidden;
+      transition:
+        border-color 240ms cubic-bezier(0.23, 1, 0.32, 1),
+        box-shadow 240ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .consumer-explorer--stage .gband--consumer {
+      height: clamp(680px, 88svh, 900px);
+    }
+    .consumer-explorer .gband--flat {
+      height: auto;
+      min-height: 0;
+    }
+    .gband--consumer .stage-hero__head { grid-row: 1; }
+    .gband--consumer .gband__rail-top {
+      position: relative;
+      z-index: 4;
+      grid-row: 2;
+    }
+    .gband__rail-top [data-gallery-desktop-rail][hidden] {
+      display: none !important;
+    }
+    .gband--consumer .gband__mount {
+      grid-row: 3;
+      grid-column: 1;
+      min-height: 0;
+      z-index: 1;
+    }
+    .gband__poster {
+      grid-row: 3;
+      grid-column: 1;
+      z-index: 0;
+      min-height: 0;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      pointer-events: none;
+      opacity: 1;
+      transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .gband__poster img {
+      display: block;
+      width: min(38vw, 440px);
+      max-height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 24px 36px rgba(0,0,0,.52));
+    }
+    .gband--consumer.is-ready .gband__poster { opacity: 0; }
+    .gband--consumer [data-gallery-canvas] {
+      opacity: 0;
+      transition: opacity 240ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .gband--consumer.is-ready [data-gallery-canvas] { opacity: 1; }
+    .gband__turn-hint {
+      position: relative;
+      z-index: 3;
+      grid-row: 3;
+      grid-column: 1;
+      align-self: end;
+      justify-self: center;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      margin: 0 0 12px;
+      padding: 5px 10px 5px 6px;
+      border: 1px solid rgba(198,204,218,.14);
+      border-radius: 999px;
+      background: rgba(10,12,17,.72);
+      color: rgba(198,204,218,.72);
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .14em;
+      line-height: 1;
+      text-transform: uppercase;
+      pointer-events: none;
+      opacity: .72;
+      transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .gband__turn-mark {
+      display: inline-grid;
+      place-items: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(198,204,218,.075);
+      color: var(--ink);
+      font-size: 11px;
+      letter-spacing: 0;
+    }
+    .gband[data-gallery-rotation='dragging'] .gband__turn-hint { opacity: 1; }
+    .gband[data-gallery-rotation='held'] .gband__turn-hint { opacity: .5; }
+
+    .stage-carousel {
+      grid-row: 3;
+      min-height: 0;
+      height: clamp(250px, 76vw, 330px);
+      touch-action: pan-y;
+      user-select: none;
+    }
+    .stage-carousel__track {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      padding: 0 16px;
+    }
+    .stage-carousel__slide {
+      width: clamp(238px, 76vw, 320px);
+      height: 100%;
+      display: grid;
+      place-items: end center;
+    }
+    .stage-carousel__figure,
+    .stage-carousel__slide.is-active .stage-carousel__figure {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      place-items: end center;
+      padding: 0 0 26px;
+      border: 0;
+      background: none;
+      opacity: 1;
+      transform: none;
+      cursor: default;
+    }
+    .stage-carousel__art {
+      z-index: 1;
+      width: 100%;
+      max-height: 100%;
+      object-fit: contain;
+      opacity: 1;
+      transform: translateY(calc(var(--art-y, 0%) - 30px)) scale(var(--art-scale, 1));
+      transform-origin: bottom center;
+      filter: drop-shadow(0 20px 30px rgba(0,0,0,.5));
+      transition:
+        opacity 200ms cubic-bezier(0.23, 1, 0.32, 1),
+        transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    @starting-style {
+      .stage-carousel__art {
+        opacity: 0;
+        transform: translate(var(--art-entry-x, 0), calc(var(--art-y, 0%) - 22px)) scale(var(--art-scale, 1));
+      }
+    }
+    .stage-carousel__plinth {
+      left: 50%;
+      bottom: 7%;
+      width: 58%;
+      height: 14px;
+      background:
+        radial-gradient(closest-side, color-mix(in srgb, var(--slide-sign, #E0A9B4) 18%, rgba(6,7,9,.9)), transparent 78%);
+    }
+    .stage-carousel__slide.is-active .stage-carousel__figure::before {
+      left: 50%;
+      bottom: 4%;
+      width: 82%;
+      opacity: .78;
+    }
+
+    .stage-placard {
+      position: relative;
+      left: auto;
+      bottom: auto;
+      grid-row: 4;
+      justify-self: center;
+      transform: none;
+      margin: 0 20px clamp(18px, 2.8vh, 28px);
+      background: rgba(10,12,17,.92);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+      transition:
+        border-color 240ms cubic-bezier(0.23, 1, 0.32, 1),
+        box-shadow 240ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .stage-placard__name,
+    .stage-placard__meta,
+    .stage-placard__actions {
+      transition: opacity 160ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .stage-placard .stage-placard__pill:active { transform: scale(.97); }
+
+    /* A single acquisition surface. The generated trade panel supplies the
+       sign identity; this header supplies only sheet mechanics. */
+    .stage-sheet__scrim,
+    .stage-sheet__panel { animation: none; }
+    .stage-sheet__scrim {
+      opacity: 1;
+      background: rgba(6,7,9,.76);
+      -webkit-backdrop-filter: blur(1px);
+      backdrop-filter: blur(1px);
+      transition: opacity 180ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .stage-sheet__panel {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      padding: 0;
+      opacity: 1;
+      transform: translateX(0);
+      transition:
+        opacity 200ms cubic-bezier(0.23, 1, 0.32, 1),
+        transform 260ms cubic-bezier(0.32, 0.72, 0, 1);
+    }
+    @starting-style {
+      .stage-sheet__scrim { opacity: 0; }
+      .stage-sheet__panel { opacity: 0; transform: translateX(24px); }
+    }
+    .stage-sheet[data-state='closing'] .stage-sheet__scrim { opacity: 0; }
+    .stage-sheet[data-state='closing'] .stage-sheet__panel {
+      opacity: 0;
+      transform: translateX(20px);
+      pointer-events: none;
+      transition-duration: 160ms, 200ms;
+    }
+    .stage-sheet__head {
+      position: relative;
+      z-index: 2;
+      flex: 0 0 58px;
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 7px 16px;
+      border-bottom: 1px solid var(--hair);
+      background: rgba(12,14,20,.94);
+    }
+    .stage-sheet__handle { display: none; }
+    .stage-sheet__close {
+      position: static;
+      float: none;
+      flex: 0 0 44px;
+      width: 44px;
+      height: 44px;
+      margin: 0;
+      border-color: var(--hair-2);
+      transition:
+        color 150ms cubic-bezier(0.23, 1, 0.32, 1),
+        border-color 150ms cubic-bezier(0.23, 1, 0.32, 1),
+        transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .stage-sheet__close:active { transform: scale(.96); }
+    .stage-sheet__body {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 22px clamp(20px, 4vw, 34px) calc(28px + env(safe-area-inset-bottom));
+    }
+    .stage-sheet .consumer-trade { width: 100%; margin-top: 0; }
+
+    /* The provenance chain now carries small, product-specific instruments
+       instead of reading as three unconnected text columns. */
+    .consumer-steps li {
+      grid-template-rows: 44px minmax(44px, auto);
+      align-items: start;
+      gap: 14px;
+    }
+    .consumer-step__visual {
+      width: fit-content;
+      min-width: 44px;
+      height: 38px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink-dim);
+    }
+    .consumer-step__disc img {
+      display: block;
+      border-radius: 50%;
+      box-shadow: 0 0 0 5px color-mix(in srgb, #E0A9B4 12%, transparent);
+    }
+    .consumer-step__record {
+      gap: 8px;
+      min-width: 112px;
+      padding: 0 10px;
+      border: 1px solid var(--hair-2);
+      border-radius: 8px;
+      background: rgba(198,204,218,.025);
+    }
+    .consumer-step__record i {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--active-sign, var(--gold));
+      box-shadow: 0 0 0 4px color-mix(in srgb, var(--active-sign, var(--gold)) 12%, transparent);
+    }
+    .consumer-step__record code {
+      font-family: var(--mono);
+      font-size: 9px;
+      letter-spacing: .08em;
+    }
+    .consumer-step__cabinet {
+      display: grid;
+      grid-template-columns: repeat(3, 30px);
+      gap: 3px;
+    }
+    .consumer-step__cabinet i {
+      height: 34px;
+      border: 1px solid var(--hair-2);
+      background:
+        radial-gradient(circle at 50% 70%, color-mix(in srgb, var(--active-sign, #E0A9B4) 28%, transparent), transparent 48%),
+        rgba(198,204,218,.025);
+    }
+
+    /* An actual miniature of the Cabinet and the thesis's own clock replace
+       the previous empty gradient and four-icon placeholder. */
+    .consumer-purpose {
+      grid-template-columns: minmax(0, .94fr) minmax(0, 1.06fr);
+      align-items: stretch;
+      gap: clamp(18px, 3vw, 34px);
+    }
+    .consumer-collection,
+    .consumer-thesis {
+      min-width: 0;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid var(--hair-2);
+      border-radius: 24px 24px 6px 24px;
+      background: rgba(15,18,26,.74);
+      box-shadow: 0 28px 70px -58px rgba(0,0,0,.9);
+    }
+    .consumer-collection__link,
+    .consumer-thesis__link {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      color: inherit;
+      text-decoration: none;
+    }
+    .consumer-collection__copy,
+    .consumer-purpose__essay {
+      padding: clamp(22px, 3vw, 32px);
+    }
+    .consumer-collection h3,
+    .consumer-purpose__essay h2 {
+      max-width: 13ch;
+      font-size: clamp(31px, 3.5vw, 44px);
+      line-height: .96;
+      letter-spacing: -.025em;
+    }
+    .consumer-collection p,
+    .consumer-purpose__essay > p {
+      max-width: 48ch;
+      margin: 16px 0 0;
+      color: var(--ink-2);
+      font-size: 14px;
+      line-height: 1.58;
+    }
+    .consumer-collection__art {
+      position: relative;
+      margin: auto 18px 0;
+      padding: 9px;
+      border: 1px solid color-mix(in srgb, var(--gold) 42%, var(--hair-2));
+      border-radius: 12px 12px 3px 12px;
+      background: rgba(6,7,9,.76);
+      box-shadow:
+        inset 0 0 0 4px rgba(198,204,218,.025),
+        0 20px 44px -34px rgba(0,0,0,.95);
+    }
+    .consumer-cabinet {
+      padding: 9px;
+      border: 1px solid var(--hair-2);
+      background:
+        radial-gradient(90% 70% at 50% 0%, rgba(219,188,119,.08), transparent 70%),
+        #090a0e;
+    }
+    .consumer-cabinet__seats {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 4px;
+    }
+    .consumer-cabinet__seat {
+      position: relative;
+      min-width: 0;
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      border: 1px solid rgba(198,204,218,.1);
+      background: linear-gradient(180deg, rgba(198,204,218,.04), rgba(6,7,9,.1));
+    }
+    .consumer-cabinet__seat::after {
+      content: '';
+      position: absolute;
+      left: 18%; right: 18%; bottom: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(219,188,119,.44), transparent);
+    }
+    .consumer-cabinet__seat picture,
+    .consumer-cabinet__seat img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .consumer-cabinet__seat img { object-fit: contain; }
+    .consumer-cabinet__number {
+      position: absolute;
+      top: 4px;
+      left: 5px;
+      z-index: 2;
+      color: rgba(198,204,218,.42);
+      font-family: var(--mono);
+      font-size: 6px;
+      letter-spacing: .12em;
+    }
+    .consumer-cabinet__glyph {
+      color: rgba(198,204,218,.22);
+      font-family: var(--serif);
+      font-size: clamp(15px, 2vw, 22px);
+    }
+    .consumer-cabinet__plaque {
+      width: fit-content;
+      display: flex;
+      align-items: baseline;
+      gap: 9px;
+      margin: 9px auto 0;
+      padding: 5px 9px;
+      border: 1px solid rgba(219,188,119,.22);
+      color: var(--ink-dim);
+      font-family: var(--mono);
+      font-size: 7px;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .consumer-cabinet__plaque strong { color: var(--gold-bright); font-size: 8px; font-weight: 500; }
+    .consumer-purpose__cta {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 12px clamp(22px, 3vw, 32px) 18px;
+      color: var(--ink);
+      font-size: 13px;
+    }
+    .consumer-thesis { border-radius: 6px 24px 24px 24px; }
+    .consumer-thesis__visual {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: #08090d;
+    }
+    .consumer-thesis__visual::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 42%, rgba(6,7,9,.88));
+      pointer-events: none;
+    }
+    .consumer-thesis__visual picture,
+    .consumer-thesis__visual img {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .consumer-thesis__visual img {
+      object-fit: cover;
+      object-position: 50% 52%;
+      transform: scale(1.015);
+      transition: transform 420ms cubic-bezier(0.23, 1, 0.32, 1);
+    }
+    .consumer-thesis__line {
+      position: absolute;
+      z-index: 2;
+      left: 18px;
+      bottom: 14px;
+      color: rgba(238,241,247,.66);
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+    }
+    .consumer-thesis .consumer-purpose__cta { margin-inline: 0; margin-bottom: 0; }
+    .consumer-purpose.is-in .consumer-cabinet__seat.is-filled {
+      opacity: 1;
+      transform: translateY(0);
+      transition:
+        opacity 300ms cubic-bezier(0.23, 1, 0.32, 1),
+        transform 360ms cubic-bezier(0.23, 1, 0.32, 1);
+      transition-delay: calc(var(--seat-i) * 45ms);
+    }
+    @starting-style {
+      .consumer-purpose.is-in .consumer-cabinet__seat.is-filled {
+        opacity: .35;
+        transform: translateY(6px);
+      }
+    }
+    @media (hover: hover) and (pointer: fine) {
+      .consumer-collection__link:hover .consumer-collection__art {
+        border-color: color-mix(in srgb, var(--gold-bright) 62%, var(--hair-2));
+      }
+      .consumer-thesis__link:hover .consumer-thesis__visual img { transform: scale(1.04); }
+      .consumer-collection__link:hover .consumer-purpose__cta,
+      .consumer-thesis__link:hover .consumer-purpose__cta { color: var(--gold-bright); }
+      .consumer-token:hover {
+        background:
+          radial-gradient(80% 150% at 0% 50%, color-mix(in srgb, var(--token-sign) 11%, transparent), transparent 72%),
+          rgba(238,241,247,.035);
+      }
+    }
+
+    .consumer-verify .vrf__result--official {
+      position: relative;
+      overflow: hidden;
+      border-color: color-mix(in srgb, var(--active-sign, var(--gold)) 44%, var(--hair-2));
+      background:
+        radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--active-sign, var(--gold)) 10%, transparent), transparent 52%),
+        var(--surface);
+    }
+    .consumer-closing { overflow: hidden; isolation: isolate; }
+    .consumer-closing::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      left: 50%; top: 50%;
+      width: min(72vw, 560px);
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(198,204,218,.07);
+      border-radius: 50%;
+      background:
+        radial-gradient(circle, transparent 44%, rgba(198,204,218,.025) 44.5%, transparent 45%),
+        repeating-conic-gradient(from 0deg, rgba(198,204,218,.06) 0 1deg, transparent 1deg 30deg);
+      opacity: .72;
+    }
+
+    @media (max-width: 1020px) {
+      .consumer-explorer--stage,
+      .consumer-explorer:not(.consumer-explorer--stage) {
+        width: 100%;
+        margin-inline: 0;
+      }
+      .consumer-explorer--stage {
+        padding: clamp(74px, 9vh, 92px) 12px clamp(36px, 5vh, 52px);
+      }
+      .consumer-explorer--stage .gband--consumer {
+        height: clamp(690px, calc(100dvh - 88px), 840px);
+        border-radius: 22px;
+      }
+      .consumer-purpose { grid-template-columns: 1fr; }
+      .consumer-collection,
+      .consumer-thesis { border-radius: 22px 22px 5px 22px; }
+    }
+    @media (max-width: 700px) {
+      .consumer-explorer:not(.consumer-explorer--stage) { padding-top: clamp(72px, 10vh, 92px); }
+      .consumer-explorer--stage { padding-inline: 8px; }
+      .consumer-explorer--stage .gband--consumer {
+        height: clamp(700px, calc(100dvh - 82px), 780px);
+      }
+      .consumer-explorer .gband--flat {
+        grid-template-rows: auto auto auto auto;
+        border-radius: 22px;
+      }
+      .stage-hero__head { padding: clamp(20px, 3.2vh, 28px) 14px 2px; }
+      .stage-hero__eyebrow { max-width: 30ch; line-height: 1.55; }
+      .stage-hero__title { font-size: clamp(34px, 10vw, 43px); }
+      .season-now {
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-areas:
+          'identity countdown'
+          'market market';
+        width: calc(100% - 8px);
+        margin-top: 14px;
+        padding: 10px 10px 12px;
+        border-radius: 13px;
+      }
+      .season-now__identity { grid-area: identity; }
+      .season-now__market {
+        grid-area: market;
+        min-height: 29px;
+        margin-top: 9px;
+        padding: 8px 0 0;
+        border-top: 1px solid var(--hair);
+        border-left: 0;
+        flex-direction: row;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .season-now__countdown {
+        grid-area: countdown;
+        min-height: 34px;
+        padding-left: 14px;
+        text-align: right;
+      }
+      .season-now__ends { display: none; }
+      .gband__rail-top { min-height: 54px; padding-top: 5px; }
+      .stage-placard {
+        width: calc(100% - 24px);
+        max-width: none;
+        margin: 12px auto 8px;
+        row-gap: 10px;
+      }
+      .gband__turn-hint { margin-bottom: 7px; }
+    }
+    @media (max-width: 640px) {
+      .reveal {
+        filter: none;
+        transform: translateY(8px);
+        transition:
+          opacity 360ms cubic-bezier(0.23, 1, 0.32, 1),
+          transform 360ms cubic-bezier(0.23, 1, 0.32, 1);
+        will-change: opacity, transform;
+      }
+      .stage-sheet__panel {
+        width: 100%;
+        max-height: min(92dvh, 820px);
+        border-radius: 22px 22px 0 0;
+        transform: translateY(0);
+      }
+      @starting-style {
+        .stage-sheet__panel { opacity: 0; transform: translateY(24px); }
+      }
+      .stage-sheet[data-state='closing'] .stage-sheet__panel {
+        transform: translateY(20px);
+      }
+      .stage-sheet__head {
+        flex-basis: 54px;
+        min-height: 54px;
+        justify-content: flex-end;
+        padding: 5px 12px;
+      }
+      .stage-sheet__handle {
+        position: absolute;
+        left: 50%; top: 9px;
+        display: block;
+        width: 36px; height: 4px;
+        transform: translateX(-50%);
+        border-radius: 999px;
+        background: rgba(198,204,218,.24);
+      }
+      .stage-sheet__body { padding: 16px 16px calc(22px + env(safe-area-inset-bottom)); }
+      .consumer-token {
+        grid-template-columns: 32px minmax(0, 1fr) auto;
+        grid-template-areas:
+          'icon identity quote'
+          'icon dates dates';
+        align-items: start;
+        column-gap: 12px;
+        row-gap: 4px;
+        min-height: 68px;
+        padding: 10px 8px;
+      }
+      .consumer-token > img { grid-area: icon; margin-top: 2px; }
+      .consumer-token__id { display: contents; }
+      .consumer-token__row { grid-area: identity; align-self: center; }
+      .consumer-token__dates {
+        grid-area: dates;
+        white-space: nowrap;
+        letter-spacing: .08em;
+      }
+      .consumer-token__quote {
+        grid-area: quote;
+        align-self: center;
+        white-space: nowrap;
+      }
+      .consumer-token__price { font-size: 13px; }
+      .consumer-token__change { padding-inline: 7px; }
+      .consumer-steps li {
+        grid-template-columns: 112px minmax(0, 1fr);
+        grid-template-rows: auto;
+        align-items: center;
+        gap: 16px;
+        padding: 18px 30px 18px 0;
+      }
+      .consumer-steps li::before { display: none; }
+      .consumer-steps li:not(:last-child)::after { right: 8px; bottom: 28px; }
+      .consumer-collection__copy,
+      .consumer-purpose__essay { padding: 24px 22px; }
+      .consumer-collection__art { margin-inline: 12px; }
+      .consumer-purpose__cta { margin-inline: 22px; }
+      .consumer-thesis .consumer-purpose__cta { margin-inline: 0; }
+      .consumer-thesis__visual { aspect-ratio: 16 / 10; }
+      .consumer-verify .vrf__examples {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+      .consumer-verify .vrf__examples .label { grid-column: 1 / -1; }
+      .consumer-verify .vrf__example { justify-content: center; padding-inline: 6px; }
+      .consumer-verify .vrf__example--clear { grid-column: 1 / -1; }
+      .ftr__row { align-items: flex-start; gap: 14px; }
+    }
+    @media (max-width: 380px) {
+      .stage-carousel { height: clamp(238px, 74vw, 270px); }
+      .stage-carousel__slide { width: clamp(228px, 74vw, 270px); }
+      .consumer-explorer--stage .gband--consumer { height: 700px; }
+      .season-now__identity picture,
+      .season-now__identity img { width: 30px; height: 30px; }
+      .season-now__identity { gap: 9px; }
+      .season-now__identity strong { font-size: 17px; }
+      .season-now__countdown { padding-left: 10px; }
+      .season-now__countdown strong { font-size: 10px; }
+      .stage-placard__meta { gap: 8px; }
+      .stage-placard__price { font-size: 12px; }
+      .consumer-token__quote { gap: 6px; }
+      .consumer-token__ticker { display: none; }
+      .consumer-steps li { grid-template-columns: 96px minmax(0, 1fr); }
+      .consumer-step__record { min-width: 96px; }
+      .consumer-step__cabinet { grid-template-columns: repeat(3, 26px); }
+    }
+    @media (max-height: 650px) and (max-width: 700px) {
+      .consumer-explorer:not(.consumer-explorer--stage) { padding-top: 70px; }
+      .stage-hero__head { padding-top: 18px; }
+      .stage-hero__title { font-size: clamp(32px, 8.8vw, 39px); }
+      .gband__rail-top { min-height: 56px; padding-top: 5px; }
+      .stage-carousel { height: clamp(226px, 68vw, 270px); }
+      .stage-carousel__slide { width: clamp(220px, 68vw, 270px); }
+      /* Short phones need less upward lift: their shallower stage is already
+         close to the title, and the extra ten pixels keeps horns and bows
+         inside the clip while retaining ample air above the placard. */
+      .stage-carousel__art {
+        transform: translateY(calc(var(--art-y, 0%) - 20px)) scale(var(--art-scale, 1));
+      }
+      @starting-style {
+        .stage-carousel__art {
+          transform: translate(var(--art-entry-x, 0), calc(var(--art-y, 0%) - 12px)) scale(var(--art-scale, 1));
+        }
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gband__poster,
+      .stage-sheet__scrim,
+      .stage-sheet__panel,
+      .consumer-cabinet__seat.is-filled,
+      .consumer-thesis__visual img {
+        transform: none !important;
+        transition-property: opacity !important;
+        transition-duration: 120ms !important;
+      }
+    }
+
     @media (max-width: 479px) {
       .consumer-signs,
       .static-sign-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }

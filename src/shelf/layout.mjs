@@ -238,6 +238,28 @@ export const SPOTLIGHT = Object.freeze({
   dim: 0.62,
 });
 
+/**
+ * The stronger profile the consumer rectangle wears. There, the row is not a
+ * shelf to browse but a single piece being offered, with the others present
+ * only as the room it stands in — so the fall-off is steep and the dark
+ * closes in faster.
+ *
+ * `focus` stays at 1. Above it the piece outgrows the box the camera frames,
+ * and a head is the first thing to leave the picture.
+ */
+export const SPOTLIGHT_STAGE = Object.freeze({
+  focus: 1,
+  near: 0.5,
+  far: 0.3,
+  dim: 0.26,
+  // The landing is a presentation of one object, not a miniature catalogue.
+  // Keep only its immediate context in the room and give the offered piece a
+  // little more lift and depth than the general-purpose shelf.
+  visibleSpan: 1.35,
+  lift: 0.09,
+  out: 0.12,
+});
+
 const smoothstep = (t) => t * t * (3 - (2 * t));
 
 /**
@@ -271,6 +293,34 @@ export const DOCK = Object.freeze({
   /** How far the current sign stands proud when no cursor is on the rail. */
   rest: 0.28,
 });
+
+// The opened Thesis sculpture turns like a dealer's turntable. The Registry
+// spotlight is always on display, so its perpetual version is deliberately
+// slower and yields for a short inspection pause after direct manipulation.
+export const TURNTABLE = Object.freeze({
+  openedRate: 0.22,
+  spotlightRate: 0.12,
+  resumeAfter: 2400,
+});
+
+export function turntableActive({
+  spotlight,
+  open,
+  targetOpen,
+  switchFrom,
+  focus,
+  targetFocus,
+  stageVisible,
+  paused,
+  handTurned,
+  reducedMotion,
+  dragging,
+}) {
+  if (!stageVisible || paused || handTurned || reducedMotion || dragging) return false;
+  return spotlight
+    ? switchFrom < 0 && Math.abs(focus - targetFocus) < 0.0005
+    : targetOpen === 1 && open > 0.98;
+}
 
 /** Magnification for a tick `distance` ticks from the cursor. */
 export function dockMagnify(distance, dock = DOCK) {
@@ -314,6 +364,25 @@ export const VITRINE = Object.freeze({
    */
   minWorldHeight: 3,
   maxWorldHeight: 7.2,
+});
+
+/**
+ * The rig for the consumer rectangle. The row's own box is about 1.9 units
+ * tall, so `minWorldHeight` — not the margin — is what actually decides how
+ * large a figure lands there: the camera resolves 2.35 units across the canvas
+ * instead of 3, which is the difference between a sculpture on a shelf and a
+ * sculpture being shown to you. Both are kept honest by the same clamp, so a
+ * cramped viewport still cannot push the row into the reader's face.
+ */
+export const SPOTLIGHT_VITRINE = Object.freeze({
+  fov: VITRINE.fov,
+  tilt: VITRINE.tilt,
+  rowMargin: 1.05,
+  stageMargin: VITRINE.stageMargin,
+  zoomGain: VITRINE.zoomGain,
+  stageZ: VITRINE.stageZ,
+  minWorldHeight: 2.35,
+  maxWorldHeight: VITRINE.maxWorldHeight,
 });
 
 /**

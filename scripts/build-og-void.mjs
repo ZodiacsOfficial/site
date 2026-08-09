@@ -22,6 +22,7 @@
  *
  *   npm run data:og
  *   npm run data:og -- --only-horoscopes  # refresh the horoscope family
+ *   npm run data:og -- --only-homepage    # refresh the cache-busted homepage card
  *
  * Deterministic and offline: fonts and disc art are inlined as data:
  * URIs; Chromium comes from playwright-core (PLAYWRIGHT_MODULE and
@@ -36,6 +37,7 @@ import sharp from 'sharp';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = resolve(root, 'public/assets/og/v2');
+const HOMEPAGE_CARD = 'share-pastel-wheel-20260809.png';
 
 // Import-free, test-pinned projection of the canonical sign table. The live
 // signs module now has runtime imports, while this generator must stay plain
@@ -280,14 +282,14 @@ const escapeHtml = (value) => String(value)
 // ── Card renderers ────────────────────────────────────────────────────
 function shareCard() {
   const body = `
-  <div class="stage" style="flex-direction: column; justify-content: center; gap: 40px;">
-    ${wheelMark(160, 15)}
-    <div>
-      <div class="display" style="font-size: 68px; max-width: 900px;">${OG_EN.share.title}</div>
-      <div class="sub" style="font-size: 26px; color: ${MUTED};">${OG_EN.share.subtitle}</div>
+  <div class="stage">
+    <div class="left" style="max-width: 580px;">
+      <div class="display" style="font-size: 67px; max-width: 580px;">${OG_EN.share.title}</div>
+      <div class="sub" style="font-size: 25px; color: ${MUTED}; max-width: 560px;">${OG_EN.share.subtitle}</div>
     </div>
+    ${wheelMark(380, 70)}
   </div>`;
-  return shell(body, OG_EN.site, { centered: true });
+  return shell(body, OG_EN.site);
 }
 
 /** The thesis page's own card — reference-document register, no consumer
@@ -625,7 +627,7 @@ async function writeEnglishManifest() {
     width: 1200,
     height: 630,
     iconSource: '/assets/zodiac-icons/128/{sign}.webp',
-    fallback: '/assets/og/v2/share.png',
+    fallback: `/assets/og/v2/${HOMEPAGE_CARD}`,
     requiredCards: englishRequiredCards(),
   }, null, 2)}\n`);
 }
@@ -641,6 +643,7 @@ const onlyHoroscopes = process.argv.includes('--only-horoscopes');
 const onlyInvite = process.argv.includes('--only-compatibility-invite');
 const onlyRussian = process.argv.includes('--only-ru');
 const onlyPeople = process.argv.includes('--only-people');
+const onlyHomepage = process.argv.includes('--only-homepage');
 
 let total = 0;
 let count = 0;
@@ -733,6 +736,15 @@ async function renderRussianCards() {
   if (russianTotal > 600 * 1024) {
     throw new Error(`Russian OG family is ${(russianTotal / 1024).toFixed(1)}KiB; budget is 600KiB`);
   }
+}
+
+if (onlyHomepage) {
+  console.log('Rendering the homepage social card…');
+  await shoot(shareCard(), HOMEPAGE_CARD);
+  await writeEnglishManifest();
+  console.log(`Done: ${count} homepage card, ${(total / 1024).toFixed(0)}KB.`);
+  await browser.close();
+  process.exit(0);
 }
 
 if (onlyRussian) {

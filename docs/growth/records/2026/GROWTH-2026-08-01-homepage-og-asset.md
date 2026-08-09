@@ -1,10 +1,10 @@
 ---
 record_id: GROWTH-2026-08-01-homepage-og-asset
 record_type: content-brief
-status: approved
+status: superseded
 owner: site owner
 created: 2026-08-01
-updated: 2026-08-01
+updated: 2026-08-06
 decision_due: null
 source_window: 2026-08-01..2026-08-01
 source_locations:
@@ -17,8 +17,8 @@ related_records:
   - GROWTH-2026-08-01-answer-engine-readiness
 evidence_quality: medium
 privacy_class: aggregate-only
-decision: approved by the site owner on 2026-08-01 for production deployment through the Release & Trust Gate
-next_action: Merge the approved release, deploy its exact merge commit, verify the public asset and rendered social metadata, then promote the exact release receipt through Daily Action v2.
+decision: approved 2026-08-01, then reverted by the site owner on 2026-08-06 — the cream card is off-system next to the dark Cosmic Void surfaces, so the homepage returns to the void fallback card
+next_action: None. Any future homepage card must be rendered in the Cosmic Void system (void field, EB Garamond display, pastel sign hues, no gold) before it can replace the fallback.
 ---
 
 # Content brief: Homepage Open Graph asset
@@ -60,3 +60,18 @@ Zodiacs homepage preview with a cream celestial design, twelve pastel zodiac sym
 - The site owner approved this reviewed asset for production on 2026-08-01.
 - Approval does not substitute for the repository release gate or live delivery verification.
 - No private chart, birth, account, or visitor data appears in the asset.
+
+## Reversal (2026-08-06)
+
+The site owner saw the cream card rendered as the zodiacs.org link preview on X
+and rejected it: a light celestial field with gold/terracotta accents does not
+belong to the dark Cosmic Void system the whole site wears, and Warm Gilt is
+retired sitewide. The asset was removed from `public/assets/og/v2/` and the
+explicit `image`/`imageAlt` props were dropped from `src/pages/index.astro`, so
+the homepage falls back to `/assets/og/v2/share.png` — the void card every other
+unlisted route shares. `scripts/verify-og-cards.mjs` now fails if a
+`homepage.webp` reappears.
+
+X caches link previews, so the old cream card can keep showing on already-posted
+links until the crawler re-fetches; re-scraping the URL in the X Card Validator
+after deploy clears it.

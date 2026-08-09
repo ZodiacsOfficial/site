@@ -3,7 +3,7 @@
  * clock computes, the disclosure surfaces render their RESOLVED values (baked
  * statically for no-JavaScript readers, re-hydrated from JSON with scripts
  * on), no amber pending chip remains, the hydration script stays silent on
- * console, and every illustrated module fits 375/390/810/1280/1440 viewports.
+ * console, and every illustrated module fits 375/390/730/810/1280/1440 viewports.
  * It also verifies the always-visible binary comparison, no-JavaScript
  * visibility, and the reduced-motion final state.
  *
@@ -16,22 +16,44 @@ import { existsSync } from 'node:fs';
 import { setTimeout as wait } from 'node:timers/promises';
 
 const OUT = process.env.OUT_DIR ?? null;
+const PORT = Number.parseInt(process.env.THESIS_QA_PORT ?? '4399', 10);
+const BASE = `http://127.0.0.1:${PORT}`;
+const ZODIAC_SLUGS = [
+  'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+  'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+];
+const ROMAN_LOTS = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+const GALLERY_SELECTOR = '#what-holding-means [data-gallery-stage]';
+const COMPARISON_ROWS = [
+  ['Millennia of history', ['✓', '×', '✓']],
+  ['Ancient mythology and symbolism', ['✓', '×', '✓']],
+  ['Identity from birth', ['×', '×', '✓']],
+  ['Scarcity', ['✓', '✓', '✓']],
+  ['Fixed supply', ['×', '✓', '✓']],
+  ['Public verification', ['×', '✓', '✓']],
+  ['Digital ownership', ['×', '✓', '✓']],
+  ['Permissionless online transfer', ['×', '✓', '✓']],
+  ['Programmable', ['×', '✓', '✓']],
+  ['Base-layer settlement in seconds', ['×', '×', '✓']],
+  ['Everyday identity in profiles and conversation', ['×', '×', '✓']],
+];
+const LEO_MINT = '8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm';
 const CHROMIUM = process.env.PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH
   ?? (existsSync('/opt/pw-browsers/chromium')
     ? '/opt/pw-browsers/chromium'
     : '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome');
 
-const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', '4399'], { stdio: 'ignore' });
+const preview = spawn('npx', ['astro', 'preview', '--host', '127.0.0.1', '--port', String(PORT)], { stdio: 'ignore' });
 // Poll readiness instead of a fixed sleep; cold npx/config loads vary by host.
 {
   const deadline = Date.now() + 30_000;
   let up = false;
   while (!up && Date.now() < deadline) {
-    up = await fetch('http://127.0.0.1:4399/thesis/', { method: 'HEAD' })
+    up = await fetch(`${BASE}/thesis/`, { method: 'HEAD' })
       .then((r) => r.ok).catch(() => false);
     if (!up) await wait(250);
   }
-  if (!up) { preview.kill(); throw new Error('astro preview did not become ready on :4399'); }
+  if (!up) { preview.kill(); throw new Error(`astro preview did not become ready on :${PORT}`); }
 }
 const results = [];
 const check = (name, ok, detail = '') => { results.push({ name, ok, detail }); };
@@ -71,34 +93,64 @@ const isVisuallyExposed = async (locator) => {
   });
 };
 
+const waitForGalleryReady = async (page, timeout = 20_000) => {
+  const gallery = page.locator(GALLERY_SELECTOR);
+  if (await gallery.count() !== 1) return false;
+  await gallery.scrollIntoViewIfNeeded();
+  return page.locator(`${GALLERY_SELECTOR}.is-ready`)
+    .waitFor({ state: 'attached', timeout })
+    .then(() => true)
+    .catch(() => false);
+};
+
 const VISUAL_MODULES = [
   ['history transmission', '#fig-1 .transmission'],
   ['seasonal wheel', '#fig-2 .cadence'],
   ['history, ownership, and rails convergence', '#fig-3 .source-convergence'],
   ['comparison', '#fig-3 .comparison-panel'],
-  ['consumer journey', '.journey'],
+  ['real-use proof', '[data-real-use-proof]'],
+  ['pastel zodiac gallery', GALLERY_SELECTOR],
   ['public scrapbook', '.scrapbook'],
 ];
 
 try {
   const browser = await chromium.launch({ executablePath: CHROMIUM });
-  const page = await browser.newPage({ viewport: { width: 1440, height: 1100 } });
+  const page = await browser.newPage({ viewport: { width: 1440, height: 900 } });
   // Script errors and same-origin load failures are page defects; external
   // fetch failures (the Pulse's live Wikimedia refresh) depend on the
   // network the drive runs on and are reported separately, not failed on.
   const errors = [];
   const external = [];
+  const galleryRequests = [];
   page.on('pageerror', (err) => errors.push(String(err)));
+  page.on('request', (req) => {
+    if (new URL(req.url()).pathname === '/assets/gallery.js') galleryRequests.push(req.url());
+  });
   page.on('requestfailed', (req) => {
     (req.url().startsWith('http://127.0.0.1') ? errors : external).push(req.url());
   });
-  await page.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await page.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
+  const registryCollectionMarker = await page.evaluate(async () => {
+    const html = await fetch('/registry/').then((response) => response.text());
+    const documentCopy = new DOMParser().parseFromString(html, 'text/html');
+    return documentCopy.querySelector('meta[name="zodiacs-registry-collection-enabled"]')?.content ?? null;
+  });
+  const registryCollectionEnabled = registryCollectionMarker === '1';
+  check('Registry publishes a valid Collection build marker',
+    registryCollectionMarker === '0' || registryCollectionMarker === '1',
+    String(registryCollectionMarker));
+  check('1440×900: no page-level horizontal overflow',
+    await page.evaluate(() => document.documentElement.scrollWidth <= window.innerWidth + 1));
+  const thesisGallery = page.locator(GALLERY_SELECTOR);
+  check('Section V contains one gallery stage', (await thesisGallery.count()) === 1);
+  check('gallery bundle is not requested above the fold', galleryRequests.length === 0,
+    galleryRequests.join(' | '));
 
   // Anchors resolve.
-  for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'worth-holding',
-    'pulse', 'the-candidacy', 'what-holding-means', 'the-public-record', 'the-test',
-    'why-solana-why-base', 'the-case-against', 'the-instrument', 'the-honest-ending',
-    'changelog', 'essay']) {
+  for (const id of ['everyone-has-a-sign', 'where-the-signs-come-from', 'attention',
+    'worth-holding', 'pulse', 'the-candidacy', 'what-holding-means', 'the-public-record',
+    'the-conclusion', 'the-test', 'why-solana-why-base', 'the-case-against',
+    'the-instrument', 'the-honest-ending', 'appendix', 'essay']) {
     check(`anchor #${id} resolves`, (await page.locator(`[id="${id}"]`).count()) === 1);
   }
 
@@ -106,10 +158,11 @@ try {
   const clock = await page.locator('[data-season-clock]').textContent();
   check('season clock renders', /season · day \d+ of \d+/.test(clock ?? ''), clock ?? '(hidden)');
 
-  // Masthead + footer + changelog entries.
+  // Masthead + footer.
   check('masthead reads Nº 09 · Why Zodiacs Matter', /Nº 09 · Why Zodiacs Matter/.test(await page.locator('.essay__rail').textContent() ?? ''));
-  check('hero leads with the consumer thesis',
-    /Bitcoin made digital ownership possible\. Zodiacs makes it personal\./.test(await page.locator('.hero__epi').textContent() ?? ''));
+  check('hero keeps one concise consumer subheader',
+    (await page.locator('.hero__epi').count()) === 0
+      && /Your sign already shows up in birthday wishes/.test(await page.locator('.hero__sub').textContent() ?? ''));
   const heroVideo = page.locator('.hero video.hero__media');
   check('hero uses one ambient zodiac-clock video', (await heroVideo.count()) === 1);
   const heroVideoStart = await heroVideo.evaluate((video) => ({
@@ -159,10 +212,6 @@ try {
     !heroVideoReturned.paused && heroVideoReturned.currentTime > heroVideoOffscreen.currentTime,
     JSON.stringify({ offscreen: heroVideoOffscreen, returned: heroVideoReturned }));
   check('hero has no static artwork canvas', (await page.locator('[data-hero-art]').count()) === 0);
-  const heroSignSlugs = [
-    'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-    'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-  ];
   const heroIcons = page.locator('.hero__twelve .hero__twelve-icon');
   const heroIconState = await heroIcons.evaluateAll((icons) => icons.map((icon) => ({
     complete: icon.complete,
@@ -178,28 +227,188 @@ try {
     heroIconState.length === 12
       && heroIconState.every((icon, index) => icon.complete
         && icon.naturalWidth === 48
-        && icon.src === `/assets/zodiac-icons/48/${heroSignSlugs[index]}.webp`
+        && icon.src === `/assets/zodiac-icons/48/${ZODIAC_SLUGS[index]}.webp`
         && icon.alt === ''),
     JSON.stringify(heroIconState));
   check('hero pastel icons keep their registry links and accessible names',
     heroLinks.length === 12 && heroLinks.every((link, index) => {
-      const slug = heroSignSlugs[index];
+      const slug = ZODIAC_SLUGS[index];
       return link.href === `/registry/${slug}/`
-        && link.label === `${slug[0].toUpperCase()}${slug.slice(1)} — registry record`;
+        && link.label === `${slug[0].toUpperCase()}${slug.slice(1)} — digital asset`;
     }));
   check('hero contains no platform zodiac emoji fallback',
     (await page.locator('.hero__twelve-glyph').count()) === 0
       && !/[♈♉♊♋♌♍♎♏♐♑♒♓]/u.test(await page.locator('.hero__twelve').textContent() ?? ''));
+  const catalogueIcons = await page.locator('#the-twelve .twelve__item').evaluateAll((links) => links.map((link) => {
+    const icon = link.querySelector('.twelve__icon');
+    return {
+      href: new URL(link.href).pathname,
+      label: link.textContent.trim().toLowerCase(),
+      complete: icon?.complete,
+      naturalWidth: icon?.naturalWidth,
+      src: icon ? new URL(icon.currentSrc || icon.src).pathname : '',
+      alt: icon?.getAttribute('alt'),
+      hidden: icon?.getAttribute('aria-hidden'),
+    };
+  }));
+  check('catalogue uses twelve official pastel zodiac icons',
+    catalogueIcons.length === 12 && catalogueIcons.every((item, index) => {
+      const slug = ZODIAC_SLUGS[index];
+      return item.href === `/registry/${slug}/`
+        && item.label === slug
+        && item.complete
+        && item.naturalWidth === 48
+        && item.src === `/assets/zodiac-icons/48/${slug}.avif`
+        && item.alt === ''
+        && item.hidden === 'true';
+    }),
+    JSON.stringify(catalogueIcons));
+  check('catalogue contains no legacy Astrofolio glyph masks',
+    (await page.locator('#the-twelve .af-glyph').count()) === 0);
   check('essay opens with a familiar sign',
     /Before you had a username, you had a sign\./.test(await page.locator('#everyone-has-a-sign').textContent() ?? ''));
+  check('consumer copy introduces the twelve as digital assets',
+    /twelve public digital assets, one for each sign\./.test(await page.locator('#everyone-has-a-sign').textContent() ?? ''));
   check('essay closes with a concrete invitation',
-    /Find your sign\. See its record\. Decide what it means to you\./.test(await page.locator('#the-honest-ending').textContent() ?? ''));
-  check('essay close links the changelog',
-    (await page.locator('.thesis-close__sig a[href="#changelog"]').count()) === 1);
-  const changelog = await page.locator('#changelog').textContent() ?? '';
-  check('changelog carries Nº 09 and preserves Nº 08 and Nº 07',
-    /Nº 09/.test(changelog) && /Nº 08 — Why Zodiacs Matter/.test(changelog)
-      && /Nº 07 — July 2026\. The Zodiac Standard/.test(changelog));
+    /Choose your sign\. See the digital asset\. Decide what it means to you\./.test(await page.locator('#the-honest-ending').textContent() ?? ''));
+  const catalogueAction = page.locator('#the-honest-ending [data-thesis-cta="catalogue"]');
+  check('essay close sends the primary action to the catalogue',
+    (await catalogueAction.count()) === 1
+      && await catalogueAction.getAttribute('href') === '/registry/'
+      && /Choose your sign[\s\S]*Open the twelve digital assets/.test(await catalogueAction.textContent() ?? ''));
+  const collectionAction = page.locator('#the-honest-ending [data-thesis-cta="collection"]');
+  check('Collection build marker controls the optional thesis action',
+    (await collectionAction.count()) === (registryCollectionEnabled ? 1 : 0),
+    `marker ${registryCollectionMarker} · ${await collectionAction.count()} action(s)`);
+  check('essay close contains only the primary, optional Collection, and copy actions',
+    (await page.locator('#the-honest-ending .thesis-close__actions > *').count())
+      === (registryCollectionEnabled ? 3 : 2));
+  if (registryCollectionEnabled) {
+    check('enabled Collection action is read-only and uses the fixed route',
+      await collectionAction.getAttribute('href') === '/registry/collection/'
+        && /View a wallet collection[\s\S]*Read-only · no signing/.test(await collectionAction.textContent() ?? ''));
+  } else {
+    check('disabled Collection route is absent from the thesis',
+      (await page.locator('a[href="/registry/collection/"]').count()) === 0);
+  }
+  check('essay close includes one canonical-link copy control',
+    (await page.locator('#the-honest-ending [data-thesis-copy-link]').count()) === 1);
+  await page.evaluate(() => {
+    window.__thesisCopiedUrl = '';
+    Object.defineProperty(navigator, 'clipboard', {
+      configurable: true,
+      value: {
+        writeText(value) {
+          window.__thesisCopiedUrl = value;
+          return Promise.resolve();
+        },
+      },
+    });
+  });
+  await page.locator('[data-thesis-copy-link]').evaluate((button) => button.click());
+  await page.waitForFunction(() => (
+    document.querySelector('[data-thesis-copy-label]')?.textContent?.trim() === 'Link copied'
+  ));
+  const copiedState = await page.evaluate(() => ({
+    copied: window.__thesisCopiedUrl,
+    label: document.querySelector('[data-thesis-copy-label]')?.textContent?.trim(),
+    status: document.querySelector('[data-thesis-share-status]')?.textContent?.trim(),
+  }));
+  check('copy control copies the canonical thesis URL and confirms it accessibly',
+    copiedState.copied === 'https://zodiacs.org/thesis/'
+      && copiedState.label === 'Link copied'
+      && copiedState.status === 'Canonical thesis link copied.',
+    JSON.stringify(copiedState));
+  check('public changelog is removed',
+    (await page.locator('#changelog, a[href="#changelog"]').count()) === 0);
+  check('removed attention summary cards stay out of the essay',
+    (await page.locator('.truth-panel').count()) === 0);
+  const attentionDrawer = page.locator('#attention > details.evidence-drawer');
+  check('Part III has one merged audience and attention drawer',
+    (await attentionDrawer.count()) === 1
+      && (await attentionDrawer.locator(':scope > summary').textContent())?.trim() === 'Audience & attention evidence'
+      && (await attentionDrawer.locator('.stats').count()) === 1
+      && (await attentionDrawer.locator('#pulse').count()) === 1);
+  await attentionDrawer.locator(':scope > summary').focus();
+  await page.keyboard.press('Enter');
+  check('merged Part III drawer exposes both audience figures and the Pulse',
+    await attentionDrawer.getAttribute('open') !== null
+      && await isVisuallyExposed(attentionDrawer.locator('.stats'))
+      && await isVisuallyExposed(attentionDrawer.locator('#pulse')));
+  await attentionDrawer.locator(':scope > summary').focus();
+  await page.keyboard.press('Enter');
+
+  // The last historical form is the branded digital asset, and the gallery
+  // upgrades its authored fallback only when the reader reaches Section IV.
+  const finalEraState = await page.locator('#fig-1 .era').last().evaluate((era) => {
+    const image = era.querySelector('.era__object img');
+    return {
+      imageCount: era.querySelectorAll('.era__object img').length,
+      imageAlt: image?.getAttribute('alt'),
+      imageSrc: image ? new URL(image.src).pathname : '',
+      label: era.querySelector('.era__name')?.textContent?.trim(),
+      date: era.querySelector('.era__time')?.textContent?.trim(),
+    };
+  });
+  check('F1 ends with the circle logo, Digital asset, and 5 Jul 2024',
+    finalEraState.imageCount === 1
+      && finalEraState.imageAlt === ''
+      && finalEraState.imageSrc === '/assets/app-icons/v3/icon-192.png'
+      && finalEraState.label === 'Digital asset'
+      && finalEraState.date === '5 Jul 2024',
+    JSON.stringify(finalEraState));
+
+  const galleryReady = await waitForGalleryReady(page);
+  check('gallery bundle loads once when Section IV approaches',
+    galleryReady && galleryRequests.length === 1,
+    `${galleryReady ? 'ready' : 'not ready'} · ${galleryRequests.length} request(s)`);
+  const railButtons = thesisGallery.locator('[data-gallery-rail]').getByRole('button');
+  const railState = await railButtons.evaluateAll((buttons) => buttons.map((button) => ({
+    current: button.getAttribute('aria-current'),
+    label: button.getAttribute('aria-label'),
+    tabIndex: button.tabIndex,
+    type: button.getAttribute('type'),
+  })));
+  check('gallery exposes twelve accessible rail controls',
+    railState.length === 12 && railState.every((control, index) => {
+      const slug = ZODIAC_SLUGS[index];
+      const name = `${slug[0].toUpperCase()}${slug.slice(1)}`;
+      return control.type === 'button'
+        && control.label === `${name}, Lot ${ROMAN_LOTS[index]} of twelve`;
+    }),
+    JSON.stringify(railState));
+  check('gallery rail has one roving current control',
+    railState.filter((control) => control.current === 'true' && control.tabIndex === 0).length === 1
+      && railState.filter((control) => control.current !== 'true' && control.tabIndex === -1).length === 11,
+    JSON.stringify(railState));
+
+  const galleryOpener = thesisGallery.locator('[data-gallery-open]');
+  await galleryOpener.focus();
+  await page.keyboard.press('Enter');
+  await page.locator(`${GALLERY_SELECTOR}.is-open [data-gallery-card]:not([hidden])`)
+    .waitFor({ state: 'attached', timeout: 5_000 }).catch(() => {});
+  const galleryOpenState = await thesisGallery.evaluate((gallery) => ({
+    cardHidden: gallery.querySelector('[data-gallery-card]')?.hidden,
+    closerFocused: document.activeElement === gallery.querySelector('[data-gallery-close]'),
+    open: gallery.classList.contains('is-open'),
+  }));
+  check('gallery opens from its keyboard control and focuses the close button',
+    galleryOpenState.open && galleryOpenState.cardHidden === false && galleryOpenState.closerFocused,
+    JSON.stringify(galleryOpenState));
+  await page.keyboard.press('Escape');
+  await page.waitForFunction((selector) => {
+    const gallery = document.querySelector(selector);
+    return gallery && !gallery.classList.contains('is-open')
+      && gallery.querySelector('[data-gallery-card]')?.hidden;
+  }, GALLERY_SELECTOR, { timeout: 5_000 }).catch(() => {});
+  const galleryClosedState = await thesisGallery.evaluate((gallery) => ({
+    cardHidden: gallery.querySelector('[data-gallery-card]')?.hidden,
+    currentFocused: document.activeElement === gallery.querySelector('[data-gallery-rail] [aria-current="true"]'),
+    open: gallery.classList.contains('is-open'),
+  }));
+  check('Escape closes the gallery card and returns focus to its current sign',
+    !galleryClosedState.open && galleryClosedState.cardHidden && galleryClosedState.currentFocused,
+    JSON.stringify(galleryClosedState));
 
   // Resolved disclosures — no amber chip remains after hydration settles.
   await wait(600);
@@ -221,15 +430,18 @@ try {
   check('test card admits the test has not begun', /has not begun/.test(tcard));
   check('test card fixes the no-later-than date', /2026-10-31/.test(tcard));
 
-  // F3 stays open and says everything through row labels plus standalone marks.
+  // F3 stays open and uses the current eleven-property comparison.
   const comparison = page.locator('#fig-3 .comparison-panel .ztbl');
   check('comparison is always visible', await isVisuallyExposed(comparison));
   check('comparison is not nested in details', (await page.locator('#fig-3 details .ztbl').count()) === 0);
   check('comparison has four scoped column headers',
     (await comparison.locator('thead th[scope="col"]').count()) === 4);
-  check('comparison has eleven scoped property rows',
+  const propertyLabels = (await comparison.locator('tbody th[scope="row"]').allTextContents())
+    .map((label) => label.trim());
+  check('comparison has the exact eleven scoped property rows',
     (await comparison.locator('tbody tr').count()) === 11
-      && (await comparison.locator('tbody th[scope="row"]').count()) === 11);
+      && JSON.stringify(propertyLabels) === JSON.stringify(COMPARISON_ROWS.map(([label]) => label)),
+    propertyLabels.join(' · '));
   check('comparison has exactly thirty-three standalone marks',
     (await comparison.locator('tbody td .comparison-mark').count()) === 33);
   check('comparison gives every mark an sr-only label',
@@ -242,13 +454,21 @@ try {
   check('comparison cells contain only checks and X marks',
     cellContent.length === 33 && cellContent.every((value) => value === '✓' || value === '×'),
     [...new Set(cellContent)].join(', '));
-  const zodiacMarks = await comparison.locator('tbody tr td:nth-of-type(3)').evaluateAll((cells) => cells.map((cell) => {
-    const clone = cell.cloneNode(true);
-    clone.querySelectorAll('.sr-only').forEach((node) => node.remove());
-    return clone.textContent.trim();
-  }));
-  check('Zodiacs receives all eleven checks',
-    zodiacMarks.length === 11 && zodiacMarks.every((mark) => mark === '✓'));
+  const rowMarks = [];
+  for (const row of await comparison.locator('tbody tr').all()) {
+    rowMarks.push(await row.locator('td').evaluateAll((cells) => cells.map((cell) => {
+      const clone = cell.cloneNode(true);
+      clone.querySelectorAll('.sr-only').forEach((node) => node.remove());
+      return clone.textContent.trim();
+    })));
+  }
+  check('comparison uses the exact yes-or-no matrix',
+    JSON.stringify(rowMarks) === JSON.stringify(COMPARISON_ROWS.map(([, marks]) => marks)),
+    JSON.stringify(rowMarks));
+  const zodiacsMarks = rowMarks.map((row) => row[2]);
+  check('Zodiacs is checked on all eleven properties',
+    zodiacsMarks.length === 11 && zodiacsMarks.every((mark) => mark === '✓'),
+    JSON.stringify(zodiacsMarks));
   const comparisonNotes = page.locator('#fig-3 details.evidence-drawer');
   await comparisonNotes.locator('summary').focus();
   await page.keyboard.press('Enter');
@@ -256,23 +476,75 @@ try {
   await page.keyboard.press('Enter');
   check('comparison evidence drawer closes from the keyboard', await comparisonNotes.getAttribute('open') === null);
   const evidenceVault = page.locator('details.evidence-vault');
+  const appendix = page.locator('#appendix');
+  check('technical appendix starts hidden inside the closed evidence vault',
+    await evidenceVault.getAttribute('open') === null
+      && (await evidenceVault.locator('#appendix').count()) === 1
+      && !await appendix.isVisible());
   await evidenceVault.locator(':scope > summary').focus();
   await page.keyboard.press('Enter');
-  check('evidence vault opens from the keyboard', await evidenceVault.getAttribute('open') !== null);
+  check('evidence vault opens from the keyboard and reveals the appendix',
+    await evidenceVault.getAttribute('open') !== null && await appendix.isVisible());
   await page.keyboard.press('Enter');
-  check('evidence vault closes from the keyboard', await evidenceVault.getAttribute('open') === null);
+  check('evidence vault closes from the keyboard and hides the appendix',
+    await evidenceVault.getAttribute('open') === null && !await appendix.isVisible());
+  await page.evaluate(() => { location.hash = 'appendix'; });
+  await page.waitForFunction(() => document.querySelector('details.evidence-vault')?.open === true);
+  check('deep-linking #appendix opens its collapsed evidence ancestor',
+    await evidenceVault.getAttribute('open') !== null && await appendix.isVisible());
+  await page.evaluate(() => {
+    history.replaceState(null, '', location.pathname);
+    document.querySelector('details.evidence-vault').open = false;
+  });
 
   // The human visual layer renders before the detailed evidence.
   check('seven-era transmission renders', (await page.locator('.transmission .era').count()) === 7);
   check('twelve-sign seasonal wheel renders', (await page.locator('.zodiac-wheel__sign').count()) === 12);
   check('Gold, Bitcoin, and Solana convergence renders',
     (await page.locator('#fig-3 .source-convergence .source-card').count()) === 3);
+  const convergenceLinks = await page.locator('#fig-3 [data-convergence-link]').evaluateAll((paths) => paths.map((path) => ({
+    source: path.getAttribute('data-convergence-link'),
+    length: path.getTotalLength(),
+  })));
+  check('three color-matched paths visibly converge into Zodiacs',
+    convergenceLinks.length === 6
+      && [...new Set(convergenceLinks.map(({ source }) => source))].join(',') === 'gold,bitcoin,solana'
+      && convergenceLinks.every(({ length }) => length > 0)
+      && (await page.locator('#fig-3 [data-convergence-result]').count()) === 1);
+  check('Gold uses the bullion-bar mark in the diagram and table',
+    (await page.locator('#fig-3 [data-icon="gold-bar"] [data-gold-bar]').count()) === 2);
+  check('gallery display labels are removed',
+    (await page.locator('.thesis-gallery__head, .gband__fallback-title').count()) === 0);
   check('comparison headers render Gold, Bitcoin, and the complete zodiac wheel',
     (await comparison.locator('.ztbl-brand--gold svg').count()) === 1
       && (await comparison.locator('.ztbl-brand--bitcoin').count()) === 1
       && (await comparison.locator('.ztbl-brand--zodiacs .brand-wheel i').count()) === 12);
-  check('consumer journey renders', (await page.locator('.journey__step').count()) === 4);
-  check('public scrapbook renders positive milestones', (await page.locator('.scrapbook__entry').count()) >= 4);
+  const realUseProof = page.locator('[data-real-use-proof]');
+  const proofHrefs = await realUseProof.locator('.proof-loop__step').evaluateAll((links) => (
+    links.map((link) => link.getAttribute('href'))
+  ));
+  check('real-use proof follows one Leo mint across three public surfaces',
+    (await realUseProof.count()) === 1
+      && (await realUseProof.locator('.proof-loop__steps > li').count()) === 3
+      && JSON.stringify(proofHrefs) === JSON.stringify([
+        '/registry/leo/',
+        `https://explorer.solana.com/address/${LEO_MINT}`,
+        `https://www.solflare.com/prices/leo/${LEO_MINT}/`,
+      ])
+      && (await realUseProof.locator('.proof-loop__mint code').textContent())?.trim() === LEO_MINT,
+    JSON.stringify(proofHrefs));
+  check('wallet proof states its third-party boundary',
+    /Solflare is a third-party wallet surface\.[\s\S]*does not show that Solflare consumes the Zodiacs Registry or SDK\./
+      .test(await realUseProof.textContent() ?? ''));
+  check('public history is a compact four-milestone strip',
+    (await page.locator('.scrapbook--compact .scrapbook__entry').count()) === 4);
+  const honestLimitation = page.locator('[data-honest-limitation]');
+  check('the main reading path visibly states what remains unproven',
+    await isVisuallyExposed(honestLimitation)
+      && /The assets are listed and transferable\. Their broader standing still has to be earned\./
+        .test(await honestLimitation.textContent() ?? '')
+      && /Independent adoption has not yet arrived\./.test(await honestLimitation.textContent() ?? '')
+      && await honestLimitation.locator('a').getAttribute('href') === '#the-candidacy');
   check('plain candidacy snapshot renders', (await page.locator('.human-score__item').count()) === 4);
   check('three-question test renders', (await page.locator('.test-question').count()) === 3);
   check('plain-language instrument renders', (await page.locator('.fact-card').count()) === 6);
@@ -312,7 +584,8 @@ try {
   await shot(page, '#fig-1', 'thesis-f1-desktop.png');
   await shot(page, '#fig-2', 'thesis-f2-desktop.png');
   await shot(page, '#fig-3', 'thesis-f3-desktop.png');
-  await shot(page, '#what-holding-means', 'thesis-journey-desktop.png');
+  await shot(page, '#what-holding-means', 'thesis-proof-desktop.png');
+  await shot(page, GALLERY_SELECTOR, 'thesis-gallery-desktop.png');
   await shot(page, '#the-public-record', 'thesis-history-desktop.png');
   await page.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(page, '#the-candidacy', 'thesis-v-desktop.png');
@@ -327,7 +600,7 @@ try {
 
   // 1280px shots for the release evidence set.
   const mid = await browser.newPage({ viewport: { width: 1280, height: 1000 } });
-  await mid.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await mid.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   await wait(600);
   await mid.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(mid, '#the-instrument', 'thesis-x-1280.png');
@@ -339,7 +612,7 @@ try {
   const reviewErrors = [];
   review.on('pageerror', (err) => reviewErrors.push(String(err)));
   review.on('requestfailed', (req) => { if (req.url().startsWith('http://127.0.0.1')) reviewErrors.push(req.url()); });
-  await review.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await review.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   await wait(600);
   const reviewOverflow = await review.evaluate(() => ({
     doc: document.documentElement.scrollWidth,
@@ -363,7 +636,8 @@ try {
   await shot(review, '#fig-1', 'thesis-f1-810.png');
   await shot(review, '#fig-2', 'thesis-f2-810.png');
   await shot(review, '#fig-3', 'thesis-f3-810.png');
-  await shot(review, '#what-holding-means', 'thesis-journey-810.png');
+  await shot(review, '#what-holding-means', 'thesis-proof-810.png');
+  await shot(review, GALLERY_SELECTOR, 'thesis-gallery-810.png');
   await shot(review, '#the-public-record', 'thesis-history-810.png');
   await review.locator('details.evidence-vault').evaluate((node) => { node.open = true; });
   await shot(review, '#the-candidacy', 'thesis-v-810.png');
@@ -373,6 +647,80 @@ try {
     reviewErrors.slice(0, 2).join(' | '));
   await review.close();
 
+  // Exact browser-comment viewport — F1 remains a single chronology and the
+  // newly embedded gallery contains any horizontal movement inside its rail.
+  const annotated = await browser.newPage({ viewport: { width: 730, height: 1054 } });
+  const annotatedErrors = [];
+  annotated.on('pageerror', (err) => annotatedErrors.push(String(err)));
+  annotated.on('requestfailed', (req) => {
+    if (req.url().startsWith('http://127.0.0.1')) annotatedErrors.push(req.url());
+  });
+  await annotated.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
+  const annotatedGalleryReady = await waitForGalleryReady(annotated);
+  await wait(350);
+  const annotatedLayout = await annotated.evaluate((selector) => {
+    const gallery = document.querySelector(selector);
+    const rail = gallery?.querySelector('[data-gallery-rail]');
+    const nextSection = document.querySelector('#the-public-record');
+    const galleryRect = gallery?.getBoundingClientRect();
+    const nextRect = nextSection?.getBoundingClientRect();
+    return {
+      documentWidth: document.documentElement.scrollWidth,
+      galleryBottom: galleryRect?.bottom ?? 0,
+      galleryClientWidth: gallery?.clientWidth ?? 0,
+      galleryLeft: galleryRect?.left ?? 0,
+      galleryRight: galleryRect?.right ?? 0,
+      galleryScrollWidth: gallery?.scrollWidth ?? 0,
+      nextSectionTop: nextRect?.top ?? 0,
+      railClientWidth: rail?.clientWidth ?? 0,
+      railScrollWidth: rail?.scrollWidth ?? 0,
+      viewportWidth: window.innerWidth,
+    };
+  }, GALLERY_SELECTOR);
+  check('730px: no page-level or gallery-stage horizontal overflow',
+    annotatedGalleryReady
+      && annotatedLayout.documentWidth <= annotatedLayout.viewportWidth + 1
+      && annotatedLayout.galleryLeft >= -1
+      && annotatedLayout.galleryRight <= annotatedLayout.viewportWidth + 1
+      && annotatedLayout.galleryScrollWidth <= annotatedLayout.galleryClientWidth + 1,
+    JSON.stringify(annotatedLayout));
+  check('730px: gallery precedes the next movement without overlap',
+    annotatedLayout.galleryBottom <= annotatedLayout.nextSectionTop + 1,
+    JSON.stringify(annotatedLayout));
+  check('730px: gallery rail owns any horizontal scrolling',
+    annotatedLayout.railClientWidth > 0
+      && annotatedLayout.railScrollWidth >= annotatedLayout.railClientWidth,
+    `${annotatedLayout.railScrollWidth} vs ${annotatedLayout.railClientWidth}`);
+
+  const annotatedTransmission = annotated.locator('#fig-1 .transmission');
+  await annotatedTransmission.scrollIntoViewIfNeeded();
+  await wait(300);
+  const annotatedF1 = await annotatedTransmission.evaluate((transmission) => {
+    const eras = [...transmission.querySelectorAll('.era')];
+    const image = eras.at(-1)?.querySelector('.era__object img');
+    const tops = eras.map((era) => era.offsetTop);
+    return {
+      complete: image?.complete ?? false,
+      eras: eras.length,
+      naturalWidth: image?.naturalWidth ?? 0,
+      oneRow: tops.length > 0 && Math.max(...tops) - Math.min(...tops) <= 2,
+      clientWidth: transmission.clientWidth,
+      scrollWidth: transmission.scrollWidth,
+    };
+  });
+  check('730px: F1 keeps seven eras on one row with the loaded circle logo',
+    annotatedF1.eras === 7
+      && annotatedF1.oneRow
+      && annotatedF1.complete
+      && annotatedF1.naturalWidth === 192
+      && annotatedF1.scrollWidth <= annotatedF1.clientWidth + 1,
+    JSON.stringify(annotatedF1));
+  await shot(annotated, '#fig-1', 'thesis-f1-730.png');
+  await shot(annotated, GALLERY_SELECTOR, 'thesis-gallery-730.png');
+  check('no page errors or same-origin failures (730px)', annotatedErrors.length === 0,
+    annotatedErrors.slice(0, 2).join(' | '));
+  await annotated.close();
+
   // Exact annotated mobile/tablet viewport — the almanac modules should feel
   // compact at 623×1054 without giving up their chronology or structure.
   const compact = await browser.newPage({ viewport: { width: 623, height: 1054 } });
@@ -381,7 +729,7 @@ try {
   compact.on('requestfailed', (req) => {
     if (req.url().startsWith('http://127.0.0.1')) compactErrors.push(req.url());
   });
-  await compact.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await compact.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   await wait(600);
   const compactPage = await compact.evaluate(() => ({
     documentWidth: document.documentElement.scrollWidth,
@@ -406,10 +754,9 @@ try {
 
   const compactModules = [
     ['history transmission', '#fig-1 .story-figure', 0.24],
-    ['attention summary', '.truth-panel', 0.24],
     ['source convergence', '#fig-3 .source-convergence', 0.44],
     ['modern rails', '.rail-map', 0.20],
-    ['consumer journey', '.journey', 0.30],
+    ['real-use proof', '[data-real-use-proof]', 0.48],
   ];
   for (const [name, selector, maxViewportFraction] of compactModules) {
     const geometry = await compact.locator(selector).first().evaluate((node) => {
@@ -438,19 +785,21 @@ try {
       const tops = [...document.querySelectorAll(selector)].map((node) => node.getBoundingClientRect().top);
       return tops.length > 0 && Math.max(...tops) - Math.min(...tops) <= 2;
     };
+    const proofTops = [...document.querySelectorAll('.proof-loop__steps > li')]
+      .map((node) => Math.round(node.getBoundingClientRect().top));
     return {
       eras: sameRow('#fig-1 .era'),
       rails: sameRow('.rail-map__item'),
-      journey: sameRow('.journey__step'),
-      truth: sameRow('.truth-panel__side'),
+      proof: proofTops.length === 3 && new Set(proofTops).size === 2,
     };
   });
-  check('623px: compact modules use their intended horizontal summaries',
-    compactRows.eras && compactRows.rails && compactRows.journey && compactRows.truth,
+  check('623px: compact modules use their intended responsive summaries',
+    compactRows.eras && compactRows.rails && compactRows.proof,
     JSON.stringify(compactRows));
   await shot(compact, '#fig-1', 'thesis-f1-623.png');
   await shot(compact, '#fig-3', 'thesis-f3-623.png');
-  await shot(compact, '#what-holding-means', 'thesis-journey-623.png');
+  await shot(compact, '#what-holding-means', 'thesis-proof-623.png');
+  await shot(compact, GALLERY_SELECTOR, 'thesis-gallery-623.png');
   check('no page errors or same-origin failures (623px)', compactErrors.length === 0,
     compactErrors.slice(0, 2).join(' | '));
   await compact.close();
@@ -459,7 +808,7 @@ try {
   const nojsContext = await browser.newContext({ javaScriptEnabled: false, reducedMotion: 'reduce' });
   const nojs = await nojsContext.newPage();
   await nojs.setViewportSize({ width: 1280, height: 1000 });
-  await nojs.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'domcontentloaded' });
+  await nojs.goto(`${BASE}/thesis/`, { waitUntil: 'domcontentloaded' });
   check('no-JS: zero pending chips', (await nojs.locator('.pending-disclosure').count()) === 0);
   check('no-JS: instrument values baked',
     (await nojs.locator('#the-instrument .disc-val').count()) >= 104);
@@ -474,16 +823,44 @@ try {
   check('no-JS + reduced motion: ambient hero video stays paused',
     !nojsHeroVideo.autoplay && nojsHeroVideo.paused,
     JSON.stringify(nojsHeroVideo));
+  const nojsCollectionLinks = await nojs.locator('a[href="/registry/collection/"]').count();
+  check('no-JS: Collection action follows the Registry build marker',
+    nojsCollectionLinks === (registryCollectionEnabled ? 1 : 0),
+    `marker ${registryCollectionMarker} · ${nojsCollectionLinks} link(s)`);
+  check('no-JS: appendix remains collapsed behind Evidence & disclosures',
+    !await nojs.locator('#appendix').isVisible()
+      && await nojs.locator('details.evidence-vault').getAttribute('open') === null);
+  const nojsFallback = nojs.locator(`${GALLERY_SELECTOR} [data-gallery-fallback]`);
+  const nojsFallbackState = await nojsFallback.locator('[data-gallery-fallback-record]')
+    .evaluateAll((links) => links.map((link) => {
+      const image = link.querySelector('img');
+      return {
+        alt: image?.getAttribute('alt') ?? '',
+        href: link.getAttribute('href') ?? '',
+        src: image?.getAttribute('src') ?? '',
+      };
+    }));
+  check('no-JS: gallery exposes all twelve linked sculpture records',
+    nojsFallbackState.length === 12 && nojsFallbackState.every((record, index) => {
+      const slug = ZODIAC_SLUGS[index];
+      const name = `${slug[0].toUpperCase()}${slug.slice(1)}`;
+      return record.href === `/registry/${slug}/`
+        && record.src === `/assets/nuggets/thumb/${slug}.png`
+        && record.alt === `${name} gold sculpture`;
+    }),
+    JSON.stringify(nojsFallbackState));
+  check('no-JS: static gallery fallback is visibly exposed', await isVisuallyExposed(nojsFallback));
   for (const [name, selector] of VISUAL_MODULES) {
     check(`no-JS: ${name} is visually exposed`, await isVisuallyExposed(nojs.locator(selector).first()));
   }
+  await shot(nojs, GALLERY_SELECTOR, 'thesis-gallery-nojs.png');
   await nojsContext.close();
 
   // Reduced motion shows final states without transitions or transforms.
   const reducedContext = await browser.newContext({ reducedMotion: 'reduce' });
   const reduced = await reducedContext.newPage();
   await reduced.setViewportSize({ width: 1280, height: 1000 });
-  await reduced.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await reduced.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   await wait(600);
   const reducedHeroVideo = await reduced.locator('.hero video.hero__media').evaluate((video) => ({
     autoplay: video.hasAttribute('autoplay'),
@@ -492,6 +869,29 @@ try {
   check('reduced motion: ambient hero video is paused',
     !reducedHeroVideo.autoplay && reducedHeroVideo.paused,
     JSON.stringify(reducedHeroVideo));
+  const reducedGalleryReady = await waitForGalleryReady(reduced);
+  // The fallback's short cross-fade is allowed even under reduced motion;
+  // sample after it has settled so this detects continuing movement.
+  await wait(400);
+  const reducedGalleryState = await reduced.locator(GALLERY_SELECTOR).evaluate((gallery) => ({
+    activeAnimations: gallery.getAnimations({ subtree: true })
+      .filter((animation) => animation.playState === 'running').length,
+    bandTransition: getComputedStyle(gallery).transitionDuration,
+    mediaMatches: matchMedia('(prefers-reduced-motion: reduce)').matches,
+    pictureTransforms: [...gallery.querySelectorAll('[data-gallery-rail] picture')]
+      .map((picture) => getComputedStyle(picture).transform),
+    ready: gallery.classList.contains('is-ready'),
+  }));
+  check('reduced motion: gallery settles without scaling or active animation',
+    reducedGalleryReady
+      && reducedGalleryState.ready
+      && reducedGalleryState.mediaMatches
+      && reducedGalleryState.activeAnimations === 0
+      && reducedGalleryState.bandTransition.split(',')
+        .every((duration) => Number.parseFloat(duration) === 0)
+      && reducedGalleryState.pictureTransforms.length === 12
+      && reducedGalleryState.pictureTransforms.every((transform) => transform === 'none'),
+    JSON.stringify(reducedGalleryState));
   const reducedStates = await reduced.locator('.reveal, [data-visual-reveal], [data-almanac-reveal], [data-visual-reveal] > *, [data-almanac-reveal] > *').evaluateAll((nodes) => nodes.map((node) => {
     const style = getComputedStyle(node);
     return {
@@ -515,7 +915,7 @@ try {
   // A preference change after load must stop the ambient video immediately.
   const changingMotionContext = await browser.newContext({ reducedMotion: 'no-preference' });
   const changingMotion = await changingMotionContext.newPage();
-  await changingMotion.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+  await changingMotion.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
   const changingHeroVideo = changingMotion.locator('.hero video.hero__media');
   await wait(350);
   const beforeMotionChange = await changingHeroVideo.evaluate((video) => ({ paused: video.paused, currentTime: video.currentTime }));
@@ -533,7 +933,7 @@ try {
     const mobErrors = [];
     mob.on('pageerror', (err) => mobErrors.push(String(err)));
     mob.on('requestfailed', (req) => { if (req.url().startsWith('http://127.0.0.1')) mobErrors.push(req.url()); });
-    await mob.goto('http://127.0.0.1:4399/thesis/', { waitUntil: 'networkidle' });
+    await mob.goto(`${BASE}/thesis/`, { waitUntil: 'networkidle' });
     await wait(600);
     const heroRibbon = await mob.locator('.hero__twelve').evaluate((row) => {
       const links = [...row.querySelectorAll('a')];
@@ -585,7 +985,8 @@ try {
       await shot(mob, '#fig-1', 'thesis-f1-mobile.png');
       await shot(mob, '#fig-2', 'thesis-f2-mobile.png');
       await shot(mob, '#fig-3', 'thesis-f3-mobile.png');
-      await shot(mob, '#what-holding-means', 'thesis-journey-mobile.png');
+      await shot(mob, '#what-holding-means', 'thesis-proof-mobile.png');
+      await shot(mob, GALLERY_SELECTOR, 'thesis-gallery-mobile.png');
       await shot(mob, '#the-public-record', 'thesis-history-mobile.png');
       await mob.locator('#the-candidacy').scrollIntoViewIfNeeded();
       await shot(mob, '#the-candidacy', 'thesis-v-mobile.png');

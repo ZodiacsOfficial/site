@@ -56,7 +56,7 @@ describe('Registry consumer and technical information architecture', () => {
     }
   });
 
-  it('makes the consumer hero about choosing a sign and checking an address', async () => {
+  it('makes the consumer hero about choosing a token and checking an address', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
@@ -64,12 +64,16 @@ describe('Registry consumer and technical information architecture', () => {
     const visible = visibleMarkup(html);
 
     for (const value of [source, visible]) {
-      expect(value).toContain('Explore the twelve signs and see the official digital record for each one.');
-      expect(value).toContain('Choose your sign');
-      expect(value).toContain('Check an address');
+      expect(value).toContain('Every sign has one official token. Explore its story, its record, and its market.');
+      // The verifier is reachable in plain words. "Check an address" named
+      // the mechanism, and "Check a token is official" dropped its "that".
+      expect(value).toContain('Verify a token');
+      expect(value).not.toContain('Check an address');
+      expect(value).not.toContain('Check a token is official');
     }
-    expect(visible).toMatch(/href="#official-twelve"[^>]*>[\s\S]*?Choose your sign/iu);
-    expect(visible).toMatch(/href="#verify"[^>]*>[\s\S]*?Check an address/iu);
+    expect(visible).toContain('Choose a token');
+    expect(visible).toMatch(/href="#official-twelve"[^>]*>[\s\S]*?Choose a token/iu);
+    expect(visible).toMatch(/href="#verify"[^>]*>[\s\S]*?Verify a token/iu);
     expect(visible).not.toContain('Open the Cabinet');
   });
 
@@ -78,7 +82,8 @@ describe('Registry consumer and technical information architecture', () => {
     const mounted = consumerRoot(source);
 
     expect(source).toContain('id="official-twelve"');
-    expect(source).toContain('className="consumer-explorer"');
+    // In stage mode the section is also the page's opening scene.
+    expect(source).toContain("'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')");
     expect(source).toContain('data-consumer-sign=');
     expect(source).toContain('aria-pressed={isActive}');
     expect(source).toContain('tabIndex={isActive ? 0 : -1}');
@@ -118,7 +123,7 @@ describe('Registry consumer and technical information architecture', () => {
     const source = await read('src/app.jsx');
 
     for (const sentence of [
-      'Check a Zodiac address',
+      'Check a Zodiac token address',
       'Paste the mint or contract address shown by a wallet or marketplace.',
       'Never paste a seed phrase.',
       'Official ',
@@ -137,9 +142,11 @@ describe('Registry consumer and technical information architecture', () => {
       read('public/registry/index.html'),
     ]);
 
-    expect(source).toContain("src: '/assets/hero/zodiacs-hero.mp4'");
-    expect(source).toContain("poster: '/assets/hero/zodiacs-hero-poster.avif'");
-    expect(source).toContain("window.matchMedia('(prefers-reduced-motion: reduce)').matches");
+    // The rendered page opens on the gallery at every width, so the film is
+    // the no-JS shell's hero alone — and it still must not autoplay for a
+    // reader who asked for stillness.
+    expect(source).not.toContain("src: '/assets/hero/zodiacs-hero.mp4'");
+    expect(html).toContain('@media (prefers-reduced-motion: reduce)');
     expect(source).toContain('new IntersectionObserver');
     expect(html).toContain('data-src="/assets/hero/zodiacs-hero.mp4"');
     expect(html).toContain('poster="/assets/hero/zodiacs-hero-poster.avif"');
@@ -148,13 +155,175 @@ describe('Registry consumer and technical information architecture', () => {
     expect(html).toContain("if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches)");
   });
 
-  it('only requests the optional gold gallery after a reader opens it', async () => {
+  it('mounts the sculpture stage on every capable viewport and keeps the bundle lazy', async () => {
     const source = await read('src/app.jsx');
-    expect(source).toContain('data-consumer-gallery-toggle');
-    expect(source).toContain('data-consumer-gallery');
+    // Phones and desktops share the real stage whenever WebGL exists. The
+    // flat carousel is now a capability fallback, not a width breakpoint.
+    expect(source).toContain('return GALLERY_LIVE;');
+    expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
     expect(source).toContain("'/assets/gallery.js'");
-    expect(source).toContain('{galleryOpen && (');
-    expect(source).toContain('<GalleryBand active={active} setActive={setActive} consumer />');
+    expect(source).toContain('carousel={!stageMode}');
+    expect(source).not.toContain('data-consumer-gallery-toggle');
+    expect(source).toContain('RAIL_PLACEHOLDER_HTML');
+  });
+
+  it('shows the current season with a live price and DST-safe countdown', async () => {
+    const [source, html, bundle] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+      read('public/assets/app.js'),
+    ]);
+
+    for (const marker of [
+      'function SeasonNow({ season })',
+      '<SeasonNow season={season} />',
+      'Now in season',
+      "remaining === 1 ? '' : 's'",
+      'Date.UTC(year, month - 1, day)',
+      'remaining: Math.max(0, total - day)',
+      'useTwelveQuotes(Boolean(season))',
+    ]) expect(source).toContain(marker);
+    expect(html).toContain('.season-now {');
+    expect(html).toContain('.season-now__progress > span');
+    for (const marker of ['season-now', 'Now in season', 'remaining']) {
+      expect(bundle).toContain(marker);
+    }
+  });
+
+  it('presents the selected sign on a placard: name, dates, price, two doors', async () => {
+    const source = await read('src/app.jsx');
+    const mounted = consumerRoot(source);
+
+    const placard = source.slice(
+      source.indexOf('className="stage-placard"'),
+      source.indexOf('className="stage-sheet"'),
+    );
+    expect(placard).toContain('className="stage-placard__name"');
+    expect(placard).toContain('{signDateLabel(sign)}');
+    expect(placard).toContain('<PlacardQuote sign={sign} />');
+    expect(placard).toContain('Trade {sign.name}');
+    expect(placard).toContain('<span>The record</span>');
+    expect(placard).toContain('href={registryProfilePath(sign)}');
+    // Flag-off the pill is the door to the catalogue page's own panel.
+    expect(placard).toContain('href={`${registryProfilePath(sign)}#acquire`}');
+    expect(mounted).toContain('<ConsumerTokensSection />');
+  });
+
+  it('says one thing about a sign, in one place, at every width', async () => {
+    const source = await read('src/app.jsx');
+    // Both flavours of the plate render the same head, placard and sheet —
+    // only the artwork differs — so the two cannot drift apart.
+    expect(source).toContain('function GalleryBand({ active, setActive, consumer = false, carousel = false })');
+    for (const once of [
+      'className="stage-placard"',
+      'className="stage-hero__head"',
+      '<PlacardQuote sign={sign} />',
+    ]) {
+      expect(source.split(once), once).toHaveLength(2);
+    }
+    // The flag-on and flag-off pill faces plus the dialog's accessible title.
+    expect(source.split('Trade {sign.name}')).toHaveLength(4);
+    // The record card and its quote are gone; the placard carries the price.
+    expect(source).not.toContain('function ConsumerSignPanel(');
+    expect(source).not.toContain('data-token-quote');
+    expect(source).not.toContain('className="consumer-preview"');
+  });
+
+  it('drops the second chain and the guide detour from the record box', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    // The landing is about a sign's official token on its native network. The
+    // Base counterpart is a fact of the catalogue page, not of choosing; and
+    // the astrology guide is a whole other wing.
+    expect(source).not.toContain('Also recorded on Base');
+    expect(source).not.toContain('astrology guide');
+    expect(html).not.toContain('astrology guide');
+    // Their styles go with them rather than lingering as dead selectors.
+    for (const dead of [
+      '.consumer-preview__base', '.consumer-preview__guide',
+      '.consumer-preview__links', '.consumer-preview__trade',
+    ]) {
+      expect(html, dead).not.toContain(dead);
+    }
+  });
+
+  it('opens on the gallery itself where the stage is live, film hero standing down', async () => {
+    const source = await read('src/app.jsx');
+    // One hero, one headline, at every width: the film is retired from the
+    // rendered page and the plate opens it instead.
+    expect(source).not.toContain('<CineHero');
+    expect(source).toContain('carousel={!stageMode}');
+    expect(source).toContain('className="stage-hero__title"');
+    // The placard says what a museum label says — name, dates, price — and
+    // holds the two doors; everything longer waits in the sheet.
+    expect(source).toContain('className="stage-placard"');
+    expect(source).toContain('function PlacardQuote(');
+    expect(source).toContain('<span>The record</span>');
+    // The sheet is a dialog portalled above the floating nav, and closing it
+    // returns focus to the pill that opened it.
+    expect(source).toContain('ReactDOM.createPortal');
+    expect(source).toContain('aria-modal="true"');
+    expect(source).toContain("if (event.key === 'Escape') {");
+    expect(source).toContain('closeSheet();');
+    expect(source).toContain('entry.node.inert = true;');
+    expect(source).toContain("body.style.position = 'fixed';");
+    expect(source).toContain('tradePillRef.current?.focus({ preventScroll: true });');
+    // The headline belongs to the plate, not to the page around it.
+    const plate = source.slice(source.indexOf('function GalleryBand('), source.indexOf('</section>', source.indexOf('function GalleryBand(')));
+    expect(plate).toContain('className="stage-hero__head"');
+    expect(plate).toContain('className="gband__rail-top"');
+  });
+
+  it('opens the sheet on the thing the reader asked for', async () => {
+    const source = await read('src/app.jsx');
+    const sheet = source.slice(
+      source.indexOf('className="stage-sheet__panel"'),
+      source.indexOf('document.body,'),
+    );
+    // The panel names itself — disc, sign, and the venue it trades through —
+    // so a second identity block above it would only push the trade down.
+    expect(sheet).toContain('<LandingTrade sign={sign} />');
+    expect(sheet).not.toContain('ConsumerSignPanel');
+    expect(sheet).toContain('className="stage-sheet__record"');
+    expect(sheet).toContain('The full record');
+  });
+
+  it('keeps the trade panel behind its flag and its own lazy bundle', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    // Flag-off the landing carries the door to the catalogue page's panel;
+    // flag-on it carries the panel. Never a runtime read of the venue.
+    expect(source).toContain('REGISTRY_TRADE_ENABLED');
+    expect(source).toContain('data-landing-trade');
+    expect(source).toContain("'/assets/trade.js'");
+    expect(source).toContain("rootMargin: '400px 0px'");
+    expect(html).toContain('<meta name="zodiacs-registry-trade-enabled" content="0" />');
+    expect(html).not.toContain('/assets/trade.js');
+  });
+
+  it('lists all twelve official tokens in zodiac order with a single batched market read', async () => {
+    const [source, html] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    const visible = visibleMarkup(html);
+
+    expect(source).toContain('Twelve tokens, live.');
+    expect(source).toContain('function loadTwelveMarketQuotes()');
+    expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
+    // Zodiac order, never a leaderboard: the strip renders SIGNS in
+    // registry order and no consumer surface sorts by performance.
+    expect(source).toContain('{SIGNS.map((item) => {');
+    expect(source).not.toMatch(/\.sort\(\(a, b\) => \(b\.marketCap/u);
+    // The static fallback carries the crawlable twelve with truncated mints.
+    expect(visible).toContain('Twelve tokens, live');
+    expect(visible).toContain('Every sign has one official token');
+    expect((visible.match(/class="static-token-list"/gu) ?? [])).toHaveLength(1);
+    expect(visible).toContain('Live prices appear with JavaScript');
   });
 
   it('publishes a useful no-JavaScript technical record from the canonical addresses', async () => {

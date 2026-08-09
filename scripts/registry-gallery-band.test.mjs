@@ -43,12 +43,13 @@ describe('the gallery band on the registry hub', () => {
       "'/assets/gallery.js'",
       "classList.contains('gallery-live')",
     ]) expect(source).toContain(marker);
-    // The heavy stage is user-controlled on the consumer Registry: neither
-    // WebGL nor its fallback mounts until the gallery is opened.
-    expect(source).toContain('data-consumer-gallery-toggle');
-    expect(source).toContain('{galleryOpen && (');
-    expect(source).toContain('{GALLERY_LIVE ? (');
-    expect(source).toContain('<GalleryBand active={active} setActive={setActive} consumer />');
+    // Capable phones keep the same live stage as desktop. Only a missing
+    // WebGL probe falls back to the flat carousel; loading remains lazy.
+    expect(source).toContain('return GALLERY_LIVE;');
+    expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
+    expect(source).toContain('carousel={!stageMode}');
+    expect(source).toContain('RAIL_PLACEHOLDER_HTML');
+    expect(source).not.toContain('data-consumer-gallery-toggle');
   });
 
   it('ships the same contract in the compiled application', async () => {
@@ -66,6 +67,45 @@ describe('the gallery band on the registry hub', () => {
     expect(bundle).not.toContain('Scroll or drag');
   });
 
+  it('keeps scene readiness declarative across breakpoints and context recovery', async () => {
+    const [app, scene, appBundle, sceneBundle] = await Promise.all([
+      read('src/app.jsx'),
+      read('src/shelf/main.mjs'),
+      read('public/assets/app.js'),
+      read('public/assets/gallery.js'),
+    ]);
+
+    // React owns the section's class list, so readiness must be state rather
+    // than a one-shot effect that a later mobile/desktop render can erase.
+    expect(app).toContain('const [galleryReady, setGalleryReady] = useState(false);');
+    expect(app).toContain("node.addEventListener('zodiacs:gallery-ready', onReady)");
+    expect(app).toContain("node.addEventListener('zodiacs:gallery-unready', onUnready)");
+    expect(app).toContain("+ (!carousel && galleryReady ? ' is-ready' : '')");
+    // The scene also owns the interactive desktop rail children. Hide that
+    // exact node on mobile instead of unmounting it, or a second desktop
+    // render can only recreate the inert placeholder spans.
+    expect(app).toContain('data-gallery-desktop-rail=""');
+    expect(app).toContain('hidden={consumer && carousel}');
+    expect(app).toContain('{railGroup}');
+    expect(app).toContain('{carousel && <DiscRail active={active} setActive={setActive} />}');
+    expect(app).not.toContain('carousel ? <DiscRail active={active} setActive={setActive} /> : railGroup');
+
+    // The scene announces the initial successful mount, hides a genuinely
+    // lost context, and announces Three's recovered renderer before repaint.
+    const lost = scene.indexOf("canvas.addEventListener('webglcontextlost'");
+    const restored = scene.indexOf("canvas.addEventListener('webglcontextrestored'");
+    expect(scene.slice(0, lost)).toContain("'zodiacs:gallery-ready'");
+    expect(scene.slice(lost, restored)).toContain("'zodiacs:gallery-unready'");
+    expect(scene.slice(restored)).toContain("'zodiacs:gallery-ready'");
+
+    // Both generated bundles ship the event contract; a source-only fix
+    // would leave the deployed Registry with the second-cycle regression.
+    for (const marker of ['zodiacs:gallery-ready', 'zodiacs:gallery-unready']) {
+      expect(appBundle).toContain(marker);
+      expect(sceneBundle).toContain(marker);
+    }
+  });
+
   it('probes WebGL before first paint and dresses the live page', async () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain("documentElement.classList.add('gallery-live')");
@@ -80,13 +120,125 @@ describe('the gallery band on the registry hub', () => {
     // section anchors; a slug is read on arrival only.
     expect(scene).not.toContain('replaceState');
     expect(scene).toContain('signFromHash(window.location.hash');
-    // A vertical wheel over the band is the page scrolling past.
-    expect(scene).toContain('Math.abs(event.deltaX) <= Math.abs(event.deltaY)');
+    // Vertical wheel input remains page scrolling; horizontal trackpad input
+    // and direct drag/swipe walk the sculpture row.
+    expect(scene).toContain('if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;');
     // A sculpture opens its record in place — never a navigation.
     expect(scene).not.toContain('location.assign');
     expect(scene).toContain('void openFigure(index)');
     // Hovering says so before the click does.
     expect(scene).toContain('setHover(scene.pick(');
+  });
+
+  it('shows one piece rather than a shelf when it is the landing’s rectangle', async () => {
+    const [app, scene, layout] = await Promise.all([
+      read('src/app.jsx'), read('src/shelf/main.mjs'), read('src/shelf/layout.mjs'),
+    ]);
+    // Read once at mount, not per selection: the rectangle is not a mode the
+    // reader can leave, and the event contract stays exactly as it was.
+    expect(app).toContain('data-gallery-spotlight');
+    expect(scene).toContain("root.hasAttribute('data-gallery-spotlight')");
+    expect(layout).toContain('export const SPOTLIGHT_STAGE');
+    expect(layout).toContain('export const SPOTLIGHT_VITRINE');
+    // Nothing is ever drawn out of it — the record is already on the page
+    // beside the figure — so the card and the open pose stay unreachable.
+    expect(scene).toContain('if (spotlight) { showFigure(index); return; }');
+    const opens = scene.indexOf('async function openFigure(');
+    expect(scene.slice(opens, scene.indexOf('\n  }\n', opens)))
+      .toContain('if (spotlight) return;');
+  });
+
+  it('turns the Registry spotlight with the Thesis engine, then yields to the hand', async () => {
+    const [app, driver, renderer, appBundle, sceneBundle] = await Promise.all([
+      read('src/app.jsx'),
+      read('src/shelf/main.mjs'),
+      read('src/shelf/scene.mjs'),
+      read('public/assets/app.js'),
+      read('public/assets/gallery.js'),
+    ]);
+
+    // Rotation is a display treatment only: the spotlight never opens the
+    // Thesis card or changes the selected sign when the focused cast is held.
+    expect(driver).toContain('turntableActive({');
+    expect(driver).toContain("? 'rotate'\n      : 'browse'");
+    expect(driver).toContain("if (drag.mode === 'rotate')");
+    expect(driver).toContain("if (finished.mode === 'rotate')");
+    expect(renderer).toContain('state.spotlight ? pose.prominence : 0');
+    expect(renderer).toContain('pitch * inspected');
+    expect(renderer).toContain('THREE.MathUtils.lerp(pose.rotationY, yaw, inspected)');
+    expect(driver).toContain('function resetSpotlightTurn(index, { immediate = false } = {})');
+    expect(driver).toContain('resetSpotlightTurn(target, { immediate });');
+    expect(driver).toContain('current() !== previous) resetSpotlightTurn(current())');
+    expect(driver).toContain('dragging: Boolean(drag) || pointers.size > 0');
+    expect(driver).toContain('pointers.delete(event.pointerId);');
+    expect(driver).toContain('restoreGesture(interrupted, { settleTurn: interrupted.mode');
+    expect(driver).toContain('handTurned = finished.handTurned;');
+    expect(driver).toContain('scheduleTurnResume({ force: settleTurn });');
+    expect(driver).toContain('let forcedTurnResume = false;');
+    expect(driver).toContain('function clearSnap()');
+    expect(driver).toContain('clearTurnResume({ clearForced: gestureMode === \'rotate\' });');
+    // Re-grabbing is interruptible: every new gesture owns the pose actually
+    // on screen instead of continuing toward an earlier damping target.
+    for (const marker of [
+      'state.targetFocus = state.focus;',
+      'state.targetYaw = state.yaw;',
+      'state.targetPitch = state.pitch;',
+      'state.targetZoom = state.zoom;',
+    ]) expect(driver).toContain(marker);
+    const pointerDown = driver.slice(
+      driver.indexOf("canvas.addEventListener('pointerdown'"),
+      driver.indexOf("canvas.addEventListener('pointermove'"),
+    );
+    const pointerMove = driver.slice(
+      driver.indexOf("canvas.addEventListener('pointermove'"),
+      driver.indexOf('function endPointer'),
+    );
+    expect(pointerDown).not.toContain('state.targetFocus = state.focus;');
+    expect(pointerMove).toContain("drag.touchIntent !== 'horizontal'");
+    expect(pointerMove.indexOf("drag.touchIntent !== 'horizontal'"))
+      .toBeLessThan(pointerMove.indexOf('state.targetFocus = state.focus;'));
+
+    // It costs no frames offscreen or behind acquisition, never autoplays for
+    // reduced motion, and resumes only after a deliberate inspection pause.
+    expect(driver).toContain("root.hasAttribute('data-gallery-paused')");
+    expect(driver).toContain("new IntersectionObserver(([entry]) =>");
+    expect(driver).toContain('TURNTABLE.resumeAfter');
+    expect(driver).toContain("state.reducedMotion ? 'manual'");
+    expect(app).toContain('data-gallery-paused=');
+    expect(app).toContain("carousel || sheetVisible ? 'zodiacs:gallery-pause'");
+    expect(app).toContain('zodiacs:gallery-pause');
+    expect(app).toContain('data-gallery-turn-hint');
+
+    // Generated output is part of the production contract.
+    for (const marker of ['galleryRotation', 'zodiacs:gallery-pause']) {
+      expect(sceneBundle).toContain(marker);
+    }
+    for (const marker of ['data-gallery-paused', 'gband__turn-hint', 'Drag to turn']) {
+      expect(appBundle).toContain(marker);
+    }
+  });
+
+  it('keeps the rectangle’s rail out of the band the scene measures', async () => {
+    const [app, html] = await Promise.all([
+      read('src/app.jsx'), read('public/registry/index.html'),
+    ]);
+    // bandRects() treats .gband__chrome's offsetTop as the FLOOR of the band
+    // it may paint into, so chrome above the canvas would leave the figures a
+    // 140px strip. The rectangle's rail wears its own class for that reason.
+    expect(app).toContain('className="gband__rail-top"');
+    expect(html).toContain('.gband__rail-top {');
+    const opens = app.indexOf('function GalleryBand(');
+    const rectangle = app.slice(opens, app.indexOf('</section>', opens));
+    expect(rectangle).toContain('<div className="gband__rail-top">');
+    expect(rectangle).toContain('{!consumer && (\n          <div className="gband__chrome">');
+    // The sculpture keeps one interaction meaning: it selects. Acquisition
+    // remains the explicit placard action, so the scene never navigates or
+    // emits a hidden trade request.
+    const scene = await read('src/shelf/main.mjs');
+    expect(scene).not.toContain('zodiacs:gallery-trade');
+    expect(scene).not.toContain('location.assign');
+    expect(app).not.toContain('zodiacs:gallery-trade');
+    expect(scene).toContain('if (index !== current()) showFigure(index);');
   });
 
   it('does not commit a touch gesture after the browser cancels it', async () => {
@@ -146,12 +298,12 @@ describe('the gallery band on the registry hub', () => {
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
-    // The static explorer keeps all twelve sign destinations useful without
-    // JavaScript while the heavy gallery remains explicitly optional.
+    // The static explorer keeps all twelve token destinations useful without
+    // JavaScript; every grid link opens the sign's official record.
     for (const slug of ['aries', 'virgo', 'pisces']) {
-      expect(html).toContain(`href="/registry/${slug}/" aria-label="Explore `);
+      expect(html).toContain(`href="/registry/${slug}/" aria-label="View the `);
     }
-    expect(source).toContain('See the gold gallery');
+    expect(source).toContain('Drag to browse · Choose a sign to open.');
     expect(html).not.toContain('?gallery=gold');
   });
 
@@ -194,6 +346,11 @@ describe('the gallery band on the registry hub', () => {
     // The resting magnification is affordance, not animation: the current
     // sign stands proud for touch and keyboard readers who raise no wave.
     expect(scene).toContain('1 + DOCK.rest');
+    // Keyboard selection snaps both the sculpture and its disc; pointer input
+    // restores the dock transition for direct manipulation.
+    expect(scene).toContain("root.dataset.galleryInput = 'keyboard';");
+    expect(scene).toContain("root.dataset.galleryInput = 'pointer';");
+    expect(html).toContain(".gband[data-gallery-input='keyboard'] .rail__tick picture { transition: none; }");
     // And the wave itself is withheld while a reader asks for less motion,
     // read at event time rather than latched at mount.
     expect(scene).toContain(

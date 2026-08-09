@@ -1001,8 +1001,25 @@ const registryAuraLandingLinked = /href=["']\/registry\/collection\/["']/.test(r
 if (registryAuraLandingLinked !== registryAuraBuildEnabled) {
   fail('registry/index.html: Registry Collection landing link does not match its build marker');
 }
+const thesisHtmlPath = resolve(root, 'thesis/index.html');
+const thesisHtml = idCache.get(thesisHtmlPath) ?? (await readFile(thesisHtmlPath, 'utf8'));
+const registryAuraThesisLinked = /href=["']\/registry\/collection\/["']/.test(thesisHtml);
+if (registryAuraThesisLinked !== registryAuraBuildEnabled) {
+  fail('thesis/index.html: Registry Collection action does not match the Registry build marker');
+}
 if (sitemapLocs.has('/registry/collection/') !== registryAuraBuildEnabled) {
   fail('sitemap.xml: Registry Collection inclusion does not match the Registry build marker');
+}
+if (registryAuraBuildEnabled) {
+  const collectionHtml = await readFile(resolve(root, 'registry/collection/index.html'), 'utf8');
+  const collectionCanonical = collectionHtml.match(/<link\b[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i)?.[1]
+    ?? collectionHtml.match(/<link\b[^>]*href=["']([^"']+)["'][^>]*rel=["']canonical["']/i)?.[1];
+  if (collectionCanonical !== 'https://zodiacs.org/registry/collection/') {
+    fail(`registry/collection/index.html: enabled output is not self-canonical — ${collectionCanonical ?? 'missing'}`);
+  }
+  if (/url=\/404\.html|http-equiv=["']refresh["'][^>]*\/404\.html/i.test(collectionHtml)) {
+    fail('registry/collection/index.html: enabled output is a 404 redirect stub');
+  }
 }
 
 // Coordinated indexing baseline (2026-07-19): compatibility prose remains

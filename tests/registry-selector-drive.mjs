@@ -29,6 +29,48 @@ async function stubNoWebgl(page) {
   });
 }
 
+/**
+ * Consumer market reads stay hermetic: the batch token endpoint answers from
+ * a fixture so quote assertions never depend on DexScreener availability.
+ * Pass { fail: true } to exercise the unavailable state instead.
+ */
+async function mockDexscreener(page, { fail = false } = {}) {
+  await page.route('https://api.dexscreener.com/**', async (route) => {
+    if (fail) return route.abort();
+    const url = route.request().url();
+    if (!url.includes('/tokens/v1/solana/')) return route.fulfill({ json: { pairs: [] } });
+    const mints = decodeURIComponent(new URL(url).pathname.split('/').pop() ?? '').split(',');
+    return route.fulfill({
+      json: mints.map((mint, index) => ({
+        chainId: 'solana',
+        dexId: 'raydium',
+        url: 'https://dexscreener.com/solana/fixture',
+        pairAddress: `FIXTUREPAIR${index}`,
+        baseToken: { address: mint },
+        priceUsd: String((index + 1) * 0.00042),
+        priceChange: { h24: index % 3 === 0 ? 4.2 : index % 3 === 1 ? -2.1 : 0 },
+        liquidity: { usd: 250000 + index },
+        marketCap: 1000000 + index,
+        pairCreatedAt: 1721000000000,
+      })),
+    });
+  });
+}
+
+/** The Cabinet is deployment-flagged. Enable it on visual consumer pages so
+ * this gate exercises the same purpose card the public Registry ships. */
+async function withCollectionFlag(page) {
+  await page.route('**/registry/', async (route) => {
+    if (route.request().resourceType() !== 'document') return route.continue();
+    const response = await route.fetch();
+    const body = (await response.text()).replace(
+      '<meta name="zodiacs-registry-collection-enabled" content="0" />',
+      '<meta name="zodiacs-registry-collection-enabled" content="1" />',
+    );
+    return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
+  });
+}
+
 if (OUT) await mkdir(OUT, { recursive: true });
 
 await withPreview({ port: 4404 }, async (baseURL) => {
@@ -344,6 +386,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         visibleCollectionSections: [...document.querySelectorAll('.static-collection-section')]
           .filter((section) => getComputedStyle(section).display !== 'none').length,
         deadGalleryLinks: document.querySelectorAll('a[href*="gallery=gold"]').length,
+        staticTokenRows: document.querySelectorAll('.static-token-list li').length,
+        staticPriceNote: document.body.textContent?.includes('Live prices appear with JavaScript') ?? false,
         links: [...nav.querySelectorAll('a')].map((link) => {
           const rect = link.getBoundingClientRect();
           return {
@@ -376,6 +420,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && fallbackState.visibleCollectionSections === 0
           && fallbackState.deadGalleryLinks === 0,
         JSON.stringify(fallbackState),
+      );
+      check(
+        `Registry no-JavaScript fallback at ${width}px lists the twelve tokens with a plain price note`,
+        fallbackState.staticTokenRows === 12 && fallbackState.staticPriceNote,
+        JSON.stringify({ rows: fallbackState.staticTokenRows, note: fallbackState.staticPriceNote }),
       );
       await fallbackPage.close();
     }
@@ -413,7 +462,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     for (const lens of [false, true]) {
       const [homeActions, registryActions] = await Promise.all([
         material(homeMaterialPage, '.hero__ctas .btn', lens),
-        material(registryMaterialPage, '.cine__cta .btn', lens),
+        material(registryMaterialPage, '.stage-placard__pill', lens),
       ]);
       check(
         `homepage hero actions match the Registry glass material (${lens ? 'lens' : 'iOS fallback'})`,
@@ -449,8 +498,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     await reducedContext.close();
 
-    // Exact review viewport: the consumer journey stays compact, uses the
-    // promised six-by-two sign grid, and leaves technical material on its own
+    // Exact review viewport: the consumer journey stays compact, keeps all
+    // twelve choices on one rail, and leaves technical material on its own
     // route rather than in the everyday reader's scroll.
     const compactRegistry = await newPage({
       viewport: { width: 623, height: 1054 },
@@ -462,11 +511,23 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       if (request.url().startsWith(baseURL)) compactRegistryErrors.push(request.url());
     });
     await compactRegistry.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-    await compactRegistry.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
-    const compactRegistryLayout = await compactRegistry.evaluate(() => {
+    const compactRegistryLive = await compactRegistry.evaluate(() => (
+      document.documentElement.classList.contains('gallery-live')
+    ));
+    const compactControls = compactRegistryLive
+      ? compactRegistry.locator('.gband--consumer button.rail__tick')
+      : compactRegistry.locator('[data-consumer-sign]');
+    await compactControls.first().waitFor({ state: 'visible', timeout: 30_000 });
+    if (compactRegistryLive) {
+      await compactRegistry.locator('.gband--consumer .stage__canvas')
+        .waitFor({ state: 'visible', timeout: 30_000 });
+    }
+    const compactRegistryLayout = await compactRegistry.evaluate((live) => {
       const shell = document.querySelector('.zd');
       const explorer = document.querySelector('.consumer-explorer');
-      const controls = [...document.querySelectorAll('[data-consumer-sign]')];
+      const controls = [...document.querySelectorAll(
+        live ? '.gband--consumer button.rail__tick' : '[data-consumer-sign]',
+      )];
       const rowTops = controls.map((node) => Math.round(node.getBoundingClientRect().top));
       const rows = [...new Set(rowTops)];
       const box = (node) => {
@@ -491,10 +552,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         explorer: box(explorer),
         controlCount: controls.length,
         rowCounts: rows.map((top) => rowTops.filter((candidate) => candidate === top).length),
+        liveStage: document.querySelectorAll('.gband--consumer[data-gallery-stage]').length,
+        flatStage: document.querySelectorAll('.gband--flat').length,
+        canvases: document.querySelectorAll('.gband--consumer .stage__canvas').length,
         heavySections: ['pulse', 'standings', 'onchain-access', 'builders', 'sdk', 'security']
           .filter((id) => document.getElementById(id)),
       };
-    });
+    }, compactRegistryLive);
     check('Registry at 623×1054 has no document overflow',
       compactRegistryLayout.documentWidth <= compactRegistryLayout.viewportWidth + 1,
       `${compactRegistryLayout.documentWidth}/${compactRegistryLayout.viewportWidth}`);
@@ -502,11 +566,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       compactRegistryLayout.shell
         && compactRegistryLayout.shell.width >= compactRegistryLayout.clientWidth * 0.88,
       `${compactRegistryLayout.shell?.width ?? 0}/${compactRegistryLayout.clientWidth}`);
-    check('Registry at 623×1054 shows all twelve signs in a six-by-two grid',
+    check('Registry at 623×1054 offers all twelve signs on one rail',
       compactRegistryLayout.controlCount === 12
-        && compactRegistryLayout.rowCounts.length === 2
-        && compactRegistryLayout.rowCounts.every((count) => count === 6),
-      JSON.stringify(compactRegistryLayout.rowCounts));
+        && compactRegistryLayout.rowCounts.length === 1
+        && (compactRegistryLive
+          ? compactRegistryLayout.liveStage === 1
+            && compactRegistryLayout.flatStage === 0
+            && compactRegistryLayout.canvases === 1
+          : compactRegistryLayout.liveStage === 0
+            && compactRegistryLayout.flatStage === 1
+            && compactRegistryLayout.canvases === 0),
+      JSON.stringify(compactRegistryLayout));
     check('Registry at 623×1054 keeps the consumer journey under 7,500px',
       compactRegistryLayout.pageHeight <= 7500,
       String(compactRegistryLayout.pageHeight));
@@ -530,15 +600,28 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const tabletEdge = await newPage({ viewport: { width: 1020, height: 900 } });
     await tabletEdge.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
-    await tabletEdge.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
-    const tabletRows = await tabletEdge.locator('[data-consumer-sign]').evaluateAll((controls) => {
+    const tabletStageLive = await tabletEdge.evaluate(() => (
+      document.documentElement.classList.contains('gallery-live')
+    ));
+    const tabletControls = tabletStageLive
+      ? tabletEdge.locator('.gband--consumer button.rail__tick')
+      : tabletEdge.locator('[data-consumer-sign]');
+    await tabletControls.first().waitFor({ state: 'visible', timeout: 30_000 });
+    if (tabletStageLive) {
+      await tabletEdge.locator('.gband--consumer .stage__canvas')
+        .waitFor({ state: 'visible', timeout: 30_000 });
+    }
+    const tabletRows = await tabletControls.evaluateAll((controls) => {
       const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
       return [...new Set(tops)].map((top) => tops.filter((candidate) => candidate === top).length);
     });
     check(
-      'Registry at exactly 1020px uses the stable six-by-two tablet explorer',
-      JSON.stringify(tabletRows) === JSON.stringify([6, 6]),
-      JSON.stringify(tabletRows),
+      'Registry at 1020px keeps all twelve choices on the active stage rail',
+      JSON.stringify(tabletRows) === JSON.stringify([12])
+        && await tabletEdge.locator(tabletStageLive
+          ? '.gband--consumer[data-gallery-stage]'
+          : '.gband--flat').count() === 1,
+      JSON.stringify({ rows: tabletRows, live: tabletStageLive }),
     );
     await tabletEdge.close();
 
@@ -603,7 +686,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       }
     }
 
+    // The grid explorer's own assertions run with WebGL denied — the path
+    // narrow, non-WebGL, and stage-failure readers actually get. The stage
+    // is asserted separately, on an unstubbed page.
     const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
+    await stubNoWebgl(desktop);
+    await mockDexscreener(desktop);
+    await withCollectionFlag(desktop);
     const desktopErrors = [];
     const desktopGalleryRequests = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
@@ -635,7 +724,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check(
       'consumer explorer presents twelve pastel sign controls in zodiac order',
       JSON.stringify(explorerState.map((item) => item.slug)) === JSON.stringify(expectedSigns)
-        && explorerState.every((item) => item.src === '/assets/zodiac-icons/128/' + item.slug + '.webp'),
+        && explorerState.every((item) => item.src === '/assets/zodiac-icons/48/' + item.slug + '.webp'),
       JSON.stringify(explorerState),
     );
     check(
@@ -646,31 +735,25 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       JSON.stringify(explorerState),
     );
     check(
-      'consumer hero uses the approved everyday actions',
-      (await desktop.locator('.cine__line').innerText()).trim()
-        === 'Explore the twelve signs and see the official digital record for each one.'
-        && await desktop.locator('.cine__cta a[href="#official-twelve"]').innerText()
-          .then((text) => text.includes('Choose your sign'))
-        && await desktop.locator('.cine__cta a[href="#verify"]').innerText()
-          .then((text) => text.includes('Check an address'))
-        && await desktop.locator('.cine__cta [data-registry-collection]').count() === 0,
+      'the plate opens the page without WebGL, carrying the same headline',
+      await desktop.locator('.cine').count() === 0
+        && await desktop.locator('h1.stage-hero__title').count() === 1
+        && (await desktop.locator('.stage-hero__line').innerText()).trim()
+          .startsWith('Every sign has one official token. Explore its story, its record, and its market.'),
     );
     check(
-      'consumer hero keeps the original film and poster',
-      await desktop.locator('.cine__media').evaluate((video) => (
-        video.getAttribute('poster') === '/assets/hero/zodiacs-hero-poster.avif'
-        // The preserved observer starts the visible film and promotes
-        // `preload` from the server-rendered `none` state to `auto`.
-        && ['none', 'auto'].includes(video.getAttribute('preload'))
-        && (video.currentSrc.endsWith('/assets/hero/zodiacs-hero.mp4')
-          || video.getAttribute('src')?.endsWith('/assets/hero/zodiacs-hero.mp4'))
-      )),
+      'the fallback stage shows one synchronized gold sculpture where the scene cannot',
+      await desktop.locator('.stage-carousel__slide').count() === 1
+        && await desktop.locator('.stage-carousel__slide.is-active .stage-carousel__art')
+          .getAttribute('src') === '/assets/sculptures/512/leo.webp',
     );
     check(
-      'gold gallery stays unmounted and unloaded until requested',
+      'without WebGL the preserved scene mount stays inert and its bundle is never requested',
       desktopGalleryRequests.length === 0
-        && await desktop.locator('[data-consumer-gallery]').count() === 0,
-      JSON.stringify(desktopGalleryRequests),
+        && await desktop.locator('[data-gallery-canvas] canvas').count() === 0
+        && await desktop.locator('[data-gallery-canvas][hidden]').count() === 1
+        && await desktop.locator('.gband--flat').count() === 1,
+      JSON.stringify({ requests: desktopGalleryRequests }),
     );
     const desktopDimensions = await desktop.evaluate(() => ({
       width: document.documentElement.scrollWidth,
@@ -696,20 +779,61 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const scrollBeforePick = await desktop.evaluate(() => scrollY);
     await piscesControl.click();
     await desktop.locator('[data-consumer-preview="pisces"]').waitFor({ state: 'visible' });
-    const piscesPreview = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((preview) => ({
-      text: preview.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-      explore: preview.querySelector('a.btn')?.getAttribute('href'),
-      record: preview.querySelector('.consumer-preview__record')?.getAttribute('href'),
+    const piscesPlacard = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((placard) => ({
+      text: placard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      name: placard.querySelector('.stage-placard__name')?.textContent ?? '',
+      record: placard.querySelector('a.btn--ghost')?.getAttribute('href'),
+      trade: placard.querySelector('a.btn--primary')?.getAttribute('href'),
+      price: placard.querySelector('.stage-placard__price')?.textContent ?? '',
+      // Two things the placard deliberately does not carry: the second chain,
+      // and a detour into the astrology guide.
+      base: placard.textContent?.includes('Also recorded on Base') ?? false,
+      guide: Boolean(placard.querySelector('a[href="/pisces/"]')),
       scrollY,
     }));
     check(
-      'selecting Pisces updates its complete preview without moving the page',
-      /Pisces/.test(piscesPreview.text)
-        && /Water/.test(piscesPreview.text)
-        && piscesPreview.explore === '/pisces/'
-        && piscesPreview.record === '/registry/pisces/'
-        && Math.abs(piscesPreview.scrollY - scrollBeforePick) <= 2,
-      JSON.stringify(piscesPreview),
+      'selecting Pisces relabels the placard without moving the page',
+      piscesPlacard.name === 'Pisces'
+        && piscesPlacard.record === '/registry/pisces/'
+        && piscesPlacard.trade === '/registry/pisces/#acquire'
+        && piscesPlacard.base === false
+        && piscesPlacard.guide === false
+        && Math.abs(piscesPlacard.scrollY - scrollBeforePick) <= 2,
+      JSON.stringify(piscesPlacard),
+    );
+    check(
+      'choosing a sign turns the carousel to its sculpture',
+      await desktop.locator('.stage-carousel__slide.is-active .stage-carousel__art')
+        .getAttribute('src') === '/assets/sculptures/512/pisces.webp',
+    );
+    await desktop.locator('.stage-placard__price').waitFor({ timeout: 15_000 });
+    const placardQuote = await desktop.locator('.stage-placard').evaluate((placard) => ({
+      price: placard.querySelector('.stage-placard__price')?.textContent ?? '',
+      change: placard.querySelector('.stage-placard__change')?.textContent ?? '',
+      directional: Boolean(placard.querySelector(
+        '.market__change--up, .market__change--down, .market__change--flat',
+      )),
+    }));
+    check(
+      'the placard quotes a live price with a signed 24h change',
+      /^\$\d/.test(placardQuote.price)
+        && /%$/.test(placardQuote.change)
+        && placardQuote.directional,
+      JSON.stringify(placardQuote),
+    );
+    const watchlist = await desktop.locator('.consumer-token').evaluateAll((rows) => rows.map((row) => ({
+      href: row.getAttribute('href'),
+      priced: Boolean(row.querySelector('.consumer-token__price')),
+    })));
+    check(
+      'the twelve-token watchlist stays in zodiac order and links every official record',
+      watchlist.length === 12
+        && watchlist.every((row, index) => row.href === '/registry/' + [
+          'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+          'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+        ][index] + '/')
+        && watchlist.every((row) => row.priced),
+      JSON.stringify(watchlist),
     );
     check(
       'the polite selection status announces the chosen sign',
@@ -793,7 +917,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       (await verifier.innerText()).includes('never connects a wallet, requests a signature, or starts a transaction'),
     );
     const compactConsumerTargets = await desktop.locator(
-      '.vrf__example, .consumer-preview__actions > a:not(.btn), .consumer-closing__actions > a:not(.btn)',
+      '.vrf__example, .consumer-preview__actions a.btn, .consumer-closing__actions > a:not(.btn)',
     ).evaluateAll((targets) => targets.map((target) => ({
       label: target.textContent.trim(),
       height: target.getBoundingClientRect().height,
@@ -808,121 +932,1120 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       'consumer Registry shows exactly five quick answers',
       await desktop.locator('#faq .consumer-faq__item').count() === 5,
     );
+    const purposeArt = await desktop.locator('#thesis').evaluate((section) => {
+      const collection = section.querySelector('.consumer-collection__link');
+      const thesis = section.querySelector('.consumer-thesis__link');
+      const thesisImage = thesis?.querySelector('img');
+      return {
+        collectionHref: collection?.getAttribute('href') ?? '',
+        seats: collection?.querySelectorAll('.consumer-cabinet__seat').length ?? 0,
+        filledSeats: collection?.querySelectorAll('.consumer-cabinet__seat.is-filled').length ?? 0,
+        seatImages: [...(collection?.querySelectorAll('.consumer-cabinet__seat.is-filled img') || [])]
+          .map((image) => image.getAttribute('src') ?? ''),
+        thesisHref: thesis?.getAttribute('href') ?? '',
+        thesisImage: thesisImage?.getAttribute('src') ?? '',
+        thesisAlt: thesisImage?.getAttribute('alt') ?? '',
+      };
+    });
+    check(
+      'collection and thesis links preview the artwork found at their destinations',
+      purposeArt.collectionHref === '/registry/collection/'
+        && purposeArt.seats === 12
+        && purposeArt.filledSeats === 5
+        && purposeArt.seatImages.length === 5
+        && purposeArt.seatImages.filter((src) => src.startsWith('/assets/cabinet-materials/')).length === 3
+        && purposeArt.seatImages.filter((src) => src.startsWith('/assets/zodiac-icons/')).length === 2
+        && purposeArt.thesisHref === '/thesis/'
+        && purposeArt.thesisImage.includes('/assets/art/zodiac-clock-')
+        && purposeArt.thesisAlt.length > 0,
+      JSON.stringify(purposeArt),
+    );
     check('desktop consumer runtime is error-free', desktopErrors.length === 0, desktopErrors.join(' | '));
     if (OUT) await desktop.screenshot({ path: OUT + '/registry-consumer-1126.png', fullPage: false });
     await desktop.close();
 
-    const mobile = await newPage({
-      viewport: { width: 390, height: 844 },
-      deviceScaleFactor: 2,
-      hasTouch: true,
+    // The sculpture renders have very different visible silhouettes. Check
+    // every sign at the three narrow widths that previously let the tall
+    // pieces run behind the placard. Measure the non-transparent sculpture
+    // pixels rather than the square WebP canvas: the source art intentionally
+    // contains optical padding and the visitor only perceives the silhouette.
+    for (const [width, height] of [[320, 568], [360, 640], [390, 844]]) {
+      const mobile = await newPage({
+        viewport: { width, height },
+        deviceScaleFactor: 2,
+        hasTouch: true,
+      });
+      await mockDexscreener(mobile);
+      await withCollectionFlag(mobile);
+      const mobileGalleryRequests = [];
+      mobile.on('request', (request) => {
+        if (new URL(request.url()).pathname === '/assets/gallery.js') {
+          mobileGalleryRequests.push(request.url());
+        }
+      });
+      await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      const label = `${width}×${height}`;
+      const mobileStageLive = await mobile.evaluate(() => (
+        document.documentElement.classList.contains('gallery-live')
+      ));
+
+      // A capable phone keeps the same real turntable as desktop. Exercise
+      // every rail control here: this catches both breakpoint regressions
+      // that silently swap the scene for a flat render and scene/page state
+      // drift after several selections.
+      if (mobileStageLive) {
+        const liveBand = mobile.locator('.gband--consumer[data-gallery-stage]');
+        await liveBand.waitFor({ state: 'visible' });
+        await liveBand.locator('.stage__canvas').waitFor({ state: 'visible', timeout: 30_000 });
+        await liveBand.locator('button.rail__tick').first().waitFor({ state: 'visible', timeout: 30_000 });
+        await mobile.waitForFunction(() => (
+          document.querySelector('.gband--consumer')?.classList.contains('is-ready')
+          && document.querySelectorAll('.gband--consumer button.rail__tick').length === 12
+        ), null, { timeout: 30_000 });
+        await mobile.waitForTimeout(400);
+
+        const liveMobileState = await liveBand.evaluate((band) => {
+          const rect = (selector) => {
+            const node = band.querySelector(selector);
+            if (!node) return null;
+            const box = node.getBoundingClientRect();
+            return {
+              top: box.top,
+              right: box.right,
+              bottom: box.bottom,
+              left: box.left,
+              width: box.width,
+              height: box.height,
+            };
+          };
+          const ticks = [...band.querySelectorAll('button.rail__tick')];
+          const tickTops = ticks.map((tick) => Math.round(tick.getBoundingClientRect().top));
+          const canvas = rect('.stage__canvas');
+          const placard = rect('.stage-placard');
+          const plate = band.getBoundingClientRect();
+          return {
+            ready: band.classList.contains('is-ready'),
+            stageCount: document.querySelectorAll('.gband--consumer[data-gallery-stage]').length,
+            flatCount: document.querySelectorAll('.gband--flat').length,
+            carouselSlides: document.querySelectorAll('.stage-carousel__slide').length,
+            canvases: band.querySelectorAll('.stage__canvas').length,
+            tickButtons: ticks.length,
+            enabledTicks: ticks.filter((tick) => !tick.disabled).length,
+            tickImages: band.querySelectorAll('button.rail__tick img').length,
+            tickRows: new Set(tickTops).size,
+            minTarget: Math.min(...ticks.map((tick) => {
+              const box = tick.getBoundingClientRect();
+              return Math.min(box.width, box.height);
+            })),
+            canvas,
+            placard,
+            plate: {
+              top: plate.top,
+              right: plate.right,
+              bottom: plate.bottom,
+              left: plate.left,
+            },
+            clearance: canvas && placard ? placard.top - canvas.bottom : -Infinity,
+            pageWidth: document.documentElement.scrollWidth,
+            viewportWidth: innerWidth,
+            pageHeight: document.documentElement.scrollHeight,
+          };
+        });
+        check(
+          `WebGL phone at ${label} keeps one live scene and all twelve rail buttons`,
+          liveMobileState.ready
+            && liveMobileState.stageCount === 1
+            && liveMobileState.flatCount === 0
+            && liveMobileState.carouselSlides === 0
+            && liveMobileState.canvases === 1
+            && liveMobileState.tickButtons === 12
+            && liveMobileState.enabledTicks === 12
+            && liveMobileState.tickImages === 12
+            && liveMobileState.tickRows === 1,
+          JSON.stringify(liveMobileState),
+        );
+        check(
+          `WebGL phone at ${label} fits the canvas above the placard without page overflow`,
+          Boolean(liveMobileState.canvas && liveMobileState.placard)
+            && liveMobileState.canvas.width > 0
+            && liveMobileState.canvas.height >= 200
+            && liveMobileState.clearance >= 0
+            && liveMobileState.canvas.left >= liveMobileState.plate.left - 1
+            && liveMobileState.canvas.right <= liveMobileState.plate.right + 1
+            && liveMobileState.placard.left >= liveMobileState.plate.left - 1
+            && liveMobileState.placard.right <= liveMobileState.plate.right + 1
+            && liveMobileState.pageWidth <= liveMobileState.viewportWidth + 1
+            && liveMobileState.pageHeight <= 7500
+            && liveMobileState.minTarget >= 44,
+          JSON.stringify(liveMobileState),
+        );
+
+        const liveSelections = [];
+        for (const [index, slug] of expectedSigns.entries()) {
+          const tick = liveBand.locator('button.rail__tick').nth(index);
+          await tick.click();
+          await mobile.waitForFunction(({ selected, selectedIndex }) => {
+            const ticks = [...document.querySelectorAll('.gband--consumer button.rail__tick')];
+            const preview = document.querySelector('.gband--consumer [data-consumer-preview]');
+            return ticks[selectedIndex]?.getAttribute('aria-pressed') === 'true'
+              && preview?.getAttribute('data-consumer-preview') === selected;
+          }, { selected: slug, selectedIndex: index });
+          liveSelections.push({
+            slug,
+            pressed: await tick.getAttribute('aria-pressed'),
+            preview: await liveBand.locator('[data-consumer-preview]').getAttribute('data-consumer-preview'),
+          });
+        }
+        check(
+          `all twelve live rail choices at ${label} keep the sculpture placard synchronized`,
+          liveSelections.every((item) => item.pressed === 'true' && item.preview === item.slug),
+          JSON.stringify(liveSelections),
+        );
+        await mobile.waitForTimeout(400);
+        check(
+          `WebGL phone at ${label} requests the scene bundle exactly once`,
+          mobileGalleryRequests.length === 1,
+          JSON.stringify(mobileGalleryRequests),
+        );
+        if (OUT && width === 390) {
+          await mobile.screenshot({ path: OUT + '/registry-consumer-390.png', fullPage: false });
+        }
+        await mobile.close();
+        continue;
+      }
+
+      // A phone whose pre-paint probe cannot create WebGL receives the
+      // bounded one-image carousel. Keep the silhouette/placard collision
+      // checks below as the explicit fallback contract.
+      await mobile.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
+      const mobileState = await mobile.locator('[data-consumer-sign]').evaluateAll((controls) => {
+        const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
+        const rows = [...new Set(tops)];
+        return {
+          count: controls.length,
+          rowCounts: rows.map((top) => tops.filter((candidate) => candidate === top).length),
+          minTarget: Math.min(...controls.map((control) => {
+            const rect = control.getBoundingClientRect();
+            return Math.min(rect.width, rect.height);
+          })),
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+          pageHeight: document.documentElement.scrollHeight,
+        };
+      });
+      check(
+        `mobile explorer at ${label} rails all twelve signs in one row`,
+        mobileState.count === 12 && mobileState.rowCounts.length === 1,
+        JSON.stringify(mobileState),
+      );
+      check(
+        `mobile Registry at ${label} has no horizontal overflow and keeps 44px targets`,
+        mobileState.pageWidth <= mobileState.viewportWidth + 1
+          && mobileState.pageHeight <= 7500
+          && mobileState.minTarget >= 44,
+        JSON.stringify(mobileState),
+      );
+
+      const sculptureGeometry = [];
+      for (const slug of expectedSigns) {
+        await mobile.locator(`[data-consumer-sign="${slug}"]`).click();
+        await mobile.locator(`[data-consumer-preview="${slug}"]`).waitFor({ state: 'visible' });
+        await mobile.waitForFunction((selected) => {
+          const slide = document.querySelector('.stage-carousel__slide.is-active');
+          const image = slide?.querySelector('.stage-carousel__art');
+          return image?.getAttribute('src')?.endsWith(`/${selected}.webp`)
+            && image.complete && image.naturalWidth > 0;
+        }, slug);
+        // Measure the resting sculpture, not a frame of its 240ms entrance.
+        // The collision guarantee is about where the artwork comes to rest.
+        await mobile.locator('.stage-carousel__slide.is-active .stage-carousel__art')
+          .evaluate(async (image) => {
+            await Promise.all(image.getAnimations().map((animation) => animation.finished.catch(() => {})));
+            await new Promise((resolve) => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+          });
+        sculptureGeometry.push(await mobile.evaluate(async (selected) => {
+          const rect = (selector) => {
+            const node = document.querySelector(selector);
+            if (!node) return null;
+            const box = node.getBoundingClientRect();
+            return {
+              top: box.top,
+              right: box.right,
+              bottom: box.bottom,
+              left: box.left,
+              width: box.width,
+              height: box.height,
+            };
+          };
+          const artNode = document.querySelector('.stage-carousel__slide.is-active .stage-carousel__art');
+          const art = rect('.stage-carousel__slide.is-active .stage-carousel__art');
+          const carousel = rect('.stage-carousel');
+          const placard = rect('.stage-placard');
+          const plate = rect('.gband--flat');
+          let visibleArt = null;
+          if (artNode instanceof HTMLImageElement && artNode.naturalWidth > 0 && art) {
+            const alphaCanvas = document.createElement('canvas');
+            alphaCanvas.width = artNode.naturalWidth;
+            alphaCanvas.height = artNode.naturalHeight;
+            const context = alphaCanvas.getContext('2d', { willReadFrequently: true });
+            context.drawImage(artNode, 0, 0);
+            const pixels = context.getImageData(0, 0, alphaCanvas.width, alphaCanvas.height).data;
+            let minX = alphaCanvas.width;
+            let minY = alphaCanvas.height;
+            let maxX = -1;
+            let maxY = -1;
+            for (let y = 0; y < alphaCanvas.height; y += 1) {
+              for (let x = 0; x < alphaCanvas.width; x += 1) {
+                if (pixels[((y * alphaCanvas.width) + x) * 4 + 3] > 8) {
+                  minX = Math.min(minX, x);
+                  minY = Math.min(minY, y);
+                  maxX = Math.max(maxX, x);
+                  maxY = Math.max(maxY, y);
+                }
+              }
+            }
+            if (maxX >= minX && maxY >= minY) {
+              visibleArt = {
+                top: art.top + ((minY / alphaCanvas.height) * art.height),
+                right: art.left + (((maxX + 1) / alphaCanvas.width) * art.width),
+                bottom: art.top + (((maxY + 1) / alphaCanvas.height) * art.height),
+                left: art.left + ((minX / alphaCanvas.width) * art.width),
+              };
+            }
+          }
+          const pressed = document.querySelector('[data-consumer-sign][aria-pressed="true"]')
+            ?.getAttribute('data-consumer-sign');
+          const preview = document.querySelector('[data-consumer-preview]')
+            ?.getAttribute('data-consumer-preview');
+          const asset = document.querySelector('.stage-carousel__slide.is-active .stage-carousel__art')
+            ?.getAttribute('src') ?? '';
+          return {
+            slug: selected,
+            art,
+            visibleArt,
+            carousel,
+            placard,
+            plate,
+            pressed,
+            preview,
+            asset,
+            activeSlides: document.querySelectorAll('.stage-carousel__slide.is-active').length,
+            clearance: visibleArt && placard ? placard.top - visibleArt.bottom : -Infinity,
+            pageWidth: document.documentElement.scrollWidth,
+            viewportWidth: innerWidth,
+          };
+        }, slug));
+      }
+      const brokenSculptures = sculptureGeometry.filter((item) => (
+        !item.art || !item.visibleArt || !item.carousel || !item.placard || !item.plate
+        || item.activeSlides !== 1
+        || item.pressed !== item.slug
+        || item.preview !== item.slug
+        || !item.asset.endsWith(`/${item.slug}.webp`)
+        || item.clearance < 15
+        || item.visibleArt.top < item.carousel.top - 1
+        || item.visibleArt.left < item.plate.left - 1
+        || item.visibleArt.right > item.plate.right + 1
+        || item.placard.left < item.plate.left - 1
+        || item.placard.right > item.plate.right + 1
+        || item.pageWidth > item.viewportWidth + 1
+      ));
+      check(
+        `all twelve sculptures at ${label} stay synchronized and clear the placard by 16px`,
+        brokenSculptures.length === 0,
+        JSON.stringify(brokenSculptures),
+      );
+      await mobile.evaluate(() => new Promise((resolve) => setTimeout(resolve, 400)));
+      check(
+        `non-WebGL phones at ${label} never request the scene bundle`,
+        mobileGalleryRequests.length === 0,
+        JSON.stringify(mobileGalleryRequests),
+      );
+      if (OUT && width === 390) {
+        await mobile.screenshot({ path: OUT + '/registry-consumer-390.png', fullPage: false });
+      }
+      await mobile.close();
+    }
+
+    // The capable-WebGL stage is now width-independent. Exercise the complete
+    // mobile → desktop → mobile → desktop cycle and prove that viewport
+    // changes preserve the same canvas, selection, and single bundle load.
+    const responsiveStage = await newPage({ viewport: { width: 390, height: 844 } });
+    await mockDexscreener(responsiveStage);
+    const responsiveStageRequests = [];
+    const responsiveStageErrors = [];
+    responsiveStage.on('request', (request) => {
+      if (new URL(request.url()).pathname === '/assets/gallery.js') responsiveStageRequests.push(request.url());
     });
-    await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
-    await mobile.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
-    const mobileState = await mobile.locator('[data-consumer-sign]').evaluateAll((controls) => {
-      const tops = controls.map((control) => Math.round(control.getBoundingClientRect().top));
-      const rows = [...new Set(tops)];
-      return {
-        count: controls.length,
-        rowCounts: rows.map((top) => tops.filter((candidate) => candidate === top).length),
-        minTarget: Math.min(...controls.map((control) => {
-          const rect = control.getBoundingClientRect();
-          return Math.min(rect.width, rect.height);
-        })),
-        pageWidth: document.documentElement.scrollWidth,
-        viewportWidth: innerWidth,
-        pageHeight: document.documentElement.scrollHeight,
-      };
-    });
+    responsiveStage.on('pageerror', (error) => responsiveStageErrors.push(String(error)));
+    await responsiveStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    const responsiveStageLive = await responsiveStage.evaluate(() => (
+      document.documentElement.classList.contains('gallery-live')
+    ));
+    if (responsiveStageLive) {
+      const liveBand = responsiveStage.locator('.gband--consumer[data-gallery-stage]');
+      await liveBand.waitFor({ state: 'visible' });
+      await liveBand.locator('.stage__canvas').waitFor({ state: 'visible', timeout: 30_000 });
+      await liveBand.locator('button.rail__tick').first().waitFor({ state: 'visible', timeout: 30_000 });
+      await responsiveStage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.classList.contains('is-ready')
+        && document.querySelectorAll('.gband--consumer button.rail__tick').length === 12
+      ), null, { timeout: 30_000 });
+      await responsiveStage.evaluate(() => {
+        window.__registryResponsiveCanvas = document.querySelector('.gband--consumer .stage__canvas');
+      });
+
+      const readResponsiveShape = () => liveBand.evaluate((band) => {
+        const canvas = band.querySelector('.stage__canvas');
+        const box = canvas?.getBoundingClientRect();
+        const tickButtons = [...band.querySelectorAll('button.rail__tick')];
+        return {
+          ready: band.classList.contains('is-ready'),
+          sameCanvas: window.__registryResponsiveCanvas === canvas,
+          stages: document.querySelectorAll('.gband--consumer[data-gallery-stage]').length,
+          flats: document.querySelectorAll('.gband--flat').length,
+          carousels: document.querySelectorAll('.stage-carousel__slide').length,
+          canvases: band.querySelectorAll('.stage__canvas').length,
+          tickButtons: tickButtons.length,
+          enabledTicks: tickButtons.filter((tick) => !tick.disabled).length,
+          tickImages: band.querySelectorAll('button.rail__tick img').length,
+          placeholders: band.querySelectorAll('.rail__tick--placeholder').length,
+          canvasWidth: box?.width ?? 0,
+          canvasHeight: box?.height ?? 0,
+          selectedIndex: tickButtons.findIndex((tick) => tick.getAttribute('aria-pressed') === 'true'),
+          preview: band.querySelector('[data-consumer-preview]')
+            ?.getAttribute('data-consumer-preview') ?? '',
+        };
+      });
+      const initialMobileShape = await readResponsiveShape();
+      check(
+        'responsive WebGL gallery opens on mobile as one usable live stage',
+        initialMobileShape.ready && initialMobileShape.sameCanvas
+          && initialMobileShape.stages === 1 && initialMobileShape.flats === 0
+          && initialMobileShape.carousels === 0 && initialMobileShape.canvases === 1
+          && initialMobileShape.tickButtons === 12 && initialMobileShape.enabledTicks === 12
+          && initialMobileShape.tickImages === 12 && initialMobileShape.placeholders === 0
+          && initialMobileShape.canvasWidth > 0 && initialMobileShape.canvasHeight >= 200,
+        JSON.stringify(initialMobileShape),
+      );
+
+      const cycleSelections = [
+        { slug: 'gemini', name: 'Gemini', index: 2 },
+        { slug: 'scorpio', name: 'Scorpio', index: 7 },
+      ];
+      for (let cycle = 1; cycle <= 2; cycle += 1) {
+        const selection = cycleSelections[cycle - 1];
+        const liveTick = liveBand.locator('button.rail__tick').nth(selection.index);
+        await liveTick.click();
+        await responsiveStage.waitForFunction(({ slug, index }) => {
+          const band = document.querySelector('.gband--consumer');
+          const ticks = [...(band?.querySelectorAll('button.rail__tick') || [])];
+          return ticks[index]?.getAttribute('aria-pressed') === 'true'
+            && band?.querySelector('[data-consumer-preview]')
+              ?.getAttribute('data-consumer-preview') === slug;
+        }, { slug: selection.slug, index: selection.index });
+        const mobileSelectionShape = await readResponsiveShape();
+        check(
+          `responsive gallery cycle ${cycle} selects ${selection.name} on mobile`,
+          mobileSelectionShape.sameCanvas
+            && mobileSelectionShape.selectedIndex === selection.index
+            && mobileSelectionShape.preview === selection.slug,
+          JSON.stringify(mobileSelectionShape),
+        );
+
+        await responsiveStage.setViewportSize({ width: 1280, height: 900 });
+        await responsiveStage.waitForFunction(() => innerWidth === 1280);
+        await responsiveStage.waitForTimeout(120);
+        const desktopShape = await readResponsiveShape();
+        check(
+          `responsive gallery cycle ${cycle} keeps the same selected live stage on desktop`,
+          desktopShape.ready && desktopShape.sameCanvas
+            && desktopShape.stages === 1 && desktopShape.flats === 0
+            && desktopShape.carousels === 0 && desktopShape.canvases === 1
+            && desktopShape.tickButtons === 12 && desktopShape.enabledTicks === 12
+            && desktopShape.selectedIndex === selection.index
+            && desktopShape.preview === selection.slug
+            && desktopShape.canvasWidth > 0 && desktopShape.canvasHeight >= 300
+            && await liveBand.getAttribute('data-gallery-paused') === null,
+          JSON.stringify(desktopShape),
+        );
+
+        await responsiveStage.setViewportSize({ width: 390, height: 844 });
+        await responsiveStage.waitForFunction(() => innerWidth === 390);
+        await responsiveStage.waitForTimeout(120);
+        const returnedMobileShape = await readResponsiveShape();
+        check(
+          `responsive gallery cycle ${cycle} retains ${selection.name} when it returns to mobile`,
+          returnedMobileShape.ready && returnedMobileShape.sameCanvas
+            && returnedMobileShape.stages === 1 && returnedMobileShape.flats === 0
+            && returnedMobileShape.carousels === 0 && returnedMobileShape.canvases === 1
+            && returnedMobileShape.tickButtons === 12
+            && returnedMobileShape.selectedIndex === selection.index
+            && returnedMobileShape.preview === selection.slug
+            && returnedMobileShape.canvasWidth > 0 && returnedMobileShape.canvasHeight >= 200,
+          JSON.stringify(returnedMobileShape),
+        );
+      }
+      await responsiveStage.waitForTimeout(400);
+      check(
+        'responsive gallery loads its scene bundle once across viewport changes',
+        responsiveStageRequests.length === 1,
+        JSON.stringify(responsiveStageRequests),
+      );
+    } else {
+      await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
+      await responsiveStage.locator('[data-consumer-sign="scorpio"]').click();
+      await responsiveStage.locator('[data-consumer-preview="scorpio"]').waitFor({ state: 'visible' });
+      await responsiveStage.setViewportSize({ width: 1280, height: 900 });
+      await responsiveStage.locator('.gband--flat').waitFor({ state: 'visible' });
+      check(
+        'non-WebGL responsive fallback remains a complete selected carousel',
+        await responsiveStage.locator('.stage-carousel__slide').count() === 1
+          && await responsiveStage.locator('[data-consumer-sign]').count() === 12
+          && await responsiveStage.locator('[data-consumer-sign="scorpio"]').getAttribute('aria-pressed') === 'true'
+          && await responsiveStage.locator('[data-consumer-preview="scorpio"]').count() === 1
+          && await responsiveStage.locator('[data-gallery-stage]').count() === 0
+          && responsiveStageRequests.length === 0,
+        JSON.stringify(responsiveStageRequests),
+      );
+    }
     check(
-      'mobile explorer uses a complete four-by-three grid',
-      mobileState.count === 12
-        && mobileState.rowCounts.length === 3
-        && mobileState.rowCounts.every((count) => count === 4),
-      JSON.stringify(mobileState),
+      'responsive gallery mode changes are runtime-error free',
+      responsiveStageErrors.length === 0,
+      responsiveStageErrors.join(' | '),
     );
-    check(
-      'mobile consumer Registry fits without overflow and keeps 44px targets',
-      mobileState.pageWidth <= mobileState.viewportWidth + 1
-        && mobileState.pageHeight <= 7500
-        && mobileState.minTarget >= 44,
-      JSON.stringify(mobileState),
-    );
-    if (OUT) await mobile.screenshot({ path: OUT + '/registry-consumer-390.png', fullPage: false });
-    await mobile.close();
+    await responsiveStage.close();
 
     const reduced = await newPage({
-      viewport: { width: 1126, height: 1180 },
+      viewport: { width: 390, height: 844 },
       reducedMotion: 'reduce',
     });
+    await stubNoWebgl(reduced);
+    await mockDexscreener(reduced);
     await reduced.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
     await reduced.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
     check(
-      'reduced motion leaves the cinematic film detached',
-      await reduced.locator('.cine__media').evaluate((video) => !video.src),
+      'reduced motion leaves no film attached to the rendered page',
+      await reduced.locator('.cine__media').count() === 0,
     );
     await reduced.locator('[data-consumer-sign="libra"]').click();
-    const reducedDurations = await reduced.locator('[data-consumer-preview="libra"]')
-      .evaluate((preview) => {
-        const style = getComputedStyle(preview);
+    await reduced.waitForFunction(() => {
+      const image = document.querySelector('.stage-carousel__slide.is-active .stage-carousel__art');
+      return image?.complete && image.naturalWidth > 0;
+    });
+    const reducedDurations = await reduced.locator('.stage-carousel__slide.is-active .stage-carousel__figure')
+      .evaluate((figure) => {
+        const style = getComputedStyle(figure);
         return {
           animation: parseFloat(style.animationDuration) || 0,
           transition: parseFloat(style.transitionDuration) || 0,
         };
       });
     check(
-      'reduced motion swaps the consumer preview without animated travel',
+      'reduced motion turns the carousel without animated travel',
       reducedDurations.animation <= 0.02 && reducedDurations.transition <= 0.02,
       JSON.stringify(reducedDurations),
     );
+    const reducedFit = await reduced.locator('.stage-carousel__slide.is-active .stage-carousel__art')
+      .evaluate((image) => {
+        const art = image.getBoundingClientRect();
+        const placard = document.querySelector('.stage-placard')?.getBoundingClientRect();
+        const alphaCanvas = document.createElement('canvas');
+        alphaCanvas.width = image.naturalWidth;
+        alphaCanvas.height = image.naturalHeight;
+        const context = alphaCanvas.getContext('2d', { willReadFrequently: true });
+        context.drawImage(image, 0, 0);
+        const pixels = context.getImageData(0, 0, alphaCanvas.width, alphaCanvas.height).data;
+        let maxY = -1;
+        for (let y = 0; y < alphaCanvas.height; y += 1) {
+          for (let x = 0; x < alphaCanvas.width; x += 1) {
+            if (pixels[((y * alphaCanvas.width) + x) * 4 + 3] > 8) maxY = y;
+          }
+        }
+        const visibleBottom = maxY < 0
+          ? Infinity
+          : art.top + (((maxY + 1) / alphaCanvas.height) * art.height);
+        return {
+          transform: getComputedStyle(image).transform,
+          clearance: placard ? placard.top - visibleBottom : -Infinity,
+        };
+      });
+    check(
+      'reduced motion preserves optical fitting and mobile placard clearance',
+      reducedFit.transform !== 'none' && reducedFit.clearance >= 15,
+      JSON.stringify(reducedFit),
+    );
     await reduced.close();
 
-    const gallery = await newPage({
+    // The stage scenario runs unstubbed: where the runner offers WebGL the
+    // sculpture stage IS the explorer; otherwise the pastel grid serves and
+    // the scene bundle never loads. Both outcomes are asserted.
+    const stagePage = await newPage({
       viewport: { width: 1280, height: 900 },
       reducedMotion: 'no-preference',
     });
-    const galleryRequests = [];
-    gallery.on('request', (request) => {
-      if (new URL(request.url()).pathname === '/assets/gallery.js') galleryRequests.push(request.url());
+    await mockDexscreener(stagePage);
+    const stageRequests = [];
+    stagePage.on('request', (request) => {
+      if (new URL(request.url()).pathname === '/assets/gallery.js') stageRequests.push(request.url());
     });
-    await gallery.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
-    await gallery.locator('[data-consumer-gallery-toggle]').waitFor({ state: 'visible' });
-    check(
-      'optional gallery makes no bundle request before its control is used',
-      galleryRequests.length === 0 && await gallery.locator('[data-consumer-gallery]').count() === 0,
-    );
-    await gallery.locator('[data-consumer-gallery-toggle]').click();
-    await gallery.locator('[data-consumer-gallery]').waitFor({ state: 'visible' });
-    const galleryLive = await gallery.evaluate(() => document.documentElement.classList.contains('gallery-live'));
-    if (galleryLive) {
-      await gallery.locator('.gband.is-ready').waitFor({ state: 'visible', timeout: 30_000 });
+    await stagePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await stagePage.locator('.consumer-explorer').waitFor({ state: 'visible' });
+    const stageLive = await stagePage.evaluate(() => document.documentElement.classList.contains('gallery-live'));
+    if (stageLive) {
+      await stagePage.locator('.gband--consumer').waitFor({ state: 'attached' });
       check(
-        'opened WebGL gallery keeps all twelve pastel rail controls',
-        await gallery.locator('.gband .rail__tick').count() === 12
-          && await gallery.locator('.gband .rail__tick img').count() === 12,
+        'the sculpture stage is the wide-screen explorer and retires the grid',
+        await stagePage.locator('[data-consumer-sign]').count() === 0,
+      );
+      await stagePage.locator('.gband.is-ready').waitFor({ state: 'attached', timeout: 30_000 });
+      check(
+        'the live stage swaps its placeholder rail for twelve live ticks',
+        await stagePage.locator('.gband .rail__tick').count() === 12
+          && await stagePage.locator('.gband .rail__tick img').count() === 12
+          && await stagePage.locator('.rail__tick--placeholder').count() === 0,
       );
       check(
-        'opening the gold gallery requests its bundle exactly once',
-        galleryRequests.length === 1,
-        JSON.stringify(galleryRequests),
+        'the default-open stage requests its bundle exactly once',
+        stageRequests.length === 1,
+        JSON.stringify(stageRequests),
+      );
+      check(
+        'the rail exposes one pressed tick for the current sign',
+        await stagePage.locator('.rail__tick[aria-pressed="true"]').count() === 1,
+      );
+      // One opening scene: the film hero stands down, the headline rides the
+      // stage, the rail picks beneath it, the chosen sculpture stands large,
+      // and the placard at its feet says name, dates, price — nothing more.
+      const shape = await stagePage.evaluate(() => {
+        const box = (sel) => {
+          const el = document.querySelector(sel);
+          return el ? el.getBoundingClientRect() : null;
+        };
+        const head = box('.stage-hero__head');
+        const plate = box('.gband--consumer');
+        const rail = box('.gband--consumer [data-gallery-rail]');
+        const canvas = box('.gband--consumer [data-gallery-canvas]');
+        const placard = box('.stage-placard');
+        return {
+          filmHero: document.querySelectorAll('.cine').length,
+          h1: document.querySelectorAll('h1').length,
+          headAboveRail: Boolean(head && rail && head.bottom <= rail.top + 1),
+          railAboveCanvas: Boolean(rail && canvas && rail.bottom <= canvas.top + 1),
+          canvasAbovePlacard: Boolean(placard && canvas
+            && canvas.bottom <= placard.top + 1),
+          plateFramed: Boolean(plate && plate.width < innerWidth - 40 && plate.width <= 1402),
+          plateRadius: plate ? getComputedStyle(document.querySelector('.gband--consumer')).borderTopLeftRadius : '',
+          headInsidePlate: Boolean(head && plate && head.top >= plate.top - 1 && head.bottom <= plate.bottom + 1),
+          // The rail must not wear .gband__chrome: the scene reads that
+          // element's offsetTop as the floor of the band it may paint into.
+          chrome: document.querySelectorAll('.gband--consumer .gband__chrome').length,
+          previewInside: document.querySelectorAll('.gband--consumer [data-consumer-preview]').length,
+          previewTotal: document.querySelectorAll('[data-consumer-preview]').length,
+          flatArt: document.querySelectorAll('.consumer-preview__art').length,
+          figureHeight: canvas ? Math.round(canvas.height) : 0,
+        };
+      });
+      check(
+        'the plate frames the opening scene: headline, rail, sculpture, placard',
+        shape.filmHero === 0 && shape.h1 === 1
+          && shape.headAboveRail && shape.railAboveCanvas && shape.canvasAbovePlacard
+          && shape.plateFramed && shape.plateRadius.startsWith('26') && shape.headInsidePlate
+          && shape.chrome === 0
+          && shape.previewInside === 1 && shape.previewTotal === 1
+          && shape.flatArt === 0
+          && shape.figureHeight >= 300,
+        JSON.stringify(shape),
+      );
+
+      // Centre it first. The rail rides the top of the rectangle and the
+      // site's nav floats over the top of the page, so scrolling the tick
+      // just barely into view would slide it under the pill.
+      const geminiTick = stagePage.locator('.rail__tick').nth(2);
+      await geminiTick.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await geminiTick.click();
+      await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
+      const geminiPlacard = await stagePage.locator('[data-consumer-preview="gemini"]').evaluate((placard) => ({
+        name: placard.querySelector('.stage-placard__name')?.textContent,
+        trade: placard.querySelector('a.btn--primary, button.btn--primary') !== null,
+        tradeHref: placard.querySelector('a.btn--primary')?.getAttribute('href') ?? null,
+        record: placard.querySelector('a.btn--ghost')?.getAttribute('href'),
+      }));
+      check(
+        'walking the rail drives the placard',
+        geminiPlacard.name === 'Gemini'
+          && geminiPlacard.trade
+          // Flag-off the trade pill is the door to the catalogue page's panel.
+          && (geminiPlacard.tradeHref === null || geminiPlacard.tradeHref === '/registry/gemini/#acquire')
+          && geminiPlacard.record === '/registry/gemini/',
+        JSON.stringify(geminiPlacard),
+      );
+
+      const liveStage = stagePage.locator('.gband--consumer');
+      const liveCanvas = liveStage.locator('.stage__canvas');
+      await stagePage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'ambient'
+      ));
+      await stagePage.waitForTimeout(900);
+      const ambientFrameA = await liveCanvas.screenshot();
+      await stagePage.waitForTimeout(500);
+      const ambientFrameB = await liveCanvas.screenshot();
+      const turnHint = (await liveStage.locator('[data-gallery-turn-hint]').innerText())
+        .replace(/\s+/g, ' ').trim();
+      check(
+        'the Registry spotlight turns quietly on its Thesis turntable',
+        !ambientFrameA.equals(ambientFrameB)
+      && turnHint.toLowerCase().includes('drag to turn'),
+        JSON.stringify({ framesEqual: ambientFrameA.equals(ambientFrameB), turnHint }),
+      );
+
+      // Find the cast rather than assuming its silhouette fills the centre:
+      // Gemini has a deliberate gap between the twins. Hover picking exposes
+      // the same proxy the real drag uses.
+      const canvasBox = await liveCanvas.boundingBox();
+      let sculpturePoint = null;
+      for (const xShare of [0.5, 0.44, 0.56, 0.38, 0.62]) {
+        for (const yShare of [0.48, 0.58, 0.38, 0.68]) {
+          const point = {
+            x: canvasBox.x + (canvasBox.width * xShare),
+            y: canvasBox.y + (canvasBox.height * yShare),
+          };
+          await stagePage.mouse.move(point.x, point.y);
+          await stagePage.waitForTimeout(20);
+          if (await liveCanvas.evaluate((canvas) => canvas.style.cursor === 'pointer')) {
+            sculpturePoint = point;
+            break;
+          }
+        }
+        if (sculpturePoint) break;
+      }
+      check('the spotlight cast exposes a direct-manipulation hit area', Boolean(sculpturePoint));
+      if (sculpturePoint) {
+        const dragX = sculpturePoint.x > canvasBox.x + (canvasBox.width * 0.65) ? -120 : 120;
+        await stagePage.mouse.move(sculpturePoint.x, sculpturePoint.y);
+        await stagePage.mouse.down();
+        await stagePage.mouse.move(sculpturePoint.x + dragX, sculpturePoint.y - 18, { steps: 5 });
+        await stagePage.mouse.up();
+        await stagePage.waitForFunction(() => (
+          document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'held'
+        ));
+        await stagePage.waitForTimeout(800);
+        const heldFrameA = await liveCanvas.screenshot();
+        await stagePage.waitForTimeout(500);
+        const heldFrameB = await liveCanvas.screenshot();
+        const heldState = await liveStage.evaluate((band) => ({
+          rotation: band.dataset.galleryRotation,
+          pressed: band.querySelector('.rail__tick[aria-pressed="true"]')?.dataset.index,
+          preview: band.querySelector('[data-consumer-preview]')?.dataset.consumerPreview,
+          open: band.classList.contains('is-open'),
+          card: band.querySelectorAll('[data-gallery-card]:not([hidden])').length,
+        }));
+        check(
+          'dragging turns the sculpture without changing its sign or opening a card',
+          heldState.rotation === 'held'
+            && heldState.pressed === '2'
+            && heldState.preview === 'gemini'
+            && !heldState.open
+            && heldState.card === 0
+            && heldFrameA.equals(heldFrameB),
+          JSON.stringify({ ...heldState, framesEqual: heldFrameA.equals(heldFrameB) }),
+        );
+        // A no-move press during the inspection pause interrupts the timer,
+        // then must re-arm it instead of leaving the cast held forever.
+        await stagePage.mouse.move(sculpturePoint.x, sculpturePoint.y);
+        await stagePage.mouse.down();
+        await stagePage.waitForTimeout(80);
+        await stagePage.mouse.up();
+        check(
+          'a held sculpture survives a tap and still schedules its quiet return',
+          await liveStage.getAttribute('data-gallery-rotation') === 'held',
+        );
+        await stagePage.waitForFunction(() => (
+          document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'ambient'
+        ), null, { timeout: 4_000 });
+        const resumedFrameA = await liveCanvas.screenshot();
+        await stagePage.waitForTimeout(500);
+        const resumedFrameB = await liveCanvas.screenshot();
+        check(
+          'the quiet turntable resumes after the inspection pause',
+          !resumedFrameA.equals(resumedFrameB),
+        );
+      }
+
+      // Tapping a sculpture on the stage chooses it. There is nothing to
+      // draw out to — the placard is already at its feet — so the card must
+      // stay shut however the canvas is used.
+      const mountBox = await stagePage.locator('.gband--consumer [data-gallery-canvas]').boundingBox();
+      await stagePage.mouse.move(mountBox.x + (mountBox.width / 2), mountBox.y + (mountBox.height / 2));
+      await stagePage.mouse.down();
+      await stagePage.waitForTimeout(80);
+      await stagePage.mouse.up();
+      await stagePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
+      check(
+        'the stage never draws a sculpture out over its own placard',
+        await stagePage.locator('.gband.is-open').count() === 0
+          && await stagePage.locator('[data-gallery-card]:not([hidden])').count() === 0,
+      );
+      const tappedFrameA = await liveCanvas.screenshot();
+      await stagePage.waitForTimeout(500);
+      const tappedFrameB = await liveCanvas.screenshot();
+      check(
+        'a tap never stalls the Registry turntable',
+        !tappedFrameA.equals(tappedFrameB),
+      );
+
+      const stageText = await stagePage.locator('.consumer-explorer').innerText();
+      check(
+        'the stage drops the second chain and the guide detour',
+        !stageText.includes('Also recorded on Base') && !/astrology guide/i.test(stageText),
       );
     } else {
       check(
-        'opened gallery retains a complete non-WebGL fallback',
-        await gallery.locator('.consumer-gallery__fallback a').count() === 12,
+        'without WebGL the pastel grid serves as the explorer',
+        await stagePage.locator('[data-consumer-sign]').count() === 12
+          && await stagePage.locator('.gband').count() === 0,
+      );
+      await stagePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 400)));
+      check(
+        'without WebGL the scene bundle is never requested',
+        stageRequests.length === 0,
+        JSON.stringify(stageRequests),
       );
     }
-    check(
-      'opening the optional gallery does not replace the consumer explorer',
-      await gallery.locator('[data-consumer-sign]').count() === 12,
-    );
-    await gallery.locator('[data-consumer-gallery-toggle]').click();
-    check(
-      'gallery control closes the optional view and restores its accessible state',
-      await gallery.locator('[data-consumer-gallery]').count() === 0
-        && await gallery.locator('[data-consumer-gallery-toggle]').getAttribute('aria-expanded') === 'false',
-    );
-    await gallery.close();
+    await stagePage.close();
+
+    const reducedStage = await newPage({
+      viewport: { width: 1280, height: 900 },
+      reducedMotion: 'reduce',
+    });
+    await mockDexscreener(reducedStage);
+    await reducedStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    const reducedStageLive = await reducedStage.evaluate(() => (
+      document.documentElement.classList.contains('gallery-live')
+    ));
+    if (reducedStageLive) {
+      const band = reducedStage.locator('.gband--consumer');
+      const canvas = band.locator('.stage__canvas');
+      await canvas.waitFor({ state: 'visible', timeout: 30_000 });
+      await reducedStage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'manual'
+      ));
+      await reducedStage.waitForTimeout(1400);
+      const quietFrameA = await canvas.screenshot();
+      await reducedStage.waitForTimeout(500);
+      const quietFrameB = await canvas.screenshot();
+      check(
+        'reduced motion keeps the WebGL spotlight still until the reader moves it',
+        quietFrameA.equals(quietFrameB)
+          && await band.getAttribute('data-gallery-rotation') === 'manual',
+      );
+    }
+    await reducedStage.close();
+
+    // ---- the trade panel, with its flag turned on ------------------------
+    //
+    // The committed shell is always flag-off, so the deployed state is
+    // simulated by rewriting the one meta the build stamps. Jupiter is
+    // stubbed: this drive proves the panel's wiring, not the venue's.
+    const tradeOrders = [];
+    const withTradeFlag = async (page) => {
+      await page.route('**/registry/', async (route) => {
+        if (route.request().resourceType() !== 'document') return route.continue();
+        const response = await route.fetch();
+        const body = (await response.text()).replace(
+          '<meta name="zodiacs-registry-trade-enabled" content="0" />',
+          '<meta name="zodiacs-registry-trade-enabled" content="1" />',
+        );
+        return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
+      });
+      await page.route('**/lite-api.jup.ag/**', async (route) => {
+        const url = new URL(route.request().url());
+        tradeOrders.push(Object.fromEntries(url.searchParams));
+        return route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            inputMint: url.searchParams.get('inputMint'),
+            outputMint: url.searchParams.get('outputMint'),
+            inAmount: url.searchParams.get('amount'),
+            outAmount: '347222000000',
+            priceImpactPct: '0.41',
+            feeBps: 10,
+            slippageBps: 50,
+            outUsdValue: 24.94,
+            requestId: 'drive-fixture',
+            transaction: null,
+          }),
+        });
+      });
+    };
+
+    // Trading is a deliberate placard action at every width. The sculpture
+    // remains a selector, while the modal owns focus and scroll only after
+    // the explicit Trade pill is pressed.
+    for (const [label, width, height, stub] of [
+      ['sheet', 1280, 900, false],
+      ['flat', 1126, 1000, true],
+      ['pocket-320', 320, 568, true],
+      ['pocket-360', 360, 640, true],
+      ['pocket-390', 390, 844, true],
+    ]) {
+      const tradePage = await newPage({
+        viewport: { width, height },
+        reducedMotion: 'no-preference',
+        isMobile: width < 500,
+        hasTouch: width < 500,
+      });
+      const tradeBundle = [];
+      tradePage.on('request', (request) => {
+        if (new URL(request.url()).pathname === '/assets/trade.js') tradeBundle.push(request.url());
+      });
+      const ordersBefore = tradeOrders.length;
+      await mockDexscreener(tradePage);
+      if (stub) await stubNoWebgl(tradePage);
+      await withTradeFlag(tradePage);
+      await tradePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await tradePage.locator('.stage-placard').waitFor({ state: 'visible', timeout: 20_000 });
+      await tradePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
+      check(
+        `the ${label} asks Jupiter nothing until the trade is opened`,
+        tradeBundle.length === 0
+          && tradeOrders.length === ordersBefore
+          && await tradePage.locator('.tp').count() === 0,
+        JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length - ordersBefore }),
+      );
+
+      const mobileSheet = width < 500;
+      if (mobileSheet) {
+        const statue = tradePage.locator('.stage-carousel__slide.is-active .stage-carousel__figure');
+        await statue.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+        await statue.click();
+        await tradePage.waitForTimeout(100);
+        check(
+          `the ${label} sculpture selects without opening a purchase sheet`,
+          await tradePage.locator('.stage-sheet').count() === 0,
+        );
+      }
+      const tradePill = tradePage.locator('button.stage-placard__pill');
+      await tradePill.click();
+      await tradePage.locator('.stage-sheet').waitFor({ state: 'visible', timeout: 10_000 });
+      await tradePage.locator('.tp').waitFor({ state: 'visible', timeout: 20_000 });
+      await tradePage.locator('.tp .out').waitFor({ state: 'visible', timeout: 20_000 });
+
+      const ceiling = await tradePage.evaluate(() => {
+        const sheet = document.querySelector('.stage-sheet__panel');
+        const tp = sheet.querySelector('.tp');
+        const box = sheet.getBoundingClientRect();
+        return {
+          lore: sheet.querySelectorAll('.consumer-preview__lore').length,
+          quote: sheet.querySelectorAll('[data-token-quote]').length,
+          record: sheet.querySelector('.stage-sheet__record')?.getAttribute('href'),
+          // How far down the sheet the reader must look to find the trade.
+          panelTop: tp ? Math.round(tp.getBoundingClientRect().top - box.top) : -1,
+          // On a phone the panel rises from the bottom edge and owns the width.
+          fromBottom: Math.round(innerHeight - box.bottom),
+          widthShare: box.width / innerWidth,
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+        };
+      });
+      check(
+        `the ${label} opens on the panel rather than on a second copy of the record`,
+        ceiling.lore === 0 && ceiling.quote === 0
+          && ceiling.record === '/registry/leo/'
+          && ceiling.panelTop >= 0 && ceiling.panelTop <= 120,
+        JSON.stringify(ceiling),
+      );
+      if (mobileSheet) {
+        check(
+          `the ${label} panel rises from the bottom edge and owns the width`,
+          ceiling.fromBottom <= 1 && ceiling.widthShare >= 0.99
+            && ceiling.pageWidth <= ceiling.viewportWidth + 1,
+          JSON.stringify(ceiling),
+        );
+      }
+
+      const panel = await tradePage.evaluate(() => {
+        const tp = document.querySelector('.tp');
+        const host = tp.closest('.consumer-trade');
+        const sheet = tp.closest('.stage-sheet__panel');
+        const close = sheet.querySelector('.stage-sheet__close');
+        const chips = [...tp.querySelectorAll('.amts button')];
+        const methods = [...tp.querySelectorAll('.payseg button')];
+        const box = (node) => {
+          const rect = node?.getBoundingClientRect();
+          return rect ? {
+            top: rect.top,
+            right: rect.right,
+            bottom: rect.bottom,
+            left: rect.left,
+            width: rect.width,
+            height: rect.height,
+          } : null;
+        };
+        const body = sheet.querySelector('.stage-sheet__body');
+        const bodyStyle = getComputedStyle(body);
+        const contentWidth = body.clientWidth
+          - parseFloat(bodyStyle.paddingLeft)
+          - parseFloat(bodyStyle.paddingRight);
+        let background = document.querySelector('main#main');
+        while (background?.parentElement && background.parentElement !== document.body) {
+          background = background.parentElement;
+        }
+        return {
+          host: tp.closest('.stage-sheet') ? 'sheet' : 'loose',
+          amount: tp.querySelector('.pay__input')?.value,
+          chips: chips.map((b) => b.textContent),
+          chipHeights: chips.map((b) => b.getBoundingClientRect().height),
+          pressed: chips.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.textContent),
+          receive: tp.querySelector('.out')?.textContent ?? '',
+          facts: [...tp.querySelectorAll('.fact')].map((f) => f.textContent),
+          method: methods.find((b) => b.getAttribute('aria-pressed') === 'true')?.textContent ?? '',
+          ramps: tp.querySelectorAll('.ramps li').length,
+          rampNames: [...tp.querySelectorAll('.ramp__name')].map((n) => n.textContent),
+          fomoRow: [...tp.querySelectorAll('.ramp')]
+            .find((r) => /fomo/i.test(r.textContent))?.textContent.replace(/\s+/g, ' ').trim() ?? '',
+          applePayBadge: tp.querySelectorAll('.tp__mark.ap').length,
+          marks: tp.querySelectorAll('.ramps .tp__mark').length,
+          go: tp.querySelectorAll('.tp__go').length,
+          heroButton: tp.querySelectorAll('.route__go, .route__t').length,
+          sheet: box(sheet),
+          bodyBox: box(body),
+          hostBox: box(host),
+          tpBox: box(tp),
+          closeBox: box(close),
+          contentWidth,
+          sheetScrollWidth: sheet.scrollWidth,
+          sheetClientWidth: sheet.clientWidth,
+          bodyOverflow: getComputedStyle(document.body).overflow,
+          backgroundInert: Boolean(background?.inert),
+          focusInside: Boolean(document.activeElement?.closest('.stage-sheet')),
+        };
+      });
+      check(
+        `the ${label} opens the panel already showing what $25 buys`,
+        panel.host === 'sheet'
+          && panel.amount === '25'
+          && panel.chips.join(' ') === '$25 $50 $100 $250'
+          && panel.pressed.join('') === '$25'
+          && /\d/.test(panel.receive)
+          && panel.facts.length === 2
+          && panel.facts.some((f) => /\$|¢/.test(f))
+          && panel.facts.some((f) => /%/.test(f))
+          && panel.chipHeights.every((height) => height >= 44),
+        JSON.stringify(panel),
+      );
+      check(
+        `the ${label} uses one full-width trade surface without close-button collision`,
+        panel.bodyBox && panel.hostBox && panel.tpBox && panel.closeBox
+          && panel.hostBox.width >= panel.contentWidth - 1
+          && panel.tpBox.width >= panel.hostBox.width - 1
+          && panel.closeBox.bottom <= panel.hostBox.top + 1
+          && panel.sheetScrollWidth <= panel.sheetClientWidth + 1,
+        JSON.stringify({
+          sheet: panel.sheet,
+          body: panel.bodyBox,
+          host: panel.hostBox,
+          trade: panel.tpBox,
+          close: panel.closeBox,
+          contentWidth: panel.contentWidth,
+          scrollWidth: panel.sheetScrollWidth,
+          clientWidth: panel.sheetClientWidth,
+        }),
+      );
+      check(
+        `the ${label} sheet owns focus and locks the background`,
+        panel.focusInside && panel.backgroundInert && panel.bodyOverflow === 'hidden',
+        JSON.stringify({
+          focusInside: panel.focusInside,
+          backgroundInert: panel.backgroundInert,
+          bodyOverflow: panel.bodyOverflow,
+        }),
+      );
+
+      // From the first focusable control, Shift+Tab must wrap to the last
+      // control rather than escape behind the scrim; Tab then wraps back.
+      const focusableCount = await tradePage.evaluate(() => {
+        const dialog = document.querySelector('.stage-sheet');
+        const focusable = [...dialog.querySelectorAll(
+          'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        )].filter((node) => {
+          const style = getComputedStyle(node);
+          const box = node.getBoundingClientRect();
+          return style.visibility !== 'hidden' && style.display !== 'none' && box.width > 0 && box.height > 0;
+        });
+        focusable[0]?.focus();
+        return focusable.length;
+      });
+      await tradePage.keyboard.press('Shift+Tab');
+      const wrappedToLast = await tradePage.evaluate(() => (
+        document.activeElement?.classList.contains('stage-sheet__record') ?? false
+      ));
+      await tradePage.keyboard.press('Tab');
+      const wrappedToFirst = await tradePage.evaluate(() => (
+        document.activeElement?.classList.contains('stage-sheet__close') ?? false
+      ));
+      check(
+        `the ${label} traps keyboard focus in both directions`,
+        focusableCount >= 3 && wrappedToLast && wrappedToFirst,
+        JSON.stringify({ count: focusableCount, wrappedToLast, wrappedToFirst }),
+      );
+      check(
+        `the ${label} lists four ways to pay, branded, alphabetical, none ranked`,
+        /Card|Apple Pay/i.test(panel.method)
+          && panel.ramps === 4 && panel.go === 0
+          && panel.rampNames.join(' · ') === 'Coinbase · fomo · MoonPay · Ramp Network'
+          && panel.heroButton === 0
+          && panel.applePayBadge === 1
+          && /Apple Pay/.test(panel.fomoRow)
+          && panel.marks >= 4,
+        JSON.stringify({ names: panel.rampNames, method: panel.method, marks: panel.marks }),
+      );
+
+      const usdc = tradePage.locator('.tp .payseg button').nth(1);
+      await usdc.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await usdc.click();
+      await tradePage.locator('.tp__go').waitFor({ state: 'visible', timeout: 10_000 });
+      check(
+        `the ${label} offers a wallet review once USDC is chosen`,
+        /review/i.test(await tradePage.locator('.tp__go').innerText())
+          && await tradePage.locator('.tp .ramps').count() === 0,
+      );
+      check(
+        `the ${label} fetches its bundle once and prices without an address`,
+        tradeBundle.length === 1
+          && tradeOrders.length > ordersBefore
+          && tradeOrders.every((q) => q.amount && q.inputMint && q.outputMint && !('taker' in q)),
+        JSON.stringify({ bundle: tradeBundle.length, orders: tradeOrders.length - ordersBefore }),
+      );
+
+      await tradePage.keyboard.press('Escape');
+      // The closing state remains mounted long enough to animate out.
+      const exitWasPresent = await tradePage.locator('.stage-sheet').count() === 1;
+      await tradePage.locator('.stage-sheet').waitFor({ state: 'detached', timeout: 3_000 });
+      const restored = await tradePage.evaluate(() => {
+        let background = document.querySelector('main#main');
+        while (background?.parentElement && background.parentElement !== document.body) {
+          background = background.parentElement;
+        }
+        return {
+          bodyOverflow: getComputedStyle(document.body).overflow,
+          backgroundInert: Boolean(background?.inert),
+          focus: document.activeElement?.classList.contains('stage-placard__pill') ?? false,
+        };
+      });
+      check(
+        `escape returns the ${label} from the sheet untouched`,
+        exitWasPresent
+          && await tradePage.locator('.stage-sheet').count() === 0
+          && await tradePage.locator('.stage-placard').count() === 1
+          && restored.bodyOverflow !== 'hidden'
+          && restored.backgroundInert === false
+          && restored.focus,
+        JSON.stringify({ exitWasPresent, restored }),
+      );
+      await tradePage.close();
+    }
 
     for (const [legacyHash, destination] of [
       ['pulse', 'market-transparency'],

@@ -19,7 +19,7 @@ export interface DisclosureEvidence {
 }
 
 export interface DisclosureRow {
-  id: 'operator' | 'economic-interest' | 'origin' | 'separation' | 'read-only' | 'financial-advice';
+  id: 'operator' | 'economic-interest' | 'origin' | 'separation' | 'read-only' | 'trade-panel' | 'financial-advice';
   label: string;
   statement: string;
   status: DisclosureStatus;
@@ -115,6 +115,17 @@ export function disclosureRows(locale: Locale): readonly DisclosureRow[] {
     links: [
       { label: disclosureText(locale, 'linkRegistry'), href: '/registry/zodiacs.registry.json' },
       { label: disclosureText(locale, 'linkSdk'), href: '/sdk/' },
+    ],
+  },
+  {
+    id: 'trade-panel',
+    label: disclosureText(locale, 'tradeLabel'),
+    statement: disclosureText(locale, 'tradeStatement'),
+    status: 'verified',
+    evidence: disclosureText(locale, 'tradeEvidence'),
+    links: [
+      { label: disclosureText(locale, 'linkTradeExample'), href: '/registry/aries/' },
+      { label: disclosureText(locale, 'linkTerms'), href: '/terms/' },
     ],
   },
   {
