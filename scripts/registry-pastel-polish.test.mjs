@@ -74,23 +74,56 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('.market-tape__track');
   });
 
+  it('keeps the display-only market tape moving until reduced motion requests native flow', async () => {
+    const [source, registry] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    const tapeSource = source.slice(
+      source.indexOf('function MarketTape('),
+      source.indexOf('function SeasonNow('),
+    );
+    const tapeRules = registry.slice(
+      registry.indexOf('.market-tape {'),
+      registry.indexOf('.consumer-market {'),
+    );
+    const materialPass = registry.indexOf('Registry material pass');
+    const reducedStart = registry.lastIndexOf('@media (prefers-reduced-motion: reduce)', materialPass);
+    const reducedRules = registry.slice(reducedStart, materialPass);
+
+    expect(tapeSource).toContain("{renderItems('primary')}");
+    expect(tapeSource).toContain("{renderItems('echo')}");
+    expect(tapeSource).not.toContain('<button');
+    expect(tapeSource).not.toContain('<a ');
+    expect(tapeRules).toContain('animation: registry-market-loop');
+    expect(tapeRules).not.toContain('button.market-tape__item');
+    expect(tapeRules).not.toContain('.market-tape:hover');
+    expect(tapeRules).not.toContain('.market-tape:focus-within');
+    expect(tapeRules).not.toContain('.market-tape:active');
+    expect(tapeRules).toMatch(/\.market-tape\[data-paused\] \.market-tape__track \{\s*animation-play-state: paused;/u);
+    expect(reducedRules).toContain('.market-tape__viewport { overflow-x: auto;');
+    expect(reducedRules).toContain('.market-tape__track { animation: none; will-change: auto; }');
+    expect(reducedRules).toContain(".market-tape__group[aria-hidden='true'] { display: none; }");
+  });
+
   it('opens on the plate and keeps the optional Cabinet in the purpose section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
 
-    // The film hero is retired: the gallery itself is the opening scene at
-    // every width, so the page has one hero and one headline.
+    // The film and large editorial title card are retired: the gallery itself
+    // is the opening scene, led by the compact season instrument.
     expect(source).not.toContain('function CineHero(');
     expect(source).not.toContain('className="cine__frame"');
-    const head = source.slice(
-      source.indexOf('className="stage-hero__head"'),
-      source.indexOf('className="gband__rail-top"'),
+    const stage = source.slice(
+      source.indexOf('function GalleryBand('),
+      source.indexOf('function ConsumerExplorer('),
     );
-    expect(head).toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
-    expect(head).not.toContain('REGISTRY_AURA_ENABLED');
-    expect(head).not.toContain('Open the Cabinet');
+    expect(stage).toContain('<SeasonNow season={season} />');
+    expect(stage).not.toContain('className="stage-hero__head"');
+    expect(stage).not.toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
+    expect(stage).not.toContain('Open the Cabinet');
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
     // The no-JS shell keeps its own hero and its own browse anchor.
     expect(registry).toContain('href="#official-twelve" data-registry-browse');
@@ -109,22 +142,30 @@ describe('registry pastel polish', () => {
       read('public/registry/index.html'),
     ]);
     const materialPass = registry.slice(registry.indexOf('Registry material pass'));
+    const glassRule = materialPass.slice(
+      materialPass.indexOf('.market-glass,'),
+      materialPass.indexOf('.market-glass::before,'),
+    );
 
     expect(source).toContain('className="market-glass"');
     expect(source).toContain('className="market-glass market-board__share-primary"');
     expect(source).toContain('className="market-glass market-board__social"');
-    expect(source).toContain('className="market-row__view market-glass"');
     expect(source).toContain('className="market-row__record market-glass"');
+    expect(source).not.toContain('className="market-row__view');
     expect(materialPass).toContain('.market-glass,');
-    expect(materialPass).toContain('backdrop-filter: blur(14px) saturate(145%);');
+    expect(glassRule).toContain('linear-gradient');
+    expect(glassRule).toContain('box-shadow:');
+    expect(glassRule).toContain('inset');
+    expect(glassRule).toContain('backdrop-filter: none;');
+    expect(materialPass).toContain('.market-glass::before,');
     expect(materialPass).toContain('.market-board__sort button,');
     expect(materialPass).toContain('min-height: 44px;');
     expect(materialPass).toContain('.market-board__socials { display: flex;');
     expect(materialPass).toContain('.market-board__social {');
     expect(materialPass).toContain('width: 44px;');
-    // Repeated leaderboard actions are painted glass, not 24 independent
+    // Repeated record links are painted glass, not twelve independent
     // backdrop blurs fighting the phone compositor.
-    expect(materialPass).toMatch(/\.market-row__view,\s*\n\s*\.market-row__record \{[\s\S]*?backdrop-filter: none;/u);
+    expect(materialPass).toMatch(/\.market-row__record \{[\s\S]*?backdrop-filter: none;/u);
     expect(materialPass).toMatch(/@media \(prefers-reduced-transparency: reduce\) \{[\s\S]*?background: #11141b;[\s\S]*?backdrop-filter: none;/u);
     expect(materialPass).toMatch(/@media \(prefers-contrast: more\) \{[\s\S]*?border-color: rgba\(238,241,247,\.55\);/u);
   });

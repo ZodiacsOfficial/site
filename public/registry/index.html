@@ -3434,95 +3434,71 @@
       width: 100vw;
       margin-inline: calc(50% - 50vw);
     }
-    .stage-hero__head {
-      position: relative; z-index: 2;
-      padding: clamp(30px, 4.5vh, 52px) 24px 0;
-      text-align: center;
-    }
-    .stage-hero__eyebrow {
-      display: inline-block;
-      color: var(--ink-mute);
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      /* It is a link, but a rule under a mono-caps line directly above the
-         title reads as a mistake — so the underline waits for intent. */
-      text-decoration: none;
-    }
-    .stage-hero__eyebrow:hover { color: var(--ink-2); text-decoration: underline; }
-    .stage-hero__title {
-      /* Two lines: the roman states, the italic answers. Set as one line the
-         device disappears and the title runs to both edges of the plate. */
-      margin: 18px 0 0;
-      font-family: var(--serif);
-      font-weight: 400;
-      font-size: clamp(38px, 4.1vw, 60px);
-      line-height: 1.02;
-      letter-spacing: -.014em;
-      color: var(--ink);
-      text-wrap: balance;
-    }
-    .stage-hero__title .it { font-style: italic; color: var(--ink-2); }
-    .stage-hero__line {
-      max-width: 54ch;
-      margin: 18px auto 0;
-      color: var(--ink-dim);
-      font-size: 14.5px;
-      line-height: 1.6;
-    }
-    /* The live season is an instrument, not a promotional badge: identity,
-       market context and time remaining sit together in one quiet readout. */
+    /* The opening title has moved into an accessible-only H1. Visually, the
+       season instrument and the artifact now begin the Registry immediately. */
     .season-now {
       --season-sign: var(--active-sign, #E0A9B4);
       position: relative;
+      z-index: 2;
       display: grid;
-      grid-template-columns: minmax(180px, 1.2fr) minmax(150px, 1fr) minmax(170px, 1fr);
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        'identity countdown'
+        'progress progress';
       align-items: center;
+      gap: 10px 24px;
       width: min(720px, calc(100% - 40px));
-      margin: 20px auto 0;
-      padding: 10px 12px 12px;
-      overflow: hidden;
-      border: 1px solid color-mix(in srgb, var(--season-sign) 28%, var(--hair-2));
-      border-radius: 15px;
-      background:
-        radial-gradient(90% 180% at 0% 50%, color-mix(in srgb, var(--season-sign) 10%, transparent), transparent 72%),
-        rgba(7,9,13,.52);
+      margin: 0 auto;
+      padding: 12px 18px 14px;
+      overflow: visible;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
       color: var(--ink-2);
       text-align: left;
-      box-shadow: inset 0 1px 0 rgba(238,241,247,.035);
+      box-shadow: none;
     }
-    .season-now__identity,
-    .season-now__market,
-    .season-now__countdown { min-width: 0; }
     .season-now__identity {
+      grid-area: identity;
+      min-width: 0;
       display: flex;
       align-items: center;
-      gap: 11px;
+      gap: 13px;
     }
-    .season-now__identity picture,
-    .season-now__identity img {
+    .season-now__sculpture {
+      position: relative;
+      flex: 0 0 auto;
       display: block;
-      width: 34px;
-      height: 34px;
+      width: 64px;
+      height: 48px;
+    }
+    .season-now__sculpture::before {
+      content: '';
+      position: absolute;
+      inset: 6px 4px 0;
       border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--season-sign) 18%, transparent), transparent 68%);
+      filter: blur(7px);
     }
-    .season-now__identity img {
-      box-shadow: 0 0 0 5px color-mix(in srgb, var(--season-sign) 11%, transparent);
+    .season-now__sculpture img {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      filter: drop-shadow(0 9px 9px rgba(0,0,0,.48));
     }
-    .season-now__identity > span,
-    .season-now__market,
+    .season-now__copy,
     .season-now__countdown {
       display: flex;
       flex-direction: column;
       gap: 2px;
     }
-    .season-now__market,
     .season-now__countdown {
-      min-height: 34px;
+      grid-area: countdown;
+      min-width: 0;
       justify-content: center;
-      padding-left: 20px;
-      border-left: 1px solid var(--hair);
+      text-align: right;
     }
     .season-now__kicker {
       color: var(--ink-mute);
@@ -3540,23 +3516,11 @@
       font-size: 18px;
       line-height: 1.05;
     }
-    .season-now__market-row {
-      display: flex;
-      align-items: baseline;
-      gap: 8px;
-      min-width: 0;
-    }
-    .season-now__market-row strong,
     .season-now__countdown strong {
       color: var(--ink-2);
       font-family: var(--mono);
       font-size: 11px;
       line-height: 1.35;
-      white-space: nowrap;
-    }
-    .season-now__change {
-      font-family: var(--mono);
-      font-size: 9px;
       white-space: nowrap;
     }
     .season-now__ends {
@@ -3566,21 +3530,35 @@
       letter-spacing: .08em;
       text-transform: uppercase;
     }
+    .season-now__progress-block {
+      grid-area: progress;
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 5px 16px;
+    }
+    .season-now__progress-value { justify-self: end; }
     .season-now__progress {
-      position: absolute;
-      left: 12px;
-      right: 12px;
-      bottom: 0;
-      height: 1px;
+      position: relative;
+      inset: auto;
+      grid-column: 1 / -1;
+      display: block;
+      width: 100%;
+      height: 6px;
       overflow: hidden;
-      background: rgba(198,204,218,.07);
+      border-radius: 999px;
+      background: rgba(198,204,218,.1);
+      box-shadow: inset 0 1px 2px rgba(0,0,0,.34), inset 0 0 0 1px rgba(238,241,247,.035);
     }
     .season-now__progress > span {
       display: block;
       width: 100%;
       height: 100%;
       transform-origin: left center;
-      background: linear-gradient(90deg, color-mix(in srgb, var(--season-sign) 62%, var(--ink-dim)), var(--season-sign));
+      border-radius: inherit;
+      background: linear-gradient(90deg, color-mix(in srgb, var(--season-sign) 54%, #d7b56d), var(--season-sign));
+      box-shadow: 0 0 12px color-mix(in srgb, var(--season-sign) 42%, transparent), inset 0 1px 0 rgba(255,255,255,.22);
       transition: transform 240ms cubic-bezier(0.23, 1, 0.32, 1);
     }
     /* The plate. One framed room holding the headline, the twelve, the piece
@@ -3928,11 +3906,6 @@
     }
     .consumer-trade { margin-top: 24px; }
     @media (max-width: 700px) {
-      .stage-hero__head { padding: clamp(22px, 3.5vh, 34px) 18px 0; }
-      .stage-hero__title { font-size: clamp(34px, 9.2vw, 46px); margin-top: 12px; }
-      /* The twelve discs and the sculpture teach the page faster than a
-         sentence does, and the room they need is worth more than it is. */
-      .stage-hero__line { display: none; }
       .gband__rail-top { padding: 10px 12px 0; }
       .stage-placard {
         flex-wrap: wrap;
@@ -4486,7 +4459,7 @@
       height: auto;
       min-height: 0;
     }
-    .gband--consumer .stage-hero__head { grid-row: 1; }
+    .gband--consumer > .season-now { grid-row: 1; }
     .gband--consumer .gband__rail-top {
       position: relative;
       z-index: 4;
@@ -5003,45 +4976,25 @@
       .consumer-explorer:not(.consumer-explorer--stage) { padding-top: clamp(72px, 10vh, 92px); }
       .consumer-explorer--stage { padding-inline: 8px; }
       .consumer-explorer--stage .gband--consumer {
-        height: clamp(700px, calc(100dvh - 82px), 780px);
+        height: clamp(610px, calc(100dvh - 134px), 680px);
       }
       .consumer-explorer .gband--flat {
         grid-template-rows: auto auto auto auto;
         border-radius: 22px;
       }
-      .stage-hero__head { padding: clamp(20px, 3.2vh, 28px) 14px 2px; }
-      .stage-hero__eyebrow { max-width: 30ch; line-height: 1.55; }
-      .stage-hero__title { font-size: clamp(34px, 10vw, 43px); }
       .season-now {
         grid-template-columns: minmax(0, 1fr) auto;
         grid-template-areas:
           'identity countdown'
-          'market market';
-        width: calc(100% - 8px);
-        margin-top: 14px;
-        padding: 10px 10px 12px;
-        border-radius: 13px;
+          'progress progress';
+        width: calc(100% - 18px);
+        gap: 8px 12px;
+        padding: 9px 8px 11px;
       }
-      .season-now__identity { grid-area: identity; }
-      .season-now__market {
-        grid-area: market;
-        min-height: 29px;
-        margin-top: 9px;
-        padding: 8px 0 0;
-        border-top: 1px solid var(--hair);
-        border-left: 0;
-        flex-direction: row;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 12px;
-      }
-      .season-now__countdown {
-        grid-area: countdown;
-        min-height: 34px;
-        padding-left: 14px;
-        text-align: right;
-      }
-      .season-now__ends { display: none; }
+      .season-now__sculpture { width: 56px; height: 44px; }
+      .season-now__identity { gap: 10px; }
+      .season-now__countdown strong { white-space: normal; }
+      .season-now__countdown .season-now__ends { display: none; }
       .gband__rail-top { min-height: 54px; padding-top: 5px; }
       .stage-placard {
         width: calc(100% - 24px);
@@ -5141,12 +5094,10 @@
     @media (max-width: 380px) {
       .stage-carousel { height: clamp(238px, 74vw, 270px); }
       .stage-carousel__slide { width: clamp(228px, 74vw, 270px); }
-      .consumer-explorer--stage .gband--consumer { height: 700px; }
-      .season-now__identity picture,
-      .season-now__identity img { width: 30px; height: 30px; }
-      .season-now__identity { gap: 9px; }
+      .consumer-explorer--stage .gband--consumer { height: 620px; }
+      .season-now__sculpture { width: 50px; height: 40px; }
+      .season-now__identity { gap: 8px; }
       .season-now__identity strong { font-size: 17px; }
-      .season-now__countdown { padding-left: 10px; }
       .season-now__countdown strong { font-size: 10px; }
       .stage-placard__meta { gap: 8px; }
       .stage-placard__price { font-size: 12px; }
@@ -5158,8 +5109,7 @@
     }
     @media (max-height: 650px) and (max-width: 700px) {
       .consumer-explorer:not(.consumer-explorer--stage) { padding-top: 70px; }
-      .stage-hero__head { padding-top: 18px; }
-      .stage-hero__title { font-size: clamp(32px, 8.8vw, 39px); }
+      .consumer-explorer--stage .gband--consumer { height: 565px; }
       .gband__rail-top { min-height: 56px; padding-top: 5px; }
       .stage-carousel { height: clamp(226px, 68vw, 270px); }
       .stage-carousel__slide { width: clamp(220px, 68vw, 270px); }
@@ -5193,18 +5143,18 @@
        active sign. Pastel is information; gold remains the artifact. */
     .consumer-explorer--stage .gband--consumer,
     .consumer-explorer .gband--flat {
-      grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+      grid-template-rows: auto auto minmax(0, 1fr) auto;
     }
     .consumer-explorer--stage .gband--consumer {
-      height: clamp(740px, 92svh, 980px);
+      height: clamp(610px, 76svh, 760px);
     }
-    .gband--consumer .market-tape { grid-row: 2; }
-    .gband--consumer .gband__rail-top { grid-row: 3; }
+    .gband--consumer > .season-now { grid-row: 1; }
+    .gband--consumer .gband__rail-top { grid-row: 2; }
     .gband--consumer .gband__mount,
     .gband--consumer .gband__poster,
     .gband--consumer .gband__turn-hint,
-    .gband--consumer .stage-carousel { grid-row: 4; }
-    .gband--consumer .stage-placard { grid-row: 5; }
+    .gband--consumer .stage-carousel { grid-row: 3; }
+    .gband--consumer .stage-placard { grid-row: 4; }
 
     .market-tape {
       position: relative;
@@ -5216,6 +5166,10 @@
       margin-top: 12px;
       border-block: 1px solid rgba(198,204,218,.09);
       background: rgba(6,7,9,.34);
+    }
+    .consumer-explorer > .market-tape {
+      width: 100%;
+      margin: 0 auto 10px;
     }
     .market-tape__viewport {
       min-width: 0;
@@ -5246,7 +5200,6 @@
       letter-spacing: .06em;
       white-space: nowrap;
     }
-    button.market-tape__item { cursor: pointer; }
     .market-tape__item::after {
       content: '';
       position: absolute;
@@ -5259,8 +5212,8 @@
         opacity 150ms cubic-bezier(0.23, 1, 0.32, 1),
         transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .market-tape__item.is-active { color: var(--ink); }
-    .market-tape__item.is-active::after { opacity: .78; transform: scaleX(1); }
+    .market-tape__item.is-season { color: var(--ink); }
+    .market-tape__item.is-season::after { opacity: .78; transform: scaleX(1); }
     .market-tape__item img { display: block; border-radius: 50%; }
     .market-tape__ticker { color: var(--ink-2); }
     .market-tape__price { color: var(--ink); font-size: 10px; }
@@ -5287,11 +5240,7 @@
       text-transform: uppercase;
       white-space: nowrap;
     }
-    .market-tape:hover .market-tape__track,
-    .market-tape:focus-within .market-tape__track,
-    .market-tape:active .market-tape__track,
-    .market-tape[data-paused] .market-tape__track,
-    .gband[data-gallery-rotation='dragging'] .market-tape__track {
+    .market-tape[data-paused] .market-tape__track {
       animation-play-state: paused;
     }
     @keyframes registry-market-loop {
@@ -5546,8 +5495,7 @@
       align-items: center;
       gap: 6px;
     }
-    .market-row__view,
-    .market-row__actions a {
+    .market-row__record {
       min-height: 38px;
       display: inline-flex;
       align-items: center;
@@ -5565,9 +5513,7 @@
         color 150ms cubic-bezier(0.23, 1, 0.32, 1),
         transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .market-row__actions a { width: 38px; padding: 0; }
-    .market-row__view:active,
-    .market-row__actions a:active { transform: scale(.97); }
+    .market-row__record:active { transform: scale(.97); }
     .market-board__state {
       min-height: 240px;
       display: grid;
@@ -5946,12 +5892,10 @@
     }
 
     @media (hover: hover) and (pointer: fine) {
-      button.market-tape__item:hover { color: var(--ink); }
       .consumer-market__personal button:hover,
       .market-board__sort button:hover,
       .market-board__share button:hover,
-      .market-row__view:hover,
-      .market-row__actions a:hover { color: var(--ink); border-color: var(--hair-3); }
+      .market-row__record:hover { color: var(--ink); border-color: var(--hair-3); }
       .market-row:hover { background: rgba(198,204,218,.035); }
       .market-row__identity:hover img { transform: scale(1.04); }
     }
@@ -5969,18 +5913,20 @@
       .outlook-wheel { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
-      .consumer-explorer--stage .gband--consumer { height: clamp(735px, calc(100dvh - 70px), 840px); }
-      .market-tape { grid-template-columns: minmax(0, 1fr); margin-top: 9px; }
+      .consumer-explorer--stage .gband--consumer { height: clamp(610px, calc(100dvh - 134px), 680px); }
+      .market-tape { grid-template-columns: minmax(0, 1fr); }
+      .consumer-explorer > .market-tape { margin: 0 auto 10px; }
       .market-tape__source { display: none; }
       .market-tape__viewport {
-        overflow-x: auto;
+        overflow: hidden;
         -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
         mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
-        scrollbar-width: none;
       }
-      .market-tape__viewport::-webkit-scrollbar { display: none; }
-      .market-tape__track { animation: none; will-change: auto; }
-      .market-tape__group[aria-hidden='true'] { display: none; }
+      .market-tape__track {
+        animation: registry-market-loop 48s linear infinite;
+        will-change: transform;
+      }
+      .market-tape__group[aria-hidden='true'] { display: flex; }
       .market-tape__item { min-height: 44px; padding-inline: 14px; }
       .consumer-market { padding-inline: 16px; }
       .consumer-market__head { grid-template-columns: 1fr; align-items: start; gap: 28px; }
@@ -6071,36 +6017,15 @@
        the translucent material; repeated row actions use a lighter painted
        glass so the phone never has to blur twenty-four moving surfaces. */
     .season-now {
-      width: min(720px, calc(100% - 44px));
-      margin-top: 18px;
-      padding: 9px 0 11px;
-      overflow: visible;
-      border: 0;
-      border-radius: 0;
-      background: transparent;
-      box-shadow: none;
       opacity: 1;
       transform: translateY(0);
       transition:
         opacity 240ms cubic-bezier(0.23, 1, 0.32, 1) 50ms,
         transform 280ms cubic-bezier(0.23, 1, 0.32, 1) 50ms;
     }
-    .season-now::before {
-      content: '';
-      position: absolute;
-      left: -16px;
-      top: 50%;
-      width: 118px;
-      height: 72px;
-      transform: translateY(-50%);
-      border-radius: 50%;
-      background: radial-gradient(circle, color-mix(in srgb, var(--season-sign) 11%, transparent), transparent 68%);
-      pointer-events: none;
-    }
     .season-now__identity,
-    .season-now__market,
-    .season-now__countdown { position: relative; z-index: 1; }
-    .season-now__progress { left: 0; right: 0; background: rgba(198,204,218,.055); }
+    .season-now__countdown,
+    .season-now__progress-block { position: relative; z-index: 1; }
     @starting-style {
       .season-now {
         opacity: 0;
@@ -6144,14 +6069,16 @@
       overflow: hidden;
       border-color: color-mix(in srgb, var(--active-sign, #B29DD0) 18%, rgba(226,231,243,.18));
       background:
-        linear-gradient(180deg, rgba(246,248,253,.115), rgba(205,214,233,.035) 46%, rgba(117,128,151,.018)),
-        color-mix(in srgb, var(--active-sign, #B29DD0) 3.5%, rgba(10,12,17,.66));
+        radial-gradient(110% 160% at 50% -55%, rgba(255,255,255,.15), transparent 58%),
+        linear-gradient(180deg, rgba(246,248,253,.09), rgba(205,214,233,.025) 46%, rgba(117,128,151,.012)),
+        color-mix(in srgb, var(--active-sign, #B29DD0) 3.5%, rgba(10,12,17,.7));
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.16),
+        inset 0 1px 0 rgba(255,255,255,.22),
+        inset 0 9px 20px -17px rgba(255,255,255,.16),
         inset 0 -1px 0 rgba(255,255,255,.025),
-        0 12px 28px -23px color-mix(in srgb, var(--active-sign, #B29DD0) 52%, transparent);
-      -webkit-backdrop-filter: blur(14px) saturate(145%);
-      backdrop-filter: blur(14px) saturate(145%);
+        0 14px 32px -24px rgba(0,0,0,.78);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
     }
     .market-glass::before,
     .consumer-market__personal button::before,
@@ -6167,21 +6094,62 @@
       opacity: .62;
       pointer-events: none;
     }
+    .market-board__sort {
+      position: relative;
+      isolation: isolate;
+      gap: 2px;
+      padding: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(198,204,218,.16);
+      border-radius: 999px;
+      background:
+        radial-gradient(120% 190% at 50% -75%, rgba(255,255,255,.16), transparent 56%),
+        linear-gradient(180deg, rgba(238,241,247,.075), rgba(198,204,218,.018) 55%, transparent),
+        rgba(10,12,17,.66);
+      box-shadow:
+        inset 0 1px 0 rgba(255,255,255,.2),
+        inset 0 10px 22px -18px rgba(255,255,255,.14),
+        inset 0 -1px 0 rgba(238,241,247,.025),
+        0 14px 34px -17px rgba(0,0,0,.72);
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .market-board__sort::before {
+      content: '';
+      position: absolute;
+      z-index: 0;
+      top: 1px;
+      left: 12%;
+      right: 12%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,.64), transparent);
+      opacity: .56;
+      pointer-events: none;
+    }
     .market-board__sort button,
     .market-board__share button {
       min-height: 44px;
       border-color: color-mix(in srgb, var(--active-sign, #B29DD0) 18%, rgba(226,231,243,.18));
     }
+    .market-board__sort button.market-glass {
+      z-index: 1;
+      overflow: hidden;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+      -webkit-backdrop-filter: none;
+      backdrop-filter: none;
+    }
+    .market-board__sort button.market-glass::before { content: none; }
     .market-board__sort button[aria-pressed='true'] {
-      border-color: color-mix(in srgb, var(--active-sign, #B29DD0) 48%, rgba(238,241,247,.22));
       background:
-        radial-gradient(90% 150% at 50% -35%, rgba(255,255,255,.19), transparent 54%),
-        color-mix(in srgb, var(--active-sign, #B29DD0) 16%, rgba(14,16,22,.76));
+        radial-gradient(100% 170% at 50% -50%, rgba(255,255,255,.2), transparent 52%),
+        color-mix(in srgb, var(--active-sign, #B29DD0) 18%, rgba(16,18,24,.82));
       color: var(--ink);
       box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--active-sign, #B29DD0) 32%, rgba(238,241,247,.12)),
         inset 0 1px 0 rgba(255,255,255,.2),
-        inset 0 -1px 0 color-mix(in srgb, var(--active-sign, #B29DD0) 34%, transparent),
-        0 14px 28px -22px color-mix(in srgb, var(--active-sign, #B29DD0) 80%, transparent);
+        0 10px 22px -18px color-mix(in srgb, var(--active-sign, #B29DD0) 72%, transparent);
     }
     .market-board__share { gap: 7px; }
     .market-board__share-primary {
@@ -6211,11 +6179,12 @@
       margin: -8px 14px 6px;
     }
     .market-row__actions { width: 100%; }
-    .market-row__view,
     .market-row__record {
+      width: 100% !important;
       min-height: 44px;
       gap: 6px;
-      padding: 4px 5px 4px 6px;
+      justify-content: flex-start;
+      padding: 4px 5px 4px 12px;
       border-color: color-mix(in srgb, var(--row-sign) 18%, rgba(226,231,243,.15));
       background:
         linear-gradient(180deg, rgba(246,248,253,.085), rgba(205,214,233,.018)),
@@ -6226,8 +6195,6 @@
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
-    .market-row__view { padding-left: 5px; }
-    .market-row__view-disc,
     .market-row__action-orb {
       flex: 0 0 auto;
       display: inline-grid;
@@ -6236,8 +6203,6 @@
       height: 26px;
       border-radius: 50%;
     }
-    .market-row__view-disc { box-shadow: 0 0 0 1px color-mix(in srgb, var(--row-sign) 30%, transparent); }
-    .market-row__view-disc img { display: block; width: 20px; height: 20px; border-radius: 50%; }
     .market-row__action-orb {
       margin-left: auto;
       background: rgba(238,241,247,.075);
@@ -6246,9 +6211,8 @@
       font: 10px/1 var(--mono);
       transition: transform 180ms cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .market-row__record { width: 44px !important; padding: 4px !important; }
     .market-row__actions .market-row__record { min-height: 44px; }
-    .market-row__record-label { display: none; }
+    .market-row__record-label { display: inline; }
 
     .consumer-steps {
       gap: clamp(10px, 1.8vw, 18px);
@@ -6382,46 +6346,31 @@
         color: var(--ink);
         transform: translateY(-1px);
       }
-      .market-row__view:hover,
+      .market-board__sort button.market-glass:hover { transform: none; }
       .market-row__record:hover {
         border-color: color-mix(in srgb, var(--row-sign) 42%, rgba(238,241,247,.2));
       }
-      .market-row__view:hover .market-row__action-orb,
       .market-row__record:hover .market-row__action-orb { transform: translate(1px, -1px); }
     }
 
     @media (max-width: 760px) {
       .season-now {
-        grid-template-columns: minmax(78px, .86fr) minmax(94px, 1.08fr) minmax(88px, .94fr);
-        grid-template-areas: 'identity market countdown';
-        width: calc(100% - 12px);
-        margin-top: 13px;
-        padding: 8px 0 10px;
+        grid-template-columns: minmax(0, 1fr) minmax(92px, auto);
+        grid-template-areas:
+          'identity countdown'
+          'progress progress';
+        width: calc(100% - 18px);
+        gap: 8px 12px;
+        margin: 0 auto;
+        padding: 9px 8px 11px;
       }
-      .season-now__identity { grid-area: identity; }
-      .season-now__market {
-        grid-area: market;
-        min-height: 34px;
-        margin: 0;
-        padding: 0 8px;
-        border-top: 0;
-        border-left: 1px solid var(--hair);
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
-        gap: 2px;
-      }
-      .season-now__countdown {
-        grid-area: countdown;
-        min-height: 34px;
-        padding-left: 8px;
-      }
-      .season-now__market-row { gap: 4px; }
-      .season-now__market-row strong,
+      .season-now__sculpture { width: 56px; height: 44px; }
+      .season-now__identity { gap: 10px; }
       .season-now__countdown strong { font-size: 9.5px; }
       .season-now__countdown strong { white-space: normal; }
-      .season-now__change { display: none; }
+      .season-now__countdown .season-now__ends { display: none; }
       .season-now__kicker { font-size: 6.5px; letter-spacing: .14em; }
+      .season-now__progress { height: 6px; }
       .gband--consumer .gband__rail-top { padding-inline: 9px; }
       .gband--consumer .rail { max-width: 100%; padding-inline: 6px; }
 
@@ -6431,10 +6380,8 @@
       .market-board__socials { justify-content: flex-end; }
       .market-board__social { flex: 0 0 44px !important; }
       .market-board__share-state { margin-top: -5px; text-align: left; }
-      .market-row__actions { gap: 7px; }
-      .market-row__view { flex: 1.34 1 0 !important; justify-content: flex-start; }
-      .market-row__record { flex: .84 1 0 !important; width: auto !important; justify-content: flex-start; padding-left: 12px !important; }
-      .market-row__record-label { display: inline; }
+      .market-row__actions { gap: 0; }
+      .market-row__record { flex: 1 1 auto !important; width: 100% !important; }
 
       .consumer-steps { grid-template-columns: 1fr; gap: 0; }
       .consumer-steps li {
@@ -6456,6 +6403,9 @@
       .consumer-steps li { grid-template-columns: 108px minmax(0, 1fr); gap: 12px; }
       .consumer-step__record { padding-inline: 4px; }
     }
+    @media (max-height: 650px) and (max-width: 700px) {
+      .consumer-explorer--stage .gband--consumer { height: 565px; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .consumer-registry .season-now {
         transform: none !important;
@@ -6474,6 +6424,7 @@
     }
     @media (prefers-reduced-transparency: reduce) {
       .market-glass,
+      .market-board__sort,
       .consumer-market__personal button,
       .market-board__state button {
         background: #11141b;
@@ -6490,9 +6441,9 @@
     }
     @media (prefers-contrast: more) {
       .market-glass,
+      .market-board__sort,
       .consumer-market__personal button,
       .market-board__state button,
-      .market-row__view,
       .market-row__record { border-color: rgba(238,241,247,.55); }
     }
 

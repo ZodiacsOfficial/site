@@ -1590,43 +1590,33 @@
       + '</picture></span>'
     )).join('');
 
-    /* A restrained exchange tape, ordered from the current season around the
-       wheel. It selects the same active sign as the sculptures and the market
-       table; on coarse pointers it becomes a plain horizontal rail so it can
-       never compete with vertical page scroll. */
-    function MarketTape({ active, setActive, season, paused = false }) {
+    /* A restrained, display-only exchange tape ordered from the current
+       season around the wheel. Its continuously moving copy is hidden from
+       assistive technology because the complete accessible market table sits
+       below; reduced motion keeps one static, horizontally scrollable group. */
+    function MarketTape({ season, paused = false }) {
       const batch = useTwelveQuotes(true);
       const start = Math.max(0, SIGNS.findIndex(item => item.ticker === season?.sign?.ticker));
       const ordered = [...SIGNS.slice(start), ...SIGNS.slice(0, start)];
-      const renderItems = (interactive) => ordered.map((item) => {
+      const renderItems = (group) => ordered.map((item) => {
         const quote = batch.status === 'ok' ? batch.quotes[item.asset.sign] : null;
-        const selected = item.ticker === active;
-        const content = (
-          <>
+        const isSeason = item.ticker === season?.sign?.ticker;
+        return (
+          <span
+            key={`${group}-${item.ticker}`}
+            className={'market-tape__item' + (isSeason ? ' is-season' : '')}
+            style={{ '--tape-sign': item.hue }}
+            data-market-tape-sign={item.asset.sign}
+            data-current-season={isSeason ? '' : undefined}
+          >
             <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="22" height="22" alt="" decoding="async" />
             <span className="market-tape__ticker">{item.ticker}</span>
             <span className="market-tape__price">{quote ? formatPriceUsd(quote.priceUsd) : '—'}</span>
             <span className={'market-tape__change' + marketChangeClass(quote?.priceChange24h)}>
               {quote ? formatPercent(quote.priceChange24h) : batch.status === 'loading' ? '…' : '—'}
             </span>
-            {item.ticker === season?.sign?.ticker && <span className="market-tape__season">Season</span>}
-          </>
-        );
-        return interactive ? (
-          <button
-            key={item.ticker}
-            type="button"
-            className={'market-tape__item' + (selected ? ' is-active' : '')}
-            style={{ '--tape-sign': item.hue }}
-            aria-pressed={selected}
-            aria-label={`${item.name}, ${quote ? `${formatPriceUsd(quote.priceUsd)}, ${formatPercent(quote.priceChange24h)} over 24 hours` : 'market data unavailable'}`}
-            onClick={() => {
-              setActive(item.ticker);
-              trackAnalytics('registry_sign_selected', { sign: item.asset.sign, source: 'market_tape' });
-            }}
-          >{content}</button>
-        ) : (
-          <span key={`echo-${item.ticker}`} className="market-tape__item" style={{ '--tape-sign': item.hue }}>{content}</span>
+            {isSeason && <span className="market-tape__season">Season</span>}
+          </span>
         );
       });
 
@@ -1634,73 +1624,56 @@
         <div
           className="market-tape"
           data-paused={paused || batch.status === 'unavailable' ? '' : undefined}
-          aria-label="Live Zodiac market tape"
+          data-market-tape=""
         >
-          <div
-            className="market-tape__viewport"
-            onBlur={(event) => {
-              if (event.currentTarget.contains(event.relatedTarget)) return;
-              if (window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) {
-                // Focusing a transformed off-screen cell makes the browser
-                // mutate this hidden scroll position. Restore the origin
-                // before focus-within releases the loop, preserving its seam.
-                event.currentTarget.scrollLeft = 0;
-              }
-            }}
-          >
+          <div className="market-tape__viewport" aria-hidden="true">
             <div className="market-tape__track">
-              <div className="market-tape__group">{renderItems(true)}</div>
-              <div className="market-tape__group" aria-hidden="true">{renderItems(false)}</div>
+              <div className="market-tape__group">{renderItems('primary')}</div>
+              <div className="market-tape__group" aria-hidden="true">{renderItems('echo')}</div>
             </div>
           </div>
-          <span className="market-tape__source">USD · DexScreener live</span>
+          <span className="market-tape__source" aria-hidden="true">USD · DexScreener live</span>
         </div>
       );
     }
 
-    /* A small instrument for the sky the visitor is actually in. It belongs
-       with the opening gallery rather than in the market list below: the
-       season explains why this particular sculpture is waiting on arrival,
-       while the live quote and countdown make that context useful now. */
+    /* A compact instrument for the sky the visitor is actually in. The gold
+       sculpture carries the season's identity; price stays on the market tape
+       and selected-sign placard, so this readout only has to explain time. */
     function SeasonNow({ season }) {
-      const batch = useTwelveQuotes(Boolean(season));
       if (!season) return null;
       const { sign, day, total, remaining, ends } = season;
-      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
-      const change = formatPercent(quote?.priceChange24h);
-      const changeClass = marketChangeClass(quote?.priceChange24h);
       const endLabel = ends.toLocaleDateString(undefined, { month: 'short', day: 'numeric' });
       const remainingLabel = remaining === 0
         ? 'Final day'
         : `${remaining} day${remaining === 1 ? '' : 's'} remaining`;
-      const progress = total > 0 ? day / total : 1;
-      const price = quote
-        ? formatPriceUsd(quote.priceUsd)
-        : batch.status === 'ok' ? 'Not indexed' : batch.status === 'unavailable' ? 'Unavailable' : 'Loading…';
+      const progress = total > 0 ? Math.min(1, Math.max(0, day / total)) : 1;
 
       return (
         <aside
           className="season-now"
-          style={{ '--season-sign': sign.hue }}
-          aria-label={`${sign.name} season. ${remainingLabel}. ${sign.ticker} price ${price}.`}
+          style={{ '--season-sign': sign.hue, '--season-progress': progress }}
+          data-season-current=""
+          data-season-sign={sign.asset.sign}
+          data-season-day={day}
+          data-season-total={total}
+          data-season-remaining={remaining}
+          aria-label={`${sign.name} season. ${remainingLabel}. Ends ${endLabel}.`}
         >
           <span className="season-now__identity">
-            <picture aria-hidden="true">
-              <source srcSet={`/assets/zodiac-icons/48/${sign.asset.sign}.avif`} type="image/avif" />
-              <img src={`/assets/zodiac-icons/48/${sign.asset.sign}.webp`} width="34" height="34" alt="" decoding="async" />
+            <picture className="season-now__sculpture" aria-hidden="true" data-season-sculpture={sign.asset.sign}>
+              <img
+                src={`/assets/sculptures/512/${sign.asset.sign}.webp`}
+                width="512"
+                height="512"
+                alt=""
+                loading="eager"
+                decoding="async"
+              />
             </picture>
-            <span>
+            <span className="season-now__copy">
               <span className="season-now__kicker">Now in season</span>
               <strong>{sign.name}</strong>
-            </span>
-          </span>
-          <span className="season-now__market" title="Live USD market data from DexScreener">
-            <span className="season-now__kicker">{sign.ticker} price</span>
-            <span className="season-now__market-row">
-              <strong>{price}</strong>
-              {quote && change !== '—' && (
-                <span className={'season-now__change' + changeClass}>{change}</span>
-              )}
             </span>
           </span>
           <span className="season-now__countdown">
@@ -1709,13 +1682,25 @@
             <span className="season-now__ends">Ends {endLabel}</span>
           </span>
           <span
-            className="season-now__progress"
-            role="progressbar"
-            aria-label={`${sign.name} season progress`}
-            aria-valuemin="1"
-            aria-valuemax={total}
-            aria-valuenow={day}
-          ><span style={{ transform: `scaleX(${progress})` }} /></span>
+            className="season-now__progress-block season-now__progress-pill"
+            data-season-progress={progress.toFixed(4)}
+          >
+            <span className="season-now__kicker">Season progress</span>
+            <span className="season-now__ends season-now__progress-value" aria-hidden="true">
+              Day {day} of {total}
+            </span>
+            <span
+              className="season-now__progress season-now__progress-track"
+              role="progressbar"
+              aria-label={`${sign.name} season progress`}
+              aria-valuemin="1"
+              aria-valuemax={total}
+              aria-valuenow={day}
+              aria-valuetext={`${remainingLabel}; day ${day} of ${total}`}
+            >
+              <span className="season-now__progress-fill" style={{ transform: `scaleX(${progress})` }} />
+            </span>
+          </span>
         </aside>
       );
     }
@@ -2114,20 +2099,28 @@
       );
 
       return (
-        <section
-          ref={stageRef}
-          id="gallery"
-          className={'gband'
-            + (consumer ? ' gband--consumer' : '')
-            + (carousel ? ' gband--flat' : '')
-            + (!carousel && galleryReady ? ' is-ready' : '')}
-          aria-label="The Gallery — the twelve Gold Sculptures"
-          data-gallery-stage={carousel ? undefined : ''}
-          data-gallery-embed={carousel ? undefined : ''}
-          data-gallery-initial={slug}
-          data-gallery-spotlight={consumer && !carousel ? '' : undefined}
-          data-gallery-paused={consumer && (carousel || sheetVisible) ? '' : undefined}
-        >
+        <>
+          {/* The market tape is the consumer route's first instrument, before
+              the framed sculpture room. It stays in this component so opening
+              the Acquisition Desk can still pause it without lifting the
+              sheet's focus and scroll-lock state out of the gallery. */}
+          {consumer && (
+            <MarketTape season={season} paused={sheetVisible} />
+          )}
+          <section
+            ref={stageRef}
+            id="gallery"
+            className={'gband'
+              + (consumer ? ' gband--consumer' : '')
+              + (carousel ? ' gband--flat' : '')
+              + (!carousel && galleryReady ? ' is-ready' : '')}
+            aria-label="The Gallery — the twelve Gold Sculptures"
+            data-gallery-stage={carousel ? undefined : ''}
+            data-gallery-embed={carousel ? undefined : ''}
+            data-gallery-initial={slug}
+            data-gallery-spotlight={consumer && !carousel ? '' : undefined}
+            data-gallery-paused={consumer && (carousel || sheetVisible) ? '' : undefined}
+          >
           {/* The stage picks with the rail at the top and shows one piece
               large below it, so the twelve read as the choice and the chosen
               sculpture as the answer. The rail deliberately does NOT wear
@@ -2135,22 +2128,7 @@
               element's offsetTop, and chrome above the canvas would leave it
               nothing. */}
           {consumer && (
-              <header className="stage-hero__head">
-                <a className="stage-hero__eyebrow" href="/disclosure/">
-                  The Official Registry · Est. {REGISTRY_ESTABLISHED}
-                  {!REGISTRY_ESTABLISHMENT_PROVENANCE_URL && ' · provenance pending'}
-                </a>
-                <h1 id="consumer-explorer-title" className="stage-hero__title">
-                  Twelve signs.<br /><span className="it">One register.</span>
-                </h1>
-                <p className="stage-hero__line">
-                  One official token for every sign. Browse the sculptures, watch the market, and verify the record.
-                </p>
-                <SeasonNow season={season} />
-              </header>
-          )}
-          {consumer && (
-            <MarketTape active={active} setActive={setActive} season={season} paused={sheetVisible} />
+            <SeasonNow season={season} />
           )}
           {consumer && (
             <div className="gband__rail-top">
@@ -2307,7 +2285,8 @@
           </aside>
 
           <p className="sr-only" role="status" aria-live="polite" data-gallery-live="" />
-        </section>
+          </section>
+        </>
       );
     }
 
@@ -3884,7 +3863,6 @@
       const [rankBy, setRankBy] = useState(initialRank);
       const [retryKey, setRetryKey] = useState(0);
       const [shareState, setShareState] = useState('');
-      const [galleryFocusRequest, setGalleryFocusRequest] = useState(null);
       const batch = useTwelveQuotes(inView, retryKey);
       const season = useCurrentSeason();
 
@@ -3922,24 +3900,6 @@
           }) + ' UTC'
         : '';
       const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
-      useEffect(() => {
-        if (!galleryFocusRequest) return undefined;
-        let outerFrame = 0;
-        let innerFrame = 0;
-        outerFrame = window.requestAnimationFrame(() => {
-          innerFrame = window.requestAnimationFrame(() => {
-            const destination = document.querySelector(`[data-consumer-sign="${galleryFocusRequest.slug}"]`)
-              ?? document.querySelector(`[data-gallery-rail] .rail__tick[data-index="${galleryFocusRequest.index}"]`);
-            if (!destination) return;
-            destination.focus({ preventScroll: true });
-            setGalleryFocusRequest(current => current === galleryFocusRequest ? null : current);
-          });
-        });
-        return () => {
-          window.cancelAnimationFrame(outerFrame);
-          window.cancelAnimationFrame(innerFrame);
-        };
-      }, [galleryFocusRequest]);
       const metricCoverage = rows.filter(
         row => toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]) !== null,
       ).length;
@@ -4006,16 +3966,6 @@
         setShareState(`${label} share opened.`);
         trackAnalytics('registry_market_shared', { rank: rankBy, destination });
       };
-      const showInGallery = (item) => {
-        setGalleryFocusRequest({ slug: item.asset.sign, index: item.order - 1 });
-        setActive(item.ticker);
-        const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-        document.getElementById('official-twelve')?.scrollIntoView({
-          block: 'start',
-          behavior: reduceMotion ? 'auto' : 'smooth',
-        });
-        trackAnalytics('registry_sign_selected', { sign: item.asset.sign, source: 'market_leaderboard' });
-      };
       return (
         <section
           ref={reveal}
@@ -4029,8 +3979,8 @@
               <span className="consumer-section-head__eyebrow">Live Zodiac market</span>
               <h2 id="consumer-market-title">The wheel, <span className="it">in motion.</span></h2>
               <p>
-                A live ranking of the twelve official tokens. Change the lens,
-                choose a sign, then return to its sculpture without losing your place.
+                A live ranking of the twelve official tokens. Change the lens or
+                choose a sign to carry that selection across the Registry.
               </p>
             </div>
             <div className="consumer-market__personal">
@@ -4137,21 +4087,9 @@
                       <span className={'market-row__metric market-row__metric--change' + marketChangeClass(quote?.priceChange24h)}><small>24H</small><strong>{quote ? formatPercent(quote.priceChange24h) : '—'}</strong></span>
                       <span className="market-row__metric market-row__metric--cap"><small>Market cap</small><strong>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</strong></span>
                       <span className="market-row__metric market-row__metric--liq"><small>Liquidity</small><strong>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</strong></span>
-                      <span className="market-row__actions">
-                        <button
-                          className="market-row__view market-glass"
-                          type="button"
-                          aria-label={`Show ${item.name} sculpture in the gallery`}
-                          onClick={() => showInGallery(item)}
-                        >
-                          <span className="market-row__view-disc" aria-hidden="true">
-                            <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="20" height="20" alt="" loading="lazy" decoding="async" />
-                          </span>
-                          <span>View sculpture</span>
-                          <span className="market-row__action-orb" aria-hidden="true">↑</span>
-                        </button>
+                      <span className="market-row__actions market-row__actions--record-only">
                         <a className="market-row__record market-glass" href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>
-                          <span className="market-row__record-label">Record</span>
+                          <span className="market-row__record-label">Official record</span>
                           <span className="market-row__action-orb" aria-hidden="true">↗</span>
                         </a>
                       </span>
@@ -4421,6 +4359,7 @@
           aria-labelledby="consumer-explorer-title"
           style={{ '--active-sign': sign.hue }}
         >
+          <h1 id="consumer-explorer-title" className="sr-only">Zodiacs Official Registry</h1>
           {/* This section IS the page's opening at every width. WebGL keeps
               the original interactive gallery on desktop and mobile; only
               machines that cannot paint it receive the image carousel. */}
