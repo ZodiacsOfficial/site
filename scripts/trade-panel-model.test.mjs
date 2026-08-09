@@ -6,13 +6,20 @@ import {
   closingNote,
   errorCopy,
   impactLine,
+  indexedLiquidity,
   money,
   panelView,
+  quoteAge,
+  shortMint,
   thinPoolWarning,
   venueFeeLine,
 } from '../src/trade/panel-model.mjs';
 
-const ARIES = { name: 'Aries', slug: 'aries' };
+const ARIES = {
+  name: 'Aries',
+  slug: 'aries',
+  mint: 'GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv',
+};
 
 /** A normalized Ultra order, shaped after a real $25 USDC → ARIES response. */
 function quote(overrides = {}) {
@@ -32,6 +39,19 @@ describe('money reads the way a person would say it', () => {
     expect(money(0.4)).toBe('40¢');
     expect(money(1)).toBe('$1.00');
     expect(money(25.324)).toBe('$25.32');
+  });
+});
+
+describe('quote context', () => {
+  it('states age and indexed depth without presenting either as execution data', () => {
+    expect(quoteAge(1_000, 5_000)).toBe('Just now');
+    expect(quoteAge(1_000, 36_000)).toBe('35s ago');
+    expect(indexedLiquidity(12_430)).toBe('$12K');
+    expect(indexedLiquidity(null)).toBe('');
+  });
+
+  it('shortens a mint for scanning while preserving its ends', () => {
+    expect(shortMint(ARIES.mint)).toBe('GhFiF…b1YZv');
   });
 });
 
@@ -154,6 +174,18 @@ describe('the assembled view', () => {
     expect(v.payMethod).toBe('card');
   });
 
+  it('separates funding from the direct swap and names what is actually bought', () => {
+    const funding = panelView({ state: 'ready', sign: ARIES, quote: quote() });
+    expect(funding.assetNote).toMatch(/official fungible Aries token/i);
+    expect(funding.assetNote).toMatch(/not the sculpture.*physical object.*1-of-1 NFT/i);
+    expect(funding.actionIntro).toMatch(/do not complete this Zodiac order/i);
+    expect(funding.methods.map((method) => method.eyebrow)).toEqual(['Fund first', 'Direct swap']);
+
+    const direct = panelView({ state: 'ready', payMethod: 'usdc', sign: ARIES, quote: quote() });
+    expect(direct.actionIntro).toMatch(/swaps USDC directly/i);
+    expect(direct.actionTitle).toBe('Review & approve');
+  });
+
   it('prices in dollars of USDC, never in SOL', () => {
     const v = panelView({ state: 'ready', sign: ARIES, quote: quote() });
     expect(v.payUnit).toBe('USDC');
@@ -172,6 +204,29 @@ describe('the assembled view', () => {
       'Buying this much moves the price 0.01%.',
     ]);
     expect(v.warning).toBeNull();
+  });
+
+  it('surfaces the official mint, quote age and indexed liquidity beside the quote', () => {
+    const v = panelView({
+      state: 'ready',
+      sign: ARIES,
+      quote: quote(),
+      quotedAt: 1_000,
+      nowMs: 26_000,
+      indexedLiquidityUsd: 42_500,
+    });
+    expect(v.details).toEqual([
+      expect.objectContaining({ label: 'Official mint', value: 'GhFiF…b1YZv', title: ARIES.mint }),
+      { label: 'Quote age', value: '25s ago' },
+      { label: 'Indexed liquidity', value: '$43K' },
+    ]);
+  });
+
+  it('makes the 1% reprice guard visible before another wallet prompt', () => {
+    const v = panelView({ state: 'ready', sign: ARIES, quote: quote(), awaitingReview: true });
+    expect(v.reviewNotice).toMatch(/more than 1%/i);
+    expect(v.reviewNotice).toMatch(/Nothing was sent to your wallet/i);
+    expect(v.actionLabel).toBe('Review refreshed quote');
   });
 
   it('raises the thin-pool warning only when the pool earns it', () => {

@@ -28,20 +28,20 @@ export const AMOUNT_PRESETS = Object.freeze(['25', '50', '100', '250']);
  * ranked — the Registry refuses ranked lists elsewhere, and the site takes
  * nothing from any of these.
  *
- * fomo sits in the list rather than above it. It is the one route that never
- * asks anyone to hold USDC, which is worth saying; it is not worth giving a
- * company most people have never heard of a headline and a paragraph. Each
- * note says what the company does in the fewest words that survive a glance.
+ * These sit only inside the funding branch. None is presented as equivalent
+ * to the direct USDC → Zodiac swap on this desk, and none receives a ranking.
+ * Each note says what the company does in the fewest words that survive a
+ * glance; visitors must still verify the official mint in any third-party app.
  */
 export const PAY_WAYS = Object.freeze([
   { name: 'Coinbase', mark: 'coinbase', href: 'https://www.coinbase.com/',
-    note: 'Dollars to USDC, no trading fee.' },
+    note: 'Fund a wallet with USDC.' },
   { name: 'fomo', mark: 'fomo', href: 'https://fomo.family/', applePay: true,
-    note: 'Apple Pay, trades in the app.' },
+    note: 'Fund in-app; verify the mint.' },
   { name: 'MoonPay', mark: 'moonpay', href: 'https://www.moonpay.com/',
-    note: 'Cards and bank transfer.' },
+    note: 'Buy USDC by card or bank.' },
   { name: 'Ramp Network', mark: 'ramp', href: 'https://rampnetwork.com/',
-    note: 'Cards, Apple Pay, Google Pay.' },
+    note: 'Buy USDC with mobile pay.' },
 ]);
 
 /** Money, in the smallest unit a person would actually say out loud. */
@@ -72,6 +72,32 @@ export function impactLine(pct) {
   return { band, text: `Buying this much moves the price ${value}%.`, severe: band === 'severe' };
 }
 
+/** A compact market-depth figure, deliberately named as indexed rather than total. */
+export function indexedLiquidity(value) {
+  const n = Number(value);
+  if (!Number.isFinite(n) || n <= 0) return '';
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    notation: 'compact',
+    maximumFractionDigits: n < 10_000 ? 1 : 0,
+  }).format(n);
+}
+
+export function quoteAge(quotedAt, nowMs = Date.now()) {
+  const age = Math.max(0, Math.floor((Number(nowMs) - Number(quotedAt)) / 1000));
+  if (!Number.isFinite(age) || !quotedAt) return '';
+  if (age < 10) return 'Just now';
+  if (age < 60) return `${age}s ago`;
+  return `${Math.floor(age / 60)}m ago`;
+}
+
+export function shortMint(mint) {
+  const value = String(mint || '');
+  if (value.length < 13) return value;
+  return `${value.slice(0, 5)}…${value.slice(-5)}`;
+}
+
 /** Said only when the pool genuinely cannot absorb the amount. */
 export function thinPoolWarning(signName, pct) {
   const value = Math.abs(Number(pct) || 0).toFixed(2);
@@ -85,9 +111,9 @@ export function thinPoolWarning(signName, pct) {
  */
 export function closingNote(payMethod) {
   if (payMethod === 'card') {
-    return 'Whichever you pick, the payment and any ID checks happen with that company — Zodiacs.org '
-      + 'never sees your card and never holds your money. Prices here move fast, and a Zodiac can lose '
-      + 'all its value.';
+    return 'Funding and any ID checks happen with the provider you choose. Zodiacs.org never sees your '
+      + 'card or holds your money. Funding USDC is not the Zodiac swap; return here to complete it. '
+      + 'Prices move fast, and a Zodiac can lose all its value.';
   }
   return 'Your wallet will ask you to approve this before anything happens. Jupiter does the trade, not '
     + 'us — Zodiacs.org never holds your money and can’t undo a trade once it’s made. Prices here move '
@@ -132,34 +158,70 @@ export function errorCopy(code) {
  * The whole view, decided in one place.
  * `quote` is a normalized Ultra order (see ultra.mjs) or null.
  */
-export function panelView({ state = 'idle', payMethod = 'card', sign, amount = '25', quote = null, error = null }) {
+export function panelView({
+  state = 'idle',
+  payMethod = 'card',
+  sign,
+  amount = '25',
+  quote = null,
+  error = null,
+  quotedAt = null,
+  nowMs = Date.now(),
+  indexedLiquidityUsd = null,
+  awaitingReview = false,
+}) {
   if (!PANEL_STATES.includes(state)) throw new Error(`panel-model: unknown state ${state}`);
   if (!PAY_METHODS.includes(payMethod)) throw new Error(`panel-model: unknown pay method ${payMethod}`);
 
   const view = {
     state,
     payMethod,
-    heading: `${sign.name}`,
-    subheading: `The official ${sign.name} token`,
-    venue: 'Quote via Jupiter',
-    payLabel: 'You pay',
+    heading: `Buy ${sign.name}`,
+    subheading: `Official ${sign.name} fungible token`,
+    venue: 'Acquisition desk',
+    assetNote: `The gold sculpture is symbolic collection art. You are buying the official fungible ${sign.name} token — not the sculpture, a physical object, or a 1-of-1 NFT.`,
+    spendTitle: 'Choose your spend',
+    routeTitle: 'Choose your route',
+    quoteTitle: payMethod === 'card' ? 'Reference quote' : 'Live swap quote',
+    actionTitle: payMethod === 'card' ? 'Fund with USDC' : 'Review & approve',
+    actionIntro: payMethod === 'card'
+      ? 'These providers fund a wallet. They do not complete this Zodiac order here.'
+      : `Your wallet swaps USDC directly for official ${sign.name} through Jupiter.`,
+    payLabel: 'Spend',
     payUnit: 'USDC',
-    payHint: 'US dollars, held as USDC',
+    payHint: '1 USDC is designed to track 1 US dollar',
     presets: AMOUNT_PRESETS,
     amount,
     // The card path is offered first: most visitors hold no USDC.
     methods: [
-      { id: 'card', label: 'Card or Apple Pay' },
-      { id: 'usdc', label: 'USDC I already have' },
+      { id: 'card', eyebrow: 'Fund first', label: 'I’m new to crypto' },
+      { id: 'usdc', eyebrow: 'Direct swap', label: 'I already have USDC' },
     ],
+    routeHint: payMethod === 'card'
+      ? 'Get USDC from a provider, then return and choose the direct swap route.'
+      : 'One wallet approval completes the USDC → Zodiac swap.',
     payWays: PAY_WAYS,
     note: closingNote(payMethod),
     showQuote: false,
-    showAction: state !== 'done',
+    showAction: state === 'ready' || state === 'signing',
     facts: [],
     warning: null,
+    reviewNotice: awaitingReview
+      ? 'The price moved by more than 1% before approval. Nothing was sent to your wallet. Review the refreshed quote and approve again if it still works for you.'
+      : null,
     error: null,
     after: null,
+    details: [
+      {
+        label: 'Official mint',
+        value: shortMint(sign.mint),
+        title: sign.mint,
+        href: sign.mint ? `https://solscan.io/token/${encodeURIComponent(sign.mint)}` : null,
+      },
+      ...(indexedLiquidity(indexedLiquidityUsd)
+        ? [{ label: 'Indexed liquidity', value: indexedLiquidity(indexedLiquidityUsd) }]
+        : []),
+    ],
   };
 
   if (state === 'error') {
@@ -188,11 +250,17 @@ export function panelView({ state = 'idle', payMethod = 'card', sign, amount = '
     view.receiveUnit = sign.name;
     view.receiveWorth = quote.outUsdValue ? `worth about $${quote.outUsdValue.toFixed(2)} right now` : '';
     view.facts = [venueFeeLine(amount, quote.feeBps), impact.text];
+    const age = quoteAge(quotedAt, nowMs);
+    if (age) view.details.splice(1, 0, { label: 'Quote age', value: age });
     view.impactBand = impact.band;
     if (impact.severe) view.warning = thinPoolWarning(sign.name, quote.priceImpactPct);
   }
 
-  view.actionLabel = state === 'signing' ? 'Approve it in your wallet' : 'Review in your wallet';
+  view.actionLabel = state === 'signing'
+    ? 'Approve in your wallet'
+    : awaitingReview
+      ? 'Review refreshed quote'
+      : 'Review swap in wallet';
   view.actionDisabled = state === 'signing';
   view.walletHint = 'No wallet yet? Phantom and Solflare are free, and hold what you buy.';
   return view;

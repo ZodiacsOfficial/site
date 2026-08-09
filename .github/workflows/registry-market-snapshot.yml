@@ -1,0 +1,110 @@
+name: Registry Market Snapshot
+
+# Archives one public, UTC-dated observation of the twelve canonical Solana
+# mints. DexScreener's public token batch requires no project secret.
+on:
+  schedule:
+    - cron: "53 6 * * *" # Backstop after the midnight Daily Sky run.
+  workflow_run:
+    workflows: ["Daily Sky"]
+    types: [completed]
+  workflow_dispatch:
+
+concurrency:
+  group: registry-market-snapshot-${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.event.repository.default_branch }}
+  cancel-in-progress: false
+
+jobs:
+  snapshot:
+    name: Archive daily market context
+    if: github.event_name != 'workflow_run' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # Scheduled events and workflow_run events can retain the SHA that
+          # created the event. Always read the current published Daily Sky
+          # revision; manual branch runs remain branch-local.
+          ref: ${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.event.repository.default_branch }}
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Require today's committed Daily Sky
+        run: |
+          echo "TARGET_DATE=$(date -u +%F)" >> "$GITHUB_ENV"
+          echo "VERIFIED_BASE_SHA=$(git rev-parse HEAD)" >> "$GITHUB_ENV"
+          TARGET_DATE=$(date -u +%F) node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const daily = JSON.parse(await readFile('src/data/daily.json', 'utf8'));
+          const target = process.env.TARGET_DATE;
+          if (daily.date !== target || !daily.snapshotAt?.startsWith(`${target}T`)) {
+            throw new Error(
+              `Registry outlook requires Daily Sky ${target}; committed facts are ${daily.date ?? 'undated'}`,
+            );
+          }
+          NODE
+
+      - name: Read and archive the public market snapshot
+        run: node scripts/build-registry-market-snapshot.mjs
+
+      - name: Publish the paired daily and weekly outlook
+        run: node scripts/build-registry-outlook.mjs
+
+      - name: Require current, internally paired artifacts
+        run: |
+          node --input-type=module <<'NODE'
+          import { readFile } from 'node:fs/promises';
+          const [history, outlook] = await Promise.all([
+            readFile('public/assets/data/registry-market-history.v1.json', 'utf8').then(JSON.parse),
+            readFile('public/assets/registry-outlook.json', 'utf8').then(JSON.parse),
+          ]);
+          const latest = history.snapshots?.at(-1);
+          const dates = {
+            market: latest?.date,
+            marketRead: latest?.source?.readAt?.slice(0, 10),
+            dailyOutlook: outlook.daily?.date,
+            weeklyOutlook: outlook.weekly?.date,
+          };
+          for (const [label, date] of Object.entries(dates)) {
+            if (date !== process.env.TARGET_DATE) {
+              throw new Error(`${label} artifact is ${date ?? 'undated'}; expected ${process.env.TARGET_DATE}`);
+            }
+          }
+          NODE
+
+      - name: Commit if today's observation changed
+        env:
+          TARGET_BRANCH: ${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.event.repository.default_branch }}
+        run: |
+          FILES="public/assets/data/registry-market-history.v1.json public/assets/registry-outlook.json"
+          if git diff --quiet -- $FILES; then
+            echo "Registry market history and outlook unchanged"
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add $FILES
+          git commit -m "Archive Registry market snapshot $(date -u +%F)"
+
+          # These artifacts were generated and checked against one exact
+          # Daily Sky/code revision. Never rebase them onto a revision the
+          # checks above did not exercise; a later workflow_run/backstop can
+          # regenerate from the newer branch tip.
+          git fetch origin "$TARGET_BRANCH"
+          remote_sha=$(git rev-parse "origin/$TARGET_BRANCH")
+          if [ "$remote_sha" != "$VERIFIED_BASE_SHA" ]; then
+            echo "Target branch advanced after artifact verification; rerun the workflow" >&2
+            exit 1
+          fi
+          if ! git push origin "HEAD:$TARGET_BRANCH"; then
+            echo "Target branch advanced during publish; rerun the workflow" >&2
+            exit 1
+          fi

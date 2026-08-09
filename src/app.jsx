@@ -1197,8 +1197,10 @@
     // One batch call quotes all twelve — the same token endpoint the
     // Market snapshot uses — so a landing visit costs a single request
     // no matter how many signs a visitor previews.
-    const TWELVE_QUOTES_KEY = 'tokens:solana:twelve';
     const MARKET_DEADLINE_MS = 8000;
+    const MARKET_REFRESH_MS = 120_000;
+    let twelveQuotesResult = null;
+    let twelveQuotesRequest = null;
     function fetchWithin(url, ms) {
       // Composed by hand — AbortSignal.timeout is still missing from Safari 15.
       const controller = new AbortController();
@@ -1206,7 +1208,13 @@
       return fetch(url, { signal: controller.signal }).finally(() => clearTimeout(timer));
     }
     function loadTwelveMarketQuotes() {
-      if (MARKET_CONTEXT_CACHE.has(TWELVE_QUOTES_KEY)) return MARKET_CONTEXT_CACHE.get(TWELVE_QUOTES_KEY);
+      const cachedAt = Date.parse(twelveQuotesResult?.observedAt || '');
+      if (twelveQuotesResult?.status === 'ok'
+        && Number.isFinite(cachedAt)
+        && Date.now() - cachedAt < MARKET_REFRESH_MS) {
+        return Promise.resolve(twelveQuotesResult);
+      }
+      if (twelveQuotesRequest) return twelveQuotesRequest;
       const mints = SIGNS.map((s) => s.representations.solana?.address).filter(Boolean);
       const url = `https://api.dexscreener.com/tokens/v1/solana/${mints.join(',')}`;
       const request = fetchWithin(url, MARKET_DEADLINE_MS)
@@ -1220,49 +1228,92 @@
           }
           const pairs = Array.isArray(payload) ? payload : payload?.pairs;
           if (!Array.isArray(pairs)) return unavailableMarketContext('shape');
-          const best = new Map();
+          const markets = new Map();
           for (const pair of pairs) {
             const mint = pair?.baseToken?.address;
-            if (!mint || !pair?.pairAddress) continue;
-            const liquidity = toFiniteNumber(pair.liquidity?.usd) ?? 0;
-            const prev = best.get(mint);
-            if (!prev || liquidity > prev.liquidity) best.set(mint, { liquidity, pair });
+            if (!mint || !pair?.pairAddress || pair?.chainId !== 'solana') continue;
+            const liquidity = Math.max(0, toFiniteNumber(pair.liquidity?.usd) ?? 0);
+            const market = markets.get(mint) || {
+              liquidityUsd: 0,
+              volume24h: 0,
+              pairs: new Set(),
+              bestLiquidity: -1,
+              bestPair: null,
+            };
+            if (!market.pairs.has(pair.pairAddress)) {
+              market.pairs.add(pair.pairAddress);
+              market.liquidityUsd += liquidity;
+              market.volume24h += Math.max(0, toFiniteNumber(pair.volume?.h24) ?? 0);
+            }
+            if (liquidity > market.bestLiquidity) {
+              market.bestLiquidity = liquidity;
+              market.bestPair = pair;
+            }
+            markets.set(mint, market);
           }
           const quotes = {};
+          let indexedPairs = 0;
           for (const sign of SIGNS) {
             const mint = sign.representations.solana?.address;
-            const pair = (mint && best.get(mint)?.pair) || null;
+            const market = (mint && markets.get(mint)) || null;
+            const pair = market?.bestPair || null;
             quotes[sign.asset.sign] = pair
               ? {
                   priceUsd: pair.priceUsd,
                   priceChange24h: pair.priceChange?.h24,
+                  marketCap: toFiniteNumber(pair.marketCap),
+                  fdv: toFiniteNumber(pair.fdv),
+                  liquidityUsd: market.liquidityUsd,
+                  volume24h: market.volume24h,
+                  poolCount: market.pairs.size,
+                  pairAddress: pair.pairAddress,
                   url: pair.url || ''
                 }
               : null;
+            if (pair) indexedPairs += 1;
           }
-          return { status: 'ok', quotes };
+          // An empty but syntactically valid upstream payload is not a live
+          // zero-dollar market. Fail into the explicit unavailable state.
+          if (indexedPairs === 0) return unavailableMarketContext('no-pair');
+          return { status: 'ok', quotes, observedAt: new Date().toISOString() };
         })
         .catch(() => unavailableMarketContext('network'))
         .then((result) => {
-          // A failed batch is never cached as final — a later look retries.
-          if (result.status === 'ok') MARKET_CONTEXT_CACHE.set(TWELVE_QUOTES_KEY, Promise.resolve(result));
-          else MARKET_CONTEXT_CACHE.delete(TWELVE_QUOTES_KEY);
+          // A failed refresh never erases the last timestamped read. Hooks can
+          // keep displaying it as stale while their short retry runs.
+          if (result.status === 'ok') twelveQuotesResult = result;
           return result;
         });
-      MARKET_CONTEXT_CACHE.set(TWELVE_QUOTES_KEY, request);
-      return request;
+      twelveQuotesRequest = request.finally(() => { twelveQuotesRequest = null; });
+      return twelveQuotesRequest;
     }
-    function useTwelveQuotes(enabled) {
+    function useTwelveQuotes(enabled, retryKey = 0) {
       const [state, setState] = useState({ status: 'idle' });
+      const [attempt, setAttempt] = useState(0);
       useEffect(() => {
         if (!enabled) return undefined;
         let cancelled = false;
-        setState({ status: 'loading' });
+        let retryTimer = 0;
+        setState((current) => current.status === 'ok'
+          ? { ...current, refreshing: true }
+          : { status: 'loading' });
         loadTwelveMarketQuotes().then((result) => {
-          if (!cancelled) setState(result);
+          if (cancelled) return;
+          setState((current) => result.status === 'ok'
+            ? { ...result, refreshing: false, stale: false }
+            : current.status === 'ok'
+              ? { ...current, refreshing: false, stale: true }
+              : result);
+          retryTimer = window.setTimeout(
+            () => setAttempt(value => value + 1),
+            result.status === 'ok' ? MARKET_REFRESH_MS : 30_000,
+          );
         });
-        return () => { cancelled = true; };
-      }, [enabled]);
+        return () => {
+          cancelled = true;
+          window.clearTimeout(retryTimer);
+        };
+      }, [enabled, retryKey, attempt]);
       return state;
     }
     function useInView(rootMargin = '0px 0px 15% 0px') {
@@ -1538,6 +1589,74 @@
       + `<img src="/assets/zodiac-icons/48/${s.asset.sign}.webp" width="26" height="26" alt="" loading="lazy" decoding="async"/>`
       + '</picture></span>'
     )).join('');
+
+    /* A restrained exchange tape, ordered from the current season around the
+       wheel. It selects the same active sign as the sculptures and the market
+       table; on coarse pointers it becomes a plain horizontal rail so it can
+       never compete with vertical page scroll. */
+    function MarketTape({ active, setActive, season, paused = false }) {
+      const batch = useTwelveQuotes(true);
+      const start = Math.max(0, SIGNS.findIndex(item => item.ticker === season?.sign?.ticker));
+      const ordered = [...SIGNS.slice(start), ...SIGNS.slice(0, start)];
+      const renderItems = (interactive) => ordered.map((item) => {
+        const quote = batch.status === 'ok' ? batch.quotes[item.asset.sign] : null;
+        const selected = item.ticker === active;
+        const content = (
+          <>
+            <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="22" height="22" alt="" decoding="async" />
+            <span className="market-tape__ticker">{item.ticker}</span>
+            <span className="market-tape__price">{quote ? formatPriceUsd(quote.priceUsd) : '—'}</span>
+            <span className={'market-tape__change' + marketChangeClass(quote?.priceChange24h)}>
+              {quote ? formatPercent(quote.priceChange24h) : batch.status === 'loading' ? '…' : '—'}
+            </span>
+            {item.ticker === season?.sign?.ticker && <span className="market-tape__season">Season</span>}
+          </>
+        );
+        return interactive ? (
+          <button
+            key={item.ticker}
+            type="button"
+            className={'market-tape__item' + (selected ? ' is-active' : '')}
+            style={{ '--tape-sign': item.hue }}
+            aria-pressed={selected}
+            aria-label={`${item.name}, ${quote ? `${formatPriceUsd(quote.priceUsd)}, ${formatPercent(quote.priceChange24h)} over 24 hours` : 'market data unavailable'}`}
+            onClick={() => {
+              setActive(item.ticker);
+              trackAnalytics('registry_sign_selected', { sign: item.asset.sign, source: 'market_tape' });
+            }}
+          >{content}</button>
+        ) : (
+          <span key={`echo-${item.ticker}`} className="market-tape__item" style={{ '--tape-sign': item.hue }}>{content}</span>
+        );
+      });
+
+      return (
+        <div
+          className="market-tape"
+          data-paused={paused || batch.status === 'unavailable' ? '' : undefined}
+          aria-label="Live Zodiac market tape"
+        >
+          <div
+            className="market-tape__viewport"
+            onBlur={(event) => {
+              if (event.currentTarget.contains(event.relatedTarget)) return;
+              if (window.matchMedia?.('(hover: hover) and (pointer: fine)').matches) {
+                // Focusing a transformed off-screen cell makes the browser
+                // mutate this hidden scroll position. Restore the origin
+                // before focus-within releases the loop, preserving its seam.
+                event.currentTarget.scrollLeft = 0;
+              }
+            }}
+          >
+            <div className="market-tape__track">
+              <div className="market-tape__group">{renderItems(true)}</div>
+              <div className="market-tape__group" aria-hidden="true">{renderItems(false)}</div>
+            </div>
+          </div>
+          <span className="market-tape__source">USD · DexScreener live</span>
+        </div>
+      );
+    }
 
     /* A small instrument for the sky the visitor is actually in. It belongs
        with the opening gallery rather than in the market list below: the
@@ -1851,6 +1970,7 @@
         body.style.top = `${-scrollY}px`;
         body.style.width = '100%';
         body.style.overflow = 'hidden';
+        body.classList.add('registry-trade-open');
 
         const focusable = () => [...(panel?.querySelectorAll(
           'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
@@ -1894,6 +2014,7 @@
           body.style.top = previousBody.top;
           body.style.width = previousBody.width;
           body.style.overflow = previousBody.overflow;
+          body.classList.remove('registry-trade-open');
           window.scrollTo({ top: scrollY, left: 0, behavior: 'instant' });
           tradePillRef.current?.focus({ preventScroll: true });
         };
@@ -2023,10 +2144,13 @@
                   Twelve signs.<br /><span className="it">One register.</span>
                 </h1>
                 <p className="stage-hero__line">
-                  Every sign has one official token. Explore its story, its record, and its market.
+                  One official token for every sign. Browse the sculptures, watch the market, and verify the record.
                 </p>
                 <SeasonNow season={season} />
               </header>
+          )}
+          {consumer && (
+            <MarketTape active={active} setActive={setActive} season={season} paused={sheetVisible} />
           )}
           {consumer && (
             <div className="gband__rail-top">
@@ -2053,7 +2177,7 @@
           {consumer && !carousel && (
             <p className="gband__turn-hint" data-gallery-turn-hint="" aria-hidden="true">
               <span className="gband__turn-mark">↔</span>
-              <span>Drag to turn</span>
+              <span>Drag the figure to turn · drag the room to browse</span>
             </p>
           )}
           {carousel && <SculptureCarousel active={active} setActive={setActive} />}
@@ -2080,11 +2204,11 @@
                     className="btn btn--primary stage-placard__pill"
                     onClick={openTrade}
                   >
-                    <span>Trade {sign.name}</span>
+                    <span>Buy {sign.name}</span>
                   </button>
                 ) : (
                   <a className="btn btn--primary stage-placard__pill" href={`${registryProfilePath(sign)}#acquire`}>
-                    <span>Trade {sign.name}</span>
+                    <span>Buy {sign.name}</span>
                   </a>
                 )}
                 <a className="btn btn--ghost stage-placard__pill" href={registryProfilePath(sign)}>
@@ -2109,13 +2233,13 @@
               <div ref={sheetPanelRef} className="stage-sheet__panel" tabIndex="-1">
                 <header className="stage-sheet__head">
                   <span className="stage-sheet__handle" aria-hidden="true" />
-                  <h2 id="stage-sheet-title" className="sr-only">Trade {sign.name}</h2>
+                  <h2 id="stage-sheet-title" className="sr-only">Acquisition Desk — buy {sign.name}</h2>
                   <button
                     ref={sheetCloseRef}
                     type="button"
                     className="stage-sheet__close"
                     onClick={closeSheet}
-                    aria-label="Close the trade sheet"
+                    aria-label="Close the Acquisition Desk"
                   >✕</button>
                 </header>
                 {/* The panel introduces itself — disc, name, and the venue it
@@ -3711,67 +3835,485 @@
         </section>
       );
     }
-    function ConsumerTokensSection() {
+    const MARKET_RANKS = Object.freeze({
+      marketCap: { label: 'Market cap', short: 'Mkt cap', field: 'marketCap' },
+      liquidity: { label: 'Indexed liquidity', short: 'Liquidity', field: 'liquidityUsd' },
+      change: { label: '24h move', short: '24H', field: 'priceChange24h' },
+    });
+
+    function ConsumerMarketSection({ active, setActive, personalSlug, setPersonalSlug }) {
       const reveal = useReveal();
-      const [hostRef, inView] = useInView('240px 0px 240px 0px');
-      const batch = useTwelveQuotes(inView);
+      const [hostRef, inView] = useInView('360px 0px 360px 0px');
+      const initialRank = (() => {
+        try {
+          const requested = new URLSearchParams(window.location.search).get('rank');
+          return requested && MARKET_RANKS[requested] ? requested : 'marketCap';
+        } catch {
+          return 'marketCap';
+        }
+      })();
+      const [rankBy, setRankBy] = useState(initialRank);
+      const [retryKey, setRetryKey] = useState(0);
+      const [shareState, setShareState] = useState('');
+      const batch = useTwelveQuotes(inView, retryKey);
+      const season = useCurrentSeason();
+
+      const rows = useMemo(() => {
+        const field = MARKET_RANKS[rankBy].field;
+        return SIGNS.map((item) => ({
+          sign: item,
+          quote: batch.status === 'ok' ? batch.quotes[item.asset.sign] : null,
+        })).sort((a, b) => {
+          const av = toFiniteNumber(a.quote?.[field]);
+          const bv = toFiniteNumber(b.quote?.[field]);
+          if (av === null && bv === null) return a.sign.order - b.sign.order;
+          if (av === null) return 1;
+          if (bv === null) return -1;
+          return bv - av || a.sign.order - b.sign.order;
+        });
+      }, [batch, rankBy]);
+
+      const quoted = rows.filter(row => row.quote);
+      const totalMarketCap = quoted.reduce((sum, row) => sum + (toFiniteNumber(row.quote.marketCap) ?? 0), 0);
+      const totalLiquidity = quoted.reduce((sum, row) => sum + (toFiniteNumber(row.quote.liquidityUsd) ?? 0), 0);
+      const advancing = quoted.filter(row => (toFiniteNumber(row.quote.priceChange24h) ?? 0) > 0).length;
+      const observed = batch.observedAt
+        ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
+        : null;
+      const observedUtc = batch.observedAt
+        ? new Date(batch.observedAt).toLocaleString('en-US', {
+            timeZone: 'UTC',
+            month: 'short',
+            day: 'numeric',
+            year: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false,
+          }) + ' UTC'
+        : '';
+      const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
+      const metricCoverage = rows.filter(
+        row => toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]) !== null,
+      ).length;
+      const shareReady = batch.status === 'ok' && metricCoverage > 0;
+
+      const metricValue = (row) => {
+        const value = toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]);
+        if (value === null) return 'Not indexed';
+        return rankBy === 'change' ? formatPercent(value) : formatUsdCompact(value);
+      };
+      const shareCopy = () => {
+        const leaders = rows.filter(row => toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]) !== null).slice(0, 3);
+        const list = leaders.map((row, index) => `${index + 1}. ${row.sign.ticker} ${metricValue(row)}`).join('\n');
+        return `Zodiacs Registry · ${MARKET_RANKS[rankBy].label}\n${list}\nRead ${observedUtc} · ${metricCoverage}/12 indexed\nLive market context via DexScreener. Not a recommendation.`;
+      };
+      const shareUrl = () => {
+        const url = new URL('/registry/', window.location.origin);
+        url.searchParams.set('rank', rankBy);
+        url.searchParams.set('sign', activeSign.asset.sign);
+        url.hash = 'market';
+        return url.toString();
+      };
+      const copyShare = async () => {
+        const text = `${shareCopy()}\n${shareUrl()}`;
+        try {
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: 'Zodiacs market snapshot', text: shareCopy(), url: shareUrl() });
+              setShareState('Shared.');
+              trackAnalytics('registry_market_shared', { rank: rankBy, destination: 'native' });
+              return;
+            } catch (error) {
+              if (error?.name === 'AbortError') return;
+              // A platform can expose Web Share while declining a particular
+              // payload. Keep the explicit gesture useful with a copy fallback.
+            }
+          }
+          if (!navigator.clipboard?.writeText) throw new Error('clipboard');
+          await navigator.clipboard.writeText(text);
+          setShareState('Snapshot copied.');
+          trackAnalytics('registry_market_shared', { rank: rankBy, destination: 'clipboard' });
+        } catch (error) {
+          setShareState('Could not share. Try Post to X.');
+        }
+      };
+      const postToX = () => {
+        const intent = new URL('https://x.com/intent/post');
+        intent.searchParams.set('text', shareCopy());
+        intent.searchParams.set('url', shareUrl());
+        window.open(intent.toString(), '_blank', 'noopener,noreferrer');
+        setShareState('X composer opened.');
+        trackAnalytics('registry_market_shared', { rank: rankBy, destination: 'x' });
+      };
+      const showInGallery = (item) => {
+        setActive(item.ticker);
+        const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+        document.getElementById('official-twelve')?.scrollIntoView({
+          block: 'start',
+          behavior: reduceMotion ? 'auto' : 'smooth',
+        });
+        trackAnalytics('registry_sign_selected', { sign: item.asset.sign, source: 'market_leaderboard' });
+      };
       return (
-        <section ref={reveal} id="tokens" className="consumer-tokens reveal" aria-labelledby="consumer-tokens-title">
-          <header className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">Live market</span>
-            <h2 id="consumer-tokens-title">Twelve tokens, live.</h2>
+        <section
+          ref={reveal}
+          id="market"
+          className="consumer-market reveal"
+          aria-labelledby="consumer-market-title"
+          style={{ '--active-sign': activeSign.hue }}
+        >
+          <header className="consumer-market__head">
+            <div className="consumer-section-head">
+              <span className="consumer-section-head__eyebrow">Live Zodiac market</span>
+              <h2 id="consumer-market-title">The wheel, <span className="it">in motion.</span></h2>
+              <p>
+                A live ranking of the twelve official tokens. Change the lens,
+                choose a sign, then return to its sculpture without losing your place.
+              </p>
+            </div>
+            <div className="consumer-market__personal">
+              <span className="consumer-market__personal-label">Your sign on this device</span>
+              <strong>{personalSlug ? titleCase(personalSlug) : 'Not chosen'}</strong>
+              <button type="button" onClick={() => setPersonalSlug(activeSign.asset.sign)}>
+                {personalSlug === activeSign.asset.sign ? `${activeSign.name} is yours` : `Choose ${activeSign.name}`}
+              </button>
+            </div>
+          </header>
+
+          <div ref={hostRef} className="market-pulse" aria-busy={batch.status === 'loading'}>
+            <div className="market-pulse__cell">
+              <span>Indexed market cap</span>
+              <strong>{batch.status === 'ok' ? formatUsdCompact(totalMarketCap) : '—'}</strong>
+              <small>{quoted.filter(row => toFiniteNumber(row.quote.marketCap) !== null).length} of 12 indexed</small>
+            </div>
+            <div className="market-pulse__cell">
+              <span>Indexed liquidity</span>
+              <strong>{batch.status === 'ok' ? formatUsdCompact(totalLiquidity) : '—'}</strong>
+              <small>Exact-mint pools indexed by DexScreener</small>
+            </div>
+            <div className="market-pulse__cell">
+              <span>Market breadth</span>
+              <strong>{batch.status === 'ok' ? `${advancing} / ${quoted.length || 12}` : '—'}</strong>
+              <small>Tokens positive over 24h</small>
+            </div>
+          </div>
+
+          <div className="market-board" data-rank={rankBy}>
+            <div className="market-board__toolbar">
+              <div className="market-board__sort" role="group" aria-label="Rank the Zodiac market by">
+                {Object.entries(MARKET_RANKS).map(([key, option]) => (
+                  <button
+                    key={key}
+                    type="button"
+                    aria-pressed={rankBy === key}
+                    onClick={() => setRankBy(key)}
+                  >{option.short}</button>
+                ))}
+              </div>
+              <div className="market-board__share">
+                <button type="button" onClick={copyShare} disabled={!shareReady}>Share snapshot</button>
+                <button type="button" onClick={postToX} disabled={!shareReady}>Post to X ↗</button>
+              </div>
+            </div>
+
+            <div className="market-board__meta">
+              <span>Ranked by {MARKET_RANKS[rankBy].label}</span>
+              <span>{observed ? `Read ${observed}${batch.stale ? ' · refresh delayed' : ''}` : batch.status === 'unavailable' ? 'Live feed unavailable' : 'Reading live markets…'}</span>
+            </div>
+
+            {batch.status === 'unavailable' && (
+              <div className="market-board__state">
+                <p>Live market context is temporarily unavailable. The official records remain available.</p>
+                <button type="button" onClick={() => setRetryKey(value => value + 1)}>Try again</button>
+              </div>
+            )}
+            <ol className="market-board__rows" aria-busy={batch.status === 'loading'}>
+                {rows.map((row, index) => {
+                  const { sign: item, quote } = row;
+                  const isActive = item.ticker === active;
+                  const isSeason = item.ticker === season?.sign?.ticker;
+                  const isPersonal = item.asset.sign === personalSlug;
+                  const rankValue = toFiniteNumber(quote?.[MARKET_RANKS[rankBy].field]);
+                  return (
+                    <li
+                      key={item.ticker}
+                      className={'market-row' + (isActive ? ' is-active' : '')}
+                      data-market-sign={item.asset.sign}
+                      style={{ '--row-sign': item.hue }}
+                    >
+                      <span className="market-row__rank">{rankValue === null ? '—' : String(index + 1).padStart(2, '0')}</span>
+                      <button className="market-row__identity" type="button" onClick={() => setActive(item.ticker)} aria-pressed={isActive}>
+                        <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="38" height="38" alt="" loading="lazy" decoding="async" />
+                        <span><strong>{item.name}</strong><small>{item.ticker}</small></span>
+                      </button>
+                      <span className="market-row__badges">
+                        {isSeason && <span>Season</span>}
+                        {isPersonal && <span>Yours</span>}
+                      </span>
+                      <span className="market-row__metric market-row__metric--price"><small>Price</small><strong>{quote ? formatPriceUsd(quote.priceUsd) : '—'}</strong></span>
+                      <span className={'market-row__metric market-row__metric--change' + marketChangeClass(quote?.priceChange24h)}><small>24H</small><strong>{quote ? formatPercent(quote.priceChange24h) : '—'}</strong></span>
+                      <span className="market-row__metric market-row__metric--cap"><small>Market cap</small><strong>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</strong></span>
+                      <span className="market-row__metric market-row__metric--liq"><small>Liquidity</small><strong>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</strong></span>
+                      <span className="market-row__actions">
+                        <button className="market-row__view" type="button" onClick={() => showInGallery(item)}>Sculpture</button>
+                        <a href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>↗</a>
+                      </span>
+                    </li>
+                  );
+                })}
+            </ol>
+
+            <p className="market-board__share-state" role="status" aria-live="polite">{shareState}</p>
+          </div>
+
+          <p className="consumer-market__foot">
+            Price and 24h change use the deepest indexed Solana pool. Liquidity sums the
+            pools returned for each official mint; market cap is shown only when the source
+            reports market cap, never substituted with FDV. DexScreener is independent
+            third-party context, may be incomplete, and is not a recommendation. See the{' '}
+            <a href="/registry/technical/#market-transparency">method and technical record</a>.
+          </p>
+        </section>
+      );
+    }
+
+    const OUTLOOK_SIGNAL_COPY = Object.freeze({
+      quiet: 'No strong symbolic catalyst is concentrated here in this window.',
+      steady: 'A modest symbolic emphasis suggests a baseline participation window.',
+      active: 'Elevated symbolic attention creates a testable hypothesis for stronger participation.',
+      supportive: 'The event mix is symbolically supportive; price direction is intentionally unclaimed.',
+      watchful: 'The event mix carries more friction than ease; watch participation and volatility.',
+      charged: 'Symbolic intensity is elevated, creating a testable volatility hypothesis.',
+    });
+
+    function ConsumerOutlookSection({ active, setActive }) {
+      const reveal = useReveal();
+      const [hostRef, inView] = useInView('360px 0px 360px 0px');
+      const [state, setState] = useState({ status: 'idle' });
+      const [horizon, setHorizon] = useState(() => {
+        try {
+          return new URLSearchParams(window.location.search).get('outlook') === 'weekly'
+            ? 'weekly'
+            : 'daily';
+        } catch {
+          return 'daily';
+        }
+      });
+      const [outlookAttempt, setOutlookAttempt] = useState(0);
+      const [shareState, setShareState] = useState('');
+      const market = useTwelveQuotes(inView);
+
+      useEffect(() => {
+        if (!inView) return undefined;
+        let cancelled = false;
+        setState({ status: 'loading' });
+        fetch('/assets/registry-outlook.json', { headers: { accept: 'application/json' } })
+          .then((response) => {
+            if (!response.ok) throw new Error(`http ${response.status}`);
+            return response.json();
+          })
+          .then((data) => {
+            if (!Array.isArray(data?.daily?.signs) || !Array.isArray(data?.weekly?.signs)) {
+              throw new Error('invalid outlook payload');
+            }
+            if (!cancelled) setState({ status: 'ok', data });
+          })
+          .catch(() => { if (!cancelled) setState({ status: 'unavailable' }); });
+        return () => { cancelled = true; };
+      // `inView` is sticky once observed. State itself stays out of this list:
+      // setting `loading` must not cancel the request that just started.
+      }, [inView, outlookAttempt]);
+
+      const edition = state.status === 'ok' ? state.data[horizon] : null;
+      const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
+      const outlook = edition?.signs?.find(item => item.sign === activeSign.asset.sign) || null;
+      const quote = market.status === 'ok' ? market.quotes[activeSign.asset.sign] : null;
+      const ranked = edition
+        ? [...edition.signs].sort((a, b) => a.attentionRank - b.attentionRank)
+        : [];
+      const editionLabel = edition
+        ? new Date(`${edition.date}T12:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+        : '';
+      const utcToday = new Date().toISOString().slice(0, 10);
+      const editionIsCurrent = Boolean(edition && edition.date === utcToday);
+      const scoreTone = outlook?.scores?.tone ?? 0;
+      const toneLabel = scoreTone > 0 ? `+${scoreTone}` : `${scoreTone}`;
+      const signalLabel = outlook ? titleCase(outlook.signal) : 'Reading…';
+      const shareCopy = outlook
+        ? `${activeSign.name} · ${horizon === 'weekly' ? '7-day' : 'daily'} sky signal: ${signalLabel}\nEdition ${edition.date} · Attention ${outlook.scores.attention}/100 · tone ${toneLabel} · volatility ${outlook.scores.volatility}/100\n${outlook.primaryFactor ? `Main factor: ${outlook.primaryFactor.label}.` : 'No exact event in this window.'}\nExperimental symbolic index — not a price forecast or financial advice.`
+        : '';
+      const shareOutlook = async () => {
+        const shared = new URL('/registry/', window.location.origin);
+        shared.searchParams.set('sign', activeSign.asset.sign);
+        shared.searchParams.set('outlook', horizon);
+        shared.hash = 'outlook';
+        const url = shared.toString();
+        try {
+          if (navigator.share) {
+            try {
+              await navigator.share({ title: `${activeSign.name} sky signal`, text: shareCopy, url });
+              setShareState('Shared.');
+              trackAnalytics('registry_outlook_shared', { sign: activeSign.asset.sign, horizon, destination: 'native' });
+              return;
+            } catch (error) {
+              if (error?.name === 'AbortError') return;
+            }
+          }
+          if (!navigator.clipboard?.writeText) throw new Error('clipboard');
+          await navigator.clipboard.writeText(`${shareCopy}\n${url}`);
+          setShareState('Reading copied.');
+          trackAnalytics('registry_outlook_shared', { sign: activeSign.asset.sign, horizon, destination: 'clipboard' });
+        } catch (error) {
+          setShareState('Could not share this reading.');
+        }
+      };
+
+      return (
+        <section ref={reveal} id="outlook" className="consumer-outlook reveal" aria-labelledby="consumer-outlook-title">
+          <header className="consumer-outlook__head">
+            <div className="consumer-section-head">
+              <span className="consumer-section-head__eyebrow">Open research instrument · v1</span>
+              <h2 id="consumer-outlook-title">A forecast you can <span className="it">audit.</span></h2>
+            </div>
             <p>
-              Prices read live from the open market, in zodiac order.
-              Open any sign to see its record and where it trades.
+              We publish the sky signal before the window closes, then observe price,
+              liquidity, and volume separately. The leading factors and calculations
+              are visible here; the full edition and every miss stay in the record.
             </p>
           </header>
-          <ol ref={hostRef} className="consumer-tokens__list">
-            {SIGNS.map((item) => {
-              const quote = batch.status === 'ok' ? batch.quotes[item.asset.sign] : null;
-              const changeClass = marketChangeClass(quote?.priceChange24h);
-              return (
-                <li key={item.ticker}>
-                  <a
-                    className="consumer-token"
-                    href={registryProfilePath(item)}
-                    style={{ '--token-sign': item.hue }}
+
+          <div ref={hostRef} className="outlook-lab" style={{ '--outlook-sign': activeSign.hue }}>
+            <div className="outlook-lab__toolbar">
+              <div role="group" aria-label="Choose outlook horizon">
+                <button type="button" aria-pressed={horizon === 'daily'} onClick={() => setHorizon('daily')}>Daily</button>
+                <button type="button" aria-pressed={horizon === 'weekly'} onClick={() => setHorizon('weekly')}>7 days</button>
+              </div>
+              <span>{edition ? `Edition ${editionLabel} · 12:00 UTC reference` : 'Loading the committed sky…'}</span>
+            </div>
+
+            {edition && !editionIsCurrent && (
+              <p className="outlook-lab__stale" role="status">
+                Latest committed edition: {editionLabel}. Sharing is paused until the {utcToday} UTC edition publishes.
+              </p>
+            )}
+
+            {state.status === 'unavailable' ? (
+              <div className="outlook-lab__state">
+                <p>The research instrument is temporarily unavailable. Live markets and official records remain independent.</p>
+                <button type="button" onClick={() => setOutlookAttempt(value => value + 1)}>Try again</button>
+              </div>
+            ) : (
+              <div className="outlook-lab__grid" aria-busy={state.status !== 'ok'}>
+                <div className="outlook-reading">
+                  <div
+                    className="outlook-dial"
+                    style={{
+                      '--attention': `${(outlook?.scores?.attention ?? 0) * 3.6}deg`,
+                      '--volatility': `${(outlook?.scores?.volatility ?? 0) * 3.6}deg`,
+                    }}
+                    aria-label={outlook ? `${activeSign.name}: attention ${outlook.scores.attention}, tone ${toneLabel}, volatility ${outlook.scores.volatility}` : 'Loading scores'}
                   >
-                    <img
-                      src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`}
-                      width="32"
-                      height="32"
-                      alt=""
-                      loading="lazy"
-                      decoding="async"
-                    />
-                    <span className="consumer-token__id">
-                      <span className="consumer-token__row">
-                        <span className="consumer-token__name">{item.name}</span>
-                        <span className="consumer-token__ticker">{item.ticker}</span>
-                      </span>
-                      <span className="consumer-token__dates">{signDateLabel(item)}</span>
-                    </span>
-                    {quote ? (
-                      <span className="consumer-token__quote">
-                        <span className="consumer-token__price">{formatPriceUsd(quote.priceUsd)}</span>
-                        <span className={'consumer-token__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
-                      </span>
-                    ) : (
-                      <span className="consumer-token__quote consumer-token__quote--quiet">
-                        {batch.status === 'ok' ? 'Not indexed' : batch.status === 'unavailable' ? '—' : '…'}
-                      </span>
+                    <span className="outlook-dial__outer"><span className="outlook-dial__inner">
+                      <img src={`/assets/zodiac-icons/128/${activeSign.asset.sign}.webp`} width="108" height="108" alt="" decoding="async" />
+                    </span></span>
+                  </div>
+                  <div className="outlook-reading__copy">
+                    <span className="outlook-reading__eyebrow">{activeSign.name} · {horizon === 'weekly' ? '7-day outlook' : 'daily outlook'}</span>
+                    <h3>{signalLabel}</h3>
+                    <p>{outlook ? OUTLOOK_SIGNAL_COPY[outlook.signal] : 'Calculating the published symbolic index…'}</p>
+                    {outlook && (
+                      <dl className="outlook-scores">
+                        <div><dt>Attention</dt><dd>{outlook.scores.attention}<small>/100</small></dd></div>
+                        <div><dt>Tone</dt><dd>{toneLabel}</dd></div>
+                        <div><dt>Volatility</dt><dd>{outlook.scores.volatility}<small>/100</small></dd></div>
+                      </dl>
                     )}
-                  </a>
-                </li>
-              );
-            })}
-          </ol>
-          <p className="consumer-tokens__foot">
-            Prices are read live from DexScreener — independent third-party data, not a
-            valuation or recommendation. A Zodiac can lose all market value. Full addresses
-            live on each record and in the <a href="/registry/zodiacs.registry.json">public Registry JSON</a>.
-            See the <a href="/disclosure/">Disclosure</a>.
-          </p>
+                    <div className="outlook-market-context">
+                      <span>Observed market · not an input</span>
+                      <strong>{quote ? `${formatPriceUsd(quote.priceUsd)} · ${formatPercent(quote.priceChange24h)} 24h` : 'Live context unavailable'}</strong>
+                      <small>{quote ? `${formatUsdCompact(quote.liquidityUsd)} indexed liquidity` : 'The sky score does not change when market data is missing.'}</small>
+                    </div>
+                    <div className="outlook-reading__actions">
+                      <button type="button" onClick={shareOutlook} disabled={!outlook || !editionIsCurrent}>Share reading</button>
+                      <a href="#market">View live market</a>
+                    </div>
+                    <p className="outlook-reading__share" role="status" aria-live="polite">{shareState}</p>
+                  </div>
+                </div>
+
+                <aside className="outlook-factors" aria-label={`${activeSign.name} calculation`}>
+                  <span className="outlook-factors__eyebrow">
+                    What moved the score{outlook?.factors?.length > 3 ? ` · top 3 of ${outlook.factors.length}` : ''}
+                  </span>
+                  {outlook?.factors?.length ? (
+                    <ol>
+                      {outlook.factors.slice(0, 3).map((factor, index) => (
+                        <li key={factor.id}>
+                          <span>{String(index + 1).padStart(2, '0')}</span>
+                          <div>
+                            <strong>{factor.label}</strong>
+                            <p>{factor.explanation}</p>
+                            <code>{factor.calculation}</code>
+                          </div>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <p className="outlook-factors__empty">No exact event is concentrated in this sign during the selected window.</p>
+                  )}
+                  {edition?.evidence && (
+                    <div className="outlook-calibration">
+                      <span>Public scorekeeping</span>
+                      <strong>{edition.evidence.historyDaysObserved} / {edition.evidence.minimumHistoryDays} daily observations</strong>
+                      <small>{edition.evidence.historyDaysRemaining} remaining before the first eligible held-out evaluation.</small>
+                    </div>
+                  )}
+                  <details className="outlook-method">
+                    <summary>Read the full method</summary>
+                    <div>
+                      <p><strong>Occupancy.</strong> Each planet adds a disclosed attention weight to the sign it occupies at the UTC reference point.</p>
+                      <p><strong>Event proximity.</strong> Exact ingresses, lunations, stations, and aspects receive 1.00–0.75× weight across the window.</p>
+                      <p><strong>Evaluation.</strong> Signals must be timestamped before outcomes and compared with persistence and equal-sign baselines on held-out data.</p>
+                      <a href="/assets/registry-outlook.json">Open the machine-readable edition ↗</a>
+                    </div>
+                  </details>
+                </aside>
+              </div>
+            )}
+
+            {ranked.length > 0 && (
+              <div className="outlook-wheel" role="group" aria-label="Symbolic attention across the twelve signs">
+                {ranked.map(item => {
+                  const sign = SIGNS.find(candidate => candidate.asset.sign === item.sign);
+                  const selected = sign?.ticker === active;
+                  if (!sign) return null;
+                  return (
+                    <button
+                      key={item.sign}
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() => setActive(sign.ticker)}
+                      style={{ '--wheel-sign': sign.hue, '--wheel-score': `${item.scores.attention}%` }}
+                    >
+                      <span className="outlook-wheel__rank">{String(item.attentionRank).padStart(2, '0')}</span>
+                      <img src={`/assets/zodiac-icons/48/${item.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
+                      <span><strong>{sign.name}</strong><small>{item.scores.attention} attention</small></span>
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
+          <div className="outlook-challenge">
+            <span>Why no price arrow?</span>
+            <p>
+              An upward arrow before calibration would be theater, not research. Version 1
+              publishes symbolic attention, tone, and volatility hypotheses; directional
+              price and liquidity calls unlock only if a timestamped history beats the
+              disclosed non-astrological baselines. Astrology is the hypothesis—not the proof.
+            </p>
+          </div>
         </section>
       );
     }
@@ -4169,12 +4711,35 @@
     function Zodiacs() {
       const technical = /^\/registry\/technical\/?$/.test(window.location.pathname);
       const [activeTicker, setActiveTicker] = useState(
-        () => currentSeason()?.sign.ticker ?? SIGNS[0].ticker
+        () => {
+          try {
+            const requested = new URLSearchParams(window.location.search).get('sign') || '';
+            const shared = SIGNS.find(item => (
+              item.asset.sign === requested.toLowerCase() || item.ticker === requested.toUpperCase()
+            ));
+            if (shared) return shared.ticker;
+          } catch { /* malformed query: season remains the safe default */ }
+          return currentSeason()?.sign.ticker ?? SIGNS[0].ticker;
+        }
       );
       const sign = useMemo(
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]
       );
+      const [personalSlug, setPersonalSlugState] = useState(() => {
+        try {
+          const stored = window.localStorage.getItem('zodiacs:today-sun-sign:v1');
+          return SIGNS.some(item => item.asset.sign === stored) ? stored : '';
+        } catch {
+          return '';
+        }
+      });
+      const setPersonalSlug = useCallback((slug) => {
+        if (!SIGNS.some(item => item.asset.sign === slug)) return;
+        setPersonalSlugState(slug);
+        try { window.localStorage.setItem('zodiacs:today-sun-sign:v1', slug); } catch { /* private browsing */ }
+        trackAnalytics('registry_personal_sign_set', { sign: slug });
+      }, []);
       // Which hero the page wears: the film, or the gallery itself.
       const stageMode = useStageMode();
 
@@ -4407,7 +4972,13 @@
           <Header />
           <main id="main" className="zd consumer-registry">
             <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
-            <ConsumerTokensSection />
+            <ConsumerMarketSection
+              active={activeTicker}
+              setActive={setActiveTicker}
+              personalSlug={personalSlug}
+              setPersonalSlug={setPersonalSlug}
+            />
+            <ConsumerOutlookSection active={activeTicker} setActive={setActiveTicker} />
             <ConsumerHowItWorks />
             <VerifierSection />
             <ConsumerPurpose />

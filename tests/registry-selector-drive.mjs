@@ -13,6 +13,15 @@ import { withPreview } from './visual/preview-server.mjs';
 const OUT = process.env.OUT_DIR ?? null;
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
+// The consumer route now includes the live market board and the public outlook
+// lab. Keep a ceiling as a regression guard, but size it for that intentional
+// narrative rather than the shorter pre-market Registry.
+const MAX_COMPACT_REGISTRY_HEIGHT = 9_000;
+const MAX_PHONE_REGISTRY_HEIGHT = 10_500;
+// The 42px live tape now owns one row of the framed hero. The scene camera fits
+// the sculpture to the room it receives, so 260px is the useful desktop floor;
+// mobile retains its separate 200px floor and explicit placard-clearance gate.
+const MIN_DESKTOP_STAGE_HEIGHT = 260;
 
 /**
  * The gallery band replaces the strip wherever WebGL exists, so the strip's
@@ -32,14 +41,22 @@ async function stubNoWebgl(page) {
 /**
  * Consumer market reads stay hermetic: the batch token endpoint answers from
  * a fixture so quote assertions never depend on DexScreener availability.
- * Pass { fail: true } to exercise the unavailable state instead.
+ * Pass { fail: true } or { empty: true } to exercise unavailable states. A
+ * singleRequestGate can hold the desk's one-mint liquidity read while the
+ * twelve-mint market fixture continues immediately.
  */
-async function mockDexscreener(page, { fail = false } = {}) {
+async function mockDexscreener(page, {
+  fail = false,
+  empty = false,
+  singleRequestGate = null,
+} = {}) {
   await page.route('https://api.dexscreener.com/**', async (route) => {
     if (fail) return route.abort();
     const url = route.request().url();
     if (!url.includes('/tokens/v1/solana/')) return route.fulfill({ json: { pairs: [] } });
+    if (empty) return route.fulfill({ json: [] });
     const mints = decodeURIComponent(new URL(url).pathname.split('/').pop() ?? '').split(',');
+    if (mints.length === 1 && singleRequestGate) await singleRequestGate;
     return route.fulfill({
       json: mints.map((mint, index) => ({
         chainId: 'solana',
@@ -51,6 +68,8 @@ async function mockDexscreener(page, { fail = false } = {}) {
         priceChange: { h24: index % 3 === 0 ? 4.2 : index % 3 === 1 ? -2.1 : 0 },
         liquidity: { usd: 250000 + index },
         marketCap: 1000000 + index,
+        fdv: 1200000 + index,
+        volume: { h24: 64000 + index },
         pairCreatedAt: 1721000000000,
       })),
     });
@@ -387,7 +406,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           .filter((section) => getComputedStyle(section).display !== 'none').length,
         deadGalleryLinks: document.querySelectorAll('a[href*="gallery=gold"]').length,
         staticTokenRows: document.querySelectorAll('.static-token-list li').length,
-        staticPriceNote: document.body.textContent?.includes('Live prices appear with JavaScript') ?? false,
+        staticPriceNote: document.body.textContent?.includes('Live figures and sharing appear with JavaScript') ?? false,
         links: [...nav.querySelectorAll('a')].map((link) => {
           const rect = link.getBoundingClientRect();
           return {
@@ -577,8 +596,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             && compactRegistryLayout.flatStage === 1
             && compactRegistryLayout.canvases === 0),
       JSON.stringify(compactRegistryLayout));
-    check('Registry at 623×1054 keeps the consumer journey under 7,500px',
-      compactRegistryLayout.pageHeight <= 7500,
+    check('Registry at 623×1054 keeps the expanded consumer journey under 9,000px',
+      compactRegistryLayout.pageHeight <= MAX_COMPACT_REGISTRY_HEIGHT,
       String(compactRegistryLayout.pageHeight));
     check('Registry at 623×1054 leaves technical sections off the consumer route',
       compactRegistryLayout.heavySections.length === 0,
@@ -739,7 +758,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await desktop.locator('.cine').count() === 0
         && await desktop.locator('h1.stage-hero__title').count() === 1
         && (await desktop.locator('.stage-hero__line').innerText()).trim()
-          .startsWith('Every sign has one official token. Explore its story, its record, and its market.'),
+          .startsWith('One official token for every sign. Browse the sculptures, watch the market, and verify the record.'),
     );
     check(
       'the fallback stage shows one synchronized gold sculpture where the scene cannot',
@@ -763,9 +782,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         .filter((id) => document.getElementById(id)),
     }));
     check(
-      'desktop consumer Registry has no horizontal overflow and stays below 6,500px',
+      'desktop consumer Registry has no horizontal overflow and stays below 9,000px',
       desktopDimensions.width <= desktopDimensions.viewport + 1
-        && desktopDimensions.height <= 6500,
+        && desktopDimensions.height <= 9000,
       JSON.stringify(desktopDimensions),
     );
     check(
@@ -821,19 +840,33 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && placardQuote.directional,
       JSON.stringify(placardQuote),
     );
-    const watchlist = await desktop.locator('.consumer-token').evaluateAll((rows) => rows.map((row) => ({
-      href: row.getAttribute('href'),
-      priced: Boolean(row.querySelector('.consumer-token__price')),
+    const watchlist = await desktop.locator('.market-row').evaluateAll((rows) => rows.map((row) => ({
+      slug: row.getAttribute('data-market-sign'),
+      href: row.querySelector('.market-row__actions a')?.getAttribute('href'),
+      priced: /^\$/.test(row.querySelector('.market-row__metric--price strong')?.textContent ?? ''),
     })));
     check(
-      'the twelve-token watchlist stays in zodiac order and links every official record',
+      'the market board defaults to descending market cap and links every official record',
       watchlist.length === 12
-        && watchlist.every((row, index) => row.href === '/registry/' + [
-          'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
-          'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-        ][index] + '/')
+        && JSON.stringify(watchlist.map((row) => row.slug)) === JSON.stringify([
+          'pisces', 'aquarius', 'capricorn', 'sagittarius', 'scorpio', 'libra',
+          'virgo', 'leo', 'cancer', 'gemini', 'taurus', 'aries',
+        ])
+        && watchlist.every((row) => row.href === `/registry/${row.slug}/`)
         && watchlist.every((row) => row.priced),
       JSON.stringify(watchlist),
+    );
+    const tapeViewport = desktop.locator('.market-tape__viewport');
+    await desktop.locator('.market-tape__group:not([aria-hidden]) button').last().focus();
+    await desktop.waitForTimeout(40);
+    const focusedTapeScroll = await tapeViewport.evaluate((node) => node.scrollLeft);
+    await desktop.locator('.market-board__sort button').first().focus();
+    await desktop.waitForTimeout(40);
+    const releasedTapeScroll = await tapeViewport.evaluate((node) => node.scrollLeft);
+    check(
+      'keyboard focus leaves the moving market tape on a clean animation seam',
+      focusedTapeScroll > 0 && releasedTapeScroll === 0,
+      JSON.stringify({ focusedTapeScroll, releasedTapeScroll }),
     );
     check(
       'the polite selection status announces the chosen sign',
@@ -852,6 +885,52 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check(
       'Home moves the consumer explorer to Aries',
       await desktop.locator('[data-consumer-preview="aries"]').count() === 1,
+    );
+
+    const outlook = desktop.locator('#outlook');
+    await outlook.locator('.outlook-lab').scrollIntoViewIfNeeded();
+    await outlook.locator('.outlook-lab__grid[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    await desktop.waitForFunction(() => (
+      document.querySelectorAll('#outlook .outlook-wheel button').length === 12
+      && !/Reading|Calculating/i.test(
+        document.querySelector('#outlook .outlook-reading h3')?.textContent ?? '',
+      )
+    ));
+    const outlookState = await outlook.evaluate((section) => {
+      const wheelButtons = [...section.querySelectorAll('.outlook-wheel button')];
+      const factorRows = [...section.querySelectorAll('.outlook-factors ol > li')];
+      return {
+        busy: section.querySelector('.outlook-lab__grid')?.getAttribute('aria-busy'),
+        edition: section.querySelector('.outlook-lab__toolbar > span')?.textContent?.trim() ?? '',
+        subject: section.querySelector('.outlook-reading__eyebrow')?.textContent?.trim() ?? '',
+        signal: section.querySelector('.outlook-reading h3')?.textContent?.trim() ?? '',
+        explanation: section.querySelector('.outlook-reading__copy > p')?.textContent?.trim() ?? '',
+        wheelCount: wheelButtons.length,
+        selectedSigns: wheelButtons
+          .filter((button) => button.getAttribute('aria-pressed') === 'true')
+          .map((button) => button.querySelector('img')?.getAttribute('src') ?? ''),
+        factorCount: factorRows.length,
+        completeFactors: factorRows.every((row) => (
+          Boolean(row.querySelector('strong')?.textContent?.trim())
+          && Boolean(row.querySelector('p')?.textContent?.trim())
+          && Boolean(row.querySelector('code')?.textContent?.trim())
+        )),
+        calibration: section.querySelector('.outlook-calibration strong')?.textContent?.trim() ?? '',
+      };
+    });
+    check(
+      'the public outlook resolves its edition, twelve-sign wheel, and disclosed Aries factors',
+      outlookState.busy === 'false'
+        && /^Edition .+ · 12:00 UTC reference$/.test(outlookState.edition)
+        && outlookState.subject === 'Aries · daily outlook'
+        && Boolean(outlookState.signal)
+        && !/Reading|Calculating/i.test(`${outlookState.signal} ${outlookState.explanation}`)
+        && outlookState.wheelCount === 12
+        && JSON.stringify(outlookState.selectedSigns) === JSON.stringify(['/assets/zodiac-icons/48/aries.webp'])
+        && outlookState.factorCount > 0
+        && outlookState.completeFactors
+        && /^\d+ \/ \d+ daily observations$/.test(outlookState.calibration),
+      JSON.stringify(outlookState),
     );
 
     const registry = await fetch(baseURL + '/registry/zodiacs.registry.json').then((response) => response.json());
@@ -964,6 +1043,75 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     if (OUT) await desktop.screenshot({ path: OUT + '/registry-consumer-1126.png', fullPage: false });
     await desktop.close();
 
+    const emptyMarket = await newPage({
+      viewport: { width: 390, height: 844 },
+      hasTouch: true,
+    });
+    await stubNoWebgl(emptyMarket);
+    await mockDexscreener(emptyMarket, { empty: true });
+    await emptyMarket.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await emptyMarket.locator('#market').scrollIntoViewIfNeeded();
+    await emptyMarket.locator('.market-board__state').waitFor({ timeout: 15_000 });
+    const emptyMarketState = await emptyMarket.locator('#market').evaluate((section) => ({
+      rows: section.querySelectorAll('.market-row').length,
+      recordLinks: section.querySelectorAll('.market-row__actions a[href^="/registry/"]').length,
+      shareDisabled: [...section.querySelectorAll('.market-board__share button')]
+        .every((button) => button.disabled),
+      pulse: [...section.querySelectorAll('.market-pulse__cell strong')]
+        .map((node) => node.textContent.trim()),
+      meta: section.querySelector('.market-board__meta')?.textContent ?? '',
+      tapePaused: document.querySelector('.market-tape')?.hasAttribute('data-paused') ?? false,
+    }));
+    check(
+      'an empty upstream feed is unavailable, never a shareable zero-dollar market',
+      emptyMarketState.rows === 12
+        && emptyMarketState.recordLinks === 12
+        && emptyMarketState.shareDisabled
+        && emptyMarketState.pulse.every((value) => value === '—')
+        && /unavailable/i.test(emptyMarketState.meta)
+        && emptyMarketState.tapePaused,
+      JSON.stringify(emptyMarketState),
+    );
+    await emptyMarket.route('**/assets/registry-outlook.json', async (route) => {
+      const response = await route.fetch();
+      const payload = await response.json();
+      payload.daily.date = '2000-01-01';
+      payload.weekly.date = '2000-01-01';
+      await route.fulfill({
+        response,
+        body: JSON.stringify(payload),
+        headers: { ...response.headers(), 'content-length': undefined },
+      });
+    });
+    await emptyMarket.goto(
+      baseURL + '/registry/?rank=liquidity&sign=pisces&outlook=weekly#outlook',
+      { waitUntil: 'domcontentloaded' },
+    );
+    await emptyMarket.locator('#outlook .outlook-lab__grid[aria-busy="false"]')
+      .waitFor({ timeout: 15_000 });
+    const sharedState = await emptyMarket.evaluate(() => ({
+      sign: document.querySelector('.stage-placard__name')?.textContent?.trim() ?? '',
+      rank: document.querySelector('.market-board__sort button[aria-pressed="true"]')
+        ?.textContent?.trim() ?? '',
+      horizon: document.querySelector('#outlook .outlook-lab__toolbar button[aria-pressed="true"]')
+        ?.textContent?.trim() ?? '',
+      subject: document.querySelector('#outlook .outlook-reading__eyebrow')
+        ?.textContent?.trim() ?? '',
+      stale: document.querySelector('#outlook .outlook-lab__stale')?.textContent?.trim() ?? '',
+      shareDisabled: document.querySelector('#outlook .outlook-reading__actions button')?.disabled ?? false,
+    }));
+    check(
+      'shared state restores sign, rank, and horizon while a stale edition stays unshareable',
+      sharedState.sign === 'Pisces'
+        && sharedState.rank === 'Liquidity'
+        && sharedState.horizon === '7 days'
+        && sharedState.subject === 'Pisces · 7-day outlook'
+        && /Latest committed edition/i.test(sharedState.stale)
+        && sharedState.shareDisabled,
+      JSON.stringify(sharedState),
+    );
+    await emptyMarket.close();
+
     // The sculpture renders have very different visible silhouettes. Check
     // every sign at the three narrow widths that previously let the tall
     // pieces run behind the placard. Measure the non-transparent sculpture
@@ -1075,7 +1223,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             && liveMobileState.placard.left >= liveMobileState.plate.left - 1
             && liveMobileState.placard.right <= liveMobileState.plate.right + 1
             && liveMobileState.pageWidth <= liveMobileState.viewportWidth + 1
-            && liveMobileState.pageHeight <= 7500
+            && liveMobileState.pageHeight <= MAX_PHONE_REGISTRY_HEIGHT
             && liveMobileState.minTarget >= 44,
           JSON.stringify(liveMobileState),
         );
@@ -1141,7 +1289,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       check(
         `mobile Registry at ${label} has no horizontal overflow and keeps 44px targets`,
         mobileState.pageWidth <= mobileState.viewportWidth + 1
-          && mobileState.pageHeight <= 7500
+          && mobileState.pageHeight <= MAX_PHONE_REGISTRY_HEIGHT
           && mobileState.minTarget >= 44,
         JSON.stringify(mobileState),
       );
@@ -1365,7 +1513,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             && desktopShape.tickButtons === 12 && desktopShape.enabledTicks === 12
             && desktopShape.selectedIndex === selection.index
             && desktopShape.preview === selection.slug
-            && desktopShape.canvasWidth > 0 && desktopShape.canvasHeight >= 300
+            && desktopShape.canvasWidth > 0
+            && desktopShape.canvasHeight >= MIN_DESKTOP_STAGE_HEIGHT
             && await liveBand.getAttribute('data-gallery-paused') === null,
           JSON.stringify(desktopShape),
         );
@@ -1554,7 +1703,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && shape.chrome === 0
           && shape.previewInside === 1 && shape.previewTotal === 1
           && shape.flatArt === 0
-          && shape.figureHeight >= 300,
+          && shape.figureHeight >= MIN_DESKTOP_STAGE_HEIGHT,
         JSON.stringify(shape),
       );
 
@@ -1595,7 +1744,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       check(
         'the Registry spotlight turns quietly on its Thesis turntable',
         !ambientFrameA.equals(ambientFrameB)
-      && turnHint.toLowerCase().includes('drag to turn'),
+          && turnHint.toLowerCase().includes('drag the figure to turn')
+          && turnHint.toLowerCase().includes('drag the room to browse'),
         JSON.stringify({ framesEqual: ambientFrameA.equals(ambientFrameB), turnHint }),
       );
 
@@ -1796,12 +1946,32 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         isMobile: width < 500,
         hasTouch: width < 500,
       });
+      if (label === 'sheet') {
+        // Exercise the real quote-age interval without adding ten seconds to
+        // this already broad drive. The old full repaint detached whichever
+        // provider link held focus at every age tick.
+        await tradePage.addInitScript(() => {
+          const nativeSetInterval = window.setInterval.bind(window);
+          window.__registryQuoteAgeTicks = 0;
+          window.setInterval = (callback, timeout, ...args) => {
+            if (timeout !== 10_000) return nativeSetInterval(callback, timeout, ...args);
+            return nativeSetInterval((...tickArgs) => {
+              window.__registryQuoteAgeTicks += 1;
+              callback(...tickArgs);
+            }, 50, ...args);
+          };
+        });
+      }
       const tradeBundle = [];
       tradePage.on('request', (request) => {
         if (new URL(request.url()).pathname === '/assets/trade.js') tradeBundle.push(request.url());
       });
       const ordersBefore = tradeOrders.length;
-      await mockDexscreener(tradePage);
+      let releaseSingleRequest = null;
+      const singleRequestGate = label === 'sheet'
+        ? new Promise((resolve) => { releaseSingleRequest = resolve; })
+        : null;
+      await mockDexscreener(tradePage, { singleRequestGate });
       if (stub) await stubNoWebgl(tradePage);
       await withTradeFlag(tradePage);
       await tradePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
@@ -1884,6 +2054,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           } : null;
         };
         const body = sheet.querySelector('.stage-sheet__body');
+        const fomoRamp = [...tp.querySelectorAll('.ramp')]
+          .find((ramp) => /fomo/i.test(ramp.textContent));
         const bodyStyle = getComputedStyle(body);
         const contentWidth = body.clientWidth
           - parseFloat(bodyStyle.paddingLeft)
@@ -1900,11 +2072,16 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           pressed: chips.filter((b) => b.getAttribute('aria-pressed') === 'true').map((b) => b.textContent),
           receive: tp.querySelector('.out')?.textContent ?? '',
           facts: [...tp.querySelectorAll('.fact')].map((f) => f.textContent),
-          method: methods.find((b) => b.getAttribute('aria-pressed') === 'true')?.textContent ?? '',
+          methods: methods.map((button) => ({
+            id: button.dataset.method,
+            eyebrow: button.querySelector('.payseg__eyebrow')?.textContent ?? '',
+            label: button.querySelector('.payseg__label')?.textContent ?? '',
+            pressed: button.getAttribute('aria-pressed') === 'true',
+          })),
           ramps: tp.querySelectorAll('.ramps li').length,
           rampNames: [...tp.querySelectorAll('.ramp__name')].map((n) => n.textContent),
-          fomoRow: [...tp.querySelectorAll('.ramp')]
-            .find((r) => /fomo/i.test(r.textContent))?.textContent.replace(/\s+/g, ' ').trim() ?? '',
+          fomoRow: fomoRamp?.textContent.replace(/\s+/g, ' ').trim() ?? '',
+          fomoApplePay: Boolean(fomoRamp?.querySelector('.tp__mark.ap[aria-label="Apple Pay"]')),
           applePayBadge: tp.querySelectorAll('.tp__mark.ap').length,
           marks: tp.querySelectorAll('.ramps .tp__mark').length,
           go: tp.querySelectorAll('.tp__go').length,
@@ -1991,16 +2168,51 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         JSON.stringify({ count: focusableCount, wrappedToLast, wrappedToFirst }),
       );
       check(
-        `the ${label} lists four ways to pay, branded, alphabetical, none ranked`,
-        /Card|Apple Pay/i.test(panel.method)
+        `the ${label} separates funding from the direct swap and keeps providers unranked`,
+        JSON.stringify(panel.methods) === JSON.stringify([
+          { id: 'card', eyebrow: 'Fund first', label: 'I’m new to crypto', pressed: true },
+          { id: 'usdc', eyebrow: 'Direct swap', label: 'I already have USDC', pressed: false },
+        ])
           && panel.ramps === 4 && panel.go === 0
           && panel.rampNames.join(' · ') === 'Coinbase · fomo · MoonPay · Ramp Network'
           && panel.heroButton === 0
           && panel.applePayBadge === 1
-          && /Apple Pay/.test(panel.fomoRow)
+          && panel.fomoApplePay
+          && /verify the mint/i.test(panel.fomoRow)
           && panel.marks >= 4,
-        JSON.stringify({ names: panel.rampNames, method: panel.method, marks: panel.marks }),
+        JSON.stringify({
+          names: panel.rampNames,
+          methods: panel.methods,
+          fomo: panel.fomoRow,
+          marks: panel.marks,
+        }),
       );
+
+      if (label === 'sheet') {
+        const focusedProvider = tradePage.locator('.tp .ramp').first();
+        const ticksBeforeFocus = await tradePage.evaluate(() => window.__registryQuoteAgeTicks);
+        await focusedProvider.focus();
+        await tradePage.waitForFunction(
+          (priorTicks) => window.__registryQuoteAgeTicks > priorTicks,
+          ticksBeforeFocus,
+        );
+        check(
+          'a quote-age tick updates in place without dropping provider keyboard focus',
+          await focusedProvider.evaluate((provider) => (
+            provider === document.activeElement && Boolean(provider.closest('.stage-sheet'))
+          )),
+        );
+
+        releaseSingleRequest();
+        await tradePage.locator('.tp .detail').filter({ hasText: 'Indexed liquidity' })
+          .waitFor({ state: 'visible', timeout: 5_000 });
+        check(
+          'late liquidity context reconciles without dropping provider keyboard focus',
+          await focusedProvider.evaluate((provider) => (
+            provider === document.activeElement && Boolean(provider.closest('.stage-sheet'))
+          )),
+        );
+      }
 
       const usdc = tradePage.locator('.tp .payseg button').nth(1);
       await usdc.evaluate((el) => el.scrollIntoView({ block: 'center' }));
