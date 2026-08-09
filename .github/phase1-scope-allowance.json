@@ -1,12 +1,13 @@
 {
   "version": 1,
-  "id": "registry-outlook-cache-hotfix-2026-08-10",
-  "reason": "Owner-approved Registry production hotfix (2026-08-10): force the consumer Signals loader to revalidate responses cached under the asset's former immutable policy and explicitly make the daily JSON revalidatable. The allowance is limited to the Registry source, generated bundle, and contract files required to repair that stale-data boundary; it does not authorize design, market methodology, wallet behavior, SDK, sign-guide, locale, or Collection changes.",
-  "baseCommit": "66027539043daa4af6f6ce021d8ad207078372dc",
+  "id": "registry-exchange-room-2026-08-09",
+  "reason": "Owner-directed Registry release (2026-08-09): add the flag-off Exchange room page at /registry/exchange/ (committed flag-off behind PUBLIC_REGISTRY_EXCHANGE_ENABLED, pending its own risk-decision ratification in docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md) and name GeckoTerminal as a chart-data provider in the locale privacy pages. The allowance is limited to the five protected files in this pull request; it does not authorize changes to Registry APIs, wallet behavior, the trade panel, SDK pages, sign guides, other locale content, or Collection availability, and it does not turn any flag on.",
+  "baseCommit": "82f9304829c83e4277e4b4953b3865b9c7fb8bef",
   "protectedPaths": [
-    "public/assets/app.js",
-    "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-risk.test.mjs",
-    "src/app.jsx"
+    "public/registry/exchange/index.html",
+    "src/pages/es/privacy/index.astro",
+    "src/pages/fr/privacy/index.astro",
+    "src/pages/it/privacy/index.astro",
+    "src/pages/pt/privacy/index.astro"
   ]
 }

@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#060709" />
+  <meta name="zodiacs-registry-exchange-enabled" content="0" />
+  <title>Zodiacs Mercantile Exchange · Registry</title>
+  <meta name="description" content="The Registry's trading room: charts, recent trades, and venue quotes for the twelve Zodiac records. Every order is built, executed, and charged for by Jupiter, an independent venue." />
+  <link rel="canonical" href="https://zodiacs.org/registry/exchange/" />
+  <meta name="robots" content="noindex" />
+  <script>
+    window.plausible = window.plausible || function () {
+      (window.plausible.q = window.plausible.q || []).push(arguments);
+    };
+    window.plausible.init = window.plausible.init || function (options) {
+      window.plausible.o = options || {};
+    };
+    window.plausible.init({
+      hashBasedRouting: false,
+      transformRequest: function (payload) {
+        var canonical = document.querySelector('link[rel="canonical"]');
+        payload.u = canonical ? canonical.href : location.origin + location.pathname;
+        payload.r = null;
+        if (payload.p && payload.p.url) delete payload.p.url;
+        return payload;
+      }
+    });
+  </script>
+  <script async src="https://plausible.io/js/pa-HwF2IBb5Sw8eboNPSOgHv.js"></script>
+  <meta property="og:title" content="Zodiacs Mercantile Exchange" />
+  <meta property="og:description" content="Charts, recent trades, and venue quotes for the twelve Zodiac records. Every order executes on Jupiter, an independent venue." />
+  <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:url" content="https://zodiacs.org/registry/exchange/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry.png" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "Zodiacs.org", "item": "https://zodiacs.org/" },
+      { "@type": "ListItem", "position": 2, "name": "Registry", "item": "https://zodiacs.org/registry/" },
+      { "@type": "ListItem", "position": 3, "name": "Exchange", "item": "https://zodiacs.org/registry/exchange/" }
+    ]
+  }
+  </script>
+  <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/app-icons/v3/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/assets/app-icons/v3/favicon-16.png" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/assets/app-icons/v3/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="96x96" href="/assets/app-icons/v3/favicon-96.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/app-icons/v3/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <style>
+    @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-normal.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2'); font-weight: 500; font-style: normal; font-display: swap; }
+    @font-face { font-family: 'EB Garamond'; src: url('/fonts/eb-garamond-latin-400-italic.woff2') format('woff2'); font-weight: 400; font-style: italic; font-display: swap; }
+    @font-face { font-family: 'JetBrains Mono'; src: url('/fonts/jetbrains-mono-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 300 600; font-style: normal; font-display: swap; }
+
+    :root {
+      --void: #060709;
+      --surface: rgba(13,16,25,.94);
+      --ink: #EEF1F7;
+      --ink-2: #C6CCDA;
+      --ink-mute: #8A93A6;
+      --hair: rgba(198,204,218,.10);
+      --hair-2: rgba(198,204,218,.16);
+      --serif: 'EB Garamond', Georgia, serif;
+      --sans: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+      --mono: 'JetBrains Mono', ui-monospace, monospace;
+      --ease: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--void);
+      color: var(--ink-2);
+      font-family: var(--sans);
+      font-size: 15px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .skip-link {
+      position: absolute; left: -9999px; top: 0;
+      padding: 10px 16px; background: var(--surface); color: var(--ink);
+      border-radius: 0 0 10px 0; z-index: 100;
+    }
+    .skip-link:focus { left: 0; }
+    a { color: var(--ink); text-decoration-color: rgba(198,204,218,.34); }
+    a:hover { text-decoration-color: currentColor; }
+
+    .shell {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 118px 22px 46px;
+    }
+
+    .kicker {
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 16px;
+      color: var(--ink-mute);
+    }
+    .hero h1 {
+      margin: 0 0 14px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: clamp(34px, 5.4vw, 54px);
+      letter-spacing: 0.005em;
+      line-height: 1.05;
+      color: var(--ink);
+    }
+    .hero__lede {
+      max-width: 66ch;
+      margin: 0;
+      font-size: 16.5px;
+      color: var(--ink-2);
+    }
+    .hero__lede a { color: var(--ink); }
+
+    .section { margin-top: 46px; }
+    .section > h2 {
+      margin: 0 0 8px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 26px;
+      color: var(--ink);
+    }
+    .section > .section__note {
+      margin: 0 0 18px;
+      color: var(--ink-mute);
+      font-size: 14px;
+    }
+
+    .records {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(168px, 1fr));
+      gap: 10px;
+      margin: 0; padding: 0;
+      list-style: none;
+    }
+    .records__item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 14px;
+      border: 1px solid var(--hair);
+      border-radius: 14px;
+      background: var(--surface);
+      text-decoration: none;
+      transition: border-color 200ms var(--ease), background 200ms var(--ease);
+    }
+    .records__item:hover {
+      border-color: color-mix(in srgb, var(--sign, #C6CCDA) 45%, var(--hair));
+      background: color-mix(in srgb, var(--sign, #C6CCDA) 6%, var(--surface));
+    }
+    .records__disc { width: 34px; height: 34px; border-radius: 50%; display: block; flex: none; }
+    .records__name { color: var(--ink); font-weight: 550; font-size: 14px; line-height: 1.25; }
+    .records__lot {
+      display: block;
+      color: var(--ink-mute);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    .posture {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 10px;
+    }
+    .posture__cell {
+      padding: 16px;
+      border: 1px solid var(--hair);
+      border-radius: 14px;
+      background: var(--surface);
+    }
+    .posture__cell h3 {
+      margin: 0 0 6px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 17px;
+      color: var(--ink);
+    }
+    .posture__cell p { margin: 0; font-size: 13.5px; color: var(--ink-2); }
+
+    .risk {
+      margin-top: 46px;
+      padding: 18px 20px;
+      border: 1px solid var(--hair-2);
+      border-radius: 16px;
+      background: var(--surface);
+      font-size: 13.5px;
+      color: var(--ink-2);
+    }
+    .risk h2 {
+      margin: 0 0 10px;
+      font-family: var(--serif);
+      font-weight: 500;
+      font-size: 18px;
+      color: var(--ink);
+    }
+    .risk p { margin: 0 0 10px; }
+    .risk p:last-child { margin-bottom: 0; }
+
+    footer {
+      margin-top: 40px;
+      padding-top: 18px;
+      border-top: 1px solid var(--hair);
+      color: var(--ink-mute);
+      font-size: 12.5px;
+    }
+    footer a { color: var(--ink-mute); }
+    footer a:hover { color: var(--ink); }
+    .assistant-link {
+      padding: 0; border: 0; background: none; cursor: pointer;
+      color: var(--ink-mute); font: inherit; text-decoration: underline;
+      text-decoration-color: rgba(198,204,218,.34);
+    }
+    .assistant-link:hover { color: var(--ink); }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      .records__item { transition: none; }
+    }
+  </style>
+  <style>
+  @font-face { font-family: 'Instrument Sans'; src: url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations'); font-weight: 400 600; font-style: normal; font-display: swap; }
+  .wnav-wrap { position: fixed; top: 14px; left: 0; right: 0; z-index: 60; display: flex; flex-direction: column; align-items: center; pointer-events: none; padding-top: env(safe-area-inset-top); }
+  .wnav { pointer-events: auto; display: inline-flex; align-items: center; gap: 10px; height: 52px; padding: 0 10px 0 20px; border-radius: 999px; background: rgba(10,12,17,0.66); backdrop-filter: saturate(150%) blur(18px); -webkit-backdrop-filter: saturate(150%) blur(18px); border: 1px solid rgba(198,204,218,0.16); box-shadow: inset 0 1px 0 rgba(238,241,247,0.06), 0 12px 32px -14px rgba(0,0,0,0.7); }
+  @media (min-width: 820px) { .wnav { gap: 18px; } }
+  .wnav__mark { display: inline-flex; align-items: center; gap: 9px; text-decoration: none; white-space: nowrap; }
+  .wnav__brand { display: block; flex-shrink: 0; }
+  .wnav__mark:hover .wnav__brand { animation: wnav-turn 14s linear infinite; }
+  .wnav__name { font-family: var(--serif, 'EB Garamond', Georgia, serif); font-weight: 400; font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; line-height: 1; color: var(--ink, #EEF1F7); white-space: nowrap; }
+  .wnav__sep { color: var(--ink-mute, #8A93A6); margin: 0 4px; }
+  .wnav__dim { color: var(--ink-2, #C6CCDA); font-weight: 500; }
+  @media (max-width: 819.5px) { .wnav__sep, .wnav__dim { display: none; } }
+  .wnav__search { display: inline-flex; align-items: center; gap: 7px; padding: 8px 11px; border: none; border-radius: 999px; background: none; color: var(--ink-2, #C6CCDA); cursor: pointer; text-decoration: none; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__search:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
+  @media (max-width: 819.5px) { .wnav__search { display: inline-grid; place-items: center; width: 34px; height: 34px; padding: 0; } }
+  .wnav__search-kbd { display: none; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; line-height: 1; padding: 3px 5px; border: 1px solid rgba(198,204,218,0.16); border-radius: 4px; color: var(--ink-mute, #8A93A6); }
+  @media (min-width: 820px) { .wnav__search-kbd { display: inline-block; } }
+  .wnav__links { display: none; align-items: center; gap: 2px; }
+  @media (min-width: 820px) { .wnav__links { display: inline-flex; } }
+  .wnav__link { display: inline-flex; align-items: center; gap: 6px; padding: 7px 13px; border-radius: 999px; font-family: 'Instrument Sans', system-ui, -apple-system, 'Segoe UI', sans-serif; font-size: 14px; font-weight: 500; letter-spacing: normal; text-transform: none; white-space: nowrap; color: var(--ink-2, #C6CCDA); text-decoration: none; background: none; border: 0; cursor: pointer; transition: color 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)), background 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__link:hover { color: var(--ink, #EEF1F7); background: rgba(198,204,218,0.07); }
+  .wnav__link[aria-current='page'] { color: var(--ink, #EEF1F7); }
+  .wnav__signs-btn svg { transition: transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__signs-btn[aria-expanded='true'] svg { transform: rotate(180deg); }
+  .wnav__chip { display: inline-flex; align-items: center; height: 34px; padding: 0 2px 0 16px; border-left: 1px solid rgba(198,204,218,0.16); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: 13px; font-weight: 400; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2, #C6CCDA); text-decoration: none; white-space: nowrap; transition: color 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav__chip:hover { color: var(--ink, #EEF1F7); }
+  @media (min-width: 820px) { .wnav__chip { letter-spacing: 0.14em; } }
+  .wnav__burger { position: relative; display: inline-block; flex: 0 0 auto; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(198,204,218,0.16); background: none; cursor: pointer; transition: transform 140ms cubic-bezier(0.23,1,0.32,1); }
+  .wnav__burger:active { transform: scale(0.97); }
+  @media (min-width: 820px) { .wnav__burger { display: none; } }
+  .wnav__burger-line { display: block; position: absolute; top: 50%; left: 50%; width: 18px; height: 1.5px; border-radius: 2px; background: var(--ink-2, #C6CCDA); transform-origin: 50% 50%; transition: transform 220ms cubic-bezier(0.77,0,0.175,1), opacity 140ms cubic-bezier(0.23,1,0.32,1); }
+  .wnav__burger-line:first-child { transform: translate(-50%, calc(-50% - 5px)); }
+  .wnav__burger-line:nth-child(2) { transform: translate(-50%, -50%); }
+  .wnav__burger-line:last-child { transform: translate(-50%, calc(-50% + 5px)); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:first-child { transform: translate(-50%, -50%) rotate(45deg); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:nth-child(2) { opacity: 0; transform: translate(-50%, -50%) scaleX(0.18); }
+  .wnav__burger[aria-expanded='true'] .wnav__burger-line:last-child { transform: translate(-50%, -50%) rotate(-45deg); }
+  .wnav-disc { display: inline-block; width: 32px; height: 32px; line-height: 0; flex: 0 0 auto; }
+  .wnav-disc img { width: 100%; height: 100%; border-radius: 50%; display: block; }
+  .wnav-disc--lg { width: 40px; height: 40px; }
+  .wnav-signs { pointer-events: auto; margin-top: 10px; width: min(100% - 32px, 620px); border-radius: 20px; background: rgba(10,12,17,0.82); backdrop-filter: saturate(150%) blur(22px); -webkit-backdrop-filter: saturate(150%) blur(22px); border: 1px solid var(--hair-2, rgba(198,204,218,0.16)); box-shadow: 0 24px 60px -24px rgba(0,0,0,0.8); padding: 10px; opacity: 0; transform: translateY(-6px) scale(0.99); transition: opacity 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)), transform 260ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav-signs[hidden] { display: none; }
+  .wnav-signs.is-open { opacity: 1; transform: none; }
+  .wnav-signs__grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 2px; }
+  @media (min-width: 640px) { .wnav-signs__grid { grid-template-columns: repeat(3, 1fr); } }
+  .wnav-signs__item { display: grid; grid-template-columns: 32px 1fr; grid-template-rows: auto auto; column-gap: 12px; align-items: center; padding: 10px 12px; border-radius: 14px; text-decoration: none; transition: background 200ms var(--ease, cubic-bezier(0.4,0,0.2,1)); }
+  .wnav-signs__item:hover { background: color-mix(in oklab, var(--sign) 12%, transparent); }
+  .wnav-signs__item .wnav-disc { grid-row: span 2; }
+  .wnav-signs__name { font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 14px; font-weight: 550; color: var(--ink, #EEF1F7); line-height: 1.25; }
+  .wnav-signs__dates { font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.06em; color: var(--ink-mute, #8A93A6); }
+  .wnav-menu { position: fixed; inset: 0; z-index: 59; pointer-events: auto; background: rgba(6,7,9,0.88); backdrop-filter: blur(26px) saturate(140%); -webkit-backdrop-filter: blur(26px) saturate(140%); padding: calc(96px + env(safe-area-inset-top)) 24px 40px; overflow-y: auto; }
+  .wnav-menu[hidden] { display: none; }
+  .wnav-menu__group + .wnav-menu__group { margin-top: 34px; }
+  .wnav-menu__label { display: block; margin-bottom: 14px; font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 10px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--ink-mute, #8A93A6); }
+  .wnav-menu__link { display: block; padding: 13px 0; font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(24px, 7vw, 32px); font-weight: 400; letter-spacing: 0.01em; line-height: 1.05; text-decoration: none; color: var(--ink, #EEF1F7); border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); }
+  .wnav-menu__link:last-child { border-bottom: 0; }
+  .wnav-menu__registry { display: grid; gap: 5px; }
+  .wnav-menu__registry small { color: var(--ink-mute, #8A93A6); font-family: var(--mono, 'JetBrains Mono', monospace); font-size: 9px; letter-spacing: 0.04em; line-height: 1.35; }
+  .wnav-menu__tools { display: grid; grid-template-columns: minmax(0, 1fr); }
+  .wnav-menu__tool { display: block; min-width: 0; padding: 11px 0; border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); color: var(--ink, #EEF1F7); font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(18px, 5vw, 22px); line-height: 1.05; text-decoration: none; }
+  .wnav-menu__tool:last-child { border-bottom: 0; }
+  .wnav-menu__signs { display: flex; flex-direction: column; }
+  .wnav-menu__sign { display: flex; flex-direction: row; align-items: center; gap: 13px; padding: 10px 0; text-decoration: none; font-family: var(--serif, 'EB Garamond', Georgia, serif); font-size: clamp(20px, 5.5vw, 26px); font-weight: 400; color: var(--ink, #EEF1F7); border-bottom: 1px solid var(--hair, rgba(198,204,218,0.10)); }
+  .wnav-menu__sign:last-child { border-bottom: 0; }
+  .wnav-menu__sign .wnav-disc { width: 30px; height: 30px; }
+  @keyframes wnav-turn { to { transform: rotate(360deg); } }
+  @media (prefers-reduced-motion: reduce) { .wnav-signs, .wnav__burger, .wnav__burger-line { transition: none; } .wnav__mark:hover .wnav__brand { animation: none; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+  <div class="wnav-wrap">
+    <nav class="wnav" aria-label="Primary" data-wnav>
+      <a class="wnav__mark" href="/"><span class="wnav__name">Zodiacs<span class="wnav__sep">·</span><span class="wnav__dim">org</span></span></a>
+      <div class="wnav__links">
+        <a class="wnav__link" href="/tools/">Tools<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        <button class="wnav__link wnav__signs-btn" type="button" data-wnav-signs aria-expanded="false" aria-controls="wnav-signs">Signs<svg width="8" height="5" viewBox="0 0 8 5" fill="none" aria-hidden="true"><path d="M1 1l3 3 3-3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+        <a class="wnav__link" href="/learn/">Learn</a>
+        <a class="wnav__link" href="/horoscopes/">Horoscopes</a>
+        <a class="wnav__link" href="/profile/">Saved charts</a>
+      </div>
+      <a class="wnav__search" href="/?search=1" aria-label="Search the site"><svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg><kbd class="wnav__search-kbd" aria-hidden="true">/</kbd></a>
+      <a class="wnav__chip" href="/registry/" aria-current="page">Registry</a>
+      <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
+        <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
+      </button>
+    </nav>
+    <div class="wnav-signs" id="wnav-signs" data-wnav-signs-menu hidden>
+      <div class="wnav-signs__grid"><a class="wnav-signs__item" href="/aries/" style="--sign:#DE8E79"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/aries.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/aries.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Aries</span><span class="wnav-signs__dates">Mar 21 – Apr 19</span></a><a class="wnav-signs__item" href="/taurus/" style="--sign:#B9D4BE"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/taurus.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/taurus.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Taurus</span><span class="wnav-signs__dates">Apr 20 – May 20</span></a><a class="wnav-signs__item" href="/gemini/" style="--sign:#B29DD0"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/gemini.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/gemini.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Gemini</span><span class="wnav-signs__dates">May 21 – Jun 20</span></a><a class="wnav-signs__item" href="/cancer/" style="--sign:#B6D4E4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/cancer.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Cancer</span><span class="wnav-signs__dates">Jun 21 – Jul 22</span></a><a class="wnav-signs__item" href="/leo/" style="--sign:#E0A9B4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/leo.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/leo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Leo</span><span class="wnav-signs__dates">Jul 23 – Aug 22</span></a><a class="wnav-signs__item" href="/virgo/" style="--sign:#B7D9B0"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/virgo.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/virgo.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Virgo</span><span class="wnav-signs__dates">Aug 23 – Sep 22</span></a><a class="wnav-signs__item" href="/libra/" style="--sign:#D3A9DE"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/libra.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Libra</span><span class="wnav-signs__dates">Sep 23 – Oct 22</span></a><a class="wnav-signs__item" href="/scorpio/" style="--sign:#B9DCE8"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/scorpio.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Scorpio</span><span class="wnav-signs__dates">Oct 23 – Nov 21</span></a><a class="wnav-signs__item" href="/sagittarius/" style="--sign:#E0B080"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/sagittarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/sagittarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Sagittarius</span><span class="wnav-signs__dates">Nov 22 – Dec 21</span></a><a class="wnav-signs__item" href="/capricorn/" style="--sign:#C0DEA8"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/capricorn.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/capricorn.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Capricorn</span><span class="wnav-signs__dates">Dec 22 – Jan 19</span></a><a class="wnav-signs__item" href="/aquarius/" style="--sign:#AE8FC9"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/aquarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/aquarius.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Aquarius</span><span class="wnav-signs__dates">Jan 20 – Feb 18</span></a><a class="wnav-signs__item" href="/pisces/" style="--sign:#A9D4C4"><picture class="wnav-disc"><source srcset="/assets/zodiac-icons/128/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/pisces.webp" width="32" height="32" alt="" loading="lazy" decoding="async"/></picture><span class="wnav-signs__name">Pisces</span><span class="wnav-signs__dates">Feb 19 – Mar 20</span></a></div>
+    </div>
+  </div>
+  <div class="wnav-menu" id="wnav-menu" data-wnav-mobile hidden>
+    <nav aria-label="Mobile">
+      <div class="wnav-menu__group">
+        <span class="wnav-menu__label">The site</span>
+        <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
+        <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
+        <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/registry/" aria-current="page"><span>Registry</span><small>Digital collection and registry</small></a>
+      </div>
+      <div class="wnav-menu__group">
+        <span class="wnav-menu__label">Tools</span>
+        <div class="wnav-menu__tools"><a class="wnav-menu__tool" style="--i:0" href="/birth-chart/" aria-label="Birth chart. See your sun, moon, rising, planets, houses, and what they mean.">Birth chart</a><a class="wnav-menu__tool" style="--i:1" href="/compatibility/" aria-label="Compatibility. Compare two charts and see where they click, clash, and grow.">Compatibility</a><a class="wnav-menu__tool" style="--i:2" href="/transits/" aria-label="Transits. See today's sky next to your chart.">Transits</a><a class="wnav-menu__tool" style="--i:3" href="/moon-sign/" aria-label="Moon sign. How you feel, and what settles you.">Moon sign</a><a class="wnav-menu__tool" style="--i:4" href="/rising-sign/" aria-label="Rising sign. Find the sign people meet first. Birth time helps.">Rising sign</a><a class="wnav-menu__tool" style="--i:5" href="/moon-phase/" aria-label="Moon phase. Tonight’s moon, and the moon of any date you care about.">Moon phase</a><a class="wnav-menu__tool" style="--i:6" href="/saturn-return/" aria-label="Saturn return. When yours hits, exactly, and what it tends to ask.">Saturn return</a><a class="wnav-menu__tool" style="--i:7" href="/birthday/" aria-label="Birthday. Pick your birthday and get the receipts: sun sign verified across 1940–2030, exact degree spans, decans with traditional rulers, and year-by-year cusp tables.">Birthday</a></div>
+      </div>
+      <div class="wnav-menu__group">
+        <span class="wnav-menu__label">The twelve</span>
+        <div class="wnav-menu__signs"><a class="wnav-menu__sign" style="--i:0;--sign:#DE8E79" href="/aries/" aria-label="Aries"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/aries.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/aries.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Aries</span></a><a class="wnav-menu__sign" style="--i:1;--sign:#B9D4BE" href="/taurus/" aria-label="Taurus"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/taurus.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/taurus.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Taurus</span></a><a class="wnav-menu__sign" style="--i:2;--sign:#B29DD0" href="/gemini/" aria-label="Gemini"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/gemini.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/gemini.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Gemini</span></a><a class="wnav-menu__sign" style="--i:3;--sign:#B6D4E4" href="/cancer/" aria-label="Cancer"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/cancer.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Cancer</span></a><a class="wnav-menu__sign" style="--i:4;--sign:#E0A9B4" href="/leo/" aria-label="Leo"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/leo.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/leo.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Leo</span></a><a class="wnav-menu__sign" style="--i:5;--sign:#B7D9B0" href="/virgo/" aria-label="Virgo"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/virgo.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/virgo.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Virgo</span></a><a class="wnav-menu__sign" style="--i:6;--sign:#D3A9DE" href="/libra/" aria-label="Libra"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/libra.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/libra.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Libra</span></a><a class="wnav-menu__sign" style="--i:7;--sign:#B9DCE8" href="/scorpio/" aria-label="Scorpio"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/scorpio.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/scorpio.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Scorpio</span></a><a class="wnav-menu__sign" style="--i:8;--sign:#E0B080" href="/sagittarius/" aria-label="Sagittarius"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/sagittarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/sagittarius.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Sagittarius</span></a><a class="wnav-menu__sign" style="--i:9;--sign:#C0DEA8" href="/capricorn/" aria-label="Capricorn"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/capricorn.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/capricorn.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Capricorn</span></a><a class="wnav-menu__sign" style="--i:10;--sign:#AE8FC9" href="/aquarius/" aria-label="Aquarius"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/aquarius.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/aquarius.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Aquarius</span></a><a class="wnav-menu__sign" style="--i:11;--sign:#A9D4C4" href="/pisces/" aria-label="Pisces"><picture class="wnav-disc wnav-disc--lg"><source srcset="/assets/zodiac-icons/128/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/128/pisces.webp" width="40" height="40" alt="" loading="lazy" decoding="async"/></picture><span>Pisces</span></a></div>
+      </div>
+    </nav>
+  </div>
+
+  <div class="shell">
+    <main id="main" tabindex="-1">
+      <section class="hero" aria-labelledby="zme-title">
+        <p class="kicker">The collector’s wing · trading room</p>
+        <h1 id="zme-title">Zodiacs Mercantile Exchange</h1>
+        <p class="hero__lede">
+          The Registry’s trading room for the Twelve. Charts and recent trades are
+          indexed market data; every executable quote and every order belongs to
+          <a href="https://jup.ag/" rel="noopener noreferrer external nofollow">Jupiter</a>,
+          an independent third-party venue that builds, executes, and charges for
+          each trade. The Exchange presents; it never holds, signs, or settles.
+        </p>
+      </section>
+
+      <!-- registry-exchange:start -->
+      <!-- registry-exchange:slot {} -->
+      <!-- registry-exchange:end -->
+
+      <section class="section" aria-labelledby="zme-records">
+        <h2 id="zme-records">The Twelve</h2>
+        <p class="section__note">Each record page carries the full catalogue entry — provenance, verified addresses, and its venue route.</p>
+        <ul class="records">
+          <li><a class="records__item" href="/registry/aries/" style="--sign:#DE8E79"><img class="records__disc" src="/assets/zodiac-icons/128/aries.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Aries</span><span class="records__lot">Lot I</span></span></a></li>
+          <li><a class="records__item" href="/registry/taurus/" style="--sign:#B9D4BE"><img class="records__disc" src="/assets/zodiac-icons/128/taurus.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Taurus</span><span class="records__lot">Lot II</span></span></a></li>
+          <li><a class="records__item" href="/registry/gemini/" style="--sign:#B29DD0"><img class="records__disc" src="/assets/zodiac-icons/128/gemini.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Gemini</span><span class="records__lot">Lot III</span></span></a></li>
+          <li><a class="records__item" href="/registry/cancer/" style="--sign:#B6D4E4"><img class="records__disc" src="/assets/zodiac-icons/128/cancer.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Cancer</span><span class="records__lot">Lot IV</span></span></a></li>
+          <li><a class="records__item" href="/registry/leo/" style="--sign:#E0A9B4"><img class="records__disc" src="/assets/zodiac-icons/128/leo.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Leo</span><span class="records__lot">Lot V</span></span></a></li>
+          <li><a class="records__item" href="/registry/virgo/" style="--sign:#B7D9B0"><img class="records__disc" src="/assets/zodiac-icons/128/virgo.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Virgo</span><span class="records__lot">Lot VI</span></span></a></li>
+          <li><a class="records__item" href="/registry/libra/" style="--sign:#D3A9DE"><img class="records__disc" src="/assets/zodiac-icons/128/libra.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Libra</span><span class="records__lot">Lot VII</span></span></a></li>
+          <li><a class="records__item" href="/registry/scorpio/" style="--sign:#B9DCE8"><img class="records__disc" src="/assets/zodiac-icons/128/scorpio.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Scorpio</span><span class="records__lot">Lot VIII</span></span></a></li>
+          <li><a class="records__item" href="/registry/sagittarius/" style="--sign:#E0B080"><img class="records__disc" src="/assets/zodiac-icons/128/sagittarius.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Sagittarius</span><span class="records__lot">Lot IX</span></span></a></li>
+          <li><a class="records__item" href="/registry/capricorn/" style="--sign:#C0DEA8"><img class="records__disc" src="/assets/zodiac-icons/128/capricorn.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Capricorn</span><span class="records__lot">Lot X</span></span></a></li>
+          <li><a class="records__item" href="/registry/aquarius/" style="--sign:#AE8FC9"><img class="records__disc" src="/assets/zodiac-icons/128/aquarius.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Aquarius</span><span class="records__lot">Lot XI</span></span></a></li>
+          <li><a class="records__item" href="/registry/pisces/" style="--sign:#A9D4C4"><img class="records__disc" src="/assets/zodiac-icons/128/pisces.webp" width="34" height="34" alt="" loading="lazy" decoding="async" /><span><span class="records__name">Pisces</span><span class="records__lot">Lot XII</span></span></a></li>
+        </ul>
+      </section>
+
+      <section class="section" aria-labelledby="zme-posture">
+        <h2 id="zme-posture">How the room works</h2>
+        <p class="section__note">The division of labour is fixed, and it is the whole point.</p>
+        <div class="posture">
+          <div class="posture__cell">
+            <h3>The venue executes</h3>
+            <p>Orders route to Jupiter, which builds the transaction, has your wallet
+            approve and sign it, submits it, and charges its own 0.10% fee. Zodiacs.org
+            holds no keys or funds, is never a counterparty, and receives nothing from
+            any trade.</p>
+          </div>
+          <div class="posture__cell">
+            <h3>Indexes describe</h3>
+            <p>Prices, charts, and the trade tape are read from public market indexes —
+            Dex Screener and GeckoTerminal — without a wallet address or any visitor
+            identifier in the request. Independent third-party data, not a valuation
+            or recommendation.</p>
+          </div>
+          <div class="posture__cell">
+            <h3>The registry verifies</h3>
+            <p>Every mint traded here is read live from the
+            <a href="/registry/zodiacs.registry.json">public registry</a> — the one
+            answer to what a sign’s official record is. No verified mint, no trade.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="risk" aria-labelledby="zme-risk">
+        <h2 id="zme-risk">Before anything is signed</h2>
+        <p>
+          Despite its name, the Exchange operates no market: this page presents a trade
+          that an independent venue builds, executes, and charges for. Jupiter is an
+          independent third-party; its 0.10% venue fee is reported with each quote, and
+          no referral, platform fee, or other compensation is configured for zodiacs.org.
+        </p>
+        <p>
+          Zodiac assets are thinly traded — pool depth is measured in thousands of
+          dollars, not millions — and can lose all market value; anyone acquiring one
+          could lose all money used to acquire a Zodiac. A trade is an onchain
+          transaction that cannot be reversed. Price impact and the amount to be
+          received are shown from the venue’s own quote before anything is signed.
+          Verify the official mint, network, amount, and destination before approving
+          anything in your wallet.
+        </p>
+        <p>
+          A wallet address is sent to the venue only when you choose to trade, never to
+          show a price. Details: <a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> ·
+          <a href="/disclosure/">Disclosure</a>.
+        </p>
+      </section>
+
+      <footer>
+        <button class="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+        · Zodiacs.org · Official registry ·
+        <a href="/registry/">Registry</a> ·
+        <a href="/disclosure/">Disclosure</a> ·
+        <a href="/disclosure/#origin">Origin receipts — 5 Jul 2024</a>
+      </footer>
+    </main>
+  </div>
+  <script>
+  (function () {
+    var buttons = document.querySelectorAll('[data-assistant-open]');
+    if (!buttons.length) return;
+    var modulePromise;
+    buttons.forEach(function (button) {
+      button.addEventListener('click', function () {
+        modulePromise = modulePromise || import('/assets/assistant-ui.js');
+        modulePromise.then(function (mod) { mod.openAssistant('en', button); }).catch(function () {});
+      });
+    });
+  })();
+  </script>
+  <script>
+  (function(){
+    var wrap = document.querySelector('[data-wnav]') ? document.querySelector('[data-wnav]').parentElement : null;
+    var signsBtn = document.querySelector('[data-wnav-signs]');
+    var signsMenu = document.querySelector('[data-wnav-signs-menu]');
+    var burger = document.querySelector('[data-wnav-burger]');
+    var mobile = document.querySelector('[data-wnav-mobile]');
+    function setSigns(open){
+      if(!signsBtn||!signsMenu) return;
+      signsBtn.setAttribute('aria-expanded', String(open));
+      if(open){ signsMenu.hidden = false; requestAnimationFrame(function(){ signsMenu.classList.add('is-open'); }); }
+      else { signsMenu.classList.remove('is-open'); setTimeout(function(){ signsMenu.hidden = true; }, 240); }
+    }
+    function setMobile(open){
+      if(!burger||!mobile) return;
+      burger.setAttribute('aria-expanded', String(open));
+      burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      mobile.hidden = !open;
+      mobile.classList.toggle('is-open', open);
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    }
+    if(signsBtn) signsBtn.addEventListener('click', function(){ setSigns(signsBtn.getAttribute('aria-expanded') !== 'true'); });
+    document.addEventListener('click', function(e){ if(wrap && !wrap.contains(e.target)) setSigns(false); });
+    if(burger) burger.addEventListener('click', function(){ setMobile(burger.getAttribute('aria-expanded') !== 'true'); });
+    if(mobile) mobile.addEventListener('click', function(e){ if(e.target.closest('a')) setMobile(false); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ setSigns(false); setMobile(false); } });
+  })();
+  </script>
+</body>
+</html>
