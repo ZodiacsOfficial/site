@@ -1,5 +1,5 @@
 /* Generated from src/trade/ by scripts/build-trade.mjs — do not edit directly. */
-"use strict";(()=>{var se="https://lite-api.jup.ag";var tt=Object.freeze(["invalid_amount","no_route","unavailable","rate_limited","order_mismatch","unexpected_fee","network","execute_failed"]),E=class extends Error{constructor(t,n,{cause:i}={}){super(n,i?{cause:i}:void 0),this.name="TradeError",this.code=t}};function f(e,t,n){throw new E(e,t,n)}function J(e,t){let n=String(e??"").trim();/^\d+(?:\.\d+)?$|^\.\d+$|^\d+\.$/.test(n)||f("invalid_amount","Enter an amount using digits and a single decimal point.");let[i="",c=""]=n.split(".");c.length>t&&f("invalid_amount",`That amount is finer than this token's ${t} decimals.`);let d=BigInt((i||"0")+c.padEnd(t,"0"));return d<=0n&&f("invalid_amount","Enter an amount greater than zero."),d}function ce(e,t,{maxFractionDigits:n=t}={}){let i=BigInt(e),c=i<0n,d=(c?-i:i).toString().padStart(t+1,"0"),o=d.slice(0,d.length-t),s=t>0?d.slice(d.length-t):"";return n<s.length&&(s=s.slice(0,n)),s=s.replace(/0+$/,""),`${c?"-":""}${o}${s?`.${s}`:""}`}function le(e){let t=Number(e);if(!Number.isFinite(t))return"unknown";let n=Math.abs(t);return n<1?"low":n<5?"notable":"severe"}function Ae(e,t){let n=new URL("/ultra/v1/order",e);for(let[i,c]of Object.entries(t))c!=null&&c!==""&&n.searchParams.set(i,String(c));return n.toString()}async function de(e){try{return await e.json()}catch(t){f("unavailable","The venue did not return a readable answer.",{cause:t})}}async function pe({inputMint:e,outputMint:t,amount:n,taker:i,baseUrl:c=se,fetchImpl:d=globalThis.fetch,signal:o}){let s=Ae(c,{inputMint:e,outputMint:t,amount:String(n),taker:i}),p;try{p=await d(s,{method:"GET",signal:o,headers:{accept:"application/json"}})}catch(a){if(a?.name==="AbortError")throw a;f("network","The price could not be reached just now.",{cause:a})}p.status===429&&f("rate_limited","The venue is rate limiting requests. Try again shortly."),p.status>=500&&f("unavailable","The venue did not answer.");let u=await de(p);if(u?.error||!p.ok){let a=typeof u?.error=="string"?u.error:"no route";/quote|route|liquidity/i.test(a)&&f("no_route","No route is available for that amount right now."),f("unavailable","The venue could not price that trade.")}return Se(u)}function Se(e){(!e||typeof e!="object")&&f("unavailable","The venue returned no order.");let{inputMint:t,outputMint:n,inAmount:i,outAmount:c,requestId:d}=e;(!t||!n||!i||!c)&&f("unavailable","The venue returned an incomplete order.");let o=Number(e.platformFee?.feeBps??e.feeBps??0);return{inputMint:t,outputMint:n,inAmount:BigInt(i),outAmount:BigInt(c),priceImpactPct:Number(e.priceImpactPct??0),feeBps:Number.isFinite(o)?o:0,routeLabels:Array.isArray(e.routePlan)?e.routePlan.map(s=>s?.swapInfo?.label).filter(Boolean):[],requestId:d??null,transaction:e.transaction??null,inUsdValue:Number(e.inUsdValue??0),outUsdValue:Number(e.outUsdValue??0)}}function Q(e,t){return(e.inputMint!==t.inputMint||e.outputMint!==t.outputMint)&&f("order_mismatch","The venue answered for a different token than the one shown."),e.inAmount!==BigInt(t.amount)&&f("order_mismatch","The venue answered for a different amount than the one entered."),e.outAmount<=0n&&f("order_mismatch","The venue returned an empty amount."),e.feeBps>50&&f("unexpected_fee","The venue quoted an unexpected fee, so nothing was sent to your wallet."),e}function ue(e){return typeof e.transaction=="string"&&e.transaction.length>0&&typeof e.requestId=="string"&&e.requestId.length>0}async function me({signedTransaction:e,requestId:t,baseUrl:n=se,fetchImpl:i=globalThis.fetch,signal:c}){(!e||!t)&&f("execute_failed","The signed transaction was incomplete.");let d;try{d=await i(new URL("/ultra/v1/execute",n).toString(),{method:"POST",signal:c,headers:{"content-type":"application/json",accept:"application/json"},body:JSON.stringify({signedTransaction:e,requestId:t})})}catch(s){if(s?.name==="AbortError")throw s;f("network","The result could not be confirmed from here.",{cause:s})}let o=await de(d);if(!d.ok||o?.status==="Failed"||o?.error){let s=o?.error||o?.status||"the venue rejected it";f("execute_failed",`The trade did not go through: ${s}.`)}return{signature:o?.signature??null,slot:o?.slot??null,status:o?.status??"Success"}}var fe=`
+"use strict";(()=>{var Ee="https://lite-api.jup.ag";var Lt=Object.freeze(["invalid_amount","no_route","unavailable","rate_limited","order_mismatch","unexpected_fee","network","execute_failed"]),A=class extends Error{constructor(t,n,{cause:a}={}){super(n,a?{cause:a}:void 0),this.name="TradeError",this.code=t}};function k(e,t,n){throw new A(e,t,n)}function ie(e,t){let n=String(e??"").trim();/^\d+(?:\.\d+)?$|^\.\d+$|^\d+\.$/.test(n)||k("invalid_amount","Enter an amount using digits and a single decimal point.");let[a="",i=""]=n.split(".");i.length>t&&k("invalid_amount",`That amount is finer than this token's ${t} decimals.`);let p=BigInt((a||"0")+i.padEnd(t,"0"));return p<=0n&&k("invalid_amount","Enter an amount greater than zero."),p}function Se(e,t,{maxFractionDigits:n=t}={}){let a=BigInt(e),i=a<0n,p=(i?-a:a).toString().padStart(t+1,"0"),l=p.slice(0,p.length-t),c=t>0?p.slice(p.length-t):"";return n<c.length&&(c=c.slice(0,n)),c=c.replace(/0+$/,""),`${i?"-":""}${l}${c?`.${c}`:""}`}function Te(e){let t=Number(e);if(!Number.isFinite(t))return"unknown";let n=Math.abs(t);return n<1?"low":n<5?"notable":"severe"}function Ye(e,t){let n=new URL("/ultra/v1/order",e);for(let[a,i]of Object.entries(t))i!=null&&i!==""&&n.searchParams.set(a,String(i));return n.toString()}async function Ne(e){try{return await e.json()}catch(t){k("unavailable","The venue did not return a readable answer.",{cause:t})}}async function Le({inputMint:e,outputMint:t,amount:n,taker:a,baseUrl:i=Ee,fetchImpl:p=globalThis.fetch,signal:l}){let c=Ye(i,{inputMint:e,outputMint:t,amount:String(n),taker:a}),m;try{m=await p(c,{method:"GET",signal:l,headers:{accept:"application/json"}})}catch(d){if(d?.name==="AbortError")throw d;k("network","The price could not be reached just now.",{cause:d})}m.status===429&&k("rate_limited","The venue is rate limiting requests. Try again shortly."),m.status>=500&&k("unavailable","The venue did not answer.");let b=await Ne(m);if(b?.error||!m.ok){let d=typeof b?.error=="string"?b.error:"no route";/quote|route|liquidity/i.test(d)&&k("no_route","No route is available for that amount right now."),k("unavailable","The venue could not price that trade.")}return Ke(b)}function Ke(e){(!e||typeof e!="object")&&k("unavailable","The venue returned no order.");let{inputMint:t,outputMint:n,inAmount:a,outAmount:i,requestId:p}=e;(!t||!n||!a||!i)&&k("unavailable","The venue returned an incomplete order.");let l=Number(e.platformFee?.feeBps??e.feeBps??0);return{inputMint:t,outputMint:n,inAmount:BigInt(a),outAmount:BigInt(i),priceImpactPct:Number(e.priceImpactPct??0),feeBps:Number.isFinite(l)?l:0,routeLabels:Array.isArray(e.routePlan)?e.routePlan.map(c=>c?.swapInfo?.label).filter(Boolean):[],requestId:p??null,transaction:e.transaction??null,inUsdValue:Number(e.inUsdValue??0),outUsdValue:Number(e.outUsdValue??0)}}function se(e,t){return(e.inputMint!==t.inputMint||e.outputMint!==t.outputMint)&&k("order_mismatch","The venue answered for a different token than the one shown."),e.inAmount!==BigInt(t.amount)&&k("order_mismatch","The venue answered for a different amount than the one entered."),e.outAmount<=0n&&k("order_mismatch","The venue returned an empty amount."),e.feeBps>50&&k("unexpected_fee","The venue quoted an unexpected fee, so nothing was sent to your wallet."),e}function qe(e){return typeof e.transaction=="string"&&e.transaction.length>0&&typeof e.requestId=="string"&&e.requestId.length>0}async function ze({signedTransaction:e,requestId:t,baseUrl:n=Ee,fetchImpl:a=globalThis.fetch,signal:i}){(!e||!t)&&k("execute_failed","The signed transaction was incomplete.");let p;try{p=await a(new URL("/ultra/v1/execute",n).toString(),{method:"POST",signal:i,headers:{"content-type":"application/json",accept:"application/json"},body:JSON.stringify({signedTransaction:e,requestId:t})})}catch(c){if(c?.name==="AbortError")throw c;k("network","The result could not be confirmed from here.",{cause:c})}let l=await Ne(p);if(!p.ok||l?.status==="Failed"||l?.error){let c=l?.error||l?.status||"the venue rejected it";k("execute_failed",`The trade did not go through: ${c}.`)}return{signature:l?.signature??null,slot:l?.slot??null,status:l?.status??"Success"}}var De=`
 .tp {
   --tp-ink: #EEF1F7;
   --tp-ink-2: #C6CCDA;
@@ -7,19 +7,26 @@
   --tp-hair: rgba(198,204,218,.10);
   --tp-hair-2: rgba(198,204,218,.22);
   --tp-hair-3: rgba(198,204,218,.42);
-  --tp-surface: rgba(21,25,37,.72);
+  --tp-surface: rgba(13,16,25,.94);
+  --tp-gold: #E7C879;
+  --tp-gold-dim: rgba(231,200,121,.58);
   --tp-red: #D4603F;
   container-type: inline-size;
   display: block;
   width: 100%;
   min-width: 0;
   margin: 0;
-  padding: 20px;
+  padding: 22px;
   border: 1px solid color-mix(in srgb, var(--tp-sign, #C6CCDA) 30%, var(--tp-hair));
-  border-radius: 20px;
+  border-radius: 24px;
   background:
-    radial-gradient(120% 100% at 0% 0%, color-mix(in srgb, var(--tp-sign, #C6CCDA) 11%, transparent), transparent 64%),
+    radial-gradient(90% 60% at 4% 0%, color-mix(in srgb, var(--tp-sign, #C6CCDA) 13%, transparent), transparent 70%),
+    radial-gradient(65% 45% at 100% 2%, rgba(231,200,121,.075), transparent 72%),
+    linear-gradient(150deg, rgba(255,255,255,.025), transparent 34%),
     var(--tp-surface);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.025),
+    0 22px 60px rgba(0,0,0,.24);
   color: var(--tp-ink-2);
   font-family: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
   font-size: 14px;
@@ -47,15 +54,57 @@
   background: transparent;
 }
 
-.tp__head { display: flex; align-items: center; gap: 11px; margin-bottom: 20px; }
-.tp__disc { width: 36px; height: 36px; border-radius: 50%; display: block; flex: none; }
+.tp__head {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px; padding-bottom: 14px;
+  border-bottom: 1px solid var(--tp-hair);
+}
+.tp__disc {
+  width: 40px; height: 40px; padding: 2px;
+  border: 1px solid color-mix(in srgb, var(--tp-sign, #C6CCDA) 55%, transparent);
+  border-radius: 50%; display: block; flex: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--tp-sign, #C6CCDA) 7%, transparent);
+}
 .tp__who { display: flex; flex-direction: column; min-width: 0; }
-.tp__name { color: var(--tp-ink); font-size: 15px; font-weight: 600; }
-.tp__sub { color: var(--tp-dim); font-size: 12px; }
+.tp__name {
+  color: var(--tp-ink);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 21px; font-weight: 500; line-height: 1.05;
+}
+.tp__sub { margin-top: 3px; color: var(--tp-dim); font-size: 11.5px; }
 .tp__venue {
-  margin-left: auto; padding-left: 10px;
-  color: var(--tp-dim); font-size: 10.5px; letter-spacing: .1em;
+  margin-left: auto; padding: 5px 8px;
+  border: 1px solid rgba(231,200,121,.18); border-radius: 999px;
+  color: var(--tp-gold-dim); font-size: 9px; letter-spacing: .13em;
   text-transform: uppercase; text-align: right;
+}
+
+.tp__asset-note {
+  margin: 0; padding: 11px 12px;
+  border: 1px solid rgba(231,200,121,.17); border-radius: 12px;
+  background: linear-gradient(100deg, rgba(231,200,121,.065), transparent 76%);
+  color: var(--tp-ink-2); font-size: 11.5px; line-height: 1.48;
+}
+.tp__flow { display: block; }
+.tp__step {
+  position: relative;
+  padding: 16px 0;
+  border-top: 1px solid var(--tp-hair);
+}
+.tp__step:first-child { border-top: 0; }
+.tp__step[hidden], .tp__complete[hidden] { display: none; }
+.tp__step-head { display: flex; align-items: center; gap: 9px; margin-bottom: 11px; }
+.tp__step-number {
+  display: inline-grid; place-items: center;
+  width: 21px; height: 21px; border: 1px solid rgba(231,200,121,.27);
+  border-radius: 50%; color: var(--tp-gold-dim);
+  font-family: ui-monospace, 'JetBrains Mono', monospace;
+  font-size: 8.5px; letter-spacing: .02em;
+}
+.tp__step-title {
+  margin: 0; color: var(--tp-ink);
+  font-family: 'EB Garamond', Georgia, serif;
+  font-size: 18px; font-weight: 500; line-height: 1;
 }
 
 .tp .lab {
@@ -66,7 +115,7 @@
 }
 .tp .pay, .tp .get {
   display: flex; align-items: baseline; gap: 8px;
-  min-height: 64px; padding: 12px 16px;
+  min-height: 58px; padding: 11px 15px;
   border: 1px solid var(--tp-hair-2); border-radius: 14px;
   background: rgba(6,7,9,.5);
 }
@@ -76,7 +125,7 @@
   border: 0; background: transparent; padding: 0;
   color: var(--tp-ink);
   font-family: ui-monospace, 'JetBrains Mono', monospace;
-  font-size: 30px; letter-spacing: -.01em;
+  font-size: 28px; letter-spacing: -.025em;
 }
 .tp .pay__input:focus { outline: none; }
 .tp .pay:focus-within {
@@ -90,10 +139,10 @@
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 8px;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 .tp .amts button {
-  min-width: 0; min-height: 44px; padding: 0 10px;
+  min-width: 0; min-height: 45px; padding: 0 10px;
   border: 1px solid var(--tp-hair-2); border-radius: 12px;
   background: transparent; color: var(--tp-ink-2);
   font-family: inherit; font-size: 13px; cursor: pointer;
@@ -110,9 +159,6 @@
   background: color-mix(in srgb, var(--tp-sign, #C6CCDA) 14%, transparent);
 }
 
-.tp .meet { display: flex; align-items: center; gap: 10px; margin: 14px 0; color: var(--tp-dim); font-size: 12px; }
-.tp .meet i { flex: 1; height: 1px; background: var(--tp-hair); }
-
 .tp .quote[hidden] { display: none; }
 .tp .out {
   flex: 1 1 auto; min-width: 0;
@@ -124,46 +170,89 @@
 .tp .out.is-waiting { color: var(--tp-dim); }
 .tp .usd { margin: 7px 0 0; color: var(--tp-dim); font-size: 12px; }
 
-.tp .facts { display: flex; flex-direction: column; gap: 4px; margin-top: 14px; }
-.tp .fact { color: var(--tp-dim); font-size: 12px; }
+.tp .facts {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px; margin-top: 10px;
+}
+.tp .fact {
+  min-width: 0; padding: 8px 9px;
+  border: 1px solid var(--tp-hair); border-radius: 9px;
+  background: rgba(255,255,255,.018);
+  color: var(--tp-dim); font-size: 10.5px; line-height: 1.35;
+}
 .tp .fact.severe { color: var(--tp-red); }
+.tp .details {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px; margin: 9px 0 0; padding: 0;
+  overflow: hidden; border: 1px solid var(--tp-hair); border-radius: 10px;
+  background: var(--tp-hair);
+}
+.tp .detail { min-width: 0; padding: 8px 9px; background: rgba(8,10,16,.92); }
+.tp .detail dt {
+  margin: 0 0 3px; color: var(--tp-dim);
+  font-family: ui-monospace, 'JetBrains Mono', monospace;
+  font-size: 7.5px; letter-spacing: .12em; text-transform: uppercase;
+}
+.tp .detail dd {
+  min-width: 0; margin: 0; color: var(--tp-ink-2);
+  font-family: ui-monospace, 'JetBrains Mono', monospace;
+  font-size: 10.5px; overflow-wrap: anywhere;
+}
+.tp .detail a { color: inherit; text-decoration-color: rgba(231,200,121,.3); text-underline-offset: 3px; }
 .tp .warn {
   margin: 12px 0 0; padding: 10px 12px;
   border: 1px solid color-mix(in srgb, var(--tp-red) 40%, transparent);
   border-radius: 10px; color: var(--tp-ink-2); font-size: 12.5px;
 }
-.tp .warn[hidden], .tp .err[hidden], .tp .after[hidden] { display: none; }
+.tp .review-notice {
+  margin: 10px 0 0; padding: 10px 11px;
+  border: 1px solid rgba(231,200,121,.3); border-radius: 10px;
+  background: rgba(231,200,121,.055);
+  color: var(--tp-ink-2); font-size: 11.5px; line-height: 1.45;
+}
+.tp .warn[hidden], .tp .review-notice[hidden], .tp .err[hidden], .tp .after[hidden] { display: none; }
 
-.tp .payq { margin: 20px 0 0; }
 .tp .payseg {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 8px;
 }
 .tp .payseg button {
-  min-width: 0; min-height: 48px; padding: 8px 12px;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  min-width: 0; min-height: 58px; padding: 9px 11px;
   border: 1px solid var(--tp-hair-2); border-radius: 12px;
   background: transparent; color: var(--tp-ink-2);
-  font-family: inherit; font-size: 13px; line-height: 1.25; cursor: pointer;
+  font-family: inherit; text-align: left; cursor: pointer;
   transition:
     transform 140ms cubic-bezier(.23,1,.32,1),
     border-color 220ms cubic-bezier(.23,1,.32,1),
     color 220ms cubic-bezier(.23,1,.32,1),
     background 220ms cubic-bezier(.23,1,.32,1);
 }
+.tp .payseg__eyebrow {
+  color: var(--tp-dim);
+  font-family: ui-monospace, 'JetBrains Mono', monospace;
+  font-size: 7.5px; letter-spacing: .11em; line-height: 1.2; text-transform: uppercase;
+}
+.tp .payseg__label { margin-top: 4px; color: inherit; font-size: 12px; line-height: 1.2; }
 .tp .payseg button:active { transform: scale(.985); }
 .tp .payseg button[aria-pressed='true'] {
   color: var(--tp-ink);
   border-color: color-mix(in srgb, var(--tp-sign, #C6CCDA) 70%, transparent);
   background: color-mix(in srgb, var(--tp-sign, #C6CCDA) 14%, transparent);
 }
+.tp .amts button:disabled, .tp .payseg button:disabled { opacity: .5; cursor: wait; }
+.tp .route-hint, .tp .action-intro {
+  margin: 8px 0 0; color: var(--tp-dim); font-size: 11.5px; line-height: 1.45;
+}
+.tp .action-intro { margin: 0 0 10px; color: var(--tp-ink-2); }
 
-.tp .action { margin-top: 16px; }
+.tp .action { margin-top: 0; }
 .tp__go {
   display: flex; align-items: center; justify-content: center;
   width: 100%; min-height: 52px; padding: 0 20px;
-  border: 0; border-radius: 999px;
-  background: var(--tp-ink); color: #060709;
+  border: 1px solid rgba(255,255,255,.14); border-radius: 999px;
+  background: linear-gradient(135deg, #F1E5BC, var(--tp-gold)); color: #090B10;
   font-family: inherit; font-size: 15px; font-weight: 600; cursor: pointer;
   transition:
     transform 140ms cubic-bezier(.23,1,.32,1),
@@ -173,13 +262,14 @@
 .tp__go:disabled { opacity: .42; cursor: default; }
 .tp .nowallet { margin: 10px 0 0; color: var(--tp-dim); font-size: 12px; text-align: center; }
 
-/* Four ways to pay, one row each: mark, name, what the company does. */
-.tp .ramps { list-style: none; margin: 0; padding: 0; }
-.tp .ramps li { border-top: 1px solid var(--tp-hair); }
-.tp .ramps li:first-child { border-top: 0; }
+/* Four ways to fund, one row each: mark, name, what the company does. */
+.tp .ramps { display: grid; gap: 6px; list-style: none; margin: 0; padding: 0; }
+.tp .ramps li { border: 0; }
 .tp .ramp {
   display: flex; align-items: center; gap: 12px;
-  min-height: 50px; padding: 7px 2px;
+  min-height: 48px; padding: 7px 9px;
+  border: 1px solid var(--tp-hair); border-radius: 10px;
+  background: rgba(255,255,255,.016);
   color: var(--tp-ink-2); text-decoration: none;
   transition: color 200ms cubic-bezier(.23,1,.32,1);
 }
@@ -226,6 +316,17 @@
   font-size: 11.5px;
   line-height: 1.55;
 }
+.tp__complete {
+  margin-top: 16px; padding: 16px;
+  border: 1px solid color-mix(in srgb, var(--tp-sign, #C6CCDA) 32%, var(--tp-hair));
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--tp-sign, #C6CCDA) 7%, transparent);
+}
+.tp__complete-kicker {
+  margin: 0; color: var(--tp-gold-dim);
+  font-family: ui-monospace, 'JetBrains Mono', monospace;
+  font-size: 8px; letter-spacing: .14em; text-transform: uppercase;
+}
 
 .tp button:focus-visible, .tp a:focus-visible {
   outline: 2px solid color-mix(in srgb, var(--tp-sign, #C6CCDA) 74%, white);
@@ -233,24 +334,33 @@
 }
 
 @container (max-width: 340px) {
-  .tp { padding: 16px; }
+  .tp { padding: 14px; border-radius: 18px; }
+  .tp__head { margin-bottom: 10px; padding-bottom: 10px; }
+  .tp__asset-note { padding: 9px 10px; font-size: 10.5px; line-height: 1.4; }
+  .tp__step { padding: 12px 0; }
+  .tp__step-head { margin-bottom: 9px; }
   .tp .pay__input { font-size: 26px; }
   .tp .out { font-size: 22px; }
-  .tp .amts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .tp .payseg { grid-template-columns: 1fr; }
-  /* Name over note rather than name beside note: a six-word line has nowhere
-     to go on a phone once the mark and the arrow have taken their room. */
-  .tp .ramp {
-    flex-wrap: wrap;
-    align-items: baseline;
-    gap: 4px 12px;
-    padding: 10px 2px;
+  .tp .amts {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px; margin-top: 8px;
   }
-  /* Explicit order so the arrow stays on the name's line and only the note
-     wraps beneath it \u2014 left to itself it would land on a third line alone. */
-  .tp .ramp__who { order: 1; flex: 1 1 auto; }
-  .tp .ramps .go { order: 2; }
-  .tp .ramp__note { order: 3; flex-basis: 100%; text-align: left; }
+  .tp .amts button { min-height: 45px; padding: 0 4px; font-size: 12px; }
+  .tp .payseg { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; }
+  .tp .payseg button { min-height: 54px; padding: 7px 8px; }
+  .tp .payseg__label { font-size: 11.5px; }
+  .tp .facts, .tp .details { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .tp .facts { gap: 6px; margin-top: 8px; }
+  .tp .fact, .tp .detail { padding: 7px 8px; }
+  /* Provider rows remain horizontal at phone width. Notes may take two lines,
+     but four separate full-width sub-rows make the funding path needlessly tall. */
+  .tp .ramp {
+    gap: 8px;
+    padding: 7px;
+  }
+  .tp .ramp__who { gap: 6px; }
+  .tp .ramp__name { font-size: 12.5px; }
+  .tp .ramp__note { font-size: 10.5px; line-height: 1.25; }
 }
 
 /* The wallet chooser, only ever raised when more than one is installed. */
@@ -301,4 +411,4 @@
 @media (prefers-reduced-motion: reduce) {
   .tp *, .tp-pick * { transition-duration: 0.01ms !important; }
 }
-`;var Te="123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz",ot=new Map([...Te].map((e,t)=>[e,BigInt(t)]));function Pe(){return globalThis.CustomEvent}function he(e,t=window){let n=new Set,i=()=>e([...n].sort((s,p)=>s.name.localeCompare(p.name))),c=Object.freeze({register:(...s)=>{for(let p of s)p?.features?.["standard:connect"]&&n.add(p);return i(),()=>{for(let p of s)n.delete(p);i()}}}),d=(s=>{let p=s.detail;typeof p=="function"&&p(c)});t.addEventListener("wallet-standard:register-wallet",d);let o=Pe();return t.dispatchEvent(new o("wallet-standard:app-ready",{detail:c})),i(),()=>t.removeEventListener("wallet-standard:register-wallet",d)}var Le="solana:mainnet",ze="solana:signTransaction";function I(){let e=new Error("The wallet was dismissed.");return e.name="WalletDismissed",e}function ge(e){return e?e.name==="WalletDismissed"||e.code===4001||e.code===-32603?!0:/reject|refus|denied|declin|cancel|dismiss|user closed/i.test(String(e.message??"")):!1}function De(e){let t=atob(e),n=new Uint8Array(t.length);for(let i=0;i<t.length;i+=1)n[i]=t.charCodeAt(i);return n}function Ne(e){let t="";for(let n=0;n<e.length;n+=32768)t+=String.fromCharCode(...e.subarray(n,n+32768));return btoa(t)}function Me(e,t){return[...(t?.accounts?.length?t.accounts:e.accounts)??[]].find(i=>!i.chains?.length||i.chains.some(c=>c.startsWith("solana:")))??null}function Be(e,t){return e.length===1?Promise.resolve(e[0]):new Promise((n,i)=>{let c=document.createElement("div");c.className="tp-pick";let d=document.createElement("div");d.className="tp-pick__box",d.setAttribute("role","dialog"),d.setAttribute("aria-modal","true"),d.setAttribute("aria-label","Choose a wallet");let o=document.createElement("p");o.className="tp-pick__title",o.textContent="Choose a wallet",d.append(o);let s=()=>{c.remove(),document.removeEventListener("keydown",p)},p=a=>{a.key==="Escape"&&(s(),i(I()))};for(let a of e){let h=document.createElement("button");if(h.type="button",h.className="tp-pick__w",a.icon){let b=document.createElement("img");b.src=a.icon,b.alt="",b.width=24,b.height=24,h.append(b)}h.append(document.createTextNode(a.name)),h.addEventListener("click",()=>{s(),n(a)}),d.append(h)}let u=document.createElement("button");u.type="button",u.className="tp-pick__x",u.textContent="Cancel",u.addEventListener("click",()=>{s(),i(I())}),d.append(u),c.addEventListener("click",a=>{a.target===c&&(s(),i(I()))}),document.addEventListener("keydown",p),c.append(d),(t?.ownerDocument??document).body.append(c),d.querySelector("button")?.focus()})}function be({host:e=null,target:t=void 0,choose:n=void 0}={}){let i=[],c=he(s=>{i=s},t??window),d=n??(s=>Be(s,e)),o=null;return{getAddress(){return o?.account.address??null},async connect(){if(o)return o.account.address;if(!i.length)throw new E("unavailable","No Solana wallet was found in this browser.");let s=await d(i),p;try{p=await s.features["standard:connect"].connect()}catch(a){throw ge(a)?I():a}let u=Me(s,p);if(!u)throw new E("unavailable","That wallet has no Solana account.");return o={wallet:s,account:u},u.address},async signTransaction(s){if(!o)throw new E("unavailable","No wallet is connected.");let p=o.wallet.features[ze];if(!p)throw new E("unavailable","That wallet cannot sign here.");let u;try{u=await p.signTransaction({transaction:De(s),account:o.account,chain:Le})}catch(h){throw ge(h)?I():h}let a=u?.[0]?.signedTransaction;if(!a)throw new E("unavailable","The wallet returned nothing to submit.");return Ne(a)},destroy(){c(),o=null}}}var $e=Object.freeze(["card","usdc"]),Ie=Object.freeze(["idle","quoting","ready","signing","done","error"]),W="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",Y=6,We=6,Fe=Object.freeze(["25","50","100","250"]),qe=Object.freeze([{name:"Coinbase",mark:"coinbase",href:"https://www.coinbase.com/",note:"Dollars to USDC, no trading fee."},{name:"fomo",mark:"fomo",href:"https://fomo.family/",applePay:!0,note:"Apple Pay, trades in the app."},{name:"MoonPay",mark:"moonpay",href:"https://www.moonpay.com/",note:"Cards and bank transfer."},{name:"Ramp Network",mark:"ramp",href:"https://rampnetwork.com/",note:"Cards, Apple Pay, Google Pay."}]);function Ue(e){let t=Number(e);return Number.isFinite(t)?t<1?`${Math.round(t*100)}\xA2`:`$${t.toFixed(2)}`:""}function Oe(e,t=We){let n=ce(e,t,{maxFractionDigits:0});return Number(n).toLocaleString("en-US",{maximumFractionDigits:0})}function Re(e,t){let n=(Number(e)||0)*((Number(t)||0)/1e4);return`Jupiter\u2019s fee \u2014 about ${Ue(n)} on this trade.`}function je(e){let t=le(e),n=Math.abs(Number(e)||0).toFixed(2);return{band:t,text:`Buying this much moves the price ${n}%.`,severe:t==="severe"}}function He(e,t){let n=Math.abs(Number(t)||0).toFixed(2);return`Not much ${e} is for sale right now, so buying this much would push the price up ${n}%. Buying less costs you less.`}function Ve(e){return e==="card"?"Whichever you pick, the payment and any ID checks happen with that company \u2014 Zodiacs.org never sees your card and never holds your money. Prices here move fast, and a Zodiac can lose all its value.":"Your wallet will ask you to approve this before anything happens. Jupiter does the trade, not us \u2014 Zodiacs.org never holds your money and can\u2019t undo a trade once it\u2019s made. Prices here move fast, and a Zodiac can lose all its value."}function Ge(e){return["They are in your wallet already. Nobody else can move them \u2014 not us, not Jupiter.","You do not need to do anything else. There is nothing to claim and nothing to renew.","Sell them whenever you like, the same way you bought them.",`${e} now shows in your Cabinet of Twelve.`]}function Je(e){switch(e){case"no_route":return"No price right now. Try again in a moment, or try a smaller amount.";case"rate_limited":return"Too many requests just now. Wait a moment and try again.";case"invalid_amount":return"Enter an amount using digits and a single decimal point.";case"order_mismatch":case"unexpected_fee":return"The price that came back did not match what you were shown, so nothing was sent to your wallet. Try again.";case"execute_failed":return"The trade did not go through. Nothing left your wallet.";case"network":return"That could not be confirmed from here. Check your wallet before trying again \u2014 it may still have gone through.";default:return"Something went wrong. Nothing was sent to your wallet."}}function xe({state:e="idle",payMethod:t="card",sign:n,amount:i="25",quote:c=null,error:d=null}){if(!Ie.includes(e))throw new Error(`panel-model: unknown state ${e}`);if(!$e.includes(t))throw new Error(`panel-model: unknown pay method ${t}`);let o={state:e,payMethod:t,heading:`${n.name}`,subheading:`The official ${n.name} token`,venue:"Quote via Jupiter",payLabel:"You pay",payUnit:"USDC",payHint:"US dollars, held as USDC",presets:Fe,amount:i,methods:[{id:"card",label:"Card or Apple Pay"},{id:"usdc",label:"USDC I already have"}],payWays:qe,note:Ve(t),showQuote:!1,showAction:e!=="done",facts:[],warning:null,error:null,after:null};if(e==="error")return o.error=Je(d),o;if(e==="done")return o.after=Ge(n.name),o.note="Zodiacs.org never held your keys or funds, and cannot reverse a trade.",o;if(e==="quoting")return o.getLabel="You get",o.actionLabel="Finding the best price\u2026",o.actionDisabled=!0,o;if(c){let s=je(c.priceImpactPct);o.showQuote=!0,o.getLabel="You get, about",o.receive=Oe(c.outAmount),o.receiveUnit=n.name,o.receiveWorth=c.outUsdValue?`worth about $${c.outUsdValue.toFixed(2)} right now`:"",o.facts=[Re(i,c.feeBps),s.text],o.impactBand=s.band,s.severe&&(o.warning=He(n.name,c.priceImpactPct))}return o.actionLabel=e==="signing"?"Approve it in your wallet":"Review in your wallet",o.actionDisabled=e==="signing",o.walletHint="No wallet yet? Phantom and Solflare are free, and hold what you buy.",o}var Qe=100,Ye=350;function Ze(e,t){if(!e||e<=0n)return!1;let n=e*BigInt(1e4-Qe)/10000n;return t<n}function ve({sign:e,deps:t,amount:n="25",payMethod:i="card"}){let{fetchOrder:c,executeOrder:d,wallet:o,onChange:s,setTimeout:p=setTimeout,clearTimeout:u=clearTimeout}=t,a={state:"idle",payMethod:i,amount:n,quote:null,error:null,signature:null,awaitingReview:!1},h=0,b=null,y=!1,w=()=>{y||s?.(z(),{...a})},z=()=>xe({state:a.state,payMethod:a.payMethod,sign:e,amount:a.amount,quote:a.quote,error:a.error});function _(x){a.state="error",a.error=x instanceof E?x.code:"unknown",a.quote=null,w()}async function D(){if(y)return;let x=++h,A;try{A=J(a.amount,Y)}catch(v){_(v);return}a.state="quoting",a.error=null,w();try{let v=await c({inputMint:W,outputMint:e.mint,amount:A});if(x!==h)return;Q(v,{inputMint:W,outputMint:e.mint,amount:A}),a.quote=v,a.state="ready",w()}catch(v){if(x!==h)return;_(v)}}function F(x){a.amount=String(x),a.awaitingReview=!1,b&&u(b),b=p(()=>{b=null,D()},Ye),w()}function q(x){a.payMethod=x,w()}async function N(){if(y||a.state==="signing")return;let x;try{x=J(a.amount,Y)}catch(v){_(v);return}let A=a.quote?.outAmount??null;a.state="signing",a.error=null,w();try{let v=o.getAddress()||await o.connect(),k=await c({inputMint:W,outputMint:e.mint,amount:x,taker:v});if(Q(k,{inputMint:W,outputMint:e.mint,amount:x}),!ue(k))throw new E("unavailable","The venue returned no transaction.");if(Ze(A,k.outAmount)){a.quote=k,a.state="ready",a.awaitingReview=!0,w();return}let M=await o.signTransaction(k.transaction),S=await d({signedTransaction:M,requestId:k.requestId});a.quote=k,a.signature=S.signature,a.state="done",w()}catch(v){if(v?.name==="WalletDismissed"){a.state=a.quote?"ready":"idle",w();return}_(v)}}function U(){y=!0,h+=1,b&&u(b),b=null}return{get state(){return{...a}},view:z,setAmount:F,setPayMethod:q,refreshQuote:D,review:N,destroy:U}}var T="tp";function l(e,t,n){let i=document.createElement(e);return t&&(i.className=t),n!=null&&(i.textContent=n),i}function ye(e,t){let n=l("span",`${T}__mark`);return n.setAttribute("aria-hidden","true"),n.style.width=`${t}px`,n.style.maskImage=`url(${e})`,n.style.webkitMaskImage=`url(${e})`,n}function Ke(e,t){let n=l("a",null,t);return n.href=e,n.target="_blank",n.rel="noopener noreferrer external nofollow",n}function we({host:e,sign:t,deps:n,marks:i={}}){let c=l("div",T);c.style.setProperty("--tp-sign",t.hue);let d=l("div",`${T}__head`);if(t.iconUrl){let r=document.createElement("img");r.className=`${T}__disc`,r.src=t.iconUrl,r.alt="",r.width=34,r.height=34,d.append(r)}let o=l("span",`${T}__who`),s=l("span",`${T}__name`),p=l("span",`${T}__sub`);o.append(s,p);let u=l("span",`${T}__venue`);d.append(o,u);let a=l("div",`${T}__body`),h=l("span","lab"),b=l("div","pay"),y=document.createElement("input");y.className="pay__input",y.inputMode="decimal",y.spellcheck=!1,y.setAttribute("aria-label","Amount in US dollars");let w=l("span","unit");b.append(y,w);let z=l("p","sub"),_=l("div","amts");_.setAttribute("role","group"),_.setAttribute("aria-label","Choose an amount");let D=l("div","meet");D.innerHTML='<i></i><span aria-hidden="true">\u2193</span><i></i>';let F=l("span","lab"),q=l("div","get"),N=l("span","out"),U=l("span","unit");q.append(N,U);let x=l("p","usd"),A=l("div","quote");A.setAttribute("aria-live","polite"),A.append(F,q,x);let v=l("div","facts"),k=l("p","warn");k.hidden=!0;let M=l("p","lab payq","How are you paying?"),S=l("div","payseg");S.setAttribute("role","group"),S.setAttribute("aria-label","How are you paying");let O=l("div","action"),L=l("button","tp__go");L.type="button";let Z=l("p","nowallet"),G=l("div","routes"),R=l("p","err");R.hidden=!0;let j=l("ul","after");j.hidden=!0;let K=l("p","note");a.append(h,b,z,_,D,A,v,k,M,S,O,R,j,K),c.append(d,a),e.replaceChildren(c);let X=()=>{},P=ve({sign:t,deps:{...n,onChange:r=>X(r)}}),ee=null,te=null;function ne(r){s.textContent=r.heading,p.textContent=r.subheading,u.textContent=r.venue,h.textContent=r.payLabel,w.textContent=r.payUnit,z.textContent=r.payHint,document.activeElement!==y&&(y.value=r.amount),ee!==r.presets&&(_.replaceChildren(...r.presets.map(m=>{let g=l("button",null,`$${m}`);return g.type="button",g.dataset.amount=m,g})),ee=r.presets);for(let m of _.children)m.setAttribute("aria-pressed",String(m.dataset.amount===r.amount));te!==r.methods&&(S.replaceChildren(...r.methods.map(m=>{let g=l("button",null,m.label);return g.type="button",g.dataset.method=m.id,g})),te=r.methods);for(let m of S.children)m.setAttribute("aria-pressed",String(m.dataset.method===r.payMethod));A.hidden=!r.showQuote&&r.state!=="quoting",F.textContent=r.getLabel||"",N.textContent=r.showQuote?r.receive:"",U.textContent=r.showQuote?r.receiveUnit:"",x.textContent=r.showQuote?r.receiveWorth:"",N.classList.toggle("is-waiting",r.state==="quoting"),v.replaceChildren(...(r.facts||[]).map((m,g)=>{let B=l("span","fact",m);return g===1&&r.impactBand==="severe"&&B.classList.add("severe"),B})),k.hidden=!r.warning,k.textContent=r.warning||"",R.hidden=!r.error,R.textContent=r.error||"",j.hidden=!r.after,r.after&&j.replaceChildren(...r.after.map(m=>l("li",null,m))),K.textContent=r.note;let C=r.payMethod==="card";O.replaceChildren(),r.showAction&&!r.error&&(C?O.append(Ee(r,i)):(L.textContent=r.actionLabel,L.disabled=!!r.actionDisabled,Z.textContent=r.walletHint||"",O.append(L,Z))),M.hidden=!r.showAction||!!r.error,S.hidden=M.hidden}function Ee(r,C){G.replaceChildren();let m=l("ul","ramps");for(let g of r.payWays){let B=l("li"),H=Ke(g.href,"");H.className="ramp",H.setAttribute("aria-label",`${g.name} \u2014 opens in a new tab`);let V=l("span","ramp__who");if(C[g.mark]&&V.append(ye(C[g.mark],22)),V.append(l("span","ramp__name",g.name)),g.applePay&&C.applepay){let $=ye(C.applepay,36);$.className="tp__mark ap",$.setAttribute("role","img"),$.setAttribute("aria-label","Apple Pay"),$.removeAttribute("aria-hidden"),V.append($)}H.append(V,l("span","ramp__note",g.note),l("span","go","\u2197")),B.append(H),m.append(B)}return G.append(m),G}let re=()=>P.setAmount(y.value),oe=r=>{let C=r.target.closest("[data-amount]");C&&P.setAmount(C.dataset.amount)},ae=r=>{let C=r.target.closest("[data-method]");C&&P.setPayMethod(C.dataset.method)},ie=()=>P.review();return y.addEventListener("input",re),_.addEventListener("click",oe),S.addEventListener("click",ae),L.addEventListener("click",ie),X=ne,ne(P.view()),P.refreshQuote(),{controller:P,destroy(){y.removeEventListener("input",re),_.removeEventListener("click",oe),S.removeEventListener("click",ae),L.removeEventListener("click",ie),P.destroy(),e.replaceChildren()}}}var _e="data-tp-styles",Xe=Object.freeze({coinbase:"/assets/venues/coinbase.svg",fomo:"/assets/venues/fomo.svg",moonpay:"/assets/venues/moonpay.svg",ramp:"/assets/venues/ramp.svg",applepay:"/assets/venues/applepay.svg"});function et(){if(document.querySelector(`[${_e}]`))return;let e=document.createElement("style");e.setAttribute(_e,""),e.textContent=fe,document.head.append(e)}function Ce(e,t){if(!e||!t?.mint)return null;et();let n=be({host:e}),i=we({host:e,sign:t,deps:{fetchOrder:pe,executeOrder:me,wallet:n},marks:Xe});return{controller:i.controller,destroy(){i.destroy(),n.destroy()}}}function ke(){for(let e of document.querySelectorAll("[data-trade-panel]")){let t=e.dataset.tradeSign;!t||e.dataset.tradeMounted||(e.dataset.tradeMounted="1",Ce(e,{name:e.dataset.tradeName??t,slug:t,mint:e.dataset.tradeMint,hue:e.dataset.tradeHue||null,iconUrl:`/assets/zodiac-icons/128/${t}.webp`}))}}window.zodiacsTrade=Object.freeze({mount:Ce});document.readyState==="loading"?document.addEventListener("DOMContentLoaded",ke,{once:!0}):ke();})();
+`;var Xe="123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz",Dt=new Map([...Xe].map((e,t)=>[e,BigInt(t)]));function et(){return globalThis.CustomEvent}function $e(e,t=window){let n=new Set,a=()=>e([...n].sort((c,m)=>c.name.localeCompare(m.name))),i=Object.freeze({register:(...c)=>{for(let m of c)m?.features?.["standard:connect"]&&n.add(m);return a(),()=>{for(let m of c)n.delete(m);a()}}}),p=(c=>{let m=c.detail;typeof m=="function"&&m(i)});t.addEventListener("wallet-standard:register-wallet",p);let l=et();return t.dispatchEvent(new l("wallet-standard:app-ready",{detail:i})),a(),()=>t.removeEventListener("wallet-standard:register-wallet",p)}var tt="solana:mainnet",nt="solana:signTransaction";function H(){let e=new Error("The wallet was dismissed.");return e.name="WalletDismissed",e}function Me(e){return e?e.name==="WalletDismissed"||e.code===4001||e.code===-32603?!0:/reject|refus|denied|declin|cancel|dismiss|user closed/i.test(String(e.message??"")):!1}function ot(e){let t=atob(e),n=new Uint8Array(t.length);for(let a=0;a<t.length;a+=1)n[a]=t.charCodeAt(a);return n}function rt(e){let t="";for(let n=0;n<e.length;n+=32768)t+=String.fromCharCode(...e.subarray(n,n+32768));return btoa(t)}function at(e,t){return[...(t?.accounts?.length?t.accounts:e.accounts)??[]].find(a=>!a.chains?.length||a.chains.some(i=>i.startsWith("solana:")))??null}function it(e,t){return e.length===1?Promise.resolve(e[0]):new Promise((n,a)=>{let i=document.createElement("div");i.className="tp-pick";let p=document.createElement("div");p.className="tp-pick__box",p.setAttribute("role","dialog"),p.setAttribute("aria-modal","true"),p.setAttribute("aria-label","Choose a wallet");let l=document.createElement("p");l.className="tp-pick__title",l.textContent="Choose a wallet",p.append(l);let c=()=>{i.remove(),document.removeEventListener("keydown",m)},m=d=>{d.key==="Escape"&&(c(),a(H()))};for(let d of e){let v=document.createElement("button");if(v.type="button",v.className="tp-pick__w",d.icon){let s=document.createElement("img");s.src=d.icon,s.alt="",s.width=24,s.height=24,v.append(s)}v.append(document.createTextNode(d.name)),v.addEventListener("click",()=>{c(),n(d)}),p.append(v)}let b=document.createElement("button");b.type="button",b.className="tp-pick__x",b.textContent="Cancel",b.addEventListener("click",()=>{c(),a(H())}),p.append(b),i.addEventListener("click",d=>{d.target===i&&(c(),a(H()))}),document.addEventListener("keydown",m),i.append(p),(t?.ownerDocument??document).body.append(i),p.querySelector("button")?.focus()})}function Be({host:e=null,target:t=void 0,choose:n=void 0}={}){let a=[],i=$e(c=>{a=c},t??window),p=n??(c=>it(c,e)),l=null;return{getAddress(){return l?.account.address??null},async connect(){if(l)return l.account.address;if(!a.length)throw new A("unavailable","No Solana wallet was found in this browser.");let c=await p(a),m;try{m=await c.features["standard:connect"].connect()}catch(d){throw Me(d)?H():d}let b=at(c,m);if(!b)throw new A("unavailable","That wallet has no Solana account.");return l={wallet:c,account:b},b.address},async signTransaction(c){if(!l)throw new A("unavailable","No wallet is connected.");let m=l.wallet.features[nt];if(!m)throw new A("unavailable","That wallet cannot sign here.");let b;try{b=await m.signTransaction({transaction:ot(c),account:l.account,chain:tt})}catch(v){throw Me(v)?H():v}let d=b?.[0]?.signedTransaction;if(!d)throw new A("unavailable","The wallet returned nothing to submit.");return rt(d)},destroy(){i(),l=null}}}var st=Object.freeze(["card","usdc"]),ct=Object.freeze(["idle","quoting","ready","signing","done","error"]),J="EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v",ce=6,dt=6,pt=Object.freeze(["25","50","100","250"]),lt=Object.freeze([{name:"Coinbase",mark:"coinbase",href:"https://www.coinbase.com/",note:"Fund a wallet with USDC."},{name:"fomo",mark:"fomo",href:"https://fomo.family/",applePay:!0,note:"Fund in-app; verify the mint."},{name:"MoonPay",mark:"moonpay",href:"https://www.moonpay.com/",note:"Buy USDC by card or bank."},{name:"Ramp Network",mark:"ramp",href:"https://rampnetwork.com/",note:"Buy USDC with mobile pay."}]);function ut(e){let t=Number(e);return Number.isFinite(t)?t<1?`${Math.round(t*100)}\xA2`:`$${t.toFixed(2)}`:""}function mt(e,t=dt){let n=Se(e,t,{maxFractionDigits:0});return Number(n).toLocaleString("en-US",{maximumFractionDigits:0})}function ft(e,t){let n=(Number(e)||0)*((Number(t)||0)/1e4);return`Jupiter\u2019s fee \u2014 about ${ut(n)} on this trade.`}function ht(e){let t=Te(e),n=Math.abs(Number(e)||0).toFixed(2);return{band:t,text:`Buying this much moves the price ${n}%.`,severe:t==="severe"}}function Pe(e){let t=Number(e);return!Number.isFinite(t)||t<=0?"":new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",notation:"compact",maximumFractionDigits:t<1e4?1:0}).format(t)}function gt(e,t=Date.now()){let n=Math.max(0,Math.floor((Number(t)-Number(e))/1e3));return!Number.isFinite(n)||!e?"":n<10?"Just now":n<60?`${n}s ago`:`${Math.floor(n/60)}m ago`}function bt(e){let t=String(e||"");return t.length<13?t:`${t.slice(0,5)}\u2026${t.slice(-5)}`}function xt(e,t){let n=Math.abs(Number(t)||0).toFixed(2);return`Not much ${e} is for sale right now, so buying this much would push the price up ${n}%. Buying less costs you less.`}function yt(e){return e==="card"?"Funding and any ID checks happen with the provider you choose. Zodiacs.org never sees your card or holds your money. Funding USDC is not the Zodiac swap; return here to complete it. Prices move fast, and a Zodiac can lose all its value.":"Your wallet will ask you to approve this before anything happens. Jupiter does the trade, not us \u2014 Zodiacs.org never holds your money and can\u2019t undo a trade once it\u2019s made. Prices here move fast, and a Zodiac can lose all its value."}function vt(e){return["They are in your wallet already. Nobody else can move them \u2014 not us, not Jupiter.","You do not need to do anything else. There is nothing to claim and nothing to renew.","Sell them whenever you like, the same way you bought them.",`${e} now shows in your Cabinet of Twelve.`]}function wt(e){switch(e){case"no_route":return"No price right now. Try again in a moment, or try a smaller amount.";case"rate_limited":return"Too many requests just now. Wait a moment and try again.";case"invalid_amount":return"Enter an amount using digits and a single decimal point.";case"order_mismatch":case"unexpected_fee":return"The price that came back did not match what you were shown, so nothing was sent to your wallet. Try again.";case"execute_failed":return"The trade did not go through. Nothing left your wallet.";case"network":return"That could not be confirmed from here. Check your wallet before trying again \u2014 it may still have gone through.";default:return"Something went wrong. Nothing was sent to your wallet."}}function Fe({state:e="idle",payMethod:t="card",sign:n,amount:a="25",quote:i=null,error:p=null,quotedAt:l=null,nowMs:c=Date.now(),indexedLiquidityUsd:m=null,awaitingReview:b=!1}){if(!ct.includes(e))throw new Error(`panel-model: unknown state ${e}`);if(!st.includes(t))throw new Error(`panel-model: unknown pay method ${t}`);let d={state:e,payMethod:t,heading:`Buy ${n.name}`,subheading:`Official ${n.name} fungible token`,venue:"Acquisition desk",assetNote:`The gold sculpture is symbolic collection art. You are buying the official fungible ${n.name} token \u2014 not the sculpture, a physical object, or a 1-of-1 NFT.`,spendTitle:"Choose your spend",routeTitle:"Choose your route",quoteTitle:t==="card"?"Reference quote":"Live swap quote",actionTitle:t==="card"?"Fund with USDC":"Review & approve",actionIntro:t==="card"?"These providers fund a wallet. They do not complete this Zodiac order here.":`Your wallet swaps USDC directly for official ${n.name} through Jupiter.`,payLabel:"Spend",payUnit:"USDC",payHint:"1 USDC is designed to track 1 US dollar",presets:pt,amount:a,methods:[{id:"card",eyebrow:"Fund first",label:"I\u2019m new to crypto"},{id:"usdc",eyebrow:"Direct swap",label:"I already have USDC"}],routeHint:t==="card"?"Get USDC from a provider, then return and choose the direct swap route.":"One wallet approval completes the USDC \u2192 Zodiac swap.",payWays:lt,note:yt(t),showQuote:!1,showAction:e==="ready"||e==="signing",facts:[],warning:null,reviewNotice:b?"The price moved by more than 1% before approval. Nothing was sent to your wallet. Review the refreshed quote and approve again if it still works for you.":null,error:null,after:null,details:[{label:"Official mint",value:bt(n.mint),title:n.mint,href:n.mint?`https://solscan.io/token/${encodeURIComponent(n.mint)}`:null},...Pe(m)?[{label:"Indexed liquidity",value:Pe(m)}]:[]]};if(e==="error")return d.error=wt(p),d;if(e==="done")return d.after=vt(n.name),d.note="Zodiacs.org never held your keys or funds, and cannot reverse a trade.",d;if(e==="quoting")return d.getLabel="You get",d.actionLabel="Finding the best price\u2026",d.actionDisabled=!0,d;if(i){let v=ht(i.priceImpactPct);d.showQuote=!0,d.getLabel="You get, about",d.receive=mt(i.outAmount),d.receiveUnit=n.name,d.receiveWorth=i.outUsdValue?`worth about $${i.outUsdValue.toFixed(2)} right now`:"",d.facts=[ft(a,i.feeBps),v.text];let s=gt(l,c);s&&d.details.splice(1,0,{label:"Quote age",value:s}),d.impactBand=v.band,v.severe&&(d.warning=xt(n.name,i.priceImpactPct))}return d.actionLabel=e==="signing"?"Approve in your wallet":b?"Review refreshed quote":"Review swap in wallet",d.actionDisabled=e==="signing",d.walletHint="No wallet yet? Phantom and Solflare are free, and hold what you buy.",d}var _t=100,kt=350;function Ct(e,t){if(!e||e<=0n)return!1;let n=e*BigInt(1e4-_t)/10000n;return t<n}function Ie({sign:e,deps:t,amount:n="25",payMethod:a="card"}){let{fetchOrder:i,executeOrder:p,wallet:l,onChange:c,setTimeout:m=setTimeout,clearTimeout:b=clearTimeout,now:d=Date.now,fetchLiquidity:v}=t,s={state:"idle",payMethod:a,amount:n,quote:null,error:null,signature:null,awaitingReview:!1,quotedAt:null,indexedLiquidityUsd:Number(e.indexedLiquidityUsd)||null},D=0,E=null,C=!1,U=!!s.indexedLiquidityUsd,M=null,_=()=>{C||c?.(W(),{...s})},W=()=>Fe({state:s.state,payMethod:s.payMethod,sign:e,amount:s.amount,quote:s.quote,error:s.error,quotedAt:s.quotedAt,nowMs:d(),indexedLiquidityUsd:s.indexedLiquidityUsd,awaitingReview:s.awaitingReview});function $(x){s.state="error",s.error=x instanceof A?x.code:"unknown",s.quote=null,s.quotedAt=null,_()}async function B(){return U||typeof v!="function"||(U=!0,M=(async()=>{try{let x=Number(await v({mint:e.mint}));if(C||!Number.isFinite(x)||x<=0)return;s.indexedLiquidityUsd=x,_()}catch{}})()),M}async function R(){if(C)return;B();let x=++D,S;try{S=ie(s.amount,ce)}catch(y){$(y);return}s.state="quoting",s.error=null,_();try{let y=await i({inputMint:J,outputMint:e.mint,amount:S});if(x!==D)return;se(y,{inputMint:J,outputMint:e.mint,amount:S}),s.quote=y,s.quotedAt=d(),s.state="ready",_()}catch(y){if(x!==D)return;$(y)}}function G(x){s.state!=="signing"&&(s.amount=String(x),s.awaitingReview=!1,E&&b(E),E=m(()=>{E=null,R()},kt),_())}function P(x){s.state!=="signing"&&(s.payMethod=x,_())}async function Q(){if(C||s.state==="signing")return;let x;try{x=ie(s.amount,ce)}catch(y){$(y);return}let S=s.quote?.outAmount??null;s.state="signing",s.error=null,_();try{let y=l.getAddress()||await l.connect(),T=await i({inputMint:J,outputMint:e.mint,amount:x,taker:y});if(se(T,{inputMint:J,outputMint:e.mint,amount:x}),!qe(T))throw new A("unavailable","The venue returned no transaction.");if(Ct(S,T.outAmount)){s.quote=T,s.quotedAt=d(),s.state="ready",s.awaitingReview=!0,_();return}let F=await l.signTransaction(T.transaction),V=await p({signedTransaction:F,requestId:T.requestId});s.quote=T,s.signature=V.signature,s.state="done",_()}catch(y){if(y?.name==="WalletDismissed"){s.state=s.quote?"ready":"idle",_();return}$(y)}}function O(){C=!0,D+=1,E&&b(E),E=null}return{get state(){return{...s}},view:W,setAmount:G,setPayMethod:P,refreshQuote:R,refreshMarketContext:B,review:Q,destroy:O}}var g="tp";function r(e,t,n){let a=document.createElement(e);return t&&(a.className=t),n!=null&&(a.textContent=n),a}function Ue(e,t){let n=r("span",`${g}__mark`);return n.setAttribute("aria-hidden","true"),n.style.width=`${t}px`,n.style.maskImage=`url(${e})`,n.style.webkitMaskImage=`url(${e})`,n}function We(e,t){let n=r("a",null,t);return n.href=e,n.target="_blank",n.rel="noopener noreferrer external nofollow",n}function X(e){let t=r("div",`${g}__step-head`);return t.append(r("span",`${g}__step-number`,String(e)),r("h3",`${g}__step-title`)),t}function Re({host:e,sign:t,deps:n,marks:a={}}){let i=r("div",g);i.style.setProperty("--tp-sign",t.hue);let p=r("div",`${g}__head`);if(t.iconUrl){let o=document.createElement("img");o.className=`${g}__disc`,o.src=t.iconUrl,o.alt="",o.width=34,o.height=34,p.append(o)}let l=r("span",`${g}__who`),c=r("span",`${g}__name`),m=r("span",`${g}__sub`);l.append(c,m);let b=r("span",`${g}__venue`);p.append(l,b);let d=r("div",`${g}__body`),v=r("p",`${g}__asset-note`),s=r("div",`${g}__flow`),D=r("span","lab"),E=r("div","pay"),C=document.createElement("input");C.className="pay__input",C.inputMode="decimal",C.spellcheck=!1,C.setAttribute("aria-label","Amount in US dollars");let U=r("span","unit");E.append(C,U);let M=r("p","sub"),_=r("div","amts");_.setAttribute("role","group"),_.setAttribute("aria-label","Choose an amount");let W=r("span","lab"),$=r("div","get"),B=r("span","out"),R=r("span","unit");$.append(B,R);let G=r("p","usd"),P=r("div","quote");P.setAttribute("aria-live","polite"),P.append(W,$,G);let Q=r("div","facts"),O=r("dl","details"),x=r("p","warn");x.hidden=!0;let S=r("p","review-notice");S.hidden=!0;let y=r("div","payseg");y.setAttribute("role","group"),y.setAttribute("aria-label","How are you paying");let T=r("p","route-hint"),F=r("div","action"),V=r("p","action-intro"),I=r("button","tp__go");I.type="button";let de=r("p","nowallet"),ee=r("div","routes"),Z=r("p","err");Z.hidden=!0;let Y=r("ul","after");Y.hidden=!0;let pe=r("p","note"),te=r("section",`${g}__step ${g}__step--spend`),le=X(1);te.append(le,D,E,M,_);let ne=r("section",`${g}__step ${g}__step--route`),ue=X(2);ne.append(ue,y,T);let oe=r("section",`${g}__step ${g}__step--quote`),me=X(3);oe.append(me,P,Q,O,x,S);let re=r("section",`${g}__step ${g}__step--action`),fe=X(4);re.append(fe,V,F),s.append(te,ne,oe,re,Z);let K=r("div",`${g}__complete`);K.hidden=!0,K.append(r("p",`${g}__complete-kicker`,"Swap complete"),Y),d.append(v,s,K,pe),i.append(p,d),e.replaceChildren(i);let he=()=>{},N=Ie({sign:t,deps:{...n,onChange:o=>he(o)}}),ge=null,be=null,xe=null,j=new Map,ae=null;function Qe(o=[]){let w=new Set;for(let[L,f]of o.entries()){let h=f.label;w.add(h);let u=j.get(h);if(!u){let z=r("div","detail"),Ce=r("dt"),Ae=r("dd");z.append(Ce,Ae),u={wrap:z,term:Ce,value:Ae,link:null},j.set(h,u)}u.term.textContent=f.label,f.href?(u.link||(u.link=We(f.href,f.value),u.value.replaceChildren(u.link)),u.link.href=f.href,u.link.textContent=f.value,f.title?(u.link.title=f.title,u.link.setAttribute("aria-label",`${f.label}: ${f.title}`)):(u.link.removeAttribute("title"),u.link.removeAttribute("aria-label"))):(u.link&&(u.value.replaceChildren(),u.link=null),u.value.textContent=f.value);let q=O.children[L]??null;q!==u.wrap&&O.insertBefore(u.wrap,q)}for(let[L,f]of j)w.has(L)||(f.wrap.remove(),j.delete(L));ae=j.get("Quote age")?.value??null}function ye(o){i.dataset.state=o.state,c.textContent=o.heading,m.textContent=o.subheading,b.textContent=o.venue,D.textContent=o.payLabel,U.textContent=o.payUnit,M.textContent=o.payHint,v.textContent=o.assetNote,le.querySelector(`.${g}__step-title`).textContent=o.spendTitle,ue.querySelector(`.${g}__step-title`).textContent=o.routeTitle,me.querySelector(`.${g}__step-title`).textContent=o.quoteTitle,fe.querySelector(`.${g}__step-title`).textContent=o.actionTitle,T.textContent=o.routeHint,V.textContent=o.actionIntro;let w=o.state==="signing";C.disabled=w,document.activeElement!==C&&(C.value=o.amount),ge!==o.presets&&(_.replaceChildren(...o.presets.map(h=>{let u=r("button",null,`$${h}`);return u.type="button",u.dataset.amount=h,u})),ge=o.presets);for(let h of _.children)h.setAttribute("aria-pressed",String(h.dataset.amount===o.amount)),h.disabled=w;let L=o.methods.map(h=>`${h.id}:${h.label}`).join("|");be!==L&&(y.replaceChildren(...o.methods.map(h=>{let u=r("button");return u.type="button",u.dataset.method=h.id,u.append(r("span","payseg__eyebrow",h.eyebrow),r("span","payseg__label",h.label)),u})),be=L);for(let h of y.children)h.setAttribute("aria-pressed",String(h.dataset.method===o.payMethod)),h.disabled=w;oe.hidden=!o.showQuote&&o.state!=="quoting",P.hidden=!o.showQuote&&o.state!=="quoting",W.textContent=o.getLabel||"",B.textContent=o.showQuote?o.receive:o.state==="quoting"?"Finding price\u2026":"",R.textContent=o.showQuote?o.receiveUnit:"",G.textContent=o.showQuote?o.receiveWorth:"",B.classList.toggle("is-waiting",o.state==="quoting"),Q.replaceChildren(...(o.facts||[]).map((h,u)=>{let q=r("span","fact",h);return u===1&&o.impactBand==="severe"&&q.classList.add("severe"),q})),Qe(o.details),x.hidden=!o.warning,x.textContent=o.warning||"",S.hidden=!o.reviewNotice,S.textContent=o.reviewNotice||"",Z.hidden=!o.error,Z.textContent=o.error||"",Y.hidden=!o.after,o.after&&Y.replaceChildren(...o.after.map(h=>r("li",null,h))),pe.textContent=o.note;let f=!o.showAction||o.error?"hidden":o.payMethod==="card"?"card":"usdc";f!==xe&&(F.replaceChildren(),f==="card"?F.append(Ve(o,a)):f==="usdc"&&F.append(I,de),xe=f),f==="usdc"&&(I.textContent=o.actionLabel,I.disabled=!!o.actionDisabled,de.textContent=o.walletHint||""),re.hidden=f==="hidden",ne.hidden=o.state==="done",te.hidden=o.state==="done",s.hidden=o.state==="done",K.hidden=!o.after}function Ve(o,w){ee.replaceChildren();let L=r("ul","ramps");for(let f of o.payWays){let h=r("li"),u=We(f.href,"");u.className="ramp",u.setAttribute("aria-label",`${f.name} \u2014 opens in a new tab`);let q=r("span","ramp__who");if(w[f.mark]&&q.append(Ue(w[f.mark],22)),q.append(r("span","ramp__name",f.name)),f.applePay&&w.applepay){let z=Ue(w.applepay,36);z.className="tp__mark ap",z.setAttribute("role","img"),z.setAttribute("aria-label","Apple Pay"),z.removeAttribute("aria-hidden"),q.append(z)}u.append(q,r("span","ramp__note",f.note),r("span","go","\u2197")),h.append(u),L.append(h)}return ee.append(L),ee}let ve=()=>N.setAmount(C.value),we=o=>{let w=o.target.closest("[data-amount]");w&&N.setAmount(w.dataset.amount)},_e=o=>{let w=o.target.closest("[data-method]");w&&N.setPayMethod(w.dataset.method)},ke=()=>N.review();C.addEventListener("input",ve),_.addEventListener("click",we),y.addEventListener("click",_e),I.addEventListener("click",ke),he=ye,ye(N.view()),N.refreshQuote();let Ze=window.setInterval(()=>{if(!N.state.quote||!ae)return;let o=N.view().details?.find(w=>w.label==="Quote age");o&&(ae.textContent=o.value)},1e4);return{controller:N,destroy(){C.removeEventListener("input",ve),_.removeEventListener("click",we),y.removeEventListener("click",_e),I.removeEventListener("click",ke),window.clearInterval(Ze),N.destroy(),e.replaceChildren()}}}var At="https://api.dexscreener.com/tokens/v1/solana";function Et(e,t){let n=String(t||"");if(!n||!Array.isArray(e))return null;let a=new Set,i=0;for(let p of e){if(p?.chainId!=="solana"||p?.baseToken?.address!==n)continue;let l=String(p?.pairAddress||"");if(!l||a.has(l))continue;let c=Number(p?.liquidity?.usd);!Number.isFinite(c)||c<=0||(a.add(l),i+=c)}return i>0?i:null}async function Oe({mint:e,fetchImpl:t=globalThis.fetch,baseUrl:n=At,signal:a}={}){if(!e||typeof t!="function")return null;let i=await t(`${n}/${encodeURIComponent(e)}`,{method:"GET",headers:{accept:"application/json"},signal:a});return i.ok?Et(await i.json(),e):null}var je="data-tp-styles",St=Object.freeze({coinbase:"/assets/venues/coinbase.svg",fomo:"/assets/venues/fomo.svg",moonpay:"/assets/venues/moonpay.svg",ramp:"/assets/venues/ramp.svg",applepay:"/assets/venues/applepay.svg"}),He=new Map;function Tt(e){let t=He.get(e);if(t)return t;let n=Oe({mint:e}).catch(()=>null);return He.set(e,n),n}function Nt(){if(document.querySelector(`[${je}]`))return;let e=document.createElement("style");e.setAttribute(je,""),e.textContent=De,document.head.append(e)}function Ge(e,t){if(!e||!t?.mint)return null;Nt();let n=Be({host:e}),a=Re({host:e,sign:t,deps:{fetchOrder:Le,executeOrder:ze,wallet:n,fetchLiquidity:({mint:i})=>Tt(i)},marks:St});return{controller:a.controller,destroy(){a.destroy(),n.destroy()}}}function Je(){for(let e of document.querySelectorAll("[data-trade-panel]")){let t=e.dataset.tradeSign;!t||e.dataset.tradeMounted||(e.dataset.tradeMounted="1",Ge(e,{name:e.dataset.tradeName??t,slug:t,mint:e.dataset.tradeMint,hue:e.dataset.tradeHue||null,iconUrl:`/assets/zodiac-icons/128/${t}.webp`}))}}window.zodiacsTrade=Object.freeze({mount:Ge});document.readyState==="loading"?document.addEventListener("DOMContentLoaded",Je,{once:!0}):Je();})();

@@ -34,6 +34,12 @@ function externalLink(href, label) {
   return a;
 }
 
+function stepHeading(number) {
+  const head = el('div', `${NS}__step-head`);
+  head.append(el('span', `${NS}__step-number`, String(number)), el('h3', `${NS}__step-title`));
+  return head;
+}
+
 /**
  * @param {object} options
  * @param {HTMLElement} options.host   where the panel mounts
@@ -64,6 +70,8 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
 
   // ── body ───────────────────────────────────────────────────────────────
   const body = el('div', `${NS}__body`);
+  const assetNote = el('p', `${NS}__asset-note`);
+  const flow = el('div', `${NS}__flow`);
 
   const payLab = el('span', 'lab');
   const payBox = el('div', 'pay');
@@ -80,9 +88,6 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
   presets.setAttribute('role', 'group');
   presets.setAttribute('aria-label', 'Choose an amount');
 
-  const meet = el('div', 'meet');
-  meet.innerHTML = '<i></i><span aria-hidden="true">↓</span><i></i>';
-
   const getLab = el('span', 'lab');
   const getRow = el('div', 'get');
   const out = el('span', 'out');
@@ -95,15 +100,19 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
   quoteRegion.append(getLab, getRow, worth);
 
   const facts = el('div', 'facts');
+  const details = el('dl', 'details');
   const warning = el('p', 'warn');
   warning.hidden = true;
+  const reviewNotice = el('p', 'review-notice');
+  reviewNotice.hidden = true;
 
-  const payq = el('p', 'lab payq', 'How are you paying?');
   const methods = el('div', 'payseg');
   methods.setAttribute('role', 'group');
   methods.setAttribute('aria-label', 'How are you paying');
+  const routeHint = el('p', 'route-hint');
 
   const action = el('div', 'action');
+  const actionIntro = el('p', 'action-intro');
   const go = el('button', 'tp__go');
   go.type = 'button';
   const walletHint = el('p', 'nowallet');
@@ -114,8 +123,27 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
   after.hidden = true;
   const note = el('p', 'note');
 
-  body.append(payLab, payBox, payHint, presets, meet, quoteRegion, facts, warning,
-    payq, methods, action, errorBox, after, note);
+  const spendStep = el('section', `${NS}__step ${NS}__step--spend`);
+  const spendHead = stepHeading(1);
+  spendStep.append(spendHead, payLab, payBox, payHint, presets);
+
+  const routeStep = el('section', `${NS}__step ${NS}__step--route`);
+  const routeHead = stepHeading(2);
+  routeStep.append(routeHead, methods, routeHint);
+
+  const quoteStep = el('section', `${NS}__step ${NS}__step--quote`);
+  const quoteHead = stepHeading(3);
+  quoteStep.append(quoteHead, quoteRegion, facts, details, warning, reviewNotice);
+
+  const actionStep = el('section', `${NS}__step ${NS}__step--action`);
+  const actionHead = stepHeading(4);
+  actionStep.append(actionHead, actionIntro, action);
+
+  flow.append(spendStep, routeStep, quoteStep, actionStep, errorBox);
+  const complete = el('div', `${NS}__complete`);
+  complete.hidden = true;
+  complete.append(el('p', `${NS}__complete-kicker`, 'Swap complete'), after);
+  body.append(assetNote, flow, complete, note);
   root.append(head, body);
   host.replaceChildren(root);
 
@@ -130,14 +158,77 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
   // ── painting ───────────────────────────────────────────────────────────
   let lastPresets = null;
   let lastMethods = null;
+  let actionMode = null;
+  const detailRows = new Map();
+  let quoteAgeValue = null;
+
+  function reconcileDetails(items = []) {
+    const present = new Set();
+    for (const [index, item] of items.entries()) {
+      const key = item.label;
+      present.add(key);
+      let row = detailRows.get(key);
+      if (!row) {
+        const wrap = el('div', 'detail');
+        const term = el('dt');
+        const value = el('dd');
+        wrap.append(term, value);
+        row = { wrap, term, value, link: null };
+        detailRows.set(key, row);
+      }
+
+      row.term.textContent = item.label;
+      if (item.href) {
+        if (!row.link) {
+          row.link = externalLink(item.href, item.value);
+          row.value.replaceChildren(row.link);
+        }
+        row.link.href = item.href;
+        row.link.textContent = item.value;
+        if (item.title) {
+          row.link.title = item.title;
+          row.link.setAttribute('aria-label', `${item.label}: ${item.title}`);
+        } else {
+          row.link.removeAttribute('title');
+          row.link.removeAttribute('aria-label');
+        }
+      } else {
+        if (row.link) {
+          row.value.replaceChildren();
+          row.link = null;
+        }
+        row.value.textContent = item.value;
+      }
+
+      const position = details.children[index] ?? null;
+      if (position !== row.wrap) details.insertBefore(row.wrap, position);
+    }
+
+    for (const [key, row] of detailRows) {
+      if (present.has(key)) continue;
+      row.wrap.remove();
+      detailRows.delete(key);
+    }
+    quoteAgeValue = detailRows.get('Quote age')?.value ?? null;
+  }
 
   function paint(view) {
+    root.dataset.state = view.state;
     name.textContent = view.heading;
     sub.textContent = view.subheading;
     venue.textContent = view.venue;
     payLab.textContent = view.payLabel;
     unit.textContent = view.payUnit;
     payHint.textContent = view.payHint;
+    assetNote.textContent = view.assetNote;
+    spendHead.querySelector(`.${NS}__step-title`).textContent = view.spendTitle;
+    routeHead.querySelector(`.${NS}__step-title`).textContent = view.routeTitle;
+    quoteHead.querySelector(`.${NS}__step-title`).textContent = view.quoteTitle;
+    actionHead.querySelector(`.${NS}__step-title`).textContent = view.actionTitle;
+    routeHint.textContent = view.routeHint;
+    actionIntro.textContent = view.actionIntro;
+    const locked = view.state === 'signing';
+    input.disabled = locked;
     // Never clobber what someone is mid-way through typing.
     if (document.activeElement !== input) input.value = view.amount;
 
@@ -152,24 +243,29 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
     }
     for (const b of presets.children) {
       b.setAttribute('aria-pressed', String(b.dataset.amount === view.amount));
+      b.disabled = locked;
     }
 
-    if (lastMethods !== view.methods) {
+    const methodKey = view.methods.map((method) => `${method.id}:${method.label}`).join('|');
+    if (lastMethods !== methodKey) {
       methods.replaceChildren(...view.methods.map((m) => {
-        const b = el('button', null, m.label);
+        const b = el('button');
         b.type = 'button';
         b.dataset.method = m.id;
+        b.append(el('span', 'payseg__eyebrow', m.eyebrow), el('span', 'payseg__label', m.label));
         return b;
       }));
-      lastMethods = view.methods;
+      lastMethods = methodKey;
     }
     for (const b of methods.children) {
       b.setAttribute('aria-pressed', String(b.dataset.method === view.payMethod));
+      b.disabled = locked;
     }
 
+    quoteStep.hidden = !view.showQuote && view.state !== 'quoting';
     quoteRegion.hidden = !view.showQuote && view.state !== 'quoting';
     getLab.textContent = view.getLabel || '';
-    out.textContent = view.showQuote ? view.receive : '';
+    out.textContent = view.showQuote ? view.receive : view.state === 'quoting' ? 'Finding price…' : '';
     outUnit.textContent = view.showQuote ? view.receiveUnit : '';
     worth.textContent = view.showQuote ? view.receiveWorth : '';
     out.classList.toggle('is-waiting', view.state === 'quoting');
@@ -180,8 +276,12 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
       return s;
     }));
 
+    reconcileDetails(view.details);
+
     warning.hidden = !view.warning;
     warning.textContent = view.warning || '';
+    reviewNotice.hidden = !view.reviewNotice;
+    reviewNotice.textContent = view.reviewNotice || '';
 
     errorBox.hidden = !view.error;
     errorBox.textContent = view.error || '';
@@ -191,20 +291,28 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
 
     note.textContent = view.note;
 
-    const cardPath = view.payMethod === 'card';
-    action.replaceChildren();
-    if (view.showAction && !view.error) {
-      if (cardPath) {
+    const nextActionMode = !view.showAction || view.error
+      ? 'hidden'
+      : view.payMethod === 'card' ? 'card' : 'usdc';
+    if (nextActionMode !== actionMode) {
+      action.replaceChildren();
+      if (nextActionMode === 'card') {
         action.append(buildPayWays(view, marks));
-      } else {
-        go.textContent = view.actionLabel;
-        go.disabled = Boolean(view.actionDisabled);
-        walletHint.textContent = view.walletHint || '';
+      } else if (nextActionMode === 'usdc') {
         action.append(go, walletHint);
       }
+      actionMode = nextActionMode;
     }
-    payq.hidden = !view.showAction || Boolean(view.error);
-    methods.hidden = payq.hidden;
+    if (nextActionMode === 'usdc') {
+      go.textContent = view.actionLabel;
+      go.disabled = Boolean(view.actionDisabled);
+      walletHint.textContent = view.walletHint || '';
+    }
+    actionStep.hidden = nextActionMode === 'hidden';
+    routeStep.hidden = view.state === 'done';
+    spendStep.hidden = view.state === 'done';
+    flow.hidden = view.state === 'done';
+    complete.hidden = !view.after;
   }
 
   /**
@@ -263,6 +371,11 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
   paintFn = paint;
   paint(controller.view());
   controller.refreshQuote();
+  const ageClock = window.setInterval(() => {
+    if (!controller.state.quote || !quoteAgeValue) return;
+    const age = controller.view().details?.find((item) => item.label === 'Quote age');
+    if (age) quoteAgeValue.textContent = age.value;
+  }, 10_000);
 
   return {
     controller,
@@ -271,6 +384,7 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
       presets.removeEventListener('click', onPresets);
       methods.removeEventListener('click', onMethods);
       go.removeEventListener('click', onGo);
+      window.clearInterval(ageClock);
       controller.destroy();
       host.replaceChildren();
     },

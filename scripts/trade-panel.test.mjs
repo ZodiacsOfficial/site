@@ -41,6 +41,8 @@ function harness(overrides = {}) {
       signTransaction: async (tx) => { calls.signed.push(tx); return baseWallet.signTransaction(tx); },
     },
     onChange: overrides.onChange,
+    now: overrides.now,
+    fetchLiquidity: overrides.fetchLiquidity,
     setTimeout: (fn) => { fn(); return 1; },
     clearTimeout: () => {},
   };
@@ -83,6 +85,17 @@ describe('quoting', () => {
     expect(panel.state.state).toBe('error');
     expect(panel.state.error).toBe('invalid_amount');
   });
+
+  it('timestamps the quote and adds indexed depth without making it a trade dependency', async () => {
+    const { panel } = harness({ now: () => 25_000, fetchLiquidity: async () => 42_500 });
+    await panel.refreshQuote();
+    await panel.refreshMarketContext();
+    expect(panel.state.quotedAt).toBe(25_000);
+    expect(panel.state.indexedLiquidityUsd).toBe(42_500);
+    expect(panel.view().details.map((item) => item.label)).toEqual([
+      'Official mint', 'Quote age', 'Indexed liquidity',
+    ]);
+  });
 });
 
 describe('reviewing in the wallet', () => {
@@ -99,6 +112,19 @@ describe('reviewing in the wallet', () => {
     expect(calls.execute[0]).toEqual({ signedTransaction: 'signed:AQAB', requestId: 'rid-1' });
     expect(panel.state.state).toBe('done');
     expect(panel.state.signature).toBe('sig-1');
+  });
+
+  it('locks the amount and route while a wallet approval is in flight', async () => {
+    const { panel } = harness({
+      fetchOrder: async (args) => order({ transaction: args.taker ? 'AQAB' : null }),
+    });
+    await panel.refreshQuote();
+    const reviewing = panel.review();
+    panel.setAmount('250');
+    panel.setPayMethod('usdc');
+    expect(panel.state.amount).toBe('25');
+    expect(panel.state.payMethod).toBe('card');
+    await reviewing;
   });
 
   it('connects only when no address is already available', async () => {
@@ -154,6 +180,8 @@ describe('the price moving between quote and signature', () => {
     expect(panel.state.state).toBe('ready');
     expect(panel.state.awaitingReview).toBe(true);
     expect(panel.state.quote.outAmount).toBe(dropped);
+    expect(panel.view().reviewNotice).toMatch(/Nothing was sent to your wallet/i);
+    expect(panel.view().actionLabel).toBe('Review refreshed quote');
     // A second press, now against the figure actually on screen, goes through.
     await panel.review();
     expect(calls.signed).toHaveLength(1);

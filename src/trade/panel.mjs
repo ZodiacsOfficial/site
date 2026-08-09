@@ -32,32 +32,56 @@ function outAmountDroppedTooFar(shown, signable) {
 
 export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card' }) {
   const { fetchOrder, executeOrder, wallet, onChange, setTimeout: setT = setTimeout,
-    clearTimeout: clearT = clearTimeout } = deps;
+    clearTimeout: clearT = clearTimeout, now = Date.now, fetchLiquidity } = deps;
 
   const state = {
     state: 'idle', payMethod, amount, quote: null, error: null,
-    signature: null, awaitingReview: false,
+    signature: null, awaitingReview: false, quotedAt: null,
+    indexedLiquidityUsd: Number(sign.indexedLiquidityUsd) || null,
   };
   let quoteToken = 0;
   let debounce = null;
   let destroyed = false;
+  let marketRequested = Boolean(state.indexedLiquidityUsd);
+  let marketRequest = null;
 
   const emit = () => { if (!destroyed) onChange?.(view(), { ...state }); };
   const view = () => panelView({
     state: state.state, payMethod: state.payMethod, sign, amount: state.amount,
-    quote: state.quote, error: state.error,
+    quote: state.quote, error: state.error, quotedAt: state.quotedAt,
+    nowMs: now(), indexedLiquidityUsd: state.indexedLiquidityUsd,
+    awaitingReview: state.awaitingReview,
   });
 
   function fail(error) {
     state.state = 'error';
     state.error = error instanceof TradeError ? error.code : 'unknown';
     state.quote = null;
+    state.quotedAt = null;
     emit();
+  }
+
+  async function refreshMarketContext() {
+    if (marketRequested || typeof fetchLiquidity !== 'function') return marketRequest;
+    marketRequested = true;
+    marketRequest = (async () => {
+      try {
+        const value = Number(await fetchLiquidity({ mint: sign.mint }));
+        if (destroyed || !Number.isFinite(value) || value <= 0) return;
+        state.indexedLiquidityUsd = value;
+        emit();
+      } catch {
+        // Market depth is context, not a condition of purchase. A failed public
+        // index must never prevent Jupiter from returning a signable order.
+      }
+    })();
+    return marketRequest;
   }
 
   /** Price for display. No address leaves the browser to show a price. */
   async function refreshQuote() {
     if (destroyed) return;
+    refreshMarketContext();
     const token = ++quoteToken;
     let atomic;
     try {
@@ -75,6 +99,7 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
       if (token !== quoteToken) return;                 // a newer amount won
       assertOrderMatches(order, { inputMint: USDC_MINT, outputMint: sign.mint, amount: atomic });
       state.quote = order;
+      state.quotedAt = now();
       state.state = 'ready';
       emit();
     } catch (error) {
@@ -84,6 +109,7 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
   }
 
   function setAmount(next) {
+    if (state.state === 'signing') return;
     state.amount = String(next);
     state.awaitingReview = false;
     if (debounce) clearT(debounce);
@@ -92,6 +118,7 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
   }
 
   function setPayMethod(next) {
+    if (state.state === 'signing') return;
     state.payMethod = next;
     emit();
   }
@@ -124,6 +151,7 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
       // Moved against them since the figure on screen: show it again first.
       if (outAmountDroppedTooFar(shown, order.outAmount)) {
         state.quote = order;
+        state.quotedAt = now();
         state.state = 'ready';
         state.awaitingReview = true;
         emit();
@@ -160,6 +188,7 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
     setAmount,
     setPayMethod,
     refreshQuote,
+    refreshMarketContext,
     review,
     destroy,
   };
