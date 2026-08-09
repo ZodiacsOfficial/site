@@ -100,6 +100,7 @@ export async function moderateInput(
   apiKey: string,
   input: string,
   signal: AbortSignal,
+  log: (line: string) => void = () => {},
 ): Promise<ModerationResult> {
   let response: Response;
   try {
@@ -112,7 +113,22 @@ export async function moderateInput(
   } catch {
     return signal.aborted ? 'aborted' : 'unavailable';
   }
-  if (!response.ok) return 'unavailable';
+  if (!response.ok) {
+    let providerCode = 'unknown';
+    try {
+      const payload = await response.json() as { error?: { code?: unknown; type?: unknown } };
+      const candidate = typeof payload.error?.code === 'string'
+        ? payload.error.code
+        : payload.error?.type;
+      if (typeof candidate === 'string' && /^[a-z0-9_.-]{1,64}$/i.test(candidate)) {
+        providerCode = candidate;
+      }
+    } catch {
+      // The status and bounded provider code are sufficient operational evidence.
+    }
+    log(`stage=moderation code=provider_error status=${response.status} provider_code=${providerCode}`);
+    return 'unavailable';
+  }
   try {
     const payload = await response.json() as { results?: Array<{ flagged?: unknown }> };
     const flagged = payload.results?.[0]?.flagged;

@@ -492,6 +492,7 @@ export function createAssistantHandler(overrides: Partial<HandlerDependencies> =
           apiKey!,
           moderationInput,
           connection.signal,
+          (line) => dependencies.log(`assistant_event request_id=${requestId} ${line}`),
         );
         if (connection.disconnected()) {
           await settleAssistantBudget(dependencies.fetch, supabaseUrl, serviceKey, reservationId, 0, dependencies.log);

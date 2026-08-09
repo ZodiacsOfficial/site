@@ -1031,6 +1031,23 @@ describe('POST /api/assistant', () => {
     }
   });
 
+  it('logs only bounded provider metadata when moderation rejects the credential', async () => {
+    const logs: string[] = [];
+    const handler = createAssistantHandler(dependencies({
+      logs,
+      moderationStatus: 401,
+      moderation: { error: { code: 'invalid_api_key', message: 'sensitive provider detail' } },
+    }));
+    const res = new MockResponse();
+    await handler(request(), res);
+
+    expect(eventData(res.text, 'error')).toEqual([{ code: 'provider_unavailable', retryable: true }]);
+    expect(logs).toContain(
+      `assistant_event request_id=${REQUEST_ID} stage=moderation code=provider_error status=401 provider_code=invalid_api_key`,
+    );
+    expect(logs.join('\n')).not.toContain('sensitive provider detail');
+  });
+
   it('retains the worst-case reservation when a successful response omits usage', async () => {
     const calls: FetchCall[] = [];
     const logs: string[] = [];
