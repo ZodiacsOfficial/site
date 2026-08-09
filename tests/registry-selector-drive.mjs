@@ -760,6 +760,40 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && (await desktop.locator('.stage-hero__line').innerText()).trim()
           .startsWith('One official token for every sign. Browse the sculptures, watch the market, and verify the record.'),
     );
+    const openingMaterial = await desktop.locator('.gband--consumer').evaluate((band) => {
+      const season = band.querySelector('.season-now');
+      const rail = band.querySelector('.rail');
+      const read = (node) => {
+        if (!node) return null;
+        const style = getComputedStyle(node);
+        return {
+          borderWidths: [style.borderTopWidth, style.borderRightWidth, style.borderBottomWidth, style.borderLeftWidth],
+          borderRadius: style.borderTopLeftRadius,
+          backgroundColor: style.backgroundColor,
+          backgroundImage: style.backgroundImage,
+          backdropFilter: style.backdropFilter || style.webkitBackdropFilter || '',
+          transitionProperty: style.transitionProperty,
+        };
+      };
+      return { season: read(season), rail: read(rail) };
+    });
+    check(
+      'the season fades into the opening room and the sculpture rail has no nested frame',
+      openingMaterial.season
+        && openingMaterial.rail
+        && openingMaterial.season.borderWidths.every((width) => width === '0px')
+        && openingMaterial.season.borderRadius === '0px'
+        && openingMaterial.season.backgroundColor === 'rgba(0, 0, 0, 0)'
+        && openingMaterial.season.backgroundImage === 'none'
+        && openingMaterial.season.transitionProperty.includes('opacity')
+        && openingMaterial.season.transitionProperty.includes('transform')
+        && openingMaterial.rail.borderWidths.every((width) => width === '0px')
+        && openingMaterial.rail.borderRadius === '0px'
+        && openingMaterial.rail.backgroundColor === 'rgba(0, 0, 0, 0)'
+        && openingMaterial.rail.backgroundImage === 'none'
+        && openingMaterial.rail.backdropFilter === 'none',
+      JSON.stringify(openingMaterial),
+    );
     check(
       'the fallback stage shows one synchronized gold sculpture where the scene cannot',
       await desktop.locator('.stage-carousel__slide').count() === 1
@@ -840,11 +874,20 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && placardQuote.directional,
       JSON.stringify(placardQuote),
     );
-    const watchlist = await desktop.locator('.market-row').evaluateAll((rows) => rows.map((row) => ({
-      slug: row.getAttribute('data-market-sign'),
-      href: row.querySelector('.market-row__actions a')?.getAttribute('href'),
-      priced: /^\$/.test(row.querySelector('.market-row__metric--price strong')?.textContent ?? ''),
-    })));
+    const watchlist = await desktop.locator('.market-row').evaluateAll((rows) => rows.map((row) => {
+      const view = row.querySelector('.market-row__view');
+      const record = row.querySelector('.market-row__record');
+      return {
+        slug: row.getAttribute('data-market-sign'),
+        href: record?.getAttribute('href'),
+        priced: /^\$/.test(row.querySelector('.market-row__metric--price strong')?.textContent ?? ''),
+        viewLabel: view?.getAttribute('aria-label') ?? '',
+        viewText: view?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        viewDisc: view?.querySelector('img')?.getAttribute('src') ?? '',
+        viewGlass: view?.classList.contains('market-glass') ?? false,
+        recordGlass: record?.classList.contains('market-glass') ?? false,
+      };
+    }));
     check(
       'the market board defaults to descending market cap and links every official record',
       watchlist.length === 12
@@ -855,6 +898,101 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && watchlist.every((row) => row.href === `/registry/${row.slug}/`)
         && watchlist.every((row) => row.priced),
       JSON.stringify(watchlist),
+    );
+    check(
+      'each leaderboard row offers a sign-specific pastel sculpture handoff',
+      new Set(watchlist.map((row) => row.viewLabel)).size === 12
+        && watchlist.every((row) => {
+          const name = row.slug.charAt(0).toUpperCase() + row.slug.slice(1);
+          return row.viewLabel === `Show ${name} sculpture in the gallery`
+            && row.viewText.includes('View sculpture')
+            && row.viewDisc === `/assets/zodiac-icons/48/${row.slug}.webp`
+            && row.viewGlass
+            && row.recordGlass;
+        }),
+      JSON.stringify(watchlist),
+    );
+    const marketMaterial = await desktop.locator('#market').evaluate((section) => {
+      const inspect = (button) => {
+        const rect = button.getBoundingClientRect();
+        const style = getComputedStyle(button);
+        return {
+          label: button.getAttribute('aria-label') || button.textContent.replace(/\s+/g, ' ').trim(),
+          glass: button.classList.contains('market-glass'),
+          svg: Boolean(button.querySelector('svg')),
+          width: rect.width,
+          height: rect.height,
+          backgroundImage: style.backgroundImage,
+          backdropFilter: style.backdropFilter || style.webkitBackdropFilter || '',
+        };
+      };
+      return {
+        sort: [...section.querySelectorAll('.market-board__sort button')].map(inspect),
+        share: [...section.querySelectorAll('.market-board__share button')].map(inspect),
+        rowActions: [...section.querySelectorAll('.market-row__view, .market-row__record')].map(inspect),
+      };
+    });
+    check(
+      'market filters and social controls use one accessible liquid-glass language',
+      marketMaterial.sort.length === 3
+        && marketMaterial.share.length === 4
+        && marketMaterial.sort.every((control) => (
+          control.glass
+            && control.height >= 43.5
+            && control.backdropFilter.includes('blur')
+        ))
+        && JSON.stringify(marketMaterial.share.map((control) => control.label))
+          === JSON.stringify(['Share snapshot', 'Share on X', 'Share on Telegram', 'Share on WhatsApp'])
+        && marketMaterial.share.every((control) => (
+          control.glass
+            && control.svg
+            && control.width >= 43.5
+            && control.height >= 43.5
+            && control.backdropFilter.includes('blur')
+        ))
+        && marketMaterial.rowActions.length === 24
+        && marketMaterial.rowActions.every((control) => (
+          control.glass && control.height >= 43.5 && control.backdropFilter === 'none'
+        )),
+      JSON.stringify(marketMaterial),
+    );
+    await desktop.evaluate(() => {
+      window.__registryMarketIntents = [];
+      window.open = (...args) => {
+        window.__registryMarketIntents.push(args);
+        return null;
+      };
+      for (const label of ['X', 'Telegram', 'WhatsApp']) {
+        document.querySelector(`.market-board__social[aria-label="Share on ${label}"]`)?.click();
+      }
+    });
+    const marketIntents = await desktop.evaluate(() => window.__registryMarketIntents);
+    const [xIntent, telegramIntent, whatsappIntent] = marketIntents.map(([url, target, features]) => ({
+      url: new URL(url),
+      target,
+      features,
+    }));
+    const xShared = xIntent ? new URL(xIntent.url.searchParams.get('url')) : null;
+    const telegramShared = telegramIntent ? new URL(telegramIntent.url.searchParams.get('url')) : null;
+    check(
+      'social logos open canonical share intents while preserving the ranked Registry view',
+      marketIntents.length === 3
+        && xIntent.url.hostname === 'x.com'
+        && xIntent.url.pathname === '/intent/post'
+        && telegramIntent.url.hostname === 't.me'
+        && telegramIntent.url.pathname === '/share/url'
+        && whatsappIntent.url.hostname === 'wa.me'
+        && xShared.pathname === '/registry/'
+        && xShared.searchParams.get('rank') === 'marketCap'
+        && xShared.searchParams.get('sign') === 'pisces'
+        && xShared.hash === '#market'
+        && telegramShared.href === xShared.href
+        && whatsappIntent.url.searchParams.get('text').includes(xShared.href)
+        && [xIntent, telegramIntent, whatsappIntent].every((intent) => (
+          intent.target === '_blank' && intent.features === 'noopener,noreferrer'
+        ))
+        && (await desktop.locator('.market-board__share-state').innerText()) === 'WhatsApp share opened.',
+      JSON.stringify(marketIntents),
     );
     const tapeViewport = desktop.locator('.market-tape__viewport');
     await desktop.locator('.market-tape__group:not([aria-hidden]) button').last().focus();
@@ -867,6 +1005,16 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       'keyboard focus leaves the moving market tape on a clean animation seam',
       focusedTapeScroll > 0 && releasedTapeScroll === 0,
       JSON.stringify({ focusedTapeScroll, releasedTapeScroll }),
+    );
+    await desktop.locator('.market-row[data-market-sign="pisces"] .market-row__view').click();
+    await desktop.waitForFunction(() => (
+      document.activeElement?.getAttribute('data-consumer-sign') === 'pisces'
+    ));
+    check(
+      'a leaderboard sculpture action returns focus to the matching gallery choice',
+      await desktop.locator('[data-consumer-sign="pisces"]').evaluate((control) => (
+        control === document.activeElement && control.getAttribute('aria-pressed') === 'true'
+      )),
     );
     check(
       'the polite selection status announces the chosen sign',
@@ -916,6 +1064,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && Boolean(row.querySelector('code')?.textContent?.trim())
         )),
         calibration: section.querySelector('.outlook-calibration strong')?.textContent?.trim() ?? '',
+        directionalAside: section.querySelectorAll('.outlook-challenge').length,
+        mentionsPriceArrow: section.textContent?.includes('Why no price arrow?') ?? false,
       };
     });
     check(
@@ -929,7 +1079,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && JSON.stringify(outlookState.selectedSigns) === JSON.stringify(['/assets/zodiac-icons/48/aries.webp'])
         && outlookState.factorCount > 0
         && outlookState.completeFactors
-        && /^\d+ \/ \d+ daily observations$/.test(outlookState.calibration),
+        && /^\d+ \/ \d+ daily observations$/.test(outlookState.calibration)
+        && outlookState.directionalAside === 0
+        && !outlookState.mentionsPriceArrow,
       JSON.stringify(outlookState),
     );
 
@@ -1019,21 +1171,33 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         collectionHref: collection?.getAttribute('href') ?? '',
         seats: collection?.querySelectorAll('.consumer-cabinet__seat').length ?? 0,
         filledSeats: collection?.querySelectorAll('.consumer-cabinet__seat.is-filled').length ?? 0,
-        seatImages: [...(collection?.querySelectorAll('.consumer-cabinet__seat.is-filled img') || [])]
-          .map((image) => image.getAttribute('src') ?? ''),
+        occupied: [...(collection?.querySelectorAll('.consumer-cabinet__seat.is-filled') || [])]
+          .map((seat) => ({
+            finish: seat.getAttribute('data-cabinet-sample-finish') ?? '',
+            src: seat.querySelector('img')?.getAttribute('src') ?? '',
+            edition: seat.querySelector('.consumer-cabinet__edition')?.textContent?.trim() ?? '',
+            count: seat.querySelector('.consumer-cabinet__count')?.textContent?.trim() ?? '',
+          })),
         thesisHref: thesis?.getAttribute('href') ?? '',
         thesisImage: thesisImage?.getAttribute('src') ?? '',
         thesisAlt: thesisImage?.getAttribute('alt') ?? '',
       };
     });
+    const expectedCabinetSample = [
+      { finish: 'crown', src: '/assets/cabinet-materials/gold/aries.webp', edition: 'V', count: '×12' },
+      { finish: 'pastel', src: '/assets/zodiac-icons/128/cancer.webp', edition: 'I', count: '' },
+      { finish: 'bronze', src: '/assets/zodiac-icons/128/leo.webp', edition: 'II', count: '' },
+      { finish: 'silver', src: '/assets/zodiac-icons/128/scorpio.webp', edition: 'III', count: '' },
+      { finish: 'gold', src: '/assets/cabinet-materials/gold/aquarius.webp', edition: 'IV', count: '×3' },
+    ];
     check(
-      'collection and thesis links preview the artwork found at their destinations',
+      'collection and thesis links preview the exact artwork found at their destinations',
       purposeArt.collectionHref === '/registry/collection/'
         && purposeArt.seats === 12
         && purposeArt.filledSeats === 5
-        && purposeArt.seatImages.length === 5
-        && purposeArt.seatImages.filter((src) => src.startsWith('/assets/cabinet-materials/')).length === 3
-        && purposeArt.seatImages.filter((src) => src.startsWith('/assets/zodiac-icons/')).length === 2
+        && JSON.stringify(purposeArt.occupied) === JSON.stringify(expectedCabinetSample)
+        && purposeArt.occupied.filter(({ src }) => src.startsWith('/assets/cabinet-materials/')).length === 2
+        && purposeArt.occupied.filter(({ src }) => src.startsWith('/assets/zodiac-icons/')).length === 3
         && purposeArt.thesisHref === '/thesis/'
         && purposeArt.thesisImage.includes('/assets/art/zodiac-clock-')
         && purposeArt.thesisAlt.length > 0,
@@ -1136,6 +1300,48 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const mobileStageLive = await mobile.evaluate(() => (
         document.documentElement.classList.contains('gallery-live')
       ));
+      const mobileMarket = mobile.locator('#market');
+      await mobileMarket.scrollIntoViewIfNeeded();
+      await mobileMarket.locator('.market-row').first().waitFor({ state: 'visible', timeout: 15_000 });
+      const compactMarketMaterial = await mobileMarket.evaluate((section) => {
+        const measure = (node) => {
+          const rect = node.getBoundingClientRect();
+          return {
+            width: rect.width,
+            height: rect.height,
+            left: rect.left,
+            right: rect.right,
+          };
+        };
+        return {
+          sort: [...section.querySelectorAll('.market-board__sort button')].map(measure),
+          share: [...section.querySelectorAll('.market-board__share button')].map(measure),
+          social: [...section.querySelectorAll('.market-board__social')].map(measure),
+          rowActions: [...section.querySelectorAll('.market-row__view, .market-row__record')].map(measure),
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+        };
+      });
+      check(
+        `market glass at ${label} keeps every social and row action touchable without overflow`,
+        compactMarketMaterial.sort.length === 3
+          && compactMarketMaterial.share.length === 4
+          && compactMarketMaterial.social.length === 3
+          && compactMarketMaterial.rowActions.length === 24
+          && [
+            ...compactMarketMaterial.sort,
+            ...compactMarketMaterial.share,
+            ...compactMarketMaterial.rowActions,
+          ].every(({ width: targetWidth, height: targetHeight, left, right }) => (
+            targetWidth >= 43.5
+              && targetHeight >= 43.5
+              && left >= -1
+              && right <= compactMarketMaterial.viewportWidth + 1
+          ))
+          && compactMarketMaterial.pageWidth <= compactMarketMaterial.viewportWidth + 1,
+        JSON.stringify(compactMarketMaterial),
+      );
+      await mobile.locator('#official-twelve').scrollIntoViewIfNeeded();
 
       // A capable phone keeps the same real turntable as desktop. Exercise
       // every rail control here: this catches both breakpoint regressions

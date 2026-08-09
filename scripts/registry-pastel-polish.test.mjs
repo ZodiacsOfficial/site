@@ -103,6 +103,70 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');
   });
 
+  it('turns market controls into restrained glass with accessible solid fallbacks', async () => {
+    const [source, registry] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+    ]);
+    const materialPass = registry.slice(registry.indexOf('Registry material pass'));
+
+    expect(source).toContain('className="market-glass"');
+    expect(source).toContain('className="market-glass market-board__share-primary"');
+    expect(source).toContain('className="market-glass market-board__social"');
+    expect(source).toContain('className="market-row__view market-glass"');
+    expect(source).toContain('className="market-row__record market-glass"');
+    expect(materialPass).toContain('.market-glass,');
+    expect(materialPass).toContain('backdrop-filter: blur(14px) saturate(145%);');
+    expect(materialPass).toContain('.market-board__sort button,');
+    expect(materialPass).toContain('min-height: 44px;');
+    expect(materialPass).toContain('.market-board__socials { display: flex;');
+    expect(materialPass).toContain('.market-board__social {');
+    expect(materialPass).toContain('width: 44px;');
+    // Repeated leaderboard actions are painted glass, not 24 independent
+    // backdrop blurs fighting the phone compositor.
+    expect(materialPass).toMatch(/\.market-row__view,\s*\n\s*\.market-row__record \{[\s\S]*?backdrop-filter: none;/u);
+    expect(materialPass).toMatch(/@media \(prefers-reduced-transparency: reduce\) \{[\s\S]*?background: #11141b;[\s\S]*?backdrop-filter: none;/u);
+    expect(materialPass).toMatch(/@media \(prefers-contrast: more\) \{[\s\S]*?border-color: rgba\(238,241,247,\.55\);/u);
+  });
+
+  it('uses recognizable sign media and the Cabinet\'s canonical curator sample', async () => {
+    const source = await read('src/app.jsx');
+    const how = source.slice(
+      source.indexOf('function ConsumerHowItWorks()'),
+      source.indexOf('function ConsumerPurpose()'),
+    );
+    const purpose = source.slice(
+      source.indexOf('function ConsumerPurpose()'),
+      source.indexOf('function ConsumerFaq()'),
+    );
+
+    for (const marker of [
+      "['aries', 'leo', 'pisces']",
+      '/assets/zodiac-icons/48/leo.webp',
+      '8Cd7…b8Qm',
+      'Choose a sign',
+      'Match the address',
+      'Recognize it anywhere',
+    ]) expect(how).toContain(marker);
+
+    for (const [slug, finish, numeral, count] of [
+      ['aries', 'crown', 'V', '×12'],
+      ['cancer', 'pastel', 'I', null],
+      ['leo', 'bronze', 'II', null],
+      ['scorpio', 'silver', 'III', null],
+      ['aquarius', 'gold', 'IV', '×3'],
+    ]) {
+      const countFragment = count ? `, count: '${count}'` : '';
+      expect(purpose).toContain(`${slug}: { finish: '${finish}', numeral: '${numeral}'${countFragment} }`);
+    }
+    expect(purpose).toContain("edition?.finish === 'gold' || edition?.finish === 'crown'");
+    expect(purpose).toContain('`/assets/cabinet-materials/gold/${item.asset.sign}`');
+    expect(purpose).toContain('`/assets/zodiac-icons/128/${item.asset.sign}`');
+    expect(purpose).toContain('data-cabinet-sample-finish={edition?.finish}');
+    expect(purpose).toContain('className="consumer-cabinet__edition"');
+    expect(purpose).toContain('className="consumer-cabinet__count"');
+  });
+
   it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
     const [wingNav, registry, thesis, sdk, source, siteNav] = await Promise.all([
       read('scripts/wing-nav.mjs'),
