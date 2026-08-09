@@ -65,8 +65,8 @@ describe('Registry consumer and technical information architecture', () => {
 
     // The no-JS shell can explain the route in prose; the mounted sculpture
     // stage no longer repeats that large hero copy above the work.
-    expect(visible).toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
-    expect(source).not.toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
+    expect(visible).toContain('Every sign has one official token. Explore its story, its record, and its market.');
+    expect(source).not.toContain('Every sign has one official token. Explore its story, its record, and its market.');
     for (const value of [source, visible]) {
       // The verifier is reachable in plain words. "Check an address" named
       // the mechanism, and "Check a token is official" dropped its "that".
@@ -83,11 +83,17 @@ describe('Registry consumer and technical information architecture', () => {
   it('renders a twelve-control pastel explorer with an accessible active state', async () => {
     const source = await read('src/app.jsx');
     const mounted = consumerRoot(source);
+    const explorer = source.slice(
+      source.indexOf('function ConsumerExplorer('),
+      source.indexOf('function ConsumerHowItWorks('),
+    );
 
     expect(source).toContain('id="official-twelve"');
-    expect(source).toContain('<h1 id="consumer-explorer-title" className="sr-only">Zodiacs Official Registry</h1>');
+    expect(explorer).toContain('<header className="consumer-masthead">');
+    expect(source).toContain('<h1 id="consumer-explorer-title">Zodiac <span className="it">Markets</span></h1>');
     expect(source).toContain('aria-labelledby="consumer-explorer-title"');
     expect(source.split('<h1 id="consumer-explorer-title"'), 'consumer Registry h1').toHaveLength(2);
+    expect(explorer).not.toMatch(/<h1[^>]*className="[^"]*sr-only/u);
     // In stage mode the section is also the page's opening scene.
     expect(source).toContain("'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')");
     expect(source).toContain('data-consumer-sign=');
@@ -232,24 +238,28 @@ describe('Registry consumer and technical information architecture', () => {
 
   it('lets the season materialize inside the scene without another framed card', async () => {
     const html = await read('public/registry/index.html');
-    const materialPass = html.slice(html.indexOf('Registry material pass'));
-    const seasonRule = materialPass.slice(
-      materialPass.indexOf('.season-now {'),
-      materialPass.indexOf('.season-now::before'),
+    const seasonBase = html.slice(
+      html.indexOf('.season-now {'),
+      html.indexOf('.season-now__identity {'),
     );
-    const railRule = materialPass.slice(
-      materialPass.indexOf('.gband--consumer .rail {'),
-      materialPass.indexOf('.gband--consumer .rail__tick img'),
+    const controlPass = html.slice(html.indexOf('Registry control pass'));
+    const seasonTransition = controlPass.slice(
+      controlPass.indexOf('.season-now {'),
+      controlPass.indexOf('.season-now__identity,'),
+    );
+    const railRule = controlPass.slice(
+      controlPass.indexOf('.gband--consumer .rail {'),
+      controlPass.indexOf('.gband--consumer .rail__tick img'),
     );
 
-    expect(seasonRule).toContain('border: 0;');
-    expect(seasonRule).toContain('border-radius: 0;');
-    expect(seasonRule).toContain('background: transparent;');
-    expect(seasonRule).toContain('opacity: 1;');
-    expect(seasonRule).toContain('opacity 240ms cubic-bezier(0.23, 1, 0.32, 1) 50ms');
-    expect(seasonRule).toContain('transform 280ms cubic-bezier(0.23, 1, 0.32, 1) 50ms');
-    expect(materialPass).toMatch(/@starting-style \{\s*\.season-now \{\s*opacity: 0;\s*transform: translateY\(7px\);/u);
-    expect(materialPass).toMatch(/@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?\.consumer-registry \.season-now \{[\s\S]*?transition-property: opacity !important;/u);
+    expect(seasonBase).toContain('border: 0;');
+    expect(seasonBase).toContain('border-radius: 0;');
+    expect(seasonBase).toContain('background: transparent;');
+    expect(seasonTransition).toContain('opacity: 1;');
+    expect(seasonTransition).toContain('opacity 240ms cubic-bezier(0.23, 1, 0.32, 1) 50ms');
+    expect(seasonTransition).toContain('transform 280ms cubic-bezier(0.23, 1, 0.32, 1) 50ms');
+    expect(controlPass).toMatch(/@starting-style \{\s*\.season-now \{\s*opacity: 0;\s*transform: translateY\(7px\);/u);
+    expect(controlPass).toMatch(/@media \(prefers-reduced-motion: reduce\) \{[\s\S]*?\.consumer-registry \.season-now \{[\s\S]*?transition-property: opacity !important;/u);
     expect(railRule).toContain('border: 0;');
     expect(railRule).toContain('border-radius: 0;');
     expect(railRule).toContain('background: transparent;');
@@ -400,7 +410,8 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('market.liquidityUsd += liquidity;');
     expect(source).toContain("if (indexedPairs === 0) return unavailableMarketContext('no-pair');");
     expect(source).toContain('const MARKET_REFRESH_MS = 120_000;');
-    expect(source).toContain('Share snapshot');
+    expect(source).toContain('aria-label="Share snapshot"');
+    expect(source).toContain('<MarketSocialIcon network="share" /><span>Share</span>');
     expect(source).toContain('function MarketSocialIcon({ network })');
     expect(source).toContain("['x', 'X']");
     expect(source).toContain("['telegram', 'Telegram']");
@@ -415,7 +426,11 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).not.toContain('galleryFocusRequest');
     expect(source).not.toContain('showInGallery');
     expect(source).not.toContain('className="market-row__view');
-    expect(source).toContain('className="market-row__record market-glass"');
+    expect(source).not.toContain('market-glass');
+    expect(source).toContain('className="registry-pill registry-pill--segment"');
+    expect(source).toContain('className="registry-pill registry-pill--share market-board__share-primary"');
+    expect(source).toContain('className="registry-pill registry-pill--icon market-board__social"');
+    expect(source).toContain('className="market-row__record registry-pill registry-pill--record"');
     expect(source).toContain('<span className="market-row__record-label">Official record</span>');
     expect(source).toContain('aria-label={`Open the official ${item.name} record`}');
     expect(source).toContain("shared.searchParams.set('outlook', horizon)");
@@ -427,13 +442,35 @@ describe('Registry consumer and technical information architecture', () => {
     expect(visible).toContain('Live figures and sharing appear with JavaScript');
   });
 
-  it('removes the directional-price aside from the auditable outlook', async () => {
+  it('turns astrology into a named, auditable three-step market-check path', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
     const visible = visibleMarkup(html);
+    const outlook = source.slice(
+      source.indexOf('function ConsumerOutlookSection('),
+      source.indexOf('function ConsumerExplorer('),
+    );
 
+    expect(outlook).toContain('<h2 id="consumer-outlook-title">Sky signals. <span className="it">Market checks.</span></h2>');
+    expect(outlook.match(/className="outlook-flow__step /gu) ?? []).toHaveLength(3);
+    for (const label of ['Sky factor', 'Sign signal', 'Market check']) {
+      expect(outlook).toContain(`<span className="outlook-flow__label">${label}</span>`);
+    }
+    expect(outlook).not.toContain('outlook-dial');
+    expect(outlook).toContain('<time dateTime={factor.at}>{formatOutlookEventMoment(factor.at)}</time>');
+    expect(outlook).toContain('className="outlook-factor__impact"');
+    expect(outlook).toContain('<summary>Show calculation</summary>');
+    expect(outlook).toContain('<code>{factor.calculation}</code>');
+    expect(html).toMatch(/\.outlook-factor__calculation summary \{[\s\S]*?min-height: 44px;/u);
+    expect(outlook).toContain('Observed separately · never an input');
+    expect(outlook).toContain('Market data never changes the astrology score.');
+    expect(outlook).toContain('className="outlook-lab__stale" role="status"');
+    expect(outlook).toContain('The research instrument is temporarily unavailable. Live markets and official records remain independent.');
+    expect(outlook).toContain('className="outlook-lab__coverage" role="status"');
+    expect(outlook).toContain('disabled={!outlook || !editionIsCurrent || !coverageComplete}>Share signal</button>');
+    expect(outlook).toContain("scoreTone >= 12 ? 'Supportive' : scoreTone <= -12 ? 'Friction' : 'Neutral'");
     expect(source).not.toContain('className="outlook-challenge"');
     expect(source).not.toContain('Why no price arrow?');
     expect(visible).not.toContain('Why no price arrow?');

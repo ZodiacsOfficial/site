@@ -3984,7 +3984,12 @@
             <div className="consumer-market__personal">
               <span className="consumer-market__personal-label">Your sign on this device</span>
               <strong>{personalSlug ? titleCase(personalSlug) : 'Not chosen'}</strong>
-              <button type="button" onClick={() => setPersonalSlug(activeSign.asset.sign)}>
+              <button
+                className="registry-pill registry-pill--compact"
+                type="button"
+                aria-pressed={personalSlug === activeSign.asset.sign}
+                onClick={() => setPersonalSlug(activeSign.asset.sign)}
+              >
                 {personalSlug === activeSign.asset.sign ? `${activeSign.name} is yours` : `Choose ${activeSign.name}`}
               </button>
             </div>
@@ -4015,15 +4020,15 @@
                   <button
                     key={key}
                     type="button"
-                    className="market-glass"
+                    className="registry-pill registry-pill--segment"
                     aria-pressed={rankBy === key}
                     onClick={() => setRankBy(key)}
                   >{option.short}</button>
                 ))}
               </div>
               <div className="market-board__share">
-                <button className="market-glass market-board__share-primary" type="button" onClick={copyShare} disabled={!shareReady}>
-                  <MarketSocialIcon network="share" /><span>Share snapshot</span>
+                <button className="registry-pill registry-pill--share market-board__share-primary" type="button" aria-label="Share snapshot" onClick={copyShare} disabled={!shareReady}>
+                  <MarketSocialIcon network="share" /><span>Share</span>
                 </button>
                 <div className="market-board__socials" role="group" aria-label="Share this snapshot on social media">
                   {[
@@ -4032,7 +4037,7 @@
                     ['whatsapp', 'WhatsApp'],
                   ].map(([network, label]) => (
                     <button
-                      className="market-glass market-board__social"
+                      className="registry-pill registry-pill--icon market-board__social"
                       key={network}
                       type="button"
                       aria-label={`Share on ${label}`}
@@ -4055,7 +4060,7 @@
             {batch.status === 'unavailable' && (
               <div className="market-board__state">
                 <p>Live market context is temporarily unavailable. The official records remain available.</p>
-                <button type="button" onClick={() => setRetryKey(value => value + 1)}>Try again</button>
+                <button className="registry-pill registry-pill--compact" type="button" onClick={() => setRetryKey(value => value + 1)}>Try again</button>
               </div>
             )}
             <ol className="market-board__rows" aria-busy={batch.status === 'loading'}>
@@ -4086,7 +4091,7 @@
                       <span className="market-row__metric market-row__metric--cap"><small>Market cap</small><strong>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</strong></span>
                       <span className="market-row__metric market-row__metric--liq"><small>Liquidity</small><strong>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</strong></span>
                       <span className="market-row__actions market-row__actions--record-only">
-                        <a className="market-row__record market-glass" href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>
+                        <a className="market-row__record registry-pill registry-pill--record" href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>
                           <span className="market-row__record-label">Official record</span>
                           <span className="market-row__action-orb" aria-hidden="true">↗</span>
                         </a>
@@ -4108,14 +4113,61 @@
       );
     }
 
-    const OUTLOOK_SIGNAL_COPY = Object.freeze({
-      quiet: 'No strong symbolic catalyst is concentrated here in this window.',
-      steady: 'A modest symbolic emphasis suggests a baseline participation window.',
-      active: 'Elevated symbolic attention creates a testable hypothesis for stronger participation.',
-      supportive: 'The event mix is symbolically supportive; price direction is intentionally unclaimed.',
-      watchful: 'The event mix carries more friction than ease; watch participation and volatility.',
-      charged: 'Symbolic intensity is elevated, creating a testable volatility hypothesis.',
+    const OUTLOOK_SIGNAL_UI = Object.freeze({
+      quiet: {
+        label: 'Low sky activity',
+        copy: 'Few concentrated planetary events touch this sign in the selected window. Treat it as a baseline watch.',
+      },
+      steady: {
+        label: 'Steady attention',
+        copy: 'The sky adds a modest amount of attention to this sign, without a strong symbolic tilt.',
+      },
+      active: {
+        label: 'Elevated attention',
+        copy: 'Several planetary factors concentrate on this sign. Compare the symbolic score with market participation without assuming causation.',
+      },
+      supportive: {
+        label: 'Supportive event mix',
+        copy: 'The astrology mix leans supportive for this sign. That describes symbolism, not an expected price direction.',
+      },
+      watchful: {
+        label: 'Friction to watch',
+        copy: 'The astrology mix carries more friction than ease. That is symbolic tone only; market behavior is observed separately.',
+      },
+      charged: {
+        label: 'High-intensity window',
+        copy: 'Multiple high-weight events touch this sign, producing a high symbolic-intensity score. It does not predict market direction or realized volatility.',
+      },
     });
+
+    function formatOutlookEventMoment(value) {
+      if (!value) return 'No dated event in this window';
+      const date = new Date(value);
+      if (Number.isNaN(date.valueOf())) return 'Time unavailable';
+      return date.toLocaleString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZone: 'UTC',
+        timeZoneName: 'short',
+      });
+    }
+
+    function formatOutlookPoints(value) {
+      const number = Number(value);
+      if (!Number.isFinite(number) || Math.abs(number) < 0.05) return '0';
+      const rounded = Number.isInteger(number) ? `${number}` : number.toFixed(1);
+      return number > 0 ? `+${rounded}` : rounded;
+    }
+
+    function outlookFactorImpact(factor) {
+      if (!factor) return 'No event points added';
+      const tone = Math.abs(Number(factor.tonePoints) || 0) < 0.05
+        ? 'neutral tone'
+        : `${formatOutlookPoints(factor.tonePoints)} tone`;
+      return `${formatOutlookPoints(factor.attentionPoints)} attention · ${tone} · ${formatOutlookPoints(factor.volatilityPoints)} event intensity`;
+    }
 
     function ConsumerOutlookSection({ active, setActive }) {
       const reveal = useReveal();
@@ -4133,6 +4185,8 @@
       const [outlookAttempt, setOutlookAttempt] = useState(0);
       const [shareState, setShareState] = useState('');
       const market = useTwelveQuotes(inView);
+
+      useEffect(() => { setShareState(''); }, [active, horizon]);
 
       useEffect(() => {
         if (!inView) return undefined;
@@ -4169,9 +4223,38 @@
       const editionIsCurrent = Boolean(edition && edition.date === utcToday);
       const scoreTone = outlook?.scores?.tone ?? 0;
       const toneLabel = scoreTone > 0 ? `+${scoreTone}` : `${scoreTone}`;
-      const signalLabel = outlook ? titleCase(outlook.signal) : 'Reading…';
+      const signalMeta = outlook
+        ? (OUTLOOK_SIGNAL_UI[outlook.signal] ?? { label: titleCase(outlook.signal), copy: outlook.summary })
+        : { label: 'Reading the sky…', copy: 'Loading the committed signal edition.' };
+      const signalLabel = signalMeta.label;
+      const primaryFactor = outlook?.primaryFactor ?? outlook?.factors?.[0] ?? null;
+      const primaryMoment = formatOutlookEventMoment(primaryFactor?.at);
+      const primaryImpact = outlookFactorImpact(primaryFactor);
+      const coverageComplete = edition?.coverage?.overall === 'complete'
+        && edition?.coverage?.events === 'complete'
+        && edition?.coverage?.occupancies === 'complete';
+      const coverageNotice = edition && !coverageComplete
+        ? 'Partial sky coverage: one or more source windows are incomplete, so this signal may omit events.'
+        : '';
+      const noFactorCopy = coverageComplete
+        ? `No scored sky factor names ${activeSign.name} in this window.`
+        : `This edition has partial sky coverage; a quiet score may reflect missing source data.`;
+      const marketReadLabel = market.observedAt
+        ? new Date(market.observedAt).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })
+        : '';
+      const marketIsLoading = market.status === 'idle' || market.status === 'loading';
+      const marketHeadline = quote
+        ? formatPriceUsd(quote.priceUsd)
+        : marketIsLoading
+          ? 'Reading live market…'
+          : 'Market data unavailable';
+      const marketDetail = quote
+        ? `${formatPercent(quote.priceChange24h)} over 24h · ${formatUsdCompact(quote.liquidityUsd)} liquidity${market.stale ? ' · refresh delayed' : ''}`
+        : marketIsLoading
+          ? 'Price, 24h movement, and liquidity will appear here.'
+          : 'The sky score remains readable without a live quote.';
       const shareCopy = outlook
-        ? `${activeSign.name} · ${horizon === 'weekly' ? '7-day' : 'daily'} sky signal: ${signalLabel}\nEdition ${edition.date} · Attention ${outlook.scores.attention}/100 · tone ${toneLabel} · volatility ${outlook.scores.volatility}/100\n${outlook.primaryFactor ? `Main factor: ${outlook.primaryFactor.label}.` : 'No exact event in this window.'}\nExperimental symbolic index — not a price forecast or financial advice.`
+        ? `${activeSign.name} · ${horizon === 'weekly' ? '7-day' : 'daily'} sky signal: ${signalLabel}\nEdition ${edition.date} · Attention ${outlook.scores.attention}/100 · tone ${toneLabel} · event intensity ${outlook.scores.volatility}/100\n${outlook.primaryFactor ? `Main factor: ${outlook.primaryFactor.label}.` : `No scored sky factor names ${activeSign.name} in this window.`}${coverageNotice ? `\n${coverageNotice}` : ''}\nExperimental symbolic index — not a price forecast or financial advice.`
         : '';
       const shareOutlook = async () => {
         const shared = new URL('/registry/', window.location.origin);
@@ -4192,10 +4275,10 @@
           }
           if (!navigator.clipboard?.writeText) throw new Error('clipboard');
           await navigator.clipboard.writeText(`${shareCopy}\n${url}`);
-          setShareState('Reading copied.');
+          setShareState('Signal copied.');
           trackAnalytics('registry_outlook_shared', { sign: activeSign.asset.sign, horizon, destination: 'clipboard' });
         } catch (error) {
-          setShareState('Could not share this reading.');
+          setShareState('Could not share this signal.');
         }
       };
 
@@ -4203,21 +4286,21 @@
         <section ref={reveal} id="outlook" className="consumer-outlook reveal" aria-labelledby="consumer-outlook-title">
           <header className="consumer-outlook__head">
             <div className="consumer-section-head">
-              <span className="consumer-section-head__eyebrow">Open research instrument · v1</span>
-              <h2 id="consumer-outlook-title">A forecast you can <span className="it">audit.</span></h2>
+              <span className="consumer-section-head__eyebrow">Astrology × market research</span>
+              <h2 id="consumer-outlook-title">Sky signals. <span className="it">Market checks.</span></h2>
             </div>
             <p>
-              We publish the sky signal before the window closes, then observe price,
-              liquidity, and volume separately. The leading factors and calculations
-              are visible here; the full edition and every miss stay in the record.
+              Named planetary events add disclosed points to the Zodiacs they touch.
+              We turn those points into attention, tone, and event-intensity scores, then
+              show live market data beside them — never inside the calculation.
             </p>
           </header>
 
           <div ref={hostRef} className="outlook-lab" style={{ '--outlook-sign': activeSign.hue }}>
             <div className="outlook-lab__toolbar">
               <div role="group" aria-label="Choose outlook horizon">
-                <button type="button" aria-pressed={horizon === 'daily'} onClick={() => setHorizon('daily')}>Daily</button>
-                <button type="button" aria-pressed={horizon === 'weekly'} onClick={() => setHorizon('weekly')}>7 days</button>
+                <button className="registry-pill registry-pill--segment" type="button" aria-pressed={horizon === 'daily'} onClick={() => setHorizon('daily')}>Today</button>
+                <button className="registry-pill registry-pill--segment" type="button" aria-pressed={horizon === 'weekly'} onClick={() => setHorizon('weekly')}>7 days</button>
               </div>
               <span>{edition ? `Edition ${editionLabel} · 12:00 UTC reference` : 'Loading the committed sky…'}</span>
             </div>
@@ -4228,92 +4311,135 @@
               </p>
             )}
 
+            {coverageNotice && (
+              <p className="outlook-lab__coverage" role="status">{coverageNotice} Sharing is paused for this edition.</p>
+            )}
+
             {state.status === 'unavailable' ? (
               <div className="outlook-lab__state">
                 <p>The research instrument is temporarily unavailable. Live markets and official records remain independent.</p>
-                <button type="button" onClick={() => setOutlookAttempt(value => value + 1)}>Try again</button>
+                <button className="registry-pill registry-pill--compact" type="button" onClick={() => setOutlookAttempt(value => value + 1)}>Try again</button>
               </div>
             ) : (
-              <div className="outlook-lab__grid" aria-busy={state.status !== 'ok'}>
-                <div className="outlook-reading">
-                  <div
-                    className="outlook-dial"
-                    style={{
-                      '--attention': `${(outlook?.scores?.attention ?? 0) * 3.6}deg`,
-                      '--volatility': `${(outlook?.scores?.volatility ?? 0) * 3.6}deg`,
-                    }}
-                    aria-label={outlook ? `${activeSign.name}: attention ${outlook.scores.attention}, tone ${toneLabel}, volatility ${outlook.scores.volatility}` : 'Loading scores'}
-                  >
-                    <span className="outlook-dial__outer"><span className="outlook-dial__inner">
-                      <img src={`/assets/zodiac-icons/128/${activeSign.asset.sign}.webp`} width="108" height="108" alt="" decoding="async" />
-                    </span></span>
-                  </div>
-                  <div className="outlook-reading__copy">
-                    <span className="outlook-reading__eyebrow">{activeSign.name} · {horizon === 'weekly' ? '7-day outlook' : 'daily outlook'}</span>
-                    <h3>{signalLabel}</h3>
-                    <p>{outlook ? OUTLOOK_SIGNAL_COPY[outlook.signal] : 'Calculating the published symbolic index…'}</p>
+              <div className="outlook-lab__body" aria-busy={state.status !== 'ok'}>
+                <ol className="outlook-flow" aria-label={`How the ${activeSign.name} sky signal is calculated and checked against the market`}>
+                  <li className="outlook-flow__step outlook-flow__step--event">
+                    <span className="outlook-flow__number">01</span>
+                    <div>
+                      <span className="outlook-flow__label">Sky factor</span>
+                      <strong>{primaryFactor?.label ?? (outlook ? 'No concentrated event' : 'Reading the sky…')}</strong>
+                      <small>{primaryFactor ? `${titleCase(primaryFactor.kind)} · ${primaryMoment}` : (outlook ? noFactorCopy : 'The selected window sets the event boundary.')}</small>
+                      {primaryFactor && <em>{primaryImpact}</em>}
+                    </div>
+                  </li>
+                  <li className="outlook-flow__step outlook-flow__step--impact">
+                    <span className="outlook-flow__number">02</span>
+                    <img src={`/assets/zodiac-icons/48/${activeSign.asset.sign}.webp`} width="38" height="38" alt="" decoding="async" />
+                    <div>
+                      <span className="outlook-flow__label">Sign signal</span>
+                      <strong>{outlook ? signalLabel : activeSign.name}</strong>
+                      <small>{outlook ? `${activeSign.name} · ${outlook.scores.attention}/100 attention · ${toneLabel} tone · ${outlook.scores.volatility}/100 event intensity` : 'Waiting for the committed score.'}</small>
+                    </div>
+                  </li>
+                  <li className="outlook-flow__step outlook-flow__step--watch">
+                    <span className="outlook-flow__number">03</span>
+                    <div>
+                      <span className="outlook-flow__label">Market check</span>
+                      <strong>{marketHeadline}</strong>
+                      <small>{marketDetail}</small>
+                      <em>Observed separately · never an input</em>
+                    </div>
+                  </li>
+                </ol>
+
+                <div className="outlook-lab__grid">
+                  <article className="outlook-reading">
+                    <div className="outlook-reading__identity">
+                      <img src={`/assets/zodiac-icons/128/${activeSign.asset.sign}.webp`} width="82" height="82" alt="" decoding="async" />
+                      <div>
+                        <span className="outlook-reading__eyebrow">{activeSign.name} · {horizon === 'weekly' ? '7-day signal' : 'today’s signal'}</span>
+                        <h3>{signalLabel}</h3>
+                      </div>
+                    </div>
+                    <p className="outlook-reading__summary">{signalMeta.copy}</p>
                     {outlook && (
-                      <dl className="outlook-scores">
-                        <div><dt>Attention</dt><dd>{outlook.scores.attention}<small>/100</small></dd></div>
-                        <div><dt>Tone</dt><dd>{toneLabel}</dd></div>
-                        <div><dt>Volatility</dt><dd>{outlook.scores.volatility}<small>/100</small></dd></div>
+                      <dl className="outlook-scores" aria-label={`${activeSign.name} signal scores`}>
+                        <div>
+                          <dt>Attention</dt>
+                          <dd>{outlook.scores.attention}<small>/100</small></dd>
+                          <small>How concentrated the sky is on this sign</small>
+                        </div>
+                        <div>
+                          <dt>Symbolic tone</dt>
+                          <dd>{scoreTone >= 12 ? 'Supportive' : scoreTone <= -12 ? 'Friction' : 'Neutral'}<small>{toneLabel}</small></dd>
+                          <small>The astrology mix, not price direction</small>
+                        </div>
+                        <div>
+                          <dt>Event intensity</dt>
+                          <dd>{outlook.scores.volatility}<small>/100</small></dd>
+                          <small>How strongly the scored sky factors cluster</small>
+                        </div>
                       </dl>
                     )}
                     <div className="outlook-market-context">
-                      <span>Observed market · not an input</span>
-                      <strong>{quote ? `${formatPriceUsd(quote.priceUsd)} · ${formatPercent(quote.priceChange24h)} 24h` : 'Live context unavailable'}</strong>
-                      <small>{quote ? `${formatUsdCompact(quote.liquidityUsd)} indexed liquidity` : 'The sky score does not change when market data is missing.'}</small>
+                      <span>Live market check · observed separately · never an input{market.stale ? ' · refresh delayed' : ''}</span>
+                      <strong>{quote ? `${formatPriceUsd(quote.priceUsd)} · ${formatPercent(quote.priceChange24h)} over 24h` : marketHeadline}</strong>
+                      <small>{quote ? `${formatUsdCompact(quote.liquidityUsd)} indexed liquidity${marketReadLabel ? ` · read ${marketReadLabel}` : ''}` : marketDetail}</small>
                     </div>
                     <div className="outlook-reading__actions">
-                      <button type="button" onClick={shareOutlook} disabled={!outlook || !editionIsCurrent}>Share reading</button>
-                      <a href="#market">View live market</a>
+                      <button className="registry-pill registry-pill--compact" type="button" onClick={shareOutlook} disabled={!outlook || !editionIsCurrent || !coverageComplete}>Share signal</button>
+                      <a className="registry-pill registry-pill--compact" href="#market">View live market</a>
                     </div>
                     <p className="outlook-reading__share" role="status" aria-live="polite">{shareState}</p>
-                  </div>
-                </div>
+                  </article>
 
-                <aside className="outlook-factors" aria-label={`${activeSign.name} calculation`}>
-                  <span className="outlook-factors__eyebrow">
-                    What moved the score{outlook?.factors?.length > 3 ? ` · top 3 of ${outlook.factors.length}` : ''}
-                  </span>
-                  {outlook?.factors?.length ? (
-                    <ol>
-                      {outlook.factors.slice(0, 3).map((factor, index) => (
-                        <li key={factor.id}>
-                          <span>{String(index + 1).padStart(2, '0')}</span>
-                          <div>
-                            <strong>{factor.label}</strong>
-                            <p>{factor.explanation}</p>
-                            <code>{factor.calculation}</code>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  ) : (
-                    <p className="outlook-factors__empty">No exact event is concentrated in this sign during the selected window.</p>
-                  )}
-                  {edition?.evidence && (
-                    <div className="outlook-calibration">
-                      <span>Public scorekeeping</span>
-                      <strong>{edition.evidence.historyDaysObserved} / {edition.evidence.minimumHistoryDays} daily observations</strong>
-                      <small>{edition.evidence.historyDaysRemaining} remaining before the first eligible held-out evaluation.</small>
-                    </div>
-                  )}
-                  <details className="outlook-method">
-                    <summary>Read the full method</summary>
-                    <div>
-                      <p><strong>Occupancy.</strong> Each planet adds a disclosed attention weight to the sign it occupies at the UTC reference point.</p>
-                      <p><strong>Event proximity.</strong> Exact ingresses, lunations, stations, and aspects receive 1.00–0.75× weight across the window.</p>
-                      <p><strong>Evaluation.</strong> Signals must be timestamped before outcomes and compared with persistence and equal-sign baselines on held-out data.</p>
-                      <a href="/assets/registry-outlook.json">Open the machine-readable edition ↗</a>
-                    </div>
-                  </details>
-                </aside>
+                  <aside className="outlook-factors" aria-label={`${activeSign.name} astrology events and calculation`}>
+                    <span className="outlook-factors__eyebrow">
+                      Events touching {activeSign.name}{outlook?.factors?.length > 3 ? ` · top 3 of ${outlook.factors.length}` : ''}
+                    </span>
+                    {outlook?.factors?.length ? (
+                      <ol>
+                        {outlook.factors.slice(0, 3).map((factor) => (
+                          <li key={factor.id}>
+                            <time dateTime={factor.at}>{formatOutlookEventMoment(factor.at)}</time>
+                            <div>
+                              <strong>{factor.label}</strong>
+                              <span className="outlook-factor__impact">{outlookFactorImpact(factor)}</span>
+                              <p>{factor.explanation}</p>
+                              <details className="outlook-factor__calculation">
+                                <summary>Show calculation</summary>
+                                <code>{factor.calculation}</code>
+                              </details>
+                            </div>
+                          </li>
+                        ))}
+                      </ol>
+                    ) : (
+                      <p className="outlook-factors__empty">{noFactorCopy}</p>
+                    )}
+                    {edition?.evidence && (
+                      <div className="outlook-calibration">
+                        <span>Evidence collection</span>
+                        <strong>{edition.evidence.historyDaysObserved} / {edition.evidence.minimumHistoryDays} daily observations</strong>
+                        <small>{edition.evidence.historyDaysRemaining} remaining before the first eligible held-out evaluation. Until then, predictive accuracy is not claimed.</small>
+                      </div>
+                    )}
+                    <details className="outlook-method">
+                      <summary>How the signal is calculated</summary>
+                      <div>
+                        <p><strong>1 · Occupancy.</strong> A planet adds a disclosed attention weight to the sign it occupies at the UTC reference point.</p>
+                        <p><strong>2 · Event proximity.</strong> Ingresses, lunations, stations, and aspects receive a 1.00–0.75× weight across the selected window.</p>
+                        <p><strong>3 · Market check.</strong> Price, liquidity, and volume are observed separately. Market data never changes the astrology score.</p>
+                        <a href="/assets/registry-outlook.json">Open the machine-readable edition ↗</a>
+                      </div>
+                    </details>
+                  </aside>
+                </div>
               </div>
             )}
 
             {ranked.length > 0 && (
-              <div className="outlook-wheel" role="group" aria-label="Symbolic attention across the twelve signs">
+              <div className="outlook-wheel" role="group" aria-label="Compare sky attention across the twelve signs">
                 {ranked.map(item => {
                   const sign = SIGNS.find(candidate => candidate.asset.sign === item.sign);
                   const selected = sign?.ticker === active;
@@ -4328,7 +4454,7 @@
                     >
                       <span className="outlook-wheel__rank">{String(item.attentionRank).padStart(2, '0')}</span>
                       <img src={`/assets/zodiac-icons/48/${item.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
-                      <span><strong>{sign.name}</strong><small>{item.scores.attention} attention</small></span>
+                      <span><strong>{sign.name}</strong><small>{item.scores.attention}/100 attention</small></span>
                     </button>
                   );
                 })}
@@ -4357,7 +4483,11 @@
           aria-labelledby="consumer-explorer-title"
           style={{ '--active-sign': sign.hue }}
         >
-          <h1 id="consumer-explorer-title" className="sr-only">Zodiacs Official Registry</h1>
+          <header className="consumer-masthead">
+            <span className="consumer-masthead__eyebrow">Official token registry</span>
+            <h1 id="consumer-explorer-title">Zodiac <span className="it">Markets</span></h1>
+            <p>Live prices, liquidity, season, and sky signals for the twelve official tokens.</p>
+          </header>
           {/* This section IS the page's opening at every width. WebGL keeps
               the original interactive gallery on desktop and mobile; only
               machines that cannot paint it receive the image carousel. */}

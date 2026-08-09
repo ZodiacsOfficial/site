@@ -17,7 +17,10 @@ const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 // lab. Keep a ceiling as a regression guard, but size it for that intentional
 // narrative rather than the shorter pre-market Registry.
 const MAX_COMPACT_REGISTRY_HEIGHT = 9_000;
-const MAX_PHONE_REGISTRY_HEIGHT = 10_500;
+// The auditable Signals lab adds three plain-language steps, factor receipts,
+// and a twelve-sign comparison wheel. Keep a firm regression ceiling while
+// allowing that intentionally scrollable evidence on the narrowest phones.
+const MAX_PHONE_REGISTRY_HEIGHT = 11_500;
 // The 42px live tape now owns one row of the framed hero. The scene camera fits
 // the sculpture to the room it receives, so 260px is the useful desktop floor;
 // mobile retains its separate 200px floor and explicit placard-clearance gate.
@@ -452,12 +455,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await fallbackPage.close();
     }
 
-    const homeMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
     const registryMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
-    await Promise.all([
-      homeMaterialPage.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded' }),
-      registryMaterialPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' }),
-    ]);
+    await registryMaterialPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
     const material = async (page, selector, lens) => {
       // This assertion compares the settled material recipes, not animation
       // timing. CI runners can briefly suspend a page while another page is
@@ -477,30 +476,89 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         return {
           background: style.backgroundColor,
           backdrop: style.backdropFilter || style.webkitBackdropFilter,
+          filter: style.filter,
           border: style.borderColor,
           shadow: style.boxShadow,
         };
       }));
     };
+    let stageMaterialReference = null;
     for (const lens of [false, true]) {
-      const [homeActions, registryActions] = await Promise.all([
-        material(homeMaterialPage, '.hero__ctas .btn', lens),
-        material(registryMaterialPage, '.stage-placard__pill', lens),
-      ]);
+      const registryActions = await material(registryMaterialPage, '.stage-placard__pill', lens);
       check(
-        `homepage hero actions match the Registry glass material (${lens ? 'lens' : 'iOS fallback'})`,
-        homeActions.length === 2
-          && registryActions.length >= 1
-          && homeActions.every((action) => (
-            action.background === registryActions[0].background
-            && action.backdrop === registryActions[0].backdrop
-            && action.border === registryActions[0].border
-            && action.shadow === registryActions[0].shadow
-          )),
-        JSON.stringify({ homeActions, registryActions }),
+        `Registry stage pills stay painted and filter-free (${lens ? 'lens' : 'iOS fallback'})`,
+        registryActions.length >= 2
+          && registryActions.every((action) => (
+            action.background !== 'rgba(0, 0, 0, 0)'
+            && action.backdrop === 'none'
+            && action.filter === 'none'
+            && action.shadow.includes('inset')
+          ))
+          && (!stageMaterialReference
+            || JSON.stringify(registryActions) === JSON.stringify(stageMaterialReference)),
+        JSON.stringify({ registryActions, stageMaterialReference }),
       );
+      stageMaterialReference = registryActions;
     }
-    await Promise.all([homeMaterialPage.close(), registryMaterialPage.close()]);
+    const mediaClient = await registryMaterialPage.context().newCDPSession(registryMaterialPage);
+    const accessibilityPillStyles = async (name, value) => {
+      await mediaClient.send('Emulation.setEmulatedMedia', {
+        media: 'screen',
+        features: [{ name, value }],
+      });
+      await registryMaterialPage.locator('.market-board__sort button[aria-pressed="true"]').waitFor();
+      await registryMaterialPage.locator([
+        '.stage-placard .btn--primary.stage-placard__pill',
+        '.stage-placard .btn--ghost.stage-placard__pill',
+        '.market-board__sort button[aria-pressed="true"]',
+      ].join(', ')).evaluateAll((controls) => {
+        for (const control of controls) control.style.setProperty('transition', 'none', 'important');
+      });
+      await registryMaterialPage.evaluate(() => new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      }));
+      return registryMaterialPage.evaluate(() => [
+        ['Buy', document.querySelector('.stage-placard .btn--primary.stage-placard__pill')],
+        ['Ghost', document.querySelector('.stage-placard .btn--ghost.stage-placard__pill')],
+        ['Selected', document.querySelector('.market-board__sort button[aria-pressed="true"]')],
+      ].map(([name, control]) => {
+        const style = getComputedStyle(control);
+        return {
+          name,
+          background: style.backgroundColor,
+          backdrop: style.backdropFilter || style.webkitBackdropFilter,
+          filter: style.filter,
+          border: style.borderColor,
+          color: style.color,
+        };
+      }));
+    };
+    const reducedTransparencyPills = await accessibilityPillStyles('prefers-reduced-transparency', 'reduce');
+    check(
+      'reduced transparency gives Buy, ghost, and selected Registry pills one opaque floor',
+      reducedTransparencyPills.length === 3
+        && reducedTransparencyPills.every((control) => (
+          control.background === 'rgb(17, 20, 27)'
+            && control.backdrop === 'none'
+            && control.filter === 'none'
+        )),
+      JSON.stringify(reducedTransparencyPills),
+    );
+    const contrastPills = await accessibilityPillStyles('prefers-contrast', 'more');
+    check(
+      'increased contrast wins over Buy, ghost, and selected Registry pill states',
+      contrastPills.length === 3
+        && contrastPills.every((control) => (
+          control.border === 'rgba(238, 241, 247, 0.72)'
+            && control.color === contrastPills[0].color
+            && control.backdrop === 'none'
+            && control.filter === 'none'
+        )),
+      JSON.stringify(contrastPills),
+    );
+    await mediaClient.send('Emulation.setEmulatedMedia', { media: 'screen', features: [] });
+    await mediaClient.detach();
+    await registryMaterialPage.close();
 
     const reducedContext = await browser.newContext({
       viewport: { width: 390, height: 844 },
@@ -758,11 +816,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       JSON.stringify(explorerState),
     );
     check(
-      'the sculpture-led stage opens without the retired film or title card',
+      'the sculpture-led stage opens under one visible Zodiac Markets masthead',
       await desktop.locator('.cine').count() === 0
         && await desktop.locator('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').count() === 0
         && await desktop.locator('h1').count() === 1
-        && (await desktop.locator('h1').innerText()) === 'Zodiacs Official Registry'
+        && await desktop.locator('.consumer-masthead > h1').isVisible()
+        && (await desktop.locator('.consumer-masthead > h1').innerText()).replace(/\s+/g, ' ').trim() === 'Zodiac Markets'
+        && !((await desktop.locator('.consumer-masthead > h1').getAttribute('class')) ?? '').includes('sr-only')
         && await desktop.locator('#official-twelve').getAttribute('aria-labelledby') === 'consumer-explorer-title',
     );
     const openingMaterial = await desktop.locator('.gband--consumer').evaluate((band) => {
@@ -918,7 +978,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         priced: /^\$/.test(row.querySelector('.market-row__metric--price strong')?.textContent ?? ''),
         recordLabel: record?.getAttribute('aria-label') ?? '',
         recordText: record?.querySelector('.market-row__record-label')?.textContent?.trim() ?? '',
-        recordGlass: record?.classList.contains('market-glass') ?? false,
+        recordPill: record?.classList.contains('registry-pill') ?? false,
         sculptureActions: row.querySelectorAll('.market-row__view').length,
       };
     }));
@@ -934,64 +994,83 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && watchlist.every((row) => (
           row.recordLabel === `Open the official ${row.slug.charAt(0).toUpperCase() + row.slug.slice(1)} record`
             && row.recordText === 'Official record'
-            && row.recordGlass
+            && row.recordPill
             && row.sculptureActions === 0
         )),
       JSON.stringify(watchlist),
     );
     const marketMaterial = await desktop.locator('#market').evaluate((section) => {
       const inspect = (button) => {
+        if (!button) return null;
         const rect = button.getBoundingClientRect();
         const style = getComputedStyle(button);
         return {
           label: button.getAttribute('aria-label') || button.textContent.replace(/\s+/g, ' ').trim(),
-          glass: button.classList.contains('market-glass'),
+          text: button.textContent.replace(/\s+/g, ' ').trim(),
+          pill: button.classList.contains('registry-pill'),
           svg: Boolean(button.querySelector('svg')),
           width: rect.width,
           height: rect.height,
           backgroundImage: style.backgroundImage,
+          backgroundColor: style.backgroundColor,
           backdropFilter: style.backdropFilter || style.webkitBackdropFilter || '',
           borderWidth: style.borderTopWidth,
+          borderRadius: style.borderTopLeftRadius,
+          fontFamily: style.fontFamily,
           boxShadow: style.boxShadow,
         };
       };
       return {
+        buy: inspect(document.querySelector('.stage-placard .btn--primary.stage-placard__pill')),
         sortShell: inspect(section.querySelector('.market-board__sort')),
         sort: [...section.querySelectorAll('.market-board__sort button')].map(inspect),
         share: [...section.querySelectorAll('.market-board__share button')].map(inspect),
         rowActions: [...section.querySelectorAll('.market-row__record')].map(inspect),
         sculptureActions: section.querySelectorAll('.market-row__view').length,
+        legacyGlass: document.querySelectorAll('.market-glass').length,
       };
     });
     check(
-      'market filters and social controls use one accessible liquid-glass language',
-      marketMaterial.sortShell
-        && marketMaterial.sortShell.backgroundImage.includes('gradient')
+      'market filters, sharing, and records use the stage Buy pill language without Market glass',
+      marketMaterial.buy
+        && marketMaterial.buy.height >= 43.5
+        && marketMaterial.legacyGlass === 0
+        && marketMaterial.sortShell
+        && marketMaterial.sortShell.backgroundImage === 'none'
         && marketMaterial.sortShell.backdropFilter === 'none'
-        && marketMaterial.sortShell.borderWidth === '1px'
-        && marketMaterial.sortShell.boxShadow.includes('inset')
+        && marketMaterial.sortShell.borderWidth === '0px'
         && marketMaterial.sort.length === 3
         && marketMaterial.share.length === 4
         && marketMaterial.sort.every((control) => (
-          control.glass
+          control.pill
             && control.height >= 43.5
             && control.backdropFilter === 'none'
+            && control.borderWidth === marketMaterial.buy.borderWidth
+            && control.borderRadius === marketMaterial.buy.borderRadius
+            && control.fontFamily === marketMaterial.buy.fontFamily
         ))
         && JSON.stringify(marketMaterial.share.map((control) => control.label))
           === JSON.stringify(['Share snapshot', 'Share on X', 'Share on Telegram', 'Share on WhatsApp'])
+        && marketMaterial.share[0]?.text === 'Share'
         && marketMaterial.share.every((control) => (
-          control.glass
+          control.pill
             && control.svg
             && control.width >= 43.5
             && control.height >= 43.5
             && control.backdropFilter === 'none'
-            && control.borderWidth === '1px'
+            && control.borderWidth === marketMaterial.buy.borderWidth
+            && control.borderRadius === marketMaterial.buy.borderRadius
+            && control.fontFamily === marketMaterial.buy.fontFamily
             && control.boxShadow.includes('inset')
         ))
         && marketMaterial.sculptureActions === 0
         && marketMaterial.rowActions.length === 12
         && marketMaterial.rowActions.every((control) => (
-          control.glass && control.height >= 43.5 && control.backdropFilter === 'none'
+          control.pill
+            && control.height >= 43.5
+            && control.backdropFilter === 'none'
+            && control.borderRadius === marketMaterial.buy.borderRadius
+            && control.fontFamily === marketMaterial.buy.fontFamily
         )),
       JSON.stringify(marketMaterial),
     );
@@ -1054,9 +1133,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const outlook = desktop.locator('#outlook');
     await outlook.locator('.outlook-lab').scrollIntoViewIfNeeded();
-    await outlook.locator('.outlook-lab__grid[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    await outlook.locator('.outlook-lab__body[aria-busy="false"]').waitFor({ timeout: 15_000 });
     await desktop.waitForFunction(() => (
       document.querySelectorAll('#outlook .outlook-wheel button').length === 12
+      && document.querySelectorAll('#outlook .outlook-flow__step').length === 3
       && !/Reading|Calculating/i.test(
         document.querySelector('#outlook .outlook-reading h3')?.textContent ?? '',
       )
@@ -1064,42 +1144,87 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const outlookState = await outlook.evaluate((section) => {
       const wheelButtons = [...section.querySelectorAll('.outlook-wheel button')];
       const factorRows = [...section.querySelectorAll('.outlook-factors ol > li')];
+      const flowSteps = [...section.querySelectorAll('.outlook-flow__step')];
       return {
-        busy: section.querySelector('.outlook-lab__grid')?.getAttribute('aria-busy'),
+        heading: section.querySelector('h2')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        busy: section.querySelector('.outlook-lab__body')?.getAttribute('aria-busy'),
         edition: section.querySelector('.outlook-lab__toolbar > span')?.textContent?.trim() ?? '',
         subject: section.querySelector('.outlook-reading__eyebrow')?.textContent?.trim() ?? '',
         signal: section.querySelector('.outlook-reading h3')?.textContent?.trim() ?? '',
-        explanation: section.querySelector('.outlook-reading__copy > p')?.textContent?.trim() ?? '',
+        explanation: section.querySelector('.outlook-reading__summary')?.textContent?.trim() ?? '',
+        flowLabels: flowSteps.map((step) => step.querySelector('.outlook-flow__label')?.textContent?.trim() ?? ''),
+        flowComplete: flowSteps.every((step) => (
+          Boolean(step.querySelector('strong')?.textContent?.trim())
+          && Boolean(step.querySelector('small')?.textContent?.trim())
+        )),
+        marketCheck: flowSteps[2]?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         wheelCount: wheelButtons.length,
         selectedSigns: wheelButtons
           .filter((button) => button.getAttribute('aria-pressed') === 'true')
           .map((button) => button.querySelector('img')?.getAttribute('src') ?? ''),
         factorCount: factorRows.length,
         completeFactors: factorRows.every((row) => (
-          Boolean(row.querySelector('strong')?.textContent?.trim())
+          Boolean(row.querySelector('time')?.getAttribute('datetime'))
+          && Boolean(row.querySelector('time')?.textContent?.trim())
+          && Boolean(row.querySelector('strong')?.textContent?.trim())
+          && /attention.+tone.+event intensity/i.test(row.querySelector('.outlook-factor__impact')?.textContent ?? '')
           && Boolean(row.querySelector('p')?.textContent?.trim())
+          && row.querySelector('details > summary')?.textContent?.trim() === 'Show calculation'
           && Boolean(row.querySelector('code')?.textContent?.trim())
         )),
+        marketSeparation: section.querySelector('.outlook-market-context')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        method: section.querySelector('.outlook-method')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        machineEdition: section.querySelector('.outlook-method a')?.getAttribute('href') ?? '',
+        dialCount: section.querySelectorAll('.outlook-dial').length,
         calibration: section.querySelector('.outlook-calibration strong')?.textContent?.trim() ?? '',
         directionalAside: section.querySelectorAll('.outlook-challenge').length,
         mentionsPriceArrow: section.textContent?.includes('Why no price arrow?') ?? false,
       };
     });
     check(
-      'the public outlook resolves its edition, twelve-sign wheel, and disclosed Aries factors',
-      outlookState.busy === 'false'
+      'the public signal resolves three plain-language steps, live market separation, and disclosed factors',
+      outlookState.heading === 'Sky signals. Market checks.'
+        && outlookState.busy === 'false'
         && /^Edition .+ · 12:00 UTC reference$/.test(outlookState.edition)
-        && outlookState.subject === 'Aries · daily outlook'
+        && outlookState.subject === 'Aries · today’s signal'
         && Boolean(outlookState.signal)
         && !/Reading|Calculating/i.test(`${outlookState.signal} ${outlookState.explanation}`)
+        && JSON.stringify(outlookState.flowLabels) === JSON.stringify(['Sky factor', 'Sign signal', 'Market check'])
+        && outlookState.flowComplete
+        && /Observed separately · never an input/i.test(outlookState.marketCheck)
         && outlookState.wheelCount === 12
         && JSON.stringify(outlookState.selectedSigns) === JSON.stringify(['/assets/zodiac-icons/48/aries.webp'])
         && outlookState.factorCount > 0
         && outlookState.completeFactors
+        && /observed separately · never an input/i.test(outlookState.marketSeparation)
+        && /Market data never changes the astrology score/i.test(outlookState.method)
+        && outlookState.machineEdition === '/assets/registry-outlook.json'
+        && outlookState.dialCount === 0
         && /^\d+ \/ \d+ daily observations$/.test(outlookState.calibration)
         && outlookState.directionalAside === 0
         && !outlookState.mentionsPriceArrow,
       JSON.stringify(outlookState),
+    );
+    await desktop.evaluate(() => {
+      window.__registrySignalShare = null;
+      Object.defineProperty(navigator, 'share', {
+        configurable: true,
+        value: async (payload) => { window.__registrySignalShare = payload; },
+      });
+    });
+    await outlook.locator('.outlook-reading__actions button').click();
+    await outlook.locator('.outlook-reading__share').filter({ hasText: 'Shared.' }).waitFor();
+    const signalShare = await desktop.evaluate(() => window.__registrySignalShare);
+    const signalShareUrl = new URL(signalShare.url);
+    check(
+      'a current complete signal shares the selected sign and horizon canonically',
+      signalShare.title === 'Aries sky signal'
+        && signalShare.text.includes('Aries · daily sky signal')
+        && signalShareUrl.pathname === '/registry/'
+        && signalShareUrl.searchParams.get('sign') === 'aries'
+        && signalShareUrl.searchParams.get('outlook') === 'daily'
+        && signalShareUrl.hash === '#outlook',
+      JSON.stringify(signalShare),
     );
 
     const registry = await fetch(baseURL + '/registry/zodiacs.registry.json').then((response) => response.json());
@@ -1268,7 +1393,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       baseURL + '/registry/?rank=liquidity&sign=pisces&outlook=weekly#outlook',
       { waitUntil: 'domcontentloaded' },
     );
-    await emptyMarket.locator('#outlook .outlook-lab__grid[aria-busy="false"]')
+    await emptyMarket.locator('#outlook .outlook-lab__body[aria-busy="false"]')
       .waitFor({ timeout: 15_000 });
     const sharedState = await emptyMarket.evaluate(() => ({
       sign: document.querySelector('.stage-placard__name')?.textContent?.trim() ?? '',
@@ -1286,10 +1411,66 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       sharedState.sign === 'Pisces'
         && sharedState.rank === 'Liquidity'
         && sharedState.horizon === '7 days'
-        && sharedState.subject === 'Pisces · 7-day outlook'
+        && sharedState.subject === 'Pisces · 7-day signal'
         && /Latest committed edition/i.test(sharedState.stale)
         && sharedState.shareDisabled,
       JSON.stringify(sharedState),
+    );
+    await emptyMarket.unroute('**/assets/registry-outlook.json');
+    await emptyMarket.route('**/assets/registry-outlook.json', async (route) => {
+      const response = await route.fetch();
+      const payload = await response.json();
+      const today = new Date().toISOString().slice(0, 10);
+      payload.daily.date = today;
+      payload.daily.coverage = {
+        ...payload.daily.coverage,
+        overall: 'partial',
+        events: 'partial',
+        missingTransitMonths: [today.slice(0, 7)],
+      };
+      await route.fulfill({
+        response,
+        body: JSON.stringify(payload),
+        headers: { ...response.headers(), 'content-length': undefined },
+      });
+    });
+    await emptyMarket.goto(baseURL + '/registry/?sign=aries&outlook=daily#outlook', { waitUntil: 'domcontentloaded' });
+    await emptyMarket.locator('#outlook .outlook-lab__body[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const partialSignal = await emptyMarket.locator('#outlook').evaluate((section) => ({
+      coverage: section.querySelector('.outlook-lab__coverage')?.textContent?.trim() ?? '',
+      stale: section.querySelectorAll('.outlook-lab__stale').length,
+      shareDisabled: section.querySelector('.outlook-reading__actions button')?.disabled ?? false,
+    }));
+    check(
+      'partial sky coverage is announced and pauses sharing even for a current edition',
+      /Partial sky coverage/i.test(partialSignal.coverage)
+        && /Sharing is paused/i.test(partialSignal.coverage)
+        && partialSignal.stale === 0
+        && partialSignal.shareDisabled,
+      JSON.stringify(partialSignal),
+    );
+    await emptyMarket.unroute('**/assets/registry-outlook.json');
+    await emptyMarket.route('**/assets/registry-outlook.json', (route) => route.abort());
+    await emptyMarket.goto(baseURL + '/registry/#outlook', { waitUntil: 'domcontentloaded' });
+    const failedSignal = emptyMarket.locator('#outlook .outlook-lab__state');
+    await failedSignal.waitFor({ timeout: 15_000 });
+    const failedSignalState = await failedSignal.evaluate((state) => {
+      const retry = state.querySelector('button');
+      return {
+        text: state.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        retryText: retry?.textContent?.trim() ?? '',
+        retryPill: retry?.classList.contains('registry-pill') ?? false,
+        retryHeight: retry?.getBoundingClientRect().height ?? 0,
+      };
+    });
+    check(
+      'an unavailable signal instrument keeps live markets independent and offers an accessible retry',
+      /temporarily unavailable/i.test(failedSignalState.text)
+        && /Live markets and official records remain independent/i.test(failedSignalState.text)
+        && failedSignalState.retryText === 'Try again'
+        && failedSignalState.retryPill
+        && failedSignalState.retryHeight >= 43.5,
+      JSON.stringify(failedSignalState),
     );
     await emptyMarket.close();
 
@@ -1355,6 +1536,41 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       });
       await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
       const label = `${width}×${height}`;
+      const mobileMasthead = await mobile.locator('.consumer-masthead').evaluate((masthead) => {
+        const heading = masthead.querySelector('h1');
+        const nav = document.querySelector('.wnav-wrap');
+        const headingRect = heading?.getBoundingClientRect();
+        const navRect = nav?.getBoundingClientRect();
+        const mastheadStyle = getComputedStyle(masthead);
+        return {
+          text: heading?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          visible: heading ? getComputedStyle(heading).visibility === 'visible' && headingRect.height > 0 : false,
+          direct: heading?.parentElement === masthead,
+          left: headingRect?.left ?? -1,
+          right: headingRect?.right ?? innerWidth + 1,
+          top: headingRect?.top ?? -1,
+          navBottom: navRect?.bottom ?? 0,
+          borderWidths: [
+            mastheadStyle.borderTopWidth,
+            mastheadStyle.borderRightWidth,
+            mastheadStyle.borderBottomWidth,
+            mastheadStyle.borderLeftWidth,
+          ],
+          background: mastheadStyle.backgroundColor,
+        };
+      });
+      check(
+        `the bare Zodiac Markets masthead at ${label} is visible below navigation without overflow`,
+        mobileMasthead.text === 'Zodiac Markets'
+          && mobileMasthead.visible
+          && mobileMasthead.direct
+          && mobileMasthead.top >= mobileMasthead.navBottom - 1
+          && mobileMasthead.left >= -1
+          && mobileMasthead.right <= width + 1
+          && mobileMasthead.borderWidths.every((value) => value === '0px')
+          && mobileMasthead.background === 'rgba(0, 0, 0, 0)',
+        JSON.stringify(mobileMasthead),
+      );
       const mobileStageLive = await mobile.evaluate(() => (
         document.documentElement.classList.contains('gallery-live')
       ));
@@ -1427,7 +1643,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       });
       check(
-        `market glass at ${label} keeps every social and row action touchable without overflow`,
+        `Registry market pills at ${label} keep every social and row action touchable without overflow`,
         compactMarketMaterial.sort.length === 3
           && compactMarketMaterial.share.length === 4
           && compactMarketMaterial.social.length === 3
@@ -1452,6 +1668,63 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           ))
           && compactMarketMaterial.pageWidth <= compactMarketMaterial.viewportWidth + 1,
         JSON.stringify(compactMarketMaterial),
+      );
+      const mobileOutlook = mobile.locator('#outlook');
+      await mobileOutlook.scrollIntoViewIfNeeded();
+      await mobileOutlook.locator('.outlook-lab__body[aria-busy="false"]').waitFor({ timeout: 15_000 });
+      const compactSignal = await mobileOutlook.evaluate((section) => {
+        const flow = section.querySelector('.outlook-flow');
+        const flowSteps = [...section.querySelectorAll('.outlook-flow__step')];
+        const targets = [...section.querySelectorAll([
+          '.outlook-lab__toolbar button',
+          '.outlook-reading__actions > *',
+          '.outlook-factor__calculation > summary',
+          '.outlook-method > summary',
+          '.outlook-wheel button',
+        ].join(', '))].map((target) => {
+          const rect = target.getBoundingClientRect();
+          return { text: target.textContent?.replace(/\s+/g, ' ').trim() ?? '', width: rect.width, height: rect.height, left: rect.left, right: rect.right };
+        });
+        const flowRect = flow?.getBoundingClientRect();
+        return {
+          heading: section.querySelector('h2')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          labels: flowSteps.map((step) => step.querySelector('.outlook-flow__label')?.textContent?.trim() ?? ''),
+          completeSteps: flowSteps.every((step) => Boolean(step.querySelector('strong')?.textContent?.trim()) && Boolean(step.querySelector('small')?.textContent?.trim())),
+          marketCheck: flowSteps[2]?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          separateMarket: section.querySelector('.outlook-market-context')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          noPricePromise: /not price direction|not a price forecast/i.test(section.textContent ?? ''),
+          dialCount: section.querySelectorAll('.outlook-dial').length,
+          wheelColumns: getComputedStyle(section.querySelector('.outlook-wheel')).gridTemplateColumns.split(/\s+/).filter(Boolean).length,
+          targets,
+          flowLeft: flowRect?.left ?? -1,
+          flowRight: flowRect?.right ?? innerWidth + 1,
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+        };
+      });
+      check(
+        `Market Signals at ${label} explain sky factor, sign signal, and market check without overflow`,
+        compactSignal.heading === 'Sky signals. Market checks.'
+          && JSON.stringify(compactSignal.labels) === JSON.stringify(['Sky factor', 'Sign signal', 'Market check'])
+          && compactSignal.completeSteps
+          && /Observed separately · never an input/i.test(compactSignal.marketCheck)
+          && /24h/i.test(compactSignal.marketCheck)
+          && /liquidity/i.test(compactSignal.marketCheck)
+          && /observed separately · never an input/i.test(compactSignal.separateMarket)
+          && compactSignal.noPricePromise
+          && compactSignal.dialCount === 0
+          && compactSignal.wheelColumns === 2
+          && compactSignal.targets.length >= 18
+          && compactSignal.targets.every((target) => (
+            target.width >= 43.5
+              && target.height >= 43.5
+              && target.left >= -1
+              && target.right <= compactSignal.viewportWidth + 1
+          ))
+          && compactSignal.flowLeft >= -1
+          && compactSignal.flowRight <= compactSignal.viewportWidth + 1
+          && compactSignal.pageWidth <= compactSignal.viewportWidth + 1,
+        JSON.stringify(compactSignal),
       );
       await mobile.locator('#official-twelve').scrollIntoViewIfNeeded();
 

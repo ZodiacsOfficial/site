@@ -695,8 +695,7 @@
        set by the inline <head> script); every other browser keeps the
        frosted blur floor. ── */
     .glass-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-    html.zdx-lens .cine__cta .btn,
-    html.zdx-lens .stage-placard__pill {
+    html.zdx-lens .cine__cta .btn {
       background: rgba(10, 12, 17, 0.56);
       backdrop-filter: url(#zdx-lens-nav);
       -webkit-backdrop-filter: url(#zdx-lens-nav);
@@ -705,8 +704,7 @@
         inset 0 -1px 0 rgba(238,241,247,0.04),
         0 12px 32px -14px rgba(0,0,0,0.7);
     }
-    html.zdx-lens .cine__cta .btn:hover,
-    html.zdx-lens .stage-placard__pill:hover { background: rgba(10, 12, 17, 0.66); }
+    html.zdx-lens .cine__cta .btn:hover { background: rgba(10, 12, 17, 0.66); }
     /* The unified nav pill refracts the footage on Chromium too — parity with
        the main site's nav (SiteNav.astro: html.zdx-lens .nav-wrap .nav). The
        #zdx-lens-nav defs + the .zdx-lens gate live on this hub page only, so
@@ -734,8 +732,7 @@
         inset 0 10px 22px -16px rgba(255,255,255,0.10),
         0 14px 34px -14px rgba(0,0,0,0.72);
     }
-    html:not(.zdx-lens) .cine__cta .btn,
-    html:not(.zdx-lens) .stage-placard__pill {
+    html:not(.zdx-lens) .cine__cta .btn {
       background: rgba(10, 12, 17, 0.58);
       backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
       -webkit-backdrop-filter: saturate(165%) blur(20px) brightness(1.1);
@@ -3815,16 +3812,14 @@
       text-transform: none;
     }
     .stage-placard .stage-placard__pill::before { display: none; }
-    /* The placard's pills are the Registry's hero actions now. Their liquid
-       glass is the shared recipe above — this rule only sets the border and
-       drops the museum arrow. */
+    /* The placard's pills are the Registry's hero actions now. They set the
+       page-wide outlined-pill standard and drop the old museum arrow. */
     .stage-placard .stage-placard__pill {
       border-color: rgba(238,241,247,0.28);
       color: var(--ink);
     }
-    /* Both pills keep the shared glass — the trade holds the hero's exact
-       material, and the record steps back in edge and ink so the primary
-       leads without either of them leaving the family. */
+    /* The record steps back in edge and ink so the primary leads without
+       either action leaving the same outlined-pill family. */
     .stage-placard .btn--ghost.stage-placard__pill { color: var(--ink-dim); border-color: rgba(238,241,247,0.14); }
     .stage-placard .btn--ghost.stage-placard__pill:hover { color: var(--ink-2); }
     .stage-placard .stage-placard__pill:hover { border-color: rgba(238,241,247,0.34); }
@@ -5148,6 +5143,45 @@
     .consumer-explorer--stage .gband--consumer {
       height: clamp(610px, 76svh, 760px);
     }
+    .consumer-masthead {
+      position: relative;
+      z-index: 5;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(300px, 440px);
+      grid-template-areas:
+        'eyebrow copy'
+        'title copy';
+      align-items: end;
+      gap: 7px clamp(44px, 7vw, 110px);
+      width: min(1400px, 100%);
+      margin: 0 auto 20px;
+      padding: 0 18px;
+    }
+    .consumer-masthead__eyebrow {
+      grid-area: eyebrow;
+      color: var(--ink-mute);
+      font: 8px/1.3 var(--mono);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .consumer-masthead h1 {
+      grid-area: title;
+      max-width: 11ch;
+      margin: 0;
+      color: var(--ink);
+      font: 400 clamp(48px, 7vw, 88px)/.88 var(--serif);
+      letter-spacing: -.045em;
+      text-wrap: balance;
+    }
+    .consumer-masthead > p {
+      grid-area: copy;
+      max-width: 46ch;
+      margin: 0 0 5px;
+      color: var(--ink-2);
+      font-size: 14px;
+      line-height: 1.58;
+      text-wrap: pretty;
+    }
     .gband--consumer > .season-now { grid-row: 1; }
     .gband--consumer .gband__rail-top { grid-row: 2; }
     .gband--consumer .gband__mount,
@@ -5642,6 +5676,68 @@
       color: var(--ink);
     }
     .outlook-lab__toolbar button:active { transform: scale(.97); }
+    .outlook-lab__body { min-width: 0; }
+    .outlook-flow {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 0 0 8px;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--hair);
+      border-radius: 20px 20px 7px 20px;
+      background: rgba(8,10,14,.72);
+      list-style: none;
+    }
+    .outlook-flow__step {
+      position: relative;
+      min-width: 0;
+      min-height: 152px;
+      display: grid;
+      grid-template-columns: 28px minmax(0, 1fr);
+      align-items: center;
+      gap: 13px;
+      padding: 22px clamp(16px, 2.6vw, 30px);
+    }
+    .outlook-flow__step + .outlook-flow__step { border-left: 1px solid var(--hair); }
+    .outlook-flow__step--impact { grid-template-columns: 28px 38px minmax(0, 1fr); }
+    .outlook-flow__step--impact img { display: block; border-radius: 50%; }
+    .outlook-flow__step--watch {
+      border-left-style: dashed !important;
+      background: rgba(198,204,218,.018);
+    }
+    .outlook-flow__number {
+      align-self: start;
+      padding-top: 3px;
+      color: var(--ink-mute);
+      font: 8px/1 var(--mono);
+      letter-spacing: .08em;
+    }
+    .outlook-flow__step > div { min-width: 0; display: grid; gap: 7px; }
+    .outlook-flow__label {
+      color: color-mix(in srgb, var(--outlook-sign) 62%, var(--ink-2));
+      font: 7.5px/1.2 var(--mono);
+      letter-spacing: .16em;
+      text-transform: uppercase;
+    }
+    .outlook-flow__step strong {
+      overflow-wrap: anywhere;
+      color: var(--ink);
+      font: 400 clamp(18px, 2vw, 24px)/1.08 var(--serif);
+    }
+    .outlook-flow__step small,
+    .outlook-flow__step em {
+      color: var(--ink-dim);
+      font-size: 10.5px;
+      line-height: 1.45;
+    }
+    .outlook-flow__step em {
+      color: var(--ink-mute);
+      font-family: var(--mono);
+      font-size: 7px;
+      font-style: normal;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
     .outlook-lab__grid {
       display: grid;
       grid-template-columns: minmax(0, 1.25fr) minmax(320px, .75fr);
@@ -5653,54 +5749,25 @@
       background: rgba(15,18,26,.58);
     }
     .outlook-reading {
-      min-height: 510px;
-      display: grid;
-      grid-template-columns: minmax(210px, .7fr) minmax(260px, 1fr);
-      align-items: center;
-      gap: clamp(28px, 5vw, 64px);
+      min-height: 0;
+      display: block;
       padding: clamp(30px, 5vw, 62px);
       border-radius: 22px 7px 7px 22px;
     }
-    .outlook-dial {
-      width: min(100%, 310px);
-      aspect-ratio: 1;
-      display: grid;
-      place-items: center;
-      justify-self: center;
-      padding: 11px;
-      border-radius: 50%;
-      background:
-        conic-gradient(var(--outlook-sign) 0 var(--attention), rgba(198,204,218,.06) var(--attention) 360deg);
-      box-shadow:
-        0 0 0 1px color-mix(in srgb, var(--outlook-sign) 25%, var(--hair)),
-        0 0 80px -44px color-mix(in srgb, var(--outlook-sign) 70%, transparent);
+    .outlook-reading__identity {
+      display: flex;
+      align-items: center;
+      gap: 18px;
     }
-    .outlook-dial__outer {
-      width: 100%; height: 100%;
-      display: grid;
-      place-items: center;
-      padding: 10px;
-      border-radius: 50%;
-      background:
-        conic-gradient(from 180deg, color-mix(in srgb, var(--outlook-sign) 58%, var(--ink-2)) 0 var(--volatility), rgba(6,7,9,.84) var(--volatility) 360deg);
-    }
-    .outlook-dial__inner {
-      width: 100%; height: 100%;
-      display: grid;
-      place-items: center;
-      border: 1px solid rgba(198,204,218,.09);
-      border-radius: 50%;
-      background:
-        radial-gradient(circle, color-mix(in srgb, var(--outlook-sign) 13%, rgba(15,18,26,.98)), rgba(8,10,14,.98) 67%);
-      box-shadow: inset 0 0 48px rgba(0,0,0,.42);
-    }
-    .outlook-dial img {
+    .outlook-reading__identity > img {
+      flex: 0 0 auto;
       display: block;
-      width: 47%; height: auto;
+      width: 72px;
+      height: 72px;
       border-radius: 50%;
-      filter: drop-shadow(0 8px 20px rgba(0,0,0,.44));
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--outlook-sign) 9%, transparent);
     }
-    .outlook-reading__copy { min-width: 0; }
+    .outlook-reading__identity > div { min-width: 0; }
     .outlook-reading__eyebrow,
     .outlook-factors__eyebrow {
       color: color-mix(in srgb, var(--outlook-sign) 66%, var(--ink-2));
@@ -5708,15 +5775,15 @@
       letter-spacing: .16em;
       text-transform: uppercase;
     }
-    .outlook-reading__copy h3 {
-      margin: 13px 0 0;
+    .outlook-reading__identity h3 {
+      margin: 9px 0 0;
       color: var(--ink);
-      font: italic 400 clamp(43px, 5vw, 68px)/.88 var(--serif);
+      font: italic 400 clamp(38px, 4.5vw, 62px)/.9 var(--serif);
       letter-spacing: -.035em;
     }
-    .outlook-reading__copy > p:not(.outlook-reading__share) {
+    .outlook-reading__summary {
       max-width: 41ch;
-      margin: 18px 0 0;
+      margin: 22px 0 0;
       color: var(--ink-2);
       font-size: 14px;
       line-height: 1.58;
@@ -5731,37 +5798,23 @@
       overflow: hidden;
       background: var(--hair);
     }
-    .outlook-scores > div { display: grid; gap: 6px; padding: 12px; background: rgba(10,12,17,.95); }
+    .outlook-scores > div { min-height: 104px; display: grid; align-content: start; gap: 7px; padding: 13px; background: rgba(10,12,17,.95); }
     .outlook-scores dt { color: var(--ink-mute); font: 7px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; }
-    .outlook-scores dd { margin: 0; color: var(--ink); font: 16px/1 var(--mono); }
+    .outlook-scores dd { display: flex; align-items: baseline; gap: 5px; margin: 0; color: var(--ink); font: 15px/1 var(--mono); }
     .outlook-scores dd small { color: var(--ink-mute); font-size: 8px; }
+    .outlook-scores > div > small { color: var(--ink-mute); font-size: 8px; line-height: 1.35; }
     .outlook-market-context {
       display: grid;
       gap: 5px;
-      margin-top: 18px;
-      padding-left: 13px;
-      border-left: 2px solid color-mix(in srgb, var(--outlook-sign) 42%, var(--hair));
+      margin-top: 24px;
+      padding-top: 19px;
+      border-top: 1px dashed var(--hair-2);
     }
     .outlook-market-context span,
     .outlook-market-context small { color: var(--ink-mute); font: 7px/1.35 var(--mono); letter-spacing: .08em; text-transform: uppercase; }
     .outlook-market-context strong { color: var(--ink-2); font: 10px/1.4 var(--mono); }
     .outlook-market-context small { letter-spacing: .02em; text-transform: none; }
-    .outlook-reading__actions { display: flex; align-items: center; gap: 16px; margin-top: 22px; }
-    .outlook-reading__actions button,
-    .outlook-reading__actions a {
-      min-height: 40px;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0 15px;
-      border: 1px solid var(--hair-2);
-      border-radius: 999px;
-      background: transparent;
-      color: var(--ink-2);
-      font: 10px/1 var(--sans);
-      text-decoration: none;
-      cursor: pointer;
-    }
+    .outlook-reading__actions { display: flex; align-items: center; gap: 10px; margin-top: 22px; }
     .outlook-reading__actions button:disabled { cursor: wait; opacity: .48; }
     .outlook-reading__share { min-height: 16px; margin: 8px 0 0; color: var(--ink-mute); font: 8px/1.3 var(--mono); }
 
@@ -5771,15 +5824,40 @@
       border-radius: 7px 22px 22px 7px;
     }
     .outlook-factors ol { display: grid; gap: 0; margin: 20px 0 0; padding: 0; list-style: none; }
-    .outlook-factors li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 12px; padding: 17px 0; border-top: 1px solid var(--hair); }
-    .outlook-factors li > span { color: var(--ink-mute); font: 8px/1 var(--mono); }
+    .outlook-factors li { display: grid; grid-template-columns: 104px minmax(0, 1fr); gap: 14px; padding: 18px 0; border-top: 1px solid var(--hair); }
+    .outlook-factors li > time {
+      color: var(--ink-mute);
+      font: 7px/1.5 var(--mono);
+      letter-spacing: .04em;
+      text-transform: uppercase;
+    }
     .outlook-factors li > div { min-width: 0; }
     .outlook-factors li strong { color: var(--ink); font: 400 17px/1.15 var(--serif); }
+    .outlook-factor__impact {
+      display: block;
+      margin-top: 7px;
+      color: color-mix(in srgb, var(--outlook-sign) 64%, var(--ink-2));
+      font: 7.5px/1.45 var(--mono);
+      letter-spacing: .03em;
+    }
     .outlook-factors li p,
     .outlook-factors__empty { margin: 8px 0 0; color: var(--ink-dim); font-size: 11.5px; line-height: 1.5; }
-    .outlook-factors li code {
+    .outlook-factor__calculation { margin-top: 8px; }
+    .outlook-factor__calculation summary {
+      width: max-content;
+      min-height: 44px;
+      display: flex;
+      align-items: center;
+      color: var(--ink-mute);
+      font: 8px/1 var(--sans);
+      cursor: pointer;
+    }
+    .outlook-factor__calculation summary::-webkit-details-marker { display: none; }
+    .outlook-factor__calculation summary::after { content: ' +'; margin-left: 5px; font-family: var(--mono); }
+    .outlook-factor__calculation[open] summary::after { content: ' −'; }
+    .outlook-factor__calculation code {
       display: block;
-      margin-top: 8px;
+      margin-top: 4px;
       overflow-wrap: anywhere;
       color: var(--ink-mute);
       font: 7.5px/1.45 var(--mono);
@@ -5812,7 +5890,8 @@
     .outlook-method summary::-webkit-details-marker { display: none; }
     .outlook-method p { margin: 0 0 12px; color: var(--ink-dim); font-size: 11px; line-height: 1.55; }
     .outlook-method a { color: var(--ink-2); font-size: 10px; }
-    .outlook-lab__stale {
+    .outlook-lab__stale,
+    .outlook-lab__coverage {
       margin: 0 0 8px;
       padding: 12px 15px;
       border: 1px solid rgba(231,200,121,.2);
@@ -5914,6 +5993,24 @@
     }
     @media (max-width: 760px) {
       .consumer-explorer--stage .gband--consumer { height: clamp(610px, calc(100dvh - 134px), 680px); }
+      .consumer-masthead {
+        grid-template-columns: minmax(0, 1fr);
+        grid-template-areas: 'eyebrow' 'title' 'copy';
+        gap: 6px;
+        margin-bottom: 15px;
+        padding-inline: 8px;
+      }
+      .consumer-masthead h1 {
+        max-width: none;
+        font-size: clamp(42px, 12vw, 58px);
+        line-height: .92;
+      }
+      .consumer-masthead > p {
+        max-width: 34ch;
+        margin-top: 6px;
+        font-size: 12.5px;
+        line-height: 1.5;
+      }
       .market-tape { grid-template-columns: minmax(0, 1fr); }
       .consumer-explorer > .market-tape { margin: 0 auto 10px; }
       .market-tape__source { display: none; }
@@ -5982,25 +6079,55 @@
       .outlook-lab__toolbar { align-items: flex-start; flex-direction: column; padding: 6px 6px 12px; }
       .outlook-lab__toolbar > div { width: 100%; }
       .outlook-lab__toolbar button { flex: 1 1 0; min-height: 44px; }
+      .outlook-flow { grid-template-columns: minmax(0, 1fr); border-radius: 18px 18px 6px 18px; }
+      .outlook-flow__step {
+        min-height: 0;
+        grid-template-columns: 26px minmax(0, 1fr);
+        align-items: start;
+        padding: 18px 16px;
+      }
+      .outlook-flow__step + .outlook-flow__step { border-top: 1px solid var(--hair); border-left: 0; }
+      .outlook-flow__step--impact { grid-template-columns: 26px 38px minmax(0, 1fr); }
+      .outlook-flow__step--watch { border-top-style: dashed !important; border-left: 0 !important; }
       .outlook-reading {
         min-height: 0;
-        grid-template-columns: 1fr;
-        gap: 28px;
         padding: 28px 20px;
       }
-      .outlook-dial { width: min(76vw, 270px); }
-      .outlook-reading__copy { text-align: center; }
-      .outlook-reading__copy > p:not(.outlook-reading__share) { margin-inline: auto; }
-      .outlook-market-context { max-width: 330px; margin-inline: auto; text-align: left; }
-      .outlook-reading__actions { justify-content: center; }
-      .outlook-reading__actions > * { min-height: 44px; }
+      .outlook-reading__identity { align-items: center; gap: 14px; }
+      .outlook-reading__identity > img { width: 62px; height: 62px; }
+      .outlook-reading__identity h3 { font-size: clamp(34px, 10.5vw, 46px); }
+      .outlook-scores { grid-template-columns: minmax(0, 1fr); }
+      .outlook-scores > div {
+        min-height: 76px;
+        grid-template-columns: minmax(0, 1fr) auto;
+        grid-template-rows: auto auto;
+        align-items: center;
+      }
+      .outlook-scores dd { grid-column: 2; grid-row: 1 / span 2; }
+      .outlook-scores > div > small { grid-column: 1; }
+      .outlook-reading__actions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .outlook-reading__actions > * { width: 100%; min-height: 44px; }
       .outlook-factors { padding: 26px 20px; }
-      .outlook-wheel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .outlook-factors li { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+      .outlook-wheel { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .outlook-wheel button {
+        min-height: 64px;
+        grid-template-columns: 14px 28px minmax(0, 1fr);
+        gap: 5px;
+        padding: 7px 6px;
+      }
+      .outlook-wheel img { width: 28px; height: 28px; }
     }
     @media (max-width: 420px) {
+      .consumer-masthead { gap: 4px; margin-bottom: 10px; }
+      .consumer-masthead > p { display: none; }
+      .consumer-explorer--stage .gband--consumer {
+        height: clamp(570px, calc(100dvh - 190px), 620px);
+      }
       .market-board__meta { align-items: flex-start; flex-direction: column; gap: 3px; }
       .market-tape__item { padding-inline: 12px; }
       .consumer-market__personal { padding: 18px; }
+      .outlook-wheel { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (prefers-reduced-motion: reduce) {
       .market-tape__viewport { overflow-x: auto; mask-image: none; -webkit-mask-image: none; scrollbar-width: none; }
@@ -6012,10 +6139,9 @@
       .market-row__identity img { transition-property: opacity, color, border-color !important; }
     }
 
-    /* ── Registry material pass · August 2026 ─────────────────────
-       The stage reads as one room, not nested cards. Small controls carry
-       the translucent material; repeated row actions use a lighter painted
-       glass so the phone never has to blur twenty-four moving surfaces. */
+    /* ── Registry control pass · August 2026 ──────────────────────
+       The stage reads as one room, not nested cards. Repeated controls use
+       the same precise outlined-pill language as the primary Buy action. */
     .season-now {
       opacity: 1;
       transform: translateY(0);
@@ -6061,95 +6187,87 @@
       filter: saturate(1.08) brightness(1.06);
     }
 
-    .market-glass,
-    .consumer-market__personal button,
-    .market-board__state button {
+    /* Registry controls use the stage placard's Buy-pill language: one
+       precise outline, a quiet dark floor, and a physical press. Market data
+       stays visually calm; no scrolling glass or refractive decoration. */
+    .consumer-registry .stage-placard .stage-placard__pill,
+    .consumer-registry .registry-pill {
+      --pill-accent: var(--active-sign, #B29DD0);
       position: relative;
-      isolation: isolate;
+      min-height: 44px;
+      height: 44px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 0 18px;
       overflow: hidden;
-      border-color: color-mix(in srgb, var(--active-sign, #B29DD0) 18%, rgba(226,231,243,.18));
-      background:
-        radial-gradient(110% 160% at 50% -55%, rgba(255,255,255,.15), transparent 58%),
-        linear-gradient(180deg, rgba(246,248,253,.09), rgba(205,214,233,.025) 46%, rgba(117,128,151,.012)),
-        color-mix(in srgb, var(--active-sign, #B29DD0) 3.5%, rgba(10,12,17,.7));
+      border: 1px solid rgba(238,241,247,.28);
+      border-radius: 999px;
+      background: rgba(10,12,17,.56);
+      color: var(--ink-2);
+      font: 500 13px/1 var(--sans);
+      letter-spacing: 0;
+      text-transform: none;
+      text-decoration: none;
+      cursor: pointer;
       box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.22),
-        inset 0 9px 20px -17px rgba(255,255,255,.16),
-        inset 0 -1px 0 rgba(255,255,255,.025),
-        0 14px 32px -24px rgba(0,0,0,.78);
+        inset 0 1px 0 rgba(238,241,247,.09),
+        inset 0 -1px 0 rgba(0,0,0,.38);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
+      transition:
+        border-color 180ms cubic-bezier(0.23, 1, 0.32, 1),
+        background-color 180ms cubic-bezier(0.23, 1, 0.32, 1),
+        color 180ms cubic-bezier(0.23, 1, 0.32, 1),
+        transform 150ms cubic-bezier(0.23, 1, 0.32, 1);
     }
-    .market-glass::before,
-    .consumer-market__personal button::before,
-    .market-board__state button::before {
-      content: '';
-      position: absolute;
-      z-index: -1;
-      top: 1px;
-      left: 15%;
-      right: 15%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.6), transparent);
-      opacity: .62;
-      pointer-events: none;
+    .consumer-registry .registry-pill:active { transform: scale(.97); }
+    .consumer-registry .registry-pill:disabled { cursor: wait; opacity: .46; }
+    .consumer-registry .registry-pill[aria-pressed='true'] {
+      border-color: color-mix(in srgb, var(--pill-accent) 46%, rgba(238,241,247,.22));
+      background: color-mix(in srgb, var(--pill-accent) 12%, rgba(10,12,17,.38));
+      color: var(--ink);
+      box-shadow:
+        inset 0 0 0 1px color-mix(in srgb, var(--pill-accent) 12%, transparent),
+        inset 0 1px 0 rgba(238,241,247,.1);
+    }
+    .consumer-registry .registry-pill--compact { padding-inline: 16px; }
+    .consumer-registry .registry-pill--segment { flex: 1 1 0; min-width: 0; }
+    .consumer-registry .registry-pill--share { justify-content: center; padding-inline: 14px; }
+    .consumer-registry .registry-pill--icon { flex: 0 0 44px; width: 44px; padding: 0; }
+    .consumer-registry .registry-pill--record {
+      --pill-accent: var(--row-sign, var(--active-sign, #B29DD0));
+      width: 100%;
+      justify-content: space-between;
+      padding: 0 7px 0 15px;
+      border-color: color-mix(in srgb, var(--pill-accent) 18%, rgba(238,241,247,.22));
+      background: color-mix(in srgb, var(--pill-accent) 4%, rgba(10,12,17,.56));
+    }
+    .consumer-registry .stage-placard .btn--primary.stage-placard__pill {
+      border-color: rgba(238,241,247,.34);
+      background: rgba(10,12,17,.56);
+      color: var(--ink);
+    }
+    .consumer-registry .stage-placard .btn--ghost.stage-placard__pill {
+      border-color: rgba(238,241,247,.14);
+      background: rgba(10,12,17,.18);
+      color: var(--ink-dim);
+      box-shadow: inset 0 1px 0 rgba(238,241,247,.045);
     }
     .market-board__sort {
-      position: relative;
-      isolation: isolate;
-      gap: 2px;
-      padding: 4px;
-      overflow: hidden;
-      border: 1px solid rgba(198,204,218,.16);
-      border-radius: 999px;
-      background:
-        radial-gradient(120% 190% at 50% -75%, rgba(255,255,255,.16), transparent 56%),
-        linear-gradient(180deg, rgba(238,241,247,.075), rgba(198,204,218,.018) 55%, transparent),
-        rgba(10,12,17,.66);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.2),
-        inset 0 10px 22px -18px rgba(255,255,255,.14),
-        inset 0 -1px 0 rgba(238,241,247,.025),
-        0 14px 34px -17px rgba(0,0,0,.72);
-      -webkit-backdrop-filter: none;
-      backdrop-filter: none;
-    }
-    .market-board__sort::before {
-      content: '';
-      position: absolute;
-      z-index: 0;
-      top: 1px;
-      left: 12%;
-      right: 12%;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,.64), transparent);
-      opacity: .56;
-      pointer-events: none;
-    }
-    .market-board__sort button,
-    .market-board__share button {
-      min-height: 44px;
-      border-color: color-mix(in srgb, var(--active-sign, #B29DD0) 18%, rgba(226,231,243,.18));
-    }
-    .market-board__sort button.market-glass {
-      z-index: 1;
-      overflow: hidden;
+      gap: 7px;
+      padding: 0;
       border: 0;
+      border-radius: 0;
       background: transparent;
       box-shadow: none;
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
-    .market-board__sort button.market-glass::before { content: none; }
-    .market-board__sort button[aria-pressed='true'] {
-      background:
-        radial-gradient(100% 170% at 50% -50%, rgba(255,255,255,.2), transparent 52%),
-        color-mix(in srgb, var(--active-sign, #B29DD0) 18%, rgba(16,18,24,.82));
-      color: var(--ink);
-      box-shadow:
-        inset 0 0 0 1px color-mix(in srgb, var(--active-sign, #B29DD0) 32%, rgba(238,241,247,.12)),
-        inset 0 1px 0 rgba(255,255,255,.2),
-        0 10px 22px -18px color-mix(in srgb, var(--active-sign, #B29DD0) 72%, transparent);
+    .market-board__sort button,
+    .market-board__share button {
+      min-height: 44px;
     }
     .market-board__share { gap: 7px; }
     .market-board__share-primary {
@@ -6185,13 +6303,6 @@
       gap: 6px;
       justify-content: flex-start;
       padding: 4px 5px 4px 12px;
-      border-color: color-mix(in srgb, var(--row-sign) 18%, rgba(226,231,243,.15));
-      background:
-        linear-gradient(180deg, rgba(246,248,253,.085), rgba(205,214,233,.018)),
-        color-mix(in srgb, var(--row-sign) 4%, rgba(10,12,17,.7));
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.12),
-        0 10px 22px -20px color-mix(in srgb, var(--row-sign) 68%, transparent);
       -webkit-backdrop-filter: none;
       backdrop-filter: none;
     }
@@ -6339,15 +6450,12 @@
     .consumer-cabinet__edition { right: 5px; bottom: 5px; }
     .consumer-cabinet__count { right: 5px; top: 5px; color: var(--gold-bright); }
     @media (hover: hover) and (pointer: fine) {
-      .market-glass:hover,
-      .consumer-market__personal button:hover,
-      .market-board__state button:hover {
-        border-color: color-mix(in srgb, var(--active-sign, #B29DD0) 38%, rgba(238,241,247,.26));
+      .consumer-registry .registry-pill:hover {
+        border-color: rgba(238,241,247,.34);
+        background-color: color-mix(in srgb, var(--pill-accent) 6%, rgba(10,12,17,.34));
         color: var(--ink);
-        transform: translateY(-1px);
       }
-      .market-board__sort button.market-glass:hover { transform: none; }
-      .market-row__record:hover {
+      .consumer-registry .registry-pill--record:hover {
         border-color: color-mix(in srgb, var(--row-sign) 42%, rgba(238,241,247,.2));
       }
       .market-row__record:hover .market-row__action-orb { transform: translate(1px, -1px); }
@@ -6423,13 +6531,11 @@
       }
     }
     @media (prefers-reduced-transparency: reduce) {
-      .market-glass,
-      .market-board__sort,
-      .consumer-market__personal button,
-      .market-board__state button {
-        background: #11141b;
-        -webkit-backdrop-filter: none;
-        backdrop-filter: none;
+      .consumer-registry .stage-placard .stage-placard__pill,
+      .consumer-registry .registry-pill {
+        background: #11141b !important;
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
       }
       .consumer-registry .season-now,
       .consumer-registry .gband--consumer .rail {
@@ -6440,11 +6546,11 @@
       }
     }
     @media (prefers-contrast: more) {
-      .market-glass,
-      .market-board__sort,
-      .consumer-market__personal button,
-      .market-board__state button,
-      .market-row__record { border-color: rgba(238,241,247,.55); }
+      .consumer-registry .stage-placard .stage-placard__pill,
+      .consumer-registry .registry-pill {
+        border-color: rgba(238,241,247,.72) !important;
+        color: var(--ink) !important;
+      }
     }
 
     @media (max-width: 479px) {
@@ -6530,9 +6636,9 @@
       </nav>
 
       <section class="static-site__section static-explorer" id="official-twelve">
-        <p class="static-site__eyebrow">The official twelve</p>
-        <h2>Choose your sign. See its token.</h2>
-        <p>One official token for every sign. Browse the sculptures, watch the market, and verify the record.</p>
+        <p class="static-site__eyebrow">Official token registry</p>
+        <h2>Zodiac Markets</h2>
+        <p>Live prices, liquidity, season, and sky signals for the twelve official tokens appear in the interactive edition. Every official record remains available here.</p>
         <nav class="static-sign-grid" aria-label="Choose a zodiac sign">
           <a id="aries" href="/registry/aries/" aria-label="View the Aries token"><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt="">Aries</a>
           <a id="taurus" href="/registry/taurus/" aria-label="View the Taurus token"><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt="">Taurus</a>
@@ -6581,10 +6687,10 @@
       </section>
 
       <section class="static-site__section" id="outlook">
-        <p class="static-site__eyebrow">Open research instrument · v1</p>
-        <h2>A forecast you can audit</h2>
-        <p>The interactive edition publishes daily and seven-day symbolic attention, tone, and volatility signals before their outcome windows close. The score is calculated from disclosed planetary occupancy and event-proximity weights; live market data is observed separately and never changes the sky score.</p>
-        <p><a href="/assets/registry-outlook.json">Open today’s machine-readable edition →</a></p>
+        <p class="static-site__eyebrow">Astrology × market research</p>
+        <h2>Sky signals. Market checks.</h2>
+        <p>Named planetary events add disclosed points to the Zodiacs they touch. Those points become attention, tone, and event-intensity scores; live market data is shown beside them and never enters the calculation.</p>
+        <p><a href="/assets/registry-outlook.json">Open the machine-readable edition →</a></p>
       </section>
 
       <section class="static-site__section" id="identity" aria-labelledby="registry-does-title">
