@@ -162,6 +162,10 @@ The Vercel daily-email endpoints require `EMAIL_PROVIDER=resend`, distinct `RESE
 
 The endpoint also retains a five-request-per-minute per-instance burst guard. Supabase is the atomic authority for ten questions per visitor per UTC day and for the $3 daily and $100 monthly production allowances. Environment overrides may lower these launch caps but cannot raise them. The route reserves a conservative worst-case cost before OpenAI and settles it from returned usage; missing or malformed usage retains the full reservation. It fails closed when the quota store is unavailable or a reservation would exceed a limit. Alerts are emitted at 70%, 90%, and 100%; configure matching provider-dashboard limits only as a secondary backstop.
 
+Run **Ask Zodiacs Live Evaluation** only after the exact evaluated commit has finished deploying. For production, select `main` and use exactly `https://zodiacs.org`. For the release candidate, select `codex/ask-zodiacs-guide` and copy its immutable Vercel deployment origin, which has the form `https://zodiacs-<deployment>-zodiacsofficial.vercel.app`. Do not use the mutable `zodiacs-org-git-…` branch alias, add a trailing slash, or append a path, query, or fragment. The workflow requires the deployment's `x-zodiacs-deployment-sha` to match the selected Git ref and binds the evidence to that origin; every new commit therefore requires its new immutable preview.
+
+Run `grounded`, `guided`, and `redteam` sequentially against that same final origin, waiting for each full-dataset coverage job to pass before dispatching the next suite. All three successful coverage jobs are required release evidence.
+
 Apply and verify the two existing assistant quota migrations, then
 `20260802070819_assistant_memory_and_cost_budget.sql`,
 `20260802090000_assistant_memory_storage_caps.sql`, and

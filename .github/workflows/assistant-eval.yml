@@ -12,7 +12,7 @@ on:
           - guided
           - redteam
       base_url:
-        description: Exact production or reviewed Ask-preview origin
+        description: Exact production or immutable Ask-preview origin
         required: true
         default: https://zodiacs.org
         type: string
@@ -29,29 +29,14 @@ jobs:
     name: Validate exact evaluation target
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout target validator
+        uses: actions/checkout@v6
+
       - name: Restrict the target to production or the reviewed Ask preview
         env:
           EVAL_BASE: ${{ inputs.base_url }}
           EVAL_REF: ${{ github.ref }}
-        run: |
-          node <<'NODE'
-          const url = new URL(process.env.EVAL_BASE);
-          const cleanOrigin = url.origin === process.env.EVAL_BASE
-            && url.username === ''
-            && url.password === ''
-            && url.pathname === '/'
-            && url.search === ''
-            && url.hash === '';
-          const production = process.env.EVAL_REF === 'refs/heads/main'
-            && url.origin === 'https://zodiacs.org';
-          const askPreview = process.env.EVAL_REF === 'refs/heads/codex/ask-zodiacs-guide'
-            && url.protocol === 'https:'
-            && /^zodiacs-[a-z0-9]+-zodiacsofficial\.vercel\.app$/i.test(url.hostname);
-          if (!cleanOrigin || (!production && !askPreview)) {
-            throw new Error('Evaluation target/ref is not an approved exact deployment origin.');
-          }
-          console.log(`Approved ${production ? 'production' : 'Ask preview'} target: ${url.origin}`);
-          NODE
+        run: node scripts/assistant-eval-target.mjs
 
   evaluate:
     name: ${{ inputs.suite }} shard ${{ matrix.offset }} against exact deployment
@@ -66,7 +51,7 @@ jobs:
       - name: Checkout evaluated source
         uses: actions/checkout@v6
 
-      - name: Record reviewed main source
+      - name: Record evaluated source
         id: source
         run: echo "sha=$(git rev-parse HEAD)" >> "${GITHUB_OUTPUT}"
 
