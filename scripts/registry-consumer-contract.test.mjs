@@ -64,7 +64,7 @@ describe('Registry consumer and technical information architecture', () => {
     const visible = visibleMarkup(html);
 
     for (const value of [source, visible]) {
-      expect(value).toContain('Every sign has one official token. Explore its story, its record, and its market.');
+      expect(value).toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
       // The verifier is reachable in plain words. "Check an address" named
       // the mechanism, and "Check a token is official" dropped its "that".
       expect(value).toContain('Verify a token');
@@ -201,12 +201,13 @@ describe('Registry consumer and technical information architecture', () => {
     expect(placard).toContain('className="stage-placard__name"');
     expect(placard).toContain('{signDateLabel(sign)}');
     expect(placard).toContain('<PlacardQuote sign={sign} />');
-    expect(placard).toContain('Trade {sign.name}');
+    expect(placard).toContain('Buy {sign.name}');
     expect(placard).toContain('<span>The record</span>');
     expect(placard).toContain('href={registryProfilePath(sign)}');
     // Flag-off the pill is the door to the catalogue page's own panel.
     expect(placard).toContain('href={`${registryProfilePath(sign)}#acquire`}');
-    expect(mounted).toContain('<ConsumerTokensSection />');
+    expect(mounted).toContain('<ConsumerMarketSection');
+    expect(mounted).toContain('<ConsumerOutlookSection active={activeTicker} setActive={setActiveTicker} />');
   });
 
   it('says one thing about a sign, in one place, at every width', async () => {
@@ -221,8 +222,9 @@ describe('Registry consumer and technical information architecture', () => {
     ]) {
       expect(source.split(once), once).toHaveLength(2);
     }
-    // The flag-on and flag-off pill faces plus the dialog's accessible title.
-    expect(source.split('Trade {sign.name}')).toHaveLength(4);
+    // The flag-on and flag-off pill faces use the same explicit purchase verb.
+    expect(source.split('Buy {sign.name}')).toHaveLength(3);
+    expect(source).toContain('Acquisition Desk — buy {sign.name}');
     // The record card and its quote are gone; the placard carries the price.
     expect(source).not.toContain('function ConsumerSignPanel(');
     expect(source).not.toContain('data-token-quote');
@@ -305,25 +307,35 @@ describe('Registry consumer and technical information architecture', () => {
     expect(html).not.toContain('/assets/trade.js');
   });
 
-  it('lists all twelve official tokens in zodiac order with a single batched market read', async () => {
+  it('ranks all twelve official tokens with one batched market read and explicit data semantics', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
     const visible = visibleMarkup(html);
 
-    expect(source).toContain('Twelve tokens, live.');
+    expect(source).toContain('The wheel, <span className="it">in motion.</span>');
     expect(source).toContain('function loadTwelveMarketQuotes()');
     expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
-    // Zodiac order, never a leaderboard: the strip renders SIGNS in
-    // registry order and no consumer surface sorts by performance.
-    expect(source).toContain('{SIGNS.map((item) => {');
-    expect(source).not.toMatch(/\.sort\(\(a, b\) => \(b\.marketCap/u);
+    expect(source).toContain("marketCap: { label: 'Market cap'");
+    expect(source).toContain("liquidity: { label: 'Indexed liquidity'");
+    expect(source).toContain("change: { label: '24h move'");
+    expect(source).toContain('if (av === null) return 1;');
+    expect(source).toContain('marketCap: toFiniteNumber(pair.marketCap)');
+    expect(source).toContain('fdv: toFiniteNumber(pair.fdv)');
+    expect(source).toContain('market.liquidityUsd += liquidity;');
+    expect(source).toContain("if (indexedPairs === 0) return unavailableMarketContext('no-pair');");
+    expect(source).toContain('const MARKET_REFRESH_MS = 120_000;');
+    expect(source).toContain('Share snapshot');
+    expect(source).toContain("url.searchParams.set('rank', rankBy)");
+    expect(source).toContain("url.searchParams.set('sign', activeSign.asset.sign)");
+    expect(source).toContain("shared.searchParams.set('outlook', horizon)");
+    expect(source).toContain("edition.date === utcToday");
     // The static fallback carries the crawlable twelve with truncated mints.
-    expect(visible).toContain('Twelve tokens, live');
-    expect(visible).toContain('Every sign has one official token');
+    expect(visible).toContain('The wheel, in motion');
+    expect(visible).toContain('The interactive edition ranks the twelve');
     expect((visible.match(/class="static-token-list"/gu) ?? [])).toHaveLength(1);
-    expect(visible).toContain('Live prices appear with JavaScript');
+    expect(visible).toContain('Live figures and sharing appear with JavaScript');
   });
 
   it('publishes a useful no-JavaScript technical record from the canonical addresses', async () => {

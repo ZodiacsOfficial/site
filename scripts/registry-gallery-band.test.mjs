@@ -213,7 +213,7 @@ describe('the gallery band on the registry hub', () => {
     for (const marker of ['galleryRotation', 'zodiacs:gallery-pause']) {
       expect(sceneBundle).toContain(marker);
     }
-    for (const marker of ['data-gallery-paused', 'gband__turn-hint', 'Drag to turn']) {
+    for (const marker of ['data-gallery-paused', 'gband__turn-hint', 'Drag the figure to turn']) {
       expect(appBundle).toContain(marker);
     }
   });

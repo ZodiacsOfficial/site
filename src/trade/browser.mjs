@@ -17,6 +17,7 @@ import { executeOrder, fetchOrder } from './ultra.mjs';
 import { TP_CSS } from './styles.mjs';
 import { createWallet } from './wallet.mjs';
 import { mountTradePanel } from './view.mjs';
+import { fetchIndexedLiquidity } from './liquidity.mjs';
 
 const STYLE_MARK = 'data-tp-styles';
 
@@ -32,6 +33,16 @@ const MARKS = Object.freeze({
   ramp: '/assets/venues/ramp.svg',
   applepay: '/assets/venues/applepay.svg',
 });
+
+const liquidityCache = new Map();
+
+function indexedLiquidityFor(mint) {
+  const current = liquidityCache.get(mint);
+  if (current) return current;
+  const request = fetchIndexedLiquidity({ mint }).catch(() => null);
+  liquidityCache.set(mint, request);
+  return request;
+}
 
 function ensureStyles() {
   if (document.querySelector(`[${STYLE_MARK}]`)) return;
@@ -52,7 +63,12 @@ export function mount(host, sign) {
   const panel = mountTradePanel({
     host,
     sign,
-    deps: { fetchOrder, executeOrder, wallet },
+    deps: {
+      fetchOrder,
+      executeOrder,
+      wallet,
+      fetchLiquidity: ({ mint }) => indexedLiquidityFor(mint),
+    },
     marks: MARKS,
   });
   return {

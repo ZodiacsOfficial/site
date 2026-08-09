@@ -55,7 +55,8 @@ describe('registry pastel polish', () => {
 
     // The disc rail walks with the arrow keys and keeps a roving tabstop,
     // the contract the pastel grid it replaced always had.
-    expect(source).toContain("() => currentSeason()?.sign.ticker ?? SIGNS[0].ticker");
+    expect(source).toContain("return currentSeason()?.sign.ticker ?? SIGNS[0].ticker");
+    expect(source).toContain("new URLSearchParams(window.location.search).get('sign')");
     expect(source).toContain('ArrowRight: activeIndex + 1,');
     expect(source).toContain('ArrowLeft: activeIndex - 1,');
     expect(source).toContain('End: SIGNS.length - 1');
@@ -67,9 +68,10 @@ describe('registry pastel polish', () => {
     expect(bundle).not.toContain('Auto-rotating');
     expect(bundle).not.toContain('Scroll or drag');
     // The stage rail paints from inert placeholder discs until the scene
-    // bundle swaps in the live ticks; the watchlist wraps, never scrolls.
+    // bundle swaps in the live ticks; the ranked board remains a card list.
     expect(registry).toContain('.rail__tick--placeholder');
-    expect(registry).toContain('.consumer-tokens__list');
+    expect(registry).toContain('.market-board__rows');
+    expect(registry).toContain('.market-tape__track');
   });
 
   it('opens on the plate and keeps the optional Cabinet in the purpose section', async () => {
@@ -86,7 +88,7 @@ describe('registry pastel polish', () => {
       source.indexOf('className="stage-hero__head"'),
       source.indexOf('className="gband__rail-top"'),
     );
-    expect(head).toContain('Every sign has one official token. Explore its story, its record, and its market.');
+    expect(head).toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
     expect(head).not.toContain('REGISTRY_AURA_ENABLED');
     expect(head).not.toContain('Open the Cabinet');
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
