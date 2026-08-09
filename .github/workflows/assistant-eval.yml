@@ -114,10 +114,12 @@ jobs:
             const count = evidence.suite === "grounded" ? evidence.asked : evidence.cases;
             const expected = Math.max(0, Math.min(10, evidence.sampledOf - evidence.offset));
             const complete = count === expected;
-            if (!complete || evidence.deploymentSha !== process.argv[2] || evidence.sourceCommit !== process.argv[2]) {
+            if (!complete || evidence.deploymentSha !== process.argv[2]
+              || evidence.sourceCommit !== process.argv[2]
+              || evidence.base !== process.argv[3]) {
               throw new Error("Evaluation evidence is incomplete or has mismatched provenance.");
             }
-          ' "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}-${{ matrix.offset }}.json" "${DEPLOYMENT_SHA}"
+          ' "${RUNNER_TEMP}/ask-zodiacs-${EVAL_SUITE}-${{ matrix.offset }}.json" "${DEPLOYMENT_SHA}" "${EVAL_BASE}"
           exit "${evaluation_status}"
 
       - name: Upload exact evaluation evidence
@@ -155,6 +157,7 @@ jobs:
       - name: Require exact full-suite coverage
         env:
           EVAL_SUITE: ${{ inputs.suite }}
+          EVAL_BASE: ${{ inputs.base_url }}
           DEPLOYMENT_SHA: ${{ github.sha }}
           EVIDENCE_DIR: ${{ runner.temp }}/ask-zodiacs-evidence
         run: |
@@ -181,7 +184,8 @@ jobs:
           for (const shard of evidence) {
             if (shard.suite !== process.env.EVAL_SUITE || !shard.pass
               || shard.deploymentSha !== process.env.DEPLOYMENT_SHA
-              || shard.sourceCommit !== process.env.DEPLOYMENT_SHA) {
+              || shard.sourceCommit !== process.env.DEPLOYMENT_SHA
+              || shard.base !== process.env.EVAL_BASE) {
               throw new Error('A shard failed or has mismatched provenance.');
             }
           }
