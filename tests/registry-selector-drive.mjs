@@ -160,6 +160,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             borderAlpha: colorAlpha(style.borderTopColor),
             backgroundAlpha: colorAlpha(style.backgroundColor),
             backdrop: style.backdropFilter || style.webkitBackdropFilter,
+            chipText: chip?.textContent?.trim() ?? '',
             chipHeight: chip ? chip.getBoundingClientRect().height : 0,
             chipTracking: chipStyle ? parseFloat(chipStyle.letterSpacing) : 0,
             searchVisible: visible(search),
@@ -208,6 +209,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             && Math.abs(geometry.chipHeight - 34) <= 0.5,
           `${geometry.chipTracking}/${geometry.chipHeight}`,
         );
+        if (route.path === '/registry/') {
+          check(`${label} keeps the Registry nav label`, geometry.chipText === 'Registry', geometry.chipText);
+        }
         if (desktopNav) {
           check(`${label} shows the full desktop lockup`, geometry.sepVisible && geometry.dimVisible);
         } else {
@@ -754,15 +758,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       JSON.stringify(explorerState),
     );
     check(
-      'the plate opens the page without WebGL, carrying the same headline',
+      'the sculpture-led stage opens without the retired film or title card',
       await desktop.locator('.cine').count() === 0
-        && await desktop.locator('h1.stage-hero__title').count() === 1
-        && (await desktop.locator('.stage-hero__line').innerText()).trim()
-          .startsWith('One official token for every sign. Browse the sculptures, watch the market, and verify the record.'),
+        && await desktop.locator('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').count() === 0
+        && await desktop.locator('h1').count() === 1
+        && (await desktop.locator('h1').innerText()) === 'Zodiacs Official Registry'
+        && await desktop.locator('#official-twelve').getAttribute('aria-labelledby') === 'consumer-explorer-title',
     );
     const openingMaterial = await desktop.locator('.gband--consumer').evaluate((band) => {
       const season = band.querySelector('.season-now');
       const rail = band.querySelector('.rail');
+      const progress = season?.querySelector('.season-now__progress');
       const read = (node) => {
         if (!node) return null;
         const style = getComputedStyle(node);
@@ -775,18 +781,48 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           transitionProperty: style.transitionProperty,
         };
       };
-      return { season: read(season), rail: read(rail) };
+      const progressRect = progress?.getBoundingClientRect();
+      const seasonRect = season?.getBoundingClientRect();
+      const progressStyle = progress ? getComputedStyle(progress) : null;
+      return {
+        oldHero: band.querySelectorAll('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').length,
+        oldCopy: /The Official Registry|Twelve signs|One register/i.test(band.textContent ?? ''),
+        season: read(season),
+        seasonDirect: season?.parentElement === band,
+        seasonText: season?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        seasonLabel: season?.getAttribute('aria-label') ?? '',
+        seasonImage: season?.querySelector('img')?.getAttribute('src') ?? '',
+        seasonPriceNodes: season?.querySelectorAll('.season-now__market-row, .season-now__change, .season-now__price').length ?? 0,
+        progress: progressRect && seasonRect && progressStyle ? {
+          width: progressRect.width,
+          seasonWidth: seasonRect.width,
+          height: progressRect.height,
+          radius: parseFloat(progressStyle.borderTopLeftRadius),
+        } : null,
+        tapeInside: band.querySelectorAll('.market-tape').length,
+        rail: read(rail),
+      };
     });
     check(
-      'the season fades into the opening room and the sculpture rail has no nested frame',
+      'the compact season sculpture and long progress pill replace the nested hero container',
       openingMaterial.season
-        && openingMaterial.rail
+        && openingMaterial.oldHero === 0
+        && !openingMaterial.oldCopy
+        && openingMaterial.seasonDirect
+        && openingMaterial.seasonImage === '/assets/sculptures/512/leo.webp'
+        && openingMaterial.seasonPriceNodes === 0
+        && !/\$|\bprice\b/i.test(`${openingMaterial.seasonText} ${openingMaterial.seasonLabel}`)
+        && openingMaterial.progress
+        && openingMaterial.progress.width >= 160
+        && openingMaterial.progress.width >= openingMaterial.progress.seasonWidth * 0.5
+        && openingMaterial.progress.height >= 5
+        && openingMaterial.progress.radius >= openingMaterial.progress.height / 2 - 1
+        && openingMaterial.tapeInside === 0
         && openingMaterial.season.borderWidths.every((width) => width === '0px')
         && openingMaterial.season.borderRadius === '0px'
         && openingMaterial.season.backgroundColor === 'rgba(0, 0, 0, 0)'
         && openingMaterial.season.backgroundImage === 'none'
-        && openingMaterial.season.transitionProperty.includes('opacity')
-        && openingMaterial.season.transitionProperty.includes('transform')
+        && openingMaterial.rail
         && openingMaterial.rail.borderWidths.every((width) => width === '0px')
         && openingMaterial.rail.borderRadius === '0px'
         && openingMaterial.rail.backgroundColor === 'rgba(0, 0, 0, 0)'
@@ -875,17 +911,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       JSON.stringify(placardQuote),
     );
     const watchlist = await desktop.locator('.market-row').evaluateAll((rows) => rows.map((row) => {
-      const view = row.querySelector('.market-row__view');
       const record = row.querySelector('.market-row__record');
       return {
         slug: row.getAttribute('data-market-sign'),
         href: record?.getAttribute('href'),
         priced: /^\$/.test(row.querySelector('.market-row__metric--price strong')?.textContent ?? ''),
-        viewLabel: view?.getAttribute('aria-label') ?? '',
-        viewText: view?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-        viewDisc: view?.querySelector('img')?.getAttribute('src') ?? '',
-        viewGlass: view?.classList.contains('market-glass') ?? false,
+        recordLabel: record?.getAttribute('aria-label') ?? '',
+        recordText: record?.querySelector('.market-row__record-label')?.textContent?.trim() ?? '',
         recordGlass: record?.classList.contains('market-glass') ?? false,
+        sculptureActions: row.querySelectorAll('.market-row__view').length,
       };
     }));
     check(
@@ -896,20 +930,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           'virgo', 'leo', 'cancer', 'gemini', 'taurus', 'aries',
         ])
         && watchlist.every((row) => row.href === `/registry/${row.slug}/`)
-        && watchlist.every((row) => row.priced),
-      JSON.stringify(watchlist),
-    );
-    check(
-      'each leaderboard row offers a sign-specific pastel sculpture handoff',
-      new Set(watchlist.map((row) => row.viewLabel)).size === 12
-        && watchlist.every((row) => {
-          const name = row.slug.charAt(0).toUpperCase() + row.slug.slice(1);
-          return row.viewLabel === `Show ${name} sculpture in the gallery`
-            && row.viewText.includes('View sculpture')
-            && row.viewDisc === `/assets/zodiac-icons/48/${row.slug}.webp`
-            && row.viewGlass
-            && row.recordGlass;
-        }),
+        && watchlist.every((row) => row.priced)
+        && watchlist.every((row) => (
+          row.recordLabel === `Open the official ${row.slug.charAt(0).toUpperCase() + row.slug.slice(1)} record`
+            && row.recordText === 'Official record'
+            && row.recordGlass
+            && row.sculptureActions === 0
+        )),
       JSON.stringify(watchlist),
     );
     const marketMaterial = await desktop.locator('#market').evaluate((section) => {
@@ -924,22 +951,31 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           height: rect.height,
           backgroundImage: style.backgroundImage,
           backdropFilter: style.backdropFilter || style.webkitBackdropFilter || '',
+          borderWidth: style.borderTopWidth,
+          boxShadow: style.boxShadow,
         };
       };
       return {
+        sortShell: inspect(section.querySelector('.market-board__sort')),
         sort: [...section.querySelectorAll('.market-board__sort button')].map(inspect),
         share: [...section.querySelectorAll('.market-board__share button')].map(inspect),
-        rowActions: [...section.querySelectorAll('.market-row__view, .market-row__record')].map(inspect),
+        rowActions: [...section.querySelectorAll('.market-row__record')].map(inspect),
+        sculptureActions: section.querySelectorAll('.market-row__view').length,
       };
     });
     check(
       'market filters and social controls use one accessible liquid-glass language',
-      marketMaterial.sort.length === 3
+      marketMaterial.sortShell
+        && marketMaterial.sortShell.backgroundImage.includes('gradient')
+        && marketMaterial.sortShell.backdropFilter === 'none'
+        && marketMaterial.sortShell.borderWidth === '1px'
+        && marketMaterial.sortShell.boxShadow.includes('inset')
+        && marketMaterial.sort.length === 3
         && marketMaterial.share.length === 4
         && marketMaterial.sort.every((control) => (
           control.glass
             && control.height >= 43.5
-            && control.backdropFilter.includes('blur')
+            && control.backdropFilter === 'none'
         ))
         && JSON.stringify(marketMaterial.share.map((control) => control.label))
           === JSON.stringify(['Share snapshot', 'Share on X', 'Share on Telegram', 'Share on WhatsApp'])
@@ -948,9 +984,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             && control.svg
             && control.width >= 43.5
             && control.height >= 43.5
-            && control.backdropFilter.includes('blur')
+            && control.backdropFilter === 'none'
+            && control.borderWidth === '1px'
+            && control.boxShadow.includes('inset')
         ))
-        && marketMaterial.rowActions.length === 24
+        && marketMaterial.sculptureActions === 0
+        && marketMaterial.rowActions.length === 12
         && marketMaterial.rowActions.every((control) => (
           control.glass && control.height >= 43.5 && control.backdropFilter === 'none'
         )),
@@ -993,28 +1032,6 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         ))
         && (await desktop.locator('.market-board__share-state').innerText()) === 'WhatsApp share opened.',
       JSON.stringify(marketIntents),
-    );
-    const tapeViewport = desktop.locator('.market-tape__viewport');
-    await desktop.locator('.market-tape__group:not([aria-hidden]) button').last().focus();
-    await desktop.waitForTimeout(40);
-    const focusedTapeScroll = await tapeViewport.evaluate((node) => node.scrollLeft);
-    await desktop.locator('.market-board__sort button').first().focus();
-    await desktop.waitForTimeout(40);
-    const releasedTapeScroll = await tapeViewport.evaluate((node) => node.scrollLeft);
-    check(
-      'keyboard focus leaves the moving market tape on a clean animation seam',
-      focusedTapeScroll > 0 && releasedTapeScroll === 0,
-      JSON.stringify({ focusedTapeScroll, releasedTapeScroll }),
-    );
-    await desktop.locator('.market-row[data-market-sign="pisces"] .market-row__view').click();
-    await desktop.waitForFunction(() => (
-      document.activeElement?.getAttribute('data-consumer-sign') === 'pisces'
-    ));
-    check(
-      'a leaderboard sculpture action returns focus to the matching gallery choice',
-      await desktop.locator('[data-consumer-sign="pisces"]').evaluate((control) => (
-        control === document.activeElement && control.getAttribute('aria-pressed') === 'true'
-      )),
     );
     check(
       'the polite selection status announces the chosen sign',
@@ -1276,6 +1293,47 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     await emptyMarket.close();
 
+    const reducedTape = await newPage({
+      viewport: { width: 390, height: 844 },
+      hasTouch: true,
+      reducedMotion: 'reduce',
+    });
+    await stubNoWebgl(reducedTape);
+    await mockDexscreener(reducedTape);
+    await reducedTape.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await reducedTape.locator('.market-tape__track').waitFor({ state: 'visible' });
+    const reducedTapeState = await reducedTape.locator('.market-tape').evaluate((tape) => {
+      const viewport = tape.querySelector('.market-tape__viewport');
+      const track = tape.querySelector('.market-tape__track');
+      const echo = tape.querySelector('.market-tape__group[aria-hidden="true"]');
+      const gallery = document.querySelector('#gallery');
+      return {
+        beforeGallery: Boolean(gallery && (tape.compareDocumentPosition(gallery) & Node.DOCUMENT_POSITION_FOLLOWING)),
+        animationName: track ? getComputedStyle(track).animationName : '',
+        animationPlayState: track ? getComputedStyle(track).animationPlayState : '',
+        echoDisplay: echo ? getComputedStyle(echo).display : '',
+        overflowX: viewport ? getComputedStyle(viewport).overflowX : '',
+        scrollWidth: viewport?.scrollWidth ?? 0,
+        clientWidth: viewport?.clientWidth ?? 0,
+        interactive: tape.querySelectorAll('button, a').length,
+        visibleItems: [...tape.querySelectorAll('.market-tape__group')]
+          .filter((group) => getComputedStyle(group).display !== 'none')
+          .reduce((count, group) => count + group.querySelectorAll('.market-tape__item').length, 0),
+      };
+    });
+    check(
+      'reduced motion keeps the top market tape as one static native-scroll row',
+      reducedTapeState.beforeGallery
+        && reducedTapeState.animationName === 'none'
+        && reducedTapeState.echoDisplay === 'none'
+        && ['auto', 'scroll'].includes(reducedTapeState.overflowX)
+        && reducedTapeState.scrollWidth > reducedTapeState.clientWidth
+        && reducedTapeState.interactive === 0
+        && reducedTapeState.visibleItems === 12,
+      JSON.stringify(reducedTapeState),
+    );
+    await reducedTape.close();
+
     // The sculpture renders have very different visible silhouettes. Check
     // every sign at the three narrow widths that previously let the tall
     // pieces run behind the placard. Measure the non-transparent sculpture
@@ -1300,6 +1358,41 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const mobileStageLive = await mobile.evaluate(() => (
         document.documentElement.classList.contains('gallery-live')
       ));
+      await mobile.locator('.market-tape__track').waitFor({ state: 'visible' });
+      const readTapeMotion = () => mobile.locator('.market-tape').evaluate((tape) => {
+        const track = tape.querySelector('.market-tape__track');
+        const gallery = document.querySelector('#gallery');
+        const style = track ? getComputedStyle(track) : null;
+        const animations = track?.getAnimations() ?? [];
+        return {
+          beforeGallery: Boolean(gallery && (tape.compareDocumentPosition(gallery) & Node.DOCUMENT_POSITION_FOLLOWING)),
+          groups: tape.querySelectorAll('.market-tape__group').length,
+          items: tape.querySelectorAll('.market-tape__item').length,
+          interactive: tape.querySelectorAll('button, a').length,
+          viewportHidden: tape.querySelector('.market-tape__viewport')?.getAttribute('aria-hidden') === 'true',
+          animationName: style?.animationName ?? '',
+          animationPlayState: style?.animationPlayState ?? '',
+          transform: style?.transform ?? '',
+          currentTime: Number(animations[0]?.currentTime ?? 0),
+        };
+      });
+      const tapeFrameA = await readTapeMotion();
+      await mobile.waitForTimeout(260);
+      const tapeFrameB = await readTapeMotion();
+      check(
+        `market tape at ${label} precedes the gallery and continuously advances`,
+        tapeFrameA.beforeGallery
+          && tapeFrameA.groups === 2
+          && tapeFrameA.items === 24
+          && tapeFrameA.interactive === 0
+          && tapeFrameA.viewportHidden
+          && tapeFrameA.animationName !== 'none'
+          && tapeFrameA.animationPlayState === 'running'
+          && tapeFrameB.animationPlayState === 'running'
+          && tapeFrameB.currentTime > tapeFrameA.currentTime + 100
+          && tapeFrameB.transform !== tapeFrameA.transform,
+        JSON.stringify({ before: tapeFrameA, after: tapeFrameB }),
+      );
       const mobileMarket = mobile.locator('#market');
       await mobileMarket.scrollIntoViewIfNeeded();
       await mobileMarket.locator('.market-row').first().waitFor({ state: 'visible', timeout: 15_000 });
@@ -1317,7 +1410,18 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           sort: [...section.querySelectorAll('.market-board__sort button')].map(measure),
           share: [...section.querySelectorAll('.market-board__share button')].map(measure),
           social: [...section.querySelectorAll('.market-board__social')].map(measure),
-          rowActions: [...section.querySelectorAll('.market-row__view, .market-row__record')].map(measure),
+          rowActions: [...section.querySelectorAll('.market-row__record')].map(measure),
+          sculptureActions: section.querySelectorAll('.market-row__view').length,
+          recordFills: [...section.querySelectorAll('.market-row__actions')].map((actions) => {
+            const parent = actions.getBoundingClientRect();
+            const record = actions.querySelector('.market-row__record')?.getBoundingClientRect();
+            return record ? {
+              parentWidth: parent.width,
+              recordWidth: record.width,
+              leftGap: record.left - parent.left,
+              rightGap: parent.right - record.right,
+            } : null;
+          }),
           pageWidth: document.documentElement.scrollWidth,
           viewportWidth: innerWidth,
         };
@@ -1327,7 +1431,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         compactMarketMaterial.sort.length === 3
           && compactMarketMaterial.share.length === 4
           && compactMarketMaterial.social.length === 3
-          && compactMarketMaterial.rowActions.length === 24
+          && compactMarketMaterial.sculptureActions === 0
+          && compactMarketMaterial.rowActions.length === 12
+          && compactMarketMaterial.recordFills.length === 12
+          && compactMarketMaterial.recordFills.every((item) => (
+            item
+              && Math.abs(item.recordWidth - item.parentWidth) <= 0.75
+              && Math.abs(item.leftGap) <= 0.75
+              && Math.abs(item.rightGap) <= 0.75
+          ))
           && [
             ...compactMarketMaterial.sort,
             ...compactMarketMaterial.share,
@@ -1869,29 +1981,38 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         'the rail exposes one pressed tick for the current sign',
         await stagePage.locator('.rail__tick[aria-pressed="true"]').count() === 1,
       );
-      // One opening scene: the film hero stands down, the headline rides the
-      // stage, the rail picks beneath it, the chosen sculpture stands large,
-      // and the placard at its feet says name, dates, price — nothing more.
+      // One opening scene: the ticker leads, the compact season sculpture and
+      // rail sit above the chosen piece, and the overall sculpture room keeps
+      // its frame after the nested title/season cards disappear.
       const shape = await stagePage.evaluate(() => {
         const box = (sel) => {
           const el = document.querySelector(sel);
           return el ? el.getBoundingClientRect() : null;
         };
-        const head = box('.stage-hero__head');
+        const tape = box('.market-tape');
         const plate = box('.gband--consumer');
+        const season = box('.gband--consumer .season-now');
         const rail = box('.gband--consumer [data-gallery-rail]');
         const canvas = box('.gband--consumer [data-gallery-canvas]');
         const placard = box('.stage-placard');
         return {
           filmHero: document.querySelectorAll('.cine').length,
-          h1: document.querySelectorAll('h1').length,
-          headAboveRail: Boolean(head && rail && head.bottom <= rail.top + 1),
+          oldHero: document.querySelectorAll('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').length,
+          tapeBeforePlate: Boolean(tape && plate && tape.bottom <= plate.top + 1),
+          seasonAboveRail: Boolean(season && rail && season.bottom <= rail.top + 1),
           railAboveCanvas: Boolean(rail && canvas && rail.bottom <= canvas.top + 1),
           canvasAbovePlacard: Boolean(placard && canvas
             && canvas.bottom <= placard.top + 1),
-          plateFramed: Boolean(plate && plate.width < innerWidth - 40 && plate.width <= 1402),
-          plateRadius: plate ? getComputedStyle(document.querySelector('.gband--consumer')).borderTopLeftRadius : '',
-          headInsidePlate: Boolean(head && plate && head.top >= plate.top - 1 && head.bottom <= plate.bottom + 1),
+          plateStyle: plate ? (() => {
+            const style = getComputedStyle(document.querySelector('.gband--consumer'));
+            return {
+              border: style.borderTopWidth,
+              radius: style.borderTopLeftRadius,
+              backgroundColor: style.backgroundColor,
+              backgroundImage: style.backgroundImage,
+            };
+          })() : null,
+          seasonDirect: document.querySelector('.gband--consumer > .season-now') !== null,
           // The rail must not wear .gband__chrome: the scene reads that
           // element's offsetTop as the floor of the band it may paint into.
           chrome: document.querySelectorAll('.gband--consumer .gband__chrome').length,
@@ -1902,10 +2023,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       });
       check(
-        'the plate frames the opening scene: headline, rail, sculpture, placard',
-        shape.filmHero === 0 && shape.h1 === 1
-          && shape.headAboveRail && shape.railAboveCanvas && shape.canvasAbovePlacard
-          && shape.plateFramed && shape.plateRadius.startsWith('26') && shape.headInsidePlate
+        'the framed sculpture room runs ticker, season, rail, sculpture, placard without a nested hero',
+        shape.filmHero === 0 && shape.oldHero === 0
+          && shape.tapeBeforePlate && shape.seasonAboveRail
+          && shape.railAboveCanvas && shape.canvasAbovePlacard
+          && shape.plateStyle?.border === '1px'
+          && parseFloat(shape.plateStyle?.radius ?? '0') >= 20
+          && shape.plateStyle?.backgroundColor !== 'rgba(0, 0, 0, 0)'
+          && shape.plateStyle?.backgroundImage !== 'none'
+          && shape.seasonDirect
           && shape.chrome === 0
           && shape.previewInside === 1 && shape.previewTotal === 1
           && shape.flatArt === 0

@@ -63,8 +63,11 @@ describe('Registry consumer and technical information architecture', () => {
     ]);
     const visible = visibleMarkup(html);
 
+    // The no-JS shell can explain the route in prose; the mounted sculpture
+    // stage no longer repeats that large hero copy above the work.
+    expect(visible).toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
+    expect(source).not.toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
     for (const value of [source, visible]) {
-      expect(value).toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
       // The verifier is reachable in plain words. "Check an address" named
       // the mechanism, and "Check a token is official" dropped its "that".
       expect(value).toContain('Verify a token');
@@ -82,6 +85,9 @@ describe('Registry consumer and technical information architecture', () => {
     const mounted = consumerRoot(source);
 
     expect(source).toContain('id="official-twelve"');
+    expect(source).toContain('<h1 id="consumer-explorer-title" className="sr-only">Zodiacs Official Registry</h1>');
+    expect(source).toContain('aria-labelledby="consumer-explorer-title"');
+    expect(source.split('<h1 id="consumer-explorer-title"'), 'consumer Registry h1').toHaveLength(2);
     // In stage mode the section is also the page's opening scene.
     expect(source).toContain("'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')");
     expect(source).toContain('data-consumer-sign=');
@@ -167,13 +173,17 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
   });
 
-  it('shows the current season with a live price and DST-safe countdown', async () => {
+  it('shows the current season as a gold sculpture, countdown, and progress instrument', async () => {
     const [source, html, bundle] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
       read('public/assets/app.js'),
     ]);
 
+    const seasonNow = source.slice(
+      source.indexOf('function SeasonNow({ season })'),
+      source.indexOf("/* The placard's price"),
+    );
     for (const marker of [
       'function SeasonNow({ season })',
       '<SeasonNow season={season} />',
@@ -181,13 +191,43 @@ describe('Registry consumer and technical information architecture', () => {
       "remaining === 1 ? '' : 's'",
       'Date.UTC(year, month - 1, day)',
       'remaining: Math.max(0, total - day)',
-      'useTwelveQuotes(Boolean(season))',
     ]) expect(source).toContain(marker);
+    expect(seasonNow).toContain('src={`/assets/sculptures/512/${sign.asset.sign}.webp`}');
+    expect(seasonNow).toContain('className="season-now__progress season-now__progress-track"');
+    expect(seasonNow).toContain('role="progressbar"');
+    expect(seasonNow).toContain('aria-valuenow={day}');
+    expect(seasonNow).not.toContain('useTwelveQuotes');
+    expect(seasonNow).not.toContain('formatPriceUsd');
+    expect(seasonNow).not.toContain('season-now__market-row');
+    expect(seasonNow).not.toMatch(/\bprice\b/iu);
     expect(html).toContain('.season-now {');
     expect(html).toContain('.season-now__progress > span');
     for (const marker of ['season-now', 'Now in season', 'remaining']) {
       expect(bundle).toContain(marker);
     }
+  });
+
+  it('keeps the top market tape display-only and duplicates only for the visual loop', async () => {
+    const source = await read('src/app.jsx');
+    const tape = source.slice(
+      source.indexOf('function MarketTape('),
+      source.indexOf('function SeasonNow('),
+    );
+    const gallery = source.slice(
+      source.indexOf('function GalleryBand('),
+      source.indexOf('function ConsumerExplorer('),
+    );
+
+    expect(tape).toContain('className="market-tape__viewport" aria-hidden="true"');
+    expect(tape).toContain("{renderItems('primary')}");
+    expect(tape).toContain("{renderItems('echo')}");
+    expect(tape).toContain('data-market-tape-sign={item.asset.sign}');
+    expect(tape).not.toContain('<button');
+    expect(tape).not.toContain('<a ');
+    expect(tape).not.toContain('onClick=');
+    expect(tape).not.toContain('aria-pressed=');
+    expect(gallery.indexOf('<MarketTape')).toBeGreaterThan(-1);
+    expect(gallery.indexOf('<MarketTape')).toBeLessThan(gallery.indexOf('<section'));
   });
 
   it('lets the season materialize inside the scene without another framed card', async () => {
@@ -238,16 +278,19 @@ describe('Registry consumer and technical information architecture', () => {
 
   it('says one thing about a sign, in one place, at every width', async () => {
     const source = await read('src/app.jsx');
-    // Both flavours of the plate render the same head, placard and sheet —
-    // only the artwork differs — so the two cannot drift apart.
+    // Both flavours of the plate render the same placard and sheet — only
+    // the artwork differs. The old editorial hero no longer sits above it.
     expect(source).toContain('function GalleryBand({ active, setActive, consumer = false, carousel = false })');
     for (const once of [
       'className="stage-placard"',
-      'className="stage-hero__head"',
       '<PlacardQuote sign={sign} />',
     ]) {
       expect(source.split(once), once).toHaveLength(2);
     }
+    expect(source).not.toContain('className="stage-hero__head"');
+    expect(source).not.toContain('className="stage-hero__title"');
+    expect(source).not.toContain('className="stage-hero__eyebrow"');
+    expect(source).not.toContain('className="stage-hero__line"');
     // The flag-on and flag-off pill faces use the same explicit purchase verb.
     expect(source.split('Buy {sign.name}')).toHaveLength(3);
     expect(source).toContain('Acquisition Desk — buy {sign.name}');
@@ -279,11 +322,14 @@ describe('Registry consumer and technical information architecture', () => {
 
   it('opens on the gallery itself where the stage is live, film hero standing down', async () => {
     const source = await read('src/app.jsx');
-    // One hero, one headline, at every width: the film is retired from the
-    // rendered page and the plate opens it instead.
+    // The film and old title card are retired; the sculpture-led stage opens
+    // the page without repeating the Registry lockup already in navigation.
     expect(source).not.toContain('<CineHero');
     expect(source).toContain('carousel={!stageMode}');
-    expect(source).toContain('className="stage-hero__title"');
+    expect(source).not.toContain('className="stage-hero__head"');
+    expect(source).not.toContain('className="stage-hero__title"');
+    expect(source).not.toContain('The Official Registry · Est.');
+    expect(source).not.toContain('Twelve signs.<br />');
     // The placard says what a museum label says — name, dates, price — and
     // holds the two doors; everything longer waits in the sheet.
     expect(source).toContain('className="stage-placard"');
@@ -298,9 +344,11 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('entry.node.inert = true;');
     expect(source).toContain("body.style.position = 'fixed';");
     expect(source).toContain('tradePillRef.current?.focus({ preventScroll: true });');
-    // The headline belongs to the plate, not to the page around it.
+    // The compact season instrument belongs directly to the stage; the old
+    // nested hero container does not.
     const plate = source.slice(source.indexOf('function GalleryBand('), source.indexOf('</section>', source.indexOf('function GalleryBand(')));
-    expect(plate).toContain('className="stage-hero__head"');
+    expect(plate).toContain('<SeasonNow season={season} />');
+    expect(plate).not.toContain('className="stage-hero__head"');
     expect(plate).toContain('className="gband__rail-top"');
   });
 
@@ -364,12 +412,12 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).not.toContain('Post to X');
     expect(source).toContain("url.searchParams.set('rank', rankBy)");
     expect(source).toContain("url.searchParams.set('sign', activeSign.asset.sign)");
-    expect(source).toContain('aria-label={`Show ${item.name} sculpture in the gallery`}');
-    expect(source).toContain('setGalleryFocusRequest({ slug: item.asset.sign, index: item.order - 1 });');
-    expect(source).toContain('document.querySelector(`[data-consumer-sign="${galleryFocusRequest.slug}"]`)');
-    expect(source).toContain('document.querySelector(`[data-gallery-rail] .rail__tick[data-index="${galleryFocusRequest.index}"]`)');
-    expect(source).toContain('innerFrame = window.requestAnimationFrame(() => {');
-    expect(source).toContain('destination.focus({ preventScroll: true });');
+    expect(source).not.toContain('galleryFocusRequest');
+    expect(source).not.toContain('showInGallery');
+    expect(source).not.toContain('className="market-row__view');
+    expect(source).toContain('className="market-row__record market-glass"');
+    expect(source).toContain('<span className="market-row__record-label">Official record</span>');
+    expect(source).toContain('aria-label={`Open the official ${item.name} record`}');
     expect(source).toContain("shared.searchParams.set('outlook', horizon)");
     expect(source).toContain("edition.date === utcToday");
     // The static fallback carries the crawlable twelve with truncated mints.
