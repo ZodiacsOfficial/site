@@ -143,7 +143,7 @@ describe('Registry symbolic outlook', () => {
     expect(libra.factors[0]).toMatchObject({
       basePoints: REGISTRY_OUTLOOK_METHOD.eventWeights.opposition,
       horizonMultiplier: 0.8125,
-      calculation: '18 attention / -12 tone / 15 volatility × 0.8125 horizon multiplier',
+      calculation: '18 attention / -12 tone / 15 event intensity × 0.8125 horizon multiplier',
     });
     expect(outlook.coverage).toMatchObject({
       overall: 'partial',
@@ -225,7 +225,7 @@ describe('Registry symbolic outlook', () => {
     const outlook = buildRegistryOutlook({ date: '2026-08-09', ...(await committedFacts()) });
     expect(formatRegistryOutlookShareText(outlook, 'leo')).toBe([
       'Leo · daily sky signal: Active',
-      `Attention ${outlook.signs.find(({ sign }) => sign === 'leo').scores.attention}/100 · tone +0 · volatility ${outlook.signs.find(({ sign }) => sign === 'leo').scores.volatility}/100`,
+      `Attention ${outlook.signs.find(({ sign }) => sign === 'leo').scores.attention}/100 · tone +0 · event intensity ${outlook.signs.find(({ sign }) => sign === 'leo').scores.volatility}/100`,
       'Main factor: Mercury enters Leo.',
       'Experimental symbolic index — not a price forecast or financial advice.',
       'https://zodiacs.org/registry/',

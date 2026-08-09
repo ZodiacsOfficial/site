@@ -72,19 +72,24 @@ export const REGISTRY_OUTLOOK_METHOD = Object.freeze({
     occupancy: 'A planet contributes its disclosed attention weight to the sign it occupies at 12:00 UTC on the first day.',
     eventProximity: 'event multiplier = 1 - 0.25 × elapsed horizon fraction; the multiplier therefore runs from 1.00 to 0.75.',
     ingress: 'attention = (10 + half the planet occupancy weight) × event multiplier; tone = 0.',
-    otherEvents: 'attention, tone, and volatility = disclosed event weight × event multiplier for every directly named sign.',
-    totals: 'Sign totals are rounded sums, with attention and volatility clamped to 0–100 and tone clamped to −100–100.',
+    otherEvents: 'attention, tone, and event intensity = disclosed event weight × event multiplier for every directly named sign.',
+    totals: 'Sign totals are rounded sums, with attention and event intensity clamped to 0–100 and tone clamped to −100–100.',
     market: 'Liquidity depth compares a sign with the collection median; turnover is 24h volume ÷ indexed liquidity. Neither alters the sky signal.',
+  }),
+  scoreDefinitions: Object.freeze({
+    attention: 'How concentrated the scored sky factors are on a sign.',
+    tone: 'The supportive or frictional symbolism assigned to those factors.',
+    volatility: 'A symbolic event-intensity index. It is not predicted realized market volatility.',
   }),
   occupancyAttention: OCCUPANCY_ATTENTION,
   eventWeights: EVENT_WEIGHTS,
   horizons: Object.freeze({ daily: 1, weekly: 7 }),
   evaluation: Object.freeze({
     minimumHistoryDays: MINIMUM_HISTORY_DAYS,
-    baseline: 'Compare with persistence and equal-sign baselines on a held-out period.',
-    priceMetric: 'Direction accuracy and magnitude error after fees/slippage.',
-    liquidityMetric: 'Direction accuracy and absolute percentage error for indexed USD liquidity.',
-    publicationRule: 'Publish every signal before its outcome window; do not rewrite misses.',
+    baseline: 'Compare observed associations with persistence and equal-sign baselines on a held-out period.',
+    priceMetric: 'Report subsequent price movement descriptively after estimated fees/slippage; do not infer causation.',
+    liquidityMetric: 'Report subsequent indexed USD liquidity change descriptively; do not infer causation.',
+    publicationRule: 'Publish each symbolic score before its market comparison; never rewrite the historical score.',
   }),
 });
 
@@ -216,7 +221,7 @@ function points(weight, multiplier) {
 }
 
 function factorCalculation(base, multiplier) {
-  const values = [`${base.attention} attention`, `${base.tone} tone`, `${base.volatility} volatility`];
+  const values = [`${base.attention} attention`, `${base.tone} tone`, `${base.volatility} event intensity`];
   return `${values.join(' / ')} × ${multiplier.toFixed(4)} horizon multiplier`;
 }
 
@@ -657,7 +662,7 @@ export function formatRegistryOutlookShareText(outlook, sign, url = 'https://zod
   const horizon = outlook.horizon.kind === 'weekly' ? '7-day' : 'daily';
   return [
     `${entry.displayName} · ${horizon} sky signal: ${titleCase(entry.signal)}`,
-    `Attention ${entry.scores.attention}/100 · tone ${entry.scores.tone >= 0 ? '+' : ''}${entry.scores.tone} · volatility ${entry.scores.volatility}/100`,
+    `Attention ${entry.scores.attention}/100 · tone ${entry.scores.tone >= 0 ? '+' : ''}${entry.scores.tone} · event intensity ${entry.scores.volatility}/100`,
     entry.primaryFactor ? `Main factor: ${entry.primaryFactor.label}.` : 'Main factor: no exact event in this window.',
     'Experimental symbolic index — not a price forecast or financial advice.',
     url,

@@ -87,7 +87,7 @@ describe('registry pastel polish', () => {
       registry.indexOf('.market-tape {'),
       registry.indexOf('.consumer-market {'),
     );
-    const materialPass = registry.indexOf('Registry material pass');
+    const materialPass = registry.indexOf('Registry control pass');
     const reducedStart = registry.lastIndexOf('@media (prefers-reduced-motion: reduce)', materialPass);
     const reducedRules = registry.slice(reducedStart, materialPass);
 
@@ -136,38 +136,36 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');
   });
 
-  it('turns market controls into restrained glass with accessible solid fallbacks', async () => {
+  it('gives Registry controls the stage Buy pill language without Market glass', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
-    const materialPass = registry.slice(registry.indexOf('Registry material pass'));
-    const glassRule = materialPass.slice(
-      materialPass.indexOf('.market-glass,'),
-      materialPass.indexOf('.market-glass::before,'),
+    const materialPass = registry.slice(registry.indexOf('Registry control pass'));
+    const pillRule = materialPass.slice(
+      materialPass.indexOf('.consumer-registry .registry-pill {'),
+      materialPass.indexOf('.consumer-registry .registry-pill:active'),
     );
 
-    expect(source).toContain('className="market-glass"');
-    expect(source).toContain('className="market-glass market-board__share-primary"');
-    expect(source).toContain('className="market-glass market-board__social"');
-    expect(source).toContain('className="market-row__record market-glass"');
+    expect(source).not.toContain('market-glass');
+    expect(registry).not.toContain('.market-glass');
+    expect(source).toContain('className="registry-pill registry-pill--segment"');
+    expect(source).toContain('className="registry-pill registry-pill--share market-board__share-primary"');
+    expect(source).toContain('className="registry-pill registry-pill--icon market-board__social"');
+    expect(source).toContain('className="market-row__record registry-pill registry-pill--record"');
     expect(source).not.toContain('className="market-row__view');
-    expect(materialPass).toContain('.market-glass,');
-    expect(glassRule).toContain('linear-gradient');
-    expect(glassRule).toContain('box-shadow:');
-    expect(glassRule).toContain('inset');
-    expect(glassRule).toContain('backdrop-filter: none;');
-    expect(materialPass).toContain('.market-glass::before,');
-    expect(materialPass).toContain('.market-board__sort button,');
-    expect(materialPass).toContain('min-height: 44px;');
-    expect(materialPass).toContain('.market-board__socials { display: flex;');
-    expect(materialPass).toContain('.market-board__social {');
-    expect(materialPass).toContain('width: 44px;');
-    // Repeated record links are painted glass, not twelve independent
-    // backdrop blurs fighting the phone compositor.
-    expect(materialPass).toMatch(/\.market-row__record \{[\s\S]*?backdrop-filter: none;/u);
-    expect(materialPass).toMatch(/@media \(prefers-reduced-transparency: reduce\) \{[\s\S]*?background: #11141b;[\s\S]*?backdrop-filter: none;/u);
-    expect(materialPass).toMatch(/@media \(prefers-contrast: more\) \{[\s\S]*?border-color: rgba\(238,241,247,\.55\);/u);
+    expect(pillRule).toContain('min-height: 44px;');
+    expect(pillRule).toContain('border: 1px solid');
+    expect(pillRule).toContain('border-radius: 999px;');
+    expect(pillRule).toContain('font: 500 13px/1 var(--sans);');
+    expect(pillRule).toContain('inset 0 1px 0');
+    expect(pillRule).toContain('backdrop-filter: none;');
+    expect(materialPass).toContain('.consumer-registry .registry-pill:active { transform: scale(.97); }');
+    expect(materialPass).toContain(".consumer-registry .registry-pill[aria-pressed='true']");
+    expect(materialPass).toMatch(/\.consumer-registry \.registry-pill--record \{[\s\S]*?width: 100%;/u);
+    expect(materialPass).toMatch(/\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?min-height: 44px;[\s\S]*?border-radius: 999px;[\s\S]*?background: rgba\(10,12,17,\.56\);[\s\S]*?font: 500 13px\/1 var\(--sans\);[\s\S]*?backdrop-filter: none;/u);
+    expect(materialPass).toMatch(/@media \(prefers-reduced-transparency: reduce\) \{[\s\S]*?\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?background: #11141b !important;[\s\S]*?backdrop-filter: none !important;/u);
+    expect(materialPass).toMatch(/@media \(prefers-contrast: more\) \{[\s\S]*?\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?border-color: rgba\(238,241,247,\.72\) !important;[\s\S]*?color: var\(--ink\) !important;/u);
   });
 
   it('uses recognizable sign media and the Cabinet\'s canonical curator sample', async () => {

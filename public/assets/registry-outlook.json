@@ -17,9 +17,14 @@
         "occupancy": "A planet contributes its disclosed attention weight to the sign it occupies at 12:00 UTC on the first day.",
         "eventProximity": "event multiplier = 1 - 0.25 × elapsed horizon fraction; the multiplier therefore runs from 1.00 to 0.75.",
         "ingress": "attention = (10 + half the planet occupancy weight) × event multiplier; tone = 0.",
-        "otherEvents": "attention, tone, and volatility = disclosed event weight × event multiplier for every directly named sign.",
-        "totals": "Sign totals are rounded sums, with attention and volatility clamped to 0–100 and tone clamped to −100–100.",
+        "otherEvents": "attention, tone, and event intensity = disclosed event weight × event multiplier for every directly named sign.",
+        "totals": "Sign totals are rounded sums, with attention and event intensity clamped to 0–100 and tone clamped to −100–100.",
         "market": "Liquidity depth compares a sign with the collection median; turnover is 24h volume ÷ indexed liquidity. Neither alters the sky signal."
+      },
+      "scoreDefinitions": {
+        "attention": "How concentrated the scored sky factors are on a sign.",
+        "tone": "The supportive or frictional symbolism assigned to those factors.",
+        "volatility": "A symbolic event-intensity index. It is not predicted realized market volatility."
       },
       "occupancyAttention": {
         "Sun": 9,
@@ -90,10 +95,10 @@
       },
       "evaluation": {
         "minimumHistoryDays": 180,
-        "baseline": "Compare with persistence and equal-sign baselines on a held-out period.",
-        "priceMetric": "Direction accuracy and magnitude error after fees/slippage.",
-        "liquidityMetric": "Direction accuracy and absolute percentage error for indexed USD liquidity.",
-        "publicationRule": "Publish every signal before its outcome window; do not rewrite misses."
+        "baseline": "Compare observed associations with persistence and equal-sign baselines on a held-out period.",
+        "priceMetric": "Report subsequent price movement descriptively after estimated fees/slippage; do not infer causation.",
+        "liquidityMetric": "Report subsequent indexed USD liquidity change descriptively; do not infer causation.",
+        "publicationRule": "Publish each symbolic score before its market comparison; never rewrite the historical score."
       }
     },
     "coverage": {
@@ -424,7 +429,7 @@
             "volatility": 2
           },
           "horizonMultiplier": 0.8284,
-          "calculation": "12.5 attention / 0 tone / 2 volatility × 0.8284 horizon multiplier",
+          "calculation": "12.5 attention / 0 tone / 2 event intensity × 0.8284 horizon multiplier",
           "explanation": "The ingress adds attention to Leo. Ingresses are intentionally neutral on price direction.",
           "source": "src/data/transits-2026-08.json"
         },
@@ -449,7 +454,7 @@
               "volatility": 2
             },
             "horizonMultiplier": 0.8284,
-            "calculation": "12.5 attention / 0 tone / 2 volatility × 0.8284 horizon multiplier",
+            "calculation": "12.5 attention / 0 tone / 2 event intensity × 0.8284 horizon multiplier",
             "explanation": "The ingress adds attention to Leo. Ingresses are intentionally neutral on price direction.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -800,9 +805,14 @@
         "occupancy": "A planet contributes its disclosed attention weight to the sign it occupies at 12:00 UTC on the first day.",
         "eventProximity": "event multiplier = 1 - 0.25 × elapsed horizon fraction; the multiplier therefore runs from 1.00 to 0.75.",
         "ingress": "attention = (10 + half the planet occupancy weight) × event multiplier; tone = 0.",
-        "otherEvents": "attention, tone, and volatility = disclosed event weight × event multiplier for every directly named sign.",
-        "totals": "Sign totals are rounded sums, with attention and volatility clamped to 0–100 and tone clamped to −100–100.",
+        "otherEvents": "attention, tone, and event intensity = disclosed event weight × event multiplier for every directly named sign.",
+        "totals": "Sign totals are rounded sums, with attention and event intensity clamped to 0–100 and tone clamped to −100–100.",
         "market": "Liquidity depth compares a sign with the collection median; turnover is 24h volume ÷ indexed liquidity. Neither alters the sky signal."
+      },
+      "scoreDefinitions": {
+        "attention": "How concentrated the scored sky factors are on a sign.",
+        "tone": "The supportive or frictional symbolism assigned to those factors.",
+        "volatility": "A symbolic event-intensity index. It is not predicted realized market volatility."
       },
       "occupancyAttention": {
         "Sun": 9,
@@ -873,10 +883,10 @@
       },
       "evaluation": {
         "minimumHistoryDays": 180,
-        "baseline": "Compare with persistence and equal-sign baselines on a held-out period.",
-        "priceMetric": "Direction accuracy and magnitude error after fees/slippage.",
-        "liquidityMetric": "Direction accuracy and absolute percentage error for indexed USD liquidity.",
-        "publicationRule": "Publish every signal before its outcome window; do not rewrite misses."
+        "baseline": "Compare observed associations with persistence and equal-sign baselines on a held-out period.",
+        "priceMetric": "Report subsequent price movement descriptively after estimated fees/slippage; do not infer causation.",
+        "liquidityMetric": "Report subsequent indexed USD liquidity change descriptively; do not infer causation.",
+        "publicationRule": "Publish each symbolic score before its market comparison; never rewrite the historical score."
       }
     },
     "coverage": {
@@ -953,7 +963,7 @@
             "volatility": 15
           },
           "horizonMultiplier": 0.9314,
-          "calculation": "18 attention / -12 tone / 15 volatility × 0.9314 horizon multiplier",
+          "calculation": "18 attention / -12 tone / 15 event intensity × 0.9314 horizon multiplier",
           "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism.",
           "source": "src/data/transits-2026-08.json"
         },
@@ -980,7 +990,7 @@
               "volatility": 15
             },
             "horizonMultiplier": 0.9314,
-            "calculation": "18 attention / -12 tone / 15 volatility × 0.9314 horizon multiplier",
+            "calculation": "18 attention / -12 tone / 15 event intensity × 0.9314 horizon multiplier",
             "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1006,7 +1016,7 @@
               "volatility": 3
             },
             "horizonMultiplier": 0.8874,
-            "calculation": "14 attention / 10 tone / 3 volatility × 0.8874 horizon multiplier",
+            "calculation": "14 attention / 10 tone / 3 event intensity × 0.8874 horizon multiplier",
             "explanation": "The exact trine is scored as supportive for the directly occupied signs (Leo and Aries). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1123,7 +1133,7 @@
             "volatility": 3
           },
           "horizonMultiplier": 0.8872,
-          "calculation": "14 attention / 10 tone / 3 volatility × 0.8872 horizon multiplier",
+          "calculation": "14 attention / 10 tone / 3 event intensity × 0.8872 horizon multiplier",
           "explanation": "The exact trine is scored as supportive for the directly occupied signs (Libra and Gemini). This is symbolic scoring, not a causal market mechanism.",
           "source": "src/data/transits-2026-08.json"
         },
@@ -1150,7 +1160,7 @@
               "volatility": 3
             },
             "horizonMultiplier": 0.8872,
-            "calculation": "14 attention / 10 tone / 3 volatility × 0.8872 horizon multiplier",
+            "calculation": "14 attention / 10 tone / 3 event intensity × 0.8872 horizon multiplier",
             "explanation": "The exact trine is scored as supportive for the directly occupied signs (Libra and Gemini). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1176,7 +1186,7 @@
               "volatility": 2
             },
             "horizonMultiplier": 0.8619,
-            "calculation": "12 attention / 7 tone / 2 volatility × 0.8619 horizon multiplier",
+            "calculation": "12 attention / 7 tone / 2 event intensity × 0.8619 horizon multiplier",
             "explanation": "The exact sextile is scored as supportive for the directly occupied signs (Leo and Gemini). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1263,7 +1273,7 @@
             "volatility": 2
           },
           "horizonMultiplier": 0.9159,
-          "calculation": "13.5 attention / 0 tone / 2 volatility × 0.9159 horizon multiplier",
+          "calculation": "13.5 attention / 0 tone / 2 event intensity × 0.9159 horizon multiplier",
           "explanation": "The ingress adds attention to Cancer. Ingresses are intentionally neutral on price direction.",
           "source": "src/data/transits-2026-08.json"
         },
@@ -1288,7 +1298,7 @@
               "volatility": 2
             },
             "horizonMultiplier": 0.9159,
-            "calculation": "13.5 attention / 0 tone / 2 volatility × 0.9159 horizon multiplier",
+            "calculation": "13.5 attention / 0 tone / 2 event intensity × 0.9159 horizon multiplier",
             "explanation": "The ingress adds attention to Cancer. Ingresses are intentionally neutral on price direction.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1359,7 +1369,7 @@
             "volatility": 15
           },
           "horizonMultiplier": 0.8909,
-          "calculation": "18 attention / -12 tone / 15 volatility × 0.8909 horizon multiplier",
+          "calculation": "18 attention / -12 tone / 15 event intensity × 0.8909 horizon multiplier",
           "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Leo and Aquarius). This is symbolic scoring, not a causal market mechanism.",
           "source": "src/data/transits-2026-08.json"
         },
@@ -1386,7 +1396,7 @@
               "volatility": 15
             },
             "horizonMultiplier": 0.8909,
-            "calculation": "18 attention / -12 tone / 15 volatility × 0.8909 horizon multiplier",
+            "calculation": "18 attention / -12 tone / 15 event intensity × 0.8909 horizon multiplier",
             "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Leo and Aquarius). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1411,7 +1421,7 @@
               "volatility": 8
             },
             "horizonMultiplier": 0.8667,
-            "calculation": "22 attention / 8 tone / 8 volatility × 0.8667 horizon multiplier",
+            "calculation": "22 attention / 8 tone / 8 event intensity × 0.8667 horizon multiplier",
             "explanation": "A new Moon is scored as symbolic renewal for Leo; that is an astrology convention, not evidence of higher returns.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1436,7 +1446,7 @@
               "volatility": 10
             },
             "horizonMultiplier": 0.7688,
-            "calculation": "18 attention / 2 tone / 10 volatility × 0.7688 horizon multiplier",
+            "calculation": "18 attention / 2 tone / 10 event intensity × 0.7688 horizon multiplier",
             "explanation": "The exact conjunction is scored as amplifying for the directly occupied signs (Leo). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1462,7 +1472,7 @@
               "volatility": 3
             },
             "horizonMultiplier": 0.8874,
-            "calculation": "14 attention / 10 tone / 3 volatility × 0.8874 horizon multiplier",
+            "calculation": "14 attention / 10 tone / 3 event intensity × 0.8874 horizon multiplier",
             "explanation": "The exact trine is scored as supportive for the directly occupied signs (Leo and Aries). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1486,7 +1496,7 @@
               "volatility": 2
             },
             "horizonMultiplier": 0.9755,
-            "calculation": "12.5 attention / 0 tone / 2 volatility × 0.9755 horizon multiplier",
+            "calculation": "12.5 attention / 0 tone / 2 event intensity × 0.9755 horizon multiplier",
             "explanation": "The ingress adds attention to Leo. Ingresses are intentionally neutral on price direction.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1512,7 +1522,7 @@
               "volatility": 2
             },
             "horizonMultiplier": 0.8619,
-            "calculation": "12 attention / 7 tone / 2 volatility × 0.8619 horizon multiplier",
+            "calculation": "12 attention / 7 tone / 2 event intensity × 0.8619 horizon multiplier",
             "explanation": "The exact sextile is scored as supportive for the directly occupied signs (Leo and Gemini). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1629,7 +1639,7 @@
             "volatility": 15
           },
           "horizonMultiplier": 0.9314,
-          "calculation": "18 attention / -12 tone / 15 volatility × 0.9314 horizon multiplier",
+          "calculation": "18 attention / -12 tone / 15 event intensity × 0.9314 horizon multiplier",
           "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism.",
           "source": "src/data/transits-2026-08.json"
         },
@@ -1656,7 +1666,7 @@
               "volatility": 15
             },
             "horizonMultiplier": 0.9314,
-            "calculation": "18 attention / -12 tone / 15 volatility × 0.9314 horizon multiplier",
+            "calculation": "18 attention / -12 tone / 15 event intensity × 0.9314 horizon multiplier",
             "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Libra and Aries). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1682,7 +1692,7 @@
               "volatility": 3
             },
             "horizonMultiplier": 0.9373,
-            "calculation": "14 attention / 10 tone / 3 volatility × 0.9373 horizon multiplier",
+            "calculation": "14 attention / 10 tone / 3 event intensity × 0.9373 horizon multiplier",
             "explanation": "The exact trine is scored as supportive for the directly occupied signs (Libra and Aquarius). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1708,7 +1718,7 @@
               "volatility": 3
             },
             "horizonMultiplier": 0.8872,
-            "calculation": "14 attention / 10 tone / 3 volatility × 0.8872 horizon multiplier",
+            "calculation": "14 attention / 10 tone / 3 event intensity × 0.8872 horizon multiplier",
             "explanation": "The exact trine is scored as supportive for the directly occupied signs (Libra and Gemini). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1863,7 +1873,7 @@
             "volatility": 15
           },
           "horizonMultiplier": 0.8909,
-          "calculation": "18 attention / -12 tone / 15 volatility × 0.8909 horizon multiplier",
+          "calculation": "18 attention / -12 tone / 15 event intensity × 0.8909 horizon multiplier",
           "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Leo and Aquarius). This is symbolic scoring, not a causal market mechanism.",
           "source": "src/data/transits-2026-08.json"
         },
@@ -1890,7 +1900,7 @@
               "volatility": 15
             },
             "horizonMultiplier": 0.8909,
-            "calculation": "18 attention / -12 tone / 15 volatility × 0.8909 horizon multiplier",
+            "calculation": "18 attention / -12 tone / 15 event intensity × 0.8909 horizon multiplier",
             "explanation": "The exact opposition is scored as frictional for the directly occupied signs (Leo and Aquarius). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
@@ -1916,7 +1926,7 @@
               "volatility": 3
             },
             "horizonMultiplier": 0.9373,
-            "calculation": "14 attention / 10 tone / 3 volatility × 0.9373 horizon multiplier",
+            "calculation": "14 attention / 10 tone / 3 event intensity × 0.9373 horizon multiplier",
             "explanation": "The exact trine is scored as supportive for the directly occupied signs (Libra and Aquarius). This is symbolic scoring, not a causal market mechanism.",
             "source": "src/data/transits-2026-08.json"
           },
