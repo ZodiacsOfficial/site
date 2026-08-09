@@ -172,6 +172,11 @@ describe('the substitution guard', () => {
     // The venue's own 10 bps passes; the site adds none of its own.
     expect(assertOrderMatches(normalizeOrder(orderPayload()), expected).feeBps).toBe(10);
   });
+
+  it('refuses a fee it cannot read rather than waving it through as zero', () => {
+    const malformed = orderPayload({ platformFee: { feeBps: 'not-a-number' } });
+    expectTradeError(() => assertOrderMatches(normalizeOrder(malformed), expected), 'unexpected_fee');
+  });
 });
 
 describe('fetching an order', () => {

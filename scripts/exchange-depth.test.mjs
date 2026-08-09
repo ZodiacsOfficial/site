@@ -125,6 +125,74 @@ describe('the ladder', () => {
     expect(rungs.filter((rung) => rung.error)).toHaveLength(1);
   });
 
+  it('drops the "vs best" figure entirely when the smallest rung fails', async () => {
+    let calls = 0;
+    const firstFails = async (url) => {
+      calls += 1;
+      if (calls === 1) return { ok: true, status: 200, json: async () => ({ error: 'no quote' }) };
+      return venueFetch()(url);
+    };
+    const { rungs } = await fetchLadder({
+      mint: MINT, side: 'buy', fetchImpl: firstFails, spacingMs: 0,
+    });
+    expect(rungs[0].error).toBeTruthy();
+    // A later rung is not "best", so nothing is measured against it.
+    for (const rung of rungs.slice(1)) expect(rung.impactBps).toBeNull();
+  });
+
+  it('marks a zero-amount answer unavailable instead of pricing it at 0', async () => {
+    const zeroed = async (url) => {
+      const params = new URL(String(url)).searchParams;
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          inputMint: params.get('inputMint'),
+          outputMint: params.get('outputMint'),
+          inAmount: params.get('amount'),
+          outAmount: '1',
+          priceImpactPct: 0,
+          feeBps: 10,
+        }),
+      };
+    };
+    // outAmount 1 atomic against USDC atomic input is fine; force the zero
+    // through the sell side, where the venue's USDC answer is the numerator.
+    const { rungs } = await fetchLadder({
+      mint: MINT, side: 'buy', fetchImpl: zeroed, spacingMs: 0, notionals: ['25'],
+    });
+    expect(rungs[0].error).toBeUndefined();
+    const zeroOut = async (url) => {
+      const params = new URL(String(url)).searchParams;
+      return {
+        ok: true,
+        status: 200,
+        json: async () => ({
+          inputMint: params.get('inputMint'),
+          outputMint: params.get('outputMint'),
+          inAmount: params.get('amount'),
+          outAmount: '0',
+          priceImpactPct: 0,
+          feeBps: 10,
+        }),
+      };
+    };
+    const zeroRungs = await fetchLadder({
+      mint: MINT, side: 'buy', fetchImpl: zeroOut, spacingMs: 0, notionals: ['25'],
+    });
+    expect(zeroRungs.rungs[0].error).toBeTruthy();
+  });
+
+  it('contains a pathological indexed mid to its own rungs instead of killing the ladder', async () => {
+    // A mid so large the sized token amount rounds to zero: every sell rung
+    // reports an error, nothing throws, and the walk completes.
+    const { rungs } = await fetchLadder({
+      mint: MINT, side: 'sell', midPriceUsd: 1e30, fetchImpl: venueFetch(), spacingMs: 0,
+    });
+    expect(rungs).toHaveLength(LADDER_NOTIONALS.length);
+    expect(rungs.every((rung) => rung.error)).toBe(true);
+  });
+
   it('stops where it stands on abort', async () => {
     const controller = new AbortController();
     let calls = 0;

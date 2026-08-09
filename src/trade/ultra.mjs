@@ -161,7 +161,10 @@ export function normalizeOrder(payload) {
     inAmount: BigInt(inAmount),
     outAmount: BigInt(outAmount),
     priceImpactPct: Number(payload.priceImpactPct ?? 0),
-    feeBps: Number.isFinite(feeBps) ? feeBps : 0,
+    // A fee the client cannot read is refused, not waved through as zero:
+    // parked past the ceiling so assertOrderMatches names it before any of
+    // it reaches a wallet.
+    feeBps: Number.isFinite(feeBps) ? feeBps : VENUE_FEE_CEILING_BPS + 1,
     routeLabels: Array.isArray(payload.routePlan)
       ? payload.routePlan.map((leg) => leg?.swapInfo?.label).filter(Boolean)
       : [],

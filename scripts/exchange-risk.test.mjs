@@ -67,6 +67,19 @@ describe('Exchange risk and trust copy', () => {
     }
   });
 
+  it('keeps reference market and executable quote labelled apart, in source and bundle', async () => {
+    // The chart and tape describe the canonical pool; the panel's quote is
+    // Jupiter's aggregate and may route beyond it. The two must never read
+    // as the same market.
+    for (const path of ['src/exchange/terminal.mjs', 'public/assets/exchange.js']) {
+      const source = compact(await read(path));
+      expect(source, path).toContain('Reference market — the sign’s canonical pool');
+      expect(source, path).toContain('Orders execute through Jupiter and may route beyond it');
+      expect(source, path).toContain('Aggregated venue quote — Jupiter may route across several pools');
+      expect(source, path).toContain('canonical pool · newest first');
+    }
+  });
+
   it('names GeckoTerminal in every privacy locale, beside the other providers', async () => {
     for (const path of [
       'src/pages/privacy/index.astro',

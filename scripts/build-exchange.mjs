@@ -28,6 +28,7 @@ const { metafile } = await esbuild.build({
   format: 'iife',
   target: ['es2020', 'safari15'],
   minify: true,
+  charset: 'utf8',
   legalComments: 'none',
   metafile: true,
   define: { 'process.env.NODE_ENV': '"production"' },

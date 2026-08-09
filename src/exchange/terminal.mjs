@@ -9,6 +9,11 @@
  * independent venue, through the existing trade bundle; the ladder's quotes
  * are taker-less, because an address leaves the browser only on an explicit
  * trade action, never to show a price.
+ *
+ * Two markets are deliberately kept apart on this page and labelled so: the
+ * chart and tape describe the sign's canonical pool (the reference market),
+ * while the panel's executable quote is Jupiter's aggregate and may route
+ * beyond that pool.
  */
 
 import { EXCHANGE_SIGNS } from './signs.mjs';
@@ -16,6 +21,7 @@ import { resolvePool } from './pools.mjs';
 import {
   GECKO_SITE_URL,
   TIMEFRAMES,
+  createCoolOff,
   createRateBudget,
   fetchOhlcv,
   fetchTrades,
@@ -32,6 +38,7 @@ const STATS_EVERY_MS = 60_000;
 const CHART_EVERY_MS = 60_000;
 const TAPE_EVERY_MS = 20_000;
 const LADDER_COOLDOWN_MS = 30_000;
+const BUDGET_RETRY_MS = 8_000;
 
 /**
  * The one sentence the ladder is not allowed to lose. Pinned by test in this
@@ -39,6 +46,11 @@ const LADDER_COOLDOWN_MS = 30_000;
  */
 export const LADDER_CAPTION = 'These pools have no order book. Each rung is Jupiter’s own executable quote '
   + 'for that size — the price you would actually get, venue fee and price impact included.';
+
+/** The reference-vs-execution boundary, also pinned by test. */
+export const CHART_SCOPE = 'Reference market — the sign’s canonical pool. '
+  + 'Orders execute through Jupiter and may route beyond it.';
+export const PANEL_SCOPE = 'Aggregated venue quote — Jupiter may route across several pools.';
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -92,8 +104,17 @@ function loadTradeBundle() {
   return tradeBundleReady;
 }
 
+const HASH_SLUGS = new Set(EXCHANGE_SIGNS.map((sign) => sign.slug));
+
+/** #taurus opens the room on Taurus; anything else opens on the first lot. */
+function initialSlug() {
+  const hash = (window.location.hash || '').replace(/^#/, '');
+  return HASH_SLUGS.has(hash) ? hash : 'aries';
+}
+
 export function createTerminal({ host }) {
   const budget = createRateBudget();
+  const coolOff = createCoolOff();
 
   // ── skeleton ────────────────────────────────────────────────────────────
   const grid = el('div', 'zme__grid');
@@ -104,10 +125,6 @@ export function createTerminal({ host }) {
   rail.append(railList);
 
   const center = el('div', 'zme__center');
-  center.style.minWidth = '0';
-  center.style.display = 'flex';
-  center.style.flexDirection = 'column';
-  center.style.gap = '14px';
 
   const chartCard = el('section', 'zme__card');
   const chartHead = el('div', 'zme__card-head');
@@ -116,9 +133,14 @@ export function createTerminal({ host }) {
   frames.setAttribute('role', 'group');
   frames.setAttribute('aria-label', 'Chart timeframe');
   chartHead.append(chartTitle, frames);
+  const chartScope = el('p', 'zme__scope', CHART_SCOPE);
   const readout = el('p', 'zme__readout');
+  readout.id = 'zme-chart-readout';
   const canvasBox = el('div', 'zme__canvas-box');
   const canvas = el('canvas', 'zme__canvas');
+  canvas.setAttribute('role', 'img');
+  canvas.setAttribute('aria-label', 'Candlestick chart of recent prices in the canonical pool');
+  canvas.setAttribute('aria-describedby', 'zme-chart-readout');
   canvasBox.append(canvas);
   const chartState = stateNode('');
   chartState.hidden = true;
@@ -129,13 +151,13 @@ export function createTerminal({ host }) {
   attribution.target = '_blank';
   attribution.rel = 'noopener noreferrer external nofollow';
   chartFoot.append(chartNote, attribution);
-  chartCard.append(chartHead, readout, canvasBox, chartState, chartFoot);
+  chartCard.append(chartHead, chartScope, readout, canvasBox, chartState, chartFoot);
 
   const tapeCard = el('section', 'zme__card');
   const tapeHead = el('div', 'zme__card-head');
   tapeHead.append(
     el('h2', 'zme__card-title', 'Recent trades'),
-    el('span', 'zme__card-note', 'pool trades · newest first'),
+    el('span', 'zme__card-note', 'canonical pool · newest first'),
   );
   const tapeScroll = el('div', 'zme-tape__scroll');
   const tapeState = stateNode('');
@@ -146,8 +168,9 @@ export function createTerminal({ host }) {
 
   const desk = el('div', 'zme__desk');
   const panelCard = el('section', 'zme__card');
+  const panelScope = el('p', 'zme__scope', PANEL_SCOPE);
   const panelHost = el('div', 'zme__panel-host');
-  panelCard.append(panelHost);
+  panelCard.append(panelScope, panelHost);
 
   const ladderCard = el('section', 'zme__card');
   const ladderHead = el('div', 'zme__card-head');
@@ -196,15 +219,22 @@ export function createTerminal({ host }) {
 
   // ── state ───────────────────────────────────────────────────────────────
   let records = null;           // Map slug → { mint, symbol }
+  let registryFailed = false;
+  let booting = false;
+  let pendingSlug = null;       // a rail click made before the registry answered
   let batchRows = [];
   let stats = {};
   let selected = null;
   let timeframe = '1h';
   let selectionAbort = null;
   let panel = null;
+  let panelAttempt = 0;
   let chartTimer = null;
   let tapeTimer = null;
   let statsTimer = null;
+  let chartRetryTimer = null;
+  let tapeRetryTimer = null;
+  let ladderEnableTimer = null;
   let ladderBusyUntil = 0;
   let destroyed = false;
 
@@ -273,6 +303,29 @@ export function createTerminal({ host }) {
     node.hidden = !message;
   }
 
+  /** The visible half of a selection: hue, pressed row, title. */
+  function paintSelection(slug) {
+    const sign = signFor(slug);
+    grid.style.setProperty('--sign', sign?.hue ?? '#C6CCDA');
+    for (const [rowSlug, row] of railRows) {
+      row.button.setAttribute('aria-pressed', String(rowSlug === slug));
+    }
+    const record = recordFor(slug);
+    chartTitle.textContent = record?.symbol ? `${record.symbol} / USD` : sign?.name ?? '—';
+  }
+
+  function registryFailureNode() {
+    const box = el('div');
+    box.append(stateNode('The registry could not be read, so there is nothing to trade against.'));
+    const retry = el('button', 'zme__ladder-refresh', 'Try again');
+    retry.type = 'button';
+    retry.style.display = 'block';
+    retry.style.margin = '0 auto 10px';
+    retry.addEventListener('click', () => bootRegistry());
+    box.append(retry);
+    return box;
+  }
+
   function fillRail() {
     for (const sign of EXCHANGE_SIGNS) {
       const row = railRows.get(sign.slug);
@@ -304,21 +357,15 @@ export function createTerminal({ host }) {
 
   async function refreshStats() {
     if (!records) return;
-    // Its own deadline: a stalled index request must never hold anything
-    // else up — the rail just keeps its last numbers.
-    const deadline = new AbortController();
-    const timer = setTimeout(() => deadline.abort(), 10_000);
     try {
       const mints = [...records.values()].map((record) => record.mint);
-      const result = await fetchBatchStats({ mints, signal: deadline.signal });
+      const result = await fetchBatchStats({ mints });
       stats = result.stats;
       batchRows = result.rows;
       fillRail();
       fillStats();
     } catch {
       // The rail keeps its last numbers; the panel and ladder are unaffected.
-    } finally {
-      clearTimeout(timer);
     }
   }
 
@@ -329,46 +376,93 @@ export function createTerminal({ host }) {
   }
 
   // ── chart + tape ────────────────────────────────────────────────────────
+  // Each loader guards its own answer: a response landing after an abort, a
+  // sign switch, or a timeframe switch is dropped rather than drawn.
+
+  function scheduleChartRetry(signal, delayMs) {
+    clearTimeout(chartRetryTimer);
+    chartRetryTimer = setTimeout(() => {
+      if (!signal.aborted && document.visibilityState === 'visible') loadChart(signal);
+    }, delayMs);
+  }
+
+  function scheduleTapeRetry(signal, delayMs) {
+    clearTimeout(tapeRetryTimer);
+    tapeRetryTimer = setTimeout(() => {
+      if (!signal.aborted && document.visibilityState === 'visible') loadTape(signal);
+    }, delayMs);
+  }
+
   async function loadChart(signal) {
     const sign = signFor(selected);
+    const tf = timeframe;
+    const slug = selected;
+    const fresh = () => !signal.aborted && tf === timeframe && slug === selected;
     const pool = poolForSelection();
     if (!pool) {
       chart.clear();
       showState(chartState, 'No indexed pool to chart. The trade panel still quotes the venue directly.');
       return;
     }
-    if (!budget.take()) return;
+    if (coolOff.active()) {
+      showState(chartState, 'The chart service asked for a pause. Retrying shortly.');
+      scheduleChartRetry(signal, coolOff.remainingMs() + 250);
+      return;
+    }
+    if (!budget.take()) {
+      showState(chartState, 'Waiting for the chart service — retrying shortly.');
+      scheduleChartRetry(signal, BUDGET_RETRY_MS);
+      return;
+    }
     try {
-      const candles = await fetchOhlcv({ pool, timeframe, signal });
-      if (signal.aborted) return;
+      const candles = await fetchOhlcv({ pool, timeframe: tf, signal });
+      if (!fresh()) return;
+      coolOff.ok();
       if (!candles.length) {
         chart.clear();
         showState(chartState, 'No trades in this window yet.');
         return;
       }
       showState(chartState, '');
-      chart.set({ candles, timeframe, hue: sign?.hue });
+      chart.set({ candles, timeframe: tf, hue: sign?.hue });
     } catch (error) {
-      if (error?.name === 'AbortError') return;
+      if (error?.name === 'AbortError' || !fresh()) return;
+      if (error?.code === 'rate_limited') {
+        coolOff.fail();
+        chart.clear();
+        showState(chartState, 'The chart service asked for a pause. Retrying shortly.');
+        scheduleChartRetry(signal, coolOff.remainingMs() + 250);
+        return;
+      }
       chart.clear();
-      showState(chartState, error?.code === 'rate_limited'
-        ? 'The chart service is rate limiting requests. It will retry shortly.'
-        : 'Chart unavailable. The trade panel still quotes the venue directly.');
+      showState(chartState, 'Chart unavailable. The trade panel still quotes the venue directly.');
     }
   }
 
   async function loadTape(signal) {
     const record = recordFor(selected);
+    const slug = selected;
+    const fresh = () => !signal.aborted && slug === selected;
     const pool = poolForSelection();
     if (!record || !pool) {
       tape.clear();
       showState(tapeState, 'No indexed pool to read trades from.');
       return;
     }
-    if (!budget.take()) return;
+    if (coolOff.active()) {
+      showState(tapeState, 'The trade feed asked for a pause. Retrying shortly.');
+      scheduleTapeRetry(signal, coolOff.remainingMs() + 250);
+      return;
+    }
+    if (!budget.take()) {
+      showState(tapeState, 'Waiting for the trade feed — retrying shortly.');
+      scheduleTapeRetry(signal, BUDGET_RETRY_MS);
+      return;
+    }
     try {
       const trades = await fetchTrades({ pool, mint: record.mint, signal });
-      if (signal.aborted) return;
+      if (!fresh()) return;
+      coolOff.ok();
       if (!trades.length) {
         tape.clear();
         showState(tapeState, 'No recent trades in this pool.');
@@ -377,17 +471,24 @@ export function createTerminal({ host }) {
       showState(tapeState, '');
       tape.set(trades, { symbol: record.symbol });
     } catch (error) {
-      if (error?.name === 'AbortError') return;
+      if (error?.name === 'AbortError' || !fresh()) return;
+      if (error?.code === 'rate_limited') {
+        coolOff.fail();
+        tape.clear();
+        showState(tapeState, 'The trade feed asked for a pause. Retrying shortly.');
+        scheduleTapeRetry(signal, coolOff.remainingMs() + 250);
+        return;
+      }
       tape.clear();
-      showState(tapeState, error?.code === 'rate_limited'
-        ? 'The trade feed is rate limiting requests. It will retry shortly.'
-        : 'Trade feed unavailable.');
+      showState(tapeState, 'Trade feed unavailable.');
     }
   }
 
   function stopTimers() {
     clearInterval(chartTimer);
     clearInterval(tapeTimer);
+    clearTimeout(chartRetryTimer);
+    clearTimeout(tapeRetryTimer);
     chartTimer = null;
     tapeTimer = null;
   }
@@ -422,7 +523,7 @@ export function createTerminal({ host }) {
           el('td', 'zme__ladder-side', side === 'buy' ? 'Buy' : 'Sell'),
           el('td', null, `$${rung.notional}`),
         ];
-        if (rung.error) {
+        if (rung.error || !rung.priceScaled) {
           const message = rung.error === 'no_route' ? 'no route' : 'unavailable';
           const spanned = el('td', null, message);
           spanned.colSpan = 2;
@@ -451,21 +552,24 @@ export function createTerminal({ host }) {
     try {
       const quote = statsFor(selected);
       const buys = await fetchLadder({ mint: record.mint, side: 'buy', signal });
-      const sells = quote?.priceUsd
-        ? await fetchLadder({
-          mint: record.mint, side: 'sell', midPriceUsd: quote.priceUsd, signal,
-        })
-        : { side: 'sell', rungs: LADDER_NOTIONALS.map((notional) => ({ notional, error: 'unavailable' })) };
+      const sells = await fetchLadder({
+        mint: record.mint,
+        side: 'sell',
+        midPriceUsd: quote?.priceUsd ?? null,
+        signal,
+      });
       if (signal.aborted) return;
       renderLadder([buys, sells]);
     } catch (error) {
-      if (error?.name !== 'AbortError') {
+      if (error?.name !== 'AbortError' && !signal.aborted) {
         ladderBody.replaceChildren();
         showState(ladderState, 'Venue quotes unavailable just now.');
       }
     } finally {
-      setTimeout(() => {
-        if (!destroyed) ladderRefresh.disabled = false;
+      clearTimeout(ladderEnableTimer);
+      const mySelection = selected;
+      ladderEnableTimer = setTimeout(() => {
+        if (!destroyed && mySelection === selected) ladderRefresh.disabled = false;
       }, Math.max(0, ladderBusyUntil - Date.now()));
     }
   }
@@ -475,19 +579,20 @@ export function createTerminal({ host }) {
   function mountPanel() {
     const sign = signFor(selected);
     const record = recordFor(selected);
+    const attempt = ++panelAttempt;
     panel?.destroy?.();
     panel = null;
     panelHost.replaceChildren();
     if (!sign || !record) {
-      panelHost.append(stateNode('The registry could not be read, so there is nothing to trade against.'));
+      panelHost.append(registryFailed
+        ? registryFailureNode()
+        : stateNode('Reading the registry…'));
       return;
     }
-    const mySelection = selected;
     loadTradeBundle().then((trade) => {
-      if (destroyed || mySelection !== selected || !trade) {
-        if (!trade && !destroyed && mySelection === selected) {
-          panelHost.append(stateNode('The trade panel could not load. The record page lists the venue route directly.'));
-        }
+      if (destroyed || attempt !== panelAttempt) return;
+      if (!trade) {
+        panelHost.append(stateNode('The trade panel could not load. The record page lists the venue route directly.'));
         return;
       }
       panel = trade.mount(panelHost, {
@@ -502,22 +607,34 @@ export function createTerminal({ host }) {
 
   // ── selection ───────────────────────────────────────────────────────────
   function select(slug) {
+    // Before the registry answers, a click only chooses; the room opens on
+    // that choice the moment the answer arrives.
+    if (!records) {
+      pendingSlug = slug;
+      paintSelection(slug);
+      if (registryFailed) {
+        showState(chartState, 'The registry could not be read. Nothing verified, nothing shown.');
+      } else {
+        showState(chartState, 'Reading the registry…');
+      }
+      return;
+    }
     if (slug === selected) return;
     selected = slug;
     selectionAbort?.abort();
     selectionAbort = new AbortController();
+    clearTimeout(ladderEnableTimer);
     ladderBusyUntil = 0;
     ladderRefresh.disabled = false;
     ladderBody.replaceChildren();
     showState(ladderState, '');
 
-    const sign = signFor(slug);
-    grid.style.setProperty('--sign', sign?.hue ?? '#C6CCDA');
-    for (const [rowSlug, row] of railRows) {
-      row.button.setAttribute('aria-pressed', String(rowSlug === slug));
+    paintSelection(slug);
+    try {
+      window.history.replaceState(null, '', `#${slug}`);
+    } catch {
+      // Sandboxed contexts may refuse; the room works without the deep link.
     }
-    const record = recordFor(slug);
-    chartTitle.textContent = record?.symbol ? `${record.symbol} / USD` : sign?.name ?? '—';
 
     chart.clear();
     tape.clear();
@@ -543,26 +660,43 @@ export function createTerminal({ host }) {
   document.addEventListener('visibilitychange', onVisibility);
 
   // ── boot ────────────────────────────────────────────────────────────────
-  showState(chartState, 'Reading the registry…');
-  showState(tapeState, '');
-  readRegistry()
-    .then((result) => {
-      if (destroyed) return;
-      records = result;
-      // The room opens on the first record at once; the rail's quotes fill
-      // in whenever the index answers. Nothing waits on the stats call.
-      select('aries');
-      refreshStats();
-      statsTimer = setInterval(() => {
-        if (document.visibilityState === 'hidden') return;
-        refreshStats();
-      }, STATS_EVERY_MS);
-    })
-    .catch(() => {
-      if (destroyed) return;
-      showState(chartState, 'The registry could not be read. Nothing verified, nothing shown — try again shortly.');
-      panelHost.append(stateNode('The registry could not be read, so there is nothing to trade against.'));
-    });
+  // Order matters: the registry names the mints, the first stats answer
+  // gives the ladder's sell side its mid price, and only then does the room
+  // open — on whichever sign was clicked while it was loading, or the hash,
+  // or the first lot.
+  function bootRegistry() {
+    if (booting || destroyed) return;
+    booting = true;
+    registryFailed = false;
+    showState(chartState, 'Reading the registry…');
+    showState(tapeState, '');
+    panelHost.replaceChildren(stateNode('Reading the registry…'));
+    readRegistry()
+      .then(async (result) => {
+        if (destroyed) return;
+        records = result;
+        await refreshStats();
+        if (destroyed) return;
+        clearInterval(statsTimer);
+        statsTimer = setInterval(() => {
+          if (document.visibilityState === 'hidden') return;
+          refreshStats();
+        }, STATS_EVERY_MS);
+        const target = pendingSlug ?? initialSlug();
+        pendingSlug = null;
+        select(target);
+      })
+      .catch(() => {
+        if (destroyed) return;
+        registryFailed = true;
+        showState(chartState, 'The registry could not be read. Nothing verified, nothing shown.');
+        panelHost.replaceChildren(registryFailureNode());
+      })
+      .finally(() => {
+        booting = false;
+      });
+  }
+  bootRegistry();
 
   return {
     select,
@@ -571,6 +705,7 @@ export function createTerminal({ host }) {
       selectionAbort?.abort();
       stopTimers();
       clearInterval(statsTimer);
+      clearTimeout(ladderEnableTimer);
       document.removeEventListener('visibilitychange', onVisibility);
       panel?.destroy?.();
       chart.destroy();

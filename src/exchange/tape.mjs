@@ -28,16 +28,17 @@ export function createTape({ host, now = () => Date.now() }) {
   table.append(head, body);
   host.append(table);
 
-  let newestSeen = 0;
+  // Freshness is by trade id, not timestamp — two fills can share a block.
+  let seenIds = null;
 
   return {
     set(trades, { symbol } = {}) {
       const rows = trades.slice(0, MAX_ROWS);
       const nowMs = now();
-      const fresh = newestSeen;
+      const previous = seenIds;
       body.replaceChildren(...rows.map((trade) => {
         const row = el('tr', trade.side === 'buy' ? 'zme-tape__row--buy' : 'zme-tape__row--sell');
-        if (fresh > 0 && trade.ts > fresh) row.classList.add('is-fresh');
+        if (previous && !previous.has(trade.id)) row.classList.add('is-fresh');
         row.append(
           el('td', null, formatAge(trade.ts, nowMs)),
           el('td', 'zme-tape__side', trade.side === 'buy' ? 'Buy' : 'Sell'),
@@ -47,11 +48,11 @@ export function createTape({ host, now = () => Date.now() }) {
         );
         return row;
       }));
-      if (rows.length) newestSeen = Math.max(newestSeen, rows[0].ts);
+      seenIds = new Set(rows.map((trade) => trade.id));
     },
     clear() {
       body.replaceChildren();
-      newestSeen = 0;
+      seenIds = null;
     },
     destroy() {
       table.remove();

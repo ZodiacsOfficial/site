@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import {
   GECKO_BASE_URL,
   TIMEFRAMES,
+  createCoolOff,
   createRateBudget,
   fetchOhlcv,
   fetchTrades,
@@ -92,6 +93,13 @@ describe('normalizing candles', () => {
 
   it('refuses an unreadable payload', () => {
     expect(() => normalizeOhlcv({})).toThrow(/not readable/);
+    expect(() => normalizeOhlcv({ data: { attributes: { ohlcv_list: 'nope' } } }))
+      .toThrow(/not readable/);
+  });
+
+  it('reads an answer with no candle list as an empty market, not an outage', () => {
+    expect(normalizeOhlcv({ data: {} })).toEqual([]);
+    expect(normalizeOhlcv({ data: { attributes: {} } })).toEqual([]);
   });
 });
 
@@ -161,10 +169,25 @@ describe('failure states', () => {
       .rejects.toMatchObject({ code: 'not_indexed' });
   });
 
-  it('lets an abort pass through untouched', async () => {
+  it('names a server error and an unreadable body as unavailable', async () => {
+    await expect(fetchOhlcv({ pool: POOL, timeframe: '1d', fetchImpl: response(500) }))
+      .rejects.toMatchObject({ code: 'unavailable' });
+    const unreadable = async () => ({
+      ok: true, status: 200, json: async () => { throw new SyntaxError('bad json'); },
+    });
+    await expect(fetchOhlcv({ pool: POOL, timeframe: '1d', fetchImpl: unreadable }))
+      .rejects.toMatchObject({ code: 'unavailable' });
+  });
+
+  it('lets an abort pass through untouched — even one landing mid body-read', async () => {
     const abort = Object.assign(new Error('aborted'), { name: 'AbortError' });
     await expect(fetchOhlcv({
       pool: POOL, timeframe: '1d', fetchImpl: async () => { throw abort; },
+    })).rejects.toBe(abort);
+    await expect(fetchOhlcv({
+      pool: POOL,
+      timeframe: '1d',
+      fetchImpl: async () => ({ ok: true, status: 200, json: async () => { throw abort; } }),
     })).rejects.toBe(abort);
   });
 });
@@ -178,5 +201,28 @@ describe('the rate budget', () => {
     expect(budget.take()).toBe(false);
     clock = 1001;
     expect(budget.take()).toBe(true);
+  });
+});
+
+describe('the 429 cool-off', () => {
+  it('opens on failure, doubles while the provider keeps pushing back, and clears on success', () => {
+    let clock = 0;
+    const coolOff = createCoolOff({ baseMs: 100, maxMs: 350, now: () => clock });
+    expect(coolOff.active()).toBe(false);
+    coolOff.fail();
+    expect(coolOff.active()).toBe(true);
+    expect(coolOff.remainingMs()).toBe(100);
+    clock = 100;
+    expect(coolOff.active()).toBe(false);
+    coolOff.fail();
+    expect(coolOff.remainingMs()).toBe(200);
+    coolOff.fail();
+    // Doubling is capped.
+    expect(coolOff.remainingMs()).toBe(350);
+    coolOff.ok();
+    expect(coolOff.active()).toBe(false);
+    coolOff.fail();
+    // …and a success resets the ladder to the base pause.
+    expect(coolOff.remainingMs()).toBe(100);
   });
 });

@@ -97,6 +97,9 @@ export async function fetchLadder({
   sleep = sleepFor,
 }) {
   const rungs = [];
+  // "vs best" only means something against the smallest size. If the first
+  // rung fails, later rungs carry no impact figure rather than measuring
+  // against a rung that is not the best.
   let baseline = null;
   for (let index = 0; index < notionals.length; index += 1) {
     const notional = notionals[index];
@@ -104,32 +107,36 @@ export async function fetchLadder({
     if (index > 0 && spacingMs > 0) await sleep(spacingMs);
     if (signal?.aborted) break;
 
-    let params;
-    if (side === 'sell') {
-      const tokenAmount = tokenAmountForNotional(notional, midPriceUsd);
-      if (!tokenAmount) {
-        rungs.push({ notional, error: 'unavailable' });
-        continue;
-      }
-      params = {
-        inputMint: mint,
-        outputMint: USDC_MINT,
-        amount: atomicFromDecimal(tokenAmount, ZODIAC_DECIMALS),
-      };
-    } else {
-      params = {
-        inputMint: USDC_MINT,
-        outputMint: mint,
-        amount: atomicFromDecimal(notional, USDC_DECIMALS),
-      };
-    }
-
     try {
+      let params;
+      if (side === 'sell') {
+        const tokenAmount = tokenAmountForNotional(notional, midPriceUsd);
+        if (!tokenAmount) {
+          rungs.push({ notional, error: 'unavailable' });
+          continue;
+        }
+        params = {
+          inputMint: mint,
+          outputMint: USDC_MINT,
+          amount: atomicFromDecimal(tokenAmount, ZODIAC_DECIMALS),
+        };
+      } else {
+        params = {
+          inputMint: USDC_MINT,
+          outputMint: mint,
+          amount: atomicFromDecimal(notional, USDC_DECIMALS),
+        };
+      }
+
       const order = await fetchOrder({ ...params, fetchImpl, signal });
       const priceScaled = side === 'sell'
         ? priceScaledFromAtomic(order.outAmount, order.inAmount)
         : priceScaledFromAtomic(order.inAmount, order.outAmount);
-      baseline = baseline ?? priceScaled;
+      if (!priceScaled) {
+        rungs.push({ notional, error: 'unavailable' });
+        continue;
+      }
+      if (index === 0) baseline = priceScaled;
       rungs.push({
         notional,
         priceScaled,

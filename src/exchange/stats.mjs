@@ -27,6 +27,7 @@ export function normalizeBatch(rows, mints) {
     let bestLiquidity = -1;
     for (const pair of rows) {
       if (pair?.chainId !== 'solana') continue;
+      if (!pair?.pairAddress) continue;
       if (pair?.baseToken?.address !== mint) continue;
       const liquidity = Number(pair?.liquidity?.usd) || 0;
       if (liquidity > bestLiquidity) {

@@ -68,7 +68,12 @@ export function tradesUrl({ pool, baseUrl = GECKO_BASE_URL }) {
 
 /** Newest-first [ts, o, h, l, c, v] rows → ascending candles, malformed rows dropped. */
 export function normalizeOhlcv(payload) {
-  const list = payload?.data?.attributes?.ohlcv_list;
+  if (!payload?.data || typeof payload.data !== 'object') {
+    fail('unavailable', 'The chart data was not readable.');
+  }
+  // An answer with no candle list is an empty market, not an outage.
+  const list = payload.data.attributes?.ohlcv_list;
+  if (list === undefined) return [];
   if (!Array.isArray(list)) fail('unavailable', 'The chart data was not readable.');
   const candles = [];
   for (const row of list) {
@@ -169,9 +174,38 @@ async function getJson(url, { fetchImpl = globalThis.fetch, signal } = {}) {
   try {
     return await response.json();
   } catch (error) {
+    // A body read can also be what the abort interrupts.
+    if (error?.name === 'AbortError') throw error;
     fail('unavailable', 'The chart service did not return a readable answer.', { cause: error });
   }
   return undefined;
+}
+
+/**
+ * Exponential cool-off for provider pushback. A 429 opens a pause that
+ * doubles with each consecutive one and clears on the next success — the
+ * "backoff on 429" half of the rate discipline; the sliding budget above is
+ * the other half.
+ */
+export function createCoolOff({
+  baseMs = 10_000,
+  maxMs = 120_000,
+  now = () => Date.now(),
+} = {}) {
+  let until = 0;
+  let step = 0;
+  return {
+    active() { return now() < until; },
+    remainingMs() { return Math.max(0, until - now()); },
+    fail() {
+      until = now() + Math.min(baseMs * 2 ** step, maxMs);
+      step += 1;
+    },
+    ok() {
+      until = 0;
+      step = 0;
+    },
+  };
 }
 
 export async function fetchOhlcv({ pool, timeframe, baseUrl, fetchImpl, signal }) {

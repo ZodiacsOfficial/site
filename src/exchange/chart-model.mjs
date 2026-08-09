@@ -31,13 +31,22 @@ export function volumeExtent(candles) {
   return max;
 }
 
-/** Round ticks that land on 1/2/5 steps across the extent. */
+/**
+ * Round ticks on 1/2/5 steps, never more than the caller asked for (plus
+ * one): the step is chosen upward until the extent holds few enough ticks,
+ * so a tight range cannot crowd the axis with overlapping labels.
+ */
 export function niceTicks(min, max, count = 4) {
   if (!(max > min) || count < 1) return [];
-  const rawStep = (max - min) / (count + 1);
-  const magnitude = 10 ** Math.floor(Math.log10(rawStep));
-  const residual = rawStep / magnitude;
-  const step = (residual >= 5 ? 5 : residual >= 2 ? 2 : 1) * magnitude;
+  const span = max - min;
+  const magnitude = 10 ** Math.floor(Math.log10(span / (count + 1)));
+  let step = magnitude * 10;
+  for (const multiple of [1, 2, 5, 10]) {
+    if (span / (magnitude * multiple) <= count + 1) {
+      step = magnitude * multiple;
+      break;
+    }
+  }
   const ticks = [];
   for (let value = Math.ceil(min / step) * step; value <= max; value += step) {
     ticks.push(value);

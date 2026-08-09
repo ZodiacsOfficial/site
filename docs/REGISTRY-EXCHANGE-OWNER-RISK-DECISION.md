@@ -96,8 +96,11 @@ these room-specific restatements:
    the built bundle, and the ladder rides the same guarded Ultra client the
    panel uses.
 3. The site never constructs, signs, or broadcasts a transaction and calls
-   no write RPC. No third-party script is loaded into the page; the
-   self-hosted-fonts rule stands unbroken.
+   no write RPC. The trading surfaces load no third-party code; the only
+   third-party script on the page is the site's long-standing,
+   self-configured Plausible analytics loader that every wing page carries,
+   which receives no wallet address or trade data. The self-hosted-fonts
+   rule stands unbroken.
 4. The pinned risk sentences render on the page itself — independent
    third-party, can lose all market value, could lose all money used to
    acquire a Zodiac, cannot be reversed, verify the official mint, network,
@@ -120,9 +123,11 @@ these room-specific restatements:
 9. Rollback stays one step: unset the flag and redeploy; the page returns to
    the committed reading-room state with no code change.
 10. Rate discipline toward the free data provider: a shared client-side
-    budget under GeckoTerminal's published ceiling, backoff on 429, polling
-    suspended for hidden tabs, and the ladder refreshed only on selection or
-    explicit request with a cooldown.
+    budget under GeckoTerminal's published ceiling; an exponential cool-off
+    opened by any 429 and cleared on the next success, during which polling
+    pauses behind a labeled waiting state; polling suspended for hidden
+    tabs; and the ladder refreshed only on selection or explicit request
+    with a cooldown.
 
 ## Phase boundary
 

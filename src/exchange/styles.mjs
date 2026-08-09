@@ -67,6 +67,13 @@ export const ZX_CSS = `
   font-size: 10px;
   letter-spacing: 0.05em;
 }
+.zme__center { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.zme__scope {
+  margin: -4px 0 10px;
+  color: var(--zx-dim);
+  font-size: 11.5px;
+  line-height: 1.5;
+}
 
 /* ── the rail ─────────────────────────────────────────────────────────── */
 .zme__rail { padding: 8px; }
