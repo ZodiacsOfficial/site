@@ -1,15 +1,12 @@
 {
   "version": 1,
-  "id": "registry-zodiac-markets-signals-2026-08-10",
-  "reason": "Owner-approved Registry release (2026-08-10): clarify the Zodiac Markets consumer masthead, market-control language, and auditable sky-signal presentation. The allowance is limited to the seven protected files in this pull request; it does not authorize changes to Registry APIs, wallet behavior, SDK pages, sign guides, locale trees, or Collection availability.",
-  "baseCommit": "de112e7d4ccdae743f24671c3dc2c8c4e629df9c",
+  "id": "registry-astrofolio-masthead-2026-08-10",
+  "reason": "Owner-approved Registry patch (2026-08-10): rename the visible consumer masthead and matching no-JavaScript fallback from Zodiac Markets to Astrofolio. The allowance is limited to the four protected source, generated, fallback, and contract files in this patch; it does not authorize changes to Registry behavior, APIs, wallet behavior, SDK pages, sign guides, locale trees, or Collection availability.",
+  "baseCommit": "bf2e0e12a6d5211e965d1f51d9dbf2837d729b85",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/index.html",
-    "public/registry/technical/index.html",
     "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-outlook.test.mjs",
-    "scripts/registry-pastel-polish.test.mjs",
     "src/app.jsx"
   ]
 }
