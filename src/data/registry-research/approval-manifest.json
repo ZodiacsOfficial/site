@@ -1,0 +1,22 @@
+{
+  "schema": "zodiacs.registry-research-approvals.v1",
+  "pilot": {
+    "startsOn": "2026-08-10",
+    "endsOn": "2026-09-08",
+    "mode": "human-approval-required",
+    "rule": "An exact artifact hash, named reviewer, and canonical review timestamp are required before publication."
+  },
+  "postPilot": {
+    "mode": "deterministic-allowlist",
+    "automaticTemplateIds": [
+      "daily-market-brief.v1",
+      "event-brief.v1",
+      "market-check.v1",
+      "observation-update.v1",
+      "weekly-outlook.v1",
+      "monthly-calibration.v1"
+    ],
+    "freeformModelOutputAllowed": false
+  },
+  "approvals": []
+}

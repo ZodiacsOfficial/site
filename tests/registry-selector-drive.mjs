@@ -17,10 +17,10 @@ const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 // lab. Keep a ceiling as a regression guard, but size it for that intentional
 // narrative rather than the shorter pre-market Registry.
 const MAX_COMPACT_REGISTRY_HEIGHT = 9_000;
-// The auditable Signals lab adds three plain-language steps, factor receipts,
-// and a twelve-sign comparison wheel. Keep a firm regression ceiling while
-// allowing that intentionally scrollable evidence on the narrowest phones.
-const MAX_PHONE_REGISTRY_HEIGHT = 11_500;
+// The Research Desk preview, five-filter ledger, auditable Signals lab, factor
+// receipts, and twelve-sign comparison wheel are intentionally scrollable on
+// narrow phones. Keep a firm ceiling sized for that complete public journey.
+const MAX_PHONE_REGISTRY_HEIGHT = 13_000;
 // The 42px live tape now owns one row of the framed hero. The scene camera fits
 // the sculpture to the room it receives, so 260px is the useful desktop floor;
 // mobile retains its separate 200px floor and explicit placard-clearance gate.
@@ -82,6 +82,51 @@ async function mockDexscreener(page, {
       })),
     });
   });
+}
+
+/** Keep the Research Desk deterministic while still exercising the public
+ * source boundary. The owned note and outside headlines deliberately use
+ * different source types and sign coverage. */
+async function mockRegistryResearch(page) {
+  const publishedAt = new Date(COMMITTED_OUTLOOK_REFERENCE).toISOString();
+  await page.route('**/assets/registry-research-feed.json', (route) => route.fulfill({
+    json: {
+      schema: 'zodiacs.registry-research-feed.v1',
+      items: [
+        {
+          id: 'owned-pisces', slug: 'owned-pisces', kind: 'daily-market-brief',
+          sourceType: 'zodiacs-research', publisher: 'Zodiacs.org Research System',
+          publishedAt, visibleAt: publishedAt, title: 'Pisces sky and market brief',
+          summary: 'A reviewed symbolic brief with market observations kept separate.',
+          url: '/registry/research/owned-pisces/', signs: ['pisces'], topics: ['pisces'], status: 'published',
+        },
+        {
+          id: 'owned-aries', slug: 'owned-aries', kind: 'event-brief',
+          sourceType: 'zodiacs-research', publisher: 'Zodiacs.org Research System',
+          publishedAt, visibleAt: publishedAt, title: 'Aries event brief',
+          summary: 'A scheduled event note.', url: '/registry/research/owned-aries/',
+          signs: ['aries'], topics: ['calendar', 'aries'], status: 'published',
+        },
+      ],
+    },
+  }));
+  await page.route('**/api/registry/news', (route) => route.fulfill({
+    json: {
+      schema: 'registry-news.v1', updatedAt: publishedAt,
+      items: [
+        {
+          id: 'astrology-headline', sourceType: 'astrology-news', publisher: 'The Astrology Podcast',
+          publishedAt, title: 'Independent astrology headline', url: 'https://theastrologypodcast.com/example',
+          author: 'External author', topics: ['pisces'], signs: ['pisces'],
+        },
+        {
+          id: 'astronomy-headline', sourceType: 'astronomy', publisher: 'NASA',
+          publishedAt, title: 'Independent astronomy headline', url: 'https://www.nasa.gov/example',
+          author: 'NASA', topics: ['astronomy'], signs: [],
+        },
+      ],
+    },
+  }));
 }
 
 /** The Cabinet is deployment-flagged. Enable it on visual consumer pages so
@@ -423,6 +468,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         marketHeading: document.querySelector('#market > h2')
           ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        h1Count: document.querySelectorAll('h1').length,
+        h1: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        deck: document.querySelector('.static-capital .capital-masthead__title > p')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        cinematicNodes: document.querySelectorAll('.cine, [data-cine-video]').length,
+        astrofolioIdentity: /Astrofolio/i.test(document.querySelector('.static-capital')?.textContent ?? ''),
         links: [...nav.querySelectorAll('a')].map((link) => {
           const rect = link.getBoundingClientRect();
           return {
@@ -461,7 +512,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         fallbackState.staticTokenRows === 12
           && fallbackState.staticPriceNote
           && fallbackState.marketEyebrow === 'Live market board'
-          && fallbackState.marketHeading === 'Zodiac Capital Markets',
+          && fallbackState.marketHeading === 'The twelve, ranked live.'
+          && fallbackState.h1Count === 1
+          && fallbackState.h1 === 'Zodiac Capital Markets'
+          && fallbackState.deck === 'Twelve signs. Twelve transferable tokens. One live public market.'
+          && fallbackState.cinematicNodes === 0
+          && !fallbackState.astrofolioIdentity,
         JSON.stringify({
           rows: fallbackState.staticTokenRows,
           note: fallbackState.staticPriceNote,
@@ -725,8 +781,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     for (const width of [390, 781]) {
       for (const record of [
-        { slug: 'cancer', next: 'leo', name: 'Leo' },
-        { slug: 'pisces', next: 'aries', name: 'Aries' },
+        { slug: 'cancer', current: 'Cancer', next: 'leo', name: 'Leo' },
+        { slug: 'pisces', current: 'Pisces', next: 'aries', name: 'Aries' },
       ]) {
         const recordPage = await newPage({ viewport: { width, height: 844 } });
         await recordPage.goto(`${baseURL}/registry/${record.slug}/`, { waitUntil: 'domcontentloaded' });
@@ -745,6 +801,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
               : -1,
             pageWidth: document.documentElement.scrollWidth,
             viewportWidth: innerWidth,
+            eyebrow: eyebrow?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            intro: document.querySelector('.lot__intro')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            sectionHeadings: [...document.querySelectorAll('.sec__title')]
+              .map((heading) => heading.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
+            constellation: document.querySelector('#constellation img')?.getAttribute('src') ?? '',
+            constellationCopy: document.querySelector('#constellation')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           };
         });
         check(
@@ -756,6 +818,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           `${record.slug} at ${width}px uses the pastel ${record.name} next-record icon`,
           actionState.icon === `/assets/zodiac-icons/48/${record.next}.webp`,
           actionState.icon,
+        );
+        check(
+          `${record.slug} at ${width}px explains a transferable token with chart and constellation context`,
+          /^Official Zodiac Token · Sign \d+ of 12$/.test(actionState.eyebrow)
+            && actionState.intro === `${record.current} is the transferable token for the ${record.current} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.`
+            && actionState.sectionHeadings.includes('Token facts')
+            && actionState.sectionHeadings.includes(`What ${record.current} represents`)
+            && actionState.sectionHeadings.includes(`The story behind ${record.current}`)
+            && actionState.sectionHeadings.includes('Official addresses')
+            && actionState.sectionHeadings.includes(`Get ${record.current}`)
+            && actionState.sectionHeadings.includes('Explore all 12')
+            && actionState.constellation === `/assets/constellations/${record.slug}.svg`
+            && /HYG Database v4\.0/.test(actionState.constellationCopy)
+            && /not official IAU boundaries/.test(actionState.constellationCopy),
+          JSON.stringify(actionState),
         );
         check(
           `${record.slug} at ${width}px keeps a 44px next-record target`,
@@ -784,6 +861,99 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       }
     }
 
+    const sparseChart = await newPage({ viewport: { width: 781, height: 900 } });
+    const sparseDates = [
+      ['2026-08-01', 0.00001],
+      ['2026-08-02', 0.000012],
+      ['2026-08-03', null],
+      ['2026-08-04', 0.000011],
+      ['2026-08-06', 0.000014],
+      ['2026-08-07', 0.000013],
+    ];
+    await sparseChart.route('**/assets/data/registry-market-history.v1.json', (route) => route.fulfill({
+      json: {
+        schema: 'zodiacs.registry-market-history.v1',
+        version: 1,
+        snapshots: sparseDates.map(([date, priceUsd]) => ({
+          date,
+          source: { provider: 'DexScreener', readAt: `${date}T12:00:00.000Z` },
+          coverage: { canonicalAssetCount: 12, assetsWithIndexedPools: 1 },
+          assets: [{
+            sign: 'leo', displayName: 'Leo', symbol: 'LEO', priceUsd,
+            change24hPct: null, marketCapUsd: 120000, fdvUsd: 150000,
+            liquidityUsd: 32000, volume24hUsd: 1700, indexedPoolCount: 2,
+            deepestPool: { url: 'https://dexscreener.com/solana/fixture-leo' },
+          }],
+        })),
+      },
+    }));
+    await sparseChart.goto(`${baseURL}/registry/leo/`, { waitUntil: 'domcontentloaded' });
+    await sparseChart.locator('[data-market]').scrollIntoViewIfNeeded();
+    await sparseChart.locator('[data-market-chart]:not([hidden])').waitFor({ timeout: 15_000 });
+    const sparseChartState = await sparseChart.locator('[data-market]').evaluate((panel) => ({
+      note: panel.querySelector('[data-market-chart-note]')?.textContent?.trim() ?? '',
+      paths: panel.querySelectorAll('[data-market-chart-canvas] path').length,
+      points: panel.querySelectorAll('[data-market-chart-canvas] circle').length,
+      sevenDisabled: panel.querySelector('[data-market-range="7d"]')?.disabled ?? false,
+      thirtyDisabled: panel.querySelector('[data-market-range="30d"]')?.disabled ?? false,
+      allPressed: panel.querySelector('[data-market-range="all"]')?.getAttribute('aria-pressed') ?? '',
+      metrics: [...panel.querySelectorAll('.market__k')].map((node) => node.textContent?.trim() ?? ''),
+      live: panel.querySelector('[data-market-live-link]')?.getAttribute('href') ?? '',
+    }));
+    check(
+      'archived charts preserve nulls and calendar gaps while ranges wait for honest coverage',
+      /^5 dated observations/.test(sparseChartState.note)
+        && sparseChartState.paths === 2
+        && sparseChartState.points === 5
+        && sparseChartState.sevenDisabled
+        && sparseChartState.thirtyDisabled
+        && sparseChartState.allPressed === 'true'
+        && sparseChartState.metrics.includes('Market cap')
+        && sparseChartState.metrics.includes('FDV')
+        && sparseChartState.live === 'https://dexscreener.com/solana/fixture-leo',
+      JSON.stringify(sparseChartState),
+    );
+    await sparseChart.close();
+
+    const relatedResearch = await newPage({ viewport: { width: 781, height: 900 } });
+    await relatedResearch.route('**/api/registry/news', (route) => route.fulfill({
+      json: { schema: 'registry-news.v1', updatedAt: COMMITTED_OUTLOOK_REFERENCE, items: [] },
+    }));
+    await relatedResearch.goto(
+      `${baseURL}/registry/research/?sign=leo&type=daily`,
+      { waitUntil: 'domcontentloaded' },
+    );
+    const relatedScope = relatedResearch.locator('#research-scope');
+    await relatedScope.waitFor({ state: 'visible' });
+    const relatedScopeState = await relatedResearch.evaluate(() => ({
+      label: document.querySelector('#research-scope span')?.textContent?.trim() ?? '',
+      sign: new URL(location.href).searchParams.get('sign'),
+      type: new URL(location.href).searchParams.get('type'),
+    }));
+    check(
+      'token-record research links restore a visible Leo daily-brief scope',
+      relatedScopeState.label === 'Related to Leo · Daily market briefs'
+        && relatedScopeState.sign === 'leo'
+        && relatedScopeState.type === 'daily',
+      JSON.stringify(relatedScopeState),
+    );
+    await relatedScope.getByRole('button', { name: 'Clear related filter' }).click();
+    await relatedResearch.waitForFunction(() => (
+      document.querySelector('#research-scope')?.hidden
+      && !new URL(location.href).searchParams.has('sign')
+      && !new URL(location.href).searchParams.has('type')
+    ));
+    const clearedScope = await relatedResearch.evaluate(() => ({
+      hidden: document.querySelector('#research-scope')?.hidden ?? false,
+      search: location.search,
+    }));
+    check(
+      'Clear related filter removes the query scope and returns to the full ledger',
+      clearedScope.hidden && clearedScope.search === '',
+      JSON.stringify(clearedScope),
+    );
+    await relatedResearch.close();
+
     // The grid explorer's own assertions run with WebGL denied — the path
     // narrow, non-WebGL, and stage-failure readers actually get. The stage
     // is asserted separately, on an unstubbed page.
@@ -810,6 +980,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     }, COMMITTED_OUTLOOK_REFERENCE);
     await stubNoWebgl(desktop);
     await mockDexscreener(desktop);
+    await mockRegistryResearch(desktop);
     await withCollectionFlag(desktop);
     const desktopErrors = [];
     const desktopGalleryRequests = [];
@@ -852,36 +1023,51 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && explorerState.every((item) => item.width >= 44 && item.height >= 44),
       JSON.stringify(explorerState),
     );
-    const desktopMasthead = await desktop.locator('.consumer-masthead').evaluate((masthead) => {
-      const caption = masthead.querySelector(':scope > p');
-      const tape = masthead.nextElementSibling;
-      const sculptureRoom = tape?.nextElementSibling;
+    const desktopMasthead = await desktop.locator('.capital-masthead').evaluate((masthead) => {
+      const title = masthead.querySelector('.capital-masthead__title');
+      const heading = title?.querySelector('h1');
+      const caption = title?.querySelector('p');
+      const tape = masthead.querySelector(':scope > .market-tape');
+      const pulse = masthead.querySelector(':scope > .capital-pulse');
+      const opening = masthead.nextElementSibling;
+      const headingStyle = heading ? getComputedStyle(heading) : null;
       return {
-        text: masthead.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-        eyebrowCount: masthead.querySelectorAll('.consumer-masthead__eyebrow').length,
+        text: heading?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        label: title?.querySelector(':scope > span')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         caption: caption?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         captionVisible: Boolean(caption && getComputedStyle(caption).display !== 'none'
           && getComputedStyle(caption).visibility !== 'hidden'
           && caption.getBoundingClientRect().height > 0),
-        tapeImmediate: tape?.classList.contains('market-tape') ?? false,
-        sculptureRoomImmediate: sculptureRoom?.matches('#gallery.gband--consumer') ?? false,
+        tapeDirect: tape?.parentElement === masthead,
+        pulseDirect: pulse?.parentElement === masthead,
+        pulseCount: pulse?.querySelectorAll(':scope > div').length ?? 0,
+        openingImmediate: opening?.classList.contains('consumer-capital-opening') ?? false,
+        openingChildren: opening ? [...opening.children].map((node) => node.id || node.className) : [],
+        cineCount: document.querySelectorAll('.cine').length,
+        legacyHeroCount: document.querySelectorAll('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').length,
+        h1Count: document.querySelectorAll('h1').length,
+        headingVisible: Boolean(heading
+          && headingStyle?.display !== 'none'
+          && headingStyle?.visibility !== 'hidden'
+          && heading.getBoundingClientRect().height > 0),
       };
     });
     check(
-      'the sculpture-led stage opens under one visible Astrofolio masthead',
-      await desktop.locator('.cine').count() === 0
-        && await desktop.locator('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').count() === 0
-        && await desktop.locator('h1').count() === 1
-        && await desktop.locator('.consumer-masthead > h1').isVisible()
-        && (await desktop.locator('.consumer-masthead > h1').innerText()).replace(/\s+/g, ' ').trim() === 'Astrofolio'
-        && !((await desktop.locator('.consumer-masthead > h1').getAttribute('class')) ?? '').includes('sr-only')
-        && await desktop.locator('#official-twelve').getAttribute('aria-labelledby') === 'consumer-explorer-title'
-        && desktopMasthead.eyebrowCount === 0
-        && !desktopMasthead.text.includes('Official token registry')
-        && desktopMasthead.caption === 'The twelve, live.'
+      'one Zodiac Capital Markets H1 leads tape, pulse, sculpture, and compact board',
+      desktopMasthead.cineCount === 0
+        && desktopMasthead.legacyHeroCount === 0
+        && desktopMasthead.h1Count === 1
+        && desktopMasthead.headingVisible
+        && desktopMasthead.text === 'Zodiac Capital Markets'
+        && desktopMasthead.label === 'Listed by the Zodiacs Registry'
+        && desktopMasthead.caption === 'Twelve signs. Twelve transferable tokens. One live public market.'
         && desktopMasthead.captionVisible
-        && desktopMasthead.tapeImmediate
-        && desktopMasthead.sculptureRoomImmediate,
+        && desktopMasthead.tapeDirect
+        && desktopMasthead.pulseDirect
+        && desktopMasthead.pulseCount === 3
+        && desktopMasthead.openingImmediate
+        && desktopMasthead.openingChildren[0] === 'official-twelve'
+        && desktopMasthead.openingChildren[1] === 'market',
       JSON.stringify(desktopMasthead),
     );
     const openingMaterial = await desktop.locator('.gband--consumer').evaluate((band) => {
@@ -997,6 +1183,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       // and a detour into the astrology guide.
       base: placard.textContent?.includes('Also recorded on Base') ?? false,
       guide: Boolean(placard.querySelector('a[href="/pisces/"]')),
+      marketSign: placard.querySelector('.stage-market')?.getAttribute('data-stage-market') ?? '',
+      chartLabel: placard.querySelector('.registry-history svg')?.getAttribute('aria-label') ?? '',
       scrollY,
     }));
     check(
@@ -1006,6 +1194,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && piscesPlacard.trade === '/registry/pisces/#acquire'
         && piscesPlacard.base === false
         && piscesPlacard.guide === false
+        && piscesPlacard.marketSign === 'pisces'
+        && /Pisces.+archived daily price observation/i.test(piscesPlacard.chartLabel)
         && Math.abs(piscesPlacard.scrollY - scrollBeforePick) <= 2,
       JSON.stringify(piscesPlacard),
     );
@@ -1014,6 +1204,81 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await desktop.locator('.stage-carousel__slide.is-active .stage-carousel__art')
         .getAttribute('src') === '/assets/sculptures/512/pisces.webp',
     );
+    await desktop.locator(
+      '.gband__constellation[data-stage-constellation="pisces"] img.is-entering[src="/assets/constellations/pisces.svg"]',
+    ).waitFor({ state: 'attached' });
+    const synchronizedContext = await desktop.evaluate(() => ({
+      constellation: document.querySelector('.gband__constellation')?.getAttribute('data-stage-constellation') ?? '',
+      constellationSrc: document.querySelector('.gband__constellation img.is-entering')?.getAttribute('src') ?? '',
+      researchSign: document.querySelector('.consumer-research__sign-filter')?.textContent?.trim() ?? '',
+      pulseSources: [...document.querySelectorAll('.research-pulse .research-item')]
+        .map((item) => item.getAttribute('data-research-source')),
+      pendingUpdates: document.querySelector('.research-pulse .research-updates')
+        ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+    }));
+    check(
+      'selected sign synchronizes sculpture, constellation, chart, and research without auto-inserting new sources',
+      synchronizedContext.constellation === 'pisces'
+        && synchronizedContext.constellationSrc === '/assets/constellations/pisces.svg'
+        && synchronizedContext.researchSign === 'For Pisces'
+        && synchronizedContext.pulseSources.includes('zodiacs-research')
+        && !synchronizedContext.pulseSources.includes('astrology-news')
+        && !synchronizedContext.pulseSources.includes('astronomy')
+        && synchronizedContext.pendingUpdates === 'Show 2 new source updates',
+      JSON.stringify(synchronizedContext),
+    );
+    await desktop.locator('.research-pulse .research-updates').click();
+    await desktop.locator('.research-pulse .research-item[data-research-source="astrology-news"]')
+      .waitFor({ state: 'visible' });
+    const acceptedResearchSources = await desktop.locator('.research-pulse .research-item')
+      .evaluateAll((items) => items.map((item) => item.getAttribute('data-research-source')));
+    check(
+      'the explicit source-update control promotes the queued edition across Research surfaces',
+      acceptedResearchSources.includes('zodiacs-research')
+        && acceptedResearchSources.includes('astrology-news')
+        && acceptedResearchSources.includes('astronomy')
+        && await desktop.locator('.research-pulse .research-updates').count() === 0,
+      JSON.stringify(acceptedResearchSources),
+    );
+    const research = desktop.locator('#research');
+    await research.scrollIntoViewIfNeeded();
+    await research.locator('.research-item[data-research-source="zodiacs-research"]')
+      .first().waitFor({ state: 'visible', timeout: 15_000 });
+    const researchState = await research.evaluate((section) => ({
+      filters: [...section.querySelectorAll('.consumer-research__filters button')]
+        .map((button) => button.textContent?.trim() ?? ''),
+      sources: [...section.querySelectorAll('.research-item')]
+        .map((item) => item.getAttribute('data-research-source')),
+      labels: [...section.querySelectorAll('.research-item__meta > span')]
+        .map((label) => label.textContent?.trim() ?? ''),
+      disclaimer: section.querySelector('.consumer-research__foot p')?.textContent?.trim() ?? '',
+      animated: [...section.querySelectorAll('.research-item, .consumer-research__ledger')]
+        .some((node) => getComputedStyle(node).animationName !== 'none'),
+      pageWidth: document.documentElement.scrollWidth,
+      viewportWidth: innerWidth,
+    }));
+    check(
+      'Markets Research exposes five filters and separates owned notes from external sources',
+      JSON.stringify(researchState.filters) === JSON.stringify([
+        'All', 'Zodiacs Research', 'Astrology News', 'Astronomy', 'Calendar',
+      ])
+        && researchState.sources.includes('zodiacs-research')
+        && researchState.sources.includes('astrology-news')
+        && researchState.sources.includes('astronomy')
+        && researchState.labels.includes('Zodiacs Research · Reviewed')
+        && researchState.labels.some((label) => label.startsWith('External source · '))
+        && researchState.disclaimer === 'Symbolic research—not investment advice. Market observations never alter the sky score.'
+        && !researchState.animated
+        && researchState.pageWidth <= researchState.viewportWidth + 1,
+      JSON.stringify(researchState),
+    );
+    await research.getByRole('button', { name: 'Astrology News', exact: true }).click();
+    check(
+      'research filtering never blends external astrology with owned research',
+      await research.locator('.research-item[data-research-source="astrology-news"]').count() === 1
+        && await research.locator('.research-item[data-research-source="zodiacs-research"]').count() === 0,
+    );
+    await research.getByRole('button', { name: 'All', exact: true }).click();
     await desktop.locator('.stage-placard__price').waitFor({ timeout: 15_000 });
     const placardQuote = await desktop.locator('.stage-placard').evaluate((placard) => ({
       price: placard.querySelector('.stage-placard__price')?.textContent ?? '',
@@ -1029,6 +1294,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && placardQuote.directional,
       JSON.stringify(placardQuote),
     );
+    const compactWatchlist = await desktop.locator('.market-row').count();
+    const expandMarket = desktop.locator('.market-board__expand');
+    check(
+      'desktop first paint shows six leaders behind an explicit Show all 12 control',
+      compactWatchlist === 6
+        && await expandMarket.getAttribute('aria-expanded') === 'false'
+        && (await expandMarket.innerText()).includes('Show all 12'),
+      `${compactWatchlist}/${await expandMarket.innerText()}`,
+    );
+    await expandMarket.click();
+    await desktop.waitForFunction(() => document.querySelectorAll('#market .market-row').length === 12);
     const watchlist = await desktop.locator('.market-row').evaluateAll((rows) => rows.map((row) => {
       const record = row.querySelector('.market-row__record');
       return {
@@ -1042,7 +1318,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       };
     }));
     check(
-      'the market board defaults to descending market cap and links every official record',
+      'Show all 12 expands the descending market-cap board and links every official record',
       watchlist.length === 12
         && JSON.stringify(watchlist.map((row) => row.slug)) === JSON.stringify([
           'pisces', 'aquarius', 'capricorn', 'sagittarius', 'scorpio', 'libra',
@@ -1096,7 +1372,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check(
       'the live market board uses the approved capital-markets identity without repetition',
       marketMaterial.eyebrow === 'Live market board'
-        && marketMaterial.heading === 'Zodiac Capital Markets',
+        && marketMaterial.heading === 'The twelve, ranked live.',
       JSON.stringify({ eyebrow: marketMaterial.eyebrow, heading: marketMaterial.heading }),
     );
     check(
@@ -1432,19 +1708,19 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       recordLinks: section.querySelectorAll('.market-row__actions a[href^="/registry/"]').length,
       shareDisabled: [...section.querySelectorAll('.market-board__share button')]
         .every((button) => button.disabled),
-      pulse: [...section.querySelectorAll('.market-pulse__cell strong')]
+      pulse: [...document.querySelectorAll('.capital-pulse strong')]
         .map((node) => node.textContent.trim()),
       meta: section.querySelector('.market-board__meta')?.textContent ?? '',
-      tapePaused: document.querySelector('.market-tape')?.hasAttribute('data-paused') ?? false,
+      expandText: section.querySelector('.market-board__expand')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
     }));
     check(
       'an empty upstream feed is unavailable, never a shareable zero-dollar market',
-      emptyMarketState.rows === 12
-        && emptyMarketState.recordLinks === 12
+      emptyMarketState.rows === 3
+        && emptyMarketState.recordLinks === 3
         && emptyMarketState.shareDisabled
         && emptyMarketState.pulse.every((value) => value === '—')
         && /unavailable/i.test(emptyMarketState.meta)
-        && emptyMarketState.tapePaused,
+        && /Show all 12/i.test(emptyMarketState.expandText),
       JSON.stringify(emptyMarketState),
     );
     await emptyMarket.route('**/assets/registry-outlook.json', async (route) => {
@@ -1596,6 +1872,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         hasTouch: true,
       });
       await mockDexscreener(mobile);
+      await mockRegistryResearch(mobile);
       await withCollectionFlag(mobile);
       const mobileGalleryRequests = [];
       mobile.on('request', (request) => {
@@ -1605,55 +1882,50 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       });
       await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
       const label = `${width}×${height}`;
-      const mobileMasthead = await mobile.locator('.consumer-masthead').evaluate((masthead) => {
-        const heading = masthead.querySelector('h1');
-        const caption = masthead.querySelector(':scope > p');
-        const tape = masthead.nextElementSibling;
-        const sculptureRoom = tape?.nextElementSibling;
+      const mobileMasthead = await mobile.locator('.capital-masthead').evaluate((masthead) => {
+        const title = masthead.querySelector('.capital-masthead__title');
+        const heading = title?.querySelector('h1');
+        const caption = title?.querySelector('p');
+        const tape = masthead.querySelector(':scope > .market-tape');
+        const pulse = masthead.querySelector(':scope > .capital-pulse');
+        const opening = masthead.nextElementSibling;
         const nav = document.querySelector('.wnav-wrap');
         const headingRect = heading?.getBoundingClientRect();
         const navRect = nav?.getBoundingClientRect();
-        const mastheadStyle = getComputedStyle(masthead);
         const captionStyle = caption ? getComputedStyle(caption) : null;
         return {
           text: heading?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           visible: heading ? getComputedStyle(heading).visibility === 'visible' && headingRect.height > 0 : false,
-          direct: heading?.parentElement === masthead,
-          eyebrowCount: masthead.querySelectorAll('.consumer-masthead__eyebrow').length,
-          legacyTextVisible: (masthead.textContent ?? '').includes('Official token registry'),
+          direct: heading?.parentElement === title,
+          label: title?.querySelector(':scope > span')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           caption: caption?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           captionDisplay: captionStyle?.display ?? '',
-          tapeImmediate: tape?.classList.contains('market-tape') ?? false,
-          sculptureRoomImmediate: sculptureRoom?.matches('#gallery.gband--consumer') ?? false,
+          tapeDirect: tape?.parentElement === masthead,
+          pulseDirect: pulse?.parentElement === masthead,
+          openingImmediate: opening?.classList.contains('consumer-capital-opening') ?? false,
           left: headingRect?.left ?? -1,
           right: headingRect?.right ?? innerWidth + 1,
           top: headingRect?.top ?? -1,
           navBottom: navRect?.bottom ?? 0,
-          borderWidths: [
-            mastheadStyle.borderTopWidth,
-            mastheadStyle.borderRightWidth,
-            mastheadStyle.borderBottomWidth,
-            mastheadStyle.borderLeftWidth,
-          ],
-          background: mastheadStyle.backgroundColor,
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
         };
       });
       check(
-        `the bare Astrofolio masthead at ${label} is visible below navigation without overflow`,
-        mobileMasthead.text === 'Astrofolio'
+        `Zodiac Capital Markets at ${label} is visible below navigation without overflow`,
+        mobileMasthead.text === 'Zodiac Capital Markets'
           && mobileMasthead.visible
           && mobileMasthead.direct
-          && mobileMasthead.eyebrowCount === 0
-          && !mobileMasthead.legacyTextVisible
-          && mobileMasthead.caption === 'The twelve, live.'
-          && mobileMasthead.captionDisplay === 'none'
-          && mobileMasthead.tapeImmediate
-          && mobileMasthead.sculptureRoomImmediate
+          && mobileMasthead.label === 'Listed by the Zodiacs Registry'
+          && mobileMasthead.caption === 'Twelve signs. Twelve transferable tokens. One live public market.'
+          && mobileMasthead.captionDisplay !== 'none'
+          && mobileMasthead.tapeDirect
+          && mobileMasthead.pulseDirect
+          && mobileMasthead.openingImmediate
           && mobileMasthead.top >= mobileMasthead.navBottom - 1
           && mobileMasthead.left >= -1
           && mobileMasthead.right <= width + 1
-          && mobileMasthead.borderWidths.every((value) => value === '0px')
-          && mobileMasthead.background === 'rgba(0, 0, 0, 0)',
+          && mobileMasthead.pageWidth <= mobileMasthead.viewportWidth + 1,
         JSON.stringify(mobileMasthead),
       );
       const mobileStageLive = await mobile.evaluate(() => (
@@ -1697,6 +1969,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const mobileMarket = mobile.locator('#market');
       await mobileMarket.scrollIntoViewIfNeeded();
       await mobileMarket.locator('.market-row').first().waitFor({ state: 'visible', timeout: 15_000 });
+      const compactRowCount = await mobileMarket.locator('.market-row').count();
+      const compactExpand = mobileMarket.locator('.market-board__expand');
+      check(
+        `mobile market at ${label} starts with three leaders and an explicit expansion`,
+        compactRowCount === 3
+          && await compactExpand.getAttribute('aria-expanded') === 'false'
+          && (await compactExpand.innerText()).includes('Show all 12'),
+        `${compactRowCount}/${await compactExpand.innerText()}`,
+      );
+      await compactExpand.click();
+      await mobile.waitForFunction(() => document.querySelectorAll('#market .market-row').length === 12);
       const compactMarketMaterial = await mobileMarket.evaluate((section) => {
         const measure = (node) => {
           const rect = node.getBoundingClientRect();
@@ -1728,7 +2011,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       });
       check(
-        `Registry market pills at ${label} keep every social and row action touchable without overflow`,
+        `expanded Registry market pills at ${label} keep every social and row action touchable without overflow`,
         compactMarketMaterial.sort.length === 3
           && compactMarketMaterial.share.length === 4
           && compactMarketMaterial.social.length === 3
@@ -2311,8 +2594,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     await mockDexscreener(stagePage);
     const stageRequests = [];
+    const stageSculptureRequests = [];
     stagePage.on('request', (request) => {
-      if (new URL(request.url()).pathname === '/assets/gallery.js') stageRequests.push(request.url());
+      const pathname = new URL(request.url()).pathname;
+      if (pathname === '/assets/gallery.js') stageRequests.push(request.url());
+      if (pathname.startsWith('/assets/sculptures/')) stageSculptureRequests.push(pathname);
     });
     await stagePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
     await stagePage.locator('.consumer-explorer').waitFor({ state: 'visible' });
@@ -2334,6 +2620,18 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         'the default-open stage requests its bundle exactly once',
         stageRequests.length === 1,
         JSON.stringify(stageRequests),
+      );
+      await stagePage.waitForFunction(() => (
+        performance.getEntriesByType('resource')
+          .some((entry) => new URL(entry.name).pathname === '/assets/sculptures/1024/leo.webp')
+      ), null, { timeout: 30_000 });
+      const initialSculptureSlugs = [...new Set(stageSculptureRequests.map((pathname) => (
+        pathname.split('/').pop()?.replace(/\.webp$/, '')
+      )))];
+      check(
+        'the opening WebGL stage requests only its selected sculpture plate',
+        initialSculptureSlugs.length === 1 && initialSculptureSlugs[0] === 'leo',
+        JSON.stringify(stageSculptureRequests),
       );
       check(
         'the rail exposes one pressed tick for the current sign',
@@ -2404,6 +2702,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await geminiTick.evaluate((el) => el.scrollIntoView({ block: 'center' }));
       await geminiTick.click();
       await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
+      await stagePage.waitForFunction(() => (
+        performance.getEntriesByType('resource')
+          .some((entry) => new URL(entry.name).pathname === '/assets/sculptures/1024/gemini.webp')
+      ), null, { timeout: 30_000 });
       const geminiPlacard = await stagePage.locator('[data-consumer-preview="gemini"]').evaluate((placard) => ({
         name: placard.querySelector('.stage-placard__name')?.textContent,
         trade: placard.querySelector('a.btn--primary, button.btn--primary') !== null,
@@ -2419,6 +2721,23 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && geminiPlacard.record === '/registry/gemini/',
         JSON.stringify(geminiPlacard),
       );
+      const requestedGeminiPaths = stageSculptureRequests.filter((pathname) => pathname.endsWith('/gemini.webp'));
+      check(
+        'a new selection requests its high-resolution plate without the twelve-image row batch',
+        requestedGeminiPaths.includes('/assets/sculptures/1024/gemini.webp')
+          && !requestedGeminiPaths.includes('/assets/sculptures/512/gemini.webp')
+          && !stageSculptureRequests.some((pathname) => (
+            pathname.includes('/512/') && !pathname.endsWith('/leo.webp')
+          )),
+        JSON.stringify(stageSculptureRequests),
+      );
+      await stagePage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryResidentTextures === '1'
+      ), null, { timeout: 3_000 });
+      check(
+        'the spotlight releases the previous decoded plate after handoff',
+        await stagePage.locator('.gband--consumer').getAttribute('data-gallery-resident-textures') === '1',
+      );
 
       const liveStage = stagePage.locator('.gband--consumer');
       const liveCanvas = liveStage.locator('.stage__canvas');
@@ -2432,11 +2751,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const turnHint = (await liveStage.locator('[data-gallery-turn-hint]').innerText())
         .replace(/\s+/g, ' ').trim();
       check(
-        'the Registry spotlight turns quietly on its Thesis turntable',
+        'the Registry spotlight begins one quiet inspection sweep',
         !ambientFrameA.equals(ambientFrameB)
           && turnHint.toLowerCase().includes('drag the figure to turn')
           && turnHint.toLowerCase().includes('drag the room to browse'),
         JSON.stringify({ framesEqual: ambientFrameA.equals(ambientFrameB), turnHint }),
+      );
+      await stagePage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'rest'
+      ), null, { timeout: 7_000 });
+      const restingFrameA = await liveCanvas.screenshot();
+      await stagePage.waitForTimeout(500);
+      const restingFrameB = await liveCanvas.screenshot();
+      check(
+        'the inspection sweep returns face-first and releases the render loop',
+        restingFrameA.equals(restingFrameB),
       );
 
       // Find the cast rather than assuming its silhouette fills the centre:
@@ -2507,7 +2836,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         await stagePage.waitForTimeout(500);
         const resumedFrameB = await liveCanvas.screenshot();
         check(
-          'the quiet turntable resumes after the inspection pause',
+          'a fresh bounded inspection sweep resumes after the inspection pause',
           !resumedFrameA.equals(resumedFrameB),
         );
       }
@@ -2515,6 +2844,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       // Tapping a sculpture on the stage chooses it. There is nothing to
       // draw out to — the placard is already at its feet — so the card must
       // stay shut however the canvas is used.
+      await stagePage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'rest'
+      ), null, { timeout: 7_000 });
       const mountBox = await stagePage.locator('.gband--consumer [data-gallery-canvas]').boundingBox();
       await stagePage.mouse.move(mountBox.x + (mountBox.width / 2), mountBox.y + (mountBox.height / 2));
       await stagePage.mouse.down();
@@ -2530,8 +2862,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await stagePage.waitForTimeout(500);
       const tappedFrameB = await liveCanvas.screenshot();
       check(
-        'a tap never stalls the Registry turntable',
-        !tappedFrameA.equals(tappedFrameB),
+        'a tap leaves the completed inspection pose at rest',
+        tappedFrameA.equals(tappedFrameB)
+          && await liveStage.getAttribute('data-gallery-rotation') === 'rest',
       );
 
       const stageText = await stagePage.locator('.consumer-explorer').innerText();
@@ -2558,6 +2891,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       viewport: { width: 1280, height: 900 },
       reducedMotion: 'reduce',
     });
+    let bitmapReferenceFrame = null;
     await mockDexscreener(reducedStage);
     await reducedStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
     const reducedStageLive = await reducedStage.evaluate(() => (
@@ -2570,6 +2904,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await reducedStage.waitForFunction(() => (
         document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'manual'
       ));
+      await reducedStage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryResidentTextures === '1'
+      ), null, { timeout: 30_000 });
       await reducedStage.waitForTimeout(1400);
       const quietFrameA = await canvas.screenshot();
       await reducedStage.waitForTimeout(500);
@@ -2579,8 +2916,83 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         quietFrameA.equals(quietFrameB)
           && await band.getAttribute('data-gallery-rotation') === 'manual',
       );
+      bitmapReferenceFrame = quietFrameB;
     }
     await reducedStage.close();
+
+    // ImageBitmap bypasses THREE.Texture.flipY. Its decode options must
+    // produce the exact same upright plate as the HTMLImage fallback, or the
+    // fast path silently turns every sculpture upside down.
+    if (bitmapReferenceFrame) {
+      const imageFallbackStage = await newPage({
+        viewport: { width: 1280, height: 900 },
+        reducedMotion: 'reduce',
+      });
+      await imageFallbackStage.addInitScript(() => {
+        try { delete globalThis.createImageBitmap; } catch {}
+      });
+      await mockDexscreener(imageFallbackStage);
+      await imageFallbackStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      const fallbackBand = imageFallbackStage.locator('.gband--consumer');
+      const fallbackCanvas = fallbackBand.locator('.stage__canvas');
+      await fallbackCanvas.waitFor({ state: 'visible', timeout: 30_000 });
+      await imageFallbackStage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'manual'
+          && document.querySelector('.gband--consumer')?.dataset.galleryResidentTextures === '1'
+      ));
+      await imageFallbackStage.waitForTimeout(1400);
+      const fallbackFrame = await fallbackCanvas.screenshot();
+      check(
+        'ImageBitmap and HTMLImage decode the sculpture with identical upright orientation',
+        await imageFallbackStage.evaluate(() => typeof globalThis.createImageBitmap === 'undefined')
+          && bitmapReferenceFrame.equals(fallbackFrame),
+      );
+      await imageFallbackStage.close();
+    }
+
+    const saverStage = await newPage({
+      viewport: { width: 390, height: 844 },
+      hasTouch: true,
+    });
+    await saverStage.addInitScript(() => {
+      const constrained = { saveData: true, effectiveType: '4g' };
+      for (const key of ['connection', 'mozConnection', 'webkitConnection']) {
+        try {
+          Object.defineProperty(navigator, key, {
+            configurable: true,
+            get: () => constrained,
+          });
+        } catch {}
+      }
+    });
+    await mockDexscreener(saverStage);
+    await mockRegistryResearch(saverStage);
+    const saverRequests = [];
+    saverStage.on('request', (request) => {
+      const pathname = new URL(request.url()).pathname;
+      if (pathname === '/assets/gallery.js' || pathname.startsWith('/assets/sculptures/')) {
+        saverRequests.push(pathname);
+      }
+    });
+    await saverStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await saverStage.locator('.consumer-explorer').waitFor({ state: 'visible' });
+    await saverStage.waitForTimeout(700);
+    const saverState = await saverStage.evaluate(() => ({
+      live: document.documentElement.classList.contains('gallery-live'),
+      canvas: document.querySelectorAll('.gband .stage__canvas').length,
+      carousel: document.querySelectorAll('[data-gallery-carousel]').length,
+    }));
+    const saverSculptureSlugs = [...new Set(saverRequests
+      .filter((pathname) => pathname.startsWith('/assets/sculptures/'))
+      .map((pathname) => pathname.split('/').pop()?.replace(/\.webp$/, '')))];
+    check(
+      'Data Saver keeps the poster path and never requests WebGL or neighboring sculptures',
+      !saverState.live && saverState.canvas === 0 && saverState.carousel === 1
+        && !saverRequests.includes('/assets/gallery.js')
+        && saverSculptureSlugs.length === 1 && saverSculptureSlugs[0] === 'leo',
+      JSON.stringify({ saverState, saverRequests }),
+    );
+    await saverStage.close();
 
     // ---- the trade panel, with its flag turned on ------------------------
     //

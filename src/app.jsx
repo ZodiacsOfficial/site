@@ -1317,6 +1317,167 @@
       }, [enabled, retryKey, attempt]);
       return state;
     }
+
+    const REGISTRY_MARKET_HISTORY_URL = '/assets/data/registry-market-history.v1.json';
+    const REGISTRY_RESEARCH_URL = '/assets/registry-research-feed.json';
+    const REGISTRY_NEWS_URL = '/api/registry/news';
+    let registryMarketHistoryRequest = null;
+    let registryResearchRequest = null;
+    let registryNewsRequest = null;
+    const registryResourceCache = new Map();
+
+    function loadRegistryJson(url, cachedRequest, setRequest) {
+      if (registryResourceCache.has(url)) return Promise.resolve(registryResourceCache.get(url));
+      if (cachedRequest) return cachedRequest;
+      const request = fetch(url, {
+        cache: 'no-cache',
+        headers: { accept: 'application/json' },
+      })
+        .then(async (response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const data = await response.json();
+          registryResourceCache.set(url, data);
+          return data;
+        });
+      const held = request.finally(() => setRequest(null));
+      setRequest(held);
+      return held;
+    }
+
+    function loadRegistryMarketHistory() {
+      return loadRegistryJson(
+        REGISTRY_MARKET_HISTORY_URL,
+        registryMarketHistoryRequest,
+        (request) => { registryMarketHistoryRequest = request; },
+      );
+    }
+
+    function loadRegistryResearch() {
+      return loadRegistryJson(
+        REGISTRY_RESEARCH_URL,
+        registryResearchRequest,
+        (request) => { registryResearchRequest = request; },
+      );
+    }
+
+    function loadRegistryNews() {
+      return loadRegistryJson(
+        REGISTRY_NEWS_URL,
+        registryNewsRequest,
+        (request) => { registryNewsRequest = request; },
+      );
+    }
+
+    function useRegistryResource(enabled, loader) {
+      const [state, setState] = useState({ status: 'idle' });
+      const [retryKey, setRetryKey] = useState(0);
+      useEffect(() => {
+        if (!enabled) return undefined;
+        let cancelled = false;
+        setState(current => current.status === 'ok'
+          ? { ...current, refreshing: true }
+          : { status: 'loading' });
+        loader()
+          .then(data => {
+            if (!cancelled) setState({ status: 'ok', data, refreshing: false });
+          })
+          .catch(() => {
+            if (!cancelled) setState(current => current.status === 'ok'
+              ? { ...current, stale: true, refreshing: false }
+              : { status: 'unavailable' });
+          });
+        return () => { cancelled = true; };
+      }, [enabled, loader, retryKey]);
+      return { ...state, retry: () => setRetryKey(value => value + 1) };
+    }
+
+    function useRegistryMarketHistory(enabled) {
+      return useRegistryResource(enabled, loadRegistryMarketHistory);
+    }
+
+    function useRegistryResearch(enabled) {
+      return useRegistryResource(enabled, loadRegistryResearch);
+    }
+
+    function useRegistryNews(enabled) {
+      return useRegistryResource(enabled, loadRegistryNews);
+    }
+
+    // External headlines are fetched in the background but never insert into
+    // the page while somebody is reading. One explicit action promotes the
+    // queued edition everywhere the landing renders external reporting.
+    let acceptedRegistryNews = null;
+    const acceptedRegistryNewsListeners = new Set();
+    function acceptRegistryNews(data) {
+      acceptedRegistryNews = data;
+      acceptedRegistryNewsListeners.forEach(listener => listener(data));
+    }
+    function useQueuedRegistryNews(enabled) {
+      const source = useRegistryNews(enabled);
+      const [accepted, setAccepted] = useState(acceptedRegistryNews);
+      useEffect(() => {
+        acceptedRegistryNewsListeners.add(setAccepted);
+        return () => acceptedRegistryNewsListeners.delete(setAccepted);
+      }, []);
+      const incoming = source.status === 'ok' && Array.isArray(source.data?.items)
+        ? source.data
+        : null;
+      const acceptedIds = new Set(Array.isArray(accepted?.items)
+        ? accepted.items.map(item => item.id)
+        : []);
+      const pendingCount = incoming
+        ? incoming.items.filter(item => !acceptedIds.has(item.id)).length
+        : 0;
+      return {
+        ...source,
+        data: accepted,
+        pendingCount,
+        acceptUpdates: () => {
+          if (incoming) acceptRegistryNews(incoming);
+        },
+      };
+    }
+
+    function marketHistoryForSign(archive, slug) {
+      const snapshots = Array.isArray(archive?.snapshots) ? archive.snapshots : [];
+      const observations = snapshots
+        .map((snapshot) => {
+          const asset = snapshot?.assets?.find(item => item.sign === slug) ?? null;
+          return {
+            date: snapshot.date,
+            observedAt: snapshot.source?.readAt ?? `${snapshot.date}T00:00:00.000Z`,
+            priceUsd: toFiniteNumber(asset?.priceUsd),
+            change24hPct: toFiniteNumber(asset?.change24hPct),
+            marketCapUsd: toFiniteNumber(asset?.marketCapUsd),
+            fdvUsd: toFiniteNumber(asset?.fdvUsd),
+            liquidityUsd: toFiniteNumber(asset?.liquidityUsd),
+            volume24hUsd: toFiniteNumber(asset?.volume24hUsd),
+            indexedPoolCount: toFiniteNumber(asset?.indexedPoolCount),
+            deepestPool: asset?.deepestPool ?? null,
+          };
+        })
+        .sort((left, right) => left.date.localeCompare(right.date));
+      return {
+        observations,
+        priced: observations.filter(item => item.priceUsd !== null),
+        latest: observations.at(-1) ?? null,
+      };
+    }
+
+    function useCompactMarketLimit() {
+      const query = '(max-width: 760px)';
+      const [limit, setLimit] = useState(() => (
+        typeof window !== 'undefined' && window.matchMedia(query).matches ? 3 : 6
+      ));
+      useEffect(() => {
+        const media = window.matchMedia(query);
+        const update = () => setLimit(media.matches ? 3 : 6);
+        update();
+        media.addEventListener?.('change', update);
+        return () => media.removeEventListener?.('change', update);
+      }, []);
+      return limit;
+    }
     function useInView(rootMargin = '0px 0px 15% 0px') {
       const ref = useRef(null);
       const [inView, setInView] = useState(false);
@@ -1730,6 +1891,178 @@
       );
     }
 
+    function MarketHistoryChart({ observations, sign, compact = false }) {
+      const available = Array.isArray(observations) ? observations : [];
+      const pricedAvailable = available.filter(point => point.priceUsd !== null);
+      const [range, setRange] = useState('all');
+      const ranges = [
+        { id: '7d', label: '7D', count: 7 },
+        { id: '30d', label: '30D', count: 30 },
+        { id: 'all', label: 'All', count: Infinity },
+      ];
+      useEffect(() => {
+        const required = ranges.find(option => option.id === range)?.count ?? Infinity;
+        if (Number.isFinite(required) && pricedAvailable.length < required) setRange('all');
+      }, [pricedAvailable.length, range]);
+      const selected = range === 'all'
+        ? available
+        : available.slice(-Number.parseInt(range, 10));
+      const priced = selected.filter(point => point.priceUsd !== null);
+      const width = compact ? 220 : 520;
+      const height = compact ? 52 : 150;
+      const inset = compact ? 3 : 8;
+      const values = priced.map(point => point.priceUsd);
+      const low = values.length ? Math.min(...values) : 0;
+      const high = values.length ? Math.max(...values) : 0;
+      const spread = high - low || Math.max(Math.abs(high) * 0.04, 1e-12);
+      const xAt = (index) => inset + ((width - (2 * inset)) * (selected.length <= 1 ? .5 : index / (selected.length - 1)));
+      const yAt = (value) => inset + ((height - (2 * inset)) * (1 - ((value - low) / spread)));
+      const segments = [];
+      let activeSegment = [];
+      selected.forEach((point, index) => {
+        const previous = selected[index - 1];
+        const currentDay = Date.parse(`${point.date}T00:00:00Z`);
+        const previousDay = previous ? Date.parse(`${previous.date}T00:00:00Z`) : currentDay;
+        const calendarGap = index > 0
+          && Number.isFinite(currentDay)
+          && Number.isFinite(previousDay)
+          && currentDay - previousDay !== 86_400_000;
+        if (point.priceUsd === null || calendarGap) {
+          if (activeSegment.length) segments.push(activeSegment);
+          activeSegment = [];
+          if (point.priceUsd === null) return;
+        }
+        activeSegment.push(`${xAt(index).toFixed(2)},${yAt(point.priceUsd).toFixed(2)}`);
+      });
+      if (activeSegment.length) segments.push(activeSegment);
+      const first = priced[0];
+      const last = priced.at(-1);
+      const summary = priced.length === 0
+        ? `${sign.name} archived price history is unavailable.`
+        : priced.length === 1
+          ? `${sign.name} has one archived daily price observation, ${formatPriceUsd(first.priceUsd)} on ${first.date}.`
+          : `${sign.name} has ${priced.length} archived daily price observations, from ${formatPriceUsd(first.priceUsd)} on ${first.date} to ${formatPriceUsd(last.priceUsd)} on ${last.date}.`;
+
+      return (
+        <figure className={'registry-history' + (compact ? ' registry-history--compact' : '')}>
+          <figcaption>
+            <span>{priced.length} daily observation{priced.length === 1 ? '' : 's'}</span>
+            {!compact && (
+              <span className="registry-history__range" role="group" aria-label="Price-history range">
+                {ranges.map(option => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    aria-pressed={range === option.id}
+                    disabled={Number.isFinite(option.count) && pricedAvailable.length < option.count}
+                    onClick={() => setRange(option.id)}
+                  >{option.label}</button>
+                ))}
+              </span>
+            )}
+          </figcaption>
+          <svg
+            viewBox={`0 0 ${width} ${height}`}
+            preserveAspectRatio="none"
+            role="img"
+            aria-label={summary}
+          >
+            <line x1={inset} x2={width - inset} y1={height - inset} y2={height - inset} className="registry-history__axis" />
+            {segments.map((points, index) => points.length > 1 ? (
+              <polyline key={index} points={points.join(' ')} className="registry-history__line" />
+            ) : (
+              <circle key={index} cx={points[0].split(',')[0]} cy={points[0].split(',')[1]} r={compact ? 2.5 : 4} className="registry-history__point" />
+            ))}
+          </svg>
+          {priced.length < 2 && <p>{priced.length ? 'History is building from the first archived day.' : 'No archived price is available yet.'}</p>}
+        </figure>
+      );
+    }
+
+    function PlacardMarketPanel({ sign }) {
+      const batch = useTwelveQuotes(true);
+      const history = useRegistryMarketHistory(true);
+      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
+      const ledger = marketHistoryForSign(history.data, sign.asset.sign);
+      const observations = ledger.observations;
+      const latest = ledger.latest;
+      const marketCapRows = batch.status === 'ok'
+        ? SIGNS.map(item => ({ item, value: toFiniteNumber(batch.quotes[item.asset.sign]?.marketCap) }))
+          .filter(row => row.value !== null)
+          .sort((a, b) => b.value - a.value || a.item.order - b.item.order)
+        : [];
+      const liquidityRows = batch.status === 'ok'
+        ? SIGNS.map(item => ({ item, value: toFiniteNumber(batch.quotes[item.asset.sign]?.liquidityUsd) }))
+          .filter(row => row.value !== null)
+          .sort((a, b) => b.value - a.value || a.item.order - b.item.order)
+        : [];
+      const capRank = marketCapRows.findIndex(row => row.item.ticker === sign.ticker);
+      const liquidityRank = liquidityRows.findIndex(row => row.item.ticker === sign.ticker);
+      const liveChartUrl = quote?.url || latest?.deepestPool?.url || '';
+      const marketCap = toFiniteNumber(quote?.marketCap) ?? latest?.marketCapUsd ?? null;
+      const liquidity = toFiniteNumber(quote?.liquidityUsd) ?? latest?.liquidityUsd ?? null;
+      const volume = toFiniteNumber(quote?.volume24h) ?? latest?.volume24hUsd ?? null;
+      const pools = toFiniteNumber(quote?.poolCount) ?? latest?.indexedPoolCount ?? null;
+
+      return (
+        <div className="stage-market" data-stage-market={sign.asset.sign}>
+          <div className="stage-market__chart">
+            <MarketHistoryChart observations={observations} sign={sign} compact />
+          </div>
+          <dl className="stage-market__facts">
+            <div><dt>Market cap{capRank >= 0 ? ` · #${capRank + 1}` : ''}</dt><dd>{marketCap === null ? '—' : formatUsdCompact(marketCap)}</dd></div>
+            <div><dt>Liquidity{liquidityRank >= 0 ? ` · #${liquidityRank + 1}` : ''}</dt><dd>{liquidity === null ? '—' : formatUsdCompact(liquidity)}</dd></div>
+            <div><dt>24h volume</dt><dd>{volume === null ? '—' : formatUsdCompact(volume)}</dd></div>
+            <div><dt>Pools</dt><dd>{pools === null ? '—' : pools}</dd></div>
+          </dl>
+          {liveChartUrl && (
+            <a className="stage-market__live" href={liveChartUrl} rel="noopener noreferrer external nofollow">
+              Open live chart <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+      );
+    }
+
+    function StageConstellation({ slug }) {
+      const currentSlug = useRef(slug);
+      const [layers, setLayers] = useState({ current: slug, previous: null });
+      useEffect(() => {
+        if (currentSlug.current === slug) return undefined;
+        const previous = currentSlug.current;
+        currentSlug.current = slug;
+        if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+          setLayers({ current: slug, previous: null });
+          return undefined;
+        }
+        setLayers({ current: slug, previous });
+        const timer = window.setTimeout(() => {
+          setLayers(current => current.current === slug
+            ? { current: slug, previous: null }
+            : current);
+        }, 320);
+        return () => window.clearTimeout(timer);
+      }, [slug]);
+      return (
+        <picture className="gband__constellation" aria-hidden="true" data-stage-constellation={slug}>
+          {layers.previous && (
+            <img
+              className="is-leaving"
+              src={`/assets/constellations/${layers.previous}.svg`}
+              alt=""
+              decoding="async"
+            />
+          )}
+          <img
+            className="is-entering"
+            src={`/assets/constellations/${layers.current}.svg`}
+            alt=""
+            decoding="async"
+          />
+        </picture>
+      );
+    }
+
     /* The twelve pastel discs as a rail rather than a grid: the same picker
        at every width, scrolling sideways where it cannot fit. Keyboard
        contract matches the grid it replaces — roving tabindex, arrows walk
@@ -1829,6 +2162,8 @@
 
       useEffect(() => {
         previousIndex.current = activeIndex;
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '')) return;
         const before = SIGNS[(activeIndex - 1 + SIGNS.length) % SIGNS.length];
         const after = SIGNS[(activeIndex + 1) % SIGNS.length];
         for (const neighbour of [before, after]) {
@@ -1909,6 +2244,9 @@
       const gallerySlug = useRef(null);
       const sign = SIGNS.find(s => s.ticker === active) ?? SIGNS[0];
       const slug = sign.asset.sign;
+      const activeSlugRef = useRef(slug);
+      activeSlugRef.current = slug;
+      const [posterSlug, setPosterSlug] = useState(slug);
       const season = useCurrentSeason();
       // The trade sheet: the panel slides in over the stage on request and
       // the sculpture stays where it is, dimmed behind the scrim. Closing
@@ -2019,7 +2357,10 @@
         const node = stageRef.current;
         if (!node) return undefined;
         const onReady = () => setGalleryReady(true);
-        const onUnready = () => setGalleryReady(false);
+        const onUnready = () => {
+          setPosterSlug(activeSlugRef.current);
+          setGalleryReady(false);
+        };
         node.addEventListener('zodiacs:gallery-ready', onReady);
         node.addEventListener('zodiacs:gallery-unready', onUnready);
         // Covers a cached scene that became ready before this effect attached.
@@ -2030,6 +2371,10 @@
           node.removeEventListener('zodiacs:gallery-unready', onUnready);
         };
       }, []);
+
+      useEffect(() => {
+        if (!galleryReady) setPosterSlug(slug);
+      }, [galleryReady, slug]);
 
       // The scene bundle carries Three.js; it is fetched only as the band
       // approaches the viewport, and only once. The carousel never asks.
@@ -2099,13 +2444,6 @@
 
       return (
         <>
-          {/* The market tape is the consumer route's first instrument, before
-              the framed sculpture room. It stays in this component so opening
-              the Acquisition Desk can still pause it without lifting the
-              sheet's focus and scroll-lock state out of the gallery. */}
-          {consumer && (
-            <MarketTape season={season} paused={sheetVisible} />
-          )}
           <section
             ref={stageRef}
             id="gallery"
@@ -2120,6 +2458,7 @@
             data-gallery-spotlight={consumer && !carousel ? '' : undefined}
             data-gallery-paused={consumer && (carousel || sheetVisible) ? '' : undefined}
           >
+          {consumer && <StageConstellation slug={slug} />}
           {/* The stage picks with the rail at the top and shows one piece
               large below it, so the twelve read as the choice and the chosen
               sculpture as the answer. The rail deliberately does NOT wear
@@ -2142,7 +2481,7 @@
           {!carousel && (
             <picture className="gband__poster" aria-hidden="true">
               <img
-                src={`/assets/sculptures/512/${slug}.webp`}
+                src={`/assets/sculptures/512/${posterSlug}.webp`}
                 width="512"
                 height="512"
                 alt=""
@@ -2173,6 +2512,7 @@
                   <PlacardQuote sign={sign} />
                 </span>
               </span>
+              <PlacardMarketPanel sign={sign} />
               <span className="stage-placard__actions">
                 {REGISTRY_TRADE_ENABLED ? (
                   <button
@@ -2189,7 +2529,7 @@
                   </a>
                 )}
                 <a className="btn btn--ghost stage-placard__pill" href={registryProfilePath(sign)}>
-                  <span>The record</span>
+                  <span>Official record</span>
                 </a>
               </span>
             </div>
@@ -3848,6 +4188,47 @@
       );
     }
 
+    function ConsumerCapitalHeader() {
+      const season = useCurrentSeason();
+      const batch = useTwelveQuotes(true);
+      const quotes = batch.status === 'ok'
+        ? SIGNS.map(sign => batch.quotes[sign.asset.sign]).filter(Boolean)
+        : [];
+      const marketCaps = quotes.map(quote => toFiniteNumber(quote.marketCap)).filter(value => value !== null);
+      const liquidities = quotes.map(quote => toFiniteNumber(quote.liquidityUsd)).filter(value => value !== null);
+      const advancing = quotes.filter(quote => (toFiniteNumber(quote.priceChange24h) ?? 0) > 0).length;
+      const totalMarketCap = marketCaps.reduce((sum, value) => sum + value, 0);
+      const totalLiquidity = liquidities.reduce((sum, value) => sum + value, 0);
+
+      return (
+        <header className="capital-masthead" aria-labelledby="consumer-explorer-title">
+          <div className="capital-masthead__title">
+            <span>Listed by the Zodiacs Registry</span>
+            <h1 id="consumer-explorer-title">Zodiac Capital Markets</h1>
+            <p>Twelve signs. Twelve transferable tokens. One live public market.</p>
+          </div>
+          <MarketTape season={season} />
+          <div className="capital-pulse" aria-busy={batch.status === 'loading'}>
+            <div>
+              <span>Indexed market cap</span>
+              <strong>{batch.status === 'ok' ? formatUsdCompact(totalMarketCap) : '—'}</strong>
+              <small>{marketCaps.length} of 12 reporting</small>
+            </div>
+            <div>
+              <span>Indexed liquidity</span>
+              <strong>{batch.status === 'ok' ? formatUsdCompact(totalLiquidity) : '—'}</strong>
+              <small>Exact-mint Solana pools</small>
+            </div>
+            <div>
+              <span>24h breadth</span>
+              <strong>{batch.status === 'ok' ? `${advancing} / ${quotes.length || 12}` : '—'}</strong>
+              <small>Tokens trading higher</small>
+            </div>
+          </div>
+        </header>
+      );
+    }
+
     function ConsumerMarketSection({ active, setActive, personalSlug, setPersonalSlug }) {
       const reveal = useReveal();
       const [hostRef, inView] = useInView('360px 0px 360px 0px');
@@ -3862,6 +4243,8 @@
       const [rankBy, setRankBy] = useState(initialRank);
       const [retryKey, setRetryKey] = useState(0);
       const [shareState, setShareState] = useState('');
+      const [expanded, setExpanded] = useState(false);
+      const compactLimit = useCompactMarketLimit();
       const batch = useTwelveQuotes(inView, retryKey);
       const season = useCurrentSeason();
 
@@ -3880,10 +4263,6 @@
         });
       }, [batch, rankBy]);
 
-      const quoted = rows.filter(row => row.quote);
-      const totalMarketCap = quoted.reduce((sum, row) => sum + (toFiniteNumber(row.quote.marketCap) ?? 0), 0);
-      const totalLiquidity = quoted.reduce((sum, row) => sum + (toFiniteNumber(row.quote.liquidityUsd) ?? 0), 0);
-      const advancing = quoted.filter(row => (toFiniteNumber(row.quote.priceChange24h) ?? 0) > 0).length;
       const observed = batch.observedAt
         ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
         : null;
@@ -3903,6 +4282,7 @@
         row => toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]) !== null,
       ).length;
       const shareReady = batch.status === 'ok' && metricCoverage > 0;
+      const visibleRows = expanded ? rows : rows.slice(0, compactLimit);
 
       const metricValue = (row) => {
         const value = toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]);
@@ -3969,50 +4349,15 @@
         <section
           ref={reveal}
           id="market"
-          className="consumer-market reveal"
+          className={'consumer-market reveal' + (expanded ? ' is-expanded' : '')}
           aria-labelledby="consumer-market-title"
           style={{ '--active-sign': activeSign.hue }}
         >
-          <header className="consumer-market__head">
-            <div className="consumer-section-head">
-              <span className="consumer-section-head__eyebrow">Live market board</span>
-              <h2 id="consumer-market-title">Zodiac Capital Markets</h2>
-              <p>
-                A live ranking of the twelve official tokens. Change the lens or
-                choose a sign to carry that selection across the Registry.
-              </p>
-            </div>
-            <div className="consumer-market__personal">
-              <span className="consumer-market__personal-label">Your sign on this device</span>
-              <strong>{personalSlug ? titleCase(personalSlug) : 'Not chosen'}</strong>
-              <button
-                className="registry-pill registry-pill--compact"
-                type="button"
-                aria-pressed={personalSlug === activeSign.asset.sign}
-                onClick={() => setPersonalSlug(activeSign.asset.sign)}
-              >
-                {personalSlug === activeSign.asset.sign ? `${activeSign.name} is yours` : `Choose ${activeSign.name}`}
-              </button>
-            </div>
+          <header ref={hostRef} className="consumer-market__compact-head">
+            <span className="consumer-section-head__eyebrow">Live market board</span>
+            <h2 id="consumer-market-title">The twelve, ranked live.</h2>
+            <p>Choose a sign to update the sculpture, chart, and research across the page.</p>
           </header>
-
-          <div ref={hostRef} className="market-pulse" aria-busy={batch.status === 'loading'}>
-            <div className="market-pulse__cell">
-              <span>Indexed market cap</span>
-              <strong>{batch.status === 'ok' ? formatUsdCompact(totalMarketCap) : '—'}</strong>
-              <small>{quoted.filter(row => toFiniteNumber(row.quote.marketCap) !== null).length} of 12 indexed</small>
-            </div>
-            <div className="market-pulse__cell">
-              <span>Indexed liquidity</span>
-              <strong>{batch.status === 'ok' ? formatUsdCompact(totalLiquidity) : '—'}</strong>
-              <small>Exact-mint pools indexed by DexScreener</small>
-            </div>
-            <div className="market-pulse__cell">
-              <span>Market breadth</span>
-              <strong>{batch.status === 'ok' ? `${advancing} / ${quoted.length || 12}` : '—'}</strong>
-              <small>Tokens positive over 24h</small>
-            </div>
-          </div>
 
           <div className="market-board" data-rank={rankBy}>
             <div className="market-board__toolbar">
@@ -4064,8 +4409,8 @@
                 <button className="registry-pill registry-pill--compact" type="button" onClick={() => setRetryKey(value => value + 1)}>Try again</button>
               </div>
             )}
-            <ol className="market-board__rows" aria-busy={batch.status === 'loading'}>
-                {rows.map((row, index) => {
+            <ol id="market-ranked-twelve" className="market-board__rows" aria-busy={batch.status === 'loading'}>
+                {visibleRows.map((row, index) => {
                   const { sign: item, quote } = row;
                   const isActive = item.ticker === active;
                   const isSeason = item.ticker === season?.sign?.ticker;
@@ -4101,6 +4446,29 @@
                   );
                 })}
             </ol>
+            <div className="market-board__expand-row">
+              <button
+                className="registry-pill registry-pill--record market-board__expand"
+                type="button"
+                aria-expanded={expanded}
+                aria-controls="market-ranked-twelve"
+                onClick={() => setExpanded(value => !value)}
+              >
+                <span>{expanded ? 'Show leaders only' : `Show all ${rows.length}`}</span>
+                <span className="market-row__action-orb" aria-hidden="true">{expanded ? '↑' : '↓'}</span>
+              </button>
+              <div className="consumer-market__personal consumer-market__personal--compact">
+                <span><small>Your sign</small><strong>{personalSlug ? titleCase(personalSlug) : 'Not chosen'}</strong></span>
+                <button
+                  className="registry-pill registry-pill--compact"
+                  type="button"
+                  aria-pressed={personalSlug === activeSign.asset.sign}
+                  onClick={() => setPersonalSlug(activeSign.asset.sign)}
+                >
+                  {personalSlug === activeSign.asset.sign ? `${activeSign.name} saved` : `Save ${activeSign.name}`}
+                </button>
+              </div>
+            </div>
           </div>
 
           <p className="consumer-market__foot">
@@ -4110,6 +4478,185 @@
             third-party context, may be incomplete, and is not a recommendation. See the{' '}
             <a href="/registry/technical/#market-transparency">method and technical record</a>.
           </p>
+        </section>
+      );
+    }
+
+    const RESEARCH_FILTERS = Object.freeze([
+      ['all', 'All'],
+      ['zodiacs', 'Zodiacs Research'],
+      ['astrology', 'Astrology News'],
+      ['astronomy', 'Astronomy'],
+      ['calendar', 'Calendar'],
+    ]);
+
+    function visibleResearchItems(firstParty, external) {
+      const now = Date.now();
+      const owned = Array.isArray(firstParty?.items) ? firstParty.items : [];
+      const outside = Array.isArray(external?.items) ? external.items : [];
+      return [...owned, ...outside]
+        .filter(item => {
+          const visibleAt = Date.parse(item.visibleAt || item.publishedAt || '');
+          return !Number.isFinite(visibleAt) || visibleAt <= now;
+        })
+        .map(item => ({
+          ...item,
+          sourceType: item.sourceType || 'zodiacs-research',
+          publisher: item.publisher || 'Zodiacs.org Research System',
+          topics: Array.isArray(item.topics) ? item.topics : [],
+          signs: Array.isArray(item.signs) && item.signs.length
+            ? item.signs
+            : SIGNS
+              .map(sign => sign.asset.sign)
+              .filter(slug => Array.isArray(item.topics) && item.topics.includes(slug)),
+        }))
+        .sort((left, right) => (
+          Date.parse(right.publishedAt || right.visibleAt || 0)
+          - Date.parse(left.publishedAt || left.visibleAt || 0)
+        ));
+    }
+
+    function researchMatchesFilter(item, filter) {
+      if (filter === 'all') return true;
+      if (filter === 'zodiacs') return item.sourceType === 'zodiacs-research';
+      if (filter === 'astrology') return item.sourceType === 'astrology-news';
+      if (filter === 'astronomy') return item.sourceType === 'astronomy';
+      return item.kind === 'event-brief' || item.topics.includes('calendar') || item.status === 'upcoming';
+    }
+
+    function researchDate(value) {
+      const date = new Date(value);
+      if (!Number.isFinite(date.getTime())) return 'Time pending';
+      return date.toLocaleString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'UTC',
+        timeZoneName: 'short',
+      });
+    }
+
+    function ResearchItem({ item, featured = false }) {
+      const external = item.sourceType !== 'zodiacs-research';
+      const href = item.url || `/registry/research/${item.slug || item.id}/`;
+      const label = external ? `External source · ${item.publisher}` : 'Zodiacs Research · Reviewed';
+      return (
+        <article className={'research-item' + (featured ? ' research-item--featured' : '')} data-research-source={item.sourceType}>
+          <a href={href} rel={external ? 'noopener noreferrer external' : undefined}>
+            <div className="research-item__meta">
+              <span>{label}</span>
+              <time dateTime={item.publishedAt}>{researchDate(item.publishedAt)}</time>
+            </div>
+            <h3>{item.title}</h3>
+            {item.summary && <p>{item.summary}</p>}
+            {item.signs.length > 0 && (
+              <span className="research-item__signs" aria-label={`Affected signs: ${item.signs.join(', ')}`}>
+                {item.signs.slice(0, 4).map(slug => (
+                  <img key={slug} src={`/assets/zodiac-icons/48/${slug}.webp`} width="24" height="24" alt="" loading="lazy" decoding="async" />
+                ))}
+              </span>
+            )}
+            <span className="research-item__open">{external ? 'Read at source' : 'Open research note'} <i aria-hidden="true">↗</i></span>
+          </a>
+        </article>
+      );
+    }
+
+    function ConsumerResearchPulse() {
+      const firstParty = useRegistryResearch(true);
+      const external = useQueuedRegistryNews(true);
+      const items = visibleResearchItems(firstParty.data, external.data);
+      const featured = items.find(item => item.sourceType === 'zodiacs-research');
+      const headlines = items.filter(item => item !== featured && item.sourceType !== 'zodiacs-research').slice(0, 2);
+      return (
+        <aside className="research-pulse" aria-labelledby="research-pulse-title">
+          <div className="research-pulse__head">
+            <span>Research pulse</span>
+            <h2 id="research-pulse-title">The sky, the market, and the record.</h2>
+          </div>
+          {featured ? <ResearchItem item={featured} featured /> : (
+            <p className="research-pulse__state">The first reviewed research edition is being prepared.</p>
+          )}
+          <div className="research-pulse__headlines" aria-label="Independent headlines">
+            {headlines.map(item => <ResearchItem key={item.id} item={item} />)}
+            {external.pendingCount > 0 && (
+              <button
+                className="registry-pill research-updates"
+                type="button"
+                onClick={external.acceptUpdates}
+              >Show {external.pendingCount} new source update{external.pendingCount === 1 ? '' : 's'}</button>
+            )}
+          </div>
+          <a className="registry-pill research-pulse__all" href="/registry/research/">
+            <span>Open Markets Research</span><span className="market-row__action-orb" aria-hidden="true">↗</span>
+          </a>
+        </aside>
+      );
+    }
+
+    function ConsumerResearchSection({ active }) {
+      const reveal = useReveal();
+      const [hostRef, inView] = useInView('420px 0px');
+      const [filter, setFilter] = useState('all');
+      const [forSign, setForSign] = useState(false);
+      const firstParty = useRegistryResearch(inView);
+      const external = useQueuedRegistryNews(inView);
+      const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
+      const items = visibleResearchItems(firstParty.data, external.data)
+        .filter(item => researchMatchesFilter(item, filter))
+        .filter(item => !forSign || item.signs.includes(activeSign.asset.sign))
+        .slice(0, 5);
+      const loading = firstParty.status === 'loading' || external.status === 'loading';
+
+      return (
+        <section ref={reveal} id="research" className="consumer-research reveal" aria-labelledby="consumer-research-title">
+          <header ref={hostRef} className="consumer-research__head">
+            <div className="consumer-section-head">
+              <span className="consumer-section-head__eyebrow">Reported outside · computed here</span>
+              <h2 id="consumer-research-title">Markets Research</h2>
+              <p>
+                Independent astrology and astronomy headlines sit beside reviewed Zodiacs research.
+                Sky facts, symbolic readings, and market observations remain separate.
+              </p>
+            </div>
+            <button
+              className="registry-pill registry-pill--compact consumer-research__sign-filter"
+              type="button"
+              aria-pressed={forSign}
+              onClick={() => setForSign(value => !value)}
+            >{forSign ? `Showing ${activeSign.name}` : `For ${activeSign.name}`}</button>
+          </header>
+          <div className="consumer-research__filters" role="group" aria-label="Filter Markets Research">
+            {RESEARCH_FILTERS.map(([id, label]) => (
+              <button
+                key={id}
+                className="registry-pill registry-pill--segment"
+                type="button"
+                aria-pressed={filter === id}
+                onClick={() => setFilter(id)}
+              >{label}</button>
+            ))}
+          </div>
+          {external.pendingCount > 0 && (
+            <button
+              className="registry-pill registry-pill--record consumer-research__updates"
+              type="button"
+              onClick={external.acceptUpdates}
+            >Show {external.pendingCount} new source update{external.pendingCount === 1 ? '' : 's'}</button>
+          )}
+          <div className="consumer-research__ledger" aria-busy={loading}>
+            {items.map((item, index) => <ResearchItem key={item.id} item={item} featured={index === 0 && item.sourceType === 'zodiacs-research'} />)}
+            {!loading && items.length === 0 && (
+              <p className="consumer-research__state">No current items match this view. The source ledger remains available in the Research Desk.</p>
+            )}
+          </div>
+          <footer className="consumer-research__foot">
+            <p>Symbolic research—not investment advice. Market observations never alter the sky score.</p>
+            <a className="registry-pill registry-pill--record" href="/registry/research/">
+              <span>Open the Research Desk</span><span className="market-row__action-orb" aria-hidden="true">↗</span>
+            </a>
+          </footer>
         </section>
       );
     }
@@ -4486,13 +5033,9 @@
           ref={reveal}
           id="official-twelve"
           className={'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')}
-          aria-labelledby="consumer-explorer-title"
+          aria-label="Interactive gallery of the twelve official Zodiac tokens"
           style={{ '--active-sign': sign.hue }}
         >
-          <header className="consumer-masthead">
-            <h1 id="consumer-explorer-title">Astrofolio</h1>
-            <p>The twelve, live.</p>
-          </header>
           {/* This section IS the page's opening at every width. WebGL keeps
               the original interactive gallery on desktop and mobile; only
               machines that cannot paint it receive the image carousel. */}
@@ -4515,12 +5058,14 @@
       return (
         <section ref={reveal} id="registry" className="consumer-how reveal" aria-labelledby="consumer-how-title">
           <header className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">One public reference</span>
-            <h2 id="consumer-how-title">What the Registry does.</h2>
+            <span className="consumer-section-head__eyebrow">The asset, in plain language</span>
+            <h2 id="consumer-how-title">What is a Zodiac?</h2>
           </header>
           <p className="consumer-how__intro">
-            The Registry is the public list of the twelve official Zodiac tokens.
-            It shows which token belongs to each sign and where its record lives.
+            A Zodiac is a transferable digital token for one of the twelve signs. Hold your
+            sign, send one to someone, collect the wheel, or display a public wallet in the
+            Cabinet of Twelve. The gold sculpture is collection artwork—not a physical object
+            or a one-of-one NFT.
           </p>
 
           <ol id="identity" className="consumer-steps" aria-label="How to use the Registry">
@@ -4531,8 +5076,8 @@
                 ))}
               </span>
               <span className="consumer-step__copy">
-                <strong>Choose a sign</strong>
-                <small>Start with the pastel disc you already recognize.</small>
+                <strong>One token for each sign</strong>
+                <small>The same rules, with a distinct season, constellation, pastel identity, and gold artwork.</small>
               </span>
             </li>
             <li>
@@ -4541,8 +5086,8 @@
                 <code>8Cd7…b8Qm</code>
               </span>
               <span className="consumer-step__copy">
-                <strong>Match the address</strong>
-                <small>The record—not the name or ticker—proves which token is official.</small>
+                <strong>Verify the exact address</strong>
+                <small>The public record—not a name, ticker, or social post—identifies the token listed here.</small>
               </span>
             </li>
             <li>
@@ -4552,16 +5097,16 @@
                 <span><img src="/assets/zodiac-icons/48/leo.webp" width="28" height="28" alt="" /></span>
               </span>
               <span className="consumer-step__copy">
-                <strong>Recognize it anywhere</strong>
-                <small>The same pastel identity follows the record into wallets and apps.</small>
+                <strong>Hold, send, or collect</strong>
+                <small>The token remains fungible; Cabinet artwork changes only how a public balance is displayed.</small>
               </span>
             </li>
           </ol>
 
           <div className="consumer-proof" aria-label="Registry facts">
-            <span><strong>12</strong> signs</span>
-            <span><strong>Solana + Base</strong> official records</span>
-            <span><strong>Safe to browse</strong> no wallet required</span>
+            <span><strong>12</strong> transferable tokens</span>
+            <span><strong>Solana + Base</strong> recorded representations</span>
+            <span><strong>Read-only</strong> no wallet required</span>
           </div>
 
           <details className="consumer-disclosure">
@@ -4732,7 +5277,7 @@
           <p>Start with the one you already know.</p>
           <div className="consumer-closing__actions">
             <a className="btn btn--primary" href="#official-twelve">
-              <span>Choose a token</span><span className="arr" aria-hidden="true">↑</span>
+              <span>Explore all 12</span>
             </a>
             <a href="/registry/technical/">Open the technical record</a>
           </div>
@@ -5158,15 +5703,20 @@
           <div className="grain" aria-hidden="true" />
           <Header />
           <main id="main" className="zd consumer-registry">
-            <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
-            <ConsumerMarketSection
-              active={activeTicker}
-              setActive={setActiveTicker}
-              personalSlug={personalSlug}
-              setPersonalSlug={setPersonalSlug}
-            />
-            <ConsumerOutlookSection active={activeTicker} setActive={setActiveTicker} />
+            <ConsumerCapitalHeader />
+            <div className="consumer-capital-opening">
+              <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
+              <ConsumerMarketSection
+                active={activeTicker}
+                setActive={setActiveTicker}
+                personalSlug={personalSlug}
+                setPersonalSlug={setPersonalSlug}
+              />
+            </div>
+            <ConsumerResearchPulse />
             <ConsumerHowItWorks />
+            <ConsumerResearchSection active={activeTicker} />
+            <ConsumerOutlookSection active={activeTicker} setActive={setActiveTicker} />
             <VerifierSection />
             <ConsumerPurpose />
             <ConsumerFaq />

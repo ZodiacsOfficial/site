@@ -142,21 +142,27 @@ async function mount(root, records) {
     scene.setBands(row, stage);
   }
 
-  // A piece on display turns slowly, as on a dealer's turntable, until the
-  // reader takes it in hand — then it is theirs to aim. Reduced motion
-  // disables the turntable outright. The Registry spotlight is already the
-  // display pose, so it receives the same turntable without opening a card.
-  const TURNTABLE_RATE = spotlight ? TURNTABLE.spotlightRate : TURNTABLE.openedRate;
+  // An opened Thesis piece keeps its dealer's turntable. The Registry uses a
+  // finite, face-safe inspection sweep instead: its source is an image-derived
+  // cast with no authored back or side, so it returns to rest before yielding
+  // to direct manipulation. Reduced motion disables both ambient treatments.
+  const TURNTABLE_RATE = TURNTABLE.openedRate;
   let handTurned = false;
   let stageVisible = true;
   let externallyPaused = root.hasAttribute('data-gallery-paused');
   let turnResumeTimer = 0;
   let forcedTurnResume = false;
+  let spotlightElapsed = 0;
+  let spotlightComplete = !spotlight;
+  let spotlightTextureRequest = 0;
+  let textureReleaseTimer = 0;
+  let spotlightRefineTimer = 0;
+  let spotlightController = null;
 
   function syncRotationState(explicit = null) {
     if (!spotlight) return;
     const next = explicit
-      ?? (state.reducedMotion ? 'manual' : handTurned ? 'held' : 'ambient');
+      ?? (state.reducedMotion ? 'manual' : handTurned ? 'held' : spotlightComplete ? 'rest' : 'ambient');
     if (root.dataset.galleryRotation !== next) root.dataset.galleryRotation = next;
   }
 
@@ -176,15 +182,55 @@ async function mount(root, records) {
       turnResumeTimer = 0;
       forcedTurnResume = false;
       handTurned = false;
+      spotlightElapsed = 0;
+      spotlightComplete = false;
       syncRotationState();
       invalidate();
     }, TURNTABLE.resumeAfter);
+  }
+
+  function scheduleTextureRelease(index) {
+    window.clearTimeout(textureReleaseTimer);
+    textureReleaseTimer = window.setTimeout(() => {
+      textureReleaseTimer = 0;
+      if (disposed) return;
+      if (scene.releaseExcept(index)) invalidate();
+      root.dataset.galleryResidentTextures = String(scene.residentTextureCount());
+    }, (DIRECT_SWITCH_SECONDS * 1000) + 80);
+  }
+
+  async function refineSpotlight(index) {
+    const request = ++spotlightTextureRequest;
+    spotlightController?.abort();
+    const controller = new AbortController();
+    spotlightController = controller;
+    const changed = await scene.refine(index, { signal: controller.signal });
+    if (disposed) return false;
+    if (controller.signal.aborted || request !== spotlightTextureRequest) {
+      scene.releaseExcept(current());
+      return false;
+    }
+    spotlightController = null;
+    scheduleTextureRelease(index);
+    root.dataset.galleryResidentTextures = String(scene.residentTextureCount());
+    return changed;
+  }
+
+  function queueSpotlightRefine(index, { immediate = false } = {}) {
+    window.clearTimeout(spotlightRefineTimer);
+    spotlightController?.abort();
+    spotlightRefineTimer = window.setTimeout(() => {
+      spotlightRefineTimer = 0;
+      void refineSpotlight(index).then((changed) => { if (changed) invalidate(); });
+    }, immediate ? 0 : 180);
   }
 
   function resetSpotlightTurn(index, { immediate = false } = {}) {
     if (!spotlight) return;
     handTurned = false;
     clearTurnResume({ clearForced: true });
+    spotlightElapsed = 0;
+    spotlightComplete = state.reducedMotion;
     state.targetYaw = shortestTurn(state.yaw, 0);
     state.targetPitch = 0;
     state.targetZoom = 0;
@@ -194,7 +240,7 @@ async function mount(root, records) {
       state.zoom = state.targetZoom;
     }
     syncRotationState();
-    void scene.refine(index).then((changed) => { if (changed) invalidate(); });
+    queueSpotlightRefine(index, { immediate });
   }
 
   // ---- the frame loop --------------------------------------------------
@@ -260,7 +306,7 @@ async function mount(root, records) {
     if (disposed) return;
     const dt = Math.min(0.05, last ? (now - last) / 1000 : 0.016);
     last = now;
-    const turning = turntableActive({
+    const turning = (!spotlight || !spotlightComplete) && turntableActive({
       spotlight,
       open: state.open,
       targetOpen: state.targetOpen,
@@ -274,14 +320,41 @@ async function mount(root, records) {
       dragging: Boolean(drag) || pointers.size > 0,
     });
     if (turning) {
-      state.yaw += TURNTABLE_RATE * dt;
-      state.targetYaw = state.yaw;
+      if (spotlight) {
+        spotlightElapsed = Math.min(TURNTABLE.spotlightSeconds, spotlightElapsed + dt);
+        const progress = spotlightElapsed / TURNTABLE.spotlightSeconds;
+        // One damped, symmetric inspection gesture: face → right cheek →
+        // left cheek → face. It starts and ends at rest, then releases rAF.
+        state.targetYaw = TURNTABLE.spotlightArc
+          * Math.sin(progress * Math.PI * 2)
+          * Math.sin(progress * Math.PI);
+        if (spotlightElapsed >= TURNTABLE.spotlightSeconds) {
+          state.targetYaw = 0;
+        }
+      } else {
+        state.yaw += TURNTABLE_RATE * dt;
+        state.targetYaw = state.yaw;
+      }
     }
     // Advance first so reduced-motion input paints its destination on this
     // frame rather than briefly rendering the old state and then stopping.
     const stateMoving = step(dt);
     const settling = scene.layout(state, dt);
     scene.render();
+    // The public state becomes `rest` only after both the interaction state
+    // and the rendered cast have actually returned face-first. Exposing it at
+    // the end of the sweep clock was subtly early: damping still had a few
+    // frames left, so assistive/test consumers could observe a moving "rest".
+    if (
+      spotlight
+      && !spotlightComplete
+      && spotlightElapsed >= TURNTABLE.spotlightSeconds
+      && !stateMoving
+      && !settling
+    ) {
+      spotlightComplete = true;
+      syncRotationState();
+    }
     const moving = stateMoving || turning || settling;
     raf = moving ? requestAnimationFrame(frame) : 0;
     if (!moving) last = 0;
@@ -810,7 +883,10 @@ async function mount(root, records) {
       // the same gesture turns it without changing the selected sign.
       handTurned = true;
       syncRotationState('dragging');
-      state.targetYaw = drag.yaw + (dx / 190);
+      const turned = drag.yaw + (dx / 190);
+      state.targetYaw = spotlight
+        ? Math.max(-TURNTABLE.spotlightManualArc, Math.min(TURNTABLE.spotlightManualArc, turned))
+        : turned;
       // A touch keeps vertical movement available to the page; mouse and pen
       // retain the full two-axis inspection.
       if (drag.pointerType !== 'touch') {
@@ -1029,6 +1105,10 @@ async function mount(root, records) {
     disposed = true;
     if (raf) cancelAnimationFrame(raf);
     clearTurnResume({ clearForced: true });
+    window.clearTimeout(textureReleaseTimer);
+    window.clearTimeout(spotlightRefineTimer);
+    spotlightController?.abort();
+    spotlightTextureRequest += 1;
     clearSnap();
     observer.disconnect();
     visibilityObserver?.disconnect();
@@ -1068,8 +1148,11 @@ async function mount(root, records) {
 
   // The plates arrive after the room does: each figure stands in its own metal
   // until its photograph is laid on, nearest the front first.
-  void scene.dressRow(start, invalidate);
-  if (spotlight) void scene.refine(start).then((changed) => { if (changed) invalidate(); });
+  if (spotlight) {
+    queueSpotlightRefine(start, { immediate: true });
+  } else {
+    void scene.dressRow(start, invalidate);
+  }
 }
 
 export { GALLERY };

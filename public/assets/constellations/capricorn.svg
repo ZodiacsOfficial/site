@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-labelledby="title description">
+  <title id="title">Capricorn constellation map</title>
+  <desc id="description">Brighter stars in Capricorn plotted from HYG Database J2000 coordinates. Deneb Algedi is highlighted. Guide lines are not official constellation boundaries.</desc>
+  <metadata>HYG Database v4.0, CC BY-SA 4.0, source blob 681f7d51024c9593182079da9fd1aec897a44e7e. Guide segments authored by Zodiacs.org.</metadata>
+  <defs>
+    <radialGradient id="field" cx="50%" cy="46%" r="66%"><stop offset="0" stop-color="#C0DEA8" stop-opacity=".08"/><stop offset="1" stop-color="#07080c" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="720" height="460" rx="28" fill="#090b10"/>
+  <rect width="720" height="460" rx="28" fill="url(#field)"/>
+  <g fill="none" stroke="#C0DEA8" stroke-opacity=".34" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">  <path d="M 611.71 58.00 L 594.98 111.52"/>
+  <path d="M 594.98 111.52 L 453.07 362.56"/>
+  <path d="M 453.07 362.56 L 420.68 402.00"/>
+  <path d="M 420.68 402.00 L 223.55 294.12"/>
+  <path d="M 223.55 294.12 L 108.29 143.73"/>
+  <path d="M 108.29 143.73 L 147.61 156.54"/>
+  <path d="M 147.61 156.54 L 340.77 170.19"/>
+  <path d="M 340.77 170.19 L 611.71 58.00"/></g>
+  <g fill="#eef1f7" fill-opacity=".86">  <circle class="star" cx="611.71" cy="58.00" r="2.62"/>
+  <circle class="star" cx="594.98" cy="111.52" r="3.15"/>
+  <circle class="star" cx="453.07" cy="362.56" r="2.07"/>
+  <circle class="star" cx="420.68" cy="402.00" r="2.08"/>
+  <circle class="star" cx="340.77" cy="170.19" r="2.12"/>
+  <circle class="star" cx="223.55" cy="294.12" r="2.43"/>
+  <circle class="star" cx="147.61" cy="156.54" r="2.51"/>
+  <circle class="star focus" cx="108.29" cy="143.73" r="3.35"/></g>
+  <circle cx="108.29" cy="143.73" r="14" fill="none" stroke="#C0DEA8" stroke-width="1.5" stroke-opacity=".9" filter="url(#glow)"/>
+  <text x="124.29" y="129.73" fill="#C0DEA8" font-family="ui-monospace, monospace" font-size="12" letter-spacing="1.5">DENEB ALGEDI</text>
+  <text x="24" y="430" fill="#8e96ab" font-family="ui-monospace, monospace" font-size="9" letter-spacing="2">J2000 · EAST LEFT · CAP</text>
+</svg>

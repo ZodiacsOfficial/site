@@ -233,6 +233,20 @@ export function createScene(canvas, records) {
     plinthGeometry, shadowGeometry, shadowMap, plinthCap,
     surface.geometry, surface.material, surface.material.map,
   ];
+  const activeFaceMaps = new Set();
+  let sceneDisposed = false;
+
+  function disposeFaceMap(map) {
+    if (!map) return;
+    activeFaceMaps.delete(map);
+    const source = map.image;
+    map.dispose();
+    map.image = null;
+    source?.close?.();
+    if (typeof HTMLImageElement !== 'undefined' && source instanceof HTMLImageElement) {
+      source.removeAttribute('src');
+    }
+  }
 
   // Fitted as a set: every piece lands inside one narrow band of height, so
   // the only sculpture that stands taller than the rest is the one the row is
@@ -309,7 +323,7 @@ export function createScene(canvas, records) {
     );
 
     return {
-      record, mesh, plinth, shadow, proxy, scale, face,
+      record, mesh, plinth, shadow, proxy, scale, face, cast: cast.clone(),
       aspect: traced.aspect,
       materials: [face, reverse, edge],
       tier: 0,
@@ -526,11 +540,18 @@ export function createScene(canvas, records) {
   }
 
   /** Lay the photograph onto a figure's face, at the tier asked for. */
-  async function dress(index, tier) {
+  async function dress(index, tier, { signal } = {}) {
     const figure = figures[index];
-    if (!figure || figure.tier >= tier) return false;
-    const image = await loadSculpture(figure.record.slug, tier);
-    if (!image || figure.tier >= tier) return false;
+    if (sceneDisposed || signal?.aborted || !figure || figure.tier >= tier) return false;
+    const image = await loadSculpture(figure.record.slug, tier, { signal });
+    if (!image) return false;
+    if (sceneDisposed || signal?.aborted || figure.tier >= tier) {
+      image.close?.();
+      if (typeof HTMLImageElement !== 'undefined' && image instanceof HTMLImageElement) {
+        image.removeAttribute('src');
+      }
+      return false;
+    }
     const map = mapFrom(image, renderer);
     const previous = figure.face.map;
     figure.face.map = map;
@@ -542,8 +563,8 @@ export function createScene(canvas, records) {
     figure.face.color.set(0xffffff);
     figure.face.needsUpdate = true;
     figure.tier = tier;
-    previous?.dispose();
-    disposables.push(map);
+    activeFaceMaps.add(map);
+    disposeFaceMap(previous);
     return true;
   }
 
@@ -558,7 +579,30 @@ export function createScene(canvas, records) {
   }
 
   /** The full plate, for a figure being examined. */
-  const refine = (index) => dress(index, HERO_TIER);
+  const refine = (index, options) => dress(index, HERO_TIER, options);
+
+  /**
+   * The Registry spotlight keeps one high-resolution plate resident. Network
+   * caching may retain a previously inspected image, but Three must release
+   * its decoded GPU texture once the light handoff has completed.
+   */
+  function releaseExcept(index) {
+    let changed = false;
+    for (let i = 0; i < figures.length; i += 1) {
+      const figure = figures[i];
+      if (i === index || figure.tier === 0 || !figure.face.map) continue;
+      const previous = figure.face.map;
+      figure.face.map = null;
+      figure.face.bumpMap = null;
+      figure.face.bumpScale = 0;
+      figure.face.color.copy(figure.cast);
+      figure.face.needsUpdate = true;
+      figure.tier = 0;
+      disposeFaceMap(previous);
+      changed = true;
+    }
+    return changed;
+  }
 
   function resize(width, height, dpr) {
     canvasSize = { width, height };
@@ -603,11 +647,15 @@ export function createScene(canvas, records) {
   }
 
   function dispose() {
+    sceneDisposed = true;
+    for (const map of [...activeFaceMaps]) disposeFaceMap(map);
     for (const item of new Set(disposables)) item?.dispose?.();
     renderer.dispose();
   }
 
   return {
-    layout, render, resize, setBands, pick, screenX, dressRow, refine, dispose, renderer,
+    layout, render, resize, setBands, pick, screenX, dressRow, refine, releaseExcept,
+    residentTextureCount: () => activeFaceMaps.size,
+    dispose, renderer,
   };
 }

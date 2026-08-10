@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zodiacs.org/schemas/registry-research-item.v1.schema.json",
+  "title": "Zodiacs.org Registry Research item",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "slug",
+    "kind",
+    "sourceType",
+    "publisher",
+    "issuedAt",
+    "visibleAt",
+    "title",
+    "summary",
+    "url",
+    "signs",
+    "topics",
+    "sections",
+    "market",
+    "evidence",
+    "riskStatement",
+    "scienceNote",
+    "artifactHash"
+  ],
+  "properties": {
+    "schema": { "const": "zodiacs.registry-research-item.v1" },
+    "id": { "type": "string", "pattern": "^zrx-[a-z0-9-]+$" },
+    "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "kind": {
+      "enum": [
+        "daily-market-brief",
+        "event-brief",
+        "market-check",
+        "observation-update",
+        "weekly-outlook",
+        "monthly-calibration"
+      ]
+    },
+    "sourceType": { "const": "zodiacs-research" },
+    "publisher": { "const": "Zodiacs.org Research System" },
+    "issuedAt": { "type": "string", "format": "date-time" },
+    "visibleAt": { "type": "string", "format": "date-time" },
+    "title": { "type": "string", "minLength": 1 },
+    "summary": { "type": "string", "minLength": 1 },
+    "url": { "type": "string", "pattern": "^/registry/research/[a-z0-9-]+/$" },
+    "signs": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "aries", "taurus", "gemini", "cancer", "leo", "virgo",
+          "libra", "scorpio", "sagittarius", "capricorn", "aquarius", "pisces"
+        ]
+      }
+    },
+    "topics": { "type": "array", "minItems": 1, "uniqueItems": true, "items": { "type": "string" } },
+    "symbolicScore": {
+      "oneOf": [
+        { "type": "null" },
+        {
+          "type": "object",
+          "required": ["sign", "attention", "tone", "eventIntensity", "calculation", "marketFieldsUsed"],
+          "properties": {
+            "sign": { "type": "string" },
+            "attention": { "type": "number" },
+            "tone": { "type": "number" },
+            "eventIntensity": { "type": "number" },
+            "calculation": { "type": "string" },
+            "marketFieldsUsed": { "const": false }
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "sections": {
+      "type": "object",
+      "required": ["skyFact", "traditionalReading", "marketObservation"],
+      "properties": {
+        "skyFact": { "$ref": "#/$defs/section" },
+        "traditionalReading": { "$ref": "#/$defs/section" },
+        "marketObservation": { "$ref": "#/$defs/section" }
+      },
+      "additionalProperties": false
+    },
+    "market": { "type": "object" },
+    "evidence": { "type": "object" },
+    "riskStatement": { "const": "Symbolic research—not investment advice. Market observations never alter the sky score." },
+    "scienceNote": { "const": "Astrology has no established predictive relationship with asset prices. Crypto assets can lose all value." },
+    "artifactHash": { "type": "string", "pattern": "^[a-f0-9]{64}$" }
+  },
+  "$defs": {
+    "section": {
+      "type": "object",
+      "required": ["heading", "body", "evidence"],
+      "properties": {
+        "heading": { "type": "string" },
+        "body": { "type": "string" },
+        "evidence": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    }
+  }
+}

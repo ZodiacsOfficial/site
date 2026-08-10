@@ -1,0 +1,13 @@
+Zodiacs.org constellation maps
+
+Star positions and apparent magnitudes are derived from HYG Database v4.0:
+https://github.com/astronexus/HYG-Database
+Source file: hyg/CURRENT/hygdata_v40.csv.gz
+Source blob: 681f7d51024c9593182079da9fd1aec897a44e7e
+License: CC BY-SA 4.0 — https://creativecommons.org/licenses/by-sa/4.0/
+
+The plotted subset is committed in scripts/constellation-data.mjs. Guide
+segments were authored by Zodiacs.org as a visual aid; they are not official
+IAU constellation boundaries. Praesepe is an open cluster rather than a HYG
+star; its supplemental J2000 centre is attributed in the Cancer record to
+SIMBAD M44: https://simbad.cds.unistra.fr/simbad/sim-id?Ident=M44

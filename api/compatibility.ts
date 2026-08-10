@@ -1,4 +1,5 @@
 import { sendInviteJson } from '../src/lib/invite/api.js';
+import { handleRegistryNews } from './_registry/news-handler.js';
 import completeHandler from '../src/lib/invite/routes/invite-complete.js';
 import exchangeHandler from '../src/lib/invite/routes/invite-exchange.js';
 import hideHandler from '../src/lib/invite/routes/invite-hide.js';
@@ -40,6 +41,10 @@ export function compatibilityInviteHandlerForAction(value: unknown): InviteHandl
 }
 
 export default async function handler(req: any, res: any): Promise<void> {
+  if (req.query?.action === 'registry-news') {
+    await handleRegistryNews(req, res);
+    return;
+  }
   const route = compatibilityInviteHandlerForAction(req.query?.action);
   if (!route) {
     sendInviteJson(res, 404, { error: 'not_found' });

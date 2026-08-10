@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-labelledby="title description">
+  <title id="title">Pisces constellation map</title>
+  <desc id="description">Brighter stars in Pisces plotted from HYG Database J2000 coordinates. Alrescha is highlighted. Guide lines are not official constellation boundaries.</desc>
+  <metadata>HYG Database v4.0, CC BY-SA 4.0, source blob 681f7d51024c9593182079da9fd1aec897a44e7e. Guide segments authored by Zodiacs.org.</metadata>
+  <defs>
+    <radialGradient id="field" cx="50%" cy="46%" r="66%"><stop offset="0" stop-color="#A9D4C4" stop-opacity=".08"/><stop offset="1" stop-color="#07080c" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="720" height="460" rx="28" fill="#090b10"/>
+  <rect width="720" height="460" rx="28" fill="url(#field)"/>
+  <g fill="none" stroke="#A9D4C4" stroke-opacity=".34" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">  <path d="M 306.71 243.34 L 258.36 239.18"/>
+  <path d="M 258.36 239.18 L 161.61 137.45"/>
+  <path d="M 161.61 137.45 L 114.45 221.88"/>
+  <path d="M 114.45 221.88 L 58.00 309.13"/>
+  <path d="M 58.00 309.13 L 532.60 322.55"/>
+  <path d="M 532.60 322.55 L 662.00 294.72"/>
+  <path d="M 662.00 294.72 L 616.95 302.06"/>
+  <path d="M 616.95 302.06 L 580.33 259.80"/>
+  <path d="M 580.33 259.80 L 539.71 270.07"/>
+  <path d="M 539.71 270.07 L 474.08 253.19"/>
+  <path d="M 474.08 253.19 L 662.00 294.72"/></g>
+  <g fill="#eef1f7" fill-opacity=".86">  <circle class="star" cx="306.71" cy="243.34" r="1.80"/>
+  <circle class="star" cx="258.36" cy="239.18" r="1.93"/>
+  <circle class="star" cx="161.61" cy="137.45" r="2.58"/>
+  <circle class="star" cx="114.45" cy="221.88" r="1.94"/>
+  <circle class="star focus" cx="58.00" cy="309.13" r="2.38"/>
+  <circle class="star" cx="662.00" cy="294.72" r="1.80"/>
+  <circle class="star" cx="616.95" cy="302.06" r="2.50"/>
+  <circle class="star" cx="580.33" cy="259.80" r="1.93"/>
+  <circle class="star" cx="539.71" cy="270.07" r="2.07"/>
+  <circle class="star" cx="532.60" cy="322.55" r="1.80"/>
+  <circle class="star" cx="474.08" cy="253.19" r="2.17"/></g>
+  <circle cx="58.00" cy="309.13" r="14" fill="none" stroke="#A9D4C4" stroke-width="1.5" stroke-opacity=".9" filter="url(#glow)"/>
+  <text x="74.00" y="295.13" fill="#A9D4C4" font-family="ui-monospace, monospace" font-size="12" letter-spacing="1.5">ALRESCHA</text>
+  <text x="24" y="430" fill="#8e96ab" font-family="ui-monospace, monospace" font-size="9" letter-spacing="2">J2000 · EAST LEFT · PSC</text>
+</svg>

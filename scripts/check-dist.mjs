@@ -1035,10 +1035,21 @@ const indexablePeoplePaths = new Set(
     .filter((person) => person.indexEligibility.eligible)
     .map((person) => `/people/${person.slug}/`),
 );
+const registryResearchPublication = JSON.parse(await readFile(
+  resolve(repo, 'src/data/registry-research/publication.json'),
+  'utf8',
+));
+const indexedRegistryResearchPaths = new Set([
+  '/registry/research/',
+  ...registryResearchPublication.items
+    .filter((item) => item.status === 'published' && item.visibleAt <= registryResearchPublication.generatedAt)
+    .map((item) => item.url),
+]);
 const sitemapPolicy = {
   // 2421 = 2420 + the indexable /registry/technical/ public record.
   total: 2421 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
-    + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true),
+    + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
+    + indexedRegistryResearchPaths.size,
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,
@@ -1046,6 +1057,7 @@ const sitemapPolicy = {
   horoscopePages: 84,
   eventPages: publishedEventPaths.size,
   peoplePages: indexablePeoplePaths.size,
+  registryResearchPages: indexedRegistryResearchPaths.size,
   translatedBlocks: 2051,
 };
 const indexedFamilies = [
@@ -1073,6 +1085,7 @@ const indexedFamilies = [
   },
   { label: 'Registry Collection', pattern: /^\/registry\/collection\/$/, expected: Number(registryAuraIndexed), localized: false },
   { label: 'Registry technical record', pattern: /^\/registry\/technical\/$/, expected: 1, localized: false },
+  { label: 'Registry Research', pattern: /^\/registry\/research(?:\/[a-z0-9-]+)?\/$/, expected: sitemapPolicy.registryResearchPages, localized: false },
 ];
 
 requireExactSet(
@@ -1089,6 +1102,11 @@ requireExactSet(
   'sitemap.xml Phase 5 People profiles',
   new Set([...sitemapLocs].filter((path) => /^\/people\/[a-z0-9-]+\/$/u.test(path))),
   indexablePeoplePaths,
+);
+requireExactSet(
+  'sitemap.xml Registry Research routes',
+  new Set([...sitemapLocs].filter((path) => /^\/registry\/research(?:\/[a-z0-9-]+)?\/$/u.test(path))),
+  indexedRegistryResearchPaths,
 );
 
 if (sitemapLocs.size !== sitemapPolicy.total) {

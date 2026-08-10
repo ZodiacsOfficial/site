@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zodiacs.org/schemas/registry-research-feed.v1.schema.json",
+  "title": "Zodiacs.org compact Registry Research feed",
+  "type": "object",
+  "required": ["schema", "generatedAt", "publisher", "window", "items"],
+  "properties": {
+    "schema": { "const": "zodiacs.registry-research-feed.v1" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "publisher": { "const": "Zodiacs.org Research System" },
+    "window": { "type": "object" },
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id", "kind", "sourceType", "publisher", "publishedAt", "visibleAt",
+          "title", "summary", "url", "signs", "topics", "status"
+        ],
+        "properties": {
+          "id": { "type": "string" },
+          "slug": { "type": "string" },
+          "kind": { "type": "string" },
+          "sourceType": { "const": "zodiacs-research" },
+          "publisher": { "const": "Zodiacs.org Research System" },
+          "publishedAt": { "type": "string", "format": "date-time" },
+          "visibleAt": { "type": "string", "format": "date-time" },
+          "title": { "type": "string" },
+          "summary": { "type": "string" },
+          "url": { "type": "string" },
+          "signs": { "type": "array", "items": { "type": "string" } },
+          "topics": { "type": "array", "items": { "type": "string" } },
+          "status": { "enum": ["published", "scheduled"] }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
