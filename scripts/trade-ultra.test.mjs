@@ -1,16 +1,19 @@
-import { describe, expect, it } from 'vitest';
+import { describe, expect, it, vi } from 'vitest';
 import {
   assertOrderMatches,
   atomicFromDecimal,
+  createVenueRequestGate,
   decimalFromAtomic,
   executeOrder,
   fetchOrder,
   isSignable,
   normalizeOrder,
+  parseVenueRetryAfter,
   priceImpactBand,
   SOL_DECIMALS,
   TradeError,
   VENUE_FEE_CEILING_BPS,
+  VENUE_REQUEST_SPACING_MS,
   WSOL_MINT,
 } from '../src/trade/ultra.mjs';
 
@@ -118,12 +121,21 @@ describe('order normalisation', () => {
 
   it('reads the fee from either shape the venue uses', () => {
     expect(normalizeOrder(orderPayload({ platformFee: undefined, feeBps: 10 })).feeBps).toBe(10);
-    expect(normalizeOrder(orderPayload({ platformFee: undefined, feeBps: undefined })).feeBps).toBe(0);
+    for (const feeBps of [undefined, '', '  ', -1, 0.5, 11, 'not-a-number']) {
+      expectTradeError(
+        () => normalizeOrder(orderPayload({ platformFee: undefined, feeBps })),
+        'unexpected_fee',
+      );
+    }
   });
 
   it('rejects an incomplete order rather than displaying blanks', () => {
     expectTradeError(() => normalizeOrder(null), 'unavailable');
     expectTradeError(() => normalizeOrder(orderPayload({ outAmount: undefined })), 'unavailable');
+    expectTradeError(() => normalizeOrder(orderPayload({ inAmount: 'not-an-integer' })), 'unavailable');
+    for (const priceImpactPct of [undefined, '', 'not-a-number']) {
+      expectTradeError(() => normalizeOrder(orderPayload({ priceImpactPct })), 'unavailable');
+    }
   });
 
   it('treats a quote as unsignable until it carries a transaction', () => {
@@ -166,11 +178,121 @@ describe('the substitution guard', () => {
     );
   });
 
-  it('refuses a fee larger than the venue has ever published', () => {
+  it('refuses a fee above the ratified 10 bps phase boundary', () => {
+    expect(VENUE_FEE_CEILING_BPS).toBe(10);
     const inflated = orderPayload({ platformFee: { feeBps: VENUE_FEE_CEILING_BPS + 1 } });
     expectTradeError(() => assertOrderMatches(normalizeOrder(inflated), expected), 'unexpected_fee');
     // The venue's own 10 bps passes; the site adds none of its own.
     expect(assertOrderMatches(normalizeOrder(orderPayload()), expected).feeBps).toBe(10);
+  });
+
+  it('refuses a fee it cannot read rather than waving it through as zero', () => {
+    const malformed = orderPayload({ platformFee: { feeBps: 'not-a-number' } });
+    expectTradeError(() => assertOrderMatches(normalizeOrder(malformed), expected), 'unexpected_fee');
+  });
+});
+
+describe('the browser-wide venue queue', () => {
+  it('paces starts and lets wallet work overtake quotes and ladder samples', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(0);
+    try {
+      const gate = createVenueRequestGate();
+      const starts = [];
+      const run = (label, requestClass) => gate.schedule(async () => {
+        starts.push([label, Date.now()]);
+        return label;
+      }, { requestClass });
+
+      const first = run('first-background', 'background');
+      const background = run('second-background', 'background');
+      const quote = run('panel-quote', 'quote');
+      const trade = run('wallet-trade', 'trade');
+      await vi.advanceTimersByTimeAsync(0);
+      await first;
+      await vi.advanceTimersByTimeAsync(VENUE_REQUEST_SPACING_MS);
+      await trade;
+      await vi.advanceTimersByTimeAsync(VENUE_REQUEST_SPACING_MS);
+      await quote;
+      await vi.advanceTimersByTimeAsync(VENUE_REQUEST_SPACING_MS);
+      await background;
+
+      expect(starts.map(([label]) => label)).toEqual([
+        'first-background', 'wallet-trade', 'panel-quote', 'second-background',
+      ]);
+      expect(starts.map(([, at]) => at)).toEqual([
+        0,
+        VENUE_REQUEST_SPACING_MS,
+        VENUE_REQUEST_SPACING_MS * 2,
+        VENUE_REQUEST_SPACING_MS * 3,
+      ]);
+    } finally {
+      vi.useRealTimers();
+    }
+  });
+
+  it('drops a superseded queued quote before it reaches the network', async () => {
+    let release;
+    const gate = createVenueRequestGate({ spacingMs: 0 });
+    const first = gate.schedule(() => new Promise((resolve) => { release = resolve; }));
+    const controller = new AbortController();
+    const task = vi.fn(async () => 'stale');
+    const stale = gate.schedule(task, { signal: controller.signal });
+    controller.abort();
+    await expect(stale).rejects.toMatchObject({ name: 'AbortError' });
+    release('done');
+    await first;
+    expect(task).not.toHaveBeenCalled();
+  });
+
+  it('gives queued wallet work a fresh network deadline after a stalled ladder request', async () => {
+    vi.useFakeTimers();
+    vi.setSystemTime(0);
+    const key = Symbol.for('zodiacs.registry.jupiter-request-gate');
+    const hadWindow = Object.prototype.hasOwnProperty.call(globalThis, 'window');
+    const previousWindow = globalThis.window;
+    const previousGate = globalThis[key];
+    globalThis.window = {};
+    globalThis[key] = createVenueRequestGate({ spacingMs: 0 });
+    try {
+      const background = fetchOrder({
+        inputMint: WSOL_MINT,
+        outputMint: ARIES,
+        amount: 100000000n,
+        requestClass: 'background',
+        deadlineMs: 80,
+        fetchImpl: async (_url, { signal }) => new Promise((_resolve, reject) => {
+          signal.addEventListener('abort', () => {
+            reject(Object.assign(new Error('background stalled'), { name: 'AbortError' }));
+          }, { once: true });
+        }),
+      }).catch((error) => error);
+      await vi.advanceTimersByTimeAsync(10);
+
+      const tradeFetch = vi.fn(async () => new Promise((resolve) => {
+        setTimeout(() => resolve(jsonResponse(orderPayload())), 30);
+      }));
+      const trade = fetchOrder({
+        inputMint: WSOL_MINT,
+        outputMint: ARIES,
+        amount: 100000000n,
+        taker: 'Wa11et',
+        deadlineMs: 80,
+        fetchImpl: tradeFetch,
+      });
+
+      await vi.advanceTimersByTimeAsync(70);
+      expect((await background).code).toBe('network');
+      expect(tradeFetch).toHaveBeenCalledTimes(1);
+      await vi.advanceTimersByTimeAsync(30);
+      await expect(trade).resolves.toMatchObject({ outputMint: ARIES });
+    } finally {
+      if (previousGate === undefined) delete globalThis[key];
+      else globalThis[key] = previousGate;
+      if (hadWindow) globalThis.window = previousWindow;
+      else delete globalThis.window;
+      vi.useRealTimers();
+    }
   });
 });
 
@@ -209,6 +331,18 @@ describe('fetching an order', () => {
     }
   });
 
+  it('carries a bounded Retry-After hint on rate limiting', async () => {
+    const response = jsonResponse({}, { status: 429 });
+    response.headers = { get: (name) => name === 'retry-after' ? '45' : null };
+    await expect(fetchOrder({
+      inputMint: WSOL_MINT,
+      outputMint: ARIES,
+      amount: 1n,
+      fetchImpl: async () => response,
+    })).rejects.toMatchObject({ code: 'rate_limited', retryAfterMs: 45_000 });
+    expect(parseVenueRetryAfter({ headers: { get: () => '999' } })).toBe(120_000);
+  });
+
   it('reports a dropped connection as a network problem', async () => {
     await expectTradeError(
       () => fetchOrder({
@@ -230,6 +364,25 @@ describe('fetching an order', () => {
       fetchImpl: async () => { throw abort; },
     })).rejects.toBe(abort);
   });
+
+  it('keeps the deadline alive while the venue body is being read', async () => {
+    const fetchImpl = async (_url, { signal }) => ({
+      ok: true,
+      status: 200,
+      json: () => new Promise((_resolve, reject) => {
+        signal.addEventListener('abort', () => {
+          reject(Object.assign(new Error('body stalled'), { name: 'AbortError' }));
+        }, { once: true });
+      }),
+    });
+    await expect(fetchOrder({
+      inputMint: WSOL_MINT,
+      outputMint: ARIES,
+      amount: 1n,
+      fetchImpl,
+      deadlineMs: 5,
+    })).rejects.toMatchObject({ code: 'network' });
+  });
 });
 
 describe('executing a signed transaction', () => {
@@ -237,7 +390,7 @@ describe('executing a signed transaction', () => {
     let captured;
     const fetchImpl = async (url, init) => {
       captured = { url, body: JSON.parse(init.body), method: init.method };
-      return jsonResponse({ status: 'Success', signature: 'sig', slot: 1 });
+      return jsonResponse({ status: 'Success', signature: 'sig', slot: 1, code: 0 });
     };
     const result = await executeOrder({ signedTransaction: 'AQAB', requestId: 'rid', fetchImpl });
 
@@ -274,7 +427,42 @@ describe('executing a signed transaction', () => {
         requestId: 'rid',
         fetchImpl: async () => { throw new TypeError('Failed to fetch'); },
       }),
-      'network',
+      'execute_unconfirmed',
+    );
+  });
+
+  it('treats an unreadable or incomplete execute answer as unconfirmed', async () => {
+    for (const response of [
+      { ok: true, status: 200, json: async () => { throw new SyntaxError('bad json'); } },
+      jsonResponse({}),
+      jsonResponse({ error: 'upstream reset' }, { status: 502 }),
+      jsonResponse({ status: 'Success', code: 0 }),
+      jsonResponse({ status: 'Success', signature: 'sig' }),
+    ]) {
+      await expectTradeError(
+        () => executeOrder({
+          signedTransaction: 'AQAB', requestId: 'rid', fetchImpl: async () => response,
+        }),
+        'execute_unconfirmed',
+      );
+    }
+  });
+
+  it('bounds a stalled execute response body as unconfirmed', async () => {
+    const fetchImpl = async (_url, { signal }) => ({
+      ok: true,
+      status: 200,
+      json: () => new Promise((_resolve, reject) => {
+        signal.addEventListener('abort', () => {
+          reject(Object.assign(new Error('body stalled'), { name: 'AbortError' }));
+        }, { once: true });
+      }),
+    });
+    await expectTradeError(
+      () => executeOrder({
+        signedTransaction: 'AQAB', requestId: 'rid', fetchImpl, deadlineMs: 5,
+      }),
+      'execute_unconfirmed',
     );
   });
 });

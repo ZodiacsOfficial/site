@@ -152,7 +152,17 @@ export function mountTradePanel({ host, sign, deps, marks = {} }) {
   let paintFn = () => {};
   const controller = createTradePanel({
     sign,
-    deps: { ...deps, onChange: (view) => paintFn(view) },
+    deps: {
+      ...deps,
+      onChange: (view, state) => {
+        paintFn(view);
+        try {
+          deps.onStateChange?.(view, state);
+        } catch {
+          // Operating telemetry is never allowed to alter a quote outcome.
+        }
+      },
+    },
   });
 
   // ── painting ───────────────────────────────────────────────────────────

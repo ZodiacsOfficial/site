@@ -129,12 +129,16 @@ describe('errors say what to do next', () => {
     expect(errorCopy('unexpected_fee')).toBe(copy);
   });
 
-  it('reports a dropped connection as unconfirmed rather than failed', () => {
+  it('keeps a display-quote outage distinct from an unconfirmed submission', () => {
+    const quote = errorCopy('network');
+    expect(quote).toContain('price could not be reached');
+    expect(quote).toContain('Nothing was sent to your wallet');
+    expect(quote).not.toContain('may still have gone through');
     // A submitted trade can still land; "failed" would invite paying twice.
-    const copy = errorCopy('network');
-    expect(copy).toMatch(/could not be confirmed/i);
-    expect(copy).toContain('it may still have gone through');
-    expect(copy).not.toMatch(/\bfailed\b/i);
+    const execute = errorCopy('execute_unconfirmed');
+    expect(execute).toMatch(/could not be confirmed/i);
+    expect(execute).toContain('it may still have gone through');
+    expect(execute).not.toMatch(/\bfailed\b/i);
   });
 
   it('uses plain words for a missing route', () => {
