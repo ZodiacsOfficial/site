@@ -19,7 +19,7 @@ const fr = {
   footerZodiacDates: 'Dates des signes (en anglais)',
   footerGlossary: 'Glossaire (en anglais)',
   footerCompute: 'Nos calculs',
-  footerRegistry: 'Zodiacs Registry',
+  footerRegistry: 'Registry',
   footerThesis: 'Thèse',
   footerArchive: 'Archives',
   footerSdk: 'SDK',

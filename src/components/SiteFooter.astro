@@ -98,7 +98,6 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
 
       <nav class="footer__col" aria-label={t(locale, 'navCollect')}>
         <span class="footer__label">{t(locale, 'navCollect')}</span>
-        <a href="/terminal/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'navCollect')}{englishSuffix}</a>
         <a href="/registry/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerRegistry')}{englishSuffix}</a>
         <a href="/sdk/" hreflang={locale === 'ru' ? 'en' : undefined} title={englishOnlyAria}>{t(locale, 'footerSdk')}{englishSuffix}</a>
         <a href={localizePath(locale, '/disclosure/')}>{t(locale, 'footerDisclosure')}</a>
