@@ -330,6 +330,7 @@ describe('PWA icon compositor', () => {
       'public/thesis/index.html',
       'public/sdk/index.html',
       'public/registry/index.html',
+      'public/terminal/index.html',
       ...SIGN_ORDER.map((sign) => `public/registry/${sign}/index.html`),
     ];
 

@@ -57,11 +57,18 @@ const entries: SearchEntry[] = [
     kind: 'page',
   },
   {
-    path: '/registry/',
+    path: '/terminal/',
     title: 'Zodiac Terminal',
     description: 'Live markets, official token records, and reviewed research.',
+    kind: 'terminal',
+    keywords: ['terminal', 'zodiac terminal', 'zodiac capital markets', 'astrofolio'],
+  },
+  {
+    path: '/registry/',
+    title: 'Zodiacs Registry',
+    description: 'Official token identities and verified addresses.',
     kind: 'registry',
-    keywords: ['terminal', 'zodiac terminal', 'registry', 'zodiac capital markets', 'astrofolio', 'record'],
+    keywords: ['registry', 'verify', 'record'],
   },
   {
     path: '/thesis/',
@@ -189,8 +196,8 @@ describe('WebMCP consumer search', () => {
   it.each(['registry', 'thesis', 'astrofolio', 'aries record'])
     ('never returns a wing entry for %s', (query) => {
       const results = rankConsumerSearchEntries(entries, query);
-      expect(results.every((entry) => entry.kind !== 'registry')).toBe(true);
-      expect(results.every((entry) => !/^\/(?:registry|thesis|sdk|archive)(?:\/|$)/.test(entry.path)))
+      expect(results.every((entry) => entry.kind !== 'terminal' && entry.kind !== 'registry')).toBe(true);
+      expect(results.every((entry) => !/^\/(?:terminal|registry|thesis|sdk|archive)(?:\/|$)/.test(entry.path)))
         .toBe(true);
     });
 

@@ -20,6 +20,8 @@ const KIND_BOOST: Record<string, number> = {
   pairing: 0.5,
   horoscope: 0.5,
   page: 0,
+  terminal: 1,
+  registry: 1,
 };
 
 const wordBoundary = (haystack: string, needle: string) =>

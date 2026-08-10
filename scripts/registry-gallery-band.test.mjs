@@ -1,7 +1,7 @@
-// The gallery band — the twelve as the registry hub's selector.
+// The gallery band — the twelve as Zodiac Terminal's selector.
 //
-// The contract has three parties: the hub page (pre-paint WebGL probe + the
-// band's CSS), the hub application (the skeleton, the strip gate, the lazy
+// The contract has three parties: the Terminal page (pre-paint WebGL probe + the
+// band's CSS), the Terminal application (the skeleton, the strip gate, the lazy
 // bundle), and the scene (embed mode: no card, no hash writes, events out,
 // navigation in). Each is pinned where it lives, source and artifact both,
 // so the compiled output cannot drift from the contract.
@@ -32,7 +32,7 @@ function functionBody(source, name) {
   return '';
 }
 
-describe('the gallery band on the registry hub', () => {
+describe('the gallery band on Zodiac Terminal', () => {
   it('renders the embedded stage skeleton and gates the strip on the probe', async () => {
     const source = await read('src/app.jsx');
     for (const marker of [
@@ -112,7 +112,7 @@ describe('the gallery band on the registry hub', () => {
   });
 
   it('probes WebGL before first paint and dresses the live page', async () => {
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     expect(html).toContain("documentElement.classList.add('gallery-live')");
     expect(html).toContain('network.saveData');
     expect(html).toContain("/(^|-)2g$/.test(network.effectiveType || '')");
@@ -262,7 +262,7 @@ describe('the gallery band on the registry hub', () => {
 
   it('keeps the rectangle’s rail out of the band the scene measures', async () => {
     const [app, html] = await Promise.all([
-      read('src/app.jsx'), read('public/registry/index.html'),
+      read('src/app.jsx'), read('public/terminal/index.html'),
     ]);
     // bandRects() treats .gband__chrome's offsetTop as the FLOOR of the band
     // it may paint into, so chrome above the canvas would leave the figures a
@@ -336,7 +336,7 @@ describe('the gallery band on the registry hub', () => {
       'Open Jupiter route',
       'View market data',
     ]) expect(source).toContain(marker);
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
@@ -357,7 +357,7 @@ describe('the gallery band on the registry hub', () => {
     const card = await read('src/shelf/card.mjs');
     expect(card).toContain('/assets/zodiac-icons/128/');
     expect(card).toContain('As it appears in wallets.');
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     expect(html).toContain('.gcard .rec__disc');
     expect(html).toContain('.gband .rail__tick img');
     const bundle = await read('public/assets/gallery.js');
@@ -374,7 +374,7 @@ describe('the gallery band on the registry hub', () => {
     // The pointer-following wave is paint-only: hit targets keep a stable
     // pitch while the picture grows inside them, avoiding layout work during
     // a WebGL interaction.
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     expect(html).toContain('width: var(--tick); height: var(--tick)');
     expect(html).not.toContain('width: calc(var(--tick) * var(--mag))');
     expect(html).toContain('transform: scale(var(--mag)); transform-origin: bottom center;');

@@ -46,7 +46,7 @@ describe('buildSearchIndex', () => {
     const second = await buildSearchIndex({ distRoot: fixtureRoot, minEntries: 0 });
     const secondJson = await readFile(join(fixtureRoot, 'search-index.json'), 'utf8');
 
-    expect(first.entries.filter((entry) => !['registry', 'term'].includes(entry.kind))).toEqual([
+    expect(first.entries.filter((entry) => !['terminal', 'registry', 'term'].includes(entry.kind))).toEqual([
       {
         path: '/',
         title: 'Home',
@@ -60,11 +60,11 @@ describe('buildSearchIndex', () => {
         kind: 'learn',
       },
     ]);
-    expect(first.entries.filter((entry) => entry.kind === 'registry'))
+    expect(first.entries.filter((entry) => ['terminal', 'registry'].includes(entry.kind)))
       .toEqual([...CURATED_WING_ENTRIES].sort((left, right) => left.path.localeCompare(right.path)));
     expect(first.entries.filter((entry) => entry.kind !== 'term'))
-      .toHaveLength(2 + 15);
-    expect(first.entries).toHaveLength(2 + 15 + GLOSSARY.length);
+      .toHaveLength(2 + 16);
+    expect(first.entries).toHaveLength(2 + 16 + GLOSSARY.length);
     expect(first.entries.filter((entry) => entry.kind === 'term')).toHaveLength(GLOSSARY.length);
     expect(searchIndex(first.entries, 'registry')[0]).toMatchObject({ kind: 'registry' });
     expect(searchIndex(first.entries, 'registry')).toContainEqual(expect.objectContaining({
@@ -72,8 +72,8 @@ describe('buildSearchIndex', () => {
       kind: 'registry',
     }));
     expect(searchIndex(first.entries, 'astrofolio')[0]).toMatchObject({
-      path: '/registry/',
-      kind: 'registry',
+      path: '/terminal/',
+      kind: 'terminal',
     });
     expect(searchIndex(first.entries, 'thesis')[0]).toMatchObject({
       path: '/thesis/',

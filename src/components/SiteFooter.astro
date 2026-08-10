@@ -38,7 +38,7 @@ const englishSuffix = locale === 'ru' ? ' — пока по-английски' 
 const englishOnlyAria = locale === 'ru' ? 'Материал пока доступен по-английски' : undefined;
 const privacyHref = localizePath(locale, '/privacy/');
 const consumerPath = stripLocale(Astro.url.pathname);
-const isRegistryWing = /^\/(?:registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(consumerPath);
+const isRegistryWing = /^\/(?:terminal|registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(consumerPath);
 const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$)/.test(consumerPath);
 ---
 <footer class="footer">

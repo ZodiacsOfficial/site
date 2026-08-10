@@ -76,11 +76,17 @@
           "@type": "ListItem",
           "position": 2,
           "name": "Zodiac Terminal",
-          "item": "https://zodiacs.org/registry/"
+          "item": "https://zodiacs.org/terminal/"
         },
         {
           "@type": "ListItem",
           "position": 3,
+          "name": "Zodiacs Registry",
+          "item": "https://zodiacs.org/registry/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
           "name": "Cancer",
           "item": "https://zodiacs.org/registry/cancer/"
         }
@@ -283,6 +289,16 @@
 
     /* ── Lot header ── */
     .lot { padding: calc(94px + env(safe-area-inset-top)) 0 36px; position: relative; }
+    .lot__crumbs {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+      margin: 0 0 24px; padding: 0; list-style: none;
+      color: var(--ink-mute); font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .lot__crumbs li { display: inline-flex; align-items: center; min-height: 44px; }
+    .lot__crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--hair-3); }
+    .lot__crumbs a { min-height: 44px; display: inline-flex; align-items: center; color: var(--ink-dim); text-underline-offset: 4px; }
+    .lot__crumbs a:hover { color: var(--ink); }
     .lot__eyebrow {
       display: flex; align-items: center; gap: 10px; width: 100%;
       margin-bottom: 28px;
@@ -780,7 +796,7 @@
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         <kbd class="wnav__search-kbd" aria-hidden="true">/</kbd>
       </a>
-      <a class="wnav__chip" href="/registry/" aria-current="page">Terminal</a>
+      <a class="wnav__chip" href="/terminal/">Terminal</a>
       <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
@@ -796,7 +812,7 @@
         <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/registry/" aria-current="page"><span>Terminal</span><small>Markets, token records, and research</small></a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/terminal/"><span>Terminal</span><small>Live markets, gold sculptures, and research</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>
@@ -811,6 +827,7 @@
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
+      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/terminal/">Zodiac Terminal</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">Cancer</li></ol></nav>
       <span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign 4 of 12</span>
       <h1 class="lot__title" id="lot-title">Cancer <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/cancer.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/cancer.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">The Crab. The gate of incarnation.</p>
@@ -840,7 +857,7 @@
             <figcaption class="card__caption">Cancer <span class="g">·</span> The Keeper</figcaption>
           </div>
         </figure>
-        <a class="figure__gallery" href="/registry/#cancer">
+        <a class="figure__gallery" href="/terminal/#cancer">
           <span>View Cancer on the market stage</span><span aria-hidden="true">→</span>
         </a>
       </div>
@@ -990,8 +1007,8 @@
     <section class="sec reveal" aria-labelledby="research-title">
       <div class="sec__head"><h2 class="sec__title" id="research-title">Cancer research</h2><span class="line"></span></div>
       <nav class="research-links" aria-label="Research related to Cancer">
-        <a href="/registry/research/?sign=cancer&amp;type=daily"><span class="research-links__glyph" aria-hidden="true">☉</span><span><strong>Latest Cancer sky brief</strong><small>Sky fact · traditional reading · market observation</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
-        <a href="/registry/research/?sign=cancer"><span class="research-links__glyph" aria-hidden="true">✦</span><span><strong>All Cancer research</strong><small>Calendar events, observation updates, and outside reporting</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
+        <a href="/terminal/research/?sign=cancer&amp;type=daily"><span class="research-links__glyph" aria-hidden="true">☉</span><span><strong>Latest Cancer sky brief</strong><small>Sky fact · traditional reading · market observation</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
+        <a href="/terminal/research/?sign=cancer"><span class="research-links__glyph" aria-hidden="true">✦</span><span><strong>All Cancer research</strong><small>Calendar events, observation updates, and outside reporting</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
       </nav>
     </section>
 
@@ -1063,7 +1080,7 @@
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/registry/#registry">Terminal</a>
+          <a href="/terminal/">Terminal</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>

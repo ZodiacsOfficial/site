@@ -131,7 +131,7 @@ describe('the rendered region', () => {
 });
 
 describe('the landing', () => {
-  const hub = () => readFile(resolve(root, 'public/registry/index.html'), 'utf8');
+  const hub = () => readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
 
   it('ships flag-off, carrying nothing of the panel', async () => {
     const html = await hub();

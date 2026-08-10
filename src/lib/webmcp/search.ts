@@ -101,8 +101,9 @@ export function rankConsumerSearchEntries(
   ));
   return searchIndex(
     entries.filter((entry) => (
-      entry.kind !== 'registry'
-      && !/^\/(?:registry|thesis|sdk|archive|collect)(?:\/|$)/.test(entry.path)
+      entry.kind !== 'terminal'
+      && entry.kind !== 'registry'
+      && !/^\/(?:terminal|registry|thesis|sdk|archive|collect)(?:\/|$)/.test(entry.path)
     )),
     normalizedQuery,
     SEARCH_RESULT_LIMIT,

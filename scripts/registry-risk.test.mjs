@@ -72,7 +72,7 @@ describe('Registry risk and trust copy', () => {
 
     // The route is built at runtime from the live registry answer — the mint
     // itself is never baked into the page that hosts the card.
-    const hub = await readFile(resolve(root, 'public/registry/index.html'), 'utf8');
+    const hub = await readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
     expect(hub).not.toContain('jup.ag/swap/');
   });
 
@@ -143,7 +143,7 @@ describe('Registry risk and trust copy', () => {
       expect(value).not.toContain('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
     }
     expect(source).toContain('check only the twelve Registry mints');
-    expect(privacy).toContain("Registry landing page's optional");
+    expect(privacy).toContain("Zodiac Terminal's optional");
     expect(privacy).toContain('Dex Screener');
     expect(privacy).toContain('Wikimedia');
     expect(privacy).toContain('do not include a wallet address');

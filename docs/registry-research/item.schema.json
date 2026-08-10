@@ -44,7 +44,7 @@
     "visibleAt": { "type": "string", "format": "date-time" },
     "title": { "type": "string", "minLength": 1 },
     "summary": { "type": "string", "minLength": 1 },
-    "url": { "type": "string", "pattern": "^/registry/research/[a-z0-9-]+/$" },
+    "url": { "type": "string", "pattern": "^/terminal/research/[a-z0-9-]+/$" },
     "signs": {
       "type": "array",
       "uniqueItems": true,

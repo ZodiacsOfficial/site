@@ -11,14 +11,14 @@ import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const queries = [
-  ['terminal', 'Zodiac Terminal'],
-  ['registry', 'Zodiac Terminal'],
-  ['zodiac capital markets', 'Zodiac Terminal'],
-  ['astrofolio', 'Zodiac Terminal'],
-  ['thesis', 'The Registry Thesis'],
-  ['aries record', 'Aries — official Zodiac record'],
+  ['terminal', 'Zodiac Terminal', 'Terminal'],
+  ['registry', 'Zodiacs Registry', 'Registry'],
+  ['zodiac capital markets', 'Zodiac Terminal', 'Terminal'],
+  ['astrofolio', 'Zodiac Terminal', 'Terminal'],
+  ['thesis', 'The Registry Thesis', 'Registry'],
+  ['aries record', 'Aries — official Zodiac record', 'Registry'],
 ];
-const wingPaths = ['/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
+const wingPaths = ['/terminal/', '/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
 
@@ -43,19 +43,19 @@ await withPreview({ port: 4403 }, async (baseURL) => {
     check('query parameter is removed without navigation', cleaned.pathname === '/' && !cleaned.searchParams.has('search'), cleaned.href);
     check('query-opened search focuses the input', await input.evaluate((element) => document.activeElement === element));
 
-    for (const [query, expectedTitle] of queries) {
+    for (const [query, expectedTitle, expectedKind] of queries) {
       await input.fill(query);
       const result = page.locator('.zsearch__opt').filter({
         has: page.locator('.zsearch__title', { hasText: expectedTitle }),
       }).filter({
-        has: page.locator('.zsearch__kind', { hasText: /^Terminal$/ }),
+        has: page.locator('.zsearch__kind', { hasText: new RegExp(`^${expectedKind}$`) }),
       }).first();
       await result.waitFor({ state: 'visible' });
       const resultTitle = await result.locator('.zsearch__title').textContent();
       const resultKind = await result.locator('.zsearch__kind').textContent();
       check(
         `${query}: returns the expected Terminal-badged entry`,
-        resultTitle === expectedTitle && resultKind === 'Terminal',
+        resultTitle === expectedTitle && resultKind === expectedKind,
         `${resultTitle} · ${resultKind}`,
       );
       if (OUT) await page.locator('.zsearch__panel').screenshot({ path: `${OUT}/search-${query.replaceAll(' ', '-')}.png` });

@@ -184,8 +184,9 @@ function jsonLd(m) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
-          { '@type': 'ListItem', position: 2, name: 'Zodiac Terminal', item: 'https://zodiacs.org/registry/' },
-          { '@type': 'ListItem', position: 3, name: m.name, item: signUrl(m.slug) }
+          { '@type': 'ListItem', position: 2, name: 'Zodiac Terminal', item: 'https://zodiacs.org/terminal/' },
+          { '@type': 'ListItem', position: 3, name: 'Zodiacs Registry', item: 'https://zodiacs.org/registry/' },
+          { '@type': 'ListItem', position: 4, name: m.name, item: signUrl(m.slug) }
         ]
       },
       {
@@ -382,6 +383,16 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
     /* ── Lot header ── */
     .lot { padding: calc(94px + env(safe-area-inset-top)) 0 36px; position: relative; }
+    .lot__crumbs {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+      margin: 0 0 24px; padding: 0; list-style: none;
+      color: var(--ink-mute); font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .lot__crumbs li { display: inline-flex; align-items: center; min-height: 44px; }
+    .lot__crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--hair-3); }
+    .lot__crumbs a { min-height: 44px; display: inline-flex; align-items: center; color: var(--ink-dim); text-underline-offset: 4px; }
+    .lot__crumbs a:hover { color: var(--ink); }
     .lot__eyebrow {
       display: flex; align-items: center; gap: 10px; width: 100%;
       margin-bottom: 28px;
@@ -869,6 +880,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
+      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/terminal/">Zodiac Terminal</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">${esc(m.name)}</li></ol></nav>
       <span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign ${m.order} of 12</span>
       <h1 class="lot__title" id="lot-title">${esc(m.name)} <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/${m.slug}.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/${m.slug}.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">${esc(p.epithet)}</p>
@@ -898,7 +910,7 @@ ${JSON.stringify(jsonLd(m), null, 2)}
             <figcaption class="card__caption">${esc(m.name)} <span class="g">·</span> ${esc(meta.archetype)}</figcaption>
           </div>
         </figure>
-        <a class="figure__gallery" href="/registry/#${m.slug}">
+        <a class="figure__gallery" href="/terminal/#${m.slug}">
           <span>View ${esc(m.name)} on the market stage</span><span aria-hidden="true">→</span>
         </a>
       </div>
@@ -1013,8 +1025,8 @@ ${beats.map((b) => `        <div class="prov__item">
     <section class="sec reveal" aria-labelledby="research-title">
       <div class="sec__head"><h2 class="sec__title" id="research-title">${esc(m.name)} research</h2><span class="line"></span></div>
       <nav class="research-links" aria-label="Research related to ${esc(m.name)}">
-        <a href="/registry/research/?sign=${m.slug}&amp;type=daily"><span class="research-links__glyph" aria-hidden="true">☉</span><span><strong>Latest ${esc(m.name)} sky brief</strong><small>Sky fact · traditional reading · market observation</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
-        <a href="/registry/research/?sign=${m.slug}"><span class="research-links__glyph" aria-hidden="true">✦</span><span><strong>All ${esc(m.name)} research</strong><small>Calendar events, observation updates, and outside reporting</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
+        <a href="/terminal/research/?sign=${m.slug}&amp;type=daily"><span class="research-links__glyph" aria-hidden="true">☉</span><span><strong>Latest ${esc(m.name)} sky brief</strong><small>Sky fact · traditional reading · market observation</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
+        <a href="/terminal/research/?sign=${m.slug}"><span class="research-links__glyph" aria-hidden="true">✦</span><span><strong>All ${esc(m.name)} research</strong><small>Calendar events, observation updates, and outside reporting</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
       </nav>
     </section>
 
@@ -1073,7 +1085,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/registry/#registry">Terminal</a>
+          <a href="/terminal/">Terminal</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>

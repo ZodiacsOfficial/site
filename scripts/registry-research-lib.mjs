@@ -342,7 +342,7 @@ function dailyBrief({ daily, outlook, marketSnapshot }) {
     visibleAt: daily.snapshotAt,
     title: factor ? `${factor.label} · daily market brief` : `${entry.displayName} · daily market brief`,
     summary,
-    url: `/registry/research/daily-market-brief-${daily.date}/`,
+    url: `/terminal/research/daily-market-brief-${daily.date}/`,
     signs: factor?.signs?.length ? factor.signs : [entry.sign],
     topics: ['markets', 'daily-sky', factor?.kind ?? 'occupancy'],
     symbolicScore: {
@@ -398,7 +398,7 @@ function eventBrief({ event, outlook, createdAt }) {
     summary: groupedFacts
       ? `${event.label} are grouped into one calendar brief to avoid feed noise. Symbolic reading and market observations remain separate.`
       : `${event.label} becomes exact at ${event.at}. Its symbolic reading and later market observations remain separate.`,
-    url: `/registry/research/event-brief-${eventSlug}/`,
+    url: `/terminal/research/event-brief-${eventSlug}/`,
     signs: event.signs,
     topics: ['calendar', 'astrology', event.kind],
     symbolicScore: score,
@@ -452,7 +452,7 @@ function marketCheck({ daily, outlook, marketSnapshot }) {
     summary: market.available
       ? `${entry.displayName} price, market cap, liquidity, volume, and collection medians at one archived observation.`
       : `${entry.displayName} market comparison is delayed because the paired archive snapshot is unavailable.`,
-    url: `/registry/research/market-check-${daily.date}/`,
+    url: `/terminal/research/market-check-${daily.date}/`,
     signs: [entry.sign],
     topics: ['markets', 'market-check'],
     symbolicScore: {
@@ -497,7 +497,7 @@ function weeklyOutlook({ daily, outlook, marketSnapshot }) {
     visibleAt: daily.snapshotAt,
     title: `Weekly symbolic outlook · ${daily.date}`,
     summary: `${names} hold the three highest disclosed attention ranks for the next seven UTC days.`,
-    url: `/registry/research/weekly-outlook-${daily.date}/`,
+    url: `/terminal/research/weekly-outlook-${daily.date}/`,
     signs: ranked.map((entry) => entry.sign),
     topics: ['markets', 'weekly-outlook', 'astrology'],
     symbolicScore: {
@@ -546,7 +546,7 @@ function monthlyCalibration({ daily, existingItems, marketHistory }) {
     visibleAt: daily.snapshotAt,
     title: `Research calibration · ${previousMonth}`,
     summary: `${checks.length} market checks, ${observations.length} elapsed observation updates, and ${snapshots.length} archived market snapshots are reported without a predictive claim.`,
-    url: `/registry/research/monthly-calibration-${previousMonth}/`,
+    url: `/terminal/research/monthly-calibration-${previousMonth}/`,
     signs: [],
     topics: ['methodology', 'calibration', 'markets'],
     symbolicScore: null,
@@ -598,7 +598,7 @@ function observationUpdate(base, snapshot, elapsedHours) {
     visibleAt: snapshot.source.readAt,
     title: `${SIGN_NAMES[base.market.sign]} ${label} observation update`,
     summary: `${label} follow-up using the first qualifying archived snapshot (${actualHours} actual hours elapsed).`,
-    url: `/registry/research/${base.slug}-observation-${elapsedHours}h/`,
+    url: `/terminal/research/${base.slug}-observation-${elapsedHours}h/`,
     signs: [base.market.sign],
     topics: ['markets', 'observation-update'],
     symbolicScore: base.symbolicScore,
@@ -840,7 +840,7 @@ export function validateRegistryResearchItem(item, { requireHash = true } = {}) 
   if (!isRecord(item) || item.schema !== REGISTRY_RESEARCH_ITEM_SCHEMA) throw new Error(`research item must use ${REGISTRY_RESEARCH_ITEM_SCHEMA}`);
   if (!/^zrx-[a-z0-9-]+$/u.test(item.id ?? '')) throw new Error('research item id is invalid');
   if (!/^[a-z0-9-]+$/u.test(item.slug ?? '')) throw new Error(`${item.id}.slug is invalid`);
-  if (item.url !== `/registry/research/${item.slug}/`) throw new Error(`${item.id}.url must be canonical`);
+  if (item.url !== `/terminal/research/${item.slug}/`) throw new Error(`${item.id}.url must be canonical`);
   if (!['daily-market-brief', 'event-brief', 'market-check', 'observation-update', 'weekly-outlook', 'monthly-calibration'].includes(item.kind)) {
     throw new Error(`${item.id}.kind is unsupported`);
   }
@@ -892,7 +892,7 @@ export function registryResearchRss(feed) {
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Zodiacs.org Markets Research</title>
-    <link>${SITE}/registry/research/</link>
+    <link>${SITE}/terminal/research/</link>
     <atom:link href="${SITE}/feeds/market-research.xml" rel="self" type="application/rss+xml" />
     <description>Deterministic symbolic research and separately timestamped Zodiac market observations.</description>
     <language>en</language>

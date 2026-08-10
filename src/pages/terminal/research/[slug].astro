@@ -50,7 +50,7 @@ const jsonUrl = `/assets/data/registry-research/items/${item.id}.json`;
   stableTypography
 >
   <main class="research-note" data-visible-at={item.visibleAt} data-scheduled={scheduled ? 'true' : undefined}>
-    <a class="research-note__back" href="/registry/research/">← Markets Research</a>
+    <a class="research-note__back" href="/terminal/research/">← Markets Research</a>
     <div class="research-note__meta">
       <span>{item.kind.replaceAll('-', ' ')}</span>
       <span>{item.publisher}</span>
@@ -108,7 +108,7 @@ const jsonUrl = `/assets/data/registry-research/items/${item.id}.json`;
       <div class="research-note__actions">
         <a href={jsonUrl}>Open immutable JSON ↗</a>
         <a href="/assets/registry-outlook.json">Open symbolic method data ↗</a>
-        <a href="/registry/">Return to Zodiac Terminal →</a>
+        <a href="/terminal/">Return to Zodiac Terminal →</a>
       </div>
     </div>
   </main>

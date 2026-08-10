@@ -58,11 +58,12 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ['/birth-chart/', '2026-07-24'],
   ['/privacy/', '2026-07-26'],
   ['/registry/technical/', '2026-08-02'],
-  ['/registry/research/', registryResearchPublication.generatedAt.slice(0, 10)],
+  ['/terminal/research/', registryResearchPublication.generatedAt.slice(0, 10)],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
   ['/thesis/', '2026-08-05'],
-  // Zodiac Terminal and the twelve plain-language token records.
-  ['/registry/', '2026-08-10'],
+  // Zodiac Terminal and the Registry's twelve plain-language token records.
+  ['/terminal/', '2026-08-11'],
+  ['/registry/', '2026-08-11'],
   ...[
     'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
     'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
@@ -169,7 +170,7 @@ export const GET: APIRoute = async () => {
     { loc: '/ask/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
     { loc: '/registry/technical/', priority: 0.6 },
-    { loc: '/registry/research/', priority: 0.68 },
+    { loc: '/terminal/research/', priority: 0.68 },
     { loc: '/learn/how-to-read-a-birth-chart/', priority: 0.8 },
     { loc: '/learn/communication/', priority: 0.8 },
     { loc: '/learn/zodiac-dates/', priority: 0.8 },

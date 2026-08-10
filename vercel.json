@@ -99,12 +99,12 @@
     },
     {
       "source": "/collect",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
       "source": "/collect/",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
@@ -114,22 +114,22 @@
     },
     {
       "source": "/registry/shelf",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
       "source": "/registry/shelf/",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
       "source": "/registry/gallery",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
       "source": "/registry/gallery/",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
@@ -145,6 +145,36 @@
     {
       "source": "/registry/aura/:path(.*)",
       "destination": "/registry/collection/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/exchange",
+      "destination": "/terminal/markets/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/exchange/",
+      "destination": "/terminal/markets/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/exchange/:path(.*)",
+      "destination": "/terminal/markets/:path",
+      "permanent": true
+    },
+    {
+      "source": "/registry/research",
+      "destination": "/terminal/research/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/research/",
+      "destination": "/terminal/research/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/research/:path(.*)",
+      "destination": "/terminal/research/:path",
       "permanent": true
     },
     {
@@ -270,7 +300,7 @@
       ]
     },
     {
-      "source": "/registry/exchange/(.*)",
+      "source": "/terminal/markets/(.*)",
       "headers": [
         {
           "key": "Content-Security-Policy",
@@ -280,6 +310,19 @@
           "key": "Referrer-Policy",
           "value": "same-origin"
         },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/registry/exchange/(.*)",
+      "headers": [
         {
           "key": "Cache-Control",
           "value": "no-store"

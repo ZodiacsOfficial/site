@@ -38,7 +38,7 @@ const here = dirname(fileURLToPath(import.meta.url));
 const root = resolve(here, '..');
 const SRC = resolve(root, 'src/app.jsx');
 const OUT = resolve(root, 'public/assets/app.js');
-const REGISTRY_HTML = resolve(root, 'public/registry/index.html');
+const TERMINAL_HTML = resolve(root, 'public/terminal/index.html');
 const THESIS_HTML = resolve(root, 'public/thesis/index.html');
 const REGISTRY_DATA = resolve(root, 'public/registry/zodiacs.registry.json');
 const REGISTRY_TECHNICAL_HTML = resolve(root, 'public/registry/technical/index.html');
@@ -160,16 +160,16 @@ const registryMeta = [
   `const REGISTRY_EXCHANGE_LANDING_COPY=Object.freeze(${JSON.stringify(REGISTRY_EXCHANGE_LANDING_COPY)});`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
-const [registryHtml, thesisHtml, registryOutlook] = await Promise.all([
-  readFile(REGISTRY_HTML, 'utf8'),
+const [terminalHtml, thesisHtml, registryOutlook] = await Promise.all([
+  readFile(TERMINAL_HTML, 'utf8'),
   readFile(THESIS_HTML, 'utf8'),
   buildRegistryOutlookArtifact(root),
 ]);
-// Both Registry flags stamp the same shell, so they are chained: each owns a
+// Registry feature flags stamp the same Terminal shell, so they are chained: each owns a
 // disjoint marker and neither can overwrite the other's configured output.
-const configuredRegistry = injectRegistryTradeLanding(
+const configuredTerminal = injectRegistryTradeLanding(
   injectRegistryExchangeLanding(
-    injectRegistryAuraLanding(registryHtml, process.env).output,
+    injectRegistryAuraLanding(terminalHtml, process.env).output,
     process.env,
   ).output,
   process.env,
@@ -179,7 +179,7 @@ const configuredThesis = injectRegistryAuraThesis(thesisHtml, process.env).outpu
 await Promise.all([
   writeFile(OUT, output, 'utf8'),
   writeFile(REGISTRY_OUTLOOK, `${JSON.stringify(registryOutlook, null, 2)}\n`, 'utf8'),
-  configuredRegistry !== registryHtml ? writeFile(REGISTRY_HTML, configuredRegistry, 'utf8') : null,
+  configuredTerminal !== terminalHtml ? writeFile(TERMINAL_HTML, configuredTerminal, 'utf8') : null,
   configuredThesis !== thesisHtml ? writeFile(THESIS_HTML, configuredThesis, 'utf8') : null,
 ]);
 
@@ -188,7 +188,7 @@ const technicalHtml = await readFile(REGISTRY_TECHNICAL_HTML, 'utf8');
 const technicalWithStyles = replaceGeneratedRegion(
   technicalHtml,
   'registry-shared-styles',
-  extractRegistryStyles(configuredRegistry),
+  extractRegistryStyles(configuredTerminal),
 );
 const configuredTechnical = replaceGeneratedRegion(
   technicalWithStyles,

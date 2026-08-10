@@ -69,11 +69,17 @@ function registryVolatileSurface(url) {
     || url.pathname === '/registry/index.html'
     || url.pathname === '/registry/exchange'
     || url.pathname === '/registry/exchange/'
-    || url.pathname === '/registry/exchange/index.html';
+    || url.pathname === '/registry/exchange/index.html'
+    || url.pathname === '/terminal'
+    || url.pathname === '/terminal/'
+    || url.pathname === '/terminal/index.html'
+    || url.pathname === '/terminal/markets'
+    || url.pathname === '/terminal/markets/'
+    || url.pathname === '/terminal/markets/index.html';
 }
 
 function registryWing(url) {
-  return ['/registry/', '/sdk/', '/thesis/', '/archive/', '/disclosure/']
+  return ['/registry/', '/terminal/', '/sdk/', '/thesis/', '/archive/', '/disclosure/']
     .some((prefix) => url.pathname.startsWith(prefix));
 }
 
@@ -142,7 +148,7 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // Registry identity and flag-stamped trading bytes are live authority.
+  // Registry identity and flag-stamped Terminal bytes are live authority.
   // Offline must fail honestly, never preserve an old mint or flag state.
   if (registryAuthority(url) || registryVolatileSurface(url)) {
     event.respondWith(fetch(request));

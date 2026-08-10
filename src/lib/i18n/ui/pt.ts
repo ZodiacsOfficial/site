@@ -19,7 +19,7 @@ const pt = {
   footerZodiacDates: 'Datas dos signos (em inglês)',
   footerGlossary: 'Glossário (em inglês)',
   footerCompute: 'Como calculamos',
-  footerRegistry: 'Visão geral',
+  footerRegistry: 'Registry',
   footerThesis: 'Tese',
   footerArchive: 'Acervo',
   footerSdk: 'SDK',

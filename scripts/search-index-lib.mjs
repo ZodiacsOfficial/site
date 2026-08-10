@@ -6,6 +6,7 @@ export const SEARCH_KINDS = Object.freeze([
   'pairing',
   'page',
   'term',
+  'terminal',
   'registry',
 ]);
 
@@ -37,7 +38,7 @@ const TOOL_ROOTS = new Set([
   'transits',
   'widgets',
 ]);
-const EXCLUDED_PREFIXES = ['/es/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
+const EXCLUDED_PREFIXES = ['/es/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
 const NAMED_ENTITIES = Object.freeze({
   amp: '&',
   apos: "'",
@@ -68,14 +69,21 @@ function freezeCuratedEntry(entry) {
  */
 export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
-    path: '/registry/',
+    path: '/terminal/',
     title: 'Zodiac Terminal',
-    description: 'Live markets, official token records, and reviewed research for the twelve Zodiac signs.',
-    kind: 'registry',
+    description: 'Live markets, rotating gold sculptures, price history, and reviewed research for the twelve Zodiac tokens.',
+    kind: 'terminal',
     keywords: [
-      'terminal', 'zodiac terminal', 'registry', 'zodiac capital markets',
-      'astrofolio', 'market', 'markets', 'token', 'tokens', 'record', 'records', 'research',
+      'terminal', 'zodiac terminal', 'zodiac capital markets',
+      'astrofolio', 'market', 'markets', 'token', 'tokens', 'research',
     ],
+  }),
+  freezeCuratedEntry({
+    path: '/registry/',
+    title: 'Zodiacs Registry',
+    description: 'Official Zodiac identities, verified addresses, canonical datasets, and methodology for all twelve signs.',
+    kind: 'registry',
+    keywords: ['registry', 'zodiacs registry', 'verify', 'verification', 'address', 'addresses', 'canonical', 'dataset', 'methodology', 'record'],
   }),
   freezeCuratedEntry({
     path: '/thesis/',

@@ -97,7 +97,7 @@ await withPreview({ port: 4412 }, async (baseURL) => {
     assertCall('MCP-B 4.0.0', polyfill);
 
     exclusions = {};
-    for (const path of ['/es/', '/registry/', '/thesis/', '/sdk/', '/archive/']) {
+    for (const path of ['/es/', '/terminal/', '/registry/', '/thesis/', '/sdk/', '/archive/']) {
       const excludedPage = await context.newPage();
       await excludedPage.goto(`${baseURL}${path}`, { waitUntil: 'networkidle' });
       await excludedPage.waitForTimeout(100);

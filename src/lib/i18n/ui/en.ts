@@ -18,7 +18,7 @@ const en = {
     footerZodiacDates: 'Zodiac dates',
     footerGlossary: 'Glossary',
     footerCompute: 'How we compute',
-    footerRegistry: 'Overview',
+    footerRegistry: 'Registry',
     footerThesis: 'Thesis',
     footerArchive: 'Archive',
     footerSdk: 'SDK',

@@ -59,7 +59,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('opens with one market identity, a plain-language promise, and the verification path', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
     const visible = visibleMarkup(html);
 
@@ -68,6 +68,13 @@ describe('Registry consumer and technical information architecture', () => {
       expect(value).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
       expect(value).not.toMatch(/<h1[^>]*>\s*Astrofolio\s*<\/h1>/iu);
     }
+    expect(html).toContain('<meta name="zodiacs-registry-view" content="terminal" />');
+    expect(html).toContain('<link rel="canonical" href="https://zodiacs.org/terminal/" />');
+    expect(html).toContain('<meta property="og:url" content="https://zodiacs.org/terminal/" />');
+    expect(html).not.toContain('"alternateName": ["Zodiac Capital Markets", "The Zodiacs Registry"]');
+    expect(source).toContain('const REGISTRY_VIEW = document.querySelector');
+    expect(source).toContain("const technical = REGISTRY_VIEW === 'technical';");
+    expect(source).not.toContain("/^\\/registry\\/technical\\/?$/.test(window.location.pathname)");
     for (const value of [source, visible]) {
       // The verifier is reachable in plain words. "Check an address" named
       // the mechanism, and "Check a token is official" dropped its "that".
@@ -119,7 +126,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('keeps builder detail out of the market-led consumer journey', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
     const mounted = consumerRoot(source);
     const fallback = visibleMarkup(html);
@@ -162,7 +169,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('keeps the mounted and no-JavaScript first paint on the same non-cinematic identity', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     const visible = visibleMarkup(html);
@@ -192,7 +199,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('shows the current season as a gold sculpture, countdown, and progress instrument', async () => {
     const [source, html, bundle] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
       read('public/assets/app.js'),
     ]);
 
@@ -248,7 +255,7 @@ describe('Registry consumer and technical information architecture', () => {
   });
 
   it('lets the season materialize inside the scene without another framed card', async () => {
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     const seasonBase = html.slice(
       html.indexOf('.season-now {'),
       html.indexOf('.season-now__identity {'),
@@ -326,7 +333,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('drops the second chain and the guide detour from the record box', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
     // The landing is about a sign's official token on its native network. The
     // Base counterpart is a fact of the catalogue page, not of choosing; and
@@ -392,7 +399,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('keeps the trade panel behind its flag and its own lazy bundle', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
     // Flag-off the landing carries the door to the catalogue page's panel;
     // flag-on it carries the panel. Never a runtime read of the venue.
@@ -407,7 +414,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('ranks a compact market board before expanding all twelve, with one batched read', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
     const visible = visibleMarkup(html);
 
@@ -490,7 +497,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('loads the selected-token chart only near view and gates the advanced market rail', async () => {
     const [source, html, buildApp, chartBuild] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
       read('scripts/build-app.mjs'),
       read('scripts/build-registry-token-chart.mjs'),
     ]);
@@ -516,16 +523,18 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('REGISTRY_EXCHANGE_LANDING_COPY.description');
     expect(buildApp).toContain('REGISTRY_EXCHANGE_ENABLED=document.querySelector');
     expect(buildApp).toContain('injectRegistryExchangeLanding(');
+    expect(buildApp).toContain("resolve(root, 'public/terminal/index.html')");
+    expect(buildApp).not.toContain("resolve(root, 'public/registry/index.html')");
     expect(html).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
   });
 
-  it('publishes the Terminal card at v3 while freezing the cached v2 Registry card', async () => {
+  it('publishes the route-versioned Terminal card at v4 while freezing the cached v2 Registry card', async () => {
     const [html, generator, verifier] = await Promise.all([
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
       read('scripts/build-og-void.mjs'),
       read('scripts/verify-og-cards.mjs'),
     ]);
-    expect(html).toContain('https://zodiacs.org/assets/og/v3/zodiac-terminal.png');
+    expect(html).toContain('https://zodiacs.org/assets/og/v4/zodiac-terminal.png');
     expect(generator).toContain('const LEGACY_REGISTRY_CARD_COPY = Object.freeze({');
     expect(generator).toContain("await shoot(registryCard(LEGACY_REGISTRY_CARD_COPY), 'registry.png');");
     expect(verifier).toContain("const legacyRegistryCardSha256 = 'f7b9e9e801e390f2ef3671755d1f3754a7e45bb9db026699f5381764aab5a08a';");
@@ -567,7 +576,7 @@ describe('Registry consumer and technical information architecture', () => {
   it('turns astrology into a named, auditable three-step market-check path', async () => {
     const [source, html, bundle] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
       read('public/assets/app.js'),
     ]);
     const visible = visibleMarkup(html);
@@ -653,7 +662,7 @@ describe('Registry consumer and technical information architecture', () => {
 
   it('uses image artwork instead of visible zodiac Unicode in both registry shells', async () => {
     const [consumer, technical] = await Promise.all([
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
       read('public/registry/technical/index.html'),
     ]);
     const zodiacUnicode = /[♈♉♊♋♌♍♎♏♐♑♒♓]/u;

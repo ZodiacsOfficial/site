@@ -27,6 +27,6 @@ After the pilot, only explicitly allowlisted deterministic template IDs can publ
 - Immutable items: `/assets/data/registry-research/items/{id}.json`
 - RSS: `/feeds/market-research.xml`
 - JSON Feed: `/feeds/market-research.json`
-- Archive: `/registry/research/`
+- Archive: `/terminal/research/`
 
 The rolling window contains the previous 30 UTC calendar days plus approved event briefs through the end of the next seven UTC calendar days. `endsBefore` is the exclusive boundary at 00:00 UTC on the following day. Scheduled items carry `visibleAt`; standard RSS/JSON feeds exclude them until their publication build is eligible.

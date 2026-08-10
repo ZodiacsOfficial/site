@@ -5,6 +5,30 @@ below is satisfied.
 
 Approved: 2026-08-10T11:40:11Z
 
+## Addendum — 2026-08-11: Terminal route split
+
+Authorized: 2026-08-11
+
+This addendum supersedes only the public route and the location of the single
+already-authorized discovery entry:
+
+- Zodiac Markets moves from `/registry/exchange/` to
+  `/terminal/markets/`. The previous path permanently redirects to the new
+  path and never serves terminal code.
+- The one flag-gated discovery entry moves with Zodiac Terminal from the old
+  `/registry/` market landing to `/terminal/`. It continues to carry the
+  selected sign only in the URL hash.
+- The feature flag, internal `exchange` identifiers, analytics event names,
+  provider boundaries, and Registry API/schema contracts stay unchanged.
+- The new route inherits the exact noindex, no-store, CSP, service-worker,
+  custody, compensation, independent-venue, pilot, and rollback controls.
+- This split creates no additional acquisition surface. The read-only
+  `/registry/` verification hub, sign records, canonical datasets, and SDK
+  interfaces remain Registry surfaces.
+
+Every earlier control in this record remains in force unless its only subject
+is the superseded public route or discovery-entry location.
+
 ## Addendum — 2026-08-10: public name and one Registry entry
 
 Authorized: 2026-08-10

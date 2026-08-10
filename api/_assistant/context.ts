@@ -79,6 +79,7 @@ PAGE INVENTORY — EVERGREEN PAGES AND HUBS
 - /learn/zodiac-dates/ — The twelve tropical zodiac signs in one…
 - /methodology/ — How zodiacs.org computes a chart.
 - /privacy/ — How zodiacs.org handles birth charts, The…
+- /terminal/research/ — Verified sky facts, traditional symbolic…
 - /terms/ — Terms for the zodiacs.org astrology…
 - /today/ — Sky details, limitations, and editorial…
 - /tools/ — Free astrology tools, no signup.
@@ -739,8 +740,10 @@ Every route below is a live date guide. Each one-line description names the sign
 - /birthday/september-8/ — Virgo birthday guide.
 - /birthday/september-9/ — Virgo birthday guide.
 
-REGISTRY WING
-- /registry/ — Zodiac Terminal: a separate interface for the twelve official Zodiac assets, their rotating gold artwork, public activity context, reviewed research, and links to canonical Zodiacs Registry identities and addresses.
+ZODIAC TERMINAL AND REGISTRY
+- /terminal/ — Zodiac Terminal: the separate consumer interface for the twelve official Zodiac assets, their rotating gold artwork, public activity context, and reviewed research.
+- /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.
+- /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.
 - /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.
 - /sdk/ — Open tools for charts, icons, and the registry interface.
 

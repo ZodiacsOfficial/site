@@ -202,7 +202,7 @@ async function mockSelectedTokenArchive(page, sign = 'leo') {
 
 /** The advanced terminal is deployment-flagged independently of trading. */
 async function withExchangeFlag(page) {
-  await page.route('**/registry/', async (route) => {
+  await page.route('**/terminal/', async (route) => {
     if (route.request().resourceType() !== 'document') return route.continue();
     const response = await route.fetch();
     const body = (await response.text()).replace(
@@ -227,13 +227,13 @@ async function mockRegistryResearch(page) {
           sourceType: 'zodiacs-research', publisher: 'Zodiacs.org Research System',
           publishedAt, visibleAt: publishedAt, title: 'Pisces sky and market brief',
           summary: 'A reviewed symbolic brief with market observations kept separate.',
-          url: '/registry/research/owned-pisces/', signs: ['pisces'], topics: ['pisces'], status: 'published',
+          url: '/terminal/research/owned-pisces/', signs: ['pisces'], topics: ['pisces'], status: 'published',
         },
         {
           id: 'owned-aries', slug: 'owned-aries', kind: 'event-brief',
           sourceType: 'zodiacs-research', publisher: 'Zodiacs.org Research System',
           publishedAt, visibleAt: publishedAt, title: 'Aries event brief',
-          summary: 'A scheduled event note.', url: '/registry/research/owned-aries/',
+          summary: 'A scheduled event note.', url: '/terminal/research/owned-aries/',
           signs: ['aries'], topics: ['calendar', 'aries'], status: 'published',
         },
       ],
@@ -261,7 +261,7 @@ async function mockRegistryResearch(page) {
 /** The Cabinet is deployment-flagged. Enable it on visual consumer pages so
  * this gate exercises the same purpose card the public Registry ships. */
 async function withCollectionFlag(page) {
-  await page.route('**/registry/', async (route) => {
+  await page.route('**/terminal/', async (route) => {
     if (route.request().resourceType() !== 'document') return route.continue();
     const response = await route.fetch();
     const body = (await response.text()).replace(
@@ -300,7 +300,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
   try {
     const navRoutes = [
       { path: '/', selector: '.nav-wrap .nav', prefix: 'nav' },
-      { path: '/registry/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
+      { path: '/terminal/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
       { path: '/registry/aries/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
       { path: '/sdk/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
     ];
@@ -391,7 +391,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             && Math.abs(geometry.chipHeight - 34) <= 0.5,
           `${geometry.chipTracking}/${geometry.chipHeight}`,
         );
-        if (route.path === '/registry/') {
+        if (route.path === '/terminal/') {
           check(`${label} keeps the Terminal nav label`, geometry.chipText === 'Terminal', geometry.chipText);
         }
         if (desktopNav) {
@@ -523,7 +523,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             JSON.stringify(menuContract.labels.map((value) => value.toLowerCase()))
               === JSON.stringify(['the site', 'tools', 'the twelve'])
               && JSON.stringify(menuContract.siteHrefs)
-                === JSON.stringify(['/learn/', '/horoscopes/', '/profile/', '/registry/']),
+                === JSON.stringify(['/learn/', '/horoscopes/', '/profile/', '/terminal/']),
             JSON.stringify(menuContract),
           );
           check(
@@ -580,7 +580,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         viewport: { width, height: 844 },
         javaScriptEnabled: false,
       });
-      await fallbackPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      await fallbackPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
       const fallbackState = await fallbackPage.locator('.static-site__nav').evaluate((nav) => ({
         pageWidth: document.documentElement.scrollWidth,
         viewportWidth: innerWidth,
@@ -658,7 +658,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     }
 
     const registryMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
-    await registryMaterialPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    await registryMaterialPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
     const material = async (page, selector, lens) => {
       // This assertion compares the settled material recipes, not animation
       // timing. CI runners can briefly suspend a page while another page is
@@ -793,7 +793,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     compactRegistry.on('requestfailed', (request) => {
       if (request.url().startsWith(baseURL)) compactRegistryErrors.push(request.url());
     });
-    await compactRegistry.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    await compactRegistry.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
     const compactRegistryLive = await compactRegistry.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
@@ -866,7 +866,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check('Registry at 623×1054 leaves technical sections off the consumer route',
       compactRegistryLayout.heavySections.length === 0,
       compactRegistryLayout.heavySections.join(','));
-    await compactRegistry.goto(`${baseURL}/registry/#identity`, { waitUntil: 'domcontentloaded' });
+    await compactRegistry.goto(`${baseURL}/terminal/#identity`, { waitUntil: 'domcontentloaded' });
     await compactRegistry.locator('#identity').waitFor({ state: 'attached' });
     await compactRegistry.waitForTimeout(1200);
     const compactHashTop = await compactRegistry.locator('#identity').evaluate((node) => (
@@ -882,7 +882,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await compactRegistry.close();
 
     const tabletEdge = await newPage({ viewport: { width: 1020, height: 900 } });
-    await tabletEdge.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    await tabletEdge.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
     const tabletStageLive = await tabletEdge.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
@@ -1060,7 +1060,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await mockSelectedTokenArchive(selectedChartPage);
       await mockGeckoHourly(selectedChartPage, { requests: geckoRequests });
       await withExchangeFlag(selectedChartPage);
-      await selectedChartPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      await selectedChartPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
       const selectedChart = selectedChartPage.locator('[data-token-chart="leo"]');
       await selectedChart.scrollIntoViewIfNeeded();
       await selectedChart.locator('.token-spark--live').waitFor({ state: 'visible', timeout: 20_000 });
@@ -1121,7 +1121,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         state.advanced?.visible
           && state.advanced.height >= 44
           && state.advanced.target === null
-          && state.advanced.href === '/registry/exchange/#leo',
+          && state.advanced.href === '/terminal/markets/#leo',
         JSON.stringify(state.advanced),
       );
       await selectedChartPage.close();
@@ -1139,7 +1139,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await mockSelectedTokenArchive(rapidChartPage);
     await mockGeckoHourly(rapidChartPage, { requests: rapidGeckoRequests });
     await withExchangeFlag(rapidChartPage);
-    await rapidChartPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    await rapidChartPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
     const initialSelectedChart = rapidChartPage.locator('[data-token-chart="leo"]');
     await initialSelectedChart.scrollIntoViewIfNeeded();
     await initialSelectedChart.locator('.token-spark--live').waitFor({ state: 'visible', timeout: 20_000 });
@@ -1182,7 +1182,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     check(
       'the enabled exchange rail follows the final selected sign without opening a new context',
-      rapidState.advancedHref === '/registry/exchange/#pisces'
+      rapidState.advancedHref === '/terminal/markets/#pisces'
         && await rapidChartPage.locator('.capital-advanced').getAttribute('target') === null,
       JSON.stringify(rapidState),
     );
@@ -1220,7 +1220,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await mockRegistryResearch(constrainedPage);
       await mockSelectedTokenArchive(constrainedPage);
       await mockGeckoHourly(constrainedPage, { requests: constrainedGeckoRequests });
-      await constrainedPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      await constrainedPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
       const constrainedChart = constrainedPage.locator('[data-token-chart="leo"]');
       await constrainedChart.scrollIntoViewIfNeeded();
       await constrainedChart.locator('.token-spark--archive').waitFor({ state: 'visible', timeout: 20_000 });
@@ -1255,7 +1255,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       json: { schema: 'registry-news.v1', updatedAt: COMMITTED_OUTLOOK_REFERENCE, items: [] },
     }));
     await relatedResearch.goto(
-      `${baseURL}/registry/research/?sign=leo&type=daily`,
+      `${baseURL}/terminal/research/?sign=leo&type=daily`,
       { waitUntil: 'domcontentloaded' },
     );
     const relatedScope = relatedResearch.locator('#research-scope');
@@ -1327,7 +1327,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         desktopGalleryRequests.push(request.url());
       }
     });
-    await desktop.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await desktop.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await desktop.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
 
     const expectedSigns = [
@@ -1784,7 +1784,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && telegramIntent.url.hostname === 't.me'
         && telegramIntent.url.pathname === '/share/url'
         && whatsappIntent.url.hostname === 'wa.me'
-        && xShared.pathname === '/registry/'
+        && xShared.pathname === '/terminal/'
         && xShared.searchParams.get('rank') === 'marketCap'
         && xShared.searchParams.get('sign') === 'pisces'
         && xShared.hash === '#market'
@@ -1904,7 +1904,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       'a current complete signal shares the selected sign and horizon canonically',
       signalShare.title === 'Aries sky signal'
         && signalShare.text.includes('Aries · daily sky signal')
-        && signalShareUrl.pathname === '/registry/'
+        && signalShareUrl.pathname === '/terminal/'
         && signalShareUrl.searchParams.get('sign') === 'aries'
         && signalShareUrl.searchParams.get('outlook') === 'daily'
         && signalShareUrl.hash === '#outlook',
@@ -2039,7 +2039,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     await stubNoWebgl(emptyMarket);
     await mockDexscreener(emptyMarket, { empty: true });
-    await emptyMarket.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await emptyMarket.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await emptyMarket.locator('#market').scrollIntoViewIfNeeded();
     await emptyMarket.locator('.market-board__state').waitFor({ timeout: 15_000 });
     const emptyMarketState = await emptyMarket.locator('#market').evaluate((section) => ({
@@ -2074,7 +2074,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       });
     });
     await emptyMarket.goto(
-      baseURL + '/registry/?rank=liquidity&sign=pisces&outlook=weekly#outlook',
+      baseURL + '/terminal/?rank=liquidity&sign=pisces&outlook=weekly#outlook',
       { waitUntil: 'domcontentloaded' },
     );
     await emptyMarket.locator('#outlook .outlook-lab__body[aria-busy="false"]')
@@ -2118,7 +2118,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         headers: { ...response.headers(), 'content-length': undefined },
       });
     });
-    await emptyMarket.goto(baseURL + '/registry/?sign=aries&outlook=daily#outlook', { waitUntil: 'domcontentloaded' });
+    await emptyMarket.goto(baseURL + '/terminal/?sign=aries&outlook=daily#outlook', { waitUntil: 'domcontentloaded' });
     await emptyMarket.locator('#outlook .outlook-lab__body[aria-busy="false"]').waitFor({ timeout: 15_000 });
     const partialSignal = await emptyMarket.locator('#outlook').evaluate((section) => ({
       coverage: section.querySelector('.outlook-lab__coverage')?.textContent?.trim() ?? '',
@@ -2135,7 +2135,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     await emptyMarket.unroute('**/assets/registry-outlook.json');
     await emptyMarket.route('**/assets/registry-outlook.json', (route) => route.abort());
-    await emptyMarket.goto(baseURL + '/registry/#outlook', { waitUntil: 'domcontentloaded' });
+    await emptyMarket.goto(baseURL + '/terminal/#outlook', { waitUntil: 'domcontentloaded' });
     const failedSignal = emptyMarket.locator('#outlook .outlook-lab__state');
     await failedSignal.waitFor({ timeout: 15_000 });
     const failedSignalState = await failedSignal.evaluate((state) => {
@@ -2165,7 +2165,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     await stubNoWebgl(reducedTape);
     await mockDexscreener(reducedTape);
-    await reducedTape.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await reducedTape.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await reducedTape.locator('.market-tape__track').waitFor({ state: 'visible' });
     const reducedTapeState = await reducedTape.locator('.market-tape').evaluate((tape) => {
       const viewport = tape.querySelector('.market-tape__viewport');
@@ -2219,7 +2219,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           mobileGalleryRequests.push(request.url());
         }
       });
-      await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await mobile.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
       const label = `${width}×${height}`;
       const mobileMasthead = await mobile.locator('.capital-masthead').evaluate((masthead) => {
         const title = masthead.querySelector('.capital-masthead__title');
@@ -2724,7 +2724,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       if (new URL(request.url()).pathname === '/assets/gallery.js') responsiveStageRequests.push(request.url());
     });
     responsiveStage.on('pageerror', (error) => responsiveStageErrors.push(String(error)));
-    await responsiveStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await responsiveStage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     const responsiveStageLive = await responsiveStage.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
@@ -2869,7 +2869,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     await stubNoWebgl(reduced);
     await mockDexscreener(reduced);
-    await reduced.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await reduced.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await reduced.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
     check(
       'reduced motion leaves no film attached to the rendered page',
@@ -2939,7 +2939,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       if (pathname === '/assets/gallery.js') stageRequests.push(request.url());
       if (pathname.startsWith('/assets/sculptures/')) stageSculptureRequests.push(pathname);
     });
-    await stagePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await stagePage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await stagePage.locator('.consumer-explorer').waitFor({ state: 'visible' });
     const stageLive = await stagePage.evaluate(() => document.documentElement.classList.contains('gallery-live'));
     if (stageLive) {
@@ -3232,7 +3232,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     let bitmapReferenceFrame = null;
     await mockDexscreener(reducedStage);
-    await reducedStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await reducedStage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     const reducedStageLive = await reducedStage.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
@@ -3271,7 +3271,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         try { delete globalThis.createImageBitmap; } catch {}
       });
       await mockDexscreener(imageFallbackStage);
-      await imageFallbackStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await imageFallbackStage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
       const fallbackBand = imageFallbackStage.locator('.gband--consumer');
       const fallbackCanvas = fallbackBand.locator('.stage__canvas');
       await fallbackCanvas.waitFor({ state: 'visible', timeout: 30_000 });
@@ -3313,7 +3313,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         saverRequests.push(pathname);
       }
     });
-    await saverStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await saverStage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await saverStage.locator('.consumer-explorer').waitFor({ state: 'visible' });
     await saverStage.waitForTimeout(700);
     const saverState = await saverStage.evaluate(() => ({
@@ -3340,7 +3340,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     // stubbed: this drive proves the panel's wiring, not the venue's.
     const tradeOrders = [];
     const withTradeFlag = async (page) => {
-      await page.route('**/registry/', async (route) => {
+      await page.route('**/terminal/', async (route) => {
         if (route.request().resourceType() !== 'document') return route.continue();
         const response = await route.fetch();
         const body = (await response.text()).replace(
@@ -3415,7 +3415,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await mockDexscreener(tradePage, { singleRequestGate });
       if (stub) await stubNoWebgl(tradePage);
       await withTradeFlag(tradePage);
-      await tradePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await tradePage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
       await tradePage.locator('.stage-placard').waitFor({ state: 'visible', timeout: 20_000 });
       await tradePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
       check(
@@ -3709,7 +3709,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       ['security', 'safety-evidence'],
     ]) {
       const legacy = await newPage({ viewport: { width: 900, height: 800 } });
-      await legacy.goto(baseURL + '/registry/#' + legacyHash, { waitUntil: 'domcontentloaded' });
+      await legacy.goto(baseURL + '/terminal/#' + legacyHash, { waitUntil: 'domcontentloaded' });
       await legacy.waitForURL('**/registry/technical/#' + destination);
       check(
         'legacy #' + legacyHash + ' opens its matching technical group',
