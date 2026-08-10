@@ -16,10 +16,10 @@ function appendNode(document, parent, tag, className, text) {
   return node;
 }
 
-export function createReadOnlyTrollbox({ host } = {}) {
+export function createReadOnlyMarketChat({ host } = {}) {
   const document = host?.ownerDocument;
   if (!host || typeof host.appendChild !== 'function' || !document?.createElement) {
-    throw new TypeError('A DOM host is required to mount the read-only Trollbox.');
+    throw new TypeError('A DOM host is required to mount read-only Market Chat.');
   }
 
   shellSequence += 1;

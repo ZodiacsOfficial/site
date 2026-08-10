@@ -6,7 +6,7 @@ import { REGISTRY_PRO_CSS } from '../src/pro/styles.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 
-describe('Registry Pro runtime presentation', () => {
+describe('Zodiac Markets runtime presentation', () => {
   it('styles every behavioral surface and mobile/reduced-motion states', () => {
     for (const selector of [
       '.rp__rail', '.rp-market', '.rp__workspace', '.rp-chart__canvas',

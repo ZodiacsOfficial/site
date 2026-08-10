@@ -1,4 +1,4 @@
-/** Browser entry for the independently flagged Registry Pro quote lab. */
+/** Browser entry for the independently flagged Zodiac Markets workspace. */
 
 import { REGISTRY_PRO_CSS } from './styles.mjs';
 import { createProTerminal } from './terminal.mjs';
@@ -26,7 +26,7 @@ function boot() {
     const fallback = document.createElement('div');
     fallback.className = 'registry-pro__fallback';
     fallback.setAttribute('role', 'status');
-    fallback.textContent = 'Registry Pro could not open. No quote or transaction was sent.';
+    fallback.textContent = 'Zodiac Markets could not open. No quote or transaction was sent.';
     host.append(fallback);
   }
 }

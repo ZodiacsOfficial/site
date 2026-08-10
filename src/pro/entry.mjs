@@ -1,5 +1,5 @@
 /**
- * Build-time stamping for the Registry Pro quote laboratory.
+ * Build-time stamping for Zodiac Markets.
  *
  * The generated, committed page is always flag-off. A build with
  * PUBLIC_REGISTRY_PRO_ENABLED=1 replaces only the marked region below with
@@ -35,9 +35,9 @@ export function renderRegistryProRegion({ enabled }) {
   return [
     START,
     `      ${slot}`,
-    '      <section class="registry-pro" data-registry-pro-terminal aria-label="Registry Pro quote laboratory">',
+    '      <section class="registry-pro" data-registry-pro-terminal aria-label="Zodiac Markets quote workspace">',
     '        <div class="registry-pro__fallback" data-registry-pro-fallback role="status">',
-    '          <strong>The quote laboratory is not open.</strong>',
+    '          <strong>Zodiac Markets is not open.</strong>',
     '          <p>JavaScript is required to read live observations. If this notice remains, no quote or transaction was sent. The verified records remain available below and in <a href="/registry/">the Registry</a>.</p>',
     '        </div>',
     '      </section>',

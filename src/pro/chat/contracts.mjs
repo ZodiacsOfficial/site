@@ -2,12 +2,12 @@ export const PRO_CHAT_PHASE = 'preview';
 
 export const PRO_CHAT_ROOM = Object.freeze({
   id: 'global',
-  label: 'Global room',
+  label: 'All markets',
 });
 
 export const PRO_CHAT_RULES = Object.freeze([
   'No links',
-  'No addresses',
+  'No wallet or contract addresses',
   'No images',
   'No direct messages',
 ]);
@@ -16,7 +16,7 @@ export const PRO_CHAT_SYSTEM_STATES = Object.freeze([
   Object.freeze({
     id: 'connection',
     label: 'System',
-    body: 'No live community connection in this build.',
+    body: 'Market Chat is not connected in this build.',
   }),
   Object.freeze({
     id: 'approval',
@@ -33,18 +33,22 @@ export const PRO_CHAT_REPORT_REASONS = Object.freeze([
   'harassment',
   'impersonation',
   'privacy',
+  'threats',
+  'unlawful_content',
 ]);
 
 export const PRO_CHAT_MODERATION_ACTIONS = Object.freeze([
-  'hide',
+  'quarantine',
   'remove',
   'restore',
   'mute',
   'ban',
+  'revoke_session',
+  'pause_posting',
 ]);
 
 export const PRO_CHAT_SHELL_COPY = Object.freeze({
-  title: 'Floor Chat',
+  title: 'Market Chat',
   status: 'Read-only design preview',
   rulesLabel: 'Room rules',
   composerLabel: 'Message',

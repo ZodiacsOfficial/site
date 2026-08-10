@@ -1,4 +1,4 @@
-// Bundles the Registry Pro browser runtime to public/assets/registry-pro.js.
+// Bundles the Zodiac Markets browser runtime to public/assets/registry-pro.js.
 //
 //   node scripts/build-registry-pro.mjs
 //

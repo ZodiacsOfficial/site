@@ -1,4 +1,4 @@
-# Registry Pro Phase 1 launch runbook
+# Zodiac Markets Phase 1 launch runbook
 
 This runbook carries the quote-only `/registry/pro/` implementation from a
 merged, flag-off state to a possible owner-authorized pilot. It does not
@@ -7,8 +7,8 @@ provider credential, or authorize a public launch by itself.
 
 While `docs/REGISTRY-PRO-OWNER-RISK-DECISION.md` reads DRAFT, stop after the
 flag-off merge and verification sections. While
-`docs/REGISTRY-PRO-TROLLBOX-OWNER-RISK-DECISION.md` reads DRAFT, keep Floor
-Chat off even if the quote laboratory is later authorized.
+`docs/REGISTRY-PRO-MARKET-CHAT-OWNER-RISK-DECISION.md` reads DRAFT, keep
+Market Chat off even if the quote workspace is later authorized.
 
 The existing public Privacy/Terms copy does not describe the new same-origin
 quote proxy and onward Jupiter/Raydium flow. No public Production pilot or
@@ -37,14 +37,14 @@ must not be used to evade a provider restriction.
    Registry Trading Room PR, target that branch; do not fold these changes into
    the existing PR. Rebase and retarget only deliberately.
 2. Pin `.github/phase1-scope-allowance.json` to the actual PR base and list
-   exactly the protected Registry Pro paths reported by the scope guard. A
+   exactly the protected Zodiac Markets paths reported by the scope guard. A
    moving base requires a rebase and a new pin.
 3. Confirm each owner record matches an explicit owner instruction. A code
    author never self-ratifies a record. A ratified quote record can proceed only
-   through its remaining mandatory controls; a DRAFT Floor Chat record keeps
+   through its remaining mandatory controls; a DRAFT Market Chat record keeps
    that separate flag off.
 4. Confirm no environment file, Vercel setting, secret, deployment alias, or
-   committed HTML enables Registry Pro, the quote gateway, or Floor Chat.
+   committed HTML enables Zodiac Markets, the quote gateway, or Market Chat.
 5. Retain a verified flag-off deployment as the Instant Rollback target before
    any later protected QA.
 
@@ -76,7 +76,7 @@ node scripts/configure-registry-pro.mjs
 git diff --exit-code
 ```
 
-Repeat with the chat flag only if the separate Floor Chat record has been
+Repeat with the chat flag only if the separate Market Chat record has been
 ratified and the implementation includes that gate:
 
 ```sh
@@ -88,9 +88,9 @@ git diff --exit-code
 
 Verify the committed page directly:
 
-- the Registry Pro enabled meta marker is `0`;
+- the Zodiac Markets enabled meta marker is `0`;
 - the terminal slot is empty and its runtime script is absent;
-- the Floor Chat enabled marker is `0` and no chat shell is mounted;
+- the Market Chat enabled marker is `0` and no chat shell is mounted;
 - the complete risk block and twelve Registry records remain readable;
 - the page is `noindex`, out of the sitemap/search corpus, and has no Cabinet
   or consumer-surface acquisition link.
@@ -141,7 +141,7 @@ Never add Supabase, SIWS, chat storage, or posting configuration in this phase.
 
 Verify in the browser and network inspector:
 
-- the Registry Pro meta marker is `1`, the terminal mounts, and the twelve
+- the Zodiac Markets meta marker is `1`, the terminal mounts, and the twelve
   official Registry records remain present;
 - all twelve signs resolve their identity from the committed Registry;
 - no quote is requested on page load or sign selection; one explicit Compare
@@ -169,7 +169,7 @@ Verify in the browser and network inspector:
 - canonical-pool chart/tape data stays labelled apart from provider routing;
   AMM-derived size views are not called an order book;
 - risk copy, `noindex`, CSP, `X-Robots-Tag`, and `Cache-Control: no-store` are
-  present, and the service worker holds no Registry Pro navigation in
+  present, and the service worker holds no Zodiac Markets navigation in
   CacheStorage;
 - browser requests are limited to zodiacs.org, the documented read-only market
   data providers, and Plausible. Jupiter and Raydium quote calls originate from
@@ -177,7 +177,7 @@ Verify in the browser and network inspector:
 - no wallet extension prompt appears anywhere. There is no real-trade test in
   this runbook because Phase 1 cannot prepare, sign, or submit a trade.
 
-If Floor Chat is separately authorized for QA, verify only a clearly labelled
+If Market Chat is separately authorized for QA, verify only a clearly labelled
 read-only preview: no chat network request, Supabase client, wallet request,
 active composer, persisted input, visitor message, or realtime connection.
 
@@ -186,17 +186,17 @@ Remove every branch-specific variable and secret after QA.
 ## Merge and possible production pilot
 
 Open the PR as draft and describe the quote-only capability matrix, flag-off
-guarantee, server-key boundary, provider normalization, independent Floor Chat
+guarantee, server-key boundary, provider normalization, independent Market Chat
 decision, protected-scope allowance, and rollback target. Do not merge around a
 red required check. Merge only after owner PR approval.
 
 Verify the first production deployment is flag-off. Merging does not carry
 forward a protected-preview variable.
 
-Only after the Registry Pro owner record is ratified, the accurate
+Only after the Zodiac Markets owner record is ratified, the accurate
 Privacy/Terms update is published, and all mandatory controls are satisfied may
 the owner authorize one Production deployment carrying all three
-quote-laboratory values together:
+quote-workspace values together:
 
 ```text
 PUBLIC_REGISTRY_PRO_ENABLED=1
@@ -209,7 +209,7 @@ whose server gate is unavailable, and do not expose an enabled server gate in a
 deployment whose page has not passed QA. Redeploy once, then repeat every
 protected-QA check against the canonical production URL.
 
-`PUBLIC_REGISTRY_PRO_CHAT_ENABLED=1` is omitted unless the separate Floor Chat
+`PUBLIC_REGISTRY_PRO_CHAT_ENABLED=1` is omitted unless the separate Market Chat
 record is ratified and the owner explicitly authorizes that static preview. It
 never enables posting.
 
@@ -257,7 +257,7 @@ and a new owner instruction. A new capability requires a new owner decision.
 
 1. Use Vercel Instant Rollback to the retained, verified flag-off production
    deployment. Do not wait for a rebuild.
-2. Confirm the production Registry Pro meta marker is `0`, the runtime script
+2. Confirm the production Zodiac Markets meta marker is `0`, the runtime script
    and terminal are absent, the quote endpoint returns `404 disabled`, and an
    offline navigation cannot recover an enabled page.
 3. Remove `PUBLIC_REGISTRY_PRO_ENABLED` and

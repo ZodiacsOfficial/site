@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { readFile } from 'node:fs/promises';
+import { readFile, readdir } from 'node:fs/promises';
 import { resolve } from 'node:path';
 
 const ROOT = resolve(import.meta.dirname, '..');
@@ -8,20 +8,80 @@ async function source(path) {
   return readFile(resolve(ROOT, path), 'utf8');
 }
 
-describe('Registry Pro public and capability posture', () => {
-  it('records quote ratification while Floor Chat remains separately DRAFT', async () => {
+async function filesUnder(path) {
+  const entries = await readdir(resolve(ROOT, path), { withFileTypes: true });
+  const files = await Promise.all(entries.map(async (entry) => {
+    const relative = `${path}/${entry.name}`;
+    return entry.isDirectory() ? filesUnder(relative) : [relative];
+  }));
+  return files.flat().sort();
+}
+
+describe('Zodiac Markets public and capability posture', () => {
+  it('records quote ratification while Market Chat remains separately DRAFT', async () => {
     const decision = await source('docs/REGISTRY-PRO-OWNER-RISK-DECISION.md');
-    const chatDecision = await source('docs/REGISTRY-PRO-TROLLBOX-OWNER-RISK-DECISION.md');
+    const chatDecision = await source('docs/REGISTRY-PRO-MARKET-CHAT-OWNER-RISK-DECISION.md');
     expect(decision).toContain('Status: ratified by the owner; flag-on authorized once every mandatory control');
     expect(decision).toContain('Approved: 2026-08-10T11:40:11Z');
+    expect(decision).toContain('visitor-facing product name be `Zodiac Markets`');
+    expect(decision).toMatch(/does\s+not mean that Zodiacs\.org operates a market/u);
     expect(chatDecision).toContain('Status: DRAFT — pending owner ratification.');
     expect(chatDecision).toContain('Approved: (pending)');
+  });
+
+  it('keeps the proposed live Market Chat contract DRAFT and isolated', async () => {
+    const liveDecision = await source(
+      'docs/ZODIAC-MARKETS-MARKET-CHAT-LIVE-OWNER-RISK-DECISION.md',
+    );
+    const liveContract = await source(
+      'docs/ZODIAC-MARKETS-MARKET-CHAT-LIVE-TECHNICAL-CONTRACT.md',
+    );
+    expect(liveDecision).toContain('Status: DRAFT — pending owner review and explicit ratification.');
+    expect(liveDecision).toContain('Approved: (pending)');
+    expect(liveDecision).toContain('a general request for a chatroom');
+    expect(liveContract).toContain('Status: DRAFT design contract.');
+    expect(liveContract).toContain('dedicated Supabase project');
+    expect(liveContract).toContain('same-origin polling');
+    expect(liveContract).toContain('must not use\n`src/lib/supabase/client.ts`');
+    expect(liveContract).toContain('No live-chat implementation');
+    expect(liveContract).toContain('REGISTRY_PRO_MARKET_CHAT_POSTING_ENABLED');
+    expect(liveContract).toContain('REGISTRY_PRO_MARKET_CHAT_SAFETY_ENABLED');
+    expect(liveContract).not.toContain('REGISTRY_PRO_MARKET_CHAT_WRITE_ENABLED');
+    expect(liveContract).toContain('Turning posting off must leave logout');
+    expect(liveContract).toContain('GET /api/market-chat/preferences');
+    expect(liveContract).toContain('POST /api/market-chat/appeal-challenge');
+    expect(liveContract).toContain('does not create or restore a posting session');
+    expect(liveContract).toContain('`threats`, and `unlawful_content`');
+    expect(liveContract).toContain('hash-chain and\nexternal-receipt verification');
+    expect(liveContract).toContain('Supabase Web3 Auth is explicitly not used');
+    expect(liveContract).not.toContain('supabase.com/docs/guides/auth/auth-web3');
+  });
+
+  it('pins the DRAFT chat implementation inventory to the inert shell', async () => {
+    const chatFiles = await filesUnder('src/pro/chat');
+    expect(chatFiles).toEqual([
+      'src/pro/chat/contracts.mjs',
+      'src/pro/chat/shell.mjs',
+    ]);
+    const chatSource = (await Promise.all(chatFiles.map(source))).join('\n');
+    expect(chatSource).not.toMatch(
+      /\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource|createClient|signInWithWeb3|signMessage/iu,
+    );
+    expect(chatSource).not.toMatch(/\/api\/market-chat|SUPABASE|MARKET_CHAT_LIVE/iu);
+
+    const apiFiles = (await filesUnder('api')).filter((path) => /\.(?:js|mjs|ts)$/u.test(path));
+    const apiSource = (await Promise.all(apiFiles.map(source))).join('\n');
+    expect(apiFiles.filter((path) => /market-chat/iu.test(path))).toEqual([]);
+    expect(apiSource).not.toMatch(/\/api\/market-chat|REGISTRY_PRO_MARKET_CHAT/iu);
+    await expect(readdir(resolve(ROOT, 'supabase-market-chat'))).rejects.toMatchObject({ code: 'ENOENT' });
   });
 
   it('keeps the quiet page noindexed, quote-only, and candid about risk', async () => {
     const html = await source('public/registry/pro/index.html');
     expect(html).toContain('<link rel="canonical" href="https://zodiacs.org/registry/pro/" />');
     expect(html).toContain('<meta name="robots" content="noindex" />');
+    expect(html).toContain('<h1 id="registry-pro-title">Zodiac Markets</h1>');
+    expect(html).toContain('The name does not mean Zodiacs.org operates a market or exchange.');
     expect(html).toMatch(/thinly traded/u);
     expect(html).toMatch(/lose all market value/u);
     expect(html).toMatch(/independent third-party observations/u);
@@ -34,7 +94,9 @@ describe('Registry Pro public and capability posture', () => {
 
   it('adds no acquisition link from the Registry hub or Cabinet', async () => {
     for (const path of ['public/registry/index.html', 'src/pages/registry/collection/index.astro']) {
-      expect(await source(path)).not.toMatch(/registry\/pro|Registry Pro|Quote Laboratory/iu);
+      const content = await source(path);
+      expect(content).not.toMatch(/\/registry\/pro(?:\/|[?#"'])/iu);
+      expect(content).not.toMatch(/Registry Pro|Quote Laboratory/iu);
     }
   });
 

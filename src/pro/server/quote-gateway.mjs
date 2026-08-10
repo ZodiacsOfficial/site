@@ -101,10 +101,10 @@ function configured(env) {
 async function limited(req, dependencies) {
   const hook = dependencies.rateLimit
     ?? (typeof req?.rateLimit === 'function' ? req.rateLimit.bind(req) : null);
-  if (!hook) throw new Error('Registry Pro quote rate limiting is unavailable.');
+  if (!hook) throw new Error('Zodiac Markets quote rate limiting is unavailable.');
   const result = await hook(req);
   if (result && typeof result === 'object' && result.error === 'not-found') {
-    throw new Error('Registry Pro quote rate-limit rule is not configured.');
+    throw new Error('Zodiac Markets quote rate-limit rule is not configured.');
   }
   return result === true || (result && typeof result === 'object' && result.rateLimited === true);
 }

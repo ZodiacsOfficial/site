@@ -1,5 +1,5 @@
 /**
- * Registry Pro's flag-on browser story with every provider stubbed locally.
+ * Zodiac Markets' flag-on browser story with every provider stubbed locally.
  * The committed page remains flag-off; this drive stamps an in-memory copy.
  */
 
@@ -167,8 +167,8 @@ try {
     const badges = await page.locator('.rp__badges').textContent() ?? '';
     check(`${viewport.width}: read-only capability badges`,
       badges.includes('No wallet') && badges.includes('No submission'));
-    check(`${viewport.width}: independently enabled Floor Chat is static`,
-      await page.locator('.rp-chat__title').textContent() === 'Floor Chat'
+    check(`${viewport.width}: independently enabled Market Chat is static`,
+      await page.locator('.rp-chat__title').textContent() === 'Market Chat'
       && await page.locator('.rp-chat__composer-input').isDisabled()
       && await page.locator('.rp-chat__submit').isDisabled());
 
@@ -254,8 +254,8 @@ for (const result of results) {
   process.stdout.write(`${result.ok ? 'PASS' : 'FAIL'} ${result.name}${result.detail ? ` — ${result.detail}` : ''}\n`);
 }
 if (failed.length) {
-  process.stderr.write(`Registry Pro browser drive failed ${failed.length}/${results.length} checks.\n`);
+  process.stderr.write(`Zodiac Markets browser drive failed ${failed.length}/${results.length} checks.\n`);
   process.exitCode = 1;
 } else {
-  process.stdout.write(`Registry Pro browser drive passed ${results.length}/${results.length} checks.\n`);
+  process.stdout.write(`Zodiac Markets browser drive passed ${results.length}/${results.length} checks.\n`);
 }

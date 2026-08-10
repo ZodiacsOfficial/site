@@ -1,10 +1,10 @@
-# Registry Pro — Phase 1 technical contract
+# Zodiac Markets — Phase 1 technical contract
 
 Status: implementation contract; the feature is dark. This document describes
 the code boundary. It does not ratify either owner decision or authorize a
 public deployment.
 
-Registry Pro is a Solana-only professional quote laboratory at
+Zodiac Markets is a Solana-only professional quote workspace at
 `/registry/pro/`. Phase 1 may put market context and independently sourced
 exact-input quotes in one interface. It is not an exchange, broker, order
 management system, smart order router, or claim of institutional-grade
@@ -52,7 +52,7 @@ copy changes.
 ## Dark-by-default surfaces
 
 The committed `/registry/pro/` HTML is always the quiet, flag-off form. Build
-stamping may mount the Registry Pro bundle only when
+stamping may mount the Zodiac Markets bundle only when
 `PUBLIC_REGISTRY_PRO_ENABLED=1` is present in the build environment. The
 committed output never contains a flag-on terminal or its script tag.
 
@@ -64,11 +64,12 @@ unless both conditions hold:
 
 `JUPITER_API_KEY` is never a `PUBLIC_` variable, never appears in HTML or the
 browser bundle, and never crosses the response boundary. The public page gate
-and server quote gate are separate so either can fail closed. No current DRAFT
-record authorizes setting either gate in a public environment.
+and server quote gate are separate so either can fail closed. Ratification
+alone does not authorize setting either gate in a public environment; every
+mandatory control in the owner record must pass first.
 
-The read-only Floor Chat shell has an independent build gate,
-`PUBLIC_REGISTRY_PRO_CHAT_ENABLED`. It is ineffective unless the Registry Pro
+The read-only Market Chat shell has an independent build gate,
+`PUBLIC_REGISTRY_PRO_CHAT_ENABLED`. It is ineffective unless the Zodiac Markets
 master gate is also enabled. Its separate decision record governs even that
 read-only preview.
 
@@ -205,9 +206,9 @@ out a trade. Links to the already-ratified Registry trade surface, if any are
 ever proposed, are a separate acquisition-surface decision and are not
 authorized here.
 
-## Floor Chat boundary
+## Market Chat boundary
 
-Phase 1 may contain only a static, read-only Floor Chat shell. It has no
+Phase 1 may contain only a static, read-only Market Chat shell. It has no
 `fetch`, WebSocket, EventSource, Supabase client, wallet request, sign-in,
 composer submission, storage write, or user-generated content. Static messages
 are project-authored display fixtures and must be rendered as text, never
@@ -215,13 +216,15 @@ trusted HTML.
 
 The existing profile Supabase client and the existing trade-wallet connection
 must not be reused for chat identity. Live posting would create new identity,
-privacy, retention, abuse, and moderation duties. Those duties belong to the
-separate trollbox decision and a later live-chat technical contract.
+privacy, retention, abuse, and moderation duties. A proposed future boundary is
+recorded in `docs/ZODIAC-MARKETS-MARKET-CHAT-LIVE-TECHNICAL-CONTRACT.md` and
+`docs/ZODIAC-MARKETS-MARKET-CHAT-LIVE-OWNER-RISK-DECISION.md`. Both are DRAFT;
+neither authorizes implementation.
 
 ## Change control
 
 Every behavioral change lands with tests. Source changes regenerate and commit
-the Registry Pro bundle. CI regenerates the flag-off page and bundles and fails
+the Zodiac Markets bundle. CI regenerates the flag-off page and bundles and fails
 on drift. The stamper must round-trip from committed flag-off to temporary
 flag-on and back with a byte-clean tree.
 

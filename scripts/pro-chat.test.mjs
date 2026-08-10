@@ -10,7 +10,7 @@ import {
   PRO_CHAT_SHELL_COPY,
   PRO_CHAT_SYSTEM_STATES,
 } from '../src/pro/chat/contracts.mjs';
-import { createReadOnlyTrollbox } from '../src/pro/chat/shell.mjs';
+import { createReadOnlyMarketChat } from '../src/pro/chat/shell.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 
@@ -48,7 +48,7 @@ class TestElement {
   }
 
   set innerHTML(_value) {
-    throw new Error('The Trollbox must not render through innerHTML.');
+    throw new Error('Market Chat must not render through innerHTML.');
   }
 }
 
@@ -70,15 +70,21 @@ function renderedText(root) {
   return walk(root).map((node) => node.textContent).filter(Boolean).join('\n');
 }
 
-describe('Registry Pro read-only Trollbox', () => {
+describe('Zodiac Markets read-only Market Chat', () => {
   it('pins the preview, global room and closed future moderation vocabulary', () => {
     expect(PRO_CHAT_PHASE).toBe('preview');
-    expect(PRO_CHAT_ROOM).toEqual({ id: 'global', label: 'Global room' });
-    expect(PRO_CHAT_RULES).toEqual(['No links', 'No addresses', 'No images', 'No direct messages']);
+    expect(PRO_CHAT_ROOM).toEqual({ id: 'global', label: 'All markets' });
+    expect(PRO_CHAT_RULES).toEqual([
+      'No links', 'No wallet or contract addresses', 'No images', 'No direct messages',
+    ]);
+    expect(PRO_CHAT_SHELL_COPY.title).toBe('Market Chat');
     expect(PRO_CHAT_REPORT_REASONS).toEqual([
       'spam', 'scam', 'manipulation', 'harassment', 'impersonation', 'privacy',
+      'threats', 'unlawful_content',
     ]);
-    expect(PRO_CHAT_MODERATION_ACTIONS).toEqual(['hide', 'remove', 'restore', 'mute', 'ban']);
+    expect(PRO_CHAT_MODERATION_ACTIONS).toEqual([
+      'quarantine', 'remove', 'restore', 'mute', 'ban', 'revoke_session', 'pause_posting',
+    ]);
     expect(Object.isFrozen(PRO_CHAT_ROOM)).toBe(true);
     expect(Object.isFrozen(PRO_CHAT_SYSTEM_STATES)).toBe(true);
     expect(PRO_CHAT_SYSTEM_STATES.every(Object.isFrozen)).toBe(true);
@@ -87,7 +93,7 @@ describe('Registry Pro read-only Trollbox', () => {
   it('renders only honest system states and a disabled, explained composer', () => {
     const document = new TestDocument();
     const host = document.createElement('div');
-    const mounted = createReadOnlyTrollbox({ host });
+    const mounted = createReadOnlyMarketChat({ host });
     const [shell] = host.children;
 
     expect(shell.tagName).toBe('ASIDE');
@@ -117,7 +123,7 @@ describe('Registry Pro read-only Trollbox', () => {
   });
 
   it('rejects an absent host and carries no active integration surface', async () => {
-    expect(() => createReadOnlyTrollbox()).toThrow(TypeError);
+    expect(() => createReadOnlyMarketChat()).toThrow(TypeError);
 
     const sources = await Promise.all([
       'src/pro/chat/contracts.mjs',
@@ -125,6 +131,7 @@ describe('Registry Pro read-only Trollbox', () => {
     ].map((file) => readFile(resolve(ROOT, file), 'utf8')));
     const source = sources.join('\n');
 
+    expect(source).not.toMatch(/Trollbox|Floor Chat/u);
     expect(source).not.toMatch(/innerHTML/u);
     expect(source).not.toMatch(/\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource/u);
     expect(source).not.toMatch(/createClient|signInWithWeb3|signMessage|signTransaction/u);

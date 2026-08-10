@@ -1,5 +1,5 @@
 /**
- * Provider-neutral contracts for the Registry Pro quote laboratory.
+ * Provider-neutral contracts for the Zodiac Markets quote workspace.
  *
  * Phase 1 is deliberately quote-only. A provider adapter may observe an
  * exact-input route, but it cannot prepare, sign, submit, or retain an

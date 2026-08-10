@@ -68,7 +68,7 @@ async function invoke(req: any = request(), dependencies: Record<string, unknown
   return res;
 }
 
-describe('Registry Pro quote gateway', () => {
+describe('Zodiac Markets quote gateway', () => {
   it('returns only normalized quote-only results for the same pair and exact input', async () => {
     const jupiterQuote = vi.fn().mockResolvedValue(quote('jupiter', '125000000000'));
     const raydiumQuote = vi.fn().mockResolvedValue(quote('raydium', '124000000000'));

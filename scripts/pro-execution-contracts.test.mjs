@@ -87,7 +87,7 @@ function raydiumPayload(overrides = {}) {
   };
 }
 
-describe('Registry Pro atomic and market contracts', () => {
+describe('Zodiac Markets atomic and market contracts', () => {
   it('keeps exact arithmetic beyond Number.MAX_SAFE_INTEGER', () => {
     expect(decimalToAtomic('9007199254740993.123456', 6)).toBe('9007199254740993123456');
     expect(atomicToDecimal('9007199254740993123456', 6)).toBe('9007199254740993.123456');

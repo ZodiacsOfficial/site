@@ -1,26 +1,27 @@
-# Registry Pro Floor Chat — owner risk decision
+# Market Chat for Zodiac Markets — owner risk decision
 
-Status: DRAFT — pending owner ratification. The Floor Chat flag stays off in
+Status: DRAFT — pending owner ratification. The Market Chat flag stays off in
 every public environment while this record is DRAFT. Merging a read-only shell
 does not authorize enabling it, accepting messages, identifying visitors, or
 creating a chat datastore.
 
 Approved: (pending)
 
-Scope: an independently gated, static, read-only `Floor Chat` preview inside
+Scope: an independently gated, static, read-only `Market Chat` preview inside
 `/registry/pro/`; project-authored fixture/status messages only; no network
 request, realtime subscription, authentication, wallet request, composer
 submission, user-generated content, persistence, moderation action, or chat
 analytics.
 
-This decision is deliberately separate from the Registry Pro quote decision.
+This decision is deliberately separate from the Zodiac Markets quote decision.
 A market terminal does not create authority to collect speech or identity, and
-a quote-laboratory approval does not authorize a trollbox.
+a quote-workspace approval does not authorize a market chat.
 
-The internal term `trollbox` describes the requested feature category. The
-visitor-facing label is `Floor Chat`, with `read-only preview` stated beside it.
-The label must not imply that displayed fixture messages came from visitors or
-are live.
+The visitor-facing and internal feature label is `Market Chat`, with
+`read-only preview` stated beside it. The earlier category nickname is retired
+and must not appear in shipped source, a generated bundle or visitor copy. The
+label must not imply that displayed fixture messages came from visitors or are
+live.
 
 ## What this record could authorize
 
@@ -37,7 +38,9 @@ explains that posting is not available.
 
 `PUBLIC_REGISTRY_PRO_CHAT_ENABLED=1` is an independent build-time gate and has
 no effect while `PUBLIC_REGISTRY_PRO_ENABLED` is off. Neither flag is currently
-authorized in a public environment.
+authorized in a public environment. This preview flag can never enable posting
+or be repurposed as a live-chat gate; the DRAFT live contract reserves separate
+public, read, write, and database switches.
 
 ## Why live chat is not a small follow-up
 
@@ -59,19 +62,23 @@ trade:
   necessary for quote or trade access.
 
 For these reasons, this record cannot be amended by merely changing `read-only`
-to `live`. A live system needs a new technical contract and a new owner risk
-decision.
+to `live`. The proposed live boundary is documented separately in
+`docs/ZODIAC-MARKETS-MARKET-CHAT-LIVE-TECHNICAL-CONTRACT.md` and
+`docs/ZODIAC-MARKETS-MARKET-CHAT-LIVE-OWNER-RISK-DECISION.md`; both remain
+DRAFT and confer no implementation authority.
 
 ## Mandatory controls for the read-only preview
 
-1. The Floor Chat flag is off by default, absent from committed flag-on bytes,
-   and independently reversible. Enabling Registry Pro does not implicitly
-   enable Floor Chat.
+1. The Market Chat flag is off by default, absent from committed flag-on bytes,
+   and independently reversible. Enabling Zodiac Markets does not implicitly
+   enable Market Chat.
 2. The rendered label says `read-only preview`; no fixture is labelled as a
    visitor, trader, verified holder, moderator action, or live message.
 3. The shell makes zero chat-related network requests and opens no realtime
    connection. Tests pin the absence of fetch, WebSocket, EventSource,
-   Supabase, wallet signing, auth, and write paths.
+   Supabase, wallet signing, auth, and write paths. They also pin the exact
+   two-file `src/pro/chat/` inventory and the absence of Market Chat APIs or a
+   migration root while the live record is DRAFT.
 4. The existing `src/lib/supabase/client.ts` profile session and the existing
    Registry trade wallet state are not imported, observed, or reused.
 5. There is no enabled composer, reaction, report, reply, direct-message,
@@ -83,7 +90,7 @@ decision.
 7. No fixture interaction writes cookies, local storage, IndexedDB, Cache
    Storage, a database, analytics free text, or a server log beyond ordinary
    page-request infrastructure.
-8. Floor Chat remains subordinate to the Registry Pro master gate, `noindex`,
+8. Market Chat remains subordinate to the Zodiac Markets master gate, `noindex`,
    and subject to the route's CSP and emergency rollback.
 9. The preview is turned off immediately if it is mistaken for live visitor
    speech, if any chat network request appears, or if a disabled interaction
@@ -126,7 +133,7 @@ integration does not supply moderation or legal posture by itself.
 ## Phase boundary
 
 If ratified, this record authorizes only an independently gated, static,
-read-only Floor Chat preview. It does not authorize reading visitor messages,
+read-only Market Chat preview. It does not authorize reading visitor messages,
 posting, identity, SIWS, Supabase, persistence, realtime delivery, presence,
 moderation powers, analytics on speech, uploads, notifications, or any linkage
 between a wallet and public speech.

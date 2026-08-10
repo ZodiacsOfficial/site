@@ -1,5 +1,5 @@
 /**
- * Runtime styles for Registry Pro.
+ * Runtime styles for Zodiac Markets.
  *
  * The terminal is dense by design, but not decorative: provider state,
  * freshness, and quote provenance remain legible at every breakpoint. Status

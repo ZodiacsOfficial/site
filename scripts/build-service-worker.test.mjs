@@ -92,7 +92,7 @@ describe('offline service worker posture', () => {
     expect(worker.caches.open).not.toHaveBeenCalled();
   });
 
-  it('never caches or stale-serves the build-time Registry Pro flag surface', async () => {
+  it('never caches or stale-serves the build-time Zodiac Markets flag surface', async () => {
     const worker = runWorker(await builtWorker(false));
     const handler = worker.handlers.get('fetch');
     for (const path of ['/registry/pro', '/registry/pro/', '/registry/pro/index.html']) {

@@ -5,7 +5,7 @@ import { PRO_SIGNS } from '../src/pro/catalog.mjs';
 
 const ROOT = resolve(import.meta.dirname, '..');
 
-describe('Registry Pro terminal contract', () => {
+describe('Zodiac Markets terminal contract', () => {
   it('keeps all twelve signs in zodiac order and only pastel sign hues', () => {
     expect(PRO_SIGNS.map((sign) => sign.slug)).toEqual([
       'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
@@ -26,6 +26,8 @@ describe('Registry Pro terminal contract', () => {
 
   it('keeps reference-market and provider-routing language separate', async () => {
     const terminal = await readFile(resolve(ROOT, 'src/pro/terminal.mjs'), 'utf8');
+    expect(terminal).toContain("element('h2', 'rp__title', 'Zodiac Markets')");
+    expect(terminal).toContain("rail.setAttribute('aria-label', 'Zodiac Markets')");
     expect(terminal).toContain('Reference-pool chart');
     expect(terminal).toContain('Canonical pool only · not a consolidated tape');
     expect(terminal).toContain('Compare exact-input quotes');
@@ -33,6 +35,14 @@ describe('Registry Pro terminal contract', () => {
     expect(terminal).toContain('Powered by Jupiter · Swap V2 Meta-Aggregator · Ultra mode');
     expect(terminal).not.toContain("'Jupiter Swap V2'");
     expect(terminal).not.toMatch(/best execution|order book/iu);
+  });
+
+  it('contains a Market Chat failure inside the optional panel', async () => {
+    const terminal = await readFile(resolve(ROOT, 'src/pro/terminal.mjs'), 'utf8');
+    expect(terminal).toContain('chat = chatFactory({ host: ui.chatHost })');
+    expect(terminal).toContain('Market Chat preview is unavailable.');
+    expect(terminal).toMatch(/if \(chatEnabled\) \{\s*try \{/u);
+    expect(terminal).not.toContain('const chat = chatEnabled ? chatFactory');
   });
 
   it('keeps candle and tape lifecycles independent and exposes chart data as a table', async () => {

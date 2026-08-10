@@ -1,5 +1,5 @@
 /**
- * Registry Pro's dark Phase-1 terminal.
+ * Zodiac Markets' dark Phase-1 terminal.
  *
  * The browser may inspect public market data and request a sanitized quote
  * comparison from the same-origin gateway. It has no wallet adapter and no
@@ -23,7 +23,7 @@ import {
   formatTokenAmount,
   formatUsd,
 } from '../exchange/chart-model.mjs';
-import { createReadOnlyTrollbox } from './chat/shell.mjs';
+import { createReadOnlyMarketChat } from './chat/shell.mjs';
 import { readRegistryMarkets } from './catalog.mjs';
 import { ProQuoteError, atomicToDecimal, decimalToAtomic } from './execution/contracts.mjs';
 
@@ -245,8 +245,8 @@ function renderTerminalShell(host) {
   const topbar = element('header', 'rp__topbar');
   const topCopy = element('div');
   topCopy.append(
-    element('p', 'rp__eyebrow', 'Registry Pro · Phase 1'),
-    element('h2', 'rp__title', 'Quote laboratory'),
+    element('p', 'rp__eyebrow', 'Twelve markets · Phase 1'),
+    element('h2', 'rp__title', 'Zodiac Markets'),
   );
   const badges = element('div', 'rp__badges');
   badges.append(
@@ -260,7 +260,7 @@ function renderTerminalShell(host) {
   loading.setAttribute('role', 'status');
   const rail = element('div', 'rp__rail');
   rail.setAttribute('role', 'group');
-  rail.setAttribute('aria-label', 'Zodiac markets');
+  rail.setAttribute('aria-label', 'Zodiac Markets');
 
   const workspace = element('div', 'rp__workspace');
   const marketColumn = element('div', 'rp__market-column');
@@ -416,16 +416,25 @@ export function createProTerminal({
   statsReader = fetchBatchStats,
   candleReader = fetchOhlcv,
   tradesReader = fetchTrades,
-  chatFactory = createReadOnlyTrollbox,
+  chatFactory = createReadOnlyMarketChat,
   chatEnabled = false,
 } = {}) {
-  if (!host) throw new TypeError('Registry Pro requires a host.');
+  if (!host) throw new TypeError('Zodiac Markets requires a host.');
   const ui = renderTerminalShell(host);
   const chart = createChart({ canvas: ui.canvas, readout: ui.readout });
   const candleTable = createCandleTable(ui.candleTableHost);
   const tape = createTape(ui.tapeHost);
   ui.chatHost.hidden = !chatEnabled;
-  const chat = chatEnabled ? chatFactory({ host: ui.chatHost }) : null;
+  let chat = null;
+  if (chatEnabled) {
+    try {
+      chat = chatFactory({ host: ui.chatHost });
+    } catch {
+      ui.chatHost.replaceChildren(
+        element('p', 'rp-status is-unavailable', 'Market Chat preview is unavailable.'),
+      );
+    }
+  }
   const budget = createRateBudget({ storage, now });
   const coolOff = createCoolOff({ storage, now });
   let markets = new Map();

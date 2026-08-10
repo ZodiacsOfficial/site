@@ -1,9 +1,16 @@
-# Registry Pro quote laboratory — owner risk decision
+# Zodiac Markets quote workspace — owner risk decision
 
 Status: ratified by the owner; flag-on authorized once every mandatory control
 below is satisfied.
 
 Approved: 2026-08-10T11:40:11Z
+
+Naming direction: on 2026-08-10T13:08:11Z the owner directed that the
+visitor-facing product name be `Zodiac Markets`. This is a copy-only naming
+amendment: `/registry/pro/`, the `registry-pro` source and API identifiers,
+environment flags, meta markers and firewall rule remain stable. The name does
+not mean that Zodiacs.org operates a market, exchange, broker or execution
+venue, and it does not widen any capability ratified below.
 
 Scope: one additional, `noindex` Registry surface at `/registry/pro/`;
 Solana only; the twelve official Zodiac SPL tokens paired with USDC;
@@ -27,19 +34,19 @@ be satisfied first.
 
 ## What is being decided
 
-Whether zodiacs.org may run a limited professional quote laboratory that lets a
+Whether zodiacs.org may run a limited professional quote workspace that lets a
 visitor examine the twelve Registry markets and ask two independent providers
 what one exact input could return at that moment.
 
-The laboratory stops before trading. Jupiter and Raydium return descriptive,
+The workspace stops before trading. Jupiter and Raydium return descriptive,
 non-executable quote data. The site does not ask either provider to prepare a
 transaction; it does not connect a wallet, request a signature, submit or
 broadcast, or carry the quote into the existing trade panel. A quote may expire,
 become unavailable, differ from a later executable route, or never be
 obtainable in a transaction.
 
-The interface may be called `Registry Pro` and described as a professional
-workspace or quote laboratory. This decision does not authorize
+The interface is called `Zodiac Markets` and may be described as a professional
+quote workspace. This decision does not authorize
 `institutional-grade`, `best execution`, `exchange`, `broker`, `order book`,
 `guaranteed`, or regulated-service claims. Information density is not an
 institutional control environment.
@@ -143,7 +150,7 @@ below is satisfied. It does not make a control optional.
 11. Analytics, if any, uses closed technical enums only. It receives no amount,
     side, sign, mint, provider output, wallet, key, route, request ID, raw
     error, transaction, signature, query/hash, referrer, or free text.
-12. Floor Chat stays off unless its separate owner record is also ratified. In
+12. Market Chat stays off unless its separate owner record is also ratified. In
     this phase it can only be a static read-only shell; live messages, posting,
     auth, wallet identity, persistence, reports, bans, or moderation are not
     authorized by this decision.
@@ -188,7 +195,7 @@ below is satisfied. It does not make a control optional.
 This ratification clears one governance gate only. It does not authorize a
 public pilot until the separate Privacy/Terms dependency and every other
 mandatory control pass. The resulting scope is a time-limited, `noindex`,
-quote-only Registry Pro pilot. It does not
+quote-only Zodiac Markets pilot. It does not
 authorize execution, wallet connection, transaction preparation, signing,
 submission, Solana RPC writes, site fees, referral compensation, arbitrary
 tokens, additional chains, limit orders, automation, user accounts, live chat,

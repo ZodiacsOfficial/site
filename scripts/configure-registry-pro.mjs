@@ -1,4 +1,4 @@
-// Stamps the Registry Pro terminal into (or out of) /registry/pro/ from shell
+// Stamps the Zodiac Markets terminal into (or out of) /registry/pro/ from shell
 // environment flags. Plain-node generators intentionally do not read .env.
 //
 //   node scripts/configure-registry-pro.mjs
@@ -26,7 +26,7 @@ const { output } = injectRegistryPro(source, process.env);
 if (output !== source) await writeFile(file, output);
 
 console.log(
-  `Registry Pro terminal: ${enabled ? 'enabled' : 'disabled'}; `
+  `Zodiac Markets terminal: ${enabled ? 'enabled' : 'disabled'}; `
   + `chat: ${chatEnabled ? 'enabled' : 'disabled'} `
   + `(${output === source ? 'no rewrite needed' : 'page rewritten'})`,
 );

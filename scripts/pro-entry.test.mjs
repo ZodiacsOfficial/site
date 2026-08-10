@@ -14,7 +14,7 @@ import {
 const ROOT = resolve(import.meta.dirname, '..');
 const PAGE = resolve(ROOT, 'public/registry/pro/index.html');
 
-describe('Registry Pro build-time gates', () => {
+describe('Zodiac Markets build-time gates', () => {
   it('accepts only the exact master value and makes chat subordinate', () => {
     expect(registryProEnabled({ [REGISTRY_PRO_FLAG]: '1' })).toBe(true);
     for (const value of ['true', 'yes', 'on', ' 1 ', '0', 1]) {
@@ -33,11 +33,14 @@ describe('Registry Pro build-time gates', () => {
     expect(committed).toContain('<!-- registry-pro:slot {} -->');
     expect(committed).not.toContain('data-registry-pro-terminal');
     expect(committed).not.toContain('/assets/registry-pro.js');
+    expect(committed).toContain('<title>Zodiac Markets · Zodiacs.org</title>');
+    expect(committed).toContain('<h1 id="registry-pro-title">Zodiac Markets</h1>');
 
     const terminal = injectRegistryPro(committed, { [REGISTRY_PRO_FLAG]: '1' });
     expect(terminal.enabled).toBe(true);
     expect(terminal.chatEnabled).toBe(false);
     expect(terminal.output).toContain('data-registry-pro-terminal');
+    expect(terminal.output).toContain('aria-label="Zodiac Markets quote workspace"');
     expect(terminal.output).toContain('data-registry-pro-fallback');
     expect(terminal.output).toContain('no quote or transaction was sent');
     expect(terminal.output).toContain('/assets/registry-pro.js');
