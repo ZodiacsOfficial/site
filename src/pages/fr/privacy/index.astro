@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '2 août 2026';
+const updated = '10 août 2026';
 
 const jsonLd = [
   {
@@ -129,6 +129,39 @@ const jsonLd = [
         que l’adresse IP, la date, l’heure, le navigateur et la page d’origine
         transmise selon la politique du navigateur ; leurs propres politiques de
         confidentialité s’appliquent.
+      </p>
+      <p>
+        Comparaison de fournisseurs dans Zodiac Markets. Ce n’est qu’après
+        l’activation de « Comparer les cotations » que le navigateur envoie une
+        requête de même origine à Zodiacs.org. Zodiacs.org et{' '}
+        <a href="https://vercel.com/legal/privacy-notice" rel="noopener noreferrer">Vercel</a>{' '}
+        reçoivent le signe du Registre choisi, le côté achat ou vente, le
+        montant d’entrée exact, la limite de glissement Raydium choisie et les
+        métadonnées ordinaires de la requête, telles que l’adresse IP, l’heure
+        et les informations du navigateur ; Vercel utilise aussi l’IP source
+        pour la courte limitation anti-abus. Notre serveur déduit les
+        identifiants officiels des jetons et envoie la paire et le montant exact
+        au{' '}
+        <a href="https://developers.jup.ag/docs/legal/privacy-policy" rel="noopener noreferrer">
+          méta-agrégateur Swap V2 de Jupiter
+        </a>{' '}
+        et à{' '}
+        <a href="https://docs.raydium.io/resources/license" rel="noopener noreferrer">Raydium</a>,
+        ainsi que la limite choisie à Raydium uniquement. Les fournisseurs
+        reçoivent une requête de notre serveur, pas directement du navigateur :
+        l’application ne leur transmet ni l’IP du visiteur, ni l’agent
+        utilisateur, ni le référent, ni l’adresse de portefeuille, ni les
+        données de naissance ou de thème, ni les résultats Aura, ni le texte de
+        l’assistant. Les valeurs sont des comparaisons brèves et non exécutables
+        ; aucun portefeuille n’est connecté, et aucune transaction, signature,
+        identifiant de requête du fournisseur ou ordre exécutable n’atteint la
+        page ni ne peut y être utilisé. Le serveur retire tout identifiant de
+        requête du fournisseur avant de répondre et n’appelle jamais de point
+        de terminaison d’exécution. L’application n’enregistre pas la
+        comparaison dans un compte ou l’analytique ; Vercel, Jupiter,{' '}
+        <a href="https://v2.raydium.io/docs/disclaimer/" rel="noopener noreferrer">Raydium</a>{' '}
+        et leur infrastructure peuvent conserver des journaux opérationnels ou
+        de sécurité selon des pratiques que nous ne contrôlons pas.
       </p>
       <p>
         La page de catalogue d’un signe et l’explorateur de la page d’accueil

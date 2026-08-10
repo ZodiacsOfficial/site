@@ -1,7 +1,7 @@
 ---
 import Base from '../../../layouts/Base.astro';
 
-const updated = '2 agosto 2026';
+const updated = '10 agosto 2026';
 
 const jsonLd = [
   {
@@ -126,6 +126,37 @@ const jsonLd = [
         metadati di una richiesta web, come indirizzo IP, data, ora, browser e la
         pagina di provenienza consentita dalle impostazioni del browser; si applicano le
         rispettive informative sulla privacy.
+      </p>
+      <p>
+        Confronto tra fornitori in Zodiac Markets. Solo dopo aver selezionato
+        «Confronta le quotazioni», il browser invia una richiesta same-origin a
+        Zodiacs.org. Zodiacs.org e{' '}
+        <a href="https://vercel.com/legal/privacy-notice" rel="noopener noreferrer">Vercel</a>{' '}
+        ricevono il segno del Registro selezionato, il lato acquisto o vendita,
+        l’importo esatto in entrata, il limite di slippage Raydium scelto e i
+        normali metadati della richiesta, come indirizzo IP, ora e informazioni
+        del browser; Vercel usa inoltre l’IP di origine per il breve limite
+        antiabuso. Il nostro server ricava gli identificativi ufficiali dei
+        token e invia la coppia e l’importo esatto al{' '}
+        <a href="https://developers.jup.ag/docs/legal/privacy-policy" rel="noopener noreferrer">
+          Meta-Aggregatore Swap V2 di Jupiter
+        </a>{' '}
+        e a{' '}
+        <a href="https://docs.raydium.io/resources/license" rel="noopener noreferrer">Raydium</a>,
+        e il limite scelto solo a Raydium. I fornitori ricevono la richiesta dal
+        nostro server, non direttamente dal browser: l’applicazione non inoltra
+        l’IP del visitatore, lo user agent, il referrer, l’indirizzo del wallet,
+        dati di nascita o del tema, risultati Aura o testo dell’assistente. I
+        valori sono confronti di breve durata e non eseguibili; non viene
+        collegato alcun wallet e nessuna transazione, firma, identificativo
+        della richiesta del fornitore od ordine eseguibile raggiunge la pagina
+        o può essere usato dalla pagina. Il server rimuove qualsiasi
+        identificativo della richiesta del fornitore prima di rispondere e non
+        chiama mai un endpoint di esecuzione. L’applicazione non salva il
+        confronto in un account o nell’analitica; Vercel, Jupiter,{' '}
+        <a href="https://v2.raydium.io/docs/disclaimer/" rel="noopener noreferrer">Raydium</a>{' '}
+        e la loro infrastruttura possono conservare log operativi o di sicurezza
+        secondo pratiche che non controlliamo.
       </p>
       <p>
         La pagina di catalogo di un segno e l’esploratore della pagina

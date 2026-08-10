@@ -1,7 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 
-const updated = '2 August 2026';
+const updated = '10 August 2026';
 
 const jsonLd = [
   {
@@ -126,6 +126,35 @@ const jsonLd = [
         receives ordinary web-request metadata, such as your IP address,
         browser information, and request time, and its own privacy terms and
         retention practices apply.
+      </p>
+      <p>
+        Zodiac Markets provider comparison. Only after you press “Compare
+        quotes,” your browser sends a same-origin request to Zodiacs.org.
+        Zodiacs.org and{' '}
+        <a href="https://vercel.com/legal/privacy-notice" rel="noopener noreferrer">Vercel</a>{' '}
+        receive the selected Registry sign, buy or sell side, exact input
+        amount, selected Raydium slippage guard, and ordinary request metadata
+        such as IP address, time, and browser information; Vercel also uses the
+        source IP for the short abuse-prevention rate limit. Our server derives
+        the official token identifiers and sends the exact pair and amount to{' '}
+        <a href="https://developers.jup.ag/docs/legal/privacy-policy" rel="noopener noreferrer">
+          Jupiter’s Swap V2 Meta-Aggregator
+        </a>{' '}
+        and{' '}
+        <a href="https://docs.raydium.io/resources/license" rel="noopener noreferrer">Raydium</a>,
+        plus the selected guard to Raydium only. These providers receive
+        requests from our server, not directly from your browser: the
+        application does not forward your visitor IP, user agent, referrer,
+        wallet address, birth or chart data, Aura results, or assistant text.
+        The returned values are short-lived, non-executable comparisons; no
+        wallet is connected, and no transaction, signature, provider request
+        handle, or executable order reaches or is usable by the page. The
+        server removes any provider request handle before responding and never
+        calls an execution endpoint. The application does not save the
+        comparison to an account or analytics, but Vercel, Jupiter,{' '}
+        <a href="https://v2.raydium.io/docs/disclaimer/" rel="noopener noreferrer">Raydium</a>,
+        and their infrastructure may retain operational or security logs under
+        practices we do not control.
       </p>
       <p>
         A sign’s catalogue page and the Registry landing explorer can also
