@@ -1,14 +1,9 @@
 # Registry Trading Room — owner risk decision
 
-Status: DRAFT — pending owner ratification. The flag stays off, everywhere,
-until the owner ratifies this record by replacing this status line and dating
-the approval. While this line reads DRAFT, the new room remains dark. When
-merged, this implementation does harden the already-live shared trade client: it
-refuses unreadable or greater-than-10-bps fees, cancels stale panel work, and
-adds page-wide pacing and request deadlines. It enables no new acquisition
-surface by itself.
+Status: ratified by the owner; flag-on authorized once every mandatory control
+below is satisfied.
 
-Approved: (pending)
+Approved: 2026-08-10T11:40:11Z
 
 Scope: exactly one additional surface — the Registry Trading Room at
 `/registry/exchange/` — plus the shared trade-client safeguards needed to keep
