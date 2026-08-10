@@ -633,6 +633,7 @@ for (const relativePath of [
   'es/aries/index.html',
   'registry/index.html',
   'registry/exchange/index.html',
+  'registry/pro/index.html',
   'thesis/index.html',
   'sdk/index.html',
   'archive/index.html',

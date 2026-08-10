@@ -69,6 +69,12 @@ owns that page.
   and are not byte-stable across platforms — same rule as the cabinet
   materials.
 - `public/assets/app.js` ← `node scripts/build-app.mjs` (source `src/app.jsx`)
+- `public/registry/pro/index.html` ← `node scripts/build-registry-pro-page.mjs`;
+  its marked terminal region is stamped by `scripts/configure-registry-pro.mjs`
+  from `PUBLIC_REGISTRY_PRO_ENABLED` in the shell. The committed state is
+  always flag-off. `public/assets/registry-pro.js` ←
+  `node scripts/build-registry-pro.mjs` (source `src/pro/`). Commit both
+  generated outputs with their sources; never commit flag-on page bytes.
 - `public/registry/index.html` Aura marker region (meta flag + no-JS entry
   between the `registry-aura-entry` comments) ← stamped by
   `scripts/configure-registry-aura.mjs` (predev/prebuild) and

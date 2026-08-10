@@ -124,6 +124,9 @@ jobs:
       - name: Existing Registry selector regression drive
         run: OUT_DIR=tests/visual/artifacts/registry npm run test:registry-selector:browser
 
+      - name: Zodiac Markets flag-on fixture acceptance
+        run: OUT_DIR=tests/visual/artifacts/registry-pro npm run test:registry-pro:browser
+
       - name: Phase 1 mobile frame cadence
         run: npm run test:phase1:frames
 
@@ -183,6 +186,9 @@ jobs:
           node scripts/build-trade.mjs
           node scripts/build-exchange.mjs
           node scripts/configure-registry-exchange.mjs
+          node scripts/build-registry-pro-page.mjs
+          node scripts/build-registry-pro.mjs
+          node scripts/configure-registry-pro.mjs
 
       - name: Drift gate
         run: git diff --exit-code -- public/

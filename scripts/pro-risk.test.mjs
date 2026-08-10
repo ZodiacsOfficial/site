@@ -1,0 +1,164 @@
+import { describe, expect, it } from 'vitest';
+import { readFile, readdir } from 'node:fs/promises';
+import { resolve } from 'node:path';
+
+const ROOT = resolve(import.meta.dirname, '..');
+
+async function source(path) {
+  return readFile(resolve(ROOT, path), 'utf8');
+}
+
+async function filesUnder(path) {
+  const entries = await readdir(resolve(ROOT, path), { withFileTypes: true });
+  const files = await Promise.all(entries.map(async (entry) => {
+    const relative = `${path}/${entry.name}`;
+    return entry.isDirectory() ? filesUnder(relative) : [relative];
+  }));
+  return files.flat().sort();
+}
+
+describe('Zodiac Markets public and capability posture', () => {
+  it('records quote ratification while Market Chat remains separately DRAFT', async () => {
+    const decision = await source('docs/REGISTRY-PRO-OWNER-RISK-DECISION.md');
+    const chatDecision = await source('docs/REGISTRY-PRO-MARKET-CHAT-OWNER-RISK-DECISION.md');
+    expect(decision).toContain('Status: ratified by the owner; flag-on authorized once every mandatory control');
+    expect(decision).toContain('Approved: 2026-08-10T11:40:11Z');
+    expect(decision).toContain('visitor-facing product name be `Zodiac Markets`');
+    expect(decision).toMatch(/does\s+not mean that Zodiacs\.org operates a market/u);
+    expect(chatDecision).toContain('Status: DRAFT — pending owner ratification.');
+    expect(chatDecision).toContain('Approved: (pending)');
+  });
+
+  it('keeps the proposed live Market Chat contract DRAFT and isolated', async () => {
+    const liveDecision = await source(
+      'docs/ZODIAC-MARKETS-MARKET-CHAT-LIVE-OWNER-RISK-DECISION.md',
+    );
+    const liveContract = await source(
+      'docs/ZODIAC-MARKETS-MARKET-CHAT-LIVE-TECHNICAL-CONTRACT.md',
+    );
+    expect(liveDecision).toContain('Status: DRAFT — pending owner review and explicit ratification.');
+    expect(liveDecision).toContain('Approved: (pending)');
+    expect(liveDecision).toContain('a general request for a chatroom');
+    expect(liveContract).toContain('Status: DRAFT design contract.');
+    expect(liveContract).toContain('dedicated Supabase project');
+    expect(liveContract).toContain('same-origin polling');
+    expect(liveContract).toContain('must not use\n`src/lib/supabase/client.ts`');
+    expect(liveContract).toContain('No live-chat implementation');
+    expect(liveContract).toContain('REGISTRY_PRO_MARKET_CHAT_POSTING_ENABLED');
+    expect(liveContract).toContain('REGISTRY_PRO_MARKET_CHAT_SAFETY_ENABLED');
+    expect(liveContract).not.toContain('REGISTRY_PRO_MARKET_CHAT_WRITE_ENABLED');
+    expect(liveContract).toContain('Turning posting off must leave logout');
+    expect(liveContract).toContain('GET /api/market-chat/preferences');
+    expect(liveContract).toContain('POST /api/market-chat/appeal-challenge');
+    expect(liveContract).toContain('does not create or restore a posting session');
+    expect(liveContract).toContain('`threats`, and `unlawful_content`');
+    expect(liveContract).toContain('hash-chain and\nexternal-receipt verification');
+    expect(liveContract).toContain('Supabase Web3 Auth is explicitly not used');
+    expect(liveContract).not.toContain('supabase.com/docs/guides/auth/auth-web3');
+  });
+
+  it('pins the DRAFT chat implementation inventory to the inert shell', async () => {
+    const chatFiles = await filesUnder('src/pro/chat');
+    expect(chatFiles).toEqual([
+      'src/pro/chat/contracts.mjs',
+      'src/pro/chat/shell.mjs',
+    ]);
+    const chatSource = (await Promise.all(chatFiles.map(source))).join('\n');
+    expect(chatSource).not.toMatch(
+      /\bfetch\s*\(|XMLHttpRequest|WebSocket|EventSource|createClient|signInWithWeb3|signMessage/iu,
+    );
+    expect(chatSource).not.toMatch(/\/api\/market-chat|SUPABASE|MARKET_CHAT_LIVE/iu);
+
+    const apiFiles = (await filesUnder('api')).filter((path) => /\.(?:js|mjs|ts)$/u.test(path));
+    const apiSource = (await Promise.all(apiFiles.map(source))).join('\n');
+    expect(apiFiles.filter((path) => /market-chat/iu.test(path))).toEqual([]);
+    expect(apiSource).not.toMatch(/\/api\/market-chat|REGISTRY_PRO_MARKET_CHAT/iu);
+    await expect(readdir(resolve(ROOT, 'supabase-market-chat'))).rejects.toMatchObject({ code: 'ENOENT' });
+  });
+
+  it('keeps the quiet page noindexed, quote-only, and candid about risk', async () => {
+    const html = await source('public/registry/pro/index.html');
+    expect(html).toContain('<link rel="canonical" href="https://zodiacs.org/registry/pro/" />');
+    expect(html).toContain('<meta name="robots" content="noindex" />');
+    expect(html).toContain('<h1 id="registry-pro-title">Zodiac Markets</h1>');
+    expect(html).toContain('The name does not mean Zodiacs.org operates a market or exchange.');
+    expect(html).toMatch(/thinly traded/u);
+    expect(html).toMatch(/lose all market value/u);
+    expect(html).toMatch(/independent third-party observations/u);
+    expect(html).toMatch(/Provider quotes are non-executable/u);
+    expect(html).toMatch(/official Registry mint/u);
+    expect(html).toMatch(/irreversible/u);
+    expect(html).toMatch(/does not connect a wallet, build a transaction/u);
+    expect(html).not.toMatch(/institutional.grade|best execution|order book/iu);
+  });
+
+  it('adds no acquisition link from the Registry hub or Cabinet', async () => {
+    for (const path of ['public/registry/index.html', 'src/pages/registry/collection/index.astro']) {
+      const content = await source(path);
+      expect(content).not.toMatch(/\/registry\/pro(?:\/|[?#"'])/iu);
+      expect(content).not.toMatch(/Registry Pro|Quote Laboratory/iu);
+    }
+  });
+
+  it('allows browser market reads and same-origin quotes, never direct execution providers', async () => {
+    const vercel = JSON.parse(await source('vercel.json'));
+    const route = vercel.headers.find((entry) => entry.source === '/registry/pro/(.*)');
+    expect(route).toBeTruthy();
+    const headers = Object.fromEntries(route.headers.map((entry) => [entry.key, entry.value]));
+    expect(headers['Cache-Control']).toBe('no-store');
+    expect(headers['X-Robots-Tag']).toContain('noindex');
+    expect(headers['Content-Security-Policy']).toContain("connect-src 'self' https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io");
+    expect(headers['Content-Security-Policy']).not.toMatch(/jup\.ag|raydium|supabase/iu);
+  });
+
+  it('contains no transaction, signing, wallet, referral, or write-RPC implementation', async () => {
+    const implementation = (await Promise.all([
+      'src/pro/browser.mjs',
+      'src/pro/catalog.mjs',
+      'src/pro/terminal.mjs',
+      'src/pro/execution/contracts.mjs',
+      'src/pro/execution/coordinator.mjs',
+      'src/pro/execution/jupiter-v2.mjs',
+      'src/pro/execution/raydium.mjs',
+      'src/pro/server/quote-gateway.mjs',
+      'api/registry-pro-quotes.ts',
+    ].map(source))).join('\n');
+    expect(implementation).not.toMatch(/signTransaction|signMessage|sendTransaction|sendRawTransaction|wallet-adapter/iu);
+    expect(implementation).not.toMatch(/\/execute\b|transaction\/swap-base-in|\/transaction\/swap/iu);
+    expect(implementation).not.toMatch(/createClient\(|signInWithWeb3|SUPABASE_SERVICE_ROLE/iu);
+    expect(implementation).toContain("'referrer', 'referralAccount', 'referralFee', 'feeBps'");
+    expect(implementation).toContain('prepare: false');
+    expect(implementation).toContain('sign: false');
+    expect(implementation).toContain('submit: false');
+  });
+
+  it('pins the firewall instrument and bounded pilot in both owner controls and launch operations', async () => {
+    const decision = await source('docs/REGISTRY-PRO-OWNER-RISK-DECISION.md');
+    const runbook = await source('docs/REGISTRY-PRO-LAUNCH-RUNBOOK.md');
+    for (const document of [decision, runbook]) {
+      expect(document).toContain('registry-pro-quotes-v1');
+      expect(document).toMatch(/12 requests per 60 seconds|12-request limit/u);
+      expect(document).toMatch(/source.IP/u);
+      expect(document).toMatch(/30 days/u);
+    }
+    expect(runbook).toMatch(/returns? `429`/u);
+    expect(runbook).toMatch(/fixed window/u);
+  });
+
+  it('uses specific, prominent Jupiter product attribution and treats the license as a launch gate', async () => {
+    const terminal = await source('src/pro/terminal.mjs');
+    const decision = await source('docs/REGISTRY-PRO-OWNER-RISK-DECISION.md');
+    const runbook = await source('docs/REGISTRY-PRO-LAUNCH-RUNBOOK.md');
+    expect(terminal).toContain('Powered by Jupiter · Swap V2 Meta-Aggregator · Ultra mode');
+    expect(terminal).not.toContain("'Jupiter Swap V2'");
+    for (const document of [decision, runbook]) {
+      expect(document).toContain('SDK & API License Agreement');
+      expect(document).toContain('written confirmation');
+      expect(document).toContain('Powered by Jupiter');
+      expect(document).toMatch(/legal operator|service's legal operator/u);
+      expect(document).toMatch(/operating jurisdiction/u);
+      expect(document).toMatch(/geographic or eligibility control/u);
+    }
+  });
+
+});

@@ -1,3 +1,4 @@
+import weeklyUnsubscribeHandler from '../_email/weekly-unsubscribe.js';
 import { hasDailyEmailRevocation } from '../../src/lib/email/daily-config.js';
 import { dailyEmailPage } from '../../src/lib/email/daily-page.js';
 import { getDailyContactEmail, removeDailySunSegment } from '../../src/lib/email/daily-resend.js';
@@ -62,7 +63,7 @@ async function currentSunEmailForClaim(
   return currentHash === recipientHash ? email : null;
 }
 
-export default async function handler(req: any, res: any): Promise<void> {
+export async function dailyUnsubscribeHandler(req: any, res: any): Promise<void> {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
     send(res, 405, dailyEmailPage('That link cannot be used', 'Open the unsubscribe link from a daily email.'));
@@ -133,4 +134,14 @@ export default async function handler(req: any, res: any): Promise<void> {
       label: 'Restart the daily',
     },
   ));
+}
+
+export default async function handler(req: any, res: any): Promise<void> {
+  // Keep both long-lived public unsubscribe URLs while staying inside the
+  // Vercel Hobby function ceiling. Their tokens and mutations remain separate.
+  if (req.query?.action === 'weekly') {
+    await weeklyUnsubscribeHandler(req, res);
+    return;
+  }
+  await dailyUnsubscribeHandler(req, res);
 }
