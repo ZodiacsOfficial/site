@@ -7,7 +7,7 @@ const es = {
     navTools: 'Herramientas',
     navLearn: 'Aprende',
     navHoroscopes: 'Horóscopos',
-    navCollect: 'Registro',
+    navCollect: 'Terminal',
     navSavedCharts: 'Cartas guardadas',
     navMenu: 'Menú',
     navSite: 'El sitio',

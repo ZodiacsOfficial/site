@@ -69,10 +69,13 @@ function freezeCuratedEntry(entry) {
 export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
     path: '/registry/',
-    title: 'The Zodiacs Registry',
-    description: 'The registry of the twelve signs — canonical records, provenance, and the Astrofolio catalogue.',
+    title: 'Zodiac Terminal',
+    description: 'Live markets, official token records, and reviewed research for the twelve Zodiac signs.',
     kind: 'registry',
-    keywords: ['registry', 'astrofolio', 'record', 'records'],
+    keywords: [
+      'terminal', 'zodiac terminal', 'registry', 'zodiac capital markets',
+      'astrofolio', 'market', 'markets', 'token', 'tokens', 'record', 'records', 'research',
+    ],
   }),
   freezeCuratedEntry({
     path: '/thesis/',

@@ -61,7 +61,7 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ['/registry/research/', registryResearchPublication.generatedAt.slice(0, 10)],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
   ['/thesis/', '2026-08-05'],
-  // Zodiac Capital Markets and the twelve plain-language token records.
+  // Zodiac Terminal and the twelve plain-language token records.
   ['/registry/', '2026-08-10'],
   ...[
     'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',

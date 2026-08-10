@@ -21,8 +21,14 @@ describe('Exchange risk and trust copy', () => {
     expect(html).toContain('operates no market');
     expect(html).toContain('<title>Zodiac Markets · Zodiacs.org</title>');
     expect(html).toContain('<meta property="og:title" content="Zodiac Markets" />');
+    expect(html).toContain('https://zodiacs.org/assets/og/v3/zodiac-terminal.png');
+    expect(html).not.toContain('https://zodiacs.org/assets/og/v2/registry.png');
     expect(html).toContain('"name": "Zodiac Markets"');
+    expect(html).toContain('"name": "Zodiac Terminal", "item": "https://zodiacs.org/registry/"');
     expect(html).toContain('<h1 id="zme-title">Zodiac Markets</h1>');
+    expect(html).toContain('<h2 id="zme-records">The 12 Official Zodiac Tokens</h2>');
+    expect(html).toContain('Sign 12 of 12');
+    expect(html).not.toMatch(/\bLot (?:I|V|X)/u);
     expect(html).not.toContain('Registry Trading Room');
     expect(html).not.toContain('Zodiacs Mercantile Exchange');
     expect(html).toContain('may not exceed 0.10%');

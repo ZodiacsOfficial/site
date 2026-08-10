@@ -11,8 +11,10 @@ import { withPreview } from './visual/preview-server.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const queries = [
-  ['registry', 'The Zodiacs Registry'],
-  ['astrofolio', 'The Zodiacs Registry'],
+  ['terminal', 'Zodiac Terminal'],
+  ['registry', 'Zodiac Terminal'],
+  ['zodiac capital markets', 'Zodiac Terminal'],
+  ['astrofolio', 'Zodiac Terminal'],
   ['thesis', 'The Registry Thesis'],
   ['aries record', 'Aries — registry record'],
 ];
@@ -46,14 +48,14 @@ await withPreview({ port: 4403 }, async (baseURL) => {
       const result = page.locator('.zsearch__opt').filter({
         has: page.locator('.zsearch__title', { hasText: expectedTitle }),
       }).filter({
-        has: page.locator('.zsearch__kind', { hasText: /^Registry$/ }),
+        has: page.locator('.zsearch__kind', { hasText: /^Terminal$/ }),
       }).first();
       await result.waitFor({ state: 'visible' });
       const resultTitle = await result.locator('.zsearch__title').textContent();
       const resultKind = await result.locator('.zsearch__kind').textContent();
       check(
-        `${query}: returns the expected Registry-badged entry`,
-        resultTitle === expectedTitle && resultKind === 'Registry',
+        `${query}: returns the expected Terminal-badged entry`,
+        resultTitle === expectedTitle && resultKind === 'Terminal',
         `${resultTitle} · ${resultKind}`,
       );
       if (OUT) await page.locator('.zsearch__panel').screenshot({ path: `${OUT}/search-${query.replaceAll(' ', '-')}.png` });

@@ -154,8 +154,8 @@ describe('curated wing search entries', () => {
     expect(CURATED_WING_ENTRIES.slice(0, 3)).toEqual([
       expect.objectContaining({
         path: '/registry/',
-        title: 'The Zodiacs Registry',
-        description: 'The registry of the twelve signs — canonical records, provenance, and the Astrofolio catalogue.',
+        title: 'Zodiac Terminal',
+        description: 'Live markets, official token records, and reviewed research for the twelve Zodiac signs.',
       }),
       expect.objectContaining({
         path: '/thesis/',
@@ -179,8 +179,8 @@ describe('curated wing search entries', () => {
     )).toEqual([]);
   });
 
-  it('keeps curated titles and descriptions out of the market register', () => {
-    for (const entry of CURATED_WING_ENTRIES) {
+  it('keeps non-market wing records out of the market register', () => {
+    for (const entry of CURATED_WING_ENTRIES.filter(({ path }) => path !== '/registry/')) {
       expect(`${entry.title} ${entry.description}`).not.toMatch(BANNED_MARKET_WORDS);
     }
   });

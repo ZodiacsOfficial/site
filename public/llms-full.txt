@@ -1,6 +1,6 @@
 # Zodiacs.org Full AI Context
 
-Zodiacs.org is a free astrology reference and calculation platform. It also maintains the original Zodiacs registry and a read-only developer SDK. Keep those surfaces distinct: consumer astrology guidance and calculators are the primary site; the registry and SDK are a related developer and collector wing.
+Zodiacs.org is a free astrology reference and calculation platform. It also publishes Zodiac Terminal, a separate market-and-records interface powered by the original Zodiacs Registry and its read-only developer SDK. Keep those surfaces distinct: consumer astrology guidance and calculators are the primary site; Zodiac Terminal presents market context and research; the Registry remains the canonical data and verification layer.
 
 ## Consumer Astrology Platform
 
@@ -98,13 +98,17 @@ For factual citations, prefer the methodology page for the calculation frame, a 
 
 Daily horoscope RSS: https://zodiacs.org/feeds/horoscopes.xml
 
-## Registry and Developer Wing
+## Zodiac Terminal, Registry, and Developer Wing
 
 ### Entity boundary
 
-The registry and SDK are maintained by Zodiacs.org but are not the basis for consumer astrology calculations. Holding a Zodiac is optional context; it does not make a chart more accurate, a person more compatible, or an interpretation more authoritative. Consumer calculator results do not depend on wallet ownership.
+Zodiac Terminal, the Registry, and the SDK are maintained by Zodiacs.org but are not the basis for consumer astrology calculations. Holding a Zodiac is optional context; it does not make a chart more accurate, a person more compatible, or an interpretation more authoritative. Consumer calculator results do not depend on wallet ownership.
 
 Astrofolio is a related consumer project exploring personal Zodiac shelves, profiles, and share cards. Zodiacs.org remains the official registry and SDK source of truth. Relationship details: https://zodiacs.org/sdk/#astrofolio
+
+### Zodiac Terminal
+
+Zodiac Terminal is the consumer market-and-records interface at https://zodiacs.org/registry/. It presents live market context, rotating gold artwork, price history, reviewed research, and links to each official token record. It does not replace or rename the Zodiacs Registry, execute trades, take custody, or change verification status.
 
 ### Official registry
 

@@ -17,12 +17,12 @@ interface Props { locale?: Locale }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const path = Astro.url.pathname;
 const registryLabel: Record<Locale, string> = {
-  en: 'Digital collection and registry',
-  es: 'Colección digital y registro',
-  pt: 'Coleção digital e registro',
-  fr: 'Collection numérique et registre',
-  it: 'Collezione digitale e registro',
-  ru: 'Цифровая коллекция и реестр — пока по-английски',
+  en: 'Markets, token records, and research',
+  es: 'Mercados, registros de tokens e investigación',
+  pt: 'Mercados, registros de tokens e pesquisa',
+  fr: 'Marchés, fiches de jetons et recherche',
+  it: 'Mercati, schede dei token e ricerca',
+  ru: 'Рынки, записи токенов и исследования — пока по-английски',
 };
 const openMenuLabel: Record<Locale, string> = {
   en: 'Open menu',

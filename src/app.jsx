@@ -1592,7 +1592,7 @@
                 <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
                 <kbd className="wnav__search-kbd" aria-hidden="true">/</kbd>
               </a>
-              <a className="wnav__chip" href="/registry/" aria-current="page">Registry</a>
+              <a className="wnav__chip" href="/registry/" aria-current="page">Terminal</a>
               <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
                 <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
               </button>
@@ -1617,8 +1617,8 @@
                 <a className="wnav-menu__link" style={{ '--i': 1 }} href="/horoscopes/">Horoscopes</a>
                 <a className="wnav-menu__link" style={{ '--i': 2 }} href="/profile/">Saved charts</a>
                 <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href="/registry/" aria-current="page">
-                  <span>Registry</span>
-                  <small>Digital collection and registry</small>
+                  <span>Terminal</span>
+                  <small>Markets, token records, and research</small>
                 </a>
               </div>
               <div className="wnav-menu__group">
@@ -1891,6 +1891,23 @@
       );
     }
 
+    let selectedTokenChartRuntimePromise = null;
+    let selectedTokenChartClient = null;
+    function loadSelectedTokenChartRuntime() {
+      if (!selectedTokenChartRuntimePromise) {
+        selectedTokenChartRuntimePromise = import('/assets/registry-token-chart.js')
+          .then((module) => {
+            selectedTokenChartClient ||= module.createSelectedTokenHistoryClient();
+            return { module, client: selectedTokenChartClient };
+          })
+          .catch((error) => {
+            selectedTokenChartRuntimePromise = null;
+            throw error;
+          });
+      }
+      return selectedTokenChartRuntimePromise;
+    }
+
     function MarketHistoryChart({ observations, sign, compact = false }) {
       const available = Array.isArray(observations) ? observations : [];
       const pricedAvailable = available.filter(point => point.priceUsd !== null);
@@ -1912,9 +1929,13 @@
       const height = compact ? 52 : 150;
       const inset = compact ? 3 : 8;
       const values = priced.map(point => point.priceUsd);
-      const low = values.length ? Math.min(...values) : 0;
-      const high = values.length ? Math.max(...values) : 0;
-      const spread = high - low || Math.max(Math.abs(high) * 0.04, 1e-12);
+      const rawLow = values.length ? Math.min(...values) : 0;
+      const rawHigh = values.length ? Math.max(...values) : 0;
+      const rawSpread = rawHigh - rawLow || Math.max(Math.abs(rawHigh) * 0.04, 1e-12);
+      const domainPadding = rawSpread * .12;
+      const low = rawLow - domainPadding;
+      const high = rawHigh + domainPadding;
+      const spread = high - low;
       const xAt = (index) => inset + ((width - (2 * inset)) * (selected.length <= 1 ? .5 : index / (selected.length - 1)));
       const yAt = (value) => inset + ((height - (2 * inset)) * (1 - ((value - low) / spread)));
       const segments = [];
@@ -1937,6 +1958,18 @@
       if (activeSegment.length) segments.push(activeSegment);
       const first = priced[0];
       const last = priced.at(-1);
+      const archiveChange = priced.length > 1 && first.priceUsd > 0
+        ? ((last.priceUsd - first.priceUsd) / first.priceUsd) * 100
+        : null;
+      const observedElapsedMs = priced.length > 1
+        ? Date.parse(last.observedAt || `${last.date}T00:00:00Z`)
+          - Date.parse(first.observedAt || `${first.date}T00:00:00Z`)
+        : 0;
+      const observedElapsed = Number.isFinite(observedElapsedMs) && observedElapsedMs > 0
+        ? observedElapsedMs < 48 * 60 * 60 * 1000
+          ? `${Math.max(1, Math.round(observedElapsedMs / 3_600_000))}h apart`
+          : `${Math.max(1, Math.round(observedElapsedMs / 86_400_000))}d apart`
+        : '';
       const summary = priced.length === 0
         ? `${sign.name} archived price history is unavailable.`
         : priced.length === 1
@@ -1961,21 +1994,209 @@
               </span>
             )}
           </figcaption>
-          <svg
-            viewBox={`0 0 ${width} ${height}`}
-            preserveAspectRatio="none"
-            role="img"
-            aria-label={summary}
-          >
-            <line x1={inset} x2={width - inset} y1={height - inset} y2={height - inset} className="registry-history__axis" />
-            {segments.map((points, index) => points.length > 1 ? (
-              <polyline key={index} points={points.join(' ')} className="registry-history__line" />
-            ) : (
-              <circle key={index} cx={points[0].split(',')[0]} cy={points[0].split(',')[1]} r={compact ? 2.5 : 4} className="registry-history__point" />
-            ))}
-          </svg>
-          {priced.length < 2 && <p>{priced.length ? 'History is building from the first archived day.' : 'No archived price is available yet.'}</p>}
+          {compact && priced.length >= 2 && priced.length < 8 ? (
+            <div className="registry-history__comparison" role="img" aria-label={summary}>
+              <span><small>{first.date.slice(5)}</small><strong>{formatPriceUsd(first.priceUsd)}</strong></span>
+              <span className={'registry-history__delta' + marketChangeClass(archiveChange)}>
+                <strong>{formatPercent(archiveChange)}</strong>
+                <small>{observedElapsed || `${priced.length} archived reads`}</small>
+              </span>
+              <span><small>{last.date.slice(5)}</small><strong>{formatPriceUsd(last.priceUsd)}</strong></span>
+            </div>
+          ) : (
+            <svg
+              viewBox={`0 0 ${width} ${height}`}
+              preserveAspectRatio="none"
+              role="img"
+              aria-label={summary}
+            >
+              <line x1={inset} x2={width - inset} y1={height - inset} y2={height - inset} className="registry-history__axis" />
+              {segments.map((points, index) => points.length > 1 ? (
+                <polyline key={index} points={points.join(' ')} className="registry-history__line" />
+              ) : (
+                <circle key={index} cx={points[0].split(',')[0]} cy={points[0].split(',')[1]} r={compact ? 2.5 : 4} className="registry-history__point" />
+              ))}
+            </svg>
+          )}
+          {priced.length < 2 && <p>{priced.length ? 'Archive building from this dated point.' : 'Archived price unavailable.'}</p>}
+          {compact && priced.length >= 2 && priced.length < 8 && <p>Archive building · a line begins at 8 daily observations.</p>}
         </figure>
+      );
+    }
+
+    function SelectedTokenMiniChart({ sign, pool, observations }) {
+      const [hostRef, inView] = useInView('160px 0px 160px 0px');
+      const [state, setState] = useState({ status: 'idle' });
+      const token = sign.representations.solana?.address || '';
+
+      useEffect(() => {
+        if (!inView || !token) return undefined;
+        let cancelled = false;
+        const controller = new AbortController();
+        const timer = window.setTimeout(() => {
+          setState({ status: 'loading' });
+          loadSelectedTokenChartRuntime()
+            .then(async ({ module, client }) => {
+              if (!pool) {
+                return {
+                  model: module.buildSelectedTokenChartModel({
+                    token,
+                    label: sign.name,
+                    pool: null,
+                    archiveObservations: observations,
+                    live: { status: 'not_indexed', reason: 'no_pool' },
+                  }),
+                };
+              }
+              return client.load({
+                token,
+                pool,
+                label: sign.name,
+                archiveObservations: observations,
+                signal: controller.signal,
+              });
+            })
+            .then((result) => {
+              if (!cancelled && result?.model) setState({ status: 'ready', model: result.model });
+            })
+            .catch((error) => {
+              if (!cancelled && error?.name !== 'AbortError') setState({ status: 'fallback' });
+            });
+        }, 220);
+
+        return () => {
+          cancelled = true;
+          window.clearTimeout(timer);
+          controller.abort();
+          selectedTokenChartClient?.cancel();
+        };
+      }, [inView, token, pool, sign.name, observations]);
+
+      const model = state.status === 'ready' ? state.model : null;
+      const width = 220;
+      const height = 56;
+      const insetX = 4;
+      const insetY = 5;
+      const linePoints = model?.points || [];
+      const values = linePoints.map(point => point.priceUsd).filter(Number.isFinite);
+      const rawLow = values.length ? Math.min(...values) : 0;
+      const rawHigh = values.length ? Math.max(...values) : 0;
+      const rawSpread = rawHigh - rawLow || Math.max(Math.abs(rawHigh) * .04, 1e-12);
+      const low = rawLow - rawSpread * .12;
+      const high = rawHigh + rawSpread * .12;
+      const spread = high - low;
+      const startMs = Number.isFinite(model?.windowStartMs)
+        ? model.windowStartMs
+        : linePoints[0]?.slotMs;
+      const endMs = Number.isFinite(model?.windowEndMs)
+        ? model.windowEndMs
+        : linePoints.at(-1)?.slotMs;
+      const spanMs = Math.max(1, (endMs || 0) - (startMs || 0));
+      const xAt = point => insetX + ((width - insetX * 2) * ((point.slotMs - startMs) / spanMs));
+      const yAt = value => insetY + ((height - insetY * 2) * (1 - ((value - low) / spread)));
+      const segmentPoints = segment => segment
+        .map(point => `${xAt(point).toFixed(2)},${yAt(point.priceUsd).toFixed(2)}`)
+        .join(' ');
+      const latest = linePoints.at(-1) || null;
+      const gradientId = `token-chart-${sign.asset.sign}`;
+      const updated = latest
+        ? new Date(latest.timestampMs).toLocaleTimeString(undefined, {
+            hour: '2-digit', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short',
+          })
+        : '';
+      const endpointMoment = (point) => {
+        if (!point) return '';
+        if (model?.timeframe === '1d' && point.date) return point.date;
+        return new Date(point.timestampMs).toLocaleString(undefined, {
+          month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC',
+        }) + ' UTC';
+      };
+      const elapsedMs = model?.first && model?.last
+        ? Math.max(0, model.last.timestampMs - model.first.timestampMs)
+        : 0;
+      const elapsedLabel = elapsedMs < 60 * 60 * 1000
+        ? `${Math.max(1, Math.round(elapsedMs / 60_000))}m elapsed`
+        : elapsedMs < 48 * 60 * 60 * 1000
+          ? `${Math.max(1, Math.round(elapsedMs / 3_600_000))}h elapsed`
+          : `${Math.max(1, Math.round((elapsedMs / 86_400_000) * 10) / 10)}d elapsed`;
+
+      return (
+        <div ref={hostRef} className="selected-token-chart" data-token-chart={sign.asset.sign}>
+          {(state.status === 'idle' || state.status === 'loading') && (
+            <figure className="token-spark token-spark--loading" aria-label={`${sign.name} 24-hour price chart loading`} aria-busy="true">
+              <figcaption><span>24H price</span><span>Loading</span></figcaption>
+              <span className="token-spark__skeleton" aria-hidden="true" />
+            </figure>
+          )}
+          {state.status === 'fallback' && <MarketHistoryChart observations={observations} sign={sign} compact />}
+          {model && model.mode === 'line' && (
+            <figure className={'token-spark ' + (model.source === 'geckoterminal-hourly' ? 'token-spark--live' : 'token-spark--archive')}>
+              <figcaption>
+                <span>{model.source === 'geckoterminal-hourly' ? '24H · GeckoTerminal' : 'Registry archive'}</span>
+                <span className={marketChangeClass(model.netChangePct)}>{formatPercent(model.netChangePct)}</span>
+              </figcaption>
+              <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" role="img" aria-label={model.ariaLabel}>
+                <defs>
+                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0" stopColor="var(--active-sign)" stopOpacity=".22" />
+                    <stop offset="1" stopColor="var(--active-sign)" stopOpacity="0" />
+                  </linearGradient>
+                </defs>
+                {[.25, .5, .75].map(fraction => (
+                  <line key={fraction} x1={insetX} x2={width - insetX} y1={height * fraction} y2={height * fraction} className="token-spark__grid" />
+                ))}
+                {model.segments.map((segment, index) => {
+                  const points = segmentPoints(segment);
+                  const firstX = xAt(segment[0]).toFixed(2);
+                  const lastX = xAt(segment.at(-1)).toFixed(2);
+                  return (
+                    <g key={`${segment[0].slotMs}-${index}`}>
+                      {segment.length > 1 && (
+                        <polygon points={`${firstX},${height - insetY} ${points} ${lastX},${height - insetY}`} fill={`url(#${gradientId})`} />
+                      )}
+                      {segment.length > 1 ? (
+                        <polyline points={points} className="token-spark__line" />
+                      ) : (
+                        <circle cx={firstX} cy={yAt(segment[0].priceUsd).toFixed(2)} r="2.4" className="token-spark__point" />
+                      )}
+                    </g>
+                  );
+                })}
+                {latest && <circle cx={xAt(latest).toFixed(2)} cy={yAt(latest.priceUsd).toFixed(2)} r="2.8" className="token-spark__latest" />}
+              </svg>
+              <p>
+                {model.coverage.observedPointCount}/{model.coverage.expectedPointCount} {model.source === 'geckoterminal-hourly' ? 'closed hourly' : 'daily'}
+                {model.source === 'geckoterminal-hourly' && ` · ${updated || 'UTC'}`}
+              </p>
+            </figure>
+          )}
+          {model && model.mode !== 'line' && (
+            <figure className="token-spark token-spark--comparison">
+              <figcaption>
+                <span>{model.timeframe === '1h' ? '24H endpoints' : 'Archive'}</span>
+                <span className={marketChangeClass(model.netChangePct)}>{formatPercent(model.netChangePct)}</span>
+              </figcaption>
+              {model.mode === 'empty' ? (
+                <p role="status">Price history unavailable.</p>
+              ) : model.mode === 'single' ? (
+                <div className="token-spark__single" role="img" aria-label={model.ariaLabel}>
+                  <strong>{formatPriceUsd(model.first.priceUsd)}</strong>
+                  <small>{endpointMoment(model.first)} · one observation</small>
+                </div>
+              ) : (
+                <div className="registry-history__comparison" role="img" aria-label={model.ariaLabel}>
+                  <span><small>First</small><strong>{formatPriceUsd(model.first.priceUsd)}</strong></span>
+                  <span className={'registry-history__delta' + marketChangeClass(model.netChangePct)}>
+                    <strong>{formatPercent(model.netChangePct)}</strong>
+                    <small>{model.coverage.observedPointCount} reads · {elapsedLabel}</small>
+                  </span>
+                  <span><small>Latest</small><strong>{formatPriceUsd(model.last.priceUsd)}</strong></span>
+                </div>
+              )}
+              <p>{model.source === 'geckoterminal-hourly' ? 'Hourly history building' : 'Registry archive fallback'} · line begins at 8 reads.</p>
+            </figure>
+          )}
+        </div>
       );
     }
 
@@ -1983,7 +2204,10 @@
       const batch = useTwelveQuotes(true);
       const history = useRegistryMarketHistory(true);
       const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
-      const ledger = marketHistoryForSign(history.data, sign.asset.sign);
+      const ledger = useMemo(
+        () => marketHistoryForSign(history.data, sign.asset.sign),
+        [history.data, sign.asset.sign],
+      );
       const observations = ledger.observations;
       const latest = ledger.latest;
       const marketCapRows = batch.status === 'ok'
@@ -2003,11 +2227,17 @@
       const liquidity = toFiniteNumber(quote?.liquidityUsd) ?? latest?.liquidityUsd ?? null;
       const volume = toFiniteNumber(quote?.volume24h) ?? latest?.volume24hUsd ?? null;
       const pools = toFiniteNumber(quote?.poolCount) ?? latest?.indexedPoolCount ?? null;
+      const chartPool = quote?.pairAddress || latest?.deepestPool?.pairAddress || '';
 
       return (
         <div className="stage-market" data-stage-market={sign.asset.sign}>
           <div className="stage-market__chart">
-            <MarketHistoryChart observations={observations} sign={sign} compact />
+            <SelectedTokenMiniChart
+              key={sign.asset.sign}
+              sign={sign}
+              pool={chartPool}
+              observations={observations}
+            />
           </div>
           <dl className="stage-market__facts">
             <div><dt>Market cap{capRank >= 0 ? ` · #${capRank + 1}` : ''}</dt><dd>{marketCap === null ? '—' : formatUsdCompact(marketCap)}</dd></div>
@@ -4188,7 +4418,7 @@
       );
     }
 
-    function ConsumerCapitalHeader() {
+    function ConsumerCapitalHeader({ sign }) {
       const season = useCurrentSeason();
       const batch = useTwelveQuotes(true);
       const quotes = batch.status === 'ok'
@@ -4201,10 +4431,14 @@
       const totalLiquidity = liquidities.reduce((sum, value) => sum + value, 0);
 
       return (
-        <header className="capital-masthead" aria-labelledby="consumer-explorer-title">
+        <header
+          className="capital-masthead"
+          aria-labelledby="consumer-explorer-title"
+          style={{ '--active-sign': sign.hue }}
+        >
           <div className="capital-masthead__title">
-            <span>Listed by the Zodiacs Registry</span>
-            <h1 id="consumer-explorer-title">Zodiac Capital Markets</h1>
+            <span>Verified by the Zodiacs Registry</span>
+            <h1 id="consumer-explorer-title">Zodiac Terminal</h1>
             <p>Twelve signs. Twelve transferable tokens. One live public market.</p>
           </div>
           <MarketTape season={season} />
@@ -4225,6 +4459,24 @@
               <small>Tokens trading higher</small>
             </div>
           </div>
+          {REGISTRY_EXCHANGE_ENABLED && (
+            <a
+              className="capital-advanced"
+              href={`${REGISTRY_EXCHANGE_PATH}#${sign.asset.sign}`}
+              aria-label={`${REGISTRY_EXCHANGE_LANDING_COPY.action} for ${sign.name}`}
+            >
+              <span className="capital-advanced__title">
+                <small>{REGISTRY_EXCHANGE_LANDING_COPY.eyebrow}</small>
+                <strong>{REGISTRY_EXCHANGE_LANDING_COPY.action}</strong>
+              </span>
+              <span className="capital-advanced__detail">{REGISTRY_EXCHANGE_LANDING_COPY.description}</span>
+              <span className="capital-advanced__arrow" aria-hidden="true">
+                <svg viewBox="0 0 20 20" focusable="false">
+                  <path d="M5 10h9M10.5 6.5 14 10l-3.5 3.5" />
+                </svg>
+              </span>
+            </a>
+          )}
         </header>
       );
     }
@@ -4292,7 +4544,7 @@
       const shareCopy = () => {
         const leaders = rows.filter(row => toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]) !== null).slice(0, 3);
         const list = leaders.map((row, index) => `${index + 1}. ${row.sign.ticker} ${metricValue(row)}`).join('\n');
-        return `Zodiacs Registry · ${MARKET_RANKS[rankBy].label}\n${list}\nRead ${observedUtc} · ${metricCoverage}/12 indexed\nLive market context via DexScreener. Not a recommendation.`;
+        return `Zodiac Terminal · ${MARKET_RANKS[rankBy].label}\n${list}\nRead ${observedUtc} · ${metricCoverage}/12 indexed\nLive market context via DexScreener. Not a recommendation.`;
       };
       const shareUrl = () => {
         const url = new URL('/registry/', window.location.origin);
@@ -5379,7 +5631,7 @@
           <div className="ftr__legal">
             {technical ? (
               <>
-                <a href="/registry/">Consumer Registry</a>
+                <a href="/registry/">Zodiac Terminal</a>
                 <a href="#records-networks">Records</a>
                 <a href="#market-transparency">Market</a>
                 <a href="#onchain-access">Access</a>
@@ -5627,7 +5879,7 @@
             <Header />
             <main id="main" className="zd technical-registry">
               <header className="technical-hero">
-                <a className="technical-hero__back" href="/registry/">← Consumer Registry</a>
+                <a className="technical-hero__back" href="/registry/">← Zodiac Terminal</a>
                 <span className="technical-hero__kicker">The complete public record</span>
                 <h1>Registry <span className="it">technical record.</span></h1>
                 <p>
@@ -5703,7 +5955,7 @@
           <div className="grain" aria-hidden="true" />
           <Header />
           <main id="main" className="zd consumer-registry">
-            <ConsumerCapitalHeader />
+            <ConsumerCapitalHeader sign={sign} />
             <div className="consumer-capital-opening">
               <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
               <ConsumerMarketSection

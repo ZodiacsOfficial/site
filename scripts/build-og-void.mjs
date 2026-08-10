@@ -23,6 +23,7 @@
  *   npm run data:og
  *   npm run data:og -- --only-horoscopes  # refresh the horoscope family
  *   npm run data:og -- --only-homepage    # refresh the cache-busted homepage card
+ *   npm run data:og -- --only-terminal    # refresh the Zodiac Terminal card
  *
  * Deterministic and offline: fonts and disc art are inlined as data:
  * URIs; Chromium comes from playwright-core (PLAYWRIGHT_MODULE and
@@ -50,6 +51,17 @@ const {
 const { HOROSCOPE_OG_SURFACES, OG_EN } = await import(
   pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href
 );
+const TERMINAL_OUT = resolve(root, 'public/assets/og/v3');
+const TERMINAL_CARD = 'zodiac-terminal.png';
+const LEGACY_REGISTRY_CARD_COPY = Object.freeze({
+  kicker: 'The Official Registry',
+  title: 'Twelve signs. One register.',
+  subtitle: 'A read-only catalogue of the twelve official Zodiac records.',
+  data: 'Nº 01–12 / 12 · read-only by design',
+});
+if (OG_EN.registry.image !== `/assets/og/v3/${TERMINAL_CARD}`) {
+  throw new Error(`Zodiac Terminal OG path must be /assets/og/v3/${TERMINAL_CARD}`);
+}
 const {
   RU_OG_COPY_DIGEST_INPUT,
   RU_OG_REQUIRED_CARDS,
@@ -345,14 +357,14 @@ function registryLotCard(s, index) {
   return shell(body, `zodiacs.org/registry/${s.slug}/`);
 }
 
-function registryCard() {
+function registryCard(copy = OG_EN.registry) {
   const body = `
   <div class="stage">
     <div class="left">
-      <span class="kicker">${OG_EN.registry.kicker}</span>
-      <div class="display" style="font-size: 78px;max-width:680px;">${OG_EN.registry.title}</div>
-      <div class="sub" style="font-size:25px;color:${MUTED};max-width:620px;">${OG_EN.registry.subtitle}</div>
-      <div class="data">${OG_EN.registry.data}</div>
+      <span class="kicker">${copy.kicker}</span>
+      <div class="display" style="font-size: 78px;max-width:680px;">${copy.title}</div>
+      <div class="sub" style="font-size:25px;color:${MUTED};max-width:620px;">${copy.subtitle}</div>
+      <div class="data">${copy.data}</div>
     </div>
     ${wheelMark(330, 38)}
   </div>`;
@@ -636,6 +648,7 @@ async function writeEnglishManifest() {
 for (const dir of ['', 'sign', 'registry', 'tool', 'pair', 'horoscope', 'placements', 'rising', 'almanac', 'events', 'people', 'pin', 'ru', 'ru/sign', 'ru/tool']) {
   await mkdir(resolve(OUT, dir), { recursive: true });
 }
+await mkdir(TERMINAL_OUT, { recursive: true });
 
 const browser = await chromium.launch({ executablePath });
 const page = await browser.newPage({ viewport: { width: 1200, height: 630 }, deviceScaleFactor: 1 });
@@ -644,12 +657,13 @@ const onlyInvite = process.argv.includes('--only-compatibility-invite');
 const onlyRussian = process.argv.includes('--only-ru');
 const onlyPeople = process.argv.includes('--only-people');
 const onlyHomepage = process.argv.includes('--only-homepage');
+const onlyTerminal = process.argv.includes('--only-terminal');
 
 let total = 0;
 let count = 0;
 let russianTotal = 0;
 
-async function shoot(html, outPath) {
+async function shoot(html, outPath, outputRoot = OUT) {
   await page.setContent(html, { waitUntil: 'load' });
   await page.evaluate(() => document.fonts.ready);
   await page.waitForTimeout(120);
@@ -706,7 +720,7 @@ async function shoot(html, outPath) {
         effort: 10,
       }).toBuffer()
     : firstPass;
-  await writeFile(resolve(OUT, outPath), buf);
+  await writeFile(resolve(outputRoot, outPath), buf);
   total += buf.length;
   if (outPath.startsWith('ru/')) russianTotal += buf.length;
   count += 1;
@@ -736,6 +750,14 @@ async function renderRussianCards() {
   if (russianTotal > 600 * 1024) {
     throw new Error(`Russian OG family is ${(russianTotal / 1024).toFixed(1)}KiB; budget is 600KiB`);
   }
+}
+
+if (onlyTerminal) {
+  console.log('Rendering the Zodiac Terminal social card…');
+  await shoot(registryCard(), TERMINAL_CARD, TERMINAL_OUT);
+  console.log(`Done: ${count} Zodiac Terminal card, ${(total / 1024).toFixed(0)}KB.`);
+  await browser.close();
+  process.exit(0);
 }
 
 if (onlyHomepage) {
@@ -836,7 +858,9 @@ if (onlyHoroscopes) {
   for (let i = 0; i < SIGNS.length; i += 1) {
     await shoot(registryLotCard(SIGNS[i], i), `registry/${SIGNS[i].slug}.png`);
   }
-  await shoot(registryCard(), 'registry.png');
+  // The v2 URL has a long-lived social-cache history. Preserve its original
+  // Registry bytes; the consumer rename owns only the versioned v3 URL.
+  await shoot(registryCard(LEGACY_REGISTRY_CARD_COPY), 'registry.png');
   await shoot(disclosureCard(), 'disclosure.png');
   await shoot(compatibilityInviteCard(), 'tool/compatibility-invite.png');
   for (const t of TOOLS) await shoot(toolCard(t), `tool/${t.key}.png`);

@@ -30,6 +30,31 @@ const committedOutlook = JSON.parse(await readFile(
   'utf8',
 ));
 const COMMITTED_OUTLOOK_REFERENCE = committedOutlook.daily.horizon.referenceAt;
+const committedRegistry = JSON.parse(await readFile(
+  new URL('../public/registry/zodiacs.registry.json', import.meta.url),
+  'utf8',
+));
+const REGISTRY_MINT_BY_SIGN = Object.fromEntries(
+  committedRegistry.assets.map((asset) => [asset.sign, asset.native.address]),
+);
+
+async function freezeRegistryClock(page) {
+  await page.addInitScript((referenceAt) => {
+    const NativeDate = Date;
+    const fixedTime = new NativeDate(referenceAt).getTime();
+    class RegistryDate extends NativeDate {
+      constructor(...args) {
+        super(...(args.length ? args : [fixedTime]));
+      }
+
+      static now() {
+        return fixedTime;
+      }
+    }
+    Object.setPrototypeOf(RegistryDate, NativeDate);
+    window.Date = RegistryDate;
+  }, COMMITTED_OUTLOOK_REFERENCE);
+}
 
 /**
  * The gallery band replaces the strip wherever WebGL exists, so the strip's
@@ -81,6 +106,110 @@ async function mockDexscreener(page, {
         pairCreatedAt: 1721000000000,
       })),
     });
+  });
+}
+
+/**
+ * The selected-token placard owns one small GeckoTerminal request: the 24
+ * closed hourly candles for its current canonical mint and deepest pool. Keep
+ * this fixture sparse on purpose. One omitted interior hour must become two
+ * SVG segments; carrying a price across that hour would make the gate fail.
+ */
+async function mockGeckoHourly(page, {
+  requests = [],
+  missingIndex = 9,
+} = {}) {
+  await page.route('https://api.geckoterminal.com/api/v2/**', (route) => {
+    const url = new URL(route.request().url());
+    const parts = url.pathname.split('/').filter(Boolean);
+    const poolIndex = parts.indexOf('pools') + 1;
+    const pool = poolIndex > 0 ? decodeURIComponent(parts[poolIndex] ?? '') : '';
+    const token = url.searchParams.get('token') ?? '';
+    const beforeTimestamp = Number(url.searchParams.get('before_timestamp'));
+    const limit = Number(url.searchParams.get('limit'));
+    requests.push({
+      aggregate: url.searchParams.get('aggregate'),
+      beforeTimestamp,
+      currency: url.searchParams.get('currency'),
+      includeEmptyIntervals: url.searchParams.get('include_empty_intervals'),
+      limit,
+      pathname: url.pathname,
+      pool,
+      token,
+    });
+
+    const candles = [];
+    for (let index = 0; index < 24; index += 1) {
+      if (index === missingIndex) continue;
+      const timestamp = beforeTimestamp - ((24 - index) * 3_600);
+      const close = 0.00004 + (index * 0.000001);
+      candles.push([
+        timestamp,
+        close - 0.0000004,
+        close + 0.0000008,
+        close - 0.0000009,
+        close,
+        1_200 + index,
+      ]);
+    }
+
+    return route.fulfill({
+      json: {
+        data: {
+          type: 'ohlcv_request_response',
+          attributes: { ohlcv_list: candles.reverse() },
+        },
+      },
+    });
+  });
+}
+
+/** Deterministic eight-day fallback for constrained-connection checks. */
+async function mockSelectedTokenArchive(page, sign = 'leo') {
+  const start = Date.UTC(2026, 6, 20, 12);
+  await page.route('**/assets/data/registry-market-history.v1.json', (route) => route.fulfill({
+    json: {
+      schema: 'zodiacs.registry-market-history.v1',
+      version: 1,
+      snapshots: Array.from({ length: 8 }, (_, index) => {
+        const instant = new Date(start + (index * 86_400_000));
+        const date = instant.toISOString().slice(0, 10);
+        return {
+          date,
+          source: { provider: 'DexScreener', readAt: instant.toISOString() },
+          coverage: { canonicalAssetCount: 12, assetsWithIndexedPools: 1 },
+          assets: [{
+            sign,
+            displayName: sign[0].toUpperCase() + sign.slice(1),
+            symbol: sign.toUpperCase(),
+            priceUsd: 0.00003 + (index * 0.000001),
+            change24hPct: null,
+            marketCapUsd: 120_000,
+            fdvUsd: 150_000,
+            liquidityUsd: 32_000,
+            volume24hUsd: 1_700,
+            indexedPoolCount: 2,
+            deepestPool: {
+              pairAddress: 'FIXTUREPAIR4',
+              url: 'https://dexscreener.com/solana/fixture-leo',
+            },
+          }],
+        };
+      }),
+    },
+  }));
+}
+
+/** The advanced terminal is deployment-flagged independently of trading. */
+async function withExchangeFlag(page) {
+  await page.route('**/registry/', async (route) => {
+    if (route.request().resourceType() !== 'document') return route.continue();
+    const response = await route.fetch();
+    const body = (await response.text()).replace(
+      '<meta name="zodiacs-registry-exchange-enabled" content="0" />',
+      '<meta name="zodiacs-registry-exchange-enabled" content="1" />',
+    );
+    return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
   });
 }
 
@@ -263,7 +392,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           `${geometry.chipTracking}/${geometry.chipHeight}`,
         );
         if (route.path === '/registry/') {
-          check(`${label} keeps the Registry nav label`, geometry.chipText === 'Registry', geometry.chipText);
+          check(`${label} keeps the Terminal nav label`, geometry.chipText === 'Terminal', geometry.chipText);
         }
         if (desktopNav) {
           check(`${label} shows the full desktop lockup`, geometry.sepVisible && geometry.dimVisible);
@@ -514,7 +643,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && fallbackState.marketEyebrow === 'Live market board'
           && fallbackState.marketHeading === 'The twelve, ranked live.'
           && fallbackState.h1Count === 1
-          && fallbackState.h1 === 'Zodiac Capital Markets'
+          && fallbackState.h1 === 'Zodiac Terminal'
           && fallbackState.deck === 'Twelve signs. Twelve transferable tokens. One live public market.'
           && fallbackState.cinematicNodes === 0
           && !fallbackState.astrofolioIdentity,
@@ -915,6 +1044,212 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     );
     await sparseChart.close();
 
+    // The landing placard asks GeckoTerminal for one selected sign only. The
+    // fixture omits one closed hour so this drive can prove that the visual
+    // line, accessible summary, and request boundary all preserve the gap.
+    for (const width of [320, 360, 390]) {
+      const selectedChartPage = await newPage({
+        viewport: { width, height: width === 320 ? 568 : width === 360 ? 640 : 844 },
+        hasTouch: true,
+      });
+      const geckoRequests = [];
+      await freezeRegistryClock(selectedChartPage);
+      await stubNoWebgl(selectedChartPage);
+      await mockDexscreener(selectedChartPage);
+      await mockRegistryResearch(selectedChartPage);
+      await mockSelectedTokenArchive(selectedChartPage);
+      await mockGeckoHourly(selectedChartPage, { requests: geckoRequests });
+      await withExchangeFlag(selectedChartPage);
+      await selectedChartPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      const selectedChart = selectedChartPage.locator('[data-token-chart="leo"]');
+      await selectedChart.scrollIntoViewIfNeeded();
+      await selectedChart.locator('.token-spark--live').waitFor({ state: 'visible', timeout: 20_000 });
+      const state = await selectedChart.evaluate((chart) => {
+        const figure = chart.querySelector('.token-spark--live');
+        const svg = figure?.querySelector('svg');
+        const rect = chart.getBoundingClientRect();
+        const advanced = document.querySelector('.capital-advanced');
+        const advancedRect = advanced?.getBoundingClientRect();
+        return {
+          aria: svg?.getAttribute('aria-label') ?? '',
+          caption: figure?.querySelector('figcaption')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          chartCount: document.querySelectorAll('[data-token-chart]').length,
+          chartLeft: rect.left,
+          chartRight: rect.right,
+          documentWidth: document.documentElement.scrollWidth,
+          expectedPoints: figure?.querySelector('p')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          polylines: [...(svg?.querySelectorAll('polyline') ?? [])]
+            .map((line) => line.getAttribute('points') ?? ''),
+          advanced: advanced ? {
+            height: advancedRect?.height ?? 0,
+            href: advanced.getAttribute('href'),
+            target: advanced.getAttribute('target'),
+            visible: getComputedStyle(advanced).display !== 'none' && (advancedRect?.height ?? 0) > 0,
+          } : null,
+          viewportWidth: innerWidth,
+        };
+      });
+      const request = geckoRequests[0] ?? null;
+      check(
+        `selected Leo owns one honest 24H Gecko chart at ${width}px`,
+        geckoRequests.length === 1
+          && request?.token === REGISTRY_MINT_BY_SIGN.leo
+          && request?.pool === 'FIXTUREPAIR4'
+          && request?.aggregate === '1'
+          && request?.limit === 24
+          && request?.currency === 'usd'
+          && request?.includeEmptyIntervals === 'false'
+          && Number.isSafeInteger(request?.beforeTimestamp)
+          && request.beforeTimestamp % 3_600 === 0
+          && state.chartCount === 1
+          && state.caption.includes('24H · GeckoTerminal')
+          && state.expectedPoints.startsWith('23/24 closed hourly')
+          && state.polylines.length === 2
+          && /Leo closed hourly history has 23 observations/.test(state.aria)
+          && /1 expected interval is missing and remains unconnected/.test(state.aria),
+        JSON.stringify({ requests: geckoRequests, state }),
+      );
+      check(
+        `selected-token chart at ${width}px stays inside the phone without overflow`,
+        state.documentWidth <= state.viewportWidth + 1
+          && state.chartLeft >= -1
+          && state.chartRight <= state.viewportWidth + 1,
+        JSON.stringify(state),
+      );
+      check(
+        `exchange rail at ${width}px is a visible same-tab 44px route for Leo`,
+        state.advanced?.visible
+          && state.advanced.height >= 44
+          && state.advanced.target === null
+          && state.advanced.href === '/registry/exchange/#leo',
+        JSON.stringify(state.advanced),
+      );
+      await selectedChartPage.close();
+    }
+
+    // Let the initial Leo request settle, then change four signs inside the
+    // 220ms selection debounce. No intermediate sign may touch GeckoTerminal;
+    // the one surviving request and attached chart must both belong to Pisces.
+    const rapidChartPage = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    const rapidGeckoRequests = [];
+    await freezeRegistryClock(rapidChartPage);
+    await stubNoWebgl(rapidChartPage);
+    await mockDexscreener(rapidChartPage);
+    await mockRegistryResearch(rapidChartPage);
+    await mockSelectedTokenArchive(rapidChartPage);
+    await mockGeckoHourly(rapidChartPage, { requests: rapidGeckoRequests });
+    await withExchangeFlag(rapidChartPage);
+    await rapidChartPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    const initialSelectedChart = rapidChartPage.locator('[data-token-chart="leo"]');
+    await initialSelectedChart.scrollIntoViewIfNeeded();
+    await initialSelectedChart.locator('.token-spark--live').waitFor({ state: 'visible', timeout: 20_000 });
+    rapidGeckoRequests.length = 0;
+    const finalGeckoRequest = rapidChartPage.waitForRequest(
+      (request) => request.url().startsWith('https://api.geckoterminal.com/api/v2/'),
+      { timeout: 20_000 },
+    );
+    await rapidChartPage.evaluate(async (slugs) => {
+      for (const [index, slug] of slugs.entries()) {
+        document.querySelector(`[data-consumer-sign="${slug}"]`)?.click();
+        if (index < slugs.length - 1) {
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+      }
+    }, ['aries', 'taurus', 'gemini', 'pisces']);
+    await finalGeckoRequest;
+    await rapidChartPage.waitForFunction(() => {
+      const chart = document.querySelector('[data-token-chart="pisces"]');
+      return /^Pisces closed hourly history has 23 observations/u.test(
+        chart?.querySelector('svg')?.getAttribute('aria-label') ?? '',
+      );
+    });
+    await rapidChartPage.waitForTimeout(350);
+    const rapidState = await rapidChartPage.evaluate(() => ({
+      advancedHref: document.querySelector('.capital-advanced')?.getAttribute('href') ?? '',
+      charts: [...document.querySelectorAll('[data-token-chart]')]
+        .map((chart) => chart.getAttribute('data-token-chart')),
+      selected: document.querySelector('[data-consumer-sign][aria-pressed="true"]')
+        ?.getAttribute('data-consumer-sign') ?? '',
+    }));
+    check(
+      'rapid sign changes debounce to one Gecko request and one final selected chart',
+      rapidGeckoRequests.length === 1
+        && rapidGeckoRequests[0].token === REGISTRY_MINT_BY_SIGN.pisces
+        && rapidGeckoRequests[0].pool === 'FIXTUREPAIR11'
+        && JSON.stringify(rapidState.charts) === JSON.stringify(['pisces'])
+        && rapidState.selected === 'pisces',
+      JSON.stringify({ requests: rapidGeckoRequests, rapidState }),
+    );
+    check(
+      'the enabled exchange rail follows the final selected sign without opening a new context',
+      rapidState.advancedHref === '/registry/exchange/#pisces'
+        && await rapidChartPage.locator('.capital-advanced').getAttribute('target') === null,
+      JSON.stringify(rapidState),
+    );
+    await rapidChartPage.close();
+
+    // Data Saver and 2g skip the third-party request altogether while still
+    // presenting the owned daily archive. This is a network policy, not an
+    // empty-chart state, and the accessible summary must say why it fell back.
+    for (const constrained of [
+      {
+        label: 'Data Saver', saveData: true, effectiveType: '4g',
+        reason: 'Live hourly prices were skipped because data saving is enabled.',
+      },
+      {
+        label: '2g', saveData: false, effectiveType: '2g',
+        reason: 'Live hourly prices were skipped on this constrained connection.',
+      },
+    ]) {
+      const constrainedPage = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+      await freezeRegistryClock(constrainedPage);
+      await constrainedPage.addInitScript(({ saveData, effectiveType }) => {
+        const connection = { saveData, effectiveType };
+        for (const key of ['connection', 'mozConnection', 'webkitConnection']) {
+          try {
+            Object.defineProperty(navigator, key, {
+              configurable: true,
+              get: () => connection,
+            });
+          } catch {}
+        }
+      }, constrained);
+      const constrainedGeckoRequests = [];
+      await stubNoWebgl(constrainedPage);
+      await mockDexscreener(constrainedPage);
+      await mockRegistryResearch(constrainedPage);
+      await mockSelectedTokenArchive(constrainedPage);
+      await mockGeckoHourly(constrainedPage, { requests: constrainedGeckoRequests });
+      await constrainedPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      const constrainedChart = constrainedPage.locator('[data-token-chart="leo"]');
+      await constrainedChart.scrollIntoViewIfNeeded();
+      await constrainedChart.locator('.token-spark--archive').waitFor({ state: 'visible', timeout: 20_000 });
+      const constrainedState = await constrainedChart.evaluate((chart) => ({
+        aria: chart.querySelector('svg')?.getAttribute('aria-label') ?? '',
+        caption: chart.querySelector('figcaption')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        count: document.querySelectorAll('[data-token-chart]').length,
+        exchangeRailCount: document.querySelectorAll('.capital-advanced').length,
+        note: chart.querySelector('.token-spark--archive > p')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      }));
+      check(
+        `${constrained.label} makes zero Gecko requests and uses the Registry archive fallback`,
+        constrainedGeckoRequests.length === 0
+          && constrainedState.count === 1
+          && constrainedState.caption.includes('Registry archive')
+          && constrainedState.note === '8/8 daily'
+          && constrainedState.aria.includes(constrained.reason),
+        JSON.stringify({ requests: constrainedGeckoRequests, constrainedState }),
+      );
+      if (constrained.label === 'Data Saver') {
+        check(
+          'the exchange rail is absent when its deployment flag is off',
+          constrainedState.exchangeRailCount === 0,
+          JSON.stringify(constrainedState),
+        );
+      }
+      await constrainedPage.close();
+    }
+
     const relatedResearch = await newPage({ viewport: { width: 781, height: 900 } });
     await relatedResearch.route('**/api/registry/news', (route) => route.fulfill({
       json: { schema: 'registry-news.v1', updatedAt: COMMITTED_OUTLOOK_REFERENCE, items: [] },
@@ -980,6 +1315,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     }, COMMITTED_OUTLOOK_REFERENCE);
     await stubNoWebgl(desktop);
     await mockDexscreener(desktop);
+    const desktopGeckoRequests = [];
+    await mockGeckoHourly(desktop, { requests: desktopGeckoRequests });
     await mockRegistryResearch(desktop);
     await withCollectionFlag(desktop);
     const desktopErrors = [];
@@ -1053,13 +1390,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       };
     });
     check(
-      'one Zodiac Capital Markets H1 leads tape, pulse, sculpture, and compact board',
+      'one Zodiac Terminal H1 leads tape, pulse, sculpture, and compact board',
       desktopMasthead.cineCount === 0
         && desktopMasthead.legacyHeroCount === 0
         && desktopMasthead.h1Count === 1
         && desktopMasthead.headingVisible
-        && desktopMasthead.text === 'Zodiac Capital Markets'
-        && desktopMasthead.label === 'Listed by the Zodiacs Registry'
+        && desktopMasthead.text === 'Zodiac Terminal'
+        && desktopMasthead.label === 'Verified by the Zodiacs Registry'
         && desktopMasthead.caption === 'Twelve signs. Twelve transferable tokens. One live public market.'
         && desktopMasthead.captionVisible
         && desktopMasthead.tapeDirect
@@ -1173,6 +1510,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const scrollBeforePick = await desktop.evaluate(() => scrollY);
     await piscesControl.click();
     await desktop.locator('[data-consumer-preview="pisces"]').waitFor({ state: 'visible' });
+    await desktop.locator('[data-token-chart="pisces"] .token-spark--live svg')
+      .waitFor({ state: 'visible', timeout: 20_000 });
     const piscesPlacard = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((placard) => ({
       text: placard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
       name: placard.querySelector('.stage-placard__name')?.textContent ?? '',
@@ -1184,7 +1523,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       base: placard.textContent?.includes('Also recorded on Base') ?? false,
       guide: Boolean(placard.querySelector('a[href="/pisces/"]')),
       marketSign: placard.querySelector('.stage-market')?.getAttribute('data-stage-market') ?? '',
-      chartLabel: placard.querySelector('.registry-history svg')?.getAttribute('aria-label') ?? '',
+      chartLabel: placard.querySelector('[data-token-chart="pisces"] svg')?.getAttribute('aria-label') ?? '',
       scrollY,
     }));
     check(
@@ -1195,7 +1534,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && piscesPlacard.base === false
         && piscesPlacard.guide === false
         && piscesPlacard.marketSign === 'pisces'
-        && /Pisces.+archived daily price observation/i.test(piscesPlacard.chartLabel)
+        && /Pisces closed hourly history has 23 observations/i.test(piscesPlacard.chartLabel)
         && Math.abs(piscesPlacard.scrollY - scrollBeforePick) <= 2,
       JSON.stringify(piscesPlacard),
     );
@@ -1912,11 +2251,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       });
       check(
-        `Zodiac Capital Markets at ${label} is visible below navigation without overflow`,
-        mobileMasthead.text === 'Zodiac Capital Markets'
+        `Zodiac Terminal at ${label} is visible below navigation without overflow`,
+        mobileMasthead.text === 'Zodiac Terminal'
           && mobileMasthead.visible
           && mobileMasthead.direct
-          && mobileMasthead.label === 'Listed by the Zodiacs Registry'
+          && mobileMasthead.label === 'Verified by the Zodiacs Registry'
           && mobileMasthead.caption === 'Twelve signs. Twelve transferable tokens. One live public market.'
           && mobileMasthead.captionDisplay !== 'none'
           && mobileMasthead.tapeDirect

@@ -120,7 +120,7 @@ describe('registry pastel polish', () => {
       source.indexOf('function ConsumerCapitalHeader('),
       source.indexOf('function ConsumerMarketSection('),
     );
-    expect(masthead).toContain('Zodiac Capital Markets');
+    expect(masthead).toContain('Zodiac Terminal');
     expect(masthead).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
     expect(masthead).toContain('<MarketTape season={season} />');
     expect(masthead).toContain('className="capital-pulse"');
@@ -135,7 +135,7 @@ describe('registry pastel polish', () => {
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
     // The no-JS shell mirrors the same masthead instead of briefly showing a
     // cinematic title that disappears after React mounts.
-    expect(registry).toContain('<h1 id="static-capital-title">Zodiac Capital Markets</h1>');
+    expect(registry).toContain('<h1 id="static-capital-title">Zodiac Terminal</h1>');
     expect(registry).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
     expect(registry).not.toContain('data-cine-video');
     expect(source).toContain('id="thesis" className="consumer-purpose reveal"');

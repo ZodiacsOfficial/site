@@ -429,10 +429,11 @@ describe('rate, provider, and cancellation behavior', () => {
 
 describe('the lazy browser asset', () => {
   it('stays a small ESM lane without the Exchange terminal or trade runtime', async () => {
-    const [source, bundle, workflow] = await Promise.all([
+    const [source, bundle, workflow, delivery] = await Promise.all([
       readFile(resolve(root, 'src/registry/selected-token-chart.mjs'), 'utf8'),
       readFile(resolve(root, 'public/assets/registry-token-chart.js'), 'utf8'),
       readFile(resolve(root, '.github/workflows/site-check.yml'), 'utf8'),
+      readFile(resolve(root, 'vercel.json'), 'utf8').then(JSON.parse),
     ]);
     expect(source).toContain("from '../exchange/gecko.mjs'");
     expect(source).not.toMatch(/from ['"]\.\.\/exchange\/(?:terminal|chart|tape|depth|browser)\.mjs/iu);
@@ -441,5 +442,10 @@ describe('the lazy browser asset', () => {
     expect(bundle).not.toMatch(/Recent trades|Jupiter|createTerminal/iu);
     expect(bundle).toMatch(/export\{/u);
     expect(workflow).toContain('node scripts/build-registry-token-chart.mjs');
+    const rule = delivery.headers.find(({ source: path }) => path === '/assets/registry-token-chart.js');
+    expect(rule?.headers).toContainEqual({
+      key: 'Cache-Control',
+      value: 'public, max-age=0, must-revalidate',
+    });
   });
 });

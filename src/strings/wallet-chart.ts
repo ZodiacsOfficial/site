@@ -2,7 +2,7 @@ export const WALLET_CHART_EN = {
   metaTitle: 'Wallet Natal Chart — Read-only Registry Instrument | Zodiacs.org',
   metaDescription: 'Paste a Solana or Base address to map its earliest supported on-chain timestamp as a symbolic, planets-only chart. No connection, signing, or transaction.',
   applicationCategory: 'EntertainmentApplication',
-  breadcrumbRegistry: 'Registry',
+  breadcrumbRegistry: 'Zodiac Terminal',
   breadcrumbPage: 'Wallet natal chart',
   kicker: 'Registry instrument · read-only',
   title: 'A symbolic chart for a public address.',
@@ -66,7 +66,7 @@ export const WALLET_CHART_EN = {
   readOnlyDisclosure: 'Read-only by design. No custody, signing, approvals, or transactions.',
   entertainmentDisclosure: 'For entertainment and symbolic context only.',
   financialDisclosure: 'Not financial advice. Nothing here is a solicitation, recommendation, or statement of value.',
-  registryBack: 'Return to the official Registry',
+  registryBack: 'Return to Zodiac Terminal',
 } as const;
 
 export type WalletChartStringKey = keyof typeof WALLET_CHART_EN;

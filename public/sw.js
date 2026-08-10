@@ -64,7 +64,10 @@ function registryAuthority(url) {
 }
 
 function registryVolatileSurface(url) {
-  return url.pathname === '/registry/exchange'
+  return url.pathname === '/registry'
+    || url.pathname === '/registry/'
+    || url.pathname === '/registry/index.html'
+    || url.pathname === '/registry/exchange'
     || url.pathname === '/registry/exchange/'
     || url.pathname === '/registry/exchange/index.html';
 }

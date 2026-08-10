@@ -38,4 +38,3 @@ if (unexpected.length) {
 
 const bytes = Object.values(metafile.outputs)[0]?.bytes ?? 0;
 process.stdout.write(`registry-token-chart: wrote assets/registry-token-chart.js (${bytes} bytes)\n`);
-

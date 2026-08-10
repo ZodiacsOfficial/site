@@ -62,6 +62,9 @@ describe('assistant site context', () => {
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
     expect(context).toContain('- /learn/placements/sun-in-aries/ — What Sun in Aries means in a birth chart.');
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
+    expect(context).toContain('- /registry/ — Zodiac Terminal: a separate interface');
+    expect(context).toContain('canonical Zodiacs Registry identities and addresses.');
+    expect(context).not.toContain('Astrofolio catalogue');
   });
 
   it('keeps privacy, calculation, time-zone, unknown-time, and horoscope-date boundaries explicit', async () => {

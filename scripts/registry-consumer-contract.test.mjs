@@ -64,7 +64,7 @@ describe('Registry consumer and technical information architecture', () => {
     const visible = visibleMarkup(html);
 
     for (const value of [source, visible]) {
-      expect(value).toContain('Zodiac Capital Markets');
+      expect(value).toContain('Zodiac Terminal');
       expect(value).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
       expect(value).not.toMatch(/<h1[^>]*>\s*Astrofolio\s*<\/h1>/iu);
     }
@@ -95,12 +95,13 @@ describe('Registry consumer and technical information architecture', () => {
       source.indexOf('function ConsumerMarketSection('),
     );
     expect(mountedH1, 'mounted consumer Registry h1').toHaveLength(1);
-    expect(masthead).toContain('<header className="capital-masthead"');
-    expect(masthead).toContain('<h1 id="consumer-explorer-title">Zodiac Capital Markets</h1>');
+    expect(masthead).toContain('<header');
+    expect(masthead).toContain('className="capital-masthead"');
+    expect(masthead).toContain('<h1 id="consumer-explorer-title">Zodiac Terminal</h1>');
     expect(masthead).toContain('<MarketTape season={season} />');
     expect(masthead).toContain('className="capital-pulse"');
-    expect(source).toContain('<ConsumerCapitalHeader />');
-    expect(source.indexOf('<ConsumerCapitalHeader />')).toBeLessThan(source.indexOf('className="consumer-capital-opening"'));
+    expect(source).toContain('<ConsumerCapitalHeader sign={sign} />');
+    expect(source.indexOf('<ConsumerCapitalHeader sign={sign} />')).toBeLessThan(source.indexOf('className="consumer-capital-opening"'));
     expect(source.indexOf('className="consumer-capital-opening"')).toBeLessThan(source.indexOf('<ConsumerResearchPulse />'));
     expect(source).toContain('id="official-twelve"');
     expect(explorer).toContain('aria-label="Interactive gallery of the twelve official Zodiac tokens"');
@@ -167,7 +168,7 @@ describe('Registry consumer and technical information architecture', () => {
     const visible = visibleMarkup(html);
     expect(source).not.toContain('function CineHero(');
     expect(source).not.toContain('className="cine__frame"');
-    expect(visible).toContain('<h1 id="static-capital-title">Zodiac Capital Markets</h1>');
+    expect(visible).toContain('<h1 id="static-capital-title">Zodiac Terminal</h1>');
     expect(visible).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
     expect(visible).not.toContain('The official Registry · Est. MMXXIV');
     expect(visible).not.toContain('Twelve signs. One register.');
@@ -479,10 +480,56 @@ describe('Registry consumer and technical information architecture', () => {
     expect(chart).toContain('const calendarGap = index > 0');
     expect(chart).toContain('currentDay - previousDay !== 86_400_000');
     expect(chart).toContain('if (point.priceUsd === null || calendarGap)');
-    expect(chart).toContain("'No archived price is available yet.'");
-    expect(chart).toContain("'History is building from the first archived day.'");
+    expect(chart).toContain("'Archived price unavailable.'");
+    expect(chart).toContain("'Archive building from this dated point.'");
+    expect(chart).toContain('Archive building · a line begins at 8 daily observations.');
     expect(chart).toContain('has ${priced.length} archived daily price observations');
     expect(chart).not.toMatch(/interpolat/iu);
+  });
+
+  it('loads the selected-token chart only near view and gates the advanced market rail', async () => {
+    const [source, html, buildApp, chartBuild] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/registry/index.html'),
+      read('scripts/build-app.mjs'),
+      read('scripts/build-registry-token-chart.mjs'),
+    ]);
+
+    expect(source).toContain('let selectedTokenChartRuntimePromise = null;');
+    expect(source).toContain("import('/assets/registry-token-chart.js')");
+    expect(source).toContain("const [hostRef, inView] = useInView('160px 0px 160px 0px');");
+    expect(source).toContain('if (!inView || !token) return undefined;');
+    expect(source).toContain('<SelectedTokenMiniChart');
+    expect(source).toContain('key={sign.asset.sign}');
+    expect(source).toContain('pool={chartPool}');
+    expect(source).toContain('{endpointMoment(model.first)} · one observation');
+    expect(source).toContain('{model.coverage.observedPointCount} reads · {elapsedLabel}');
+    expect(source).toContain('Open live chart');
+    expect(html).not.toMatch(/<script[^>]+src=["']\/assets\/registry-token-chart\.js["']/iu);
+    expect(chartBuild).toContain("format: 'esm'");
+    expect(chartBuild).toContain("!path.endsWith('src/exchange/gecko.mjs')");
+    expect(chartBuild).toContain('Registry token chart pulled unexpected modules');
+
+    expect(source).toContain('{REGISTRY_EXCHANGE_ENABLED && (');
+    expect(source).toContain('className="capital-advanced"');
+    expect(source).toContain('href={`${REGISTRY_EXCHANGE_PATH}#${sign.asset.sign}`}');
+    expect(source).toContain('REGISTRY_EXCHANGE_LANDING_COPY.description');
+    expect(buildApp).toContain('REGISTRY_EXCHANGE_ENABLED=document.querySelector');
+    expect(buildApp).toContain('injectRegistryExchangeLanding(');
+    expect(html).toContain('<meta name="zodiacs-registry-exchange-enabled" content="0" />');
+  });
+
+  it('publishes the Terminal card at v3 while freezing the cached v2 Registry card', async () => {
+    const [html, generator, verifier] = await Promise.all([
+      read('public/registry/index.html'),
+      read('scripts/build-og-void.mjs'),
+      read('scripts/verify-og-cards.mjs'),
+    ]);
+    expect(html).toContain('https://zodiacs.org/assets/og/v3/zodiac-terminal.png');
+    expect(generator).toContain('const LEGACY_REGISTRY_CARD_COPY = Object.freeze({');
+    expect(generator).toContain("await shoot(registryCard(LEGACY_REGISTRY_CARD_COPY), 'registry.png');");
+    expect(verifier).toContain("const legacyRegistryCardSha256 = 'f7b9e9e801e390f2ef3671755d1f3754a7e45bb9db026699f5381764aab5a08a';");
+    expect(verifier).toContain('legacy v2 card bytes changed');
   });
 
   it('publishes a source-separated Research Desk preview with five stable filters', async () => {
