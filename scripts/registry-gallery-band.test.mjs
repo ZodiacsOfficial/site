@@ -49,6 +49,11 @@ describe('the gallery band on the registry hub', () => {
     expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
     expect(source).toContain('carousel={!stageMode}');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
+    expect(source).toContain('const [posterSlug, setPosterSlug] = useState(slug);');
+    expect(source).toContain('if (!galleryReady) setPosterSlug(slug);');
+    expect(source).toContain('src={`/assets/sculptures/512/${posterSlug}.webp`}');
+    expect(source).toContain('connection?.saveData');
+    expect(source).toContain("/(^|-)2g$/.test(connection?.effectiveType || '')");
     expect(source).not.toContain('data-consumer-gallery-toggle');
   });
 
@@ -109,6 +114,9 @@ describe('the gallery band on the registry hub', () => {
   it('probes WebGL before first paint and dresses the live page', async () => {
     const html = await read('public/registry/index.html');
     expect(html).toContain("documentElement.classList.add('gallery-live')");
+    expect(html).toContain('network.saveData');
+    expect(html).toContain("/(^|-)2g$/.test(network.effectiveType || '')");
+    expect(html).toContain('if (!constrained && (glProbe.getContext');
     expect(html).toContain('.gband {');
     // The fallback card is absent rather than merely concealed.
     expect(html).not.toContain('html.gallery-live #featured-sign');
@@ -148,7 +156,7 @@ describe('the gallery band on the registry hub', () => {
       .toContain('if (spotlight) return;');
   });
 
-  it('turns the Registry spotlight with the Thesis engine, then yields to the hand', async () => {
+  it('gives the Registry one bounded inspection sweep, then yields to the hand', async () => {
     const [app, driver, renderer, appBundle, sceneBundle] = await Promise.all([
       read('src/app.jsx'),
       read('src/shelf/main.mjs'),
@@ -160,6 +168,10 @@ describe('the gallery band on the registry hub', () => {
     // Rotation is a display treatment only: the spotlight never opens the
     // Thesis card or changes the selected sign when the focused cast is held.
     expect(driver).toContain('turntableActive({');
+    expect(driver).toContain('spotlightElapsed >= TURNTABLE.spotlightSeconds');
+    expect(driver).toContain("spotlightComplete ? 'rest' : 'ambient'");
+    expect(driver).toContain('TURNTABLE.spotlightManualArc');
+    expect(driver).toContain('Math.sin(progress * Math.PI * 2)');
     expect(driver).toContain("? 'rotate'\n      : 'browse'");
     expect(driver).toContain("if (drag.mode === 'rotate')");
     expect(driver).toContain("if (finished.mode === 'rotate')");
@@ -216,6 +228,36 @@ describe('the gallery band on the registry hub', () => {
     for (const marker of ['data-gallery-paused', 'gband__turn-hint', 'Drag the figure to turn']) {
       expect(appBundle).toContain(marker);
     }
+  });
+
+  it('loads only the selected high-resolution plate in the Registry spotlight', async () => {
+    const [driver, renderer, textures] = await Promise.all([
+      read('src/shelf/main.mjs'),
+      read('src/shelf/scene.mjs'),
+      read('src/shelf/textures.mjs'),
+    ]);
+    const arrival = driver.slice(driver.lastIndexOf('// The plates arrive after the room does:'));
+    expect(arrival).toContain('if (spotlight)');
+    expect(arrival).toContain('queueSpotlightRefine(start, { immediate: true });');
+    expect(arrival).toContain('void scene.dressRow(start, invalidate);');
+    expect(driver).toContain('scene.releaseExcept(index)');
+    expect(driver).toContain('spotlightTextureRequest');
+    expect(driver).toContain('spotlightController?.abort();');
+    expect(driver).toContain('}, immediate ? 0 : 180);');
+    expect(driver).toContain('spotlightTextureRequest += 1;');
+    expect(renderer).toContain('function releaseExcept(index)');
+    expect(renderer).toContain('const activeFaceMaps = new Set();');
+    expect(renderer).toContain('sceneDisposed || signal?.aborted');
+    expect(renderer).toContain('residentTextureCount: () => activeFaceMaps.size');
+    expect(renderer).toContain('figure.face.map = null;');
+    expect(renderer).toContain('disposeFaceMap(previous);');
+    expect(renderer).not.toContain('disposables.push(map);');
+    expect(textures).toContain('fetch(`/assets/sculptures/${tier}/${slug}.webp`');
+    expect(textures).toContain('signal,');
+    expect(textures).toContain("imageOrientation: 'flipY'");
+    expect(textures).toContain("premultiplyAlpha: 'none'");
+    expect(textures).toContain("colorSpaceConversion: 'none'");
+    expect(textures).toContain("error?.name !== 'AbortError'");
   });
 
   it('keeps the rectangle’s rail out of the band the scene measures', async () => {

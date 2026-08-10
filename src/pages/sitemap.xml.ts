@@ -15,10 +15,16 @@ import { SIGNS } from '../lib/signs';
 import daily from '../data/daily.json';
 import horoscopeProgram from '../data/horoscope-program.json';
 import eventsPublicationData from '../data/events-publication.json';
+import registryResearchPublicationData from '../data/registry-research/publication.json';
 import type { EventsPublication } from '../lib/events/publication';
 
 const SITE = 'https://zodiacs.org';
 const eventsPublication = eventsPublicationData as EventsPublication;
+type RegistryResearchPublication = {
+  generatedAt: string;
+  items: Array<{ url: string; status: 'published' | 'scheduled'; visibleAt: string; publishedAt: string }>;
+};
+const registryResearchPublication = registryResearchPublicationData as unknown as RegistryResearchPublication;
 const YEARLY_HOROSCOPE_LASTMOD = '2026-07-19';
 // Keep these dates source-controlled: build environments may have shallow or
 // absent Git history. When an evergreen page's rendered source changes, update
@@ -52,14 +58,15 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
   ['/birth-chart/', '2026-07-24'],
   ['/privacy/', '2026-07-26'],
   ['/registry/technical/', '2026-08-02'],
+  ['/registry/research/', registryResearchPublication.generatedAt.slice(0, 10)],
   ...LEGACY_URLS.map((url) => [url.path, '2026-07-10'] as const),
   ['/thesis/', '2026-08-05'],
-  // Registry redesign — token-first landing plus head-only record upgrades.
-  ['/registry/', '2026-08-03'],
+  // Zodiac Capital Markets and the twelve plain-language token records.
+  ['/registry/', '2026-08-10'],
   ...[
     'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
     'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
-  ].map((sign) => [`/registry/${sign}/`, '2026-08-03'] as const),
+  ].map((sign) => [`/registry/${sign}/`, '2026-08-10'] as const),
   ...[
     '/disclosure/',
     ...CHINESE_ZODIAC_PATHS,
@@ -162,6 +169,7 @@ export const GET: APIRoute = async () => {
     { loc: '/ask/', priority: 0.8 },
     { loc: '/profile/', priority: 0.75 },
     { loc: '/registry/technical/', priority: 0.6 },
+    { loc: '/registry/research/', priority: 0.68 },
     { loc: '/learn/how-to-read-a-birth-chart/', priority: 0.8 },
     { loc: '/learn/communication/', priority: 0.8 },
     { loc: '/learn/zodiac-dates/', priority: 0.8 },
@@ -202,6 +210,13 @@ export const GET: APIRoute = async () => {
       priority: 0.64,
       lastmod: event.lastModified,
     })),
+    ...registryResearchPublication.items
+      .filter((item) => item.status === 'published' && item.visibleAt <= registryResearchPublication.generatedAt)
+      .map((item) => ({
+        loc: item.url,
+        priority: 0.56,
+        lastmod: item.publishedAt.slice(0, 10),
+      })),
     ...(PEOPLE_DIRECTORY_INDEXABLE ? [{
       loc: '/people/',
       priority: 0.7,

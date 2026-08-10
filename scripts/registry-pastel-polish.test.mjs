@@ -106,16 +106,24 @@ describe('registry pastel polish', () => {
     expect(reducedRules).toContain(".market-tape__group[aria-hidden='true'] { display: none; }");
   });
 
-  it('opens on the plate and keeps the optional Cabinet in the purpose section', async () => {
+  it('opens on the capital market masthead and keeps the optional Cabinet in the purpose section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
     ]);
 
-    // The film and large editorial title card are retired: the gallery itself
-    // is the opening scene, led by the compact season instrument.
+    // The film is retired. A single market identity now precedes the selected
+    // sculpture and compact board without introducing a second brand.
     expect(source).not.toContain('function CineHero(');
     expect(source).not.toContain('className="cine__frame"');
+    const masthead = source.slice(
+      source.indexOf('function ConsumerCapitalHeader('),
+      source.indexOf('function ConsumerMarketSection('),
+    );
+    expect(masthead).toContain('Zodiac Capital Markets');
+    expect(masthead).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
+    expect(masthead).toContain('<MarketTape season={season} />');
+    expect(masthead).toContain('className="capital-pulse"');
     const stage = source.slice(
       source.indexOf('function GalleryBand('),
       source.indexOf('function ConsumerExplorer('),
@@ -125,8 +133,11 @@ describe('registry pastel polish', () => {
     expect(stage).not.toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
     expect(stage).not.toContain('Open the Cabinet');
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
-    // The no-JS shell keeps its own hero and its own browse anchor.
-    expect(registry).toContain('href="#official-twelve" data-registry-browse');
+    // The no-JS shell mirrors the same masthead instead of briefly showing a
+    // cinematic title that disappears after React mounts.
+    expect(registry).toContain('<h1 id="static-capital-title">Zodiac Capital Markets</h1>');
+    expect(registry).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
+    expect(registry).not.toContain('data-cine-video');
     expect(source).toContain('id="thesis" className="consumer-purpose reveal"');
     expect(source).toContain('REGISTRY_AURA_ENABLED &&');
     expect(source).toContain('See occupied signs, material editions, and wheel coverage for any public wallet.');
@@ -183,9 +194,10 @@ describe('registry pastel polish', () => {
       "['aries', 'leo', 'pisces']",
       '/assets/zodiac-icons/48/leo.webp',
       '8Cd7…b8Qm',
-      'Choose a sign',
-      'Match the address',
-      'Recognize it anywhere',
+      'One token for each sign',
+      'Verify the exact address',
+      'Hold, send, or collect',
+      'collection artwork—not a physical object',
     ]) expect(how).toContain(marker);
 
     for (const [slug, finish, numeral, count] of [
@@ -305,7 +317,7 @@ describe('registry pastel polish', () => {
     expect(registry.slice(directionRule)).toContain('.market__change--flat { color: var(--market-flat); }');
   });
 
-  it.each(signs)('renders the %s lot title with one decorative pastel disc', async (slug, name) => {
+  it.each(signs)('renders the %s token record in plain language with market and constellation context', async (slug, name) => {
     const html = await read(`public/registry/${slug}/index.html`);
     const title = `<h1 class="lot__title" id="lot-title">${name} <picture class="lot__title-icon" aria-hidden="true">`;
     const nextIndex = (signs.findIndex(([candidate]) => candidate === slug) + 1) % signs.length;
@@ -318,8 +330,25 @@ describe('registry pastel polish', () => {
     expect(html).not.toContain('class="lot__icon"');
     expect(html).not.toContain('<span class="glyph">');
     expect(html).toContain('padding: calc(94px + env(safe-area-inset-top)) 0 36px;');
-    expect(html).toContain(`<span class="lot__eyebrow">Catalogue <span class="g">/</span> Lot`);
-    expect(html).not.toContain(`of XII <span class="g">·</span> ${name.toUpperCase()}`);
+    expect(html).toContain(`<span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign`);
+    expect(html).toContain(`${name} is the transferable token for the ${name} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.`);
+    for (const heading of [
+      'Token facts',
+      `What ${name} represents`,
+      `The story behind ${name}`,
+      'Official addresses',
+      `Get ${name}`,
+      'Explore all 12',
+    ]) expect(html).toContain(heading);
+    for (const retired of ['Museum label', 'Catalogue note', '>Provenance<', '>Acquisition<']) {
+      expect(html).not.toContain(retired);
+    }
+    expect(html).toContain(`src="/assets/constellations/${slug}.svg"`);
+    expect(html).toContain('HYG Database v4.0');
+    expect(html).toContain('CC BY-SA 4.0');
+    expect(html).toContain('they are not official IAU boundaries');
+    expect(html).toContain('data-market-chart');
+    expect(html).toContain('Open live chart');
     expect(html).toContain('class="lot__meta"');
     expect(html).toContain('min-height: 44px;');
     expect(html).toContain(`class="lot__next" href="/registry/${nextSlug}/" aria-label="Next record, ${nextName}"`);

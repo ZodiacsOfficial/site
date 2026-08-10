@@ -1,0 +1,24 @@
+{
+  "schema": "zodiacs.registry-research-publication.v1",
+  "generatedAt": "2026-08-10T08:18:02.259Z",
+  "publisher": "Zodiacs.org Research System",
+  "method": {
+    "id": "zodiacs.registry-research-method.v1",
+    "version": 1,
+    "generator": "zodiacs.registry-research.deterministic.v1",
+    "deterministicTemplatesOnly": true,
+    "modelAuthoredProse": false,
+    "scoreRule": "The disclosed Registry Outlook sky score is copied before market comparison. Market fields cannot alter that score or its wording.",
+    "observationRule": "Follow-ups use the first archived market snapshot at or after the requested elapsed interval and report the actual elapsed time.",
+    "causalityRule": "Market changes are observations, never evidence that a sky event caused a price or liquidity movement.",
+    "publicationRule": "During the pilot, an exact artifact hash and named reviewer are required before an item enters public feeds."
+  },
+  "window": {
+    "previousDays": 30,
+    "futureDays": 7,
+    "startsAt": "2026-07-11T00:00:00.000Z",
+    "endsBefore": "2026-08-18T00:00:00.000Z"
+  },
+  "rollingItemIds": [],
+  "items": []
+}

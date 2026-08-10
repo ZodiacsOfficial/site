@@ -17,6 +17,7 @@ const EXPECTED_HANDLERS = [
   'api/email/subscribe.ts',
   'api/email/unsubscribe.ts',
   'api/push/subscribe.ts',
+  'api/registry/news.ts',
   'api/unsubscribe.ts',
   'api/wallet-birth.ts',
 ] as const;

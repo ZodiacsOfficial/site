@@ -6460,6 +6460,600 @@
       }
     }
 
+    /* ── Zodiac Capital Markets · opening and Research Desk ─────────
+       The live market is the page identity now. The sculpture room and the
+       compact board share one opening composition, while research reads as
+       an editorial ledger rather than another stack of product cards. */
+    .capital-masthead,
+    .consumer-capital-opening,
+    .research-pulse,
+    .consumer-research {
+      position: relative;
+      left: 50%;
+      width: min(calc(100vw - 32px), 1400px);
+      translate: -50% 0;
+    }
+    .capital-masthead {
+      padding: clamp(106px, 12vw, 150px) 0 16px;
+    }
+    .static-capital {
+      left: auto;
+      width: min(calc(100% - 32px), 1400px);
+      margin-inline: auto;
+      translate: none;
+    }
+    .static-capital .market-tape__track { animation: none; transform: none; }
+    .capital-masthead__title {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(270px, 440px);
+      grid-template-areas:
+        'label deck'
+        'title deck';
+      align-items: end;
+      gap: 8px clamp(34px, 7vw, 110px);
+      padding: 0 clamp(4px, 1vw, 14px) clamp(24px, 3vw, 38px);
+    }
+    .capital-masthead__title > span {
+      grid-area: label;
+      color: var(--active-sign, var(--ink-mute));
+      font: 8px/1.3 var(--mono);
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .capital-masthead__title h1 {
+      grid-area: title;
+      max-width: 10ch;
+      margin: 0;
+      color: var(--ink);
+      font: 400 clamp(64px, 8.2vw, 116px)/.82 var(--serif);
+      letter-spacing: -.055em;
+      text-wrap: balance;
+    }
+    .capital-masthead__title p {
+      grid-area: deck;
+      max-width: 30ch;
+      margin: 0 0 .22em;
+      color: var(--ink-2);
+      font: 400 clamp(17px, 1.65vw, 23px)/1.35 var(--sans);
+      text-wrap: balance;
+    }
+    .capital-masthead > .market-tape {
+      width: 100%;
+      margin: 0;
+      background: transparent;
+    }
+    .capital-pulse {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 12px;
+      border-block: 1px solid var(--hair-2);
+    }
+    .capital-pulse > div {
+      min-height: 98px;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-areas:
+        'label value'
+        'note value';
+      align-items: center;
+      gap: 4px 18px;
+      padding: 18px clamp(14px, 2.5vw, 30px);
+    }
+    .capital-pulse > div + div { border-left: 1px solid var(--hair-2); }
+    .capital-pulse span {
+      grid-area: label;
+      color: var(--ink-mute);
+      font: 8px/1.2 var(--mono);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .capital-pulse strong {
+      grid-area: value;
+      color: var(--ink);
+      font: 400 clamp(27px, 3vw, 40px)/.9 var(--serif);
+      letter-spacing: -.035em;
+      white-space: nowrap;
+    }
+    .capital-pulse small {
+      grid-area: note;
+      color: var(--ink-dim);
+      font: 8px/1.35 var(--mono);
+      letter-spacing: .035em;
+    }
+
+    .consumer-capital-opening {
+      display: grid;
+      grid-template-columns: minmax(0, 1.48fr) minmax(390px, .72fr);
+      align-items: start;
+      gap: 16px;
+      padding: 18px 0 clamp(54px, 7vw, 92px);
+    }
+    .consumer-capital-opening .consumer-explorer--stage,
+    .consumer-capital-opening .consumer-explorer:not(.consumer-explorer--stage) {
+      width: auto;
+      min-width: 0;
+      margin: 0;
+      padding: 0;
+      border: 0;
+    }
+    .consumer-capital-opening .consumer-explorer--stage .gband--consumer,
+    .consumer-capital-opening .consumer-explorer .gband--flat {
+      width: 100%;
+      height: clamp(720px, 78svh, 790px);
+      border-radius: 24px;
+    }
+    .consumer-capital-opening:has(.consumer-market.is-expanded) .consumer-explorer,
+    .consumer-capital-opening .consumer-market.is-expanded {
+      grid-column: 1 / -1;
+    }
+
+    /* The selected constellation is a quiet factual layer behind the object.
+       It crossfades with selection; it never competes with the gold art. */
+    .gband__constellation {
+      position: absolute;
+      z-index: 0;
+      inset: 18% 7% 25%;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      opacity: .15;
+    }
+    .gband__constellation img {
+      grid-area: 1 / 1;
+      width: min(100%, 620px);
+      height: 100%;
+      object-fit: contain;
+      opacity: .78;
+      transform: scale(.985);
+      mix-blend-mode: screen;
+      animation: registry-constellation-arrive 280ms cubic-bezier(.23,1,.32,1) both;
+    }
+    .gband__constellation img.is-leaving {
+      animation: registry-constellation-leave 280ms cubic-bezier(.23,1,.32,1) both;
+    }
+    @keyframes registry-constellation-arrive {
+      from { opacity: 0; transform: scale(.97); }
+      to { opacity: .78; transform: scale(.985); }
+    }
+    @keyframes registry-constellation-leave {
+      from { opacity: .78; transform: scale(.985); }
+      to { opacity: 0; transform: scale(1.01); }
+    }
+    .gband--consumer .gband__mount,
+    .gband--consumer .gband__poster,
+    .gband--consumer .stage-carousel { position: relative; z-index: 1; }
+
+    /* Selected-token market instrument. It widens the old museum placard
+       into a compact brokerage readout without moving Buy into every row. */
+    .consumer-registry .stage-placard {
+      width: calc(100% - 32px);
+      max-width: 1050px;
+      display: grid;
+      grid-template-columns: minmax(118px, .48fr) minmax(0, 1.8fr) minmax(120px, .5fr);
+      align-items: center;
+      gap: 14px;
+      margin: 0 auto 14px;
+      padding: 12px 14px 12px 18px;
+      border-radius: 20px;
+      background: rgba(8,10,14,.94);
+    }
+    .stage-placard__dates { display: none; }
+    .stage-market {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(128px, .68fr) minmax(180px, 1fr);
+      grid-template-rows: auto auto;
+      align-items: center;
+      gap: 7px 14px;
+      padding-inline: 14px;
+      border-inline: 1px solid var(--hair-2);
+    }
+    .stage-market__chart { grid-row: 1 / 3; min-width: 0; }
+    .stage-market__facts {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 8px;
+      margin: 0;
+    }
+    .stage-market__facts > div { min-width: 0; }
+    .stage-market__facts dt {
+      overflow: hidden;
+      color: var(--ink-mute);
+      font: 8.5px/1.2 var(--mono);
+      letter-spacing: .09em;
+      text-overflow: ellipsis;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .stage-market__facts dd {
+      margin: 4px 0 0;
+      color: var(--ink-2);
+      font: 11px/1.2 var(--mono);
+      white-space: nowrap;
+    }
+    .stage-market__live {
+      justify-self: start;
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink-dim);
+      font: 11px/1.2 var(--sans);
+      text-decoration: none;
+    }
+    .stage-market__live:hover { color: var(--ink); }
+    .registry-history { min-width: 0; margin: 0; }
+    .registry-history figcaption {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin-bottom: 5px;
+      color: var(--ink-mute);
+      font: 8.5px/1.2 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .registry-history svg { display: block; width: 100%; height: 52px; overflow: visible; }
+    .registry-history__axis { stroke: rgba(198,204,218,.12); stroke-width: 1; }
+    .registry-history__line {
+      fill: none;
+      stroke: var(--active-sign, #E0A9B4);
+      stroke-width: 2;
+      vector-effect: non-scaling-stroke;
+    }
+    .registry-history__point { fill: var(--active-sign, #E0A9B4); }
+    .registry-history > p {
+      margin: 4px 0 0;
+      color: var(--ink-mute);
+      font: 8.5px/1.3 var(--mono);
+    }
+    .registry-history__range { display: inline-flex; gap: 4px; }
+    .registry-history__range button {
+      min-width: 44px;
+      min-height: 44px;
+      border: 1px solid var(--hair-2);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--ink-dim);
+      font: 9px/1 var(--sans);
+    }
+    .registry-history__range button[aria-pressed='true'] { color: var(--ink); border-color: var(--active-sign); }
+    .registry-history__range button:disabled { opacity: .34; }
+    .consumer-registry .stage-placard__actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 7px;
+    }
+    .consumer-registry .stage-placard__actions .stage-placard__pill {
+      width: 100%;
+      padding-inline: 12px;
+      white-space: nowrap;
+    }
+
+    /* Compact board beside the room. The expanded state returns to the full
+       twelve-row ledger across the entire opening width. */
+    .consumer-capital-opening .consumer-market {
+      min-width: 0;
+      padding: 4px 0 0;
+      border: 0;
+      background: none;
+    }
+    .consumer-market__compact-head { padding: 2px 8px 14px; }
+    .consumer-market__compact-head h2 {
+      max-width: 10ch;
+      margin: 0;
+      color: var(--ink);
+      font: 400 clamp(36px, 3.4vw, 50px)/.92 var(--serif);
+      letter-spacing: -.035em;
+    }
+    .consumer-market__compact-head p {
+      max-width: 40ch;
+      margin: 12px 0 0;
+      color: var(--ink-dim);
+      font: 13px/1.5 var(--sans);
+    }
+    .consumer-capital-opening .market-board {
+      margin-top: 0;
+      padding: 7px;
+      border-radius: 21px 21px 6px 21px;
+    }
+    .consumer-capital-opening .market-board__toolbar {
+      align-items: stretch;
+      flex-direction: column;
+      gap: 7px;
+      padding: 7px 7px 12px;
+    }
+    .consumer-capital-opening .market-board__sort,
+    .consumer-capital-opening .market-board__share { width: 100%; }
+    .consumer-capital-opening .market-board__sort button { flex: 1 1 0; padding-inline: 8px; }
+    .consumer-capital-opening .market-board__share-primary { flex: 1 1 auto; }
+    .consumer-capital-opening .market-board__socials { flex: 0 0 auto; }
+    .consumer-market:not(.is-expanded) .market-row {
+      grid-template-columns: 27px minmax(0, 1fr) auto;
+      grid-template-areas:
+        'rank identity badges'
+        'rank price primary';
+      min-height: 72px;
+      gap: 4px 10px;
+      padding: 6px 9px;
+    }
+    .consumer-market:not(.is-expanded) .market-row__rank {
+      grid-area: rank;
+      align-self: stretch;
+      display: grid;
+      place-items: center;
+      border-right: 1px solid var(--hair);
+    }
+    .consumer-market:not(.is-expanded) .market-row__identity { grid-area: identity; min-height: 44px; }
+    .consumer-market:not(.is-expanded) .market-row__identity img { width: 34px; height: 34px; }
+    .consumer-market:not(.is-expanded) .market-row__badges { grid-area: badges; justify-content: flex-end; }
+    .consumer-market:not(.is-expanded) .market-row__metric { display: none; padding: 0; }
+    .consumer-market:not(.is-expanded) .market-row__metric--price { grid-area: price; display: grid; }
+    .consumer-market:not(.is-expanded) .market-row__metric--cap,
+    .consumer-market:not(.is-expanded) .market-row__metric--liq,
+    .consumer-market:not(.is-expanded) .market-row__metric--change { grid-area: primary; text-align: right; }
+    .consumer-market:not(.is-expanded) .market-board[data-rank='marketCap'] .market-row__metric--cap,
+    .consumer-market:not(.is-expanded) .market-board[data-rank='liquidity'] .market-row__metric--liq,
+    .consumer-market:not(.is-expanded) .market-board[data-rank='change'] .market-row__metric--change { display: grid; }
+    .consumer-market:not(.is-expanded) .market-row__actions { display: none; }
+    .market-board__expand-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 7px 3px;
+    }
+    .market-board__expand { width: 100%; justify-content: space-between; }
+    .consumer-market__personal--compact {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      box-shadow: none;
+    }
+    .consumer-market__personal--compact::before { display: none; }
+    .consumer-market__personal--compact > span { display: none; }
+    .consumer-market__personal--compact button { margin: 0; white-space: nowrap; }
+    .consumer-capital-opening .consumer-market__foot {
+      margin: 12px 8px 0;
+      color: var(--ink-mute);
+      font: 8px/1.5 var(--mono);
+    }
+
+    /* The pulse is a short editorial threshold. No carousel, no nested glass,
+       and no publisher imagery that could imply endorsement. */
+    .research-pulse {
+      display: grid;
+      grid-template-columns: minmax(190px, .55fr) minmax(0, 1.35fr) minmax(280px, .9fr);
+      grid-template-areas:
+        'head feature headlines'
+        'head feature action';
+      gap: 0 clamp(24px, 4vw, 58px);
+      padding: clamp(28px, 4vw, 52px) clamp(4px, 1vw, 14px);
+      border-block: 1px solid var(--hair-2);
+    }
+    .research-pulse__head { grid-area: head; align-self: start; }
+    .research-pulse__head > span {
+      color: var(--active-sign, var(--ink-mute));
+      font: 8px/1.2 var(--mono);
+      letter-spacing: .2em;
+      text-transform: uppercase;
+    }
+    .research-pulse__head h2 {
+      max-width: 9ch;
+      margin-top: 12px;
+      font-size: clamp(30px, 3.4vw, 48px);
+      line-height: .94;
+    }
+    .research-pulse > .research-item--featured { grid-area: feature; }
+    .research-pulse__headlines { grid-area: headlines; }
+    .research-pulse__headlines > .research-updates {
+      width: 100%;
+      justify-content: center;
+      margin-top: 12px;
+    }
+    .research-pulse__all { grid-area: action; align-self: end; justify-self: start; margin-top: 18px; }
+    .research-pulse__state { grid-area: feature; color: var(--ink-dim); }
+    .research-item { min-width: 0; border-top: 1px solid var(--hair-2); }
+    .research-item > a {
+      display: block;
+      min-height: 44px;
+      padding: 15px 0;
+      color: inherit;
+      text-decoration: none;
+    }
+    .research-item__meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--ink-mute);
+      font: 9px/1.35 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+    .research-item h3 {
+      margin: 10px 0 0;
+      color: var(--ink);
+      font: 400 20px/1.08 var(--serif);
+      letter-spacing: -.015em;
+    }
+    .research-item p {
+      margin: 10px 0 0;
+      color: var(--ink-dim);
+      font: 12px/1.5 var(--sans);
+    }
+    .research-item__signs { display: flex; gap: 4px; margin-top: 13px; }
+    .research-item__signs img { border-radius: 50%; }
+    .research-item__open {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--ink-2);
+      font: 11px/1.2 var(--sans);
+    }
+    .research-item__open i { font-style: normal; }
+    .research-item--featured { border-top-color: color-mix(in srgb, var(--active-sign, #E0A9B4) 45%, var(--hair)); }
+    .research-item--featured h3 { font-size: clamp(28px, 3.3vw, 46px); line-height: .96; }
+
+    .consumer-research {
+      padding: clamp(70px, 9vw, 118px) clamp(4px, 1vw, 14px);
+      border-block: 1px solid var(--hair-2);
+    }
+    .consumer-research__head {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: 24px;
+    }
+    .consumer-research__head .consumer-section-head { max-width: 760px; }
+    .consumer-research__head .consumer-section-head h2 {
+      font-size: clamp(52px, 7vw, 96px);
+      line-height: .86;
+    }
+    .consumer-research__head .consumer-section-head p {
+      max-width: 58ch;
+      margin: 22px 0 0;
+      color: var(--ink-2);
+      line-height: 1.6;
+    }
+    .consumer-research__filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 36px;
+    }
+    .consumer-research__updates { margin-top: 14px; }
+    .consumer-research__ledger {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+      gap: 0 clamp(32px, 6vw, 88px);
+      margin-top: 28px;
+    }
+    .consumer-research__ledger .research-item--featured { grid-row: span 4; }
+    .consumer-research__state { color: var(--ink-dim); }
+    .consumer-research__foot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 24px;
+      margin-top: 32px;
+      padding-top: 20px;
+      border-top: 1px solid var(--hair-2);
+    }
+    .consumer-research__foot p { margin: 0; color: var(--ink-mute); font: 9px/1.5 var(--mono); }
+    .consumer-research__foot a { min-width: 230px; }
+    .registry-trade-open .market-tape__track { animation-play-state: paused; }
+
+    @media (hover: hover) and (pointer: fine) {
+      .research-item > a:hover h3,
+      .research-item > a:hover .research-item__open { color: var(--active-sign, var(--gold-bright)); }
+    }
+
+    @media (max-width: 1120px) {
+      .capital-masthead__title { grid-template-columns: minmax(0, 1fr) minmax(230px, 300px); }
+      .consumer-capital-opening { grid-template-columns: 1fr; max-width: 820px; }
+      .consumer-capital-opening .consumer-market { padding-top: 24px; }
+      .consumer-market:not(.is-expanded) .market-row__actions { display: none; }
+      .research-pulse { grid-template-columns: minmax(180px, .65fr) minmax(0, 1.35fr); grid-template-areas: 'head feature' 'head headlines' 'head action'; }
+      .consumer-research__ledger { grid-template-columns: 1fr 1fr; }
+    }
+
+    @media (max-width: 760px) {
+      .capital-masthead,
+      .consumer-capital-opening,
+      .research-pulse,
+      .consumer-research { width: calc(100vw - 16px); }
+      .capital-masthead { padding-top: 82px; }
+      .capital-masthead__title {
+        grid-template-columns: 1fr;
+        grid-template-areas: 'label' 'title' 'deck';
+        gap: 7px;
+        padding: 0 8px 20px;
+      }
+      .capital-masthead__title h1 { max-width: 9ch; font-size: clamp(48px, 14vw, 66px); line-height: .85; }
+      .capital-masthead__title p { max-width: 31ch; margin-top: 7px; font-size: 15px; }
+      .capital-pulse { margin-top: 8px; }
+      .capital-pulse > div {
+        min-height: 82px;
+        grid-template-columns: 1fr;
+        grid-template-areas: 'label' 'value';
+        align-content: center;
+        gap: 7px;
+        padding: 12px 8px;
+        text-align: center;
+      }
+      .capital-pulse strong { font-size: clamp(20px, 7.2vw, 28px); white-space: normal; }
+      .capital-pulse small { display: none; }
+      .consumer-capital-opening { gap: 0; padding-top: 8px; }
+      .consumer-capital-opening .consumer-explorer--stage .gband--consumer,
+      .consumer-capital-opening .consumer-explorer .gband--flat { height: 710px; border-radius: 21px; }
+      .gband__constellation { inset: 17% 2% 32%; opacity: .12; }
+      .consumer-registry .stage-placard {
+        width: calc(100% - 16px);
+        grid-template-columns: minmax(0, 1fr);
+        gap: 8px;
+        margin-bottom: 8px;
+        padding: 10px;
+        border-radius: 17px;
+      }
+      .stage-placard__who { align-items: center; }
+      .stage-market {
+        grid-template-columns: minmax(96px, .72fr) minmax(0, 1.4fr);
+        padding: 8px 0;
+        border-inline: 0;
+        border-block: 1px solid var(--hair-2);
+      }
+      .stage-market__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .consumer-registry .stage-placard__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .gband__turn-hint { margin-bottom: 4px; }
+      .consumer-capital-opening .consumer-market { padding-inline: 0; }
+      .consumer-market__compact-head { padding: 30px 8px 16px; }
+      .consumer-market__compact-head h2 { font-size: clamp(40px, 12vw, 54px); }
+      .market-board__expand-row { grid-template-columns: 1fr; }
+      .consumer-market__personal--compact { justify-content: stretch; }
+      .consumer-market__personal--compact button { width: 100%; }
+      .consumer-market.is-expanded .market-row {
+        grid-template-columns: 27px minmax(0, 1fr) auto;
+        grid-template-areas:
+          'rank identity badges'
+          'rank price primary'
+          'rank view view';
+      }
+      .research-pulse {
+        grid-template-columns: 1fr;
+        grid-template-areas: 'head' 'feature' 'headlines' 'action';
+        gap: 22px;
+        padding: 34px 8px;
+      }
+      .research-pulse__head h2 { max-width: 12ch; font-size: 37px; }
+      .research-pulse__all { width: 100%; justify-content: space-between; margin-top: 0; }
+      .research-item--featured h3 { font-size: 32px; }
+      .consumer-research { padding: 74px 8px; }
+      .consumer-research__head { grid-template-columns: 1fr; align-items: start; }
+      .consumer-research__head .consumer-section-head h2 { font-size: clamp(50px, 15vw, 68px); }
+      .consumer-research__sign-filter { justify-self: start; }
+      .consumer-research__filters { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .consumer-research__filters .registry-pill:first-child { grid-column: 1 / -1; }
+      .consumer-research__ledger { grid-template-columns: 1fr; gap: 0; }
+      .consumer-research__ledger .research-item--featured { grid-row: auto; }
+      .consumer-research__foot { align-items: stretch; flex-direction: column; }
+      .consumer-research__foot a { width: 100%; min-width: 0; }
+    }
+
+    @media (max-width: 360px) {
+      .capital-masthead__title h1 { font-size: 46px; }
+      .consumer-capital-opening .consumer-explorer--stage .gband--consumer,
+      .consumer-capital-opening .consumer-explorer .gband--flat { height: 690px; }
+      .stage-market { grid-template-columns: 92px minmax(0, 1fr); gap: 7px 10px; }
+      .stage-market__facts dd { font-size: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .gband__constellation img { animation: none; transform: none; }
+      .gband__constellation img.is-leaving { display: none; }
+    }
+
     @media (max-width: 479px) {
       .consumer-signs,
       .static-sign-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }

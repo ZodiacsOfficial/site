@@ -344,6 +344,24 @@
       ]
     },
     {
+      "source": "/assets/registry-research-feed.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/data/registry-market-history.v1.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/assets/gallery.js",
       "headers": [
         {
