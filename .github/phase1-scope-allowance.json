@@ -1,7 +1,7 @@
 {
   "version": 1,
   "id": "registry-pro-disclosures-2026-08-10",
-  "reason": "Owner-authorized Registry Pro disclosure packet (2026-08-10): describe the same-origin Zodiacs.org/Vercel comparison request and its onward Jupiter and Raydium provider requests in the exact protected Privacy locales below. This allowance does not enable Registry Pro, its quote gateway, any provider key, transaction capability, or Floor Chat, and it does not authorize other Registry or locale changes.",
+  "reason": "Owner-authorized Zodiac Markets disclosure packet (2026-08-10): rename the Registry Pro working label and describe the same-origin Zodiacs.org/Vercel comparison request and its onward Jupiter and Raydium provider requests in the exact protected Privacy locales below. This allowance does not enable Zodiac Markets, its quote gateway, any provider key, transaction capability, or Market Chat, and it does not authorize other Registry or locale changes.",
   "baseCommit": "c9fa667cbd733bb562de836b8be0a837ea22a1e9",
   "protectedPaths": [
     "src/pages/es/privacy/index.astro",
