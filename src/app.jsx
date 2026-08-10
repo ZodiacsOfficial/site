@@ -3974,8 +3974,8 @@
         >
           <header className="consumer-market__head">
             <div className="consumer-section-head">
-              <span className="consumer-section-head__eyebrow">Live Zodiac market</span>
-              <h2 id="consumer-market-title">The wheel, <span className="it">in motion.</span></h2>
+              <span className="consumer-section-head__eyebrow">Live market board</span>
+              <h2 id="consumer-market-title">Zodiac Capital Markets</h2>
               <p>
                 A live ranking of the twelve official tokens. Change the lens or
                 choose a sign to carry that selection across the Registry.
@@ -4484,9 +4484,8 @@
           style={{ '--active-sign': sign.hue }}
         >
           <header className="consumer-masthead">
-            <span className="consumer-masthead__eyebrow">Official token registry</span>
             <h1 id="consumer-explorer-title">Astrofolio</h1>
-            <p>Live prices, liquidity, season, and sky signals for the twelve official tokens.</p>
+            <p>The twelve, live.</p>
           </header>
           {/* This section IS the page's opening at every width. WebGL keeps
               the original interactive gallery on desktop and mobile; only
