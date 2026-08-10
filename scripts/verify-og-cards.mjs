@@ -20,7 +20,7 @@ import {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'public/assets/og/v2');
-const terminalOut = resolve(root, 'public/assets/og/v3');
+const terminalOut = resolve(root, 'public/assets/og/v4');
 const terminalCard = 'zodiac-terminal.png';
 const legacyRegistryCardSha256 = 'f7b9e9e801e390f2ef3671755d1f3754a7e45bb9db026699f5381764aab5a08a';
 const homepageCard = 'share-pastel-wheel-20260809.png';
@@ -129,10 +129,10 @@ for (const slug of signSlugs) {
 }
 
 for (const relativePath of expected) await validatePng(relativePath);
-if (OG_EN.registry.image !== `/assets/og/v3/${terminalCard}`) {
-  failures.push(`registry image: expected /assets/og/v3/${terminalCard}, received ${OG_EN.registry.image}`);
+if (OG_EN.registry.image !== `/assets/og/v4/${terminalCard}`) {
+  failures.push(`registry image: expected /assets/og/v4/${terminalCard}, received ${OG_EN.registry.image}`);
 }
-await validatePng(terminalCard, { base: terminalOut, label: `v3/${terminalCard}` });
+await validatePng(terminalCard, { base: terminalOut, label: `v4/${terminalCard}` });
 try {
   const legacyRegistryBytes = await readFile(resolve(out, 'registry.png'));
   const legacyRegistryHash = createHash('sha256').update(legacyRegistryBytes).digest('hex');
@@ -230,4 +230,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — homepage on the cache-busted void card; Zodiac Terminal on its versioned v3 card; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
+console.log(`verify-og-cards: OK — homepage on the cache-busted void card; Zodiac Terminal on its versioned v4 card; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);

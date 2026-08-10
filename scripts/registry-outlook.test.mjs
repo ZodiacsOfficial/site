@@ -228,7 +228,7 @@ describe('Registry symbolic outlook', () => {
       `Attention ${outlook.signs.find(({ sign }) => sign === 'leo').scores.attention}/100 · tone +0 · event intensity ${outlook.signs.find(({ sign }) => sign === 'leo').scores.volatility}/100`,
       'Main factor: Mercury enters Leo.',
       'Experimental symbolic index — not a price forecast or financial advice.',
-      'https://zodiacs.org/registry/',
+      'https://zodiacs.org/terminal/',
     ].join('\n'));
   });
 

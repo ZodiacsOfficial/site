@@ -87,13 +87,13 @@ const tools = [
     href="/assets/hero/zodiacs-hero-poster.avif"
     fetchpriority="high"
   />
-  <!-- Legacy hash deep-links (the registry SPA lived here) → the wing. -->
+  <!-- Legacy hash deep-links from the old homepage SPA → their new homes. -->
   <script is:inline>
     (function () {
       var h = location.hash;
-      if (['#verify', '#registry', '#official-twelve', '#sdk', '#market', '#faq-registry', '#identity', '#pulse', '#standings'].indexOf(h) !== -1) {
-        location.replace('/registry/' + h);
-      }
+      if (['#verify', '#registry', '#official-twelve', '#faq-registry', '#identity'].indexOf(h) !== -1) location.replace('/registry/' + h);
+      else if (['#market', '#pulse', '#standings'].indexOf(h) !== -1) location.replace('/terminal/' + h);
+      else if (h === '#sdk') location.replace('/sdk/');
     })();
   </script>
 

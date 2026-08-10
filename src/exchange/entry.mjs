@@ -16,7 +16,7 @@
 
 export const REGISTRY_EXCHANGE_FLAG = 'PUBLIC_REGISTRY_EXCHANGE_ENABLED';
 export const REGISTRY_EXCHANGE_META = 'zodiacs-registry-exchange-enabled';
-export const REGISTRY_EXCHANGE_PATH = '/registry/exchange/';
+export const REGISTRY_EXCHANGE_PATH = '/terminal/markets/';
 export const REGISTRY_EXCHANGE_PUBLIC_NAME = 'Zodiac Markets';
 export const REGISTRY_EXCHANGE_LANDING_COPY = Object.freeze({
   eyebrow: 'Advanced market view',

@@ -16,7 +16,7 @@ import {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ON = { [REGISTRY_EXCHANGE_FLAG]: '1' };
-const page = () => readFile(resolve(root, 'public/registry/exchange/index.html'), 'utf8');
+const page = () => readFile(resolve(root, 'public/terminal/markets/index.html'), 'utf8');
 const landing = () => [
   '<!doctype html>',
   '<html><head>',
@@ -34,7 +34,7 @@ describe('the flag', () => {
   });
 
   it('exports one stable public integration contract for the Registry landing', () => {
-    expect(REGISTRY_EXCHANGE_PATH).toBe('/registry/exchange/');
+    expect(REGISTRY_EXCHANGE_PATH).toBe('/terminal/markets/');
     expect(REGISTRY_EXCHANGE_PUBLIC_NAME).toBe('Zodiac Markets');
     expect(REGISTRY_EXCHANGE_LANDING_COPY).toEqual({
       eyebrow: 'Advanced market view',
@@ -153,15 +153,15 @@ describe('the committed-off drift invariant', () => {
     expect(job.indexOf('configure-registry-exchange.mjs')).toBeLessThan(job.indexOf('git diff --exit-code'));
   });
 
-  it('configures the route and Registry landing together before writing either', async () => {
+  it('configures the route and Terminal landing together before writing either', async () => {
     const configure = await readFile(resolve(root, 'scripts/configure-registry-exchange.mjs'), 'utf8');
-    expect(configure).toContain("resolve(root, 'public/registry/exchange/index.html')");
-    expect(configure).toContain("resolve(root, 'public/registry/index.html')");
+    expect(configure).toContain("resolve(root, 'public/terminal/markets/index.html')");
+    expect(configure).toContain("resolve(root, 'public/terminal/index.html')");
     expect(configure).toContain('injectRegistryExchange(exchangeSource, process.env)');
-    expect(configure).toContain('injectRegistryExchangeLanding(hubSource, process.env)');
+    expect(configure).toContain('injectRegistryExchangeLanding(terminalSource, process.env)');
     expect(configure.indexOf('const exchangeOutput =')).toBeLessThan(configure.indexOf('const writes ='));
-    expect(configure.indexOf('const hubOutput =')).toBeLessThan(configure.indexOf('const writes ='));
+    expect(configure.indexOf('const terminalOutput =')).toBeLessThan(configure.indexOf('const writes ='));
     expect(configure).toContain('await Promise.all(writes)');
-    expect(configure).toContain('of 2 surfaces rewritten, landing included');
+    expect(configure).toContain('of 2 surfaces rewritten, Terminal landing included');
   });
 });

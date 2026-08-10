@@ -108,7 +108,7 @@ Astrofolio is a related consumer project exploring personal Zodiac shelves, prof
 
 ### Zodiac Terminal
 
-Zodiac Terminal is the consumer market-and-records interface at https://zodiacs.org/registry/. It presents live market context, rotating gold artwork, price history, reviewed research, and links to each official token record. It does not replace or rename the Zodiacs Registry, execute trades, take custody, or change verification status.
+Zodiac Terminal is the consumer market interface at https://zodiacs.org/terminal/. It presents live market context, rotating gold artwork, price history, reviewed research, and links to each official token record. Advanced charts and independent venue quotes live at https://zodiacs.org/terminal/markets/; the reviewed research archive lives at https://zodiacs.org/terminal/research/. The Terminal does not replace or rename the Zodiacs Registry, execute trades, take custody, or change verification status.
 
 ### Official registry
 

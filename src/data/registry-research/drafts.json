@@ -42,7 +42,7 @@
       "visibleAt": "2026-08-10T08:18:02.259Z",
       "title": "Libra market check · 2026-08-10",
       "summary": "Libra price, market cap, liquidity, volume, and collection medians at one archived observation.",
-      "url": "/registry/research/market-check-2026-08-10/",
+      "url": "/terminal/research/market-check-2026-08-10/",
       "signs": [
         "libra"
       ],
@@ -118,7 +118,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "960fc6d923089c4ee1067448c605ceef56437c91604c5d50aa194de43c6c3b75"
+      "artifactHash": "e6404c5fcdb9049430cf17ad2c347cb61cb7c8d28f699828750dbff78138a321"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -148,7 +148,7 @@
       "visibleAt": "2026-08-10T12:00:00.000Z",
       "title": "Venus opposition Neptune · daily market brief",
       "summary": "Venus opposition Neptune leads the disclosed symbolic index; Libra market measures are recorded separately.",
-      "url": "/registry/research/daily-market-brief-2026-08-10/",
+      "url": "/terminal/research/daily-market-brief-2026-08-10/",
       "signs": [
         "libra",
         "aries"
@@ -221,7 +221,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "1ddad076ea6fc1e52da4dcfb3ec55c552db729c9490c965f7859c4e111c50d0f"
+      "artifactHash": "d7be2736ea467a205468058ffc4ea5c08be09dd3397922ed35205737aeb38ea9"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -251,7 +251,7 @@
       "visibleAt": "2026-08-10T12:00:00.000Z",
       "title": "Weekly symbolic outlook · 2026-08-10",
       "summary": "Leo, Libra, Aries hold the three highest disclosed attention ranks for the next seven UTC days.",
-      "url": "/registry/research/weekly-outlook-2026-08-10/",
+      "url": "/terminal/research/weekly-outlook-2026-08-10/",
       "signs": [
         "leo",
         "libra",
@@ -322,7 +322,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "87b67b697c1644d0ccddf8c7feae97ccbc77a3a3d78a42352b80d418f76b7a16"
+      "artifactHash": "f94d87df6dfa049c5b432fd0af4f83c973977a0e6f31abcb968be6923134ad7e"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -353,7 +353,7 @@
       "eventAt": "2026-08-10T18:09:22.279Z",
       "title": "Venus Trine Pluto · event brief",
       "summary": "Venus Trine Pluto becomes exact at 2026-08-10T18:09:22.279Z. Its symbolic reading and later market observations remain separate.",
-      "url": "/registry/research/event-brief-aspect-2026-08-10t18-09-22-279z-venus-trine-pluto/",
+      "url": "/terminal/research/event-brief-aspect-2026-08-10t18-09-22-279z-venus-trine-pluto/",
       "signs": [
         "libra",
         "aquarius"
@@ -414,7 +414,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "0e604de729655dab0dbb4eec3c8a84d3baf02e8a8b8426552fb657d70d30e471"
+      "artifactHash": "9714cab026a743d07900efade4e98213b1b6231ccda6ac4263feafd1b648cb33"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -445,7 +445,7 @@
       "eventAt": "2026-08-10T22:07:55.623Z",
       "title": "Venus Opposition Neptune · event brief",
       "summary": "Venus Opposition Neptune becomes exact at 2026-08-10T22:07:55.623Z. Its symbolic reading and later market observations remain separate.",
-      "url": "/registry/research/event-brief-aspect-2026-08-10t22-07-55-623z-venus-opposition-neptune/",
+      "url": "/terminal/research/event-brief-aspect-2026-08-10t22-07-55-623z-venus-opposition-neptune/",
       "signs": [
         "aries",
         "libra"
@@ -506,7 +506,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "ab8f7238da8aac935771fe620971b537a5e515e094d86619e0d962181a50ef4d"
+      "artifactHash": "65e3898cb96be3277f38e476425a01d928865d05a79fb65dd2b84d4aaa87ff31"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -537,7 +537,7 @@
       "eventAt": "2026-08-11T08:31:01.563Z",
       "title": "Mars enters Cancer · event brief",
       "summary": "Mars enters Cancer becomes exact at 2026-08-11T08:31:01.563Z. Its symbolic reading and later market observations remain separate.",
-      "url": "/registry/research/event-brief-ingress-2026-08-11t08-31-01-563z-mars-cancer/",
+      "url": "/terminal/research/event-brief-ingress-2026-08-11t08-31-01-563z-mars-cancer/",
       "signs": [
         "cancer"
       ],
@@ -597,7 +597,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "a656a8ba473d67bb0d125c73c9526aaf7afc721eacebeaa5e3facbc8e551d72f"
+      "artifactHash": "76c5815406522df5035e114360bdff5c5760eed3542fc441027882bb0c54f5c0"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -628,7 +628,7 @@
       "eventAt": "2026-08-12T01:19:36.991Z",
       "title": "Mercury Opposition Pluto · event brief",
       "summary": "Mercury Opposition Pluto becomes exact at 2026-08-12T01:19:36.991Z. Its symbolic reading and later market observations remain separate.",
-      "url": "/registry/research/event-brief-aspect-2026-08-12t01-19-36-991z-mercury-opposition-pluto/",
+      "url": "/terminal/research/event-brief-aspect-2026-08-12t01-19-36-991z-mercury-opposition-pluto/",
       "signs": [
         "leo",
         "aquarius"
@@ -689,7 +689,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "215b86e5801f8511072a6056fe33fc11d33dd4e053344fb73d7389a3bfc514d3"
+      "artifactHash": "e7fe966ae7d6693625b4a76ec2c20047dd90c8abea0a89830b154110c721553c"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -720,7 +720,7 @@
       "eventAt": "2026-08-12T03:41:46.694Z",
       "title": "3 exact aspects on 2026-08-12 · event brief",
       "summary": "3 exact aspects on 2026-08-12 are grouped into one calendar brief to avoid feed noise. Symbolic reading and market observations remain separate.",
-      "url": "/registry/research/event-brief-aspect-2026-08-12t03-41-46-694z-minor-aspects-2026-08-12-3/",
+      "url": "/terminal/research/event-brief-aspect-2026-08-12t03-41-46-694z-minor-aspects-2026-08-12-3/",
       "signs": [
         "aries",
         "gemini",
@@ -811,7 +811,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "49a4e6e5e76eada98980c49a997397c0cb2fa4df1825c621f029166a3581d846"
+      "artifactHash": "5282f03d3363a8111d4c561ce3adb6a9cf505f09a3be7306e4e5af4a8328a8a7"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -842,7 +842,7 @@
       "eventAt": "2026-08-12T17:36:35.369Z",
       "title": "New Moon in Leo · event brief",
       "summary": "New Moon in Leo becomes exact at 2026-08-12T17:36:35.369Z. Its symbolic reading and later market observations remain separate.",
-      "url": "/registry/research/event-brief-lunation-2026-08-12t17-36-35-369z-new-moon-leo/",
+      "url": "/terminal/research/event-brief-lunation-2026-08-12t17-36-35-369z-new-moon-leo/",
       "signs": [
         "leo"
       ],
@@ -902,7 +902,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "c9aa964c569c20d1b53c51f5efae9d7cf8f47b73cfdbe2fbb5866d8ccb4cbf4d"
+      "artifactHash": "502fe7cb04bba7d03099a2b6f1bda5b2d81b3d8255c9c538a28917066bfca7a9"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -933,7 +933,7 @@
       "eventAt": "2026-08-15T11:23:04.166Z",
       "title": "Mercury Conjunction Jupiter · event brief",
       "summary": "Mercury Conjunction Jupiter becomes exact at 2026-08-15T11:23:04.166Z. Its symbolic reading and later market observations remain separate.",
-      "url": "/registry/research/event-brief-aspect-2026-08-15t11-23-04-166z-mercury-conjunction-jupiter/",
+      "url": "/terminal/research/event-brief-aspect-2026-08-15t11-23-04-166z-mercury-conjunction-jupiter/",
       "signs": [
         "leo"
       ],
@@ -993,7 +993,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "ec45669c5c9265c9b7794610bdf0e2d876c8fa41c7bcecf374037fe9e6356b42"
+      "artifactHash": "93fa24bfca83469b81afe22b836bf6d8f9c47f01dd50abe21dc7b51a33ab3046"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -1024,7 +1024,7 @@
       "eventAt": "2026-08-17T10:00:09.749Z",
       "title": "Mars Square Neptune · event brief",
       "summary": "Mars Square Neptune becomes exact at 2026-08-17T10:00:09.749Z. Its symbolic reading and later market observations remain separate.",
-      "url": "/registry/research/event-brief-aspect-2026-08-17t10-00-09-749z-mars-square-neptune/",
+      "url": "/terminal/research/event-brief-aspect-2026-08-17t10-00-09-749z-mars-square-neptune/",
       "signs": [
         "aries",
         "cancer"
@@ -1078,7 +1078,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "6f972773d362091d04dcc24bf18aadf59cf6ab211f10cf78a8b84d747b84abe6"
+      "artifactHash": "a2b797d909ed2f7e1b5892f0075c1537bf30da8eb85fb76a3651b44ad817c6b2"
     },
     {
       "schema": "zodiacs.registry-research-item.v1",
@@ -1109,7 +1109,7 @@
       "eventAt": "2026-08-17T15:25:35.145Z",
       "title": "2 exact aspects on 2026-08-17 · event brief",
       "summary": "2 exact aspects on 2026-08-17 are grouped into one calendar brief to avoid feed noise. Symbolic reading and market observations remain separate.",
-      "url": "/registry/research/event-brief-aspect-2026-08-17t15-25-35-145z-minor-aspects-2026-08-17-2/",
+      "url": "/terminal/research/event-brief-aspect-2026-08-17t15-25-35-145z-minor-aspects-2026-08-17-2/",
       "signs": [
         "aries",
         "leo",
@@ -1183,7 +1183,7 @@
           "missingOccupancyPlanets": []
         }
       },
-      "artifactHash": "10aaf4e3cdb463deadf31b28dc5779cb1b7403bf385a111098a797e540760136"
+      "artifactHash": "2ff3e38bee4ee5452598cbffd724218307caf06bbf6a7da2db16441b0021c994"
     }
   ]
 }

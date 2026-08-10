@@ -220,7 +220,7 @@ describe('Registry Research deterministic publication', () => {
         visibleAt: '2026-08-10T12:00:00.000Z',
         title: 'Sky & market <check>',
         summary: 'Observed, not "predicted".',
-        url: '/registry/research/test/',
+        url: '/terminal/research/test/',
         status: 'published',
       }],
     });

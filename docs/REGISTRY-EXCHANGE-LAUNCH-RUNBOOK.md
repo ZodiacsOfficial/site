@@ -1,6 +1,6 @@
 # Zodiac Markets launch runbook
 
-This runbook carries Zodiac Markets at `/registry/exchange/` from
+This runbook carries Zodiac Markets at `/terminal/markets/` from
 merged-but-flag-off to a
 time-limited production pilot. It does not ratify the owner decision, enable a
 Vercel environment, approve a PR, or authorize a real trade by itself.
@@ -51,8 +51,8 @@ node scripts/configure-registry-exchange.mjs
 git diff --exit-code
 ```
 
-Before any flag-on QA, verify that both the route and `/registry/` landing
-markers are `0`, the terminal and its script are absent, and the Registry has
+Before any flag-on QA, verify that both the route and `/terminal/` landing
+markers are `0`, the terminal and its script are absent, and Zodiac Terminal has
 no Zodiac Markets discovery entry. The round trip above must stamp both
 markers to `1` from the same environment flag, then restore both to `0`.
 
@@ -64,10 +64,10 @@ production alias. Remove the branch override after QA.
 
 Verify:
 
-- the enabled meta marker is `1` on both Zodiac Markets and `/registry/`, the
+- the enabled meta marker is `1` on both Zodiac Markets and `/terminal/`, the
   terminal mounts, and the twelve records remain below it;
-- exactly one Zodiac Markets discovery entry appears on `/registry/`; it is
-  same-origin, points to `/registry/exchange/#<selected-sign>`, contains no
+- exactly one Zodiac Markets discovery entry appears on `/terminal/`; it is
+  same-origin, points to `/terminal/markets/#<selected-sign>`, contains no
   venue URL, and causes no provider or wallet request merely by rendering or
   receiving focus;
 - all twelve selections keep the panel responsive without automatically
@@ -121,8 +121,8 @@ requires a dated owner decision.
 ## Emergency rollback
 
 1. Use Vercel Instant Rollback to the retained flag-off production deployment.
-2. Confirm both the production route and Registry landing meta markers are
-   `0`, the terminal/script and sole Registry discovery entry are absent, and
+2. Confirm both the production route and Terminal landing meta markers are
+   `0`, the terminal/script and sole Terminal discovery entry are absent, and
    an offline request cannot recover a cached flag-on page.
 3. Remove the Production environment variable and deploy the current `main` to
    make flag-off durable.

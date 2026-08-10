@@ -1,4 +1,5 @@
     const { useState, useMemo, useEffect, useRef, useCallback } = React;
+    const REGISTRY_VIEW = document.querySelector('meta[name="zodiacs-registry-view"]')?.content ?? '';
 
     function trackAnalytics(name, properties = {}) {
       window.zodiacsAnalytics?.track?.(name, properties);
@@ -13,7 +14,7 @@
         if (!el) return;
         // Hash navigation can place a section in the viewport before its
         // observer is attached. Reveal that target synchronously so a direct
-        // /registry/#thesis visit never lands on an invisible panel.
+        // /terminal/#thesis visit never lands on an invisible panel.
         const rect = el.getBoundingClientRect();
         const isHashTarget = el.id && window.location.hash === `#${el.id}`;
         const isAlreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
@@ -1592,7 +1593,7 @@
                 <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
                 <kbd className="wnav__search-kbd" aria-hidden="true">/</kbd>
               </a>
-              <a className="wnav__chip" href="/registry/" aria-current="page">Terminal</a>
+              <a className="wnav__chip" href="/terminal/" aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>Terminal</a>
               <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
                 <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
               </button>
@@ -1616,7 +1617,7 @@
                 <a className="wnav-menu__link" style={{ '--i': 0 }} href="/learn/">Learn</a>
                 <a className="wnav-menu__link" style={{ '--i': 1 }} href="/horoscopes/">Horoscopes</a>
                 <a className="wnav-menu__link" style={{ '--i': 2 }} href="/profile/">Saved charts</a>
-                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href="/registry/" aria-current="page">
+                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 3 }} href="/terminal/" aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>
                   <span>Terminal</span>
                   <small>Markets, token records, and research</small>
                 </a>
@@ -4437,7 +4438,7 @@
           style={{ '--active-sign': sign.hue }}
         >
           <div className="capital-masthead__title">
-            <span>Verified by the Zodiacs Registry</span>
+            <span><a href="/registry/">Verified by the Zodiacs Registry</a></span>
             <h1 id="consumer-explorer-title">Zodiac Terminal</h1>
             <p>Twelve signs. Twelve transferable tokens. One live public market.</p>
           </div>
@@ -4547,7 +4548,7 @@
         return `Zodiac Terminal · ${MARKET_RANKS[rankBy].label}\n${list}\nRead ${observedUtc} · ${metricCoverage}/12 indexed\nLive market context via DexScreener. Not a recommendation.`;
       };
       const shareUrl = () => {
-        const url = new URL('/registry/', window.location.origin);
+        const url = new URL('/terminal/', window.location.origin);
         url.searchParams.set('rank', rankBy);
         url.searchParams.set('sign', activeSign.asset.sign);
         url.hash = 'market';
@@ -4791,7 +4792,7 @@
 
     function ResearchItem({ item, featured = false }) {
       const external = item.sourceType !== 'zodiacs-research';
-      const href = item.url || `/registry/research/${item.slug || item.id}/`;
+      const href = item.url || `/terminal/research/${item.slug || item.id}/`;
       const label = external ? `External source · ${item.publisher}` : 'Zodiacs Research · Reviewed';
       return (
         <article className={'research-item' + (featured ? ' research-item--featured' : '')} data-research-source={item.sourceType}>
@@ -4840,7 +4841,7 @@
               >Show {external.pendingCount} new source update{external.pendingCount === 1 ? '' : 's'}</button>
             )}
           </div>
-          <a className="registry-pill research-pulse__all" href="/registry/research/">
+          <a className="registry-pill research-pulse__all" href="/terminal/research/">
             <span>Open Markets Research</span><span className="market-row__action-orb" aria-hidden="true">↗</span>
           </a>
         </aside>
@@ -4905,7 +4906,7 @@
           </div>
           <footer className="consumer-research__foot">
             <p>Symbolic research—not investment advice. Market observations never alter the sky score.</p>
-            <a className="registry-pill registry-pill--record" href="/registry/research/">
+            <a className="registry-pill registry-pill--record" href="/terminal/research/">
               <span>Open the Research Desk</span><span className="market-row__action-orb" aria-hidden="true">↗</span>
             </a>
           </footer>
@@ -5062,7 +5063,7 @@
         ? `${activeSign.name} · ${horizon === 'weekly' ? '7-day' : 'daily'} sky signal: ${signalLabel}\nEdition ${edition.date} · Attention ${outlook.scores.attention}/100 · tone ${toneLabel} · event intensity ${outlook.scores.volatility}/100\n${outlook.primaryFactor ? `Main factor: ${outlook.primaryFactor.label}.` : `No scored sky factor names ${activeSign.name} in this window.`}${coverageNotice ? `\n${coverageNotice}` : ''}\nExperimental symbolic index — not a price forecast or financial advice.`
         : '';
       const shareOutlook = async () => {
-        const shared = new URL('/registry/', window.location.origin);
+        const shared = new URL('/terminal/', window.location.origin);
         shared.searchParams.set('sign', activeSign.asset.sign);
         shared.searchParams.set('outlook', horizon);
         shared.hash = 'outlook';
@@ -5631,7 +5632,7 @@
           <div className="ftr__legal">
             {technical ? (
               <>
-                <a href="/registry/">Zodiac Terminal</a>
+                <a href="/registry/">Zodiacs Registry</a>
                 <a href="#records-networks">Records</a>
                 <a href="#market-transparency">Market</a>
                 <a href="#onchain-access">Access</a>
@@ -5693,7 +5694,7 @@
     };
 
     function Zodiacs() {
-      const technical = /^\/registry\/technical\/?$/.test(window.location.pathname);
+      const technical = REGISTRY_VIEW === 'technical';
       const [activeTicker, setActiveTicker] = useState(
         () => {
           try {
@@ -5879,7 +5880,7 @@
             <Header />
             <main id="main" className="zd technical-registry">
               <header className="technical-hero">
-                <a className="technical-hero__back" href="/registry/">← Zodiac Terminal</a>
+                <a className="technical-hero__back" href="/registry/">← Zodiacs Registry</a>
                 <span className="technical-hero__kicker">The complete public record</span>
                 <h1>Registry <span className="it">technical record.</span></h1>
                 <p>

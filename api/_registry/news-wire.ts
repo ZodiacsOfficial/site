@@ -497,7 +497,7 @@ export async function fetchRegistryNewsSource(
   const cached = cache.get(source.id);
   const headers: Record<string, string> = {
     Accept: 'application/rss+xml, application/atom+xml, application/xml;q=0.9, text/xml;q=0.8',
-    'User-Agent': 'Zodiacs.org Registry Research/1.0 (+https://zodiacs.org/registry/research/)',
+    'User-Agent': 'Zodiacs.org Registry Research/1.0 (+https://zodiacs.org/terminal/research/)',
   };
   if (cached?.etag) headers['If-None-Match'] = cached.etag;
   if (cached?.lastModified) headers['If-Modified-Since'] = cached.lastModified;

@@ -652,7 +652,7 @@ export function buildRegistryOutlooks(options = {}) {
 }
 
 /** A compact, deterministic share caption for a sign's published outlook. */
-export function formatRegistryOutlookShareText(outlook, sign, url = 'https://zodiacs.org/registry/') {
+export function formatRegistryOutlookShareText(outlook, sign, url = 'https://zodiacs.org/terminal/') {
   if (!isRecord(outlook) || outlook.schema !== 'zodiacs.registry-outlook.v1') {
     throw new Error('formatRegistryOutlookShareText requires a Registry outlook');
   }

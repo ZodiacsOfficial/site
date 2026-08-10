@@ -351,7 +351,7 @@ export function AuraResult({
               </button>
             </>
           )}
-          <a class="btn btn--ghost" href="/registry/">Browse Zodiac Terminal</a>
+          <a class="btn btn--ghost" href="/terminal/">Browse Zodiac Terminal</a>
         </div>
         {sharePreviewUrl && !illustrative && (
           <AuraSharePreview

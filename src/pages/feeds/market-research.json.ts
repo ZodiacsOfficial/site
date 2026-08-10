@@ -23,7 +23,7 @@ const rollingItemIds = new Set((feed as typeof feed & { rollingItemIds?: string[
 export const GET: APIRoute = () => new Response(JSON.stringify({
   schema: 'zodiacs.registry-research-json-feed.v1',
   title: 'Zodiacs.org Markets Research',
-  home_page_url: 'https://zodiacs.org/registry/research/',
+  home_page_url: 'https://zodiacs.org/terminal/research/',
   feed_url: 'https://zodiacs.org/feeds/market-research.json',
   description: 'Deterministic symbolic research and separately timestamped Zodiac market observations.',
   generatedAt: feed.generatedAt,

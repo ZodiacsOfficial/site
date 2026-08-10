@@ -36,19 +36,19 @@ for (const sign of SIGNS) {
   written += 1;
 }
 
-// The landing explorer carries the panel too. Its shell holds no markup for
+// The Terminal explorer carries the panel too. Its shell holds no markup for
 // it — the panel is mounted into the chosen sign's card at runtime — so only
 // the flag is stamped here.
-const hubFile = resolve(root, 'public/registry/index.html');
-const hubSource = await readFile(hubFile, 'utf8');
-const hub = injectRegistryTradeLanding(hubSource, process.env).output;
-if (hub !== hubSource) {
-  await writeFile(hubFile, hub);
+const terminalFile = resolve(root, 'public/terminal/index.html');
+const terminalSource = await readFile(terminalFile, 'utf8');
+const terminal = injectRegistryTradeLanding(terminalSource, process.env).output;
+if (terminal !== terminalSource) {
+  await writeFile(terminalFile, terminal);
   written += 1;
 }
 
 console.log(
   `Registry trade panel: ${enabled ? 'enabled' : 'disabled'} `
   + `(${written} of ${SIGNS.length + 1} page${written === 1 ? '' : 's'} rewritten,`
-  + ' landing included)',
+  + ' Terminal landing included)',
 );

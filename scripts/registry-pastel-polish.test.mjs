@@ -26,7 +26,7 @@ describe('registry pastel polish', () => {
     const [source, bundle, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/assets/app.js'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     expect(source).toContain('src="/assets/zodiac-icons/48/${s.asset.sign}.webp"');
@@ -50,7 +50,7 @@ describe('registry pastel polish', () => {
     const [source, bundle, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/assets/app.js'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     // The disc rail walks with the arrow keys and keeps a roving tabstop,
@@ -77,7 +77,7 @@ describe('registry pastel polish', () => {
   it('keeps the display-only market tape moving until reduced motion requests native flow', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
     const tapeSource = source.slice(
       source.indexOf('function MarketTape('),
@@ -109,7 +109,7 @@ describe('registry pastel polish', () => {
   it('opens on the capital market masthead and keeps the optional Cabinet in the purpose section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     // The film is retired. A single market identity now precedes the selected
@@ -150,7 +150,7 @@ describe('registry pastel polish', () => {
   it('gives Registry controls the stage Buy pill language without Market glass', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
     const materialPass = registry.slice(registry.indexOf('Registry control pass'));
     const pillRule = materialPass.slice(
@@ -221,7 +221,7 @@ describe('registry pastel polish', () => {
   it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
     const [wingNav, registry, thesis, sdk, source, siteNav] = await Promise.all([
       read('scripts/wing-nav.mjs'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
       read('public/thesis/index.html'),
       read('public/sdk/index.html'),
       read('src/app.jsx'),
@@ -285,7 +285,7 @@ describe('registry pastel polish', () => {
   it('uses a full-row, plain-English Registry Collection feature band', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     expect(source).toContain("t: 'Verify a Zodiac'");
@@ -303,7 +303,7 @@ describe('registry pastel polish', () => {
   it('paints market direction after generic values and includes an explicit flat state', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     expect(source.match(/market__change--flat/g)?.length).toBeGreaterThanOrEqual(2);

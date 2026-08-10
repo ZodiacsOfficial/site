@@ -22,7 +22,11 @@ function runWorker(source) {
   const handlers = new Map();
   const showNotification = vi.fn(async (_title, _options) => {});
   const openWindow = vi.fn(async () => {});
-  const networkFetch = vi.fn(async () => ({ ok: true, status: 200 }));
+  const networkFetch = vi.fn(async () => ({
+    ok: true,
+    status: 200,
+    clone: () => ({ ok: true, status: 200 }),
+  }));
   const caches = {
     open: vi.fn(async () => ({
       add: vi.fn(), put: vi.fn(), match: vi.fn(), keys: vi.fn(async () => []),
@@ -66,12 +70,14 @@ describe('offline service worker posture', () => {
     expect(source).toMatch(/if \(registryAuthority\(url\) \|\| registryVolatileSurface\(url\)\) \{\s*event\.respondWith\(fetch\(request\)\)/);
   });
 
-  it('never caches or stale-serves either build-time Exchange flag surface', async () => {
+  it('never caches or stale-serves Registry authority or either build-time Terminal flag surface', async () => {
     const worker = runWorker(await builtWorker(false));
     const handler = worker.handlers.get('fetch');
     const volatilePaths = [
       '/registry', '/registry/', '/registry/index.html',
       '/registry/exchange', '/registry/exchange/', '/registry/exchange/index.html',
+      '/terminal', '/terminal/', '/terminal/index.html',
+      '/terminal/markets', '/terminal/markets/', '/terminal/markets/index.html',
     ];
     for (const path of volatilePaths) {
       let completion;
@@ -85,11 +91,28 @@ describe('offline service worker posture', () => {
     worker.networkFetch.mockRejectedValueOnce(new TypeError('offline'));
     let offline;
     handler({
-      request: { method: 'GET', mode: 'navigate', url: 'https://zodiacs.org/registry/exchange/' },
+      request: { method: 'GET', mode: 'navigate', url: 'https://zodiacs.org/terminal/markets/' },
       respondWith: (promise) => { offline = Promise.resolve(promise); },
     });
     await expect(offline).rejects.toThrow('offline');
     expect(worker.caches.open).not.toHaveBeenCalled();
+  });
+
+  it('keeps non-authoritative Terminal pages network-first with an offline fallback', async () => {
+    const worker = runWorker(await builtWorker(false));
+    const handler = worker.handlers.get('fetch');
+    let completion;
+    handler({
+      request: {
+        method: 'GET',
+        mode: 'navigate',
+        url: 'https://zodiacs.org/terminal/research/',
+      },
+      respondWith: (promise) => { completion = Promise.resolve(promise); },
+    });
+    await completion;
+    expect(worker.networkFetch).toHaveBeenCalledOnce();
+    expect(worker.caches.open).toHaveBeenCalledOnce();
   });
 
   it('ships with push disabled and versioned shell/data caches', async () => {

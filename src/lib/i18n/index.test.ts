@@ -206,7 +206,7 @@ describe('i18n helpers', () => {
 
   it('uses the approved French registry register', () => {
     expect(UI.fr.navCollect).toBe('Terminal');
-    expect(UI.fr.footerRegistry).toBe('Vue d’ensemble');
+    expect(UI.fr.footerRegistry).toBe('Zodiacs Registry');
     expect(UI.fr.recordLabel).toBe('Aile des collections');
     expect(UI.fr.recordOneOfTwelve).toBe(
       'figure aussi parmi les Douze — une notice de référence dans le registre.',
@@ -216,7 +216,7 @@ describe('i18n helpers', () => {
 
   it('uses the approved Italian registry register', () => {
     expect(UI.it.navCollect).toBe('Terminal');
-    expect(UI.it.footerRegistry).toBe('Panoramica');
+    expect(UI.it.footerRegistry).toBe('Zodiacs Registry');
     expect(UI.it.recordLabel).toBe('Ala della collezione');
     expect(UI.it.recordOneOfTwelve).toBe(
       'esiste anche come uno dei Dodici — una scheda di riferimento nel registro.',

@@ -51,7 +51,7 @@ const {
 const { HOROSCOPE_OG_SURFACES, OG_EN } = await import(
   pathToFileURL(resolve(root, 'src/strings/seo.en.mjs')).href
 );
-const TERMINAL_OUT = resolve(root, 'public/assets/og/v3');
+const TERMINAL_OUT = resolve(root, 'public/assets/og/v4');
 const TERMINAL_CARD = 'zodiac-terminal.png';
 const LEGACY_REGISTRY_CARD_COPY = Object.freeze({
   kicker: 'The Official Registry',
@@ -59,8 +59,8 @@ const LEGACY_REGISTRY_CARD_COPY = Object.freeze({
   subtitle: 'A read-only catalogue of the twelve official Zodiac records.',
   data: 'Nº 01–12 / 12 · read-only by design',
 });
-if (OG_EN.registry.image !== `/assets/og/v3/${TERMINAL_CARD}`) {
-  throw new Error(`Zodiac Terminal OG path must be /assets/og/v3/${TERMINAL_CARD}`);
+if (OG_EN.registry.image !== `/assets/og/v4/${TERMINAL_CARD}`) {
+  throw new Error(`Zodiac Terminal OG path must be /assets/og/v4/${TERMINAL_CARD}`);
 }
 const {
   RU_OG_COPY_DIGEST_INPUT,
@@ -368,7 +368,7 @@ function registryCard(copy = OG_EN.registry) {
     </div>
     ${wheelMark(330, 38)}
   </div>`;
-  return shell(body, 'zodiacs.org/registry/');
+  return shell(body, copy.path === '/terminal/' ? 'zodiacs.org/terminal/' : 'zodiacs.org/registry/');
 }
 
 function disclosureCard() {

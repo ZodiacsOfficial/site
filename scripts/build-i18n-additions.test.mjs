@@ -17,7 +17,7 @@ const EXPECTED_SECTION_COUNTS = {
   'WS1 — trust, disclosure, and archive receipts': 72,
   'WS2b — email capture and shared footer': 32,
   'WS2c — OG and social-card art': 121,
-  'WS2d — structured data': 43,
+  'WS2d — structured data': 46,
   'WS3 — share cards and result sharing': 48,
   'WS4 — PWA, install prompt, and flag-off push scaffold': 22,
   'WS5 — programmatic pages and Chinese zodiac': 77,
@@ -26,13 +26,13 @@ const EXPECTED_SECTION_COUNTS = {
 };
 
 describe('additive locale handoff manifest', () => {
-  it('covers the exact 566-key additive source set without duplicates', () => {
+  it('covers the exact 569-key additive source set without duplicates', () => {
     const sections = i18nAdditionEntries();
     const entries = sections.flatMap(({ entries: values }) => values);
     const counts = Object.fromEntries(sections.map(({ title, entries: values }) => [title, values.length]));
 
     expect(counts).toEqual(EXPECTED_SECTION_COUNTS);
-    expect(entries).toHaveLength(566);
+    expect(entries).toHaveLength(569);
     expect(new Set(entries.map(({ key }) => key)).size).toBe(entries.length);
     expect(i18nAdditionSections()).toEqual(
       sections.map(({ title, entries: values }) => [title, values.map(({ key }) => key)]),
@@ -125,7 +125,7 @@ describe('additive locale handoff manifest', () => {
 
   it('renders all per-key fields and keeps the checked-in manifest byte-current', async () => {
     const rendered = renderI18nAdditions();
-    expect(rendered).toContain('TODO(i18n): translation handoff for 566 additive keys');
+    expect(rendered).toContain('TODO(i18n): translation handoff for 569 additive keys');
     expect(rendered).toContain('`push.prompt.accept`');
     expect(
       i18nAdditionEntries()
@@ -133,9 +133,9 @@ describe('additive locale handoff manifest', () => {
         .find(({ key }) => key === 'push.prompt.accept')?.pendingLocales,
     ).toEqual([]);
     expect(i18nAdditionEntries().flatMap(({ entries: values }) => values).every(({ pendingLocales }) => pendingLocales.length === 0)).toBe(true);
-    expect(rendered.match(/^  - EN default:/gm)).toHaveLength(566);
-    expect(rendered.match(/^  - Usage:/gm)).toHaveLength(566);
-    expect(rendered.match(/^  - Pending locales:/gm)).toHaveLength(566);
+    expect(rendered.match(/^  - EN default:/gm)).toHaveLength(569);
+    expect(rendered.match(/^  - Usage:/gm)).toHaveLength(569);
+    expect(rendered.match(/^  - Pending locales:/gm)).toHaveLength(569);
     expect(rendered).toContain('`footerDisclosure`');
     expect(await i18nManifestIsCurrent()).toBe(true);
   });

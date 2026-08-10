@@ -72,7 +72,7 @@ const ru = {
   footerZodiacDates: 'Даты знаков',
   footerGlossary: 'Глоссарий',
   footerCompute: 'Как мы считаем',
-  footerRegistry: 'Обзор',
+  footerRegistry: 'Zodiacs Registry',
   footerThesis: 'Манифест',
   footerArchive: 'Архив',
   footerSdk: 'SDK',
