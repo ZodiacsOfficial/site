@@ -451,9 +451,10 @@ describe('Registry consumer and technical information architecture', () => {
   });
 
   it('turns astrology into a named, auditable three-step market-check path', async () => {
-    const [source, html] = await Promise.all([
+    const [source, html, bundle] = await Promise.all([
       read('src/app.jsx'),
       read('public/registry/index.html'),
+      read('public/assets/app.js'),
     ]);
     const visible = visibleMarkup(html);
     const outlook = source.slice(
@@ -479,6 +480,12 @@ describe('Registry consumer and technical information architecture', () => {
     expect(outlook).toContain('className="outlook-lab__coverage" role="status"');
     expect(outlook).toContain('disabled={!outlook || !editionIsCurrent || !coverageComplete}>Share signal</button>');
     expect(outlook).toContain("scoreTone >= 12 ? 'Supportive' : scoreTone <= -12 ? 'Friction' : 'Neutral'");
+    expect(source).toContain("const REGISTRY_OUTLOOK_URL = '/assets/registry-outlook.json';");
+    expect(outlook).toContain("fetch(REGISTRY_OUTLOOK_URL, {\n          // Revalidate even a still-fresh response cached before this daily\n          // publication received its explicit max-age=0 delivery policy.\n          cache: 'no-cache',");
+    expect(bundle).toContain("const REGISTRY_OUTLOOK_URL='/assets/registry-outlook.json';");
+    expect(bundle).toContain("fetch(REGISTRY_OUTLOOK_URL,{cache:'no-cache',headers:{accept:'application/json'}})");
+    expect(outlook).toContain('<a href={REGISTRY_OUTLOOK_URL}>Open the machine-readable edition ↗</a>');
+    expect(visible).toContain('href="/assets/registry-outlook.json"');
     expect(source).not.toContain('className="outlook-challenge"');
     expect(source).not.toContain('Why no price arrow?');
     expect(visible).not.toContain('Why no price arrow?');

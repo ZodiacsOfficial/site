@@ -183,4 +183,16 @@ describe('Registry risk and trust copy', () => {
     // which the endpoint's CSRF gate must reject — the page would 403 itself.
     expect(referrer).toBe('same-origin');
   });
+
+  it('revalidates the daily Registry outlook instead of caching it as an immutable asset', async () => {
+    const config = JSON.parse(await readFile(resolve(root, 'vercel.json'), 'utf8'));
+    const routes = config.headers.filter((entry) => entry.source === '/assets/registry-outlook.json');
+    expect(routes).toHaveLength(1);
+    const cacheHeaders = routes[0].headers.filter((header) => header.key === 'Cache-Control');
+    expect(cacheHeaders).toHaveLength(1);
+    const cacheControl = cacheHeaders[0].value;
+
+    expect(cacheControl).toBe('public, max-age=0, must-revalidate');
+    expect(cacheControl).not.toContain('immutable');
+  });
 });
