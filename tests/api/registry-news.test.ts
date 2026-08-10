@@ -7,7 +7,8 @@ import {
   type RegistryNewsFeedCache,
   type RegistryNewsSource,
 } from '../../api/_registry/news-wire.js';
-import { handleRegistryNews } from '../../api/registry/news.js';
+import { handleRegistryNews } from '../../api/_registry/news-handler.js';
+import compatibilityHandler from '../../api/compatibility.js';
 
 const NOW = Date.parse('2026-08-10T12:00:00.000Z');
 
@@ -360,6 +361,17 @@ describe('Registry news aggregate and endpoint', () => {
     expect(response.statusCode).toBe(405);
     expect(response.headers.get('Allow')).toBe('GET');
     expect(response.headers.get('Cache-Control')).toBe('private, no-store');
+    expect(JSON.parse(response.body)).toEqual({ error: 'method' });
+  });
+
+  it('dispatches the stable news URL through the shared compatibility function', async () => {
+    const response = responseRecorder();
+    await compatibilityHandler(
+      { method: 'POST', query: { action: 'registry-news' } },
+      response,
+    );
+    expect(response.statusCode).toBe(405);
+    expect(response.headers.get('Allow')).toBe('GET');
     expect(JSON.parse(response.body)).toEqual({ error: 'method' });
   });
 });

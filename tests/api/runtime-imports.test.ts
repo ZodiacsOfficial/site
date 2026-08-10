@@ -17,7 +17,6 @@ const EXPECTED_HANDLERS = [
   'api/email/subscribe.ts',
   'api/email/unsubscribe.ts',
   'api/push/subscribe.ts',
-  'api/registry/news.ts',
   'api/unsubscribe.ts',
   'api/wallet-birth.ts',
 ] as const;
@@ -188,6 +187,15 @@ function auditRuntimeGraphs(): { violations: string[]; catalogs: string[] } {
 describe('Vercel API runtime packaging', () => {
   it('exposes only the intended function handlers', () => {
     expect(deployedFunctionFiles(API_ROOT).sort()).toEqual([...EXPECTED_HANDLERS].sort());
+    expect(EXPECTED_HANDLERS).toHaveLength(12);
+  });
+
+  it('routes Registry news through the existing compatibility function', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/registry/news',
+      destination: '/api/compatibility?action=registry-news',
+    });
   });
 
   it('uses Node ESM-safe relative imports through every handler graph', () => {

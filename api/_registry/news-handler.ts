@@ -2,9 +2,7 @@ import {
   collectRegistryNews,
   type RegistryNewsDependencies,
   type RegistryNewsResponse,
-} from '../_registry/news-wire.js';
-
-export const config = { maxDuration: 10 };
+} from './news-wire.js';
 
 interface CachePolicy {
   browser: string;

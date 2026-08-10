@@ -160,6 +160,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/registry/news",
+      "destination": "/api/compatibility?action=registry-news"
+    },
+    {
       "source": "/c/:token/",
       "destination": "/api/compatibility?action=invite-exchange&token=:token"
     },
