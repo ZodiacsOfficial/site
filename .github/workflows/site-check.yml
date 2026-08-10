@@ -176,6 +176,7 @@ jobs:
       - name: Rebuild wing output from sources
         run: |
           node scripts/build-app.mjs
+          node scripts/build-registry-token-chart.mjs
           node scripts/build-sign-pages.mjs
           node scripts/build-archive.mjs
           node scripts/build-shelf.mjs
