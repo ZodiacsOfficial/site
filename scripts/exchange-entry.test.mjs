@@ -4,7 +4,12 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
   REGISTRY_EXCHANGE_FLAG,
+  REGISTRY_EXCHANGE_LANDING_COPY,
+  REGISTRY_EXCHANGE_META,
+  REGISTRY_EXCHANGE_PATH,
+  REGISTRY_EXCHANGE_PUBLIC_NAME,
   injectRegistryExchange,
+  injectRegistryExchangeLanding,
   registryExchangeEnabled,
   renderExchangeRegion,
 } from '../src/exchange/entry.mjs';
@@ -12,6 +17,12 @@ import {
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const ON = { [REGISTRY_EXCHANGE_FLAG]: '1' };
 const page = () => readFile(resolve(root, 'public/registry/exchange/index.html'), 'utf8');
+const landing = () => [
+  '<!doctype html>',
+  '<html><head>',
+  `<meta name="${REGISTRY_EXCHANGE_META}" content="0" />`,
+  '</head><body>Registry landing fixture</body></html>',
+].join('\n');
 
 describe('the flag', () => {
   it('turns on for exactly one value', () => {
@@ -20,6 +31,18 @@ describe('the flag', () => {
       expect(registryExchangeEnabled({ [REGISTRY_EXCHANGE_FLAG]: value })).toBe(false);
     }
     expect(registryExchangeEnabled({})).toBe(false);
+  });
+
+  it('exports one stable public integration contract for the Registry landing', () => {
+    expect(REGISTRY_EXCHANGE_PATH).toBe('/registry/exchange/');
+    expect(REGISTRY_EXCHANGE_PUBLIC_NAME).toBe('Zodiac Markets');
+    expect(REGISTRY_EXCHANGE_LANDING_COPY).toEqual({
+      eyebrow: 'Advanced market view',
+      action: 'Open Zodiac Markets',
+      description: 'All 12 · charts · recent trades · independent venue quotes',
+      ariaLabel: 'Open Zodiac Markets for the selected Zodiac token',
+    });
+    expect(Object.isFrozen(REGISTRY_EXCHANGE_LANDING_COPY)).toBe(true);
   });
 });
 
@@ -55,7 +78,8 @@ describe('stamping', () => {
     expect(enabled).toBe(true);
     expect(output).toContain('<meta name="zodiacs-registry-exchange-enabled" content="1" />');
     expect(output.match(/data-zme-terminal/g)).toHaveLength(1);
-    expect(output).toContain('aria-label="Registry Trading Room terminal"');
+    expect(output).toContain('aria-label="Zodiac Markets terminal"');
+    expect(output).not.toContain('Registry Trading Room');
     expect(output).not.toContain('aria-label="Exchange terminal"');
     expect(output.match(/src="\/assets\/exchange\.js"/g)).toHaveLength(1);
   });
@@ -89,6 +113,28 @@ describe('stamping', () => {
   });
 });
 
+describe('Registry landing flag synchronization', () => {
+  it('stamps the landing marker from the exact same flag', () => {
+    const committed = landing();
+    const on = injectRegistryExchangeLanding(committed, ON);
+    expect(on.enabled).toBe(true);
+    expect(on.output).toContain(`<meta name="${REGISTRY_EXCHANGE_META}" content="1" />`);
+    expect(on.output.match(new RegExp(REGISTRY_EXCHANGE_META, 'g'))).toHaveLength(1);
+    expect(injectRegistryExchangeLanding(on.output, {}).output).toBe(committed);
+  });
+
+  it('is idempotent and fails closed when the landing marker is missing', () => {
+    const committed = landing();
+    const on = injectRegistryExchangeLanding(committed, ON).output;
+    expect(injectRegistryExchangeLanding(on, ON).output).toBe(on);
+    expect(injectRegistryExchangeLanding(committed, {}).output).toBe(committed);
+    expect(() => injectRegistryExchangeLanding('<html><head></head></html>', ON))
+      .toThrow(/hub is missing its flag marker/);
+    expect(() => injectRegistryExchangeLanding(`${committed}\n${committed}`, ON))
+      .toThrow(/hub must contain exactly one flag marker/);
+  });
+});
+
 describe('the rendered region', () => {
   it('renders nothing but its markers when the flag is off', () => {
     const off = renderExchangeRegion({ enabled: false });
@@ -105,5 +151,17 @@ describe('the committed-off drift invariant', () => {
     expect(job).toContain('node scripts/build-exchange.mjs');
     expect(job).toContain('node scripts/configure-registry-exchange.mjs');
     expect(job.indexOf('configure-registry-exchange.mjs')).toBeLessThan(job.indexOf('git diff --exit-code'));
+  });
+
+  it('configures the route and Registry landing together before writing either', async () => {
+    const configure = await readFile(resolve(root, 'scripts/configure-registry-exchange.mjs'), 'utf8');
+    expect(configure).toContain("resolve(root, 'public/registry/exchange/index.html')");
+    expect(configure).toContain("resolve(root, 'public/registry/index.html')");
+    expect(configure).toContain('injectRegistryExchange(exchangeSource, process.env)');
+    expect(configure).toContain('injectRegistryExchangeLanding(hubSource, process.env)');
+    expect(configure.indexOf('const exchangeOutput =')).toBeLessThan(configure.indexOf('const writes ='));
+    expect(configure.indexOf('const hubOutput =')).toBeLessThan(configure.indexOf('const writes ='));
+    expect(configure).toContain('await Promise.all(writes)');
+    expect(configure).toContain('of 2 surfaces rewritten, landing included');
   });
 });

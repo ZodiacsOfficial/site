@@ -1,6 +1,7 @@
-# Registry Trading Room launch runbook
+# Zodiac Markets launch runbook
 
-This runbook carries `/registry/exchange/` from merged-but-flag-off to a
+This runbook carries Zodiac Markets at `/registry/exchange/` from
+merged-but-flag-off to a
 time-limited production pilot. It does not ratify the owner decision, enable a
 Vercel environment, approve a PR, or authorize a real trade by itself.
 
@@ -50,6 +51,11 @@ node scripts/configure-registry-exchange.mjs
 git diff --exit-code
 ```
 
+Before any flag-on QA, verify that both the route and `/registry/` landing
+markers are `0`, the terminal and its script are absent, and the Registry has
+no Zodiac Markets discovery entry. The round trip above must stamp both
+markers to `1` from the same environment flag, then restore both to `0`.
+
 ## Protected flag-on QA
 
 The owner may authorize one branch-specific Preview variable with deployment
@@ -58,8 +64,12 @@ production alias. Remove the branch override after QA.
 
 Verify:
 
-- the enabled meta marker is `1`, the terminal mounts, and the twelve records
-  remain below it;
+- the enabled meta marker is `1` on both Zodiac Markets and `/registry/`, the
+  terminal mounts, and the twelve records remain below it;
+- exactly one Zodiac Markets discovery entry appears on `/registry/`; it is
+  same-origin, points to `/registry/exchange/#<selected-sign>`, contains no
+  venue URL, and causes no provider or wallet request merely by rendering or
+  receiving focus;
 - all twelve selections keep the panel responsive without automatically
   loading the depth ladder;
 - sign selection locks during wallet review, and every ambiguous execute
@@ -73,12 +83,12 @@ Verify:
 - requests are limited to self, `lite-api.jup.ag`, `api.dexscreener.com`,
   `api.geckoterminal.com`, and `plausible.io`; a wallet address appears only
   after the visitor explicitly asks the panel to trade;
-- the service worker has no CacheStorage entry for any Exchange navigation.
+- the service worker has no CacheStorage entry for any Zodiac Markets navigation.
 
 ## Merge and production pilot
 
 Open the PR as draft. Describe the flag-off guarantee, audit fixes, legacy
-Ultra constraint, neutral name, CSP/cache controls, and rollback target. Do
+Ultra constraint, Zodiac Markets public name, CSP/cache controls, and rollback target. Do
 not merge around a red required check. Merge only after owner PR approval.
 
 Confirm the merge deploy is flag-off first. Then the owner may set
@@ -111,8 +121,9 @@ requires a dated owner decision.
 ## Emergency rollback
 
 1. Use Vercel Instant Rollback to the retained flag-off production deployment.
-2. Confirm the production meta marker is `0`, the terminal/script are absent,
-   and an offline request cannot recover a cached flag-on page.
+2. Confirm both the production route and Registry landing meta markers are
+   `0`, the terminal/script and sole Registry discovery entry are absent, and
+   an offline request cannot recover a cached flag-on page.
 3. Remove the Production environment variable and deploy the current `main` to
    make flag-off durable.
 4. If Vercel paused automatic domain assignment during rollback, restore it

@@ -1,11 +1,35 @@
-# Registry Trading Room — owner risk decision
+# Zodiac Markets — owner risk decision
 
 Status: ratified by the owner; flag-on authorized once every mandatory control
 below is satisfied.
 
 Approved: 2026-08-10T11:40:11Z
 
-Scope: exactly one additional surface — the Registry Trading Room at
+## Addendum — 2026-08-10: public name and one Registry entry
+
+Authorized: 2026-08-10
+
+This addendum supersedes only the original public name and discovery
+boundary. It does not expand execution, custody, indexing, provider, or pilot
+scope:
+
+- The public name is **Zodiac Markets**. The interface must continue to say
+  that Zodiacs.org operates no market and that every order belongs to the
+  independent venue that builds, executes, and charges for it.
+- The route, internal `exchange` identifiers, and feature-flag name stay unchanged.
+- The owner authorizes exactly one same-origin discovery entry on `/registry/`,
+  only when `PUBLIC_REGISTRY_EXCHANGE_ENABLED=1`. It may link to
+  `/registry/exchange/` with the selected sign in the URL hash.
+- No global navigation, footer, Cabinet, or sign-record entry is authorized.
+  The Registry entry contains no venue URL and mounting or selecting it causes
+  no provider or wallet request.
+- The same build stamper must set the route and Registry landing markers from
+  the same flag. Flag-off means that the route terminal and the Registry entry
+  are both absent.
+- All noindex, no-store, CSP, service-worker, custody, compensation,
+  independent-venue, pilot, and rollback controls remain unchanged.
+
+Scope: exactly one additional surface — Zodiac Markets at
 `/registry/exchange/` — plus the shared trade-client safeguards needed to keep
 that surface within the existing trust boundary; Solana only; spot only; the site's existing trade panel calling
 Jupiter's public Ultra API, plus read-only market description (candlestick
@@ -30,9 +54,9 @@ off until the owner explicitly ratifies this record after considering it.
 
 ## What is being decided
 
-Whether the Registry may keep one room in which the twelve records, their
-market history, and the venue's own quotes stand side by side — a market-room
-interface. The trade inside it is the already-ratified trade:
+Whether the Registry may keep one interface in which the twelve records,
+their market history, and the venue's own quotes stand side by side. The trade
+inside Zodiac Markets is the already-ratified trade:
 the same panel, the same venue, the same controls, on one more page.
 
 The transaction protocol is unchanged. The market-data surface, automated
@@ -49,7 +73,7 @@ rollback requirements are new:
   Dex Screener endpoints the Registry already uses, labelled "indexed" as
   everywhere else.
 - **A depth ladder.** The pools are AMMs; there is no order book, and the
-  room does not pretend to one. Each rung is an indicative, taker-less
+  interface does not pretend to one. Each rung is an indicative, taker-less
   Jupiter quote for a fixed size ($25–$1,000), sampled sequentially from the
   same Ultra endpoint the panel uses. A trade is quoted again before wallet
   review; sell-side dollar sizes are estimates derived from the indexed mid,
@@ -58,11 +82,11 @@ rollback requirements are new:
 
 ## The name
 
-"Registry Trading Room" describes the interface without claiming that the
-site operates an exchange, and it does not reverse the Registry masthead
-choice merged on 2026-08-10. The boundary the trade decision rests on is stated in
-the room itself: it "presents a trade that an independent venue builds,
-executes, and charges for", and "operates no market". Those sentences are
+"Zodiac Markets" names the advanced market-data and trade interface without
+claiming that Zodiacs.org operates an exchange or venue. The boundary the
+trade decision rests on is stated in the interface itself: it "presents a
+trade that an independent venue builds, executes, and charges for", and
+"operates no market". Those sentences are
 pinned by `scripts/exchange-risk.test.mjs` against the committed page and
 survive stamping. The route, source directory, and flag retain the internal
 word `exchange` for compatibility; those identifiers are not a public claim
@@ -101,7 +125,7 @@ contract current or durable.
 Ratification therefore authorizes, at most, a 30-day pilot on the existing
 ratified Ultra path. Immediately before a flag-on build, the launch owner must
 run the committed provider probe and keep the flag off if the no-taker order,
-fee boundary, market-index, chart, or recent-trades contracts fail. The room returns flag-off
+fee boundary, market-index, chart, or recent-trades contracts fail. Zodiac Markets returns flag-off
 on or before 2026-09-09 unless the owner records a dated review of the live
 contract and pilot evidence. Migrating to Swap V2, introducing an API key or
 site proxy, changing the 10 bps fee ceiling, or otherwise changing transaction
@@ -110,7 +134,7 @@ responsibility requires a new owner decision before code or configuration.
 ## Controls that remain mandatory
 
 The earlier execution, custody, and compensation controls carry over. The
-explicit room-specific terms below govern where they add to or differ from
+explicit surface-specific terms below govern where they add to or differ from
 that record:
 
 1. Committed `public/registry/exchange/index.html` stays flag-off; only the
@@ -129,10 +153,10 @@ that record:
    no write RPC. The trading surfaces load no third-party code; the only
    third-party script on the page is the site's long-standing,
    self-configured Plausible analytics loader that every wing page carries.
-   Its room events use a closed schema containing only surface and technical
+   Its technical events use a closed schema containing only surface and technical
    outcome enums — never trade intent, a wallet address, amount, mint, quote,
    request ID, transaction, visitor-supplied URL/query/hash, referrer, or free
-   text. Plausible's standard envelope receives the fixed canonical room URL;
+   text. Plausible's standard envelope receives the fixed canonical surface URL;
    the page transform clears the referrer. The self-hosted-fonts rule stands
    unbroken (`scripts/exchange-analytics.test.mjs`).
 4. The pinned risk sentences render on the page itself — independent
@@ -141,10 +165,12 @@ that record:
    amount, and destination — with the thin-liquidity warning and the venue's
    fee ceiling in the same block, in the committed flag-off bytes and after
    stamping alike (`scripts/exchange-risk.test.mjs`).
-5. The Cabinet (`/registry/collection/`) never gains the room, the panel, or
-   any link to `/registry/exchange/` (pinned by test). The `/registry/` hub
-   keeps its `jup.ag/swap/` ban; this page carries only the venue's homepage
-   link, like the hub's venue directory.
+5. The Cabinet (`/registry/collection/`) never gains Zodiac Markets, the
+   panel, or any link to `/registry/exchange/` (pinned by test). Exactly one
+   discovery entry may appear on `/registry/`, under the same flag as the
+   terminal; flag-off removes it. No global navigation, footer, sign-record,
+   leaderboard-row, or additional Registry link is authorized. The hub keeps
+   its `jup.ag/swap/` ban; the entry is same-origin and carries no venue URL.
 6. A wallet address is sent to the venue only when the visitor chooses to
    trade — never to show a price, a chart, a tape row, or a ladder rung. The
    privacy pages' description of what leaves the browser stays accurate, and
@@ -153,7 +179,7 @@ that record:
    indicative quote at the time requested and a trade is quoted again before
    wallet review — renders with the ladder and is pinned by test in source
    and bundle.
-8. The room stays `noindex` and out of the sitemap under this record.
+8. Zodiac Markets stays `noindex` and out of the sitemap under this record.
    Indexing it is a separate, later decision with its own SEO review.
 9. Emergency rollback uses Vercel Instant Rollback to the immediately prior
    verified flag-off production deployment, without waiting for a build. The
@@ -166,7 +192,7 @@ that record:
     valid `Retry-After` up to 120s. A success that began before a sibling 429
     cannot erase the pause. The provider limit is IP-bound, so this does not
     claim a guarantee across browsers or visitors sharing a NAT.
-11. The depth ladder makes no request on room open or sign selection. A visitor
+11. The depth ladder makes no request on initial load or sign selection. A visitor
     explicitly loads ten taker-less quotes. One page-wide scheduler starts no
     more than one Jupiter request every 2.1 seconds, cancels superseded display
     work, and gives wallet-bound work priority over ladder samples. The button
@@ -183,8 +209,9 @@ that record:
     direct user feedback during the first hour and daily thereafter. Contract
     or fee mismatch, a new key requirement, unexpected origin or address
     disclosure, rollback/cache failure, or sustained provider failure turns
-    the flag off immediately. No indexing, broader acquisition surface, or
-    permanent dependency follows automatically.
+    the flag off immediately. No indexing, discovery entry beyond the one
+    flag-gated Registry hub entry, broader acquisition surface, or permanent
+    dependency follows automatically.
 
 ## Phase boundary
 
@@ -194,4 +221,4 @@ It does not authorize Base-chain
 trading, fees or compensation of any kind, any API key or site secret
 (Jupiter's Trigger/limit-order API requires one and therefore stays out of
 scope until a record of its own), embedding any third-party script, indexing
-the room, any further acquisition surface, or the thesis §VII claim surface.
+Zodiac Markets, any further acquisition surface, or the thesis §VII claim surface.
