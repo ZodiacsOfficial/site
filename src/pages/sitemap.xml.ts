@@ -110,6 +110,12 @@ const EVERGREEN_LASTMOD = new Map<string, string>([
       'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
     ].map((sign) => `/ru/${sign}/`),
   ].map((loc) => [loc, '2026-07-22'] as const),
+  // Registry Pro disclosure publication. Keep these last so the Map resolves
+  // every translated Privacy page and the English Terms page to this review.
+  ...[
+    '/privacy/', '/es/privacy/', '/fr/privacy/', '/it/privacy/',
+    '/pt/privacy/', '/ru/privacy/', '/terms/',
+  ].map((loc) => [loc, '2026-08-10'] as const),
 ]);
 
 function getLastmod(loc: string): string {
