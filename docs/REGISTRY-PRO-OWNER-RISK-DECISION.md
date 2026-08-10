@@ -1,11 +1,9 @@
 # Registry Pro quote laboratory — owner risk decision
 
-Status: DRAFT — pending owner ratification. The page and quote gateway stay
-off in every public environment until the owner reads this record, replaces
-this status with explicit ratification, and dates the approval in ISO 8601 UTC.
-Merging flag-off code does not authorize a launch.
+Status: ratified by the owner; flag-on authorized once every mandatory control
+below is satisfied.
 
-Approved: (pending)
+Approved: 2026-08-10T11:40:11Z
 
 Scope: one additional, `noindex` Registry surface at `/registry/pro/`;
 Solana only; the twelve official Zodiac SPL tokens paired with USDC;
@@ -22,9 +20,10 @@ Registry trade-panel and Registry Trading Room decisions. Those decisions do
 not authorize this route, its server-held provider credential, its provider
 comparison, or any new public claim.
 
-While this record reads DRAFT, there is no authority to set a public feature
-flag, enable the quote gateway, place a Jupiter key in a live deployment for
-this feature, or characterize the feature as launched.
+Ratification alone does not authorize setting a public feature flag, enabling
+the quote gateway, placing a Jupiter key in a live deployment for this feature,
+or characterizing the feature as launched. Every mandatory control below must
+be satisfied first.
 
 ## What is being decided
 
@@ -45,7 +44,7 @@ workspace or quote laboratory. This decision does not authorize
 `guaranteed`, or regulated-service claims. Information density is not an
 institutional control environment.
 
-## New risks accepted if ratified
+## New risks accepted by ratification
 
 - **Server credential and proxy.** Jupiter quote access moves behind a
   same-origin server function carrying a secret API key. That key must never
@@ -186,8 +185,8 @@ below is satisfied. It does not make a control optional.
 
 ## Phase boundary
 
-If ratified, this record clears one governance gate only. It does not authorize
-a public pilot until the separate Privacy/Terms dependency and every other
+This ratification clears one governance gate only. It does not authorize a
+public pilot until the separate Privacy/Terms dependency and every other
 mandatory control pass. The resulting scope is a time-limited, `noindex`,
 quote-only Registry Pro pilot. It does not
 authorize execution, wallet connection, transaction preparation, signing,

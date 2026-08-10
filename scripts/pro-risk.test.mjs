@@ -9,6 +9,15 @@ async function source(path) {
 }
 
 describe('Registry Pro public and capability posture', () => {
+  it('records quote ratification while Floor Chat remains separately DRAFT', async () => {
+    const decision = await source('docs/REGISTRY-PRO-OWNER-RISK-DECISION.md');
+    const chatDecision = await source('docs/REGISTRY-PRO-TROLLBOX-OWNER-RISK-DECISION.md');
+    expect(decision).toContain('Status: ratified by the owner; flag-on authorized once every mandatory control');
+    expect(decision).toContain('Approved: 2026-08-10T11:40:11Z');
+    expect(chatDecision).toContain('Status: DRAFT — pending owner ratification.');
+    expect(chatDecision).toContain('Approved: (pending)');
+  });
+
   it('keeps the quiet page noindexed, quote-only, and candid about risk', async () => {
     const html = await source('public/registry/pro/index.html');
     expect(html).toContain('<link rel="canonical" href="https://zodiacs.org/registry/pro/" />');

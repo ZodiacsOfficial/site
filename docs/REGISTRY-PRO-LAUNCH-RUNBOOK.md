@@ -39,8 +39,10 @@ must not be used to evade a provider restriction.
 2. Pin `.github/phase1-scope-allowance.json` to the actual PR base and list
    exactly the protected Registry Pro paths reported by the scope guard. A
    moving base requires a rebase and a new pin.
-3. Confirm the two owner records still read DRAFT and `Approved: (pending)`.
-   A code author never self-ratifies them.
+3. Confirm each owner record matches an explicit owner instruction. A code
+   author never self-ratifies a record. A ratified quote record can proceed only
+   through its remaining mandatory controls; a DRAFT Floor Chat record keeps
+   that separate flag off.
 4. Confirm no environment file, Vercel setting, secret, deployment alias, or
    committed HTML enables Registry Pro, the quote gateway, or Floor Chat.
 5. Retain a verified flag-off deployment as the Instant Rollback target before
