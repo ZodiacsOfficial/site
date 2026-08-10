@@ -909,6 +909,7 @@
     }
 
     const SIGNS = ZODIACS_REGISTRY.assets.map(toDisplaySign);
+    const REGISTRY_OUTLOOK_URL = '/assets/registry-outlook.json';
 
     // The source renders share a 512px canvas, but their visible silhouettes
     // do not share the same optical centre. These restrained corrections keep
@@ -4192,7 +4193,12 @@
         if (!inView) return undefined;
         let cancelled = false;
         setState({ status: 'loading' });
-        fetch('/assets/registry-outlook.json', { headers: { accept: 'application/json' } })
+        fetch(REGISTRY_OUTLOOK_URL, {
+          // Revalidate even a still-fresh response cached before this daily
+          // publication received its explicit max-age=0 delivery policy.
+          cache: 'no-cache',
+          headers: { accept: 'application/json' },
+        })
           .then((response) => {
             if (!response.ok) throw new Error(`http ${response.status}`);
             return response.json();
@@ -4430,7 +4436,7 @@
                         <p><strong>1 · Occupancy.</strong> A planet adds a disclosed attention weight to the sign it occupies at the UTC reference point.</p>
                         <p><strong>2 · Event proximity.</strong> Ingresses, lunations, stations, and aspects receive a 1.00–0.75× weight across the selected window.</p>
                         <p><strong>3 · Market check.</strong> Price, liquidity, and volume are observed separately. Market data never changes the astrology score.</p>
-                        <a href="/assets/registry-outlook.json">Open the machine-readable edition ↗</a>
+                        <a href={REGISTRY_OUTLOOK_URL}>Open the machine-readable edition ↗</a>
                       </div>
                     </details>
                   </aside>

@@ -1,13 +1,12 @@
 {
   "version": 1,
-  "id": "registry-astrofolio-capital-markets-composition-2026-08-10",
-  "reason": "Owner-approved Registry patch (2026-08-10): simplify the Astrofolio opening into one visible identity, a restrained desktop caption, and the existing market tape leading into the sculpture room; name the live leaderboard Zodiac Capital Markets without changing its behavior. The allowance is limited to the five protected source, generated, shared-style, fallback, and contract files in this patch; it does not authorize changes to Registry behavior, APIs, wallet behavior, SDK pages, sign guides, locale trees, or Collection availability.",
-  "baseCommit": "82f9304829c83e4277e4b4953b3865b9c7fb8bef",
+  "id": "registry-outlook-cache-hotfix-2026-08-10",
+  "reason": "Owner-approved Registry production hotfix (2026-08-10): force the consumer Signals loader to revalidate responses cached under the asset's former immutable policy and explicitly make the daily JSON revalidatable. The allowance is limited to the Registry source, generated bundle, and contract files required to repair that stale-data boundary; it does not authorize design, market methodology, wallet behavior, SDK, sign-guide, locale, or Collection changes.",
+  "baseCommit": "66027539043daa4af6f6ce021d8ad207078372dc",
   "protectedPaths": [
     "public/assets/app.js",
-    "public/registry/index.html",
-    "public/registry/technical/index.html",
     "scripts/registry-consumer-contract.test.mjs",
+    "scripts/registry-risk.test.mjs",
     "src/app.jsx"
   ]
 }
