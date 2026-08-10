@@ -1,68 +1,12 @@
 {
-  "capturedAt": "2026-07-27",
+  "capturedAt": "2026-08-10",
   "wikipedia": {
     "rangeDays": 30,
-    "from": "20260627",
-    "to": "20260726",
-    "twelveAvgDay": 17088,
-    "lastDay": 18706,
+    "from": "20260711",
+    "to": "20260809",
+    "twelveAvgDay": 17233,
+    "lastDay": 15867,
     "series": [
-      {
-        "date": "20260627",
-        "views": 15792
-      },
-      {
-        "date": "20260628",
-        "views": 16717
-      },
-      {
-        "date": "20260629",
-        "views": 16159
-      },
-      {
-        "date": "20260630",
-        "views": 16380
-      },
-      {
-        "date": "20260701",
-        "views": 16727
-      },
-      {
-        "date": "20260702",
-        "views": 17126
-      },
-      {
-        "date": "20260703",
-        "views": 16186
-      },
-      {
-        "date": "20260704",
-        "views": 16596
-      },
-      {
-        "date": "20260705",
-        "views": 16882
-      },
-      {
-        "date": "20260706",
-        "views": 16980
-      },
-      {
-        "date": "20260707",
-        "views": 16954
-      },
-      {
-        "date": "20260708",
-        "views": 17436
-      },
-      {
-        "date": "20260709",
-        "views": 17362
-      },
-      {
-        "date": "20260710",
-        "views": 17200
-      },
       {
         "date": "20260711",
         "views": 17228
@@ -126,42 +70,98 @@
       {
         "date": "20260726",
         "views": 18706
+      },
+      {
+        "date": "20260727",
+        "views": 17917
+      },
+      {
+        "date": "20260728",
+        "views": 18027
+      },
+      {
+        "date": "20260729",
+        "views": 17756
+      },
+      {
+        "date": "20260730",
+        "views": 18097
+      },
+      {
+        "date": "20260731",
+        "views": 18773
+      },
+      {
+        "date": "20260801",
+        "views": 17748
+      },
+      {
+        "date": "20260802",
+        "views": 17957
+      },
+      {
+        "date": "20260803",
+        "views": 16774
+      },
+      {
+        "date": "20260804",
+        "views": 16605
+      },
+      {
+        "date": "20260805",
+        "views": 15947
+      },
+      {
+        "date": "20260806",
+        "views": 15620
+      },
+      {
+        "date": "20260807",
+        "views": 15760
+      },
+      {
+        "date": "20260808",
+        "views": 15985
+      },
+      {
+        "date": "20260809",
+        "views": 15867
       }
     ],
     "perSignAvgDay": {
-      "aries": 1337,
-      "taurus": 1618,
-      "gemini": 2378,
-      "cancer": 1346,
-      "leo": 1255,
-      "virgo": 1226,
-      "libra": 1079,
-      "scorpio": 1213,
-      "sagittarius": 1992,
-      "capricorn": 1413,
-      "aquarius": 1165,
-      "pisces": 1067
+      "aries": 1382,
+      "taurus": 1635,
+      "gemini": 2231,
+      "cancer": 1117,
+      "leo": 1520,
+      "virgo": 1262,
+      "libra": 1110,
+      "scorpio": 1254,
+      "sagittarius": 2054,
+      "capricorn": 1409,
+      "aquarius": 1189,
+      "pisces": 1070
     },
     "comparisons": [
       {
         "label": "Dogecoin",
-        "avgDay": 295,
-        "multiple": 58
+        "avgDay": 290,
+        "multiple": 59
       },
       {
         "label": "Ethereum",
-        "avgDay": 686,
-        "multiple": 25
+        "avgDay": 671,
+        "multiple": 26
       },
       {
         "label": "Solana",
-        "avgDay": 324,
-        "multiple": 53
+        "avgDay": 330,
+        "multiple": 52
       },
       {
         "label": "Shiba Inu",
-        "avgDay": 87,
-        "multiple": 196
+        "avgDay": 85,
+        "multiple": 203
       }
     ]
   },
