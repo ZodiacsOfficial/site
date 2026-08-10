@@ -72,8 +72,8 @@ const entries: SearchEntry[] = [
   },
   {
     path: '/registry/aries/',
-    title: 'Aries — registry record',
-    description: 'The canonical record of Aries.',
+    title: 'Aries — official Zodiac record',
+    description: 'Official Aries identity, addresses, artwork, provenance, and verification.',
     kind: 'registry',
     keywords: ['registry', 'astrofolio', 'record', 'aries'],
   },

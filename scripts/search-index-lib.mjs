@@ -93,8 +93,8 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   }),
   ...SIGN_NAMES.map((sign) => freezeCuratedEntry({
     path: `/registry/${sign.toLowerCase()}/`,
-    title: `${sign} — registry record`,
-    description: `The canonical record of ${sign} in the registry: provenance, description, and verification.`,
+    title: `${sign} — official Zodiac record`,
+    description: `Official ${sign} identity, addresses, artwork, provenance, and verification.`,
     kind: 'registry',
     keywords: ['registry', 'astrofolio', 'record', sign.toLowerCase()],
   })),

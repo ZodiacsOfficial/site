@@ -170,8 +170,8 @@ describe('curated wing search entries', () => {
     ]);
     expect(CURATED_WING_ENTRIES[3]).toEqual(expect.objectContaining({
       path: '/registry/aries/',
-      title: 'Aries — registry record',
-      description: 'The canonical record of Aries in the registry: provenance, description, and verification.',
+      title: 'Aries — official Zodiac record',
+      description: 'Official Aries identity, addresses, artwork, provenance, and verification.',
     }));
     expect(searchIndexShapeFailures(
       sortSearchEntries(CURATED_WING_ENTRIES),

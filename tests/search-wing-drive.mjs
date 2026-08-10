@@ -16,7 +16,7 @@ const queries = [
   ['zodiac capital markets', 'Zodiac Terminal'],
   ['astrofolio', 'Zodiac Terminal'],
   ['thesis', 'The Registry Thesis'],
-  ['aries record', 'Aries — registry record'],
+  ['aries record', 'Aries — official Zodiac record'],
 ];
 const wingPaths = ['/registry/', '/thesis/', '/sdk/', '/registry/aries/'];
 const results = [];
