@@ -1,11 +1,12 @@
 {
   "version": 1,
-  "id": "registry-astrofolio-masthead-2026-08-10",
-  "reason": "Owner-approved Registry patch (2026-08-10): rename the visible consumer masthead and matching no-JavaScript fallback from Zodiac Markets to Astrofolio. The allowance is limited to the four protected source, generated, fallback, and contract files in this patch; it does not authorize changes to Registry behavior, APIs, wallet behavior, SDK pages, sign guides, locale trees, or Collection availability.",
-  "baseCommit": "bf2e0e12a6d5211e965d1f51d9dbf2837d729b85",
+  "id": "registry-astrofolio-capital-markets-composition-2026-08-10",
+  "reason": "Owner-approved Registry patch (2026-08-10): simplify the Astrofolio opening into one visible identity, a restrained desktop caption, and the existing market tape leading into the sculpture room; name the live leaderboard Zodiac Capital Markets without changing its behavior. The allowance is limited to the five protected source, generated, shared-style, fallback, and contract files in this patch; it does not authorize changes to Registry behavior, APIs, wallet behavior, SDK pages, sign guides, locale trees, or Collection availability.",
+  "baseCommit": "82f9304829c83e4277e4b4953b3865b9c7fb8bef",
   "protectedPaths": [
     "public/assets/app.js",
     "public/registry/index.html",
+    "public/registry/technical/index.html",
     "scripts/registry-consumer-contract.test.mjs",
     "src/app.jsx"
   ]

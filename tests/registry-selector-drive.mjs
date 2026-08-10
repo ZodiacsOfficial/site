@@ -5,7 +5,7 @@
  *   npm run build
  *   npm run test:registry-selector:browser
  */
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
@@ -25,6 +25,11 @@ const MAX_PHONE_REGISTRY_HEIGHT = 11_500;
 // the sculpture to the room it receives, so 260px is the useful desktop floor;
 // mobile retains its separate 200px floor and explicit placard-clearance gate.
 const MIN_DESKTOP_STAGE_HEIGHT = 260;
+const committedOutlook = JSON.parse(await readFile(
+  new URL('../public/assets/registry-outlook.json', import.meta.url),
+  'utf8',
+));
+const COMMITTED_OUTLOOK_REFERENCE = committedOutlook.daily.horizon.referenceAt;
 
 /**
  * The gallery band replaces the strip wherever WebGL exists, so the strip's
@@ -414,6 +419,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         deadGalleryLinks: document.querySelectorAll('a[href*="gallery=gold"]').length,
         staticTokenRows: document.querySelectorAll('.static-token-list li').length,
         staticPriceNote: document.body.textContent?.includes('Live figures and sharing appear with JavaScript') ?? false,
+        marketEyebrow: document.querySelector('#market > .static-site__eyebrow')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        marketHeading: document.querySelector('#market > h2')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         links: [...nav.querySelectorAll('a')].map((link) => {
           const rect = link.getBoundingClientRect();
           return {
@@ -449,8 +458,16 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
       check(
         `Registry no-JavaScript fallback at ${width}px lists the twelve tokens with a plain price note`,
-        fallbackState.staticTokenRows === 12 && fallbackState.staticPriceNote,
-        JSON.stringify({ rows: fallbackState.staticTokenRows, note: fallbackState.staticPriceNote }),
+        fallbackState.staticTokenRows === 12
+          && fallbackState.staticPriceNote
+          && fallbackState.marketEyebrow === 'Live market board'
+          && fallbackState.marketHeading === 'Zodiac Capital Markets',
+        JSON.stringify({
+          rows: fallbackState.staticTokenRows,
+          note: fallbackState.staticPriceNote,
+          eyebrow: fallbackState.marketEyebrow,
+          heading: fallbackState.marketHeading,
+        }),
       );
       await fallbackPage.close();
     }
@@ -771,6 +788,26 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     // narrow, non-WebGL, and stage-failure readers actually get. The stage
     // is asserted separately, on an unstubbed page.
     const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
+    // The primary Outlook assertions exercise the complete, current-edition
+    // path. Anchor only this page to the receipt's disclosed reference time so
+    // a committed daily artifact does not become stale merely because the
+    // browser gate runs after midnight. Routed cases below independently prove
+    // stale and partial editions remain unshareable.
+    await desktop.addInitScript((referenceAt) => {
+      const NativeDate = Date;
+      const fixedTime = new NativeDate(referenceAt).getTime();
+      class ReceiptDate extends NativeDate {
+        constructor(...args) {
+          super(...(args.length ? args : [fixedTime]));
+        }
+
+        static now() {
+          return fixedTime;
+        }
+      }
+      Object.setPrototypeOf(ReceiptDate, NativeDate);
+      window.Date = ReceiptDate;
+    }, COMMITTED_OUTLOOK_REFERENCE);
     await stubNoWebgl(desktop);
     await mockDexscreener(desktop);
     await withCollectionFlag(desktop);
@@ -815,6 +852,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && explorerState.every((item) => item.width >= 44 && item.height >= 44),
       JSON.stringify(explorerState),
     );
+    const desktopMasthead = await desktop.locator('.consumer-masthead').evaluate((masthead) => {
+      const caption = masthead.querySelector(':scope > p');
+      const tape = masthead.nextElementSibling;
+      const sculptureRoom = tape?.nextElementSibling;
+      return {
+        text: masthead.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        eyebrowCount: masthead.querySelectorAll('.consumer-masthead__eyebrow').length,
+        caption: caption?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        captionVisible: Boolean(caption && getComputedStyle(caption).display !== 'none'
+          && getComputedStyle(caption).visibility !== 'hidden'
+          && caption.getBoundingClientRect().height > 0),
+        tapeImmediate: tape?.classList.contains('market-tape') ?? false,
+        sculptureRoomImmediate: sculptureRoom?.matches('#gallery.gband--consumer') ?? false,
+      };
+    });
     check(
       'the sculpture-led stage opens under one visible Astrofolio masthead',
       await desktop.locator('.cine').count() === 0
@@ -823,7 +875,14 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && await desktop.locator('.consumer-masthead > h1').isVisible()
         && (await desktop.locator('.consumer-masthead > h1').innerText()).replace(/\s+/g, ' ').trim() === 'Astrofolio'
         && !((await desktop.locator('.consumer-masthead > h1').getAttribute('class')) ?? '').includes('sr-only')
-        && await desktop.locator('#official-twelve').getAttribute('aria-labelledby') === 'consumer-explorer-title',
+        && await desktop.locator('#official-twelve').getAttribute('aria-labelledby') === 'consumer-explorer-title'
+        && desktopMasthead.eyebrowCount === 0
+        && !desktopMasthead.text.includes('Official token registry')
+        && desktopMasthead.caption === 'The twelve, live.'
+        && desktopMasthead.captionVisible
+        && desktopMasthead.tapeImmediate
+        && desktopMasthead.sculptureRoomImmediate,
+      JSON.stringify(desktopMasthead),
     );
     const openingMaterial = await desktop.locator('.gband--consumer').evaluate((band) => {
       const season = band.querySelector('.season-now');
@@ -1021,6 +1080,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       };
       return {
+        eyebrow: section.querySelector('.consumer-section-head__eyebrow')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        heading: section.querySelector('#consumer-market-title')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         buy: inspect(document.querySelector('.stage-placard .btn--primary.stage-placard__pill')),
         sortShell: inspect(section.querySelector('.market-board__sort')),
         sort: [...section.querySelectorAll('.market-board__sort button')].map(inspect),
@@ -1030,6 +1093,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         legacyGlass: document.querySelectorAll('.market-glass').length,
       };
     });
+    check(
+      'the live market board uses the approved capital-markets identity without repetition',
+      marketMaterial.eyebrow === 'Live market board'
+        && marketMaterial.heading === 'Zodiac Capital Markets',
+      JSON.stringify({ eyebrow: marketMaterial.eyebrow, heading: marketMaterial.heading }),
+    );
     check(
       'market filters, sharing, and records use the stage Buy pill language without Market glass',
       marketMaterial.buy
@@ -1538,14 +1607,24 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const label = `${width}×${height}`;
       const mobileMasthead = await mobile.locator('.consumer-masthead').evaluate((masthead) => {
         const heading = masthead.querySelector('h1');
+        const caption = masthead.querySelector(':scope > p');
+        const tape = masthead.nextElementSibling;
+        const sculptureRoom = tape?.nextElementSibling;
         const nav = document.querySelector('.wnav-wrap');
         const headingRect = heading?.getBoundingClientRect();
         const navRect = nav?.getBoundingClientRect();
         const mastheadStyle = getComputedStyle(masthead);
+        const captionStyle = caption ? getComputedStyle(caption) : null;
         return {
           text: heading?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           visible: heading ? getComputedStyle(heading).visibility === 'visible' && headingRect.height > 0 : false,
           direct: heading?.parentElement === masthead,
+          eyebrowCount: masthead.querySelectorAll('.consumer-masthead__eyebrow').length,
+          legacyTextVisible: (masthead.textContent ?? '').includes('Official token registry'),
+          caption: caption?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          captionDisplay: captionStyle?.display ?? '',
+          tapeImmediate: tape?.classList.contains('market-tape') ?? false,
+          sculptureRoomImmediate: sculptureRoom?.matches('#gallery.gband--consumer') ?? false,
           left: headingRect?.left ?? -1,
           right: headingRect?.right ?? innerWidth + 1,
           top: headingRect?.top ?? -1,
@@ -1564,6 +1643,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         mobileMasthead.text === 'Astrofolio'
           && mobileMasthead.visible
           && mobileMasthead.direct
+          && mobileMasthead.eyebrowCount === 0
+          && !mobileMasthead.legacyTextVisible
+          && mobileMasthead.caption === 'The twelve, live.'
+          && mobileMasthead.captionDisplay === 'none'
+          && mobileMasthead.tapeImmediate
+          && mobileMasthead.sculptureRoomImmediate
           && mobileMasthead.top >= mobileMasthead.navBottom - 1
           && mobileMasthead.left >= -1
           && mobileMasthead.right <= width + 1

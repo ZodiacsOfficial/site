@@ -46,7 +46,7 @@ export type {
 } from './horoscope-program-types';
 
 export const HOROSCOPE_PROGRAM_SCHEMA = 'zodiacs.horoscope-program.v1' as const;
-export const HOROSCOPE_PROGRAM_RENDERER = 'zodiacs.horoscope-program-renderer.v6' as const;
+export const HOROSCOPE_PROGRAM_RENDERER = 'zodiacs.horoscope-program-renderer.v7' as const;
 
 export const HOROSCOPE_WORD_BOUNDS: Record<HoroscopeSurface, { min: number; max: number }> = {
   today: { min: 90, max: 140 },
@@ -1068,7 +1068,7 @@ function weeklySurface(sign: HoroscopeSign, days: Daily[], catalog: EvidenceCata
     const exactHouses = eventHouses(exact.event, sign);
     const exactContext = eventSentence(exact.event, sign).replace(/[.]$/u, '');
     passages.push(passage(
-      `${WEEKLY_CHECKPOINT[exactHouses[0]]}. ${exactContext}; ${uncap(HOUSE_DECISION[exactHouses[0]]).replace(/[.]$/u, '')}.`,
+      `${WEEKLY_CHECKPOINT[exactHouses[0]]}. ${exactContext}.`,
       catalog.event(exact.event, sign, { date: exact.daily.date, sourceId: exact.daily.eventsSource ?? `daily-snapshot:${exact.daily.date}` }),
     ));
   } else {

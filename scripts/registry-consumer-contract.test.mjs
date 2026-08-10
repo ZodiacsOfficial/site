@@ -90,7 +90,10 @@ describe('Registry consumer and technical information architecture', () => {
 
     expect(source).toContain('id="official-twelve"');
     expect(explorer).toContain('<header className="consumer-masthead">');
-    expect(source).toContain('<h1 id="consumer-explorer-title">Astrofolio</h1>');
+    expect(explorer).toContain('<h1 id="consumer-explorer-title">Astrofolio</h1>');
+    expect(explorer).toContain('<p>The twelve, live.</p>');
+    expect(explorer).not.toContain('consumer-masthead__eyebrow');
+    expect(explorer).not.toContain('Official token registry');
     expect(source).toContain('aria-labelledby="consumer-explorer-title"');
     expect(source.split('<h1 id="consumer-explorer-title"'), 'consumer Registry h1').toHaveLength(2);
     expect(explorer).not.toMatch(/<h1[^>]*className="[^"]*sr-only/u);
@@ -234,6 +237,8 @@ describe('Registry consumer and technical information architecture', () => {
     expect(tape).not.toContain('aria-pressed=');
     expect(gallery.indexOf('<MarketTape')).toBeGreaterThan(-1);
     expect(gallery.indexOf('<MarketTape')).toBeLessThan(gallery.indexOf('<section'));
+    expect(gallery.slice(gallery.indexOf('return ('), gallery.indexOf('<section')))
+      .toContain('<MarketTape season={season} paused={sheetVisible} />');
   });
 
   it('lets the season materialize inside the scene without another framed card', async () => {
@@ -398,7 +403,11 @@ describe('Registry consumer and technical information architecture', () => {
     ]);
     const visible = visibleMarkup(html);
 
-    expect(source).toContain('The wheel, <span className="it">in motion.</span>');
+    expect(source).toContain('<span className="consumer-section-head__eyebrow">Live market board</span>');
+    expect(source).toContain('<h2 id="consumer-market-title">Zodiac Capital Markets</h2>');
+    expect(source).not.toContain('Live Zodiac market');
+    expect(visible).toContain('<p class="static-site__eyebrow">Live market board</p>');
+    expect(visible).toContain('<h2>Zodiac Capital Markets</h2>');
     expect(source).toContain('function loadTwelveMarketQuotes()');
     expect(source).toContain('https://api.dexscreener.com/tokens/v1/solana/');
     expect(source).toContain("marketCap: { label: 'Market cap'");
@@ -436,7 +445,6 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain("shared.searchParams.set('outlook', horizon)");
     expect(source).toContain("edition.date === utcToday");
     // The static fallback carries the crawlable twelve with truncated mints.
-    expect(visible).toContain('The wheel, in motion');
     expect(visible).toContain('The interactive edition ranks the twelve');
     expect((visible.match(/class="static-token-list"/gu) ?? [])).toHaveLength(1);
     expect(visible).toContain('Live figures and sharing appear with JavaScript');
