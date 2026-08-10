@@ -344,7 +344,7 @@ async function verifyNoJavaScriptSample(browser, baseURL) {
 
   assert.equal(
     normalized(await page.locator('.aura-page__hero .kicker').innerText()).toLowerCase(),
-    'the registry',
+    'zodiac terminal',
   );
   assert.equal(
     normalized(await page.locator('h1').innerText()),

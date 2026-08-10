@@ -433,7 +433,7 @@ export async function generateAssistantContext({ repoRoot = repo } = {}) {
     birthdayLines(birthdays, signNames),
     '',
     'REGISTRY WING',
-    '- /registry/ — The registry of the twelve signs: canonical records, provenance, and the Astrofolio catalogue.',
+    '- /registry/ — Zodiac Terminal: a separate interface for the twelve official Zodiac assets, their rotating gold artwork, public activity context, reviewed research, and links to canonical Zodiacs Registry identities and addresses.',
     '- /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.',
     '- /sdk/ — Open tools for charts, icons, and the registry interface.',
     '',

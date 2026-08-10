@@ -9,7 +9,7 @@ const read = (path) => readFile(resolve(root, path), 'utf8');
 const compact = (value) => value.replace(/\s+/g, ' ');
 
 describe('Exchange risk and trust copy', () => {
-  it('keeps the pinned sentences on the committed page, beside the room, not in a footer', async () => {
+  it('keeps the pinned sentences on the committed page, beside Zodiac Markets, not in a footer', async () => {
     const html = compact(await read('public/registry/exchange/index.html'));
     expect(html).toContain('independent third-party');
     expect(html).toContain('can lose all market value');
@@ -19,7 +19,17 @@ describe('Exchange risk and trust copy', () => {
     // The venue boundary, in the decision record's own words, plus the fee.
     expect(html).toContain('presents a trade that an independent venue builds, executes, and charges for');
     expect(html).toContain('operates no market');
-    expect(html).toContain('<h1 id="zme-title">Registry Trading Room</h1>');
+    expect(html).toContain('<title>Zodiac Markets · Zodiacs.org</title>');
+    expect(html).toContain('<meta property="og:title" content="Zodiac Markets" />');
+    expect(html).toContain('https://zodiacs.org/assets/og/v3/zodiac-terminal.png');
+    expect(html).not.toContain('https://zodiacs.org/assets/og/v2/registry.png');
+    expect(html).toContain('"name": "Zodiac Markets"');
+    expect(html).toContain('"name": "Zodiac Terminal", "item": "https://zodiacs.org/registry/"');
+    expect(html).toContain('<h1 id="zme-title">Zodiac Markets</h1>');
+    expect(html).toContain('<h2 id="zme-records">The 12 Official Zodiac Tokens</h2>');
+    expect(html).toContain('Sign 12 of 12');
+    expect(html).not.toMatch(/\bLot (?:I|V|X)/u);
+    expect(html).not.toContain('Registry Trading Room');
     expect(html).not.toContain('Zodiacs Mercantile Exchange');
     expect(html).toContain('may not exceed 0.10%');
     // Thin pools are a headline, not a footnote.
@@ -107,7 +117,7 @@ describe('Exchange risk and trust copy', () => {
     }
   });
 
-  it('browser-enforces the room network allowlist and noindex boundary', async () => {
+  it('browser-enforces the Zodiac Markets network allowlist and noindex boundary', async () => {
     const config = JSON.parse(await read('vercel.json'));
     const rule = config.headers.find((entry) => entry.source === '/registry/exchange/(.*)');
     const headers = new Map(rule?.headers?.map(({ key, value }) => [key, value]));
@@ -122,11 +132,22 @@ describe('Exchange risk and trust copy', () => {
     expect(headers.get('X-Robots-Tag')).toBe('noindex, noarchive');
   });
 
-  it('keeps the Cabinet free of any route to the Exchange', async () => {
+  it('keeps the Cabinet free of any route to Zodiac Markets', async () => {
     // Mandatory control: the Collection surface never gains an acquisition
     // link — including a link to this room.
     const cabinet = await read('src/pages/registry/collection/index.astro');
     expect(cabinet).not.toContain('/registry/exchange/');
     expect(cabinet).not.toContain('Mercantile');
+  });
+
+  it('records the owner-authorized rename and exactly one flag-gated Registry discovery entry', async () => {
+    const decision = compact(await read('docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md'));
+    expect(decision).toContain('Addendum — 2026-08-10: public name and one Registry entry');
+    expect(decision).toContain('The public name is **Zodiac Markets**');
+    expect(decision).toContain('exactly one same-origin discovery entry on `/registry/`');
+    expect(decision).toContain('only when `PUBLIC_REGISTRY_EXCHANGE_ENABLED=1`');
+    expect(decision).toContain('No global navigation, footer, Cabinet, or sign-record entry is authorized');
+    expect(decision).toContain('The route, internal `exchange` identifiers, and feature-flag name stay unchanged');
+    expect(decision).toContain('noindex, no-store, CSP, service-worker, custody, compensation, independent-venue, pilot, and rollback controls remain unchanged');
   });
 });

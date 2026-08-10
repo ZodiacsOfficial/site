@@ -14,18 +14,32 @@ import { fileURLToPath } from 'node:url';
 import { dirname, resolve } from 'node:path';
 import {
   injectRegistryExchange,
+  injectRegistryExchangeLanding,
   registryExchangeEnabled,
 } from '../src/exchange/entry.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const file = resolve(root, 'public/registry/exchange/index.html');
+const exchangeFile = resolve(root, 'public/registry/exchange/index.html');
+const hubFile = resolve(root, 'public/registry/index.html');
 
 const enabled = registryExchangeEnabled(process.env);
-const source = await readFile(file, 'utf8');
-const { output } = injectRegistryExchange(source, process.env);
-if (output !== source) await writeFile(file, output);
+const [exchangeSource, hubSource] = await Promise.all([
+  readFile(exchangeFile, 'utf8'),
+  readFile(hubFile, 'utf8'),
+]);
+
+// Validate and render both surfaces before writing either one. A malformed or
+// missing hub marker must fail the build without leaving route and entry in
+// different flag states.
+const exchangeOutput = injectRegistryExchange(exchangeSource, process.env).output;
+const hubOutput = injectRegistryExchangeLanding(hubSource, process.env).output;
+const writes = [
+  exchangeOutput !== exchangeSource ? writeFile(exchangeFile, exchangeOutput) : null,
+  hubOutput !== hubSource ? writeFile(hubFile, hubOutput) : null,
+].filter(Boolean);
+await Promise.all(writes);
 
 console.log(
   `Registry exchange terminal: ${enabled ? 'enabled' : 'disabled'} `
-  + `(${output === source ? 'no rewrite needed' : 'page rewritten'})`,
+  + `(${writes.length} of 2 surfaces rewritten, landing included)`,
 );

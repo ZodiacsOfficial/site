@@ -66,16 +66,20 @@ describe('offline service worker posture', () => {
     expect(source).toMatch(/if \(registryAuthority\(url\) \|\| registryVolatileSurface\(url\)\) \{\s*event\.respondWith\(fetch\(request\)\)/);
   });
 
-  it('never caches or stale-serves the build-time Exchange flag surface', async () => {
+  it('never caches or stale-serves either build-time Exchange flag surface', async () => {
     const worker = runWorker(await builtWorker(false));
     const handler = worker.handlers.get('fetch');
-    for (const path of ['/registry/exchange', '/registry/exchange/', '/registry/exchange/index.html']) {
+    const volatilePaths = [
+      '/registry', '/registry/', '/registry/index.html',
+      '/registry/exchange', '/registry/exchange/', '/registry/exchange/index.html',
+    ];
+    for (const path of volatilePaths) {
       let completion;
       const request = { method: 'GET', mode: 'navigate', url: `https://zodiacs.org${path}` };
       handler({ request, respondWith: (promise) => { completion = Promise.resolve(promise); } });
       await completion;
     }
-    expect(worker.networkFetch).toHaveBeenCalledTimes(3);
+    expect(worker.networkFetch).toHaveBeenCalledTimes(volatilePaths.length);
     expect(worker.caches.open).not.toHaveBeenCalled();
 
     worker.networkFetch.mockRejectedValueOnce(new TypeError('offline'));

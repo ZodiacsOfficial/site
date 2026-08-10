@@ -67,6 +67,44 @@ export function ohlcvUrl({ pool, timeframe, baseUrl = GECKO_BASE_URL }) {
   return url.toString();
 }
 
+/**
+ * A narrow hourly-price request for small read-only surfaces outside the
+ * Exchange terminal. `beforeTimestamp` is the first still-open hour, so the
+ * provider can return only completed candles. Empty intervals stay omitted:
+ * callers preserve them as gaps instead of drawing invented carry-forwards.
+ *
+ * The token address is explicit even though Registry pools currently put the
+ * canonical token on the base side. That keeps this helper correct if a
+ * selected pool's orientation changes later.
+ */
+export function hourlyOhlcvWindowUrl({
+  pool,
+  token,
+  beforeTimestamp,
+  limit = 24,
+  baseUrl = GECKO_BASE_URL,
+}) {
+  const timestamp = Number(beforeTimestamp);
+  const count = Number(limit);
+  if (!pool || !token) fail('unavailable', 'A pool and token are required for hourly prices.');
+  if (!Number.isSafeInteger(timestamp) || timestamp <= 0) {
+    fail('unavailable', 'The closed-hour boundary was not readable.');
+  }
+  if (!Number.isSafeInteger(count) || count < 1 || count > 1000) {
+    fail('unavailable', 'The hourly-price limit was not readable.');
+  }
+  const url = new URL(
+    `${baseUrl}/networks/solana/pools/${encodeURIComponent(pool)}/ohlcv/hour`,
+  );
+  url.searchParams.set('aggregate', '1');
+  url.searchParams.set('before_timestamp', String(timestamp));
+  url.searchParams.set('limit', String(count));
+  url.searchParams.set('currency', 'usd');
+  url.searchParams.set('token', String(token));
+  url.searchParams.set('include_empty_intervals', 'false');
+  return url.toString();
+}
+
 export function tradesUrl({ pool, baseUrl = GECKO_BASE_URL }) {
   return new URL(
     `${baseUrl}/networks/solana/pools/${encodeURIComponent(pool)}/trades`,
@@ -324,6 +362,24 @@ export function createCoolOff({
 
 export async function fetchOhlcv({ pool, timeframe, baseUrl, fetchImpl, signal, deadlineMs }) {
   const payload = await getJson(ohlcvUrl({ pool, timeframe, baseUrl }), {
+    fetchImpl, signal, deadlineMs,
+  });
+  return normalizeOhlcv(payload);
+}
+
+export async function fetchHourlyOhlcvWindow({
+  pool,
+  token,
+  beforeTimestamp,
+  limit,
+  baseUrl,
+  fetchImpl,
+  signal,
+  deadlineMs,
+}) {
+  const payload = await getJson(hourlyOhlcvWindowUrl({
+    pool, token, beforeTimestamp, limit, baseUrl,
+  }), {
     fetchImpl, signal, deadlineMs,
   });
   return normalizeOhlcv(payload);

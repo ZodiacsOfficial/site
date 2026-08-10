@@ -25,6 +25,12 @@ import {
   injectRegistryAuraThesis,
 } from '../src/lib/registry-aura-entry.mjs';
 import { REGISTRY_TRADE_META, injectRegistryTradeLanding } from '../src/trade/entry.mjs';
+import {
+  REGISTRY_EXCHANGE_LANDING_COPY,
+  REGISTRY_EXCHANGE_META,
+  REGISTRY_EXCHANGE_PATH,
+  injectRegistryExchangeLanding,
+} from '../src/exchange/entry.mjs';
 import { EN } from '../src/strings/en.mjs';
 import { buildRegistryOutlookArtifact } from './registry-outlook-artifact.mjs';
 
@@ -149,6 +155,9 @@ const registryMeta = [
   `const REGISTRY_AURA_PATH=${JSON.stringify(REGISTRY_AURA_PATH)};`,
   `const REGISTRY_AURA_ENTRY_COPY=Object.freeze(${JSON.stringify(REGISTRY_AURA_ENTRY_COPY)});`,
   `const REGISTRY_TRADE_ENABLED=document.querySelector('meta[name="${REGISTRY_TRADE_META}"]')?.content==='1';`,
+  `const REGISTRY_EXCHANGE_ENABLED=document.querySelector('meta[name="${REGISTRY_EXCHANGE_META}"]')?.content==='1';`,
+  `const REGISTRY_EXCHANGE_PATH=${JSON.stringify(REGISTRY_EXCHANGE_PATH)};`,
+  `const REGISTRY_EXCHANGE_LANDING_COPY=Object.freeze(${JSON.stringify(REGISTRY_EXCHANGE_LANDING_COPY)});`,
 ].join('');
 const output = banner + registryMeta + code + '\n';
 const [registryHtml, thesisHtml, registryOutlook] = await Promise.all([
@@ -159,7 +168,10 @@ const [registryHtml, thesisHtml, registryOutlook] = await Promise.all([
 // Both Registry flags stamp the same shell, so they are chained: each owns a
 // disjoint marker and neither can overwrite the other's configured output.
 const configuredRegistry = injectRegistryTradeLanding(
-  injectRegistryAuraLanding(registryHtml, process.env).output,
+  injectRegistryExchangeLanding(
+    injectRegistryAuraLanding(registryHtml, process.env).output,
+    process.env,
+  ).output,
   process.env,
 ).output;
 const configuredThesis = injectRegistryAuraThesis(thesisHtml, process.env).output;

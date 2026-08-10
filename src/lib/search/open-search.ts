@@ -15,7 +15,7 @@ const KIND_LABEL: Record<string, string> = {
   pairing: 'Pairing',
   horoscope: 'Horoscope',
   page: 'Page',
-  registry: 'Registry',
+  registry: 'Terminal',
 };
 
 let root: HTMLDivElement | null = null;

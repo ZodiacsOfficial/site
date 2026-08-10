@@ -58,10 +58,10 @@ const entries: SearchEntry[] = [
   },
   {
     path: '/registry/',
-    title: 'The Zodiacs Registry',
-    description: 'Canonical records and provenance.',
+    title: 'Zodiac Terminal',
+    description: 'Live markets, official token records, and reviewed research.',
     kind: 'registry',
-    keywords: ['registry', 'astrofolio', 'record'],
+    keywords: ['terminal', 'zodiac terminal', 'registry', 'zodiac capital markets', 'astrofolio', 'record'],
   },
   {
     path: '/thesis/',
@@ -72,8 +72,8 @@ const entries: SearchEntry[] = [
   },
   {
     path: '/registry/aries/',
-    title: 'Aries — registry record',
-    description: 'The canonical record of Aries.',
+    title: 'Aries — official Zodiac record',
+    description: 'Official Aries identity, addresses, artwork, provenance, and verification.',
     kind: 'registry',
     keywords: ['registry', 'astrofolio', 'record', 'aries'],
   },

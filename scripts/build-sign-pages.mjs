@@ -184,7 +184,7 @@ function jsonLd(m) {
         '@type': 'BreadcrumbList',
         itemListElement: [
           { '@type': 'ListItem', position: 1, name: 'Zodiacs.org', item: 'https://zodiacs.org/' },
-          { '@type': 'ListItem', position: 2, name: 'The Registry', item: 'https://zodiacs.org/registry/' },
+          { '@type': 'ListItem', position: 2, name: 'Zodiac Terminal', item: 'https://zodiacs.org/registry/' },
           { '@type': 'ListItem', position: 3, name: m.name, item: signUrl(m.slug) }
         ]
       },
@@ -1073,7 +1073,7 @@ ${SIGN_ORDER.map((s) => `        <a href="${signPath(s)}"${s === m.slug ? ' clas
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/registry/#registry">Registry</a>
+          <a href="/registry/#registry">Terminal</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>

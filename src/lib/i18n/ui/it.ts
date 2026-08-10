@@ -7,7 +7,7 @@ const it = {
   navTools: "Strumenti",
   navLearn: "Capire",
   navHoroscopes: "Oroscopi",
-  navCollect: "Registro",
+  navCollect: "Terminal",
   navSavedCharts: "Temi salvati",
   navMenu: "Menu",
   navSite: "Il sito",
