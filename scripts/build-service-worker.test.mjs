@@ -92,6 +92,28 @@ describe('offline service worker posture', () => {
     expect(worker.caches.open).not.toHaveBeenCalled();
   });
 
+  it('never caches or stale-serves the build-time Registry Pro flag surface', async () => {
+    const worker = runWorker(await builtWorker(false));
+    const handler = worker.handlers.get('fetch');
+    for (const path of ['/registry/pro', '/registry/pro/', '/registry/pro/index.html']) {
+      let completion;
+      const request = { method: 'GET', mode: 'navigate', url: `https://zodiacs.org${path}` };
+      handler({ request, respondWith: (promise) => { completion = Promise.resolve(promise); } });
+      await completion;
+    }
+    expect(worker.networkFetch).toHaveBeenCalledTimes(3);
+    expect(worker.caches.open).not.toHaveBeenCalled();
+
+    worker.networkFetch.mockRejectedValueOnce(new TypeError('offline'));
+    let offline;
+    handler({
+      request: { method: 'GET', mode: 'navigate', url: 'https://zodiacs.org/registry/pro/' },
+      respondWith: (promise) => { offline = Promise.resolve(promise); },
+    });
+    await expect(offline).rejects.toThrow('offline');
+    expect(worker.caches.open).not.toHaveBeenCalled();
+  });
+
   it('ships with push disabled and versioned shell/data caches', async () => {
     const source = await readFile(resolve(ROOT, 'public/sw.js'), 'utf8');
     expect(source).toContain('const PUSH_ENABLED = false');

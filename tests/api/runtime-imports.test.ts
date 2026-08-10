@@ -17,7 +17,7 @@ const EXPECTED_HANDLERS = [
   'api/email/subscribe.ts',
   'api/email/unsubscribe.ts',
   'api/push/subscribe.ts',
-  'api/unsubscribe.ts',
+  'api/registry-pro-quotes.ts',
   'api/wallet-birth.ts',
 ] as const;
 
@@ -195,6 +195,14 @@ describe('Vercel API runtime packaging', () => {
     expect(vercel.rewrites).toContainEqual({
       source: '/api/registry/news',
       destination: '/api/compatibility?action=registry-news',
+    });
+  });
+
+  it('routes the weekly and daily opt-outs through one email function', () => {
+    const config = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(config.rewrites).toContainEqual({
+      source: '/api/unsubscribe',
+      destination: '/api/email/unsubscribe?action=weekly',
     });
   });
 

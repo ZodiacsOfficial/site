@@ -164,6 +164,10 @@
       "destination": "/api/compatibility?action=registry-news"
     },
     {
+      "source": "/api/unsubscribe",
+      "destination": "/api/email/unsubscribe?action=weekly"
+    },
+    {
       "source": "/c/:token/",
       "destination": "/api/compatibility?action=invite-exchange&token=:token"
     },
@@ -291,6 +295,27 @@
       ]
     },
     {
+      "source": "/registry/pro/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/registry/collection/(.*)",
       "headers": [
         {
@@ -394,6 +419,15 @@
     },
     {
       "source": "/assets/exchange.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/registry-pro.js",
       "headers": [
         {
           "key": "Cache-Control",

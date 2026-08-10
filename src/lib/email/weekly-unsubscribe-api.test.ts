@@ -1,6 +1,6 @@
 import { createHmac } from 'node:crypto';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import unsubscribeHandler from '../../../api/unsubscribe';
+import unsubscribeHandler from '../../../api/email/unsubscribe';
 
 const ORIGINAL_ENV = { ...process.env };
 const USER_ID = '110e8400-e29b-41d4-a716-446655440000';
@@ -41,7 +41,7 @@ describe('weekly digest unsubscribe page', () => {
 
     await unsubscribeHandler({
       method: 'GET',
-      query: { u: USER_ID, sig: signature },
+      query: { action: 'weekly', u: USER_ID, sig: signature },
     }, response);
 
     expect(response.statusCode).toBe(200);
@@ -62,7 +62,7 @@ describe('weekly digest unsubscribe page', () => {
 
     await unsubscribeHandler({
       method: 'POST',
-      query: { u: USER_ID, sig: signature },
+      query: { action: 'weekly', u: USER_ID, sig: signature },
     }, response);
 
     expect(response.statusCode).toBe(200);

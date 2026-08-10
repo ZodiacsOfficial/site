@@ -1,9 +1,6 @@
-// Vercel serverless function (this repo builds to static Astro with no SSR
-// adapter, so a per-request endpoint lives here as a zero-config function).
-// Deliberately self-contained: only node:crypto (a builtin) and global fetch.
-// It imports nothing from ../src and does NOT pull @supabase/supabase-js —
-// both were import-time crash risks in the bundled function, and the DB
-// write is a single PostgREST call the service role can make directly.
+// Deliberately self-contained: only node:crypto and global fetch. Keeping the
+// weekly implementation below an underscore directory lets Vercel package it
+// with the shared email entrypoint without creating another public function.
 import { createHmac, timingSafeEqual } from 'node:crypto';
 
 const SIGNING_CONTEXT = 'zodiacs-weekly-digest-unsubscribe';
@@ -53,7 +50,6 @@ function weeklyDigestPage(
   return `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"><title>${attr(title)}</title><style>@font-face{font-family:'Instrument Sans';src:url('/fonts/instrument-sans-latin-wght-normal.woff2') format('woff2-variations');font-weight:400 700;font-display:swap}@font-face{font-family:'EB Garamond';src:url('/fonts/eb-garamond-latin-500-normal.woff2') format('woff2');font-weight:500;font-display:swap}body{margin:0;min-height:100vh;display:grid;place-items:center;background:#060709;color:#EEF1F7;font:16px/1.6 'Instrument Sans',system-ui,sans-serif}.card{width:min(560px,calc(100% - 40px));box-sizing:border-box;padding:clamp(28px,7vw,56px);border:1px solid rgba(198,204,218,.16);border-radius:22px;background:#0F121A;text-align:center}.signs{display:flex;flex-wrap:wrap;justify-content:center;gap:5px;margin:0 auto 24px;max-width:220px}.signs img{border-radius:50%}h1{margin:0 0 12px;font:500 clamp(2rem,7vw,3rem)/1.05 'EB Garamond',Georgia,serif}p{margin:0;color:#C6CCDA}form,.return{margin-top:24px}button,a{font:600 14px/1 'Instrument Sans',system-ui,sans-serif}button{padding:12px 18px;border:1px solid #C6CCDA;border-radius:999px;background:#EEF1F7;color:#060709;cursor:pointer}a{color:#EEF1F7}</style></head><body><main class="card">${iconWheel()}<h1>${attr(title)}</h1><p>${attr(body)}</p>${actionMarkup}</main></body></html>`;
 }
 
-/** Shown on GET — no state change (mail scanners prefetch GET links). */
 function confirmPage(action: string): string {
   return weeklyDigestPage(
     'Unsubscribe?',
@@ -63,8 +59,6 @@ function confirmPage(action: string): string {
 }
 
 function donePage(): string {
-  // The existing weekly preference restarts from the authenticated profile;
-  // unlike the two daily lists, it does not send a fresh confirmation email.
   return weeklyDigestPage(
     'Done — you’re unsubscribed.',
     'No more weekly digest. If you change your mind, restart it from your profile.',
@@ -72,7 +66,7 @@ function donePage(): string {
   );
 }
 
-export default async function handler(req: any, res: any): Promise<void> {
+export default async function weeklyUnsubscribeHandler(req: any, res: any): Promise<void> {
   if (req.method !== 'GET' && req.method !== 'POST') {
     res.setHeader('Allow', 'GET, POST');
     send(res, 405, 'text/plain', 'Method not allowed');
@@ -95,18 +89,16 @@ export default async function handler(req: any, res: any): Promise<void> {
     return;
   }
 
-  // GET never mutates — render a confirm page whose button POSTs back.
   if (req.method === 'GET') {
     const action = `/api/unsubscribe?u=${encodeURIComponent(userId)}&sig=${encodeURIComponent(signature)}`;
     send(res, 200, 'text/html', confirmPage(action));
     return;
   }
 
-  // POST performs the opt-out via PostgREST (service role bypasses RLS).
   const endpoint = `${url.replace(/\/+$/, '')}/rest/v1/profiles?user_id=eq.${encodeURIComponent(userId)}`;
   let ok = false;
   try {
-    const patch = await fetch(endpoint, {
+    const response = await fetch(endpoint, {
       method: 'PATCH',
       headers: {
         apikey: serviceKey,
@@ -116,7 +108,7 @@ export default async function handler(req: any, res: any): Promise<void> {
       },
       body: JSON.stringify({ digest_opt_in: false, updated_at: new Date().toISOString() }),
     });
-    ok = patch.ok;
+    ok = response.ok;
   } catch {
     ok = false;
   }
