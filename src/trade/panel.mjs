@@ -42,10 +42,20 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
   let quoteToken = 0;
   let debounce = null;
   let destroyed = false;
+  let quoteAbort = null;
+  let reviewAbort = null;
+  let executeStarted = false;
   let marketRequested = Boolean(state.indexedLiquidityUsd);
   let marketRequest = null;
 
-  const emit = () => { if (!destroyed) onChange?.(view(), { ...state }); };
+  const emit = () => {
+    if (destroyed) return;
+    try {
+      onChange?.(view(), { ...state });
+    } catch {
+      // Rendering and operating telemetry cannot turn a valid quote into an error.
+    }
+  };
   const view = () => panelView({
     state: state.state, payMethod: state.payMethod, sign, amount: state.amount,
     quote: state.quote, error: state.error, quotedAt: state.quotedAt,
@@ -82,11 +92,14 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
   async function refreshQuote() {
     if (destroyed) return;
     refreshMarketContext();
+    quoteAbort?.abort();
     const token = ++quoteToken;
     let atomic;
     try {
       atomic = atomicFromDecimal(state.amount, USDC_DECIMALS);
     } catch (error) { fail(error); return; }
+    const controller = new AbortController();
+    quoteAbort = controller;
 
     state.state = 'quoting';
     state.error = null;
@@ -95,21 +108,26 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
     try {
       const order = await fetchOrder({
         inputMint: USDC_MINT, outputMint: sign.mint, amount: atomic,
+        signal: controller.signal,
       });
-      if (token !== quoteToken) return;                 // a newer amount won
+      if (destroyed || controller.signal.aborted || token !== quoteToken) return;
       assertOrderMatches(order, { inputMint: USDC_MINT, outputMint: sign.mint, amount: atomic });
       state.quote = order;
       state.quotedAt = now();
       state.state = 'ready';
       emit();
     } catch (error) {
-      if (token !== quoteToken) return;
+      if (destroyed || controller.signal.aborted || error?.name === 'AbortError' || token !== quoteToken) return;
       fail(error);
+    } finally {
+      if (quoteAbort === controller) quoteAbort = null;
     }
   }
 
   function setAmount(next) {
     if (state.state === 'signing') return;
+    quoteToken += 1;
+    quoteAbort?.abort();
     state.amount = String(next);
     state.awaitingReview = false;
     if (debounce) clearT(debounce);
@@ -130,10 +148,16 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
    */
   async function review() {
     if (destroyed || state.state === 'signing') return;
+    quoteToken += 1;
+    quoteAbort?.abort();
+    reviewAbort?.abort();
     let atomic;
     try {
       atomic = atomicFromDecimal(state.amount, USDC_DECIMALS);
     } catch (error) { fail(error); return; }
+    const controller = new AbortController();
+    reviewAbort = controller;
+    const stale = () => destroyed || controller.signal.aborted;
 
     const shown = state.quote?.outAmount ?? null;
     state.state = 'signing';
@@ -142,9 +166,15 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
 
     try {
       const address = wallet.getAddress() || await wallet.connect();
+      if (stale()) return;
       const order = await fetchOrder({
-        inputMint: USDC_MINT, outputMint: sign.mint, amount: atomic, taker: address,
+        inputMint: USDC_MINT,
+        outputMint: sign.mint,
+        amount: atomic,
+        taker: address,
+        signal: controller.signal,
       });
+      if (stale()) return;
       assertOrderMatches(order, { inputMint: USDC_MINT, outputMint: sign.mint, amount: atomic });
       if (!isSignable(order)) throw new TradeError('unavailable', 'The venue returned no transaction.');
 
@@ -159,12 +189,23 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
       }
 
       const signed = await wallet.signTransaction(order.transaction);
-      const result = await executeOrder({ signedTransaction: signed, requestId: order.requestId });
+      if (stale()) return;
+      // Once a visitor has signed, let the venue answer even if the host is
+      // torn down. Aborting an already-started submission destroys the only
+      // evidence that distinguishes failure from an uncertain result.
+      executeStarted = true;
+      const result = await executeOrder({
+        signedTransaction: signed,
+        requestId: order.requestId,
+        signal: controller.signal,
+      });
+      if (stale()) return;
       state.quote = order;
       state.signature = result.signature;
       state.state = 'done';
       emit();
     } catch (error) {
+      if (stale() || error?.name === 'AbortError') return;
       // A wallet the visitor dismissed is not a failure worth shouting about.
       if (error?.name === 'WalletDismissed') {
         state.state = state.quote ? 'ready' : 'idle';
@@ -172,12 +213,17 @@ export function createTradePanel({ sign, deps, amount = '25', payMethod = 'card'
         return;
       }
       fail(error);
+    } finally {
+      executeStarted = false;
+      if (reviewAbort === controller) reviewAbort = null;
     }
   }
 
   function destroy() {
     destroyed = true;
     quoteToken += 1;
+    quoteAbort?.abort();
+    if (!executeStarted) reviewAbort?.abort();
     if (debounce) clearT(debounce);
     debounce = null;
   }

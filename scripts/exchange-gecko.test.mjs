@@ -4,6 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { describe, expect, it } from 'vitest';
 import {
   GECKO_BASE_URL,
+  GECKO_BUDGET_PER_MINUTE,
   TIMEFRAMES,
   createCoolOff,
   createRateBudget,
@@ -12,6 +13,7 @@ import {
   normalizeOhlcv,
   normalizeTrades,
   ohlcvUrl,
+  parseRetryAfter,
   tradesUrl,
 } from '../src/exchange/gecko.mjs';
 
@@ -164,6 +166,17 @@ describe('failure states', () => {
       .rejects.toMatchObject({ code: 'rate_limited' });
   });
 
+  it('carries the provider Retry-After hint into the cool-off decision', async () => {
+    const fetchImpl = async () => ({
+      ok: false,
+      status: 429,
+      headers: { get: (name) => name === 'retry-after' ? '45' : null },
+      json: async () => ({}),
+    });
+    await expect(fetchTrades({ pool: POOL, mint: MINT, fetchImpl }))
+      .rejects.toMatchObject({ code: 'rate_limited', retryAfterMs: 45_000 });
+  });
+
   it('names a missing pool as not indexed', async () => {
     await expect(fetchOhlcv({ pool: POOL, timeframe: '1d', fetchImpl: response(404) }))
       .rejects.toMatchObject({ code: 'not_indexed' });
@@ -190,6 +203,17 @@ describe('failure states', () => {
       fetchImpl: async () => ({ ok: true, status: 200, json: async () => { throw abort; } }),
     })).rejects.toBe(abort);
   });
+
+  it('bounds a provider request that never answers', async () => {
+    const hanging = async (_url, { signal }) => new Promise((_resolve, reject) => {
+      signal.addEventListener('abort', () => {
+        reject(Object.assign(new Error('deadline'), { name: 'AbortError' }));
+      }, { once: true });
+    });
+    await expect(fetchOhlcv({
+      pool: POOL, timeframe: '1d', fetchImpl: hanging, deadlineMs: 5,
+    })).rejects.toMatchObject({ code: 'network' });
+  });
 });
 
 describe('the rate budget', () => {
@@ -201,6 +225,47 @@ describe('the rate budget', () => {
     expect(budget.take()).toBe(false);
     clock = 1001;
     expect(budget.take()).toBe(true);
+  });
+
+  it('shares one conservative allowance across same-origin tabs', () => {
+    let clock = 0;
+    const values = new Map();
+    const storage = {
+      getItem: (key) => values.get(key) ?? null,
+      setItem: (key, value) => values.set(key, value),
+    };
+    const first = createRateBudget({ limit: 2, windowMs: 1000, now: () => clock, storage });
+    const second = createRateBudget({ limit: 2, windowMs: 1000, now: () => clock, storage });
+    expect(first.take()).toBe(true);
+    expect(second.take()).toBe(true);
+    expect(first.take()).toBe(false);
+    clock = 1001;
+    expect(second.take()).toBe(true);
+  });
+
+  it('keeps enforcing its memory ceiling when private-mode storage rejects writes', () => {
+    const storage = {
+      getItem: () => null,
+      setItem: () => { throw new Error('quota blocked'); },
+    };
+    const budget = createRateBudget({ limit: 2, storage });
+    expect(budget.take()).toBe(true);
+    expect(budget.take()).toBe(true);
+    expect(budget.take()).toBe(false);
+  });
+
+  it('leaves substantial headroom below the provider IP ceiling', () => {
+    expect(GECKO_BUDGET_PER_MINUTE).toBeLessThanOrEqual(12);
+  });
+});
+
+describe('Retry-After', () => {
+  it('reads delta-seconds and HTTP dates, capped to the room maximum', () => {
+    expect(parseRetryAfter('12')).toBe(12_000);
+    expect(parseRetryAfter('999')).toBe(120_000);
+    expect(parseRetryAfter('Thu, 01 Jan 1970 00:00:30 GMT', { now: () => 10_000 }))
+      .toBe(20_000);
+    expect(parseRetryAfter('not a delay')).toBeNull();
   });
 });
 
@@ -224,5 +289,53 @@ describe('the 429 cool-off', () => {
     coolOff.fail();
     // …and a success resets the ladder to the base pause.
     expect(coolOff.remainingMs()).toBe(100);
+  });
+
+  it('honours a longer provider hint without exceeding the hard cap', () => {
+    let clock = 0;
+    const coolOff = createCoolOff({ baseMs: 100, maxMs: 1000, now: () => clock });
+    coolOff.fail(750);
+    expect(coolOff.remainingMs()).toBe(750);
+    clock = 750;
+    coolOff.fail(5000);
+    expect(coolOff.remainingMs()).toBe(1000);
+  });
+
+  it('never lets a later 429 shorten an existing provider pause', () => {
+    let clock = 0;
+    const coolOff = createCoolOff({ baseMs: 10_000, maxMs: 120_000, now: () => clock });
+    coolOff.fail(120_000);
+    clock = 1_000;
+    coolOff.fail();
+    expect(coolOff.remainingMs()).toBe(119_000);
+  });
+
+  it('does not let an older in-flight success erase a newer 429 pause', () => {
+    let clock = 0;
+    const coolOff = createCoolOff({ baseMs: 100, maxMs: 1000, now: () => clock });
+    const olderRequest = coolOff.token();
+    coolOff.fail();
+    expect(coolOff.ok(olderRequest)).toBe(false);
+    expect(coolOff.active()).toBe(true);
+    clock = 100;
+    const recoveryRequest = coolOff.token();
+    expect(coolOff.ok(recoveryRequest)).toBe(true);
+    expect(coolOff.active()).toBe(false);
+  });
+
+  it('shares a provider pause across same-origin tabs', () => {
+    let clock = 0;
+    const values = new Map();
+    const storage = {
+      getItem: (key) => values.get(key) ?? null,
+      setItem: (key, value) => values.set(key, value),
+    };
+    const first = createCoolOff({ baseMs: 100, now: () => clock, storage });
+    const second = createCoolOff({ baseMs: 100, now: () => clock, storage });
+    first.fail();
+    expect(second.active()).toBe(true);
+    expect(second.remainingMs()).toBe(100);
+    clock = 100;
+    expect(second.active()).toBe(false);
   });
 });

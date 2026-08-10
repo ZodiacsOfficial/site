@@ -12,6 +12,9 @@
 
 export const ULTRA_BASE_URL = 'https://lite-api.jup.ag';
 export const WSOL_MINT = 'So11111111111111111111111111111111111111112';
+export const VENUE_REQUEST_SPACING_MS = 2_100;
+export const VENUE_REQUEST_DEADLINE_MS = 12_000;
+export const VENUE_EXECUTE_DEADLINE_MS = 20_000;
 
 /** Solana's native mint carries nine decimals; every Zodiac carries six. */
 export const SOL_DECIMALS = 9;
@@ -19,11 +22,11 @@ export const SOL_DECIMALS = 9;
 /**
  * Jupiter's own Ultra fee was 10 bps when this panel was written. We display
  * whatever the order reports rather than a hardcoded figure, but refuse an
- * order whose fee has grown beyond anything the venue has published: that
- * shape is what a mistakenly configured referral account would look like, and
- * the site takes no fee at all.
+ * order whose fee exceeds the ratified 10 bps phase boundary: that shape is
+ * either a changed venue contract or a mistakenly configured referral, and
+ * either one requires a fresh owner decision before a wallet sees it.
  */
-export const VENUE_FEE_CEILING_BPS = 50;
+export const VENUE_FEE_CEILING_BPS = 10;
 
 export const TRADE_ERROR_CODES = Object.freeze([
   'invalid_amount',
@@ -33,19 +36,175 @@ export const TRADE_ERROR_CODES = Object.freeze([
   'order_mismatch',
   'unexpected_fee',
   'network',
+  'execute_unconfirmed',
   'execute_failed',
 ]);
 
 export class TradeError extends Error {
-  constructor(code, message, { cause } = {}) {
+  constructor(code, message, { cause, retryAfterMs = null } = {}) {
     super(message, cause ? { cause } : undefined);
     this.name = 'TradeError';
     this.code = code;
+    this.retryAfterMs = retryAfterMs;
   }
 }
 
 function fail(code, message, options) {
   throw new TradeError(code, message, options);
+}
+
+const REQUEST_PRIORITY = Object.freeze({ background: 0, quote: 1, trade: 2 });
+const VENUE_GATE_KEY = Symbol.for('zodiacs.registry.jupiter-request-gate');
+
+function abortError() {
+  return Object.assign(new Error('The request was cancelled.'), { name: 'AbortError' });
+}
+
+/**
+ * One conservative page-wide queue shared by the exchange and trade
+ * bundles. Wallet-bound work outranks a panel quote, and a panel quote
+ * outranks an explicitly requested ladder sample.
+ */
+export function createVenueRequestGate({
+  spacingMs = VENUE_REQUEST_SPACING_MS,
+  now = Date.now,
+  setTimeout: setT = setTimeout,
+  clearTimeout: clearT = clearTimeout,
+} = {}) {
+  let sequence = 0;
+  let active = false;
+  let timer = null;
+  let lastStartedAt = Number.NEGATIVE_INFINITY;
+  const queue = [];
+
+  function remove(entry) {
+    const index = queue.indexOf(entry);
+    if (index >= 0) queue.splice(index, 1);
+    entry.signal?.removeEventListener?.('abort', entry.onAbort);
+  }
+
+  function pick() {
+    let best = 0;
+    for (let index = 1; index < queue.length; index += 1) {
+      const candidate = queue[index];
+      const current = queue[best];
+      const candidatePriority = REQUEST_PRIORITY[candidate.requestClass];
+      const currentPriority = REQUEST_PRIORITY[current.requestClass];
+      if (candidatePriority > currentPriority
+        || (candidatePriority === currentPriority && candidate.sequence < current.sequence)) {
+        best = index;
+      }
+    }
+    return queue.splice(best, 1)[0];
+  }
+
+  function pump() {
+    if (active || timer) return;
+    for (let index = queue.length - 1; index >= 0; index -= 1) {
+      if (!queue[index].signal?.aborted) continue;
+      const entry = queue[index];
+      remove(entry);
+      entry.reject(abortError());
+    }
+    if (!queue.length) return;
+
+    const waitMs = Math.max(0, lastStartedAt + spacingMs - now());
+    if (waitMs > 0) {
+      timer = setT(() => {
+        timer = null;
+        pump();
+      }, waitMs);
+      return;
+    }
+
+    const entry = pick();
+    entry.started = true;
+    entry.signal?.removeEventListener?.('abort', entry.onAbort);
+    active = true;
+    lastStartedAt = now();
+    Promise.resolve()
+      .then(() => entry.task())
+      .then(entry.resolve, entry.reject)
+      .finally(() => {
+        active = false;
+        pump();
+      });
+  }
+
+  function schedule(task, { requestClass = 'quote', signal } = {}) {
+    if (signal?.aborted) return Promise.reject(abortError());
+    return new Promise((resolve, reject) => {
+      const entry = {
+        task,
+        requestClass: Object.prototype.hasOwnProperty.call(REQUEST_PRIORITY, requestClass)
+          ? requestClass
+          : 'quote',
+        signal,
+        sequence: sequence += 1,
+        started: false,
+        resolve,
+        reject,
+        onAbort: null,
+      };
+      entry.onAbort = () => {
+        if (entry.started) return;
+        remove(entry);
+        reject(abortError());
+        if (!queue.length && timer) {
+          clearT(timer);
+          timer = null;
+        }
+        pump();
+      };
+      signal?.addEventListener?.('abort', entry.onAbort, { once: true });
+      queue.push(entry);
+      pump();
+    });
+  }
+
+  return Object.freeze({ schedule });
+}
+
+function browserVenueGate() {
+  if (typeof window === 'undefined') return null;
+  if (!globalThis[VENUE_GATE_KEY]) {
+    globalThis[VENUE_GATE_KEY] = createVenueRequestGate();
+  }
+  return globalThis[VENUE_GATE_KEY];
+}
+
+function scheduleVenueRequest(task, options) {
+  const gate = browserVenueGate();
+  return gate ? gate.schedule(task, options) : task();
+}
+
+function boundedRequest(parentSignal, deadlineMs) {
+  const controller = new AbortController();
+  let timedOut = false;
+  const onAbort = () => controller.abort();
+  if (parentSignal?.aborted) controller.abort();
+  else parentSignal?.addEventListener?.('abort', onAbort, { once: true });
+  const timer = setTimeout(() => {
+    timedOut = true;
+    controller.abort();
+  }, deadlineMs);
+  return {
+    signal: controller.signal,
+    timedOut: () => timedOut,
+    cleanup() {
+      clearTimeout(timer);
+      parentSignal?.removeEventListener?.('abort', onAbort);
+    },
+  };
+}
+
+export function parseVenueRetryAfter(response, nowMs = Date.now()) {
+  const raw = response?.headers?.get?.('retry-after');
+  if (!raw) return null;
+  const seconds = Number(raw);
+  const delay = Number.isFinite(seconds) ? seconds * 1_000 : Date.parse(raw) - nowMs;
+  if (!Number.isFinite(delay) || delay < 0) return null;
+  return Math.min(120_000, Math.round(delay));
 }
 
 /**
@@ -106,6 +265,7 @@ async function readJson(response) {
   try {
     return await response.json();
   } catch (error) {
+    if (error?.name === 'AbortError') throw error;
     fail('unavailable', 'The venue did not return a readable answer.', { cause: error });
   }
   return undefined;
@@ -123,28 +283,60 @@ export async function fetchOrder({
   baseUrl = ULTRA_BASE_URL,
   fetchImpl = globalThis.fetch,
   signal,
+  requestClass = taker ? 'trade' : 'quote',
+  deadlineMs = VENUE_REQUEST_DEADLINE_MS,
 }) {
   const url = orderUrl(baseUrl, { inputMint, outputMint, amount: String(amount), taker });
-  let response;
+  let bounded = null;
   try {
-    response = await fetchImpl(url, { method: 'GET', signal, headers: { accept: 'application/json' } });
-  } catch (error) {
-    if (error?.name === 'AbortError') throw error;
-    fail('network', 'The price could not be reached just now.', { cause: error });
-  }
-  if (response.status === 429) fail('rate_limited', 'The venue is rate limiting requests. Try again shortly.');
-  if (response.status >= 500) fail('unavailable', 'The venue did not answer.');
-
-  const payload = await readJson(response);
-  // Ultra reports a routing failure as 200 + {error}, and a bad request as 4xx.
-  if (payload?.error || !response.ok) {
-    const message = typeof payload?.error === 'string' ? payload.error : 'no route';
-    if (/quote|route|liquidity/i.test(message)) {
-      fail('no_route', 'No route is available for that amount right now.');
+    let response;
+    try {
+      response = await scheduleVenueRequest(
+        () => {
+          // Queue time is not network time. A wallet-bound request that waits
+          // behind one active ladder sample still receives its full deadline.
+          bounded = boundedRequest(signal, deadlineMs);
+          return fetchImpl(url, {
+            method: 'GET', signal: bounded.signal, headers: { accept: 'application/json' },
+          });
+        },
+        { requestClass, signal },
+      );
+    } catch (error) {
+      if (error?.name === 'AbortError' && !bounded?.timedOut()) throw error;
+      fail('network', 'The price could not be reached just now.', { cause: error });
     }
-    fail('unavailable', 'The venue could not price that trade.');
+    if (response.status === 429) {
+      fail('rate_limited', 'The venue is rate limiting requests. Try again shortly.', {
+        retryAfterMs: parseVenueRetryAfter(response),
+      });
+    }
+    if (response.status >= 500) fail('unavailable', 'The venue did not answer.');
+
+    let payload;
+    try {
+      payload = await readJson(response);
+    } catch (error) {
+      if (error?.name === 'AbortError' && bounded?.timedOut()) {
+        fail('network', 'The price could not be reached just now.', { cause: error });
+      }
+      throw error;
+    }
+    // Ultra reports a routing failure as 200 + {error}, and a bad request as 4xx.
+    if (payload?.error || !response.ok) {
+      const message = typeof payload?.error === 'string' ? payload.error : 'no route';
+      if (/quote|route|liquidity/i.test(message)) {
+        fail('no_route', 'No route is available for that amount right now.');
+      }
+      fail('unavailable', 'The venue could not price that trade.');
+    }
+    return normalizeOrder(payload);
+  } catch (error) {
+    if (error instanceof TradeError || error?.name === 'AbortError') throw error;
+    fail('network', 'The price could not be reached just now.', { cause: error });
+  } finally {
+    bounded?.cleanup();
   }
-  return normalizeOrder(payload);
 }
 
 /** Reduce Ultra's response to the fields the panel shows and checks. */
@@ -154,17 +346,38 @@ export function normalizeOrder(payload) {
   if (!inputMint || !outputMint || !inAmount || !outAmount) {
     fail('unavailable', 'The venue returned an incomplete order.');
   }
-  const feeBps = Number(payload.platformFee?.feeBps ?? payload.feeBps ?? 0);
+  let inAtomic;
+  let outAtomic;
+  try {
+    inAtomic = BigInt(inAmount);
+    outAtomic = BigInt(outAmount);
+  } catch (error) {
+    fail('unavailable', 'The venue returned unreadable amounts.', { cause: error });
+  }
+  const feeValue = payload.platformFee?.feeBps ?? payload.feeBps;
+  const feeReadable = typeof feeValue === 'number'
+    || (typeof feeValue === 'string' && feeValue.trim() !== '');
+  const feeBps = Number(feeValue);
+  if (!feeReadable
+    || !Number.isInteger(feeBps)
+    || feeBps < 0
+    || feeBps > VENUE_FEE_CEILING_BPS) {
+    fail('unexpected_fee', 'The venue quoted an unexpected fee, so nothing was sent to your wallet.');
+  }
+  const impactValue = payload.priceImpactPct;
+  const impactReadable = typeof impactValue === 'number'
+    || (typeof impactValue === 'string' && impactValue.trim() !== '');
+  const priceImpactPct = Number(impactValue);
+  if (!impactReadable || !Number.isFinite(priceImpactPct)) {
+    fail('unavailable', 'The venue returned no readable price impact.');
+  }
   return {
     inputMint,
     outputMint,
-    inAmount: BigInt(inAmount),
-    outAmount: BigInt(outAmount),
-    priceImpactPct: Number(payload.priceImpactPct ?? 0),
-    // A fee the client cannot read is refused, not waved through as zero:
-    // parked past the ceiling so assertOrderMatches names it before any of
-    // it reaches a wallet.
-    feeBps: Number.isFinite(feeBps) ? feeBps : VENUE_FEE_CEILING_BPS + 1,
+    inAmount: inAtomic,
+    outAmount: outAtomic,
+    priceImpactPct,
+    feeBps,
     routeLabels: Array.isArray(payload.routePlan)
       ? payload.routePlan.map((leg) => leg?.swapInfo?.label).filter(Boolean)
       : [],
@@ -190,7 +403,9 @@ export function assertOrderMatches(order, expected) {
   if (order.outAmount <= 0n) {
     fail('order_mismatch', 'The venue returned an empty amount.');
   }
-  if (order.feeBps > VENUE_FEE_CEILING_BPS) {
+  if (!Number.isInteger(order.feeBps)
+    || order.feeBps < 0
+    || order.feeBps > VENUE_FEE_CEILING_BPS) {
     fail('unexpected_fee', 'The venue quoted an unexpected fee, so nothing was sent to your wallet.');
   }
   return order;
@@ -214,32 +429,62 @@ export async function executeOrder({
   baseUrl = ULTRA_BASE_URL,
   fetchImpl = globalThis.fetch,
   signal,
+  deadlineMs = VENUE_EXECUTE_DEADLINE_MS,
 }) {
   if (!signedTransaction || !requestId) {
     fail('execute_failed', 'The signed transaction was incomplete.');
   }
-  let response;
+  let bounded = null;
   try {
-    response = await fetchImpl(new URL('/ultra/v1/execute', baseUrl).toString(), {
-      method: 'POST',
-      signal,
-      headers: { 'content-type': 'application/json', accept: 'application/json' },
-      body: JSON.stringify({ signedTransaction, requestId }),
-    });
+    let response;
+    try {
+      response = await scheduleVenueRequest(
+        () => {
+          bounded = boundedRequest(signal, deadlineMs);
+          return fetchImpl(new URL('/ultra/v1/execute', baseUrl).toString(), {
+            method: 'POST',
+            signal: bounded.signal,
+            headers: { 'content-type': 'application/json', accept: 'application/json' },
+            body: JSON.stringify({ signedTransaction, requestId }),
+          });
+        },
+        { requestClass: 'trade', signal },
+      );
+    } catch (error) {
+      if (error?.name === 'AbortError' && !bounded?.timedOut()) throw error;
+      fail('execute_unconfirmed', 'The result could not be confirmed from here.', { cause: error });
+    }
+    let payload;
+    try {
+      payload = await readJson(response);
+    } catch (error) {
+      if (error?.name === 'AbortError' && !bounded?.timedOut()) throw error;
+      // Once the signed payload has reached the execute endpoint, an
+      // unreadable answer is unknown — never a safe invitation to retry.
+      fail('execute_unconfirmed', 'The result could not be confirmed from here.', { cause: error });
+    }
+    if (!response.ok) {
+      fail('execute_unconfirmed', 'The result could not be confirmed from here.');
+    }
+    if (payload?.status === 'Failed') {
+      const reason = payload?.error || payload?.status || 'the venue rejected it';
+      fail('execute_failed', `The trade did not go through: ${reason}.`);
+    }
+    if (payload?.status !== 'Success'
+      || payload?.code !== 0
+      || typeof payload?.signature !== 'string'
+      || payload.signature.length === 0) {
+      fail('execute_unconfirmed', 'The result could not be confirmed from here.');
+    }
+    return {
+      signature: payload.signature,
+      slot: payload?.slot ?? null,
+      status: payload.status,
+    };
   } catch (error) {
-    if (error?.name === 'AbortError') throw error;
-    // A submitted trade may still land after the connection drops, so this
-    // says "unconfirmed", never "failed".
-    fail('network', 'The result could not be confirmed from here.', { cause: error });
+    if (error instanceof TradeError || error?.name === 'AbortError') throw error;
+    fail('execute_unconfirmed', 'The result could not be confirmed from here.', { cause: error });
+  } finally {
+    bounded?.cleanup();
   }
-  const payload = await readJson(response);
-  if (!response.ok || payload?.status === 'Failed' || payload?.error) {
-    const reason = payload?.error || payload?.status || 'the venue rejected it';
-    fail('execute_failed', `The trade did not go through: ${reason}.`);
-  }
-  return {
-    signature: payload?.signature ?? null,
-    slot: payload?.slot ?? null,
-    status: payload?.status ?? 'Success',
-  };
 }

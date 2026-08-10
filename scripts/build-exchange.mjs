@@ -8,7 +8,7 @@
 // the output of the source beside it.
 //
 // Source: src/exchange/browser.mjs → terminal / chart / tape / gecko / stats /
-// depth / pools / styles (plus the shared trade ultra client for the ladder).
+// depth / pools / styles / analytics (plus the shared trade ultra client for the ladder).
 // Nothing is baked in — every mint arrives from the live registry answer, so
 // the Registry keeps one answer to what a sign's mint is.
 

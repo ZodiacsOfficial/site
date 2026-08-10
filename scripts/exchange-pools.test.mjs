@@ -42,6 +42,10 @@ describe('the deepest-pool fallback', () => {
     expect(deepestPoolFor([], MINT)).toBeNull();
     expect(deepestPoolFor(rows, 'unlisted')).toBeNull();
     expect(deepestPoolFor(undefined, MINT)).toBeNull();
+    expect(deepestPoolFor([
+      { chainId: 'solana', pairAddress: 'empty', baseToken: { address: MINT }, liquidity: {} },
+      { chainId: 'solana', pairAddress: 'zero', baseToken: { address: MINT }, liquidity: { usd: 0 } },
+    ], MINT)).toBeNull();
   });
 
   it('prefers the pinned pool when the sign has one', () => {

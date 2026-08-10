@@ -7,6 +7,7 @@
 
 import { ZX_CSS } from './styles.mjs';
 import { createTerminal } from './terminal.mjs';
+import { trackExchangeEvent } from './analytics.mjs';
 
 function ensureStyles() {
   if (document.querySelector('style[data-zme-styles]')) return;
@@ -22,6 +23,7 @@ function boot() {
   host.dataset.zmeMounted = '1';
   ensureStyles();
   createTerminal({ host });
+  trackExchangeEvent('exchange_room_mount');
 }
 
 if (document.readyState === 'loading') {

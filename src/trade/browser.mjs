@@ -55,8 +55,9 @@ function ensureStyles() {
 /**
  * @param {HTMLElement} host
  * @param {{name: string, slug: string, mint: string, hue?: string, iconUrl?: string}} sign
+ * @param {{onStateChange?: Function}} hooks
  */
-export function mount(host, sign) {
+export function mount(host, sign, hooks = {}) {
   if (!host || !sign?.mint) return null;
   ensureStyles();
   const wallet = createWallet({ host });
@@ -68,6 +69,7 @@ export function mount(host, sign) {
       executeOrder,
       wallet,
       fetchLiquidity: ({ mint }) => indexedLiquidityFor(mint),
+      onStateChange: hooks.onStateChange,
     },
     marks: MARKS,
   });

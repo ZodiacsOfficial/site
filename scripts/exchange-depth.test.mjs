@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import {
   LADDER_NOTIONALS,
+  LADDER_QUOTE_SPACING_MS,
   USDC_MINT,
   ZODIAC_DECIMALS,
   fetchLadder,
@@ -125,6 +126,77 @@ describe('the ladder', () => {
     expect(rungs.filter((rung) => rung.error)).toHaveLength(1);
   });
 
+  it('refuses substituted amounts, mints, empty output, and an excessive fee', async () => {
+    const cases = [
+      { outputMint: 'WrongMint' },
+      { inAmount: '1' },
+      { outAmount: '0' },
+      { platformFee: { feeBps: 11 } },
+    ];
+    for (const override of cases) {
+      const fetchImpl = async (url) => {
+        const params = new URL(String(url)).searchParams;
+        return {
+          ok: true,
+          status: 200,
+          json: async () => ({
+            inputMint: params.get('inputMint'),
+            outputMint: params.get('outputMint'),
+            inAmount: params.get('amount'),
+            outAmount: '1000000',
+            priceImpactPct: 0.1,
+            feeBps: 10,
+            ...override,
+          }),
+        };
+      };
+      const { rungs } = await fetchLadder({
+        mint: MINT,
+        side: 'buy',
+        notionals: ['25'],
+        fetchImpl,
+        spacingMs: 0,
+      });
+      expect(rungs[0].error, JSON.stringify(override)).toBeTruthy();
+    }
+  });
+
+  it('stops the walk on the first 429 and carries its retry hint', async () => {
+    let calls = 0;
+    const rateLimited = async () => {
+      calls += 1;
+      return {
+        ok: false,
+        status: 429,
+        headers: { get: () => '45' },
+        json: async () => ({}),
+      };
+    };
+    const result = await fetchLadder({
+      mint: MINT, side: 'buy', fetchImpl: rateLimited, spacingMs: 0,
+    });
+    expect(calls).toBe(1);
+    expect(result).toMatchObject({ halted: 'rate_limited', retryAfterMs: 45_000 });
+    expect(result.rungs).toHaveLength(0);
+  });
+
+  it('bounds a depth response that never finishes', async () => {
+    const hanging = async (_url, { signal }) => new Promise((_resolve, reject) => {
+      signal.addEventListener('abort', () => {
+        reject(Object.assign(new Error('deadline'), { name: 'AbortError' }));
+      }, { once: true });
+    });
+    const { rungs } = await fetchLadder({
+      mint: MINT,
+      side: 'buy',
+      notionals: ['25'],
+      fetchImpl: hanging,
+      spacingMs: 0,
+      deadlineMs: 5,
+    });
+    expect(rungs).toEqual([{ notional: '25', error: 'network' }]);
+  });
+
   it('drops the "vs best" figure entirely when the smallest rung fails', async () => {
     let calls = 0;
     const firstFails = async (url) => {
@@ -212,5 +284,9 @@ describe('constants', () => {
   it('keeps the shared USDC identity and six-decimal Zodiacs', () => {
     expect(USDC_MINT).toBe('EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v');
     expect(ZODIAC_DECIMALS).toBe(6);
+  });
+
+  it('paces keyless ladder quotes below one request every two seconds', () => {
+    expect(LADDER_QUOTE_SPACING_MS).toBeGreaterThanOrEqual(2_000);
   });
 });

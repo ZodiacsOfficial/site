@@ -101,6 +101,7 @@ export const ZX_CSS = `
   .zme__rail-item { width: auto; min-width: 168px; flex: 0 0 auto; }
 }
 .zme__rail-item:hover { background: color-mix(in srgb, var(--sign, #C6CCDA) 10%, transparent); }
+.zme__rail-item:disabled { cursor: wait; opacity: 0.58; }
 .zme__rail-item[aria-pressed='true'] {
   background: color-mix(in srgb, var(--sign, #C6CCDA) 15%, transparent);
   color: var(--zx-ink);

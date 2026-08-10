@@ -38,7 +38,8 @@ export function deepestPoolFor(rows, mint) {
     if (pair?.chainId !== 'solana') continue;
     if (!pair?.pairAddress) continue;
     if (pair?.baseToken?.address !== mint) continue;
-    const liquidity = Number(pair?.liquidity?.usd) || 0;
+    const liquidity = Number(pair?.liquidity?.usd);
+    if (!Number.isFinite(liquidity) || liquidity <= 0) continue;
     if (liquidity > bestLiquidity) {
       bestLiquidity = liquidity;
       best = String(pair.pairAddress);

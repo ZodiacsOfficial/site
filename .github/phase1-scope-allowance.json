@@ -1,8 +1,8 @@
 {
   "version": 1,
   "id": "registry-exchange-room-2026-08-09",
-  "reason": "Owner-directed Registry release (2026-08-09): add the flag-off Exchange room page at /registry/exchange/ (committed flag-off behind PUBLIC_REGISTRY_EXCHANGE_ENABLED, pending its own risk-decision ratification in docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md) and name GeckoTerminal as a chart-data provider in the locale privacy pages. The allowance is limited to the five protected files in this pull request; it does not authorize changes to Registry APIs, wallet behavior, the trade panel, SDK pages, sign guides, other locale content, or Collection availability, and it does not turn any flag on.",
-  "baseCommit": "82f9304829c83e4277e4b4953b3865b9c7fb8bef",
+  "reason": "Owner-directed Registry release (2026-08-09): add the flag-off Registry Trading Room at /registry/exchange/ (committed flag-off behind PUBLIC_REGISTRY_EXCHANGE_ENABLED, pending its own risk-decision ratification in docs/REGISTRY-EXCHANGE-OWNER-RISK-DECISION.md), harden the shared trade client without changing its custody or wallet boundary, and name GeckoTerminal as a chart-data provider in the locale privacy pages. The allowance is limited to the five protected files in this pull request; it does not authorize changes to Registry APIs, wallet behavior, SDK pages, sign guides, other locale content, or Collection availability, and it does not turn any flag on.",
+  "baseCommit": "461904bedd6296d5d8e705fd8397c1a8dafa3451",
   "protectedPaths": [
     "public/registry/exchange/index.html",
     "src/pages/es/privacy/index.astro",

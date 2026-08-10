@@ -147,6 +147,8 @@ export function errorCopy(code) {
     case 'execute_failed':
       return 'The trade did not go through. Nothing left your wallet.';
     case 'network':
+      return 'The price could not be reached just now. Nothing was sent to your wallet. Try again.';
+    case 'execute_unconfirmed':
       return 'That could not be confirmed from here. Check your wallet before trying again — it may '
         + 'still have gone through.';
     default:

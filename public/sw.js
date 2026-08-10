@@ -63,6 +63,12 @@ function registryAuthority(url) {
     || (url.pathname.startsWith('/registry/') && url.pathname.endsWith('.json'));
 }
 
+function registryVolatileSurface(url) {
+  return url.pathname === '/registry/exchange'
+    || url.pathname === '/registry/exchange/'
+    || url.pathname === '/registry/exchange/index.html';
+}
+
 function registryWing(url) {
   return ['/registry/', '/sdk/', '/thesis/', '/archive/', '/disclosure/']
     .some((prefix) => url.pathname.startsWith(prefix));
@@ -133,9 +139,9 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  // The machine-readable Registry is live authority. Offline must be an
-  // honest network failure, never an old identity verdict.
-  if (registryAuthority(url)) {
+  // Registry identity and flag-stamped trading bytes are live authority.
+  // Offline must fail honestly, never preserve an old mint or flag state.
+  if (registryAuthority(url) || registryVolatileSurface(url)) {
     event.respondWith(fetch(request));
     return;
   }

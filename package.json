@@ -7,6 +7,7 @@
     "node": "22.x"
   },
   "scripts": {
+    "exchange:probe": "node scripts/probe-registry-exchange.mjs",
     "predev": "node scripts/sync-registry-establishment.mjs && node scripts/configure-registry-aura.mjs && node scripts/configure-registry-trade.mjs && node scripts/configure-registry-exchange.mjs && node scripts/configure-legacy-analytics.mjs && node scripts/build-widget-loader.mjs",
     "dev": "astro dev",
     "prebuild": "npm run editorial:daily:verify && npm run editorial:daily:replay && npm run editorial:daily:freshness && npm run editorial:horoscopes:verify && npm run editorial:horoscopes:freshness && npm run editorial:transits:verify-all && npm run data:events:verify && node scripts/build-people-pilot.mjs --check && node scripts/build-people-portraits.mjs --check && node scripts/validate-people-pilot.mjs && node scripts/check-people-pilot.mjs && node scripts/sync-registry-establishment.mjs && node scripts/configure-registry-aura.mjs && node scripts/configure-registry-trade.mjs && node scripts/configure-registry-exchange.mjs && node scripts/configure-legacy-analytics.mjs && node scripts/build-widget-loader.mjs && npm run data:og:verify",

@@ -181,6 +181,7 @@ jobs:
           node scripts/build-shelf.mjs
           node scripts/build-trade.mjs
           node scripts/build-exchange.mjs
+          node scripts/configure-registry-exchange.mjs
 
       - name: Drift gate
         run: git diff --exit-code -- public/

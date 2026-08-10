@@ -1,35 +1,48 @@
-# Registry exchange room — owner risk decision
+# Registry Trading Room — owner risk decision
 
 Status: DRAFT — pending owner ratification. The flag stays off, everywhere,
 until the owner ratifies this record by replacing this status line and dating
-the approval. Nothing in the merged implementation changes any live surface
-while this line reads DRAFT.
+the approval. While this line reads DRAFT, the new room remains dark. When
+merged, this implementation does harden the already-live shared trade client: it
+refuses unreadable or greater-than-10-bps fees, cancels stale panel work, and
+adds page-wide pacing and request deadlines. It enables no new acquisition
+surface by itself.
 
 Approved: (pending)
 
-Scope: exactly one additional surface — the Exchange room at
-`/registry/exchange/`, presented under the name "Zodiacs Mercantile
-Exchange"; Solana only; spot only; the site's existing trade panel calling
+Scope: exactly one additional surface — the Registry Trading Room at
+`/registry/exchange/` — plus the shared trade-client safeguards needed to keep
+that surface within the existing trust boundary; Solana only; spot only; the site's existing trade panel calling
 Jupiter's public Ultra API, plus read-only market description (candlestick
 charts, a recent-trades tape, indexed price/liquidity statistics) and a
 quote-derived depth ladder; no referral account, platform fee, or
 compensation of any kind; committed HTML always flag-off behind
 `PUBLIC_REGISTRY_EXCHANGE_ENABLED`.
 
-This record extends, and changes nothing in, the ratified trade decision of
-2026-08-02 (`docs/REGISTRY-TRADE-OWNER-RISK-DECISION.md`, scope amended
-2026-08-04). That decision's phase boundary reserved "acquisition surfaces
-outside the twelve catalogue pages" for a later record; this is that record,
-for one named surface.
+This record reuses the execution trust boundary ratified on 2026-08-02
+(`docs/REGISTRY-TRADE-OWNER-RISK-DECISION.md`, scope amended 2026-08-04), but
+expands the acquisition surface, provider dependencies, browser request
+volume, and operational exposure. Those changes are expressly decided here.
+The earlier decision reserved "acquisition surfaces outside the twelve
+catalogue pages" for a later record; this is that record, for one named
+surface.
+
+Like the trade decision it extends, this is an owner risk decision, not a
+legal opinion or a claim that every applicable jurisdiction has been
+analysed. Ratification does not substitute for advice from qualified counsel.
+Whether to obtain that advice remains an owner-only decision; the flag stays
+off until the owner explicitly ratifies this record after considering it.
 
 ## What is being decided
 
 Whether the Registry may keep one room in which the twelve records, their
-market history, and the venue's own quotes stand side by side — an
-exchange-style terminal. The trade inside it is the already-ratified trade:
+market history, and the venue's own quotes stand side by side — a market-room
+interface. The trade inside it is the already-ratified trade:
 the same panel, the same venue, the same controls, on one more page.
 
-What is new is description, not execution:
+The transaction protocol is unchanged. The market-data surface, automated
+quote traffic, shared fee guard, provider limits, monitoring duties, and
+rollback requirements are new:
 
 - **Candlestick charts and a recent-trades tape**, read in the visitor's
   browser from GeckoTerminal's public keyless API for the sign's canonical
@@ -41,32 +54,33 @@ What is new is description, not execution:
   Dex Screener endpoints the Registry already uses, labelled "indexed" as
   everywhere else.
 - **A depth ladder.** The pools are AMMs; there is no order book, and the
-  room does not pretend to one. Each rung is Jupiter's own executable quote
-  for a fixed size ($25–$1,000), fetched from the same Ultra endpoint the
-  panel uses, without a taker. The caption beside it says exactly this and
-  is pinned by test.
+  room does not pretend to one. Each rung is an indicative, taker-less
+  Jupiter quote for a fixed size ($25–$1,000), sampled sequentially from the
+  same Ultra endpoint the panel uses. A trade is quoted again before wallet
+  review; sell-side dollar sizes are estimates derived from the indexed mid,
+  while their displayed prices come from Jupiter's atomic amounts. The
+  caption beside it says exactly this and is pinned by test.
 
 ## The name
 
-"Zodiacs Mercantile Exchange" is the room's museum-register name, and the
-owner acknowledges the tension in it: the site does not operate an exchange.
-The boundary the trade decision rests on is therefore stated in the room
-itself, in its risk block, in these words: the page "presents a trade that an
-independent venue builds, executes, and charges for", and "the Exchange
-operates no market". Those sentences are pinned by
-`scripts/exchange-risk.test.mjs` against the committed page and survive
-stamping. If the owner concludes on reflection that the name itself
-overreaches, renaming the room is a copy change with no code consequence;
-this record does not treat the name as load-bearing.
+"Registry Trading Room" describes the interface without claiming that the
+site operates an exchange, and it does not reverse the Registry masthead
+choice merged on 2026-08-10. The boundary the trade decision rests on is stated in
+the room itself: it "presents a trade that an independent venue builds,
+executes, and charges for", and "operates no market". Those sentences are
+pinned by `scripts/exchange-risk.test.mjs` against the committed page and
+survive stamping. The route, source directory, and flag retain the internal
+word `exchange` for compatibility; those identifiers are not a public claim
+about who operates the venue.
 
 ## Why this stays inside the ratified boundary
 
 - The execution path is unchanged: quotes and transactions come from
   Jupiter's Ultra API; the visitor's wallet signs; Jupiter submits. The site
   still builds, signs, sends, and reverses nothing, holds no keys or funds,
-  and receives no compensation. The fee on every quote is the venue's own
-  0.10%, reported, with a hard client-side ceiling refusing anything that
-  looks like a misconfigured referral.
+  and receives no compensation. The exact venue fee is reported with every
+  trade-panel quote and may not exceed 0.10%; a missing, malformed, or higher fee is
+  refused before the quote can be used.
 - The ladder adds no new privilege: it is the panel's own quote call at
   fixed sizes, taker-less by construction (`src/exchange/depth.mjs` never
   passes one; pinned by test).
@@ -81,15 +95,36 @@ this record does not treat the name as load-bearing.
   `/registry/zodiacs.registry.json`; nothing is baked into the page or the
   bundle (pinned by test). No verified mint, no panel and no ladder.
 
+## Time-limited venue dependency
+
+Jupiter's official documentation checked on 2026-08-10 says that Ultra Swap
+is no longer actively maintained and has been superseded by Swap V2. The
+existing keyless `lite-api.jup.ag/ultra/v1` contract still answered live
+no-taker and Aries quote probes that day, but this record does not call that
+contract current or durable.
+
+Ratification therefore authorizes, at most, a 30-day pilot on the existing
+ratified Ultra path. Immediately before a flag-on build, the launch owner must
+run the committed provider probe and keep the flag off if the no-taker order,
+fee boundary, market-index, chart, or recent-trades contracts fail. The room returns flag-off
+on or before 2026-09-09 unless the owner records a dated review of the live
+contract and pilot evidence. Migrating to Swap V2, introducing an API key or
+site proxy, changing the 10 bps fee ceiling, or otherwise changing transaction
+responsibility requires a new owner decision before code or configuration.
+
 ## Controls that remain mandatory
 
-All ten controls of the 2026-08-02 record apply to this room verbatim, with
-these room-specific restatements:
+The earlier execution, custody, and compensation controls carry over. The
+explicit room-specific terms below govern where they add to or differ from
+that record:
 
 1. Committed `public/registry/exchange/index.html` stays flag-off; only the
-   Vercel production environment sets `PUBLIC_REGISTRY_EXCHANGE_ENABLED=1`;
-   the CI drift gate keeps regenerating the flag-off state; the stamping is
-   byte-reversible (`scripts/exchange-entry.test.mjs`).
+   Vercel production environment may set `PUBLIC_REGISTRY_EXCHANGE_ENABLED=1`
+   by default. Before launch, the owner may authorize one deployment-protected,
+   branch-specific preview carrying the flag for QA; it is never assigned a
+   public domain, never becomes a preview default, and the branch override is
+   removed after QA. The CI drift gate keeps regenerating the flag-off state;
+   the stamping is byte-reversible (`scripts/exchange-entry.test.mjs`).
 2. No referral account, platform fee, or compensation parameter is ever sent
    to any venue or data provider; `scripts/exchange-gecko.test.mjs` pins the
    absence of key/referral/fee parameters across the exchange sources and
@@ -98,14 +133,18 @@ these room-specific restatements:
 3. The site never constructs, signs, or broadcasts a transaction and calls
    no write RPC. The trading surfaces load no third-party code; the only
    third-party script on the page is the site's long-standing,
-   self-configured Plausible analytics loader that every wing page carries,
-   which receives no wallet address or trade data. The self-hosted-fonts
-   rule stands unbroken.
+   self-configured Plausible analytics loader that every wing page carries.
+   Its room events use a closed schema containing only surface and technical
+   outcome enums — never trade intent, a wallet address, amount, mint, quote,
+   request ID, transaction, visitor-supplied URL/query/hash, referrer, or free
+   text. Plausible's standard envelope receives the fixed canonical room URL;
+   the page transform clears the referrer. The self-hosted-fonts rule stands
+   unbroken (`scripts/exchange-analytics.test.mjs`).
 4. The pinned risk sentences render on the page itself — independent
    third-party, can lose all market value, could lose all money used to
    acquire a Zodiac, cannot be reversed, verify the official mint, network,
    amount, and destination — with the thin-liquidity warning and the venue's
-   0.10% fee in the same block, in the committed flag-off bytes and after
+   fee ceiling in the same block, in the committed flag-off bytes and after
    stamping alike (`scripts/exchange-risk.test.mjs`).
 5. The Cabinet (`/registry/collection/`) never gains the room, the panel, or
    any link to `/registry/exchange/` (pinned by test). The `/registry/` hub
@@ -115,25 +154,48 @@ these room-specific restatements:
    trade — never to show a price, a chart, a tape row, or a ladder rung. The
    privacy pages' description of what leaves the browser stays accurate, and
    names GeckoTerminal in every locale alongside the existing providers.
-7. The depth ladder's honesty caption — no order book; each rung is the
-   venue's own executable quote — renders with the ladder and is pinned by
-   test in source and bundle.
+7. The depth ladder's honesty caption — no order book; each rung is an
+   indicative quote at the time requested and a trade is quoted again before
+   wallet review — renders with the ladder and is pinned by test in source
+   and bundle.
 8. The room stays `noindex` and out of the sitemap under this record.
    Indexing it is a separate, later decision with its own SEO review.
-9. Rollback stays one step: unset the flag and redeploy; the page returns to
-   the committed reading-room state with no code change.
-10. Rate discipline toward the free data provider: a shared client-side
-    budget under GeckoTerminal's published ceiling; an exponential cool-off
-    opened by any 429 and cleared on the next success, during which polling
-    pauses behind a labeled waiting state; polling suspended for hidden
-    tabs; and the ladder refreshed only on selection or explicit request
-    with a cooldown.
+9. Emergency rollback uses Vercel Instant Rollback to the immediately prior
+   verified flag-off production deployment, without waiting for a build. The
+   owner then removes the production flag and redeploys to make that state
+   durable. The service worker treats this route as network-only, so it cannot
+   stale-serve flag-on HTML after rollback (`scripts/build-service-worker.test.mjs`).
+10. Rate discipline toward GeckoTerminal is best-effort across same-origin
+    tabs: a 12/minute stored budget, jittered non-overlapping polling, a 12s
+    request deadline, hidden-tab suspension, exponential cool-off, and any
+    valid `Retry-After` up to 120s. A success that began before a sibling 429
+    cannot erase the pause. The provider limit is IP-bound, so this does not
+    claim a guarantee across browsers or visitors sharing a NAT.
+11. The depth ladder makes no request on room open or sign selection. A visitor
+    explicitly loads ten taker-less quotes. One page-wide scheduler starts no
+    more than one Jupiter request every 2.1 seconds, cancels superseded display
+    work, and gives wallet-bound work priority over ladder samples. The button
+    has a cooldown and partial answers remain labelled rather than retried in a
+    burst. Sign switching is locked while wallet review is unresolved; after a
+    visitor signs, host teardown cannot abort the venue answer and erase the
+    distinction between a failed and an unconfirmed submission.
+12. A route-specific Content Security Policy browser-enforces the allowed
+    script and connection origins: self, Jupiter, Dex Screener, GeckoTerminal,
+    and the pre-existing Plausible service. The route also carries noindex and
+    `Cache-Control: no-store` headers in addition to its HTML meta control.
+13. The initial release is a 30-day, `noindex`, zero-compensation pilot. The
+    owner reviews privacy-safe aggregate mount and provider-state events plus
+    direct user feedback during the first hour and daily thereafter. Contract
+    or fee mismatch, a new key requirement, unexpected origin or address
+    disclosure, rollback/cache failure, or sustained provider failure turns
+    the flag off immediately. No indexing, broader acquisition surface, or
+    permanent dependency follows automatically.
 
 ## Phase boundary
 
-This record, once ratified, clears exactly one gate: setting
-`PUBLIC_REGISTRY_EXCHANGE_ENABLED=1` in production after the implementation
-merges with every control above satisfied. It does not authorize Base-chain
+This record, once ratified, clears exactly one gate: a time-limited flag-on
+pilot after the implementation merges and every control above is satisfied.
+It does not authorize Base-chain
 trading, fees or compensation of any kind, any API key or site secret
 (Jupiter's Trigger/limit-order API requires one and therefore stays out of
 scope until a record of its own), embedding any third-party script, indexing

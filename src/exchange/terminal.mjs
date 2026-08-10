@@ -12,8 +12,8 @@
  *
  * Two markets are deliberately kept apart on this page and labelled so: the
  * chart and tape describe the sign's canonical pool (the reference market),
- * while the panel's executable quote is Jupiter's aggregate and may route
- * beyond that pool.
+ * while the panel's indicative quote is Jupiter's aggregate and may route
+ * beyond that pool. A trade is quoted again before wallet review.
  */
 
 import { EXCHANGE_SIGNS } from './signs.mjs';
@@ -27,30 +27,69 @@ import {
   fetchTrades,
 } from './gecko.mjs';
 import { fetchBatchStats } from './stats.mjs';
-import { LADDER_NOTIONALS, fetchLadder } from './depth.mjs';
+import { LADDER_QUOTE_SPACING_MS, fetchLadder } from './depth.mjs';
 import { createChart } from './chart.mjs';
 import { createTape } from './tape.mjs';
 import { formatPrice, formatUsd } from './chart-model.mjs';
+import { trackExchangeEvent } from './analytics.mjs';
 
 const REGISTRY_URL = '/registry/zodiacs.registry.json';
 const REGISTRY_DEADLINE = 12_000;
+const STATS_DEADLINE_MS = 10_000;
 const STATS_EVERY_MS = 60_000;
 const CHART_EVERY_MS = 60_000;
 const TAPE_EVERY_MS = 20_000;
 const LADDER_COOLDOWN_MS = 30_000;
 const BUDGET_RETRY_MS = 8_000;
+export const POLL_JITTER_RATIO = 0.12;
+
+export function jitteredPollDelay(baseMs, random = Math.random) {
+  const unit = Math.min(1, Math.max(0, Number(random()) || 0));
+  const factor = 1 - POLL_JITTER_RATIO + unit * POLL_JITTER_RATIO * 2;
+  return Math.round(baseMs * factor);
+}
+
+export function requestMayStart(activeKey, nextKey) {
+  return activeKey !== nextKey;
+}
+
+export function beginLatestRequest(current, key, parentSignal) {
+  if (!current?.controller.signal.aborted
+    && !requestMayStart(current?.key ?? null, key)) return null;
+  current?.controller.abort();
+  const controller = new AbortController();
+  const relayAbort = () => controller.abort();
+  if (parentSignal.aborted) controller.abort();
+  else parentSignal.addEventListener('abort', relayAbort, { once: true });
+  return {
+    key,
+    controller,
+    detach() { parentSignal.removeEventListener('abort', relayAbort); },
+  };
+}
+
+export function latestRequestIsCurrent(active, candidate) {
+  return active === candidate && !candidate.controller.signal.aborted;
+}
+
+export function panelLocksSelection(candidate) {
+  return candidate?.controller?.state?.state === 'signing';
+}
 
 /**
  * The one sentence the ladder is not allowed to lose. Pinned by test in this
  * source and in the built bundle.
  */
-export const LADDER_CAPTION = 'These pools have no order book. Each rung is Jupiter’s own executable quote '
-  + 'for that size — the price you would actually get, venue fee and price impact included.';
+export const LADDER_CAPTION = 'These pools have no order book. Each rung is an indicative Jupiter quote '
+  + 'at the time requested; price comes from the returned atomic amounts and “vs best” compares '
+  + 'the smallest rung. Sell sizes are estimates from the indexed mid. Quotes with unreadable '
+  + 'fee or impact fields, or a fee above 0.10%, are refused. A trade is quoted again before wallet review.';
 
 /** The reference-vs-execution boundary, also pinned by test. */
 export const CHART_SCOPE = 'Reference market — the sign’s canonical pool. '
   + 'Orders execute through Jupiter and may route beyond it.';
-export const PANEL_SCOPE = 'Aggregated venue quote — Jupiter may route across several pools.';
+export const PANEL_SCOPE = 'Indicative aggregate quote — Jupiter may route across several pools; '
+  + 'a trade is quoted again before wallet review.';
 
 function el(tag, className, text) {
   const node = document.createElement(tag);
@@ -113,8 +152,21 @@ function initialSlug() {
 }
 
 export function createTerminal({ host }) {
-  const budget = createRateBudget();
-  const coolOff = createCoolOff();
+  let sharedBudgetStorage = null;
+  try {
+    sharedBudgetStorage = window.localStorage;
+  } catch {
+    // Storage can be disabled. The in-memory budget remains conservative.
+  }
+  const budget = createRateBudget({ storage: sharedBudgetStorage });
+  const coolOff = createCoolOff({ storage: sharedBudgetStorage });
+  const reportedStates = new Map();
+
+  function reportState(surface, outcome) {
+    if (reportedStates.get(surface) === outcome) return;
+    reportedStates.set(surface, outcome);
+    trackExchangeEvent('exchange_market_state', { surface, outcome });
+  }
 
   // ── skeleton ────────────────────────────────────────────────────────────
   const grid = el('div', 'zme__grid');
@@ -175,10 +227,10 @@ export function createTerminal({ host }) {
   const ladderCard = el('section', 'zme__card');
   const ladderHead = el('div', 'zme__card-head');
   const ladderTitle = el('h2', 'zme__card-title', 'Depth');
-  const ladderRefresh = el('button', 'zme__ladder-refresh', 'Refresh');
+  const ladderRefresh = el('button', 'zme__ladder-refresh', 'Load depth');
   ladderRefresh.type = 'button';
   ladderHead.append(ladderTitle, ladderRefresh);
-  const ladderNote = el('span', 'zme__card-note', 'modelled from venue quotes');
+  const ladderNote = el('span', 'zme__card-note', '10 taker-less quotes · about 20 seconds');
   const ladderTable = el('table', 'zme__ladder-table');
   const ladderTableHead = el('thead');
   const ladderHeadRow = el('tr');
@@ -189,8 +241,7 @@ export function createTerminal({ host }) {
   ladderTableHead.append(ladderHeadRow);
   const ladderBody = el('tbody');
   ladderTable.append(ladderTableHead, ladderBody);
-  const ladderState = stateNode('');
-  ladderState.hidden = true;
+  const ladderState = stateNode('Load depth to request ten taker-less venue quotes.');
   const ladderCaption = el('p', 'zme__ladder-caption', LADDER_CAPTION);
   ladderCard.append(ladderHead, ladderNote, ladderTable, ladderState, ladderCaption);
 
@@ -234,6 +285,9 @@ export function createTerminal({ host }) {
   let statsTimer = null;
   let chartRetryTimer = null;
   let tapeRetryTimer = null;
+  let chartRequest = null;
+  let tapeRequest = null;
+  let statsRequest = null;
   let ladderEnableTimer = null;
   let ladderBusyUntil = 0;
   let destroyed = false;
@@ -314,6 +368,14 @@ export function createTerminal({ host }) {
     chartTitle.textContent = record?.symbol ? `${record.symbol} / USD` : sign?.name ?? '—';
   }
 
+  function setRailLocked(locked) {
+    for (const { button } of railRows.values()) {
+      button.disabled = locked;
+      if (locked) button.title = 'Finish or dismiss the wallet review before changing signs.';
+      else button.removeAttribute('title');
+    }
+  }
+
   function registryFailureNode() {
     const box = el('div');
     box.append(stateNode('The registry could not be read, so there is nothing to trade against.'));
@@ -357,15 +419,28 @@ export function createTerminal({ host }) {
 
   async function refreshStats() {
     if (!records) return;
+    if (statsRequest) return statsRequest;
+    const controller = new AbortController();
+    const deadline = setTimeout(() => controller.abort(), STATS_DEADLINE_MS);
+    const request = (async () => {
+      try {
+        const mints = [...records.values()].map((record) => record.mint);
+        const result = await fetchBatchStats({ mints, signal: controller.signal });
+        stats = result.stats;
+        batchRows = result.rows;
+        fillRail();
+        fillStats();
+      } catch {
+        // The rail keeps its last numbers; the panel and ladder are unaffected.
+      } finally {
+        clearTimeout(deadline);
+      }
+    })();
+    statsRequest = request;
     try {
-      const mints = [...records.values()].map((record) => record.mint);
-      const result = await fetchBatchStats({ mints });
-      stats = result.stats;
-      batchRows = result.rows;
-      fillRail();
-      fillStats();
-    } catch {
-      // The rail keeps its last numbers; the panel and ladder are unaffected.
+      return await request;
+    } finally {
+      if (statsRequest === request) statsRequest = null;
     }
   }
 
@@ -394,14 +469,22 @@ export function createTerminal({ host }) {
   }
 
   async function loadChart(signal) {
+    const requestKey = `${selected}:${timeframe}`;
+    const request = beginLatestRequest(chartRequest, requestKey, signal);
+    if (!request) return;
+    chartRequest = request;
+    try {
     const sign = signFor(selected);
     const tf = timeframe;
     const slug = selected;
-    const fresh = () => !signal.aborted && tf === timeframe && slug === selected;
+    const fresh = () => latestRequestIsCurrent(chartRequest, request)
+      && tf === timeframe
+      && slug === selected;
     const pool = poolForSelection();
     if (!pool) {
       chart.clear();
       showState(chartState, 'No indexed pool to chart. The trade panel still quotes the venue directly.');
+      reportState('chart', 'not_indexed');
       return;
     }
     if (coolOff.active()) {
@@ -415,38 +498,56 @@ export function createTerminal({ host }) {
       return;
     }
     try {
-      const candles = await fetchOhlcv({ pool, timeframe: tf, signal });
+      const coolOffToken = coolOff.token();
+      const candles = await fetchOhlcv({ pool, timeframe: tf, signal: request.controller.signal });
       if (!fresh()) return;
-      coolOff.ok();
+      coolOff.ok(coolOffToken);
       if (!candles.length) {
         chart.clear();
         showState(chartState, 'No trades in this window yet.');
+        reportState('chart', 'empty');
         return;
       }
       showState(chartState, '');
       chart.set({ candles, timeframe: tf, hue: sign?.hue });
+      reportState('chart', 'ready');
     } catch (error) {
-      if (error?.name === 'AbortError' || !fresh()) return;
+      if (error?.name === 'AbortError') return;
       if (error?.code === 'rate_limited') {
-        coolOff.fail();
+        coolOff.fail(error.retryAfterMs);
+        if (!fresh()) return;
         chart.clear();
         showState(chartState, 'The chart service asked for a pause. Retrying shortly.');
+        reportState('chart', 'rate_limited');
         scheduleChartRetry(signal, coolOff.remainingMs() + 250);
         return;
       }
+      if (!fresh()) return;
       chart.clear();
       showState(chartState, 'Chart unavailable. The trade panel still quotes the venue directly.');
+      reportState('chart', error?.code === 'not_indexed' ? 'not_indexed' : 'unavailable');
+    }
+    } finally {
+      request.detach();
+      if (chartRequest === request) chartRequest = null;
     }
   }
 
   async function loadTape(signal) {
+    const requestKey = selected;
+    const request = beginLatestRequest(tapeRequest, requestKey, signal);
+    if (!request) return;
+    tapeRequest = request;
+    try {
     const record = recordFor(selected);
     const slug = selected;
-    const fresh = () => !signal.aborted && slug === selected;
+    const fresh = () => latestRequestIsCurrent(tapeRequest, request)
+      && slug === selected;
     const pool = poolForSelection();
     if (!record || !pool) {
       tape.clear();
       showState(tapeState, 'No indexed pool to read trades from.');
+      reportState('tape', 'not_indexed');
       return;
     }
     if (coolOff.active()) {
@@ -460,33 +561,48 @@ export function createTerminal({ host }) {
       return;
     }
     try {
-      const trades = await fetchTrades({ pool, mint: record.mint, signal });
+      const coolOffToken = coolOff.token();
+      const trades = await fetchTrades({
+        pool,
+        mint: record.mint,
+        signal: request.controller.signal,
+      });
       if (!fresh()) return;
-      coolOff.ok();
+      coolOff.ok(coolOffToken);
       if (!trades.length) {
         tape.clear();
         showState(tapeState, 'No recent trades in this pool.');
+        reportState('tape', 'empty');
         return;
       }
       showState(tapeState, '');
       tape.set(trades, { symbol: record.symbol });
+      reportState('tape', 'ready');
     } catch (error) {
-      if (error?.name === 'AbortError' || !fresh()) return;
+      if (error?.name === 'AbortError') return;
       if (error?.code === 'rate_limited') {
-        coolOff.fail();
+        coolOff.fail(error.retryAfterMs);
+        if (!fresh()) return;
         tape.clear();
         showState(tapeState, 'The trade feed asked for a pause. Retrying shortly.');
+        reportState('tape', 'rate_limited');
         scheduleTapeRetry(signal, coolOff.remainingMs() + 250);
         return;
       }
+      if (!fresh()) return;
       tape.clear();
       showState(tapeState, 'Trade feed unavailable.');
+      reportState('tape', error?.code === 'not_indexed' ? 'not_indexed' : 'unavailable');
+    }
+    } finally {
+      request.detach();
+      if (tapeRequest === request) tapeRequest = null;
     }
   }
 
   function stopTimers() {
-    clearInterval(chartTimer);
-    clearInterval(tapeTimer);
+    clearTimeout(chartTimer);
+    clearTimeout(tapeTimer);
     clearTimeout(chartRetryTimer);
     clearTimeout(tapeRetryTimer);
     chartTimer = null;
@@ -497,18 +613,26 @@ export function createTerminal({ host }) {
     stopTimers();
     if (!selectionAbort) return;
     const { signal } = selectionAbort;
-    chartTimer = setInterval(() => {
-      if (document.visibilityState === 'hidden') return;
-      loadChart(signal);
-    }, CHART_EVERY_MS);
-    tapeTimer = setInterval(() => {
-      if (document.visibilityState === 'hidden') return;
-      loadTape(signal);
-    }, TAPE_EVERY_MS);
+    const scheduleChart = () => {
+      chartTimer = setTimeout(async () => {
+        if (!signal.aborted && document.visibilityState !== 'hidden') await loadChart(signal);
+        if (!signal.aborted) scheduleChart();
+      }, jitteredPollDelay(CHART_EVERY_MS));
+    };
+    const scheduleTape = () => {
+      tapeTimer = setTimeout(async () => {
+        if (!signal.aborted && document.visibilityState !== 'hidden') await loadTape(signal);
+        if (!signal.aborted) scheduleTape();
+      }, jitteredPollDelay(TAPE_EVERY_MS));
+    };
+    scheduleChart();
+    scheduleTape();
   }
 
   function restartChart() {
     if (!selectionAbort) return;
+    clearTimeout(chartRetryTimer);
+    chartRetryTimer = null;
     showState(chartState, '');
     loadChart(selectionAbort.signal);
   }
@@ -521,7 +645,7 @@ export function createTerminal({ host }) {
         const row = el('tr', side === 'buy' ? 'zme__ladder-row--buy' : 'zme__ladder-row--sell');
         const cells = [
           el('td', 'zme__ladder-side', side === 'buy' ? 'Buy' : 'Sell'),
-          el('td', null, `$${rung.notional}`),
+          el('td', null, `${side === 'sell' ? '≈' : ''}$${rung.notional}`),
         ];
         if (rung.error || !rung.priceScaled) {
           const message = rung.error === 'no_route' ? 'no route' : 'unavailable';
@@ -543,15 +667,31 @@ export function createTerminal({ host }) {
   async function refreshLadder() {
     const record = recordFor(selected);
     if (!record || !selectionAbort) return;
+    const requestSelection = selected;
     const now = Date.now();
     if (now < ladderBusyUntil) return;
     ladderBusyUntil = now + LADDER_COOLDOWN_MS;
     ladderRefresh.disabled = true;
+    ladderRefresh.textContent = 'Reading…';
     const { signal } = selectionAbort;
-    showState(ladderState, '');
+    showState(ladderState, 'Reading buy quotes from the venue…');
     try {
       const quote = statsFor(selected);
       const buys = await fetchLadder({ mint: record.mint, side: 'buy', signal });
+      if (signal.aborted) return;
+      renderLadder([buys]);
+      if (buys.halted === 'rate_limited') {
+        ladderBusyUntil = Math.max(
+          ladderBusyUntil,
+          Date.now() + Math.max(LADDER_COOLDOWN_MS, Number(buys.retryAfterMs) || 0),
+        );
+        showState(ladderState, 'The venue asked for a pause. Try depth again later.');
+        reportState('ladder', 'rate_limited');
+        return;
+      }
+      showState(ladderState, 'Reading sell quotes from the venue…');
+      await new Promise((resolve) => { setTimeout(resolve, LADDER_QUOTE_SPACING_MS); });
+      if (signal.aborted) return;
       const sells = await fetchLadder({
         mint: record.mint,
         side: 'sell',
@@ -560,16 +700,32 @@ export function createTerminal({ host }) {
       });
       if (signal.aborted) return;
       renderLadder([buys, sells]);
+      if (sells.halted === 'rate_limited') {
+        ladderBusyUntil = Math.max(
+          ladderBusyUntil,
+          Date.now() + Math.max(LADDER_COOLDOWN_MS, Number(sells.retryAfterMs) || 0),
+        );
+        showState(ladderState, 'The venue asked for a pause. Partial depth is shown.');
+        reportState('ladder', 'rate_limited');
+        return;
+      }
+      const rungs = [...buys.rungs, ...sells.rungs];
+      const failures = rungs.filter((rung) => rung.error || !rung.priceScaled).length;
+      reportState('ladder', failures === 0 ? 'ready' : failures === rungs.length ? 'unavailable' : 'partial');
+      showState(ladderState, failures === 0 ? '' : 'Some venue quotes were unavailable.');
     } catch (error) {
       if (error?.name !== 'AbortError' && !signal.aborted) {
         ladderBody.replaceChildren();
         showState(ladderState, 'Venue quotes unavailable just now.');
+        reportState('ladder', 'unavailable');
       }
     } finally {
       clearTimeout(ladderEnableTimer);
-      const mySelection = selected;
       ladderEnableTimer = setTimeout(() => {
-        if (!destroyed && mySelection === selected) ladderRefresh.disabled = false;
+        if (!destroyed && requestSelection === selected) {
+          ladderRefresh.disabled = false;
+          ladderRefresh.textContent = 'Refresh';
+        }
       }, Math.max(0, ladderBusyUntil - Date.now()));
     }
   }
@@ -582,6 +738,7 @@ export function createTerminal({ host }) {
     const attempt = ++panelAttempt;
     panel?.destroy?.();
     panel = null;
+    setRailLocked(false);
     panelHost.replaceChildren();
     if (!sign || !record) {
       panelHost.append(registryFailed
@@ -593,6 +750,7 @@ export function createTerminal({ host }) {
       if (destroyed || attempt !== panelAttempt) return;
       if (!trade) {
         panelHost.append(stateNode('The trade panel could not load. The record page lists the venue route directly.'));
+        reportState('panel', 'unavailable');
         return;
       }
       panel = trade.mount(panelHost, {
@@ -601,12 +759,22 @@ export function createTerminal({ host }) {
         mint: record.mint,
         hue: sign.hue,
         iconUrl: `/assets/zodiac-icons/128/${sign.slug}.webp`,
+      }, {
+        onStateChange: (_view, state) => {
+          setRailLocked(state.state === 'signing');
+          if (state.state === 'ready') reportState('panel', 'ready');
+          if (state.state === 'error') {
+            reportState('panel', state.error === 'rate_limited' ? 'rate_limited' : 'unavailable');
+          }
+        },
       });
+      if (!panel) reportState('panel', 'unavailable');
     });
   }
 
   // ── selection ───────────────────────────────────────────────────────────
   function select(slug) {
+    if (slug !== selected && panelLocksSelection(panel)) return false;
     // Before the registry answers, a click only chooses; the room opens on
     // that choice the moment the answer arrives.
     if (!records) {
@@ -626,8 +794,9 @@ export function createTerminal({ host }) {
     clearTimeout(ladderEnableTimer);
     ladderBusyUntil = 0;
     ladderRefresh.disabled = false;
+    ladderRefresh.textContent = 'Load depth';
     ladderBody.replaceChildren();
-    showState(ladderState, '');
+    showState(ladderState, 'Load depth to request ten taker-less venue quotes.');
 
     paintSelection(slug);
     try {
@@ -644,10 +813,9 @@ export function createTerminal({ host }) {
     mountPanel();
 
     const { signal } = selectionAbort;
+    startTimers();
     loadChart(signal);
     loadTape(signal);
-    startTimers();
-    refreshLadder();
   }
 
   function onVisibility() {

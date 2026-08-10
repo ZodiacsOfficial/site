@@ -40,7 +40,7 @@ export function renderExchangeRegion({ enabled }) {
   return [
     START,
     `      ${slot}`,
-    '      <section class="zme" data-zme-terminal aria-label="Exchange terminal">',
+    '      <section class="zme" data-zme-terminal aria-label="Registry Trading Room terminal">',
     '        <noscript>',
     '          <p class="zme__noscript">The terminal needs JavaScript. Each record page under',
     '          <a href="/registry/">the Registry</a> lists the venue route directly.</p>',

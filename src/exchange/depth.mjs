@@ -2,10 +2,9 @@
  * The depth ladder — the honest substitute for an order book.
  *
  * These pools are AMMs; there is no book of resting orders to display. Each
- * rung below is instead the venue's own executable quote for a fixed size,
- * fetched from the same Jupiter Ultra endpoint the trade panel uses. That
- * makes the ladder exactly as real as the trade: the price you would get,
- * not a picture of one.
+ * rung below is instead an indicative quote for a fixed size, fetched from
+ * the same Jupiter Ultra endpoint the trade panel uses. No taker is present,
+ * so a trade is quoted again before wallet review.
  *
  * Two rules carry over from the ratified trade decision and are pinned by
  * test: no taker is ever sent — a ladder is price display, and an address
@@ -14,7 +13,13 @@
  * atomic amounts with scaled-BigInt division, never floats.
  */
 
-import { atomicFromDecimal, decimalFromAtomic, fetchOrder } from '../trade/ultra.mjs';
+import {
+  VENUE_REQUEST_SPACING_MS,
+  assertOrderMatches,
+  atomicFromDecimal,
+  decimalFromAtomic,
+  fetchOrder,
+} from '../trade/ultra.mjs';
 import { USDC_DECIMALS, USDC_MINT } from '../trade/panel-model.mjs';
 
 export { USDC_DECIMALS, USDC_MINT };
@@ -28,6 +33,8 @@ export const LADDER_NOTIONALS = Object.freeze(['25', '100', '250', '500', '1000'
 /** Ladder prices are USDC per token at twelve fractional digits. */
 export const PRICE_SCALE_DECIMALS = 12;
 const PRICE_SCALE = 10n ** BigInt(PRICE_SCALE_DECIMALS);
+/** Legacy keyless venue traffic stays below one request every two seconds. */
+export const LADDER_QUOTE_SPACING_MS = VENUE_REQUEST_SPACING_MS;
 
 /**
  * USDC per token from an order's atomic amounts, as a scaled BigInt.
@@ -77,7 +84,6 @@ export function tokenAmountForNotional(notional, midPriceUsd) {
   return tokens.toFixed(ZODIAC_DECIMALS);
 }
 
-const DEFAULT_SPACING_MS = 250;
 const sleepFor = (ms) => new Promise((resolve) => { setTimeout(resolve, ms); });
 
 /**
@@ -93,8 +99,9 @@ export async function fetchLadder({
   midPriceUsd = null,
   fetchImpl,
   signal,
-  spacingMs = DEFAULT_SPACING_MS,
+  spacingMs = LADDER_QUOTE_SPACING_MS,
   sleep = sleepFor,
+  deadlineMs,
 }) {
   const rungs = [];
   // "vs best" only means something against the smallest size. If the first
@@ -128,7 +135,14 @@ export async function fetchLadder({
         };
       }
 
-      const order = await fetchOrder({ ...params, fetchImpl, signal });
+      const order = await fetchOrder({
+        ...params,
+        fetchImpl,
+        signal,
+        requestClass: 'background',
+        deadlineMs,
+      });
+      assertOrderMatches(order, params);
       const priceScaled = side === 'sell'
         ? priceScaledFromAtomic(order.outAmount, order.inAmount)
         : priceScaledFromAtomic(order.inAmount, order.outAmount);
@@ -146,6 +160,9 @@ export async function fetchLadder({
       });
     } catch (error) {
       if (error?.name === 'AbortError') throw error;
+      if (error?.code === 'rate_limited') {
+        return { side, rungs, halted: 'rate_limited', retryAfterMs: error.retryAfterMs };
+      }
       rungs.push({ notional, error: error?.code ?? 'unavailable' });
     }
   }

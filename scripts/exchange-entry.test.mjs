@@ -55,6 +55,8 @@ describe('stamping', () => {
     expect(enabled).toBe(true);
     expect(output).toContain('<meta name="zodiacs-registry-exchange-enabled" content="1" />');
     expect(output.match(/data-zme-terminal/g)).toHaveLength(1);
+    expect(output).toContain('aria-label="Registry Trading Room terminal"');
+    expect(output).not.toContain('aria-label="Exchange terminal"');
     expect(output.match(/src="\/assets\/exchange\.js"/g)).toHaveLength(1);
   });
 
@@ -93,5 +95,15 @@ describe('the rendered region', () => {
     expect(off).not.toContain('data-zme-terminal');
     expect(off).not.toContain('/assets/exchange.js');
     expect(off).toContain('registry-exchange:slot');
+  });
+});
+
+describe('the committed-off drift invariant', () => {
+  it('unstamps the page in the fresh-checkout drift job before diffing public output', async () => {
+    const workflow = await readFile(resolve(root, '.github/workflows/site-check.yml'), 'utf8');
+    const job = workflow.slice(workflow.indexOf('  legacy-drift:'), workflow.indexOf('  phase3-delivery-sql:'));
+    expect(job).toContain('node scripts/build-exchange.mjs');
+    expect(job).toContain('node scripts/configure-registry-exchange.mjs');
+    expect(job.indexOf('configure-registry-exchange.mjs')).toBeLessThan(job.indexOf('git diff --exit-code'));
   });
 });
