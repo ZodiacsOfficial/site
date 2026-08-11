@@ -23,9 +23,14 @@ const PISCES_MINT = 'PiscesCanonicalMint111111111111111111111111';
 const LEO_POOL = 'LeoPool111111111111111111111111111111111111';
 const PISCES_POOL = 'PiscesPool11111111111111111111111111111111';
 
-function candle(at, close = 1) {
+function candle(at, close = 1, {
+  open = close * 0.995,
+  high = Math.max(open, close) * 1.004,
+  low = Math.min(open, close) * 0.996,
+  volume = 1,
+} = {}) {
   const ts = Date.parse(at) / 1000;
-  return { ts, o: close, h: close, l: close, c: close, v: 1 };
+  return { ts, o: open, h: high, l: low, c: close, v: volume };
 }
 
 function hourlyCandles(count = 8, { gapAfter = null, startHour = 1 } = {}) {
@@ -71,7 +76,7 @@ function abortException() {
 }
 
 describe('the narrow GeckoTerminal request', () => {
-  it('pins one selected token and pool to 24 non-filled closed hourly results', () => {
+  it('pins one selected token and pool to 24 clock-hour OHLCV results', () => {
     const beforeTimestamp = Math.floor(NOW_MS / 3_600_000) * 3600;
     const url = new URL(hourlyOhlcvWindowUrl({
       pool: LEO_POOL,
@@ -85,7 +90,7 @@ describe('the narrow GeckoTerminal request', () => {
       limit: '24',
       currency: 'usd',
       token: LEO_MINT,
-      include_empty_intervals: 'false',
+      include_empty_intervals: 'true',
     });
     expect(url.toString()).not.toContain(PISCES_MINT);
     expect(url.toString()).not.toContain(PISCES_POOL);
@@ -128,7 +133,7 @@ describe('the narrow GeckoTerminal request', () => {
 });
 
 describe('closed-hour normalization and honest sparse models', () => {
-  it('keeps real hourly positions, drops open/old/misaligned rows, and preserves holes', () => {
+  it('preserves OHLCV, keeps internal holes, and appends only trailing idle slots', () => {
     const series = normalizeClosedHourlyPrices([
       candle('2026-08-09T11:00:00.000Z', 0.8), // outside the 24 closed hours
       candle('2026-08-09T12:00:00.000Z', 1),
@@ -138,10 +143,103 @@ describe('closed-hour normalization and honest sparse models', () => {
     ], { nowMs: NOW_MS, pool: LEO_POOL });
     expect(series.windowStartMs).toBe(Date.parse('2026-08-09T12:00:00.000Z'));
     expect(series.windowEndMs).toBe(Date.parse('2026-08-10T12:00:00.000Z'));
-    expect(series.points.map((point) => point.at)).toEqual([
+    expect(series.points).toHaveLength(23);
+    expect(series.points.slice(0, 2).map((point) => point.slotAt)).toEqual([
       '2026-08-09T12:00:00.000Z',
       '2026-08-09T14:00:00.000Z',
     ]);
+    expect(series.points[0]).toMatchObject({
+      openUsd: 0.995,
+      closeUsd: 1,
+      priceUsd: 1,
+      volumeUsd: 1,
+      hasTrades: true,
+      idleKind: null,
+    });
+    expect(series.points.at(-1)).toMatchObject({
+      slotAt: '2026-08-10T11:00:00.000Z',
+      hasTrades: false,
+      idleKind: 'derived-trailing',
+      volumeUsd: 0,
+    });
+    expect(series.points.some(point => point.slotAt === '2026-08-09T13:00:00.000Z')).toBe(false);
+  });
+
+  it('builds a complete 24-slot candle model with provider and trailing no-swap hours', () => {
+    const windowStart = Date.parse('2026-08-09T12:00:00.000Z');
+    const activeIndexes = new Set([1, 3, 5, 6, 9, 12, 15, 18, 20]);
+    let carriedClose = 1;
+    const rows = Array.from({ length: 21 }, (_, index) => {
+      const active = activeIndexes.has(index);
+      const open = carriedClose;
+      const close = active ? carriedClose * (index % 2 ? 1.01 : 0.995) : carriedClose;
+      carriedClose = close;
+      return candle(new Date(windowStart + index * 3_600_000).toISOString(), close, {
+        open,
+        high: active ? Math.max(open, close) * 1.003 : close,
+        low: active ? Math.min(open, close) * 0.997 : close,
+        volume: active ? 100 + index : 0,
+      });
+    });
+    const series = normalizeClosedHourlyPrices(rows, { nowMs: NOW_MS, pool: LEO_POOL });
+    const model = buildSelectedTokenChartModel({
+      token: LEO_MINT,
+      label: 'Leo',
+      pool: LEO_POOL,
+      live: { status: 'ready', series },
+    });
+
+    expect(model.points).toHaveLength(24);
+    expect(model.mode).toBe('line');
+    expect(model.coverage).toMatchObject({
+      activePointCount: 9,
+      idlePointCount: 15,
+      providerIdlePointCount: 12,
+      derivedIdlePointCount: 3,
+      missingPointCount: 0,
+    });
+    expect(model.startPriceUsd).toBe(rows[0].o);
+    expect(model.endPriceUsd).toBe(rows.at(-1).c);
+    expect(model.startTimestampMs).toBe(series.windowStartMs);
+    expect(model.endTimestampMs).toBe(series.windowEndMs);
+    expect(model.lastActive.slotAt).toBe('2026-08-10T08:00:00.000Z');
+    expect(model.caption).toBe('9 active hours · 15 no-swap hours · GeckoTerminal');
+    expect(model.ariaLabel).toMatch(/24-hour candlestick chart/i);
+    expect(model.ariaLabel).toMatch(/9 hours contained swaps; 15 no-swap hours carry the preceding close with zero volume/i);
+  });
+
+  it('keeps sparse live endpoint prices, timestamps, change, and elapsed window consistent', () => {
+    const series = normalizeClosedHourlyPrices([
+      candle('2026-08-10T06:00:00.000Z', 1.1, {
+        open: 1,
+        high: 1.12,
+        low: 0.99,
+        volume: 10,
+      }),
+    ], { nowMs: NOW_MS, pool: LEO_POOL });
+    const model = buildSelectedTokenChartModel({
+      token: LEO_MINT,
+      label: 'Leo',
+      pool: LEO_POOL,
+      live: { status: 'ready', series },
+    });
+
+    expect(model.mode).toBe('comparison');
+    expect(model.coverage).toMatchObject({
+      observedPointCount: 6,
+      activePointCount: 1,
+      idlePointCount: 5,
+      derivedIdlePointCount: 5,
+    });
+    expect(model.startPriceUsd).toBe(1);
+    expect(model.endPriceUsd).toBe(1.1);
+    expect(model.startTimestampMs).toBe(Date.parse('2026-08-10T06:00:00.000Z'));
+    expect(model.endTimestampMs).toBe(Date.parse('2026-08-10T12:00:00.000Z'));
+    expect(model.netChangePct).toBeCloseTo(10);
+    expect(model.ariaLabel).toMatch(/covers 6 hourly slots from \$1 at Aug 10, 2026, 06:00 UTC to \$1\.1 at Aug 10, 2026, 12:00 UTC/i);
+    expect(model.ariaLabel).toMatch(/available hourly slots have a high of \$1\.12 and a low of \$0\.99/i);
+    expect(model.ariaLabel).not.toMatch(/candlestick chart/i);
+    expect(model.ariaLabel).not.toContain('Aug 9, 2026');
   });
 
   it.each([
@@ -196,10 +294,11 @@ describe('closed-hour normalization and honest sparse models', () => {
     });
     expect(model.source).toBe('geckoterminal-hourly');
     expect(model.mode).toBe('line');
-    expect(model.segments.map((segment) => segment.length)).toEqual([3, 5]);
+    expect(model.segments.map((segment) => segment.length)).toEqual([3, 7]);
     expect(model.points[3].timestampMs - model.points[2].timestampMs).toBe(2 * 3_600_000);
-    expect(model.caption).toBe('8 of 24 closed hourly observations · GeckoTerminal');
-    expect(model.ariaLabel).toMatch(/Leo closed hourly history has 8 observations/i);
+    expect(model.caption).toBe('8 active hours · 2 no-swap hours · GeckoTerminal');
+    expect(model.ariaLabel).toMatch(/Leo closed hourly history covers 10 hourly slots/i);
+    expect(model.ariaLabel).toMatch(/8 hours contained swaps; 2 no-swap hours carry the preceding close with zero volume/i);
     expect(model.ariaLabel).toMatch(/expected intervals are missing and remain unconnected/i);
     expect(model.sourceAttributionUrl).toBe('https://www.geckoterminal.com/');
   });
@@ -221,7 +320,7 @@ describe('closed-hour normalization and honest sparse models', () => {
     ));
 
     expect(drawnPoints).toEqual(model.points);
-    expect(drawnIntervals).toEqual(Array(6).fill(3_600_000));
+    expect(drawnIntervals).toEqual(Array(8).fill(3_600_000));
     expect(model.segments[0].at(-1).slotMs).toBe(Date.parse('2026-08-10T03:00:00.000Z'));
     expect(model.segments[1][0].slotMs).toBe(Date.parse('2026-08-10T05:00:00.000Z'));
   });

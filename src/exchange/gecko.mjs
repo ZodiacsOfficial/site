@@ -70,8 +70,9 @@ export function ohlcvUrl({ pool, timeframe, baseUrl = GECKO_BASE_URL }) {
 /**
  * A narrow hourly-price request for small read-only surfaces outside the
  * Exchange terminal. `beforeTimestamp` is the first still-open hour, so the
- * provider can return only completed candles. Empty intervals stay omitted:
- * callers preserve them as gaps instead of drawing invented carry-forwards.
+ * provider can return only completed candles. GeckoTerminal fills no-swap
+ * clock hours with the preceding close and zero volume; callers keep those
+ * intervals visibly distinct from hours that contained trades.
  *
  * The token address is explicit even though Registry pools currently put the
  * canonical token on the base side. That keeps this helper correct if a
@@ -101,7 +102,11 @@ export function hourlyOhlcvWindowUrl({
   url.searchParams.set('limit', String(count));
   url.searchParams.set('currency', 'usd');
   url.searchParams.set('token', String(token));
-  url.searchParams.set('include_empty_intervals', 'false');
+  // A market chart needs clock-time continuity. GeckoTerminal fills hours
+  // without swaps with the preceding close and zero volume; consumers can
+  // therefore render those intervals as idle ticks rather than inventing a
+  // trade or joining unrelated observations.
+  url.searchParams.set('include_empty_intervals', 'true');
   return url.toString();
 }
 
