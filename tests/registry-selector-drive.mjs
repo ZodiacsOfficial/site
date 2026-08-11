@@ -128,9 +128,10 @@ async function mockDexscreener(page, {
 
 /**
  * The selected-token placard owns one small GeckoTerminal request: the 24
- * closed hourly candles for its current canonical mint and deepest pool. Keep
- * this fixture sparse on purpose. One omitted interior hour must become two
- * SVG segments; carrying a price across that hour would make the gate fail.
+ * closed hourly candles for its current canonical mint and deepest pool. The
+ * provider fills no-swap clock hours with the preceding close and zero volume;
+ * the fixture mirrors that contract so the UI can distinguish active candles
+ * from idle ticks without fabricating a swap.
  */
 async function mockGeckoHourly(page, {
   requests = [],
@@ -157,18 +158,24 @@ async function mockGeckoHourly(page, {
     });
 
     const candles = [];
+    const activeIndexes = new Set(includedIndexes ?? Array.from(
+      { length: 24 },
+      (_, index) => index,
+    ).filter((index) => index !== missingIndex));
+    let previousClose = 0.00004;
     for (let index = 0; index < 24; index += 1) {
-      if (includedIndexes ? !includedIndexes.includes(index) : index === missingIndex) continue;
       const timestamp = beforeTimestamp - ((24 - index) * 3_600);
-      const close = 0.00004 + (index * 0.000001);
-      candles.push([
-        timestamp,
-        close - 0.0000004,
-        close + 0.0000008,
-        close - 0.0000009,
-        close,
-        1_200 + index,
-      ]);
+      const active = activeIndexes.has(index);
+      if (active) {
+        const open = previousClose;
+        const close = 0.00004 + (index * 0.000001);
+        const high = Math.max(open, close) + 0.0000008;
+        const low = Math.min(open, close) - 0.0000009;
+        candles.push([timestamp, open, high, low, close, 1_200 + index]);
+        previousClose = close;
+      } else {
+        candles.push([timestamp, previousClose, previousClose, previousClose, previousClose, 0]);
+      }
     }
 
     return route.fulfill({
@@ -1134,8 +1141,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await sparseChart.close();
 
     // The landing placard asks GeckoTerminal for one selected sign only. The
-    // fixture omits one closed hour so this drive can prove that the visual
-    // line, accessible summary, and request boundary all preserve the gap.
+    // fixture marks one closed hour as zero-volume so this drive can prove the
+    // OHLC candle, idle-tick, volume, accessibility, and request boundaries.
     for (const width of [320, 360, 390]) {
       const selectedChartPage = await newPage({
         viewport: { width, height: width === 320 ? 568 : width === 360 ? 640 : 844 },
@@ -1161,7 +1168,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         const advancedRect = advanced?.getBoundingClientRect();
         return {
           aria: svg?.getAttribute('aria-label') ?? '',
+          bodies: svg?.querySelectorAll('.token-spark__body').length ?? 0,
           caption: figure?.querySelector('figcaption')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          idle: svg?.querySelectorAll('.token-spark__idle').length ?? 0,
           chartCount: document.querySelectorAll('[data-token-chart]').length,
           chartLeft: rect.left,
           chartRight: rect.right,
@@ -1169,6 +1178,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           expectedPoints: figure?.querySelector('p')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           polylines: [...(svg?.querySelectorAll('polyline') ?? [])]
             .map((line) => line.getAttribute('points') ?? ''),
+          volumes: svg?.querySelectorAll('.token-spark__volume').length ?? 0,
+          wicks: svg?.querySelectorAll('.token-spark__wick').length ?? 0,
           advanced: advanced ? {
             height: advancedRect?.height ?? 0,
             href: advanced.getAttribute('href'),
@@ -1187,15 +1198,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && request?.aggregate === '1'
           && request?.limit === 24
           && request?.currency === 'usd'
-          && request?.includeEmptyIntervals === 'false'
+          && request?.includeEmptyIntervals === 'true'
           && Number.isSafeInteger(request?.beforeTimestamp)
           && request.beforeTimestamp % 3_600 === 0
           && state.chartCount === 1
-          && state.caption.includes('24H price · GeckoTerminal')
-          && state.expectedPoints.startsWith('23 of 24 hourly closes · 1 hour missing')
-          && state.polylines.length === 2
-          && /Leo closed hourly history has 23 observations/.test(state.aria)
-          && /1 expected interval is missing and remains unconnected/.test(state.aria),
+          && state.caption.includes('LEO / USD · 24H')
+          && state.caption.includes('Reference pool · GeckoTerminal · UTC')
+          && state.expectedPoints.startsWith('23 active hours · 1 no-swap hour carries last close')
+          && state.bodies === 23
+          && state.wicks === 23
+          && state.volumes === 23
+          && state.idle === 1
+          && state.polylines.length === 0
+          && /Leo closed hourly history covers 24 hourly slots/.test(state.aria)
+          && /24-hour candlestick chart/.test(state.aria)
+          && /23 hours contained swaps; 1 no-swap hour carries the preceding close with zero volume/.test(state.aria),
         JSON.stringify({ requests: geckoRequests, state }),
       );
       check(
@@ -1216,9 +1233,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await selectedChartPage.close();
     }
 
-    // A thinly traded pool still reads as a chart without pretending that a
-    // missing hour has a price. The eight real closes get full-width axes and
-    // points; disconnected runs stay disconnected and receive no area fill.
+    // A thinly traded pool still reads as a financial chart. Eight real OHLCV
+    // hours get bodies, wicks, and volume; sixteen documented zero-volume
+    // carry hours get faint idle ticks rather than invented candle bodies.
     const sparseLivePage = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
     await freezeRegistryClock(sparseLivePage);
     await stubNoWebgl(sparseLivePage);
@@ -1241,7 +1258,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       return {
         areas: svg?.querySelectorAll('.token-spark__area').length ?? 0,
         axes: svg?.querySelectorAll('.token-spark__axis').length ?? 0,
+        bodies: svg?.querySelectorAll('.token-spark__body').length ?? 0,
         coverage: figure?.querySelector(':scope > p')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        idle: svg?.querySelectorAll('.token-spark__idle').length ?? 0,
         latest: svg?.querySelectorAll('.token-spark__latest-ring').length ?? 0,
         plotHeight: rect?.height ?? 0,
         plotWidth: rect?.width ?? 0,
@@ -1249,25 +1268,29 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         priceScale: figure?.querySelector('.token-spark__price-scale')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         segments: [...(svg?.querySelectorAll('.token-spark__line') ?? [])]
           .map((line) => (line.getAttribute('points') ?? '').trim().split(/\s+/).length),
-        timeScale: figure?.querySelector('.token-spark__time-scale')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        timeScale: [...(figure?.querySelectorAll('.token-spark__time-scale span') ?? [])]
+          .map((label) => label.textContent?.trim() ?? ''),
+        volumes: svg?.querySelectorAll('.token-spark__volume').length ?? 0,
+        wicks: svg?.querySelectorAll('.token-spark__wick').length ?? 0,
       };
     });
     check(
-      'eight sparse hourly closes render as a full-width honest chart instrument',
+      'eight active hours render as a full-width OHLCV chart with honest idle slots',
       sparseLiveState.plotWidth >= 300
-        && sparseLiveState.plotHeight >= 100
+        && sparseLiveState.plotHeight >= 145
         && sparseLiveState.axes === 2
-        && sparseLiveState.points === 8
+        && sparseLiveState.bodies === 8
+        && sparseLiveState.wicks === 8
+        && sparseLiveState.volumes === 8
+        && sparseLiveState.idle === 16
+        && sparseLiveState.points === 0
         && sparseLiveState.latest === 1
         && sparseLiveState.areas === 0
-        && sparseLiveState.segments.length === 2
-        && sparseLiveState.segments.every((length) => length === 2)
-        && sparseLiveState.coverage.startsWith('8 of 24 hourly closes · 16 hours missing')
-        && sparseLiveState.priceScale.includes('High')
-        && sparseLiveState.priceScale.includes('Low')
-        && sparseLiveState.timeScale.includes('−24H')
-        && sparseLiveState.timeScale.includes('UTC')
-        && sparseLiveState.timeScale.includes('Now'),
+        && sparseLiveState.segments.length === 0
+        && sparseLiveState.coverage.startsWith('8 active hours · 16 no-swap hours carry last close')
+        && /\$0\.0000/u.test(sparseLiveState.priceScale)
+        && sparseLiveState.timeScale.length === 3
+        && sparseLiveState.timeScale.every((value) => /^\d{2}:\d{2}$/u.test(value)),
       JSON.stringify(sparseLiveState),
     );
     await sparseLivePage.close();
@@ -1304,7 +1327,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await finalGeckoRequest;
     await rapidChartPage.waitForFunction(() => {
       const chart = document.querySelector('[data-token-chart="pisces"]');
-      return /^Pisces closed hourly history has 23 observations/u.test(
+      return /^Pisces closed hourly history covers 24 hourly slots/u.test(
         chart?.querySelector('svg')?.getAttribute('aria-label') ?? '',
       );
     });
@@ -1381,7 +1404,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         constrainedGeckoRequests.length === 0
           && constrainedState.count === 1
           && constrainedState.caption.includes('Registry archive')
-          && constrainedState.note === '8 of 8 daily closes'
+          && constrainedState.note.startsWith('8 of 8 daily closes')
           && constrainedState.aria.includes(constrained.reason),
         JSON.stringify({ requests: constrainedGeckoRequests, constrainedState }),
       );
@@ -1718,7 +1741,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && piscesPlacard.base === false
         && piscesPlacard.guide === false
         && piscesPlacard.marketSign === 'pisces'
-        && /Pisces closed hourly history has 23 observations/i.test(piscesPlacard.chartLabel)
+        && /Pisces closed hourly history covers 24 hourly slots/i.test(piscesPlacard.chartLabel)
         && Math.abs(piscesPlacard.scrollY - scrollBeforePick) <= 2,
       JSON.stringify(piscesPlacard),
     );
