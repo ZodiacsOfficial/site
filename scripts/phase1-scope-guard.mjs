@@ -56,6 +56,7 @@ function resolveBase() {
 
 export const protectedPaths = [
   { label: 'Registry wing', pattern: /^(?:public|src\/pages)\/registry\//u },
+  { label: 'Zodiac Markets terminal', pattern: /^public\/terminal\/markets\/index\.html$/u },
   { label: 'Registry generated application', pattern: /^(?:src\/app\.jsx|public\/assets\/app\.js)$/u },
   { label: 'Registry implementation', pattern: /^src\/(?:components\/(?:LocalizedDisclosurePage|Registry)|islands\/(?:aura\/|RegistryAura|WalletChart)|lib\/(?:aura\/|aura-share|registry|wallet\/)|styles\/(?:registry-aura|wallet-chart)\.css$|strings\/wallet-chart\.ts$|data\/aura-moon-ingresses\.json$)/u },
   { label: 'Registry API', pattern: /^api\/(?:aura-holdings|wallet-birth)\.ts$/u },

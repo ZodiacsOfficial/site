@@ -1,13 +1,9 @@
 {
   "version": 1,
-  "id": "terminal-market-briefing-2026-08-11",
-  "reason": "Owner-approved Zodiac Terminal briefing consolidation (2026-08-11): replace the overlapping Research Pulse, landing research ledger, and Sky Signals dashboard with one selected-token Today’s market briefing containing the most relevant published sky fact, a neutral traditional reading, four observed market measures, the next exact event, two independent source headlines, and a sign-scoped Markets Research link. Preserve the dedicated Research Desk, immutable approval-gated research artifacts, canonical Registry data layer, routes, schemas, feature flags, analytics identifiers, and explicit non-predictive risk boundary. This allowance also makes the pre-existing Registry Research publication tests date-independent so the daily evidence rollover remains buildable without changing production publication rules.",
-  "baseCommit": "5451042e84758abed19442cfe77f080ccf79d09b",
+  "id": "zodiac-markets-mobile-terminal-2026-08-11",
+  "reason": "Owner-approved mobile-only Zodiac Markets terminal redesign (2026-08-11): compact the mobile fold, replace the phone rail with an accessible twelve-market sheet, add Chart and Trade presentation tabs, and add one sign-colored Buy shortcut to the existing buy-only Jupiter panel. Desktop, providers, polling, wallet boundaries, transaction behavior, routes, flags, Registry Pro, and Market Chat remain unchanged. The canonical page moved from /registry/exchange/ to /terminal/markets/ before this work; this allowance protects and authorizes that exact current page.",
+  "baseCommit": "7dd1cc0ac35f6aee5979b1887061f1e1579a5669",
   "protectedPaths": [
-    "public/assets/app.js",
-    "public/registry/technical/index.html",
-    "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-research.test.mjs",
-    "src/app.jsx"
+    "public/terminal/markets/index.html"
   ]
 }
