@@ -2025,10 +2025,10 @@
       }, [inView, token, pool, sign.name, observations]);
 
       const model = state.status === 'ready' ? state.model : null;
-      const width = 220;
-      const height = 56;
-      const insetX = 4;
-      const insetY = 5;
+      const width = 280;
+      const height = 84;
+      const insetX = 7;
+      const insetY = 7;
       const linePoints = model?.points || [];
       const values = linePoints.map(point => point.priceUsd).filter(Number.isFinite);
       const rawLow = values.length ? Math.min(...values) : 0;
@@ -2051,9 +2051,13 @@
         .join(' ');
       const latest = linePoints.at(-1) || null;
       const gradientId = `token-chart-${sign.asset.sign}`;
+      const observedShare = model?.coverage?.expectedPointCount > 0
+        ? model.coverage.observedPointCount / model.coverage.expectedPointCount
+        : 0;
+      const showArea = model?.mode === 'line' && observedShare >= .9;
       const updated = latest
         ? new Date(latest.timestampMs).toLocaleTimeString(undefined, {
-            hour: '2-digit', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short',
+            hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC',
           })
         : '';
       const endpointMoment = (point) => {
@@ -2084,41 +2088,82 @@
           {model && model.mode === 'line' && (
             <figure className={'token-spark ' + (model.source === 'geckoterminal-hourly' ? 'token-spark--live' : 'token-spark--archive')}>
               <figcaption>
-                <span>{model.source === 'geckoterminal-hourly' ? '24H · GeckoTerminal' : 'Registry archive'}</span>
+                <span>{model.source === 'geckoterminal-hourly' ? '24H price · GeckoTerminal' : 'Registry archive'}</span>
                 <span className={marketChangeClass(model.netChangePct)}>{formatPercent(model.netChangePct)}</span>
               </figcaption>
-              <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" role="img" aria-label={model.ariaLabel}>
-                <defs>
-                  <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="0" stopColor="var(--active-sign)" stopOpacity=".22" />
-                    <stop offset="1" stopColor="var(--active-sign)" stopOpacity="0" />
-                  </linearGradient>
-                </defs>
-                {[.25, .5, .75].map(fraction => (
-                  <line key={fraction} x1={insetX} x2={width - insetX} y1={height * fraction} y2={height * fraction} className="token-spark__grid" />
-                ))}
-                {model.segments.map((segment, index) => {
-                  const points = segmentPoints(segment);
-                  const firstX = xAt(segment[0]).toFixed(2);
-                  const lastX = xAt(segment.at(-1)).toFixed(2);
-                  return (
-                    <g key={`${segment[0].slotMs}-${index}`}>
-                      {segment.length > 1 && (
-                        <polygon points={`${firstX},${height - insetY} ${points} ${lastX},${height - insetY}`} fill={`url(#${gradientId})`} />
-                      )}
-                      {segment.length > 1 ? (
-                        <polyline points={points} className="token-spark__line" />
-                      ) : (
-                        <circle cx={firstX} cy={yAt(segment[0].priceUsd).toFixed(2)} r="2.4" className="token-spark__point" />
-                      )}
-                    </g>
-                  );
-                })}
-                {latest && <circle cx={xAt(latest).toFixed(2)} cy={yAt(latest.priceUsd).toFixed(2)} r="2.8" className="token-spark__latest" />}
-              </svg>
+              <div className="token-spark__plot">
+                <div className="token-spark__canvas">
+                  <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" role="img" aria-label={model.ariaLabel}>
+                    <defs>
+                      <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0" stopColor="var(--active-sign)" stopOpacity=".18" />
+                        <stop offset="1" stopColor="var(--active-sign)" stopOpacity="0" />
+                      </linearGradient>
+                    </defs>
+                    {[.25, .5, .75].map(fraction => (
+                      <line
+                        key={fraction}
+                        x1={insetX}
+                        x2={width - insetX}
+                        y1={insetY + ((height - insetY * 2) * fraction)}
+                        y2={insetY + ((height - insetY * 2) * fraction)}
+                        className="token-spark__grid"
+                      />
+                    ))}
+                    <line x1={width / 2} x2={width / 2} y1={insetY} y2={height - insetY} className="token-spark__grid token-spark__grid--vertical" />
+                    <line x1={insetX} x2={width - insetX} y1={height - insetY} y2={height - insetY} className="token-spark__axis" />
+                    <line x1={insetX} x2={insetX} y1={insetY} y2={height - insetY} className="token-spark__axis" />
+                    {latest && (
+                      <line
+                        x1={insetX}
+                        x2={width - insetX}
+                        y1={yAt(latest.priceUsd).toFixed(2)}
+                        y2={yAt(latest.priceUsd).toFixed(2)}
+                        className="token-spark__latest-guide"
+                      />
+                    )}
+                    {model.segments.map((segment, index) => {
+                      const points = segmentPoints(segment);
+                      const firstX = xAt(segment[0]).toFixed(2);
+                      const lastX = xAt(segment.at(-1)).toFixed(2);
+                      return (
+                        <g key={`${segment[0].slotMs}-${index}`}>
+                          {showArea && segment.length >= 4 && (
+                            <polygon className="token-spark__area" points={`${firstX},${height - insetY} ${points} ${lastX},${height - insetY}`} fill={`url(#${gradientId})`} />
+                          )}
+                          {segment.length > 1 && <polyline points={points} className="token-spark__line" />}
+                        </g>
+                      );
+                    })}
+                    {linePoints.map(point => (
+                      <circle
+                        key={point.slotMs}
+                        cx={xAt(point).toFixed(2)}
+                        cy={yAt(point.priceUsd).toFixed(2)}
+                        r="1.65"
+                        className="token-spark__point"
+                      />
+                    ))}
+                    {latest && (
+                      <>
+                        <circle cx={xAt(latest).toFixed(2)} cy={yAt(latest.priceUsd).toFixed(2)} r="4.4" className="token-spark__latest-ring" />
+                        <circle cx={xAt(latest).toFixed(2)} cy={yAt(latest.priceUsd).toFixed(2)} r="2.35" className="token-spark__latest" />
+                      </>
+                    )}
+                  </svg>
+                </div>
+                <span className="token-spark__price-scale" aria-hidden="true">
+                  <span><small>High</small>{formatPriceUsd(rawHigh)}</span>
+                  <span><small>Low</small>{formatPriceUsd(rawLow)}</span>
+                </span>
+                <span className="token-spark__time-scale" aria-hidden="true">
+                  <span>−24H</span><span>UTC</span><span>Now</span>
+                </span>
+              </div>
               <p>
-                {model.coverage.observedPointCount}/{model.coverage.expectedPointCount} {model.source === 'geckoterminal-hourly' ? 'closed hourly' : 'daily'}
-                {model.source === 'geckoterminal-hourly' && ` · ${updated || 'UTC'}`}
+                {model.coverage.observedPointCount} of {model.coverage.expectedPointCount} {model.source === 'geckoterminal-hourly' ? 'hourly closes' : 'daily closes'}
+                {model.coverage.missingPointCount > 0 && ` · ${model.coverage.missingPointCount} ${model.source === 'geckoterminal-hourly' ? 'hour' : 'day'}${model.coverage.missingPointCount === 1 ? '' : 's'} missing`}
+                {model.source === 'geckoterminal-hourly' && ` · updated ${updated || 'UTC'}${updated ? ' UTC' : ''}`}
               </p>
             </figure>
           )}
@@ -5247,14 +5292,15 @@
     function ConsumerClosing() {
       const reveal = useReveal();
       return (
-        <section ref={reveal} className="consumer-closing reveal" aria-label="Choose a sign">
-          <h2>Find your sign in the Registry.</h2>
-          <p>Start with the one you already know.</p>
+        <section ref={reveal} className="consumer-closing reveal" aria-labelledby="consumer-closing-title">
+          <span className="consumer-closing__eyebrow">Official records</span>
+          <h2 id="consumer-closing-title">Find your sign in the Registry.</h2>
+          <p>One sign. One verified record across Solana and Base.</p>
           <div className="consumer-closing__actions">
-            <a className="btn btn--primary" href="#official-twelve">
-              <span>Explore all 12</span>
+            <a className="consumer-closing__registry" href="/registry/">
+              <span>Open the Zodiacs Registry</span>
+              <span className="consumer-closing__arrow" aria-hidden="true">→</span>
             </a>
-            <a href="/registry/technical/">Open the technical record</a>
           </div>
         </section>
       );
@@ -5343,41 +5389,29 @@
       );
     }
 
-    function Footer({ technical = false }) {
+    function TechnicalFooter() {
       return (
-        <footer className="ftr">
+        <footer className="ftr ftr--technical">
           <div className="ftr__row">
             <div className="mark">Zodiacs<span className="g">·</span>org</div>
             <div>© MMXXVI</div>
           </div>
-        <div className="ftr__row">
-          <div className="ftr__legal">
-            {technical ? (
-              <>
-                <a href="/registry/">Zodiacs Registry</a>
-                <a href="#records-networks">Records</a>
-                <a href="#market-transparency">Market</a>
-                <a href="#onchain-access">Access</a>
-                <a href="#builders">Builders</a>
-                <a href="#security">Safety</a>
-              </>
-            ) : (
-              <>
-                <a href="#official-twelve">The Twelve</a>
-                <a href="#registry">How it works</a>
-                <a href="#verify">Verify a token</a>
-                <a href="/registry/technical/">Technical record</a>
-                <a href="#thesis">Thesis</a>
-              </>
-            )}
-            <a href="/sdk/">SDK</a>
-            <a href="/registry/zodiacs.registry.json">Record</a>
-            <a href="/archive/">Archive</a>
-            <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
-            <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
-            <a href="/privacy/">Privacy</a>
-            <a href="/terms/">Terms</a>
-          </div>
+          <div className="ftr__row">
+            <div className="ftr__legal">
+              <a href="/registry/">Zodiacs Registry</a>
+              <a href="#records-networks">Records</a>
+              <a href="#market-transparency">Market</a>
+              <a href="#onchain-access">Access</a>
+              <a href="#builders">Builders</a>
+              <a href="#security">Safety</a>
+              <a href="/sdk/">SDK</a>
+              <a href="/registry/zodiacs.registry.json">Record</a>
+              <a href="/archive/">Archive</a>
+              <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+              <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
+              <a href="/privacy/">Privacy</a>
+              <a href="/terms/">Terms</a>
+            </div>
             <div>Registry lookup tools: read-only</div>
           </div>
           <div className="ftr__row">
@@ -5390,6 +5424,80 @@
             </div>
             <div>Channels</div>
           </div>
+          <div className="ftr__row ftr__row--origin">
+            <span>
+              Zodiacs.org · Official registry · Est. {REGISTRY_ESTABLISHED} ·{' '}
+              {REGISTRY_ESTABLISHMENT_PROVENANCE_URL
+                ? <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">{REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL}</a>
+                : <a href="/disclosure/#origin">{REGISTRY_PROVENANCE_PENDING_LABEL}</a>}
+            </span>
+          </div>
+        </footer>
+      );
+    }
+
+    function Footer({ technical = false }) {
+      if (technical) return <TechnicalFooter />;
+      return (
+        <footer className="ftr">
+          <div className="ftr__mast">
+            <div className="ftr__identity">
+              <div className="mark">Zodiacs<span className="g">·</span>org</div>
+              <p>Live markets, verified by the public Registry.</p>
+            </div>
+            <div className="ftr__copyright">© MMXXVI</div>
+          </div>
+
+          <div className="ftr__directory">
+            <nav className="ftr__group" aria-label="Explore Zodiacs">
+              <span className="ftr__label">Explore</span>
+              <div className="ftr__links">
+                <a href="/registry/">Official Registry</a>
+                <a href="/terminal/research/">Markets research</a>
+                <a href="/registry/#verify">Verify a token</a>
+              </div>
+            </nav>
+            <nav className="ftr__group" aria-label="Trust and policies">
+              <span className="ftr__label">Trust</span>
+              <div className="ftr__links">
+                <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
+                <a href="/privacy/">Privacy</a>
+                <a href="/terms/">Terms</a>
+              </div>
+            </nav>
+          </div>
+
+          <aside
+            className="ftr__market-notice"
+            role="note"
+            aria-labelledby="terminal-market-notice-title"
+            data-terminal-market-notice
+          >
+            <span className="ftr__market-notice-label" id="terminal-market-notice-title">Market &amp; venue notice</span>
+            <div className="ftr__market-notice-copy">
+              <p>
+                Zodiac tokens are speculative, thinly traded digital assets. Prices can be
+                volatile, liquidity may disappear, and you could lose all money used to acquire
+                one. Astrology has no established predictive relationship with asset prices.
+              </p>
+              <p>
+                Zodiacs.org provides the Terminal interface and public Registry; it does not
+                operate a DEX, exchange, broker, or custodial service. When trading is available,
+                Jupiter, an independent third-party liquidity aggregator, supplies the executable
+                quote, builds and submits the transaction, and charges any venue fee shown; your
+                wallet reviews, approves, and signs. Zodiacs.org holds no keys or funds, cannot
+                reverse transactions, and receives no trading or referral compensation.
+                References to Jupiter do not imply affiliation or endorsement.
+              </p>
+              <p>
+                Information is for informational purposes only and is not an offer or solicitation,
+                an investment recommendation or trading strategy, or accounting, legal, tax, or
+                financial advice. Third-party services may not be available in all regions. Verify
+                the official address, network, amount, fees, and destination before signing.
+              </p>
+            </div>
+          </aside>
+
           <div className="ftr__row ftr__row--origin">
             <span>
               Zodiacs.org · Official registry · Est. {REGISTRY_ESTABLISHED} ·{' '}

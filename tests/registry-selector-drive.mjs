@@ -13,14 +13,31 @@ import { withPreview } from './visual/preview-server.mjs';
 const OUT = process.env.OUT_DIR ?? null;
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
+async function waitForSettledCanvas(page, canvas, {
+  consecutive = 4,
+  interval = 350,
+  attempts = 18,
+} = {}) {
+  let previous = null;
+  let streak = 0;
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    const frame = await canvas.screenshot();
+    streak = previous?.equals(frame) ? streak + 1 : 1;
+    previous = frame;
+    if (streak >= consecutive) return { frame, settled: true, attempts: attempt + 1 };
+    await page.waitForTimeout(interval);
+  }
+  return { frame: previous, settled: false, attempts };
+}
 // The consumer route includes the live market board and one concise briefing.
 // Keep a ceiling as a regression guard for the intentional narrative.
 const MAX_COMPACT_REGISTRY_HEIGHT = 9_000;
 // Narrow phones retain the sculpture, market board, and one continuous
 // briefing, but no duplicate research ledger or twelve-sign signal wheel.
-// The fully revealed WebGL path measures 9.6–9.9k across the supported phones;
-// keep a tight ceiling with enough room for cross-platform font metrics.
-const MAX_PHONE_REGISTRY_HEIGHT = 10_250;
+// The fully revealed WebGL path, including the readable market-and-venue
+// notice, measures 10.3–10.6k across the supported phones. Keep a tight
+// ceiling with enough room for cross-platform font metrics.
+const MAX_PHONE_REGISTRY_HEIGHT = 10_750;
 // The 42px live tape now owns one row of the framed hero. The scene camera fits
 // the sculpture to the room it receives, so 260px is the useful desktop floor;
 // mobile retains its separate 200px floor and explicit placard-clearance gate.
@@ -118,6 +135,7 @@ async function mockDexscreener(page, {
 async function mockGeckoHourly(page, {
   requests = [],
   missingIndex = 9,
+  includedIndexes = null,
 } = {}) {
   await page.route('https://api.geckoterminal.com/api/v2/**', (route) => {
     const url = new URL(route.request().url());
@@ -140,7 +158,7 @@ async function mockGeckoHourly(page, {
 
     const candles = [];
     for (let index = 0; index < 24; index += 1) {
-      if (index === missingIndex) continue;
+      if (includedIndexes ? !includedIndexes.includes(index) : index === missingIndex) continue;
       const timestamp = beforeTimestamp - ((24 - index) * 3_600);
       const close = 0.00004 + (index * 0.000001);
       candles.push([
@@ -602,6 +620,18 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         cinematicNodes: document.querySelectorAll('.cine, [data-cine-video]').length,
         astrofolioIdentity: /Astrofolio/i.test(document.querySelector('.static-capital')?.textContent ?? ''),
+        marketNotice: (() => {
+          const notice = document.querySelector('[data-terminal-market-notice]');
+          const box = notice?.getBoundingClientRect();
+          return {
+            count: document.querySelectorAll('[data-terminal-market-notice]').length,
+            text: notice?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            links: notice?.querySelectorAll('a').length ?? -1,
+            directoryLinks: document.querySelectorAll('.static-site__footer > nav a').length,
+            left: box?.left ?? -1,
+            right: box?.right ?? -1,
+          };
+        })(),
         links: [...nav.querySelectorAll('a')].map((link) => {
           const rect = link.getBoundingClientRect();
           return {
@@ -662,11 +692,62 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && !fallbackState.removedLandingResearch,
         JSON.stringify(fallbackState),
       );
+      check(
+        `Registry no-JavaScript fallback at ${width}px carries the complete market and venue notice without a link farm`,
+        fallbackState.marketNotice.count === 1
+          && fallbackState.marketNotice.links === 0
+          && fallbackState.marketNotice.directoryLinks === 6
+          && fallbackState.marketNotice.left >= -1
+          && fallbackState.marketNotice.right <= fallbackState.viewportWidth + 1
+          && fallbackState.marketNotice.text.includes('speculative, thinly traded digital assets')
+          && fallbackState.marketNotice.text.includes('does not operate a DEX, exchange, broker, or custodial service')
+          && fallbackState.marketNotice.text.includes('Jupiter, an independent third-party liquidity aggregator')
+          && fallbackState.marketNotice.text.includes('may not be available in all regions'),
+        JSON.stringify(fallbackState.marketNotice),
+      );
       await fallbackPage.close();
     }
 
     const registryMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
     await registryMaterialPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
+    await registryMaterialPage.locator('footer:not(.ftr--technical) [data-terminal-market-notice]').waitFor();
+    await registryMaterialPage.locator('footer:not(.ftr--technical) [data-terminal-market-notice]').scrollIntoViewIfNeeded();
+    const marketNoticeState = await registryMaterialPage.locator('footer:not(.ftr--technical) [data-terminal-market-notice]').evaluate((notice) => {
+      const box = notice.getBoundingClientRect();
+      const style = getComputedStyle(notice.querySelector('p'));
+      const directory = notice.previousElementSibling;
+      const origin = notice.nextElementSibling;
+      return {
+        count: document.querySelectorAll('footer:not(.ftr--technical) [data-terminal-market-notice]').length,
+        text: notice.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        links: notice.querySelectorAll('a').length,
+        directoryLinks: directory?.querySelectorAll('a').length ?? -1,
+        ordered: directory?.classList.contains('ftr__directory')
+          && origin?.classList.contains('ftr__row--origin'),
+        left: box.left,
+        right: box.right,
+        viewportWidth: innerWidth,
+        pageWidth: document.documentElement.scrollWidth,
+        fontSize: parseFloat(style.fontSize),
+        lineHeight: parseFloat(style.lineHeight),
+      };
+    });
+    check(
+      'the mobile Terminal presents readable, link-free market and DEX fine print below the six-link directory',
+      marketNoticeState.count === 1
+        && marketNoticeState.links === 0
+        && marketNoticeState.directoryLinks === 6
+        && marketNoticeState.ordered
+        && marketNoticeState.left >= -1
+        && marketNoticeState.right <= marketNoticeState.viewportWidth + 1
+        && marketNoticeState.pageWidth <= marketNoticeState.viewportWidth + 1
+        && marketNoticeState.fontSize >= 11
+        && marketNoticeState.lineHeight / marketNoticeState.fontSize >= 1.5
+        && marketNoticeState.text.includes('could lose all money used to acquire one')
+        && marketNoticeState.text.includes('receives no trading or referral compensation')
+        && marketNoticeState.text.includes('not an offer or solicitation'),
+      JSON.stringify(marketNoticeState),
+    );
     const material = async (page, selector, lens) => {
       // This assertion compares the settled material recipes, not animation
       // timing. CI runners can briefly suspend a page while another page is
@@ -1110,8 +1191,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && Number.isSafeInteger(request?.beforeTimestamp)
           && request.beforeTimestamp % 3_600 === 0
           && state.chartCount === 1
-          && state.caption.includes('24H · GeckoTerminal')
-          && state.expectedPoints.startsWith('23/24 closed hourly')
+          && state.caption.includes('24H price · GeckoTerminal')
+          && state.expectedPoints.startsWith('23 of 24 hourly closes · 1 hour missing')
           && state.polylines.length === 2
           && /Leo closed hourly history has 23 observations/.test(state.aria)
           && /1 expected interval is missing and remains unconnected/.test(state.aria),
@@ -1134,6 +1215,62 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
       await selectedChartPage.close();
     }
+
+    // A thinly traded pool still reads as a chart without pretending that a
+    // missing hour has a price. The eight real closes get full-width axes and
+    // points; disconnected runs stay disconnected and receive no area fill.
+    const sparseLivePage = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await freezeRegistryClock(sparseLivePage);
+    await stubNoWebgl(sparseLivePage);
+    await mockDexscreener(sparseLivePage);
+    await mockRegistryBriefingSources(sparseLivePage);
+    await mockSelectedTokenArchive(sparseLivePage);
+    await mockGeckoHourly(sparseLivePage, {
+      includedIndexes: [0, 1, 4, 5, 9, 13, 17, 22],
+    });
+    await withExchangeFlag(sparseLivePage);
+    await sparseLivePage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
+    const sparseLiveChart = sparseLivePage.locator('[data-token-chart="leo"]');
+    await sparseLiveChart.scrollIntoViewIfNeeded();
+    await sparseLiveChart.locator('.token-spark--live').waitFor({ state: 'visible', timeout: 20_000 });
+    const sparseLiveState = await sparseLiveChart.evaluate((chart) => {
+      const figure = chart.querySelector('.token-spark--live');
+      const plot = figure?.querySelector('.token-spark__plot');
+      const svg = plot?.querySelector('svg');
+      const rect = plot?.getBoundingClientRect();
+      return {
+        areas: svg?.querySelectorAll('.token-spark__area').length ?? 0,
+        axes: svg?.querySelectorAll('.token-spark__axis').length ?? 0,
+        coverage: figure?.querySelector(':scope > p')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        latest: svg?.querySelectorAll('.token-spark__latest-ring').length ?? 0,
+        plotHeight: rect?.height ?? 0,
+        plotWidth: rect?.width ?? 0,
+        points: svg?.querySelectorAll('.token-spark__point').length ?? 0,
+        priceScale: figure?.querySelector('.token-spark__price-scale')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        segments: [...(svg?.querySelectorAll('.token-spark__line') ?? [])]
+          .map((line) => (line.getAttribute('points') ?? '').trim().split(/\s+/).length),
+        timeScale: figure?.querySelector('.token-spark__time-scale')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      };
+    });
+    check(
+      'eight sparse hourly closes render as a full-width honest chart instrument',
+      sparseLiveState.plotWidth >= 300
+        && sparseLiveState.plotHeight >= 100
+        && sparseLiveState.axes === 2
+        && sparseLiveState.points === 8
+        && sparseLiveState.latest === 1
+        && sparseLiveState.areas === 0
+        && sparseLiveState.segments.length === 2
+        && sparseLiveState.segments.every((length) => length === 2)
+        && sparseLiveState.coverage.startsWith('8 of 24 hourly closes · 16 hours missing')
+        && sparseLiveState.priceScale.includes('High')
+        && sparseLiveState.priceScale.includes('Low')
+        && sparseLiveState.timeScale.includes('−24H')
+        && sparseLiveState.timeScale.includes('UTC')
+        && sparseLiveState.timeScale.includes('Now'),
+      JSON.stringify(sparseLiveState),
+    );
+    await sparseLivePage.close();
 
     // Let the initial Leo request settle, then change four signs inside the
     // 220ms selection debounce. No intermediate sign may touch GeckoTerminal;
@@ -1244,7 +1381,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         constrainedGeckoRequests.length === 0
           && constrainedState.count === 1
           && constrainedState.caption.includes('Registry archive')
-          && constrainedState.note === '8/8 daily'
+          && constrainedState.note === '8 of 8 daily closes'
           && constrainedState.aria.includes(constrained.reason),
         JSON.stringify({ requests: constrainedGeckoRequests, constrainedState }),
       );
@@ -3419,16 +3556,14 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await reducedStage.waitForFunction(() => (
         document.querySelector('.gband--consumer')?.dataset.galleryResidentTextures === '1'
       ), null, { timeout: 30_000 });
-      await reducedStage.waitForTimeout(1400);
-      const quietFrameA = await canvas.screenshot();
-      await reducedStage.waitForTimeout(500);
-      const quietFrameB = await canvas.screenshot();
+      const quiet = await waitForSettledCanvas(reducedStage, canvas);
       check(
         'reduced motion keeps the WebGL spotlight still until the reader moves it',
-        quietFrameA.equals(quietFrameB)
+        quiet.settled
           && await band.getAttribute('data-gallery-rotation') === 'manual',
+        JSON.stringify({ settled: quiet.settled, attempts: quiet.attempts }),
       );
-      bitmapReferenceFrame = quietFrameB;
+      bitmapReferenceFrame = quiet.frame;
     }
     await reducedStage.close();
 
@@ -3452,12 +3587,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'manual'
           && document.querySelector('.gband--consumer')?.dataset.galleryResidentTextures === '1'
       ));
-      await imageFallbackStage.waitForTimeout(1400);
-      const fallbackFrame = await fallbackCanvas.screenshot();
+      const fallback = await waitForSettledCanvas(imageFallbackStage, fallbackCanvas);
       check(
         'ImageBitmap and HTMLImage decode the sculpture with identical upright orientation',
         await imageFallbackStage.evaluate(() => typeof globalThis.createImageBitmap === 'undefined')
-          && bitmapReferenceFrame.equals(fallbackFrame),
+          && fallback.settled
+          && bitmapReferenceFrame.equals(fallback.frame),
+        JSON.stringify({ settled: fallback.settled, attempts: fallback.attempts }),
       );
       await imageFallbackStage.close();
     }

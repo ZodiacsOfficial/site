@@ -1,9 +1,13 @@
 {
   "version": 1,
-  "id": "zodiac-markets-mobile-terminal-2026-08-11",
-  "reason": "Owner-approved mobile-only Zodiac Markets terminal redesign (2026-08-11): compact the mobile fold, replace the phone rail with an accessible twelve-market sheet, add Chart and Trade presentation tabs, and add one sign-colored Buy shortcut to the existing buy-only Jupiter panel. Desktop, providers, polling, wallet boundaries, transaction behavior, routes, flags, Registry Pro, and Market Chat remain unchanged. The canonical page moved from /registry/exchange/ to /terminal/markets/ before this work; this allowance protects and authorizes that exact current page.",
-  "baseCommit": "7dd1cc0ac35f6aee5979b1887061f1e1579a5669",
+  "id": "terminal-chart-closing-and-risk-polish-2026-08-11",
+  "reason": "Owner-requested Zodiac Terminal polish (2026-08-11): replace the redundant pill closing action and dense consumer footer link farm with one quiet Registry action and six essential destinations, while preserving the technical Registry footer. Add a readable market and venue notice that identifies Jupiter as an independent liquidity aggregator, distinguishes Zodiacs.org from a DEX, broker, exchange, or custodian, states the speculative and total-loss risk, preserves regional and advice boundaries, and adds no promotional link. Recompose the selected-token 24-hour chart as a full-width mobile instrument with axes, time and price scales, every observed close, an explicit latest marker, and honest missing-hour disclosure; never connect or interpolate missing observations. Preserve routes, market data semantics, provider isolation, sparse fallback states, official record actions, and Registry technical behavior.",
+  "baseCommit": "59f83849c6e1de7b1bcc60f1304a76f4782cfc66",
   "protectedPaths": [
-    "public/terminal/markets/index.html"
+    "public/assets/app.js",
+    "public/registry/technical/index.html",
+    "scripts/registry-consumer-contract.test.mjs",
+    "scripts/registry-selected-token-chart.test.mjs",
+    "src/app.jsx"
   ]
 }

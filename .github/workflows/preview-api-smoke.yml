@@ -28,7 +28,10 @@ jobs:
         with:
           node-version: 22
 
-      - name: Probe the public Preview functions
+      - name: Probe the Preview functions
         env:
           PREVIEW_URL: ${{ github.event.deployment_status.environment_url || github.event.deployment_status.target_url }}
+          # Optional for public previews; required when Vercel Deployment
+          # Protection intercepts automation before it reaches the app.
+          VERCEL_AUTOMATION_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
         run: node scripts/smoke-preview-functions.mjs

@@ -2401,27 +2401,147 @@
     /* ── Footer ────────────────────────────────────────────────── */
 
     .ftr {
-      padding: 40px 20px 56px;
+      padding: 42px 20px 52px;
       border-top: 1px solid var(--hair);
-      font-family: var(--mono);
-      font-size: 9.5px;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
       color: var(--ink-mute);
     }
-    .ftr__row {
-      display: flex; justify-content: space-between; align-items: center;
+    .ftr__mast,
+    .ftr__directory,
+    .ftr__market-notice,
+    .ftr__row--origin {
+      width: min(100%, 1120px);
+      margin-inline: auto;
     }
-    .ftr__row + .ftr__row {
+    .ftr__mast {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 28px;
+    }
+    .ftr .mark { color: var(--ink-2); letter-spacing: 0.14em; font-family: var(--display); font-weight: 400; font-size: 13px; }
+    .ftr .mark .g { color: var(--gold); }
+    .ftr--technical .mark { text-transform: none; font-size: 11.5px; }
+    .ftr__identity p {
+      max-width: 38ch;
+      margin: 8px 0 0;
+      color: var(--ink-mute);
+      font-family: var(--sans);
+      font-size: 12px;
+      line-height: 1.5;
+    }
+    .ftr__copyright,
+    .ftr__label {
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+    .ftr__directory {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 28px clamp(34px, 7vw, 88px);
+      margin-top: 30px;
+      padding-block: 22px;
+      border-block: 1px solid var(--hair);
+    }
+    .ftr__group {
+      display: grid;
+      grid-template-columns: 64px minmax(0, 1fr);
+      gap: 12px;
+      align-items: start;
+    }
+    .ftr__label { padding-top: 15px; color: var(--ink-mute); }
+    .ftr__links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0 22px;
+    }
+    .ftr__links a,
+    .ftr__links .assistant-link {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      color: var(--ink-dim);
+      font-family: var(--sans);
+      font-size: 12.5px;
+      line-height: 1.3;
+      text-decoration: none;
+      transition: color 420ms var(--ease), transform 420ms var(--ease);
+    }
+    .ftr__links a:hover,
+    .ftr__links .assistant-link:hover { color: var(--ink); transform: translateY(-1px); }
+    .ftr__links .assistant-link {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      cursor: pointer;
+    }
+    .ftr__links .assistant-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
+    .ftr__market-notice {
+      display: grid;
+      grid-template-columns: 148px minmax(0, 1fr);
+      gap: 18px clamp(28px, 6vw, 72px);
+      padding-block: 24px 8px;
+    }
+    .ftr__market-notice-label {
+      padding-top: 2px;
+      color: var(--ink-mute);
+      font-family: var(--mono);
+      font-size: 8.5px;
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+    .ftr__market-notice-copy {
+      display: grid;
+      gap: 10px;
+      max-width: 86ch;
+    }
+    .ftr__market-notice-copy p {
+      margin: 0;
+      color: var(--ink-mute);
+      font-family: var(--sans);
+      font-size: 10.5px;
+      line-height: 1.65;
+      text-wrap: pretty;
+    }
+    .ftr__row {
+      display: flex;
+      align-items: center;
+    }
+    .ftr--technical {
+      font-family: var(--mono);
+      font-size: 9.5px;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+    }
+    .ftr--technical .ftr__row { justify-content: space-between; }
+    .ftr--technical .ftr__row + .ftr__row {
       margin-top: 18px;
       padding-top: 18px;
       border-top: 1px solid var(--hair);
     }
-    .ftr .mark { color: var(--ink-2); letter-spacing: 0.14em; font-family: var(--display); font-weight: 400; text-transform: none; font-size: 11.5px; }
-    .ftr .mark .g { color: var(--gold); }
-    .ftr__legal {
-      display: inline-flex; flex-wrap: wrap; gap: 12px 14px;
+    .ftr__legal { display: inline-flex; flex-wrap: wrap; gap: 12px 14px; }
+    .ftr__legal a,
+    .ftr__legal .assistant-link {
+      color: var(--ink-dim);
+      text-decoration: none;
+      transition: color 320ms var(--ease);
     }
+    .ftr__legal a:hover,
+    .ftr__legal .assistant-link:hover { color: var(--gold); }
+    .ftr__legal .assistant-link {
+      appearance: none;
+      border: 0;
+      padding: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      letter-spacing: inherit;
+      text-transform: inherit;
+      cursor: pointer;
+    }
+    .ftr__legal .assistant-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
     /* Origin credit — quietest possible footer line. Not a brand
        statement; just acknowledges where this work began. No link, no
        gold accent, no italic. */
@@ -2434,21 +2554,14 @@
       color: var(--ink-mute);
       padding-top: 14px !important;
       margin-top: 14px !important;
-      border-top: 1px solid var(--hair) !important;
+      line-height: 1.7;
     }
-    .ftr__legal a,
-    .ftr__legal .assistant-link {
-      color: var(--ink-dim);
-      text-decoration: none;
-      transition: color 320ms var(--ease);
+    .ftr__row--origin a { color: var(--ink-dim); text-underline-offset: 4px; }
+    .ftr:not(.ftr--technical) .ftr__row--origin a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
     }
-    .ftr__legal a:hover,
-    .ftr__legal .assistant-link:hover { color: var(--gold); }
-    .ftr__legal .assistant-link {
-      appearance: none; border: 0; padding: 0; background: transparent;
-      font: inherit; letter-spacing: inherit; cursor: pointer;
-    }
-    .ftr__legal .assistant-link:focus-visible { outline: 1px solid var(--gold); outline-offset: 4px; }
 
     /* ── Static fallback for crawlers, audit tools, and no-JS clients ─ */
     .static-site {
@@ -2619,6 +2732,8 @@
       color: var(--ink);
     }
     .static-site__footer {
+      display: grid;
+      gap: 12px;
       padding-top: 36px;
       border-top: 1px solid var(--hair);
       font-family: var(--mono);
@@ -2627,6 +2742,22 @@
       text-transform: uppercase;
       color: var(--ink-mute);
     }
+    .static-site__footer nav { display: flex; flex-wrap: wrap; gap: 8px 20px; }
+    .static-site__footer nav a { min-height: 44px; display: inline-flex; align-items: center; }
+    .static-site__market-notice {
+      display: grid;
+      gap: 8px;
+      margin-top: 8px;
+      padding-top: 20px;
+      border-top: 1px solid var(--hair);
+      color: var(--ink-mute);
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0;
+      line-height: 1.65;
+      text-transform: none;
+    }
+    .static-site__market-notice p { margin: 0; }
     .static-site__footer .assistant-link {
       appearance: none; border: 0; padding: 0; background: transparent;
       color: var(--ink-dim); font: inherit; letter-spacing: inherit;
@@ -4161,19 +4292,47 @@
     .consumer-faq__item dt { color: var(--ink); font-family: var(--sans); font-size: 14px; font-weight: 560; }
     .consumer-faq__item dd { margin: 0; color: var(--ink-dim); font-size: 13px; line-height: 1.55; }
     .consumer-closing { text-align: center; border-bottom: 0; }
-    .consumer-closing h2 { max-width: 16ch; margin-inline: auto; font-size: clamp(40px, 6vw, 68px); line-height: .95; }
-    .consumer-closing__actions { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 14px 24px; margin-top: 28px; }
-    .consumer-closing .btn {
-      min-height: 50px; height: 50px; border-radius: 999px;
-      font-family: var(--sans); font-size: 14px; letter-spacing: 0; text-transform: none;
+    .consumer-closing__eyebrow {
+      display: block;
+      margin-bottom: 16px;
+      color: var(--active-sign, var(--ink-mute));
+      font-family: var(--mono);
+      font-size: 8px;
+      letter-spacing: .26em;
+      text-transform: uppercase;
     }
-    .consumer-closing .btn::before { display: none; }
-    .consumer-closing__actions > a:not(.btn) {
+    .consumer-closing h2 { max-width: 16ch; margin-inline: auto; font-size: clamp(40px, 6vw, 68px); line-height: .95; }
+    .consumer-closing > p {
+      max-width: 36ch;
+      margin: 18px auto 0;
+      color: var(--ink-dim);
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .consumer-closing__actions { display: flex; justify-content: center; margin-top: 24px; }
+    .consumer-closing__registry {
       display: inline-flex;
       align-items: center;
+      gap: 12px;
       min-height: 44px;
-      color: var(--ink-dim);
-      font-size: 12px;
+      border-bottom: 1px solid color-mix(in srgb, var(--active-sign, var(--ink-2)) 48%, transparent);
+      color: var(--ink-2);
+      font-family: var(--sans);
+      font-size: 13px;
+      text-decoration: none;
+      transition: color 420ms var(--ease), border-color 420ms var(--ease);
+    }
+    .consumer-closing__arrow {
+      display: inline-block;
+      color: var(--active-sign, var(--ink-dim));
+      transition: transform 520ms var(--ease);
+    }
+    .consumer-closing__registry:hover {
+      color: var(--ink);
+      border-color: var(--active-sign, var(--ink-2));
+    }
+    .consumer-closing__registry:hover .consumer-closing__arrow {
+      transform: translate(2px, -2px);
     }
 
     /* Indexable no-JavaScript consumer view mirrors the same short journey. */
@@ -4243,9 +4402,17 @@
     .static-faq div { display: grid; grid-template-columns: .42fr .58fr; gap: 26px; padding: 18px 0; border-bottom: 1px solid var(--hair); }
     .static-faq dt { font-family: var(--sans); color: var(--ink); }
     .static-faq dd { margin: 0; color: var(--ink-dim); font-family: var(--sans); font-size: 13px; line-height: 1.5; }
-    .static-closing { display: flex; align-items: center; flex-wrap: wrap; gap: 18px 26px; margin-top: 28px; }
-    .static-closing .btn { min-width: 210px; border-radius: 999px; font-family: var(--sans); font-size: 13px; letter-spacing: 0; text-transform: none; }
-    .static-closing .btn::before { display: none; }
+    .static-closing { margin-top: 28px; }
+    .static-closing a {
+      min-height: 44px;
+      display: inline-flex;
+      align-items: center;
+      border-bottom: 1px solid var(--hair-2);
+      color: var(--ink-2);
+      font-family: var(--sans);
+      font-size: 13px;
+      text-decoration: none;
+    }
 
     /* Technical record: dense when needed, calm everywhere else. */
     .technical-registry { padding: clamp(84px, 10vw, 132px) clamp(20px, 6vw, 72px) 80px; }
@@ -5091,7 +5258,32 @@
       .consumer-verify .vrf__examples .label { grid-column: 1 / -1; }
       .consumer-verify .vrf__example { justify-content: center; padding-inline: 6px; }
       .consumer-verify .vrf__example--clear { grid-column: 1 / -1; }
-      .ftr__row { align-items: flex-start; gap: 14px; }
+      .ftr { padding-inline: 24px; }
+      .ftr__mast { gap: 18px; }
+      .ftr__directory { grid-template-columns: 1fr; gap: 0; }
+      .ftr__group {
+        grid-template-columns: 1fr;
+        gap: 5px;
+      }
+      .ftr__group + .ftr__group {
+        margin-top: 14px;
+        padding-top: 14px;
+        border-top: 1px solid var(--hair);
+      }
+      .ftr__label { padding-top: 0; }
+      .ftr__links {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0 18px;
+      }
+      .ftr__market-notice {
+        grid-template-columns: 1fr;
+        gap: 8px;
+        padding-top: 22px;
+      }
+      .ftr__market-notice-copy p { font-size: 11px; }
+      .ftr--technical .ftr__row { align-items: flex-start; gap: 14px; }
+      .ftr__row--origin { align-items: flex-start; gap: 14px; }
     }
     @media (max-width: 380px) {
       .stage-carousel { height: clamp(238px, 74vw, 270px); }
@@ -6515,36 +6707,109 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    .token-spark svg { display: block; width: 100%; height: 56px; overflow: visible; }
-    .token-spark__grid {
-      stroke: rgba(198,204,218,.1);
+    .token-spark__plot {
+      min-width: 0;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      grid-template-rows: 74px 15px;
+      overflow: hidden;
+      border: 1px solid rgba(198,204,218,.1);
+      border-radius: 8px;
+      background:
+        linear-gradient(180deg, color-mix(in srgb, var(--active-sign, #E0A9B4) 4%, transparent), transparent 70%),
+        rgba(3,5,9,.28);
+      box-shadow: inset 0 1px 0 rgba(238,241,247,.025);
+    }
+    .token-spark__canvas { min-width: 0; grid-column: 1; grid-row: 1; }
+    .token-spark svg { display: block; width: 100%; height: 74px; overflow: hidden; }
+    .token-spark__axis {
+      stroke: rgba(198,204,218,.22);
       stroke-width: 1;
       vector-effect: non-scaling-stroke;
     }
+    .token-spark__grid {
+      stroke: rgba(198,204,218,.09);
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+    .token-spark__grid--vertical { stroke-dasharray: 1 4; }
     .token-spark__line {
       fill: none;
       stroke: var(--active-sign, #E0A9B4);
-      stroke-width: 1.75;
+      stroke-width: 2;
       stroke-linecap: round;
       stroke-linejoin: round;
       vector-effect: non-scaling-stroke;
     }
-    .token-spark__point { fill: var(--active-sign, #E0A9B4); }
+    .token-spark__area { pointer-events: none; }
+    .token-spark__point {
+      fill: var(--active-sign, #E0A9B4);
+      stroke: rgba(8,10,14,.78);
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
+    .token-spark__latest-guide {
+      stroke: color-mix(in srgb, var(--active-sign, #E0A9B4) 40%, transparent);
+      stroke-width: 1;
+      stroke-dasharray: 2 4;
+      vector-effect: non-scaling-stroke;
+    }
+    .token-spark__latest-ring {
+      fill: color-mix(in srgb, var(--active-sign, #E0A9B4) 16%, transparent);
+      stroke: var(--active-sign, #E0A9B4);
+      stroke-width: 1;
+      vector-effect: non-scaling-stroke;
+    }
     .token-spark__latest {
       fill: var(--active-sign, #E0A9B4);
       stroke: rgba(8,10,14,.94);
       stroke-width: 1.5;
       vector-effect: non-scaling-stroke;
     }
-    .token-spark > p {
-      margin: 4px 0 0;
+    .token-spark__price-scale {
+      min-width: 65px;
+      grid-column: 2;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 7px 7px 7px 8px;
+      border-left: 1px solid rgba(198,204,218,.08);
+      color: var(--ink-dim);
+      font: 7px/1.25 var(--mono);
+      letter-spacing: .015em;
+      text-align: right;
+      white-space: nowrap;
+    }
+    .token-spark__price-scale > span { display: grid; gap: 3px; }
+    .token-spark__price-scale small {
       color: var(--ink-mute);
-      font: 7.5px/1.3 var(--mono);
+      font: 6.5px/1 var(--mono);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .token-spark__time-scale {
+      grid-column: 1;
+      grid-row: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 7px;
+      border-top: 1px solid rgba(198,204,218,.07);
+      color: var(--ink-mute);
+      font: 6.5px/1 var(--mono);
+      letter-spacing: .09em;
+      text-transform: uppercase;
+    }
+    .token-spark > p {
+      margin: 6px 0 0;
+      color: var(--ink-mute);
+      font: 7.5px/1.35 var(--mono);
       letter-spacing: .025em;
     }
     .token-spark__skeleton {
       position: relative;
-      min-height: 56px;
+      min-height: 89px;
       display: block;
       overflow: hidden;
       border-block: 1px solid rgba(198,204,218,.08);
@@ -6558,7 +6823,7 @@
       to { opacity: .82; transform: scaleY(1); }
     }
     .token-spark__single {
-      min-height: 56px;
+      min-height: 74px;
       display: grid;
       align-content: center;
       gap: 5px;
@@ -7037,7 +7302,7 @@
       .capital-advanced__arrow { grid-area: arrow; }
       .consumer-capital-opening { gap: 0; padding-top: 8px; }
       .consumer-capital-opening .consumer-explorer--stage .gband--consumer,
-      .consumer-capital-opening .consumer-explorer .gband--flat { height: 710px; border-radius: 21px; }
+      .consumer-capital-opening .consumer-explorer .gband--flat { height: 810px; border-radius: 21px; }
       .gband__constellation { inset: 17% 2% 32%; opacity: .12; }
       .consumer-registry .stage-placard {
         width: calc(100% - 16px);
@@ -7049,11 +7314,14 @@
       }
       .stage-placard__who { align-items: center; }
       .stage-market {
-        grid-template-columns: minmax(96px, .72fr) minmax(0, 1.4fr);
+        grid-template-columns: minmax(0, 1fr);
         padding: 8px 0;
         border-inline: 0;
         border-block: 1px solid var(--hair-2);
       }
+      .stage-market__chart { grid-row: auto; grid-column: 1; }
+      .token-spark__plot { grid-template-rows: 92px 17px; }
+      .token-spark svg { height: 92px; }
       .stage-market__facts { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .consumer-registry .stage-placard__actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .gband__turn-hint { margin-bottom: 4px; }
@@ -7144,8 +7412,8 @@
     @media (max-width: 360px) {
       .capital-masthead__title h1 { font-size: 46px; }
       .consumer-capital-opening .consumer-explorer--stage .gband--consumer,
-      .consumer-capital-opening .consumer-explorer .gband--flat { height: 690px; }
-      .stage-market { grid-template-columns: 92px minmax(0, 1fr); gap: 7px 10px; }
+      .consumer-capital-opening .consumer-explorer .gband--flat { height: 790px; }
+      .stage-market { grid-template-columns: minmax(0, 1fr); gap: 7px; }
       .stage-market__facts dd { font-size: 9px; }
       .consumer-briefing__market dl > div:nth-child(even) { padding-left: 12px; }
       .consumer-briefing__market dd { font-size: 13px; }
@@ -7325,17 +7593,26 @@
           <div><dt>How do people invest in astrology?</dt><dd>Some collect the token of their sign the way they collect any cultural object. That is a speculative choice, not advice — prices can fall to zero. The reasoning lives in the thesis.</dd></div>
         </dl>
         <div class="static-closing">
-          <a class="btn btn--primary" href="#official-twelve">Explore all 12</a>
-          <a href="/registry/technical/">Open the technical record →</a>
+          <a href="/registry/">Open the Zodiacs Registry →</a>
         </div>
       </section>
 
       <footer class="static-site__footer">
-        <a href="/privacy/">Privacy</a> ·
-        <a href="/terms/">Terms</a> ·
-        <a href="/disclosure/">Disclosure</a> ·
-        <a href="/registry/technical/">Technical record</a> ·
-        Zodiacs.org · Est. <span data-registry-established>MMXXIV</span>
+        <span>Zodiacs.org · Est. <span data-registry-established>MMXXIV</span></span>
+        <nav aria-label="Essential Registry links">
+          <a href="/registry/">Official Registry</a>
+          <a href="/terminal/research/">Markets research</a>
+          <a href="/registry/#verify">Verify a token</a>
+          <a href="/disclosure/">Disclosure</a>
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
+        </nav>
+        <aside class="static-site__market-notice" role="note" aria-labelledby="static-terminal-market-notice-title" data-terminal-market-notice>
+          <strong id="static-terminal-market-notice-title">Market &amp; venue notice</strong>
+          <p>Zodiac tokens are speculative, thinly traded digital assets. Prices can be volatile, liquidity may disappear, and you could lose all money used to acquire one. Astrology has no established predictive relationship with asset prices.</p>
+          <p>Zodiacs.org provides the Terminal interface and public Registry; it does not operate a DEX, exchange, broker, or custodial service. When trading is available, Jupiter, an independent third-party liquidity aggregator, supplies the executable quote, builds and submits the transaction, and charges any venue fee shown; your wallet reviews, approves, and signs. Zodiacs.org holds no keys or funds, cannot reverse transactions, and receives no trading or referral compensation. References to Jupiter do not imply affiliation or endorsement.</p>
+          <p>Information is for informational purposes only and is not an offer or solicitation, an investment recommendation or trading strategy, or accounting, legal, tax, or financial advice. Third-party services may not be available in all regions. Verify the official address, network, amount, fees, and destination before signing.</p>
+        </aside>
       </footer>
     </main>
   </div>
