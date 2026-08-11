@@ -3,6 +3,7 @@ import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
+import { injectRegistryExchange, REGISTRY_EXCHANGE_FLAG } from '../src/exchange/entry.mjs';
 
 const OUT = process.env.OUT_DIR ?? null;
 const results = [];
@@ -12,6 +13,20 @@ const registry = JSON.parse(await readFile(
   'utf8',
 ));
 const mints = registry.assets.map((asset) => asset.native.address);
+
+async function enableExchangeFixture(page) {
+  await page.route('**/terminal/markets/**', async (route) => {
+    if (route.request().resourceType() !== 'document') return route.continue();
+    const response = await route.fetch();
+    const source = await response.text();
+    const body = injectRegistryExchange(source, { [REGISTRY_EXCHANGE_FLAG]: '1' }).output;
+    return route.fulfill({
+      response,
+      body,
+      headers: { ...response.headers(), 'content-length': undefined },
+    });
+  });
+}
 
 async function mockProviders(page, requests) {
   await page.route('https://api.dexscreener.com/**', (route) => route.fulfill({
@@ -82,6 +97,7 @@ async function inspectMobile(browser, baseURL, width) {
   const pageErrors = [];
   page.on('pageerror', (error) => pageErrors.push(error.message));
   page.on('request', (request) => requestOrigins.add(new URL(request.url()).origin));
+  await enableExchangeFixture(page);
   await mockProviders(page, providerRequests);
   await waitForTerminal(page);
 
@@ -194,6 +210,7 @@ async function inspectMobile(browser, baseURL, width) {
 async function inspectDesktop(browser, baseURL, width) {
   const context = await browser.newContext({ baseURL, viewport: { width, height: 900 } });
   const page = await context.newPage();
+  await enableExchangeFixture(page);
   await mockProviders(page, []);
   await waitForTerminal(page);
   const state = await page.evaluate(() => ({
@@ -217,6 +234,7 @@ async function inspectReducedMotion(browser, baseURL) {
     reducedMotion: 'reduce',
   });
   const page = await context.newPage();
+  await enableExchangeFixture(page);
   await mockProviders(page, []);
   await waitForTerminal(page);
   const durations = await page.evaluate(() => ({
