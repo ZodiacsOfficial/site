@@ -1210,7 +1210,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && state.volumes === 23
           && state.idle === 1
           && state.polylines.length === 0
-          && /Leo closed hourly history has 24 observations/.test(state.aria)
+          && /Leo closed hourly history covers 24 hourly slots/.test(state.aria)
           && /24-hour candlestick chart/.test(state.aria)
           && /23 hours contained swaps; 1 no-swap hour carries the preceding close with zero volume/.test(state.aria),
         JSON.stringify({ requests: geckoRequests, state }),
@@ -1327,7 +1327,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await finalGeckoRequest;
     await rapidChartPage.waitForFunction(() => {
       const chart = document.querySelector('[data-token-chart="pisces"]');
-      return /^Pisces closed hourly history has 24 observations/u.test(
+      return /^Pisces closed hourly history covers 24 hourly slots/u.test(
         chart?.querySelector('svg')?.getAttribute('aria-label') ?? '',
       );
     });
@@ -1741,7 +1741,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && piscesPlacard.base === false
         && piscesPlacard.guide === false
         && piscesPlacard.marketSign === 'pisces'
-        && /Pisces closed hourly history has 24 observations/i.test(piscesPlacard.chartLabel)
+        && /Pisces closed hourly history covers 24 hourly slots/i.test(piscesPlacard.chartLabel)
         && Math.abs(piscesPlacard.scrollY - scrollBeforePick) <= 2,
       JSON.stringify(piscesPlacard),
     );
