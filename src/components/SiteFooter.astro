@@ -2,6 +2,7 @@
 import { SIGNS, signName } from '../lib/signs';
 import BrandMark from './BrandMark.astro';
 import EmailCapture from './EmailCapture.astro';
+import TerminalMarketVenueNotice from './TerminalMarketVenueNotice.astro';
 import {
   LOCALE_META,
   LEGACY_HOME_SELECTOR_LOCALES,
@@ -14,7 +15,7 @@ import {
 } from '../lib/i18n';
 
 const year = new Date().getFullYear();
-interface Props { locale?: Locale }
+interface Props { locale?: Locale; terminalMarketNotice?: boolean }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const routeLanguageLinks = alternatePathEntries(Astro.url.pathname);
 // Preserve the established locale-home fallback on English-only routes while
@@ -40,6 +41,7 @@ const privacyHref = localizePath(locale, '/privacy/');
 const consumerPath = stripLocale(Astro.url.pathname);
 const isRegistryWing = /^\/(?:terminal|registry|sdk|thesis|archive|disclosure)(?:\/|$)/.test(consumerPath);
 const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$)/.test(consumerPath);
+const terminalMarketNotice = Boolean(Astro.props.terminalMarketNotice);
 ---
 <footer class="footer">
   <div class="container">
@@ -104,6 +106,8 @@ const suppressFooterEmailCapture = /^\/(?:birth-chart|horoscopes|profile)(?:\/|$
         <span class="footer__note">{t(locale, 'footerCollectNote')}</span>
       </nav>
     </div>
+
+    {terminalMarketNotice && <TerminalMarketVenueNotice />}
 
     <hr class="rule" />
 

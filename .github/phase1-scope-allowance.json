@@ -1,13 +1,9 @@
 {
   "version": 1,
-  "id": "terminal-selected-token-ohlcv-chart-2026-08-11",
-  "reason": "Owner-requested Zodiac Terminal chart correction (2026-08-11): replace the selected-token scatter-like sparse-close rendering with a recognizable 24-slot OHLCV instrument. Request GeckoTerminal's documented filled clock-hour response, preserve exact open/high/low/close/volume evidence, render traded hours as accessible hollow/filled candlesticks with a real volume band, and render zero-volume no-swap hours as faint idle ticks. Append only trailing closed no-swap slots using the same prior-close/zero-volume rule, label the active and idle-hour counts, calculate the window change from the first open to final carried close, and keep selected-token-only loading, cancellation, caching, archive fallbacks, routes, official actions, and Registry technical behavior unchanged.",
-  "baseCommit": "fb1d3be6ba7bf15a30f0b49538b0dc27bdfa1fb7",
+  "id": "terminal-market-notice-coverage-2026-08-12",
+  "reason": "Owner-requested Terminal notice coverage (2026-08-12): render the existing market and venue boundary on every canonical Terminal surface. Keep Zodiac Markets' point-of-action risk block, the Research boundary, and research audit receipts in place; add no venue link, execution feature, acquisition entry, provider request, or new route.",
+  "baseCommit": "c7d1fa249215e502e115420217db3b422a3ed265",
   "protectedPaths": [
-    "public/assets/app.js",
-    "public/registry/technical/index.html",
-    "scripts/registry-consumer-contract.test.mjs",
-    "scripts/registry-selected-token-chart.test.mjs",
-    "src/app.jsx"
+    "public/terminal/markets/index.html"
   ]
 }
