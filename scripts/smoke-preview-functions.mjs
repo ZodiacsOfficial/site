@@ -9,12 +9,20 @@ if (previewUrl.protocol !== 'https:' || !previewUrl.hostname.endsWith('.vercel.a
   throw new Error(`Refusing to probe a non-Vercel preview URL: ${previewUrl.origin}`);
 }
 
-const protectionFailure = 'the no-secret smoke requires a public Preview deployment';
+const protectionBypass = process.env.VERCEL_AUTOMATION_BYPASS_SECRET?.trim() ?? '';
+if (/[\r\n]/.test(protectionBypass)) {
+  throw new Error('VERCEL_AUTOMATION_BYPASS_SECRET contains invalid header characters.');
+}
+
+const protectionFailure = protectionBypass
+  ? 'Vercel rejected the configured automation bypass'
+  : 'the no-secret smoke requires a public Preview deployment';
 const sameOriginHeaders = {
   accept: 'application/json',
   origin: previewUrl.origin,
   referer: `${previewUrl.origin}/`,
   'user-agent': 'zodiacs-preview-function-smoke/1.0',
+  ...(protectionBypass ? { 'x-vercel-protection-bypass': protectionBypass } : {}),
 };
 
 const probes = [
