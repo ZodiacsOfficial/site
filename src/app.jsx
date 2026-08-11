@@ -1320,10 +1320,8 @@
     }
 
     const REGISTRY_MARKET_HISTORY_URL = '/assets/data/registry-market-history.v1.json';
-    const REGISTRY_RESEARCH_URL = '/assets/registry-research-feed.json';
     const REGISTRY_NEWS_URL = '/api/registry/news';
     let registryMarketHistoryRequest = null;
-    let registryResearchRequest = null;
     let registryNewsRequest = null;
     const registryResourceCache = new Map();
 
@@ -1350,14 +1348,6 @@
         REGISTRY_MARKET_HISTORY_URL,
         registryMarketHistoryRequest,
         (request) => { registryMarketHistoryRequest = request; },
-      );
-    }
-
-    function loadRegistryResearch() {
-      return loadRegistryJson(
-        REGISTRY_RESEARCH_URL,
-        registryResearchRequest,
-        (request) => { registryResearchRequest = request; },
       );
     }
 
@@ -1396,47 +1386,8 @@
       return useRegistryResource(enabled, loadRegistryMarketHistory);
     }
 
-    function useRegistryResearch(enabled) {
-      return useRegistryResource(enabled, loadRegistryResearch);
-    }
-
     function useRegistryNews(enabled) {
       return useRegistryResource(enabled, loadRegistryNews);
-    }
-
-    // External headlines are fetched in the background but never insert into
-    // the page while somebody is reading. One explicit action promotes the
-    // queued edition everywhere the landing renders external reporting.
-    let acceptedRegistryNews = null;
-    const acceptedRegistryNewsListeners = new Set();
-    function acceptRegistryNews(data) {
-      acceptedRegistryNews = data;
-      acceptedRegistryNewsListeners.forEach(listener => listener(data));
-    }
-    function useQueuedRegistryNews(enabled) {
-      const source = useRegistryNews(enabled);
-      const [accepted, setAccepted] = useState(acceptedRegistryNews);
-      useEffect(() => {
-        acceptedRegistryNewsListeners.add(setAccepted);
-        return () => acceptedRegistryNewsListeners.delete(setAccepted);
-      }, []);
-      const incoming = source.status === 'ok' && Array.isArray(source.data?.items)
-        ? source.data
-        : null;
-      const acceptedIds = new Set(Array.isArray(accepted?.items)
-        ? accepted.items.map(item => item.id)
-        : []);
-      const pendingCount = incoming
-        ? incoming.items.filter(item => !acceptedIds.has(item.id)).length
-        : 0;
-      return {
-        ...source,
-        data: accepted,
-        pendingCount,
-        acceptUpdates: () => {
-          if (incoming) acceptRegistryNews(incoming);
-        },
-      };
     }
 
     function marketHistoryForSign(archive, slug) {
@@ -4735,216 +4686,43 @@
       );
     }
 
-    const RESEARCH_FILTERS = Object.freeze([
-      ['all', 'All'],
-      ['zodiacs', 'Zodiacs Research'],
-      ['astrology', 'Astrology News'],
-      ['astronomy', 'Astronomy'],
-      ['calendar', 'Calendar'],
-    ]);
-
-    function visibleResearchItems(firstParty, external) {
+    function visibleBriefingHeadlines(external, activeSlug) {
       const now = Date.now();
-      const owned = Array.isArray(firstParty?.items) ? firstParty.items : [];
-      const outside = Array.isArray(external?.items) ? external.items : [];
-      return [...owned, ...outside]
+      const items = Array.isArray(external?.items) ? external.items : [];
+      return items
         .filter(item => {
-          const visibleAt = Date.parse(item.visibleAt || item.publishedAt || '');
-          return !Number.isFinite(visibleAt) || visibleAt <= now;
+          const publishedAt = Date.parse(item.publishedAt || '');
+          const sourceAllowed = item.sourceType === 'astrology-news' || item.sourceType === 'astronomy';
+          return sourceAllowed && Number.isFinite(publishedAt) && publishedAt <= now && item.url && item.title;
         })
         .map(item => ({
           ...item,
-          sourceType: item.sourceType || 'zodiacs-research',
-          publisher: item.publisher || 'Zodiacs.org Research System',
           topics: Array.isArray(item.topics) ? item.topics : [],
-          signs: Array.isArray(item.signs) && item.signs.length
-            ? item.signs
-            : SIGNS
-              .map(sign => sign.asset.sign)
-              .filter(slug => Array.isArray(item.topics) && item.topics.includes(slug)),
+          signs: Array.isArray(item.signs) ? item.signs : [],
         }))
-        .sort((left, right) => (
-          Date.parse(right.publishedAt || right.visibleAt || 0)
-          - Date.parse(left.publishedAt || left.visibleAt || 0)
-        ));
+        .sort((left, right) => {
+          const leftRelevant = left.signs.includes(activeSlug) || left.topics.includes(activeSlug);
+          const rightRelevant = right.signs.includes(activeSlug) || right.topics.includes(activeSlug);
+          if (leftRelevant !== rightRelevant) return leftRelevant ? -1 : 1;
+          return Date.parse(right.publishedAt) - Date.parse(left.publishedAt);
+        })
+        .slice(0, 2);
     }
 
-    function researchMatchesFilter(item, filter) {
-      if (filter === 'all') return true;
-      if (filter === 'zodiacs') return item.sourceType === 'zodiacs-research';
-      if (filter === 'astrology') return item.sourceType === 'astrology-news';
-      if (filter === 'astronomy') return item.sourceType === 'astronomy';
-      return item.kind === 'event-brief' || item.topics.includes('calendar') || item.status === 'upcoming';
-    }
-
-    function researchDate(value) {
+    function formatBriefingDate(value) {
       const date = new Date(value);
       if (!Number.isFinite(date.getTime())) return 'Time pending';
-      return date.toLocaleString(undefined, {
+      return date.toLocaleDateString(undefined, {
         month: 'short',
         day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
+        year: 'numeric',
         timeZone: 'UTC',
-        timeZoneName: 'short',
       });
     }
 
-    function ResearchItem({ item, featured = false }) {
-      const external = item.sourceType !== 'zodiacs-research';
-      const href = item.url || `/terminal/research/${item.slug || item.id}/`;
-      const label = external ? `External source · ${item.publisher}` : 'Zodiacs Research · Reviewed';
-      return (
-        <article className={'research-item' + (featured ? ' research-item--featured' : '')} data-research-source={item.sourceType}>
-          <a href={href} rel={external ? 'noopener noreferrer external' : undefined}>
-            <div className="research-item__meta">
-              <span>{label}</span>
-              <time dateTime={item.publishedAt}>{researchDate(item.publishedAt)}</time>
-            </div>
-            <h3>{item.title}</h3>
-            {item.summary && <p>{item.summary}</p>}
-            {item.signs.length > 0 && (
-              <span className="research-item__signs" aria-label={`Affected signs: ${item.signs.join(', ')}`}>
-                {item.signs.slice(0, 4).map(slug => (
-                  <img key={slug} src={`/assets/zodiac-icons/48/${slug}.webp`} width="24" height="24" alt="" loading="lazy" decoding="async" />
-                ))}
-              </span>
-            )}
-            <span className="research-item__open">{external ? 'Read at source' : 'Open research note'} <i aria-hidden="true">↗</i></span>
-          </a>
-        </article>
-      );
-    }
-
-    function ConsumerResearchPulse() {
-      const firstParty = useRegistryResearch(true);
-      const external = useQueuedRegistryNews(true);
-      const items = visibleResearchItems(firstParty.data, external.data);
-      const featured = items.find(item => item.sourceType === 'zodiacs-research');
-      const headlines = items.filter(item => item !== featured && item.sourceType !== 'zodiacs-research').slice(0, 2);
-      return (
-        <aside className="research-pulse" aria-labelledby="research-pulse-title">
-          <div className="research-pulse__head">
-            <span>Research pulse</span>
-            <h2 id="research-pulse-title">The sky, the market, and the record.</h2>
-          </div>
-          {featured ? <ResearchItem item={featured} featured /> : (
-            <p className="research-pulse__state">The first reviewed research edition is being prepared.</p>
-          )}
-          <div className="research-pulse__headlines" aria-label="Independent headlines">
-            {headlines.map(item => <ResearchItem key={item.id} item={item} />)}
-            {external.pendingCount > 0 && (
-              <button
-                className="registry-pill research-updates"
-                type="button"
-                onClick={external.acceptUpdates}
-              >Show {external.pendingCount} new source update{external.pendingCount === 1 ? '' : 's'}</button>
-            )}
-          </div>
-          <a className="registry-pill research-pulse__all" href="/terminal/research/">
-            <span>Open Markets Research</span><span className="market-row__action-orb" aria-hidden="true">↗</span>
-          </a>
-        </aside>
-      );
-    }
-
-    function ConsumerResearchSection({ active }) {
-      const reveal = useReveal();
-      const [hostRef, inView] = useInView('420px 0px');
-      const [filter, setFilter] = useState('all');
-      const [forSign, setForSign] = useState(false);
-      const firstParty = useRegistryResearch(inView);
-      const external = useQueuedRegistryNews(inView);
-      const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
-      const items = visibleResearchItems(firstParty.data, external.data)
-        .filter(item => researchMatchesFilter(item, filter))
-        .filter(item => !forSign || item.signs.includes(activeSign.asset.sign))
-        .slice(0, 5);
-      const loading = firstParty.status === 'loading' || external.status === 'loading';
-
-      return (
-        <section ref={reveal} id="research" className="consumer-research reveal" aria-labelledby="consumer-research-title">
-          <header ref={hostRef} className="consumer-research__head">
-            <div className="consumer-section-head">
-              <span className="consumer-section-head__eyebrow">Reported outside · computed here</span>
-              <h2 id="consumer-research-title">Markets Research</h2>
-              <p>
-                Independent astrology and astronomy headlines sit beside reviewed Zodiacs research.
-                Sky facts, symbolic readings, and market observations remain separate.
-              </p>
-            </div>
-            <button
-              className="registry-pill registry-pill--compact consumer-research__sign-filter"
-              type="button"
-              aria-pressed={forSign}
-              onClick={() => setForSign(value => !value)}
-            >{forSign ? `Showing ${activeSign.name}` : `For ${activeSign.name}`}</button>
-          </header>
-          <div className="consumer-research__filters" role="group" aria-label="Filter Markets Research">
-            {RESEARCH_FILTERS.map(([id, label]) => (
-              <button
-                key={id}
-                className="registry-pill registry-pill--segment"
-                type="button"
-                aria-pressed={filter === id}
-                onClick={() => setFilter(id)}
-              >{label}</button>
-            ))}
-          </div>
-          {external.pendingCount > 0 && (
-            <button
-              className="registry-pill registry-pill--record consumer-research__updates"
-              type="button"
-              onClick={external.acceptUpdates}
-            >Show {external.pendingCount} new source update{external.pendingCount === 1 ? '' : 's'}</button>
-          )}
-          <div className="consumer-research__ledger" aria-busy={loading}>
-            {items.map((item, index) => <ResearchItem key={item.id} item={item} featured={index === 0 && item.sourceType === 'zodiacs-research'} />)}
-            {!loading && items.length === 0 && (
-              <p className="consumer-research__state">No current items match this view. The source ledger remains available in the Research Desk.</p>
-            )}
-          </div>
-          <footer className="consumer-research__foot">
-            <p>Symbolic research—not investment advice. Market observations never alter the sky score.</p>
-            <a className="registry-pill registry-pill--record" href="/terminal/research/">
-              <span>Open the Research Desk</span><span className="market-row__action-orb" aria-hidden="true">↗</span>
-            </a>
-          </footer>
-        </section>
-      );
-    }
-
-    const OUTLOOK_SIGNAL_UI = Object.freeze({
-      quiet: {
-        label: 'Low sky activity',
-        copy: 'Few concentrated planetary events touch this sign in the selected window. Treat it as a baseline watch.',
-      },
-      steady: {
-        label: 'Steady attention',
-        copy: 'The sky adds a modest amount of attention to this sign, without a strong symbolic tilt.',
-      },
-      active: {
-        label: 'Elevated attention',
-        copy: 'Several planetary factors concentrate on this sign. Compare the symbolic score with market participation without assuming causation.',
-      },
-      supportive: {
-        label: 'Supportive event mix',
-        copy: 'The astrology mix leans supportive for this sign. That describes symbolism, not an expected price direction.',
-      },
-      watchful: {
-        label: 'Friction to watch',
-        copy: 'The astrology mix carries more friction than ease. That is symbolic tone only; market behavior is observed separately.',
-      },
-      charged: {
-        label: 'High-intensity window',
-        copy: 'Multiple high-weight events touch this sign, producing a high symbolic-intensity score. It does not predict market direction or realized volatility.',
-      },
-    });
-
-    function formatOutlookEventMoment(value) {
-      if (!value) return 'No dated event in this window';
+    function formatBriefingEventMoment(value) {
       const date = new Date(value);
-      if (Number.isNaN(date.valueOf())) return 'Time unavailable';
+      if (!Number.isFinite(date.getTime())) return 'Time unavailable';
       return date.toLocaleString(undefined, {
         month: 'short',
         day: 'numeric',
@@ -4955,47 +4733,88 @@
       });
     }
 
-    function formatOutlookPoints(value) {
-      const number = Number(value);
-      if (!Number.isFinite(number) || Math.abs(number) < 0.05) return '0';
-      const rounded = Number.isInteger(number) ? `${number}` : number.toFixed(1);
-      return number > 0 ? `+${rounded}` : rounded;
+    function nextBriefingFactor(entry, nowMs) {
+      const seen = new Set();
+      return (Array.isArray(entry?.factors) ? entry.factors : [])
+        .filter(factor => {
+          if (!factor?.id || factor.kind === 'occupancy') return false;
+          const at = Date.parse(factor.at || '');
+          return Number.isFinite(at) && at > nowMs;
+        })
+        .sort((left, right) => (
+          Date.parse(left.at) - Date.parse(right.at)
+          || String(left.id).localeCompare(String(right.id))
+        ))
+        .find(factor => {
+          if (seen.has(factor.id)) return false;
+          seen.add(factor.id);
+          return true;
+        }) || null;
     }
 
-    function outlookFactorImpact(factor) {
-      if (!factor) return 'No event points added';
-      const tone = Math.abs(Number(factor.tonePoints) || 0) < 0.05
-        ? 'neutral tone'
-        : `${formatOutlookPoints(factor.tonePoints)} tone`;
-      return `${formatOutlookPoints(factor.attentionPoints)} attention · ${tone} · ${formatOutlookPoints(factor.volatilityPoints)} event intensity`;
+    function formatBriefingCountdown(value, nowMs) {
+      const remaining = Date.parse(value || '') - nowMs;
+      if (!Number.isFinite(remaining) || remaining <= 0) return 'Now';
+      const minutes = Math.max(1, Math.ceil(remaining / 60_000));
+      if (minutes < 60) return `in ${minutes}m`;
+      const hours = Math.floor(minutes / 60);
+      const minuteRemainder = minutes % 60;
+      if (hours < 24) return `in ${hours}h${minuteRemainder ? ` ${minuteRemainder}m` : ''}`;
+      const days = Math.floor(hours / 24);
+      const hourRemainder = hours % 24;
+      return `in ${days}d${hourRemainder ? ` ${hourRemainder}h` : ''}`;
     }
 
-    function ConsumerOutlookSection({ active, setActive }) {
+    function briefingReadingFor(outlook, sign) {
+      const name = sign.name;
+      switch (outlook?.signal) {
+        case 'supportive':
+          return `Traditional astrology reads this as a more constructive backdrop for ${name}; it does not imply a higher token price.`;
+        case 'watchful':
+          return `Traditional astrology reads this as a higher-friction backdrop for ${name}; market direction remains independent.`;
+        case 'charged':
+          return `Traditional astrology reads this as an intense event window for ${name}; it does not predict price direction or volatility.`;
+        case 'active':
+          return `Traditional astrology reads this as heightened focus on ${name}; check whether volume and liquidity actually show greater activity.`;
+        case 'steady':
+          return `Traditional astrology reads this as moderate focus on ${name}; compare it with market participation without assuming direction.`;
+        case 'quiet':
+        default:
+          return `Traditional astrology treats this as a low-activity window for ${name}; use it as context, not a market forecast.`;
+      }
+    }
+
+    function BriefingHeadline({ item }) {
+      const category = item.sourceType === 'astronomy' ? 'Astronomy' : 'Astrology';
+      return (
+        <article className="consumer-briefing__headline" data-briefing-headline>
+          <a href={item.url} rel="noopener noreferrer external">
+            <span>
+              <strong>{category} · {item.publisher}</strong>
+              <time dateTime={item.publishedAt}>{formatBriefingDate(item.publishedAt)}</time>
+            </span>
+            <h3>{item.title}</h3>
+            <i aria-hidden="true">↗</i>
+          </a>
+        </article>
+      );
+    }
+
+    function ConsumerMarketBriefing({ active }) {
       const reveal = useReveal();
-      const [hostRef, inView] = useInView('360px 0px 360px 0px');
-      const [state, setState] = useState({ status: 'idle' });
-      const [horizon, setHorizon] = useState(() => {
-        try {
-          return new URLSearchParams(window.location.search).get('outlook') === 'weekly'
-            ? 'weekly'
-            : 'daily';
-        } catch {
-          return 'daily';
-        }
-      });
-      const [outlookAttempt, setOutlookAttempt] = useState(0);
-      const [shareState, setShareState] = useState('');
+      const [hostRef, inView] = useInView('460px 0px');
+      const [sky, setSky] = useState({ status: 'idle' });
+      const [skyAttempt, setSkyAttempt] = useState(0);
+      const [nowMs, setNowMs] = useState(() => Date.now());
       const market = useTwelveQuotes(inView);
-
-      useEffect(() => { setShareState(''); }, [active, horizon]);
+      const news = useRegistryNews(inView);
+      const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
 
       useEffect(() => {
         if (!inView) return undefined;
         let cancelled = false;
-        setState({ status: 'loading' });
+        setSky({ status: 'loading' });
         fetch(REGISTRY_OUTLOOK_URL, {
-          // Revalidate even a still-fresh response cached before this daily
-          // publication received its explicit max-age=0 delivery policy.
           cache: 'no-cache',
           headers: { accept: 'application/json' },
         })
@@ -5007,270 +4826,173 @@
             if (!Array.isArray(data?.daily?.signs) || !Array.isArray(data?.weekly?.signs)) {
               throw new Error('invalid outlook payload');
             }
-            if (!cancelled) setState({ status: 'ok', data });
+            if (!cancelled) setSky({ status: 'ok', data });
           })
-          .catch(() => { if (!cancelled) setState({ status: 'unavailable' }); });
+          .catch(() => { if (!cancelled) setSky({ status: 'unavailable' }); });
         return () => { cancelled = true; };
-      // `inView` is sticky once observed. State itself stays out of this list:
-      // setting `loading` must not cancel the request that just started.
-      }, [inView, outlookAttempt]);
+      }, [inView, skyAttempt]);
 
-      const edition = state.status === 'ok' ? state.data[horizon] : null;
-      const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
-      const outlook = edition?.signs?.find(item => item.sign === activeSign.asset.sign) || null;
+      useEffect(() => {
+        if (!inView) return undefined;
+        setNowMs(Date.now());
+        const timer = window.setInterval(() => setNowMs(Date.now()), 60_000);
+        return () => window.clearInterval(timer);
+      }, [inView]);
+
+      const dailyEdition = sky.status === 'ok' ? sky.data.daily : null;
+      const weeklyEdition = sky.status === 'ok' ? sky.data.weekly : null;
+      const dailyOutlook = dailyEdition?.signs?.find(item => item.sign === activeSign.asset.sign) || null;
+      const weeklyOutlook = weeklyEdition?.signs?.find(item => item.sign === activeSign.asset.sign) || null;
+      const primaryFactor = dailyOutlook?.primaryFactor ?? null;
+      const nextFactor = nextBriefingFactor(weeklyOutlook, nowMs);
       const quote = market.status === 'ok' ? market.quotes[activeSign.asset.sign] : null;
-      const ranked = edition
-        ? [...edition.signs].sort((a, b) => a.attentionRank - b.attentionRank)
-        : [];
-      const editionLabel = edition
-        ? new Date(`${edition.date}T12:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+      const headlines = visibleBriefingHeadlines(news.data, activeSign.asset.sign);
+      const editionReference = dailyEdition?.horizon?.referenceAt
+        || (dailyEdition?.date ? `${dailyEdition.date}T12:00:00.000Z` : '');
+      const editionIsCurrent = dailyEdition?.date === new Date(nowMs).toISOString().slice(0, 10);
+      const coverageComplete = dailyEdition?.coverage?.overall === 'complete'
+        && dailyEdition?.coverage?.events === 'complete'
+        && dailyEdition?.coverage?.occupancies === 'complete';
+      const marketLoading = market.status === 'idle' || market.status === 'loading';
+      const skyLoading = sky.status === 'idle' || sky.status === 'loading';
+      const newsLoading = news.status === 'idle' || news.status === 'loading';
+      const editionMeta = sky.status === 'unavailable'
+        ? 'Sky edition unavailable'
+        : dailyEdition
+          ? `Edition ${formatBriefingDate(editionReference)}`
+          : 'Loading today’s edition';
+      const marketRead = market.observedAt
+        ? new Date(market.observedAt).toLocaleTimeString(undefined, {
+            hour: 'numeric', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short',
+          })
         : '';
-      const utcToday = new Date().toISOString().slice(0, 10);
-      const editionIsCurrent = Boolean(edition && edition.date === utcToday);
-      const scoreTone = outlook?.scores?.tone ?? 0;
-      const toneLabel = scoreTone > 0 ? `+${scoreTone}` : `${scoreTone}`;
-      const signalMeta = outlook
-        ? (OUTLOOK_SIGNAL_UI[outlook.signal] ?? { label: titleCase(outlook.signal), copy: outlook.summary })
-        : { label: 'Reading the sky…', copy: 'Loading the committed signal edition.' };
-      const signalLabel = signalMeta.label;
-      const primaryFactor = outlook?.primaryFactor ?? outlook?.factors?.[0] ?? null;
-      const primaryMoment = formatOutlookEventMoment(primaryFactor?.at);
-      const primaryImpact = outlookFactorImpact(primaryFactor);
-      const coverageComplete = edition?.coverage?.overall === 'complete'
-        && edition?.coverage?.events === 'complete'
-        && edition?.coverage?.occupancies === 'complete';
-      const coverageNotice = edition && !coverageComplete
-        ? 'Partial sky coverage: one or more source windows are incomplete, so this signal may omit events.'
-        : '';
-      const noFactorCopy = coverageComplete
-        ? `No scored sky factor names ${activeSign.name} in this window.`
-        : `This edition has partial sky coverage; a quiet score may reflect missing source data.`;
-      const marketReadLabel = market.observedAt
-        ? new Date(market.observedAt).toLocaleTimeString(undefined, { hour: 'numeric', minute: '2-digit' })
-        : '';
-      const marketIsLoading = market.status === 'idle' || market.status === 'loading';
-      const marketHeadline = quote
-        ? formatPriceUsd(quote.priceUsd)
-        : marketIsLoading
-          ? 'Reading live market…'
-          : 'Market data unavailable';
-      const marketDetail = quote
-        ? `${formatPercent(quote.priceChange24h)} over 24h · ${formatUsdCompact(quote.liquidityUsd)} liquidity${market.stale ? ' · refresh delayed' : ''}`
-        : marketIsLoading
-          ? 'Price, 24h movement, and liquidity will appear here.'
-          : 'The sky score remains readable without a live quote.';
-      const shareCopy = outlook
-        ? `${activeSign.name} · ${horizon === 'weekly' ? '7-day' : 'daily'} sky signal: ${signalLabel}\nEdition ${edition.date} · Attention ${outlook.scores.attention}/100 · tone ${toneLabel} · event intensity ${outlook.scores.volatility}/100\n${outlook.primaryFactor ? `Main factor: ${outlook.primaryFactor.label}.` : `No scored sky factor names ${activeSign.name} in this window.`}${coverageNotice ? `\n${coverageNotice}` : ''}\nExperimental symbolic index — not a price forecast or financial advice.`
-        : '';
-      const shareOutlook = async () => {
-        const shared = new URL('/terminal/', window.location.origin);
-        shared.searchParams.set('sign', activeSign.asset.sign);
-        shared.searchParams.set('outlook', horizon);
-        shared.hash = 'outlook';
-        const url = shared.toString();
-        try {
-          if (navigator.share) {
-            try {
-              await navigator.share({ title: `${activeSign.name} sky signal`, text: shareCopy, url });
-              setShareState('Shared.');
-              trackAnalytics('registry_outlook_shared', { sign: activeSign.asset.sign, horizon, destination: 'native' });
-              return;
-            } catch (error) {
-              if (error?.name === 'AbortError') return;
-            }
-          }
-          if (!navigator.clipboard?.writeText) throw new Error('clipboard');
-          await navigator.clipboard.writeText(`${shareCopy}\n${url}`);
-          setShareState('Signal copied.');
-          trackAnalytics('registry_outlook_shared', { sign: activeSign.asset.sign, horizon, destination: 'clipboard' });
-        } catch (error) {
-          setShareState('Could not share this signal.');
-        }
-      };
 
       return (
-        <section ref={reveal} id="outlook" className="consumer-outlook reveal" aria-labelledby="consumer-outlook-title">
-          <header className="consumer-outlook__head">
-            <div className="consumer-section-head">
-              <span className="consumer-section-head__eyebrow">Astrology × market research</span>
-              <h2 id="consumer-outlook-title">Sky signals. <span className="it">Market checks.</span></h2>
+        <section
+          ref={reveal}
+          id="briefing"
+          className="consumer-briefing reveal"
+          aria-labelledby="consumer-briefing-title"
+          aria-busy={skyLoading || marketLoading || news.status === 'loading'}
+          data-briefing-sign={activeSign.asset.sign}
+          style={{ '--briefing-sign': activeSign.hue }}
+        >
+          <span id="research" className="consumer-briefing__legacy-anchor" aria-hidden="true" />
+          <span id="outlook" className="consumer-briefing__legacy-anchor" aria-hidden="true" />
+          <header ref={hostRef} className="consumer-briefing__head">
+            <div>
+              <span className="consumer-section-head__eyebrow">Sky fact · market observation</span>
+              <h2 id="consumer-briefing-title">Today’s market briefing</h2>
+              <p>One relevant sky event, one plain-language reading, and the market measures that matter now.</p>
             </div>
-            <p>
-              Named planetary events add disclosed points to the Zodiacs they touch.
-              We turn those points into attention, tone, and event-intensity scores, then
-              show live market data beside them — never inside the calculation.
-            </p>
+            <div className="consumer-briefing__sign">
+              <img src={`/assets/zodiac-icons/128/${activeSign.asset.sign}.webp`} width="58" height="58" alt="" decoding="async" />
+              <span>
+                <small>Selected token</small>
+                <strong>{activeSign.name}</strong>
+                <em>{editionMeta}</em>
+              </span>
+            </div>
           </header>
 
-          <div ref={hostRef} className="outlook-lab" style={{ '--outlook-sign': activeSign.hue }}>
-            <div className="outlook-lab__toolbar">
-              <div role="group" aria-label="Choose outlook horizon">
-                <button className="registry-pill registry-pill--segment" type="button" aria-pressed={horizon === 'daily'} onClick={() => setHorizon('daily')}>Today</button>
-                <button className="registry-pill registry-pill--segment" type="button" aria-pressed={horizon === 'weekly'} onClick={() => setHorizon('weekly')}>7 days</button>
-              </div>
-              <span>{edition ? `Edition ${editionLabel} · 12:00 UTC reference` : 'Loading the committed sky…'}</span>
-            </div>
+          {!editionIsCurrent && dailyEdition && (
+            <p className="consumer-briefing__notice" role="status">
+              Latest published sky edition: {formatBriefingDate(editionReference)}. Treat this as archived context until today’s edition publishes.
+            </p>
+          )}
+          {dailyEdition && !coverageComplete && (
+            <p className="consumer-briefing__notice" role="status">
+              This edition has partial sky coverage and may omit an event.
+            </p>
+          )}
 
-            {edition && !editionIsCurrent && (
-              <p className="outlook-lab__stale" role="status">
-                Latest committed edition: {editionLabel}. Sharing is paused until the {utcToday} UTC edition publishes.
-              </p>
-            )}
-
-            {coverageNotice && (
-              <p className="outlook-lab__coverage" role="status">{coverageNotice} Sharing is paused for this edition.</p>
-            )}
-
-            {state.status === 'unavailable' ? (
-              <div className="outlook-lab__state">
-                <p>The research instrument is temporarily unavailable. Live markets and official records remain independent.</p>
-                <button className="registry-pill registry-pill--compact" type="button" onClick={() => setOutlookAttempt(value => value + 1)}>Try again</button>
-              </div>
-            ) : (
-              <div className="outlook-lab__body" aria-busy={state.status !== 'ok'}>
-                <ol className="outlook-flow" aria-label={`How the ${activeSign.name} sky signal is calculated and checked against the market`}>
-                  <li className="outlook-flow__step outlook-flow__step--event">
-                    <span className="outlook-flow__number">01</span>
-                    <div>
-                      <span className="outlook-flow__label">Sky factor</span>
-                      <strong>{primaryFactor?.label ?? (outlook ? 'No concentrated event' : 'Reading the sky…')}</strong>
-                      <small>{primaryFactor ? `${titleCase(primaryFactor.kind)} · ${primaryMoment}` : (outlook ? noFactorCopy : 'The selected window sets the event boundary.')}</small>
-                      {primaryFactor && <em>{primaryImpact}</em>}
-                    </div>
-                  </li>
-                  <li className="outlook-flow__step outlook-flow__step--impact">
-                    <span className="outlook-flow__number">02</span>
-                    <img src={`/assets/zodiac-icons/48/${activeSign.asset.sign}.webp`} width="38" height="38" alt="" decoding="async" />
-                    <div>
-                      <span className="outlook-flow__label">Sign signal</span>
-                      <strong>{outlook ? signalLabel : activeSign.name}</strong>
-                      <small>{outlook ? `${activeSign.name} · ${outlook.scores.attention}/100 attention · ${toneLabel} tone · ${outlook.scores.volatility}/100 event intensity` : 'Waiting for the committed score.'}</small>
-                    </div>
-                  </li>
-                  <li className="outlook-flow__step outlook-flow__step--watch">
-                    <span className="outlook-flow__number">03</span>
-                    <div>
-                      <span className="outlook-flow__label">Market check</span>
-                      <strong>{marketHeadline}</strong>
-                      <small>{marketDetail}</small>
-                      <em>Observed separately · never an input</em>
-                    </div>
-                  </li>
-                </ol>
-
-                <div className="outlook-lab__grid">
-                  <article className="outlook-reading">
-                    <div className="outlook-reading__identity">
-                      <img src={`/assets/zodiac-icons/128/${activeSign.asset.sign}.webp`} width="82" height="82" alt="" decoding="async" />
-                      <div>
-                        <span className="outlook-reading__eyebrow">{activeSign.name} · {horizon === 'weekly' ? '7-day signal' : 'today’s signal'}</span>
-                        <h3>{signalLabel}</h3>
-                      </div>
-                    </div>
-                    <p className="outlook-reading__summary">{signalMeta.copy}</p>
-                    {outlook && (
-                      <dl className="outlook-scores" aria-label={`${activeSign.name} signal scores`}>
-                        <div>
-                          <dt>Attention</dt>
-                          <dd>{outlook.scores.attention}<small>/100</small></dd>
-                          <small>How concentrated the sky is on this sign</small>
-                        </div>
-                        <div>
-                          <dt>Symbolic tone</dt>
-                          <dd>{scoreTone >= 12 ? 'Supportive' : scoreTone <= -12 ? 'Friction' : 'Neutral'}<small>{toneLabel}</small></dd>
-                          <small>The astrology mix, not price direction</small>
-                        </div>
-                        <div>
-                          <dt>Event intensity</dt>
-                          <dd>{outlook.scores.volatility}<small>/100</small></dd>
-                          <small>How strongly the scored sky factors cluster</small>
-                        </div>
-                      </dl>
-                    )}
-                    <div className="outlook-market-context">
-                      <span>Live market check · observed separately · never an input{market.stale ? ' · refresh delayed' : ''}</span>
-                      <strong>{quote ? `${formatPriceUsd(quote.priceUsd)} · ${formatPercent(quote.priceChange24h)} over 24h` : marketHeadline}</strong>
-                      <small>{quote ? `${formatUsdCompact(quote.liquidityUsd)} indexed liquidity${marketReadLabel ? ` · read ${marketReadLabel}` : ''}` : marketDetail}</small>
-                    </div>
-                    <div className="outlook-reading__actions">
-                      <button className="registry-pill registry-pill--compact" type="button" onClick={shareOutlook} disabled={!outlook || !editionIsCurrent || !coverageComplete}>Share signal</button>
-                      <a className="registry-pill registry-pill--compact" href="#market">View live market</a>
-                    </div>
-                    <p className="outlook-reading__share" role="status" aria-live="polite">{shareState}</p>
-                  </article>
-
-                  <aside className="outlook-factors" aria-label={`${activeSign.name} astrology events and calculation`}>
-                    <span className="outlook-factors__eyebrow">
-                      Events touching {activeSign.name}{outlook?.factors?.length > 3 ? ` · top 3 of ${outlook.factors.length}` : ''}
-                    </span>
-                    {outlook?.factors?.length ? (
-                      <ol>
-                        {outlook.factors.slice(0, 3).map((factor) => (
-                          <li key={factor.id}>
-                            <time dateTime={factor.at}>{formatOutlookEventMoment(factor.at)}</time>
-                            <div>
-                              <strong>{factor.label}</strong>
-                              <span className="outlook-factor__impact">{outlookFactorImpact(factor)}</span>
-                              <p>{factor.explanation}</p>
-                              <details className="outlook-factor__calculation">
-                                <summary>Show calculation</summary>
-                                <code>{factor.calculation}</code>
-                              </details>
-                            </div>
-                          </li>
-                        ))}
-                      </ol>
-                    ) : (
-                      <p className="outlook-factors__empty">{noFactorCopy}</p>
-                    )}
-                    {edition?.evidence && (
-                      <div className="outlook-calibration">
-                        <span>Evidence collection</span>
-                        <strong>{edition.evidence.historyDaysObserved} / {edition.evidence.minimumHistoryDays} daily observations</strong>
-                        <small>{edition.evidence.historyDaysRemaining} remaining before the first eligible held-out evaluation. Until then, predictive accuracy is not claimed.</small>
-                      </div>
-                    )}
-                    <details className="outlook-method">
-                      <summary>How the signal is calculated</summary>
-                      <div>
-                        <p><strong>1 · Occupancy.</strong> A planet adds a disclosed attention weight to the sign it occupies at the UTC reference point.</p>
-                        <p><strong>2 · Event proximity.</strong> Ingresses, lunations, stations, and aspects receive a 1.00–0.75× weight across the selected window.</p>
-                        <p><strong>3 · Market check.</strong> Price, liquidity, and volume are observed separately. Market data never changes the astrology score.</p>
-                        <a href={REGISTRY_OUTLOOK_URL}>Open the machine-readable edition ↗</a>
-                      </div>
-                    </details>
-                  </aside>
+          <div className="consumer-briefing__grid">
+            <article className="consumer-briefing__lead" data-briefing-event>
+              <span className="consumer-briefing__label">
+                {primaryFactor?.kind === 'occupancy' ? 'Daily sky reference' : 'Most relevant sky event'}
+              </span>
+              {sky.status === 'unavailable' ? (
+                <div className="consumer-briefing__state">
+                  <h3>Sky context unavailable</h3>
+                  <p>Market and source feeds load independently.</p>
+                  <button className="registry-pill registry-pill--compact" type="button" onClick={() => setSkyAttempt(value => value + 1)}>Retry sky data</button>
                 </div>
-              </div>
-            )}
+              ) : (
+                <>
+                  <h3>{skyLoading ? 'Reading the published sky…' : primaryFactor?.label ?? 'No concentrated event today'}</h3>
+                  {primaryFactor?.at && <time dateTime={primaryFactor.at}>{formatBriefingEventMoment(primaryFactor.at)}</time>}
+                  <div className="consumer-briefing__reading" data-briefing-reading>
+                    <span>Traditional reading</span>
+                    <p>{skyLoading ? 'The practical reading will appear with the published edition.' : briefingReadingFor(dailyOutlook, activeSign)}</p>
+                  </div>
+                </>
+              )}
+            </article>
 
-            {ranked.length > 0 && (
-              <div className="outlook-wheel" role="group" aria-label="Compare sky attention across the twelve signs">
-                {ranked.map(item => {
-                  const sign = SIGNS.find(candidate => candidate.asset.sign === item.sign);
-                  const selected = sign?.ticker === active;
-                  if (!sign) return null;
-                  return (
-                    <button
-                      key={item.sign}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() => setActive(sign.ticker)}
-                      style={{ '--wheel-sign': sign.hue, '--wheel-score': `${item.scores.attention}%` }}
-                    >
-                      <span className="outlook-wheel__rank">{String(item.attentionRank).padStart(2, '0')}</span>
-                      <img src={`/assets/zodiac-icons/48/${item.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
-                      <span><strong>{sign.name}</strong><small>{item.scores.attention}/100 attention</small></span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+            <aside className="consumer-briefing__market" aria-label={`${activeSign.name} observed market data`} data-briefing-market>
+              <header>
+                <span className="consumer-briefing__label">Observed market</span>
+                <small>{marketRead ? `Read ${marketRead}${market.stale ? ' · refresh delayed' : ''}` : marketLoading ? 'Reading live market…' : 'Live read unavailable'}</small>
+              </header>
+              <dl>
+                <div><dt>Price</dt><dd>{quote ? formatPriceUsd(quote.priceUsd) : marketLoading ? '…' : '—'}</dd></div>
+                <div><dt>24H change</dt><dd className={quote ? marketChangeClass(quote.priceChange24h) : ''}>{quote ? formatPercent(quote.priceChange24h) : marketLoading ? '…' : '—'}</dd></div>
+                <div><dt>Liquidity</dt><dd>{quote ? formatUsdCompact(quote.liquidityUsd) : marketLoading ? '…' : '—'}</dd></div>
+                <div><dt>24H volume</dt><dd>{quote ? formatUsdCompact(quote.volume24h) : marketLoading ? '…' : '—'}</dd></div>
+              </dl>
+              <p>Observed separately. Market data never changes the sky reading.</p>
+            </aside>
+
+            <aside className="consumer-briefing__next" aria-label={`${activeSign.name} next exact event`} data-briefing-next-event>
+              <span className="consumer-briefing__label">Next exact event · 7-day window</span>
+              {skyLoading ? (
+                <p>Loading the published seven-day schedule…</p>
+              ) : sky.status === 'unavailable' ? (
+                <p>Next-event schedule unavailable.</p>
+              ) : nextFactor ? (
+                <>
+                  <strong>{nextFactor.label}</strong>
+                  <span>
+                    <time dateTime={nextFactor.at}>{formatBriefingEventMoment(nextFactor.at)}</time>
+                    <em aria-hidden="true">{formatBriefingCountdown(nextFactor.at, nowMs)}</em>
+                  </span>
+                </>
+              ) : (
+                <p>No additional exact event is scheduled for {activeSign.name} in the published seven-day window.</p>
+              )}
+            </aside>
           </div>
 
+          <div className="consumer-briefing__news" aria-label="Independent source headlines" data-briefing-headlines>
+            <header>
+              <span className="consumer-briefing__label">Independent reporting</span>
+              <small>{newsLoading || headlines.length > 0
+                ? 'Publisher and publication date shown for every source'
+                : 'Fresh source coverage is unavailable'}</small>
+            </header>
+            <div>
+              {headlines.map(item => <BriefingHeadline key={item.id} item={item} />)}
+              {newsLoading && [0, 1].map(index => (
+                <article className="consumer-briefing__headline consumer-briefing__headline--placeholder" aria-hidden="true" key={index}>
+                  <span />
+                  <span />
+                </article>
+              ))}
+              {news.status === 'unavailable' && <p className="consumer-briefing__news-state">Source headlines are temporarily unavailable.</p>}
+              {news.status === 'ok' && headlines.length === 0 && <p className="consumer-briefing__news-state">No fresh source headlines are available.</p>}
+            </div>
+          </div>
+
+          <footer className="consumer-briefing__foot">
+            <p>Symbolic context—not a price forecast. Astrology has no established predictive relationship with asset prices, and crypto assets can lose all value.</p>
+            <a className="registry-pill registry-pill--record consumer-briefing__cta" href={`/terminal/research/?sign=${activeSign.asset.sign}`}>
+              <span>Open Markets Research</span><span className="market-row__action-orb" aria-hidden="true">↗</span>
+            </a>
+          </footer>
         </section>
       );
     }
+
     function useStageMode() {
       // The original Registry gallery worked at every width. Keep the real
       // turntable on phones as well as desktops whenever WebGL exists; the
@@ -5966,10 +5688,8 @@
                 setPersonalSlug={setPersonalSlug}
               />
             </div>
-            <ConsumerResearchPulse />
+            <ConsumerMarketBriefing active={activeTicker} />
             <ConsumerHowItWorks />
-            <ConsumerResearchSection active={activeTicker} />
-            <ConsumerOutlookSection active={activeTicker} setActive={setActiveTicker} />
             <VerifierSection />
             <ConsumerPurpose />
             <ConsumerFaq />

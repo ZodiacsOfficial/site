@@ -13,14 +13,14 @@ import { withPreview } from './visual/preview-server.mjs';
 const OUT = process.env.OUT_DIR ?? null;
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
-// The consumer route now includes the live market board and the public outlook
-// lab. Keep a ceiling as a regression guard, but size it for that intentional
-// narrative rather than the shorter pre-market Registry.
+// The consumer route includes the live market board and one concise briefing.
+// Keep a ceiling as a regression guard for the intentional narrative.
 const MAX_COMPACT_REGISTRY_HEIGHT = 9_000;
-// The Research Desk preview, five-filter ledger, auditable Signals lab, factor
-// receipts, and twelve-sign comparison wheel are intentionally scrollable on
-// narrow phones. Keep a firm ceiling sized for that complete public journey.
-const MAX_PHONE_REGISTRY_HEIGHT = 13_000;
+// Narrow phones retain the sculpture, market board, and one continuous
+// briefing, but no duplicate research ledger or twelve-sign signal wheel.
+// The fully revealed WebGL path measures 9.6–9.9k across the supported phones;
+// keep a tight ceiling with enough room for cross-platform font metrics.
+const MAX_PHONE_REGISTRY_HEIGHT = 10_250;
 // The 42px live tape now owns one row of the framed hero. The scene camera fits
 // the sculpture to the room it receives, so 260px is the useful desktop floor;
 // mobile retains its separate 200px floor and explicit placard-clearance gate.
@@ -213,48 +213,37 @@ async function withExchangeFlag(page) {
   });
 }
 
-/** Keep the Research Desk deterministic while still exercising the public
- * source boundary. The owned note and outside headlines deliberately use
- * different source types and sign coverage. */
-async function mockRegistryResearch(page) {
-  const publishedAt = new Date(COMMITTED_OUTLOOK_REFERENCE).toISOString();
-  await page.route('**/assets/registry-research-feed.json', (route) => route.fulfill({
-    json: {
-      schema: 'zodiacs.registry-research-feed.v1',
-      items: [
-        {
-          id: 'owned-pisces', slug: 'owned-pisces', kind: 'daily-market-brief',
-          sourceType: 'zodiacs-research', publisher: 'Zodiacs.org Research System',
-          publishedAt, visibleAt: publishedAt, title: 'Pisces sky and market brief',
-          summary: 'A reviewed symbolic brief with market observations kept separate.',
-          url: '/terminal/research/owned-pisces/', signs: ['pisces'], topics: ['pisces'], status: 'published',
-        },
-        {
-          id: 'owned-aries', slug: 'owned-aries', kind: 'event-brief',
-          sourceType: 'zodiacs-research', publisher: 'Zodiacs.org Research System',
-          publishedAt, visibleAt: publishedAt, title: 'Aries event brief',
-          summary: 'A scheduled event note.', url: '/terminal/research/owned-aries/',
-          signs: ['aries'], topics: ['calendar', 'aries'], status: 'published',
-        },
-      ],
-    },
-  }));
+/** Keep the landing briefing's independent source boundary deterministic.
+ * Three fresh outside headlines prove that the landing renders at most two;
+ * the Pisces topic also proves selected-sign relevance wins over chronology. */
+function registryBriefingNewsPayload() {
+  const publishedAt = new Date(Date.parse(COMMITTED_OUTLOOK_REFERENCE) - 86_400_000).toISOString();
+  return {
+    schema: 'registry-news.v1', updatedAt: publishedAt,
+    items: [
+      {
+        id: 'astrology-headline', sourceType: 'astrology-news', publisher: 'The Astrology Podcast',
+        publishedAt, title: 'Independent astrology headline', url: 'https://theastrologypodcast.com/example',
+        author: 'External author', topics: ['pisces'], signs: ['pisces'],
+      },
+      {
+        id: 'astronomy-headline', sourceType: 'astronomy', publisher: 'NASA',
+        publishedAt, title: 'Independent astronomy headline', url: 'https://www.nasa.gov/example',
+        author: 'NASA', topics: ['astronomy'], signs: [],
+      },
+      {
+        id: 'extra-astrology-headline', sourceType: 'astrology-news', publisher: 'The Mountain Astrologer',
+        publishedAt: new Date(Date.parse(publishedAt) - 3_600_000).toISOString(),
+        title: 'A third fresh headline', url: 'https://mountainastrologer.com/example',
+        author: 'External author', topics: ['leo'], signs: ['leo'],
+      },
+    ],
+  };
+}
+
+async function mockRegistryBriefingSources(page) {
   await page.route('**/api/registry/news', (route) => route.fulfill({
-    json: {
-      schema: 'registry-news.v1', updatedAt: publishedAt,
-      items: [
-        {
-          id: 'astrology-headline', sourceType: 'astrology-news', publisher: 'The Astrology Podcast',
-          publishedAt, title: 'Independent astrology headline', url: 'https://theastrologypodcast.com/example',
-          author: 'External author', topics: ['pisces'], signs: ['pisces'],
-        },
-        {
-          id: 'astronomy-headline', sourceType: 'astronomy', publisher: 'NASA',
-          publishedAt, title: 'Independent astronomy headline', url: 'https://www.nasa.gov/example',
-          author: 'NASA', topics: ['astronomy'], signs: [],
-        },
-      ],
-    },
+    json: registryBriefingNewsPayload(),
   }));
 }
 
@@ -597,6 +586,16 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         marketHeading: document.querySelector('#market > h2')
           ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        briefingCount: document.querySelectorAll('section#briefing').length,
+        briefingHeading: document.querySelector('#briefing > h2')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        briefingAliases: ['research', 'outlook'].every((id) => (
+          document.getElementById(id)?.closest('section')?.id === 'briefing'
+        )),
+        briefingCta: document.querySelector('#briefing a[href^="/terminal/research/"]')
+          ?.getAttribute('href') ?? '',
+        removedLandingResearch: /Research Pulse|Sky signals\. Market checks\.|Markets Research preview/i
+          .test(document.body.textContent ?? ''),
         h1Count: document.querySelectorAll('h1').length,
         h1: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         deck: document.querySelector('.static-capital .capital-masthead__title > p')
@@ -653,6 +652,15 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           eyebrow: fallbackState.marketEyebrow,
           heading: fallbackState.marketHeading,
         }),
+      );
+      check(
+        `Registry no-JavaScript fallback at ${width}px exposes one concise briefing and both legacy anchors`,
+        fallbackState.briefingCount === 1
+          && fallbackState.briefingHeading === 'Today’s market briefing'
+          && fallbackState.briefingAliases
+          && fallbackState.briefingCta === '/terminal/research/?sign=leo'
+          && !fallbackState.removedLandingResearch,
+        JSON.stringify(fallbackState),
       );
       await fallbackPage.close();
     }
@@ -1056,7 +1064,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await freezeRegistryClock(selectedChartPage);
       await stubNoWebgl(selectedChartPage);
       await mockDexscreener(selectedChartPage);
-      await mockRegistryResearch(selectedChartPage);
+      await mockRegistryBriefingSources(selectedChartPage);
       await mockSelectedTokenArchive(selectedChartPage);
       await mockGeckoHourly(selectedChartPage, { requests: geckoRequests });
       await withExchangeFlag(selectedChartPage);
@@ -1135,7 +1143,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await freezeRegistryClock(rapidChartPage);
     await stubNoWebgl(rapidChartPage);
     await mockDexscreener(rapidChartPage);
-    await mockRegistryResearch(rapidChartPage);
+    await mockRegistryBriefingSources(rapidChartPage);
     await mockSelectedTokenArchive(rapidChartPage);
     await mockGeckoHourly(rapidChartPage, { requests: rapidGeckoRequests });
     await withExchangeFlag(rapidChartPage);
@@ -1217,7 +1225,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const constrainedGeckoRequests = [];
       await stubNoWebgl(constrainedPage);
       await mockDexscreener(constrainedPage);
-      await mockRegistryResearch(constrainedPage);
+      await mockRegistryBriefingSources(constrainedPage);
       await mockSelectedTokenArchive(constrainedPage);
       await mockGeckoHourly(constrainedPage, { requests: constrainedGeckoRequests });
       await constrainedPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
@@ -1252,7 +1260,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     const relatedResearch = await newPage({ viewport: { width: 781, height: 900 } });
     await relatedResearch.route('**/api/registry/news', (route) => route.fulfill({
-      json: { schema: 'registry-news.v1', updatedAt: COMMITTED_OUTLOOK_REFERENCE, items: [] },
+      json: registryBriefingNewsPayload(),
     }));
     await relatedResearch.goto(
       `${baseURL}/terminal/research/?sign=leo&type=daily`,
@@ -1287,17 +1295,49 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       clearedScope.hidden && clearedScope.search === '',
       JSON.stringify(clearedScope),
     );
+    const researchFilters = await relatedResearch.locator('.research-filters button')
+      .evaluateAll((buttons) => buttons.map((button) => button.textContent?.trim() ?? ''));
+    const sourceUpdates = relatedResearch.locator('#research-source-updates');
+    await sourceUpdates.waitFor({ state: 'visible', timeout: 15_000 });
+    check(
+      'the dedicated Research Desk retains its five filters and queued source-update control',
+      JSON.stringify(researchFilters) === JSON.stringify([
+        'All', 'Zodiacs Research', 'Astrology News', 'Astronomy', 'Calendar',
+      ])
+        && await sourceUpdates.innerText() === 'Show 3 source updates',
+      JSON.stringify(researchFilters),
+    );
+    await sourceUpdates.click();
+    await relatedResearch.getByRole('button', { name: 'Astrology News', exact: true }).click();
+    const dedicatedFilterState = await relatedResearch.evaluate(() => ({
+      active: document.querySelector('.research-filters button[aria-pressed="true"]')
+        ?.textContent?.trim() ?? '',
+      categories: [...document.querySelectorAll('#research-items [data-category]')]
+        .filter((item) => !item.hidden)
+        .map((item) => item.getAttribute('data-category')),
+      filter: new URL(location.href).searchParams.get('filter'),
+      updatesHidden: document.querySelector('#research-source-updates')?.hidden ?? false,
+    }));
+    check(
+      'Research Desk filtering keeps external astrology separate after explicit acceptance',
+      dedicatedFilterState.active === 'Astrology News'
+        && dedicatedFilterState.categories.length === 2
+        && dedicatedFilterState.categories.every((category) => category === 'astrology-news')
+        && dedicatedFilterState.filter === 'astrology-news'
+        && dedicatedFilterState.updatesHidden,
+      JSON.stringify(dedicatedFilterState),
+    );
     await relatedResearch.close();
 
     // The grid explorer's own assertions run with WebGL denied — the path
     // narrow, non-WebGL, and stage-failure readers actually get. The stage
     // is asserted separately, on an unstubbed page.
     const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
-    // The primary Outlook assertions exercise the complete, current-edition
-    // path. Anchor only this page to the receipt's disclosed reference time so
-    // a committed daily artifact does not become stale merely because the
-    // browser gate runs after midnight. Routed cases below independently prove
-    // stale and partial editions remain unshareable.
+    // The primary briefing assertions exercise the complete current-edition
+    // path. Anchor this page to the receipt's disclosed reference time so a
+    // committed daily artifact does not become stale merely because the gate
+    // runs after midnight. Routed cases independently prove stale and partial
+    // editions are disclosed without bringing the old signal controls back.
     await desktop.addInitScript((referenceAt) => {
       const NativeDate = Date;
       const fixedTime = new NativeDate(referenceAt).getTime();
@@ -1317,15 +1357,22 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await mockDexscreener(desktop);
     const desktopGeckoRequests = [];
     await mockGeckoHourly(desktop, { requests: desktopGeckoRequests });
-    await mockRegistryResearch(desktop);
+    await mockRegistryBriefingSources(desktop);
     await withCollectionFlag(desktop);
     const desktopErrors = [];
     const desktopGalleryRequests = [];
+    const desktopOutlookRequests = [];
+    const desktopLandingResearchRequests = [];
+    const desktopNewsRequests = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
     desktop.on('request', (request) => {
-      if (new URL(request.url()).pathname === '/assets/gallery.js') {
+      const pathname = new URL(request.url()).pathname;
+      if (pathname === '/assets/gallery.js') {
         desktopGalleryRequests.push(request.url());
       }
+      if (pathname === '/assets/registry-outlook.json') desktopOutlookRequests.push(request.url());
+      if (pathname === '/assets/registry-research-feed.json') desktopLandingResearchRequests.push(request.url());
+      if (pathname === '/api/registry/news') desktopNewsRequests.push(request.url());
     });
     await desktop.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await desktop.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
@@ -1546,78 +1593,78 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await desktop.locator(
       '.gband__constellation[data-stage-constellation="pisces"] img.is-entering[src="/assets/constellations/pisces.svg"]',
     ).waitFor({ state: 'attached' });
-    const synchronizedContext = await desktop.evaluate(() => ({
+    const briefing = desktop.locator('#briefing');
+    await briefing.scrollIntoViewIfNeeded();
+    await desktop.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const synchronizedContext = await briefing.evaluate((section) => ({
       constellation: document.querySelector('.gband__constellation')?.getAttribute('data-stage-constellation') ?? '',
       constellationSrc: document.querySelector('.gband__constellation img.is-entering')?.getAttribute('src') ?? '',
-      researchSign: document.querySelector('.consumer-research__sign-filter')?.textContent?.trim() ?? '',
-      pulseSources: [...document.querySelectorAll('.research-pulse .research-item')]
-        .map((item) => item.getAttribute('data-research-source')),
-      pendingUpdates: document.querySelector('.research-pulse .research-updates')
-        ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-    }));
-    check(
-      'selected sign synchronizes sculpture, constellation, chart, and research without auto-inserting new sources',
-      synchronizedContext.constellation === 'pisces'
-        && synchronizedContext.constellationSrc === '/assets/constellations/pisces.svg'
-        && synchronizedContext.researchSign === 'For Pisces'
-        && synchronizedContext.pulseSources.includes('zodiacs-research')
-        && !synchronizedContext.pulseSources.includes('astrology-news')
-        && !synchronizedContext.pulseSources.includes('astronomy')
-        && synchronizedContext.pendingUpdates === 'Show 2 new source updates',
-      JSON.stringify(synchronizedContext),
-    );
-    await desktop.locator('.research-pulse .research-updates').click();
-    await desktop.locator('.research-pulse .research-item[data-research-source="astrology-news"]')
-      .waitFor({ state: 'visible' });
-    const acceptedResearchSources = await desktop.locator('.research-pulse .research-item')
-      .evaluateAll((items) => items.map((item) => item.getAttribute('data-research-source')));
-    check(
-      'the explicit source-update control promotes the queued edition across Research surfaces',
-      acceptedResearchSources.includes('zodiacs-research')
-        && acceptedResearchSources.includes('astrology-news')
-        && acceptedResearchSources.includes('astronomy')
-        && await desktop.locator('.research-pulse .research-updates').count() === 0,
-      JSON.stringify(acceptedResearchSources),
-    );
-    const research = desktop.locator('#research');
-    await research.scrollIntoViewIfNeeded();
-    await research.locator('.research-item[data-research-source="zodiacs-research"]')
-      .first().waitFor({ state: 'visible', timeout: 15_000 });
-    const researchState = await research.evaluate((section) => ({
-      filters: [...section.querySelectorAll('.consumer-research__filters button')]
-        .map((button) => button.textContent?.trim() ?? ''),
-      sources: [...section.querySelectorAll('.research-item')]
-        .map((item) => item.getAttribute('data-research-source')),
-      labels: [...section.querySelectorAll('.research-item__meta > span')]
-        .map((label) => label.textContent?.trim() ?? ''),
-      disclaimer: section.querySelector('.consumer-research__foot p')?.textContent?.trim() ?? '',
-      animated: [...section.querySelectorAll('.research-item, .consumer-research__ledger')]
-        .some((node) => getComputedStyle(node).animationName !== 'none'),
+      heading: section.querySelector('h2')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      sign: section.getAttribute('data-briefing-sign'),
+      signName: section.querySelector('.consumer-briefing__sign strong')?.textContent?.trim() ?? '',
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      reading: section.querySelector('[data-briefing-reading] p')?.textContent?.trim() ?? '',
+      nextEvent: section.querySelector('[data-briefing-next-event]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      marketLabels: [...section.querySelectorAll('[data-briefing-market] dt')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      marketValues: [...section.querySelectorAll('[data-briefing-market] dd')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      headlineCount: section.querySelectorAll('.consumer-briefing__headline').length,
+      headlineTitles: [...section.querySelectorAll('.consumer-briefing__headline h3')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      headlineLinks: [...section.querySelectorAll('.consumer-briefing__headline a')].map((link) => ({
+        rel: link.getAttribute('rel') ?? '',
+        href: link.getAttribute('href') ?? '',
+        dateTime: link.querySelector('time')?.getAttribute('datetime') ?? '',
+      })),
+      cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+      removedControls: section.querySelectorAll([
+        '.research-updates', '.consumer-research__filters', '.outlook-wheel',
+        '.outlook-score', '.outlook-lab__toolbar', '.outlook-reading__actions',
+      ].join(',')).length,
       pageWidth: document.documentElement.scrollWidth,
       viewportWidth: innerWidth,
     }));
     check(
-      'Markets Research exposes five filters and separates owned notes from external sources',
-      JSON.stringify(researchState.filters) === JSON.stringify([
-        'All', 'Zodiacs Research', 'Astrology News', 'Astronomy', 'Calendar',
-      ])
-        && researchState.sources.includes('zodiacs-research')
-        && researchState.sources.includes('astrology-news')
-        && researchState.sources.includes('astronomy')
-        && researchState.labels.includes('Zodiacs Research · Reviewed')
-        && researchState.labels.some((label) => label.startsWith('External source · '))
-        && researchState.disclaimer === 'Symbolic research—not investment advice. Market observations never alter the sky score.'
-        && !researchState.animated
-        && researchState.pageWidth <= researchState.viewportWidth + 1,
-      JSON.stringify(researchState),
+      'selected Pisces synchronizes sculpture, constellation, market briefing, sources, and Research CTA',
+      synchronizedContext.constellation === 'pisces'
+        && synchronizedContext.constellationSrc === '/assets/constellations/pisces.svg'
+        && synchronizedContext.heading === 'Today’s market briefing'
+        && synchronizedContext.sign === 'pisces'
+        && synchronizedContext.signName === 'Pisces'
+        && synchronizedContext.event === 'No concentrated event today'
+        && /Pisces/i.test(synchronizedContext.reading)
+        && /No additional exact event is scheduled for Pisces/i.test(synchronizedContext.nextEvent)
+        && JSON.stringify(synchronizedContext.marketLabels) === JSON.stringify([
+          'Price', '24H change', 'Liquidity', '24H volume',
+        ])
+        && synchronizedContext.marketValues[0] === '$0.00504'
+        && synchronizedContext.marketValues[1] === '0.00%'
+        && synchronizedContext.marketValues[2] === '$250K'
+        && synchronizedContext.marketValues[3] === '$64K'
+        && synchronizedContext.headlineCount === 2
+        && synchronizedContext.headlineTitles[0] === 'Independent astrology headline'
+        && synchronizedContext.headlineLinks.every((link) => (
+          link.href.startsWith('https://')
+            && link.rel.split(/\s+/).includes('external')
+            && Boolean(link.dateTime)
+        ))
+        && synchronizedContext.cta === '/terminal/research/?sign=pisces'
+        && synchronizedContext.removedControls === 0
+        && synchronizedContext.pageWidth <= synchronizedContext.viewportWidth + 1,
+      JSON.stringify(synchronizedContext),
     );
-    await research.getByRole('button', { name: 'Astrology News', exact: true }).click();
     check(
-      'research filtering never blends external astrology with owned research',
-      await research.locator('.research-item[data-research-source="astrology-news"]').count() === 1
-        && await research.locator('.research-item[data-research-source="zodiacs-research"]').count() === 0,
+      'landing briefing performs one Outlook read, one news read, and no Research Desk feed read',
+      desktopOutlookRequests.length === 1
+        && desktopNewsRequests.length === 1
+        && desktopLandingResearchRequests.length === 0,
+      JSON.stringify({
+        outlook: desktopOutlookRequests,
+        news: desktopNewsRequests,
+        research: desktopLandingResearchRequests,
+      }),
     );
-    await research.getByRole('button', { name: 'All', exact: true }).click();
     await desktop.locator('.stage-placard__price').waitFor({ timeout: 15_000 });
     const placardQuote = await desktop.locator('.stage-placard').evaluate((placard) => ({
       price: placard.querySelector('.stage-placard__price')?.textContent ?? '',
@@ -1815,100 +1862,64 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await desktop.locator('[data-consumer-preview="aries"]').count() === 1,
     );
 
-    const outlook = desktop.locator('#outlook');
-    await outlook.locator('.outlook-lab').scrollIntoViewIfNeeded();
-    await outlook.locator('.outlook-lab__body[aria-busy="false"]').waitFor({ timeout: 15_000 });
-    await desktop.waitForFunction(() => (
-      document.querySelectorAll('#outlook .outlook-wheel button').length === 12
-      && document.querySelectorAll('#outlook .outlook-flow__step').length === 3
-      && !/Reading|Calculating/i.test(
-        document.querySelector('#outlook .outlook-reading h3')?.textContent ?? '',
-      )
-    ));
-    const outlookState = await outlook.evaluate((section) => {
-      const wheelButtons = [...section.querySelectorAll('.outlook-wheel button')];
-      const factorRows = [...section.querySelectorAll('.outlook-factors ol > li')];
-      const flowSteps = [...section.querySelectorAll('.outlook-flow__step')];
-      return {
-        heading: section.querySelector('h2')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-        busy: section.querySelector('.outlook-lab__body')?.getAttribute('aria-busy'),
-        edition: section.querySelector('.outlook-lab__toolbar > span')?.textContent?.trim() ?? '',
-        subject: section.querySelector('.outlook-reading__eyebrow')?.textContent?.trim() ?? '',
-        signal: section.querySelector('.outlook-reading h3')?.textContent?.trim() ?? '',
-        explanation: section.querySelector('.outlook-reading__summary')?.textContent?.trim() ?? '',
-        flowLabels: flowSteps.map((step) => step.querySelector('.outlook-flow__label')?.textContent?.trim() ?? ''),
-        flowComplete: flowSteps.every((step) => (
-          Boolean(step.querySelector('strong')?.textContent?.trim())
-          && Boolean(step.querySelector('small')?.textContent?.trim())
-        )),
-        marketCheck: flowSteps[2]?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-        wheelCount: wheelButtons.length,
-        selectedSigns: wheelButtons
-          .filter((button) => button.getAttribute('aria-pressed') === 'true')
-          .map((button) => button.querySelector('img')?.getAttribute('src') ?? ''),
-        factorCount: factorRows.length,
-        completeFactors: factorRows.every((row) => (
-          Boolean(row.querySelector('time')?.getAttribute('datetime'))
-          && Boolean(row.querySelector('time')?.textContent?.trim())
-          && Boolean(row.querySelector('strong')?.textContent?.trim())
-          && /attention.+tone.+event intensity/i.test(row.querySelector('.outlook-factor__impact')?.textContent ?? '')
-          && Boolean(row.querySelector('p')?.textContent?.trim())
-          && row.querySelector('details > summary')?.textContent?.trim() === 'Show calculation'
-          && Boolean(row.querySelector('code')?.textContent?.trim())
-        )),
-        marketSeparation: section.querySelector('.outlook-market-context')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-        method: section.querySelector('.outlook-method')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-        machineEdition: section.querySelector('.outlook-method a')?.getAttribute('href') ?? '',
-        dialCount: section.querySelectorAll('.outlook-dial').length,
-        calibration: section.querySelector('.outlook-calibration strong')?.textContent?.trim() ?? '',
-        directionalAside: section.querySelectorAll('.outlook-challenge').length,
-        mentionsPriceArrow: section.textContent?.includes('Why no price arrow?') ?? false,
-      };
-    });
+    const expectedAriesDaily = committedOutlook.daily.signs.find((item) => item.sign === 'aries');
+    const expectedAriesNext = committedOutlook.weekly.signs
+      .find((item) => item.sign === 'aries')?.factors
+      .filter((factor) => (
+        factor.kind !== 'occupancy'
+          && Date.parse(factor.at) > Date.parse(COMMITTED_OUTLOOK_REFERENCE)
+      ))
+      .sort((left, right) => Date.parse(left.at) - Date.parse(right.at))[0];
+    const ariesBriefing = desktop.locator('#briefing');
+    await ariesBriefing.scrollIntoViewIfNeeded();
+    await desktop.locator('#briefing[data-briefing-sign="aries"][aria-busy="false"]')
+      .waitFor({ timeout: 15_000 });
+    const ariesBriefingState = await ariesBriefing.evaluate((section) => ({
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      eventAt: section.querySelector('[data-briefing-event] > time')?.getAttribute('datetime') ?? '',
+      reading: section.querySelector('[data-briefing-reading] p')?.textContent?.trim() ?? '',
+      marketLabels: [...section.querySelectorAll('[data-briefing-market] dt')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      marketValues: [...section.querySelectorAll('[data-briefing-market] dd')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      marketSeparation: section.querySelector('[data-briefing-market] > p')?.textContent?.trim() ?? '',
+      nextLabel: section.querySelector('[data-briefing-next-event] > strong')?.textContent?.trim() ?? '',
+      nextAt: section.querySelector('[data-briefing-next-event] time')?.getAttribute('datetime') ?? '',
+      countdown: section.querySelector('[data-briefing-next-event] em')?.textContent?.trim() ?? '',
+      disclaimer: section.querySelector('.consumer-briefing__foot p')?.textContent?.trim() ?? '',
+      headlineCount: section.querySelectorAll('.consumer-briefing__headline').length,
+      oldWheel: document.querySelectorAll('.outlook-wheel').length,
+      oldScores: document.querySelectorAll('.outlook-score, .outlook-dial').length,
+      oldFilters: document.querySelectorAll('.consumer-research__filters').length,
+      shareSignal: [...document.querySelectorAll('button')]
+        .some((button) => /share signal/i.test(button.textContent ?? '')),
+    }));
     check(
-      'the public signal resolves three plain-language steps, live market separation, and disclosed factors',
-      outlookState.heading === 'Sky signals. Market checks.'
-        && outlookState.busy === 'false'
-        && /^Edition .+ · 12:00 UTC reference$/.test(outlookState.edition)
-        && outlookState.subject === 'Aries · today’s signal'
-        && Boolean(outlookState.signal)
-        && !/Reading|Calculating/i.test(`${outlookState.signal} ${outlookState.explanation}`)
-        && JSON.stringify(outlookState.flowLabels) === JSON.stringify(['Sky factor', 'Sign signal', 'Market check'])
-        && outlookState.flowComplete
-        && /Observed separately · never an input/i.test(outlookState.marketCheck)
-        && outlookState.wheelCount === 12
-        && JSON.stringify(outlookState.selectedSigns) === JSON.stringify(['/assets/zodiac-icons/48/aries.webp'])
-        && outlookState.factorCount > 0
-        && outlookState.completeFactors
-        && /observed separately · never an input/i.test(outlookState.marketSeparation)
-        && /Market data never changes the astrology score/i.test(outlookState.method)
-        && outlookState.machineEdition === '/assets/registry-outlook.json'
-        && outlookState.dialCount === 0
-        && /^\d+ \/ \d+ daily observations$/.test(outlookState.calibration)
-        && outlookState.directionalAside === 0
-        && !outlookState.mentionsPriceArrow,
-      JSON.stringify(outlookState),
-    );
-    await desktop.evaluate(() => {
-      window.__registrySignalShare = null;
-      Object.defineProperty(navigator, 'share', {
-        configurable: true,
-        value: async (payload) => { window.__registrySignalShare = payload; },
-      });
-    });
-    await outlook.locator('.outlook-reading__actions button').click();
-    await outlook.locator('.outlook-reading__share').filter({ hasText: 'Shared.' }).waitFor();
-    const signalShare = await desktop.evaluate(() => window.__registrySignalShare);
-    const signalShareUrl = new URL(signalShare.url);
-    check(
-      'a current complete signal shares the selected sign and horizon canonically',
-      signalShare.title === 'Aries sky signal'
-        && signalShare.text.includes('Aries · daily sky signal')
-        && signalShareUrl.pathname === '/terminal/'
-        && signalShareUrl.searchParams.get('sign') === 'aries'
-        && signalShareUrl.searchParams.get('outlook') === 'daily'
-        && signalShareUrl.hash === '#outlook',
-      JSON.stringify(signalShare),
+      'the Aries briefing keeps one exact event, neutral reading, four observed metrics, and next-event countdown',
+      ariesBriefingState.event === expectedAriesDaily?.primaryFactor?.label
+        && ariesBriefingState.eventAt === expectedAriesDaily?.primaryFactor?.at
+        && /Traditional astrology/i.test(ariesBriefingState.reading)
+        && /Aries/i.test(ariesBriefingState.reading)
+        && /without assuming direction/i.test(ariesBriefingState.reading)
+        && JSON.stringify(ariesBriefingState.marketLabels) === JSON.stringify([
+          'Price', '24H change', 'Liquidity', '24H volume',
+        ])
+        && ariesBriefingState.marketValues[0] === '$0.00042'
+        && ariesBriefingState.marketValues[1] === '+4.20%'
+        && ariesBriefingState.marketValues[2] === '$250K'
+        && ariesBriefingState.marketValues[3] === '$64K'
+        && /Market data never changes the sky reading/i.test(ariesBriefingState.marketSeparation)
+        && ariesBriefingState.nextLabel === expectedAriesNext?.label
+        && ariesBriefingState.nextAt === expectedAriesNext?.at
+        && /^in \d+h(?: \d+m)?$/i.test(ariesBriefingState.countdown)
+        && /not a price forecast/i.test(ariesBriefingState.disclaimer)
+        && /no established predictive relationship/i.test(ariesBriefingState.disclaimer)
+        && ariesBriefingState.headlineCount === 2
+        && ariesBriefingState.oldWheel === 0
+        && ariesBriefingState.oldScores === 0
+        && ariesBriefingState.oldFilters === 0
+        && !ariesBriefingState.shareSignal,
+      JSON.stringify({ expectedAriesDaily, expectedAriesNext, ariesBriefingState }),
     );
 
     const registry = await fetch(baseURL + '/registry/zodiacs.registry.json').then((response) => response.json());
@@ -2037,8 +2048,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       viewport: { width: 390, height: 844 },
       hasTouch: true,
     });
+    await freezeRegistryClock(emptyMarket);
     await stubNoWebgl(emptyMarket);
     await mockDexscreener(emptyMarket, { empty: true });
+    await mockRegistryBriefingSources(emptyMarket);
     await emptyMarket.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await emptyMarket.locator('#market').scrollIntoViewIfNeeded();
     await emptyMarket.locator('.market-board__state').waitFor({ timeout: 15_000 });
@@ -2062,6 +2075,27 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && /Show all 12/i.test(emptyMarketState.expandText),
       JSON.stringify(emptyMarketState),
     );
+    await emptyMarket.locator('#briefing').scrollIntoViewIfNeeded();
+    await emptyMarket.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const marketFailureBriefing = await emptyMarket.locator('#briefing').evaluate((section) => ({
+      skyFailure: section.querySelectorAll('.consumer-briefing__state').length,
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      values: [...section.querySelectorAll('[data-briefing-market] dd')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      marketStatus: section.querySelector('[data-briefing-market] header small')?.textContent?.trim() ?? '',
+      headlines: section.querySelectorAll('.consumer-briefing__headline').length,
+      cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+    }));
+    check(
+      'market failure leaves sky context, two outside headlines, and deeper Research available',
+      marketFailureBriefing.skyFailure === 0
+        && Boolean(marketFailureBriefing.event)
+        && JSON.stringify(marketFailureBriefing.values) === JSON.stringify(['—', '—', '—', '—'])
+        && marketFailureBriefing.marketStatus === 'Live read unavailable'
+        && marketFailureBriefing.headlines === 2
+        && marketFailureBriefing.cta === '/terminal/research/?sign=leo',
+      JSON.stringify(marketFailureBriefing),
+    );
     await emptyMarket.route('**/assets/registry-outlook.json', async (route) => {
       const response = await route.fetch();
       const payload = await response.json();
@@ -2074,30 +2108,35 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       });
     });
     await emptyMarket.goto(
-      baseURL + '/terminal/?rank=liquidity&sign=pisces&outlook=weekly#outlook',
+      baseURL + '/terminal/?rank=liquidity&sign=pisces#outlook',
       { waitUntil: 'domcontentloaded' },
     );
-    await emptyMarket.locator('#outlook .outlook-lab__body[aria-busy="false"]')
+    await emptyMarket.locator('#briefing[aria-busy="false"]')
       .waitFor({ timeout: 15_000 });
     const sharedState = await emptyMarket.evaluate(() => ({
       sign: document.querySelector('.stage-placard__name')?.textContent?.trim() ?? '',
       rank: document.querySelector('.market-board__sort button[aria-pressed="true"]')
         ?.textContent?.trim() ?? '',
-      horizon: document.querySelector('#outlook .outlook-lab__toolbar button[aria-pressed="true"]')
-        ?.textContent?.trim() ?? '',
-      subject: document.querySelector('#outlook .outlook-reading__eyebrow')
-        ?.textContent?.trim() ?? '',
-      stale: document.querySelector('#outlook .outlook-lab__stale')?.textContent?.trim() ?? '',
-      shareDisabled: document.querySelector('#outlook .outlook-reading__actions button')?.disabled ?? false,
+      briefingSign: document.querySelector('#briefing')?.getAttribute('data-briefing-sign') ?? '',
+      stale: document.querySelector('#briefing .consumer-briefing__notice')?.textContent?.trim() ?? '',
+      cta: document.querySelector('#briefing .consumer-briefing__cta')?.getAttribute('href') ?? '',
+      hash: location.hash,
+      aliasInsideBriefing: document.querySelector('#briefing > #outlook')?.getAttribute('aria-hidden') ?? '',
+      briefingTop: document.querySelector('#briefing')?.getBoundingClientRect().top ?? innerHeight,
+      oldHorizonControls: document.querySelectorAll('.outlook-lab__toolbar, [name="outlook"]').length,
     }));
     check(
-      'shared state restores sign, rank, and horizon while a stale edition stays unshareable',
+      '#outlook deep-links to the consolidated briefing while restoring sign and market rank',
       sharedState.sign === 'Pisces'
         && sharedState.rank === 'Liquidity'
-        && sharedState.horizon === '7 days'
-        && sharedState.subject === 'Pisces · 7-day signal'
-        && /Latest committed edition/i.test(sharedState.stale)
-        && sharedState.shareDisabled,
+        && sharedState.briefingSign === 'pisces'
+        && /Latest published sky edition/i.test(sharedState.stale)
+        && sharedState.cta === '/terminal/research/?sign=pisces'
+        && sharedState.hash === '#outlook'
+        && sharedState.aliasInsideBriefing === 'true'
+        && sharedState.briefingTop > 0
+        && sharedState.briefingTop < 220
+        && sharedState.oldHorizonControls === 0,
       JSON.stringify(sharedState),
     );
     await emptyMarket.unroute('**/assets/registry-outlook.json');
@@ -2118,45 +2157,147 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         headers: { ...response.headers(), 'content-length': undefined },
       });
     });
-    await emptyMarket.goto(baseURL + '/terminal/?sign=aries&outlook=daily#outlook', { waitUntil: 'domcontentloaded' });
-    await emptyMarket.locator('#outlook .outlook-lab__body[aria-busy="false"]').waitFor({ timeout: 15_000 });
-    const partialSignal = await emptyMarket.locator('#outlook').evaluate((section) => ({
-      coverage: section.querySelector('.outlook-lab__coverage')?.textContent?.trim() ?? '',
-      stale: section.querySelectorAll('.outlook-lab__stale').length,
-      shareDisabled: section.querySelector('.outlook-reading__actions button')?.disabled ?? false,
+    await emptyMarket.goto(baseURL + '/terminal/?sign=aries#outlook', { waitUntil: 'domcontentloaded' });
+    await emptyMarket.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const partialSignal = await emptyMarket.locator('#briefing').evaluate((section) => ({
+      notices: [...section.querySelectorAll('.consumer-briefing__notice')]
+        .map((notice) => notice.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
+      sign: section.getAttribute('data-briefing-sign'),
+      cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+      oldSignalControls: section.querySelectorAll('.outlook-lab__toolbar, .outlook-reading__actions').length,
     }));
     check(
-      'partial sky coverage is announced and pauses sharing even for a current edition',
-      /Partial sky coverage/i.test(partialSignal.coverage)
-        && /Sharing is paused/i.test(partialSignal.coverage)
-        && partialSignal.stale === 0
-        && partialSignal.shareDisabled,
+      'partial sky coverage is announced without reviving signal horizons or sharing',
+      partialSignal.notices.length === 1
+        && /partial sky coverage/i.test(partialSignal.notices[0])
+        && /may omit an event/i.test(partialSignal.notices[0])
+        && partialSignal.sign === 'aries'
+        && partialSignal.cta === '/terminal/research/?sign=aries'
+        && partialSignal.oldSignalControls === 0,
       JSON.stringify(partialSignal),
     );
-    await emptyMarket.unroute('**/assets/registry-outlook.json');
-    await emptyMarket.route('**/assets/registry-outlook.json', (route) => route.abort());
-    await emptyMarket.goto(baseURL + '/terminal/#outlook', { waitUntil: 'domcontentloaded' });
-    const failedSignal = emptyMarket.locator('#outlook .outlook-lab__state');
-    await failedSignal.waitFor({ timeout: 15_000 });
-    const failedSignalState = await failedSignal.evaluate((state) => {
-      const retry = state.querySelector('button');
+    await emptyMarket.close();
+
+    const skyFailure = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await freezeRegistryClock(skyFailure);
+    await stubNoWebgl(skyFailure);
+    await mockDexscreener(skyFailure);
+    await mockRegistryBriefingSources(skyFailure);
+    await skyFailure.route('**/assets/registry-outlook.json', (route) => route.abort());
+    await skyFailure.goto(baseURL + '/terminal/#outlook', { waitUntil: 'domcontentloaded' });
+    const failedSky = skyFailure.locator('#briefing .consumer-briefing__state');
+    await failedSky.waitFor({ timeout: 15_000 });
+    await skyFailure.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const failedSkyState = await skyFailure.locator('#briefing').evaluate((section) => {
+      const state = section.querySelector('.consumer-briefing__state');
+      const retry = state?.querySelector('button');
       return {
-        text: state.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        text: state?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
         retryText: retry?.textContent?.trim() ?? '',
         retryPill: retry?.classList.contains('registry-pill') ?? false,
         retryHeight: retry?.getBoundingClientRect().height ?? 0,
+        edition: section.querySelector('.consumer-briefing__sign em')?.textContent?.trim() ?? '',
+        next: section.querySelector('[data-briefing-next-event] p')?.textContent?.trim() ?? '',
+        marketValues: [...section.querySelectorAll('[data-briefing-market] dd')]
+          .map((node) => node.textContent?.trim() ?? ''),
+        headlines: section.querySelectorAll('.consumer-briefing__headline').length,
+        cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+        hashAlias: Boolean(section.querySelector(':scope > #outlook')) && location.hash === '#outlook',
       };
     });
     check(
-      'an unavailable signal instrument keeps live markets independent and offers an accessible retry',
-      /temporarily unavailable/i.test(failedSignalState.text)
-        && /Live markets and official records remain independent/i.test(failedSignalState.text)
-        && failedSignalState.retryText === 'Try again'
-        && failedSignalState.retryPill
-        && failedSignalState.retryHeight >= 43.5,
-      JSON.stringify(failedSignalState),
+      'sky failure leaves market and news independent and offers an accessible retry',
+      /Sky context unavailable/i.test(failedSkyState.text)
+        && /Market and source feeds load independently/i.test(failedSkyState.text)
+        && failedSkyState.retryText === 'Retry sky data'
+        && failedSkyState.retryPill
+        && failedSkyState.retryHeight >= 43.5
+        && failedSkyState.edition === 'Sky edition unavailable'
+        && failedSkyState.next === 'Next-event schedule unavailable.'
+        && failedSkyState.marketValues.every((value) => !['…', '—'].includes(value))
+        && failedSkyState.headlines === 2
+        && failedSkyState.cta === '/terminal/research/?sign=leo'
+        && failedSkyState.hashAlias,
+      JSON.stringify(failedSkyState),
     );
-    await emptyMarket.close();
+    await skyFailure.close();
+
+    const newsFailure = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await freezeRegistryClock(newsFailure);
+    await stubNoWebgl(newsFailure);
+    await mockDexscreener(newsFailure);
+    await newsFailure.route('**/api/registry/news', (route) => route.abort());
+    await newsFailure.goto(baseURL + '/terminal/#briefing', { waitUntil: 'domcontentloaded' });
+    await newsFailure.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const failedNewsState = await newsFailure.locator('#briefing').evaluate((section) => ({
+      text: section.querySelector('.consumer-briefing__news-state')?.textContent?.trim() ?? '',
+      sourceMeta: section.querySelector('.consumer-briefing__news > header small')?.textContent?.trim() ?? '',
+      skyFailure: section.querySelectorAll('.consumer-briefing__state').length,
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      marketValues: [...section.querySelectorAll('[data-briefing-market] dd')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+    }));
+    check(
+      'news failure leaves the sky, market observation, and Research CTA intact',
+      failedNewsState.text === 'Source headlines are temporarily unavailable.'
+        && failedNewsState.sourceMeta === 'Fresh source coverage is unavailable'
+        && failedNewsState.skyFailure === 0
+        && Boolean(failedNewsState.event)
+        && failedNewsState.marketValues.every((value) => !['…', '—'].includes(value))
+        && failedNewsState.cta === '/terminal/research/?sign=leo',
+      JSON.stringify(failedNewsState),
+    );
+    await newsFailure.close();
+
+    const loadingBriefing = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await freezeRegistryClock(loadingBriefing);
+    await stubNoWebgl(loadingBriefing);
+    await mockDexscreener(loadingBriefing);
+    await mockRegistryBriefingSources(loadingBriefing);
+    let releaseSkyLoading;
+    let releaseNewsLoading;
+    const skyLoadingGate = new Promise((resolve) => { releaseSkyLoading = resolve; });
+    const newsLoadingGate = new Promise((resolve) => { releaseNewsLoading = resolve; });
+    await loadingBriefing.route('**/assets/registry-outlook.json', async (route) => {
+      await skyLoadingGate;
+      const response = await route.fetch();
+      await route.fulfill({ response });
+    });
+    await loadingBriefing.route('**/api/registry/news', async (route) => {
+      await newsLoadingGate;
+      await route.fulfill({ json: registryBriefingNewsPayload() });
+    });
+    await loadingBriefing.goto(baseURL + '/terminal/#briefing', { waitUntil: 'domcontentloaded' });
+    await loadingBriefing.locator('#briefing[aria-busy="true"]').waitFor({ timeout: 15_000 });
+    const loadingState = await loadingBriefing.locator('#briefing').evaluate((section) => ({
+      busy: section.getAttribute('aria-busy'),
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      edition: section.querySelector('.consumer-briefing__sign em')?.textContent?.trim() ?? '',
+      next: section.querySelector('[data-briefing-next-event] p')?.textContent?.trim() ?? '',
+      placeholders: section.querySelectorAll('.consumer-briefing__headline--placeholder').length,
+      liveHeadlines: section.querySelectorAll('[data-briefing-headline]').length,
+    }));
+    check(
+      'the briefing exposes an honest busy state while its published sky edition is pending',
+      loadingState.busy === 'true'
+        && loadingState.event === 'Reading the published sky…'
+        && loadingState.edition === 'Loading today’s edition'
+        && loadingState.next === 'Loading the published seven-day schedule…'
+        && loadingState.placeholders === 2
+        && loadingState.liveHeadlines === 0,
+      JSON.stringify(loadingState),
+    );
+    releaseSkyLoading();
+    releaseNewsLoading();
+    await loadingBriefing.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    check(
+      'the pending briefing settles without a reload',
+      await loadingBriefing.locator('[data-briefing-event] h3').innerText() !== 'Reading the published sky…'
+        && await loadingBriefing.locator('.consumer-briefing__headline--placeholder').count() === 0
+        && await loadingBriefing.locator('[data-briefing-headline]').count() === 2,
+    );
+    await loadingBriefing.close();
 
     const reducedTape = await newPage({
       viewport: { width: 390, height: 844 },
@@ -2210,8 +2351,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         deviceScaleFactor: 2,
         hasTouch: true,
       });
+      await freezeRegistryClock(mobile);
       await mockDexscreener(mobile);
-      await mockRegistryResearch(mobile);
+      await mockRegistryBriefingSources(mobile);
       await withCollectionFlag(mobile);
       const mobileGalleryRequests = [];
       mobile.on('request', (request) => {
@@ -2376,62 +2518,93 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && compactMarketMaterial.pageWidth <= compactMarketMaterial.viewportWidth + 1,
         JSON.stringify(compactMarketMaterial),
       );
-      const mobileOutlook = mobile.locator('#outlook');
-      await mobileOutlook.scrollIntoViewIfNeeded();
-      await mobileOutlook.locator('.outlook-lab__body[aria-busy="false"]').waitFor({ timeout: 15_000 });
-      const compactSignal = await mobileOutlook.evaluate((section) => {
-        const flow = section.querySelector('.outlook-flow');
-        const flowSteps = [...section.querySelectorAll('.outlook-flow__step')];
-        const targets = [...section.querySelectorAll([
-          '.outlook-lab__toolbar button',
-          '.outlook-reading__actions > *',
-          '.outlook-factor__calculation > summary',
-          '.outlook-method > summary',
-          '.outlook-wheel button',
-        ].join(', '))].map((target) => {
-          const rect = target.getBoundingClientRect();
-          return { text: target.textContent?.replace(/\s+/g, ' ').trim() ?? '', width: rect.width, height: rect.height, left: rect.left, right: rect.right };
-        });
-        const flowRect = flow?.getBoundingClientRect();
+      const mobileBriefing = mobile.locator('#briefing');
+      await mobileBriefing.scrollIntoViewIfNeeded();
+      await mobile.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+      const compactBriefing = await mobileBriefing.evaluate((section) => {
+        const box = (selector) => {
+          const node = section.querySelector(selector);
+          const rect = node?.getBoundingClientRect();
+          return rect ? { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right } : null;
+        };
+        const targets = [...section.querySelectorAll('.consumer-briefing__headline > a, .consumer-briefing__cta')]
+          .map((target) => {
+            const rect = target.getBoundingClientRect();
+            return {
+              text: target.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+              width: rect.width,
+              height: rect.height,
+              left: rect.left,
+              right: rect.right,
+            };
+          });
+        const sign = section.getAttribute('data-briefing-sign') ?? '';
         return {
+          count: document.querySelectorAll('.consumer-briefing').length,
           heading: section.querySelector('h2')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-          labels: flowSteps.map((step) => step.querySelector('.outlook-flow__label')?.textContent?.trim() ?? ''),
-          completeSteps: flowSteps.every((step) => Boolean(step.querySelector('strong')?.textContent?.trim()) && Boolean(step.querySelector('small')?.textContent?.trim())),
-          marketCheck: flowSteps[2]?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-          separateMarket: section.querySelector('.outlook-market-context')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
-          noPricePromise: /not price direction|not a price forecast/i.test(section.textContent ?? ''),
-          dialCount: section.querySelectorAll('.outlook-dial').length,
-          wheelColumns: getComputedStyle(section.querySelector('.outlook-wheel')).gridTemplateColumns.split(/\s+/).filter(Boolean).length,
+          sign,
+          aliasesInside: ['research', 'outlook'].every((id) => section.querySelector(`:scope > #${id}`)),
+          labels: [...section.querySelectorAll('[data-briefing-market] dt')]
+            .map((node) => node.textContent?.trim() ?? ''),
+          values: [...section.querySelectorAll('[data-briefing-market] dd')]
+            .map((node) => node.textContent?.trim() ?? ''),
+          event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+          reading: section.querySelector('[data-briefing-reading] p')?.textContent?.trim() ?? '',
+          next: section.querySelector('[data-briefing-next-event]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          headlineCount: section.querySelectorAll('.consumer-briefing__headline').length,
+          liveHeadlineCount: section.querySelectorAll('[data-briefing-headline]').length,
+          cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
           targets,
-          flowLeft: flowRect?.left ?? -1,
-          flowRight: flowRect?.right ?? innerWidth + 1,
+          boxes: [
+            box('.consumer-briefing__head'),
+            box('.consumer-briefing__lead'),
+            box('.consumer-briefing__market'),
+            box('.consumer-briefing__next'),
+            box('.consumer-briefing__news'),
+            box('.consumer-briefing__foot'),
+          ],
+          oldUi: document.querySelectorAll([
+            '.research-pulse', '.consumer-research', '.outlook-lab', '.outlook-wheel',
+            '.outlook-score', '.consumer-research__filters',
+          ].join(',')).length,
+          details: section.querySelectorAll('details').length,
+          tabs: section.querySelectorAll('[role="tab"], [role="tablist"]').length,
           pageWidth: document.documentElement.scrollWidth,
           viewportWidth: innerWidth,
         };
       });
+      const continuousBriefing = compactBriefing.boxes.every(Boolean)
+        && compactBriefing.boxes.every((box, index, boxes) => (
+          index === 0 || box.top >= boxes[index - 1].top
+        ));
       check(
-        `Market Signals at ${label} explain sky factor, sign signal, and market check without overflow`,
-        compactSignal.heading === 'Sky signals. Market checks.'
-          && JSON.stringify(compactSignal.labels) === JSON.stringify(['Sky factor', 'Sign signal', 'Market check'])
-          && compactSignal.completeSteps
-          && /Observed separately · never an input/i.test(compactSignal.marketCheck)
-          && /24h/i.test(compactSignal.marketCheck)
-          && /liquidity/i.test(compactSignal.marketCheck)
-          && /observed separately · never an input/i.test(compactSignal.separateMarket)
-          && compactSignal.noPricePromise
-          && compactSignal.dialCount === 0
-          && compactSignal.wheelColumns === 2
-          && compactSignal.targets.length >= 18
-          && compactSignal.targets.every((target) => (
+        `Today's market briefing at ${label} is one continuous selected-sign stack without overflow`,
+        compactBriefing.count === 1
+          && compactBriefing.heading === 'Today’s market briefing'
+          && compactBriefing.aliasesInside
+          && JSON.stringify(compactBriefing.labels) === JSON.stringify([
+            'Price', '24H change', 'Liquidity', '24H volume',
+          ])
+          && compactBriefing.values.every((value) => !['…', '—'].includes(value))
+          && Boolean(compactBriefing.event)
+          && Boolean(compactBriefing.reading)
+          && Boolean(compactBriefing.next)
+          && compactBriefing.headlineCount === 2
+          && compactBriefing.liveHeadlineCount === 2
+          && compactBriefing.cta === `/terminal/research/?sign=${compactBriefing.sign}`
+          && continuousBriefing
+          && compactBriefing.oldUi === 0
+          && compactBriefing.details === 0
+          && compactBriefing.tabs === 0
+          && compactBriefing.targets.length === 3
+          && compactBriefing.targets.every((target) => (
             target.width >= 43.5
               && target.height >= 43.5
               && target.left >= -1
-              && target.right <= compactSignal.viewportWidth + 1
+              && target.right <= compactBriefing.viewportWidth + 1
           ))
-          && compactSignal.flowLeft >= -1
-          && compactSignal.flowRight <= compactSignal.viewportWidth + 1
-          && compactSignal.pageWidth <= compactSignal.viewportWidth + 1,
-        JSON.stringify(compactSignal),
+          && compactBriefing.pageWidth <= compactBriefing.viewportWidth + 1,
+        JSON.stringify(compactBriefing),
       );
       await mobile.locator('#official-twelve').scrollIntoViewIfNeeded();
 
@@ -3305,7 +3478,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       }
     });
     await mockDexscreener(saverStage);
-    await mockRegistryResearch(saverStage);
+    await mockRegistryBriefingSources(saverStage);
     const saverRequests = [];
     saverStage.on('request', (request) => {
       const pathname = new URL(request.url()).pathname;

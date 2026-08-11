@@ -88,7 +88,7 @@ describe('Registry consumer and technical information architecture', () => {
     expect(visible).not.toContain('Open the Cabinet');
   });
 
-  it('renders one H1 before the tape, pulse, sculpture, and compact market board', async () => {
+  it('renders one H1 before the tape, aggregate metrics, sculpture, compact market board, and briefing', async () => {
     const source = await read('src/app.jsx');
     const mounted = consumerRoot(source);
     const explorer = source.slice(
@@ -109,7 +109,8 @@ describe('Registry consumer and technical information architecture', () => {
     expect(masthead).toContain('className="capital-pulse"');
     expect(source).toContain('<ConsumerCapitalHeader sign={sign} />');
     expect(source.indexOf('<ConsumerCapitalHeader sign={sign} />')).toBeLessThan(source.indexOf('className="consumer-capital-opening"'));
-    expect(source.indexOf('className="consumer-capital-opening"')).toBeLessThan(source.indexOf('<ConsumerResearchPulse />'));
+    expect(source.indexOf('className="consumer-capital-opening"')).toBeLessThan(source.indexOf('<ConsumerMarketBriefing active={activeTicker} />'));
+    expect(source.indexOf('<ConsumerMarketBriefing active={activeTicker} />')).toBeLessThan(source.indexOf('<ConsumerHowItWorks />'));
     expect(source).toContain('id="official-twelve"');
     expect(explorer).toContain('aria-label="Interactive gallery of the twelve official Zodiac tokens"');
     // In stage mode the section is also the page's opening scene.
@@ -302,7 +303,7 @@ describe('Registry consumer and technical information architecture', () => {
     // Flag-off the pill is the door to the catalogue page's own panel.
     expect(placard).toContain('href={`${registryProfilePath(sign)}#acquire`}');
     expect(mounted).toContain('<ConsumerMarketSection');
-    expect(mounted).toContain('<ConsumerOutlookSection active={activeTicker} setActive={setActiveTicker} />');
+    expect(mounted).toContain('<ConsumerMarketBriefing active={activeTicker} />');
   });
 
   it('says one thing about a sign, in one place, at every width', async () => {
@@ -464,8 +465,8 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('className="market-row__record registry-pill registry-pill--record"');
     expect(source).toContain('<span className="market-row__record-label">Official record</span>');
     expect(source).toContain('aria-label={`Open the official ${item.name} record`}');
-    expect(source).toContain("shared.searchParams.set('outlook', horizon)");
-    expect(source).toContain("edition.date === utcToday");
+    expect(source).not.toContain("shared.searchParams.set('outlook', horizon)");
+    expect(source).toContain('href={`/terminal/research/?sign=${activeSign.asset.sign}`}');
     // The static fallback carries the crawlable twelve with truncated mints.
     expect(visible).toContain('The interactive edition ranks the twelve');
     expect((visible.match(/class="static-token-list"/gu) ?? [])).toHaveLength(1);
@@ -541,77 +542,108 @@ describe('Registry consumer and technical information architecture', () => {
     expect(verifier).toContain('legacy v2 card bytes changed');
   });
 
-  it('publishes a source-separated Research Desk preview with five stable filters', async () => {
-    const source = await read('src/app.jsx');
-    const research = source.slice(
-      source.indexOf('const RESEARCH_FILTERS'),
-      source.indexOf('const OUTLOOK_SIGNAL_UI'),
-    );
-    const mounted = consumerRoot(source);
-
-    for (const label of ['All', 'Zodiacs Research', 'Astrology News', 'Astronomy', 'Calendar']) {
-      expect(research).toContain(`'${label}'`);
-    }
-    expect(research).toContain("item.sourceType === 'zodiacs-research'");
-    expect(research).toContain("item.sourceType === 'astrology-news'");
-    expect(research).toContain("item.sourceType === 'astronomy'");
-    expect(research).toContain('External source · ${item.publisher}');
-    expect(research).toContain('Zodiacs Research · Reviewed');
-    expect(research).toContain('Independent headlines');
-    expect(research).toContain('Open Markets Research');
-    expect(source).toContain('function useQueuedRegistryNews(enabled)');
-    expect(source).toContain('let acceptedRegistryNews = null;');
-    expect(source).toContain('const pendingCount = incoming');
-    expect(source).toContain('if (incoming) acceptRegistryNews(incoming);');
-    expect(research).toContain('Show {external.pendingCount} new source update');
-    expect(research).toContain('onClick={external.acceptUpdates}');
-    expect(research).toContain('Sky facts, symbolic readings, and market observations remain separate.');
-    expect(research).toContain('Symbolic research—not investment advice. Market observations never alter the sky score.');
-    expect(research).toContain('.slice(0, 5)');
-    expect(mounted.indexOf('<ConsumerResearchPulse />')).toBeGreaterThan(mounted.indexOf('className="consumer-capital-opening"'));
-    expect(mounted.indexOf('<ConsumerResearchPulse />')).toBeLessThan(mounted.indexOf('<ConsumerHowItWorks />'));
-    expect(mounted.indexOf('<ConsumerResearchSection active={activeTicker} />')).toBeGreaterThan(mounted.indexOf('<ConsumerHowItWorks />'));
-  });
-
-  it('turns astrology into a named, auditable three-step market-check path', async () => {
+  it('consolidates landing research into one selected-sign market briefing', async () => {
     const [source, html, bundle] = await Promise.all([
       read('src/app.jsx'),
       read('public/terminal/index.html'),
       read('public/assets/app.js'),
     ]);
+    const mounted = consumerRoot(source);
     const visible = visibleMarkup(html);
-    const outlook = source.slice(
-      source.indexOf('function ConsumerOutlookSection('),
-      source.indexOf('function ConsumerExplorer('),
+    const briefing = source.slice(
+      source.indexOf('function visibleBriefingHeadlines('),
+      source.indexOf('function useStageMode('),
     );
 
-    expect(outlook).toContain('<h2 id="consumer-outlook-title">Sky signals. <span className="it">Market checks.</span></h2>');
-    expect(outlook.match(/className="outlook-flow__step /gu) ?? []).toHaveLength(3);
-    for (const label of ['Sky factor', 'Sign signal', 'Market check']) {
-      expect(outlook).toContain(`<span className="outlook-flow__label">${label}</span>`);
+    expect(briefing).toContain('function ConsumerMarketBriefing({ active })');
+    expect(briefing).toContain('<h2 id="consumer-briefing-title">Today’s market briefing</h2>');
+    for (const hook of [
+      'data-briefing-sign={activeSign.asset.sign}',
+      'data-briefing-event',
+      'data-briefing-reading',
+      'data-briefing-market',
+      'data-briefing-next-event',
+      'data-briefing-headlines',
+      'data-briefing-headline',
+    ]) {
+      expect(briefing).toContain(hook);
     }
-    expect(outlook).not.toContain('outlook-dial');
-    expect(outlook).toContain('<time dateTime={factor.at}>{formatOutlookEventMoment(factor.at)}</time>');
-    expect(outlook).toContain('className="outlook-factor__impact"');
-    expect(outlook).toContain('<summary>Show calculation</summary>');
-    expect(outlook).toContain('<code>{factor.calculation}</code>');
-    expect(html).toMatch(/\.outlook-factor__calculation summary \{[\s\S]*?min-height: 44px;/u);
-    expect(outlook).toContain('Observed separately · never an input');
-    expect(outlook).toContain('Market data never changes the astrology score.');
-    expect(outlook).toContain('className="outlook-lab__stale" role="status"');
-    expect(outlook).toContain('The research instrument is temporarily unavailable. Live markets and official records remain independent.');
-    expect(outlook).toContain('className="outlook-lab__coverage" role="status"');
-    expect(outlook).toContain('disabled={!outlook || !editionIsCurrent || !coverageComplete}>Share signal</button>');
-    expect(outlook).toContain("scoreTone >= 12 ? 'Supportive' : scoreTone <= -12 ? 'Friction' : 'Neutral'");
+    expect(briefing.match(/<dt>[^<]+<\/dt>/gu)?.map(label => label.replace(/<\/?dt>/gu, ''))).toEqual([
+      'Price', '24H change', 'Liquidity', '24H volume',
+    ]);
+    expect(briefing).toContain('.slice(0, 2)');
+    expect(briefing).toContain('newsLoading && [0, 1].map');
+    expect(briefing).toContain('consumer-briefing__headline--placeholder');
+    expect(briefing).toContain("factor.kind === 'occupancy'");
+    expect(briefing).toContain('<time dateTime={nextFactor.at}>{formatBriefingEventMoment(nextFactor.at)}</time>');
+    expect(briefing).toContain('{formatBriefingCountdown(nextFactor.at, nowMs)}');
+    expect(briefing).toContain('aria-label={`${activeSign.name} next exact event`}');
+    expect(briefing).toContain('Next-event schedule unavailable.');
+    expect(briefing).toContain('Loading the published seven-day schedule…');
+    expect(briefing).toContain('Market and source feeds load independently.');
+    expect(briefing).not.toContain('market briefing selected.');
+    expect(briefing).toContain('useTwelveQuotes(inView)');
+    expect(briefing).toContain('useRegistryNews(inView)');
     expect(source).toContain("const REGISTRY_OUTLOOK_URL = '/assets/registry-outlook.json';");
-    expect(outlook).toContain("fetch(REGISTRY_OUTLOOK_URL, {\n          // Revalidate even a still-fresh response cached before this daily\n          // publication received its explicit max-age=0 delivery policy.\n          cache: 'no-cache',");
+    expect(briefing).toContain("fetch(REGISTRY_OUTLOOK_URL, {\n          cache: 'no-cache',");
     expect(bundle).toContain("const REGISTRY_OUTLOOK_URL='/assets/registry-outlook.json';");
     expect(bundle).toContain("fetch(REGISTRY_OUTLOOK_URL,{cache:'no-cache',headers:{accept:'application/json'}})");
-    expect(outlook).toContain('<a href={REGISTRY_OUTLOOK_URL}>Open the machine-readable edition ↗</a>');
-    expect(visible).toContain('href="/assets/registry-outlook.json"');
-    expect(source).not.toContain('className="outlook-challenge"');
-    expect(source).not.toContain('Why no price arrow?');
-    expect(visible).not.toContain('Why no price arrow?');
+    expect(briefing).toContain('href={`/terminal/research/?sign=${activeSign.asset.sign}`}');
+    expect(briefing).toContain('<span>Open Markets Research</span>');
+    expect(mounted.match(/<ConsumerMarketBriefing active=\{activeTicker\} \/>/gu) ?? []).toHaveLength(1);
+    expect(mounted.indexOf('<ConsumerMarketBriefing active={activeTicker} />')).toBeGreaterThan(mounted.indexOf('className="consumer-capital-opening"'));
+    expect(mounted.indexOf('<ConsumerMarketBriefing active={activeTicker} />')).toBeLessThan(mounted.indexOf('<ConsumerHowItWorks />'));
+
+    for (const removed of [
+      'function ConsumerResearchPulse(',
+      'function ConsumerResearchSection(',
+      'function ConsumerOutlookSection(',
+      'function useQueuedRegistryNews(',
+      'function useRegistryResearch(',
+      'const REGISTRY_RESEARCH_URL',
+      'Show new source update',
+    ]) {
+      expect(source).not.toContain(removed);
+    }
+    for (const removed of [
+      'research-pulse',
+      'consumer-research',
+      'outlook-wheel',
+      'outlook-score',
+      'Share signal',
+      'Sky signals. Market checks.',
+    ]) {
+      expect(mounted).not.toContain(removed);
+      expect(visible).not.toContain(removed);
+    }
+
+    expect((visible.match(/id="briefing"/gu) ?? [])).toHaveLength(1);
+    expect(visible).toContain('<span id="research" aria-hidden="true"></span>');
+    expect(visible).toContain('<span id="outlook" aria-hidden="true"></span>');
+    expect(visible).toContain('<h2>Today’s market briefing</h2>');
+    expect(visible).toContain('href="/terminal/research/?sign=leo"');
+  });
+
+  it('keeps the five source filters in the dedicated Research Desk, not the landing page', async () => {
+    const [source, researchPage] = await Promise.all([
+      read('src/app.jsx'),
+      read('src/pages/terminal/research/index.astro'),
+    ]);
+    const mounted = consumerRoot(source);
+
+    for (const [filter, label] of [
+      ['all', 'All'],
+      ['zodiacs-research', 'Zodiacs Research'],
+      ['astrology-news', 'Astrology News'],
+      ['astronomy', 'Astronomy'],
+      ['calendar', 'Calendar'],
+    ]) {
+      expect(researchPage).toContain(`data-filter="${filter}"`);
+      expect(researchPage).toContain(`>${label}</button>`);
+    }
+    expect(researchPage).toContain('href="/assets/registry-research-feed.json"');
+    expect(mounted).not.toContain('/assets/registry-research-feed.json');
+    expect(mounted).not.toContain('consumer-research__filters');
   });
 
   it('publishes a useful no-JavaScript technical record from the canonical addresses', async () => {

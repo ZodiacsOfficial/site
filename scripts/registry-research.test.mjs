@@ -46,7 +46,7 @@ function approvalFor(item, overrides = {}) {
 }
 
 describe('Registry Research deterministic publication', () => {
-  it('builds deterministic daily, market, weekly, and grouped event drafts from committed evidence', async () => {
+  it('builds deterministic daily, market, scheduled weekly, and event drafts from committed evidence', async () => {
     const inputs = await committedInputs();
     const first = buildRegistryResearchLedger(inputs);
     const second = buildRegistryResearchLedger(inputs);
@@ -55,8 +55,9 @@ describe('Registry Research deterministic publication', () => {
     expect(first.items.some((item) => item.kind === 'daily-market-brief')).toBe(true);
     expect(first.items.find((item) => item.kind === 'daily-market-brief').title).toContain('daily market brief');
     expect(first.items.some((item) => item.kind === 'market-check')).toBe(true);
-    expect(first.items.some((item) => item.kind === 'weekly-outlook')).toBe(true);
-    expect(first.items.some((item) => item.title === '3 exact aspects on 2026-08-12 · event brief')).toBe(true);
+    const expectsWeekly = new Date(`${inputs.daily.date}T00:00:00.000Z`).getUTCDay() === 1;
+    expect(first.items.some((item) => item.kind === 'weekly-outlook')).toBe(expectsWeekly);
+    expect(first.items.some((item) => item.kind === 'event-brief')).toBe(true);
     expect(first.items.every((item) => item.method.modelAuthoredProse === false)).toBe(true);
     expect(first.items.every((item) => item.riskStatement.includes('not investment advice'))).toBe(true);
   });
@@ -107,7 +108,9 @@ describe('Registry Research deterministic publication', () => {
 
     const item = ledger.items.find((candidate) => candidate.kind === 'daily-market-brief');
     const approvedManifest = deepClone(inputs.approvalManifest);
-    approvedManifest.approvals.push(approvalFor(item));
+    approvedManifest.approvals.push(approvalFor(item, {
+      reviewedAt: new Date(Date.parse(item.visibleAt) + 60_000).toISOString(),
+    }));
     const approved = publishRegistryResearch({ ledger, approvalManifest: approvedManifest });
 
     expect(approved.feed.items).toHaveLength(1);
@@ -128,16 +131,16 @@ describe('Registry Research deterministic publication', () => {
   it('reveals an approved event at its exact time without mutating the immutable item payload', async () => {
     const inputs = await committedInputs();
     const ledger = buildRegistryResearchLedger(inputs);
-    const event = ledger.items.find((item) => item.kind === 'event-brief' && item.visibleAt.startsWith('2026-08-11'));
+    const event = ledger.items.find((item) => item.kind === 'event-brief' && item.visibleAt > ledger.generatedAt);
     const manifest = deepClone(inputs.approvalManifest);
-    manifest.approvals.push(approvalFor(event));
+    manifest.approvals.push(approvalFor(event, { reviewedAt: ledger.generatedAt }));
 
     const before = publishRegistryResearch({ ledger, approvalManifest: manifest });
     const scheduled = before.publication.items.find((item) => item.id === event.id);
     expect(scheduled.status).toBe('scheduled');
 
     const laterLedger = deepClone(ledger);
-    laterLedger.generatedAt = '2026-08-12T00:00:00.000Z';
+    laterLedger.generatedAt = new Date(Date.parse(event.visibleAt) + 1).toISOString();
     const after = publishRegistryResearch({ ledger: laterLedger, approvalManifest: manifest });
     const visible = after.publication.items.find((item) => item.id === event.id);
     expect(visible.status).toBe('published');
@@ -170,8 +173,8 @@ describe('Registry Research deterministic publication', () => {
     const futureInputs = deepClone(inputs);
     const latest = deepClone(futureInputs.marketHistory.snapshots.at(-1));
     const baseMs = new Date(latest.source.readAt).getTime();
-    latest.date = '2026-08-11';
     latest.source.readAt = new Date(baseMs + (25 * 3_600_000)).toISOString();
+    latest.date = latest.source.readAt.slice(0, 10);
     const sign = strongestMarketCheck(first).market.sign;
     const changedAsset = latest.assets.find((asset) => asset.sign === sign);
     changedAsset.priceUsd *= 1.1;
