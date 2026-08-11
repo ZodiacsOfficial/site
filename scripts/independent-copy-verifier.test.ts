@@ -143,9 +143,11 @@ describe('independent copy verifier', () => {
     const reading = tampered.signs.find((entry) => entry.sign === 'aquarius')?.readings.today;
     expect(reading).toBeDefined();
     if (!reading) return;
+    const repeatedAction = reading.passages[1].text.match(/^[^.]+\./u)?.[0];
+    expect(repeatedAction).toBeDefined();
     reading.passages[2].text = reading.passages[2].text.replace(
       /^[^.]+\./u,
-      'Reserve a real block for the person, pleasure, or draft before it becomes optional.',
+      repeatedAction ?? '',
     );
     reading.text = reading.passages.map((passage) => passage.text).join('\n\n');
     reading.wordCount = independentWordCount(reading.text);

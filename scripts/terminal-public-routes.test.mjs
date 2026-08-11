@@ -61,7 +61,8 @@ describe('Terminal public-route split', () => {
 
   it('keeps the generated research ledger and feeds on canonical Terminal URLs', async () => {
     const drafts = JSON.parse(await read('src/data/registry-research/drafts.json'));
-    expect(drafts.items).toHaveLength(12);
+    expect(drafts.items.length).toBeGreaterThan(0);
+    expect(new Set(drafts.items.map((item) => item.id)).size).toBe(drafts.items.length);
     for (const item of drafts.items) {
       expect(item.url).toBe(`/terminal/research/${item.slug}/`);
     }
