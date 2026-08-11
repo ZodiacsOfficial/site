@@ -121,8 +121,16 @@ export function createChart({ canvas, readout }) {
     // time ticks
     context.fillStyle = INK_DIM;
     context.textAlign = 'center';
-    for (const index of timeTickIndices(candles, timeframe)) {
-      const label = formatClock(candles[index].ts, timeframe);
+    const mobileChart = window.matchMedia('(max-width: 800px)').matches;
+    const mobileTimeLabels = mobileChart
+      ? (width <= 340 ? 2 : 3)
+      : 6;
+    for (const index of timeTickIndices(candles, timeframe, mobileTimeLabels)) {
+      const fullLabel = formatClock(candles[index].ts, timeframe);
+      const labelParts = fullLabel.split(' ');
+      const label = mobileChart && timeframe !== '1d'
+        ? labelParts[labelParts.length - 1]
+        : fullLabel;
       const x = Math.min(Math.max(centers[index], 24), plotWidth - 24);
       context.fillText(label, x, height - TIME_AXIS_HEIGHT / 2);
     }
