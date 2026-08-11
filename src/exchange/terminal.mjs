@@ -169,14 +169,74 @@ export function createTerminal({ host }) {
   }
 
   // ── skeleton ────────────────────────────────────────────────────────────
+  const mobileHeader = el('div', 'zme-mobile-market');
+  const marketButton = el('button', 'zme-mobile-market__button');
+  marketButton.type = 'button';
+  marketButton.setAttribute('aria-haspopup', 'dialog');
+  marketButton.setAttribute('aria-expanded', 'false');
+  marketButton.setAttribute('aria-controls', 'zme-market-sheet');
+  const marketPicture = document.createElement('picture');
+  const marketSource = document.createElement('source');
+  marketSource.type = 'image/avif';
+  const marketIcon = document.createElement('img');
+  marketIcon.className = 'zme-mobile-market__disc';
+  marketIcon.width = 38;
+  marketIcon.height = 38;
+  marketIcon.alt = '';
+  marketPicture.append(marketSource, marketIcon);
+  const marketIdentity = el('span', 'zme-mobile-market__identity');
+  const marketName = el('span', 'zme-mobile-market__name', '—');
+  const marketPair = el('span', 'zme-mobile-market__pair', '— / USDC');
+  marketIdentity.append(marketName, marketPair);
+  const marketChevron = el('span', 'zme-mobile-market__chevron', '⌄');
+  marketChevron.setAttribute('aria-hidden', 'true');
+  marketButton.append(marketPicture, marketIdentity, marketChevron);
+
+  const mobileSummary = el('div', 'zme-mobile-summary');
+  const mobilePrice = el('span', 'zme-mobile-summary__price', '—');
+  const mobileChange = el('span', 'zme-mobile-summary__change', '—');
+  const mobileLiquidity = el('span', 'zme-mobile-summary__liquidity', 'Liquidity —');
+  mobileSummary.append(mobilePrice, mobileChange, mobileLiquidity);
+  mobileHeader.append(marketButton, mobileSummary);
+
+  const mobileTabs = el('div', 'zme-mobile-tabs');
+  mobileTabs.setAttribute('role', 'tablist');
+  mobileTabs.setAttribute('aria-label', 'Market view');
+  const chartTab = el('button', 'zme-mobile-tabs__tab', 'Chart');
+  const tradeTab = el('button', 'zme-mobile-tabs__tab', 'Trade');
+  for (const [button, id, panelId] of [
+    [chartTab, 'zme-chart-tab', 'zme-chart-panel'],
+    [tradeTab, 'zme-trade-tab', 'zme-trade-panel'],
+  ]) {
+    button.type = 'button';
+    button.id = id;
+    button.setAttribute('role', 'tab');
+    button.setAttribute('aria-controls', panelId);
+  }
+  mobileTabs.append(chartTab, tradeTab);
+
   const grid = el('div', 'zme__grid');
+  grid.dataset.mobileTab = 'chart';
 
   const rail = el('section', 'zme__card zme__rail');
+  rail.id = 'zme-market-sheet';
   rail.setAttribute('aria-label', 'The twelve records');
+  const railHead = el('div', 'zme__sheet-head');
+  const railTitle = el('h2', 'zme__sheet-title', 'Choose a market');
+  railTitle.id = 'zme-market-sheet-title';
+  const railClose = el('button', 'zme__sheet-close', 'Close');
+  railClose.type = 'button';
+  railHead.append(railTitle, railClose);
   const railList = el('ul', 'zme__rail-list');
-  rail.append(railList);
+  rail.append(railHead, railList);
+
+  const sheetBackdrop = el('button', 'zme__sheet-backdrop');
+  sheetBackdrop.type = 'button';
+  sheetBackdrop.tabIndex = -1;
+  sheetBackdrop.setAttribute('aria-label', 'Close market selector');
 
   const center = el('div', 'zme__center');
+  center.id = 'zme-chart-panel';
 
   const chartCard = el('section', 'zme__card');
   const chartHead = el('div', 'zme__card-head');
@@ -212,6 +272,9 @@ export function createTerminal({ host }) {
     el('span', 'zme__card-note', 'canonical pool · newest first'),
   );
   const tapeScroll = el('div', 'zme-tape__scroll');
+  tapeScroll.tabIndex = 0;
+  tapeScroll.setAttribute('role', 'region');
+  tapeScroll.setAttribute('aria-label', 'Recent canonical-pool trades');
   const tapeState = stateNode('');
   tapeState.hidden = true;
   tapeCard.append(tapeHead, tapeScroll, tapeState);
@@ -219,6 +282,7 @@ export function createTerminal({ host }) {
   center.append(chartCard, tapeCard);
 
   const desk = el('div', 'zme__desk');
+  desk.id = 'zme-trade-panel';
   const panelCard = el('section', 'zme__card');
   const panelScope = el('p', 'zme__scope', PANEL_SCOPE);
   const panelHost = el('div', 'zme__panel-host');
@@ -265,8 +329,11 @@ export function createTerminal({ host }) {
   statsCard.append(statsHead, statsGrid);
 
   desk.append(panelCard, ladderCard, statsCard);
+  const stickyBuy = el('button', 'zme-mobile-buy', 'Buy');
+  stickyBuy.type = 'button';
+
   grid.append(rail, center, desk);
-  host.append(grid);
+  host.append(mobileHeader, mobileTabs, sheetBackdrop, grid, stickyBuy);
 
   // ── state ───────────────────────────────────────────────────────────────
   let records = null;           // Map slug → { mint, symbol }
@@ -291,6 +358,19 @@ export function createTerminal({ host }) {
   let ladderEnableTimer = null;
   let ladderBusyUntil = 0;
   let destroyed = false;
+  let mobileTab = 'chart';
+  let sheetOpen = false;
+  let focusBeforeSheet = null;
+  let bodyOverflowBeforeSheet = '';
+
+  const mobileMedia = window.matchMedia('(max-width: 800px)');
+  const terminalObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver(([entry]) => {
+      host.dataset.stickyVisible = String(entry.isIntersecting);
+    }, { threshold: 0.02 })
+    : null;
+  host.dataset.stickyVisible = 'true';
+  terminalObserver?.observe(host);
 
   const chart = createChart({ canvas, readout });
   const tape = createTape({ host: tapeScroll });
@@ -321,7 +401,10 @@ export function createTerminal({ host }) {
     const change = el('span', 'zme__rail-change', '');
     quote.append(price, change);
     button.append(picture, name, quote);
-    button.addEventListener('click', () => select(sign.slug));
+    button.addEventListener('click', () => {
+      const changed = select(sign.slug);
+      if (mobileMedia.matches && changed !== false) closeMarketSheet();
+    });
     item.append(button);
     railList.append(item);
     railRows.set(sign.slug, { button, price, change });
@@ -352,6 +435,138 @@ export function createTerminal({ host }) {
     return record ? stats[record.mint] ?? null : null;
   };
 
+  function setMobileTab(next, { focus = false } = {}) {
+    if (next !== 'chart' && next !== 'trade') return;
+    mobileTab = next;
+    grid.dataset.mobileTab = next;
+    for (const [button, key] of [[chartTab, 'chart'], [tradeTab, 'trade']]) {
+      const active = key === next;
+      button.setAttribute('aria-selected', String(active));
+      button.tabIndex = active ? 0 : -1;
+      if (focus && active) button.focus();
+    }
+    if (mobileMedia.matches) {
+      center.setAttribute('aria-hidden', String(next !== 'chart'));
+      desk.setAttribute('aria-hidden', String(next !== 'trade'));
+    }
+  }
+
+  function focusTradeAmount(attempt = 0) {
+    if (!mobileMedia.matches || mobileTab !== 'trade') return;
+    const input = panelHost.querySelector('.tp .pay__input');
+    if (input) {
+      input.focus({ preventScroll: true });
+      input.scrollIntoView({ block: 'center', behavior: 'auto' });
+      return;
+    }
+    if (attempt < 20) setTimeout(() => focusTradeAmount(attempt + 1), 50);
+  }
+
+  function closeMarketSheet({ restoreFocus = true } = {}) {
+    if (!sheetOpen) return;
+    sheetOpen = false;
+    rail.dataset.open = 'false';
+    sheetBackdrop.dataset.open = 'false';
+    marketButton.setAttribute('aria-expanded', 'false');
+    if (mobileMedia.matches) {
+      rail.setAttribute('aria-hidden', 'true');
+      rail.inert = true;
+    }
+    document.body.style.overflow = bodyOverflowBeforeSheet;
+    if (restoreFocus && focusBeforeSheet?.isConnected) focusBeforeSheet.focus();
+    focusBeforeSheet = null;
+  }
+
+  function openMarketSheet() {
+    if (!mobileMedia.matches || marketButton.disabled || sheetOpen) return;
+    sheetOpen = true;
+    focusBeforeSheet = document.activeElement;
+    bodyOverflowBeforeSheet = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    rail.inert = false;
+    rail.dataset.open = 'true';
+    sheetBackdrop.dataset.open = 'true';
+    rail.setAttribute('aria-hidden', 'false');
+    marketButton.setAttribute('aria-expanded', 'true');
+    requestAnimationFrame(() => {
+      const active = rail.querySelector('[aria-pressed="true"]');
+      (active || railClose).focus();
+    });
+  }
+
+  function updateResponsivePresentation() {
+    if (mobileMedia.matches) {
+      rail.setAttribute('role', 'dialog');
+      rail.setAttribute('aria-modal', 'true');
+      rail.setAttribute('aria-labelledby', railTitle.id);
+      center.setAttribute('role', 'tabpanel');
+      center.setAttribute('aria-labelledby', chartTab.id);
+      desk.setAttribute('role', 'tabpanel');
+      desk.setAttribute('aria-labelledby', tradeTab.id);
+      if (!sheetOpen) {
+        rail.setAttribute('aria-hidden', 'true');
+        rail.inert = true;
+      }
+      setMobileTab(mobileTab);
+      return;
+    }
+    closeMarketSheet({ restoreFocus: false });
+    rail.removeAttribute('role');
+    rail.removeAttribute('aria-modal');
+    rail.removeAttribute('aria-hidden');
+    rail.removeAttribute('aria-labelledby');
+    rail.inert = false;
+    center.removeAttribute('role');
+    center.removeAttribute('aria-labelledby');
+    center.removeAttribute('aria-hidden');
+    desk.removeAttribute('role');
+    desk.removeAttribute('aria-labelledby');
+    desk.removeAttribute('aria-hidden');
+  }
+
+  function onTerminalKeydown(event) {
+    if (sheetOpen) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        closeMarketSheet();
+        return;
+      }
+      if (event.key === 'Tab') {
+        const focusable = [...rail.querySelectorAll('button:not(:disabled)')];
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+      return;
+    }
+    if (!mobileTabs.contains(event.target)) return;
+    const keys = ['ArrowLeft', 'ArrowRight', 'Home', 'End'];
+    if (!keys.includes(event.key)) return;
+    event.preventDefault();
+    const next = event.key === 'ArrowLeft' || event.key === 'Home' ? 'chart' : 'trade';
+    setMobileTab(next, { focus: true });
+  }
+
+  marketButton.addEventListener('click', openMarketSheet);
+  railClose.addEventListener('click', () => closeMarketSheet());
+  sheetBackdrop.addEventListener('click', () => closeMarketSheet());
+  chartTab.addEventListener('click', () => setMobileTab('chart'));
+  tradeTab.addEventListener('click', () => setMobileTab('trade'));
+  stickyBuy.addEventListener('click', () => {
+    setMobileTab('trade');
+    focusTradeAmount();
+  });
+  document.addEventListener('keydown', onTerminalKeydown);
+  mobileMedia.addEventListener('change', updateResponsivePresentation);
+  updateResponsivePresentation();
+
   function showState(node, message) {
     node.textContent = message;
     node.hidden = !message;
@@ -366,6 +581,11 @@ export function createTerminal({ host }) {
     }
     const record = recordFor(slug);
     chartTitle.textContent = record?.symbol ? `${record.symbol} / USD` : sign?.name ?? '—';
+    marketName.textContent = sign?.name ?? '—';
+    marketPair.textContent = `${record?.symbol || sign?.name || '—'} / USDC`;
+    marketSource.srcset = sign ? `/assets/zodiac-icons/128/${sign.slug}.avif` : '';
+    marketIcon.src = sign ? `/assets/zodiac-icons/128/${sign.slug}.webp` : '';
+    stickyBuy.textContent = `Buy ${sign?.name ?? ''}`.trim();
   }
 
   function setRailLocked(locked) {
@@ -374,6 +594,8 @@ export function createTerminal({ host }) {
       if (locked) button.title = 'Finish or dismiss the wallet review before changing signs.';
       else button.removeAttribute('title');
     }
+    marketButton.disabled = locked;
+    stickyBuy.disabled = locked;
   }
 
   function registryFailureNode() {
@@ -410,11 +632,18 @@ export function createTerminal({ host }) {
 
   function fillStats() {
     const quote = selected ? statsFor(selected) : null;
-    statPrice.textContent = quote?.priceUsd ? formatPrice(quote.priceUsd) : '—';
-    statChange.textContent = quote?.change24hPct === null || quote?.change24hPct === undefined
+    const priceText = quote?.priceUsd ? formatPrice(quote.priceUsd) : '—';
+    const changeText = quote?.change24hPct === null || quote?.change24hPct === undefined
       ? '—'
       : `${quote.change24hPct > 0 ? '+' : ''}${quote.change24hPct.toFixed(2)}%`;
-    statLiquidity.textContent = quote?.liquidityUsd ? formatUsd(quote.liquidityUsd) : '—';
+    const liquidityText = quote?.liquidityUsd ? formatUsd(quote.liquidityUsd) : '—';
+    statPrice.textContent = priceText;
+    statChange.textContent = changeText;
+    statLiquidity.textContent = liquidityText;
+    mobilePrice.textContent = priceText;
+    mobileChange.textContent = changeText;
+    mobileChange.classList.toggle('is-positive', Boolean(quote?.change24hPct > 0));
+    mobileLiquidity.textContent = `Liquidity ${liquidityText}`;
   }
 
   async function refreshStats() {
@@ -870,11 +1099,15 @@ export function createTerminal({ host }) {
     select,
     destroy() {
       destroyed = true;
+      closeMarketSheet({ restoreFocus: false });
       selectionAbort?.abort();
       stopTimers();
       clearInterval(statsTimer);
       clearTimeout(ladderEnableTimer);
       document.removeEventListener('visibilitychange', onVisibility);
+      document.removeEventListener('keydown', onTerminalKeydown);
+      mobileMedia.removeEventListener('change', updateResponsivePresentation);
+      terminalObserver?.disconnect();
       panel?.destroy?.();
       chart.destroy();
       tape.destroy();

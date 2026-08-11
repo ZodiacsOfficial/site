@@ -223,6 +223,20 @@
     }
     .assistant-link:hover { color: var(--ink); }
 
+    @media (max-width: 800px) {
+      .shell {
+        width: 100%;
+        padding: calc(78px + env(safe-area-inset-top)) 10px 34px;
+        overflow: clip;
+      }
+      .hero { padding: 0 4px; }
+      .kicker { margin-bottom: 3px; font-size: 12px; }
+      .hero h1 { margin-bottom: 0; font-size: 27px; line-height: 1.08; }
+      .hero__lede { display: none; }
+      .section { margin-top: 34px; }
+      .risk { margin-top: 34px; }
+    }
+
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
       .records__item { transition: none; }
