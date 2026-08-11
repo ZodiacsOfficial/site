@@ -204,6 +204,28 @@ describe('closed-hour normalization and honest sparse models', () => {
     expect(model.sourceAttributionUrl).toBe('https://www.geckoterminal.com/');
   });
 
+  it('exposes only contiguous observed runs for drawing and never bridges a missing hour', () => {
+    const series = normalizeClosedHourlyPrices(hourlyCandles(8, { gapAfter: 2 }), {
+      nowMs: NOW_MS,
+      pool: LEO_POOL,
+    });
+    const model = buildSelectedTokenChartModel({
+      token: LEO_MINT,
+      label: 'Leo',
+      pool: LEO_POOL,
+      live: { status: 'ready', series },
+    });
+    const drawnPoints = model.segments.flat();
+    const drawnIntervals = model.segments.flatMap((segment) => (
+      segment.slice(1).map((point, index) => point.slotMs - segment[index].slotMs)
+    ));
+
+    expect(drawnPoints).toEqual(model.points);
+    expect(drawnIntervals).toEqual(Array(6).fill(3_600_000));
+    expect(model.segments[0].at(-1).slotMs).toBe(Date.parse('2026-08-10T03:00:00.000Z'));
+    expect(model.segments[1][0].slotMs).toBe(Date.parse('2026-08-10T05:00:00.000Z'));
+  });
+
   it('breaks a mature series when the selected pricing pool changes', () => {
     const rows = archive(8);
     rows[4].deepestPool.pairAddress = PISCES_POOL;

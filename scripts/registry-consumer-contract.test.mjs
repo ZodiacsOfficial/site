@@ -124,6 +124,118 @@ describe('Registry consumer and technical information architecture', () => {
     expect(mounted).not.toContain('className="close__sigil"');
   });
 
+  it('ends with one clear Registry action and a restrained essential footer', async () => {
+    const [source, html, bundle] = await Promise.all([
+      read('src/app.jsx'),
+      read('public/terminal/index.html'),
+      read('public/assets/app.js'),
+    ]);
+    const closing = source.slice(
+      source.indexOf('function ConsumerClosing()'),
+      source.indexOf('function TechnicalRecordsSection()'),
+    );
+    const footer = source.slice(
+      source.indexOf('function Footer('),
+      source.indexOf('// Root', source.indexOf('function Footer(')),
+    );
+    const directory = footer.slice(
+      footer.indexOf('className="ftr__directory"'),
+      footer.indexOf('className="ftr__market-notice"'),
+    );
+    const marketNotice = footer.slice(
+      footer.indexOf('className="ftr__market-notice"'),
+      footer.indexOf('className="ftr__row ftr__row--origin"'),
+    );
+    const technicalFooter = source.slice(
+      source.indexOf('function TechnicalFooter()'),
+      source.indexOf('function Footer('),
+    );
+    const staticClosing = html.slice(
+      html.indexOf('<div class="static-closing">'),
+      html.indexOf('</div>', html.indexOf('<div class="static-closing">')),
+    );
+    const staticFooter = html.slice(
+      html.indexOf('<footer class="static-site__footer">'),
+      html.indexOf('</footer>', html.indexOf('<footer class="static-site__footer">')),
+    );
+
+    expect(closing.match(/<a\b/gu) ?? []).toHaveLength(1);
+    expect(closing).toContain('href="/registry/"');
+    expect(closing).toContain('Open the Zodiacs Registry');
+    expect(closing).toContain('aria-hidden="true">→</span>');
+    expect(closing).not.toContain('aria-hidden="true">↗</span>');
+    expect(closing).not.toContain('btn btn--primary');
+    expect(closing).not.toContain('Explore all 12');
+    expect(staticClosing).toContain('href="/registry/"');
+    expect(staticClosing).toContain('Open the Zodiacs Registry →');
+    expect(staticClosing).not.toContain('Open the Zodiacs Registry ↗');
+    expect(staticClosing).not.toContain('btn btn--primary');
+    expect(staticClosing).not.toContain('Explore all 12');
+
+    expect(footer).toContain('className="ftr__directory"');
+    expect(footer).toContain('aria-label="Explore Zodiacs"');
+    expect(footer).toContain('aria-label="Trust and policies"');
+    expect(directory.match(/<a\b/gu) ?? []).toHaveLength(6);
+    for (const destination of [
+      '/registry/',
+      '/registry/#verify',
+      '/terminal/research/',
+      '/disclosure/',
+      '/privacy/',
+      '/terms/',
+    ]) {
+      expect(directory).toContain(`href="${destination}"`);
+      expect(staticFooter).toContain(`href="${destination}"`);
+    }
+    expect(staticFooter.match(/<a\b/gu) ?? []).toHaveLength(6);
+    for (const retired of [
+      'The Twelve',
+      'How it works',
+      'Official channels',
+      'Ask Zodiacs',
+      'Technical record',
+      'astrofoliosol',
+      'astrofolioonsol',
+      'tiktok.com/@astrofolio',
+    ]) expect(directory).not.toContain(retired);
+    for (const anchor of ['#records-networks', '#market-transparency', '#onchain-access', '#builders', '#security']) {
+      expect(technicalFooter).toContain(`href="${anchor}"`);
+    }
+    expect(technicalFooter).not.toContain('data-terminal-market-notice');
+    expect(marketNotice).toContain('role="note"');
+    expect(marketNotice).toContain('aria-labelledby="terminal-market-notice-title"');
+    expect(marketNotice).toContain('data-terminal-market-notice');
+    expect(marketNotice.match(/<a\b/gu) ?? []).toHaveLength(0);
+    expect(staticFooter.match(/data-terminal-market-notice/gu) ?? []).toHaveLength(1);
+    expect(staticFooter).toContain('role="note"');
+    expect(staticFooter).toContain('aria-labelledby="static-terminal-market-notice-title"');
+    for (const disclosure of [marketNotice, staticFooter, bundle]) {
+      const copy = disclosure.replace(/\s+/gu, ' ');
+      expect(copy).toContain('speculative, thinly traded digital assets');
+      expect(copy).toContain('could lose all money used to acquire');
+      expect(copy).toContain('no established predictive relationship with asset prices');
+      expect(copy).toContain('does not operate a DEX, exchange, broker, or custodial service');
+      expect(copy).toContain('Jupiter, an independent third-party liquidity aggregator');
+      expect(copy).toContain('wallet reviews, approves, and signs');
+      expect(copy).toContain('holds no keys or funds');
+      expect(copy).toContain('receives no trading or referral compensation');
+      expect(copy).toContain('do not imply affiliation or endorsement');
+      expect(copy).toContain('not an offer or solicitation');
+      expect(copy).toContain('accounting, legal, tax, or financial advice');
+      expect(copy).toContain('may not be available in all regions');
+    }
+    expect(marketNotice).not.toMatch(/Coinbase|Bermuda/iu);
+    expect(staticFooter).not.toMatch(/Coinbase|Bermuda/iu);
+    expect(footer.indexOf('className="ftr__directory"')).toBeLessThan(footer.indexOf('className="ftr__market-notice"'));
+    expect(footer.indexOf('className="ftr__market-notice"')).toBeLessThan(footer.indexOf('className="ftr__row ftr__row--origin"'));
+    expect(html).toContain('.ftr__directory {');
+    expect(html).toContain('.ftr__market-notice {');
+    expect(html).toContain('.static-site__market-notice {');
+    expect(html).toContain('.consumer-closing__registry {');
+    expect(html).toContain('.static-site__footer nav a { min-height: 44px;');
+    expect(html).toContain('.ftr:not(.ftr--technical) .ftr__row--origin a {');
+  });
+
   it('keeps builder detail out of the market-led consumer journey', async () => {
     const [source, html] = await Promise.all([
       read('src/app.jsx'),
