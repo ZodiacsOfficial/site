@@ -2055,12 +2055,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         .some((button) => /share signal/i.test(button.textContent ?? '')),
     }));
     check(
-      'the Aries briefing keeps one exact event, neutral reading, four observed metrics, and next-event countdown',
+      'the Aries briefing keeps one exact event, practical reading, four observed metrics, and next-event countdown',
       ariesBriefingState.event === expectedAriesDaily?.primaryFactor?.label
         && ariesBriefingState.eventAt === expectedAriesDaily?.primaryFactor?.at
         && /Traditional astrology/i.test(ariesBriefingState.reading)
         && /Aries/i.test(ariesBriefingState.reading)
-        && /without assuming direction/i.test(ariesBriefingState.reading)
+        && /does not imply a higher token price|market direction remains independent|does not predict price direction or volatility|check whether volume and liquidity actually show greater activity|without assuming direction|use it as context, not a market forecast/i
+          .test(ariesBriefingState.reading)
         && JSON.stringify(ariesBriefingState.marketLabels) === JSON.stringify([
           'Price', '24H change', 'Liquidity', '24H volume',
         ])
@@ -2071,7 +2072,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && /Market data never changes the sky reading/i.test(ariesBriefingState.marketSeparation)
         && ariesBriefingState.nextLabel === expectedAriesNext?.label
         && ariesBriefingState.nextAt === expectedAriesNext?.at
-        && /^in \d+h(?: \d+m)?$/i.test(ariesBriefingState.countdown)
+        && /^in (?:(?:\d+d )?\d+h(?: \d+m)?)$/i.test(ariesBriefingState.countdown)
         && /not a price forecast/i.test(ariesBriefingState.disclaimer)
         && /no established predictive relationship/i.test(ariesBriefingState.disclaimer)
         && ariesBriefingState.headlineCount === 2
@@ -2859,6 +2860,16 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           JSON.stringify(liveMobileState),
         );
 
+        await liveBand.evaluate((band) => {
+          band.__zodiacsSelectionPaints = [];
+          band.addEventListener('zodiacs:gallery-sign', (event) => {
+            band.__zodiacsSelectionPaints.push({
+              selected: event?.detail?.slug ?? '',
+              rendered: event?.detail?.renderedSlug ?? '',
+              renderedAttribute: band.dataset.galleryRenderedSign ?? '',
+            });
+          });
+        });
         const liveSelections = [];
         for (const [index, slug] of expectedSigns.entries()) {
           const tick = liveBand.locator('button.rail__tick').nth(index);
@@ -2873,14 +2884,89 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             slug,
             pressed: await tick.getAttribute('aria-pressed'),
             preview: await liveBand.locator('[data-consumer-preview]').getAttribute('data-consumer-preview'),
+            rendered: await liveBand.getAttribute('data-gallery-rendered-sign'),
           });
         }
+        const selectionPaints = await liveBand.evaluate((band) => band.__zodiacsSelectionPaints ?? []);
         check(
-          `all twelve live rail choices at ${label} keep the sculpture placard synchronized`,
-          liveSelections.every((item) => item.pressed === 'true' && item.preview === item.slug),
-          JSON.stringify(liveSelections),
+          `all twelve live rail choices at ${label} paint before publishing the selected sign`,
+          liveSelections.every((item) => (
+            item.pressed === 'true'
+              && item.preview === item.slug
+              && item.rendered === item.slug
+          ))
+            && selectionPaints.length === expectedSigns.length
+            && selectionPaints.every((item) => item.selected === item.rendered),
+          JSON.stringify({ liveSelections, selectionPaints }),
         );
-        await mobile.waitForTimeout(400);
+        await mobile.waitForFunction(() => {
+          const band = document.querySelector('.gband--consumer');
+          return band?.dataset.galleryRenderedSign === 'pisces'
+            && band.dataset.galleryResidentTextures === '1'
+            && band.dataset.galleryTextureSigns === 'pisces';
+        }, null, { timeout: 10_000 });
+        await mobile.waitForTimeout(1000);
+        const settledSelection = await liveBand.evaluate((band) => ({
+          rendered: band.dataset.galleryRenderedSign ?? '',
+          textures: band.dataset.galleryTextureSigns ?? '',
+          resident: band.dataset.galleryResidentTextures ?? '',
+          preview: band.querySelector('[data-consumer-preview]')?.getAttribute('data-consumer-preview') ?? '',
+          pressed: [...band.querySelectorAll('.rail__tick')]
+            .find((tick) => tick.getAttribute('aria-pressed') === 'true')
+            ?.querySelector('img')?.getAttribute('src') ?? '',
+          season: band.querySelector('[data-season-sign]')?.getAttribute('data-season-sign') ?? '',
+        }));
+        check(
+          `rapid live choices at ${label} settle on one Pisces cast without a stale Leo rebound`,
+          settledSelection.rendered === 'pisces'
+            && settledSelection.textures === 'pisces'
+            && settledSelection.resident === '1'
+            && settledSelection.preview === 'pisces'
+            && settledSelection.pressed === '/assets/zodiac-icons/48/pisces.webp'
+            // The selected cast and the calendar season are separate facts.
+            && settledSelection.season === 'leo',
+          JSON.stringify(settledSelection),
+        );
+        if (width === 390) {
+          // A room drag is intentionally fluid, unlike a labelled rail
+          // choice. Its public selection must still wait for the cast that is
+          // actually painted instead of letting the placard lead the canvas.
+          const leoTick = liveBand.locator('button.rail__tick').nth(4);
+          await leoTick.click();
+          await mobile.waitForFunction(() => (
+            document.querySelector('.gband--consumer')?.dataset.galleryRenderedSign === 'leo'
+          ));
+          await liveBand.evaluate((band) => { band.__zodiacsSelectionPaints = []; });
+          const roomCanvas = liveBand.locator('.stage__canvas');
+          const roomBox = await roomCanvas.boundingBox();
+          const roomStart = {
+            x: roomBox.x + (roomBox.width * 0.14),
+            y: roomBox.y + (roomBox.height * 0.18),
+          };
+          await mobile.mouse.move(roomStart.x, roomStart.y);
+          await mobile.mouse.down();
+          await mobile.mouse.move(roomStart.x + (roomBox.width * 0.58), roomStart.y, { steps: 10 });
+          await mobile.mouse.up();
+          await mobile.waitForFunction(() => (
+            (document.querySelector('.gband--consumer')?.__zodiacsSelectionPaints?.length ?? 0) > 0
+          ));
+          await mobile.waitForTimeout(1000);
+          const roomBrowse = await liveBand.evaluate((band) => ({
+            rendered: band.dataset.galleryRenderedSign ?? '',
+            preview: band.querySelector('[data-consumer-preview]')?.getAttribute('data-consumer-preview') ?? '',
+            selected: [...band.querySelectorAll('.rail__tick')]
+              .findIndex((tick) => tick.getAttribute('aria-pressed') === 'true'),
+            paints: band.__zodiacsSelectionPaints ?? [],
+          }));
+          check(
+            'a fluid room browse publishes only sculptures that have reached the canvas',
+            roomBrowse.paints.length > 0
+              && roomBrowse.paints.every((item) => item.selected === item.rendered)
+              && roomBrowse.rendered === roomBrowse.preview
+              && roomBrowse.selected !== 4,
+            JSON.stringify(roomBrowse),
+          );
+        }
         check(
           `WebGL phone at ${label} requests the scene bundle exactly once`,
           mobileGalleryRequests.length === 1,
@@ -3372,6 +3458,16 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       // just barely into view would slide it under the pill.
       const geminiTick = stagePage.locator('.rail__tick').nth(2);
       await geminiTick.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await stagePage.locator('.gband--consumer').evaluate((band) => {
+        band.__zodiacsSelectionPaints = [];
+        band.addEventListener('zodiacs:gallery-sign', (event) => {
+          band.__zodiacsSelectionPaints.push({
+            selected: event?.detail?.slug ?? '',
+            rendered: event?.detail?.renderedSlug ?? '',
+            renderedAttribute: band.dataset.galleryRenderedSign ?? '',
+          });
+        });
+      });
       await geminiTick.click();
       await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
       await stagePage.waitForFunction(() => (
@@ -3392,6 +3488,18 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && (geminiPlacard.tradeHref === null || geminiPlacard.tradeHref === '/registry/gemini/#acquire')
           && geminiPlacard.record === '/registry/gemini/',
         JSON.stringify(geminiPlacard),
+      );
+      const geminiPresentation = await stagePage.locator('.gband--consumer').evaluate((band) => ({
+        rendered: band.dataset.galleryRenderedSign ?? '',
+        paints: band.__zodiacsSelectionPaints ?? [],
+      }));
+      check(
+        'the wide-screen scene paints Gemini before publishing the Gemini selection',
+        geminiPresentation.rendered === 'gemini'
+          && geminiPresentation.paints.some((item) => (
+            item.selected === 'gemini' && item.rendered === 'gemini'
+          )),
+        JSON.stringify(geminiPresentation),
       );
       const requestedGeminiPaths = stageSculptureRequests.filter((pathname) => pathname.endsWith('/gemini.webp'));
       check(

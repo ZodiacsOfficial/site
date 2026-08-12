@@ -196,6 +196,7 @@ async function mount(root, records) {
       if (disposed) return;
       if (scene.releaseExcept(index)) invalidate();
       root.dataset.galleryResidentTextures = String(scene.residentTextureCount());
+      root.dataset.galleryTextureSigns = scene.residentTextureSlugs().join(' ');
     }, (DIRECT_SWITCH_SECONDS * 1000) + 80);
   }
 
@@ -213,6 +214,7 @@ async function mount(root, records) {
     spotlightController = null;
     scheduleTextureRelease(index);
     root.dataset.galleryResidentTextures = String(scene.residentTextureCount());
+    root.dataset.galleryTextureSigns = scene.residentTextureSlugs().join(' ');
     return changed;
   }
 
@@ -250,6 +252,7 @@ async function mount(root, records) {
   let raf = 0;
   let last = 0;
   let disposed = false;
+  let paintedIndex = -1;
 
   // Exponential response for gestures that move through adjacent pieces.
   // At 15/s the visible travel is about 98% complete inside 260ms. Distant
@@ -339,8 +342,11 @@ async function mount(root, records) {
     // Advance first so reduced-motion input paints its destination on this
     // frame rather than briefly rendering the old state and then stopping.
     const stateMoving = step(dt);
-    const settling = scene.layout(state, dt);
-    scene.render();
+    const settling = paintScene(dt);
+    // Browsing gestures can move the target several frames ahead of what is
+    // actually on canvas. Publish from the painted cast on each frame so a
+    // slow phone never lets the placard outrun the gold sculpture.
+    if (spotlight) syncChrome();
     // The public state becomes `rest` only after both the interaction state
     // and the rendered cast have actually returned face-first. Exposing it at
     // the end of the sweep clock was subtly early: damping still had a few
@@ -364,6 +370,18 @@ async function mount(root, records) {
     if (disposed || raf) return;
     last = 0;
     raf = requestAnimationFrame(frame);
+  }
+
+  /** Paint once, then publish only the identity that really reached canvas. */
+  function paintScene(dt = 0) {
+    const settling = scene.layout(state, dt);
+    scene.render();
+    const index = scene.renderedIndex();
+    paintedIndex = index;
+    if (index >= 0) root.dataset.galleryRenderedSign = records[index].slug;
+    else delete root.dataset.galleryRenderedSign;
+    root.dataset.galleryTextureSigns = scene.residentTextureSlugs().join(' ');
+    return settling;
   }
 
   // The spotlight otherwise has a perpetual frame loop. Keep the museum
@@ -444,6 +462,10 @@ async function mount(root, records) {
       resetSpotlightTurn(target, { immediate });
     }
     clearSnap();
+    // A labelled rail/page choice is a commit, not a browse gesture. Paint
+    // its destination before publishing the new slug so React, the pressed
+    // disc, and the gold sculpture can never describe different signs.
+    if (spotlight && immediate) paintScene(0);
     syncChrome();
     if (announce) speak(`${records[current()].name}, Lot ${records[current()].lot}`);
     invalidate();
@@ -476,7 +498,9 @@ async function mount(root, records) {
   }
 
   function syncChrome() {
-    const index = current();
+    const index = spotlight
+      ? (paintedIndex >= 0 ? paintedIndex : (chromeIndex >= 0 ? chromeIndex : current()))
+      : current();
     const record = records[index];
     const indexChanged = index !== chromeIndex;
     const showing = state.targetOpen > 0;
@@ -486,7 +510,14 @@ async function mount(root, records) {
       // The host page owns the address bar; the selection is an event.
       root.dispatchEvent(new CustomEvent('zodiacs:gallery-sign', {
         bubbles: true,
-        detail: { slug: record.slug },
+        detail: {
+          slug: record.slug,
+          // The host can prove this selection came from the cast rendered in
+          // the preceding paint, rather than from a target still in flight.
+          renderedSlug: spotlight && paintedIndex >= 0
+            ? records[paintedIndex].slug
+            : record.slug,
+        },
       }));
     }
     if (opener && (indexChanged || showingChanged)) {
@@ -553,7 +584,7 @@ async function mount(root, records) {
   }
 
   /** Walking the rail with a piece already on display swaps the piece. */
-  function showFigure(index, { immediate = false } = {}) {
+  function showFigure(index, { immediate = spotlight } = {}) {
     focusFigure(index, { announce: state.targetOpen === 0, immediate });
     if (state.targetOpen > 0 && index !== state.openIndex) {
       void openFigure(index, { takeFocus: false });
@@ -1126,7 +1157,7 @@ async function mount(root, records) {
     const index = slugs.indexOf(String(slug || '').toLowerCase());
     if (index >= 0 && index !== current()) {
       mirroredSlug = records[index].slug;
-      focusFigure(index, { announce: false });
+      focusFigure(index, { announce: false, immediate: true });
     }
   });
 
