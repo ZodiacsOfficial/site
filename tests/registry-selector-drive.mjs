@@ -3511,12 +3511,19 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           )),
         JSON.stringify(stageSculptureRequests),
       );
-      await stagePage.waitForFunction(() => (
-        document.querySelector('.gband--consumer')?.dataset.galleryResidentTextures === '1'
-      ), null, { timeout: 3_000 });
+      await stagePage.waitForFunction(() => {
+        const band = document.querySelector('.gband--consumer');
+        return band?.dataset.galleryResidentTextures === '1'
+          && band.dataset.galleryTextureSigns === 'gemini';
+      }, null, { timeout: 3_000 });
+      const settledGeminiTexture = await stagePage.locator('.gband--consumer').evaluate((band) => ({
+        resident: band.dataset.galleryResidentTextures ?? '',
+        signs: band.dataset.galleryTextureSigns ?? '',
+      }));
       check(
         'the spotlight releases the previous decoded plate after handoff',
-        await stagePage.locator('.gband--consumer').getAttribute('data-gallery-resident-textures') === '1',
+        settledGeminiTexture.resident === '1' && settledGeminiTexture.signs === 'gemini',
+        JSON.stringify(settledGeminiTexture),
       );
 
       const liveStage = stagePage.locator('.gband--consumer');
