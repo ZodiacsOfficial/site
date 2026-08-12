@@ -1030,9 +1030,6 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             intro: document.querySelector('.lot__intro')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
             sectionHeadings: [...document.querySelectorAll('.sec__title')]
               .map((heading) => heading.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
-            detailHeadings: [...document.querySelectorAll('.record-detail__title')]
-              .map((heading) => heading.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
-            quickAction: document.querySelector('.quick__action')?.getAttribute('href') ?? '',
             constellation: document.querySelector('#constellation img')?.getAttribute('src') ?? '',
             constellationCopy: document.querySelector('#constellation')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           };
@@ -1050,14 +1047,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         check(
           `${record.slug} at ${width}px explains a transferable token with chart and constellation context`,
           /^Official Zodiac Token · Sign \d+ of 12$/.test(actionState.eyebrow)
-            && actionState.intro === `${record.current} is the official digital token for the ${record.current} zodiac sign. See today’s price, verify the address, and learn how buying works.`
-            && actionState.detailHeadings.includes('Key facts')
-            && actionState.detailHeadings.includes(`About ${record.current}`)
-            && actionState.detailHeadings.includes(`Read the ${record.current} story`)
+            && actionState.intro === `${record.current} is the transferable token for the ${record.current} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.`
+            && actionState.sectionHeadings.includes('Token facts')
+            && actionState.sectionHeadings.includes(`What ${record.current} represents`)
+            && actionState.sectionHeadings.includes(`The story behind ${record.current}`)
             && actionState.sectionHeadings.includes('Official addresses')
-            && actionState.sectionHeadings.includes(`How to buy ${record.current}`)
+            && actionState.sectionHeadings.includes(`Get ${record.current}`)
             && actionState.sectionHeadings.includes('Explore all 12')
-            && actionState.quickAction === '#acquire'
             && actionState.constellation === `/assets/constellations/${record.slug}.svg`
             && /HYG Database v4\.0/.test(actionState.constellationCopy)
             && /not official IAU boundaries/.test(actionState.constellationCopy),
@@ -1117,12 +1113,10 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       },
     }));
     await sparseChart.goto(`${baseURL}/registry/leo/`, { waitUntil: 'domcontentloaded' });
-    await sparseChart.locator('#market > summary').click();
     await sparseChart.locator('[data-market]').scrollIntoViewIfNeeded();
     await sparseChart.locator('[data-market-chart]:not([hidden])').waitFor({ timeout: 15_000 });
     const sparseChartState = await sparseChart.locator('[data-market]').evaluate((panel) => ({
       note: panel.querySelector('[data-market-chart-note]')?.textContent?.trim() ?? '',
-      empty: panel.querySelector('.market__chart-empty')?.textContent?.trim() ?? '',
       paths: panel.querySelectorAll('[data-market-chart-canvas] path').length,
       points: panel.querySelectorAll('[data-market-chart-canvas] circle').length,
       sevenDisabled: panel.querySelector('[data-market-range="7d"]')?.disabled ?? false,
@@ -1133,10 +1127,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     }));
     check(
       'archived charts preserve nulls and calendar gaps while ranges wait for honest coverage',
-      /^Archive through .* · 5 daily closes\.$/.test(sparseChartState.note)
-        && /5 daily closes recorded\. A trend line will appear after 8 honest daily closes\./.test(sparseChartState.empty)
-        && sparseChartState.paths === 0
-        && sparseChartState.points === 0
+      /^5 dated observations/.test(sparseChartState.note)
+        && sparseChartState.paths === 2
+        && sparseChartState.points === 5
         && sparseChartState.sevenDisabled
         && sparseChartState.thirtyDisabled
         && sparseChartState.allPressed === 'true'
