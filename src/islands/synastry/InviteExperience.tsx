@@ -1,5 +1,7 @@
 import type { Session } from '@supabase/supabase-js';
 import { useEffect, useRef, useState } from 'preact/hooks';
+import { profileAccessAllowed } from '../../lib/account-v2/profile-access-reader';
+import { useProfileAccessGeneration } from '../../lib/hooks/useProfileAccessGeneration';
 import type { SavedChart } from '../../lib/profile/schema';
 import type { InvitePublicPayload } from '../../lib/invite/types';
 import { rememberInviteLink } from '../../lib/invite/local-links';
@@ -33,7 +35,7 @@ const COPY = {
   siNoSyncedCta: 'Open your profile',
 } as const;
 
-type AccountState = 'loading' | 'signed-out' | 'signed-in';
+export type AccountState = 'loading' | 'signed-out' | 'signed-in';
 type CreateState = 'idle' | 'creating' | 'ready' | 'error' | 'throttled' | 'capped';
 
 interface CreatedInvite {
@@ -46,6 +48,86 @@ interface InvitePanelProps {
   enabled: boolean;
   visible: boolean;
   charts: SavedChart[];
+}
+
+export interface InviteAccountSnapshot {
+  account: AccountState;
+  session: Session | null;
+  syncedIds: string[];
+}
+
+interface InviteAccountResolverDependencies {
+  getSyncSession(): Promise<Session | null>;
+  getSyncedChartIds(userId: string): Promise<string[]>;
+  profileAccessAllowed(): boolean;
+  profileAccessGeneration(): number;
+  commit(snapshot: InviteAccountSnapshot): void;
+}
+
+export interface InviteAccountResolver {
+  resolve(supplied?: Session | null): Promise<void>;
+  invalidate(): void;
+  dispose(): void;
+}
+
+/** Serializes auth snapshots and their synced-chart lookup into one latest-wins result. */
+export function createInviteAccountResolver(
+  dependencies: InviteAccountResolverDependencies,
+): InviteAccountResolver {
+  let active = true;
+  let version = 0;
+  const cleared = (account: AccountState): InviteAccountSnapshot => ({
+    account,
+    session: null,
+    syncedIds: [],
+  });
+  const current = (candidateVersion: number, accessGeneration: number) => active
+    && candidateVersion === version
+    && accessGeneration === dependencies.profileAccessGeneration()
+    && dependencies.profileAccessAllowed();
+
+  return {
+    async resolve(supplied?: Session | null): Promise<void> {
+      if (!active) return;
+      const candidateVersion = ++version;
+      const accessGeneration = dependencies.profileAccessGeneration();
+      if (!dependencies.profileAccessAllowed()) {
+        if (candidateVersion === version) dependencies.commit(cleared('signed-out'));
+        return;
+      }
+      dependencies.commit(cleared('loading'));
+      try {
+        const nextSession = supplied === undefined
+          ? await dependencies.getSyncSession()
+          : supplied;
+        if (!current(candidateVersion, accessGeneration)) return;
+        if (!nextSession) {
+          dependencies.commit(cleared('signed-out'));
+          return;
+        }
+        const ids = await dependencies.getSyncedChartIds(nextSession.user.id);
+        if (!current(candidateVersion, accessGeneration)) return;
+        dependencies.commit({
+          account: 'signed-in',
+          session: nextSession,
+          syncedIds: [...ids],
+        });
+      } catch {
+        if (current(candidateVersion, accessGeneration)) {
+          dependencies.commit(cleared('signed-out'));
+        }
+      }
+    },
+    invalidate(): void {
+      if (!active) return;
+      version += 1;
+      dependencies.commit(cleared('signed-out'));
+    },
+    dispose(): void {
+      active = false;
+      version += 1;
+    },
+  };
 }
 
 function sunSlug(chart: SavedChart): string {
@@ -96,6 +178,20 @@ export function InvitePanel({ enabled, visible, charts }: InvitePanelProps) {
   const [announcement, setAnnouncement] = useState('');
   const linkRef = useRef<HTMLInputElement>(null);
   const requestRef = useRef(false);
+  const accountResolverRef = useRef<InviteAccountResolver | null>(null);
+  const profileAccessGeneration = useProfileAccessGeneration(() => {
+    accountResolverRef.current?.invalidate();
+    setSession(null);
+    setSyncedIds([]);
+    setAccount('signed-out');
+    requestRef.current = false;
+    setSelected('');
+    setConsent(false);
+    setNotify(false);
+    setCreated(null);
+    setCreateState('idle');
+    setAnnouncement('');
+  });
 
   const syncedCharts = charts
     .filter((chart) => syncedIds.includes(chart.id))
@@ -105,41 +201,54 @@ export function InvitePanel({ enabled, visible, charts }: InvitePanelProps) {
     if (!enabled) return;
     let active = true;
     let unsubscribe = () => {};
-
-    const resolve = async (supplied?: Session | null) => {
-      try {
-        const [sync, daily] = await Promise.all([
-          import('../../lib/profile/sync'),
-          import('../../lib/profile/daily-email-client'),
-        ]);
-        const nextSession = supplied === undefined ? await sync.getSyncSession() : supplied;
-        if (!active) return;
-        setSession(nextSession);
-        if (!nextSession) {
-          setSyncedIds([]);
-          setAccount('signed-out');
+    let removeProfileAccessListener = () => {};
+    void Promise.all([
+      import('../../lib/profile/sync'),
+      import('../../lib/profile/daily-email-client'),
+    ]).then(([sync, daily]) => {
+      if (!active) return;
+      const resolver = createInviteAccountResolver({
+        getSyncSession: sync.getSyncSession,
+        getSyncedChartIds: daily.getSyncedChartIds,
+        profileAccessAllowed,
+        profileAccessGeneration: () => profileAccessGeneration.current,
+        commit(snapshot) {
+          setSession(snapshot.session);
+          setSyncedIds(snapshot.syncedIds);
+          setAccount(snapshot.account);
+        },
+      });
+      accountResolverRef.current = resolver;
+      // Subscribe before taking the initial snapshot so an auth transition can
+      // always supersede a slower getSyncSession/getSyncedChartIds chain.
+      unsubscribe = sync.onSyncAuthChange((next) => void resolver.resolve(next));
+      const onProfileAccess = () => {
+        if (!profileAccessAllowed()) {
+          resolver.invalidate();
           return;
         }
-        const ids = await daily.getSyncedChartIds(nextSession.user.id);
-        if (!active) return;
-        setSyncedIds(ids);
-        setAccount('signed-in');
-      } catch {
-        if (!active) return;
-        setSyncedIds([]);
-        setAccount('signed-out');
-      }
-    };
-
-    void resolve();
-    void import('../../lib/profile/sync').then((sync) => {
+        queueMicrotask(() => {
+          if (active && profileAccessAllowed()) void resolver.resolve();
+        });
+      };
+      window.addEventListener('zodiacs:profile-access', onProfileAccess);
+      removeProfileAccessListener = () => {
+        window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+      };
+      void resolver.resolve();
+    }).catch(() => {
       if (!active) return;
-      unsubscribe = sync.onSyncAuthChange((next) => void resolve(next));
-    }).catch(() => {});
+      setSession(null);
+      setSyncedIds([]);
+      setAccount('signed-out');
+    });
 
     return () => {
       active = false;
       unsubscribe();
+      removeProfileAccessListener();
+      accountResolverRef.current?.dispose();
+      accountResolverRef.current = null;
     };
   }, [enabled]);
 
@@ -160,20 +269,30 @@ export function InvitePanel({ enabled, visible, charts }: InvitePanelProps) {
 
   async function createInvite() {
     if (!session || !selected || !consent || requestRef.current) return;
+    const accessGeneration = profileAccessGeneration.current;
     requestRef.current = true;
     setCreateState('creating');
     setAnnouncement('');
     try {
+      const sync = await import('../../lib/profile/sync');
+      if (accessGeneration !== profileAccessGeneration.current || !profileAccessAllowed()) return;
+      const currentSession = await sync.getSyncSession();
+      if (
+        accessGeneration !== profileAccessGeneration.current
+        || !profileAccessAllowed()
+        || !currentSession
+      ) return;
       const response = await fetch('/api/compatibility/invites', {
         method: 'POST',
         credentials: 'same-origin',
         headers: {
           Accept: 'application/json',
-          Authorization: `Bearer ${session.access_token}`,
+          Authorization: `Bearer ${currentSession.access_token}`,
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ chartId: selected, consent: true, notify }),
       });
+      if (accessGeneration !== profileAccessGeneration.current || !profileAccessAllowed()) return;
       if (response.status === 429) {
         setCreateState('throttled');
         return;
@@ -183,6 +302,7 @@ export function InvitePanel({ enabled, visible, charts }: InvitePanelProps) {
         return;
       }
       const payload = await response.json() as unknown;
+      if (accessGeneration !== profileAccessGeneration.current || !profileAccessAllowed()) return;
       if (!response.ok || !validCreatedInvite(payload)) throw new Error('invalid invite response');
       rememberInviteLink(payload.id, payload.url);
       setCreated(payload);
@@ -195,8 +315,10 @@ export function InvitePanel({ enabled, visible, charts }: InvitePanelProps) {
       }).zodiacsAnalytics?.track?.('invite_created', { notify });
       window.dispatchEvent(new CustomEvent('zodiacs:invite-created', { detail: payload }));
     } catch {
+      if (accessGeneration !== profileAccessGeneration.current) return;
       setCreateState('error');
     } finally {
+      if (accessGeneration !== profileAccessGeneration.current) return;
       requestRef.current = false;
     }
   }

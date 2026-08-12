@@ -1,5 +1,27 @@
 import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
+import type { SavedChart } from '../lib/profile/schema';
+import { profileChartRunInput } from '../lib/profile/profile-chart-handoff';
+
+const SAVED_CHART: SavedChart = {
+  id: '11111111-1111-4111-8111-111111111111',
+  name: 'Private A',
+  createdAt: '2026-01-01T00:00:00.000Z',
+  updatedAt: '2026-01-01T00:00:00.000Z',
+  birth: {
+    date: '1990-06-15',
+    time: '14:30',
+    timeKnown: true,
+    place: {
+      name: 'New York', admin1: 'NY', country: 'US',
+      lat: 40.7128, lon: -74.006, tz: 'America/New_York',
+    },
+  },
+  summary: {
+    engineVersion: '0.1.0', utcISO: '1990-06-15T18:30:00.000Z', houseSystem: 'whole',
+    bodies: [], angles: null, flags: [],
+  },
+};
 
 describe('Russian chart-result seams', () => {
   it('localizes an unlabeled shared birthplace', async () => {
@@ -16,5 +38,101 @@ describe('Russian chart-result seams', () => {
     expect(runtime).toContain("another: 'Прочитать другую карту — пока по-английски'");
     expect(runtime).toContain("compareMine: 'Сравнить с моей — пока по-английски'");
     expect(runtime).toContain("compareAdd: 'Добавить мою карту для сравнения — пока по-английски'");
+  });
+
+  it('scrubs only profile-origin handoffs and fences delayed chart computation', async () => {
+    const source = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
+    const revocation = source.slice(
+      source.indexOf('const profileAccessGeneration = useProfileAccessGeneration'),
+      source.indexOf('// ── Chart Explorer state'),
+    );
+    expect(revocation).toContain('if (mineProfileOriginRef.current)');
+    expect(revocation).toContain('setMineHandoff(null);');
+    expect(revocation).toContain('if (!primaryProfileOriginRef.current) return;');
+    for (const scrub of [
+      "setDate('');",
+      "setTime('');",
+      'setCity(null);',
+      'setChart(null);',
+      'setComputedInput(null);',
+      'setShareInput(null);',
+      'setShareDialogOpen(false);',
+      'clearPostChartContext();',
+    ]) expect(revocation, scrub).toContain(scrub);
+
+    const run = source.slice(
+      source.indexOf('async function runChart('),
+      source.indexOf('function compute('),
+    );
+    expect(run).toContain('const accessGeneration = profileAccessGeneration.current;');
+    expect(run).toContain('const requiresProfileAccess = primaryProfileOriginRef.current;');
+    expect(run).toContain('runId === runChartIdRef.current');
+    expect(run).toContain('accessGeneration === profileAccessGeneration.current');
+    expect(run).toContain('const engine = await loadEngine();\n      if (!runIsCurrent()) return;');
+    expect(run).toContain('if (!runIsCurrent()) return;\n      setError');
+    expect(run).toContain('if (runId === runChartIdRef.current) setBusy(false);');
+    expect(source).toContain('primaryProfileOriginRef.current = true;');
+    expect(source).toContain('primaryProfileOriginRef.current = false;');
+    expect(source).toContain('primaryProfileOriginRef.current)');
+  });
+
+  it('defers an opaque saved-chart id until access, resolving only the admitted profile', async () => {
+    expect(profileChartRunInput([], SAVED_CHART.id)).toBeNull();
+    expect(profileChartRunInput([{
+      ...SAVED_CHART,
+      id: '22222222-2222-4222-8222-222222222222',
+    }], SAVED_CHART.id))
+      .toBeNull();
+    expect(profileChartRunInput([SAVED_CHART], SAVED_CHART.id)).toMatchObject({
+      date: '1990-06-15',
+      name: 'Private A',
+      city: { tz: 'America/New_York' },
+    });
+
+    const source = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
+    const profileManager = await readFile(new URL('./ProfileManager.tsx', import.meta.url), 'utf8');
+    const branch = source.slice(
+      source.indexOf("if (params.has('profileChartId'))"),
+      source.indexOf("if (params.has('c') && params.has('p'))"),
+    );
+    expect(profileManager).toContain('profileChartHandoffFragment(chart.id)');
+    expect(profileManager).not.toContain('encodeChartLink');
+    expect(branch.indexOf('clearFragment();')).toBeLessThan(branch.indexOf('profileAccessAllowed()'));
+    expect(branch).toContain("window.addEventListener('zodiacs:profile-access', onProfileAccess);");
+    expect(branch).toContain('accessGeneration !== profileAccessGeneration.current');
+    expect(branch).toContain('loadProfileChartRunInput(profileChartId)');
+    expect(branch).toContain('primaryProfileChartIdRef.current = profileChartId;');
+    expect(branch).toContain('handoffId === profileHandoffIdRef.current');
+  });
+
+  it('lets manual work cancel a delayed private open without declassifying its source', async () => {
+    const source = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
+    const invalidation = source.slice(
+      source.indexOf('function invalidateProfileHandoff()'),
+      source.indexOf('// ── Chart Explorer state'),
+    );
+    expect(invalidation).toContain('profileHandoffIdRef.current += 1;');
+    expect(invalidation).toContain('primaryProfileChartIdRef.current = null;');
+    expect(invalidation).not.toContain('primaryProfileOriginRef.current = false;');
+    expect(source).toContain('onDateChange={(value) => { invalidateProfileHandoff(); setDate(value); }}');
+    expect(source).toContain('onCityChange={(value) => { invalidateProfileHandoff(); setCity(value); }}');
+
+    const compute = source.slice(source.indexOf('function compute('), source.indexOf('const shareUrl'));
+    expect(compute).toContain('invalidateProfileHandoff();');
+
+    const another = source.slice(
+      source.indexOf('const anotherChartHref'),
+      source.indexOf('useEffect(() =>', source.indexOf('const anotherChartHref')),
+    );
+    expect(another).toContain('primaryProfileOriginRef.current');
+    expect(another).toContain("'/birth-chart/someone-else/'");
+    expect(another).toContain('someoneElseHandoffPath(shareInput)');
+  });
+
+  it('never persists exact chart identity in first-reading progress', async () => {
+    const source = await readFile(new URL('./ChartCalculator.tsx', import.meta.url), 'utf8');
+    expect(source).not.toContain('firstReadingChartKey');
+    expect(source).not.toContain('firstReading.chartKey');
+    expect(source).toContain('setFirstReading(readFirstReadingProgress(localStorage));');
   });
 });

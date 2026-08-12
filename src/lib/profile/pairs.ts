@@ -19,6 +19,7 @@ import {
   type PositionsShareChart,
   type PositionsShareInput,
 } from '../share-positions';
+import { profileAccessAllowed } from '../account-v2/profile-access-reader';
 
 export const PAIRS_KEY = 'zodiacs.pairs.v1';
 export const MAX_PAIRS = 24;
@@ -88,6 +89,7 @@ function isPair(value: unknown): value is SavedPair {
 }
 
 export function loadPairs(): SavedPair[] {
+  if (!profileAccessAllowed()) return [];
   try {
     const raw = localStorage.getItem(PAIRS_KEY);
     if (!raw) return [];
@@ -99,6 +101,7 @@ export function loadPairs(): SavedPair[] {
 }
 
 function persist(pairs: SavedPair[]): boolean {
+  if (!profileAccessAllowed()) return false;
   try {
     localStorage.setItem(PAIRS_KEY, JSON.stringify(pairs));
     window.dispatchEvent(new CustomEvent('zodiacs:pairs', { detail: pairs }));

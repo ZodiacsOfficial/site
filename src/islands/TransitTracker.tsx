@@ -15,6 +15,7 @@ import type { City } from '../lib/geo/search';
 import { localizePath, normalizeCatalogLocale, t, type CatalogLocale as Locale } from '../lib/i18n';
 import { useEngine, type EngineLoader } from '../lib/hooks/useEngine';
 import { useProfile } from '../lib/hooks/useProfile';
+import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import type { TransitSky } from './transit/TransitRing';
 import type { CalendarPositionsSource } from './CalendarSubscribe';
 import type {
@@ -162,6 +163,16 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
   const errorRef = useRef<HTMLParagraphElement>(null);
   const focusAfterComputeRef = useRef(false);
   const initialProfileReadRef = useRef(false);
+  const profileAccessGeneration = useProfileAccessGeneration(() => {
+    setResult(null);
+    setRingMod(null);
+    setSearchFocus(null);
+    setBusy(false);
+    setError('');
+    setSlot((current) => current.source === 'saved'
+      ? { source: 'form', savedId: '', date: '', time: '', timeKnown: true, city: null }
+      : current);
+  });
 
   useEffect(() => {
     if (!profileReady || initialProfileReadRef.current) return;
@@ -186,11 +197,13 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
     focusAfterComputeRef.current = e !== undefined;
     setBusy(true);
     setError('');
+    const accessGeneration = profileAccessGeneration.current;
     try {
       const [engine, mod] = await Promise.all([
         loadEngine(),
         ringMod ? Promise.resolve(ringMod) : import('./transit/TransitRing'),
       ]);
+      if (accessGeneration !== profileAccessGeneration.current) return;
       const natal = slot.source === 'saved'
         ? natalFromSaved(charts.find((c) => c.id === slot.savedId)!, engine)
         : natalFromForm(slot, engine);
@@ -198,14 +211,16 @@ export default function TransitTracker({ locale: rawLocale = 'en' }: { locale?: 
         engine.computeBodies(when)
           .filter((b) => TRANSIT_BODIES.has(b.body))
           .map(({ body, lon, retrograde }) => ({ body, lon, retrograde }));
+      if (accessGeneration !== profileAccessGeneration.current) return;
       setRingMod(mod);
       setSearchFocus(null);
       setResult({ natal, computeSky, nowMs: Date.now() });
     } catch (err) {
+      if (accessGeneration !== profileAccessGeneration.current) return;
       setError(t(locale, 'transitError'));
       console.error(err);
     } finally {
-      setBusy(false);
+      if (accessGeneration === profileAccessGeneration.current) setBusy(false);
     }
   }
 

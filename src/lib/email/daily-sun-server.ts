@@ -15,7 +15,10 @@ export interface DailySunPreference {
   recipientHash: string;
   sign: string;
   confirmedAt: string;
+  confirmedByAttemptId: string;
 }
+
+export type DailySunProviderMutationOutcome = 'ready' | 'busy' | 'unavailable';
 
 export type DailySunRequestKind = 'subscribe' | 'sign_change';
 export type DailySunStageOutcome =
@@ -89,16 +92,20 @@ function parseActivePreference(candidate: unknown): DailySunPreference | null {
     recipient_hash?: unknown;
     sign?: unknown;
     confirmed_at?: unknown;
+    confirmed_by_attempt_id?: unknown;
   };
   return typeof row.recipient_hash === 'string'
     && HASH.test(row.recipient_hash)
     && isSign(row.sign)
     && typeof row.confirmed_at === 'string'
     && Number.isFinite(Date.parse(row.confirmed_at))
+    && typeof row.confirmed_by_attempt_id === 'string'
+    && UUID.test(row.confirmed_by_attempt_id)
     ? {
       recipientHash: row.recipient_hash,
       sign: row.sign,
       confirmedAt: row.confirmed_at,
+      confirmedByAttemptId: row.confirmed_by_attempt_id.toLowerCase(),
     }
     : null;
 }
@@ -146,7 +153,7 @@ export async function getDailySunPreference(
 ): Promise<DailySunPreference | null> {
   if (!HASH.test(recipientHash)) return null;
   const query = new URLSearchParams({
-    select: 'recipient_hash,sign,confirmed_at',
+    select: 'recipient_hash,sign,confirmed_at,confirmed_by_attempt_id',
     recipient_hash: `eq.${recipientHash}`,
     limit: '1',
   });
@@ -156,6 +163,52 @@ export async function getDailySunPreference(
   if (!response.ok) throw new Error(`Daily sun preference lookup failed (${response.status})`);
   const body = await response.json() as unknown;
   return Array.isArray(body) && body.length === 1 ? parseActivePreference(body[0]) : null;
+}
+
+export async function beginDailySunProviderMutation(
+  preference: DailySunPreference,
+  leaseId: string,
+  env: Environment = process.env,
+  fetcher: Fetch = fetch,
+): Promise<DailySunProviderMutationOutcome> {
+  if (!HASH.test(preference.recipientHash)
+    || !UUID.test(preference.confirmedByAttemptId)
+    || !UUID.test(leaseId)) return 'unavailable';
+  const result = await rpc('account_v2_begin_daily_sun_provider_mutation', {
+    candidate_recipient_hash: preference.recipientHash,
+    candidate_authority_attempt_id: preference.confirmedByAttemptId,
+    candidate_lease_id: leaseId,
+  }, env, fetcher);
+  if (!result || typeof result !== 'object' || Array.isArray(result)) {
+    throw new Error('Daily sun provider mutation lease returned an invalid state.');
+  }
+  const outcome = (result as { outcome?: unknown }).outcome;
+  if (outcome !== 'ready' && outcome !== 'busy' && outcome !== 'unavailable') {
+    throw new Error('Daily sun provider mutation lease returned an invalid state.');
+  }
+  return outcome;
+}
+
+export async function finishDailySunProviderMutation(
+  preference: DailySunPreference,
+  leaseId: string,
+  env: Environment = process.env,
+  fetcher: Fetch = fetch,
+): Promise<void> {
+  if (!HASH.test(preference.recipientHash)
+    || !UUID.test(preference.confirmedByAttemptId)
+    || !UUID.test(leaseId)) {
+    throw new Error('Daily sun provider mutation lease identifiers are invalid.');
+  }
+  const result = await rpc('account_v2_finish_daily_sun_provider_mutation', {
+    candidate_recipient_hash: preference.recipientHash,
+    candidate_authority_attempt_id: preference.confirmedByAttemptId,
+    candidate_lease_id: leaseId,
+  }, env, fetcher);
+  if (!result || typeof result !== 'object' || Array.isArray(result)
+    || (result as { outcome?: unknown }).outcome !== 'released') {
+    throw new Error('Daily sun provider mutation lease was not released.');
+  }
 }
 
 export async function savePendingDailySunConfirmation(

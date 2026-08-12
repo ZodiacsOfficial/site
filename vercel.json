@@ -190,6 +190,10 @@
   ],
   "rewrites": [
     {
+      "source": "/api/account/:action",
+      "destination": "/api/account?action=:action"
+    },
+    {
       "source": "/api/registry/news",
       "destination": "/api/compatibility?action=registry-news"
     },

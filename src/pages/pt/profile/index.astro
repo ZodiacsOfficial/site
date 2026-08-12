@@ -2,7 +2,14 @@
 import Base from '../../../layouts/Base.astro';
 import ProfileDashboard from '../../../islands/ProfileDashboard';
 import ProfileManager from '../../../islands/ProfileManager';
+import AccountBoundProfileSurface from '../../../islands/AccountBoundProfileSurface';
+import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../../../lib/account-v2/feature-flags';
 import '../../../styles/calculator.css';
+
+const accountSyncV2Enabled = isAccountSyncV2Enabled({
+  PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
+  PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
+});
 
 const jsonLd = [
   {
@@ -22,6 +29,7 @@ const jsonLd = [
   path="/pt/profile/"
   locale="pt"
   jsonLd={jsonLd}
+  privateSurface={accountSyncV2Enabled}
 >
   <section class="section--tight container container--narrow">
     <div class="pf-hero">
@@ -29,10 +37,18 @@ const jsonLd = [
       <h1 class="display">Mapas salvos.</h1>
       <p>Salve mapas neste dispositivo. Entre na conta quando quiser acessá-los em todos os seus dispositivos.</p>
     </div>
-    <ProfileDashboard locale="pt" client:load />
-    <ProfileManager locale="pt" client:load />
+    {accountSyncV2Enabled ? (
+      <AccountBoundProfileSurface locale="pt" client:load />
+    ) : (
+      <>
+        <ProfileDashboard locale="pt" client:load />
+        <ProfileManager locale="pt" client:load />
+      </>
+    )}
     <aside class="pf-note">
-      <p class="mono">Se você apagar os dados do navegador, os mapas armazenados apenas localmente também serão apagados. Entre na conta para sincronizar mapas salvos e exclusões entre dispositivos.</p>
+      <p class="mono">{accountSyncV2Enabled
+        ? <>O teste de sincronização criptografada é gerenciado temporariamente em <a href="/profile/">/profile/</a>. Aqui, seus mapas ficam somente neste dispositivo.</>
+        : 'Se você apagar os dados do navegador, os mapas armazenados apenas localmente também serão apagados. Entre na conta para sincronizar mapas salvos e exclusões entre dispositivos.'}</p>
     </aside>
   </section>
 </Base>

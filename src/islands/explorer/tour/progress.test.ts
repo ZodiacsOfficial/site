@@ -36,6 +36,7 @@ describe('first-reading progress', () => {
       step: 3,
       updatedAt: '2026-07-17T00:00:00.000Z',
     });
+    expect(storage.values.get(FIRST_READING_STORAGE_KEY)).not.toContain('chartKey');
     expect(readFirstReadingProgress(storage)).toEqual(saved);
   });
 
@@ -48,14 +49,21 @@ describe('first-reading progress', () => {
       .toBe('dismissed');
   });
 
-  it('keeps an in-progress reading tied to the chart it started from', () => {
-    const storage = memoryStorage();
-    const saved = writeFirstReadingProgress(storage, {
+  it('removes legacy exact chart identity without erasing tour progress', () => {
+    const storage = memoryStorage(JSON.stringify({
+      version: 1,
       status: 'in_progress',
       step: 2,
       chartKey: '1990-06-15T16:30:00.000Z|1|40.7128|-74.0060',
-    });
+      updatedAt: '2026-07-17T00:00:00.000Z',
+    }));
 
-    expect(readFirstReadingProgress(storage).chartKey).toBe(saved.chartKey);
+    expect(readFirstReadingProgress(storage)).toEqual({
+      version: 1,
+      status: 'in_progress',
+      step: 2,
+      updatedAt: '2026-07-17T00:00:00.000Z',
+    });
+    expect(storage.values.get(FIRST_READING_STORAGE_KEY)).not.toContain('chartKey');
   });
 });

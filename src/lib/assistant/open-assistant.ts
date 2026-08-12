@@ -8,6 +8,7 @@ import './assistant.css';
 import { houseOf, wholeSignCusps } from '../engine/houses';
 import { normalizeLocale as normalizeSiteLocale, type ReleasedLocale as Locale } from '../i18n/core';
 import { PROFILE_KEY } from '../profile/schema';
+import { profileAccessAllowed } from '../account-v2/profile-access-reader';
 import { degreeInSign, signForLongitude } from '../signs';
 
 export type AssistantLocale = Locale;
@@ -248,6 +249,7 @@ let messages: AssistantMessage[] = [];
 let savedChart: StoredChart | null = null;
 let chartEnabled = false;
 let chartSummaryPromise: Promise<string | null> | null = null;
+let profileAccessGeneration = 0;
 
 class AssistantFailure extends Error {
   constructor(public code: string) {
@@ -363,6 +365,7 @@ export function latestSavedChartFromJson(raw: string | null): StoredChart | null
 }
 
 function readLatestSavedChart(): StoredChart | null {
+  if (!profileAccessAllowed()) return null;
   try {
     return latestSavedChartFromJson(localStorage.getItem(PROFILE_KEY));
   } catch {
@@ -629,18 +632,59 @@ let chartConsented = false;
 /** Withdraws an on-screen consent card, declining it, when set. */
 let dismissPendingConsent: (() => void) | null = null;
 
+function currentProfileAccessGeneration(generation: number): boolean {
+  return generation === profileAccessGeneration;
+}
+
+function clearAssistantForProfileRevocation(): void {
+  abortRequest();
+  dismissPendingConsent?.();
+  dismissPendingConsent = null;
+  savedChart = null;
+  chartSummaryPromise = null;
+  chartConsented = false;
+  chartEnabled = false;
+  messages = [];
+  transcript?.replaceChildren();
+  if (intro) intro.hidden = false;
+  if (textarea) {
+    textarea.value = '';
+    syncTextareaHeight();
+  }
+  setStatus();
+  setBusy(false);
+}
+
+function onProfileAccessChange(): void {
+  profileAccessGeneration += 1;
+  if (profileAccessAllowed()) {
+    refreshSavedChart();
+    return;
+  }
+  clearAssistantForProfileRevocation();
+}
+
 /**
  * Plain-language consent with an exact preview of the payload. Resolves
  * true only when the visitor confirms; the summary shown is the same
  * string the request will carry.
  */
-async function requestChartConsent(): Promise<boolean> {
+async function requestChartConsent(
+  expectedGeneration = profileAccessGeneration,
+): Promise<boolean> {
+  if (!currentProfileAccessGeneration(expectedGeneration) || !profileAccessAllowed()) return false;
   if (chartConsented) return true;
   const log = transcript;
-  if (!savedChart || !log) return false;
-  chartSummaryPromise ??= placementSummaryForChart(savedChart);
+  const chart = savedChart;
+  if (!chart || !log) return false;
+  chartSummaryPromise ??= placementSummaryForChart(chart);
   const summary = await chartSummaryPromise;
-  if (!summary) return false;
+  if (
+    !summary
+    || !currentProfileAccessGeneration(expectedGeneration)
+    || !profileAccessAllowed()
+    || savedChart !== chart
+  ) return false;
   return new Promise((resolve) => {
     const copy = currentCopy();
     const card = document.createElement('section');
@@ -662,15 +706,25 @@ async function requestChartConsent(): Promise<boolean> {
     cancel.type = 'button';
     cancel.className = 'zassistant__consent-cancel';
     cancel.textContent = copy.consentCancel;
+    let settled = false;
+    let dismiss = () => {};
     const settle = (granted: boolean) => {
+      if (settled) return;
+      settled = true;
       card.remove();
-      dismissPendingConsent = null;
-      chartConsented = granted;
-      if (!granted) chartEnabled = false;
-      syncChartButton();
-      resolve(granted);
+      if (dismissPendingConsent === dismiss) dismissPendingConsent = null;
+      const current = currentProfileAccessGeneration(expectedGeneration)
+        && profileAccessAllowed()
+        && savedChart === chart;
+      if (current) {
+        chartConsented = granted;
+        if (!granted) chartEnabled = false;
+        syncChartButton();
+      }
+      resolve(current && granted);
     };
-    dismissPendingConsent = () => settle(false);
+    dismiss = () => settle(false);
+    dismissPendingConsent = dismiss;
     confirm.addEventListener('click', () => settle(true));
     cancel.addEventListener('click', () => settle(false));
     row.append(confirm, cancel);
@@ -709,6 +763,7 @@ function questionRequestsMyChart(question: string): boolean {
 
 async function submitQuestion(): Promise<void> {
   if (!textarea || activeRequest) return;
+  const expectedGeneration = profileAccessGeneration;
   const question = textarea.value.trim();
   if (!question) {
     setStatus(currentCopy().empty);
@@ -723,8 +778,14 @@ async function submitQuestion(): Promise<void> {
   const assistantMessage = appendMessage('assistant', '');
   assistantMessage.article.setAttribute('aria-busy', 'true');
 
-  activeRequest = new AbortController();
+  const request = new AbortController();
+  activeRequest = request;
   setBusy(true);
+
+  const requestIsCurrent = () => (
+    currentProfileAccessGeneration(expectedGeneration)
+    && activeRequest === request
+  );
 
   let answer = '';
   try {
@@ -732,30 +793,43 @@ async function submitQuestion(): Promise<void> {
     const wantsChart = Boolean(savedChart) && (chartEnabled || questionRequestsMyChart(question));
     if (wantsChart && savedChart) {
       setStatus(currentCopy().chartReading);
-      const granted = await requestChartConsent();
+      const granted = await requestChartConsent(expectedGeneration);
+      if (!requestIsCurrent()) return;
       if (granted) {
         chartEnabled = true;
         syncChartButton();
         chartSummaryPromise ??= placementSummaryForChart(savedChart);
         const resolved = await chartSummaryPromise;
+        if (!requestIsCurrent()) return;
         if (chartEnabled && resolved) chart = resolved;
       }
     }
+    if (!requestIsCurrent()) return;
     setStatus(currentCopy().thinking);
 
     const response = await fetch('/api/assistant', {
       method: 'POST',
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ messages: requestMessages, ...(chart ? { chart } : {}) }),
-      signal: activeRequest.signal,
+      signal: request.signal,
     });
-    if (!response.ok) throw new AssistantFailure(await failureCode(response));
+    if (!requestIsCurrent()) {
+      await response.body?.cancel().catch(() => {});
+      return;
+    }
+    if (!response.ok) {
+      const code = await failureCode(response);
+      if (!requestIsCurrent()) return;
+      throw new AssistantFailure(code);
+    }
 
     await consumeAssistantStream(response, (delta) => {
+      if (!requestIsCurrent()) return;
       answer += delta;
       assistantMessage.body.textContent = answer;
       scrollTranscript();
     });
+    if (!requestIsCurrent()) return;
     if (!answer.trim()) throw new AssistantFailure('unavailable');
 
     renderAssistantText(assistantMessage.body, answer);
@@ -765,6 +839,7 @@ async function submitQuestion(): Promise<void> {
     setStatus(currentCopy().complete);
     track('assistant_reply');
   } catch (error) {
+    if (!requestIsCurrent()) return;
     assistantMessage.article.removeAttribute('aria-busy');
     const aborted = error instanceof DOMException && error.name === 'AbortError';
     if (!answer) assistantMessage.article.remove();
@@ -776,8 +851,8 @@ async function submitQuestion(): Promise<void> {
       setStatus(friendlyFailure(code));
     }
   } finally {
-    setBusy(false);
-    if (root && !root.hidden) textarea.focus();
+    if (activeRequest === request) setBusy(false);
+    if (currentProfileAccessGeneration(expectedGeneration) && root && !root.hidden) textarea.focus();
   }
 }
 
@@ -866,7 +941,9 @@ function build(): void {
       syncChartButton();
       return;
     }
-    void requestChartConsent().then((granted) => {
+    const expectedGeneration = profileAccessGeneration;
+    void requestChartConsent(expectedGeneration).then((granted) => {
+      if (!currentProfileAccessGeneration(expectedGeneration)) return;
       chartEnabled = granted;
       syncChartButton();
     });
@@ -940,6 +1017,7 @@ function build(): void {
   window.addEventListener('zodiacs:profile', () => {
     if (!activeRequest) refreshSavedChart();
   });
+  window.addEventListener('zodiacs:profile-access', onProfileAccessChange);
 }
 
 /** Open the assistant dialog. Safe to call repeatedly on the same page. */

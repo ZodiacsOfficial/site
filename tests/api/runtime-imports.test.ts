@@ -7,6 +7,7 @@ import * as ts from 'typescript';
 const ROOT = fileURLToPath(new URL('../..', import.meta.url));
 const API_ROOT = join(ROOT, 'api');
 const EXPECTED_HANDLERS = [
+  'api/account.ts',
   'api/aura-holdings.ts',
   'api/assistant.ts',
   'api/calendar/transits.ts',
@@ -187,7 +188,7 @@ function auditRuntimeGraphs(): { violations: string[]; catalogs: string[] } {
 describe('Vercel API runtime packaging', () => {
   it('exposes only the intended function handlers', () => {
     expect(deployedFunctionFiles(API_ROOT).sort()).toEqual([...EXPECTED_HANDLERS].sort());
-    expect(EXPECTED_HANDLERS).toHaveLength(12);
+    expect(EXPECTED_HANDLERS).toHaveLength(13);
   });
 
   it('routes Registry news through the existing compatibility function', () => {
@@ -195,6 +196,14 @@ describe('Vercel API runtime packaging', () => {
     expect(vercel.rewrites).toContainEqual({
       source: '/api/registry/news',
       destination: '/api/compatibility?action=registry-news',
+    });
+  });
+
+  it('keeps account lifecycle actions on one scoped function route', () => {
+    const vercel = JSON.parse(readFileSync(join(ROOT, 'vercel.json'), 'utf8'));
+    expect(vercel.rewrites).toContainEqual({
+      source: '/api/account/:action',
+      destination: '/api/account?action=:action',
     });
   });
 

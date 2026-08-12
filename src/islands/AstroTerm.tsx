@@ -1,6 +1,5 @@
 import { useEffect, useRef } from 'preact/hooks';
 import { resolveContextTerm } from '../data/context-help';
-import { bindContextHelp } from '../lib/context-help-client';
 import '../styles/context-help.css';
 
 export interface AstroTermProps {
@@ -31,7 +30,17 @@ export default function AstroTerm({
 
   useEffect(() => {
     if (!root.current || !entry) return;
-    return bindContextHelp(root.current);
+    let active = true;
+    let cleanup: (() => void) | undefined;
+    const target = root.current;
+    void import('../lib/context-help-client').then(({ bindContextHelp }) => {
+      if (!active) return;
+      cleanup = bindContextHelp(target);
+    }).catch(() => {});
+    return () => {
+      active = false;
+      cleanup?.();
+    };
   }, [entry]);
 
   if (!entry) {

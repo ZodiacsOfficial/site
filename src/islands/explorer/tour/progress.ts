@@ -7,8 +7,6 @@ export interface FirstReadingProgress {
   status: FirstReadingStatus;
   /** Zero-based stop in the four-step reading. */
   step: number;
-  /** Identifies the person/chart an in-progress reading belongs to. */
-  chartKey?: string;
   updatedAt: string;
 }
 
@@ -45,8 +43,12 @@ export function readFirstReadingProgress(storage: StorageLike): FirstReadingProg
       step,
       updatedAt: typeof value.updatedAt === 'string' ? value.updatedAt : '',
     };
-    if (typeof value.chartKey === 'string' && value.chartKey !== '') {
-      progress.chartKey = value.chartKey;
+    // v1 briefly stored exact UTC/coordinates in `chartKey`. Preserve the
+    // visitor's tour progress while removing that source-private residue.
+    if (typeof (value as { chartKey?: unknown }).chartKey === 'string') {
+      try {
+        storage.setItem(FIRST_READING_STORAGE_KEY, JSON.stringify(progress));
+      } catch { /* best-effort migration; the returned value is still clean */ }
     }
     return progress;
   } catch {
@@ -65,7 +67,6 @@ export function writeFirstReadingProgress(
     step: Math.max(0, Math.min(3, Math.trunc(progress.step))),
     updatedAt: now.toISOString(),
   };
-  if (progress.chartKey) next.chartKey = progress.chartKey;
   try {
     storage.setItem(FIRST_READING_STORAGE_KEY, JSON.stringify(next));
   } catch {

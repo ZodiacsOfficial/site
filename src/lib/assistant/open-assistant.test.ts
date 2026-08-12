@@ -1,3 +1,4 @@
+import { readFile } from 'node:fs/promises';
 import { describe, expect, it } from 'vitest';
 import {
   consumeAssistantStream,
@@ -110,5 +111,75 @@ describe('assistant SSE frames', () => {
       (delta) => deltas.push(delta),
     )).rejects.toThrow('unavailable');
     expect(deltas).toEqual(['partial']);
+  });
+});
+
+describe('assistant profile-access privacy fence', () => {
+  it('invalidates first, then scrubs every account-derived assistant surface on denial', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const clearStart = source.indexOf('function clearAssistantForProfileRevocation()');
+    const handlerStart = source.indexOf('function onProfileAccessChange()');
+    const consentStart = source.indexOf('async function requestChartConsent(');
+    const clear = source.slice(clearStart, handlerStart);
+    const handler = source.slice(handlerStart, consentStart);
+
+    expect(clearStart).toBeGreaterThan(-1);
+    expect(handler).toContain('profileAccessGeneration += 1;');
+    expect(handler.indexOf('profileAccessGeneration += 1;'))
+      .toBeLessThan(handler.indexOf('profileAccessAllowed()'));
+    expect(handler).toContain('refreshSavedChart();');
+    expect(handler).toContain('clearAssistantForProfileRevocation();');
+
+    for (const requiredScrub of [
+      'abortRequest();',
+      'dismissPendingConsent?.();',
+      'dismissPendingConsent = null;',
+      'savedChart = null;',
+      'chartSummaryPromise = null;',
+      'chartConsented = false;',
+      'chartEnabled = false;',
+      'messages = [];',
+      'transcript?.replaceChildren();',
+      "textarea.value = '';",
+      'setBusy(false);',
+    ]) {
+      expect(clear, requiredScrub).toContain(requiredScrub);
+    }
+    expect(source).toContain(
+      "window.addEventListener('zodiacs:profile-access', onProfileAccessChange);",
+    );
+  });
+
+  it('fences consent, network send, stream paint, and completion state to one access generation', async () => {
+    const source = await readFile(new URL('./open-assistant.ts', import.meta.url), 'utf8');
+    const consentStart = source.indexOf('async function requestChartConsent(');
+    const submitStart = source.indexOf('async function submitQuestion()');
+    const focusStart = source.indexOf('function focusableControls()');
+    const consent = source.slice(consentStart, submitStart);
+    const submit = source.slice(submitStart, focusStart);
+
+    expect(consent).toContain('expectedGeneration = profileAccessGeneration');
+    expect(consent).toContain('!currentProfileAccessGeneration(expectedGeneration)');
+    expect(consent.indexOf('const summary = await chartSummaryPromise;'))
+      .toBeLessThan(consent.indexOf('savedChart !== chart'));
+    expect(consent).toContain('resolve(current && granted);');
+
+    expect(submit).toContain('const expectedGeneration = profileAccessGeneration;');
+    expect(submit).toContain('activeRequest === request');
+    expect(submit).toContain('requestChartConsent(expectedGeneration)');
+    expect(submit.indexOf('if (!requestIsCurrent()) return;'))
+      .toBeLessThan(submit.indexOf("const response = await fetch('/api/assistant'"));
+    expect(submit).toContain('signal: request.signal');
+    expect(submit).toContain('await response.body?.cancel().catch(() => {});');
+    expect(submit).toContain('await consumeAssistantStream(response, (delta) => {\n      if (!requestIsCurrent()) return;');
+    expect(submit).toContain('if (!requestIsCurrent()) return;\n    assistantMessage.article.removeAttribute');
+    expect(submit).toContain('if (activeRequest === request) setBusy(false);');
+
+    const chartButton = source.slice(
+      source.indexOf("chartButton.addEventListener('click'"),
+      source.indexOf("transcript = document.createElement('div')"),
+    );
+    expect(chartButton).toContain('requestChartConsent(expectedGeneration).then((granted) => {');
+    expect(chartButton).toContain('if (!currentProfileAccessGeneration(expectedGeneration)) return;');
   });
 });

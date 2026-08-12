@@ -3,6 +3,7 @@ import type { ComponentType } from 'preact';
 import { BirthFields } from './BirthFields';
 import PlaceSearch from './PlaceSearch';
 import { useProfile } from '../lib/hooks/useProfile';
+import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
 import type { City } from '../lib/geo/search';
 import type { SolarReturnResultData } from './solar-return/compute';
 import type { SolarReturnResultProps } from './solar-return/SolarReturnResult';
@@ -29,6 +30,15 @@ export default function SolarReturnCalculator() {
   const [error, setError] = useState('');
   const errorRef = useRef<HTMLParagraphElement>(null);
   const initialized = useRef(false);
+  const profileAccessGeneration = useProfileAccessGeneration(() => {
+    setResult(null);
+    setResultView(null);
+    setWheelView(null);
+    setSource('manual');
+    setSavedId('');
+    setBusy(false);
+    setError('');
+  });
 
   useEffect(() => {
     if (!profileReady || initialized.current) return;
@@ -51,12 +61,14 @@ export default function SolarReturnCalculator() {
     if (!ready || busy) return;
     setBusy(true);
     setError('');
+    const accessGeneration = profileAccessGeneration.current;
     try {
       const [{ computeSolarReturn }, view, wheel] = await Promise.all([
         import('./solar-return/compute'),
         import('./solar-return/SolarReturnResult'),
         import('./transit/TransitRing'),
       ]);
+      if (accessGeneration !== profileAccessGeneration.current) return;
       const selected = source === 'saved' ? saved : null;
       const birthplace = selected ? selected.birth.place : city;
       const savedSun = selected && !selected.birth.place
@@ -73,14 +85,16 @@ export default function SolarReturnCalculator() {
         castLocation: selected && !selected.birth.place ? null : (differentPlace ? castCity : birthplace),
         year: yearMode === 'current' ? 'current' : Number(customYear),
       });
+      if (accessGeneration !== profileAccessGeneration.current) return;
       setResultView(() => view.SolarReturnResult);
       setWheelView(() => wheel.StaticWheel);
       setResult(resultData);
     } catch (cause) {
+      if (accessGeneration !== profileAccessGeneration.current) return;
       console.error(cause);
       setError('The solar return could not be computed. Check the details and try again.');
     } finally {
-      setBusy(false);
+      if (accessGeneration === profileAccessGeneration.current) setBusy(false);
     }
   }
 

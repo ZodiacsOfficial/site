@@ -215,11 +215,18 @@ describe('admin-only daily email bootstrap', () => {
         state = 'confirmed';
         return json({ outcome: 'completed', active_sign: 'libra' });
       }
+      if (url.endsWith('/rest/v1/rpc/account_v2_begin_daily_sun_provider_mutation')) {
+        return json({ outcome: 'ready' });
+      }
+      if (url.endsWith('/rest/v1/rpc/account_v2_finish_daily_sun_provider_mutation')) {
+        return json({ outcome: 'released' });
+      }
       if (url.includes('/rest/v1/daily_sun_preferences?') && !init?.method) {
         return json(state === 'confirmed' ? [{
           recipient_hash: recipientHash,
           sign: 'libra',
           confirmed_at: '2026-07-21T12:00:00.000Z',
+          confirmed_by_attempt_id: ADMIN_USER_ID,
         }] : []);
       }
       if (url === 'https://api.resend.com/contacts' && init?.method === 'POST') {

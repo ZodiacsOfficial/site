@@ -12,7 +12,6 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'preact/hooks'
 import { BirthFields } from './BirthFields';
 import ChartActionDock from './ChartActionDock';
 import AstroTerm from './AstroTerm';
-import EvidenceDisclosure from './EvidenceDisclosure';
 import type { CopyLinkState } from './CopyLinkButton';
 import SignChip from './SignChip';
 import PlanetGlyph from '../components/PlanetGlyph';
@@ -49,7 +48,10 @@ import {
   chartHandoffFragment,
   compatibilityHandoffPath,
   mineHandoffFromHash,
+  profileChartIdFromHash,
+  profileHandoffOriginsFromHash,
   someoneElseHandoffPath,
+  someoneElseProfileHandoffPath,
   subjectModeFromHash,
   type MineHandoff,
   type SubjectMode,
@@ -63,11 +65,14 @@ import { CATALOG_LOCALES, RELEASED_LOCALES, localizePath, normalizeCatalogLocale
 import { aspectLabel, moonPhaseLabel, planetLabel } from '../lib/i18n/astrology';
 import { russianRuntime } from '../lib/i18n/ru-runtime';
 import { useEngine } from '../lib/hooks/useEngine';
+import { useProfileAccessGeneration } from '../lib/hooks/useProfileAccessGeneration';
+import { profileAccessAllowed } from '../lib/account-v2/profile-access-reader';
 import type { AspectType } from '../lib/engine/types';
 import {
   clearPostChartContext,
   publishPostChartContext,
 } from '../lib/profile/post-chart-context';
+import '../styles/evidence-disclosure.css';
 
 type Mode = 'full' | 'moon' | 'rising';
 
@@ -136,14 +141,6 @@ const WHEEL_ACTION_COPY = {
   compareAdd: string;
   shareOther: string;
 }>;
-function firstReadingChartKey(chart: Chart): string {
-  return [
-    chart.input.utc.toISOString(),
-    chart.input.timeKnown ? '1' : '0',
-    chart.input.latitude?.toFixed(4) ?? '',
-    chart.input.longitude?.toFixed(4) ?? '',
-  ].join('|');
-}
 const CHART_BOOK_COPY = {
   en: { label: 'Whose chart is this?', save: 'Save', skip: 'Skip' },
   es: { label: '¿De quién es esta carta?', save: 'Guardar', skip: 'Omitir' },
@@ -355,6 +352,67 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   const shareReturnRef = useRef<HTMLElement | null>(null);
   const focusAfterComputeRef = useRef(false);
   const chartContextIdRef = useRef(0);
+  const primaryProfileOriginRef = useRef(false);
+  const primaryProfileChartIdRef = useRef<string | null>(null);
+  const mineProfileOriginRef = useRef(false);
+  const runChartIdRef = useRef(0);
+  const profileHandoffIdRef = useRef(0);
+  const profileAccessGeneration = useProfileAccessGeneration(() => {
+    setMatchedName(null);
+    setSaved('idle');
+    setSavePromptOpen(false);
+    setSaveDraft('');
+    setSaveInitial('');
+    setSaveSource('auto');
+    if (mineProfileOriginRef.current) {
+      mineProfileOriginRef.current = false;
+      setMineHandoff(null);
+    }
+    if (!primaryProfileOriginRef.current) return;
+    primaryProfileOriginRef.current = false;
+    primaryProfileChartIdRef.current = null;
+    runChartIdRef.current += 1;
+    chartContextIdRef.current += 1;
+    clearPostChartContext();
+    setDate('');
+    setTime('');
+    setTimeKnown(true);
+    setCity(null);
+    setHouseSystem('whole');
+    setChart(null);
+    setComputedInput(null);
+    setShareInput(null);
+    setPositionsOnly(null);
+    setFromLink(false);
+    setLinkName(null);
+    setSubjectMode('self');
+    setShare('idle');
+    setCard('idle');
+    setShareDialogOpen(false);
+    setMoonAmbiguous(false);
+    setError('');
+    resetLens();
+    exitTour();
+    cancelSpotlightArrival();
+    setSelection(null);
+    setSpotlight(null);
+    setAnnounce('');
+    setDepthOpen(false);
+    setA2hsHint(null);
+    setBusy(false);
+    focusAfterComputeRef.current = false;
+    try {
+      setFirstReading(readFirstReadingProgress(localStorage));
+    } catch { /* blocked storage keeps the already-scrubbed in-memory state */ }
+  });
+
+  function invalidateProfileHandoff(): void {
+    profileHandoffIdRef.current += 1;
+    primaryProfileChartIdRef.current = null;
+    if (!primaryProfileOriginRef.current) return;
+    runChartIdRef.current += 1;
+    setBusy(false);
+  }
 
   // ── Chart Explorer state (full mode) ──
   const [selection, setSelection] = useState<EntityRef | null>(null);
@@ -443,7 +501,6 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   function persistFirstReading(
     status: FirstReadingStatus,
     step: number,
-    chartKey = chart ? firstReadingChartKey(chart) : firstReading.chartKey,
   ) {
     let next: FirstReadingProgress = {
       version: 1,
@@ -451,9 +508,8 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       step: Math.max(0, Math.min(3, step)),
       updatedAt: new Date().toISOString(),
     };
-    if (chartKey) next.chartKey = chartKey;
     try {
-      next = writeFirstReadingProgress(localStorage, { status, step, chartKey });
+      next = writeFirstReadingProgress(localStorage, { status, step });
     } catch { /* storage unavailable — in-memory progress still works */ }
     setFirstReading(next);
     return next;
@@ -821,7 +877,68 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     const params = new URLSearchParams(hash.slice(1));
     const nextSubjectMode = subjectModeFromHash(hash);
     const nextMineHandoff = mineHandoffFromHash(hash);
+    const handoffOrigins = profileHandoffOriginsFromHash(hash);
     const clearFragment = () => history.replaceState(null, '', window.location.pathname + window.location.search);
+
+    if (params.has('profileChartId')) {
+      const profileChartId = profileChartIdFromHash(hash);
+      const handoffId = profileHandoffIdRef.current + 1;
+      profileHandoffIdRef.current = handoffId;
+      clearFragment();
+      if (!profileChartId || params.size !== 1) {
+        setError(t(locale, 'chartError'));
+        return;
+      }
+      let active = true;
+      let resolving = false;
+      const handoffIsCurrent = () => active && handoffId === profileHandoffIdRef.current;
+      const onProfileAccess = () => { queueMicrotask(resolveCurrentProfileChart); };
+      const resolveCurrentProfileChart = () => {
+        if (!handoffIsCurrent() || resolving || !profileAccessAllowed()) return;
+        resolving = true;
+        const accessGeneration = profileAccessGeneration.current;
+        void import('../lib/profile/profile-chart-handoff').then(({ loadProfileChartRunInput }) => {
+          resolving = false;
+          if (!handoffIsCurrent() || !profileAccessAllowed()) return;
+          if (accessGeneration !== profileAccessGeneration.current) {
+            queueMicrotask(resolveCurrentProfileChart);
+            return;
+          }
+          const input = loadProfileChartRunInput(profileChartId);
+          if (!input) {
+            active = false;
+            window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+            return;
+          }
+          const linkCity = input.city;
+          active = false;
+          window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+          primaryProfileOriginRef.current = true;
+          primaryProfileChartIdRef.current = profileChartId;
+          mineProfileOriginRef.current = false;
+          setDate(input.date);
+          setTime(input.time);
+          setTimeKnown(input.timeKnown);
+          setCity(linkCity);
+          setHouseSystem(input.houseSystem);
+          setFromLink(true);
+          setLinkName(input.name ?? null);
+          setPositionsOnly(null);
+          void runChart(input, false);
+        }).catch(() => {
+          resolving = false;
+          if (handoffIsCurrent() && accessGeneration === profileAccessGeneration.current) {
+            setError(t(locale, 'chartError'));
+          }
+        });
+      };
+      window.addEventListener('zodiacs:profile-access', onProfileAccess);
+      resolveCurrentProfileChart();
+      return () => {
+        active = false;
+        window.removeEventListener('zodiacs:profile-access', onProfileAccess);
+      };
+    }
 
     if (params.has('c') && params.has('p')) {
       clearFragment();
@@ -854,6 +971,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           setShareSurface(surface);
           setSubjectMode(nextSubjectMode);
           setMineHandoff(nextMineHandoff);
+          primaryProfileOriginRef.current = false;
+          primaryProfileChartIdRef.current = null;
+          mineProfileOriginRef.current = handoffOrigins.mine && nextMineHandoff !== null;
           clearFragment();
         })
         .catch(() => {
@@ -879,6 +999,9 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setFromLink(true);
     setLinkName(decoded.name ?? null);
     setPositionsOnly(null);
+    primaryProfileOriginRef.current = false;
+    primaryProfileChartIdRef.current = null;
+    mineProfileOriginRef.current = handoffOrigins.mine && nextMineHandoff !== null;
     clearFragment();
     runChart({
       date: decoded.date, time: decoded.time ?? '', timeKnown: decoded.timeKnown,
@@ -906,6 +1029,17 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     && !(mode === 'rising' && !timeKnown);
 
   async function runChart(input: RunInput, focusAfterCompute: boolean) {
+    const accessGeneration = profileAccessGeneration.current;
+    const requiresProfileAccess = primaryProfileOriginRef.current;
+    const runId = runChartIdRef.current + 1;
+    runChartIdRef.current = runId;
+    const runIsCurrent = () => (
+      runId === runChartIdRef.current
+      && (!requiresProfileAccess || (
+        accessGeneration === profileAccessGeneration.current
+        && profileAccessAllowed()
+      ))
+    );
     focusAfterComputeRef.current = focusAfterCompute;
     setBusy(true);
     setError('');
@@ -923,6 +1057,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     setMineHandoff(input.mine ?? null);
     try {
       const engine = await loadEngine();
+      if (!runIsCurrent()) return;
       const effectiveTime = input.timeKnown ? input.time : '12:00';
       const resolved = resolveLocalToUtc(input.date, effectiveTime, input.city.tz);
       const result = engine.computeChart({
@@ -933,18 +1068,12 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         timeKnown: input.timeKnown,
         flags: resolved.flags,
       });
+      if (!runIsCurrent()) return;
       setChart(result);
       setComputedInput({ ...input, city: { ...input.city } });
       const contextId = chartContextIdRef.current + 1;
       chartContextIdRef.current = contextId;
       clearPostChartContext();
-      if (mode === 'full' && firstReading.status === 'in_progress') {
-        const nextChartKey = firstReadingChartKey(result);
-        if (firstReading.chartKey !== nextChartKey) {
-          persistFirstReading('not_started', 0, nextChartKey);
-          exitTour();
-        }
-      }
       if (mode === 'full') {
         void import('./CalendarSubscribe').then(setCalendarSurface, () => {});
         void import('./CopyLinkButton').then(setCopyLinkModule, () => {});
@@ -988,16 +1117,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
       requestAnimationFrame(() => resultRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     } catch (err) {
+      if (!runIsCurrent()) return;
       setError(t(locale, 'chartError'));
       console.error(err);
     } finally {
-      setBusy(false);
+      if (runId === runChartIdRef.current) setBusy(false);
     }
   }
 
   function compute(e: Event) {
     e.preventDefault();
     if (!canCompute || !city) return;
+    invalidateProfileHandoff();
     setFromLink(false);
     if (subjectMode === 'self') setLinkName(null);
     runChart({
@@ -1091,13 +1222,18 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     ? compatibilityHandoffPath(shareInput, mineHandoff)
     : undefined;
   const anotherChartHref = subjectMode === 'self' && shareInput
-    ? someoneElseHandoffPath(shareInput)
+    ? primaryProfileOriginRef.current
+      ? primaryProfileChartIdRef.current
+        ? someoneElseProfileHandoffPath(primaryProfileChartIdRef.current) ?? '/birth-chart/someone-else/'
+        : '/birth-chart/someone-else/'
+      : someoneElseHandoffPath(shareInput)
     : '/birth-chart/someone-else/';
 
   useEffect(() => {
     if (!chart || !computedInput || mode !== 'full') return;
     let active = true;
     const contextId = chartContextIdRef.current;
+    const accessGeneration = profileAccessGeneration.current;
     const identity = {
       birth: {
         date: computedInput.date,
@@ -1115,7 +1251,11 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
       summary: { houseSystem: chart.houses?.system ?? computedInput.houseSystem },
     };
     void import('../lib/profile/store').then(({ findMatchingChart }) => {
-      if (!active || contextId !== chartContextIdRef.current) return;
+      if (
+        !active
+        || contextId !== chartContextIdRef.current
+        || accessGeneration !== profileAccessGeneration.current
+      ) return;
       const match = findMatchingChart(identity);
       setMatchedName(match?.name ?? null);
       publishPostChartContext({
@@ -1160,13 +1300,16 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
   async function openSavePrompt(origin: 'tour' | 'free' = 'free') {
     const identity = chartIdentity();
     if (!identity || saved === 'saved') return;
+    const accessGeneration = profileAccessGeneration.current;
     saveOriginRef.current = origin;
     let currentName = matchedName;
     try {
       const { findMatchingChart } = await import('../lib/profile/store');
+      if (accessGeneration !== profileAccessGeneration.current) return;
       currentName = findMatchingChart(identity)?.name ?? null;
       setMatchedName(currentName);
     } catch { /* saving will surface an error if storage cannot load */ }
+    if (accessGeneration !== profileAccessGeneration.current) return;
     const source: SavePrefillSource = linkName ? 'link' : currentName ? 'match' : 'auto';
     const prefill = (linkName ?? currentName ?? autoName).slice(0, NAME_MAX);
     setSaveSource(source);
@@ -1180,8 +1323,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
     if (!chart || !computedInput || !identity) return;
     track('chart_save', { source: saveOriginRef.current });
     const now = new Date().toISOString();
+    const accessGeneration = profileAccessGeneration.current;
     try {
       const { findMatchingChart, saveChart } = await import('../lib/profile/store');
+      if (accessGeneration !== profileAccessGeneration.current) return;
       const status = saveChart({
         id: crypto.randomUUID(),
         name: explicitName ?? autoName,
@@ -1197,6 +1342,7 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
           flags: chart.flags,
         },
       }, explicitName ? { explicitName } : undefined);
+      if (accessGeneration !== profileAccessGeneration.current) return;
       setSaved(status === 'updated' ? 'saved' : status);
       if (status === 'saved' || status === 'updated') {
         track('chart_saved', { source: saveOriginRef.current });
@@ -1218,8 +1364,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
         }).catch(() => {});
       }
     } catch {
+      if (accessGeneration !== profileAccessGeneration.current) return;
       setSaved('error');
     }
+    if (accessGeneration !== profileAccessGeneration.current) return;
     closeSavePrompt();
   }
 
@@ -1315,10 +1463,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
               time={time}
               timeKnown={timeKnown}
               city={city}
-              onDateChange={setDate}
-              onTimeChange={setTime}
-              onTimeKnownChange={setTimeKnown}
-              onCityChange={setCity}
+              onDateChange={(value) => { invalidateProfileHandoff(); setDate(value); }}
+              onTimeChange={(value) => { invalidateProfileHandoff(); setTime(value); }}
+              onTimeKnownChange={(value) => { invalidateProfileHandoff(); setTimeKnown(value); }}
+              onCityChange={(value) => { invalidateProfileHandoff(); setCity(value); }}
               onWarm={loadEngine}
               showUnknownTime={mode !== 'rising'}
               requireKnownTime
@@ -1332,7 +1480,10 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
                 <select
                   id="house-system" class="field__input"
                   value={houseSystem}
-                  onChange={(e) => setHouseSystem((e.target as HTMLSelectElement).value as HouseSystem)}
+                  onChange={(e) => {
+                    invalidateProfileHandoff();
+                    setHouseSystem((e.target as HTMLSelectElement).value as HouseSystem);
+                  }}
                 >
                   <option value="whole">{t(locale, 'wholeSignDefault')}</option>
                   <option value="placidus">{t(locale, 'placidus')}</option>
@@ -1518,14 +1669,21 @@ export default function ChartCalculator({ mode, locale: rawLocale = 'en' }: Prop
 
           {/* Wheel + inspector + placements (full mode) — the Chart Explorer */}
           {mode !== 'full' && chart && (
-            <EvidenceDisclosure label={detailLabels.lead.replace(/\s*—\s*$/, '')}>
-              <p class="calc__receipt mono" data-chart-receipt>
-                {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
-                {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
-                {chart.houses ? ` · ${chart.houses.system === 'whole' ? t(locale, 'wholeSignHouses') : t(locale, 'placidusHouses')}` : ''}
-                {' · '}{t(locale, 'engine')}{chart.engineVersion}
-              </p>
-            </EvidenceDisclosure>
+            <details class="evidence-disclosure evidence-disclosure--quiet" data-evidence-disclosure data-evidence-variant="quiet">
+              <summary>
+                <span class="evidence-disclosure__summary">
+                  <strong>{detailLabels.lead.replace(/\s*—\s*$/, '')}</strong>
+                </span>
+              </summary>
+              <div class="evidence-disclosure__body">
+                <p class="calc__receipt mono" data-chart-receipt>
+                  {chart.input.utc.toISOString().replace('T', ' · ').slice(0, 21)} UTC
+                  {city ? ` · ${city.lat.toFixed(2)}°, ${city.lon.toFixed(2)}°` : ''}
+                  {chart.houses ? ` · ${chart.houses.system === 'whole' ? t(locale, 'wholeSignHouses') : t(locale, 'placidusHouses')}` : ''}
+                  {' · '}{t(locale, 'engine')}{chart.engineVersion}
+                </p>
+              </div>
+            </details>
           )}
 
           {mode === 'full' && scene && (

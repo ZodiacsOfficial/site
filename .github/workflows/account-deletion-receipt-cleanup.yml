@@ -1,0 +1,39 @@
+name: Account Deletion Receipt Cleanup
+
+on:
+  schedule:
+    - cron: "37 * * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: account-deletion-receipt-cleanup
+  cancel-in-progress: false
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Prune expired deletion capabilities
+        env:
+          ACCOUNT_SYNC_V2_CLEANUP_SECRET: ${{ secrets.ACCOUNT_SYNC_V2_CLEANUP_SECRET }}
+        run: |
+          if [ -z "$ACCOUNT_SYNC_V2_CLEANUP_SECRET" ]; then
+            echo "Account sync v2 cleanup is not provisioned; no cleanup request was sent."
+            exit 0
+          fi
+          curl \
+            --fail-with-body \
+            --silent \
+            --show-error \
+            --retry 2 \
+            --retry-all-errors \
+            --max-time 30 \
+            --request POST \
+            --header "Authorization: Bearer $ACCOUNT_SYNC_V2_CLEANUP_SECRET" \
+            --header "Content-Type: application/json" \
+            --data '{}' \
+            https://zodiacs.org/api/account/cleanup-receipts

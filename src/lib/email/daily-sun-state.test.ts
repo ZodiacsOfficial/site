@@ -119,6 +119,7 @@ function createHarness(initialActive: ActiveRow | null = null) {
   let contactWrites = 0;
   let failNextContactWrite = false;
   let nextAllowedAt: number | null = null;
+  let providerLease: { attemptId: string; leaseId: string } | null = null;
 
   const fetcher = vi.fn(async (input: string | URL | Request, init?: RequestInit) => {
     const url = new URL(String(input));
@@ -250,6 +251,44 @@ function createHarness(initialActive: ActiveRow | null = null) {
       };
       request = null;
       return json({ outcome: 'completed', active_sign: active.sign });
+    }
+
+    if (url.pathname === '/rest/v1/rpc/account_v2_begin_daily_sun_provider_mutation'
+      && method === 'POST') {
+      callOrder.push('db:provider-lease-begin');
+      const body = JSON.parse(bodyText) as {
+        candidate_recipient_hash: string;
+        candidate_authority_attempt_id: string;
+        candidate_lease_id: string;
+      };
+      if (!active
+        || active.recipient_hash !== body.candidate_recipient_hash
+        || active.confirmed_by_attempt_id !== body.candidate_authority_attempt_id) {
+        return json({ outcome: 'unavailable' });
+      }
+      if (providerLease
+        && (providerLease.attemptId !== body.candidate_authority_attempt_id
+          || providerLease.leaseId !== body.candidate_lease_id)) {
+        return json({ outcome: 'busy' });
+      }
+      providerLease = {
+        attemptId: body.candidate_authority_attempt_id,
+        leaseId: body.candidate_lease_id,
+      };
+      return json({ outcome: 'ready' });
+    }
+
+    if (url.pathname === '/rest/v1/rpc/account_v2_finish_daily_sun_provider_mutation'
+      && method === 'POST') {
+      callOrder.push('db:provider-lease-finish');
+      const body = JSON.parse(bodyText) as {
+        candidate_authority_attempt_id: string;
+        candidate_lease_id: string;
+      };
+      const matches = providerLease?.attemptId === body.candidate_authority_attempt_id
+        && providerLease.leaseId === body.candidate_lease_id;
+      if (matches) providerLease = null;
+      return json({ outcome: matches ? 'released' : 'not_found' });
     }
 
     if (url.pathname === '/rest/v1/rpc/release_daily_sun_confirmation' && method === 'POST') {
@@ -573,9 +612,14 @@ describe('durable daily sun confirmation state', () => {
     expect(harness.request).toBeNull();
     expect(harness.contactWrites).toBe(2);
     const completion = harness.callOrder.indexOf('db:complete');
+    const leaseBegin = harness.callOrder.indexOf('db:provider-lease-begin');
     const firstProviderWrite = harness.callOrder.indexOf('provider:contact');
+    const leaseFinish = harness.callOrder.indexOf('db:provider-lease-finish');
     expect(completion).toBeGreaterThan(-1);
+    expect(leaseBegin).toBeGreaterThan(completion);
     expect(firstProviderWrite).toBeGreaterThan(completion);
+    expect(firstProviderWrite).toBeGreaterThan(leaseBegin);
+    expect(leaseFinish).toBeGreaterThan(firstProviderWrite);
   });
 
   it('reclaims a stale confirming lease without accepting the old owner', async () => {

@@ -1,3 +1,5 @@
+import { profileAccessAllowed } from '../account-v2/profile-access-reader';
+
 type Fetcher = typeof fetch;
 
 const UUID = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -225,6 +227,7 @@ export async function pauseDailyChartPreferenceForDeletion(
  * prove the server preference was paused; it never grants enrollment authority.
  */
 export function rememberDailyChartSelection(chartId: string | null): void {
+  if (!profileAccessAllowed()) return;
   try {
     if (chartId && UUID.test(chartId)) localStorage.setItem(DAILY_CHART_SELECTION_KEY, chartId);
     else localStorage.removeItem(DAILY_CHART_SELECTION_KEY);
@@ -235,6 +238,7 @@ export function rememberDailyChartSelection(chartId: string | null): void {
 }
 
 export function rememberedDailyChartSelection(): string | null {
+  if (!profileAccessAllowed()) return null;
   try {
     const chartId = localStorage.getItem(DAILY_CHART_SELECTION_KEY);
     return chartId && UUID.test(chartId) ? chartId : null;

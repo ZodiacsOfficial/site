@@ -1,7 +1,12 @@
 ---
 import Base from '../../layouts/Base.astro';
+import { accountSyncV2Enabled as isAccountSyncV2Enabled } from '../../lib/account-v2/feature-flags';
 
-const updated = '2 August 2026';
+const accountSyncV2Enabled = isAccountSyncV2Enabled({
+  PUBLIC_ACCOUNT_SYNC_V2_ENABLED: process.env.PUBLIC_ACCOUNT_SYNC_V2_ENABLED,
+  PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK: process.env.PUBLIC_ACCOUNT_SYNC_V2_PREVIEW_ACK,
+});
+const updated = accountSyncV2Enabled ? '12 August 2026' : '2 August 2026';
 
 const jsonLd = [
   {
@@ -172,32 +177,105 @@ const jsonLd = [
       </p>
 
       <h2>Optional account (sync across devices)</h2>
-      <p>
-        You can create a free account to keep your saved charts on more than one
-        device. This is entirely optional and the tools work fully without it.
-        If you create one:
-      </p>
-      <ul>
-        <li>
-          You sign in with a one-time link sent to your email address — there is
-          no password to store.
-        </li>
-        <li>
-          We store your email address and the charts you choose to sync (which
-          include the birth details for those charts) with our database
-          provider, <a href="https://supabase.com/" rel="noopener noreferrer">Supabase</a>,
-          so they can appear on your other devices. Access is restricted to your
-          own account.
-        </li>
-        <li>
-          While you are signed in, a sign-in token is kept in your browser so
-          you stay logged in. Signing out removes it.
-        </li>
-        <li>
-          You can delete your account and its stored charts at any time by
-          emailing <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
-        </li>
-      </ul>
+      {accountSyncV2Enabled ? (
+        <>
+          <p>
+            Accounts remain optional. Account-free calculators and local chart
+            saving work without signing in. The encrypted sync canary accepts at
+            most one chart that you explicitly confirm is your own. The preview
+            is limited to adults aged 18 or older.
+          </p>
+          <ul>
+            <li>
+              You sign in with a one-time link sent to your email address. A
+              first-party session token remains in this browser until sign-out.
+            </li>
+            <li>
+              Before upload, the profile page shows the exact birth source and
+              derived placement data that would leave the device. No chart is
+              selected or migrated automatically.
+            </li>
+            <li>
+              The saved label, exact date, time, place, coordinates, timezone,
+              and derived placements are encrypted by our server with a
+              per-record data key. That key is wrapped by a service key stored
+              outside the database. This is service-managed encryption—not
+              end-to-end encryption—so Zodiacs can decrypt the record when you
+              restore it on another signed-in device.
+            </li>
+            <li>
+              The database receives an encrypted chart envelope plus minimal
+              identifiers, revisions, consent state, and deletion authority
+              needed for synchronization. The chart is not public, used for
+              discovery, sent to an AI provider, or licensed for advertising by
+              this consent.
+            </li>
+            <li>
+              <a href="https://supabase.com/" rel="noopener noreferrer">Supabase</a>{' '}
+              processes account and database records, and{' '}
+              <a href="https://vercel.com/" rel="noopener noreferrer">Vercel</a>{' '}
+              runs the server boundary that validates and encrypts them.
+            </li>
+            <li>
+              To make deletion reliable after an account email changes, we keep
+              a bounded history of up to 16 confirmed account-email locators.
+              Each locator is encrypted with a service-managed key; the database
+              does not receive the plaintext address. During deletion, a
+              request-bound encrypted cleanup record may remain for up to seven
+              days while removal from the email provider is retried. It is used
+              only for that cleanup and is then deleted with the recovery receipt.
+            </li>
+            <li>
+              Withdrawing chart-sync consent immediately erases the v2 remote
+              encrypted chart record. Local copies stay on devices
+              unless you separately clear them.
+            </li>
+            <li>
+              You can download a JSON account export or initiate permanent
+              deletion from the profile page. Account deletion also removes a
+              linked, independently confirmed Daily Sun subscription when that
+              cleanup can be confirmed. If an email change or key rotation makes
+              the match ambiguous, account erasure still completes and the page
+              tells you to use the email’s unsubscribe link or contact support.
+            </li>
+            <li>
+              Accounts with charts from the earlier cloud-sync system are not
+              silently migrated. The canary pauses and offers export until an
+              explicit chart-by-chart migration review is available; permanent
+              account deletion removes those legacy records too.
+            </li>
+          </ul>
+        </>
+      ) : (
+        <>
+          <p>
+            You can create a free account to keep your saved charts on more than one
+            device. This is entirely optional and the tools work fully without it.
+            If you create one:
+          </p>
+          <ul>
+            <li>
+              You sign in with a one-time link sent to your email address — there is
+              no password to store.
+            </li>
+            <li>
+              We store your email address and the charts you choose to sync (which
+              include the birth details for those charts) with our database
+              provider, <a href="https://supabase.com/" rel="noopener noreferrer">Supabase</a>,
+              so they can appear on your other devices. Access is restricted to your
+              own account.
+            </li>
+            <li>
+              While you are signed in, a sign-in token is kept in your browser so
+              you stay logged in. Signing out removes it.
+            </li>
+            <li>
+              You can delete your account and its stored charts at any time by
+              emailing <a href="mailto:admin@zodiacs.org">admin@zodiacs.org</a>.
+            </li>
+          </ul>
+        </>
+      )}
 
       <h2>Optional weekly email</h2>
       <p>
@@ -242,18 +320,30 @@ const jsonLd = [
         makes and may keep short-lived technical logs (such as IP address and
         browser type) to deliver the site and guard against abuse. We do not run
         advertising, and we use no cross-site tracking cookies or third-party
-        marketing pixels. We count page views and anonymous feature usage with
-        Plausible, a cookieless analytics service. To avoid counting the same
-        device repeatedly during one day, Plausible briefly processes the IP
-        address and user agent to derive an identifier scoped to this site,
-        device, and day. The raw IP and user agent are not stored; the salt used
-        for that identifier rotates and is deleted every 24 hours. Plausible
-        receives no birth data, public address, chart identifier, connected
-        account identifier, or exact held-sign list. It receives no cross-site identifier.
-        Aura events carry only
-        allowlisted categories such as an outcome and a coarse held-count
-        bucket; other events similarly record “a chart was saved,” never whose.
+        marketing pixels.
       </p>
+      {accountSyncV2Enabled ? (
+        <p>
+          Third-party analytics are disabled throughout the access-controlled
+          encrypted-sync preview. This prevents an analytics script from
+          sharing the same page context as private browser chart storage.
+        </p>
+      ) : (
+        <p>
+          We count page views and anonymous feature usage with Plausible, a
+          cookieless analytics service. To avoid counting the same device
+          repeatedly during one day, Plausible briefly processes the IP address
+          and user agent to derive an identifier scoped to this site, device,
+          and day. The raw IP and user agent are not stored; the salt used for
+          that identifier rotates and is deleted every 24 hours. Plausible
+          receives no birth data, public address, chart identifier, connected
+          account identifier, or exact held-sign list. It also receives no
+          cross-site identifier.
+          Aura events carry only allowlisted categories such as an outcome and
+          a coarse held-count bucket; other events similarly record “a chart was
+          saved,” never whose.
+        </p>
+      )}
 
       <h2>Cookies</h2>
       <p>
@@ -278,7 +368,9 @@ const jsonLd = [
         <li>Paste a public address instead of connecting third-party wallet software.</li>
         <li>Leave Aura's “Remember” option unchecked and clear its browser data at any time.</li>
         <li>Delete saved charts by clearing your browser's data for this site.</li>
-        <li>Delete an account and its synced data by emailing us.</li>
+        {accountSyncV2Enabled
+          ? <li>Export or delete an account from the profile page; choose separately whether to clear this browser.</li>
+          : <li>Delete an account and its synced data by emailing us.</li>}
         <li>Turn the weekly email off with one click, any time.</li>
         <li>Request correction, withholding, or removal of a People profile.</li>
       </ul>

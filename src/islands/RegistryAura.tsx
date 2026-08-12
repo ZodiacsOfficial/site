@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "preact/hooks";
 import { useProfile } from "../lib/hooks/useProfile";
+import { useProfileAccessGeneration } from "../lib/hooks/useProfileAccessGeneration";
 import type { SavedChart } from "../lib/profile/schema";
 import {
   AURA_SIGN_ORDER,
@@ -335,6 +336,20 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   const preparedDownloadActionRef = useRef<
     ((blob: Blob) => "downloaded") | null
   >(null);
+  const profileAccessGeneration = useProfileAccessGeneration(() => {
+    requestRef.current?.abort();
+    requestRef.current = null;
+    restoredRef.current = false;
+    shareGenerationRef.current += 1;
+    preparedShareActionRef.current = null;
+    preparedDownloadActionRef.current = null;
+    setSelectedChartId("");
+    setResult(null);
+    setSharePreview(null);
+    setShareState("idle");
+    setRequestState("idle");
+    setStatus("");
+  });
 
   const chart = selectedChart(profile.charts, selectedChartId);
   const parsedAddress = parseWalletAddress(address);
@@ -420,6 +435,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
   useEffect(() => {
     if (!profileReady || restoredRef.current) return;
     restoredRef.current = true;
+    const accessGeneration = profileAccessGeneration.current;
     const sessionStore = auraStorage("session");
     const localStore = auraStorage("local");
     const session = sessionStore
@@ -453,6 +469,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     setSelectedChartId(cachedChart?.id ?? "");
     void loadAuraComposer()
       .then(({ auraSkySigns, composeAura }) => {
+        if (accessGeneration !== profileAccessGeneration.current) return;
         const composition = composeAura({
           heldSigns: cached.holdings.map(({ sign }) => sign),
           chart: cachedChart,
@@ -486,6 +503,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
         setPersistenceReady(true);
       })
       .catch(() => {
+        if (accessGeneration !== profileAccessGeneration.current) return;
         setError(
           "The saved collection could not be restored. Clear its data and try again.",
         );
@@ -580,6 +598,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
     requestRef.current?.abort();
     const controller = new AbortController();
     requestRef.current = controller;
+    const accessGeneration = profileAccessGeneration.current;
     setRequestState("busy");
     setError("");
     setStatus("Reading the public record…");
@@ -596,6 +615,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       const payload: unknown = await response.json().catch(() => null);
       if (controller.signal.aborted || requestRef.current !== controller)
         return;
+      if (accessGeneration !== profileAccessGeneration.current) return;
       if (!response.ok) {
         const code =
           payload && typeof payload === "object" && "error" in payload
@@ -620,6 +640,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       const { composeAura } = await loadAuraComposer();
       if (controller.signal.aborted || requestRef.current !== controller)
         return;
+      if (accessGeneration !== profileAccessGeneration.current) return;
       const composition = composeAura({
         heldSigns: payload.heldSigns,
         chart,
@@ -627,6 +648,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       });
       if (controller.signal.aborted || requestRef.current !== controller)
         return;
+      if (accessGeneration !== profileAccessGeneration.current) return;
       const mode: AuraAddressMode =
         connectedWallet && connectedAddressRef.current === parsed.address
           ? "connected"
@@ -662,6 +684,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
       );
     } catch (caught) {
       if ((caught as DOMException)?.name === "AbortError") return;
+      if (accessGeneration !== profileAccessGeneration.current) return;
       fail(ERROR_COPY.network, "network", refresh);
     } finally {
       if (requestRef.current === controller) requestRef.current = null;
@@ -838,6 +861,7 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
 
   const updateSelectedChart = (nextId: string) => {
     const nextChart = selectedChart(profile.charts, nextId);
+    const accessGeneration = profileAccessGeneration.current;
     setSelectedChartId(nextId);
     invalidateSharePreview();
     if (!result || result.mode === "example") return;
@@ -847,7 +871,9 @@ export function RegistryAura({ availableChains }: RegistryAuraProps) {
 
     void loadAuraComposer()
       .then(({ composeAura }) => {
+        if (accessGeneration !== profileAccessGeneration.current) return;
         setResult((current) => {
+          if (accessGeneration !== profileAccessGeneration.current) return current;
           if (!current || current.mode === "example") return current;
           return {
             ...current,
