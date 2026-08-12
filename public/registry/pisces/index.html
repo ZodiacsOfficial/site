@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#060709" />
   <meta name="color-scheme" content="dark" />
-  <title>Pisces — Official PISCES Token · Lot XII of XII | Zodiacs.org</title>
-  <meta name="description" content="The Fishes. Bound by a cord, never to be parted. The official Pisces zodiac token: PISCES on Solana, official Base counterpart, provenance, live market context, and acquisition." />
+  <title>Pisces — Official PISCES Zodiac Token · Sign 12 of 12 | Zodiacs.org</title>
+  <meta name="description" content="Pisces is the transferable token for the Pisces sign. Verify its official addresses, market history, constellation, and collection artwork." />
   <link rel="canonical" href="https://zodiacs.org/registry/pisces/" />
   <script>
     window.plausible = window.plausible || function () {
@@ -31,18 +31,18 @@
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Pisces · Official PISCES Token — Zodiacs" />
-  <meta property="og:description" content="The Fishes. Bound by a cord, never to be parted. The official Pisces zodiac token, native on Solana — provenance from Babylon to the onchain record." />
+  <meta property="og:description" content="The official Pisces zodiac token: verified addresses, market history, constellation, and collection artwork." />
   <meta property="og:type" content="article" />
   <meta property="og:url" content="https://zodiacs.org/registry/pisces/" />
   <meta property="og:image" content="https://zodiacs.org/assets/og/v2/registry/pisces.png" />
   <meta property="og:image:width" content="1200" />
   <meta property="og:image:height" content="630" />
-  <meta property="og:image:alt" content="Pisces — Nº 12 of 12, Lot XII of XII in the official Zodiacs.org Registry." />
+  <meta property="og:image:alt" content="Pisces — official Zodiac token, sign 12 of 12 in the Zodiacs.org Registry." />
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Pisces · Official PISCES Token — Zodiacs" />
-  <meta name="twitter:description" content="The Fishes. Bound by a cord, never to be parted. The official Pisces zodiac token, native on Solana — provenance from Babylon to the onchain record." />
+  <meta name="twitter:description" content="The official Pisces zodiac token: verified addresses, market history, constellation, and collection artwork." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v2/registry/pisces.png" />
-  <meta name="twitter:image:alt" content="Pisces — Nº 12 of 12, Lot XII of XII in the official Zodiacs.org Registry." />
+  <meta name="twitter:image:alt" content="Pisces — official Zodiac token, sign 12 of 12 in the Zodiacs.org Registry." />
 
   <link rel="icon" type="image/svg+xml" sizes="any" href="/assets/app-icons/v3/favicon.svg" />
   <link rel="icon" type="image/png" sizes="16x16" href="/assets/app-icons/v3/favicon-16.png" />
@@ -75,12 +75,18 @@
         {
           "@type": "ListItem",
           "position": 2,
-          "name": "The Registry",
-          "item": "https://zodiacs.org/registry/"
+          "name": "Zodiac Terminal",
+          "item": "https://zodiacs.org/terminal/"
         },
         {
           "@type": "ListItem",
           "position": 3,
+          "name": "Zodiacs Registry",
+          "item": "https://zodiacs.org/registry/"
+        },
+        {
+          "@type": "ListItem",
+          "position": 4,
           "name": "Pisces",
           "item": "https://zodiacs.org/registry/pisces/"
         }
@@ -90,8 +96,8 @@
       "@type": "WebPage",
       "@id": "https://zodiacs.org/registry/pisces/#page",
       "url": "https://zodiacs.org/registry/pisces/",
-      "name": "Pisces — Official PISCES Token · Lot XII of XII",
-      "description": "The Fishes. Bound by a cord, never to be parted. The official Pisces zodiac token: PISCES on Solana, official Base counterpart, provenance, live market context, and acquisition.",
+      "name": "Pisces — Official PISCES Zodiac Token · Sign 12 of 12",
+      "description": "Pisces is the transferable token for the Pisces sign. Verify its official addresses, market history, constellation, and collection artwork.",
       "inLanguage": "en",
       "isPartOf": {
         "@type": "WebSite",
@@ -283,6 +289,16 @@
 
     /* ── Lot header ── */
     .lot { padding: calc(94px + env(safe-area-inset-top)) 0 36px; position: relative; }
+    .lot__crumbs {
+      display: flex; align-items: center; flex-wrap: wrap; gap: 6px;
+      margin: 0 0 24px; padding: 0; list-style: none;
+      color: var(--ink-mute); font-family: var(--mono); font-size: 8.5px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+    }
+    .lot__crumbs li { display: inline-flex; align-items: center; min-height: 44px; }
+    .lot__crumbs li + li::before { content: "/"; margin-right: 6px; color: var(--hair-3); }
+    .lot__crumbs a { min-height: 44px; display: inline-flex; align-items: center; color: var(--ink-dim); text-underline-offset: 4px; }
+    .lot__crumbs a:hover { color: var(--ink); }
     .lot__eyebrow {
       display: flex; align-items: center; gap: 10px; width: 100%;
       margin-bottom: 28px;
@@ -316,6 +332,11 @@
       font-family: var(--serif); font-style: italic;
       font-size: clamp(19px, 3vw, 26px); line-height: 1.35; color: var(--gold-bright);
       text-wrap: pretty;
+    }
+    .lot__intro {
+      margin: 20px 0 0; max-width: 62ch;
+      font-family: var(--serif); font-size: clamp(17px, 2.2vw, 20px);
+      line-height: 1.55; color: var(--ink-2); text-wrap: pretty;
     }
     .lot__meta {
       display: grid; gap: 12px; align-items: center;
@@ -355,7 +376,7 @@
       .split__figure { position: sticky; top: 86px; }
     }
     .figure__gallery {
-      display: inline-flex; align-items: center; gap: 7px; margin-top: 12px;
+      display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin-top: 8px;
       font-family: var(--display); font-size: 12px; letter-spacing: 0.04em;
       color: var(--ink-dim); text-decoration: none;
       border-bottom: 1px solid var(--hair-2); padding-bottom: 2px;
@@ -417,7 +438,7 @@
       letter-spacing: 0.26em; text-transform: uppercase; color: var(--gold);
     }
 
-    /* Museum label rows */
+    /* Token fact rows */
     .rows { border-top: 1px solid var(--hair); }
     .row {
       display: flex; justify-content: space-between; align-items: baseline;
@@ -430,7 +451,7 @@
     .row .v { font-family: var(--serif); font-style: italic; font-size: 16.5px; color: var(--ink); text-align: right; }
     .row .v.mono { font-family: var(--mono); font-style: normal; font-size: 12px; color: var(--ink-2); letter-spacing: 0.04em; }
 
-    /* Catalogue note (essay) */
+    /* Sign story */
     .note { max-width: 62ch; }
     .note__lede {
       margin: 0 0 26px;
@@ -445,6 +466,54 @@
       margin: 0 0 20px;
       font-family: var(--serif); font-size: 16.5px; line-height: 1.62;
       color: var(--ink-2); text-wrap: pretty;
+    }
+
+    /* Why this record matters — an open editorial grid, not a card wall. */
+    .value {
+      display: grid; grid-template-columns: 1fr;
+      border-top: 1px solid var(--hair);
+    }
+    .value__item { padding: 18px 0 20px; border-bottom: 1px solid var(--hair); }
+    .value__k {
+      display: block; margin-bottom: 8px;
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+      text-transform: uppercase; color: var(--gold);
+    }
+    .value__v {
+      margin: 0; max-width: 48ch;
+      font-family: var(--serif); font-size: 15.5px; line-height: 1.55; color: var(--ink-2);
+    }
+    @media (min-width: 700px) {
+      .value { grid-template-columns: 1fr 1fr; column-gap: 32px; }
+    }
+
+    /* Constellation record */
+    .constellation {
+      display: grid; gap: 26px; align-items: center;
+    }
+    .constellation__map {
+      position: relative; padding: 7px;
+      background: rgba(198,204,218,0.025);
+      border: 1px solid var(--hair-2); border-radius: 30px;
+      box-shadow: inset 0 1px 0 rgba(238,241,247,0.08);
+    }
+    .constellation__map img { width: 100%; height: auto; border-radius: 23px; }
+    .constellation__copy { max-width: 54ch; }
+    .constellation__lede {
+      margin: 0 0 18px; font-family: var(--serif); font-size: clamp(20px, 2.8vw, 27px);
+      line-height: 1.35; color: var(--ink); text-wrap: pretty;
+    }
+    .constellation__body {
+      margin: 0 0 18px; font-family: var(--serif); font-size: 15.5px;
+      line-height: 1.58; color: var(--ink-2); text-wrap: pretty;
+    }
+    .constellation__source {
+      margin: 0; font-family: var(--mono); font-size: 8.5px;
+      line-height: 1.75; letter-spacing: 0.11em; color: var(--ink-mute);
+    }
+    .constellation__source a { color: var(--ink-dim); text-underline-offset: 3px; }
+    @media (min-width: 820px) {
+      .constellation { grid-template-columns: minmax(0, 1.28fr) minmax(260px, 0.72fr); gap: 48px; }
     }
 
     /* Provenance timeline */
@@ -490,6 +559,7 @@
     .rec__k .net { color: var(--ink-dim); }
     .rec__links { display: flex; flex-wrap: wrap; gap: 10px 18px; margin-top: 16px; padding-top: 14px; border-top: 1px solid var(--hair); }
     .rec__link {
+      display: inline-flex; align-items: center; min-height: 44px;
       font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em;
       text-transform: uppercase; color: var(--gold); text-decoration: none;
       border-bottom: 1px solid rgba(198,204,218,0.32); padding-bottom: 2px;
@@ -499,7 +569,7 @@
 
     .copychip {
       display: inline-flex; align-items: center; gap: 8px;
-      padding: 6px 10px; border: 1px solid var(--hair-2);
+      min-height: 44px; padding: 7px 11px; border: 1px solid var(--hair-2);
       background: rgba(198,204,218,0.04); color: var(--ink-2);
       cursor: pointer; font-family: var(--mono); font-size: 11.5px; letter-spacing: 0.04em;
       transition: border-color 280ms var(--ease), color 280ms var(--ease), transform 220ms var(--ease);
@@ -537,12 +607,12 @@
     }
     .market__source:hover { color: var(--gold-bright); border-bottom-color: var(--hair-3); }
     .market__grid { display: grid; grid-template-columns: 1fr 1fr; }
-    @media (min-width: 640px) { .market__grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (min-width: 640px) { .market__grid { grid-template-columns: repeat(4, 1fr); } }
     .market__cell { min-height: 72px; padding: 13px 14px 12px; border-bottom: 1px solid var(--hair); border-right: 1px solid var(--hair); }
     .market__cell:nth-child(2n) { border-right: 0; }
     @media (min-width: 640px) {
       .market__cell:nth-child(2n) { border-right: 1px solid var(--hair); }
-      .market__cell:nth-child(3n) { border-right: 0; }
+      .market__cell:nth-child(4n) { border-right: 0; }
     }
     .market__k { margin-bottom: 7px; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-mute); }
     .market__v { font-family: var(--serif); font-style: italic; font-size: 15px; line-height: 1.15; color: var(--ink-2); }
@@ -552,7 +622,52 @@
     .market__state { margin: 0; padding: 15px 16px 16px; font-family: var(--serif); font-style: italic; font-size: 13.5px; color: var(--ink-mute); }
     .market__state::before { content: "—"; margin-right: 8px; font-style: normal; }
 
-    /* Acquisition */
+    .market__chart { padding: 18px 16px 14px; border-bottom: 1px solid var(--hair); }
+    .market__chart-head {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 18px; margin-bottom: 13px;
+    }
+    .market__chart-title { margin: 0 0 5px; font-family: var(--serif); font-size: 19px; font-weight: 400; color: var(--ink); }
+    .market__chart-note { margin: 0; font-family: var(--mono); font-size: 8.5px; line-height: 1.6; letter-spacing: 0.12em; color: var(--ink-mute); }
+    .market__ranges { display: inline-flex; gap: 4px; flex: 0 0 auto; }
+    .market__range {
+      min-width: 44px; min-height: 44px; padding: 0 11px;
+      border: 1px solid var(--hair-2); border-radius: 999px;
+      font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em; color: var(--ink-dim);
+      transition: color 280ms var(--ease), border-color 280ms var(--ease), background 280ms var(--ease), transform 180ms var(--ease);
+    }
+    .market__range[aria-pressed="true"] { color: var(--ink); border-color: var(--gold); background: rgba(198,204,218,0.09); }
+    .market__range:disabled { opacity: 0.32; cursor: not-allowed; }
+    .market__range:not(:disabled):active { transform: scale(0.96); }
+    .market__svg { display: block; width: 100%; min-height: 176px; overflow: visible; }
+    .market__chart-empty {
+      min-height: 150px; display: grid; place-items: center; text-align: center;
+      font-family: var(--serif); font-style: italic; font-size: 15px; color: var(--ink-mute);
+    }
+    .market__foot {
+      display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px 18px;
+      padding: 12px 16px 14px; font-family: var(--mono); font-size: 8.5px;
+      line-height: 1.6; letter-spacing: 0.11em; color: var(--ink-mute);
+    }
+    @media (max-width: 520px) {
+      .market__head, .market__chart-head { flex-direction: column; }
+      .market__source { min-height: 32px; display: inline-flex; align-items: center; }
+    }
+
+    .research-links { display: grid; grid-template-columns: 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); }
+    .research-links a {
+      display: grid; grid-template-columns: 32px 1fr auto; align-items: center; gap: 13px;
+      min-height: 70px; padding: 13px 16px; background: var(--bg); text-decoration: none;
+      transition: background 320ms var(--ease), color 320ms var(--ease);
+    }
+    .research-links a:hover { background: rgba(198,204,218,0.05); }
+    .research-links__glyph { color: var(--gold); font-family: var(--serif); font-style: italic; font-size: 22px; }
+    .research-links strong { display: block; margin-bottom: 4px; font-family: var(--serif); font-size: 16px; font-weight: 400; color: var(--ink); }
+    .research-links small { display: block; font-family: var(--mono); font-size: 8.5px; letter-spacing: 0.11em; color: var(--ink-mute); }
+    .research-links__arr { color: var(--gold); }
+    @media (min-width: 700px) { .research-links { grid-template-columns: 1fr 1fr; } }
+
+    /* Get the token */
     .acq__copy {
       margin: 0 0 22px; max-width: 52ch;
       font-family: var(--serif); font-size: 16px; line-height: 1.58; color: var(--ink-2);
@@ -592,20 +707,13 @@
     }
     .acq__note a { color: var(--ink-dim); text-decoration: none; border-bottom: 1px solid rgba(198,204,218,0.22); }
     .acq__note a:hover { color: var(--gold-bright); border-bottom-color: var(--gold); }
-    .acq__shelf {
-      margin: 18px 0 0;
-      display: flex; align-items: center; gap: 10px;
-      border: 1px solid var(--hair);
-      padding: 14px 16px;
-      text-decoration: none;
-      font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--ink-2);
-      transition: border-color 320ms var(--ease), color 320ms var(--ease);
+    .acq__related {
+      display: inline-flex; align-items: center; gap: 7px; min-height: 44px; margin-top: 14px;
+      font-family: var(--serif); font-size: 13.5px; color: var(--ink-mute);
+      text-decoration: none; border-bottom: 1px solid var(--hair-2); padding-bottom: 2px;
+      transition: color 320ms var(--ease), border-color 320ms var(--ease);
     }
-    .acq__shelf:hover { border-color: var(--gold); color: var(--gold-bright); }
-    /* Official sign icon, from the SDK asset set */
-    .acq__shelf-icon { display: block; flex: 0 0 auto; width: 18px; height: 18px; }
-    .acq__shelf-arr { margin-left: auto; color: var(--gold); }
+    .acq__related:hover { color: var(--ink-2); border-color: var(--gold); }
 
     /* Next lot / strip */
     .nextlot { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--hair); border: 1px solid var(--hair); }
@@ -625,7 +733,7 @@
       gap: 10px; padding: 26px 0 4px;
     }
     .strip a {
-      display: grid; place-items: center; width: 40px; height: 40px;
+      display: grid; place-items: center; width: 44px; height: 44px;
       border-radius: 50%; border: 1px solid transparent;
       transition: border-color 320ms var(--ease), transform 220ms var(--ease);
     }
@@ -689,7 +797,7 @@
         <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" stroke-width="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
         <kbd class="wnav__search-kbd" aria-hidden="true">/</kbd>
       </a>
-      <a class="wnav__chip" href="/registry/" aria-current="page">Registry</a>
+      <a class="wnav__chip" href="/terminal/">Terminal</a>
       <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
@@ -706,7 +814,7 @@
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
         <a class="wnav-menu__link" style="--i:3" href="/ask/">Ask Zodiacs</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:4" href="/registry/" aria-current="page"><span>Registry</span><small>Digital collection and registry</small></a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:4" href="/terminal/"><span>Terminal</span><small>Live markets, gold sculptures, and research</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>
@@ -721,9 +829,11 @@
 
   <main class="pg" id="main">
     <section class="lot" aria-labelledby="lot-title">
-      <span class="lot__eyebrow">Catalogue <span class="g">/</span> Lot XII of XII</span>
+      <nav aria-label="Breadcrumb"><ol class="lot__crumbs"><li><a href="/terminal/">Zodiac Terminal</a></li><li><a href="/registry/">Zodiacs Registry</a></li><li aria-current="page">Pisces</li></ol></nav>
+      <span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign 12 of 12</span>
       <h1 class="lot__title" id="lot-title">Pisces <picture class="lot__title-icon" aria-hidden="true"><source srcset="/assets/zodiac-icons/400/pisces.avif" type="image/avif"/><img src="/assets/zodiac-icons/400/pisces.webp" width="112" height="112" alt="" decoding="async" fetchpriority="high"/></picture></h1>
       <p class="lot__epithet">The Fishes. Bound by a cord, never to be parted.</p>
+      <p class="lot__intro">Pisces is the transferable token for the Pisces sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.</p>
       <div class="lot__meta">
         <div class="lot__dates">19 February — 20 March · Water · Jupiter</div>
         <a class="lot__next" href="/registry/aries/" aria-label="Next record, Aries">
@@ -740,7 +850,7 @@
           <span class="card__corner card__corner--bl"></span><span class="card__corner card__corner--br"></span>
           <div class="card__inner">
             <div class="card__head">
-              <span class="label">Nº 12 / 12</span>
+              <span class="label">Sign 12 / 12</span>
               <span class="label label--gold">Official record</span>
             </div>
             <div class="stage">
@@ -749,30 +859,30 @@
             <figcaption class="card__caption">Pisces <span class="g">·</span> The Mystic</figcaption>
           </div>
         </figure>
-        <a class="figure__gallery" href="/registry/#pisces">
-          <span>View in the gallery</span><span aria-hidden="true">→</span>
+        <a class="figure__gallery" href="/terminal/#pisces">
+          <span>View Pisces on the market stage</span><span aria-hidden="true">→</span>
         </a>
       </div>
 
       <div>
-        <section class="sec reveal" style="padding-top:8px" aria-label="Museum label">
-          <div class="sec__head"><h2 class="sec__title">Museum label</h2><span class="line"></span></div>
+        <section class="sec reveal" style="padding-top:8px" aria-label="Token facts">
+          <div class="sec__head"><h2 class="sec__title">Token facts</h2><span class="line"></span></div>
           <div class="rows">
-            <div class="row"><span class="k">Lot</span><span class="v mono">XII of XII</span></div>
+            <div class="row"><span class="k">Position</span><span class="v mono">12 of 12</span></div>
             <div class="row"><span class="k">Dates</span><span class="v mono">19 February — 20 March</span></div>
             <div class="row"><span class="k">Element</span><span class="v">Water</span></div>
             <div class="row"><span class="k">Modality</span><span class="v">Mutable</span></div>
             <div class="row"><span class="k">Ruler</span><span class="v">Jupiter</span></div>
             <div class="row"><span class="k">Archetype</span><span class="v">The Mystic</span></div>
             <div class="row"><span class="k">Principal star</span><span class="v">Alrescha — “the cord” — the knot that binds the two fish</span></div>
-            <div class="row"><span class="k">Babylonian record</span><span class="v">Zibbātu — “the Tails”, two fish joined by the fish-cord</span></div>
-            <div class="row"><span class="k">Medium</span><span class="v">Native SPL record, Solana · Official ERC-20 representation, Base</span></div>
-            <div class="row"><span class="k">Edition</span><span class="v">One canonical record of twelve</span></div>
+            <div class="row"><span class="k">Early name</span><span class="v">Zibbātu — “the Tails”, two fish joined by the fish-cord</span></div>
+            <div class="row"><span class="k">Networks</span><span class="v">Original SPL token on Solana · Official ERC-20 counterpart on Base</span></div>
+            <div class="row"><span class="k">Official set</span><span class="v">One Pisces identity in the twelve-sign Registry</span></div>
           </div>
         </section>
 
-        <section class="sec reveal" aria-label="Catalogue note">
-          <div class="sec__head"><h2 class="sec__title">Catalogue note</h2><span class="line"></span></div>
+        <section class="sec reveal" aria-label="What Pisces represents">
+          <div class="sec__head"><h2 class="sec__title">What Pisces represents</h2><span class="line"></span></div>
           <div class="note">
             <p class="note__lede">The last sign — and, for the past two thousand years, the first: the vernal equinox itself has stood among these stars since antiquity, so that every spring begins in Pisces. This is the record of the Fishes.</p>
             <p>Babylon saw two fish joined by a cord — the “Tails,” bound at the star later named Alrescha, “the knot.” The cord is the sign’s whole grammar: two living things moving in different directions, held by one tie that does not break.</p>
@@ -783,8 +893,32 @@
       </div>
     </div>
 
-    <section class="sec reveal" id="provenance" aria-label="Provenance">
-      <div class="sec__head"><h2 class="sec__title">Provenance</h2><span class="line"></span></div>
+    <section class="sec reveal" aria-labelledby="value-title">
+      <div class="sec__head"><h2 class="sec__title" id="value-title">Why Pisces has a place in the set</h2><span class="line"></span></div>
+      <div class="value">
+        <div class="value__item"><span class="value__k">Verified identity</span><p class="value__v">The Registry connects Pisces to one original Solana mint and its official Base counterpart, so the token can be checked before it is viewed or acquired.</p></div>
+        <div class="value__item"><span class="value__k">Comparable market context</span><p class="value__v">Price, market cap, FDV, liquidity, volume, and pool coverage use the same published method across all twelve signs.</p></div>
+        <div class="value__item"><span class="value__k">A complete system</span><p class="value__v">Pisces is one identity in a twelve-token set. Its place comes from the zodiac structure—not a promise that its market price will rise.</p></div>
+        <div class="value__item"><span class="value__k">A distinct visual record</span><p class="value__v">The pastel sign, plotted constellation, seasonal dates, and gold sculpture make the token recognizable beyond its contract address.</p></div>
+      </div>
+    </section>
+
+    <section class="sec reveal" id="constellation" aria-labelledby="constellation-title">
+      <div class="sec__head"><h2 class="sec__title" id="constellation-title">The Pisces constellation</h2><span class="line"></span></div>
+      <div class="constellation">
+        <div class="constellation__map">
+          <img src="/assets/constellations/pisces.svg" width="720" height="460" loading="lazy" decoding="async" alt="Map of the brighter Pisces constellation stars, with Alrescha highlighted" />
+        </div>
+        <div class="constellation__copy">
+          <p class="constellation__lede">Alrescha is the principal star marked in Pisces’s pastel color.</p>
+          <p class="constellation__body">The map plots J2000 right ascension and declination for the brighter stars in the constellation. Dot size reflects apparent brightness. The connecting lines help the figure read at a glance; they are not official IAU boundaries.</p>
+          <p class="constellation__source">Star catalogue: <a href="https://github.com/astronexus/HYG-Database" rel="noopener noreferrer">HYG Database v4.0</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/" rel="noopener noreferrer">CC BY-SA 4.0</a>. Guide segments authored by Zodiacs.org.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="sec reveal" id="provenance" aria-label="The story behind Pisces">
+      <div class="sec__head"><h2 class="sec__title">The story behind Pisces</h2><span class="line"></span></div>
       <div class="prov">
         <div class="prov__item">
           <div class="prov__era">c. 1000 BC <span class="place">· Babylon</span></div>
@@ -817,8 +951,8 @@
       </div>
     </section>
 
-    <section class="sec reveal" id="record" aria-label="The record">
-      <div class="sec__head"><h2 class="sec__title">The record</h2><span class="line"></span></div>
+    <section class="sec reveal" id="record" aria-label="Official addresses">
+      <div class="sec__head"><h2 class="sec__title">Official addresses</h2><span class="line"></span></div>
       <div class="rec">
         <div class="rec__row">
           <span class="rec__k">Original <span class="net">· Solana SPL</span></span>
@@ -850,18 +984,38 @@
       <aside class="market" data-market>
         <div class="market__head">
           <div>
-            <span class="market__label">Market Context</span>
-            <p class="market__copy">Independent third-party data, not a valuation or recommendation. It may be delayed or unavailable; prices and liquidity can change quickly, and a Zodiac can lose all market value. Operator and economic-interest statements remain pending confirmation; see the <a href="/disclosure/">Disclosure</a>.</p>
+            <span class="market__label">Registry market archive</span>
+            <p class="market__copy">Daily observations indexed from exact-mint Solana pools. Independent third-party data, not a valuation or recommendation. It may be delayed or unavailable, and a Zodiac can lose all market value.</p>
           </div>
-          <a class="market__source" href="https://dexscreener.com/solana/Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko" rel="noopener noreferrer">Dex Screener ↗</a>
+          <a class="market__source" data-market-live-link href="https://dexscreener.com/solana/Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko" rel="noopener noreferrer">Open live chart ↗</a>
         </div>
         <p class="market__state" data-market-state>Loading market context.</p>
+        <div class="market__chart" data-market-chart hidden>
+          <div class="market__chart-head">
+            <div><h3 class="market__chart-title">Price history</h3><p class="market__chart-note" data-market-chart-note></p></div>
+            <div class="market__ranges" aria-label="Price chart range">
+              <button class="market__range" type="button" data-market-range="7d" aria-pressed="false">7D</button>
+              <button class="market__range" type="button" data-market-range="30d" aria-pressed="false">30D</button>
+              <button class="market__range" type="button" data-market-range="all" aria-pressed="true">All</button>
+            </div>
+          </div>
+          <div data-market-chart-canvas></div>
+        </div>
         <div class="market__grid" data-market-grid hidden></div>
+        <div class="market__foot" data-market-foot hidden></div>
       </aside>
     </section>
 
-    <section class="sec reveal" id="acquire" aria-label="Acquisition">
-      <div class="sec__head"><h2 class="sec__title">Acquisition</h2><span class="line"></span></div>
+    <section class="sec reveal" aria-labelledby="research-title">
+      <div class="sec__head"><h2 class="sec__title" id="research-title">Pisces research</h2><span class="line"></span></div>
+      <nav class="research-links" aria-label="Research related to Pisces">
+        <a href="/terminal/research/?sign=pisces&amp;type=daily"><span class="research-links__glyph" aria-hidden="true">☉</span><span><strong>Latest Pisces sky brief</strong><small>Sky fact · traditional reading · market observation</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
+        <a href="/terminal/research/?sign=pisces"><span class="research-links__glyph" aria-hidden="true">✦</span><span><strong>All Pisces research</strong><small>Calendar events, observation updates, and outside reporting</small></span><span class="research-links__arr" aria-hidden="true">→</span></a>
+      </nav>
+    </section>
+
+    <section class="sec reveal" id="acquire" aria-label="Get Pisces">
+      <div class="sec__head"><h2 class="sec__title">Get Pisces</h2><span class="line"></span></div>
       <p class="acq__copy">
         The links below open independent third-party services; they are not
         endorsements or recommendations, and Zodiacs.org does not sell or
@@ -884,29 +1038,25 @@
           <span>View market data</span><span class="arr">↗</span>
         </a>
       </div>
-      <a class="acq__shelf" href="https://astrofolio.xyz/" rel="noopener noreferrer">
-        <img class="acq__shelf-icon" src="/assets/sdk/zodiac-icons/circle/pisces.png" alt="" loading="lazy" decoding="async" width="18" height="18" />
-        <span>Pisces on the Astrofolio shelf — the related consumer experience</span>
-        <span class="acq__shelf-arr" aria-hidden="true">↗</span>
-      </a>
+      <a class="acq__related" href="https://astrofolio.xyz/" rel="noopener noreferrer">Related product: view Pisces in Astrofolio <span aria-hidden="true">↗</span></a>
       <p class="acq__note">
         Official mint: <a href="/registry/zodiacs.registry.json">3JsSsmGz…pAkPeE</a> ·
         This Registry page does not request custody, signing, approvals, or transactions.
       </p>
     </section>
 
-    <section class="sec reveal" aria-label="Continue the catalogue">
-      <div class="sec__head"><h2 class="sec__title">The catalogue</h2><span class="line"></span></div>
-      <nav class="nextlot" aria-label="Adjacent lots">
+    <section class="sec reveal" aria-label="Explore all 12">
+      <div class="sec__head"><h2 class="sec__title">Explore all 12</h2><span class="line"></span></div>
+      <nav class="nextlot" aria-label="Adjacent signs">
         <a href="/registry/aquarius/">
           <span class="dir">← Previous</span>
           <span class="nm">Aquarius</span>
-          <span class="lt">Lot XI</span>
+          <span class="lt">Official sign 11 of 12</span>
         </a>
         <a href="/registry/aries/">
           <span class="dir">Next →</span>
           <span class="nm">Aries</span>
-          <span class="lt">Lot I</span>
+          <span class="lt">Official sign 1 of 12</span>
         </a>
       </nav>
       <nav class="strip" aria-label="All twelve signs">
@@ -932,7 +1082,7 @@
       </div>
       <div class="ftr__row">
         <div class="ftr__links">
-          <a href="/registry/#registry">Registry</a>
+          <a href="/terminal/">Terminal</a>
           <a href="/registry/#verify">Verify</a>
           <a href="/thesis/">Thesis</a>
           <a href="/sdk/">SDK</a>
@@ -1060,24 +1210,44 @@
       });
     });
 
-    // Market context — same quiet semantics as the main page: lazy,
-    // third-party, unavailable-safe.
-    var MARKET = { chainId: "solana", pairId: "Fzz8QrSV8sPKsTtHocwYARE8Zo6Rd4Wv2Ee4JtCuiDko" };
+    // Market context comes from the Registry-owned daily archive. The archive
+    // preserves nulls and keeps market cap separate from FDV.
+    var SIGN = "pisces";
+    var ACCENT = "#A9D4C4";
+    var ARCHIVE_URL = '/assets/data/registry-market-history.v1.json';
     var panel = document.querySelector('[data-market]');
     var stateEl = panel.querySelector('[data-market-state]');
     var gridEl = panel.querySelector('[data-market-grid]');
+    var chartEl = panel.querySelector('[data-market-chart]');
+    var chartCanvas = panel.querySelector('[data-market-chart-canvas]');
+    var chartNote = panel.querySelector('[data-market-chart-note]');
+    var footEl = panel.querySelector('[data-market-foot]');
+    var liveLink = panel.querySelector('[data-market-live-link]');
+    var rangeButtons = Array.from(panel.querySelectorAll('[data-market-range]'));
+    var archiveSnapshots = [];
 
-    function setUnavailable() { stateEl.textContent = 'Market context unavailable.'; }
+    function finiteNumber(v) {
+      if (v === null || v === undefined || v === '' || typeof v === 'boolean') return null;
+      var n = Number(v);
+      return isFinite(n) ? n : null;
+    }
+    function setUnavailable(message) {
+      stateEl.textContent = message || 'Registry market archive unavailable.';
+      stateEl.hidden = false;
+      gridEl.hidden = true;
+      chartEl.hidden = true;
+      footEl.hidden = true;
+    }
 
     function fmtPrice(v) {
-      var n = Number(v);
-      if (!isFinite(n)) return '—';
+      var n = finiteNumber(v);
+      if (n === null) return '—';
       var d = Math.abs(n) < 0.0001 ? 8 : Math.abs(n) < 0.01 ? 6 : 4;
       return '$' + n.toFixed(d).replace(/0+$/, '').replace(/\.$/, '');
     }
     function fmtCompact(v) {
-      var n = Number(v);
-      if (!isFinite(n)) return '—';
+      var n = finiteNumber(v);
+      if (n === null) return '—';
       var a = Math.abs(n);
       if (a >= 1e9) return '$' + (n / 1e9).toLocaleString(undefined, { maximumFractionDigits: 1 }) + 'B';
       if (a >= 1e6) return '$' + (n / 1e6).toLocaleString(undefined, { maximumFractionDigits: 1 }) + 'M';
@@ -1085,56 +1255,240 @@
       return '$' + n.toLocaleString(undefined, { maximumFractionDigits: 2 });
     }
     function fmtPct(v) {
-      var n = Number(v);
-      if (!isFinite(n)) return '—';
+      var n = finiteNumber(v);
+      if (n === null) return '—';
       return (n > 0 ? '+' : '') + n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + '%';
     }
     function fmtDate(v) {
-      var n = Number(v);
-      if (!isFinite(n)) return '—';
-      var d = new Date(n);
+      if (!v) return '—';
+      var d = new Date(v);
       if (isNaN(d.getTime())) return '—';
       return d.toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' });
     }
-    function fmtDex(v) {
-      if (!v) return '—';
-      var s = String(v).replace(/[-_]/g, ' ').replace(/\b\w/g, function (c) { return c.toUpperCase(); });
-      return s.replace(/[&<>"']/g, function (ch) {
-        return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
+    function fmtTimestamp(v) {
+      if (!v) return 'Time unavailable';
+      var d = new Date(v);
+      if (isNaN(d.getTime())) return 'Time unavailable';
+      return d.toLocaleString(undefined, {
+        year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', timeZoneName: 'short'
+      });
+    }
+    function make(tag, className, text) {
+      var el = document.createElement(tag);
+      if (className) el.className = className;
+      if (text !== undefined) el.textContent = text;
+      return el;
+    }
+    function latestAsset(snapshot) {
+      var assets = snapshot && Array.isArray(snapshot.assets) ? snapshot.assets : [];
+      return assets.find(function (asset) { return asset && asset.sign === SIGN; }) || null;
+    }
+    function marketCapRank(snapshot, asset) {
+      var ranked = (snapshot.assets || []).filter(function (candidate) {
+        return finiteNumber(candidate && candidate.marketCapUsd) !== null;
+      }).slice().sort(function (a, b) {
+        return finiteNumber(b.marketCapUsd) - finiteNumber(a.marketCapUsd);
+      });
+      var index = ranked.findIndex(function (candidate) { return candidate.sign === asset.sign; });
+      return index < 0 ? '—' : (index + 1) + ' of ' + ranked.length;
+    }
+
+    function renderMetrics(snapshot, asset) {
+      var change = finiteNumber(asset.change24hPct);
+      var changeClass = change === null ? '' : (change > 0 ? ' market__v--up' : change < 0 ? ' market__v--down' : '');
+      var cells = [
+        ['Price USD', fmtPrice(asset.priceUsd), 'market__v--mono'],
+        ['24H change', fmtPct(asset.change24hPct), 'market__v--mono' + changeClass],
+        ['Market cap', fmtCompact(asset.marketCapUsd), ''],
+        ['FDV', fmtCompact(asset.fdvUsd), ''],
+        ['Indexed liquidity', fmtCompact(asset.liquidityUsd), ''],
+        ['24H volume', fmtCompact(asset.volume24hUsd), ''],
+        ['Indexed pools', finiteNumber(asset.indexedPoolCount) === null ? '—' : String(asset.indexedPoolCount), 'market__v--mono'],
+        ['Market-cap rank', marketCapRank(snapshot, asset), 'market__v--mono']
+      ];
+      gridEl.replaceChildren();
+      cells.forEach(function (cell) {
+        var wrapper = make('div', 'market__cell');
+        wrapper.append(make('div', 'market__k', cell[0]));
+        wrapper.append(make('div', 'market__v ' + cell[2], cell[1]));
+        gridEl.append(wrapper);
+      });
+      stateEl.hidden = true;
+      gridEl.hidden = false;
+      footEl.replaceChildren(
+        make('span', '', 'Observed ' + fmtTimestamp(snapshot.source && snapshot.source.readAt)),
+        make('span', '', 'Coverage ' + ((snapshot.coverage && snapshot.coverage.assetsWithIndexedPools) || 0) + ' / ' + ((snapshot.coverage && snapshot.coverage.canonicalAssetCount) || 12) + ' assets · exact-mint method')
+      );
+      footEl.hidden = false;
+
+      var deepUrl = asset.deepestPool && asset.deepestPool.url;
+      if (typeof deepUrl === 'string' && /^https:\/\/dexscreener\.com\//i.test(deepUrl)) liveLink.href = deepUrl;
+    }
+
+    function observationsForRange(range) {
+      if (!archiveSnapshots.length || range === 'all') return archiveSnapshots;
+      var lastDate = new Date(archiveSnapshots[archiveSnapshots.length - 1].date + 'T00:00:00Z');
+      var days = range === '7d' ? 7 : 30;
+      var floor = lastDate.getTime() - (days - 1) * 86400000;
+      return archiveSnapshots.filter(function (observation) {
+        return new Date(observation.date + 'T00:00:00Z').getTime() >= floor;
       });
     }
 
-    function renderMarket(pair) {
-      var change = Number(pair.priceChange && pair.priceChange.h24);
-      var changeClass = isFinite(change) ? (change > 0 ? ' market__v--up' : change < 0 ? ' market__v--down' : '') : '';
-      var cells = [
-        ['Price USD', fmtPrice(pair.priceUsd), ' market__v--mono'],
-        ['24H Change', fmtPct(pair.priceChange && pair.priceChange.h24), ' market__v--mono' + changeClass],
-        ['Liquidity', fmtCompact(pair.liquidity && pair.liquidity.usd), ''],
-        ['Market Cap', fmtCompact(pair.marketCap), ''],
-        ['Pair Created', fmtDate(pair.pairCreatedAt), ''],
-        ['Source / DEX', fmtDex(pair.dexId), '']
-      ];
-      gridEl.innerHTML = cells.map(function (c) {
-        return '<div class="market__cell"><div class="market__k">' + c[0] +
-          '</div><div class="market__v' + c[2] + '">' + c[1] + '</div></div>';
-      }).join('');
-      stateEl.hidden = true;
-      gridEl.hidden = false;
+    function svgNode(tag, attrs) {
+      var node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      Object.keys(attrs || {}).forEach(function (key) { node.setAttribute(key, attrs[key]); });
+      return node;
+    }
+
+    function chartDescription(points) {
+      var finite = points.filter(function (point) { return point.price !== null; });
+      if (!finite.length) return 'Price history unavailable.';
+      if (finite.length === 1) return 'One dated observation — ' + fmtDate(finite[0].date) + '.';
+      return finite.length + ' dated observations · ' + fmtDate(finite[0].date) + '–' + fmtDate(finite[finite.length - 1].date) + '.';
+    }
+
+    function renderChart(range) {
+      var points = observationsForRange(range);
+      var finite = points.filter(function (point) { return point.price !== null; });
+      chartCanvas.replaceChildren();
+      chartNote.textContent = chartDescription(points);
+      rangeButtons.forEach(function (button) {
+        button.setAttribute('aria-pressed', button.getAttribute('data-market-range') === range ? 'true' : 'false');
+      });
+      if (!finite.length) {
+        chartCanvas.append(make('div', 'market__chart-empty', 'No dated price observations are available for this token.'));
+        return;
+      }
+
+      var w = 680;
+      var h = 190;
+      var px = 18;
+      var py = 20;
+      var times = finite.map(function (point) { return new Date(point.date + 'T00:00:00Z').getTime(); });
+      var prices = finite.map(function (point) { return point.price; });
+      var minT = Math.min.apply(null, times);
+      var maxT = Math.max.apply(null, times);
+      var minP = Math.min.apply(null, prices);
+      var maxP = Math.max.apply(null, prices);
+      var pPad = maxP === minP ? Math.max(Math.abs(maxP) * 0.08, 0.00000001) : (maxP - minP) * 0.12;
+      minP -= pPad;
+      maxP += pPad;
+      function xFor(point) {
+        if (maxT === minT) return w / 2;
+        return px + (new Date(point.date + 'T00:00:00Z').getTime() - minT) / (maxT - minT) * (w - px * 2);
+      }
+      function yFor(point) {
+        return py + (maxP - point.price) / (maxP - minP) * (h - py * 2);
+      }
+
+      var svg = svgNode('svg', {
+        class: 'market__svg',
+        viewBox: '0 0 ' + w + ' ' + h,
+        role: 'img',
+        'aria-label': chartDescription(points)
+      });
+      [0.25, 0.5, 0.75].forEach(function (ratio) {
+        var y = py + (h - py * 2) * ratio;
+        svg.append(svgNode('line', {
+          x1: px, y1: y, x2: w - px, y2: y,
+          stroke: 'rgba(198,204,218,0.12)', 'stroke-width': '1'
+        }));
+      });
+
+      var segments = [];
+      var active = [];
+      points.forEach(function (point, index) {
+        var previous = index ? points[index - 1] : null;
+        var gap = previous
+          ? new Date(point.date + 'T00:00:00Z').getTime() - new Date(previous.date + 'T00:00:00Z').getTime()
+          : 0;
+        if (point.price === null || gap > 1.5 * 86400000) {
+          if (active.length) segments.push(active);
+          active = point.price === null ? [] : [point];
+        } else {
+          active.push(point);
+        }
+      });
+      if (active.length) segments.push(active);
+      segments.forEach(function (segment) {
+        if (segment.length < 2) return;
+        var d = segment.map(function (point, index) {
+          return (index ? 'L ' : 'M ') + xFor(point).toFixed(2) + ' ' + yFor(point).toFixed(2);
+        }).join(' ');
+        svg.append(svgNode('path', {
+          d: d, fill: 'none', stroke: ACCENT, 'stroke-width': '3',
+          'stroke-linecap': 'round', 'stroke-linejoin': 'round'
+        }));
+      });
+      finite.forEach(function (point) {
+        svg.append(svgNode('circle', {
+          cx: xFor(point).toFixed(2), cy: yFor(point).toFixed(2),
+          r: finite.length === 1 ? '5' : '3.5',
+          fill: ACCENT, stroke: '#090b10', 'stroke-width': '2'
+        }));
+      });
+      chartCanvas.append(svg);
+    }
+
+    function configureRanges() {
+      ['7d', '30d'].forEach(function (range) {
+        var button = panel.querySelector('[data-market-range="' + range + '"]');
+        var required = range === '7d' ? 7 : 30;
+        var available = observationsForRange(range).filter(function (point) { return point.price !== null; }).length;
+        button.disabled = available < required;
+        if (button.disabled) button.title = 'Available after ' + required + ' dated observations in this range';
+      });
+      rangeButtons.forEach(function (button) {
+        button.addEventListener('click', function () {
+          if (!button.disabled) renderChart(button.getAttribute('data-market-range'));
+        });
+      });
+    }
+
+    function renderArchive(archive) {
+      if (!archive || archive.schema !== 'zodiacs.registry-market-history.v1' || !Array.isArray(archive.snapshots)) {
+        setUnavailable('Registry market archive has an unsupported format.');
+        return;
+      }
+      var snapshots = archive.snapshots.slice().sort(function (a, b) {
+        return String(a.date).localeCompare(String(b.date));
+      });
+      if (!snapshots.length) {
+        setUnavailable('No daily market snapshots have been published yet.');
+        return;
+      }
+      var latest = snapshots[snapshots.length - 1];
+      var asset = latestAsset(latest);
+      if (!asset) {
+        setUnavailable('This token is not present in the latest market snapshot.');
+        return;
+      }
+
+      archiveSnapshots = snapshots.map(function (snapshot) {
+        var snapshotAsset = latestAsset(snapshot);
+        return {
+          date: snapshot.date,
+          price: snapshotAsset ? finiteNumber(snapshotAsset.priceUsd) : null
+        };
+      });
+      renderMetrics(latest, asset);
+      configureRanges();
+      renderChart('all');
+      chartEl.hidden = false;
     }
 
     function loadMarket() {
-      if (!MARKET) { setUnavailable(); return; }
-      var url = 'https://api.dexscreener.com/latest/dex/pairs/' +
-        encodeURIComponent(MARKET.chainId) + '/' + encodeURIComponent(MARKET.pairId);
-      fetch(url).then(function (res) {
-        if (!res.ok) throw new Error('http');
+      fetch(ARCHIVE_URL, {
+        cache: 'no-cache',
+        headers: { accept: 'application/json' }
+      }).then(function (res) {
+        if (!res.ok) throw new Error('HTTP ' + res.status);
         return res.json();
-      }).then(function (payload) {
-        var pairs = payload && payload.pairs;
-        if (!pairs || !pairs.length) { setUnavailable(); return; }
-        renderMarket(pairs[0]);
-      }).catch(setUnavailable);
+      }).then(renderArchive).catch(function () {
+        setUnavailable('Registry market archive is temporarily unavailable.');
+      });
     }
 
     if ('IntersectionObserver' in window) {

@@ -99,12 +99,12 @@
     },
     {
       "source": "/collect",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
       "source": "/collect/",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
@@ -114,22 +114,22 @@
     },
     {
       "source": "/registry/shelf",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
       "source": "/registry/shelf/",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
       "source": "/registry/gallery",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
       "source": "/registry/gallery/",
-      "destination": "/registry/",
+      "destination": "/terminal/",
       "permanent": true
     },
     {
@@ -148,6 +148,36 @@
       "permanent": true
     },
     {
+      "source": "/registry/exchange",
+      "destination": "/terminal/markets/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/exchange/",
+      "destination": "/terminal/markets/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/exchange/:path(.*)",
+      "destination": "/terminal/markets/:path",
+      "permanent": true
+    },
+    {
+      "source": "/registry/research",
+      "destination": "/terminal/research/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/research/",
+      "destination": "/terminal/research/",
+      "permanent": true
+    },
+    {
+      "source": "/registry/research/:path(.*)",
+      "destination": "/terminal/research/:path",
+      "permanent": true
+    },
+    {
       "source": "/:path((?!api(?:/|$)|\\.well-known(?:/|$)|.*\\.[^/]+$).*[^/])",
       "destination": "/:path/",
       "permanent": true
@@ -159,6 +189,10 @@
     }
   ],
   "rewrites": [
+    {
+      "source": "/api/registry/news",
+      "destination": "/api/compatibility?action=registry-news"
+    },
     {
       "source": "/c/:token/",
       "destination": "/api/compatibility?action=invite-exchange&token=:token"
@@ -266,6 +300,40 @@
       ]
     },
     {
+      "source": "/terminal/markets/(.*)",
+      "headers": [
+        {
+          "key": "Content-Security-Policy",
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' https://plausible.io; script-src-attr 'none'; connect-src 'self' https://lite-api.jup.ag https://api.dexscreener.com https://api.geckoterminal.com https://plausible.io; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline'; font-src 'self'; manifest-src 'self'; media-src 'self'; worker-src 'self' blob:; frame-src 'none'; frame-ancestors 'none'; object-src 'none'; base-uri 'self'; form-action 'self'"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "same-origin"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
+      "source": "/registry/exchange/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, noarchive"
+        }
+      ]
+    },
+    {
       "source": "/registry/collection/(.*)",
       "headers": [
         {
@@ -314,7 +382,61 @@
       ]
     },
     {
+      "source": "/assets/registry-outlook.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/registry-research-feed.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/data/registry-market-history.v1.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
       "source": "/assets/gallery.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/registry-token-chart.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/trade.js",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
+      ]
+    },
+    {
+      "source": "/assets/exchange.js",
       "headers": [
         {
           "key": "Cache-Control",

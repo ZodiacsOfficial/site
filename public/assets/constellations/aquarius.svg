@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-labelledby="title description">
+  <title id="title">Aquarius constellation map</title>
+  <desc id="description">Brighter stars in Aquarius plotted from HYG Database J2000 coordinates. Sadalsuud is highlighted. Guide lines are not official constellation boundaries.</desc>
+  <metadata>HYG Database v4.0, CC BY-SA 4.0, source blob 681f7d51024c9593182079da9fd1aec897a44e7e. Guide segments authored by Zodiacs.org.</metadata>
+  <defs>
+    <radialGradient id="field" cx="50%" cy="46%" r="66%"><stop offset="0" stop-color="#AE8FC9" stop-opacity=".08"/><stop offset="1" stop-color="#07080c" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="720" height="460" rx="28" fill="#090b10"/>
+  <rect width="720" height="460" rx="28" fill="url(#field)"/>
+  <g fill="none" stroke="#AE8FC9" stroke-opacity=".34" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">  <path d="M 662.00 260.11 L 453.25 185.11"/>
+  <path d="M 453.25 185.11 L 290.45 84.75"/>
+  <path d="M 290.45 84.75 L 214.95 105.15"/>
+  <path d="M 214.95 105.15 L 180.81 79.02"/>
+  <path d="M 180.81 79.02 L 149.78 80.88"/>
+  <path d="M 290.45 84.75 L 237.89 227.38"/>
+  <path d="M 237.89 227.38 L 67.68 223.49"/>
+  <path d="M 67.68 223.49 L 58.00 380.98"/></g>
+  <g fill="#eef1f7" fill-opacity=".86">  <circle class="star" cx="662.00" cy="260.11" r="2.42"/>
+  <circle class="star focus" cx="453.25" cy="185.11" r="3.30"/>
+  <circle class="star" cx="290.45" cy="84.75" r="3.25"/>
+  <circle class="star" cx="237.89" cy="227.38" r="2.03"/>
+  <circle class="star" cx="214.95" cy="105.15" r="2.34"/>
+  <circle class="star" cx="180.81" cy="79.02" r="2.55"/>
+  <circle class="star" cx="149.78" cy="80.88" r="2.16"/>
+  <circle class="star" cx="67.68" cy="223.49" r="2.47"/>
+  <circle class="star" cx="58.00" cy="380.98" r="2.93"/></g>
+  <circle cx="453.25" cy="185.11" r="14" fill="none" stroke="#AE8FC9" stroke-width="1.5" stroke-opacity=".9" filter="url(#glow)"/>
+  <text x="469.25" y="171.11" fill="#AE8FC9" font-family="ui-monospace, monospace" font-size="12" letter-spacing="1.5">SADALSUUD</text>
+  <text x="24" y="430" fill="#8e96ab" font-family="ui-monospace, monospace" font-size="9" letter-spacing="2">J2000 · EAST LEFT · AQR</text>
+</svg>

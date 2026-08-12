@@ -22,6 +22,18 @@ function runWorker(source) {
   const handlers = new Map();
   const showNotification = vi.fn(async (_title, _options) => {});
   const openWindow = vi.fn(async () => {});
+  const networkFetch = vi.fn(async () => ({
+    ok: true,
+    status: 200,
+    clone: () => ({ ok: true, status: 200 }),
+  }));
+  const caches = {
+    open: vi.fn(async () => ({
+      add: vi.fn(), put: vi.fn(), match: vi.fn(), keys: vi.fn(async () => []),
+    })),
+    keys: vi.fn(async () => []),
+    delete: vi.fn(async () => true),
+  };
   const self = {
     addEventListener: (name, handler) => handlers.set(name, handler),
     location: { origin: 'https://zodiacs.org' },
@@ -33,8 +45,8 @@ function runWorker(source) {
     },
     skipWaiting: vi.fn(async () => {}),
   };
-  runInNewContext(source, { self, URL, Promise });
-  return { handlers, openWindow, self, showNotification };
+  runInNewContext(source, { self, URL, Promise, fetch: networkFetch, caches, setTimeout, clearTimeout });
+  return { caches, handlers, networkFetch, openWindow, self, showNotification };
 }
 
 async function dispatchPush(handler, payload, { malformedJson = false, missingData = false } = {}) {
@@ -55,7 +67,52 @@ describe('offline service worker posture', () => {
   it('never stale-serves Registry authority JSON', async () => {
     const source = await readFile(resolve(ROOT, 'public/sw.js'), 'utf8');
     expect(source).toContain("url.pathname === '/registry/zodiacs.registry.json'");
-    expect(source).toMatch(/if \(registryAuthority\(url\)\) \{\s*event\.respondWith\(fetch\(request\)\)/);
+    expect(source).toMatch(/if \(registryAuthority\(url\) \|\| registryVolatileSurface\(url\)\) \{\s*event\.respondWith\(fetch\(request\)\)/);
+  });
+
+  it('never caches or stale-serves Registry authority or either build-time Terminal flag surface', async () => {
+    const worker = runWorker(await builtWorker(false));
+    const handler = worker.handlers.get('fetch');
+    const volatilePaths = [
+      '/registry', '/registry/', '/registry/index.html',
+      '/registry/exchange', '/registry/exchange/', '/registry/exchange/index.html',
+      '/terminal', '/terminal/', '/terminal/index.html',
+      '/terminal/markets', '/terminal/markets/', '/terminal/markets/index.html',
+    ];
+    for (const path of volatilePaths) {
+      let completion;
+      const request = { method: 'GET', mode: 'navigate', url: `https://zodiacs.org${path}` };
+      handler({ request, respondWith: (promise) => { completion = Promise.resolve(promise); } });
+      await completion;
+    }
+    expect(worker.networkFetch).toHaveBeenCalledTimes(volatilePaths.length);
+    expect(worker.caches.open).not.toHaveBeenCalled();
+
+    worker.networkFetch.mockRejectedValueOnce(new TypeError('offline'));
+    let offline;
+    handler({
+      request: { method: 'GET', mode: 'navigate', url: 'https://zodiacs.org/terminal/markets/' },
+      respondWith: (promise) => { offline = Promise.resolve(promise); },
+    });
+    await expect(offline).rejects.toThrow('offline');
+    expect(worker.caches.open).not.toHaveBeenCalled();
+  });
+
+  it('keeps non-authoritative Terminal pages network-first with an offline fallback', async () => {
+    const worker = runWorker(await builtWorker(false));
+    const handler = worker.handlers.get('fetch');
+    let completion;
+    handler({
+      request: {
+        method: 'GET',
+        mode: 'navigate',
+        url: 'https://zodiacs.org/terminal/research/',
+      },
+      respondWith: (promise) => { completion = Promise.resolve(promise); },
+    });
+    await completion;
+    expect(worker.networkFetch).toHaveBeenCalledOnce();
+    expect(worker.caches.open).toHaveBeenCalledOnce();
   });
 
   it('ships with push disabled and versioned shell/data caches', async () => {

@@ -70,6 +70,13 @@ await withPreview({ port: 4405 }, async (baseURL) => {
     check('Ask about this prefills but does not auto-send',
       await contextualModal.locator('textarea').inputValue() === 'Help me understand these transits.'
       && requests.length === 1);
+
+    await page.keyboard.press('Escape');
+    await page.goto(`${baseURL}/terminal/`, { waitUntil: 'networkidle' });
+    check('Terminal keeps a shared Ask guide destination', await page.locator('.wnav a[href="/ask/"]').count() === 1);
+
+    await page.goto(`${baseURL}/registry/`, { waitUntil: 'networkidle' });
+    check('verification Registry keeps a shared Ask guide destination', await page.locator('.wnav a[href="/ask/"]').count() === 1);
     check('no runtime errors', errors.length === 0, errors.join(' | '));
     await context.close();
   } finally {

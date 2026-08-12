@@ -58,18 +58,21 @@ describe('assistant site context', { timeout: 30_000 }, () => {
 
     expect(counts).toEqual({
       birthdays: 366,
-      consumerRoutes: 681,
+      consumerRoutes: 682,
       glossary: 145,
       guides: 12,
       learn: 159,
       pairs: 78,
-      staticPages: 42,
+      staticPages: 43,
       tools: 17,
     });
     expect(context).toContain('- /birthday/february-29/ — Pisces birthday guide.');
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
     expect(context).toContain('- /learn/placements/sun-in-aries/ — What Sun in Aries means in a birth chart.');
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
+    expect(context).toContain('- /terminal/ — Zodiac Terminal: the separate consumer interface');
+    expect(context).toContain('- /registry/ — Zodiacs Registry: the read-only verification hub');
+    expect(context).not.toContain('Astrofolio catalogue');
   });
 
   it('keeps privacy, calculation, time-zone, unknown-time, and horoscope-date boundaries explicit', async () => {
@@ -156,6 +159,7 @@ Canonical labels: "Get your free birth chart" · "Save this chart" · "Saved cha
     expect(knowledgeIndex.chunks.some(({ path, locale }) => (
       path === '/es/privacy/' && locale === 'es'
     ))).toBe(true);
+    expect(knowledgeIndex.chunks.some(({ path }) => path === '/terminal/research/')).toBe(true);
     expect(ASSISTANT_KNOWLEDGE_INDEX).toEqual(knowledgeIndex);
   });
 

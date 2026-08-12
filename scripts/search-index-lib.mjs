@@ -6,6 +6,7 @@ export const SEARCH_KINDS = Object.freeze([
   'pairing',
   'page',
   'term',
+  'terminal',
   'registry',
 ]);
 
@@ -37,7 +38,7 @@ const TOOL_ROOTS = new Set([
   'transits',
   'widgets',
 ]);
-const EXCLUDED_PREFIXES = ['/es/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
+const EXCLUDED_PREFIXES = ['/es/', '/terminal/', '/registry/', '/thesis/', '/archive/', '/sdk/'];
 const NAMED_ENTITIES = Object.freeze({
   amp: '&',
   apos: "'",
@@ -68,11 +69,21 @@ function freezeCuratedEntry(entry) {
  */
 export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
+    path: '/terminal/',
+    title: 'Zodiac Terminal',
+    description: 'Live markets, rotating gold sculptures, price history, and reviewed research for the twelve Zodiac tokens.',
+    kind: 'terminal',
+    keywords: [
+      'terminal', 'zodiac terminal', 'zodiac capital markets',
+      'astrofolio', 'market', 'markets', 'token', 'tokens', 'research',
+    ],
+  }),
+  freezeCuratedEntry({
     path: '/registry/',
-    title: 'The Zodiacs Registry',
-    description: 'The registry of the twelve signs — canonical records, provenance, and the Astrofolio catalogue.',
+    title: 'Zodiacs Registry',
+    description: 'Official Zodiac identities, verified addresses, canonical datasets, and methodology for all twelve signs.',
     kind: 'registry',
-    keywords: ['registry', 'astrofolio', 'record', 'records'],
+    keywords: ['registry', 'zodiacs registry', 'verify', 'verification', 'address', 'addresses', 'canonical', 'dataset', 'methodology', 'record'],
   }),
   freezeCuratedEntry({
     path: '/thesis/',
@@ -90,8 +101,8 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   }),
   ...SIGN_NAMES.map((sign) => freezeCuratedEntry({
     path: `/registry/${sign.toLowerCase()}/`,
-    title: `${sign} — registry record`,
-    description: `The canonical record of ${sign} in the registry: provenance, description, and verification.`,
+    title: `${sign} — official Zodiac record`,
+    description: `Official ${sign} identity, addresses, artwork, provenance, and verification.`,
     kind: 'registry',
     keywords: ['registry', 'astrofolio', 'record', sign.toLowerCase()],
   })),

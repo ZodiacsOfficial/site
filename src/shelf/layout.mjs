@@ -295,11 +295,16 @@ export const DOCK = Object.freeze({
 });
 
 // The opened Thesis sculpture turns like a dealer's turntable. The Registry
-// spotlight is always on display, so its perpetual version is deliberately
-// slower and yields for a short inspection pause after direct manipulation.
+// spotlight receives one bounded inspection sweep, then rests; after direct
+// manipulation it waits before offering that same short sweep again.
 export const TURNTABLE = Object.freeze({
   openedRate: 0.22,
-  spotlightRate: 0.12,
+  // The Registry owns an image-derived cast rather than an authored back and
+  // side. Give it one restrained inspection sweep, never a perpetual 360°
+  // orbit that exposes geometry the collection does not actually contain.
+  spotlightArc: 0.24,
+  spotlightManualArc: 0.52,
+  spotlightSeconds: 4.8,
   resumeAfter: 2400,
 });
 

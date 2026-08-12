@@ -76,7 +76,7 @@ describe("AuraResult rooms", () => {
     expect(markup).toContain("7 places remain reserved.");
     expect(markup).toContain("Share the dated seal");
     expect(markup).toContain("Open another collection");
-    expect(markup).toContain("Browse the Registry");
+    expect(markup).toContain("Browse Zodiac Terminal");
     expect(markup).toContain("never the address");
     expect(markup).toContain(`Collection checked`);
     expect(markup).not.toContain("The clearest connections");
@@ -107,7 +107,7 @@ describe("AuraResult rooms", () => {
     expect(markup).not.toContain("Collection checked");
     expect(markup).not.toMatch(/illustrative/i);
     expect(markup).toContain("Open my collection");
-    expect(markup).toContain("Browse the Registry");
+    expect(markup).toContain("Browse Zodiac Terminal");
     expect(markup).not.toContain("Share the dated seal");
   });
 });

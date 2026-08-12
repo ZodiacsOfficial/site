@@ -79,6 +79,7 @@ PAGE INVENTORY — EVERGREEN PAGES AND HUBS
 - /learn/zodiac-dates/ — The twelve tropical zodiac signs in one…
 - /methodology/ — How zodiacs.org computes a chart.
 - /privacy/ — How zodiacs.org handles birth charts, The…
+- /terminal/research/ — Verified sky facts, traditional symbolic…
 - /terms/ — Terms for the zodiacs.org astrology…
 - /today/ — Sky details, limitations, and editorial…
 - /tools/ — Free astrology tools, no signup.
@@ -739,8 +740,10 @@ Every route below is a live date guide. Each one-line description names the sign
 - /birthday/september-8/ — Virgo birthday guide.
 - /birthday/september-9/ — Virgo birthday guide.
 
-REGISTRY WING
-- /registry/ — The registry of the twelve signs: canonical records, provenance, and the Astrofolio catalogue.
+ZODIAC TERMINAL AND REGISTRY
+- /terminal/ — Zodiac Terminal: the separate consumer interface for the twelve official Zodiac assets, their rotating gold artwork, public activity context, and reviewed research.
+- /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.
+- /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.
 - /thesis/ — The Nº 09 essay: zodiac history and identity meet public digital ownership and Solana performance; supporting disclosures follow.
 - /sdk/ — Open tools for charts, icons, and the registry interface.
 
@@ -770,55 +773,55 @@ ANSWERING BOUNDARIES
 
 export const ASSISTANT_KNOWLEDGE_INDEX = {
   "version": 1,
-  "hash": "422c3752c5b429bfe79df90e53413c4280dcfac15e3784adee1b667e140f89c4",
+  "hash": "d8478a0084d0456fd30e8242ed5a455f530292f93e4bd85eb848e8a403fa57a2",
   "chunks": [
     {
-      "id": "src_1adf8b785d272f82bf8c",
+      "id": "src_b57bb37dc6f62d9983ad",
       "path": "/",
       "title": "Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools",
       "heading": "Your whole chart, not just your sign.",
       "locale": "en",
-      "text": "Your whole chart, not just your sign. Free birth charts, moon signs, compatibility, and horoscopes — accurate, private, and easy to understand. Get your free birth chart ↗ See your forecasts Aug 9 · 12 UTC Sun 16°55′ Leo Moon in Cancer Mercury direct Saturn retrograde Neptune retrograde Pluto retrograde New moon · Aug 12 Interactive preview See how a birth chart becomes a story. Explore a real chart without entering anything. Tap a sign, planet, house, or connection to see what it means. Sample chart · Frida Kahlo Tap a mark on the wheel—or choose a starting point. Frida Kahlo · July 6, 1907 · 8:30 AM · Coyoacán, Mexico · computed as 1907-07-06 15:06 UTC Try the preview Three ways into a chart Choose a starting point below, or tap any symbol on the wheel. Planet Her Sun Life area House 12 Connection Tight aspect Planet Sun in Cancer Her Sun centers itself in the"
+      "text": "Your whole chart, not just your sign. Free birth charts, moon signs, compatibility, and horoscopes — accurate, private, and easy to understand. Get your free birth chart ↗ See your forecasts Aug 12 · 12 UTC Sun 19°48′ Leo Moon in Leo Mercury direct Saturn retrograde Neptune retrograde Pluto retrograde New moon · Aug 12 Interactive preview See how a birth chart becomes a story. Explore a real chart without entering anything. Tap a sign, planet, house, or connection to see what it means. Sample chart · Frida Kahlo Tap a mark on the wheel—or choose a starting point. Frida Kahlo · July 6, 1907 · 8:30 AM · Coyoacán, Mexico · computed as 1907-07-06 15:06 UTC Try the preview Three ways into a chart Choose a starting point below, or tap any symbol on the wheel. Planet Her Sun Life area House 12 Connection Tight aspect Planet Sun in Cancer Her Sun centers itself in the twelfth"
     },
     {
-      "id": "src_4669d22642ba6a3b6e5e",
+      "id": "src_5b489ea8eddc89aa50e6",
       "path": "/",
       "title": "Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools",
       "heading": "Your whole chart, not just your sign.",
       "locale": "en",
-      "text": "twelfth house — solitude, rest, and what runs beneath awareness. See my birth chart ↗ Sun · 13°22′ Cancer Cancer Identity, purpose, and the direction she grows into. Moon · 29°42′ Taurus Taurus Emotional needs, instinct, and what helps her feel steady. Rising · 23°30′ Leo Leo First impression, approach, and how other people meet her. A real chart, calculated from the 1907 sky. Your preview takes about twenty seconds. The sky today, by sign Aug 9, 2026 · Waning Crescent Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces Tap your Sun sign for a clear reading for today — no birth time needed. Start with your chart Find your birth chart, moon sign, rising sign, compatibility, and what the sky is doing now. Birth chart Your sun, moon, rising, planets, houses, and what they mean. Open → Moon sign How you feel — and what helps you"
+      "text": "house — solitude, rest, and what runs beneath awareness. See my birth chart ↗ Sun · 13°22′ Cancer Cancer Identity, purpose, and the direction she grows into. Moon · 29°42′ Taurus Taurus Emotional needs, instinct, and what helps her feel steady. Rising · 23°30′ Leo Leo First impression, approach, and how other people meet her. A real chart, calculated from the 1907 sky. Your preview takes about twenty seconds. The sky today, by sign Aug 12, 2026 · New Moon Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces Tap your Sun sign for a clear reading for today — no birth time needed. Start with your chart Find your birth chart, moon sign, rising sign, compatibility, and what the sky is doing now. Birth chart Your sun, moon, rising, planets, houses, and what they mean. Open → Moon sign How you feel — and what helps you feel at home. Open →"
     },
     {
-      "id": "src_68bcb50933623ca65c84",
+      "id": "src_4a72e5a025aede875ab0",
       "path": "/",
       "title": "Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools",
       "heading": "Your whole chart, not just your sign.",
       "locale": "en",
-      "text": "feel at home. Open → Rising sign How people first meet you. Open → Compatibility See how two charts connect. Open → And for the month ahead Eclipses. Every solar and lunar eclipse through 2028, with peak times in UTC — see the dates . The twelve signs A full guide to each: character, relationships, history, and what the sign means across your chart. Aries Mar 21 – Apr 19 Taurus Apr 20 – May 20 Gemini May 21 – Jun 20 Cancer Jun 21 – Jul 22 Leo Jul 23 – Aug 22 Virgo Aug 23 – Sep 22 Libra Sep 23 – Oct 22 Scorpio Oct 23 – Nov 21 Sagittarius Nov 22 – Dec 21 Capricorn Dec 22 – Jan 19 Aquarius Jan 20 – Feb 18 Pisces Feb 19 – Mar 20 Learn your signs. Save what matters. Three parts to the site, and you can start anywhere. Learn A guide to every sign Twelve sign guides, the big three explained, and plain-language help for reading your chart. Start here → Calculate Free"
+      "text": "Rising sign How people first meet you. Open → Compatibility See how two charts connect. Open → And for the month ahead Eclipses. Every solar and lunar eclipse through 2028, with peak times in UTC — see the dates . The twelve signs A full guide to each: character, relationships, history, and what the sign means across your chart. Aries Mar 21 – Apr 19 Taurus Apr 20 – May 20 Gemini May 21 – Jun 20 Cancer Jun 21 – Jul 22 Leo Jul 23 – Aug 22 Virgo Aug 23 – Sep 22 Libra Sep 23 – Oct 22 Scorpio Oct 23 – Nov 21 Sagittarius Nov 22 – Dec 21 Capricorn Dec 22 – Jan 19 Aquarius Jan 20 – Feb 18 Pisces Feb 19 – Mar 20 Learn your signs. Save what matters. Three parts to the site, and you can start anywhere. Learn A guide to every sign Twelve sign guides, the big three explained, and plain-language help for reading your chart. Start here → Calculate Free astrology tools Birth chart,"
     },
     {
-      "id": "src_f6a08d7ef09ee7b0179c",
+      "id": "src_d2afd817cd483f1d5b3e",
       "path": "/",
       "title": "Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools",
       "heading": "Your whole chart, not just your sign.",
       "locale": "en",
-      "text": "astrology tools Birth chart, moon, rising, compatibility, and transits, calculated privately in your browser. Open the tools → Keep Saved charts Save a chart, return to it, and keep the people you care about close. Sign in only when you want sync. Saved charts → New here Follow the five-step beginner path Your chart, one useful idea at a time. Have your birth details Get your chart explained Start with the big three, then explore when you are ready. Coming back See what today means for you A fresh brief for your saved chart—or start with your sun sign. Common questions Is it free? Yes. Every calculator and guide is free, with no account and no paywall. Charts are computed in your own browser, so there is nothing to sell you. How accurate are the charts? Planetary positions come from an astronomical engine tested automatically against NASA JPL reference data to within"
+      "text": "moon, rising, compatibility, and transits, calculated privately in your browser. Open the tools → Keep Saved charts Save a chart, return to it, and keep the people you care about close. Sign in only when you want sync. Saved charts → New here Follow the five-step beginner path Your chart, one useful idea at a time. Have your birth details Get your chart explained Start with the big three, then explore when you are ready. Coming back See what today means for you A fresh brief for your saved chart—or start with your sun sign. Common questions Is it free? Yes. Every calculator and guide is free, with no account and no paywall. Charts are computed in your own browser, so there is nothing to sell you. How accurate are the charts? Planetary positions come from an astronomical engine tested automatically against NASA JPL reference data to within a few hundredths of a degree."
     },
     {
-      "id": "src_b08d8ad0571cde1bd08d",
+      "id": "src_0c8e9f24cfe08fc89f14",
       "path": "/",
       "title": "Zodiacs.org — Free Birth Charts, Sign Guides & Astrology Tools",
       "heading": "Your whole chart, not just your sign.",
       "locale": "en",
-      "text": "a few hundredths of a degree. Historical clock changes, including pre-1922 local mean time where available, use the IANA/ICU history supplied by your browser or device runtime. Every chart lists its computed UTC instant so you can check the conversion. What happens to my birth data? The calculation runs entirely in your browser. Saving a chart stores it on this device first; if you choose account sync, your saved charts upload to your account (stored with row-level security) so they can follow you across devices. What is the Registry? The collector’s wing of the site: a museum-style catalogue of the twelve signs as canonical records, with its own archive and thesis. It is deliberately separate from the astrology tools. Visit it if collecting interests you, or ignore it entirely. Start with your birth chart. Get your free birth chart ↗ Or look up your exact birthday →"
+      "text": "Historical clock changes, including pre-1922 local mean time where available, use the IANA/ICU history supplied by your browser or device runtime. Every chart lists its computed UTC instant so you can check the conversion. What happens to my birth data? The calculation runs entirely in your browser. Saving a chart stores it on this device first; if you choose account sync, your saved charts upload to your account (stored with row-level security) so they can follow you across devices. What is Zodiac Terminal? The market-and-records desk for the twelve official Zodiac tokens. It brings together live market context, rotating gold artwork, verified Registry addresses, price history, and reviewed research. It remains separate from the site’s free astrology tools, and no purchase is required. Start with your birth chart. Get your free birth chart ↗ Or look up your exact birthday →"
     },
     {
-      "id": "src_5770f5acb3f48959706b",
+      "id": "src_4a20e7a79ba84cc6a4eb",
       "path": "/es/",
       "title": "Zodiacs.org en español — cartas natales gratis y astrología fácil",
       "heading": "Explora las estrellas detrás de tu historia.",
       "locale": "es",
-      "text": "Explora las estrellas detrás de tu historia. Cartas natales, signo lunar, compatibilidad y horóscopos gratis: precisos, privados y fáciles de entender. Obtén tu carta natal gratis ↗ Ver pronósticos 9 ago · 12 UTC Sol 16°55′ Leo Luna en Cáncer Mercurio directo Saturno retrógrado Neptuno retrógrado Plutón retrógrado Luna nueva · 12 ago El cielo de hoy, por signo 9 ago 2026 · Luna menguante Aries Tauro Géminis Cáncer Leo Virgo Libra Escorpio Sagitario Capricornio Acuario Piscis Toca tu signo solar para una lectura clara de hoy — no necesitas la hora de nacimiento. Empieza con tu carta Encuentra tu carta natal, signo lunar, ascendente, compatibilidad y lo que está pasando en el cielo ahora. Carta natal Tu Sol, Luna, ascendente,"
+      "text": "Explora las estrellas detrás de tu historia. Cartas natales, signo lunar, compatibilidad y horóscopos gratis: precisos, privados y fáciles de entender. Obtén tu carta natal gratis ↗ Ver pronósticos 12 ago · 12 UTC Sol 19°48′ Leo Luna en Leo Mercurio directo Saturno retrógrado Neptuno retrógrado Plutón retrógrado Luna nueva · 12 ago El cielo de hoy, por signo 12 ago 2026 · Luna nueva Aries Tauro Géminis Cáncer Leo Virgo Libra Escorpio Sagitario Capricornio Acuario Piscis Toca tu signo solar para una lectura clara de hoy — no necesitas la hora de nacimiento. Empieza con tu carta Encuentra tu carta natal, signo lunar, ascendente, compatibilidad y lo que está pasando en el cielo ahora. Carta natal Tu Sol, Luna, ascendente,"
     },
     {
       "id": "src_1414ce9ab02f4f87d992",
@@ -829,28 +832,28 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "planetas, casas y lo que significan. Abrir → Signo lunar Cómo sientes, qué te calma y qué necesitas para sentirte en casa. Abrir → Ascendente La primera impresión que das y cómo se ordena tu carta. Abrir → Compatibilidad Compara dos cartas y mira dónde conectan, chocan y crecen. Abrir → Los doce signos Guías claras para cada signo: personalidad, amor, compatibilidad y qué significa en tu carta. Aries 21 mar – 19 abr Tauro 20 abr – 20 may Géminis 21 may – 20 jun Cáncer 21 jun – 22 jul Leo 23 jul – 22 ago Virgo 23 ago – 22 sep Libra 23 sep – 22 oct Escorpio 23 oct – 21 nov Sagitario 22 nov – 21 dic Capricornio 22 dic – 19 ene Acuario 20 ene – 18 feb Piscis 19 feb – 20 mar Empieza con tu carta natal. Obtén tu carta natal gratis ↗"
     },
     {
-      "id": "src_b4571e20b49d952a90ec",
+      "id": "src_b5b8a0b0826d17b40ddb",
       "path": "/pt/",
       "title": "Zodiacs.org em português — mapas astrais grátis e astrologia descomplicada",
       "heading": "Explore as estrelas por trás da sua história.",
       "locale": "pt",
-      "text": "Explore as estrelas por trás da sua história. Mapas astrais, signo lunar, compatibilidade e horóscopos grátis: precisos, privados e fáceis de entender. Faça seu mapa astral grátis ↗ Ver previsões 9 de ago. · 12h UTC Sol 16°55′ Leão Lua em Câncer Mercúrio direto Saturno retrógrado Netuno retrógrado Plutão retrógrado Lua nova · 12 de ago. O céu de hoje, por signo 9 de ago. de 2026 · Lua minguante Áries Touro Gêmeos Câncer Leão Virgem Libra Escorpião Sagitário Capricórnio Aquário Peixes Toque no seu signo solar para uma leitura clara de hoje — não é preciso saber a hora de nascimento. Comece pelo seu mapa Descubra seu mapa astral, signo lunar, ascendente, compatibilidade e o que está acontecendo no céu agora. Mapa astral Seu Sol, sua Lua, seu ascendente, seus planetas, suas casas"
+      "text": "Explore as estrelas por trás da sua história. Mapas astrais, signo lunar, compatibilidade e horóscopos grátis: precisos, privados e fáceis de entender. Faça seu mapa astral grátis ↗ Ver previsões 12 de ago. · 12h UTC Sol 19°48′ Leão Lua em Leão Mercúrio direto Saturno retrógrado Netuno retrógrado Plutão retrógrado Lua nova · 12 de ago. O céu de hoje, por signo 12 de ago. de 2026 · Lua nova Áries Touro Gêmeos Câncer Leão Virgem Libra Escorpião Sagitário Capricórnio Aquário Peixes Toque no seu signo solar para uma leitura clara de hoje — não é preciso saber a hora de nascimento. Comece pelo seu mapa Descubra seu mapa astral, signo lunar, ascendente, compatibilidade e o que está acontecendo no céu agora. Mapa astral Seu Sol, sua Lua, seu ascendente, seus planetas, suas casas e"
     },
     {
-      "id": "src_79abc2b818efa7cccd35",
+      "id": "src_3058e938e03abe664e22",
       "path": "/pt/",
       "title": "Zodiacs.org em português — mapas astrais grátis e astrologia descomplicada",
       "heading": "Explore as estrelas por trás da sua história.",
       "locale": "pt",
-      "text": "e o significado de cada um. Abrir → Signo lunar Como você vive as emoções, o que traz calma e do que precisa para se sentir em casa. Abrir → Ascendente A primeira impressão que você causa e como seu mapa se organiza. Abrir → Compatibilidade Compare dois mapas e veja onde vocês se conectam, entram em conflito e crescem. Abrir → Os doze signos Guias claros de cada signo: personalidade, amor, compatibilidade e o que ele significa no seu mapa. Áries 21 mar – 19 abr Touro 20 abr – 20 mai Gêmeos 21 mai – 20 jun Câncer 21 jun – 22 jul Leão 23 jul – 22 ago Virgem 23 ago – 22 set Libra 23 set – 22 out Escorpião 23 out – 21 nov Sagitário 22 nov – 21 dez Capricórnio 22 dez – 19 jan Aquário 20 jan – 18 fev Peixes 19 fev – 20 mar Comece pelo seu mapa astral. Faça seu mapa astral grátis ↗"
+      "text": "o significado de cada um. Abrir → Signo lunar Como você vive as emoções, o que traz calma e do que precisa para se sentir em casa. Abrir → Ascendente A primeira impressão que você causa e como seu mapa se organiza. Abrir → Compatibilidade Compare dois mapas e veja onde vocês se conectam, entram em conflito e crescem. Abrir → Os doze signos Guias claros de cada signo: personalidade, amor, compatibilidade e o que ele significa no seu mapa. Áries 21 mar – 19 abr Touro 20 abr – 20 mai Gêmeos 21 mai – 20 jun Câncer 21 jun – 22 jul Leão 23 jul – 22 ago Virgem 23 ago – 22 set Libra 23 set – 22 out Escorpião 23 out – 21 nov Sagitário 22 nov – 21 dez Capricórnio 22 dez – 19 jan Aquário 20 jan – 18 fev Peixes 19 fev – 20 mar Comece pelo seu mapa astral. Faça seu mapa astral grátis ↗"
     },
     {
-      "id": "src_b4bf5bc1d3d8b352091e",
+      "id": "src_de6d1c046753197228b5",
       "path": "/fr/",
       "title": "Zodiacs.org en français — thèmes astraux gratuits et astrologie claire",
       "heading": "Explore les étoiles derrière ton histoire.",
       "locale": "fr",
-      "text": "Explore les étoiles derrière ton histoire. Thèmes astraux, signe lunaire, compatibilité et horoscopes gratuits : précis, confidentiels et faciles à comprendre. Obtiens ton thème astral gratuit ↗ Voir les prévisions 9 août · 12 h UTC Soleil 16°55′ Lion Lune en Cancer Mercure direct Saturne rétrograde Neptune rétrograde Pluton rétrograde Nouvelle Lune · 12 août Le ciel d’aujourd’hui, signe par signe 9 août 2026 · Dernier croissant Bélier Taureau Gémeaux Cancer Lion Vierge Balance Scorpion Sagittaire Capricorne Verseau Poissons Appuie sur ton signe solaire pour une lecture claire du jour — aucune heure de naissance nécessaire. Commence par ton thème Découvre ton thème astral, ton signe lunaire, ton ascendant, tes compatibilités et ce qui se passe dans le ciel maintenant. Thème astral Ton Soleil, ta Lune, ton ascendant, tes planètes, tes"
+      "text": "Explore les étoiles derrière ton histoire. Thèmes astraux, signe lunaire, compatibilité et horoscopes gratuits : précis, confidentiels et faciles à comprendre. Obtiens ton thème astral gratuit ↗ Voir les prévisions 12 août · 12 h UTC Soleil 19°48′ Lion Lune en Lion Mercure direct Saturne rétrograde Neptune rétrograde Pluton rétrograde Nouvelle Lune · 12 août Le ciel d’aujourd’hui, signe par signe 12 août 2026 · Nouvelle Lune Bélier Taureau Gémeaux Cancer Lion Vierge Balance Scorpion Sagittaire Capricorne Verseau Poissons Appuie sur ton signe solaire pour une lecture claire du jour — aucune heure de naissance nécessaire. Commence par ton thème Découvre ton thème astral, ton signe lunaire, ton ascendant, tes compatibilités et ce qui se passe dans le ciel maintenant. Thème astral Ton Soleil, ta Lune, ton ascendant, tes planètes, tes"
     },
     {
       "id": "src_9098862530c7376fd9cb",
@@ -861,12 +864,12 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "maisons et leur signification. Ouvrir → Signe lunaire Ta manière de ressentir, ce qui t’apaise et ce dont tu as besoin pour te sentir chez toi. Ouvrir → Ascendant La première impression que tu donnes et la façon dont ton thème s’organise. Ouvrir → Compatibilité Compare deux thèmes et vois où ils s’accordent, se heurtent et évoluent. Ouvrir → Les douze signes Des guides clairs pour chaque signe : personnalité, amour, compatibilité et signification dans ton thème. Bélier 21 mars – 19 avr. Taureau 20 avr. – 20 mai Gémeaux 21 mai – 20 juin Cancer 21 juin – 22 juil. Lion 23 juil. – 22 août Vierge 23 août – 22 sept. Balance 23 sept. – 22 oct. Scorpion 23 oct. – 21 nov. Sagittaire 22 nov. – 21 déc. Capricorne 22 déc. – 19 janv. Verseau 20 janv. – 18 févr. Poissons 19 févr. – 20 mars Commence par ton thème astral. Obtiens ton thème astral gratuit ↗"
     },
     {
-      "id": "src_79229f71fac79c7eea32",
+      "id": "src_009da6b81b8b91db061b",
       "path": "/it/",
       "title": "Zodiacs.org in italiano — temi natali gratuiti e astrologia chiara",
       "heading": "Esplora le stelle dietro la tua storia.",
       "locale": "it",
-      "text": "Esplora le stelle dietro la tua storia. Temi natali, segno lunare, compatibilità e oroscopi gratuiti: precisi, riservati e facili da capire. Calcola il tuo tema natale gratis ↗ Vedi le previsioni 9 ago · 12 UTC Sole 16°55′ Leone Luna in Cancro Mercurio diretto Saturno retrogrado Nettuno retrogrado Plutone retrogrado Luna nuova · 12 ago Il cielo di oggi, segno per segno 9 ago 2026 · Falce calante Ariete Toro Gemelli Cancro Leone Vergine Bilancia Scorpione Sagittario Capricorno Acquario Pesci Tocca il tuo segno solare per una lettura chiara di oggi — non serve l’ora di nascita. Inizia dal tuo tema Scopri il tuo tema natale, il segno lunare, l’ascendente, le compatibilità e ciò che accade nel cielo adesso. Tema natale Il tuo Sole, la tua Luna, l’ascendente, i pianeti, le"
+      "text": "Esplora le stelle dietro la tua storia. Temi natali, segno lunare, compatibilità e oroscopi gratuiti: precisi, riservati e facili da capire. Calcola il tuo tema natale gratis ↗ Vedi le previsioni 12 ago · 12 UTC Sole 19°48′ Leone Luna in Leone Mercurio diretto Saturno retrogrado Nettuno retrogrado Plutone retrogrado Luna nuova · 12 ago Il cielo di oggi, segno per segno 12 ago 2026 · Luna nuova Ariete Toro Gemelli Cancro Leone Vergine Bilancia Scorpione Sagittario Capricorno Acquario Pesci Tocca il tuo segno solare per una lettura chiara di oggi — non serve l’ora di nascita. Inizia dal tuo tema Scopri il tuo tema natale, il segno lunare, l’ascendente, le compatibilità e ciò che accade nel cielo adesso. Tema natale Il tuo Sole, la tua Luna, l’ascendente, i pianeti, le"
     },
     {
       "id": "src_bcf8fd643cc31ea14f1d",
@@ -877,44 +880,44 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "case e il loro significato. Apri → Segno lunare Come vivi le emozioni, che cosa ti calma e ciò di cui hai bisogno per sentirti a casa. Apri → Ascendente La prima impressione che dai e il modo in cui si organizza il tuo tema. Apri → Compatibilità Confronta due temi e scopri dove si accordano, si scontrano e crescono. Apri → I dodici segni Guide chiare per ogni segno: personalità, amore, compatibilità e significato nel tuo tema. Ariete 21 mar – 19 apr Toro 20 apr – 20 mag Gemelli 21 mag – 20 giu Cancro 21 giu – 22 lug Leone 23 lug – 22 ago Vergine 23 ago – 22 set Bilancia 23 set – 22 ott Scorpione 23 ott – 21 nov Sagittario 22 nov – 21 dic Capricorno 22 dic – 19 gen Acquario 20 gen – 18 feb Pesci 19 feb – 20 mar Inizia dal tuo tema natale. Calcola il tuo tema natale gratis ↗"
     },
     {
-      "id": "src_fd65e264ceaacbadcdf6",
+      "id": "src_3fc291acc8cf49de3eda",
       "path": "/about/",
       "title": "About Zodiacs.org — Accurate, Plain, Private Astrology",
       "heading": "A straight answer about the sky.",
       "locale": "en",
-      "text": "About A straight answer about the sky. Zodiacs.org is a free astrology reference built on one idea: the astronomy can be exact even when the interpretation is a tradition. Every chart here is computed from the real positions of the planets, explained in plain language, and kept on your own device. Why it exists Most astrology sites are either beautiful and vague or accurate and unreadable. The calculators that get the math right tend to look like tax software; the ones that feel good tend to hand-wave the numbers. We wanted a third option — a place where you can get your full birth chart in about twenty seconds, see the exact degrees behind every claim, and read what they mean in ordinary words. The reading comes first. Exact degrees, dated sky facts, and sources stay close by for anyone who"
+      "text": "About A straight answer about the sky. Zodiacs.org is a free astrology reference built on one idea: the astronomy can be exact even when the interpretation is a tradition. Every chart here is computed from the real positions of the planets, explained in plain language, and kept on your own device. Why it exists Most astrology sites are either beautiful and vague or accurate and unreadable. The calculators that get the math right tend to look like tax software; the ones that feel good tend to hand-wave the numbers. We wanted a third option — a place where you can get your full birth chart in about twenty seconds, see the exact degrees behind every claim, and read what they mean in ordinary words. The reading comes first. Exact degrees, dated sky facts, and sources stay close by for anyone who wants to"
     },
     {
-      "id": "src_62acb4503e293bb8c0bb",
+      "id": "src_8a5962cfa9aa000c09e4",
       "path": "/about/",
       "title": "About Zodiacs.org — Accurate, Plain, Private Astrology",
       "heading": "A straight answer about the sky.",
       "locale": "en",
-      "text": "wants to check them, without turning every page into a technical report. Accuracy without the homework When a date, degree, or birth time matters, it is calculated against the actual sky and checked before it appears. If you want the ephemeris, house systems, historical time-zone handling, and accuracy limits, the full methodology is public . Your data stays yours The engine runs in your browser, so chart calculation sends no birth fields to a chart API. Charts you save live on your device unless you choose to sync selected charts and their birth details with a free account. If you explicitly attach a chart to the assistant, its placements-only summary—not the saved name or raw birth fields—is sent with your question transiently to OpenAI after you approve its exact preview. There are no ads and"
+      "text": "check them, without turning every page into a technical report. Accuracy without the homework When a date, degree, or birth time matters, it is calculated against the actual sky and checked before it appears. If you want the ephemeris, house systems, historical time-zone handling, and accuracy limits, the full methodology is public . Your data stays yours The engine runs in your browser, so chart calculation sends no birth fields to a chart API. Charts you save live on your device unless you choose to sync selected charts and their birth details with a free account. If you explicitly attach a chart to the assistant, its placements-only summary—not the saved name or raw birth fields—is sent with your question transiently to OpenAI after you approve its exact preview. There are no ads and no cross-site"
     },
     {
-      "id": "src_79a36cdcfd846adbbf41",
+      "id": "src_921c832893d9e77a3d97",
       "path": "/about/",
       "title": "About Zodiacs.org — Accurate, Plain, Private Astrology",
       "heading": "A straight answer about the sky.",
       "locale": "en",
-      "text": "no cross-site tracking. The full detail is on the privacy page . Two registers under one roof Most of the site is the astrology reference — guides, calculators, horoscopes, and the birthday pages. Alongside it lives the Registry , the collector's wing: a museum-toned catalogue of the twelve as a set of canonical records, kept in its own voice. The two share one design but keep their own registers; the astrology surfaces stay free of any market language, by design. Astrofolio is a related but separate consumer experience; Zodiacs.org remains the astrology reference and the official Registry and SDK source. Charts you save start on this device and sync only if you choose a Zodiacs.org account. Astrofolio separately explores personal Zodiac shelves, profiles, and share cards. It is never required to"
+      "text": "tracking. The full detail is on the privacy page . Two experiences under one roof Most of the site is the astrology reference — guides, calculators, horoscopes, and the birthday pages. Alongside it lives Zodiac Terminal , the live market-and-research desk for the twelve official Zodiac tokens. It combines public market context and reviewed research with records maintained by the Zodiacs Registry . The two share one design, while the astrology surfaces stay free of market language by design. Astrofolio is a related but separate consumer experience; Zodiacs.org remains the astrology reference and the official Registry and SDK source. Charts you save start on this device and sync only if you choose a Zodiacs.org account. Astrofolio separately explores personal Zodiac shelves, profiles, and share cards. It is"
     },
     {
-      "id": "src_dc703efa41d09da29611",
+      "id": "src_c51c87f355139657fe08",
       "path": "/about/",
       "title": "About Zodiacs.org — Accurate, Plain, Private Astrology",
       "heading": "A straight answer about the sky.",
       "locale": "en",
-      "text": "use the free tools. The Registry’s operator and economic-interest attestations, the twelve dated origin receipts, and the establishment provenance are published on the disclosure page. Read the Registry disclosure . How Zodiacs.org is maintained Zodiacs.org is an independent project maintained by automated systems, without a traditional human editorial staff. Articles use the Zodiacs.org organizational byline; there is no invented editor, biography, or set of credentials behind it. The calculators remain free because the core math runs on your device. Open the publication details Automation, checks, and public records AI agents can propose writing, design, and code, but free-form model prose cannot publish itself. Daily editions begin with structured sky facts and versioned local templates. A"
+      "text": "never required to use the free tools. The Registry’s operator and economic-interest attestations, the twelve dated origin receipts, and the establishment provenance are published on the disclosure page. Read the Registry disclosure . How Zodiacs.org is maintained Zodiacs.org is an independent project maintained by automated systems, without a traditional human editorial staff. Articles use the Zodiacs.org organizational byline; there is no invented editor, biography, or set of credentials behind it. The calculators remain free because the core math runs on your device. Open the publication details Automation, checks, and public records AI agents can propose writing, design, and code, but free-form model prose cannot publish itself. Daily editions begin with structured sky facts and versioned local"
     },
     {
-      "id": "src_2c04de045a22b749db35",
+      "id": "src_8232d12c0a5900523288",
       "path": "/about/",
       "title": "About Zodiacs.org — Accurate, Plain, Private Astrology",
       "heading": "A straight answer about the sky.",
       "locale": "en",
-      "text": "separate astronomy audit recalculates the sky, while policy checks reject unsupported facts, unsafe certainty, and incomplete editions before publication. The current daily edition exposes its facts, generation mode, policy version, hashes, and verification result in a public publication record . The rulebook is machine-readable , the daily method is documented , and the correction log records material changes. Get in touch Corrections, questions, press, or a request about your data — write to admin@zodiacs.org . If you have spotted an astrological or astronomical error on a page, tell us which page; accuracy reports are the ones we answer first. For a correction or removal request concerning a page in the People directory, write to people@zodiacs.org . Get your free birth chart ↗ How we compute it"
+      "text": "templates. A separate astronomy audit recalculates the sky, while policy checks reject unsupported facts, unsafe certainty, and incomplete editions before publication. The current daily edition exposes its facts, generation mode, policy version, hashes, and verification result in a public publication record . The rulebook is machine-readable , the daily method is documented , and the correction log records material changes. Get in touch Corrections, questions, press, or a request about your data — write to admin@zodiacs.org . If you have spotted an astrological or astronomical error on a page, tell us which page; accuracy reports are the ones we answer first. For a correction or removal request concerning a page in the People directory, write to people@zodiacs.org . Get your free birth chart ↗ How we compute it"
     },
     {
       "id": "src_c8fa7964688f79418725",
@@ -1677,36 +1680,36 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "dated 5 July 2024. Each was located by instruction-level inspection on archival RPC and cross-checked against Solscan’s independently indexed public pages; token names were never used as evidence. Base representations are official bridges and are disclosed separately in the thesis instrument table. Aries origin receipt — 2024-07-05 ↗ Taurus origin receipt — 2024-07-05 ↗ Gemini origin receipt — 2024-07-05 ↗ Cancer origin receipt — 2024-07-05 ↗ Leo origin receipt — 2024-07-05 ↗ Virgo origin receipt — 2024-07-05 ↗ Libra origin receipt — 2024-07-05 ↗ Scorpio origin receipt — 2024-07-05 ↗ Sagittarius origin receipt — 2024-07-05 ↗ Capricorn origin receipt — 2024-07-05 ↗ Aquarius origin receipt — 2024-07-05 ↗ Pisces origin receipt — 2024-07-05 ↗ Separation The core astrology tools remain free, contain no advertising"
     },
     {
-      "id": "src_b5210474f8c255ad4a3d",
+      "id": "src_7a18874344c4c989d64a",
       "path": "/disclosure/",
       "title": "Disclosure — Zodiacs.org Registry",
       "heading": "The facts, including the unresolved ones.",
       "locale": "en",
-      "text": "or cross-site trackers, and can be used without the Registry. Registry Collection is an optional cross-link that reads a saved chart and one public wallet record side by side; the wallet record does not alter the chart calculation. Verified from published materials The calculators compute in the browser and require no Registry interaction. Aura keeps chart computation local and sends only the selected public address through its holdings lookup. Privacy Methodology Read-only posture The Registry lookup surfaces and @zodiacs/sdk are read-only. Registry Collection may connect to compatible wallet software only after a user click to obtain authorized public accounts; it uses one compatible address for the lookup and does not hold assets, request signatures or approvals, construct or submit transactions, or"
+      "text": "or cross-site trackers, and can be used without the Registry. Registry Collection is an optional cross-link that reads a saved chart and one public wallet record side by side; the wallet record does not alter the chart calculation. Verified from published materials The calculators compute in the browser and require no Registry interaction. Aura keeps chart computation local and sends only the selected public address through its holdings lookup. Privacy Methodology Read-only posture The Registry lookup surfaces and @zodiacs/sdk are read-only. Registry Collection may connect to compatible wallet software only after a user click to obtain authorized public accounts; it uses one compatible address for the lookup and does not hold assets, request signatures or approvals, construct or submit transactions, or switch"
     },
     {
-      "id": "src_aa5a8438358d3eafb63e",
+      "id": "src_19c86abf0d3b46111be0",
       "path": "/disclosure/",
       "title": "Disclosure — Zodiacs.org Registry",
       "heading": "The facts, including the unresolved ones.",
       "locale": "en",
-      "text": "switch networks. The optional trade panel on catalogue pages is a separate surface with its own row below. Verified from published materials Aura also accepts a pasted address, forwards only the one address used for its holdings lookup, and the SDK documents and tests a read-only API surface. A connection is not proof of identity, control, or legal ownership. Machine-readable Registry SDK posture Trade panel When the trade panel is enabled, a sign’s catalogue page and the Registry landing explorer can offer a trade in place. The panel is Zodiacs.org’s own interface, but the trade is not: prices come from the public API of Jupiter, an independent venue; Jupiter builds the transaction; the visitor’s wallet software asks them to approve and sign it; and Jupiter submits it to the network. Zodiacs.org never holds"
+      "text": "networks. The optional trade panel on catalogue pages is a separate surface with its own row below. Verified from published materials Aura also accepts a pasted address, forwards only the one address used for its holdings lookup, and the SDK documents and tests a read-only API surface. A connection is not proof of identity, control, or legal ownership. Machine-readable Registry SDK posture Trade panel When the trade panel is enabled, a sign’s catalogue page and the Registry landing explorer can offer a trade in place. The panel is Zodiacs.org’s own interface, but the trade is not: prices come from the public API of Jupiter, an independent venue; Jupiter builds the transaction; the visitor’s wallet software asks them to approve and sign it; and Jupiter submits it to the network. Zodiacs.org never holds keys or"
     },
     {
-      "id": "src_fbd63061ac4c884b894e",
+      "id": "src_cb221bc384dc188edf70",
       "path": "/disclosure/",
       "title": "Disclosure — Zodiacs.org Registry",
       "heading": "The facts, including the unresolved ones.",
       "locale": "en",
-      "text": "keys or funds, never builds, signs, or sends a transaction, and cannot reverse one. Jupiter charges a fee of 0.10% on the trade. Zodiacs.org configures no referral account or platform fee and receives nothing from any trade. Verified from published materials The panel is enabled by an operator switch and now appears on the pages named above. Its published page code makes the rules checkable — the site holds no signing key and calls no write endpoint of its own; prices are read from Jupiter and only the visitor’s own wallet can sign. The 0.10% figure is the fee Jupiter’s public order response reports; it is the venue’s, not the site’s. A sign’s catalogue page Terms Financial advice and solicitation Registry records, market context, and Registry Collection are not financial advice or a solicitation to buy, sell,"
+      "text": "funds, never builds, signs, or sends a transaction, and cannot reverse one. Jupiter charges a fee of 0.10% on the trade. Zodiacs.org configures no referral account or platform fee and receives nothing from any trade. Verified from published materials The panel is enabled by an operator switch and now appears on the pages named above. Its published page code makes the rules checkable — the site holds no signing key and calls no write endpoint of its own; prices are read from Jupiter and only the visitor’s own wallet can sign. The 0.10% figure is the fee Jupiter’s public order response reports; it is the venue’s, not the site’s. A sign’s catalogue page Terms Financial advice and solicitation Registry records, market context, and Registry Collection are not financial advice or a solicitation to buy, sell, or"
     },
     {
-      "id": "src_fcce4cd8d4028bde1a67",
+      "id": "src_d73e75eeb39a2a6fcd16",
       "path": "/disclosure/",
       "title": "Disclosure — Zodiacs.org Registry",
       "heading": "The facts, including the unresolved ones.",
       "locale": "en",
-      "text": "or hold an asset. The Collection is a symbolic reflection, not a wallet score or price signal, and no purchase is required. Verified from published materials “Official” is a Registry classification only: it means an address, contract, mint, or representation matches the Registry’s published list—not government approval, identity verification, safety, value, liquidity, or future performance. Contextual notices and the terms state the digital-asset risks. Terms Thesis What “operator attested” means The operator-relationship and economic-interest rows repeat, verbatim and dated, statements the operator supplied for publication. No public record lets a stranger verify them, so they carry the attestation chip rather than the verified one. Every other row links evidence a stranger can check. Return to the Registry →"
+      "text": "hold an asset. The Collection is a symbolic reflection, not a wallet score or price signal, and no purchase is required. Verified from published materials “Official” is a Registry classification only: it means an address, contract, mint, or representation matches the Registry’s published list—not government approval, identity verification, safety, value, liquidity, or future performance. Contextual notices and the terms state the digital-asset risks. Terms Thesis What “operator attested” means The operator-relationship and economic-interest rows repeat, verbatim and dated, statements the operator supplied for publication. No public record lets a stranger verify them, so they carry the attestation chip rather than the verified one. Every other row links evidence a stranger can check. Return to Zodiacs Registry →"
     },
     {
       "id": "src_01a396a650f5979af611",
@@ -1757,44 +1760,44 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "dispositivo y solo envía la dirección pública seleccionada a través de su consulta de tenencias. Privacidad Metodología Condición de solo lectura Las superficies de consulta del Registro y @zodiacs/sdk son de solo lectura. Registry Collection puede conectarse a una billetera compatible únicamente después de un clic de la persona usuaria para obtener las cuentas públicas autorizadas; usa una dirección compatible para la consulta y no custodia activos, solicita firmas o aprobaciones, crea o envía transacciones ni cambia de red. El panel de negociación opcional de las páginas del catálogo es una superficie separada, con su propia fila más abajo. Verificado a partir de materiales publicados Aura también acepta una dirección pegada, solo reenvía la dirección utilizada para su consulta de tenencias y el SDK documenta y prueba una interfaz de solo lectura. Una"
     },
     {
-      "id": "src_195f71f44797f9765d93",
+      "id": "src_35f67cc51e17dc095a2c",
       "path": "/es/disclosure/",
       "title": "Declaraciones — Registro de Zodiacs.org",
       "heading": "Los hechos, incluidos los que siguen sin resolverse.",
       "locale": "es",
-      "text": "conexión no demuestra identidad, control ni propiedad legal. Registro legible por máquinas Enfoque del SDK Panel de negociación Cuando el panel de negociación está activado, la página de catálogo de un signo y el explorador de la portada del Registro pueden ofrecer una operación en la propia página. El panel es la interfaz del propio Zodiacs.org, pero la operación no lo es: los precios provienen de la API pública de Jupiter, una plataforma independiente; Jupiter construye la transacción; el software de billetera de la persona visitante le pide aprobarla y firmarla; y Jupiter la envía a la red. Zodiacs.org nunca custodia claves ni fondos, nunca construye, firma ni envía una transacción, y no puede revertirla. Jupiter cobra una comisión del 0,10% sobre la operación. Zodiacs.org no configura ninguna cuenta de referidos ni comisión de plataforma y no recibe nada"
+      "text": "conexión no demuestra identidad, control ni propiedad legal. Registro legible por máquinas Enfoque del SDK Panel de negociación Cuando el panel de negociación está activado, la página de catálogo de un signo y el explorador de la portada del Registro pueden ofrecer una operación en la propia página. El panel es la interfaz del propio Zodiacs.org, pero la operación no lo es: los precios provienen de la API pública de Jupiter, una plataforma independiente; Jupiter construye la transacción; el software de billetera de la persona visitante le pide aprobarla y firmarla; y Jupiter la envía a la red. Zodiacs.org nunca custodia claves ni fondos, nunca construye, firma ni envía una transacción, y no puede revertirla. Jupiter cobra una comisión del 0,10% sobre la operación. Zodiacs.org no configura ninguna cuenta de referidos ni comisión de plataforma y no recibe nada por"
     },
     {
-      "id": "src_167078f11bfaba10de12",
+      "id": "src_5adb40b7dae93bf05332",
       "path": "/es/disclosure/",
       "title": "Declaraciones — Registro de Zodiacs.org",
       "heading": "Los hechos, incluidos los que siguen sin resolverse.",
       "locale": "es",
-      "text": "por ninguna operación. Verificado a partir de materiales publicados El panel está activado mediante un interruptor del operador y aparece ya en las páginas indicadas arriba. Su código publicado hace comprobables las reglas: el sitio no guarda ninguna clave de firma y no llama a ningún endpoint de escritura propio; los precios se leen de Jupiter y solo la billetera del visitante puede firmar. La cifra del 0,10% es la comisión que informa la respuesta pública de órdenes de Jupiter; es de la plataforma, no del sitio. La página de catálogo de un signo Términos Consejo financiero e invitación a operar Los registros, el contexto de mercado y Registry Collection no constituyen asesoramiento financiero ni una invitación a comprar, vender o mantener un activo. La Collection es una reflexión simbólica, no una puntuación de la billetera ni una señal de precio, y no"
+      "text": "ninguna operación. Verificado a partir de materiales publicados El panel está activado mediante un interruptor del operador y aparece ya en las páginas indicadas arriba. Su código publicado hace comprobables las reglas: el sitio no guarda ninguna clave de firma y no llama a ningún endpoint de escritura propio; los precios se leen de Jupiter y solo la billetera del visitante puede firmar. La cifra del 0,10% es la comisión que informa la respuesta pública de órdenes de Jupiter; es de la plataforma, no del sitio. La página de catálogo de un signo Términos Consejo financiero e invitación a operar Los registros, el contexto de mercado y Registry Collection no constituyen asesoramiento financiero ni una invitación a comprar, vender o mantener un activo. La Collection es una reflexión simbólica, no una puntuación de la billetera ni una señal de precio, y no requiere"
     },
     {
-      "id": "src_bc7145fe415856863886",
+      "id": "src_50995d4d2df0d606ba94",
       "path": "/es/disclosure/",
       "title": "Declaraciones — Registro de Zodiacs.org",
       "heading": "Los hechos, incluidos los que siguen sin resolverse.",
       "locale": "es",
-      "text": "requiere ninguna compra. Verificado a partir de materiales publicados «Oficial» es solo una clasificación del Registro: significa que una dirección, un contrato, una acuñación o una representación coincide con la lista publicada por el Registro; no implica aprobación gubernamental, verificación de identidad, seguridad, valor, liquidez ni rendimiento futuro. Los avisos contextuales y los términos explican los riesgos de los activos digitales. Términos Tesis Qué significa «certificado por el operador» Las filas de relación del operador e interés económico repiten, literalmente y con fecha, declaraciones que el operador entregó para su publicación. Ningún registro público permite a un tercero verificarlas, por eso llevan el distintivo de certificación y no el de verificado. Todas las demás filas enlazan pruebas que cualquiera puede comprobar. Volver al Registro →"
+      "text": "ninguna compra. Verificado a partir de materiales publicados «Oficial» es solo una clasificación del Registro: significa que una dirección, un contrato, una acuñación o una representación coincide con la lista publicada por el Registro; no implica aprobación gubernamental, verificación de identidad, seguridad, valor, liquidez ni rendimiento futuro. Los avisos contextuales y los términos explican los riesgos de los activos digitales. Términos Tesis Qué significa «certificado por el operador» Las filas de relación del operador e interés económico repiten, literalmente y con fecha, declaraciones que el operador entregó para su publicación. Ningún registro público permite a un tercero verificarlas, por eso llevan el distintivo de certificación y no el de verificado. Todas las demás filas enlazan pruebas que cualquiera puede comprobar. Volver al Registro de Zodiacs →"
     },
     {
-      "id": "src_1162dc00e64543ece556",
+      "id": "src_41b667c190b27bfc3310",
       "path": "/pt/disclosure/",
       "title": "Divulgações — Registro do Zodiacs.org",
       "heading": "Os fatos, inclusive os ainda não resolvidos.",
       "locale": "pt",
-      "text": "Divulgações do Registro Os fatos, inclusive os ainda não resolvidos. Esta página separa os fatos sustentados por evidências públicas das declarações fornecidas pelo operador. Uma declaração do operador é datada e rotulada como tal; nunca é apresentada como verificada de forma independente. Estas divulgações se aplicam à Ala do acervo. As ferramentas de astrologia continuam gratuitas, calculadas no navegador e utilizáveis sem o Registro. Criação do Registro Est. MMXXIV Primeiro recibo de origem · 2024-07-05 ↗ Declaração Situação e evidências Relação com o operador O operador declara (2026-08-02): “Controlo pessoalmente o domínio zodiacs.org, o repositório, as implantações e o conteúdo do Registro ali publicado. Não controlo o astrofolio.xyz, seus canais oficiais, a implantação dos tokens nem"
+      "text": "Divulgações do Registro Os fatos, inclusive os ainda não resolvidos. Esta página separa os fatos sustentados por evidências públicas das declarações fornecidas pelo operador. Uma declaração do operador é datada e rotulada como tal; nunca é apresentada como verificada de forma independente. Estas divulgações se aplicam à Ala do acervo. As ferramentas de astrologia continuam gratuitas, calculadas no navegador e utilizáveis sem o Registro. Criação do Registro Est. MMXXIV Primeiro recibo de origem · 2024-07-05 ↗ Declaração Situação e evidências Relação com o operador O operador declara (2026-08-02): “Controlo pessoalmente o domínio zodiacs.org, o repositório, as implantações e o conteúdo do Registro ali publicado. Não controlo o astrofolio.xyz, seus canais oficiais, a implantação dos tokens nem suas"
     },
     {
-      "id": "src_c70e66cffc5525a2ee22",
+      "id": "src_0a03d5a693d41bf500e6",
       "path": "/pt/disclosure/",
       "title": "Divulgações — Registro do Zodiacs.org",
       "heading": "Os fatos, inclusive os ainda não resolvidos.",
       "locale": "pt",
-      "text": "suas autoridades administrativas, a tesouraria, a liquidez ou a atividade de mercado. Nenhuma pessoa, conta ou organização responsável pelo zodiacs.org controla também essas superfícies da Astrofolio. Mantenho posições em um ou mais ativos do Registro. Não há nenhuma conta de indicação, taxa de plataforma ou outra remuneração da Jupiter, de qualquer reserva de liquidez ou de qualquer marketplace configurada para o zodiacs.org, e o site não recebe nada por nenhuma operação realizada por meio dele.” Declarado pelo operador — sem verificação independente Declarado pelo operador em 2026-08-02 e publicado literalmente; sem verificação independente. Substitui a declaração de 2026-07-23, que não tratava de remuneração de plataformas, indicações ou marketplaces. Interesse econômico O operador declara"
+      "text": "autoridades administrativas, a tesouraria, a liquidez ou a atividade de mercado. Nenhuma pessoa, conta ou organização responsável pelo zodiacs.org controla também essas superfícies da Astrofolio. Mantenho posições em um ou mais ativos do Registro. Não há nenhuma conta de indicação, taxa de plataforma ou outra remuneração da Jupiter, de qualquer reserva de liquidez ou de qualquer marketplace configurada para o zodiacs.org, e o site não recebe nada por nenhuma operação realizada por meio dele.” Declarado pelo operador — sem verificação independente Declarado pelo operador em 2026-08-02 e publicado literalmente; sem verificação independente. Substitui a declaração de 2026-07-23, que não tratava de remuneração de plataformas, indicações ou marketplaces. Interesse econômico O operador declara"
     },
     {
       "id": "src_cca51cb6d06dfd15f96e",
@@ -1845,12 +1848,12 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "operação. Verificado em materiais publicados O painel está ativado por um interruptor do operador e aparece já nas páginas indicadas acima. O seu código publicado torna as regras verificáveis: o site não guarda nenhuma chave de assinatura e não chama nenhum endpoint de escrita próprio; os preços são lidos da Jupiter e só a carteira do visitante pode assinar. O valor de 0,10% é a comissão indicada na resposta pública de ordens da Jupiter; é da plataforma, não do site. A página de catálogo de um signo Termos Aconselhamento financeiro e solicitação Os registros, o contexto de mercado e o Registry Collection não constituem aconselhamento financeiro nem solicitação para comprar, vender ou manter um ativo. A Collection é uma reflexão simbólica, não uma pontuação de carteira nem um sinal de preço, e nenhuma"
     },
     {
-      "id": "src_b84cef18b63fb2ca462a",
+      "id": "src_9e22802f0b3c394282c8",
       "path": "/pt/disclosure/",
       "title": "Divulgações — Registro do Zodiacs.org",
       "heading": "Os fatos, inclusive os ainda não resolvidos.",
       "locale": "pt",
-      "text": "compra é necessária. Verificado em materiais publicados “Oficial” é apenas uma classificação do Registro: significa que um endereço, contrato, mint ou representação corresponde à lista publicada pelo Registro — não aprovação governamental, verificação de identidade, segurança, valor, liquidez ou desempenho futuro. Os avisos contextuais e os termos informam os riscos dos ativos digitais. Termos Tese O que significa “declarado pelo operador” As linhas de relação do operador e de interesse econômico repetem, literalmente e com data, declarações que o operador forneceu para publicação. Nenhum registro público permite que terceiros as verifiquem; por isso levam o selo de declaração, nunca o de verificado. Todas as outras linhas apontam para evidências que qualquer pessoa pode conferir. Voltar ao Registro →"
+      "text": "compra é necessária. Verificado em materiais publicados “Oficial” é apenas uma classificação do Registro: significa que um endereço, contrato, mint ou representação corresponde à lista publicada pelo Registro — não aprovação governamental, verificação de identidade, segurança, valor, liquidez ou desempenho futuro. Os avisos contextuais e os termos informam os riscos dos ativos digitais. Termos Tese O que significa “declarado pelo operador” As linhas de relação do operador e de interesse econômico repetem, literalmente e com data, declarações que o operador forneceu para publicação. Nenhum registro público permite que terceiros as verifiquem; por isso levam o selo de declaração, nunca o de verificado. Todas as outras linhas apontam para evidências que qualquer pessoa pode conferir. Voltar ao Registro Zodiacs →"
     },
     {
       "id": "src_71594801b161310924db",
@@ -1869,60 +1872,60 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "la trésorerie, la liquidité ni l’activité de marché. Aucune personne, aucun compte ni aucune organisation responsable de zodiacs.org ne contrôle également ces surfaces Astrofolio. Je détiens des positions dans un ou plusieurs actifs du Registre. Aucun compte de parrainage, frais de plateforme ou autre rémunération provenant de Jupiter, d’une réserve de liquidité ou d’une place de marché n’est configuré pour zodiacs.org, et le site ne reçoit rien pour une opération effectuée par son intermédiaire. » Attesté par l’opérateur — sans vérification indépendante Attesté par l’opérateur le 2026-08-02 et publié mot pour mot ; sans vérification indépendante. Cette attestation remplace celle du 2026-07-23, qui n’abordait pas la rémunération liée aux plateformes, au parrainage ou aux places de marché. Intérêt économique L’opérateur atteste (2026-08-02) détenir des positions dans un"
     },
     {
-      "id": "src_323c435e889ada02ac9e",
+      "id": "src_9b958d23fce32fc054b8",
       "path": "/fr/disclosure/",
       "title": "Déclarations — Registre Zodiacs.org",
       "heading": "Les faits, y compris ceux qui restent à résoudre.",
       "locale": "fr",
-      "text": "ou plusieurs des douze actifs du Registre et ne percevoir aucune rémunération de parrainage, de frais de plateforme, de liquidité ou de place de marché pour une opération effectuée par l’intermédiaire du site. Attesté par l’opérateur — sans vérification indépendante L’attestation de détention est la déclaration de l’opérateur lui-même, datée du 2026-08-02 et sans vérification indépendante ; elle n’énumère ni actifs, ni portefeuilles, ni montants, ni politique de blocage, d’acquisition progressive ou de cession, et les avoirs privés ne sont déduits d’aucun portefeuille. La répartition des détenteurs est publiée via des instantanés publics. Au 20 juillet 2026, la part des dix premiers comptes de jetons allait de 23,0 % à 30,6 % selon les douze actifs, avec une médiane de 27,2 %. Ces chiffres peuvent être vérifiés dans les instantanés publiés et les registres publics de"
+      "text": "ou plusieurs des douze actifs du Registre et ne percevoir aucune rémunération de parrainage, de frais de plateforme, de liquidité ou de place de marché pour une opération effectuée par l’intermédiaire du site. Attesté par l’opérateur — sans vérification indépendante L’attestation de détention est la déclaration de l’opérateur lui-même, datée du 2026-08-02 et sans vérification indépendante ; elle n’énumère ni actifs, ni portefeuilles, ni montants, ni politique de blocage, d’acquisition progressive ou de cession, et les avoirs privés ne sont déduits d’aucun portefeuille. La répartition des détenteurs est publiée via des instantanés publics. Au 20 juillet 2026, la part des dix premiers comptes de jetons allait de 23,0 % à 30,6 % selon les douze actifs, avec une médiane de 27,2 %. Ces chiffres peuvent être vérifiés dans les instantanés publiés et les registres publics de la"
     },
     {
-      "id": "src_d87492fb159d3f424d83",
+      "id": "src_9c82ca150cc36ec0920f",
       "path": "/fr/disclosure/",
       "title": "Déclarations — Registre Zodiacs.org",
       "heading": "Les faits, y compris ceux qui restent à résoudre.",
       "locale": "fr",
-      "text": "la chaîne. Instantanés de répartition ↗ Origine Chaque enregistrement canonique est étayé par sa pièce d’origine : la transaction qui a créé le jeton natif du signe sur Solana. Vérifié à partir des éléments publiés Les douze pièces sont datées du 5 juillet 2024. Chacune a été localisée par inspection des instructions sur un RPC d’archive et recoupée avec les pages publiques de Solscan, indexées indépendamment ; les noms des jetons n’ont jamais servi de preuve. Les représentations sur Base sont des ponts officiels, déclarés séparément dans le tableau de l’instrument de la thèse. Pièce d’origine de Bélier — 2024-07-05 ↗ Pièce d’origine de Taureau — 2024-07-05 ↗ Pièce d’origine de Gémeaux — 2024-07-05 ↗ Pièce d’origine de Cancer — 2024-07-05 ↗ Pièce d’origine de Lion — 2024-07-05 ↗ Pièce d’origine de Vierge — 2024-07-05 ↗ Pièce d’origine de Balance — 2024-07-05 ↗ Pièce"
+      "text": "chaîne. Instantanés de répartition ↗ Origine Chaque enregistrement canonique est étayé par sa pièce d’origine : la transaction qui a créé le jeton natif du signe sur Solana. Vérifié à partir des éléments publiés Les douze pièces sont datées du 5 juillet 2024. Chacune a été localisée par inspection des instructions sur un RPC d’archive et recoupée avec les pages publiques de Solscan, indexées indépendamment ; les noms des jetons n’ont jamais servi de preuve. Les représentations sur Base sont des ponts officiels, déclarés séparément dans le tableau de l’instrument de la thèse. Pièce d’origine de Bélier — 2024-07-05 ↗ Pièce d’origine de Taureau — 2024-07-05 ↗ Pièce d’origine de Gémeaux — 2024-07-05 ↗ Pièce d’origine de Cancer — 2024-07-05 ↗ Pièce d’origine de Lion — 2024-07-05 ↗ Pièce d’origine de Vierge — 2024-07-05 ↗ Pièce d’origine de Balance — 2024-07-05 ↗ Pièce"
     },
     {
-      "id": "src_733ddbfbe0a3bed69075",
+      "id": "src_f5a377fdfb4cf50356a1",
       "path": "/fr/disclosure/",
       "title": "Déclarations — Registre Zodiacs.org",
       "heading": "Les faits, y compris ceux qui restent à résoudre.",
       "locale": "fr",
-      "text": "d’origine de Scorpion — 2024-07-05 ↗ Pièce d’origine de Sagittaire — 2024-07-05 ↗ Pièce d’origine de Capricorne — 2024-07-05 ↗ Pièce d’origine de Verseau — 2024-07-05 ↗ Pièce d’origine de Poissons — 2024-07-05 ↗ Séparation Les principaux outils astrologiques restent gratuits, ne contiennent ni publicité ni traqueur intersite et peuvent être utilisés sans le Registre. Registry Collection est un lien facultatif qui lit côte à côte un thème enregistré et le registre public d’un portefeuille ; le registre du portefeuille ne modifie pas le calcul du thème. Vérifié à partir des éléments publiés Les calculateurs effectuent leurs calculs dans le navigateur sans interaction avec le Registre. Aura conserve le calcul du thème sur l’appareil et transmet uniquement l’adresse publique sélectionnée à son service de consultation des actifs. Confidentialité Méthodologie Fonctionnement"
+      "text": "d’origine de Scorpion — 2024-07-05 ↗ Pièce d’origine de Sagittaire — 2024-07-05 ↗ Pièce d’origine de Capricorne — 2024-07-05 ↗ Pièce d’origine de Verseau — 2024-07-05 ↗ Pièce d’origine de Poissons — 2024-07-05 ↗ Séparation Les principaux outils astrologiques restent gratuits, ne contiennent ni publicité ni traqueur intersite et peuvent être utilisés sans le Registre. Registry Collection est un lien facultatif qui lit côte à côte un thème enregistré et le registre public d’un portefeuille ; le registre du portefeuille ne modifie pas le calcul du thème. Vérifié à partir des éléments publiés Les calculateurs effectuent leurs calculs dans le navigateur sans interaction avec le Registre. Aura conserve le calcul du thème sur l’appareil et transmet uniquement l’adresse publique sélectionnée à son service de consultation des actifs. Confidentialité Méthodologie Fonctionnement en"
     },
     {
-      "id": "src_ccd00dd6162941a05390",
+      "id": "src_13d83aa2f9b66f104ac5",
       "path": "/fr/disclosure/",
       "title": "Déclarations — Registre Zodiacs.org",
       "heading": "Les faits, y compris ceux qui restent à résoudre.",
       "locale": "fr",
-      "text": "en lecture seule Les interfaces de consultation du Registre et @zodiacs/sdk sont en lecture seule. Registry Collection peut se connecter à un portefeuille compatible uniquement après un clic de l’utilisateur afin d’obtenir les comptes publics autorisés ; il utilise une adresse compatible pour la consultation, ne détient aucun actif, ne demande aucune signature ou autorisation, ne construit ni ne soumet de transaction et ne change pas de réseau. Le panneau de négociation optionnel des pages du catalogue est une surface distincte, décrite dans sa propre ligne ci-dessous. Vérifié à partir des éléments publiés Aura accepte aussi une adresse collée, ne transmet que l’adresse utilisée pour sa consultation des actifs et le SDK documente et teste une interface en lecture seule. Une connexion ne prouve ni l’identité, ni le contrôle, ni la propriété juridique. Registre lisible"
+      "text": "lecture seule Les interfaces de consultation du Registre et @zodiacs/sdk sont en lecture seule. Registry Collection peut se connecter à un portefeuille compatible uniquement après un clic de l’utilisateur afin d’obtenir les comptes publics autorisés ; il utilise une adresse compatible pour la consultation, ne détient aucun actif, ne demande aucune signature ou autorisation, ne construit ni ne soumet de transaction et ne change pas de réseau. Le panneau de négociation optionnel des pages du catalogue est une surface distincte, décrite dans sa propre ligne ci-dessous. Vérifié à partir des éléments publiés Aura accepte aussi une adresse collée, ne transmet que l’adresse utilisée pour sa consultation des actifs et le SDK documente et teste une interface en lecture seule. Une connexion ne prouve ni l’identité, ni le contrôle, ni la propriété juridique. Registre lisible par"
     },
     {
-      "id": "src_d001471d385082c43963",
+      "id": "src_24325b29ef06ab46e296",
       "path": "/fr/disclosure/",
       "title": "Déclarations — Registre Zodiacs.org",
       "heading": "Les faits, y compris ceux qui restent à résoudre.",
       "locale": "fr",
-      "text": "par machine Position du SDK Panneau de négociation Lorsque le panneau de négociation est activé, la page de catalogue d’un signe et l’explorateur de la page d’accueil du Registre peuvent proposer une opération sur place. Le panneau est l’interface de Zodiacs.org, mais l’opération ne l’est pas : les prix proviennent de l’API publique de Jupiter, une plateforme indépendante ; Jupiter construit la transaction ; le logiciel de portefeuille du visiteur lui demande de l’approuver et de la signer ; et Jupiter la soumet au réseau. Zodiacs.org ne détient jamais de clés ni de fonds, ne construit, ne signe et n’envoie jamais de transaction, et ne peut pas en annuler une. Jupiter prélève des frais de 0,10 % sur l’opération. Zodiacs.org ne configure aucun compte de parrainage ni frais de plateforme et ne reçoit rien pour une opération. Vérifié à partir des éléments publiés Le panneau"
+      "text": "machine Position du SDK Panneau de négociation Lorsque le panneau de négociation est activé, la page de catalogue d’un signe et l’explorateur de la page d’accueil du Registre peuvent proposer une opération sur place. Le panneau est l’interface de Zodiacs.org, mais l’opération ne l’est pas : les prix proviennent de l’API publique de Jupiter, une plateforme indépendante ; Jupiter construit la transaction ; le logiciel de portefeuille du visiteur lui demande de l’approuver et de la signer ; et Jupiter la soumet au réseau. Zodiacs.org ne détient jamais de clés ni de fonds, ne construit, ne signe et n’envoie jamais de transaction, et ne peut pas en annuler une. Jupiter prélève des frais de 0,10 % sur l’opération. Zodiacs.org ne configure aucun compte de parrainage ni frais de plateforme et ne reçoit rien pour une opération. Vérifié à partir des éléments publiés Le panneau est"
     },
     {
-      "id": "src_341927da985c890ddca2",
+      "id": "src_818a3c1b11696365c400",
       "path": "/fr/disclosure/",
       "title": "Déclarations — Registre Zodiacs.org",
       "heading": "Les faits, y compris ceux qui restent à résoudre.",
       "locale": "fr",
-      "text": "est activé par un interrupteur de l’opérateur et figure désormais sur les pages nommées ci-dessus. Son code publié rend les règles vérifiables : le site ne détient aucune clé de signature et n’appelle aucun point d’écriture qui lui soit propre ; les prix sont lus chez Jupiter et seul le portefeuille du visiteur peut signer. Le chiffre de 0,10 % est la commission indiquée par la réponse publique d’ordres de Jupiter ; elle revient à la plateforme, pas au site. La page de catalogue d’un signe Conditions Conseil financier et sollicitation Les entrées du Registre, le contexte de marché et Registry Collection ne constituent ni un conseil financier ni une sollicitation à acheter, vendre ou détenir un actif. La Collection est une réflexion symbolique, pas une note attribuée au portefeuille ni un signal de prix, et aucun achat n’est requis. Vérifié à partir des éléments publiés"
+      "text": "activé par un interrupteur de l’opérateur et figure désormais sur les pages nommées ci-dessus. Son code publié rend les règles vérifiables : le site ne détient aucune clé de signature et n’appelle aucun point d’écriture qui lui soit propre ; les prix sont lus chez Jupiter et seul le portefeuille du visiteur peut signer. Le chiffre de 0,10 % est la commission indiquée par la réponse publique d’ordres de Jupiter ; elle revient à la plateforme, pas au site. La page de catalogue d’un signe Conditions Conseil financier et sollicitation Les entrées du Registre, le contexte de marché et Registry Collection ne constituent ni un conseil financier ni une sollicitation à acheter, vendre ou détenir un actif. La Collection est une réflexion symbolique, pas une note attribuée au portefeuille ni un signal de prix, et aucun achat n’est requis. Vérifié à partir des éléments publiés «"
     },
     {
-      "id": "src_4be17273a9ee69f41229",
+      "id": "src_82cad9123153098a0723",
       "path": "/fr/disclosure/",
       "title": "Déclarations — Registre Zodiacs.org",
       "heading": "Les faits, y compris ceux qui restent à résoudre.",
       "locale": "fr",
-      "text": "« Officiel » est uniquement une classification du Registre : cela signifie qu’une adresse, un contrat, un jeton créé ou une représentation correspond à la liste publiée par le Registre — et non une approbation gouvernementale, une vérification d’identité, une garantie de sécurité, de valeur, de liquidité ou de performance future. Les avertissements contextuels et les conditions exposent les risques liés aux actifs numériques. Conditions Thèse Ce que signifie « attesté par l’opérateur » Les lignes relation de l’opérateur et intérêts économiques reprennent, mot pour mot et avec leur date, des déclarations fournies par l’opérateur pour publication. Aucun registre public ne permet à un tiers de les vérifier ; elles portent donc la pastille d’attestation, jamais celle de vérifié. Toutes les autres lignes renvoient à des preuves que chacun peut contrôler. Retour au Registre →"
+      "text": "Officiel » est uniquement une classification du Registre : cela signifie qu’une adresse, un contrat, un jeton créé ou une représentation correspond à la liste publiée par le Registre — et non une approbation gouvernementale, une vérification d’identité, une garantie de sécurité, de valeur, de liquidité ou de performance future. Les avertissements contextuels et les conditions exposent les risques liés aux actifs numériques. Conditions Thèse Ce que signifie « attesté par l’opérateur » Les lignes relation de l’opérateur et intérêts économiques reprennent, mot pour mot et avec leur date, des déclarations fournies par l’opérateur pour publication. Aucun registre public ne permet à un tiers de les vérifier ; elles portent donc la pastille d’attestation, jamais celle de vérifié. Toutes les autres lignes renvoient à des preuves que chacun peut contrôler. Retour au Registre Zodiacs →"
     },
     {
       "id": "src_34c389454ded8d149761",
@@ -1933,28 +1936,28 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "Informativa del Registro I fatti, compresi quelli ancora irrisolti. Questa pagina separa i fatti sostenuti da prove pubbliche dalle dichiarazioni fornite dall’operatore. Un’attestazione dell’operatore è datata ed etichettata come tale; non viene mai presentata come verificata in modo indipendente. Questa informativa riguarda l’Ala della collezione. Gli strumenti astrologici restano gratuiti, calcolati nel browser e utilizzabili senza il Registro. Istituzione del Registro Fond. MMXXIV Prima ricevuta di origine · 2024-07-05 ↗ Dichiarazione Stato e prove Rapporto con l’operatore L’operatore attesta (2026-08-02): «Controllo personalmente il dominio zodiacs.org, il repository, i deploy e i contenuti del Registro lì pubblicati. Non controllo astrofolio.xyz, i suoi canali ufficiali, il deployment dei token né le loro autorità"
     },
     {
-      "id": "src_d1dfefe2a0f1f89023fc",
+      "id": "src_a12642498d01577badd7",
       "path": "/it/disclosure/",
       "title": "Informativa — Registro Zodiacs.org",
       "heading": "I fatti, compresi quelli ancora irrisolti.",
       "locale": "it",
-      "text": "amministrative, la tesoreria, la liquidità o l’attività di mercato. Nessuna persona, account od organizzazione responsabile di zodiacs.org controlla anche quelle superfici Astrofolio. Detengo posizioni in uno o più asset del Registro. Per zodiacs.org non è configurato alcun account di referral, commissione di piattaforma o altra remunerazione da Jupiter, da riserve di liquidità o da qualsiasi marketplace, e il sito non riceve nulla per alcuna operazione effettuata tramite esso.» Attestato dall’operatore — senza verifica indipendente Attestato dall’operatore il 2026-08-02 e pubblicato alla lettera; senza verifica indipendente. Sostituisce l’attestazione del 2026-07-23, che non trattava la remunerazione da sedi, referral o marketplace. Interesse economico L’operatore attesta (2026-08-02) di detenere posizioni in uno o più dei"
+      "text": "amministrative, la tesoreria, la liquidità o l’attività di mercato. Nessuna persona, account od organizzazione responsabile di zodiacs.org controlla anche quelle superfici Astrofolio. Detengo posizioni in uno o più asset del Registro. Per zodiacs.org non è configurato alcun account di referral, commissione di piattaforma o altra remunerazione da Jupiter, da riserve di liquidità o da qualsiasi marketplace, e il sito non riceve nulla per alcuna operazione effettuata tramite esso.» Attestato dall’operatore — senza verifica indipendente Attestato dall’operatore il 2026-08-02 e pubblicato alla lettera; senza verifica indipendente. Sostituisce l’attestazione del 2026-07-23, che non trattava la remunerazione da sedi, referral o marketplace. Interesse economico L’operatore attesta (2026-08-02) di detenere posizioni in uno o più dei dodici"
     },
     {
-      "id": "src_8827b561d03b55e347cd",
+      "id": "src_f087a27e45294536dca8",
       "path": "/it/disclosure/",
       "title": "Informativa — Registro Zodiacs.org",
       "heading": "I fatti, compresi quelli ancora irrisolti.",
       "locale": "it",
-      "text": "dodici asset del Registro e di non ricevere alcuna remunerazione da referral, commissioni di piattaforma, liquidità o marketplace per alcuna operazione effettuata tramite il sito. Attestato dall’operatore — senza verifica indipendente L’attestazione sulle posizioni è una dichiarazione dell’operatore stesso, datata 2026-08-02 e senza verifica indipendente; non elenca asset, portafogli, importi né politiche di lock-up, maturazione o dismissione, e le posizioni private non vengono dedotte da alcun portafoglio. La distribuzione dei detentori è pubblicata tramite istantanee pubbliche. Al 20 luglio 2026 la quota dei dieci maggiori account di token andava dal 23,0% al 30,6% sui dodici asset, con una mediana del 27,2%. Le cifre sono verificabili nelle istantanee pubblicate e nei registri pubblici della catena. Istantanee di distribuzione"
+      "text": "asset del Registro e di non ricevere alcuna remunerazione da referral, commissioni di piattaforma, liquidità o marketplace per alcuna operazione effettuata tramite il sito. Attestato dall’operatore — senza verifica indipendente L’attestazione sulle posizioni è una dichiarazione dell’operatore stesso, datata 2026-08-02 e senza verifica indipendente; non elenca asset, portafogli, importi né politiche di lock-up, maturazione o dismissione, e le posizioni private non vengono dedotte da alcun portafoglio. La distribuzione dei detentori è pubblicata tramite istantanee pubbliche. Al 20 luglio 2026 la quota dei dieci maggiori account di token andava dal 23,0% al 30,6% sui dodici asset, con una mediana del 27,2%. Le cifre sono verificabili nelle istantanee pubblicate e nei registri pubblici della catena. Istantanee di distribuzione ↗"
     },
     {
-      "id": "src_f069f46a394f9082d387",
+      "id": "src_59e91c52bee64d11982f",
       "path": "/it/disclosure/",
       "title": "Informativa — Registro Zodiacs.org",
       "heading": "I fatti, compresi quelli ancora irrisolti.",
       "locale": "it",
-      "text": "↗ Origine Ogni record canonico è provato dalla sua ricevuta di origine: la transazione che ha creato il mint nativo del segno su Solana. Verificato dai materiali pubblicati Le dodici ricevute sono datate 5 luglio 2024. Ognuna è stata individuata ispezionando le istruzioni su un RPC di archivio e riscontrata con le pagine pubbliche di Solscan, indicizzate in modo indipendente; i nomi dei token non sono mai stati usati come prova. Le rappresentazioni su Base sono ponti ufficiali, dichiarati separatamente nella tabella dello strumento della tesi. Ricevuta di origine di Ariete — 2024-07-05 ↗ Ricevuta di origine di Toro — 2024-07-05 ↗ Ricevuta di origine di Gemelli — 2024-07-05 ↗ Ricevuta di origine di Cancro — 2024-07-05 ↗ Ricevuta di origine di Leone — 2024-07-05 ↗ Ricevuta di origine di Vergine — 2024-07-05 ↗ Ricevuta di origine di"
+      "text": "Origine Ogni record canonico è provato dalla sua ricevuta di origine: la transazione che ha creato il mint nativo del segno su Solana. Verificato dai materiali pubblicati Le dodici ricevute sono datate 5 luglio 2024. Ognuna è stata individuata ispezionando le istruzioni su un RPC di archivio e riscontrata con le pagine pubbliche di Solscan, indicizzate in modo indipendente; i nomi dei token non sono mai stati usati come prova. Le rappresentazioni su Base sono ponti ufficiali, dichiarati separatamente nella tabella dello strumento della tesi. Ricevuta di origine di Ariete — 2024-07-05 ↗ Ricevuta di origine di Toro — 2024-07-05 ↗ Ricevuta di origine di Gemelli — 2024-07-05 ↗ Ricevuta di origine di Cancro — 2024-07-05 ↗ Ricevuta di origine di Leone — 2024-07-05 ↗ Ricevuta di origine di Vergine — 2024-07-05 ↗ Ricevuta di origine di"
     },
     {
       "id": "src_68e9d322947dae886771",
@@ -1981,20 +1984,20 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "Registro leggibile dalle macchine Assetto dell’SDK Pannello di negoziazione Quando il pannello di negoziazione è attivo, la pagina di catalogo di un segno e l’esploratore della pagina iniziale del Registro possono proporre un’operazione sul posto. Il pannello è l’interfaccia di Zodiacs.org, ma l’operazione no: i prezzi provengono dall’API pubblica di Jupiter, una sede indipendente; Jupiter costruisce la transazione; il software wallet del visitatore gli chiede di approvarla e firmarla; e Jupiter la invia alla rete. Zodiacs.org non custodisce mai chiavi o fondi, non costruisce, firma né invia mai una transazione e non può annullarla. Jupiter applica una commissione dello 0,10% sull’operazione. Zodiacs.org non configura alcun account di referral né commissione di piattaforma e non riceve nulla da alcuna operazione. Verificato dai"
     },
     {
-      "id": "src_9c92c0a6e8d4f268de99",
+      "id": "src_d83957f6d65bc3dd9756",
       "path": "/it/disclosure/",
       "title": "Informativa — Registro Zodiacs.org",
       "heading": "I fatti, compresi quelli ancora irrisolti.",
       "locale": "it",
-      "text": "materiali pubblicati Il pannello è attivato da un interruttore dell’operatore e compare ormai nelle pagine indicate sopra. Il suo codice pubblicato rende verificabili le regole: il sito non detiene alcuna chiave di firma e non chiama alcun endpoint di scrittura proprio; i prezzi si leggono da Jupiter e solo il wallet del visitatore può firmare. La cifra dello 0,10% è la commissione riportata dalla risposta pubblica degli ordini di Jupiter; è della sede, non del sito. La pagina di catalogo di un segno Termini Consulenza finanziaria e sollecitazione Le voci del Registro, il contesto di mercato e Registry Collection non costituiscono consulenza finanziaria né una sollecitazione ad acquistare, vendere o detenere un asset. La Collection è una riflessione simbolica, non un punteggio del wallet né un segnale di prezzo, e non richiede"
+      "text": "materiali pubblicati Il pannello è attivato da un interruttore dell’operatore e compare ormai nelle pagine indicate sopra. Il suo codice pubblicato rende verificabili le regole: il sito non detiene alcuna chiave di firma e non chiama alcun endpoint di scrittura proprio; i prezzi si leggono da Jupiter e solo il wallet del visitatore può firmare. La cifra dello 0,10% è la commissione riportata dalla risposta pubblica degli ordini di Jupiter; è della sede, non del sito. La pagina di catalogo di un segno Termini Consulenza finanziaria e sollecitazione Le voci del Registro, il contesto di mercato e Registry Collection non costituiscono consulenza finanziaria né una sollecitazione ad acquistare, vendere o detenere un asset. La Collection è una riflessione simbolica, non un punteggio del wallet né un segnale di prezzo, e non richiede alcun"
     },
     {
-      "id": "src_37c5a231329f3b98a8ff",
+      "id": "src_fd49b96182e491a064c9",
       "path": "/it/disclosure/",
       "title": "Informativa — Registro Zodiacs.org",
       "heading": "I fatti, compresi quelli ancora irrisolti.",
       "locale": "it",
-      "text": "alcun acquisto. Verificato dai materiali pubblicati “Ufficiale” è soltanto una classificazione del Registro: significa che un indirizzo, contratto, mint o rappresentazione corrisponde all’elenco pubblicato dal Registro, non che esistano approvazione governativa, verifica dell’identità, sicurezza, valore, liquidità o rendimenti futuri. Gli avvisi contestuali e i termini descrivono i rischi degli asset digitali. Termini Tesi Cosa significa «attestato dall’operatore» Le righe rapporto con l’operatore e interesse economico riportano, alla lettera e con data, dichiarazioni che l’operatore ha fornito per la pubblicazione. Nessun registro pubblico consente a terzi di verificarle, perciò portano il contrassegno di attestazione e non quello di verificato. Tutte le altre righe rimandano a prove che chiunque può controllare. Torna al Registro →"
+      "text": "acquisto. Verificato dai materiali pubblicati “Ufficiale” è soltanto una classificazione del Registro: significa che un indirizzo, contratto, mint o rappresentazione corrisponde all’elenco pubblicato dal Registro, non che esistano approvazione governativa, verifica dell’identità, sicurezza, valore, liquidità o rendimenti futuri. Gli avvisi contestuali e i termini descrivono i rischi degli asset digitali. Termini Tesi Cosa significa «attestato dall’operatore» Le righe rapporto con l’operatore e interesse economico riportano, alla lettera e con data, dichiarazioni che l’operatore ha fornito per la pubblicazione. Nessun registro pubblico consente a terzi di verificarle, perciò portano il contrassegno di attestazione e non quello di verificato. Tutte le altre righe rimandano a prove che chiunque può controllare. Torna al Registro Zodiacs →"
     },
     {
       "id": "src_e30401c5db58679dcb24",
@@ -2237,44 +2240,44 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "31, 2026. The older almanac meaning — a fourth full moon in one season — survives mostly in trivia contests. Neither kind looks blue. Where do full moon names come from? The Wolf, Snow, Worm sequence comes from North American almanac tradition, which drew on Algonquian and colonial seasonal names. They describe the farming and hunting year, not astrology — the astrological content of a full moon is its zodiac sign and degree, which is why the table lists both. What does a full moon mean in astrology? A full moon is the Sun and Moon in exact opposition, so it always pairs two opposite signs — a Capricorn full moon happens in Cancer season. Astrologers read it as a culmination or a coming-to-light in the part of your chart holding the Moon’s sign. Which part that is takes your birth chart."
     },
     {
-      "id": "src_ec6c46907d9b6b86a0f5",
+      "id": "src_eae97ac67def31c0d912",
       "path": "/horoscopes/",
-      "title": "Daily Horoscopes — August 9, 2026, All 12 Signs",
+      "title": "Daily Horoscopes — August 12, 2026, All 12 Signs",
       "heading": "Daily horoscopes",
       "locale": "en",
-      "text": "Daily edition · August 9, 2026 Daily horoscopes Find your sign for the August 9, 2026 edition’s focus, pressure point, and most useful move. Read your Sun sign first—and your rising sign too, if you know it. Updated daily · August 9, 2026 Aries Mar 21 – Apr 19 August 9, 2026 For the August 9, 2026 edition, protect the conditions that make home and private life workable. For Aries, a clean first move matters more than a dramatic sprint. The waning crescent Moon puts home,… Read on August 9, 2026 → Taurus Apr 20 – May 20 August 9, 2026 For the August 9, 2026 edition, clarify the message, route, or conversation closest to hand. For Taurus, steady attention can reveal which pressure is real and which can wait. The waning crescent"
+      "text": "Daily edition · August 12, 2026 Daily horoscopes Find your sign for the August 12, 2026 edition’s focus, pressure point, and most useful move. Read your Sun sign first—and your rising sign too, if you know it. Updated daily · August 12, 2026 Aries Mar 21 – Apr 19 August 12, 2026 For the August 12, 2026 edition, give play, romance, or creative work a defined place. For Aries, a clean first move matters more than a dramatic sprint. The new moon Moon puts pleasure, romance,… Read on August 12, 2026 → Taurus Apr 20 – May 20 August 12, 2026 For the August 12, 2026 edition, protect the conditions that make home and private life workable. For Taurus, steady attention can reveal which pressure is real and which can wait. The new moon Moon… Read"
     },
     {
-      "id": "src_5a4fac58d84052e9119c",
+      "id": "src_8c161b2fcc9c25a094c4",
       "path": "/horoscopes/",
-      "title": "Daily Horoscopes — August 9, 2026, All 12 Signs",
+      "title": "Daily Horoscopes — August 12, 2026, All 12 Signs",
       "heading": "Daily horoscopes",
       "locale": "en",
-      "text": "Moon… Read on August 9, 2026 → Gemini May 21 – Jun 20 August 9, 2026 For the August 9, 2026 edition, check the budget of time, attention, and material resources. For Gemini, the sharp question is more valuable than another quick answer. The waning crescent Moon puts… Read on August 9, 2026 → Cancer Jun 21 – Jul 22 August 9, 2026 For the August 9, 2026 edition, make your own position visible before reacting to the room. For Cancer, care works best when it includes a boundary around your own time. The waning crescent Moon puts… Read on August 9, 2026 → Leo Jul 23 – Aug 22 August 9, 2026 For the August 9, 2026 edition, leave room for rest, closure, and work that happens offstage. For Leo, presence is strongest when the point is"
+      "text": "on August 12, 2026 → Gemini May 21 – Jun 20 August 12, 2026 For the August 12, 2026 edition, clarify the message, route, or conversation closest to hand. For Gemini, the sharp question is more valuable than another quick answer. The new moon Moon puts errands,… Read on August 12, 2026 → Cancer Jun 21 – Jul 22 August 12, 2026 For the August 12, 2026 edition, check the budget of time, attention, and material resources. For Cancer, care works best when it includes a boundary around your own time. The new moon Moon puts money,… Read on August 12, 2026 → Leo Jul 23 – Aug 22 August 12, 2026 For the August 12, 2026 edition, make your own position visible before reacting to the room. For Leo, presence is strongest when the point is clearer than"
     },
     {
-      "id": "src_0d7abf5dbbb2648e48a4",
+      "id": "src_0470c87527550cb819ea",
       "path": "/horoscopes/",
-      "title": "Daily Horoscopes — August 9, 2026, All 12 Signs",
+      "title": "Daily Horoscopes — August 12, 2026, All 12 Signs",
       "heading": "Daily horoscopes",
       "locale": "en",
-      "text": "clearer than the performance. The waning crescent Moon… Read on August 9, 2026 → Virgo Aug 23 – Sep 22 August 9, 2026 For the August 9, 2026 edition, ask which friendship, group, or future plan still has momentum. For Virgo, one useful correction is enough; the whole system does not need rebuilding. The waning… Read on August 9, 2026 → Libra Sep 23 – Oct 22 August 9, 2026 For the August 9, 2026 edition, choose what should be visible in your work and public role. For Libra, balance comes from a clear choice, not from extending every negotiation. The waning crescent Moon… Read on August 9, 2026 → Scorpio Oct 23 – Nov 21 August 9, 2026 For the August 9, 2026 edition, test the larger belief against study, distance, or direct"
+      "text": "the performance. The new moon Moon puts how… Read on August 12, 2026 → Virgo Aug 23 – Sep 22 August 12, 2026 For the August 12, 2026 edition, leave room for rest, closure, and work that happens offstage. For Virgo, one useful correction is enough; the whole system does not need rebuilding. The new moon Moon… Read on August 12, 2026 → Libra Sep 23 – Oct 22 August 12, 2026 For the August 12, 2026 edition, ask which friendship, group, or future plan still has momentum. For Libra, balance comes from a clear choice, not from extending every negotiation. The new moon Moon… Read on August 12, 2026 → Scorpio Oct 23 – Nov 21 August 12, 2026 For the August 12, 2026 edition, choose what should be visible in your work and public role. For Scorpio,"
     },
     {
-      "id": "src_eca9198d2a35e9f23835",
+      "id": "src_a09e80a9a803c6dc8faa",
       "path": "/horoscopes/",
-      "title": "Daily Horoscopes — August 9, 2026, All 12 Signs",
+      "title": "Daily Horoscopes — August 12, 2026, All 12 Signs",
       "heading": "Daily horoscopes",
       "locale": "en",
-      "text": "experience. For Scorpio, depth is useful when it produces a fact, a boundary, or a decision. The waning… Read on August 9, 2026 → Sagittarius Nov 22 – Dec 21 August 9, 2026 For the August 9, 2026 edition, name what is shared, owed, private, or difficult to divide. For Sagittarius, the wider view helps once the August 9, 2026 edition’s practical detail has a place in it. The waning crescent… Read on August 9, 2026 → Capricorn Dec 22 – Jan 19 August 9, 2026 For the August 9, 2026 edition, put the agreement or disagreement directly on the table. For Capricorn, responsibility is clearer when you distinguish the essential from the inherited. The waning… Read on August 9, 2026 → Aquarius Jan 20 – Feb 18 August 9, 2026 For the August 9,"
+      "text": "depth is useful when it produces a fact, a boundary, or a decision. The new moon Moon puts… Read on August 12, 2026 → Sagittarius Nov 22 – Dec 21 August 12, 2026 For the August 12, 2026 edition, test the larger belief against study, distance, or direct experience. For Sagittarius, the wider view helps once the August 12, 2026 edition’s practical detail has a place in it. The new… Read on August 12, 2026 → Capricorn Dec 22 – Jan 19 August 12, 2026 For the August 12, 2026 edition, name what is shared, owed, private, or difficult to divide. For Capricorn, responsibility is clearer when you distinguish the essential from the inherited. The new moon… Read on August 12, 2026 → Aquarius Jan 20 – Feb 18 August 12, 2026 For the August 12, 2026"
     },
     {
-      "id": "src_c638a3fa43580a0fdd8a",
+      "id": "src_078ef827570dd5fb0c12",
       "path": "/horoscopes/",
-      "title": "Daily Horoscopes — August 9, 2026, All 12 Signs",
+      "title": "Daily Horoscopes — August 12, 2026, All 12 Signs",
       "heading": "Daily horoscopes",
       "locale": "en",
-      "text": "2026 edition, adjust the routine where the daily load repeatedly catches. For Aquarius, the original move is the one that improves the system, not merely surprises it. The waning… Read on August 9, 2026 → Pisces Feb 19 – Mar 20 August 9, 2026 For the August 9, 2026 edition, give play, romance, or creative work a defined place. For Pisces, intuition becomes useful after it is given a boundary and a concrete question. The waning crescent… Read on August 9, 2026 → Want a more personal view? Get your free birth chart . Behind these readings This is the August 9, 2026 UTC edition; the underlying positions use the recorded noon-UTC sky. Sun-sign horoscopes give the broad view. See the astrology, sources, and checks behind each edition ."
+      "text": "edition, put the agreement or disagreement directly on the table. For Aquarius, the original move is the one that improves the system, not merely surprises it. The new moon Moon… Read on August 12, 2026 → Pisces Feb 19 – Mar 20 August 12, 2026 For the August 12, 2026 edition, adjust the routine where the daily load repeatedly catches. For Pisces, intuition becomes useful after it is given a boundary and a concrete question. The new moon Moon… Read on August 12, 2026 → Want a more personal view? Get your free birth chart . Behind these readings This is the August 12, 2026 UTC edition; the underlying positions use the recorded noon-UTC sky. Sun-sign horoscopes give the broad view. See the astrology, sources, and checks behind each edition ."
     },
     {
       "id": "src_73dc40a05c75fe0e3cea",
@@ -3509,116 +3512,116 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "Privacy You choose when data leaves your device. Chart calculation runs in your browser. Birth fields are not sent as part of calculation or a The Cabinet of Twelve lookup; they leave your device only if you choose account sync or type them into an assistant message. If you explicitly attach a chart to the assistant, a placements-only summary also leaves the device; saved names and raw birth fields are not attached. Aura sends one public wallet address—not your birth or chart data—to a blockchain-data provider for a read-only lookup. Accounts, remembered Aura data, and the weekly email are optional and off by default. We show no ads and use no cross-site tracking. What happens when you use a calculator Every chart on this site is computed on your own device. When you enter a birth date, time, and place, that information is used by code"
     },
     {
-      "id": "src_972eb72e75c5eb129395",
+      "id": "src_3108bcf9d7483bed6b87",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "running in your browser to calculate the chart. It is not transmitted to our servers, logged, or stored by us as part of that calculation. It leaves the device only if you later choose account sync or put it in an assistant message. This is a deliberate design choice, described in full on our methodology page . Place search uses a list of cities that ships with the site and runs entirely in your browser. Typing a city name does not call an external service. AI assistant When you use the assistant, your chat messages are sent to our AI provider, OpenAI, to generate the reply. A saved chart is included only after you select it, turn attachment on, and approve a preview of the exact placements-only payload. The saved chart's name, identifier, birth date, time, birthplace, and coordinates are never included; anything you type into chat is"
+      "text": "running in your browser to calculate the chart. It is not transmitted to our servers, logged, or stored by us as part of that calculation. It leaves the device only if you later choose account sync or put it in an assistant message. This is a deliberate design choice, described in full on our methodology page . Place search uses a list of cities that ships with the site and runs entirely in your browser. Typing a city name does not call an external service. AI assistant When you use the assistant, your chat messages are sent to our AI provider, OpenAI, to generate the reply. A saved chart is included only after you select it, turn attachment on, and approve a preview of the exact placements-only payload. The saved chart's name, identifier, birth date, time, birthplace, and coordinates are never included; anything you type into chat is part"
     },
     {
-      "id": "src_fc3c923e3f94e089d1fe",
+      "id": "src_42609b217f41496e0c79",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "part of the message you send. Model requests use store: false , though OpenAI's abuse-monitoring retention may still apply. By default, completed conversations live only in this tab's session storage. They survive navigation and reloads in the tab, and clear with the browser session. Signed-in people can explicitly choose “Remember this conversation for 90 days.” Remembered threads contain only the visible questions and completed answers, locale, title, timestamps, and an optional reference to a chart they own. Their expiry is fixed at 90 days after creation and is never extended. You can delete one thread, delete all threads, or opt out; opting out deletes every remembered conversation. Failed, stopped, and partial replies are not saved. For fair-use limits, we keep an HMAC pseudonym derived from request network data with a daily"
+      "text": "of the message you send. Model requests use store: false , though OpenAI's abuse-monitoring retention may still apply. By default, completed conversations live only in this tab's session storage. They survive navigation and reloads in the tab, and clear with the browser session. Signed-in people can explicitly choose “Remember this conversation for 90 days.” Remembered threads contain only the visible questions and completed answers, locale, title, timestamps, and an optional reference to a chart they own. Their expiry is fixed at 90 days after creation and is never extended. You can delete one thread, delete all threads, or opt out; opting out deletes every remembered conversation. Failed, stopped, and partial replies are not saved. For fair-use limits, we keep an HMAC pseudonym derived from request network data with a daily count, never"
     },
     {
-      "id": "src_b8af8baf0c9ae4f77cac",
+      "id": "src_8c41fcde8025675f552b",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "count, never the raw IP or an account ID. Quota rows retain only today and yesterday. A separate, domain-separated HMAC pseudonym is sent to OpenAI as the safety identifier. Aggregate daily and monthly cost totals contain no question, answer, chart data, or raw identifier. Charts you save When you save a chart, it is stored in your browser's local storage — on your device, under your control. It is not sent anywhere unless you choose to create an account (below). Clearing your browser's site data removes saved charts. We cannot see them and cannot recover them for you. The Cabinet of Twelve and public wallet addresses The Cabinet of Twelve reads one public wallet address and the dated sky side by side. If you choose to add a chart already saved in this browser, its summary is an optional on-device comparison layer. The pattern and any"
+      "text": "the raw IP or an account ID. Quota rows retain only today and yesterday. A separate, domain-separated HMAC pseudonym is sent to OpenAI as the safety identifier. Aggregate daily and monthly cost totals contain no question, answer, chart data, or raw identifier. Charts you save When you save a chart, it is stored in your browser's local storage — on your device, under your control. It is not sent anywhere unless you choose to create an account (below). Clearing your browser's site data removes saved charts. We cannot see them and cannot recover them for you. The Cabinet of Twelve and public wallet addresses The Cabinet of Twelve reads one public wallet address and the dated sky side by side. If you choose to add a chart already saved in this browser, its summary is an optional on-device comparison layer. The pattern and any symbolic reflection"
     },
     {
-      "id": "src_d9e73b7bba0842a3c279",
+      "id": "src_6635e1cee420145ba3db",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "symbolic reflection are composed on your device. When you compose or refresh an Aura, our holdings endpoint receives the public address and forwards it to the configured blockchain-data provider to check which Zodiacs.org Registry entries are present. The configured provider is currently PublicNode, operated by Allnodes. The request does not include birth fields, chart names, chart placements, or chart geometry. When the feature is enabled, the Registry landing page's optional public Shelf uses the same endpoint and sends the same single public Solana address only after you press View; it does not send chart or birth data. When Aura is off, the illustrative Shelf makes no address or provider request. You can paste a public address without connecting a wallet. If you choose Connect, compatible third-party wallet software is invoked only"
+      "text": "are composed on your device. When you compose or refresh an Aura, our holdings endpoint receives the public address and forwards it to the configured blockchain-data provider to check which Zodiacs.org Registry entries are present. The configured provider is currently PublicNode, operated by Allnodes. The request does not include birth fields, chart names, chart placements, or chart geometry. When the feature is enabled, Zodiac Terminal's optional public Shelf uses the same endpoint and sends the same single public Solana address only after you press View; it does not send chart or birth data. When Aura is off, the illustrative Shelf makes no address or provider request. You can paste a public address without connecting a wallet. If you choose Connect, compatible third-party wallet software is invoked only after your click. It may return"
     },
     {
-      "id": "src_41e23a868f2bc5607a03",
+      "id": "src_1f37865f4bfc36cc8ed2",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "after your click. It may return the public accounts you authorize to this browser; Aura selects one compatible address and forwards only that address for the lookup. Aura does not request a recovery phrase, private key, message signature, token approval, transaction, or network switch. Your wallet provider's own privacy terms apply to its software and connection prompt. A public address is public but not necessarily anonymous. Its on-chain holdings and history may be visible and may become linked with a person or other activity. Vercel, the configured blockchain-data provider, and their infrastructure may process routine request metadata and operational or security logs, such as IP address, time, and browser information. We do not promise that a public-address request is never logged by infrastructure providers whose retention practices"
+      "text": "the public accounts you authorize to this browser; Aura selects one compatible address and forwards only that address for the lookup. Aura does not request a recovery phrase, private key, message signature, token approval, transaction, or network switch. Your wallet provider's own privacy terms apply to its software and connection prompt. A public address is public but not necessarily anonymous. Its on-chain holdings and history may be visible and may become linked with a person or other activity. Vercel, the configured blockchain-data provider, and their infrastructure may process routine request metadata and operational or security logs, such as IP address, time, and browser information. We do not promise that a public-address request is never logged by infrastructure providers whose retention practices we do not control. Public Terminal"
     },
     {
-      "id": "src_cc17b8ac2fbb304315b2",
+      "id": "src_208dfcc033708120b325",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "we do not control. Public Registry data sources When a relevant Registry panel is displayed, your browser may request public market data from Dex Screener or public attention data from Wikimedia. Those automatic requests do not include a wallet address, birth fields, chart data, or Aura results. The independent service still receives ordinary web-request metadata, such as your IP address, browser information, and request time, and its own privacy terms and retention practices apply. A sign’s catalogue page and the Registry landing explorer can also include an optional trade panel. The panel is our own interface, and it requests a price from the public API of Jupiter, an independent venue. On the landing the panel only opens when you ask for it — from a sign’s pill or by choosing the sculpture on show — at every screen size, so that"
+      "text": "and Registry data sources When a relevant Zodiac Terminal panel is displayed, your browser may request public market data from Dex Screener, public chart and trade data from GeckoTerminal, or public attention data from Wikimedia. Those automatic requests do not include a wallet address, birth fields, chart data, or Aura results. The independent service still receives ordinary web-request metadata, such as your IP address, browser information, and request time, and its own privacy terms and retention practices apply. A sign’s official Registry record and the Zodiac Terminal explorer can also include an optional trade panel. The panel is our own interface, and it requests a price from the public API of Jupiter, an independent venue. On the landing the panel only opens when you ask for it — from a sign’s pill or by choosing the sculpture on"
     },
     {
-      "id": "src_af2092a3c9d2b0205b80",
+      "id": "src_f39735025d9fc6c5b621",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "request is made when you open it and again whenever you change the amount or the sign; what leaves your browser then is the amount, the two token identifiers, and ordinary web-request metadata — not your address, which is not sent unless you choose to trade. If you do choose to trade, your public address is sent to Jupiter so it can build the transaction, and the transaction your wallet signs is returned to Jupiter to submit to the network; those requests, and any wallet prompt, are governed by Jupiter’s own privacy terms. Jupiter receives ordinary web-request metadata, such as your IP address, browser information, and request time. Zodiacs.org keeps no record of your address, balance, or trades from that panel, and no birth or chart data is ever part of it. Aura browser storage and sharing By default, Aura keeps the public address,"
+      "text": "show — at every screen size, so that request is made when you open it and again whenever you change the amount or the sign; what leaves your browser then is the amount, the two token identifiers, and ordinary web-request metadata — not your address, which is not sent unless you choose to trade. If you do choose to trade, your public address is sent to Jupiter so it can build the transaction, and the transaction your wallet signs is returned to Jupiter to submit to the network; those requests, and any wallet prompt, are governed by Jupiter’s own privacy terms. Jupiter receives ordinary web-request metadata, such as your IP address, browser information, and request time. Zodiacs.org keeps no record of your address, balance, or trades from that panel, and no birth or chart data is ever part of it. Aura browser storage and sharing By default,"
     },
     {
-      "id": "src_f6fd453843c7cdd6b1fb",
+      "id": "src_0d914b80eb8187c4098d",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "chain, Registry sign results, lookup time, and optional selected chart identifier in this tab's session storage. It becomes ineligible for restoration after eight hours. The unchecked “Remember this address on this device” option stores the same fields in local storage and makes them ineligible after 24 hours. Ineligible records are deleted the next time Aura reads them; if you do not return, the browser may retain the expired bytes until you clear site data. “Forget address / Clear Aura data” removes both Aura records from this browser; it cannot erase public blockchain history or infrastructure logs. Aura share images are composed on your device. The image omits the public address, chain, chart name, birth fields, exact placements, chart geometry, and the held-sign count and list. It does not include a saved-chart fact. A browser share"
+      "text": "Aura keeps the public address, chain, Registry sign results, lookup time, and optional selected chart identifier in this tab's session storage. It becomes ineligible for restoration after eight hours. The unchecked “Remember this address on this device” option stores the same fields in local storage and makes them ineligible after 24 hours. Ineligible records are deleted the next time Aura reads them; if you do not return, the browser may retain the expired bytes until you clear site data. “Forget address / Clear Aura data” removes both Aura records from this browser; it cannot erase public blockchain history or infrastructure logs. Aura share images are composed on your device. The image omits the public address, chain, chart name, birth fields, exact placements, chart geometry, and the held-sign count and list. It does not include a"
     },
     {
-      "id": "src_2d0043ad786f97688e6b",
+      "id": "src_d324aa5c150c6ca9561f",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "sheet or download sends the image to a destination you choose, whose privacy terms then apply. Clearing Aura cannot recall copies that other people or services have saved or reposted. Optional account (sync across devices) You can create a free account to keep your saved charts on more than one device. This is entirely optional and the tools work fully without it. If you create one: You sign in with a one-time link sent to your email address — there is no password to store. We store your email address and the charts you choose to sync (which include the birth details for those charts) with our database provider, Supabase , so they can appear on your other devices. Access is restricted to your own account. While you are signed in, a sign-in token is kept in your browser so you stay logged in. Signing out removes it. You can delete your"
+      "text": "saved-chart fact. A browser share sheet or download sends the image to a destination you choose, whose privacy terms then apply. Clearing Aura cannot recall copies that other people or services have saved or reposted. Optional account (sync across devices) You can create a free account to keep your saved charts on more than one device. This is entirely optional and the tools work fully without it. If you create one: You sign in with a one-time link sent to your email address — there is no password to store. We store your email address and the charts you choose to sync (which include the birth details for those charts) with our database provider, Supabase , so they can appear on your other devices. Access is restricted to your own account. While you are signed in, a sign-in token is kept in your browser so you stay logged in. Signing out"
     },
     {
-      "id": "src_d6d20f3fa568aaf38032",
+      "id": "src_bb1fe107f4c69b0946ab",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "account and its stored charts at any time by emailing admin@zodiacs.org . Assistant memory is a separate, unchecked choice. Remembered threads expire 90 days after creation and can be deleted individually or all at once without affecting your saved charts. Optional weekly email Account holders can opt in to a weekly email summarizing the coming week's sky for their saved charts. It is unchecked by default. If you opt in, we store that preference and send the email through our email provider, Resend . Every email includes a one-click unsubscribe link, and you can turn it off from your profile at any time. We do not use your email for anything else and we do not sell or share it. Daily brief, calendar, and notifications The daily brief reads computed positions from a chart saved on your device. A transit calendar feed receives the same"
+      "text": "removes it. You can delete your account and its stored charts at any time by emailing admin@zodiacs.org . Assistant memory is a separate, unchecked choice. Remembered threads expire 90 days after creation and can be deleted individually or all at once without affecting your saved charts. Optional weekly email Account holders can opt in to a weekly email summarizing the coming week's sky for their saved charts. It is unchecked by default. If you opt in, we store that preference and send the email through our email provider, Resend . Every email includes a one-click unsubscribe link, and you can turn it off from your profile at any time. We do not use your email for anything else and we do not sell or share it. Daily brief, calendar, and notifications The daily brief reads computed positions from a chart saved on your device. A transit calendar"
     },
     {
-      "id": "src_10e61f2961db1910e801",
+      "id": "src_4c38242aa6213d5b7f3e",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "positions-only chart code used by the sharing feature; neither includes your name, birth date, time, place, or coordinates. If you turn on daily notifications, we store your browser's push subscription — a vendor push-service URL and its delivery keys, with no birth data — so we can send the note. You can turn notifications off at any time. Public People pages The People directory uses names, public birth dates and places, life dates, disciplines, and licensed portraits from reviewed Wikidata, Wikipedia, and Wikimedia Commons records. The chart is computed from those sourced facts and describes the recorded sky and its uncertainty; it does not make claims about a person's health, conduct, relationships, finances, or private life. Profiles of living people are not submitted to search engines. To request a correction, withholding, or"
+      "text": "feed receives the same positions-only chart code used by the sharing feature; neither includes your name, birth date, time, place, or coordinates. If you turn on daily notifications, we store your browser's push subscription — a vendor push-service URL and its delivery keys, with no birth data — so we can send the note. You can turn notifications off at any time. Public People pages The People directory uses names, public birth dates and places, life dates, disciplines, and licensed portraits from reviewed Wikidata, Wikipedia, and Wikimedia Commons records. The chart is computed from those sourced facts and describes the recorded sky and its uncertainty; it does not make claims about a person's health, conduct, relationships, finances, or private life. Profiles of living people are not submitted to search engines. To request a correction,"
     },
     {
-      "id": "src_f6a1c694275fe023227c",
+      "id": "src_016419d6a9497bc5c9fd",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "removal, email people@zodiacs.org . We honor a subject's removal request even when the underlying public source remains unchanged. Hosting, logs, and analytics The site is hosted on Vercel . Like all web hosts, their servers process the requests your browser makes and may keep short-lived technical logs (such as IP address and browser type) to deliver the site and guard against abuse. We do not run advertising, and we use no cross-site tracking cookies or third-party marketing pixels. We count page views and anonymous feature usage with Plausible, a cookieless analytics service. To avoid counting the same device repeatedly during one day, Plausible briefly processes the IP address and user agent to derive an identifier scoped to this site, device, and day. The raw IP and user agent are not stored; the salt used for that identifier rotates"
+      "text": "withholding, or removal, email people@zodiacs.org . We honor a subject's removal request even when the underlying public source remains unchanged. Hosting, logs, and analytics The site is hosted on Vercel . Like all web hosts, their servers process the requests your browser makes and may keep short-lived technical logs (such as IP address and browser type) to deliver the site and guard against abuse. We do not run advertising, and we use no cross-site tracking cookies or third-party marketing pixels. We count page views and anonymous feature usage with Plausible, a cookieless analytics service. To avoid counting the same device repeatedly during one day, Plausible briefly processes the IP address and user agent to derive an identifier scoped to this site, device, and day. The raw IP and user agent are not stored; the salt used for that"
     },
     {
-      "id": "src_9c921b810482e93530ed",
+      "id": "src_1aee07ae87b7ab327fd0",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "and is deleted every 24 hours. Plausible receives no birth data, public address, chart identifier, connected account identifier, or exact held-sign list. It receives no cross-site identifier. Aura events carry only allowlisted categories such as an outcome and a coarse held-count bucket; other events similarly record “a chart was saved,” never whose. Cookies We do not use advertising or tracking cookies. The only browser storage we use is first-party storage for features you request: saved charts, bounded Aura session data, an optional remembered Aura address, site preferences, and, if you sign in, a sign-in token. These stay on your device and are not used to track you across other sites. Children The site is intended for a general audience and is not directed at children under 13. We do not knowingly collect personal information from them."
+      "text": "identifier rotates and is deleted every 24 hours. Plausible receives no birth data, public address, chart identifier, connected account identifier, or exact held-sign list. It receives no cross-site identifier. Aura events carry only allowlisted categories such as an outcome and a coarse held-count bucket; other events similarly record “a chart was saved,” never whose. Cookies We do not use advertising or tracking cookies. The only browser storage we use is first-party storage for features you request: saved charts, bounded Aura session data, an optional remembered Aura address, site preferences, and, if you sign in, a sign-in token. These stay on your device and are not used to track you across other sites. Children The site is intended for a general audience and is not directed at children under 13. We do not knowingly collect personal information"
     },
     {
-      "id": "src_195d4a524850f8d56385",
+      "id": "src_2f8f5eec8f90c26bf40c",
       "path": "/privacy/",
       "title": "Privacy — How Your Data Is Handled",
       "heading": "You choose when data leaves your device.",
       "locale": "en",
-      "text": "Your choices Use every calculator with no account and nothing stored off-device. Use the Aura example without a chart, address, wallet connection, or purchase. Paste a public address instead of connecting third-party wallet software. Leave Aura's “Remember” option unchecked and clear its browser data at any time. Delete saved charts by clearing your browser's data for this site. Delete an account and its synced data by emailing us. Turn the weekly email off with one click, any time. Request correction, withholding, or removal of a People profile. Changes If we change how we handle data, we will update this page and its date. Material changes to the account or email features will be reflected here before they take effect. Contact Questions about privacy, or a request to delete your data, go to admin@zodiacs.org . Last updated: 2 August 2026"
+      "text": "from them. Your choices Use every calculator with no account and nothing stored off-device. Use the Aura example without a chart, address, wallet connection, or purchase. Paste a public address instead of connecting third-party wallet software. Leave Aura's “Remember” option unchecked and clear its browser data at any time. Delete saved charts by clearing your browser's data for this site. Delete an account and its synced data by emailing us. Turn the weekly email off with one click, any time. Request correction, withholding, or removal of a People profile. Changes If we change how we handle data, we will update this page and its date. Material changes to the account or email features will be reflected here before they take effect. Contact Questions about privacy, or a request to delete your data, go to admin@zodiacs.org . Last updated: 2 August 2026"
     },
     {
       "id": "src_2898dffc065e79ae89fc",
@@ -3629,84 +3632,84 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "Privacidad Tú decides cuándo salen datos de tu dispositivo. El cálculo de las cartas se ejecuta en tu navegador. Los datos de nacimiento no se envían como parte del cálculo ni de una consulta de The Cabinet of Twelve; solo salen del dispositivo si eliges sincronizar una cuenta o los escribes en el asistente. Aura envía una dirección pública de billetera —no tus datos de nacimiento ni de la carta— a un proveedor de datos de blockchain para realizar una consulta de solo lectura. Mostramos cero anuncios y no usamos seguimiento entre sitios. Calculadoras y cartas guardadas La búsqueda de lugares y el cálculo astrológico ocurren en tu dispositivo. Las cartas que guardas permanecen en el almacenamiento local del navegador. Una cuenta es opcional; si la usas, Supabase guarda el correo y las cartas que eliges sincronizar para mostrarlas en tus otros"
     },
     {
-      "id": "src_35efeae818e48d3f6cd6",
+      "id": "src_211a524e582e0cb01a29",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "dispositivos. Los datos de nacimiento no se transmiten ni se guardan en nuestros servidores como parte del cálculo en sí. The Cabinet of Twelve, Shelf y direcciones públicas The Cabinet of Twelve lee en paralelo una dirección pública de billetera y el cielo fechado. Si eliges añadir una carta guardada en este navegador, su resumen es una capa comparativa opcional que permanece en el dispositivo. El patrón y cualquier reflexión simbólica se componen en tu dispositivo. Al componer o actualizar un Aura, nuestro endpoint de tenencias recibe la dirección pública y la reenvía al proveedor de datos de blockchain configurado para comprobar qué entradas del Registro están presentes. El proveedor configurado es actualmente PublicNode, operado por Allnodes. La solicitud no incluye datos de nacimiento, nombre de la carta, posiciones ni geometría de la"
+      "text": "dispositivos. Los datos de nacimiento no se transmiten ni se guardan en nuestros servidores como parte del cálculo en sí. The Cabinet of Twelve, Shelf y direcciones públicas The Cabinet of Twelve lee en paralelo una dirección pública de billetera y el cielo fechado. Si eliges añadir una carta guardada en este navegador, su resumen es una capa comparativa opcional que permanece en el dispositivo. El patrón y cualquier reflexión simbólica se componen en tu dispositivo. Al componer o actualizar un Aura, nuestro endpoint de tenencias recibe la dirección pública y la reenvía al proveedor de datos de blockchain configurado para comprobar qué entradas del Registro están presentes. El proveedor configurado es actualmente PublicNode, operado por Allnodes. La solicitud no incluye datos de nacimiento, nombre de la carta, posiciones ni geometría de la carta."
     },
     {
-      "id": "src_d570a28c35ea23da37f8",
+      "id": "src_9408c58d0000ec83c8ac",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "carta. Cuando está habilitado, el Shelf público opcional de la portada del Registro usa el mismo endpoint y envía una sola dirección pública de Solana después de que pulses «Ver»; no envía datos de nacimiento ni de cartas. Si Aura está deshabilitado, el Shelf ilustrativo no hace ninguna solicitud de dirección o proveedor. «Volver a la vista de ejemplo» quita el resultado de la pantalla; recargar o cerrar la página elimina la caché temporal del Shelf en memoria. Puedes pegar una dirección sin conectar una billetera. Si eliges «Conectar», el software de una billetera externa solo se abre después de tu clic. Puede devolver a este navegador las cuentas públicas que autorices; Aura elige una dirección compatible y solo reenvía esa dirección para la consulta. No solicita frase de recuperación, clave privada, firma de mensaje, aprobación de tokens,"
+      "text": "Cuando está habilitado, el Shelf público opcional de la portada del Registro usa el mismo endpoint y envía una sola dirección pública de Solana después de que pulses «Ver»; no envía datos de nacimiento ni de cartas. Si Aura está deshabilitado, el Shelf ilustrativo no hace ninguna solicitud de dirección o proveedor. «Volver a la vista de ejemplo» quita el resultado de la pantalla; recargar o cerrar la página elimina la caché temporal del Shelf en memoria. Puedes pegar una dirección sin conectar una billetera. Si eliges «Conectar», el software de una billetera externa solo se abre después de tu clic. Puede devolver a este navegador las cuentas públicas que autorices; Aura elige una dirección compatible y solo reenvía esa dirección para la consulta. No solicita frase de recuperación, clave privada, firma de mensaje, aprobación de tokens, transacción ni"
     },
     {
-      "id": "src_ed07b28cca43d4eabc1d",
+      "id": "src_ddc0443ca7dafdbf49de",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "transacción ni cambio de red. Se aplican las condiciones de privacidad del proveedor de la billetera. Una dirección pública es pública, pero no necesariamente anónima. Su historial y sus tenencias on-chain pueden ser visibles y vincularse con una persona u otra actividad. Vercel, el proveedor de datos de blockchain configurado y su infraestructura pueden tratar metadatos ordinarios de la solicitud y registros operativos o de seguridad, como dirección IP, fecha, hora y datos del navegador. No prometemos que los proveedores de infraestructura nunca registren una consulta de dirección pública ni controlamos sus plazos de conservación. Almacenamiento y uso compartido de Aura De forma predeterminada, Aura guarda la dirección pública, la red, los signos del Registro encontrados, la hora de consulta y el identificador opcional de la carta seleccionada"
+      "text": "cambio de red. Se aplican las condiciones de privacidad del proveedor de la billetera. Una dirección pública es pública, pero no necesariamente anónima. Su historial y sus tenencias on-chain pueden ser visibles y vincularse con una persona u otra actividad. Vercel, el proveedor de datos de blockchain configurado y su infraestructura pueden tratar metadatos ordinarios de la solicitud y registros operativos o de seguridad, como dirección IP, fecha, hora y datos del navegador. No prometemos que los proveedores de infraestructura nunca registren una consulta de dirección pública ni controlamos sus plazos de conservación. Almacenamiento y uso compartido de Aura De forma predeterminada, Aura guarda la dirección pública, la red, los signos del Registro encontrados, la hora de consulta y el identificador opcional de la carta seleccionada en el almacenamiento de"
     },
     {
-      "id": "src_9d0654a95d55e0741486",
+      "id": "src_9b6f9b97be9c356ca750",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "en el almacenamiento de sesión de esta pestaña, con una vigencia de restauración de ocho horas. La opción desmarcada «Recordar esta dirección en este dispositivo» guarda los mismos campos en el almacenamiento local con una vigencia de restauración de 24 horas. Después de esos plazos, los registros ya no pueden restaurarse. Aura los elimina la próxima vez que intenta leerlos, pero sus bytes caducados pueden permanecer en el almacenamiento del navegador hasta que vuelvas a Aura o borres los datos del sitio. «Olvidar dirección / Borrar datos de Aura» elimina ambos registros del navegador, pero no el historial público de la blockchain ni los registros de infraestructura. Las imágenes para compartir se componen en tu dispositivo. De forma predeterminada omiten dirección, red, nombre y datos de la carta, posiciones exactas, geometría y la cantidad o"
+      "text": "sesión de esta pestaña, con una vigencia de restauración de ocho horas. La opción desmarcada «Recordar esta dirección en este dispositivo» guarda los mismos campos en el almacenamiento local con una vigencia de restauración de 24 horas. Después de esos plazos, los registros ya no pueden restaurarse. Aura los elimina la próxima vez que intenta leerlos, pero sus bytes caducados pueden permanecer en el almacenamiento del navegador hasta que vuelvas a Aura o borres los datos del sitio. «Olvidar dirección / Borrar datos de Aura» elimina ambos registros del navegador, pero no el historial público de la blockchain ni los registros de infraestructura. Las imágenes para compartir se componen en tu dispositivo. De forma predeterminada omiten dirección, red, nombre y datos de la carta, posiciones exactas, geometría y la cantidad o lista de signos hallados. No"
     },
     {
-      "id": "src_bb4dc8860a2272915ba4",
+      "id": "src_8525d6b17bc9d4710633",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "lista de signos hallados. No incluyen ningún dato de una carta guardada. La aplicación de destino elegida en la hoja de compartir aplica sus propias condiciones. Borrar Aura no puede retirar copias guardadas o republicadas por otras personas o servicios. Solicitudes automáticas del Registro Algunas secciones del Registro piden automáticamente desde tu navegador datos públicos de mercado a DexScreener y estadísticas públicas de visitas a Wikimedia. Estas solicitudes GET automáticas no contienen una dirección de billetera, datos de nacimiento, datos de cartas ni texto que hayas introducido. DexScreener y Wikimedia pueden recibir metadatos ordinarios de una solicitud web, como dirección IP, fecha, hora, navegador y la página de origen que permita la política del navegador; se aplican sus propias políticas de privacidad. La página de catálogo de un"
+      "text": "incluyen ningún dato de una carta guardada. La aplicación de destino elegida en la hoja de compartir aplica sus propias condiciones. Borrar Aura no puede retirar copias guardadas o republicadas por otras personas o servicios. Solicitudes automáticas del Registro Algunas secciones del Registro piden automáticamente desde tu navegador datos públicos de mercado a DexScreener, datos públicos de gráficos y operaciones a GeckoTerminal y estadísticas públicas de visitas a Wikimedia. Estas solicitudes GET automáticas no contienen una dirección de billetera, datos de nacimiento, datos de cartas ni texto que hayas introducido. DexScreener, GeckoTerminal y Wikimedia pueden recibir metadatos ordinarios de una solicitud web, como dirección IP, fecha, hora, navegador y la página de origen que permita la política del navegador; se aplican sus propias políticas de"
     },
     {
-      "id": "src_c4b74d292923e8d771c0",
+      "id": "src_6537394dbcdf40deabc8",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "signo y el explorador de la portada del Registro pueden incluir además un panel de negociación opcional. El panel es nuestra propia interfaz y solicita un precio a la API pública de Jupiter, una plataforma independiente. En la portada el panel solo se abre cuando lo pides —desde la pastilla de un signo o eligiendo la escultura expuesta— en cualquier tamaño de pantalla, de modo que esa solicitud se hace cuando lo abres y de nuevo cada vez que cambias el importe o el signo; lo que sale de tu navegador entonces es el importe, los dos identificadores de token y los metadatos habituales de una solicitud web, no tu dirección, que no se envía salvo que decidas operar. Si decides operar, tu dirección pública se envía a Jupiter para que construya la transacción, y la transacción que firma tu billetera vuelve a Jupiter para que la envíe a la red; esas"
+      "text": "privacidad. La página de catálogo de un signo y el explorador de la portada del Registro pueden incluir además un panel de negociación opcional. El panel es nuestra propia interfaz y solicita un precio a la API pública de Jupiter, una plataforma independiente. En la portada el panel solo se abre cuando lo pides —desde la pastilla de un signo o eligiendo la escultura expuesta— en cualquier tamaño de pantalla, de modo que esa solicitud se hace cuando lo abres y de nuevo cada vez que cambias el importe o el signo; lo que sale de tu navegador entonces es el importe, los dos identificadores de token y los metadatos habituales de una solicitud web, no tu dirección, que no se envía salvo que decidas operar. Si decides operar, tu dirección pública se envía a Jupiter para que construya la transacción, y la transacción que firma tu billetera vuelve a Jupiter para"
     },
     {
-      "id": "src_f620a964a3af93893fbc",
+      "id": "src_2882f582d7e708dde0da",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "solicitudes, y cualquier aviso de la billetera, se rigen por las políticas de privacidad propias de Jupiter. Jupiter recibe metadatos ordinarios de una solicitud web, como dirección IP, navegador y hora. Zodiacs.org no guarda de ese panel tu dirección, saldos ni operaciones, y en él nunca intervienen datos de nacimiento ni de la carta. Asistente de IA Cuando usas el asistente, tus mensajes de chat se envían a nuestro proveedor de IA, OpenAI, para generar la respuesta. Una carta guardada solo se incluye después de elegirla, activar el adjunto y aprobar una vista previa de la carga exacta, limitada a posiciones. Nunca se incluyen el nombre o identificador de la carta, la fecha, la hora, el lugar de nacimiento ni las coordenadas; todo lo que escribas en el chat forma parte del mensaje enviado. Las solicitudes usan store: false , aunque puede aplicarse"
+      "text": "que la envíe a la red; esas solicitudes, y cualquier aviso de la billetera, se rigen por las políticas de privacidad propias de Jupiter. Jupiter recibe metadatos ordinarios de una solicitud web, como dirección IP, navegador y hora. Zodiacs.org no guarda de ese panel tu dirección, saldos ni operaciones, y en él nunca intervienen datos de nacimiento ni de la carta. Asistente de IA Cuando usas el asistente, tus mensajes de chat se envían a nuestro proveedor de IA, OpenAI, para generar la respuesta. Una carta guardada solo se incluye después de elegirla, activar el adjunto y aprobar una vista previa de la carga exacta, limitada a posiciones. Nunca se incluyen el nombre o identificador de la carta, la fecha, la hora, el lugar de nacimiento ni las coordenadas; todo lo que escribas en el chat forma parte del mensaje enviado. Las solicitudes usan store: false ,"
     },
     {
-      "id": "src_a6af1ed3b839c977f66f",
+      "id": "src_cfc106954cad2ff03564",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "la retención de OpenAI para supervisar abusos. Por defecto, las conversaciones completadas viven solo en el almacenamiento de sesión de esta pestaña. Las personas con sesión iniciada pueden elegir expresamente «Recordar esta conversación durante 90 días». Los hilos recordados vencen 90 días después de crearse, sin prórroga, y se pueden borrar uno a uno, todos a la vez o al desactivar la opción. Las respuestas fallidas, detenidas o parciales no se guardan. Para los límites de uso conservamos un seudónimo HMAC derivado de datos de red con un recuento diario, nunca la IP original ni un identificador de cuenta. Las filas de cuota conservan solo hoy y ayer. Se envía a OpenAI un seudónimo HMAC distinto, derivado por separado con separación de dominio, como identificador de seguridad; los totales agregados de coste no contienen preguntas, respuestas,"
+      "text": "aunque puede aplicarse la retención de OpenAI para supervisar abusos. Por defecto, las conversaciones completadas viven solo en el almacenamiento de sesión de esta pestaña. Las personas con sesión iniciada pueden elegir expresamente «Recordar esta conversación durante 90 días». Los hilos recordados vencen 90 días después de crearse, sin prórroga, y se pueden borrar uno a uno, todos a la vez o al desactivar la opción. Las respuestas fallidas, detenidas o parciales no se guardan. Para los límites de uso conservamos un seudónimo HMAC derivado de datos de red con un recuento diario, nunca la IP original ni un identificador de cuenta. Las filas de cuota conservan solo hoy y ayer. Se envía a OpenAI un seudónimo HMAC distinto, derivado por separado con separación de dominio, como identificador de seguridad; los totales agregados de coste no contienen preguntas,"
     },
     {
-      "id": "src_fd1a0db5e75c307b833c",
+      "id": "src_62c3ff837c6d37603b67",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "datos de la carta ni identificadores sin procesar. Resumen diario, calendario y notificaciones El resumen diario lee las posiciones calculadas de una carta guardada en tu dispositivo. El calendario de tránsitos recibe el mismo código de solo posiciones que usa la función para compartir cartas; ninguno incluye tu nombre, fecha, hora, lugar de nacimiento ni coordenadas. Si activas las notificaciones diarias, guardamos la suscripción push del navegador — una URL del servicio de notificaciones y sus claves de entrega, sin datos de nacimiento — para poder enviar la nota. Puedes desactivarlas en cualquier momento. Correo, alojamiento y analítica El correo semanal requiere una cuenta y una suscripción voluntaria; está desactivado de forma predeterminada y cada mensaje permite darse de baja. Vercel aloja el sitio y puede conservar registros técnicos breves"
+      "text": "respuestas, datos de la carta ni identificadores sin procesar. Resumen diario, calendario y notificaciones El resumen diario lee las posiciones calculadas de una carta guardada en tu dispositivo. El calendario de tránsitos recibe el mismo código de solo posiciones que usa la función para compartir cartas; ninguno incluye tu nombre, fecha, hora, lugar de nacimiento ni coordenadas. Si activas las notificaciones diarias, guardamos la suscripción push del navegador — una URL del servicio de notificaciones y sus claves de entrega, sin datos de nacimiento — para poder enviar la nota. Puedes desactivarlas en cualquier momento. Correo, alojamiento y analítica El correo semanal requiere una cuenta y una suscripción voluntaria; está desactivado de forma predeterminada y cada mensaje permite darse de baja. Vercel aloja el sitio y puede conservar registros técnicos"
     },
     {
-      "id": "src_88d5cac0707de5a23dfc",
+      "id": "src_da4678a1e3646175a244",
       "path": "/es/privacy/",
       "title": "Privacidad — Cómo tratamos tus datos",
       "heading": "Tú decides cuándo salen datos de tu dispositivo.",
       "locale": "es",
-      "text": "para entregar las páginas y prevenir abusos. No usamos publicidad ni seguimiento entre sitios. Contamos visitas y uso anónimo de funciones con Plausible, un servicio de analítica sin cookies. Para no contar repetidamente el mismo dispositivo durante un día, Plausible procesa brevemente la dirección IP y el agente de usuario para derivar un identificador limitado a este sitio, dispositivo y día. No almacena la IP ni el agente de usuario originales; la sal del identificador rota y se elimina cada 24 horas. No recibe datos de nacimiento, direcciones públicas, identificadores de cartas o cuentas conectadas ni la lista exacta de signos. Los eventos de Aura solo incluyen categorías permitidas, como el resultado y un rango aproximado de cantidad; los demás eventos registran «se guardó una carta», nunca de quién. Almacenamiento del navegador No usamos"
+      "text": "breves para entregar las páginas y prevenir abusos. No usamos publicidad ni seguimiento entre sitios. Contamos visitas y uso anónimo de funciones con Plausible, un servicio de analítica sin cookies. Para no contar repetidamente el mismo dispositivo durante un día, Plausible procesa brevemente la dirección IP y el agente de usuario para derivar un identificador limitado a este sitio, dispositivo y día. No almacena la IP ni el agente de usuario originales; la sal del identificador rota y se elimina cada 24 horas. No recibe datos de nacimiento, direcciones públicas, identificadores de cartas o cuentas conectadas ni la lista exacta de signos. Los eventos de Aura solo incluyen categorías permitidas, como el resultado y un rango aproximado de cantidad; los demás eventos registran «se guardó una carta», nunca de quién. Almacenamiento del navegador No usamos"
     },
     {
       "id": "src_981d9572d3e2094dc49f",
@@ -3717,300 +3720,300 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "cookies publicitarias ni de seguimiento. Utilizamos almacenamiento propio para las funciones que solicitas: cartas guardadas, datos de sesión limitados de Aura, una dirección de Aura recordada de forma opcional, preferencias del sitio y, si inicias sesión, un token de acceso. No se usa para seguirte por otros sitios. Tus opciones Usar las calculadoras sin cuenta ni almacenamiento fuera del dispositivo. Probar el ejemplo de Aura sin carta, dirección, conexión o compra. Pegar una dirección pública en lugar de conectar una billetera externa. Dejar desmarcada la opción «Recordar» y borrar los datos de Aura cuando quieras. Volver a la vista de ejemplo del Shelf y recargar la página para borrar su caché temporal. Borrar cartas locales desde el navegador. Pedir que eliminemos una cuenta escribiendo a admin@zodiacs.org . Última actualización: 2 de agosto de 2026"
     },
     {
-      "id": "src_0cdddef93c910c15cf9a",
+      "id": "src_a6d87cc08369ef1c9094",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "Privacidade Você escolhe quando os dados saem do seu dispositivo. Em resumo: o mapa astral é calculado no seu navegador. Os dados de nascimento não são enviados durante esse cálculo nem em uma consulta do The Cabinet of Twelve; eles só saem do dispositivo se você escolher sincronizar uma conta ou digitá-los no assistente. Aura envia um endereço público de carteira — não seus dados de nascimento nem do mapa — a um provedor de dados de blockchain para uma consulta somente para leitura. Não exibimos anúncios nem usamos rastreamento entre sites. Calculadoras e mapas salvos A busca de lugares e o cálculo astrológico acontecem no seu dispositivo. Os mapas que você salva ficam no armazenamento local do navegador. A conta é opcional; se você a usar, o Supabase armazena seu e-mail e os mapas que você escolher sincronizar para"
+      "text": "Privacidade Você escolhe quando os dados saem do seu dispositivo. Em resumo: o mapa astral é calculado no seu navegador. Os dados de nascimento não são enviados durante esse cálculo nem em uma consulta do The Cabinet of Twelve; eles só saem do dispositivo se você escolher sincronizar uma conta ou digitá-los no assistente. Aura envia um endereço público de carteira — não seus dados de nascimento nem do mapa — a um provedor de dados de blockchain para uma consulta somente para leitura. Não exibimos anúncios nem usamos rastreamento entre sites. Calculadoras e mapas salvos A busca de lugares e o cálculo astrológico acontecem no seu dispositivo. Os mapas que você salva ficam no armazenamento local do navegador. A conta é opcional; se você a usar, o Supabase armazena seu e-mail e os mapas que você escolher sincronizar para exibi-los nos"
     },
     {
-      "id": "src_bee83a50d0db6e44fa7d",
+      "id": "src_20ad43f3633d80d42066",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "exibi-los nos seus outros dispositivos. Os dados de nascimento não são transmitidos nem armazenados em nossos servidores como parte do cálculo em si. The Cabinet of Twelve, Shelf e endereços públicos The Cabinet of Twelve lê lado a lado um endereço público de carteira e o céu datado. Se você adicionar um mapa salvo neste navegador, o resumo dele será uma camada comparativa opcional que permanece no dispositivo. O padrão e qualquer reflexão simbólica são compostos no seu dispositivo. Ao compor ou atualizar um Aura, nosso endpoint de ativos recebe o endereço público e o encaminha ao provedor de dados de blockchain configurado para verificar quais entradas do Registro estão presentes. O provedor configurado é atualmente PublicNode, operado pela Allnodes. A solicitação não inclui dados de nascimento, nome do mapa, posições ou"
+      "text": "seus outros dispositivos. Os dados de nascimento não são transmitidos nem armazenados em nossos servidores como parte do cálculo em si. The Cabinet of Twelve, Shelf e endereços públicos The Cabinet of Twelve lê lado a lado um endereço público de carteira e o céu datado. Se você adicionar um mapa salvo neste navegador, o resumo dele será uma camada comparativa opcional que permanece no dispositivo. O padrão e qualquer reflexão simbólica são compostos no seu dispositivo. Ao compor ou atualizar um Aura, nosso endpoint de ativos recebe o endereço público e o encaminha ao provedor de dados de blockchain configurado para verificar quais entradas do Registro estão presentes. O provedor configurado é atualmente PublicNode, operado pela Allnodes. A solicitação não inclui dados de nascimento, nome do mapa, posições ou geometria do mapa."
     },
     {
-      "id": "src_67fc1c4eca6751d2152f",
+      "id": "src_85b1c3216ab38eec3219",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "geometria do mapa. Quando ativado, o Shelf público opcional da página inicial do Registro usa o mesmo endpoint e envia um único endereço público da Solana depois que você pressiona “View”; ele não envia dados de nascimento nem do mapa. Quando Aura está desativado, o Shelf ilustrativo não faz nenhuma solicitação de endereço ou provedor. “Back to the example view” remove o resultado da tela; recarregar ou fechar a página apaga o cache temporário do Shelf mantido na memória. Você pode colar um endereço sem conectar uma carteira. Se escolher “Connect”, o software de uma carteira de terceiros só é aberto depois do seu clique. Ele pode retornar a este navegador as contas públicas que você autorizar; Aura seleciona um endereço compatível e encaminha apenas esse endereço para a consulta. Aura não solicita frase de recuperação, chave"
+      "text": "Quando ativado, o Shelf público opcional da página inicial do Registro usa o mesmo endpoint e envia um único endereço público da Solana depois que você pressiona “View”; ele não envia dados de nascimento nem do mapa. Quando Aura está desativado, o Shelf ilustrativo não faz nenhuma solicitação de endereço ou provedor. “Back to the example view” remove o resultado da tela; recarregar ou fechar a página apaga o cache temporário do Shelf mantido na memória. Você pode colar um endereço sem conectar uma carteira. Se escolher “Connect”, o software de uma carteira de terceiros só é aberto depois do seu clique. Ele pode retornar a este navegador as contas públicas que você autorizar; Aura seleciona um endereço compatível e encaminha apenas esse endereço para a consulta. Aura não solicita frase de recuperação, chave privada, assinatura de"
     },
     {
-      "id": "src_0a60d4001011b996987d",
+      "id": "src_3d718c17d35f950e5c94",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "privada, assinatura de mensagem, aprovação de token, transação ou mudança de rede. A política de privacidade do provedor da carteira se aplica ao software dele. Um endereço público é público, mas não necessariamente anônimo. Seus ativos e seu histórico on-chain podem ser visíveis e vinculados a uma pessoa ou a outra atividade. A Vercel, o provedor de dados de blockchain configurado e a infraestrutura deles podem processar metadados comuns da solicitação e registros operacionais ou de segurança, como endereço IP, data, hora e informações do navegador. Não prometemos que uma consulta de endereço público jamais seja registrada por provedores de infraestrutura cujos prazos de retenção não controlamos. Armazenamento e compartilhamento do Aura Por padrão, Aura salva o endereço público, a rede, os signos do Registro encontrados, o"
+      "text": "mensagem, aprovação de token, transação ou mudança de rede. A política de privacidade do provedor da carteira se aplica ao software dele. Um endereço público é público, mas não necessariamente anônimo. Seus ativos e seu histórico on-chain podem ser visíveis e vinculados a uma pessoa ou a outra atividade. A Vercel, o provedor de dados de blockchain configurado e a infraestrutura deles podem processar metadados comuns da solicitação e registros operacionais ou de segurança, como endereço IP, data, hora e informações do navegador. Não prometemos que uma consulta de endereço público jamais seja registrada por provedores de infraestrutura cujos prazos de retenção não controlamos. Armazenamento e compartilhamento do Aura Por padrão, Aura salva o endereço público, a rede, os signos do Registro encontrados, o horário da consulta e o"
     },
     {
-      "id": "src_b863d8d91cdc0824daca",
+      "id": "src_0d2f93cd2dfe23c023ad",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "horário da consulta e o identificador opcional do mapa selecionado no armazenamento de sessão desta aba, com validade de restauração de oito horas. A opção desmarcada “Remember this address on this device” salva os mesmos campos no armazenamento local com validade de restauração de 24 horas. Depois desses prazos, os registros não podem mais ser restaurados. Aura os apaga na próxima tentativa de leitura, mas os bytes expirados podem permanecer no armazenamento do navegador até você voltar ao Aura ou limpar os dados do site. “Forget address / Clear Aura data” remove os dois registros deste navegador, mas não apaga o histórico público da blockchain nem registros de infraestrutura. As imagens de compartilhamento do Aura são compostas no seu dispositivo. Por padrão, elas omitem endereço, rede, nome e dados do mapa, posições"
+      "text": "identificador opcional do mapa selecionado no armazenamento de sessão desta aba, com validade de restauração de oito horas. A opção desmarcada “Remember this address on this device” salva os mesmos campos no armazenamento local com validade de restauração de 24 horas. Depois desses prazos, os registros não podem mais ser restaurados. Aura os apaga na próxima tentativa de leitura, mas os bytes expirados podem permanecer no armazenamento do navegador até você voltar ao Aura ou limpar os dados do site. “Forget address / Clear Aura data” remove os dois registros deste navegador, mas não apaga o histórico público da blockchain nem registros de infraestrutura. As imagens de compartilhamento do Aura são compostas no seu dispositivo. Por padrão, elas omitem endereço, rede, nome e dados do mapa, posições exatas, geometria e a quantidade ou"
     },
     {
-      "id": "src_7752efa720be3700cb80",
+      "id": "src_b66e20e26b6d8346e24b",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "exatas, geometria e a quantidade ou lista de signos encontrados. Nenhum fato de um mapa salvo é incluído. O aplicativo escolhido na folha de compartilhamento aplica sua própria política. Limpar o Aura não recolhe cópias que outras pessoas ou serviços salvaram ou republicaram. Solicitações automáticas do Registro Algumas seções do Registro solicitam automaticamente, pelo seu navegador, dados públicos de mercado à DexScreener e estatísticas públicas de visualização à Wikimedia. Essas solicitações GET automáticas não contêm endereço de carteira, dados de nascimento, dados do mapa nem texto digitado por você. DexScreener e Wikimedia podem receber metadados comuns de uma solicitação web, como endereço IP, data, hora, navegador e a página de origem permitida pela política do navegador; as políticas de privacidade próprias desses"
+      "text": "lista de signos encontrados. Nenhum fato de um mapa salvo é incluído. O aplicativo escolhido na folha de compartilhamento aplica sua própria política. Limpar o Aura não recolhe cópias que outras pessoas ou serviços salvaram ou republicaram. Solicitações automáticas do Registro Algumas seções do Registro solicitam automaticamente, pelo seu navegador, dados públicos de mercado à DexScreener, dados públicos de gráficos e negociações à GeckoTerminal e estatísticas públicas de visualização à Wikimedia. Essas solicitações GET automáticas não contêm endereço de carteira, dados de nascimento, dados do mapa nem texto digitado por você. DexScreener, GeckoTerminal e Wikimedia podem receber metadados comuns de uma solicitação web, como endereço IP, data, hora, navegador e a página de origem permitida pela política do navegador; as políticas de"
     },
     {
-      "id": "src_f4f988791b81699e9e50",
+      "id": "src_dacb4539cba354aed246",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "serviços se aplicam. A página de catálogo de um signo e o explorador da página inicial do Registo também podem incluir um painel de negociação opcional. O painel é a nossa própria interface e pede um preço à API pública da Jupiter, uma plataforma independente. Na página inicial o painel só abre quando o pede — a partir da pastilha de um signo ou escolhendo a escultura exposta — em qualquer tamanho de ecrã, por isso esse pedido é feito quando o abre e de novo sempre que muda o montante ou o signo; o que sai do seu navegador nessa altura é o montante, os dois identificadores de token e os metadados comuns de um pedido web — não o seu endereço, que só é enviado se escolher operar. Se você decidir operar, o seu endereço público é enviado à Jupiter para que ela monte a transação, e a transação assinada pela sua carteira volta à"
+      "text": "privacidade próprias desses serviços se aplicam. A página de catálogo de um signo e o explorador da página inicial do Registo também podem incluir um painel de negociação opcional. O painel é a nossa própria interface e pede um preço à API pública da Jupiter, uma plataforma independente. Na página inicial o painel só abre quando o pede — a partir da pastilha de um signo ou escolhendo a escultura exposta — em qualquer tamanho de ecrã, por isso esse pedido é feito quando o abre e de novo sempre que muda o montante ou o signo; o que sai do seu navegador nessa altura é o montante, os dois identificadores de token e os metadados comuns de um pedido web — não o seu endereço, que só é enviado se escolher operar. Se você decidir operar, o seu endereço público é enviado à Jupiter para que ela monte a transação, e a transação assinada pela"
     },
     {
-      "id": "src_10b8ae6c30731ce57bfd",
+      "id": "src_806eaf50cb7602b06493",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "Jupiter para ser enviada à rede; essas solicitações, e qualquer aviso da carteira, seguem as políticas de privacidade da própria Jupiter. A Jupiter recebe metadados comuns de uma solicitação web, como endereço IP, navegador e hora. O Zodiacs.org não guarda desse painel o seu endereço, saldos nem operações, e nenhum dado de nascimento ou do mapa participa dele. Assistente de IA Quando você usa o assistente, suas mensagens são enviadas ao nosso provedor de IA, a OpenAI, para gerar a resposta. Um mapa salvo só é incluído depois que você o escolhe, ativa o anexo e aprova a prévia da carga exata, limitada às posições. O nome e o identificador do mapa, a data, a hora, o local de nascimento e as coordenadas nunca são incluídos; tudo o que você digitar no chat fará parte da mensagem. As solicitações usam store: false , embora a"
+      "text": "sua carteira volta à Jupiter para ser enviada à rede; essas solicitações, e qualquer aviso da carteira, seguem as políticas de privacidade da própria Jupiter. A Jupiter recebe metadados comuns de uma solicitação web, como endereço IP, navegador e hora. O Zodiacs.org não guarda desse painel o seu endereço, saldos nem operações, e nenhum dado de nascimento ou do mapa participa dele. Assistente de IA Quando você usa o assistente, suas mensagens são enviadas ao nosso provedor de IA, a OpenAI, para gerar a resposta. Um mapa salvo só é incluído depois que você o escolhe, ativa o anexo e aprova a prévia da carga exata, limitada às posições. O nome e o identificador do mapa, a data, a hora, o local de nascimento e as coordenadas nunca são incluídos; tudo o que você digitar no chat fará parte da mensagem. As solicitações usam store: false"
     },
     {
-      "id": "src_7e2c6cf365601b343743",
+      "id": "src_fbc07e26b299256f3e14",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "retenção da OpenAI para monitorar abuso ainda possa se aplicar. Por padrão, conversas concluídas ficam apenas no armazenamento de sessão desta aba. Pessoas conectadas podem escolher explicitamente “Lembrar esta conversa por 90 dias”. Os tópicos lembrados expiram 90 dias após a criação, sem prorrogação, e podem ser apagados um a um, todos de uma vez ou ao desativar a opção. Respostas interrompidas, parciais ou com falha não são salvas. Para os limites de uso, mantemos um pseudônimo HMAC derivado de dados da rede com a contagem diária, nunca o IP original nem um identificador de conta. As linhas de cota guardam apenas hoje e ontem. Um pseudônimo HMAC distinto, derivado separadamente com separação de domínio, é enviado à OpenAI como identificador de segurança; os totais agregados de custo não contêm perguntas, respostas, dados do"
+      "text": ", embora a retenção da OpenAI para monitorar abuso ainda possa se aplicar. Por padrão, conversas concluídas ficam apenas no armazenamento de sessão desta aba. Pessoas conectadas podem escolher explicitamente “Lembrar esta conversa por 90 dias”. Os tópicos lembrados expiram 90 dias após a criação, sem prorrogação, e podem ser apagados um a um, todos de uma vez ou ao desativar a opção. Respostas interrompidas, parciais ou com falha não são salvas. Para os limites de uso, mantemos um pseudônimo HMAC derivado de dados da rede com a contagem diária, nunca o IP original nem um identificador de conta. As linhas de cota guardam apenas hoje e ontem. Um pseudônimo HMAC distinto, derivado separadamente com separação de domínio, é enviado à OpenAI como identificador de segurança; os totais agregados de custo não contêm perguntas, respostas,"
     },
     {
-      "id": "src_e5cc74e547928e856ab1",
+      "id": "src_f471d332594b6bafe140",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "mapa nem identificadores brutos. Resumo diário, calendário e notificações O resumo diário lê as posições calculadas de um mapa salvo no seu dispositivo. O calendário de trânsitos recebe o mesmo código que contém apenas posições e é usado no compartilhamento; nenhum deles inclui seu nome, data, hora ou local de nascimento nem coordenadas. Se você ativar as notificações diárias, armazenamos a assinatura push do navegador — uma URL do serviço de notificações e suas chaves de entrega, sem dados de nascimento — para enviar o aviso. Você pode desativá-las a qualquer momento. E-mail, hospedagem e análise O e-mail semanal exige uma conta e uma adesão voluntária; fica desativado por padrão, e toda mensagem permite cancelar a assinatura. A Vercel hospeda o site e pode manter registros técnicos breves para entregar as páginas e prevenir"
+      "text": "dados do mapa nem identificadores brutos. Resumo diário, calendário e notificações O resumo diário lê as posições calculadas de um mapa salvo no seu dispositivo. O calendário de trânsitos recebe o mesmo código que contém apenas posições e é usado no compartilhamento; nenhum deles inclui seu nome, data, hora ou local de nascimento nem coordenadas. Se você ativar as notificações diárias, armazenamos a assinatura push do navegador — uma URL do serviço de notificações e suas chaves de entrega, sem dados de nascimento — para enviar o aviso. Você pode desativá-las a qualquer momento. E-mail, hospedagem e análise O e-mail semanal exige uma conta e uma adesão voluntária; fica desativado por padrão, e toda mensagem permite cancelar a assinatura. A Vercel hospeda o site e pode manter registros técnicos breves para entregar as páginas e"
     },
     {
-      "id": "src_a85ec0f21ebe673b024c",
+      "id": "src_3bda73f12a250925c6b3",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "abusos. Não usamos publicidade nem rastreamento entre sites. Contamos visualizações de páginas e o uso anônimo de recursos com o Plausible, um serviço de análise sem cookies. Para não contar repetidamente o mesmo dispositivo durante um dia, o Plausible processa brevemente o endereço IP e o agente do usuário para derivar um identificador limitado a este site, dispositivo e dia. O IP e o agente do usuário originais não são armazenados; o sal desse identificador é trocado e apagado a cada 24 horas. Ele não recebe dados de nascimento, endereço público, identificador de mapa ou de conta conectada nem a lista exata de signos. Os eventos do Aura incluem apenas categorias permitidas, como o resultado e uma faixa aproximada da quantidade; os outros eventos registram “um mapa foi salvo”, nunca de quem. Armazenamento do navegador Não usamos"
+      "text": "prevenir abusos. Não usamos publicidade nem rastreamento entre sites. Contamos visualizações de páginas e o uso anônimo de recursos com o Plausible, um serviço de análise sem cookies. Para não contar repetidamente o mesmo dispositivo durante um dia, o Plausible processa brevemente o endereço IP e o agente do usuário para derivar um identificador limitado a este site, dispositivo e dia. O IP e o agente do usuário originais não são armazenados; o sal desse identificador é trocado e apagado a cada 24 horas. Ele não recebe dados de nascimento, endereço público, identificador de mapa ou de conta conectada nem a lista exata de signos. Os eventos do Aura incluem apenas categorias permitidas, como o resultado e uma faixa aproximada da quantidade; os outros eventos registram “um mapa foi salvo”, nunca de quem. Armazenamento do navegador Não"
     },
     {
-      "id": "src_d3edf62f32ea24525906",
+      "id": "src_97d6f83dc5c1bdce9ab5",
       "path": "/pt/privacy/",
       "title": "Privacidade — Como seus dados são tratados",
       "heading": "Você escolhe quando os dados saem do seu dispositivo.",
       "locale": "pt",
-      "text": "cookies de publicidade ou rastreamento. O armazenamento próprio do site serve aos recursos que você solicita: mapas salvos, dados de sessão limitados do Aura, um endereço do Aura lembrado de forma opcional, preferências do site e, se você entrar, um token de acesso. Ele não é usado para rastrear você em outros sites. Suas escolhas Usar as calculadoras sem conta nem armazenamento fora do dispositivo. Experimentar o exemplo do Aura sem mapa, endereço, conexão ou compra. Colar um endereço público em vez de conectar uma carteira de terceiros. Deixar “Remember” desmarcado e limpar os dados do Aura quando quiser. Voltar ao exemplo do Shelf e recarregar a página para apagar o cache temporário. Apagar os mapas locais pelo navegador. Pedir a exclusão de uma conta escrevendo para admin@zodiacs.org . Última atualização: 2 de agosto de 2026"
+      "text": "usamos cookies de publicidade ou rastreamento. O armazenamento próprio do site serve aos recursos que você solicita: mapas salvos, dados de sessão limitados do Aura, um endereço do Aura lembrado de forma opcional, preferências do site e, se você entrar, um token de acesso. Ele não é usado para rastrear você em outros sites. Suas escolhas Usar as calculadoras sem conta nem armazenamento fora do dispositivo. Experimentar o exemplo do Aura sem mapa, endereço, conexão ou compra. Colar um endereço público em vez de conectar uma carteira de terceiros. Deixar “Remember” desmarcado e limpar os dados do Aura quando quiser. Voltar ao exemplo do Shelf e recarregar a página para apagar o cache temporário. Apagar os mapas locais pelo navegador. Pedir a exclusão de uma conta escrevendo para admin@zodiacs.org . Última atualização: 2 de agosto de 2026"
     },
     {
-      "id": "src_cb508d17d54e6afb68c7",
+      "id": "src_ec28c4eea5a1b9f349ff",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "Confidentialité Tu choisis quand des données quittent ton appareil. En bref : le calcul du thème astral se fait dans ton navigateur. Les données de naissance ne sont pas envoyées lors de ce calcul ni d’une consultation The Cabinet of Twelve ; elles ne quittent l’appareil que si tu choisis de synchroniser un compte ou si tu les écris dans l’assistant. Aura transmet une adresse publique de portefeuille — pas tes données de naissance ni celles du thème — à un fournisseur de données blockchain pour une consultation en lecture seule. Nous n’affichons aucune publicité et n’utilisons aucun suivi intersite. Calculateurs et thèmes enregistrés La recherche de lieux et le calcul astrologique ont lieu sur ton appareil. Les thèmes que tu enregistres restent dans le stockage local du navigateur. Le compte est facultatif ; si tu l’utilises,"
+      "text": "Confidentialité Tu choisis quand des données quittent ton appareil. En bref : le calcul du thème astral se fait dans ton navigateur. Les données de naissance ne sont pas envoyées lors de ce calcul ni d’une consultation The Cabinet of Twelve ; elles ne quittent l’appareil que si tu choisis de synchroniser un compte ou si tu les écris dans l’assistant. Aura transmet une adresse publique de portefeuille — pas tes données de naissance ni celles du thème — à un fournisseur de données blockchain pour une consultation en lecture seule. Nous n’affichons aucune publicité et n’utilisons aucun suivi intersite. Calculateurs et thèmes enregistrés La recherche de lieux et le calcul astrologique ont lieu sur ton appareil. Les thèmes que tu enregistres restent dans le stockage local du navigateur. Le compte est facultatif ; si tu l’utilises, Supabase"
     },
     {
-      "id": "src_2ff20ea803a4827da24a",
+      "id": "src_3a13185be417a450364c",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "Supabase conserve ton adresse e-mail et les thèmes que tu choisis de synchroniser afin de les afficher sur tes autres appareils. Les données de naissance ne sont ni transmises ni conservées sur nos serveurs dans le cadre du calcul lui-même. The Cabinet of Twelve, Shelf et adresses publiques The Cabinet of Twelve lit côte à côte une adresse publique de portefeuille et le ciel daté. Si tu ajoutes un thème enregistré dans ce navigateur, son résumé devient une couche de comparaison facultative qui reste sur ton appareil. Le motif et toute réflexion symbolique sont composés sur ton appareil. Lorsque tu composes ou actualises un Aura, notre service de consultation des avoirs reçoit l’adresse publique et la transmet au fournisseur de données blockchain configuré afin de vérifier quelles entrées du Registre sont présentes. Le fournisseur"
+      "text": "conserve ton adresse e-mail et les thèmes que tu choisis de synchroniser afin de les afficher sur tes autres appareils. Les données de naissance ne sont ni transmises ni conservées sur nos serveurs dans le cadre du calcul lui-même. The Cabinet of Twelve, Shelf et adresses publiques The Cabinet of Twelve lit côte à côte une adresse publique de portefeuille et le ciel daté. Si tu ajoutes un thème enregistré dans ce navigateur, son résumé devient une couche de comparaison facultative qui reste sur ton appareil. Le motif et toute réflexion symbolique sont composés sur ton appareil. Lorsque tu composes ou actualises un Aura, notre service de consultation des avoirs reçoit l’adresse publique et la transmet au fournisseur de données blockchain configuré afin de vérifier quelles entrées du Registre sont présentes. Le fournisseur configuré est"
     },
     {
-      "id": "src_984dfb1b5607a7ec8850",
+      "id": "src_2180400d3c4e870ff091",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "configuré est actuellement PublicNode, exploité par Allnodes. La requête n’inclut ni données de naissance, ni nom du thème, ni positions, ni géométrie du thème. Lorsqu’il est activé, le Shelf public facultatif de la page d’accueil du Registre utilise le même point d’accès et transmet une seule adresse publique Solana après que tu as appuyé sur « View » ; il n’envoie aucune donnée de naissance ou de thème. Quand Aura est désactivé, le Shelf illustratif n’effectue aucune requête d’adresse ou de fournisseur. « Back to the example view » masque le résultat affiché ; recharger ou fermer la page efface le cache temporaire du Shelf conservé en mémoire. Tu peux coller une adresse sans connecter de portefeuille. Si tu choisis « Connect », le logiciel d’un portefeuille tiers ne s’ouvre qu’après ton clic. Il peut renvoyer à ce navigateur les"
+      "text": "actuellement PublicNode, exploité par Allnodes. La requête n’inclut ni données de naissance, ni nom du thème, ni positions, ni géométrie du thème. Lorsqu’il est activé, le Shelf public facultatif de la page d’accueil du Registre utilise le même point d’accès et transmet une seule adresse publique Solana après que tu as appuyé sur « View » ; il n’envoie aucune donnée de naissance ou de thème. Quand Aura est désactivé, le Shelf illustratif n’effectue aucune requête d’adresse ou de fournisseur. « Back to the example view » masque le résultat affiché ; recharger ou fermer la page efface le cache temporaire du Shelf conservé en mémoire. Tu peux coller une adresse sans connecter de portefeuille. Si tu choisis « Connect », le logiciel d’un portefeuille tiers ne s’ouvre qu’après ton clic. Il peut renvoyer à ce navigateur les comptes publics que tu"
     },
     {
-      "id": "src_fe08f754ceafb88351ae",
+      "id": "src_c92b2c688efac5878ca3",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "comptes publics que tu autorises ; Aura choisit une adresse compatible et ne transmet que cette adresse pour la consultation. Aura ne demande ni phrase de récupération, ni clé privée, ni signature de message, ni autorisation de jeton, ni transaction, ni changement de réseau. La politique de confidentialité du fournisseur du portefeuille s’applique à son logiciel. Une adresse publique est publique, mais pas forcément anonyme. Ses avoirs et son historique on-chain peuvent être visibles et reliés à une personne ou à une autre activité. Vercel, le fournisseur de données blockchain configuré et leur infrastructure peuvent traiter les métadonnées ordinaires de la requête ainsi que des journaux opérationnels ou de sécurité, par exemple l’adresse IP, la date, l’heure et les informations du navigateur. Nous ne promettons pas qu’une requête"
+      "text": "autorises ; Aura choisit une adresse compatible et ne transmet que cette adresse pour la consultation. Aura ne demande ni phrase de récupération, ni clé privée, ni signature de message, ni autorisation de jeton, ni transaction, ni changement de réseau. La politique de confidentialité du fournisseur du portefeuille s’applique à son logiciel. Une adresse publique est publique, mais pas forcément anonyme. Ses avoirs et son historique on-chain peuvent être visibles et reliés à une personne ou à une autre activité. Vercel, le fournisseur de données blockchain configuré et leur infrastructure peuvent traiter les métadonnées ordinaires de la requête ainsi que des journaux opérationnels ou de sécurité, par exemple l’adresse IP, la date, l’heure et les informations du navigateur. Nous ne promettons pas qu’une requête d’adresse publique ne sera"
     },
     {
-      "id": "src_a0724dbf3d2a0c89f7ec",
+      "id": "src_06859175f1e25588b37e",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "d’adresse publique ne sera jamais journalisée par des fournisseurs d’infrastructure dont nous ne contrôlons pas la durée de conservation. Stockage et partage d’Aura Par défaut, Aura enregistre l’adresse publique, le réseau, les signes du Registre trouvés, l’heure de consultation et l’identifiant facultatif du thème sélectionné dans le stockage de session de cet onglet, avec une durée de restauration de huit heures. L’option non cochée « Remember this address on this device » enregistre les mêmes champs dans le stockage local avec une durée de restauration de 24 heures. Passé ces délais, les entrées ne peuvent plus être restaurées. Aura les supprime lors de sa prochaine tentative de lecture, mais leurs octets expirés peuvent rester dans le stockage du navigateur jusqu’à ton retour dans Aura ou jusqu’à ce que tu effaces les données du"
+      "text": "jamais journalisée par des fournisseurs d’infrastructure dont nous ne contrôlons pas la durée de conservation. Stockage et partage d’Aura Par défaut, Aura enregistre l’adresse publique, le réseau, les signes du Registre trouvés, l’heure de consultation et l’identifiant facultatif du thème sélectionné dans le stockage de session de cet onglet, avec une durée de restauration de huit heures. L’option non cochée « Remember this address on this device » enregistre les mêmes champs dans le stockage local avec une durée de restauration de 24 heures. Passé ces délais, les entrées ne peuvent plus être restaurées. Aura les supprime lors de sa prochaine tentative de lecture, mais leurs octets expirés peuvent rester dans le stockage du navigateur jusqu’à ton retour dans Aura ou jusqu’à ce que tu effaces les données du site. « Forget address / Clear"
     },
     {
-      "id": "src_d0281139ced1461a3360",
+      "id": "src_542142373d5f868dc6ee",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "site. « Forget address / Clear Aura data » efface les deux entrées de ce navigateur, mais ne peut pas supprimer l’historique public de la blockchain ni les journaux d’infrastructure. Les images Aura à partager sont composées sur ton appareil. Par défaut, elles excluent l’adresse, le réseau, le nom et les données du thème, les positions exactes, la géométrie ainsi que le nombre et la liste des signes trouvés. Elles n’incluent aucun fait provenant d’un thème enregistré. L’application choisie dans la feuille de partage applique ensuite sa propre politique. Effacer Aura ne permet pas de rappeler les copies enregistrées ou republiées par d’autres personnes ou services. Requêtes automatiques du Registre Certaines sections du Registre demandent automatiquement, depuis ton navigateur, des données publiques de marché à DexScreener et des"
+      "text": "Aura data » efface les deux entrées de ce navigateur, mais ne peut pas supprimer l’historique public de la blockchain ni les journaux d’infrastructure. Les images Aura à partager sont composées sur ton appareil. Par défaut, elles excluent l’adresse, le réseau, le nom et les données du thème, les positions exactes, la géométrie ainsi que le nombre et la liste des signes trouvés. Elles n’incluent aucun fait provenant d’un thème enregistré. L’application choisie dans la feuille de partage applique ensuite sa propre politique. Effacer Aura ne permet pas de rappeler les copies enregistrées ou republiées par d’autres personnes ou services. Requêtes automatiques du Registre Certaines sections du Registre demandent automatiquement, depuis ton navigateur, des données publiques de marché à DexScreener, des données publiques de graphiques et de"
     },
     {
-      "id": "src_1b084167d8f5bd39d894",
+      "id": "src_c24ea6b5a4e956524521",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "statistiques publiques de consultation à Wikimedia. Ces requêtes GET automatiques ne contiennent ni adresse de portefeuille, ni données de naissance, ni données de thème, ni texte saisi. DexScreener et Wikimedia peuvent recevoir les métadonnées ordinaires d’une requête web, telles que l’adresse IP, la date, l’heure, le navigateur et la page d’origine transmise selon la politique du navigateur ; leurs propres politiques de confidentialité s’appliquent. La page de catalogue d’un signe et l’explorateur de la page d’accueil du Registre peuvent aussi comporter un panneau de négociation optionnel. Sur la page d’accueil, le panneau ne s’ouvre que si vous le demandez — depuis la pastille d’un signe ou en choisissant la sculpture exposée — quelle que soit la taille de l’écran : la demande de prix est donc faite quand vous l’ouvrez, puis à"
+      "text": "transactions à GeckoTerminal et des statistiques publiques de consultation à Wikimedia. Ces requêtes GET automatiques ne contiennent ni adresse de portefeuille, ni données de naissance, ni données de thème, ni texte saisi. DexScreener, GeckoTerminal et Wikimedia peuvent recevoir les métadonnées ordinaires d’une requête web, telles que l’adresse IP, la date, l’heure, le navigateur et la page d’origine transmise selon la politique du navigateur ; leurs propres politiques de confidentialité s’appliquent. La page de catalogue d’un signe et l’explorateur de la page d’accueil du Registre peuvent aussi comporter un panneau de négociation optionnel. Sur la page d’accueil, le panneau ne s’ouvre que si vous le demandez — depuis la pastille d’un signe ou en choisissant la sculpture exposée — quelle que soit la taille de l’écran : la demande de prix est"
     },
     {
-      "id": "src_639863398402e5c173e2",
+      "id": "src_c96c29c191e28743738e",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "chaque changement de montant ou de signe ; ce qui quitte alors votre navigateur, c’est le montant, les deux identifiants de jeton et les métadonnées ordinaires d’une requête web — pas votre adresse, qui n’est envoyée que si vous choisissez d’opérer. Le panneau est notre propre interface et demande un prix à l’API publique de Jupiter, une plateforme indépendante. Si tu choisis d’effectuer une opération, ton adresse publique est envoyée à Jupiter pour qu’il construise la transaction, et la transaction signée par ton portefeuille lui est renvoyée pour être soumise au réseau ; ces requêtes, ainsi que toute invite du portefeuille, relèvent des politiques de confidentialité propres à Jupiter. Jupiter reçoit les métadonnées ordinaires d’une requête web, telles que l’adresse IP, le navigateur et l’heure. Zodiacs.org ne conserve de ce panneau"
+      "text": "donc faite quand vous l’ouvrez, puis à chaque changement de montant ou de signe ; ce qui quitte alors votre navigateur, c’est le montant, les deux identifiants de jeton et les métadonnées ordinaires d’une requête web — pas votre adresse, qui n’est envoyée que si vous choisissez d’opérer. Le panneau est notre propre interface et demande un prix à l’API publique de Jupiter, une plateforme indépendante. Si tu choisis d’effectuer une opération, ton adresse publique est envoyée à Jupiter pour qu’il construise la transaction, et la transaction signée par ton portefeuille lui est renvoyée pour être soumise au réseau ; ces requêtes, ainsi que toute invite du portefeuille, relèvent des politiques de confidentialité propres à Jupiter. Jupiter reçoit les métadonnées ordinaires d’une requête web, telles que l’adresse IP, le navigateur et l’heure."
     },
     {
-      "id": "src_8ba4d45953af94d6fafe",
+      "id": "src_d921cb05cc03190d74d7",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "ni ton adresse, ni tes soldes, ni tes opérations, et aucune donnée de naissance ou de thème n’y intervient. Assistant IA Lorsque tu utilises l’assistant, tes messages sont envoyés à notre fournisseur d’IA, OpenAI, afin de produire la réponse. Un thème enregistré n’est inclus qu’après l’avoir choisi, activé la pièce jointe et approuvé l’aperçu de la charge exacte, limitée aux positions. Le nom et l’identifiant du thème, la date, l’heure, le lieu de naissance et les coordonnées ne sont jamais inclus ; tout ce que tu écris fait partie du message. Les demandes utilisent store: false , même si la conservation d’OpenAI pour la surveillance des abus peut encore s’appliquer. Par défaut, les conversations terminées vivent uniquement dans le stockage de session de cet onglet. Les personnes connectées peuvent choisir explicitement « Mémoriser"
+      "text": "Zodiacs.org ne conserve de ce panneau ni ton adresse, ni tes soldes, ni tes opérations, et aucune donnée de naissance ou de thème n’y intervient. Assistant IA Lorsque tu utilises l’assistant, tes messages sont envoyés à notre fournisseur d’IA, OpenAI, afin de produire la réponse. Un thème enregistré n’est inclus qu’après l’avoir choisi, activé la pièce jointe et approuvé l’aperçu de la charge exacte, limitée aux positions. Le nom et l’identifiant du thème, la date, l’heure, le lieu de naissance et les coordonnées ne sont jamais inclus ; tout ce que tu écris fait partie du message. Les demandes utilisent store: false , même si la conservation d’OpenAI pour la surveillance des abus peut encore s’appliquer. Par défaut, les conversations terminées vivent uniquement dans le stockage de session de cet onglet. Les personnes connectées peuvent"
     },
     {
-      "id": "src_bafdfa3be5e91b833fa2",
+      "id": "src_42beb6bffb2d46ed183c",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "cette conversation pendant 90 jours ». Les fils mémorisés expirent 90 jours après leur création, sans prolongation, et peuvent être supprimés un par un, tous ensemble ou lors du retrait du consentement. Les réponses interrompues, partielles ou échouées ne sont pas enregistrées. Pour les limites d’usage, nous conservons un pseudonyme HMAC dérivé des données réseau avec un compteur journalier, jamais l’adresse IP brute ni un identifiant de compte. Les lignes de quota ne gardent qu’aujourd’hui et hier. Un pseudonyme HMAC distinct, dérivé séparément avec séparation de domaine, est envoyé à OpenAI comme identifiant de sécurité ; les totaux de coût agrégés ne contiennent ni questions, ni réponses, ni données du thème, ni identifiants bruts. Résumé quotidien, calendrier et notifications Le résumé quotidien lit les positions calculées d’un"
+      "text": "choisir explicitement « Mémoriser cette conversation pendant 90 jours ». Les fils mémorisés expirent 90 jours après leur création, sans prolongation, et peuvent être supprimés un par un, tous ensemble ou lors du retrait du consentement. Les réponses interrompues, partielles ou échouées ne sont pas enregistrées. Pour les limites d’usage, nous conservons un pseudonyme HMAC dérivé des données réseau avec un compteur journalier, jamais l’adresse IP brute ni un identifiant de compte. Les lignes de quota ne gardent qu’aujourd’hui et hier. Un pseudonyme HMAC distinct, dérivé séparément avec séparation de domaine, est envoyé à OpenAI comme identifiant de sécurité ; les totaux de coût agrégés ne contiennent ni questions, ni réponses, ni données du thème, ni identifiants bruts. Résumé quotidien, calendrier et notifications Le résumé quotidien lit les"
     },
     {
-      "id": "src_4805fa6e4bd2880a8c2e",
+      "id": "src_8789be1351c27c8e1ff5",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "thème enregistré sur ton appareil. Le calendrier des transits reçoit le même code de thème, limité aux positions, que la fonction de partage ; aucun des deux n’inclut ton nom, ta date, ton heure ou ton lieu de naissance, ni tes coordonnées. Si tu actives les notifications quotidiennes, nous conservons l’abonnement de ton navigateur aux notifications push — une URL du service de notification et ses clés de livraison, sans données de naissance — afin de pouvoir envoyer la note. Tu peux les désactiver à tout moment. E-mail, hébergement et analyse d’audience L’e-mail hebdomadaire nécessite un compte et une inscription volontaire ; il est désactivé par défaut et chaque message permet de se désabonner. Vercel héberge le site et peut conserver de brefs journaux techniques pour servir les pages et prévenir les abus. Nous n’utilisons ni"
+      "text": "positions calculées d’un thème enregistré sur ton appareil. Le calendrier des transits reçoit le même code de thème, limité aux positions, que la fonction de partage ; aucun des deux n’inclut ton nom, ta date, ton heure ou ton lieu de naissance, ni tes coordonnées. Si tu actives les notifications quotidiennes, nous conservons l’abonnement de ton navigateur aux notifications push — une URL du service de notification et ses clés de livraison, sans données de naissance — afin de pouvoir envoyer la note. Tu peux les désactiver à tout moment. E-mail, hébergement et analyse d’audience L’e-mail hebdomadaire nécessite un compte et une inscription volontaire ; il est désactivé par défaut et chaque message permet de se désabonner. Vercel héberge le site et peut conserver de brefs journaux techniques pour servir les pages et prévenir les abus. Nous"
     },
     {
-      "id": "src_653452115e52fc5b78b6",
+      "id": "src_df3e31b2225e475514de",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "publicité ni suivi entre sites. Nous comptons les pages vues et l’usage anonyme des fonctions avec Plausible, un service d’analyse sans cookies. Pour ne pas recompter le même appareil pendant une journée, Plausible traite brièvement l’adresse IP et l’agent utilisateur afin de dériver un identifiant limité à ce site, cet appareil et ce jour. L’adresse IP et l’agent utilisateur bruts ne sont pas conservés ; le sel de cet identifiant change et est supprimé toutes les 24 heures. Il ne reçoit ni données de naissance, ni adresse publique, ni identifiant de thème ou de compte connecté, ni liste exacte des signes. Les événements Aura ne contiennent que des catégories autorisées, comme le résultat et une tranche approximative du nombre de signes ; les autres événements indiquent « un thème a été enregistré », jamais par qui. Stockage du navigateur"
+      "text": "n’utilisons ni publicité ni suivi entre sites. Nous comptons les pages vues et l’usage anonyme des fonctions avec Plausible, un service d’analyse sans cookies. Pour ne pas recompter le même appareil pendant une journée, Plausible traite brièvement l’adresse IP et l’agent utilisateur afin de dériver un identifiant limité à ce site, cet appareil et ce jour. L’adresse IP et l’agent utilisateur bruts ne sont pas conservés ; le sel de cet identifiant change et est supprimé toutes les 24 heures. Il ne reçoit ni données de naissance, ni adresse publique, ni identifiant de thème ou de compte connecté, ni liste exacte des signes. Les événements Aura ne contiennent que des catégories autorisées, comme le résultat et une tranche approximative du nombre de signes ; les autres événements indiquent « un thème a été enregistré », jamais par qui. Stockage du"
     },
     {
-      "id": "src_8e1d6c1f080a1aa35894",
+      "id": "src_d6fdeefa3171cf9b7a63",
       "path": "/fr/privacy/",
       "title": "Confidentialité — Comment tes données sont traitées",
       "heading": "Tu choisis quand des données quittent ton appareil.",
       "locale": "fr",
-      "text": "Nous n’utilisons aucun cookie publicitaire ou de suivi. Le stockage interne du site sert uniquement aux fonctions que tu demandes : thèmes enregistrés, données de session Aura limitées, adresse Aura mémorisée en option, préférences du site et, si tu te connectes, jeton de connexion. Il ne sert pas à te suivre sur d’autres sites. Tes choix Utiliser les calculateurs sans compte ni stockage hors appareil. Essayer l’exemple Aura sans thème, adresse, connexion ou achat. Coller une adresse publique au lieu de connecter un portefeuille tiers. Laisser l’option « Remember » décochée et effacer les données Aura à tout moment. Revenir à l’exemple du Shelf et recharger la page pour effacer son cache temporaire. Supprimer les thèmes locaux depuis le navigateur. Demander la suppression d’un compte à admin@zodiacs.org . Dernière mise à jour : 2 août 2026"
+      "text": "navigateur Nous n’utilisons aucun cookie publicitaire ou de suivi. Le stockage interne du site sert uniquement aux fonctions que tu demandes : thèmes enregistrés, données de session Aura limitées, adresse Aura mémorisée en option, préférences du site et, si tu te connectes, jeton de connexion. Il ne sert pas à te suivre sur d’autres sites. Tes choix Utiliser les calculateurs sans compte ni stockage hors appareil. Essayer l’exemple Aura sans thème, adresse, connexion ou achat. Coller une adresse publique au lieu de connecter un portefeuille tiers. Laisser l’option « Remember » décochée et effacer les données Aura à tout moment. Revenir à l’exemple du Shelf et recharger la page pour effacer son cache temporaire. Supprimer les thèmes locaux depuis le navigateur. Demander la suppression d’un compte à admin@zodiacs.org . Dernière mise à jour : 2 août 2026"
     },
     {
-      "id": "src_9bd922c9e744f1ca9044",
+      "id": "src_8717a9aa9b25a85a88cb",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "Privacy Scegli tu quando i dati lasciano il dispositivo. In breve: il tema natale viene calcolato nel tuo browser. I dati di nascita non vengono inviati durante quel calcolo né durante una consultazione The Cabinet of Twelve; lasciano il dispositivo solo se scegli di sincronizzare un account o se li scrivi nell’assistente. Aura invia un indirizzo pubblico del wallet — non i dati di nascita o del tema — a un fornitore di dati blockchain per una consultazione di sola lettura. Non mostriamo pubblicità e non usiamo il tracciamento tra siti. Calcolatori e temi salvati La ricerca dei luoghi e il calcolo astrologico avvengono sul tuo dispositivo. I temi che salvi restano nella memoria locale del browser. L’account è facoltativo; se lo usi, Supabase conserva il tuo indirizzo e-mail e i temi che scegli di sincronizzare per mostrarli sugli altri dispositivi. I dati"
+      "text": "Privacy Scegli tu quando i dati lasciano il dispositivo. In breve: il tema natale viene calcolato nel tuo browser. I dati di nascita non vengono inviati durante quel calcolo né durante una consultazione The Cabinet of Twelve; lasciano il dispositivo solo se scegli di sincronizzare un account o se li scrivi nell’assistente. Aura invia un indirizzo pubblico del wallet — non i dati di nascita o del tema — a un fornitore di dati blockchain per una consultazione di sola lettura. Non mostriamo pubblicità e non usiamo il tracciamento tra siti. Calcolatori e temi salvati La ricerca dei luoghi e il calcolo astrologico avvengono sul tuo dispositivo. I temi che salvi restano nella memoria locale del browser. L’account è facoltativo; se lo usi, Supabase conserva il tuo indirizzo e-mail e i temi che scegli di sincronizzare per mostrarli sugli altri dispositivi. I dati di"
     },
     {
-      "id": "src_474794228f4d520290e0",
+      "id": "src_bb2b30cfad5f72762e2f",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "di nascita non vengono trasmessi né conservati sui nostri server come parte del calcolo stesso. The Cabinet of Twelve, Shelf e indirizzi pubblici The Cabinet of Twelve legge affiancati un indirizzo pubblico del wallet e il cielo con la relativa data. Se aggiungi un tema salvato in questo browser, il suo riepilogo è un livello di confronto facoltativo che rimane sul dispositivo. Il pattern e qualsiasi riflessione simbolica vengono composti sul dispositivo. Quando componi o aggiorni un Aura, il nostro endpoint delle disponibilità riceve l’indirizzo pubblico e lo inoltra al fornitore di dati blockchain configurato per verificare quali voci del Registro sono presenti. Il fornitore configurato è attualmente PublicNode, gestito da Allnodes. La richiesta non include dati di nascita, nome del tema, posizioni o geometria del tema. Quando è attivo, lo Shelf pubblico"
+      "text": "nascita non vengono trasmessi né conservati sui nostri server come parte del calcolo stesso. The Cabinet of Twelve, Shelf e indirizzi pubblici The Cabinet of Twelve legge affiancati un indirizzo pubblico del wallet e il cielo con la relativa data. Se aggiungi un tema salvato in questo browser, il suo riepilogo è un livello di confronto facoltativo che rimane sul dispositivo. Il pattern e qualsiasi riflessione simbolica vengono composti sul dispositivo. Quando componi o aggiorni un Aura, il nostro endpoint delle disponibilità riceve l’indirizzo pubblico e lo inoltra al fornitore di dati blockchain configurato per verificare quali voci del Registro sono presenti. Il fornitore configurato è attualmente PublicNode, gestito da Allnodes. La richiesta non include dati di nascita, nome del tema, posizioni o geometria del tema. Quando è attivo, lo Shelf pubblico"
     },
     {
-      "id": "src_9f8f0512eecc6262f2d4",
+      "id": "src_430d1f08f35147f1414a",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "facoltativo nella pagina iniziale del Registro usa lo stesso endpoint e invia un solo indirizzo pubblico Solana dopo che premi “View”; non invia dati di nascita o del tema. Quando Aura è disattivato, lo Shelf illustrativo non effettua richieste di indirizzi o al fornitore. “Back to the example view” rimuove il risultato dallo schermo; ricaricare o chiudere la pagina elimina la cache temporanea dello Shelf conservata in memoria. Puoi incollare un indirizzo senza collegare un wallet. Se scegli “Connect”, il software di un wallet di terze parti si apre solo dopo un tuo clic. Può restituire a questo browser gli account pubblici che autorizzi; Aura seleziona un indirizzo compatibile e inoltra solo quello per la consultazione. Aura non richiede frase di recupero, chiave privata, firma di un messaggio, approvazione di token, transazione o cambio di rete. Al"
+      "text": "facoltativo nella pagina iniziale del Registro usa lo stesso endpoint e invia un solo indirizzo pubblico Solana dopo che premi “View”; non invia dati di nascita o del tema. Quando Aura è disattivato, lo Shelf illustrativo non effettua richieste di indirizzi o al fornitore. “Back to the example view” rimuove il risultato dallo schermo; ricaricare o chiudere la pagina elimina la cache temporanea dello Shelf conservata in memoria. Puoi incollare un indirizzo senza collegare un wallet. Se scegli “Connect”, il software di un wallet di terze parti si apre solo dopo un tuo clic. Può restituire a questo browser gli account pubblici che autorizzi; Aura seleziona un indirizzo compatibile e inoltra solo quello per la consultazione. Aura non richiede frase di recupero, chiave privata, firma di un messaggio, approvazione di token, transazione o cambio di rete. Al software si"
     },
     {
-      "id": "src_0bee356ecb3de454dac2",
+      "id": "src_657d5b8d3089cfb7b4a0",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "software si applica l’informativa sulla privacy del fornitore del wallet. Un indirizzo pubblico è pubblico, ma non necessariamente anonimo. Le sue disponibilità e la cronologia on-chain possono essere visibili e collegate a una persona o ad altre attività. Vercel, il fornitore di dati blockchain configurato e le rispettive infrastrutture possono trattare i normali metadati della richiesta e log operativi o di sicurezza, come indirizzo IP, data, ora e informazioni sul browser. Non promettiamo che una richiesta relativa a un indirizzo pubblico non venga mai registrata da fornitori di infrastruttura dei quali non controlliamo i tempi di conservazione. Memoria e condivisione di Aura Per impostazione predefinita, Aura salva l’indirizzo pubblico, la rete, i segni del Registro trovati, l’ora della consultazione e l’identificatore facoltativo del tema selezionato"
+      "text": "applica l’informativa sulla privacy del fornitore del wallet. Un indirizzo pubblico è pubblico, ma non necessariamente anonimo. Le sue disponibilità e la cronologia on-chain possono essere visibili e collegate a una persona o ad altre attività. Vercel, il fornitore di dati blockchain configurato e le rispettive infrastrutture possono trattare i normali metadati della richiesta e log operativi o di sicurezza, come indirizzo IP, data, ora e informazioni sul browser. Non promettiamo che una richiesta relativa a un indirizzo pubblico non venga mai registrata da fornitori di infrastruttura dei quali non controlliamo i tempi di conservazione. Memoria e condivisione di Aura Per impostazione predefinita, Aura salva l’indirizzo pubblico, la rete, i segni del Registro trovati, l’ora della consultazione e l’identificatore facoltativo del tema selezionato nella memoria di"
     },
     {
-      "id": "src_582931e1bab522f2df34",
+      "id": "src_ef6b5450370db3885533",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "nella memoria di sessione di questa scheda, con una validità di ripristino di otto ore. L’opzione non selezionata “Remember this address on this device” salva gli stessi campi nella memoria locale con una validità di ripristino di 24 ore. Dopo questi termini, le voci non possono più essere ripristinate. Aura le elimina al successivo tentativo di lettura, ma i byte scaduti possono restare nella memoria del browser finché non torni in Aura o non cancelli i dati del sito. “Forget address / Clear Aura data” rimuove entrambe le voci da questo browser, ma non può cancellare la cronologia pubblica della blockchain o i log dell’infrastruttura. Le immagini Aura da condividere vengono composte sul tuo dispositivo. Per impostazione predefinita escludono indirizzo, rete, nome e dati del tema, posizioni esatte, geometria, numero e lista dei segni trovati. Non includono"
+      "text": "sessione di questa scheda, con una validità di ripristino di otto ore. L’opzione non selezionata “Remember this address on this device” salva gli stessi campi nella memoria locale con una validità di ripristino di 24 ore. Dopo questi termini, le voci non possono più essere ripristinate. Aura le elimina al successivo tentativo di lettura, ma i byte scaduti possono restare nella memoria del browser finché non torni in Aura o non cancelli i dati del sito. “Forget address / Clear Aura data” rimuove entrambe le voci da questo browser, ma non può cancellare la cronologia pubblica della blockchain o i log dell’infrastruttura. Le immagini Aura da condividere vengono composte sul tuo dispositivo. Per impostazione predefinita escludono indirizzo, rete, nome e dati del tema, posizioni esatte, geometria, numero e lista dei segni trovati. Non includono alcun fatto proveniente"
     },
     {
-      "id": "src_d3f3f910cd3731082b71",
+      "id": "src_6250e4afa293ad45b239",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "alcun fatto proveniente da un tema salvato. L’applicazione scelta nel pannello di condivisione applica la propria informativa. Cancellare Aura non consente di ritirare copie salvate o ripubblicate da altre persone o servizi. Richieste automatiche del Registro Alcune sezioni del Registro richiedono automaticamente, tramite il tuo browser, dati pubblici di mercato a DexScreener e statistiche pubbliche sulle visualizzazioni a Wikimedia. Queste richieste GET automatiche non contengono indirizzi di wallet, dati di nascita, dati del tema o testo inserito da te. DexScreener e Wikimedia possono ricevere i normali metadati di una richiesta web, come indirizzo IP, data, ora, browser e la pagina di provenienza consentita dalle impostazioni del browser; si applicano le rispettive informative sulla privacy. La pagina di catalogo di un segno e l’esploratore della pagina"
+      "text": "da un tema salvato. L’applicazione scelta nel pannello di condivisione applica la propria informativa. Cancellare Aura non consente di ritirare copie salvate o ripubblicate da altre persone o servizi. Richieste automatiche del Registro Alcune sezioni del Registro richiedono automaticamente, tramite il tuo browser, dati pubblici di mercato a DexScreener, dati pubblici di grafici e scambi a GeckoTerminal e statistiche pubbliche sulle visualizzazioni a Wikimedia. Queste richieste GET automatiche non contengono indirizzi di wallet, dati di nascita, dati del tema o testo inserito da te. DexScreener, GeckoTerminal e Wikimedia possono ricevere i normali metadati di una richiesta web, come indirizzo IP, data, ora, browser e la pagina di provenienza consentita dalle impostazioni del browser; si applicano le rispettive informative sulla privacy. La pagina di catalogo di un"
     },
     {
-      "id": "src_11c09e0ec931233cd70e",
+      "id": "src_19484bb943f1d8afae34",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "iniziale del Registro possono inoltre includere un pannello di negoziazione opzionale. Il pannello è la nostra interfaccia e richiede un prezzo all’API pubblica di Jupiter, una sede indipendente. Nella pagina iniziale il pannello si apre solo se lo chiedi — dalla pillola di un segno o scegliendo la scultura esposta — su qualsiasi dimensione di schermo, quindi quella richiesta parte quando lo apri e di nuovo ogni volta che cambi l’importo o il segno; ciò che lascia il tuo browser in quel momento è l’importo, i due identificativi del token e i metadati ordinari di una richiesta web, non il tuo indirizzo, che non viene inviato a meno che tu non scelga di operare. Se scegli di operare, il tuo indirizzo pubblico viene inviato a Jupiter perché costruisca la transazione, e la transazione firmata dal tuo wallet torna a Jupiter perché la invii alla rete; quelle"
+      "text": "segno e l’esploratore della pagina iniziale del Registro possono inoltre includere un pannello di negoziazione opzionale. Il pannello è la nostra interfaccia e richiede un prezzo all’API pubblica di Jupiter, una sede indipendente. Nella pagina iniziale il pannello si apre solo se lo chiedi — dalla pillola di un segno o scegliendo la scultura esposta — su qualsiasi dimensione di schermo, quindi quella richiesta parte quando lo apri e di nuovo ogni volta che cambi l’importo o il segno; ciò che lascia il tuo browser in quel momento è l’importo, i due identificativi del token e i metadati ordinari di una richiesta web, non il tuo indirizzo, che non viene inviato a meno che tu non scelga di operare. Se scegli di operare, il tuo indirizzo pubblico viene inviato a Jupiter perché costruisca la transazione, e la transazione firmata dal tuo wallet torna a Jupiter perché la"
     },
     {
-      "id": "src_84c869c62c43a8f28426",
+      "id": "src_7ff4750d025fff538d0a",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "richieste, e qualsiasi richiesta del wallet, sono regolate dalle informative sulla privacy di Jupiter. Jupiter riceve i normali metadati di una richiesta web, come indirizzo IP, browser e ora. Zodiacs.org non conserva da quel pannello il tuo indirizzo, i saldi o le operazioni, e nessun dato di nascita o del tema vi partecipa. Assistente IA Quando usi l’assistente, i tuoi messaggi vengono inviati al nostro fornitore di IA, OpenAI, per generare la risposta. Un tema salvato viene incluso solo dopo averlo scelto, aver attivato l’allegato e aver approvato l’anteprima del carico esatto, limitato alle posizioni. Il nome e l’identificatore del tema, la data, l’ora, il luogo di nascita e le coordinate non vengono mai inclusi; tutto ciò che scrivi nella chat fa parte del messaggio. Le richieste usano store: false , anche se può ancora applicarsi la conservazione di"
+      "text": "invii alla rete; quelle richieste, e qualsiasi richiesta del wallet, sono regolate dalle informative sulla privacy di Jupiter. Jupiter riceve i normali metadati di una richiesta web, come indirizzo IP, browser e ora. Zodiacs.org non conserva da quel pannello il tuo indirizzo, i saldi o le operazioni, e nessun dato di nascita o del tema vi partecipa. Assistente IA Quando usi l’assistente, i tuoi messaggi vengono inviati al nostro fornitore di IA, OpenAI, per generare la risposta. Un tema salvato viene incluso solo dopo averlo scelto, aver attivato l’allegato e aver approvato l’anteprima del carico esatto, limitato alle posizioni. Il nome e l’identificatore del tema, la data, l’ora, il luogo di nascita e le coordinate non vengono mai inclusi; tutto ciò che scrivi nella chat fa parte del messaggio. Le richieste usano store: false , anche se può ancora applicarsi la"
     },
     {
-      "id": "src_5050ae9fca69f003cf97",
+      "id": "src_e76cf9224f4423995911",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "OpenAI per il monitoraggio degli abusi. Per impostazione predefinita, le conversazioni completate vivono solo nell’archivio di sessione di questa scheda. Chi ha effettuato l’accesso può scegliere esplicitamente “Ricorda questa conversazione per 90 giorni”. I thread ricordati scadono 90 giorni dopo la creazione, senza proroga, e si possono eliminare singolarmente, tutti insieme o disattivando l’opzione. Le risposte interrotte, parziali o non riuscite non vengono salvate. Per i limiti d’uso conserviamo uno pseudonimo HMAC derivato dai dati di rete con il conteggio giornaliero, mai l’IP originale né un identificatore dell’account. Le righe di quota conservano solo oggi e ieri. A OpenAI viene inviato uno pseudonimo HMAC distinto, derivato separatamente con separazione di dominio, come identificatore di sicurezza; i totali aggregati dei costi non contengono domande,"
+      "text": "conservazione di OpenAI per il monitoraggio degli abusi. Per impostazione predefinita, le conversazioni completate vivono solo nell’archivio di sessione di questa scheda. Chi ha effettuato l’accesso può scegliere esplicitamente “Ricorda questa conversazione per 90 giorni”. I thread ricordati scadono 90 giorni dopo la creazione, senza proroga, e si possono eliminare singolarmente, tutti insieme o disattivando l’opzione. Le risposte interrotte, parziali o non riuscite non vengono salvate. Per i limiti d’uso conserviamo uno pseudonimo HMAC derivato dai dati di rete con il conteggio giornaliero, mai l’IP originale né un identificatore dell’account. Le righe di quota conservano solo oggi e ieri. A OpenAI viene inviato uno pseudonimo HMAC distinto, derivato separatamente con separazione di dominio, come identificatore di sicurezza; i totali aggregati dei costi non"
     },
     {
-      "id": "src_d7d5001ab11a827faff6",
+      "id": "src_11fb42633d62d8bacde1",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "risposte, dati del tema o identificatori grezzi. Riepilogo quotidiano, calendario e notifiche Il riepilogo quotidiano legge le posizioni calcolate di un tema salvato sul tuo dispositivo. Il calendario dei transiti riceve lo stesso codice del tema, limitato alle posizioni, usato dalla funzione di condivisione; nessuno dei due include nome, data, ora o luogo di nascita, né le coordinate. Se attivi le notifiche quotidiane, conserviamo la sottoscrizione del browser alle notifiche push — un URL del servizio di notifica e le relative chiavi di consegna, senza dati di nascita — per poter inviare la notifica. Puoi disattivarle in qualsiasi momento. E-mail, hosting e analisi L’e-mail settimanale richiede un account e un’iscrizione volontaria; è disattivata per impostazione predefinita e ogni messaggio permette di annullare l’iscrizione. Vercel ospita il sito e può"
+      "text": "contengono domande, risposte, dati del tema o identificatori grezzi. Riepilogo quotidiano, calendario e notifiche Il riepilogo quotidiano legge le posizioni calcolate di un tema salvato sul tuo dispositivo. Il calendario dei transiti riceve lo stesso codice del tema, limitato alle posizioni, usato dalla funzione di condivisione; nessuno dei due include nome, data, ora o luogo di nascita, né le coordinate. Se attivi le notifiche quotidiane, conserviamo la sottoscrizione del browser alle notifiche push — un URL del servizio di notifica e le relative chiavi di consegna, senza dati di nascita — per poter inviare la notifica. Puoi disattivarle in qualsiasi momento. E-mail, hosting e analisi L’e-mail settimanale richiede un account e un’iscrizione volontaria; è disattivata per impostazione predefinita e ogni messaggio permette di annullare l’iscrizione. Vercel ospita il"
     },
     {
-      "id": "src_20417df979467b23c81d",
+      "id": "src_2e8d2914291b2ea888f8",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "conservare brevi log tecnici per fornire le pagine e prevenire gli abusi. Non usiamo pubblicità né tracciamento tra siti. Contiamo le visualizzazioni di pagina e l’uso anonimo delle funzioni con Plausible, un servizio di analisi senza cookie. Per non conteggiare più volte lo stesso dispositivo durante un giorno, Plausible elabora brevemente l’indirizzo IP e lo user agent per ricavare un identificatore limitato a questo sito, dispositivo e giorno. IP e user agent grezzi non vengono conservati; il sale usato per l’identificatore ruota e viene eliminato ogni 24 ore. Non riceve dati di nascita, indirizzi pubblici, identificatori del tema o dell’account collegato né la lista esatta dei segni. Gli eventi Aura includono solo categorie consentite, come l’esito e una fascia approssimativa del numero di segni; gli altri eventi registrano «un tema è stato salvato», mai da"
+      "text": "sito e può conservare brevi log tecnici per fornire le pagine e prevenire gli abusi. Non usiamo pubblicità né tracciamento tra siti. Contiamo le visualizzazioni di pagina e l’uso anonimo delle funzioni con Plausible, un servizio di analisi senza cookie. Per non conteggiare più volte lo stesso dispositivo durante un giorno, Plausible elabora brevemente l’indirizzo IP e lo user agent per ricavare un identificatore limitato a questo sito, dispositivo e giorno. IP e user agent grezzi non vengono conservati; il sale usato per l’identificatore ruota e viene eliminato ogni 24 ore. Non riceve dati di nascita, indirizzi pubblici, identificatori del tema o dell’account collegato né la lista esatta dei segni. Gli eventi Aura includono solo categorie consentite, come l’esito e una fascia approssimativa del numero di segni; gli altri eventi registrano «un tema è stato salvato», mai"
     },
     {
-      "id": "src_8c657ef7fe54b770ba54",
+      "id": "src_a9b88fae5b57c1f76ac7",
       "path": "/it/privacy/",
       "title": "Privacy — Come vengono trattati i tuoi dati",
       "heading": "Scegli tu quando i dati lasciano il dispositivo.",
       "locale": "it",
-      "text": "chi. Memoria del browser Non usiamo cookie pubblicitari o di tracciamento. La memoria interna del sito serve alle funzioni che richiedi: temi salvati, dati di sessione Aura limitati, un indirizzo Aura ricordato facoltativamente, preferenze del sito e, se accedi, un token di accesso. Non viene usata per seguirti su altri siti. Le tue scelte Usare i calcolatori senza account o memoria esterna al dispositivo. Provare l’esempio Aura senza tema, indirizzo, collegamento o acquisto. Incollare un indirizzo pubblico invece di collegare un wallet di terze parti. Lasciare “Remember” non selezionato e cancellare i dati Aura in qualsiasi momento. Tornare all’esempio dello Shelf e ricaricare la pagina per cancellarne la cache temporanea. Eliminare i temi locali dal browser. Chiedere la cancellazione di un account scrivendo a admin@zodiacs.org . Ultimo aggiornamento: 2 agosto 2026"
+      "text": "da chi. Memoria del browser Non usiamo cookie pubblicitari o di tracciamento. La memoria interna del sito serve alle funzioni che richiedi: temi salvati, dati di sessione Aura limitati, un indirizzo Aura ricordato facoltativamente, preferenze del sito e, se accedi, un token di accesso. Non viene usata per seguirti su altri siti. Le tue scelte Usare i calcolatori senza account o memoria esterna al dispositivo. Provare l’esempio Aura senza tema, indirizzo, collegamento o acquisto. Incollare un indirizzo pubblico invece di collegare un wallet di terze parti. Lasciare “Remember” non selezionato e cancellare i dati Aura in qualsiasi momento. Tornare all’esempio dello Shelf e ricaricare la pagina per cancellarne la cache temporanea. Eliminare i temi locali dal browser. Chiedere la cancellazione di un account scrivendo a admin@zodiacs.org . Ultimo aggiornamento: 2 agosto 2026"
     },
     {
       "id": "src_065fbfe7c2b7a3a6ea00",
@@ -4357,6 +4360,22 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "year, from one return to the next. Should I use my birthplace or where I am now? Astrologers disagree about whether a solar-return chart should be cast for your birthplace or for where you actually are on your birthday. Both traditions are old and neither is provable, so this tool defaults to your birthplace and lets you recast for any location — the planets don't move, but the houses and rising sign do. If you travel for your birthday, casting both and comparing is the honest experiment. Does my birth time matter for a solar return? The return instant itself depends only on your birth date's Sun position, which needs your birth time to pin precisely — an unknown time can shift the return by a few hours. With no birth time we use 12:00 local civil time as the natal reference and omit the return chart's rising sign, angles, and houses, and say so."
     },
     {
+      "id": "src_ee2b2b81724ffe01a46c",
+      "path": "/terminal/research/",
+      "title": "Markets Research | Zodiac Terminal",
+      "heading": "Markets Research",
+      "locale": "en",
+      "text": "← Zodiac Terminal Zodiacs.org Research System Markets Research Verified sky events, traditional interpretations, and observed market data—kept in three separate lanes so you can audit every note. Research boundary Astrology has no established predictive relationship with asset prices. Symbolic research is not investment advice, and crypto assets can lose all value. Latest editions The research ledger Source updates All Zodiacs Research Astrology News Astronomy Calendar The public ledger is waiting for its first reviewed edition. Deterministic briefs are being generated as"
+    },
+    {
+      "id": "src_f24a6537683b9e15dbe0",
+      "path": "/terminal/research/",
+      "title": "Markets Research | Zodiac Terminal",
+      "heading": "Markets Research",
+      "locale": "en",
+      "text": "drafts. During the 30-day pilot, an exact artifact hash and named editorial reviewer are required before publication. Clear related filter No research matches this filter. How to read it Three claims, never blended 01 Sky fact An exact event, occupancy, or UTC position from the committed astronomy catalog. 02 Traditional reading A disclosed symbolic interpretation. It does not use price, liquidity, or volume. 03 Market observation A separately timestamped archive record. It describes what was observed and never claims causation. Machine-readable index ↗ RSS feed ↗ JSON Feed ↗"
+    },
+    {
       "id": "src_83ce31c08ecbcae13f08",
       "path": "/terms/",
       "title": "Terms of Use",
@@ -4429,60 +4448,60 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "otherwise. City data is from GeoNames under CC BY 4.0, and the fonts are used under the SIL Open Font License; both are credited in the footer. You are welcome to quote and link to pages with attribution. Changes We may update these terms as the site evolves. When we do, we will change the date below. Continuing to use the site after a change means you accept the updated terms. Applicable law The operator's legal identity and a chosen governing jurisdiction have not yet been confirmed in the site's published materials. Applicable law still governs your use, and nothing in these terms removes mandatory consumer or other rights that apply to you. We will update this section and the date above when those facts are confirmed. Contact Questions about these terms go to admin@zodiacs.org . Last updated: 2 August 2026"
     },
     {
-      "id": "src_a10651a314a8843c4dd6",
+      "id": "src_9455dfe73edace9b7df3",
       "path": "/today/",
-      "title": "August 9, 2026 Daily Astrology Brief",
-      "heading": "The August 9, 2026 edition",
+      "title": "August 12, 2026 Daily Astrology Brief",
+      "heading": "The August 12, 2026 edition",
       "locale": "en",
-      "text": "Your daily brief The August 9, 2026 edition Start with the zodiac sign you know. If you have a saved birth chart, you’ll automatically get a more personal comparison. August 9, 2026 Your daily astrology snapshot 1 day For your saved chart A few themes from the August 9, 2026 sky, compared with your saved birth chart. Your saved-chart comparison is temporarily unavailable. Your Sun-sign baseline is ready below. Aries Sun-sign baseline The August 9, 2026 edition may draw more attention to home, family, and the private floor of your life. Read the full Aries horoscope → Taurus Sun-sign baseline The August 9, 2026 edition may draw more attention to errands, siblings, messages, and the near neighborhood. Read the full Taurus horoscope → Gemini Sun-sign baseline The August 9, 2026 edition may draw more attention to money, possessions, and what"
+      "text": "Your daily brief The August 12, 2026 edition Start with the zodiac sign you know. If you have a saved birth chart, you’ll automatically get a more personal comparison. August 12, 2026 Your daily astrology snapshot 1 day For your saved chart A few themes from the August 12, 2026 sky, compared with your saved birth chart. Your saved-chart comparison is temporarily unavailable. Your Sun-sign baseline is ready below. Aries Sun-sign baseline The August 12, 2026 edition may draw more attention to pleasure, romance, children, and what you make for joy. Read the full Aries horoscope → Taurus Sun-sign baseline The August 12, 2026 edition may draw more attention to home, family, and the private floor of your life. Read the full Taurus horoscope → Gemini Sun-sign baseline The August 12, 2026 edition may draw more attention to errands, siblings, messages,"
     },
     {
-      "id": "src_cc365a050df8759c1eff",
+      "id": "src_61c4e088229ee8190024",
       "path": "/today/",
-      "title": "August 9, 2026 Daily Astrology Brief",
-      "heading": "The August 9, 2026 edition",
+      "title": "August 12, 2026 Daily Astrology Brief",
+      "heading": "The August 12, 2026 edition",
       "locale": "en",
-      "text": "steadies you. Read the full Gemini horoscope → Cancer Sun-sign baseline The August 9, 2026 edition may draw more attention to how you look, start, and come across. Read the full Cancer horoscope → Leo Sun-sign baseline The August 9, 2026 edition may draw more attention to rest, retreat, and what runs under the surface. Read the full Leo horoscope → Virgo Sun-sign baseline The August 9, 2026 edition may draw more attention to friends, groups, and the future you are pointing at. Read the full Virgo horoscope → Libra Sun-sign baseline The August 9, 2026 edition may draw more attention to career, reputation, and what the public sees. Read the full Libra horoscope → Scorpio Sun-sign baseline The August 9, 2026 edition may draw more attention to travel, study, belief, and the longer view. Read the full Scorpio horoscope → Sagittarius Sun-sign"
+      "text": "and the near neighborhood. Read the full Gemini horoscope → Cancer Sun-sign baseline The August 12, 2026 edition may draw more attention to money, possessions, and what steadies you. Read the full Cancer horoscope → Leo Sun-sign baseline The August 12, 2026 edition may draw more attention to how you look, start, and come across. Read the full Leo horoscope → Virgo Sun-sign baseline The August 12, 2026 edition may draw more attention to rest, retreat, and what runs under the surface. Read the full Virgo horoscope → Libra Sun-sign baseline The August 12, 2026 edition may draw more attention to friends, groups, and the future you are pointing at. Read the full Libra horoscope → Scorpio Sun-sign baseline The August 12, 2026 edition may draw more attention to career, reputation, and what the public sees. Read the full Scorpio horoscope → Sagittarius"
     },
     {
-      "id": "src_38bd99bfa80222f248a4",
+      "id": "src_411f22885064271a2502",
       "path": "/today/",
-      "title": "August 9, 2026 Daily Astrology Brief",
-      "heading": "The August 9, 2026 edition",
+      "title": "August 12, 2026 Daily Astrology Brief",
+      "heading": "The August 12, 2026 edition",
       "locale": "en",
-      "text": "baseline The August 9, 2026 edition may draw more attention to shared money, debts, intimacy, and what gets merged. Read the full Sagittarius horoscope → Capricorn Sun-sign baseline The August 9, 2026 edition may draw more attention to partners, the people directly across the table. Read the full Capricorn horoscope → Aquarius Sun-sign baseline The August 9, 2026 edition may draw more attention to work in progress, health routines, and the daily load. Read the full Aquarius horoscope → Pisces Sun-sign baseline The August 9, 2026 edition may draw more attention to pleasure, romance, children, and what you make for joy. Read the full Pisces horoscope → Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces Your saved chart and this comparison stay in this browser. How this comparison works The saved-chart"
+      "text": "Sun-sign baseline The August 12, 2026 edition may draw more attention to travel, study, belief, and the longer view. Read the full Sagittarius horoscope → Capricorn Sun-sign baseline The August 12, 2026 edition may draw more attention to shared money, debts, intimacy, and what gets merged. Read the full Capricorn horoscope → Aquarius Sun-sign baseline The August 12, 2026 edition may draw more attention to partners, the people directly across the table. Read the full Aquarius horoscope → Pisces Sun-sign baseline The August 12, 2026 edition may draw more attention to work in progress, health routines, and the daily load. Read the full Pisces horoscope → Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces Your saved chart and this comparison stay in this browser. How this comparison works The saved-chart layer"
     },
     {
-      "id": "src_0f85a904a5d5f203e965",
+      "id": "src_85288761d5de415b0f7f",
       "path": "/today/",
-      "title": "August 9, 2026 Daily Astrology Brief",
-      "heading": "The August 9, 2026 edition",
+      "title": "August 12, 2026 Daily Astrology Brief",
+      "heading": "The August 12, 2026 edition",
       "locale": "en",
-      "text": "layer runs privately in this browser. If it cannot load, the complete Sun-sign reading remains available here. Start with your Sun sign This is usually the zodiac sign you know from your birthday. Choose it for one clear note for the August 9, 2026 edition — no birth time needed. No saved chart on this device. Your Sun sign still gives you a useful starting point. Aries Mar 21 – Apr 19 Taurus Apr 20 – May 20 Gemini May 21 – Jun 20 Cancer Jun 21 – Jul 22 Leo Jul 23 – Aug 22 Virgo Aug 23 – Sep 22 Libra Sep 23 – Oct 22 Scorpio Oct 23 – Nov 21 Sagittarius Nov 22 – Dec 21 Capricorn Dec 22 – Jan 19 Aquarius Jan 20 – Feb 18 Pisces Feb 19 – Mar 20 Mar 21 – Apr 19 Aries · August 9, 2026 The August 9, 2026 edition may draw more attention to home, family, and the private floor of your life. Read the full Aries horoscope → Apr 20 – May 20 Taurus ·"
+      "text": "runs privately in this browser. If it cannot load, the complete Sun-sign reading remains available here. Start with your Sun sign This is usually the zodiac sign you know from your birthday. Choose it for one clear note for the August 12, 2026 edition — no birth time needed. No saved chart on this device. Your Sun sign still gives you a useful starting point. Aries Mar 21 – Apr 19 Taurus Apr 20 – May 20 Gemini May 21 – Jun 20 Cancer Jun 21 – Jul 22 Leo Jul 23 – Aug 22 Virgo Aug 23 – Sep 22 Libra Sep 23 – Oct 22 Scorpio Oct 23 – Nov 21 Sagittarius Nov 22 – Dec 21 Capricorn Dec 22 – Jan 19 Aquarius Jan 20 – Feb 18 Pisces Feb 19 – Mar 20 Mar 21 – Apr 19 Aries · August 12, 2026 The August 12, 2026 edition may draw more attention to pleasure, romance, children, and what you make for joy. Read the full Aries horoscope → Apr 20 – May 20 Taurus ·"
     },
     {
-      "id": "src_7ad36a5e887552db861d",
+      "id": "src_33f8759cfd46c65a1d10",
       "path": "/today/",
-      "title": "August 9, 2026 Daily Astrology Brief",
-      "heading": "The August 9, 2026 edition",
+      "title": "August 12, 2026 Daily Astrology Brief",
+      "heading": "The August 12, 2026 edition",
       "locale": "en",
-      "text": "August 9, 2026 The August 9, 2026 edition may draw more attention to errands, siblings, messages, and the near neighborhood. Read the full Taurus horoscope → May 21 – Jun 20 Gemini · August 9, 2026 The August 9, 2026 edition may draw more attention to money, possessions, and what steadies you. Read the full Gemini horoscope → Jun 21 – Jul 22 Cancer · August 9, 2026 The August 9, 2026 edition may draw more attention to how you look, start, and come across. Read the full Cancer horoscope → Jul 23 – Aug 22 Leo · August 9, 2026 The August 9, 2026 edition may draw more attention to rest, retreat, and what runs under the surface. Read the full Leo horoscope → Aug 23 – Sep 22 Virgo · August 9, 2026 The August 9, 2026 edition may draw more attention to friends, groups, and the future you are pointing at. Read the full Virgo horoscope → Sep 23 – Oct"
+      "text": "August 12, 2026 The August 12, 2026 edition may draw more attention to home, family, and the private floor of your life. Read the full Taurus horoscope → May 21 – Jun 20 Gemini · August 12, 2026 The August 12, 2026 edition may draw more attention to errands, siblings, messages, and the near neighborhood. Read the full Gemini horoscope → Jun 21 – Jul 22 Cancer · August 12, 2026 The August 12, 2026 edition may draw more attention to money, possessions, and what steadies you. Read the full Cancer horoscope → Jul 23 – Aug 22 Leo · August 12, 2026 The August 12, 2026 edition may draw more attention to how you look, start, and come across. Read the full Leo horoscope → Aug 23 – Sep 22 Virgo · August 12, 2026 The August 12, 2026 edition may draw more attention to rest, retreat, and what runs under the surface. Read the full Virgo horoscope → Sep 23 –"
     },
     {
-      "id": "src_8e84b4af7ab1f06de5eb",
+      "id": "src_3c6da7776d7aeca73432",
       "path": "/today/",
-      "title": "August 9, 2026 Daily Astrology Brief",
-      "heading": "The August 9, 2026 edition",
+      "title": "August 12, 2026 Daily Astrology Brief",
+      "heading": "The August 12, 2026 edition",
       "locale": "en",
-      "text": "22 Libra · August 9, 2026 The August 9, 2026 edition may draw more attention to career, reputation, and what the public sees. Read the full Libra horoscope → Oct 23 – Nov 21 Scorpio · August 9, 2026 The August 9, 2026 edition may draw more attention to travel, study, belief, and the longer view. Read the full Scorpio horoscope → Nov 22 – Dec 21 Sagittarius · August 9, 2026 The August 9, 2026 edition may draw more attention to shared money, debts, intimacy, and what gets merged. Read the full Sagittarius horoscope → Dec 22 – Jan 19 Capricorn · August 9, 2026 The August 9, 2026 edition may draw more attention to partners, the people directly across the table. Read the full Capricorn horoscope → Jan 20 – Feb 18 Aquarius · August 9, 2026 The August 9, 2026 edition may draw more attention to work in progress, health routines, and the daily load."
+      "text": "Oct 22 Libra · August 12, 2026 The August 12, 2026 edition may draw more attention to friends, groups, and the future you are pointing at. Read the full Libra horoscope → Oct 23 – Nov 21 Scorpio · August 12, 2026 The August 12, 2026 edition may draw more attention to career, reputation, and what the public sees. Read the full Scorpio horoscope → Nov 22 – Dec 21 Sagittarius · August 12, 2026 The August 12, 2026 edition may draw more attention to travel, study, belief, and the longer view. Read the full Sagittarius horoscope → Dec 22 – Jan 19 Capricorn · August 12, 2026 The August 12, 2026 edition may draw more attention to shared money, debts, intimacy, and what gets merged. Read the full Capricorn horoscope → Jan 20 – Feb 18 Aquarius · August 12, 2026 The August 12, 2026 edition may draw more attention to partners, the people directly across the"
     },
     {
-      "id": "src_d92cf8ce1d3c281e39ee",
+      "id": "src_c0ea3bef39e6b65a86ac",
       "path": "/today/",
-      "title": "August 9, 2026 Daily Astrology Brief",
-      "heading": "The August 9, 2026 edition",
+      "title": "August 12, 2026 Daily Astrology Brief",
+      "heading": "The August 12, 2026 edition",
       "locale": "en",
-      "text": "Read the full Aquarius horoscope → Feb 19 – Mar 20 Pisces · August 9, 2026 The August 9, 2026 edition may draw more attention to pleasure, romance, children, and what you make for joy. Read the full Pisces horoscope → Want a reading based on your whole chart? Add your birth time and place for a more personal daily comparison. Get your birth chart → Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 Behind this daily reading Sky details, limitations, and editorial standards Each reading is tied to the recorded sky for 2026-08-09 , the UTC edition date; planetary positions use a noon-UTC snapshot. Automated checks verify the sky facts, keep the twelve signs meaningfully distinct, and screen restricted advice before an edition is published. How daily publication works View this edition’s record Corrections"
+      "text": "table. Read the full Aquarius horoscope → Feb 19 – Mar 20 Pisces · August 12, 2026 The August 12, 2026 edition may draw more attention to work in progress, health routines, and the daily load. Read the full Pisces horoscope → Want a reading based on your whole chart? Add your birth time and place for a more personal daily comparison. Get your birth chart → Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 Behind this daily reading Sky details, limitations, and editorial standards Each reading is tied to the recorded sky for 2026-08-12 , the UTC edition date; planetary positions use a noon-UTC snapshot. Automated checks verify the sky facts, keep the twelve signs meaningfully distinct, and screen restricted advice before an edition is published. How daily publication works View this edition’s record Corrections"
     },
     {
       "id": "src_2ce99ae1ad5b1947b3a8",
@@ -61541,332 +61560,380 @@ export const ASSISTANT_KNOWLEDGE_INDEX = {
       "text": "La data, con le risposte Qual è il segno zodiacale del 9 settembre? Vergine. Tra il 1940 e il 2030, il Sole rimane in Vergine per tutta questa data. Qual è il decano del 9 settembre? Il secondo decano di Vergine, il cui governatore tradizionale è Saturno. A quale grado si trova il Sole il 9 settembre? Tra 15°55′ Vergine e 17°19′ Vergine a mezzogiorno UTC, a seconda dell’anno. Per il grado esatto servono data, anno e ora di nascita. La data dà il Sole. Per il resto serve un tema. Luna, ascendente, case e aspetti, calcolati gratis sul tuo dispositivo dal momento esatto della nascita. Calcola gratis il tuo tema natale ↗ Il calendario ← 8 settembre Tutti i compleanni (in inglese) 10 settembre → Approfondisci Vergine Guida di Vergine Condividi questa pagina: X · WhatsApp · Telegram · E-mail"
     },
     {
-      "id": "src_a1065cb8336a6f2d52aa",
+      "id": "src_77eb7495a2720c3d44a9",
       "path": "/horoscopes/aquarius/",
-      "title": "Aquarius daily horoscope — August 9, 2026",
+      "title": "Aquarius daily horoscope — August 12, 2026",
       "heading": "Aquarius daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Aquarius Daily horoscope · August 9, 2026 Aquarius daily horoscope Aquarius daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Jan 20 – Feb 18 · air · fixed · ruled by Uranus Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Aquarius on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer adds"
+      "text": "Horoscopes / Aquarius Daily horoscope · August 12, 2026 Aquarius daily horoscope Aquarius daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Jan 20 – Feb 18 · air · fixed · ruled by Uranus Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Aquarius on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds"
     },
     {
-      "id": "src_e94eaa7d100ab5f0a7a5",
+      "id": "src_3a1f4c346e52807252ac",
       "path": "/horoscopes/aquarius/",
-      "title": "Aquarius daily horoscope — August 9, 2026",
+      "title": "Aquarius daily horoscope — August 12, 2026",
       "heading": "Aquarius daily horoscope",
       "locale": "en",
-      "text": "close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 9, 2026 edition, adjust the routine where the daily load repeatedly catches. For Aquarius, the original move is the one that improves the system, not merely surprises it. The waning crescent Moon puts work in progress, health routines, and the daily load on the day’s agenda. Where to focus Reserve time for the person, pleasure, or creative draft before the calendar treats it as optional; Mars in Gemini gives pleasure,"
+      "text": "close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, put the agreement or disagreement directly on the table. For Aquarius, the original move is the one that improves the system, not merely surprises it. The new moon Moon puts partners, the people directly across the table on the day’s agenda. Where to focus Remove one repeated snag from the routine before adding another promise to the week; Mars in Cancer gives work in progress, health routines, and the"
     },
     {
-      "id": "src_fd373d00a12d2dd752ad",
+      "id": "src_13571eac9377419380d8",
       "path": "/horoscopes/aquarius/",
-      "title": "Aquarius daily horoscope — August 9, 2026",
+      "title": "Aquarius daily horoscope — August 12, 2026",
       "heading": "Aquarius daily horoscope",
       "locale": "en",
-      "text": "romance, children, and what you make for joy a second vote in the decision. A moment to watch State the unsettled term plainly and leave enough silence for the other side to answer. Mercury entering Leo brings partners, the people directly across the table into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Mars 28.8° Gemini at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Aquarius by RSS → Aquarius daily"
+      "text": "daily load a second vote in the decision. A moment to watch State the unsettled term plainly and leave enough silence for the other side to answer. Mercury opposition Pluto connects partners, the people directly across the table with how you look, start, and come across. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Mars 0.8° Cancer at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Aquarius by RSS → Aquarius"
     },
     {
-      "id": "src_3bcc22133b3eda6104b8",
+      "id": "src_da5cb3df7e19d0be6050",
       "path": "/horoscopes/aquarius/",
-      "title": "Aquarius daily horoscope — August 9, 2026",
+      "title": "Aquarius daily horoscope — August 12, 2026",
       "heading": "Aquarius daily horoscope",
       "locale": "en",
-      "text": "horoscope, answered What does this Aquarius daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Aquarius as their Sun sign? Start with Aquarius as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Aquarius use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Pisces"
+      "text": "daily horoscope, answered What does this Aquarius daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Aquarius as their Sun sign? Start with Aquarius as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Aquarius use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Pisces"
     },
     {
-      "id": "src_599a2962ee57635cc097",
+      "id": "src_3280852ef482ca412003",
       "path": "/horoscopes/aries/",
-      "title": "Aries daily horoscope — August 9, 2026",
+      "title": "Aries daily horoscope — August 12, 2026",
       "heading": "Aries daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Aries Daily horoscope · August 9, 2026 Aries daily horoscope Aries daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Mar 21 – Apr 19 · fire · cardinal · ruled by Mars Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Aries on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your"
+      "text": "Horoscopes / Aries Daily horoscope · August 12, 2026 Aries daily horoscope Aries daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Mar 21 – Apr 19 · fire · cardinal · ruled by Mars Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Aries on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds close"
     },
     {
-      "id": "src_62ae11a7e2d4d471e263",
+      "id": "src_bdf7a95d7556870883fa",
       "path": "/horoscopes/aries/",
-      "title": "Aries daily horoscope — August 9, 2026",
+      "title": "Aries daily horoscope — August 12, 2026",
       "heading": "Aries daily horoscope",
       "locale": "en",
-      "text": "transits → What matters now For the August 9, 2026 edition, protect the conditions that make home and private life workable. For Aries, a clean first move matters more than a dramatic sprint. The waning crescent Moon puts home, family, and the private floor of your life on the day’s agenda. Where to focus Name the condition your home or family life needs before you volunteer another piece of your time; Mercury in Cancer gives home, family, and the private floor of your life a second vote in the decision. A moment to watch Reserve a real block for the person, pleasure, or draft before it becomes optional. Mercury entering Leo brings pleasure, romance, children, and what you make for joy into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What"
+      "text": "contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, give play, romance, or creative work a defined place. For Aries, a clean first move matters more than a dramatic sprint. The new moon Moon puts pleasure, romance, children, and what you make for joy on the day’s agenda. Where to focus Reserve time for the person, pleasure, or creative draft before the calendar treats it as optional; Mercury in Leo gives pleasure, romance, children, and what you make for joy a"
     },
     {
-      "id": "src_f0465f1c0c68733317db",
+      "id": "src_95db270952726fb50de1",
       "path": "/horoscopes/aries/",
-      "title": "Aries daily horoscope — August 9, 2026",
+      "title": "Aries daily horoscope — August 12, 2026",
       "heading": "Aries daily horoscope",
       "locale": "en",
-      "text": "matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Mercury 29.7° Cancer at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Aries by RSS → Aries daily horoscope, answered What does this Aries daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Aries as their Sun sign? Start with Aries as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Aries use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
+      "text": "second vote in the decision. A moment to watch After reserving the time, decide what would make the invitation or draft worth continuing. Mercury opposition Pluto connects pleasure, romance, children, and what you make for joy with friends, groups, and the future you are pointing at. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Mercury 4.7° Leo at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Aries by RSS →"
     },
     {
-      "id": "src_a94a9f51dcfac9e871b1",
+      "id": "src_f51bdd864a02373b194d",
+      "path": "/horoscopes/aries/",
+      "title": "Aries daily horoscope — August 12, 2026",
+      "heading": "Aries daily horoscope",
+      "locale": "en",
+      "text": "Aries daily horoscope, answered What does this Aries daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Aries as their Sun sign? Start with Aries as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Aries use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
+    },
+    {
+      "id": "src_c12ab154d15c5215034e",
       "path": "/horoscopes/cancer/",
-      "title": "Cancer daily horoscope — August 9, 2026",
+      "title": "Cancer daily horoscope — August 12, 2026",
       "heading": "Cancer daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Cancer Daily horoscope · August 9, 2026 Cancer daily horoscope Cancer daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Jun 21 – Jul 22 · water · cardinal · ruled by Moon Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Cancer on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All"
+      "text": "Horoscopes / Cancer Daily horoscope · August 12, 2026 Cancer daily horoscope Cancer daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Jun 21 – Jul 22 · water · cardinal · ruled by Moon Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Cancer on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds close"
     },
     {
-      "id": "src_470a2f11e3ab10351b5a",
+      "id": "src_c15a215f23cf7650fadd",
       "path": "/horoscopes/cancer/",
-      "title": "Cancer daily horoscope — August 9, 2026",
+      "title": "Cancer daily horoscope — August 12, 2026",
       "heading": "Cancer daily horoscope",
       "locale": "en",
-      "text": "your transits → What matters now For the August 9, 2026 edition, make your own position visible before reacting to the room. For Cancer, care works best when it includes a boundary around your own time. The waning crescent Moon puts how you look, start, and come across on the day’s agenda. Where to focus Choose the finished work, standard, or responsibility you are prepared to make visible; Saturn retrograde in Aries gives career, reputation, and what the public sees a second vote in the decision. A moment to watch Put a number beside the cost and decide what you will not spend to force the result. Mercury entering Leo brings money, possessions, and what steadies you into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon"
+      "text": "contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, check the budget of time, attention, and material resources. For Cancer, care works best when it includes a boundary around your own time. The new moon Moon puts money, possessions, and what steadies you on the day’s agenda. Where to focus Choose the finished work, standard, or responsibility you are prepared to make visible; Saturn retrograde in Aries gives career, reputation, and what the public sees a"
     },
     {
-      "id": "src_03c8fa7a64ff02251d89",
+      "id": "src_2aa40730e964ccee2196",
       "path": "/horoscopes/cancer/",
-      "title": "Cancer daily horoscope — August 9, 2026",
+      "title": "Cancer daily horoscope — August 12, 2026",
       "heading": "Cancer daily horoscope",
       "locale": "en",
-      "text": "2.6° Cancer at 12:00 UTC Where to focus Saturn 14.6° Aries, retrograde at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Cancer by RSS → Cancer daily horoscope, answered What does this Cancer daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Cancer as their Sun sign? Start with Cancer as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Cancer use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
+      "text": "second vote in the decision. A moment to watch Put a number beside the cost and decide what you will not spend to force the result. Mercury opposition Pluto connects money, possessions, and what steadies you with shared money, debts, intimacy, and what gets merged. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Saturn 14.5° Aries, retrograde at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Cancer by RSS → Cancer"
     },
     {
-      "id": "src_732929109931c70cfce5",
+      "id": "src_99439b5ff38665305984",
+      "path": "/horoscopes/cancer/",
+      "title": "Cancer daily horoscope — August 12, 2026",
+      "heading": "Cancer daily horoscope",
+      "locale": "en",
+      "text": "daily horoscope, answered What does this Cancer daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Cancer as their Sun sign? Start with Cancer as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Cancer use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
+    },
+    {
+      "id": "src_54583c8de8008cf3f1ee",
       "path": "/horoscopes/capricorn/",
-      "title": "Capricorn daily horoscope — August 9, 2026",
+      "title": "Capricorn daily horoscope — August 12, 2026",
       "heading": "Capricorn daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Capricorn Daily horoscope · August 9, 2026 Capricorn daily horoscope Capricorn daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Dec 22 – Jan 19 · earth · cardinal · ruled by Saturn Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Capricorn on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private"
+      "text": "Horoscopes / Capricorn Daily horoscope · August 12, 2026 Capricorn daily horoscope Capricorn daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Dec 22 – Jan 19 · earth · cardinal · ruled by Saturn Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Capricorn on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer"
     },
     {
-      "id": "src_a624908c83243f321e3e",
+      "id": "src_c0c0c72e5a566de06614",
       "path": "/horoscopes/capricorn/",
-      "title": "Capricorn daily horoscope — August 9, 2026",
+      "title": "Capricorn daily horoscope — August 12, 2026",
       "heading": "Capricorn daily horoscope",
       "locale": "en",
-      "text": "saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 9, 2026 edition, put the agreement or disagreement directly on the table. For Capricorn, responsibility is clearer when you distinguish the essential from the inherited. The waning crescent Moon puts partners, the people directly across the table on the day’s agenda. Where to focus Choose the finished work, standard, or responsibility you are prepared to make visible; Venus in Libra gives"
+      "text": "adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, name what is shared, owed, private, or difficult to divide. For Capricorn, responsibility is clearer when you distinguish the essential from the inherited. The new moon Moon puts shared money, debts, intimacy, and what gets merged on the day’s agenda. Where to focus Choose the finished work, standard, or responsibility you are prepared to make visible; Venus in Libra gives career, reputation, and what the"
     },
     {
-      "id": "src_6ab5cdcd785e9d4d11ad",
+      "id": "src_952169fb8384f05e0cec",
       "path": "/horoscopes/capricorn/",
-      "title": "Capricorn daily horoscope — August 9, 2026",
+      "title": "Capricorn daily horoscope — August 12, 2026",
       "heading": "Capricorn daily horoscope",
       "locale": "en",
-      "text": "career, reputation, and what the public sees a second vote in the decision. A moment to watch List what is shared, owed, and private before making the next commitment. Mercury entering Leo brings shared money, debts, intimacy, and what gets merged into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Venus 2.7° Libra at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Capricorn by RSS → Capricorn daily"
+      "text": "public sees a second vote in the decision. A moment to watch List what is shared, owed, and private before making the next commitment. Mercury opposition Pluto connects shared money, debts, intimacy, and what gets merged with money, possessions, and what steadies you. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Venus 5.7° Libra at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Capricorn by RSS → Capricorn daily"
     },
     {
-      "id": "src_d16774b8666b250097d0",
+      "id": "src_c4738e4ede837f154980",
       "path": "/horoscopes/capricorn/",
-      "title": "Capricorn daily horoscope — August 9, 2026",
+      "title": "Capricorn daily horoscope — August 12, 2026",
       "heading": "Capricorn daily horoscope",
       "locale": "en",
-      "text": "horoscope, answered What does this Capricorn daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Capricorn as their Sun sign? Start with Capricorn as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Capricorn use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Aquarius Pisces"
+      "text": "horoscope, answered What does this Capricorn daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Capricorn as their Sun sign? Start with Capricorn as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Capricorn use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Aquarius Pisces"
     },
     {
-      "id": "src_9eab057f8031ffe893fa",
+      "id": "src_e8490e09ae54a2f2dce1",
       "path": "/horoscopes/gemini/",
-      "title": "Gemini daily horoscope — August 9, 2026",
+      "title": "Gemini daily horoscope — August 12, 2026",
       "heading": "Gemini daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Gemini Daily horoscope · August 9, 2026 Gemini daily horoscope Gemini daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. May 21 – Jun 20 · air · mutable · ruled by Mercury Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Gemini on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief →"
+      "text": "Horoscopes / Gemini Daily horoscope · August 12, 2026 Gemini daily horoscope Gemini daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. May 21 – Jun 20 · air · mutable · ruled by Mercury Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Gemini on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds"
     },
     {
-      "id": "src_557b433330481a49c418",
+      "id": "src_4d2bcf3f615d9d505447",
       "path": "/horoscopes/gemini/",
-      "title": "Gemini daily horoscope — August 9, 2026",
+      "title": "Gemini daily horoscope — August 12, 2026",
       "heading": "Gemini daily horoscope",
       "locale": "en",
-      "text": "All your transits → What matters now For the August 9, 2026 edition, check the budget of time, attention, and material resources. For Gemini, the sharp question is more valuable than another quick answer. The waning crescent Moon puts money, possessions, and what steadies you on the day’s agenda. Where to focus Decide what you want to begin, and what you are willing to be known for beginning; Mars in Gemini gives how you look, start, and come across a second vote in the decision. A moment to watch Put the message in writing, then choose the smallest first move that matches it. Mercury entering Leo brings errands, siblings, messages, and the near neighborhood into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon"
+      "text": "close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, clarify the message, route, or conversation closest to hand. For Gemini, the sharp question is more valuable than another quick answer. The new moon Moon puts errands, siblings, messages, and the near neighborhood on the day’s agenda. Where to focus Put a number beside the cost, the available capacity, and the value you expect in return; Mars in Cancer gives money, possessions, and what steadies you a"
     },
     {
-      "id": "src_0862705c8539919766ce",
+      "id": "src_0fdac6a96910e6b22d62",
       "path": "/horoscopes/gemini/",
-      "title": "Gemini daily horoscope — August 9, 2026",
+      "title": "Gemini daily horoscope — August 12, 2026",
       "heading": "Gemini daily horoscope",
       "locale": "en",
-      "text": "2.6° Cancer at 12:00 UTC Where to focus Mars 28.8° Gemini at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Gemini by RSS → Gemini daily horoscope, answered What does this Gemini daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Gemini as their Sun sign? Start with Gemini as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Gemini use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
+      "text": "second vote in the decision. A moment to watch Put the message in writing, then choose the smallest first move that matches it. Mercury opposition Pluto connects errands, siblings, messages, and the near neighborhood with travel, study, belief, and the longer view. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Mars 0.8° Cancer at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Gemini by RSS → Gemini daily"
     },
     {
-      "id": "src_f53dfa37f954be7d5319",
+      "id": "src_6736783ab345ec43821c",
+      "path": "/horoscopes/gemini/",
+      "title": "Gemini daily horoscope — August 12, 2026",
+      "heading": "Gemini daily horoscope",
+      "locale": "en",
+      "text": "horoscope, answered What does this Gemini daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Gemini as their Sun sign? Start with Gemini as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Gemini use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
+    },
+    {
+      "id": "src_42ae5b9495761fb01518",
       "path": "/horoscopes/leo/",
-      "title": "Leo daily horoscope — August 9, 2026",
+      "title": "Leo daily horoscope — August 12, 2026",
       "heading": "Leo daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Leo Daily horoscope · August 9, 2026 Leo daily horoscope Leo daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Jul 23 – Aug 22 · fire · fixed · ruled by Sun Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Leo on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your"
+      "text": "Horoscopes / Leo Daily horoscope · August 12, 2026 Leo daily horoscope Leo daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Jul 23 – Aug 22 · fire · fixed · ruled by Sun Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Leo on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits"
     },
     {
-      "id": "src_605c6a0dd6999fc2c379",
+      "id": "src_527c43d601c4ba7f13d3",
       "path": "/horoscopes/leo/",
-      "title": "Leo daily horoscope — August 9, 2026",
+      "title": "Leo daily horoscope — August 12, 2026",
       "heading": "Leo daily horoscope",
       "locale": "en",
-      "text": "transits → What matters now For the August 9, 2026 edition, leave room for rest, closure, and work that happens offstage. For Leo, presence is strongest when the point is clearer than the performance. The waning crescent Moon puts rest, retreat, and what runs under the surface on the day’s agenda. Where to focus Close one open loop, protect a quiet block, and let unfinished background work stay out of public view; Mercury in Cancer gives rest, retreat, and what runs under the surface a second vote in the decision. A moment to watch Choose one visible first move and make it before asking the room for permission. Mercury entering Leo brings how you look, start, and come across into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What"
+      "text": "→ What matters now For the August 12, 2026 edition, make your own position visible before reacting to the room. For Leo, presence is strongest when the point is clearer than the performance. The new moon Moon puts how you look, start, and come across on the day’s agenda. Where to focus Decide what you want to begin, and what you are willing to be known for beginning; Mercury in Leo gives how you look, start, and come across a second vote in the decision. A moment to watch After making the first move, check whether it made your position clearer before adding another. Mercury opposition Pluto connects how you look, start, and come across with partners, the people directly across the table. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What"
     },
     {
-      "id": "src_341deedc03f5dc5ef41a",
+      "id": "src_926357c03530103e4e92",
       "path": "/horoscopes/leo/",
-      "title": "Leo daily horoscope — August 9, 2026",
+      "title": "Leo daily horoscope — August 12, 2026",
       "heading": "Leo daily horoscope",
       "locale": "en",
-      "text": "matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Mercury 29.7° Cancer at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Leo by RSS → Leo daily horoscope, answered What does this Leo daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Leo as their Sun sign? Start with Leo as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Leo use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
+      "text": "matters now Moon 16.7° Leo at 12:00 UTC Where to focus Mercury 4.7° Leo at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Leo by RSS → Leo daily horoscope, answered What does this Leo daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Leo as their Sun sign? Start with Leo as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Leo use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
     },
     {
-      "id": "src_bef71ab334f8ff2d2450",
+      "id": "src_fb9ac910089dac5210a5",
       "path": "/horoscopes/libra/",
-      "title": "Libra daily horoscope — August 9, 2026",
+      "title": "Libra daily horoscope — August 12, 2026",
       "heading": "Libra daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Libra Daily horoscope · August 9, 2026 Libra daily horoscope Libra daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Sep 23 – Oct 22 · air · cardinal · ruled by Venus Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Libra on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your"
+      "text": "Horoscopes / Libra Daily horoscope · August 12, 2026 Libra daily horoscope Libra daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Sep 23 – Oct 22 · air · cardinal · ruled by Venus Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Libra on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds close"
     },
     {
-      "id": "src_3d5cf907bc597e223c7b",
+      "id": "src_5fc6ee3026612fae7a9e",
       "path": "/horoscopes/libra/",
-      "title": "Libra daily horoscope — August 9, 2026",
+      "title": "Libra daily horoscope — August 12, 2026",
       "heading": "Libra daily horoscope",
       "locale": "en",
-      "text": "transits → What matters now For the August 9, 2026 edition, choose what should be visible in your work and public role. For Libra, balance comes from a clear choice, not from extending every negotiation. The waning crescent Moon puts career, reputation, and what the public sees on the day’s agenda. Where to focus Choose the course, journey, publication, or conversation that could test the larger idea in real life; Mars in Gemini gives travel, study, belief, and the longer view a second vote in the decision. A moment to watch Ask which invitation has a real next step and decline the one that only creates motion. Mercury entering Leo brings friends, groups, and the future you are pointing at into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What"
+      "text": "contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, ask which friendship, group, or future plan still has momentum. For Libra, balance comes from a clear choice, not from extending every negotiation. The new moon Moon puts friends, groups, and the future you are pointing at on the day’s agenda. Where to focus Choose the finished work, standard, or responsibility you are prepared to make visible; Mars in Cancer gives career, reputation, and what the public sees a"
     },
     {
-      "id": "src_fb434363ac4184722561",
+      "id": "src_21b43f82f2dd39313158",
       "path": "/horoscopes/libra/",
-      "title": "Libra daily horoscope — August 9, 2026",
+      "title": "Libra daily horoscope — August 12, 2026",
       "heading": "Libra daily horoscope",
       "locale": "en",
-      "text": "matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Mars 28.8° Gemini at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Libra by RSS → Libra daily horoscope, answered What does this Libra daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Libra as their Sun sign? Start with Libra as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Libra use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Scorpio Sagittarius Capricorn Aquarius Pisces"
+      "text": "second vote in the decision. A moment to watch Ask which invitation has a real next step and decline the one that only creates motion. Mercury opposition Pluto connects friends, groups, and the future you are pointing at with pleasure, romance, children, and what you make for joy. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Mars 0.8° Cancer at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Libra by RSS →"
     },
     {
-      "id": "src_ec969b836777dc136f81",
+      "id": "src_9c089596154e7369041d",
+      "path": "/horoscopes/libra/",
+      "title": "Libra daily horoscope — August 12, 2026",
+      "heading": "Libra daily horoscope",
+      "locale": "en",
+      "text": "Libra daily horoscope, answered What does this Libra daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Libra as their Sun sign? Start with Libra as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Libra use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Scorpio Sagittarius Capricorn Aquarius Pisces"
+    },
+    {
+      "id": "src_ae00566664b838651964",
       "path": "/horoscopes/pisces/",
-      "title": "Pisces daily horoscope — August 9, 2026",
+      "title": "Pisces daily horoscope — August 12, 2026",
       "heading": "Pisces daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Pisces Daily horoscope · August 9, 2026 Pisces daily horoscope Pisces daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Feb 19 – Mar 20 · water · mutable · ruled by Neptune Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Pisces on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer"
+      "text": "Horoscopes / Pisces Daily horoscope · August 12, 2026 Pisces daily horoscope Pisces daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Feb 19 – Mar 20 · water · mutable · ruled by Neptune Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Pisces on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds close"
     },
     {
-      "id": "src_15d02be5afc448478c0a",
+      "id": "src_8268ebac2f3f13b46306",
       "path": "/horoscopes/pisces/",
-      "title": "Pisces daily horoscope — August 9, 2026",
+      "title": "Pisces daily horoscope — August 12, 2026",
       "heading": "Pisces daily horoscope",
       "locale": "en",
-      "text": "adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 9, 2026 edition, give play, romance, or creative work a defined place. For Pisces, intuition becomes useful after it is given a boundary and a concrete question. The waning crescent Moon puts pleasure, romance, children, and what you make for joy on the day’s agenda. Where to focus Put a number beside the cost, the available capacity, and the value you expect in return; Saturn retrograde in Aries gives money,"
+      "text": "contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, adjust the routine where the daily load repeatedly catches. For Pisces, intuition becomes useful after it is given a boundary and a concrete question. The new moon Moon puts work in progress, health routines, and the daily load on the day’s agenda. Where to focus Put a number beside the cost, the available capacity, and the value you expect in return; Saturn retrograde in Aries gives money, possessions, and what"
     },
     {
-      "id": "src_21fffe3ff6addce6ac4c",
+      "id": "src_db69f2e6c83e7ae7da44",
       "path": "/horoscopes/pisces/",
-      "title": "Pisces daily horoscope — August 9, 2026",
+      "title": "Pisces daily horoscope — August 12, 2026",
       "heading": "Pisces daily horoscope",
       "locale": "en",
-      "text": "possessions, and what steadies you a second vote in the decision. A moment to watch Remove one repeated snag from the routine before adding another task. Mercury entering Leo brings work in progress, health routines, and the daily load into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Saturn 14.6° Aries, retrograde at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Pisces by RSS → Pisces daily"
+      "text": "steadies you a second vote in the decision. A moment to watch Remove one repeated snag from the routine before adding another task. Mercury opposition Pluto connects work in progress, health routines, and the daily load with rest, retreat, and what runs under the surface. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Saturn 14.5° Aries, retrograde at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Pisces by RSS →"
     },
     {
-      "id": "src_8beecb6a8d6f81f7c5d1",
+      "id": "src_962c4414a2d3db56f405",
       "path": "/horoscopes/pisces/",
-      "title": "Pisces daily horoscope — August 9, 2026",
+      "title": "Pisces daily horoscope — August 12, 2026",
       "heading": "Pisces daily horoscope",
       "locale": "en",
-      "text": "horoscope, answered What does this Pisces daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Pisces as their Sun sign? Start with Pisces as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Pisces use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius"
+      "text": "Pisces daily horoscope, answered What does this Pisces daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Pisces as their Sun sign? Start with Pisces as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Pisces use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius"
     },
     {
-      "id": "src_9c28a93966a3d731faa0",
+      "id": "src_30fdab1ab7358291cd98",
       "path": "/horoscopes/sagittarius/",
-      "title": "Sagittarius daily horoscope — August 9, 2026",
+      "title": "Sagittarius daily horoscope — August 12, 2026",
       "heading": "Sagittarius daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Sagittarius Daily horoscope · August 9, 2026 Sagittarius daily horoscope Sagittarius daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Nov 22 – Dec 21 · fire · mutable · ruled by Jupiter Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Sagittarius on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart"
+      "text": "Horoscopes / Sagittarius Daily horoscope · August 12, 2026 Sagittarius daily horoscope Sagittarius daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Nov 22 – Dec 21 · fire · mutable · ruled by Jupiter Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Sagittarius on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds close"
     },
     {
-      "id": "src_b3b9718928f6e489666a",
+      "id": "src_57c506701ef6ed887d72",
       "path": "/horoscopes/sagittarius/",
-      "title": "Sagittarius daily horoscope — August 9, 2026",
+      "title": "Sagittarius daily horoscope — August 12, 2026",
       "heading": "Sagittarius daily horoscope",
       "locale": "en",
-      "text": "layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 9, 2026 edition, name what is shared, owed, private, or difficult to divide. For Sagittarius, the wider view helps once the August 9, 2026 edition’s practical detail has a place in it. The waning crescent Moon puts shared money, debts, intimacy, and what gets merged on the day’s agenda. Where to focus List what is shared, what is owed, and what must remain private before making the next commitment; Mercury in Cancer"
+      "text": "contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, test the larger belief against study, distance, or direct experience. For Sagittarius, the wider view helps once the August 12, 2026 edition’s practical detail has a place in it. The new moon Moon puts travel, study, belief, and the longer view on the day’s agenda. Where to focus Choose the course, journey, publication, or conversation that could test the larger idea in real life; Mercury in Leo gives travel, study, belief, and"
     },
     {
-      "id": "src_1209b3b9e189cbffb077",
+      "id": "src_f0379ebfe92faf61fd0f",
       "path": "/horoscopes/sagittarius/",
-      "title": "Sagittarius daily horoscope — August 9, 2026",
+      "title": "Sagittarius daily horoscope — August 12, 2026",
       "heading": "Sagittarius daily horoscope",
       "locale": "en",
-      "text": "gives shared money, debts, intimacy, and what gets merged a second vote in the decision. A moment to watch Test the larger idea against one source, journey, class, or lived example. Mercury entering Leo brings travel, study, belief, and the longer view into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Mercury 29.7° Cancer at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Sagittarius by RSS → Sagittarius daily"
+      "text": "the longer view a second vote in the decision. A moment to watch Once the practical question is chosen, let the answer revise the larger idea if necessary. Mercury opposition Pluto connects travel, study, belief, and the longer view with errands, siblings, messages, and the near neighborhood. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Mercury 4.7° Leo at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Sagittarius by RSS →"
     },
     {
-      "id": "src_1d114d57623e268a6891",
+      "id": "src_c42ec12a13c1b2e00e9d",
       "path": "/horoscopes/sagittarius/",
-      "title": "Sagittarius daily horoscope — August 9, 2026",
+      "title": "Sagittarius daily horoscope — August 12, 2026",
       "heading": "Sagittarius daily horoscope",
       "locale": "en",
-      "text": "horoscope, answered What does this Sagittarius daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Sagittarius as their Sun sign? Start with Sagittarius as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Sagittarius use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Capricorn Aquarius Pisces"
+      "text": "Sagittarius daily horoscope, answered What does this Sagittarius daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Sagittarius as their Sun sign? Start with Sagittarius as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Sagittarius use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Scorpio Capricorn Aquarius Pisces"
     },
     {
-      "id": "src_b3aa5ce694641307a5e3",
+      "id": "src_b1c28533ea856eb1b952",
       "path": "/horoscopes/scorpio/",
-      "title": "Scorpio daily horoscope — August 9, 2026",
+      "title": "Scorpio daily horoscope — August 12, 2026",
       "heading": "Scorpio daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Scorpio Daily horoscope · August 9, 2026 Scorpio daily horoscope Scorpio daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Oct 23 – Nov 21 · water · fixed · ruled by Pluto Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Scorpio on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer"
+      "text": "Horoscopes / Scorpio Daily horoscope · August 12, 2026 Scorpio daily horoscope Scorpio daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Oct 23 – Nov 21 · water · fixed · ruled by Pluto Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Scorpio on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds close"
     },
     {
-      "id": "src_2f28df37dcf96b662922",
+      "id": "src_45be70deeada9d07ca6c",
       "path": "/horoscopes/scorpio/",
-      "title": "Scorpio daily horoscope — August 9, 2026",
+      "title": "Scorpio daily horoscope — August 12, 2026",
       "heading": "Scorpio daily horoscope",
       "locale": "en",
-      "text": "adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 9, 2026 edition, test the larger belief against study, distance, or direct experience. For Scorpio, depth is useful when it produces a fact, a boundary, or a decision. The waning crescent Moon puts travel, study, belief, and the longer view on the day’s agenda. Where to focus Remove one repeated snag from the routine before adding another promise to the week; Saturn retrograde in Aries gives work in progress,"
+      "text": "contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, choose what should be visible in your work and public role. For Scorpio, depth is useful when it produces a fact, a boundary, or a decision. The new moon Moon puts career, reputation, and what the public sees on the day’s agenda. Where to focus Remove one repeated snag from the routine before adding another promise to the week; Saturn retrograde in Aries gives work in progress, health routines, and the daily load"
     },
     {
-      "id": "src_aac80e49a19ea09efd2b",
+      "id": "src_81ba263c15ad94ba3b53",
       "path": "/horoscopes/scorpio/",
-      "title": "Scorpio daily horoscope — August 9, 2026",
+      "title": "Scorpio daily horoscope — August 12, 2026",
       "heading": "Scorpio daily horoscope",
       "locale": "en",
-      "text": "health routines, and the daily load a second vote in the decision. A moment to watch Finish the work you are prepared to make visible and name the standard it meets. Mercury entering Leo brings career, reputation, and what the public sees into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Saturn 14.6° Aries, retrograde at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Scorpio by RSS → Scorpio daily"
+      "text": "a second vote in the decision. A moment to watch Finish the work you are prepared to make visible and name the standard it meets. Mercury opposition Pluto connects career, reputation, and what the public sees with home, family, and the private floor of your life. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Saturn 14.5° Aries, retrograde at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Scorpio by RSS → Scorpio"
     },
     {
-      "id": "src_d1f8774f2489df8eabd0",
+      "id": "src_aaa636563d0ec0009712",
       "path": "/horoscopes/scorpio/",
-      "title": "Scorpio daily horoscope — August 9, 2026",
+      "title": "Scorpio daily horoscope — August 12, 2026",
       "heading": "Scorpio daily horoscope",
       "locale": "en",
-      "text": "horoscope, answered What does this Scorpio daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Scorpio as their Sun sign? Start with Scorpio as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Scorpio use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Sagittarius Capricorn Aquarius Pisces"
+      "text": "daily horoscope, answered What does this Scorpio daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Scorpio as their Sun sign? Start with Scorpio as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Scorpio use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Virgo Libra Sagittarius Capricorn Aquarius Pisces"
     },
     {
-      "id": "src_2a4590c3c89b35aeafbd",
+      "id": "src_7370ac2376f049bf089e",
       "path": "/horoscopes/taurus/",
-      "title": "Taurus daily horoscope — August 9, 2026",
+      "title": "Taurus daily horoscope — August 12, 2026",
       "heading": "Taurus daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Taurus Daily horoscope · August 9, 2026 Taurus daily horoscope Taurus daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Apr 20 – May 20 · earth · fixed · ruled by Venus Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Taurus on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your"
+      "text": "Horoscopes / Taurus Daily horoscope · August 12, 2026 Taurus daily horoscope Taurus daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Apr 20 – May 20 · earth · fixed · ruled by Venus Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Taurus on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds close"
     },
     {
-      "id": "src_be26f046bcb0448e72f2",
+      "id": "src_552ab63c4fb23668b3f1",
       "path": "/horoscopes/taurus/",
-      "title": "Taurus daily horoscope — August 9, 2026",
+      "title": "Taurus daily horoscope — August 12, 2026",
       "heading": "Taurus daily horoscope",
       "locale": "en",
-      "text": "transits → What matters now For the August 9, 2026 edition, clarify the message, route, or conversation closest to hand. For Taurus, steady attention can reveal which pressure is real and which can wait. The waning crescent Moon puts errands, siblings, messages, and the near neighborhood on the day’s agenda. Where to focus Remove one repeated snag from the routine before adding another promise to the week; Venus in Libra gives work in progress, health routines, and the daily load a second vote in the decision. A moment to watch Name the condition home needs and protect it before volunteering more of your day. Mercury entering Leo brings home, family, and the private floor of your life into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What"
+      "text": "contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, protect the conditions that make home and private life workable. For Taurus, steady attention can reveal which pressure is real and which can wait. The new moon Moon puts home, family, and the private floor of your life on the day’s agenda. Where to focus Remove one repeated snag from the routine before adding another promise to the week; Venus in Libra gives work in progress, health routines, and the daily"
     },
     {
-      "id": "src_b8f91ec6a3aa073a3daa",
+      "id": "src_512919022381427f608b",
       "path": "/horoscopes/taurus/",
-      "title": "Taurus daily horoscope — August 9, 2026",
+      "title": "Taurus daily horoscope — August 12, 2026",
       "heading": "Taurus daily horoscope",
       "locale": "en",
-      "text": "matters now Moon 2.6° Cancer at 12:00 UTC Where to focus Venus 2.7° Libra at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Taurus by RSS → Taurus daily horoscope, answered What does this Taurus daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Taurus as their Sun sign? Start with Taurus as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Taurus use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius"
+      "text": "load a second vote in the decision. A moment to watch Name the condition home needs and protect it before volunteering more of your day. Mercury opposition Pluto connects home, family, and the private floor of your life with career, reputation, and what the public sees. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Venus 5.7° Libra at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Taurus by RSS → Taurus"
     },
     {
-      "id": "src_f990f7bb0e85334680cd",
-      "path": "/horoscopes/virgo/",
-      "title": "Virgo daily horoscope — August 9, 2026",
-      "heading": "Virgo daily horoscope",
+      "id": "src_05e2707b391023a0ad0d",
+      "path": "/horoscopes/taurus/",
+      "title": "Taurus daily horoscope — August 12, 2026",
+      "heading": "Taurus daily horoscope",
       "locale": "en",
-      "text": "Horoscopes / Virgo Daily horoscope · August 9, 2026 Virgo daily horoscope Virgo daily horoscope for August 9, 2026: what needs your attention, what to watch, and one useful move. Aug 23 – Sep 22 · earth · mutable · ruled by Mercury Daily Tomorrow Weekly Monthly Love Career 2027 The August 9, 2026 edition’s sky Moon Waning Crescent · 2.6° Cancer at 12:00 UTC Exact Mercury enters Leo on August 9, 2026 at 16:28 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Virgo on August 9, 2026. For your chart Saved chart · 2026-08-09 Your Sun-sign reading is ready above. This private saved-chart layer adds close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief →"
+      "text": "daily horoscope, answered What does this Taurus daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Taurus as their Sun sign? Start with Taurus as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Taurus use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Gemini Cancer Leo Virgo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
     },
     {
-      "id": "src_3d8524ece2dd64903f71",
+      "id": "src_1d0f289310c7274c73e1",
       "path": "/horoscopes/virgo/",
-      "title": "Virgo daily horoscope — August 9, 2026",
+      "title": "Virgo daily horoscope — August 12, 2026",
       "heading": "Virgo daily horoscope",
       "locale": "en",
-      "text": "All your transits → What matters now For the August 9, 2026 edition, ask which friendship, group, or future plan still has momentum. For Virgo, one useful correction is enough; the whole system does not need rebuilding. The waning crescent Moon puts friends, groups, and the future you are pointing at on the day’s agenda. Where to focus Put a number beside the cost, the available capacity, and the value you expect in return; Venus in Libra gives money, possessions, and what steadies you a second vote in the decision. A moment to watch Close one open loop and protect a quiet block from new demands. Mercury entering Leo brings rest, retreat, and what runs under the surface into focus. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-09 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters"
+      "text": "Horoscopes / Virgo Daily horoscope · August 12, 2026 Virgo daily horoscope Virgo daily horoscope for August 12, 2026: what needs your attention, what to watch, and one useful move. Aug 23 – Sep 22 · earth · mutable · ruled by Mercury Daily Tomorrow Weekly Monthly Love Career 2027 The August 12, 2026 edition’s sky Moon New Moon · 16.7° Leo at 12:00 UTC Exact Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Next five days Coming up in the sky Total solar eclipse in Leo — August 12, 2026 Aug 12 The reading What matters most for Virgo on August 12, 2026. For your chart Saved chart · 2026-08-12 Your Sun-sign reading is ready above. This private saved-chart layer adds"
     },
     {
-      "id": "src_feeacd2efeffde92f5b8",
+      "id": "src_e4f6d8baa6b6d5381dff",
       "path": "/horoscopes/virgo/",
-      "title": "Virgo daily horoscope — August 9, 2026",
+      "title": "Virgo daily horoscope — August 12, 2026",
       "heading": "Virgo daily horoscope",
       "locale": "en",
-      "text": "now Moon 2.6° Cancer at 12:00 UTC Where to focus Venus 2.7° Libra at 12:00 UTC A moment to watch Mercury enters Leo on August 9, 2026 at 16:28 UTC Read our method and sources → Follow Virgo by RSS → Virgo daily horoscope, answered What does this Virgo daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 9, 2026, with one practical way to work with them. Is this reading only for people with Virgo as their Sun sign? Start with Virgo as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Virgo use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
+      "text": "close contacts when available. The complete daily reading remains available above. Your saved chart stays in this browser. You can open the full daily brief whenever you are ready. Open my full daily brief → All your transits → What matters now For the August 12, 2026 edition, leave room for rest, closure, and work that happens offstage. For Virgo, one useful correction is enough; the whole system does not need rebuilding. The new moon Moon puts rest, retreat, and what runs under the surface on the day’s agenda. Where to focus Put a number beside the cost, the available capacity, and the value you expect in return; Venus in Libra gives money, possessions, and what"
+    },
+    {
+      "id": "src_38a02a14834d4fd97ae6",
+      "path": "/horoscopes/virgo/",
+      "title": "Virgo daily horoscope — August 12, 2026",
+      "heading": "Virgo daily horoscope",
+      "locale": "en",
+      "text": "steadies you a second vote in the decision. A moment to watch Close one open loop and protect a quiet block from new demands. Mercury opposition Pluto connects rest, retreat, and what runs under the surface with work in progress, health routines, and the daily load. Behind this reading Exact sky, dates, and method + − The astrology here follows the 2026-08-12 noon-UTC sky. Each section connects to the recorded position or exact event shown below. What matters now Moon 16.7° Leo at 12:00 UTC Where to focus Venus 5.7° Libra at 12:00 UTC A moment to watch Mercury opposition Pluto on August 12, 2026 at 01:19 UTC Read our method and sources → Follow Virgo by RSS → Virgo daily"
+    },
+    {
+      "id": "src_0d2b4f2e2e4baf133c24",
+      "path": "/horoscopes/virgo/",
+      "title": "Virgo daily horoscope — August 12, 2026",
+      "heading": "Virgo daily horoscope",
+      "locale": "en",
+      "text": "horoscope, answered What does this Virgo daily horoscope cover? Your daily horoscope highlights the themes most likely to matter on August 12, 2026, with one practical way to work with them. Is this reading only for people with Virgo as their Sun sign? Start with Virgo as your Sun sign. If you know your rising sign, read that too; your full birth chart gives the most personal picture. How should Virgo use this reading? Take the part that feels useful, turn it into one question or action, and let your own judgment lead. Send this page: X · WhatsApp · Telegram · Email The other eleven signs Aries Taurus Gemini Cancer Leo Libra Scorpio Sagittarius Capricorn Aquarius Pisces"
     },
     {
       "id": "src_fce46afcf9f1a8e245b1",

@@ -58,13 +58,19 @@ jobs:
       - name: Publish the paired daily and weekly outlook
         run: node scripts/build-registry-outlook.mjs
 
+      - name: Generate deterministic Registry Research drafts and approved feeds
+        run: node scripts/build-registry-research.mjs
+
       - name: Require current, internally paired artifacts
         run: |
           node --input-type=module <<'NODE'
           import { readFile } from 'node:fs/promises';
-          const [history, outlook] = await Promise.all([
+          const [history, outlook, researchDrafts, researchPublication, researchFeed] = await Promise.all([
             readFile('public/assets/data/registry-market-history.v1.json', 'utf8').then(JSON.parse),
             readFile('public/assets/registry-outlook.json', 'utf8').then(JSON.parse),
+            readFile('src/data/registry-research/drafts.json', 'utf8').then(JSON.parse),
+            readFile('src/data/registry-research/publication.json', 'utf8').then(JSON.parse),
+            readFile('public/assets/registry-research-feed.json', 'utf8').then(JSON.parse),
           ]);
           const latest = history.snapshots?.at(-1);
           const dates = {
@@ -72,6 +78,9 @@ jobs:
             marketRead: latest?.source?.readAt?.slice(0, 10),
             dailyOutlook: outlook.daily?.date,
             weeklyOutlook: outlook.weekly?.date,
+            researchDrafts: researchDrafts.generatedAt?.slice(0, 10),
+            researchPublication: researchPublication.generatedAt?.slice(0, 10),
+            researchFeed: researchFeed.generatedAt?.slice(0, 10),
           };
           for (const [label, date] of Object.entries(dates)) {
             if (date !== process.env.TARGET_DATE) {
@@ -84,7 +93,7 @@ jobs:
         env:
           TARGET_BRANCH: ${{ github.event_name == 'workflow_dispatch' && github.ref_name || github.event.repository.default_branch }}
         run: |
-          FILES="public/assets/data/registry-market-history.v1.json public/assets/registry-outlook.json"
+          FILES="public/assets/data/registry-market-history.v1.json public/assets/registry-outlook.json src/data/registry-research/drafts.json src/data/registry-research/publication.json public/assets/registry-research-feed.json public/assets/data/registry-research"
           if git diff --quiet -- $FILES; then
             echo "Registry market history and outlook unchanged"
             exit 0

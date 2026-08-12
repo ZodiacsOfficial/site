@@ -233,6 +233,25 @@ export function createScene(canvas, records) {
     plinthGeometry, shadowGeometry, shadowMap, plinthCap,
     surface.geometry, surface.material, surface.material.map,
   ];
+  const activeFaceMaps = new Set();
+  let sceneDisposed = false;
+  // Identity of the cast that owned the strongest visible presentation in
+  // the last layout. The host publishes this only after render, so browser
+  // and assistive tests can distinguish the sculpture actually painted from
+  // a selection that has merely been requested.
+  let renderedIndex = -1;
+
+  function disposeFaceMap(map) {
+    if (!map) return;
+    activeFaceMaps.delete(map);
+    const source = map.image;
+    map.dispose();
+    map.image = null;
+    source?.close?.();
+    if (typeof HTMLImageElement !== 'undefined' && source instanceof HTMLImageElement) {
+      source.removeAttribute('src');
+    }
+  }
 
   // Fitted as a set: every piece lands inside one narrow band of height, so
   // the only sculpture that stands taller than the rest is the one the row is
@@ -309,7 +328,7 @@ export function createScene(canvas, records) {
     );
 
     return {
-      record, mesh, plinth, shadow, proxy, scale, face,
+      record, mesh, plinth, shadow, proxy, scale, face, cast: cast.clone(),
       aspect: traced.aspect,
       materials: [face, reverse, edge],
       tier: 0,
@@ -421,6 +440,8 @@ export function createScene(canvas, records) {
     // Hover eases in and out rather than popping; while any figure is still
     // rising or settling, the caller keeps the frame loop alive.
     let hoverSettling = false;
+    let dominantIndex = -1;
+    let dominantStrength = -1;
 
     for (let i = 0; i < figures.length; i += 1) {
       const figure = figures[i];
@@ -494,6 +515,14 @@ export function createScene(canvas, records) {
 
       const opacity = (i === openIndex ? 1 : dimmed) * spot.opacity * switchOpacity;
       for (const material of figure.materials) material.opacity = opacity;
+      // Use the presentation's own opacity and emphasis to report what a
+      // reader can actually see. During the intentional dark midpoint of a
+      // handoff there is no rendered sign; otherwise the strongest cast wins.
+      const strength = opacity * spot.scale;
+      if (opacity > 0.001 && strength > dominantStrength) {
+        dominantStrength = strength;
+        dominantIndex = i;
+      }
 
       // The plinth stays in the row; only the figure is lifted off it. It
       // recedes with its own piece, so a figure well down the row sits on a
@@ -522,15 +551,23 @@ export function createScene(canvas, records) {
     offer.intensity = 7 - (open * 2.6);
 
     placeCamera(open, opened, zoom, state.spotlight ? SPOTLIGHT_VITRINE : VITRINE);
+    renderedIndex = dominantIndex;
     return hoverSettling;
   }
 
   /** Lay the photograph onto a figure's face, at the tier asked for. */
-  async function dress(index, tier) {
+  async function dress(index, tier, { signal } = {}) {
     const figure = figures[index];
-    if (!figure || figure.tier >= tier) return false;
-    const image = await loadSculpture(figure.record.slug, tier);
-    if (!image || figure.tier >= tier) return false;
+    if (sceneDisposed || signal?.aborted || !figure || figure.tier >= tier) return false;
+    const image = await loadSculpture(figure.record.slug, tier, { signal });
+    if (!image) return false;
+    if (sceneDisposed || signal?.aborted || figure.tier >= tier) {
+      image.close?.();
+      if (typeof HTMLImageElement !== 'undefined' && image instanceof HTMLImageElement) {
+        image.removeAttribute('src');
+      }
+      return false;
+    }
     const map = mapFrom(image, renderer);
     const previous = figure.face.map;
     figure.face.map = map;
@@ -542,8 +579,8 @@ export function createScene(canvas, records) {
     figure.face.color.set(0xffffff);
     figure.face.needsUpdate = true;
     figure.tier = tier;
-    previous?.dispose();
-    disposables.push(map);
+    activeFaceMaps.add(map);
+    disposeFaceMap(previous);
     return true;
   }
 
@@ -558,7 +595,30 @@ export function createScene(canvas, records) {
   }
 
   /** The full plate, for a figure being examined. */
-  const refine = (index) => dress(index, HERO_TIER);
+  const refine = (index, options) => dress(index, HERO_TIER, options);
+
+  /**
+   * The Registry spotlight keeps one high-resolution plate resident. Network
+   * caching may retain a previously inspected image, but Three must release
+   * its decoded GPU texture once the light handoff has completed.
+   */
+  function releaseExcept(index) {
+    let changed = false;
+    for (let i = 0; i < figures.length; i += 1) {
+      const figure = figures[i];
+      if (i === index || figure.tier === 0 || !figure.face.map) continue;
+      const previous = figure.face.map;
+      figure.face.map = null;
+      figure.face.bumpMap = null;
+      figure.face.bumpScale = 0;
+      figure.face.color.copy(figure.cast);
+      figure.face.needsUpdate = true;
+      figure.tier = 0;
+      disposeFaceMap(previous);
+      changed = true;
+    }
+    return changed;
+  }
 
   function resize(width, height, dpr) {
     canvasSize = { width, height };
@@ -603,11 +663,19 @@ export function createScene(canvas, records) {
   }
 
   function dispose() {
+    sceneDisposed = true;
+    for (const map of [...activeFaceMaps]) disposeFaceMap(map);
     for (const item of new Set(disposables)) item?.dispose?.();
     renderer.dispose();
   }
 
   return {
-    layout, render, resize, setBands, pick, screenX, dressRow, refine, dispose, renderer,
+    layout, render, resize, setBands, pick, screenX, dressRow, refine, releaseExcept,
+    residentTextureCount: () => activeFaceMaps.size,
+    renderedIndex: () => renderedIndex,
+    residentTextureSlugs: () => figures
+      .filter((figure) => figure.tier > 0 && figure.face.map)
+      .map((figure) => figure.record.slug),
+    dispose, renderer,
   };
 }

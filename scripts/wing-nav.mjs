@@ -8,10 +8,9 @@
 // Instrument Sans links, a pastel Signs dropdown, a Registry chip, and a
 // mobile burger overlay) — in the wing's inlined-token form (no hashed bundle).
 //
-// Link set (owner-directed): Signs ▾ · Tools · Learn · Horoscopes · Ask Zodiacs
-// · Saved charts on the left, a "Registry ↗" chip on the right (the sanctioned
-// entry point to the wing). No Thesis/Archive/SDK in the nav — they live in the
-// footer.
+// Link set (owner-directed): Signs ▾ · Tools · Learn · Horoscopes · Ask Zodiacs · Saved charts
+// on the left, a "Terminal" chip on the right. The verification Registry remains
+// a separate read-only destination linked from records and the footer.
 //
 // Sign table mirrors src/lib/signs.ts (slug/name/glyph/dates/hue); keep in sync
 // if that file changes. The Signs items link to the consumer guides (/{slug}/).
@@ -56,8 +55,8 @@ export function brandMarkSvg(size = 17) {
   return `<svg class="wnav__brand" width="${size}" height="${size}" viewBox="0 0 24 24" fill="none" aria-hidden="true">${dots}</svg>`;
 }
 
-// The full nav markup (bar + Signs dropdown + mobile overlay). The Registry chip
-// is marked aria-current on every wing page (we are always in the wing here).
+// The full nav markup (bar + Signs dropdown + mobile overlay). Terminal is the
+// consumer market destination even when the current wing page is a Registry record.
 export function wingNavHtml({ includeSearch = true } = {}) {
   const signGrid = NAV_SIGNS.map((s) => (
     `<a class="wnav-signs__item" href="/${s.slug}/" style="--sign:${s.hue}">` +
@@ -93,7 +92,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav__link" href="/profile/">Saved charts</a>
       </div>
       ${search}
-      <a class="wnav__chip" href="/registry/" aria-current="page">Registry</a>
+      <a class="wnav__chip" href="/terminal/">Terminal</a>
       <button class="wnav__burger" type="button" data-wnav-burger aria-expanded="false" aria-controls="wnav-menu" aria-label="Open menu">
         <span class="wnav__burger-line"></span><span class="wnav__burger-line"></span><span class="wnav__burger-line"></span>
       </button>
@@ -110,7 +109,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
         <a class="wnav-menu__link" style="--i:3" href="/ask/">Ask Zodiacs</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:4" href="/registry/" aria-current="page"><span>Registry</span><small>Digital collection and registry</small></a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:4" href="/terminal/"><span>Terminal</span><small>Live markets, gold sculptures, and research</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>

@@ -220,12 +220,54 @@ export function paintReverse(record, castColour) {
  * examined. Resolves to null if the plate cannot load — the gallery carries on
  * with the cast in its edge colour rather than showing nothing.
  */
-export function loadSculpture(slug, tier) {
-  return new Promise((done) => {
-    const image = new Image();
-    image.decoding = 'async';
-    image.onload = () => done(image);
-    image.onerror = () => done(null);
-    image.src = `/assets/sculptures/${tier}/${slug}.webp`;
-  });
+export async function loadSculpture(slug, tier, { signal } = {}) {
+  try {
+    const response = await fetch(`/assets/sculptures/${tier}/${slug}.webp`, {
+      signal,
+      cache: 'force-cache',
+    });
+    if (!response.ok) return null;
+    const blob = await response.blob();
+    if (signal?.aborted) return null;
+    if ('createImageBitmap' in window) {
+      // THREE.Texture.flipY is intentionally ignored for ImageBitmap inputs.
+      // Decode with the same vertical orientation and alpha treatment that
+      // WebGL applies to the HTMLImage fallback, or every cast appears upside
+      // down on browsers that support the faster bitmap path.
+      const bitmap = await createImageBitmap(blob, {
+        imageOrientation: 'flipY',
+        premultiplyAlpha: 'none',
+        colorSpaceConversion: 'none',
+      });
+      if (signal?.aborted) {
+        bitmap.close();
+        return null;
+      }
+      return bitmap;
+    }
+
+    return await new Promise((done) => {
+      const image = new Image();
+      const url = URL.createObjectURL(blob);
+      const finish = (value) => {
+        signal?.removeEventListener('abort', abort);
+        URL.revokeObjectURL(url);
+        done(value);
+      };
+      const abort = () => {
+        image.onload = null;
+        image.onerror = null;
+        image.removeAttribute('src');
+        finish(null);
+      };
+      image.decoding = 'async';
+      image.onload = () => finish(image);
+      image.onerror = () => finish(null);
+      signal?.addEventListener('abort', abort, { once: true });
+      image.src = url;
+    });
+  } catch (error) {
+    if (error?.name !== 'AbortError') return null;
+    return null;
+  }
 }

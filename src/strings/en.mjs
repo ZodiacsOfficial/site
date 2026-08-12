@@ -54,7 +54,7 @@ export const EN = Object.freeze({
   'disclosure.establishedPending': 'Earliest deploy provenance — pending',
   'disclosure.operatorRequest': 'What “operator attested” means',
   'disclosure.operatorRequestBody': 'The operator-relationship and economic-interest rows repeat, verbatim and dated, statements the operator supplied for publication. No public record lets a stranger verify them, so they carry the attestation chip rather than the verified one. Every other row links evidence a stranger can check.',
-  'disclosure.backRegistry': 'Return to the Registry',
+  'disclosure.backRegistry': 'Return to Zodiacs Registry',
   'disclosure.linkLabel': 'Disclosure',
   'disclosure.aboutNotice': 'The Registry’s operator and economic-interest attestations, the twelve dated origin receipts, and the establishment provenance are published on the disclosure page.',
   'disclosure.aboutLink': 'Read the Registry disclosure',

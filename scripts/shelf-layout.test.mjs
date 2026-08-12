@@ -54,9 +54,11 @@ describe('turntable policy', () => {
     dragging: false,
   };
 
-  it('turns the settled Registry spotlight without opening a card', () => {
+  it('permits a bounded Registry inspection sweep without opening a card', () => {
     expect(turntableActive(ready)).toBe(true);
-    expect(TURNTABLE.spotlightRate).toBeLessThan(TURNTABLE.openedRate);
+    expect(TURNTABLE.spotlightArc).toBeLessThan(Math.PI / 10);
+    expect(TURNTABLE.spotlightManualArc).toBeLessThan(Math.PI / 5);
+    expect(TURNTABLE.spotlightSeconds).toBeLessThanOrEqual(5);
     expect(TURNTABLE.resumeAfter).toBe(2400);
   });
 

@@ -75,6 +75,13 @@ async function registryHtmlFiles() {
   const directory = resolve(root, 'public/registry');
   const entries = await readdir(directory, { withFileTypes: true });
   return entries.flatMap((entry) => {
+    // /registry/ is the first-party authority hub. It intentionally makes no
+    // analytics or other third-party request; record and technical pages keep
+    // the legacy analytics policy below it.
+    if (entry.isFile() && entry.name === 'index.html') return [];
+    // Zodiac Markets moved to /terminal/markets/. The legacy directory may
+    // still exist in a dirty worktree while its tracked page is being removed.
+    if (entry.isDirectory() && entry.name === 'exchange') return [];
     if (entry.isFile() && entry.name.endsWith('.html')) return [join(directory, entry.name)];
     if (entry.isDirectory()) return [join(directory, entry.name, 'index.html')];
     return [];
@@ -84,6 +91,7 @@ async function registryHtmlFiles() {
 export async function configureLegacyAnalytics(config = {}) {
   const targets = [
     ...(await registryHtmlFiles()),
+    resolve(root, 'public/terminal/markets/index.html'),
     resolve(root, 'public/archive/index.html'),
     resolve(root, 'public/sdk/index.html'),
     resolve(root, 'public/thesis/index.html'),

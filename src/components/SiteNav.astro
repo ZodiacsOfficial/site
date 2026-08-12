@@ -17,12 +17,12 @@ interface Props { locale?: Locale }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const path = Astro.url.pathname;
 const registryLabel: Record<Locale, string> = {
-  en: 'Digital collection and registry',
-  es: 'Colección digital y registro',
-  pt: 'Coleção digital e registro',
-  fr: 'Collection numérique et registre',
-  it: 'Collezione digitale e registro',
-  ru: 'Цифровая коллекция и реестр — пока по-английски',
+  en: 'Live markets, gold sculptures, and research',
+  es: 'Mercados en vivo, esculturas doradas e investigación',
+  pt: 'Mercados ao vivo, esculturas douradas e pesquisa',
+  fr: 'Marchés en direct, sculptures dorées et recherche',
+  it: 'Mercati live, sculture dorate e ricerca',
+  ru: 'Рынки, золотые скульптуры и исследования — пока по-английски',
 };
 const openMenuLabel: Record<Locale, string> = {
   en: 'Open menu',
@@ -114,9 +114,9 @@ const visibleNavTools = locale === 'ru'
 
     <a
       class:list={['nav__chip', { 'nav__chip--deferred': locale === 'ru' }]}
-      href="/registry/"
+      href="/terminal/"
       hreflang={locale === 'ru' ? 'en' : undefined}
-      aria-current={path.startsWith('/registry/') ? 'page' : undefined}
+      aria-current={path.startsWith('/terminal/') ? 'page' : undefined}
       title={locale === 'ru' ? englishOnlyAria : undefined}
       aria-label={locale === 'ru' ? `${t(locale, 'navCollect')}. ${englishOnlyAria}` : undefined}
     >
@@ -173,7 +173,7 @@ const visibleNavTools = locale === 'ru'
       <a class="mobile-menu__link" style="--i:1" href={localizePath(locale, '/horoscopes/')} hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>{t(locale, 'navHoroscopes')}{locale === 'ru' ? ' — пока по-английски' : ''}</a>
       <a class="mobile-menu__link" style="--i:2" href={localizePath(locale, '/profile/')}>{t(locale, 'navSavedCharts')}</a>
       {locale !== 'ru' && <a class="mobile-menu__link" style="--i:3" href={localizePath(locale, '/ask/')}>{askLabel[locale]}</a>}
-      <a class="mobile-menu__link mobile-menu__registry" style="--i:4" href="/registry/" hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>
+      <a class="mobile-menu__link mobile-menu__registry" style="--i:4" href="/terminal/" hreflang={locale === 'ru' ? 'en' : undefined} title={locale === 'ru' ? englishOnlyAria : undefined}>
         <span>{t(locale, 'navCollect')}</span>
         <small>{registryLabel[locale]}</small>
       </a>
@@ -279,8 +279,8 @@ const visibleNavTools = locale === 'ru'
     text-decoration: none;
   }
   .nav__link:hover { color: var(--text); background: rgba(198, 204, 218, 0.07); }
-  .nav__link[aria-current='page'] { color: var(--text); }
   .nav__ask { border: 0; background: none; cursor: pointer; }
+  .nav__link[aria-current='page'] { color: var(--text); }
   .nav__link--deferred,
   .nav__chip--deferred {
     flex-direction: column;

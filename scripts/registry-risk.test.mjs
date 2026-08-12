@@ -72,7 +72,7 @@ describe('Registry risk and trust copy', () => {
 
     // The route is built at runtime from the live registry answer — the mint
     // itself is never baked into the page that hosts the card.
-    const hub = await readFile(resolve(root, 'public/registry/index.html'), 'utf8');
+    const hub = await readFile(resolve(root, 'public/terminal/index.html'), 'utf8');
     expect(hub).not.toContain('jup.ag/swap/');
   });
 
@@ -143,7 +143,7 @@ describe('Registry risk and trust copy', () => {
       expect(value).not.toContain('TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA');
     }
     expect(source).toContain('check only the twelve Registry mints');
-    expect(privacy).toContain("Registry landing page's optional");
+    expect(privacy).toContain("Zodiac Terminal's optional");
     expect(privacy).toContain('Dex Screener');
     expect(privacy).toContain('Wikimedia');
     expect(privacy).toContain('do not include a wallet address');
@@ -182,5 +182,17 @@ describe('Registry risk and trust copy', () => {
     // browser serialize Origin as `null` on the page's own same-origin POSTs,
     // which the endpoint's CSRF gate must reject — the page would 403 itself.
     expect(referrer).toBe('same-origin');
+  });
+
+  it('revalidates the daily Registry outlook instead of caching it as an immutable asset', async () => {
+    const config = JSON.parse(await readFile(resolve(root, 'vercel.json'), 'utf8'));
+    const routes = config.headers.filter((entry) => entry.source === '/assets/registry-outlook.json');
+    expect(routes).toHaveLength(1);
+    const cacheHeaders = routes[0].headers.filter((header) => header.key === 'Cache-Control');
+    expect(cacheHeaders).toHaveLength(1);
+    const cacheControl = cacheHeaders[0].value;
+
+    expect(cacheControl).toBe('public, max-age=0, must-revalidate');
+    expect(cacheControl).not.toContain('immutable');
   });
 });

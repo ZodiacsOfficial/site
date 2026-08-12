@@ -109,7 +109,8 @@ describe('reviewing in the wallet', () => {
     const signable = calls.fetch.at(-1);
     expect(signable.taker).toBe('Wa11etAddress');
     expect(calls.signed).toEqual(['AQAB']);
-    expect(calls.execute[0]).toEqual({ signedTransaction: 'signed:AQAB', requestId: 'rid-1' });
+    expect(calls.execute[0]).toMatchObject({ signedTransaction: 'signed:AQAB', requestId: 'rid-1' });
+    expect(calls.execute[0].signal).toBeInstanceOf(AbortSignal);
     expect(panel.state.state).toBe('done');
     expect(panel.state.signature).toBe('sig-1');
   });
@@ -162,6 +163,40 @@ describe('reviewing in the wallet', () => {
     await panel.review();
     expect(panel.state.state).toBe('error');
     expect(calls.signed).toHaveLength(0);
+  });
+
+  it('cannot continue an old sign after its panel is destroyed', async () => {
+    let releaseConnect;
+    const { panel, calls } = harness({
+      wallet: {
+        getAddress: () => null,
+        connect: () => new Promise((resolve) => { releaseConnect = resolve; }),
+        signTransaction: async (tx) => 'signed:' + tx,
+      },
+      fetchOrder: async () => order({ transaction: 'AQAB' }),
+    });
+    const reviewing = panel.review();
+    await Promise.resolve();
+    panel.destroy();
+    releaseConnect('OldSignAddress');
+    await reviewing;
+    expect(calls.fetch).toHaveLength(0);
+    expect(calls.signed).toHaveLength(0);
+    expect(calls.execute).toHaveLength(0);
+  });
+
+  it('does not abort the venue answer after a signed submission has started', async () => {
+    let releaseExecute;
+    const { panel, calls } = harness({
+      fetchOrder: async () => order({ transaction: 'AQAB' }),
+      executeOrder: () => new Promise((resolve) => { releaseExecute = resolve; }),
+    });
+    const reviewing = panel.review();
+    while (calls.execute.length === 0) await Promise.resolve();
+    panel.destroy();
+    expect(calls.execute[0].signal.aborted).toBe(false);
+    releaseExecute({ signature: 'sig-1', status: 'Success' });
+    await reviewing;
   });
 });
 
@@ -226,11 +261,26 @@ describe('when things go wrong', () => {
     expect(panel.view().error).toContain('No price right now');
   });
 
+  it('never tells a failed display quote that a trade may have gone through', async () => {
+    const { panel } = harness({
+      fetchOrder: async () => { throw new TradeError('network', 'offline'); },
+    });
+    await panel.refreshQuote();
+    expect(panel.view().error).toContain('Nothing was sent to your wallet');
+    expect(panel.view().error).not.toContain('may still have gone through');
+  });
+
   it('stops emitting once destroyed', async () => {
     const seen = [];
     const { panel } = harness({ onChange: (v) => seen.push(v.state) });
     panel.destroy();
     await panel.refreshQuote();
     expect(seen).not.toContain('ready');
+  });
+
+  it('keeps a valid quote ready when an operating hook throws', async () => {
+    const { panel } = harness({ onChange: () => { throw new Error('telemetry blocked'); } });
+    await expect(panel.refreshQuote()).resolves.toBeUndefined();
+    expect(panel.state.state).toBe('ready');
   });
 });

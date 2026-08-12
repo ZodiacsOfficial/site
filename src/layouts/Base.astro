@@ -44,6 +44,8 @@ interface Props {
   localTypography?: boolean;
   /** UTC edition rendered by a daily surface; relative wording is enabled only while current. */
   editionDate?: string;
+  /** Render the Terminal-only market and venue boundary in the shared footer. */
+  terminalMarketNotice?: boolean;
 }
 
 const props = Astro.props;
@@ -307,7 +309,7 @@ const assistantContextTopic = assistantContextPath.startsWith('/birth-chart/')
 
     {props.type === 'article' && <EditorialLine locale={locale} />}
     <SourcesLine sources={props.sources} locale={locale} />
-    <SiteFooter locale={locale} />
+    <SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} />
 
     <script>
       // Scroll reveal — heavy fade-up on viewport entry, once.

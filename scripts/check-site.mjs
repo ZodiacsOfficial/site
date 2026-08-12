@@ -123,9 +123,9 @@ async function hasId(filePath, id) {
   }
   const html = idCache.get(filePath);
   if (html.includes(`id="${id}"`) || html.includes(`id='${id}'`)) return true;
-  // The legacy registry index renders some sections client-side; ids live in the
+  // Zodiac Terminal renders some sections client-side; ids live in the
   // compiled bundle (JSX id="x" compiles to id: "x").
-  if (filePath === resolve(publicRoot, 'registry/index.html')) {
+  if (filePath === resolve(publicRoot, 'terminal/index.html')) {
     const bundlePath = resolve(publicRoot, 'assets/app.js');
     if (!idCache.has(bundlePath)) {
       idCache.set(bundlePath, await readFile(bundlePath, 'utf8'));

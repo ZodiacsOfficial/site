@@ -1,0 +1,181 @@
+---
+import Base from '../../../layouts/Base.astro';
+import publicationJson from '../../../data/registry-research/publication.json';
+
+type ResearchSection = { heading: string; body: string; evidence: string[] };
+type ResearchItem = {
+  id: string;
+  slug: string;
+  kind: string;
+  publisher: string;
+  publishedAt: string;
+  visibleAt: string;
+  title: string;
+  summary: string;
+  url: string;
+  signs: string[];
+  topics: string[];
+  status: 'published' | 'scheduled';
+  artifactHash: string;
+  riskStatement: string;
+  scienceNote: string;
+  symbolicScore: null | { sign: string; attention: number; tone: number; eventIntensity: number; calculation: string; marketFieldsUsed: false };
+  sections: { skyFact: ResearchSection; traditionalReading: ResearchSection; marketObservation: ResearchSection };
+  market: Record<string, unknown> & { available: boolean; observedAt?: string | null; snapshotId?: string | null };
+  evidence: Record<string, unknown>;
+  revisions: Array<Record<string, unknown>>;
+};
+
+const publication = publicationJson as typeof publicationJson & { items: ResearchItem[] };
+
+export function getStaticPaths() {
+  return (publicationJson.items as ResearchItem[]).map((item) => ({ params: { slug: item.slug }, props: { item } }));
+}
+
+const { item } = Astro.props as { item: ResearchItem };
+const displayDate = (value: string) => new Intl.DateTimeFormat('en-US', {
+  month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short',
+}).format(new Date(value));
+const sectionList = [item.sections.skyFact, item.sections.traditionalReading, item.sections.marketObservation];
+const scheduled = item.status === 'scheduled' && item.visibleAt > publication.generatedAt;
+const jsonUrl = `/assets/data/registry-research/items/${item.id}.json`;
+---
+<Base
+  title={`${item.title} | Zodiacs.org Markets Research`}
+  description={item.summary}
+  path={item.url}
+  type="article"
+  noindex={scheduled}
+  rssFeed={{ href: '/feeds/market-research.xml', title: 'Zodiacs.org Markets Research' }}
+  stableTypography
+  terminalMarketNotice
+>
+  <article class="research-note" data-visible-at={item.visibleAt} data-scheduled={scheduled ? 'true' : undefined}>
+    <a class="research-note__back" href="/terminal/research/">← Markets Research</a>
+    <div class="research-note__meta">
+      <span>{item.kind.replaceAll('-', ' ')}</span>
+      <span>{item.publisher}</span>
+      <time datetime={item.visibleAt}>{scheduled ? `Scheduled ${displayDate(item.visibleAt)}` : displayDate(item.visibleAt)}</time>
+    </div>
+    <header>
+      <p class="research-note__kicker">{item.signs.length ? item.signs.join(' · ') : 'Research methodology'}</p>
+      <h1>{item.title}</h1>
+      <p>{item.summary}</p>
+    </header>
+
+    {scheduled ? (
+      <section class="research-note__scheduled" data-scheduled-message>
+        <strong>This edition is approved and scheduled.</strong>
+        <p>It becomes visible at its exact UTC event time. No market outcome has been attached in advance.</p>
+      </section>
+    ) : null}
+
+    <div class="research-note__body" hidden={scheduled} data-research-body>
+      {item.symbolicScore && (
+        <section class="research-score" aria-labelledby="research-score-title">
+          <div><span>Attention</span><strong>{item.symbolicScore.attention}</strong><small>/ 100</small></div>
+          <div><span>Tone</span><strong>{item.symbolicScore.tone > 0 ? '+' : ''}{item.symbolicScore.tone}</strong></div>
+          <div><span>Event intensity</span><strong>{item.symbolicScore.eventIntensity}</strong><small>/ 100</small></div>
+          <p id="research-score-title">{item.symbolicScore.calculation}</p>
+        </section>
+      )}
+
+      <div class="research-sections">
+        {sectionList.map((section, index) => (
+          <section>
+            <span>0{index + 1}</span>
+            <h2>{section.heading}</h2>
+            <p>{section.body}</p>
+            {section.evidence.length > 0 && <small>Evidence: {section.evidence.join(' · ')}</small>}
+          </section>
+        ))}
+      </div>
+
+      <section class="research-note__audit">
+        <div>
+          <p class="research-note__kicker">Audit receipt</p>
+          <h2>Fixed before comparison.</h2>
+          <p>{item.riskStatement}</p>
+          <p>{item.scienceNote}</p>
+        </div>
+        <dl>
+          <div><dt>Artifact</dt><dd>{item.artifactHash}</dd></div>
+          <div><dt>Visible at</dt><dd>{item.visibleAt}</dd></div>
+          <div><dt>Market snapshot</dt><dd>{String(item.market.snapshotId ?? 'Delayed / not applicable')}</dd></div>
+          <div><dt>Revisions</dt><dd>{item.revisions.length ? `${item.revisions.length} append-only update(s)` : 'None'}</dd></div>
+        </dl>
+      </section>
+
+      <div class="research-note__actions">
+        <a href={jsonUrl}>Open immutable JSON ↗</a>
+        <a href="/assets/registry-outlook.json">Open symbolic method data ↗</a>
+        <a href="/terminal/">Return to Zodiac Terminal →</a>
+      </div>
+    </div>
+  </article>
+</Base>
+
+{scheduled && (
+  <script>
+    const note = document.querySelector('[data-scheduled="true"]');
+    if (note instanceof HTMLElement) {
+      const visibleAt = Date.parse(note.dataset.visibleAt ?? '');
+      const reveal = () => {
+        if (!Number.isFinite(visibleAt) || Date.now() < visibleAt) return;
+        note.querySelector('[data-scheduled-message]')?.remove();
+        const body = note.querySelector('[data-research-body]');
+        if (body instanceof HTMLElement) body.hidden = false;
+        note.removeAttribute('data-scheduled');
+      };
+      reveal();
+      if (Number.isFinite(visibleAt) && visibleAt > Date.now()) window.setTimeout(reveal, Math.min(visibleAt - Date.now(), 2_147_000_000));
+    }
+  </script>
+)}
+
+<style>
+  .research-note { --note-pink: #e7a3b2; max-width: 970px; margin: 0 auto; padding: clamp(96px, 12vw, 148px) clamp(18px, 4vw, 48px) 120px; }
+  .research-note__back { display: inline-flex; margin-bottom: 44px; color: var(--muted); font-size: 13px; text-decoration: none; }
+  .research-note__meta { display: flex; flex-wrap: wrap; gap: 9px 22px; padding: 15px 0; border-block: 1px solid var(--hair-1); color: var(--faint); font: 500 10px/1.45 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+  .research-note__meta time { margin-left: auto; }
+  .research-note header { max-width: 820px; padding: clamp(52px, 8vw, 88px) 0; }
+  .research-note__kicker { margin: 0 0 14px; color: var(--note-pink); font: 500 10px/1.4 var(--font-mono); letter-spacing: .2em; text-transform: uppercase; }
+  .research-note header h1 { margin: 0; font: 500 clamp(46px, 8vw, 86px)/.92 var(--font-serif); letter-spacing: -.03em; text-wrap: balance; }
+  .research-note header > p:last-child { max-width: 680px; margin: 25px 0 0; color: var(--text-2); font-size: clamp(18px, 2.2vw, 22px); line-height: 1.5; }
+  .research-note__scheduled { padding: 30px; border: 1px solid color-mix(in srgb, var(--note-pink) 45%, transparent); border-radius: 24px; background: color-mix(in srgb, var(--note-pink) 7%, transparent); }
+  .research-note__scheduled strong { font: 500 26px/1.1 var(--font-serif); }
+  .research-note__scheduled p { margin: 10px 0 0; color: var(--muted); }
+  .research-score { display: grid; grid-template-columns: repeat(3, 1fr); border-block: 1px solid var(--hair-1); }
+  .research-score > div { padding: 26px 24px 28px 0; }
+  .research-score > div + div { padding-left: 24px; border-left: 1px solid var(--hair-1); }
+  .research-score span { display: block; margin-bottom: 10px; color: var(--faint); font: 500 10px/1 var(--font-mono); letter-spacing: .13em; text-transform: uppercase; }
+  .research-score strong { font: 500 40px/1 var(--font-serif); }
+  .research-score small { margin-left: 5px; color: var(--faint); }
+  .research-score > p { grid-column: 1 / -1; margin: 0; padding: 17px 0; border-top: 1px solid var(--hair-1); color: var(--muted); font-size: 12px; line-height: 1.6; }
+  .research-sections { padding: 48px 0; }
+  .research-sections section { display: grid; grid-template-columns: 80px minmax(180px, .55fr) 1fr; gap: 26px; padding: 32px 0; border-bottom: 1px solid var(--hair-1); }
+  .research-sections section > span { color: var(--note-pink); font: 500 10px/1.5 var(--font-mono); letter-spacing: .14em; }
+  .research-sections h2 { margin: 0; font: 500 clamp(28px, 4vw, 40px)/1 var(--font-serif); }
+  .research-sections p { margin: 0; color: var(--text-2); line-height: 1.7; }
+  .research-sections small { grid-column: 3; color: var(--faint); font: 10px/1.6 var(--font-mono); overflow-wrap: anywhere; }
+  .research-note__audit { display: grid; grid-template-columns: .75fr 1fr; gap: clamp(34px, 7vw, 78px); padding: clamp(34px, 6vw, 62px); border: 1px solid var(--hair-2); border-radius: 28px; background: var(--void-1); }
+  .research-note__audit h2 { margin: 0; font: 500 clamp(32px, 4vw, 48px)/.98 var(--font-serif); }
+  .research-note__audit p:not(.research-note__kicker) { color: var(--muted); font-size: 13px; line-height: 1.65; }
+  .research-note__audit dl { margin: 0; }
+  .research-note__audit dl div { padding: 13px 0; border-bottom: 1px solid var(--hair-1); }
+  .research-note__audit dt { color: var(--faint); font: 500 9px/1.4 var(--font-mono); letter-spacing: .13em; text-transform: uppercase; }
+  .research-note__audit dd { margin: 7px 0 0; color: var(--text-2); font: 11px/1.55 var(--font-mono); overflow-wrap: anywhere; }
+  .research-note__actions { display: flex; flex-wrap: wrap; gap: 18px 28px; padding-top: 30px; }
+  .research-note__actions a { color: var(--muted); font-size: 13px; }
+  .research-note__actions a:hover { color: var(--text); }
+  [hidden] { display: none !important; }
+  @media (max-width: 680px) {
+    .research-note { padding-inline: 16px; }
+    .research-note__meta time { width: 100%; margin-left: 0; }
+    .research-score { grid-template-columns: 1fr; }
+    .research-score > div + div { padding-left: 0; border-top: 1px solid var(--hair-1); border-left: 0; }
+    .research-sections section { grid-template-columns: 38px 1fr; }
+    .research-sections p, .research-sections small { grid-column: 2; }
+    .research-note__audit { grid-template-columns: 1fr; padding: 28px 20px; }
+  }
+</style>

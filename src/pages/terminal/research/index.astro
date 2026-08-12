@@ -1,0 +1,336 @@
+---
+import Base from '../../../layouts/Base.astro';
+import publicationJson from '../../../data/registry-research/publication.json';
+
+type ResearchItem = {
+  id: string;
+  slug: string;
+  kind: string;
+  sourceType: string;
+  publisher: string;
+  publishedAt: string;
+  visibleAt: string;
+  title: string;
+  summary: string;
+  url: string;
+  signs: string[];
+  topics: string[];
+  status: 'published' | 'scheduled';
+};
+
+const publication = { ...publicationJson, items: publicationJson.items as unknown as ResearchItem[] };
+const dateLabel = (value: string) => new Intl.DateTimeFormat('en-US', {
+  month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC',
+}).format(new Date(value));
+const categoryFor = (item: ResearchItem) => item.kind === 'event-brief' ? 'calendar' : 'zodiacs-research';
+const visibleItems = publication.items.filter((item) => item.status === 'published' && item.visibleAt <= publication.generatedAt);
+---
+<Base
+  title="Markets Research | Zodiac Terminal"
+  description="Verified sky facts, traditional symbolic readings, and separately timestamped Zodiac market observations from Zodiacs.org Research System."
+  path="/terminal/research/"
+  rssFeed={{ href: '/feeds/market-research.xml', title: 'Zodiacs.org Markets Research' }}
+  stableTypography
+  terminalMarketNotice
+>
+  <div class="research-shell">
+    <header class="research-hero">
+      <a class="research-back" href="/terminal/">← Zodiac Terminal</a>
+      <p class="research-kicker">Zodiacs.org Research System</p>
+      <h1>Markets Research</h1>
+      <p class="research-deck">
+        Verified sky events, traditional interpretations, and observed market data—kept in three separate lanes so you can audit every note.
+      </p>
+      <div class="research-disclosure" role="note">
+        <strong>Research boundary</strong>
+        <span>Astrology has no established predictive relationship with asset prices. Symbolic research is not investment advice, and crypto assets can lose all value.</span>
+      </div>
+    </header>
+
+    <section class="research-stream" aria-labelledby="research-stream-title">
+      <div class="research-stream__head">
+        <div>
+          <p class="research-kicker">Latest editions</p>
+          <h2 id="research-stream-title">The research ledger</h2>
+        </div>
+        <button id="research-source-updates" class="research-updates" type="button" hidden>Source updates</button>
+      </div>
+
+      <nav class="research-filters" aria-label="Filter market research">
+        <button type="button" class="is-active" data-filter="all" aria-pressed="true">All</button>
+        <button type="button" data-filter="zodiacs-research" aria-pressed="false">Zodiacs Research</button>
+        <button type="button" data-filter="astrology-news" aria-pressed="false">Astrology News</button>
+        <button type="button" data-filter="astronomy" aria-pressed="false">Astronomy</button>
+        <button type="button" data-filter="calendar" aria-pressed="false">Calendar</button>
+      </nav>
+
+      <div id="research-items" class="research-items" aria-live="polite">
+        {visibleItems.map((item) => (
+          <article
+            class="research-item"
+            data-category={categoryFor(item)}
+            data-kind={item.kind}
+            data-topics={item.topics.join(' ')}
+            data-signs={item.signs.join(' ')}
+          >
+            <div class="research-item__meta">
+              <span>{item.kind.replaceAll('-', ' ')}</span>
+              <time datetime={item.visibleAt}>{dateLabel(item.visibleAt)}</time>
+            </div>
+            <h3><a href={item.url}>{item.title}</a></h3>
+            <p>{item.summary}</p>
+            <div class="research-item__foot">
+              <span>{item.publisher}</span>
+              {item.signs.length > 0 && <span>{item.signs.join(' · ')}</span>}
+            </div>
+          </article>
+        ))}
+        {visibleItems.length === 0 && (
+          <div class="research-empty" data-empty-state>
+            <strong>The public ledger is waiting for its first reviewed edition.</strong>
+            <p>Deterministic briefs are being generated as drafts. During the 30-day pilot, an exact artifact hash and named editorial reviewer are required before publication.</p>
+          </div>
+        )}
+      </div>
+      <div id="research-scope" class="research-scope" hidden>
+        <span></span>
+        <button type="button">Clear related filter</button>
+      </div>
+      <p id="research-filter-empty" class="research-filter-empty" hidden>No research matches this filter.</p>
+    </section>
+
+    <section class="research-method" aria-labelledby="research-method-title">
+      <p class="research-kicker">How to read it</p>
+      <h2 id="research-method-title">Three claims, never blended</h2>
+      <div class="research-method__grid">
+        <article><span>01</span><h3>Sky fact</h3><p>An exact event, occupancy, or UTC position from the committed astronomy catalog.</p></article>
+        <article><span>02</span><h3>Traditional reading</h3><p>A disclosed symbolic interpretation. It does not use price, liquidity, or volume.</p></article>
+        <article><span>03</span><h3>Market observation</h3><p>A separately timestamped archive record. It describes what was observed and never claims causation.</p></article>
+      </div>
+      <div class="research-links">
+        <a href="/assets/registry-research-feed.json">Machine-readable index ↗</a>
+        <a href="/feeds/market-research.xml">RSS feed ↗</a>
+        <a href="/feeds/market-research.json">JSON Feed ↗</a>
+      </div>
+    </section>
+  </div>
+</Base>
+
+<script>
+  type ExternalHeadline = {
+    id: string;
+    sourceType: 'astrology-news' | 'astronomy';
+    publisher: string;
+    publishedAt: string;
+    title: string;
+    url: string;
+    topics: string[];
+  };
+  const itemsRoot = document.querySelector<HTMLElement>('#research-items');
+  const filterButtons = [...document.querySelectorAll<HTMLButtonElement>('[data-filter]')];
+  const filterEmpty = document.querySelector<HTMLElement>('#research-filter-empty');
+  const researchScope = document.querySelector<HTMLElement>('#research-scope');
+  const researchScopeLabel = researchScope?.querySelector<HTMLElement>('span');
+  const researchScopeClear = researchScope?.querySelector<HTMLButtonElement>('button');
+  const sourceUpdates = document.querySelector<HTMLButtonElement>('#research-source-updates');
+  const filterIds = new Set(['all', 'zodiacs-research', 'astrology-news', 'astronomy', 'calendar']);
+  const signIds = new Set([
+    'aries', 'taurus', 'gemini', 'cancer', 'leo', 'virgo',
+    'libra', 'scorpio', 'sagittarius', 'capricorn', 'aquarius', 'pisces',
+  ]);
+  const initialParams = new URLSearchParams(window.location.search);
+  const requestedFilter = initialParams.get('filter') ?? 'all';
+  const requestedSign = initialParams.get('sign') ?? '';
+  const requestedType = initialParams.get('type') ?? '';
+  let activeFilter = filterIds.has(requestedFilter) ? requestedFilter : 'all';
+  let activeSign = signIds.has(requestedSign) ? requestedSign : '';
+  let activeType = requestedType === 'daily' ? 'daily' : '';
+  let queuedHeadlines: ExternalHeadline[] = [];
+
+  function titleCase(value: string) {
+    return value ? value.charAt(0).toUpperCase() + value.slice(1) : '';
+  }
+
+  function syncUrl() {
+    const url = new URL(window.location.href);
+    if (activeFilter === 'all') url.searchParams.delete('filter');
+    else url.searchParams.set('filter', activeFilter);
+    if (activeSign) url.searchParams.set('sign', activeSign);
+    else url.searchParams.delete('sign');
+    if (activeType) url.searchParams.set('type', activeType);
+    else url.searchParams.delete('type');
+    window.history.replaceState(null, '', `${url.pathname}${url.search}${url.hash}`);
+  }
+
+  function syncControls() {
+    filterButtons.forEach((button) => {
+      const active = button.getAttribute('data-filter') === activeFilter;
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    });
+    if (researchScope && researchScopeLabel) {
+      const labels = [];
+      if (activeSign) labels.push(`Related to ${titleCase(activeSign)}`);
+      if (activeType === 'daily') labels.push('Daily market briefs');
+      researchScope.hidden = labels.length === 0;
+      researchScopeLabel.textContent = labels.join(' · ');
+    }
+  }
+
+  function applyFilter() {
+    if (!itemsRoot) return;
+    let shown = 0;
+    const entries = [...itemsRoot.querySelectorAll<HTMLElement>('[data-category]')];
+    entries.forEach((element) => {
+      const category = element.dataset.category;
+      const topics = element.dataset.topics?.split(' ') ?? [];
+      const signs = element.dataset.signs?.split(' ') ?? [];
+      const kind = element.dataset.kind ?? '';
+      const categoryMatches = activeFilter === 'all' || category === activeFilter || topics.includes(activeFilter);
+      const signMatches = !activeSign || signs.includes(activeSign) || topics.includes(activeSign);
+      const typeMatches = !activeType || (activeType === 'daily' && kind === 'daily-market-brief');
+      const matches = categoryMatches && signMatches && typeMatches;
+      element.hidden = !matches;
+      if (matches) shown += 1;
+    });
+    if (filterEmpty instanceof HTMLElement) {
+      filterEmpty.textContent = activeSign
+        ? `No current research matches ${titleCase(activeSign)} in this view.`
+        : 'No research matches this filter.';
+      filterEmpty.hidden = shown > 0 || entries.length === 0;
+    }
+  }
+
+  filterButtons.forEach((button) => button.addEventListener('click', () => {
+    activeFilter = button.getAttribute('data-filter') ?? 'all';
+    activeType = '';
+    syncControls();
+    syncUrl();
+    applyFilter();
+  }));
+
+  researchScopeClear?.addEventListener('click', () => {
+    activeSign = '';
+    activeType = '';
+    syncControls();
+    syncUrl();
+    applyFilter();
+  });
+
+  function externalArticle(item: ExternalHeadline) {
+    const article = document.createElement('article');
+    article.className = 'research-item research-item--external';
+    article.dataset.category = item.sourceType;
+    article.dataset.kind = 'external-report';
+    article.dataset.topics = Array.isArray(item.topics) ? item.topics.join(' ') : '';
+    article.dataset.signs = Array.isArray(item.topics)
+      ? item.topics.filter((topic) => signIds.has(topic)).join(' ')
+      : '';
+    const meta = document.createElement('div');
+    meta.className = 'research-item__meta';
+    const source = document.createElement('span');
+    source.textContent = item.sourceType === 'astronomy' ? 'Astronomy source' : 'Astrology news';
+    const time = document.createElement('time');
+    time.dateTime = item.publishedAt;
+    time.textContent = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(new Date(item.publishedAt));
+    meta.append(source, time);
+    const heading = document.createElement('h3');
+    const link = document.createElement('a');
+    link.href = item.url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.textContent = item.title;
+    heading.append(link);
+    const summary = document.createElement('p');
+    summary.textContent = `Headline from ${item.publisher}. Opens the original publisher's page.`;
+    const foot = document.createElement('div');
+    foot.className = 'research-item__foot';
+    const publisher = document.createElement('span');
+    publisher.textContent = item.publisher;
+    foot.append(publisher);
+    article.append(meta, heading, summary, foot);
+    return article;
+  }
+
+  if (sourceUpdates instanceof HTMLButtonElement && itemsRoot) {
+    fetch('/api/registry/news', { headers: { Accept: 'application/json' } })
+      .then((response) => response.ok ? response.json() : Promise.reject(new Error('news unavailable')))
+      .then((payload) => {
+        queuedHeadlines = Array.isArray(payload.items) ? payload.items as ExternalHeadline[] : [];
+        if (!queuedHeadlines.length) return;
+        sourceUpdates.textContent = `Show ${queuedHeadlines.length} source update${queuedHeadlines.length === 1 ? '' : 's'}`;
+        sourceUpdates.hidden = false;
+      })
+      .catch(() => {});
+    sourceUpdates.addEventListener('click', () => {
+      queuedHeadlines.forEach((item) => itemsRoot.append(externalArticle(item)));
+      queuedHeadlines = [];
+      sourceUpdates.hidden = true;
+      itemsRoot.querySelector('[data-empty-state]')?.remove();
+      applyFilter();
+    }, { once: true });
+  }
+
+  syncControls();
+  syncUrl();
+  applyFilter();
+</script>
+
+<style>
+  .research-shell { --research-pink: #e7a3b2; --research-mint: #b7ddc2; max-width: 1120px; margin: 0 auto; padding: clamp(96px, 12vw, 148px) clamp(18px, 4vw, 48px) 120px; }
+  .research-hero { max-width: 840px; padding-bottom: clamp(44px, 7vw, 76px); }
+  .research-back { display: inline-flex; margin-bottom: 44px; color: var(--muted); font-size: 13px; text-decoration: none; }
+  .research-back:hover { color: var(--text); }
+  .research-kicker { margin: 0 0 13px; color: var(--research-pink); font: 500 10px/1.4 var(--font-mono); letter-spacing: .22em; text-transform: uppercase; }
+  .research-hero h1 { max-width: 740px; margin: 0; font: 500 clamp(52px, 9vw, 104px)/.88 var(--font-serif); letter-spacing: -.035em; text-wrap: balance; }
+  .research-deck { max-width: 690px; margin: 28px 0 0; color: var(--text-2); font-size: clamp(18px, 2.3vw, 23px); line-height: 1.48; text-wrap: pretty; }
+  .research-disclosure { display: grid; grid-template-columns: minmax(130px, .35fr) 1fr; gap: 24px; margin-top: 42px; padding: 22px 0; border-block: 1px solid var(--hair-1); color: var(--muted); font-size: 13px; line-height: 1.65; }
+  .research-disclosure strong { color: var(--text); font: 500 11px/1.5 var(--font-mono); letter-spacing: .11em; text-transform: uppercase; }
+  .research-stream { padding: clamp(46px, 7vw, 72px) 0; border-top: 1px solid var(--hair-1); }
+  .research-stream__head { display: flex; align-items: end; justify-content: space-between; gap: 24px; }
+  .research-stream h2, .research-method h2 { max-width: 720px; margin: 0; font: 500 clamp(36px, 5vw, 58px)/.98 var(--font-serif); letter-spacing: -.02em; }
+  .research-updates { min-height: 44px; padding: 0 18px; border: 1px solid color-mix(in srgb, var(--research-mint) 44%, transparent); border-radius: 999px; background: color-mix(in srgb, var(--research-mint) 8%, transparent); color: var(--research-mint); cursor: pointer; }
+  .research-filters { display: flex; gap: 8px; margin: 34px 0 26px; padding-bottom: 4px; overflow-x: auto; scrollbar-width: none; }
+  .research-filters::-webkit-scrollbar { display: none; }
+  .research-filters button { min-height: 44px; flex: 0 0 auto; padding: 0 17px; border: 1px solid var(--hair-2); border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+  .research-filters button:hover, .research-filters button.is-active { border-color: color-mix(in srgb, var(--research-pink) 60%, transparent); background: color-mix(in srgb, var(--research-pink) 10%, transparent); color: var(--text); }
+  .research-scope { display: flex; align-items: center; justify-content: space-between; gap: 18px; margin: -8px 0 24px; padding: 12px 0; border-bottom: 1px solid var(--hair-1); color: var(--research-mint); font: 500 10px/1.4 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; }
+  .research-scope button { min-height: 44px; padding: 0 15px; border: 1px solid var(--hair-2); border-radius: 999px; background: transparent; color: var(--muted); cursor: pointer; }
+  .research-scope button:hover { border-color: color-mix(in srgb, var(--research-mint) 55%, transparent); color: var(--text); }
+  .research-items { border-top: 1px solid var(--hair-1); }
+  .research-item { display: grid; grid-template-columns: minmax(140px, .28fr) 1fr minmax(140px, .28fr); column-gap: clamp(20px, 4vw, 48px); padding: clamp(24px, 4vw, 38px) 0; border-bottom: 1px solid var(--hair-1); }
+  .research-item__meta { grid-row: 1 / span 2; display: flex; flex-direction: column; gap: 7px; color: var(--faint); font: 500 10px/1.45 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; }
+  .research-item h3 { margin: 0; font: 500 clamp(25px, 3vw, 36px)/1.04 var(--font-serif); }
+  .research-item h3 a { color: var(--text); text-decoration: none; }
+  .research-item h3 a:hover { color: var(--research-pink); }
+  .research-item > p { margin: 13px 0 0; color: var(--text-2); line-height: 1.6; }
+  .research-item__foot { grid-column: 3; grid-row: 1 / span 2; display: flex; flex-direction: column; align-items: flex-end; gap: 8px; color: var(--faint); font: 500 10px/1.45 var(--font-mono); letter-spacing: .1em; text-align: right; text-transform: uppercase; }
+  .research-item--external h3 a::after { content: ' \2197'; color: var(--faint); font-size: .55em; vertical-align: top; }
+  .research-empty { padding: 40px 0; border-bottom: 1px solid var(--hair-1); }
+  .research-empty strong { display: block; max-width: 620px; font: 500 28px/1.08 var(--font-serif); }
+  .research-empty p { max-width: 680px; margin: 14px 0 0; color: var(--muted); line-height: 1.65; }
+  .research-filter-empty { color: var(--muted); }
+  .research-method { padding: clamp(56px, 9vw, 96px) 0 0; }
+  .research-method__grid { display: grid; grid-template-columns: repeat(3, 1fr); margin-top: 34px; border-block: 1px solid var(--hair-1); }
+  .research-method article { padding: 28px 28px 34px 0; }
+  .research-method article + article { padding-left: 28px; border-left: 1px solid var(--hair-1); }
+  .research-method article span { color: var(--research-pink); font: 500 10px/1 var(--font-mono); letter-spacing: .14em; }
+  .research-method article h3 { margin: 24px 0 10px; font: 500 25px/1 var(--font-serif); }
+  .research-method article p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.65; }
+  .research-links { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 28px; }
+  .research-links a { color: var(--muted); font-size: 13px; }
+  .research-links a:hover { color: var(--text); }
+  [hidden] { display: none !important; }
+  @media (max-width: 720px) {
+    .research-shell { padding-inline: 16px; }
+    .research-disclosure { grid-template-columns: 1fr; gap: 8px; }
+    .research-stream__head { align-items: start; flex-direction: column; }
+    .research-scope { align-items: start; flex-direction: column; }
+    .research-item { grid-template-columns: 1fr; }
+    .research-item__meta { grid-row: auto; flex-direction: row; justify-content: space-between; margin-bottom: 15px; }
+    .research-item__foot { grid-column: 1; grid-row: auto; align-items: start; flex-direction: row; margin-top: 18px; text-align: left; }
+    .research-method__grid { grid-template-columns: 1fr; }
+    .research-method article { padding: 24px 0; }
+    .research-method article + article { padding-left: 0; border-top: 1px solid var(--hair-1); border-left: 0; }
+  }
+</style>

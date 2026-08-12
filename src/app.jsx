@@ -1,4 +1,5 @@
     const { useState, useMemo, useEffect, useRef, useCallback } = React;
+    const REGISTRY_VIEW = document.querySelector('meta[name="zodiacs-registry-view"]')?.content ?? '';
 
     function trackAnalytics(name, properties = {}) {
       window.zodiacsAnalytics?.track?.(name, properties);
@@ -13,7 +14,7 @@
         if (!el) return;
         // Hash navigation can place a section in the viewport before its
         // observer is attached. Reveal that target synchronously so a direct
-        // /registry/#thesis visit never lands on an invisible panel.
+        // /terminal/#thesis visit never lands on an invisible panel.
         const rect = el.getBoundingClientRect();
         const isHashTarget = el.id && window.location.hash === `#${el.id}`;
         const isAlreadyVisible = rect.top < window.innerHeight && rect.bottom > 0;
@@ -909,6 +910,7 @@
     }
 
     const SIGNS = ZODIACS_REGISTRY.assets.map(toDisplaySign);
+    const REGISTRY_OUTLOOK_URL = '/assets/registry-outlook.json';
 
     // The source renders share a 512px canvas, but their visible silhouettes
     // do not share the same optical centre. These restrained corrections keep
@@ -1316,6 +1318,118 @@
       }, [enabled, retryKey, attempt]);
       return state;
     }
+
+    const REGISTRY_MARKET_HISTORY_URL = '/assets/data/registry-market-history.v1.json';
+    const REGISTRY_NEWS_URL = '/api/registry/news';
+    let registryMarketHistoryRequest = null;
+    let registryNewsRequest = null;
+    const registryResourceCache = new Map();
+
+    function loadRegistryJson(url, cachedRequest, setRequest) {
+      if (registryResourceCache.has(url)) return Promise.resolve(registryResourceCache.get(url));
+      if (cachedRequest) return cachedRequest;
+      const request = fetch(url, {
+        cache: 'no-cache',
+        headers: { accept: 'application/json' },
+      })
+        .then(async (response) => {
+          if (!response.ok) throw new Error(`HTTP ${response.status}`);
+          const data = await response.json();
+          registryResourceCache.set(url, data);
+          return data;
+        });
+      const held = request.finally(() => setRequest(null));
+      setRequest(held);
+      return held;
+    }
+
+    function loadRegistryMarketHistory() {
+      return loadRegistryJson(
+        REGISTRY_MARKET_HISTORY_URL,
+        registryMarketHistoryRequest,
+        (request) => { registryMarketHistoryRequest = request; },
+      );
+    }
+
+    function loadRegistryNews() {
+      return loadRegistryJson(
+        REGISTRY_NEWS_URL,
+        registryNewsRequest,
+        (request) => { registryNewsRequest = request; },
+      );
+    }
+
+    function useRegistryResource(enabled, loader) {
+      const [state, setState] = useState({ status: 'idle' });
+      const [retryKey, setRetryKey] = useState(0);
+      useEffect(() => {
+        if (!enabled) return undefined;
+        let cancelled = false;
+        setState(current => current.status === 'ok'
+          ? { ...current, refreshing: true }
+          : { status: 'loading' });
+        loader()
+          .then(data => {
+            if (!cancelled) setState({ status: 'ok', data, refreshing: false });
+          })
+          .catch(() => {
+            if (!cancelled) setState(current => current.status === 'ok'
+              ? { ...current, stale: true, refreshing: false }
+              : { status: 'unavailable' });
+          });
+        return () => { cancelled = true; };
+      }, [enabled, loader, retryKey]);
+      return { ...state, retry: () => setRetryKey(value => value + 1) };
+    }
+
+    function useRegistryMarketHistory(enabled) {
+      return useRegistryResource(enabled, loadRegistryMarketHistory);
+    }
+
+    function useRegistryNews(enabled) {
+      return useRegistryResource(enabled, loadRegistryNews);
+    }
+
+    function marketHistoryForSign(archive, slug) {
+      const snapshots = Array.isArray(archive?.snapshots) ? archive.snapshots : [];
+      const observations = snapshots
+        .map((snapshot) => {
+          const asset = snapshot?.assets?.find(item => item.sign === slug) ?? null;
+          return {
+            date: snapshot.date,
+            observedAt: snapshot.source?.readAt ?? `${snapshot.date}T00:00:00.000Z`,
+            priceUsd: toFiniteNumber(asset?.priceUsd),
+            change24hPct: toFiniteNumber(asset?.change24hPct),
+            marketCapUsd: toFiniteNumber(asset?.marketCapUsd),
+            fdvUsd: toFiniteNumber(asset?.fdvUsd),
+            liquidityUsd: toFiniteNumber(asset?.liquidityUsd),
+            volume24hUsd: toFiniteNumber(asset?.volume24hUsd),
+            indexedPoolCount: toFiniteNumber(asset?.indexedPoolCount),
+            deepestPool: asset?.deepestPool ?? null,
+          };
+        })
+        .sort((left, right) => left.date.localeCompare(right.date));
+      return {
+        observations,
+        priced: observations.filter(item => item.priceUsd !== null),
+        latest: observations.at(-1) ?? null,
+      };
+    }
+
+    function useCompactMarketLimit() {
+      const query = '(max-width: 760px)';
+      const [limit, setLimit] = useState(() => (
+        typeof window !== 'undefined' && window.matchMedia(query).matches ? 3 : 6
+      ));
+      useEffect(() => {
+        const media = window.matchMedia(query);
+        const update = () => setLimit(media.matches ? 3 : 6);
+        update();
+        media.addEventListener?.('change', update);
+        return () => media.removeEventListener?.('change', update);
+      }, []);
+      return limit;
+    }
     function useInView(rootMargin = '0px 0px 15% 0px') {
       const ref = useRef(null);
       const [inView, setInView] = useState(false);
@@ -1431,7 +1545,7 @@
                 <svg width="14" height="14" viewBox="0 0 15 15" fill="none" aria-hidden="true"><circle cx="6.5" cy="6.5" r="4.75" stroke="currentColor" strokeWidth="1.4"/><path d="M10.5 10.5L13.5 13.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/></svg>
                 <kbd className="wnav__search-kbd" aria-hidden="true">/</kbd>
               </a>
-              <a className="wnav__chip" href="/registry/" aria-current="page">Registry</a>
+              <a className="wnav__chip" href="/terminal/" aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>Terminal</a>
               <button type="button" className="wnav__burger" aria-expanded={menuOpen} aria-controls="wnav-menu" aria-label={menuOpen ? 'Close menu' : 'Open menu'} onClick={() => setMenuOpen((v) => !v)}>
                 <span className="wnav__burger-line" /><span className="wnav__burger-line" /><span className="wnav__burger-line" />
               </button>
@@ -1456,9 +1570,9 @@
                 <a className="wnav-menu__link" style={{ '--i': 1 }} href="/horoscopes/">Horoscopes</a>
                 <a className="wnav-menu__link" style={{ '--i': 2 }} href="/profile/">Saved charts</a>
                 <a className="wnav-menu__link" style={{ '--i': 3 }} href="/ask/">Ask Zodiacs</a>
-                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 4 }} href="/registry/" aria-current="page">
-                  <span>Registry</span>
-                  <small>Digital collection and registry</small>
+                <a className="wnav-menu__link wnav-menu__registry" style={{ '--i': 4 }} href="/terminal/" aria-current={REGISTRY_VIEW === 'terminal' ? 'page' : undefined}>
+                  <span>Terminal</span>
+                  <small>Markets, token records, and research</small>
                 </a>
               </div>
               <div className="wnav-menu__group">
@@ -1731,6 +1845,531 @@
       );
     }
 
+    let selectedTokenChartRuntimePromise = null;
+    let selectedTokenChartClient = null;
+    function loadSelectedTokenChartRuntime() {
+      if (!selectedTokenChartRuntimePromise) {
+        selectedTokenChartRuntimePromise = import('/assets/registry-token-chart.js')
+          .then((module) => {
+            selectedTokenChartClient ||= module.createSelectedTokenHistoryClient();
+            return { module, client: selectedTokenChartClient };
+          })
+          .catch((error) => {
+            selectedTokenChartRuntimePromise = null;
+            throw error;
+          });
+      }
+      return selectedTokenChartRuntimePromise;
+    }
+
+    function MarketHistoryChart({ observations, sign, compact = false }) {
+      const available = Array.isArray(observations) ? observations : [];
+      const pricedAvailable = available.filter(point => point.priceUsd !== null);
+      const [range, setRange] = useState('all');
+      const ranges = [
+        { id: '7d', label: '7D', count: 7 },
+        { id: '30d', label: '30D', count: 30 },
+        { id: 'all', label: 'All', count: Infinity },
+      ];
+      useEffect(() => {
+        const required = ranges.find(option => option.id === range)?.count ?? Infinity;
+        if (Number.isFinite(required) && pricedAvailable.length < required) setRange('all');
+      }, [pricedAvailable.length, range]);
+      const selected = range === 'all'
+        ? available
+        : available.slice(-Number.parseInt(range, 10));
+      const priced = selected.filter(point => point.priceUsd !== null);
+      const width = compact ? 220 : 520;
+      const height = compact ? 52 : 150;
+      const inset = compact ? 3 : 8;
+      const values = priced.map(point => point.priceUsd);
+      const rawLow = values.length ? Math.min(...values) : 0;
+      const rawHigh = values.length ? Math.max(...values) : 0;
+      const rawSpread = rawHigh - rawLow || Math.max(Math.abs(rawHigh) * 0.04, 1e-12);
+      const domainPadding = rawSpread * .12;
+      const low = rawLow - domainPadding;
+      const high = rawHigh + domainPadding;
+      const spread = high - low;
+      const xAt = (index) => inset + ((width - (2 * inset)) * (selected.length <= 1 ? .5 : index / (selected.length - 1)));
+      const yAt = (value) => inset + ((height - (2 * inset)) * (1 - ((value - low) / spread)));
+      const segments = [];
+      let activeSegment = [];
+      selected.forEach((point, index) => {
+        const previous = selected[index - 1];
+        const currentDay = Date.parse(`${point.date}T00:00:00Z`);
+        const previousDay = previous ? Date.parse(`${previous.date}T00:00:00Z`) : currentDay;
+        const calendarGap = index > 0
+          && Number.isFinite(currentDay)
+          && Number.isFinite(previousDay)
+          && currentDay - previousDay !== 86_400_000;
+        if (point.priceUsd === null || calendarGap) {
+          if (activeSegment.length) segments.push(activeSegment);
+          activeSegment = [];
+          if (point.priceUsd === null) return;
+        }
+        activeSegment.push(`${xAt(index).toFixed(2)},${yAt(point.priceUsd).toFixed(2)}`);
+      });
+      if (activeSegment.length) segments.push(activeSegment);
+      const first = priced[0];
+      const last = priced.at(-1);
+      const archiveChange = priced.length > 1 && first.priceUsd > 0
+        ? ((last.priceUsd - first.priceUsd) / first.priceUsd) * 100
+        : null;
+      const observedElapsedMs = priced.length > 1
+        ? Date.parse(last.observedAt || `${last.date}T00:00:00Z`)
+          - Date.parse(first.observedAt || `${first.date}T00:00:00Z`)
+        : 0;
+      const observedElapsed = Number.isFinite(observedElapsedMs) && observedElapsedMs > 0
+        ? observedElapsedMs < 48 * 60 * 60 * 1000
+          ? `${Math.max(1, Math.round(observedElapsedMs / 3_600_000))}h apart`
+          : `${Math.max(1, Math.round(observedElapsedMs / 86_400_000))}d apart`
+        : '';
+      const summary = priced.length === 0
+        ? `${sign.name} archived price history is unavailable.`
+        : priced.length === 1
+          ? `${sign.name} has one archived daily price observation, ${formatPriceUsd(first.priceUsd)} on ${first.date}.`
+          : `${sign.name} has ${priced.length} archived daily price observations, from ${formatPriceUsd(first.priceUsd)} on ${first.date} to ${formatPriceUsd(last.priceUsd)} on ${last.date}.`;
+
+      return (
+        <figure className={'registry-history' + (compact ? ' registry-history--compact' : '')}>
+          <figcaption>
+            <span>{priced.length} daily observation{priced.length === 1 ? '' : 's'}</span>
+            {!compact && (
+              <span className="registry-history__range" role="group" aria-label="Price-history range">
+                {ranges.map(option => (
+                  <button
+                    key={option.id}
+                    type="button"
+                    aria-pressed={range === option.id}
+                    disabled={Number.isFinite(option.count) && pricedAvailable.length < option.count}
+                    onClick={() => setRange(option.id)}
+                  >{option.label}</button>
+                ))}
+              </span>
+            )}
+          </figcaption>
+          {compact && priced.length >= 2 && priced.length < 8 ? (
+            <div className="registry-history__comparison" role="img" aria-label={summary}>
+              <span><small>{first.date.slice(5)}</small><strong>{formatPriceUsd(first.priceUsd)}</strong></span>
+              <span className={'registry-history__delta' + marketChangeClass(archiveChange)}>
+                <strong>{formatPercent(archiveChange)}</strong>
+                <small>{observedElapsed || `${priced.length} archived reads`}</small>
+              </span>
+              <span><small>{last.date.slice(5)}</small><strong>{formatPriceUsd(last.priceUsd)}</strong></span>
+            </div>
+          ) : (
+            <svg
+              viewBox={`0 0 ${width} ${height}`}
+              preserveAspectRatio="none"
+              role="img"
+              aria-label={summary}
+            >
+              <line x1={inset} x2={width - inset} y1={height - inset} y2={height - inset} className="registry-history__axis" />
+              {segments.map((points, index) => points.length > 1 ? (
+                <polyline key={index} points={points.join(' ')} className="registry-history__line" />
+              ) : (
+                <circle key={index} cx={points[0].split(',')[0]} cy={points[0].split(',')[1]} r={compact ? 2.5 : 4} className="registry-history__point" />
+              ))}
+            </svg>
+          )}
+          {priced.length < 2 && <p>{priced.length ? 'Archive building from this dated point.' : 'Archived price unavailable.'}</p>}
+          {compact && priced.length >= 2 && priced.length < 8 && <p>Archive building · a line begins at 8 daily observations.</p>}
+        </figure>
+      );
+    }
+
+    function SelectedTokenMiniChart({ sign, pool, observations }) {
+      const [hostRef, inView] = useInView('160px 0px 160px 0px');
+      const [state, setState] = useState({ status: 'idle' });
+      const token = sign.representations.solana?.address || '';
+
+      useEffect(() => {
+        if (!inView || !token) return undefined;
+        let cancelled = false;
+        const controller = new AbortController();
+        const timer = window.setTimeout(() => {
+          setState({ status: 'loading' });
+          loadSelectedTokenChartRuntime()
+            .then(async ({ module, client }) => {
+              if (!pool) {
+                return {
+                  model: module.buildSelectedTokenChartModel({
+                    token,
+                    label: sign.name,
+                    pool: null,
+                    archiveObservations: observations,
+                    live: { status: 'not_indexed', reason: 'no_pool' },
+                  }),
+                };
+              }
+              return client.load({
+                token,
+                pool,
+                label: sign.name,
+                archiveObservations: observations,
+                signal: controller.signal,
+              });
+            })
+            .then((result) => {
+              if (!cancelled && result?.model) setState({ status: 'ready', model: result.model });
+            })
+            .catch((error) => {
+              if (!cancelled && error?.name !== 'AbortError') setState({ status: 'fallback' });
+            });
+        }, 220);
+
+        return () => {
+          cancelled = true;
+          window.clearTimeout(timer);
+          controller.abort();
+          selectedTokenChartClient?.cancel();
+        };
+      }, [inView, token, pool, sign.name, observations]);
+
+      const model = state.status === 'ready' ? state.model : null;
+      const width = 320;
+      const height = 124;
+      const insetX = 8;
+      const priceTop = 8;
+      const priceBottom = 91;
+      const volumeTop = 101;
+      const volumeBottom = 119;
+      const linePoints = model?.points || [];
+      const lows = linePoints
+        .map(point => Number.isFinite(point.lowUsd) ? point.lowUsd : point.priceUsd)
+        .filter(Number.isFinite);
+      const highs = linePoints
+        .map(point => Number.isFinite(point.highUsd) ? point.highUsd : point.priceUsd)
+        .filter(Number.isFinite);
+      const rawLow = lows.length ? Math.min(...lows) : 0;
+      const rawHigh = highs.length ? Math.max(...highs) : 0;
+      const rawSpread = rawHigh - rawLow || Math.max(Math.abs(rawHigh) * .04, 1e-12);
+      const low = rawLow - rawSpread * .12;
+      const high = rawHigh + rawSpread * .12;
+      const spread = high - low;
+      const startMs = Number.isFinite(model?.windowStartMs)
+        ? model.windowStartMs
+        : linePoints[0]?.slotMs;
+      const endMs = Number.isFinite(model?.windowEndMs)
+        ? model.windowEndMs
+        : linePoints.at(-1)?.slotMs;
+      const spanMs = Math.max(1, (endMs || 0) - (startMs || 0));
+      const xAt = point => insetX + ((width - insetX * 2) * ((point.slotMs - startMs) / spanMs));
+      const candleXAt = point => insetX + ((width - insetX * 2) * (
+        (point.slotMs - startMs + ((model?.intervalMs || 0) / 2)) / spanMs
+      ));
+      const yAt = value => priceTop + ((priceBottom - priceTop) * (1 - ((value - low) / spread)));
+      const segmentPoints = segment => segment
+        .map(point => `${xAt(point).toFixed(2)},${yAt(point.priceUsd).toFixed(2)}`)
+        .join(' ');
+      const latest = linePoints.at(-1) || null;
+      const lastActive = model?.lastActive || null;
+      const isLiveCandles = model?.source === 'geckoterminal-hourly';
+      const maxVolume = Math.max(0, ...linePoints.map(point => Number(point.volumeUsd) || 0));
+      const slotWidth = ((width - insetX * 2) * ((model?.intervalMs || 1) / spanMs));
+      const candleWidth = Math.max(2.8, Math.min(7, slotWidth * .54));
+      const volumeHeight = value => maxVolume > 0
+        ? Math.max(1.2, Math.sqrt(value / maxVolume) * (volumeBottom - volumeTop))
+        : 0;
+      const updated = latest
+        ? new Date(latest.timestampMs).toLocaleTimeString(undefined, {
+            hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC',
+          })
+        : '';
+      const formatChartHour = value => new Date(value).toLocaleTimeString(undefined, {
+        hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC',
+      });
+      const timeTicks = Number.isFinite(startMs) && Number.isFinite(endMs)
+        ? [startMs, startMs + spanMs / 2, endMs].map(formatChartHour)
+        : ['−24H', 'UTC', 'Now'];
+      const activeHour = lastActive
+        ? `${formatChartHour(lastActive.slotMs)}–${formatChartHour(lastActive.slotMs + (model?.intervalMs || 0))} UTC`
+        : 'No active hour';
+      const endpointMoment = (point) => {
+        if (!point) return '';
+        if (model?.timeframe === '1d' && point.date) return point.date;
+        return new Date(point.timestampMs).toLocaleString(undefined, {
+          month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC',
+        }) + ' UTC';
+      };
+      const elapsedMs = Number.isFinite(model?.startTimestampMs) && Number.isFinite(model?.endTimestampMs)
+        ? Math.max(0, model.endTimestampMs - model.startTimestampMs)
+        : 0;
+      const elapsedLabel = elapsedMs < 60 * 60 * 1000
+        ? `${Math.max(1, Math.round(elapsedMs / 60_000))}m elapsed`
+        : elapsedMs < 48 * 60 * 60 * 1000
+          ? `${Math.max(1, Math.round(elapsedMs / 3_600_000))}h elapsed`
+          : `${Math.max(1, Math.round((elapsedMs / 86_400_000) * 10) / 10)}d elapsed`;
+
+      return (
+        <div ref={hostRef} className="selected-token-chart" data-token-chart={sign.asset.sign}>
+          {(state.status === 'idle' || state.status === 'loading') && (
+            <figure className="token-spark token-spark--loading" aria-label={`${sign.name} 24-hour price chart loading`} aria-busy="true">
+              <figcaption><span>24H price</span><span>Loading</span></figcaption>
+              <span className="token-spark__skeleton" aria-hidden="true" />
+            </figure>
+          )}
+          {state.status === 'fallback' && <MarketHistoryChart observations={observations} sign={sign} compact />}
+          {model && model.mode === 'line' && (
+            <figure className={'token-spark ' + (model.source === 'geckoterminal-hourly' ? 'token-spark--live' : 'token-spark--archive')}>
+              <figcaption>
+                <span className="token-spark__identity">
+                  <strong>{model.source === 'geckoterminal-hourly' ? `${sign.name.toUpperCase()} / USD · 24H` : 'Registry archive'}</strong>
+                  <small>{model.source === 'geckoterminal-hourly' ? 'Reference pool · GeckoTerminal · UTC' : 'Daily closes'}</small>
+                </span>
+                <span className="token-spark__close">
+                  <small>{model.source === 'geckoterminal-hourly' ? '24H close' : 'Change'}</small>
+                  <strong className={marketChangeClass(model.netChangePct)}>{formatPercent(model.netChangePct)}</strong>
+                </span>
+              </figcaption>
+              <div className="token-spark__plot">
+                <div className="token-spark__canvas">
+                  <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" role="img" aria-label={model.ariaLabel}>
+                    {[.25, .5, .75].map(fraction => (
+                      <line
+                        key={fraction}
+                        x1={insetX}
+                        x2={width - insetX}
+                        y1={priceTop + ((priceBottom - priceTop) * fraction)}
+                        y2={priceTop + ((priceBottom - priceTop) * fraction)}
+                        className="token-spark__grid"
+                      />
+                    ))}
+                    <line x1={width / 2} x2={width / 2} y1={priceTop} y2={volumeBottom} className="token-spark__grid token-spark__grid--vertical" />
+                    <line x1={insetX} x2={width - insetX} y1={priceBottom} y2={priceBottom} className="token-spark__axis" />
+                    <line x1={insetX} x2={insetX} y1={priceTop} y2={volumeBottom} className="token-spark__axis" />
+                    {isLiveCandles && <line x1={insetX} x2={width - insetX} y1={volumeTop - 4} y2={volumeTop - 4} className="token-spark__volume-rule" />}
+                    {latest && (
+                      <line
+                        x1={insetX}
+                        x2={width - insetX}
+                        y1={yAt(latest.closeUsd ?? latest.priceUsd).toFixed(2)}
+                        y2={yAt(latest.closeUsd ?? latest.priceUsd).toFixed(2)}
+                        className="token-spark__latest-guide"
+                      />
+                    )}
+                    {isLiveCandles ? linePoints.map((point) => {
+                      const x = candleXAt(point);
+                      const openY = yAt(point.openUsd);
+                      const closeY = yAt(point.closeUsd);
+                      const bodyY = Math.min(openY, closeY);
+                      const bodyHeight = Math.max(2, Math.abs(closeY - openY));
+                      const direction = Math.abs(point.closeUsd - point.openUsd) < 1e-15
+                        ? 'flat'
+                        : point.closeUsd > point.openUsd ? 'up' : 'down';
+                      const barHeight = point.hasTrades ? volumeHeight(point.volumeUsd) : 0;
+                      return point.hasTrades ? (
+                        <g key={point.slotMs} className={`token-spark__candle token-spark__candle--${direction}`}>
+                          <line
+                            x1={x.toFixed(2)}
+                            x2={x.toFixed(2)}
+                            y1={yAt(point.highUsd).toFixed(2)}
+                            y2={yAt(point.lowUsd).toFixed(2)}
+                            className="token-spark__wick"
+                          />
+                          <rect
+                            x={(x - candleWidth / 2).toFixed(2)}
+                            y={bodyY.toFixed(2)}
+                            width={candleWidth.toFixed(2)}
+                            height={bodyHeight.toFixed(2)}
+                            rx=".7"
+                            className="token-spark__body"
+                          />
+                          <rect
+                            x={(x - Math.max(1.4, candleWidth * .32)).toFixed(2)}
+                            y={(volumeBottom - barHeight).toFixed(2)}
+                            width={Math.max(2.8, candleWidth * .64).toFixed(2)}
+                            height={barHeight.toFixed(2)}
+                            rx=".5"
+                            className="token-spark__volume"
+                          />
+                        </g>
+                      ) : (
+                        <line
+                          key={point.slotMs}
+                          x1={(x - candleWidth * .42).toFixed(2)}
+                          x2={(x + candleWidth * .42).toFixed(2)}
+                          y1={yAt(point.closeUsd).toFixed(2)}
+                          y2={yAt(point.closeUsd).toFixed(2)}
+                          className={`token-spark__idle token-spark__idle--${point.idleKind || 'provider'}`}
+                        />
+                      );
+                    }) : (
+                      <>
+                        {model.segments.map((segment, index) => segment.length > 1 ? (
+                          <polyline key={`${segment[0].slotMs}-${index}`} points={segmentPoints(segment)} className="token-spark__line" />
+                        ) : null)}
+                        {linePoints.map(point => (
+                          <circle
+                            key={point.slotMs}
+                            cx={xAt(point).toFixed(2)}
+                            cy={yAt(point.priceUsd).toFixed(2)}
+                            r="1.65"
+                            className="token-spark__point"
+                          />
+                        ))}
+                      </>
+                    )}
+                    {latest && (
+                      <>
+                        <circle cx={(isLiveCandles ? candleXAt(latest) : xAt(latest)).toFixed(2)} cy={yAt(latest.closeUsd ?? latest.priceUsd).toFixed(2)} r="4.4" className="token-spark__latest-ring" />
+                        <circle cx={(isLiveCandles ? candleXAt(latest) : xAt(latest)).toFixed(2)} cy={yAt(latest.closeUsd ?? latest.priceUsd).toFixed(2)} r="2.35" className="token-spark__latest" />
+                      </>
+                    )}
+                  </svg>
+                </div>
+                <span className="token-spark__price-scale" aria-hidden="true">
+                  <span>{formatPriceUsd(rawHigh)}</span>
+                  <span>{formatPriceUsd((rawHigh + rawLow) / 2)}</span>
+                  <span>{formatPriceUsd(rawLow)}</span>
+                </span>
+                <span className="token-spark__time-scale" aria-hidden="true">
+                  <span>{timeTicks[0]}</span><span>{timeTicks[1]}</span><span>{timeTicks[2]}</span>
+                </span>
+              </div>
+              {isLiveCandles ? (
+                <p>
+                  {model.coverage.activePointCount} active hour{model.coverage.activePointCount === 1 ? '' : 's'}
+                  {' · '}{model.coverage.idlePointCount} no-swap hour{model.coverage.idlePointCount === 1 ? ' carries' : 's carry'} last close
+                  {' · '}latest active {activeHour}
+                </p>
+              ) : (
+                <p>
+                  {model.coverage.observedPointCount} of {model.coverage.expectedPointCount} daily closes
+                  {model.coverage.missingPointCount > 0 && ` · ${model.coverage.missingPointCount} day${model.coverage.missingPointCount === 1 ? '' : 's'} missing`}
+                  {updated && ` · updated ${updated} UTC`}
+                </p>
+              )}
+            </figure>
+          )}
+          {model && model.mode !== 'line' && (
+            <figure className="token-spark token-spark--comparison">
+              <figcaption>
+                <span>{model.timeframe === '1h' ? 'Hourly endpoints' : 'Archive'}</span>
+                <span className={marketChangeClass(model.netChangePct)}>{formatPercent(model.netChangePct)}</span>
+              </figcaption>
+              {model.mode === 'empty' ? (
+                <p role="status">Price history unavailable.</p>
+              ) : model.mode === 'single' ? (
+                <div className="token-spark__single" role="img" aria-label={model.ariaLabel}>
+                  <strong>{formatPriceUsd(model.first.priceUsd)}</strong>
+                  <small>{endpointMoment(model.first)} · one observation</small>
+                </div>
+              ) : (
+                <div className="registry-history__comparison" role="img" aria-label={model.ariaLabel}>
+                  <span><small>{model.timeframe === '1h' ? 'First open' : 'First'}</small><strong>{formatPriceUsd(model.startPriceUsd)}</strong></span>
+                  <span className={'registry-history__delta' + marketChangeClass(model.netChangePct)}>
+                    <strong>{formatPercent(model.netChangePct)}</strong>
+                    <small>
+                      {model.timeframe === '1h'
+                        ? `${model.coverage.activePointCount} active · ${model.coverage.idlePointCount} no-swap`
+                        : `${model.coverage.observedPointCount} reads`}
+                      {' · '}{elapsedLabel}
+                    </small>
+                  </span>
+                  <span><small>{model.timeframe === '1h' ? 'Latest close' : 'Latest'}</small><strong>{formatPriceUsd(model.endPriceUsd)}</strong></span>
+                </div>
+              )}
+              <p>{model.source === 'geckoterminal-hourly' ? 'Hourly history building · chart begins at 8 hourly slots.' : 'Registry archive fallback · line begins at 8 reads.'}</p>
+            </figure>
+          )}
+        </div>
+      );
+    }
+
+    function PlacardMarketPanel({ sign }) {
+      const batch = useTwelveQuotes(true);
+      const history = useRegistryMarketHistory(true);
+      const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
+      const ledger = useMemo(
+        () => marketHistoryForSign(history.data, sign.asset.sign),
+        [history.data, sign.asset.sign],
+      );
+      const observations = ledger.observations;
+      const latest = ledger.latest;
+      const marketCapRows = batch.status === 'ok'
+        ? SIGNS.map(item => ({ item, value: toFiniteNumber(batch.quotes[item.asset.sign]?.marketCap) }))
+          .filter(row => row.value !== null)
+          .sort((a, b) => b.value - a.value || a.item.order - b.item.order)
+        : [];
+      const liquidityRows = batch.status === 'ok'
+        ? SIGNS.map(item => ({ item, value: toFiniteNumber(batch.quotes[item.asset.sign]?.liquidityUsd) }))
+          .filter(row => row.value !== null)
+          .sort((a, b) => b.value - a.value || a.item.order - b.item.order)
+        : [];
+      const capRank = marketCapRows.findIndex(row => row.item.ticker === sign.ticker);
+      const liquidityRank = liquidityRows.findIndex(row => row.item.ticker === sign.ticker);
+      const liveChartUrl = quote?.url || latest?.deepestPool?.url || '';
+      const marketCap = toFiniteNumber(quote?.marketCap) ?? latest?.marketCapUsd ?? null;
+      const liquidity = toFiniteNumber(quote?.liquidityUsd) ?? latest?.liquidityUsd ?? null;
+      const volume = toFiniteNumber(quote?.volume24h) ?? latest?.volume24hUsd ?? null;
+      const pools = toFiniteNumber(quote?.poolCount) ?? latest?.indexedPoolCount ?? null;
+      const chartPool = quote?.pairAddress || latest?.deepestPool?.pairAddress || '';
+
+      return (
+        <div className="stage-market" data-stage-market={sign.asset.sign}>
+          <div className="stage-market__chart">
+            <SelectedTokenMiniChart
+              key={sign.asset.sign}
+              sign={sign}
+              pool={chartPool}
+              observations={observations}
+            />
+          </div>
+          <dl className="stage-market__facts">
+            <div><dt>Market cap{capRank >= 0 ? ` · #${capRank + 1}` : ''}</dt><dd>{marketCap === null ? '—' : formatUsdCompact(marketCap)}</dd></div>
+            <div><dt>Liquidity{liquidityRank >= 0 ? ` · #${liquidityRank + 1}` : ''}</dt><dd>{liquidity === null ? '—' : formatUsdCompact(liquidity)}</dd></div>
+            <div><dt>24h volume</dt><dd>{volume === null ? '—' : formatUsdCompact(volume)}</dd></div>
+            <div><dt>Pools</dt><dd>{pools === null ? '—' : pools}</dd></div>
+          </dl>
+          {liveChartUrl && (
+            <a className="stage-market__live" href={liveChartUrl} rel="noopener noreferrer external nofollow">
+              Open live chart <span aria-hidden="true">↗</span>
+            </a>
+          )}
+        </div>
+      );
+    }
+
+    function StageConstellation({ slug }) {
+      const currentSlug = useRef(slug);
+      const [layers, setLayers] = useState({ current: slug, previous: null });
+      useEffect(() => {
+        if (currentSlug.current === slug) return undefined;
+        const previous = currentSlug.current;
+        currentSlug.current = slug;
+        if (window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) {
+          setLayers({ current: slug, previous: null });
+          return undefined;
+        }
+        setLayers({ current: slug, previous });
+        const timer = window.setTimeout(() => {
+          setLayers(current => current.current === slug
+            ? { current: slug, previous: null }
+            : current);
+        }, 320);
+        return () => window.clearTimeout(timer);
+      }, [slug]);
+      return (
+        <picture className="gband__constellation" aria-hidden="true" data-stage-constellation={slug}>
+          {layers.previous && (
+            <img
+              className="is-leaving"
+              src={`/assets/constellations/${layers.previous}.svg`}
+              alt=""
+              decoding="async"
+            />
+          )}
+          <img
+            className="is-entering"
+            src={`/assets/constellations/${layers.current}.svg`}
+            alt=""
+            decoding="async"
+          />
+        </picture>
+      );
+    }
+
     /* The twelve pastel discs as a rail rather than a grid: the same picker
        at every width, scrolling sideways where it cannot fit. Keyboard
        contract matches the grid it replaces — roving tabindex, arrows walk
@@ -1830,6 +2469,8 @@
 
       useEffect(() => {
         previousIndex.current = activeIndex;
+        const connection = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
+        if (connection?.saveData || /(^|-)2g$/.test(connection?.effectiveType || '')) return;
         const before = SIGNS[(activeIndex - 1 + SIGNS.length) % SIGNS.length];
         const after = SIGNS[(activeIndex + 1) % SIGNS.length];
         for (const neighbour of [before, after]) {
@@ -1910,6 +2551,9 @@
       const gallerySlug = useRef(null);
       const sign = SIGNS.find(s => s.ticker === active) ?? SIGNS[0];
       const slug = sign.asset.sign;
+      const activeSlugRef = useRef(slug);
+      activeSlugRef.current = slug;
+      const [posterSlug, setPosterSlug] = useState(slug);
       const season = useCurrentSeason();
       // The trade sheet: the panel slides in over the stage on request and
       // the sculpture stays where it is, dimmed behind the scrim. Closing
@@ -2020,7 +2664,10 @@
         const node = stageRef.current;
         if (!node) return undefined;
         const onReady = () => setGalleryReady(true);
-        const onUnready = () => setGalleryReady(false);
+        const onUnready = () => {
+          setPosterSlug(activeSlugRef.current);
+          setGalleryReady(false);
+        };
         node.addEventListener('zodiacs:gallery-ready', onReady);
         node.addEventListener('zodiacs:gallery-unready', onUnready);
         // Covers a cached scene that became ready before this effect attached.
@@ -2031,6 +2678,10 @@
           node.removeEventListener('zodiacs:gallery-unready', onUnready);
         };
       }, []);
+
+      useEffect(() => {
+        if (!galleryReady) setPosterSlug(slug);
+      }, [galleryReady, slug]);
 
       // The scene bundle carries Three.js; it is fetched only as the band
       // approaches the viewport, and only once. The carousel never asks.
@@ -2100,13 +2751,6 @@
 
       return (
         <>
-          {/* The market tape is the consumer route's first instrument, before
-              the framed sculpture room. It stays in this component so opening
-              the Acquisition Desk can still pause it without lifting the
-              sheet's focus and scroll-lock state out of the gallery. */}
-          {consumer && (
-            <MarketTape season={season} paused={sheetVisible} />
-          )}
           <section
             ref={stageRef}
             id="gallery"
@@ -2121,6 +2765,7 @@
             data-gallery-spotlight={consumer && !carousel ? '' : undefined}
             data-gallery-paused={consumer && (carousel || sheetVisible) ? '' : undefined}
           >
+          {consumer && <StageConstellation slug={slug} />}
           {/* The stage picks with the rail at the top and shows one piece
               large below it, so the twelve read as the choice and the chosen
               sculpture as the answer. The rail deliberately does NOT wear
@@ -2143,7 +2788,7 @@
           {!carousel && (
             <picture className="gband__poster" aria-hidden="true">
               <img
-                src={`/assets/sculptures/512/${slug}.webp`}
+                src={`/assets/sculptures/512/${posterSlug}.webp`}
                 width="512"
                 height="512"
                 alt=""
@@ -2174,6 +2819,7 @@
                   <PlacardQuote sign={sign} />
                 </span>
               </span>
+              <PlacardMarketPanel sign={sign} />
               <span className="stage-placard__actions">
                 {REGISTRY_TRADE_ENABLED ? (
                   <button
@@ -2190,7 +2836,7 @@
                   </a>
                 )}
                 <a className="btn btn--ghost stage-placard__pill" href={registryProfilePath(sign)}>
-                  <span>The record</span>
+                  <span>Official record</span>
                 </a>
               </span>
             </div>
@@ -3849,6 +4495,69 @@
       );
     }
 
+    function ConsumerCapitalHeader({ sign }) {
+      const season = useCurrentSeason();
+      const batch = useTwelveQuotes(true);
+      const quotes = batch.status === 'ok'
+        ? SIGNS.map(sign => batch.quotes[sign.asset.sign]).filter(Boolean)
+        : [];
+      const marketCaps = quotes.map(quote => toFiniteNumber(quote.marketCap)).filter(value => value !== null);
+      const liquidities = quotes.map(quote => toFiniteNumber(quote.liquidityUsd)).filter(value => value !== null);
+      const advancing = quotes.filter(quote => (toFiniteNumber(quote.priceChange24h) ?? 0) > 0).length;
+      const totalMarketCap = marketCaps.reduce((sum, value) => sum + value, 0);
+      const totalLiquidity = liquidities.reduce((sum, value) => sum + value, 0);
+
+      return (
+        <header
+          className="capital-masthead"
+          aria-labelledby="consumer-explorer-title"
+          style={{ '--active-sign': sign.hue }}
+        >
+          <div className="capital-masthead__title">
+            <span><a href="/registry/">Verified by the Zodiacs Registry</a></span>
+            <h1 id="consumer-explorer-title">Zodiac Terminal</h1>
+            <p>Twelve signs. Twelve transferable tokens. One live public market.</p>
+          </div>
+          <MarketTape season={season} />
+          <div className="capital-pulse" aria-busy={batch.status === 'loading'}>
+            <div>
+              <span>Indexed market cap</span>
+              <strong>{batch.status === 'ok' ? formatUsdCompact(totalMarketCap) : '—'}</strong>
+              <small>{marketCaps.length} of 12 reporting</small>
+            </div>
+            <div>
+              <span>Indexed liquidity</span>
+              <strong>{batch.status === 'ok' ? formatUsdCompact(totalLiquidity) : '—'}</strong>
+              <small>Exact-mint Solana pools</small>
+            </div>
+            <div>
+              <span>24h breadth</span>
+              <strong>{batch.status === 'ok' ? `${advancing} / ${quotes.length || 12}` : '—'}</strong>
+              <small>Tokens trading higher</small>
+            </div>
+          </div>
+          {REGISTRY_EXCHANGE_ENABLED && (
+            <a
+              className="capital-advanced"
+              href={`${REGISTRY_EXCHANGE_PATH}#${sign.asset.sign}`}
+              aria-label={`${REGISTRY_EXCHANGE_LANDING_COPY.action} for ${sign.name}`}
+            >
+              <span className="capital-advanced__title">
+                <small>{REGISTRY_EXCHANGE_LANDING_COPY.eyebrow}</small>
+                <strong>{REGISTRY_EXCHANGE_LANDING_COPY.action}</strong>
+              </span>
+              <span className="capital-advanced__detail">{REGISTRY_EXCHANGE_LANDING_COPY.description}</span>
+              <span className="capital-advanced__arrow" aria-hidden="true">
+                <svg viewBox="0 0 20 20" focusable="false">
+                  <path d="M5 10h9M10.5 6.5 14 10l-3.5 3.5" />
+                </svg>
+              </span>
+            </a>
+          )}
+        </header>
+      );
+    }
+
     function ConsumerMarketSection({ active, setActive, personalSlug, setPersonalSlug }) {
       const reveal = useReveal();
       const [hostRef, inView] = useInView('360px 0px 360px 0px');
@@ -3863,6 +4572,8 @@
       const [rankBy, setRankBy] = useState(initialRank);
       const [retryKey, setRetryKey] = useState(0);
       const [shareState, setShareState] = useState('');
+      const [expanded, setExpanded] = useState(false);
+      const compactLimit = useCompactMarketLimit();
       const batch = useTwelveQuotes(inView, retryKey);
       const season = useCurrentSeason();
 
@@ -3881,10 +4592,6 @@
         });
       }, [batch, rankBy]);
 
-      const quoted = rows.filter(row => row.quote);
-      const totalMarketCap = quoted.reduce((sum, row) => sum + (toFiniteNumber(row.quote.marketCap) ?? 0), 0);
-      const totalLiquidity = quoted.reduce((sum, row) => sum + (toFiniteNumber(row.quote.liquidityUsd) ?? 0), 0);
-      const advancing = quoted.filter(row => (toFiniteNumber(row.quote.priceChange24h) ?? 0) > 0).length;
       const observed = batch.observedAt
         ? new Date(batch.observedAt).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })
         : null;
@@ -3904,6 +4611,7 @@
         row => toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]) !== null,
       ).length;
       const shareReady = batch.status === 'ok' && metricCoverage > 0;
+      const visibleRows = expanded ? rows : rows.slice(0, compactLimit);
 
       const metricValue = (row) => {
         const value = toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]);
@@ -3913,10 +4621,10 @@
       const shareCopy = () => {
         const leaders = rows.filter(row => toFiniteNumber(row.quote?.[MARKET_RANKS[rankBy].field]) !== null).slice(0, 3);
         const list = leaders.map((row, index) => `${index + 1}. ${row.sign.ticker} ${metricValue(row)}`).join('\n');
-        return `Zodiacs Registry · ${MARKET_RANKS[rankBy].label}\n${list}\nRead ${observedUtc} · ${metricCoverage}/12 indexed\nLive market context via DexScreener. Not a recommendation.`;
+        return `Zodiac Terminal · ${MARKET_RANKS[rankBy].label}\n${list}\nRead ${observedUtc} · ${metricCoverage}/12 indexed\nLive market context via DexScreener. Not a recommendation.`;
       };
       const shareUrl = () => {
-        const url = new URL('/registry/', window.location.origin);
+        const url = new URL('/terminal/', window.location.origin);
         url.searchParams.set('rank', rankBy);
         url.searchParams.set('sign', activeSign.asset.sign);
         url.hash = 'market';
@@ -3970,45 +4678,15 @@
         <section
           ref={reveal}
           id="market"
-          className="consumer-market reveal"
+          className={'consumer-market reveal' + (expanded ? ' is-expanded' : '')}
           aria-labelledby="consumer-market-title"
           style={{ '--active-sign': activeSign.hue }}
         >
-          <header className="consumer-market__head">
-            <div className="consumer-section-head">
-              <span className="consumer-section-head__eyebrow">Live Zodiac market</span>
-              <h2 id="consumer-market-title">The wheel, <span className="it">in motion.</span></h2>
-              <p>
-                A live ranking of the twelve official tokens. Change the lens or
-                choose a sign to carry that selection across the Registry.
-              </p>
-            </div>
-            <div className="consumer-market__personal">
-              <span className="consumer-market__personal-label">Your sign on this device</span>
-              <strong>{personalSlug ? titleCase(personalSlug) : 'Not chosen'}</strong>
-              <button type="button" onClick={() => setPersonalSlug(activeSign.asset.sign)}>
-                {personalSlug === activeSign.asset.sign ? `${activeSign.name} is yours` : `Choose ${activeSign.name}`}
-              </button>
-            </div>
+          <header ref={hostRef} className="consumer-market__compact-head">
+            <span className="consumer-section-head__eyebrow">Live market board</span>
+            <h2 id="consumer-market-title">The twelve, ranked live.</h2>
+            <p>Choose a sign to update the sculpture, chart, and research across the page.</p>
           </header>
-
-          <div ref={hostRef} className="market-pulse" aria-busy={batch.status === 'loading'}>
-            <div className="market-pulse__cell">
-              <span>Indexed market cap</span>
-              <strong>{batch.status === 'ok' ? formatUsdCompact(totalMarketCap) : '—'}</strong>
-              <small>{quoted.filter(row => toFiniteNumber(row.quote.marketCap) !== null).length} of 12 indexed</small>
-            </div>
-            <div className="market-pulse__cell">
-              <span>Indexed liquidity</span>
-              <strong>{batch.status === 'ok' ? formatUsdCompact(totalLiquidity) : '—'}</strong>
-              <small>Exact-mint pools indexed by DexScreener</small>
-            </div>
-            <div className="market-pulse__cell">
-              <span>Market breadth</span>
-              <strong>{batch.status === 'ok' ? `${advancing} / ${quoted.length || 12}` : '—'}</strong>
-              <small>Tokens positive over 24h</small>
-            </div>
-          </div>
 
           <div className="market-board" data-rank={rankBy}>
             <div className="market-board__toolbar">
@@ -4017,15 +4695,15 @@
                   <button
                     key={key}
                     type="button"
-                    className="market-glass"
+                    className="registry-pill registry-pill--segment"
                     aria-pressed={rankBy === key}
                     onClick={() => setRankBy(key)}
                   >{option.short}</button>
                 ))}
               </div>
               <div className="market-board__share">
-                <button className="market-glass market-board__share-primary" type="button" onClick={copyShare} disabled={!shareReady}>
-                  <MarketSocialIcon network="share" /><span>Share snapshot</span>
+                <button className="registry-pill registry-pill--share market-board__share-primary" type="button" aria-label="Share snapshot" onClick={copyShare} disabled={!shareReady}>
+                  <MarketSocialIcon network="share" /><span>Share</span>
                 </button>
                 <div className="market-board__socials" role="group" aria-label="Share this snapshot on social media">
                   {[
@@ -4034,7 +4712,7 @@
                     ['whatsapp', 'WhatsApp'],
                   ].map(([network, label]) => (
                     <button
-                      className="market-glass market-board__social"
+                      className="registry-pill registry-pill--icon market-board__social"
                       key={network}
                       type="button"
                       aria-label={`Share on ${label}`}
@@ -4057,11 +4735,11 @@
             {batch.status === 'unavailable' && (
               <div className="market-board__state">
                 <p>Live market context is temporarily unavailable. The official records remain available.</p>
-                <button type="button" onClick={() => setRetryKey(value => value + 1)}>Try again</button>
+                <button className="registry-pill registry-pill--compact" type="button" onClick={() => setRetryKey(value => value + 1)}>Try again</button>
               </div>
             )}
-            <ol className="market-board__rows" aria-busy={batch.status === 'loading'}>
-                {rows.map((row, index) => {
+            <ol id="market-ranked-twelve" className="market-board__rows" aria-busy={batch.status === 'loading'}>
+                {visibleRows.map((row, index) => {
                   const { sign: item, quote } = row;
                   const isActive = item.ticker === active;
                   const isSeason = item.ticker === season?.sign?.ticker;
@@ -4088,7 +4766,7 @@
                       <span className="market-row__metric market-row__metric--cap"><small>Market cap</small><strong>{quote?.marketCap !== null && quote?.marketCap !== undefined ? formatUsdCompact(quote.marketCap) : '—'}</strong></span>
                       <span className="market-row__metric market-row__metric--liq"><small>Liquidity</small><strong>{quote ? formatUsdCompact(quote.liquidityUsd) : '—'}</strong></span>
                       <span className="market-row__actions market-row__actions--record-only">
-                        <a className="market-row__record market-glass" href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>
+                        <a className="market-row__record registry-pill registry-pill--record" href={registryProfilePath(item)} aria-label={`Open the official ${item.name} record`}>
                           <span className="market-row__record-label">Official record</span>
                           <span className="market-row__action-orb" aria-hidden="true">↗</span>
                         </a>
@@ -4097,6 +4775,29 @@
                   );
                 })}
             </ol>
+            <div className="market-board__expand-row">
+              <button
+                className="registry-pill registry-pill--record market-board__expand"
+                type="button"
+                aria-expanded={expanded}
+                aria-controls="market-ranked-twelve"
+                onClick={() => setExpanded(value => !value)}
+              >
+                <span>{expanded ? 'Show leaders only' : `Show all ${rows.length}`}</span>
+                <span className="market-row__action-orb" aria-hidden="true">{expanded ? '↑' : '↓'}</span>
+              </button>
+              <div className="consumer-market__personal consumer-market__personal--compact">
+                <span><small>Your sign</small><strong>{personalSlug ? titleCase(personalSlug) : 'Not chosen'}</strong></span>
+                <button
+                  className="registry-pill registry-pill--compact"
+                  type="button"
+                  aria-pressed={personalSlug === activeSign.asset.sign}
+                  onClick={() => setPersonalSlug(activeSign.asset.sign)}
+                >
+                  {personalSlug === activeSign.asset.sign ? `${activeSign.name} saved` : `Save ${activeSign.name}`}
+                </button>
+              </div>
+            </div>
           </div>
 
           <p className="consumer-market__foot">
@@ -4110,37 +4811,138 @@
       );
     }
 
-    const OUTLOOK_SIGNAL_COPY = Object.freeze({
-      quiet: 'No strong symbolic catalyst is concentrated here in this window.',
-      steady: 'A modest symbolic emphasis suggests a baseline participation window.',
-      active: 'Elevated symbolic attention creates a testable hypothesis for stronger participation.',
-      supportive: 'The event mix is symbolically supportive; price direction is intentionally unclaimed.',
-      watchful: 'The event mix carries more friction than ease; watch participation and volatility.',
-      charged: 'Symbolic intensity is elevated, creating a testable volatility hypothesis.',
-    });
+    function visibleBriefingHeadlines(external, activeSlug) {
+      const now = Date.now();
+      const items = Array.isArray(external?.items) ? external.items : [];
+      return items
+        .filter(item => {
+          const publishedAt = Date.parse(item.publishedAt || '');
+          const sourceAllowed = item.sourceType === 'astrology-news' || item.sourceType === 'astronomy';
+          return sourceAllowed && Number.isFinite(publishedAt) && publishedAt <= now && item.url && item.title;
+        })
+        .map(item => ({
+          ...item,
+          topics: Array.isArray(item.topics) ? item.topics : [],
+          signs: Array.isArray(item.signs) ? item.signs : [],
+        }))
+        .sort((left, right) => {
+          const leftRelevant = left.signs.includes(activeSlug) || left.topics.includes(activeSlug);
+          const rightRelevant = right.signs.includes(activeSlug) || right.topics.includes(activeSlug);
+          if (leftRelevant !== rightRelevant) return leftRelevant ? -1 : 1;
+          return Date.parse(right.publishedAt) - Date.parse(left.publishedAt);
+        })
+        .slice(0, 2);
+    }
 
-    function ConsumerOutlookSection({ active, setActive }) {
-      const reveal = useReveal();
-      const [hostRef, inView] = useInView('360px 0px 360px 0px');
-      const [state, setState] = useState({ status: 'idle' });
-      const [horizon, setHorizon] = useState(() => {
-        try {
-          return new URLSearchParams(window.location.search).get('outlook') === 'weekly'
-            ? 'weekly'
-            : 'daily';
-        } catch {
-          return 'daily';
-        }
+    function formatBriefingDate(value) {
+      const date = new Date(value);
+      if (!Number.isFinite(date.getTime())) return 'Time pending';
+      return date.toLocaleDateString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric',
+        timeZone: 'UTC',
       });
-      const [outlookAttempt, setOutlookAttempt] = useState(0);
-      const [shareState, setShareState] = useState('');
+    }
+
+    function formatBriefingEventMoment(value) {
+      const date = new Date(value);
+      if (!Number.isFinite(date.getTime())) return 'Time unavailable';
+      return date.toLocaleString(undefined, {
+        month: 'short',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: '2-digit',
+        timeZone: 'UTC',
+        timeZoneName: 'short',
+      });
+    }
+
+    function nextBriefingFactor(entry, nowMs) {
+      const seen = new Set();
+      return (Array.isArray(entry?.factors) ? entry.factors : [])
+        .filter(factor => {
+          if (!factor?.id || factor.kind === 'occupancy') return false;
+          const at = Date.parse(factor.at || '');
+          return Number.isFinite(at) && at > nowMs;
+        })
+        .sort((left, right) => (
+          Date.parse(left.at) - Date.parse(right.at)
+          || String(left.id).localeCompare(String(right.id))
+        ))
+        .find(factor => {
+          if (seen.has(factor.id)) return false;
+          seen.add(factor.id);
+          return true;
+        }) || null;
+    }
+
+    function formatBriefingCountdown(value, nowMs) {
+      const remaining = Date.parse(value || '') - nowMs;
+      if (!Number.isFinite(remaining) || remaining <= 0) return 'Now';
+      const minutes = Math.max(1, Math.ceil(remaining / 60_000));
+      if (minutes < 60) return `in ${minutes}m`;
+      const hours = Math.floor(minutes / 60);
+      const minuteRemainder = minutes % 60;
+      if (hours < 24) return `in ${hours}h${minuteRemainder ? ` ${minuteRemainder}m` : ''}`;
+      const days = Math.floor(hours / 24);
+      const hourRemainder = hours % 24;
+      return `in ${days}d${hourRemainder ? ` ${hourRemainder}h` : ''}`;
+    }
+
+    function briefingReadingFor(outlook, sign) {
+      const name = sign.name;
+      switch (outlook?.signal) {
+        case 'supportive':
+          return `Traditional astrology reads this as a more constructive backdrop for ${name}; it does not imply a higher token price.`;
+        case 'watchful':
+          return `Traditional astrology reads this as a higher-friction backdrop for ${name}; market direction remains independent.`;
+        case 'charged':
+          return `Traditional astrology reads this as an intense event window for ${name}; it does not predict price direction or volatility.`;
+        case 'active':
+          return `Traditional astrology reads this as heightened focus on ${name}; check whether volume and liquidity actually show greater activity.`;
+        case 'steady':
+          return `Traditional astrology reads this as moderate focus on ${name}; compare it with market participation without assuming direction.`;
+        case 'quiet':
+        default:
+          return `Traditional astrology treats this as a low-activity window for ${name}; use it as context, not a market forecast.`;
+      }
+    }
+
+    function BriefingHeadline({ item }) {
+      const category = item.sourceType === 'astronomy' ? 'Astronomy' : 'Astrology';
+      return (
+        <article className="consumer-briefing__headline" data-briefing-headline>
+          <a href={item.url} rel="noopener noreferrer external">
+            <span>
+              <strong>{category} · {item.publisher}</strong>
+              <time dateTime={item.publishedAt}>{formatBriefingDate(item.publishedAt)}</time>
+            </span>
+            <h3>{item.title}</h3>
+            <i aria-hidden="true">↗</i>
+          </a>
+        </article>
+      );
+    }
+
+    function ConsumerMarketBriefing({ active }) {
+      const reveal = useReveal();
+      const [hostRef, inView] = useInView('460px 0px');
+      const [sky, setSky] = useState({ status: 'idle' });
+      const [skyAttempt, setSkyAttempt] = useState(0);
+      const [nowMs, setNowMs] = useState(() => Date.now());
       const market = useTwelveQuotes(inView);
+      const news = useRegistryNews(inView);
+      const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
 
       useEffect(() => {
         if (!inView) return undefined;
         let cancelled = false;
-        setState({ status: 'loading' });
-        fetch('/assets/registry-outlook.json', { headers: { accept: 'application/json' } })
+        setSky({ status: 'loading' });
+        fetch(REGISTRY_OUTLOOK_URL, {
+          cache: 'no-cache',
+          headers: { accept: 'application/json' },
+        })
           .then((response) => {
             if (!response.ok) throw new Error(`http ${response.status}`);
             return response.json();
@@ -4149,198 +4951,173 @@
             if (!Array.isArray(data?.daily?.signs) || !Array.isArray(data?.weekly?.signs)) {
               throw new Error('invalid outlook payload');
             }
-            if (!cancelled) setState({ status: 'ok', data });
+            if (!cancelled) setSky({ status: 'ok', data });
           })
-          .catch(() => { if (!cancelled) setState({ status: 'unavailable' }); });
+          .catch(() => { if (!cancelled) setSky({ status: 'unavailable' }); });
         return () => { cancelled = true; };
-      // `inView` is sticky once observed. State itself stays out of this list:
-      // setting `loading` must not cancel the request that just started.
-      }, [inView, outlookAttempt]);
+      }, [inView, skyAttempt]);
 
-      const edition = state.status === 'ok' ? state.data[horizon] : null;
-      const activeSign = SIGNS.find(item => item.ticker === active) ?? SIGNS[0];
-      const outlook = edition?.signs?.find(item => item.sign === activeSign.asset.sign) || null;
+      useEffect(() => {
+        if (!inView) return undefined;
+        setNowMs(Date.now());
+        const timer = window.setInterval(() => setNowMs(Date.now()), 60_000);
+        return () => window.clearInterval(timer);
+      }, [inView]);
+
+      const dailyEdition = sky.status === 'ok' ? sky.data.daily : null;
+      const weeklyEdition = sky.status === 'ok' ? sky.data.weekly : null;
+      const dailyOutlook = dailyEdition?.signs?.find(item => item.sign === activeSign.asset.sign) || null;
+      const weeklyOutlook = weeklyEdition?.signs?.find(item => item.sign === activeSign.asset.sign) || null;
+      const primaryFactor = dailyOutlook?.primaryFactor ?? null;
+      const nextFactor = nextBriefingFactor(weeklyOutlook, nowMs);
       const quote = market.status === 'ok' ? market.quotes[activeSign.asset.sign] : null;
-      const ranked = edition
-        ? [...edition.signs].sort((a, b) => a.attentionRank - b.attentionRank)
-        : [];
-      const editionLabel = edition
-        ? new Date(`${edition.date}T12:00:00Z`).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })
+      const headlines = visibleBriefingHeadlines(news.data, activeSign.asset.sign);
+      const editionReference = dailyEdition?.horizon?.referenceAt
+        || (dailyEdition?.date ? `${dailyEdition.date}T12:00:00.000Z` : '');
+      const editionIsCurrent = dailyEdition?.date === new Date(nowMs).toISOString().slice(0, 10);
+      const coverageComplete = dailyEdition?.coverage?.overall === 'complete'
+        && dailyEdition?.coverage?.events === 'complete'
+        && dailyEdition?.coverage?.occupancies === 'complete';
+      const marketLoading = market.status === 'idle' || market.status === 'loading';
+      const skyLoading = sky.status === 'idle' || sky.status === 'loading';
+      const newsLoading = news.status === 'idle' || news.status === 'loading';
+      const editionMeta = sky.status === 'unavailable'
+        ? 'Sky edition unavailable'
+        : dailyEdition
+          ? `Edition ${formatBriefingDate(editionReference)}`
+          : 'Loading today’s edition';
+      const marketRead = market.observedAt
+        ? new Date(market.observedAt).toLocaleTimeString(undefined, {
+            hour: 'numeric', minute: '2-digit', timeZone: 'UTC', timeZoneName: 'short',
+          })
         : '';
-      const utcToday = new Date().toISOString().slice(0, 10);
-      const editionIsCurrent = Boolean(edition && edition.date === utcToday);
-      const scoreTone = outlook?.scores?.tone ?? 0;
-      const toneLabel = scoreTone > 0 ? `+${scoreTone}` : `${scoreTone}`;
-      const signalLabel = outlook ? titleCase(outlook.signal) : 'Reading…';
-      const shareCopy = outlook
-        ? `${activeSign.name} · ${horizon === 'weekly' ? '7-day' : 'daily'} sky signal: ${signalLabel}\nEdition ${edition.date} · Attention ${outlook.scores.attention}/100 · tone ${toneLabel} · volatility ${outlook.scores.volatility}/100\n${outlook.primaryFactor ? `Main factor: ${outlook.primaryFactor.label}.` : 'No exact event in this window.'}\nExperimental symbolic index — not a price forecast or financial advice.`
-        : '';
-      const shareOutlook = async () => {
-        const shared = new URL('/registry/', window.location.origin);
-        shared.searchParams.set('sign', activeSign.asset.sign);
-        shared.searchParams.set('outlook', horizon);
-        shared.hash = 'outlook';
-        const url = shared.toString();
-        try {
-          if (navigator.share) {
-            try {
-              await navigator.share({ title: `${activeSign.name} sky signal`, text: shareCopy, url });
-              setShareState('Shared.');
-              trackAnalytics('registry_outlook_shared', { sign: activeSign.asset.sign, horizon, destination: 'native' });
-              return;
-            } catch (error) {
-              if (error?.name === 'AbortError') return;
-            }
-          }
-          if (!navigator.clipboard?.writeText) throw new Error('clipboard');
-          await navigator.clipboard.writeText(`${shareCopy}\n${url}`);
-          setShareState('Reading copied.');
-          trackAnalytics('registry_outlook_shared', { sign: activeSign.asset.sign, horizon, destination: 'clipboard' });
-        } catch (error) {
-          setShareState('Could not share this reading.');
-        }
-      };
 
       return (
-        <section ref={reveal} id="outlook" className="consumer-outlook reveal" aria-labelledby="consumer-outlook-title">
-          <header className="consumer-outlook__head">
-            <div className="consumer-section-head">
-              <span className="consumer-section-head__eyebrow">Open research instrument · v1</span>
-              <h2 id="consumer-outlook-title">A forecast you can <span className="it">audit.</span></h2>
+        <section
+          ref={reveal}
+          id="briefing"
+          className="consumer-briefing reveal"
+          aria-labelledby="consumer-briefing-title"
+          aria-busy={skyLoading || marketLoading || news.status === 'loading'}
+          data-briefing-sign={activeSign.asset.sign}
+          style={{ '--briefing-sign': activeSign.hue }}
+        >
+          <span id="research" className="consumer-briefing__legacy-anchor" aria-hidden="true" />
+          <span id="outlook" className="consumer-briefing__legacy-anchor" aria-hidden="true" />
+          <header ref={hostRef} className="consumer-briefing__head">
+            <div>
+              <span className="consumer-section-head__eyebrow">Sky fact · market observation</span>
+              <h2 id="consumer-briefing-title">Today’s market briefing</h2>
+              <p>One relevant sky event, one plain-language reading, and the market measures that matter now.</p>
             </div>
-            <p>
-              We publish the sky signal before the window closes, then observe price,
-              liquidity, and volume separately. The leading factors and calculations
-              are visible here; the full edition and every miss stay in the record.
-            </p>
+            <div className="consumer-briefing__sign">
+              <img src={`/assets/zodiac-icons/128/${activeSign.asset.sign}.webp`} width="58" height="58" alt="" decoding="async" />
+              <span>
+                <small>Selected token</small>
+                <strong>{activeSign.name}</strong>
+                <em>{editionMeta}</em>
+              </span>
+            </div>
           </header>
 
-          <div ref={hostRef} className="outlook-lab" style={{ '--outlook-sign': activeSign.hue }}>
-            <div className="outlook-lab__toolbar">
-              <div role="group" aria-label="Choose outlook horizon">
-                <button type="button" aria-pressed={horizon === 'daily'} onClick={() => setHorizon('daily')}>Daily</button>
-                <button type="button" aria-pressed={horizon === 'weekly'} onClick={() => setHorizon('weekly')}>7 days</button>
-              </div>
-              <span>{edition ? `Edition ${editionLabel} · 12:00 UTC reference` : 'Loading the committed sky…'}</span>
-            </div>
+          {!editionIsCurrent && dailyEdition && (
+            <p className="consumer-briefing__notice" role="status">
+              Latest published sky edition: {formatBriefingDate(editionReference)}. Treat this as archived context until today’s edition publishes.
+            </p>
+          )}
+          {dailyEdition && !coverageComplete && (
+            <p className="consumer-briefing__notice" role="status">
+              This edition has partial sky coverage and may omit an event.
+            </p>
+          )}
 
-            {edition && !editionIsCurrent && (
-              <p className="outlook-lab__stale" role="status">
-                Latest committed edition: {editionLabel}. Sharing is paused until the {utcToday} UTC edition publishes.
-              </p>
-            )}
-
-            {state.status === 'unavailable' ? (
-              <div className="outlook-lab__state">
-                <p>The research instrument is temporarily unavailable. Live markets and official records remain independent.</p>
-                <button type="button" onClick={() => setOutlookAttempt(value => value + 1)}>Try again</button>
-              </div>
-            ) : (
-              <div className="outlook-lab__grid" aria-busy={state.status !== 'ok'}>
-                <div className="outlook-reading">
-                  <div
-                    className="outlook-dial"
-                    style={{
-                      '--attention': `${(outlook?.scores?.attention ?? 0) * 3.6}deg`,
-                      '--volatility': `${(outlook?.scores?.volatility ?? 0) * 3.6}deg`,
-                    }}
-                    aria-label={outlook ? `${activeSign.name}: attention ${outlook.scores.attention}, tone ${toneLabel}, volatility ${outlook.scores.volatility}` : 'Loading scores'}
-                  >
-                    <span className="outlook-dial__outer"><span className="outlook-dial__inner">
-                      <img src={`/assets/zodiac-icons/128/${activeSign.asset.sign}.webp`} width="108" height="108" alt="" decoding="async" />
-                    </span></span>
-                  </div>
-                  <div className="outlook-reading__copy">
-                    <span className="outlook-reading__eyebrow">{activeSign.name} · {horizon === 'weekly' ? '7-day outlook' : 'daily outlook'}</span>
-                    <h3>{signalLabel}</h3>
-                    <p>{outlook ? OUTLOOK_SIGNAL_COPY[outlook.signal] : 'Calculating the published symbolic index…'}</p>
-                    {outlook && (
-                      <dl className="outlook-scores">
-                        <div><dt>Attention</dt><dd>{outlook.scores.attention}<small>/100</small></dd></div>
-                        <div><dt>Tone</dt><dd>{toneLabel}</dd></div>
-                        <div><dt>Volatility</dt><dd>{outlook.scores.volatility}<small>/100</small></dd></div>
-                      </dl>
-                    )}
-                    <div className="outlook-market-context">
-                      <span>Observed market · not an input</span>
-                      <strong>{quote ? `${formatPriceUsd(quote.priceUsd)} · ${formatPercent(quote.priceChange24h)} 24h` : 'Live context unavailable'}</strong>
-                      <small>{quote ? `${formatUsdCompact(quote.liquidityUsd)} indexed liquidity` : 'The sky score does not change when market data is missing.'}</small>
-                    </div>
-                    <div className="outlook-reading__actions">
-                      <button type="button" onClick={shareOutlook} disabled={!outlook || !editionIsCurrent}>Share reading</button>
-                      <a href="#market">View live market</a>
-                    </div>
-                    <p className="outlook-reading__share" role="status" aria-live="polite">{shareState}</p>
-                  </div>
+          <div className="consumer-briefing__grid">
+            <article className="consumer-briefing__lead" data-briefing-event>
+              <span className="consumer-briefing__label">
+                {primaryFactor?.kind === 'occupancy' ? 'Daily sky reference' : 'Most relevant sky event'}
+              </span>
+              {sky.status === 'unavailable' ? (
+                <div className="consumer-briefing__state">
+                  <h3>Sky context unavailable</h3>
+                  <p>Market and source feeds load independently.</p>
+                  <button className="registry-pill registry-pill--compact" type="button" onClick={() => setSkyAttempt(value => value + 1)}>Retry sky data</button>
                 </div>
+              ) : (
+                <>
+                  <h3>{skyLoading ? 'Reading the published sky…' : primaryFactor?.label ?? 'No concentrated event today'}</h3>
+                  {primaryFactor?.at && <time dateTime={primaryFactor.at}>{formatBriefingEventMoment(primaryFactor.at)}</time>}
+                  <div className="consumer-briefing__reading" data-briefing-reading>
+                    <span>Traditional reading</span>
+                    <p>{skyLoading ? 'The practical reading will appear with the published edition.' : briefingReadingFor(dailyOutlook, activeSign)}</p>
+                  </div>
+                </>
+              )}
+            </article>
 
-                <aside className="outlook-factors" aria-label={`${activeSign.name} calculation`}>
-                  <span className="outlook-factors__eyebrow">
-                    What moved the score{outlook?.factors?.length > 3 ? ` · top 3 of ${outlook.factors.length}` : ''}
+            <aside className="consumer-briefing__market" aria-label={`${activeSign.name} observed market data`} data-briefing-market>
+              <header>
+                <span className="consumer-briefing__label">Observed market</span>
+                <small>{marketRead ? `Read ${marketRead}${market.stale ? ' · refresh delayed' : ''}` : marketLoading ? 'Reading live market…' : 'Live read unavailable'}</small>
+              </header>
+              <dl>
+                <div><dt>Price</dt><dd>{quote ? formatPriceUsd(quote.priceUsd) : marketLoading ? '…' : '—'}</dd></div>
+                <div><dt>24H change</dt><dd className={quote ? marketChangeClass(quote.priceChange24h) : ''}>{quote ? formatPercent(quote.priceChange24h) : marketLoading ? '…' : '—'}</dd></div>
+                <div><dt>Liquidity</dt><dd>{quote ? formatUsdCompact(quote.liquidityUsd) : marketLoading ? '…' : '—'}</dd></div>
+                <div><dt>24H volume</dt><dd>{quote ? formatUsdCompact(quote.volume24h) : marketLoading ? '…' : '—'}</dd></div>
+              </dl>
+              <p>Observed separately. Market data never changes the sky reading.</p>
+            </aside>
+
+            <aside className="consumer-briefing__next" aria-label={`${activeSign.name} next exact event`} data-briefing-next-event>
+              <span className="consumer-briefing__label">Next exact event · 7-day window</span>
+              {skyLoading ? (
+                <p>Loading the published seven-day schedule…</p>
+              ) : sky.status === 'unavailable' ? (
+                <p>Next-event schedule unavailable.</p>
+              ) : nextFactor ? (
+                <>
+                  <strong>{nextFactor.label}</strong>
+                  <span>
+                    <time dateTime={nextFactor.at}>{formatBriefingEventMoment(nextFactor.at)}</time>
+                    <em aria-hidden="true">{formatBriefingCountdown(nextFactor.at, nowMs)}</em>
                   </span>
-                  {outlook?.factors?.length ? (
-                    <ol>
-                      {outlook.factors.slice(0, 3).map((factor, index) => (
-                        <li key={factor.id}>
-                          <span>{String(index + 1).padStart(2, '0')}</span>
-                          <div>
-                            <strong>{factor.label}</strong>
-                            <p>{factor.explanation}</p>
-                            <code>{factor.calculation}</code>
-                          </div>
-                        </li>
-                      ))}
-                    </ol>
-                  ) : (
-                    <p className="outlook-factors__empty">No exact event is concentrated in this sign during the selected window.</p>
-                  )}
-                  {edition?.evidence && (
-                    <div className="outlook-calibration">
-                      <span>Public scorekeeping</span>
-                      <strong>{edition.evidence.historyDaysObserved} / {edition.evidence.minimumHistoryDays} daily observations</strong>
-                      <small>{edition.evidence.historyDaysRemaining} remaining before the first eligible held-out evaluation.</small>
-                    </div>
-                  )}
-                  <details className="outlook-method">
-                    <summary>Read the full method</summary>
-                    <div>
-                      <p><strong>Occupancy.</strong> Each planet adds a disclosed attention weight to the sign it occupies at the UTC reference point.</p>
-                      <p><strong>Event proximity.</strong> Exact ingresses, lunations, stations, and aspects receive 1.00–0.75× weight across the window.</p>
-                      <p><strong>Evaluation.</strong> Signals must be timestamped before outcomes and compared with persistence and equal-sign baselines on held-out data.</p>
-                      <a href="/assets/registry-outlook.json">Open the machine-readable edition ↗</a>
-                    </div>
-                  </details>
-                </aside>
-              </div>
-            )}
-
-            {ranked.length > 0 && (
-              <div className="outlook-wheel" role="group" aria-label="Symbolic attention across the twelve signs">
-                {ranked.map(item => {
-                  const sign = SIGNS.find(candidate => candidate.asset.sign === item.sign);
-                  const selected = sign?.ticker === active;
-                  if (!sign) return null;
-                  return (
-                    <button
-                      key={item.sign}
-                      type="button"
-                      aria-pressed={selected}
-                      onClick={() => setActive(sign.ticker)}
-                      style={{ '--wheel-sign': sign.hue, '--wheel-score': `${item.scores.attention}%` }}
-                    >
-                      <span className="outlook-wheel__rank">{String(item.attentionRank).padStart(2, '0')}</span>
-                      <img src={`/assets/zodiac-icons/48/${item.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
-                      <span><strong>{sign.name}</strong><small>{item.scores.attention} attention</small></span>
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+                </>
+              ) : (
+                <p>No additional exact event is scheduled for {activeSign.name} in the published seven-day window.</p>
+              )}
+            </aside>
           </div>
 
+          <div className="consumer-briefing__news" aria-label="Independent source headlines" data-briefing-headlines>
+            <header>
+              <span className="consumer-briefing__label">Independent reporting</span>
+              <small>{newsLoading || headlines.length > 0
+                ? 'Publisher and publication date shown for every source'
+                : 'Fresh source coverage is unavailable'}</small>
+            </header>
+            <div>
+              {headlines.map(item => <BriefingHeadline key={item.id} item={item} />)}
+              {newsLoading && [0, 1].map(index => (
+                <article className="consumer-briefing__headline consumer-briefing__headline--placeholder" aria-hidden="true" key={index}>
+                  <span />
+                  <span />
+                </article>
+              ))}
+              {news.status === 'unavailable' && <p className="consumer-briefing__news-state">Source headlines are temporarily unavailable.</p>}
+              {news.status === 'ok' && headlines.length === 0 && <p className="consumer-briefing__news-state">No fresh source headlines are available.</p>}
+            </div>
+          </div>
+
+          <footer className="consumer-briefing__foot">
+            <p>Symbolic context—not a price forecast. Astrology has no established predictive relationship with asset prices, and crypto assets can lose all value.</p>
+            <a className="registry-pill registry-pill--record consumer-briefing__cta" href={`/terminal/research/?sign=${activeSign.asset.sign}`}>
+              <span>Open Markets Research</span><span className="market-row__action-orb" aria-hidden="true">↗</span>
+            </a>
+          </footer>
         </section>
       );
     }
+
     function useStageMode() {
       // The original Registry gallery worked at every width. Keep the real
       // turntable on phones as well as desktops whenever WebGL exists; the
@@ -4356,10 +5133,9 @@
           ref={reveal}
           id="official-twelve"
           className={'consumer-explorer' + (stageMode ? ' consumer-explorer--stage' : '')}
-          aria-labelledby="consumer-explorer-title"
+          aria-label="Interactive gallery of the twelve official Zodiac tokens"
           style={{ '--active-sign': sign.hue }}
         >
-          <h1 id="consumer-explorer-title" className="sr-only">Zodiacs Official Registry</h1>
           {/* This section IS the page's opening at every width. WebGL keeps
               the original interactive gallery on desktop and mobile; only
               machines that cannot paint it receive the image carousel. */}
@@ -4382,12 +5158,14 @@
       return (
         <section ref={reveal} id="registry" className="consumer-how reveal" aria-labelledby="consumer-how-title">
           <header className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">One public reference</span>
-            <h2 id="consumer-how-title">What the Registry does.</h2>
+            <span className="consumer-section-head__eyebrow">The asset, in plain language</span>
+            <h2 id="consumer-how-title">What is a Zodiac?</h2>
           </header>
           <p className="consumer-how__intro">
-            The Registry is the public list of the twelve official Zodiac tokens.
-            It shows which token belongs to each sign and where its record lives.
+            A Zodiac is a transferable digital token for one of the twelve signs. Hold your
+            sign, send one to someone, collect the wheel, or display a public wallet in the
+            Cabinet of Twelve. The gold sculpture is collection artwork—not a physical object
+            or a one-of-one NFT.
           </p>
 
           <ol id="identity" className="consumer-steps" aria-label="How to use the Registry">
@@ -4398,8 +5176,8 @@
                 ))}
               </span>
               <span className="consumer-step__copy">
-                <strong>Choose a sign</strong>
-                <small>Start with the pastel disc you already recognize.</small>
+                <strong>One token for each sign</strong>
+                <small>The same rules, with a distinct season, constellation, pastel identity, and gold artwork.</small>
               </span>
             </li>
             <li>
@@ -4408,8 +5186,8 @@
                 <code>8Cd7…b8Qm</code>
               </span>
               <span className="consumer-step__copy">
-                <strong>Match the address</strong>
-                <small>The record—not the name or ticker—proves which token is official.</small>
+                <strong>Verify the exact address</strong>
+                <small>The public record—not a name, ticker, or social post—identifies the token listed here.</small>
               </span>
             </li>
             <li>
@@ -4419,16 +5197,16 @@
                 <span><img src="/assets/zodiac-icons/48/leo.webp" width="28" height="28" alt="" /></span>
               </span>
               <span className="consumer-step__copy">
-                <strong>Recognize it anywhere</strong>
-                <small>The same pastel identity follows the record into wallets and apps.</small>
+                <strong>Hold, send, or collect</strong>
+                <small>The token remains fungible; Cabinet artwork changes only how a public balance is displayed.</small>
               </span>
             </li>
           </ol>
 
           <div className="consumer-proof" aria-label="Registry facts">
-            <span><strong>12</strong> signs</span>
-            <span><strong>Solana + Base</strong> official records</span>
-            <span><strong>Safe to browse</strong> no wallet required</span>
+            <span><strong>12</strong> transferable tokens</span>
+            <span><strong>Solana + Base</strong> recorded representations</span>
+            <span><strong>Read-only</strong> no wallet required</span>
           </div>
 
           <details className="consumer-disclosure">
@@ -4594,14 +5372,15 @@
     function ConsumerClosing() {
       const reveal = useReveal();
       return (
-        <section ref={reveal} className="consumer-closing reveal" aria-label="Choose a sign">
-          <h2>Find your sign in the Registry.</h2>
-          <p>Start with the one you already know.</p>
+        <section ref={reveal} className="consumer-closing reveal" aria-labelledby="consumer-closing-title">
+          <span className="consumer-closing__eyebrow">Official records</span>
+          <h2 id="consumer-closing-title">Find your sign in the Registry.</h2>
+          <p>One sign. One verified record across Solana and Base.</p>
           <div className="consumer-closing__actions">
-            <a className="btn btn--primary" href="#official-twelve">
-              <span>Choose a token</span><span className="arr" aria-hidden="true">↑</span>
+            <a className="consumer-closing__registry" href="/registry/">
+              <span>Open the Zodiacs Registry</span>
+              <span className="consumer-closing__arrow" aria-hidden="true">→</span>
             </a>
-            <a href="/registry/technical/">Open the technical record</a>
           </div>
         </section>
       );
@@ -4690,41 +5469,29 @@
       );
     }
 
-    function Footer({ technical = false }) {
+    function TechnicalFooter() {
       return (
-        <footer className="ftr">
+        <footer className="ftr ftr--technical">
           <div className="ftr__row">
             <div className="mark">Zodiacs<span className="g">·</span>org</div>
             <div>© MMXXVI</div>
           </div>
-        <div className="ftr__row">
-          <div className="ftr__legal">
-            {technical ? (
-              <>
-                <a href="/registry/">Consumer Registry</a>
-                <a href="#records-networks">Records</a>
-                <a href="#market-transparency">Market</a>
-                <a href="#onchain-access">Access</a>
-                <a href="#builders">Builders</a>
-                <a href="#security">Safety</a>
-              </>
-            ) : (
-              <>
-                <a href="#official-twelve">The Twelve</a>
-                <a href="#registry">How it works</a>
-                <a href="#verify">Verify a token</a>
-                <a href="/registry/technical/">Technical record</a>
-                <a href="#thesis">Thesis</a>
-              </>
-            )}
-            <a href="/sdk/">SDK</a>
-            <a href="/registry/zodiacs.registry.json">Record</a>
-            <a href="/archive/">Archive</a>
-            <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
-            <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
-            <a href="/privacy/">Privacy</a>
-            <a href="/terms/">Terms</a>
-          </div>
+          <div className="ftr__row">
+            <div className="ftr__legal">
+              <a href="/registry/">Zodiacs Registry</a>
+              <a href="#records-networks">Records</a>
+              <a href="#market-transparency">Market</a>
+              <a href="#onchain-access">Access</a>
+              <a href="#builders">Builders</a>
+              <a href="#security">Safety</a>
+              <a href="/sdk/">SDK</a>
+              <a href="/registry/zodiacs.registry.json">Record</a>
+              <a href="/archive/">Archive</a>
+              <button className="assistant-link" type="button" data-assistant-open aria-haspopup="dialog">Ask Zodiacs</button>
+              <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
+              <a href="/privacy/">Privacy</a>
+              <a href="/terms/">Terms</a>
+            </div>
             <div>Registry lookup tools: read-only</div>
           </div>
           <div className="ftr__row">
@@ -4737,6 +5504,80 @@
             </div>
             <div>Channels</div>
           </div>
+          <div className="ftr__row ftr__row--origin">
+            <span>
+              Zodiacs.org · Official registry · Est. {REGISTRY_ESTABLISHED} ·{' '}
+              {REGISTRY_ESTABLISHMENT_PROVENANCE_URL
+                ? <a href={REGISTRY_ESTABLISHMENT_PROVENANCE_URL} rel="noopener nofollow">{REGISTRY_ESTABLISHMENT_PROVENANCE_LABEL}</a>
+                : <a href="/disclosure/#origin">{REGISTRY_PROVENANCE_PENDING_LABEL}</a>}
+            </span>
+          </div>
+        </footer>
+      );
+    }
+
+    function Footer({ technical = false }) {
+      if (technical) return <TechnicalFooter />;
+      return (
+        <footer className="ftr">
+          <div className="ftr__mast">
+            <div className="ftr__identity">
+              <div className="mark">Zodiacs<span className="g">·</span>org</div>
+              <p>Live markets, verified by the public Registry.</p>
+            </div>
+            <div className="ftr__copyright">© MMXXVI</div>
+          </div>
+
+          <div className="ftr__directory">
+            <nav className="ftr__group" aria-label="Explore Zodiacs">
+              <span className="ftr__label">Explore</span>
+              <div className="ftr__links">
+                <a href="/registry/">Official Registry</a>
+                <a href="/terminal/research/">Markets research</a>
+                <a href="/registry/#verify">Verify a token</a>
+              </div>
+            </nav>
+            <nav className="ftr__group" aria-label="Trust and policies">
+              <span className="ftr__label">Trust</span>
+              <div className="ftr__links">
+                <a href="/disclosure/">{REGISTRY_DISCLOSURE_LABEL}</a>
+                <a href="/privacy/">Privacy</a>
+                <a href="/terms/">Terms</a>
+              </div>
+            </nav>
+          </div>
+
+          <aside
+            className="ftr__market-notice"
+            role="note"
+            aria-labelledby="terminal-market-notice-title"
+            data-terminal-market-notice
+          >
+            <span className="ftr__market-notice-label" id="terminal-market-notice-title">Market &amp; venue notice</span>
+            <div className="ftr__market-notice-copy">
+              <p>
+                Zodiac tokens are speculative, thinly traded digital assets. Prices can be
+                volatile, liquidity may disappear, and you could lose all money used to acquire
+                one. Astrology has no established predictive relationship with asset prices.
+              </p>
+              <p>
+                Zodiacs.org provides the Terminal interface and public Registry; it does not
+                operate a DEX, exchange, broker, or custodial service. When trading is available,
+                Jupiter, an independent third-party liquidity aggregator, supplies the executable
+                quote, builds and submits the transaction, and charges any venue fee shown; your
+                wallet reviews, approves, and signs. Zodiacs.org holds no keys or funds, cannot
+                reverse transactions, and receives no trading or referral compensation.
+                References to Jupiter do not imply affiliation or endorsement.
+              </p>
+              <p>
+                Information is for informational purposes only and is not an offer or solicitation,
+                an investment recommendation or trading strategy, or accounting, legal, tax, or
+                financial advice. Third-party services may not be available in all regions. Verify
+                the official address, network, amount, fees, and destination before signing.
+              </p>
+            </div>
+          </aside>
+
           <div className="ftr__row ftr__row--origin">
             <span>
               Zodiacs.org · Official registry · Est. {REGISTRY_ESTABLISHED} ·{' '}
@@ -4763,7 +5604,7 @@
     };
 
     function Zodiacs() {
-      const technical = /^\/registry\/technical\/?$/.test(window.location.pathname);
+      const technical = REGISTRY_VIEW === 'technical';
       const [activeTicker, setActiveTicker] = useState(
         () => {
           try {
@@ -4949,7 +5790,7 @@
             <Header />
             <main id="main" className="zd technical-registry">
               <header className="technical-hero">
-                <a className="technical-hero__back" href="/registry/">← Consumer Registry</a>
+                <a className="technical-hero__back" href="/registry/">← Zodiacs Registry</a>
                 <span className="technical-hero__kicker">The complete public record</span>
                 <h1>Registry <span className="it">technical record.</span></h1>
                 <p>
@@ -5025,14 +5866,17 @@
           <div className="grain" aria-hidden="true" />
           <Header />
           <main id="main" className="zd consumer-registry">
-            <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
-            <ConsumerMarketSection
-              active={activeTicker}
-              setActive={setActiveTicker}
-              personalSlug={personalSlug}
-              setPersonalSlug={setPersonalSlug}
-            />
-            <ConsumerOutlookSection active={activeTicker} setActive={setActiveTicker} />
+            <ConsumerCapitalHeader sign={sign} />
+            <div className="consumer-capital-opening">
+              <ConsumerExplorer active={activeTicker} setActive={setActiveTicker} sign={sign} stageMode={stageMode} />
+              <ConsumerMarketSection
+                active={activeTicker}
+                setActive={setActiveTicker}
+                personalSlug={personalSlug}
+                setPersonalSlug={setPersonalSlug}
+              />
+            </div>
+            <ConsumerMarketBriefing active={activeTicker} />
             <ConsumerHowItWorks />
             <VerifierSection />
             <ConsumerPurpose />

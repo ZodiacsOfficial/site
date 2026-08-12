@@ -1,7 +1,7 @@
-// The gallery band — the twelve as the registry hub's selector.
+// The gallery band — the twelve as Zodiac Terminal's selector.
 //
-// The contract has three parties: the hub page (pre-paint WebGL probe + the
-// band's CSS), the hub application (the skeleton, the strip gate, the lazy
+// The contract has three parties: the Terminal page (pre-paint WebGL probe + the
+// band's CSS), the Terminal application (the skeleton, the strip gate, the lazy
 // bundle), and the scene (embed mode: no card, no hash writes, events out,
 // navigation in). Each is pinned where it lives, source and artifact both,
 // so the compiled output cannot drift from the contract.
@@ -32,7 +32,7 @@ function functionBody(source, name) {
   return '';
 }
 
-describe('the gallery band on the registry hub', () => {
+describe('the gallery band on Zodiac Terminal', () => {
   it('renders the embedded stage skeleton and gates the strip on the probe', async () => {
     const source = await read('src/app.jsx');
     for (const marker of [
@@ -49,6 +49,11 @@ describe('the gallery band on the registry hub', () => {
     expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
     expect(source).toContain('carousel={!stageMode}');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
+    expect(source).toContain('const [posterSlug, setPosterSlug] = useState(slug);');
+    expect(source).toContain('if (!galleryReady) setPosterSlug(slug);');
+    expect(source).toContain('src={`/assets/sculptures/512/${posterSlug}.webp`}');
+    expect(source).toContain('connection?.saveData');
+    expect(source).toContain("/(^|-)2g$/.test(connection?.effectiveType || '')");
     expect(source).not.toContain('data-consumer-gallery-toggle');
   });
 
@@ -107,8 +112,11 @@ describe('the gallery band on the registry hub', () => {
   });
 
   it('probes WebGL before first paint and dresses the live page', async () => {
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     expect(html).toContain("documentElement.classList.add('gallery-live')");
+    expect(html).toContain('network.saveData');
+    expect(html).toContain("/(^|-)2g$/.test(network.effectiveType || '')");
+    expect(html).toContain('if (!constrained && (glProbe.getContext');
     expect(html).toContain('.gband {');
     // The fallback card is absent rather than merely concealed.
     expect(html).not.toContain('html.gallery-live #featured-sign');
@@ -148,7 +156,7 @@ describe('the gallery band on the registry hub', () => {
       .toContain('if (spotlight) return;');
   });
 
-  it('turns the Registry spotlight with the Thesis engine, then yields to the hand', async () => {
+  it('gives the Registry one bounded inspection sweep, then yields to the hand', async () => {
     const [app, driver, renderer, appBundle, sceneBundle] = await Promise.all([
       read('src/app.jsx'),
       read('src/shelf/main.mjs'),
@@ -160,6 +168,10 @@ describe('the gallery band on the registry hub', () => {
     // Rotation is a display treatment only: the spotlight never opens the
     // Thesis card or changes the selected sign when the focused cast is held.
     expect(driver).toContain('turntableActive({');
+    expect(driver).toContain('spotlightElapsed >= TURNTABLE.spotlightSeconds');
+    expect(driver).toContain("spotlightComplete ? 'rest' : 'ambient'");
+    expect(driver).toContain('TURNTABLE.spotlightManualArc');
+    expect(driver).toContain('Math.sin(progress * Math.PI * 2)');
     expect(driver).toContain("? 'rotate'\n      : 'browse'");
     expect(driver).toContain("if (drag.mode === 'rotate')");
     expect(driver).toContain("if (finished.mode === 'rotate')");
@@ -218,9 +230,39 @@ describe('the gallery band on the registry hub', () => {
     }
   });
 
+  it('loads only the selected high-resolution plate in the Registry spotlight', async () => {
+    const [driver, renderer, textures] = await Promise.all([
+      read('src/shelf/main.mjs'),
+      read('src/shelf/scene.mjs'),
+      read('src/shelf/textures.mjs'),
+    ]);
+    const arrival = driver.slice(driver.lastIndexOf('// The plates arrive after the room does:'));
+    expect(arrival).toContain('if (spotlight)');
+    expect(arrival).toContain('queueSpotlightRefine(start, { immediate: true });');
+    expect(arrival).toContain('void scene.dressRow(start, invalidate);');
+    expect(driver).toContain('scene.releaseExcept(index)');
+    expect(driver).toContain('spotlightTextureRequest');
+    expect(driver).toContain('spotlightController?.abort();');
+    expect(driver).toContain('}, immediate ? 0 : 180);');
+    expect(driver).toContain('spotlightTextureRequest += 1;');
+    expect(renderer).toContain('function releaseExcept(index)');
+    expect(renderer).toContain('const activeFaceMaps = new Set();');
+    expect(renderer).toContain('sceneDisposed || signal?.aborted');
+    expect(renderer).toContain('residentTextureCount: () => activeFaceMaps.size');
+    expect(renderer).toContain('figure.face.map = null;');
+    expect(renderer).toContain('disposeFaceMap(previous);');
+    expect(renderer).not.toContain('disposables.push(map);');
+    expect(textures).toContain('fetch(`/assets/sculptures/${tier}/${slug}.webp`');
+    expect(textures).toContain('signal,');
+    expect(textures).toContain("imageOrientation: 'flipY'");
+    expect(textures).toContain("premultiplyAlpha: 'none'");
+    expect(textures).toContain("colorSpaceConversion: 'none'");
+    expect(textures).toContain("error?.name !== 'AbortError'");
+  });
+
   it('keeps the rectangle’s rail out of the band the scene measures', async () => {
     const [app, html] = await Promise.all([
-      read('src/app.jsx'), read('public/registry/index.html'),
+      read('src/app.jsx'), read('public/terminal/index.html'),
     ]);
     // bandRects() treats .gband__chrome's offsetTop as the FLOOR of the band
     // it may paint into, so chrome above the canvas would leave the figures a
@@ -294,7 +336,7 @@ describe('the gallery band on the registry hub', () => {
       'Open Jupiter route',
       'View market data',
     ]) expect(source).toContain(marker);
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     expect(html).toContain('.gcard {');
     expect(html).toContain('.gband.is-open {');
     expect(html).toContain('.gband__name {');
@@ -315,7 +357,7 @@ describe('the gallery band on the registry hub', () => {
     const card = await read('src/shelf/card.mjs');
     expect(card).toContain('/assets/zodiac-icons/128/');
     expect(card).toContain('As it appears in wallets.');
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     expect(html).toContain('.gcard .rec__disc');
     expect(html).toContain('.gband .rail__tick img');
     const bundle = await read('public/assets/gallery.js');
@@ -332,7 +374,7 @@ describe('the gallery band on the registry hub', () => {
     // The pointer-following wave is paint-only: hit targets keep a stable
     // pitch while the picture grows inside them, avoiding layout work during
     // a WebGL interaction.
-    const html = await read('public/registry/index.html');
+    const html = await read('public/terminal/index.html');
     expect(html).toContain('width: var(--tick); height: var(--tick)');
     expect(html).not.toContain('width: calc(var(--tick) * var(--mag))');
     expect(html).toContain('transform: scale(var(--mag)); transform-origin: bottom center;');

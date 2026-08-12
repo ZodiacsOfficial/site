@@ -5,7 +5,7 @@
  *   npm run build
  *   npm run test:registry-selector:browser
  */
-import { mkdir } from 'node:fs/promises';
+import { mkdir, readFile } from 'node:fs/promises';
 import { chromium } from 'playwright-core';
 import { findChromium, STABLE_CHROMIUM_ARGS } from './visual/browser.mjs';
 import { withPreview } from './visual/preview-server.mjs';
@@ -13,15 +13,65 @@ import { withPreview } from './visual/preview-server.mjs';
 const OUT = process.env.OUT_DIR ?? null;
 const results = [];
 const check = (name, ok, detail = '') => results.push({ name, ok, detail });
-// The consumer route now includes the live market board and the public outlook
-// lab. Keep a ceiling as a regression guard, but size it for that intentional
-// narrative rather than the shorter pre-market Registry.
+async function waitForSettledCanvas(page, canvas, {
+  consecutive = 4,
+  interval = 350,
+  attempts = 18,
+} = {}) {
+  let previous = null;
+  let streak = 0;
+  for (let attempt = 0; attempt < attempts; attempt += 1) {
+    const frame = await canvas.screenshot();
+    streak = previous?.equals(frame) ? streak + 1 : 1;
+    previous = frame;
+    if (streak >= consecutive) return { frame, settled: true, attempts: attempt + 1 };
+    await page.waitForTimeout(interval);
+  }
+  return { frame: previous, settled: false, attempts };
+}
+// The consumer route includes the live market board and one concise briefing.
+// Keep a ceiling as a regression guard for the intentional narrative.
 const MAX_COMPACT_REGISTRY_HEIGHT = 9_000;
-const MAX_PHONE_REGISTRY_HEIGHT = 10_500;
+// Narrow phones retain the sculpture, market board, and one continuous
+// briefing, but no duplicate research ledger or twelve-sign signal wheel.
+// The fully revealed WebGL path, including the readable market-and-venue
+// notice, measures 10.3–10.6k across the supported phones. Keep a tight
+// ceiling with enough room for cross-platform font metrics.
+const MAX_PHONE_REGISTRY_HEIGHT = 10_750;
 // The 42px live tape now owns one row of the framed hero. The scene camera fits
 // the sculpture to the room it receives, so 260px is the useful desktop floor;
 // mobile retains its separate 200px floor and explicit placard-clearance gate.
 const MIN_DESKTOP_STAGE_HEIGHT = 260;
+const committedOutlook = JSON.parse(await readFile(
+  new URL('../public/assets/registry-outlook.json', import.meta.url),
+  'utf8',
+));
+const COMMITTED_OUTLOOK_REFERENCE = committedOutlook.daily.horizon.referenceAt;
+const committedRegistry = JSON.parse(await readFile(
+  new URL('../public/registry/zodiacs.registry.json', import.meta.url),
+  'utf8',
+));
+const REGISTRY_MINT_BY_SIGN = Object.fromEntries(
+  committedRegistry.assets.map((asset) => [asset.sign, asset.native.address]),
+);
+
+async function freezeRegistryClock(page) {
+  await page.addInitScript((referenceAt) => {
+    const NativeDate = Date;
+    const fixedTime = new NativeDate(referenceAt).getTime();
+    class RegistryDate extends NativeDate {
+      constructor(...args) {
+        super(...(args.length ? args : [fixedTime]));
+      }
+
+      static now() {
+        return fixedTime;
+      }
+    }
+    Object.setPrototypeOf(RegistryDate, NativeDate);
+    window.Date = RegistryDate;
+  }, COMMITTED_OUTLOOK_REFERENCE);
+}
 
 /**
  * The gallery band replaces the strip wherever WebGL exists, so the strip's
@@ -76,10 +126,156 @@ async function mockDexscreener(page, {
   });
 }
 
+/**
+ * The selected-token placard owns one small GeckoTerminal request: the 24
+ * closed hourly candles for its current canonical mint and deepest pool. The
+ * provider fills no-swap clock hours with the preceding close and zero volume;
+ * the fixture mirrors that contract so the UI can distinguish active candles
+ * from idle ticks without fabricating a swap.
+ */
+async function mockGeckoHourly(page, {
+  requests = [],
+  missingIndex = 9,
+  includedIndexes = null,
+} = {}) {
+  await page.route('https://api.geckoterminal.com/api/v2/**', (route) => {
+    const url = new URL(route.request().url());
+    const parts = url.pathname.split('/').filter(Boolean);
+    const poolIndex = parts.indexOf('pools') + 1;
+    const pool = poolIndex > 0 ? decodeURIComponent(parts[poolIndex] ?? '') : '';
+    const token = url.searchParams.get('token') ?? '';
+    const beforeTimestamp = Number(url.searchParams.get('before_timestamp'));
+    const limit = Number(url.searchParams.get('limit'));
+    requests.push({
+      aggregate: url.searchParams.get('aggregate'),
+      beforeTimestamp,
+      currency: url.searchParams.get('currency'),
+      includeEmptyIntervals: url.searchParams.get('include_empty_intervals'),
+      limit,
+      pathname: url.pathname,
+      pool,
+      token,
+    });
+
+    const candles = [];
+    const activeIndexes = new Set(includedIndexes ?? Array.from(
+      { length: 24 },
+      (_, index) => index,
+    ).filter((index) => index !== missingIndex));
+    let previousClose = 0.00004;
+    for (let index = 0; index < 24; index += 1) {
+      const timestamp = beforeTimestamp - ((24 - index) * 3_600);
+      const active = activeIndexes.has(index);
+      if (active) {
+        const open = previousClose;
+        const close = 0.00004 + (index * 0.000001);
+        const high = Math.max(open, close) + 0.0000008;
+        const low = Math.min(open, close) - 0.0000009;
+        candles.push([timestamp, open, high, low, close, 1_200 + index]);
+        previousClose = close;
+      } else {
+        candles.push([timestamp, previousClose, previousClose, previousClose, previousClose, 0]);
+      }
+    }
+
+    return route.fulfill({
+      json: {
+        data: {
+          type: 'ohlcv_request_response',
+          attributes: { ohlcv_list: candles.reverse() },
+        },
+      },
+    });
+  });
+}
+
+/** Deterministic eight-day fallback for constrained-connection checks. */
+async function mockSelectedTokenArchive(page, sign = 'leo') {
+  const start = Date.UTC(2026, 6, 20, 12);
+  await page.route('**/assets/data/registry-market-history.v1.json', (route) => route.fulfill({
+    json: {
+      schema: 'zodiacs.registry-market-history.v1',
+      version: 1,
+      snapshots: Array.from({ length: 8 }, (_, index) => {
+        const instant = new Date(start + (index * 86_400_000));
+        const date = instant.toISOString().slice(0, 10);
+        return {
+          date,
+          source: { provider: 'DexScreener', readAt: instant.toISOString() },
+          coverage: { canonicalAssetCount: 12, assetsWithIndexedPools: 1 },
+          assets: [{
+            sign,
+            displayName: sign[0].toUpperCase() + sign.slice(1),
+            symbol: sign.toUpperCase(),
+            priceUsd: 0.00003 + (index * 0.000001),
+            change24hPct: null,
+            marketCapUsd: 120_000,
+            fdvUsd: 150_000,
+            liquidityUsd: 32_000,
+            volume24hUsd: 1_700,
+            indexedPoolCount: 2,
+            deepestPool: {
+              pairAddress: 'FIXTUREPAIR4',
+              url: 'https://dexscreener.com/solana/fixture-leo',
+            },
+          }],
+        };
+      }),
+    },
+  }));
+}
+
+/** The advanced terminal is deployment-flagged independently of trading. */
+async function withExchangeFlag(page) {
+  await page.route('**/terminal/', async (route) => {
+    if (route.request().resourceType() !== 'document') return route.continue();
+    const response = await route.fetch();
+    const body = (await response.text()).replace(
+      '<meta name="zodiacs-registry-exchange-enabled" content="0" />',
+      '<meta name="zodiacs-registry-exchange-enabled" content="1" />',
+    );
+    return route.fulfill({ response, body, headers: { ...response.headers(), 'content-length': undefined } });
+  });
+}
+
+/** Keep the landing briefing's independent source boundary deterministic.
+ * Three fresh outside headlines prove that the landing renders at most two;
+ * the Pisces topic also proves selected-sign relevance wins over chronology. */
+function registryBriefingNewsPayload() {
+  const publishedAt = new Date(Date.parse(COMMITTED_OUTLOOK_REFERENCE) - 86_400_000).toISOString();
+  return {
+    schema: 'registry-news.v1', updatedAt: publishedAt,
+    items: [
+      {
+        id: 'astrology-headline', sourceType: 'astrology-news', publisher: 'The Astrology Podcast',
+        publishedAt, title: 'Independent astrology headline', url: 'https://theastrologypodcast.com/example',
+        author: 'External author', topics: ['pisces'], signs: ['pisces'],
+      },
+      {
+        id: 'astronomy-headline', sourceType: 'astronomy', publisher: 'NASA',
+        publishedAt, title: 'Independent astronomy headline', url: 'https://www.nasa.gov/example',
+        author: 'NASA', topics: ['astronomy'], signs: [],
+      },
+      {
+        id: 'extra-astrology-headline', sourceType: 'astrology-news', publisher: 'The Mountain Astrologer',
+        publishedAt: new Date(Date.parse(publishedAt) - 3_600_000).toISOString(),
+        title: 'A third fresh headline', url: 'https://mountainastrologer.com/example',
+        author: 'External author', topics: ['leo'], signs: ['leo'],
+      },
+    ],
+  };
+}
+
+async function mockRegistryBriefingSources(page) {
+  await page.route('**/api/registry/news', (route) => route.fulfill({
+    json: registryBriefingNewsPayload(),
+  }));
+}
+
 /** The Cabinet is deployment-flagged. Enable it on visual consumer pages so
  * this gate exercises the same purpose card the public Registry ships. */
 async function withCollectionFlag(page) {
-  await page.route('**/registry/', async (route) => {
+  await page.route('**/terminal/', async (route) => {
     if (route.request().resourceType() !== 'document') return route.continue();
     const response = await route.fetch();
     const body = (await response.text()).replace(
@@ -118,7 +314,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
   try {
     const navRoutes = [
       { path: '/', selector: '.nav-wrap .nav', prefix: 'nav' },
-      { path: '/registry/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
+      { path: '/terminal/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
       { path: '/registry/aries/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
       { path: '/sdk/', selector: '.wnav-wrap .wnav', prefix: 'wnav' },
     ];
@@ -209,8 +405,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             && Math.abs(geometry.chipHeight - 34) <= 0.5,
           `${geometry.chipTracking}/${geometry.chipHeight}`,
         );
-        if (route.path === '/registry/') {
-          check(`${label} keeps the Registry nav label`, geometry.chipText === 'Registry', geometry.chipText);
+        if (route.path === '/terminal/') {
+          check(`${label} keeps the Terminal nav label`, geometry.chipText === 'Terminal', geometry.chipText);
         }
         if (desktopNav) {
           check(`${label} shows the full desktop lockup`, geometry.sepVisible && geometry.dimVisible);
@@ -341,7 +537,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             JSON.stringify(menuContract.labels.map((value) => value.toLowerCase()))
               === JSON.stringify(['the site', 'tools', 'the twelve'])
               && JSON.stringify(menuContract.siteHrefs)
-                === JSON.stringify(['/learn/', '/horoscopes/', '/profile/', '/ask/', '/registry/']),
+                === JSON.stringify(['/learn/', '/horoscopes/', '/profile/', '/ask/', '/terminal/']),
             JSON.stringify(menuContract),
           );
           check(
@@ -398,7 +594,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         viewport: { width, height: 844 },
         javaScriptEnabled: false,
       });
-      await fallbackPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+      await fallbackPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
       const fallbackState = await fallbackPage.locator('.static-site__nav').evaluate((nav) => ({
         pageWidth: document.documentElement.scrollWidth,
         viewportWidth: innerWidth,
@@ -411,6 +607,38 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         deadGalleryLinks: document.querySelectorAll('a[href*="gallery=gold"]').length,
         staticTokenRows: document.querySelectorAll('.static-token-list li').length,
         staticPriceNote: document.body.textContent?.includes('Live figures and sharing appear with JavaScript') ?? false,
+        marketEyebrow: document.querySelector('#market > .static-site__eyebrow')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        marketHeading: document.querySelector('#market > h2')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        briefingCount: document.querySelectorAll('section#briefing').length,
+        briefingHeading: document.querySelector('#briefing > h2')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        briefingAliases: ['research', 'outlook'].every((id) => (
+          document.getElementById(id)?.closest('section')?.id === 'briefing'
+        )),
+        briefingCta: document.querySelector('#briefing a[href^="/terminal/research/"]')
+          ?.getAttribute('href') ?? '',
+        removedLandingResearch: /Research Pulse|Sky signals\. Market checks\.|Markets Research preview/i
+          .test(document.body.textContent ?? ''),
+        h1Count: document.querySelectorAll('h1').length,
+        h1: document.querySelector('h1')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        deck: document.querySelector('.static-capital .capital-masthead__title > p')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        cinematicNodes: document.querySelectorAll('.cine, [data-cine-video]').length,
+        astrofolioIdentity: /Astrofolio/i.test(document.querySelector('.static-capital')?.textContent ?? ''),
+        marketNotice: (() => {
+          const notice = document.querySelector('[data-terminal-market-notice]');
+          const box = notice?.getBoundingClientRect();
+          return {
+            count: document.querySelectorAll('[data-terminal-market-notice]').length,
+            text: notice?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            links: notice?.querySelectorAll('a').length ?? -1,
+            directoryLinks: document.querySelectorAll('.static-site__footer > nav a').length,
+            left: box?.left ?? -1,
+            right: box?.right ?? -1,
+          };
+        })(),
         links: [...nav.querySelectorAll('a')].map((link) => {
           const rect = link.getBoundingClientRect();
           return {
@@ -446,18 +674,87 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       );
       check(
         `Registry no-JavaScript fallback at ${width}px lists the twelve tokens with a plain price note`,
-        fallbackState.staticTokenRows === 12 && fallbackState.staticPriceNote,
-        JSON.stringify({ rows: fallbackState.staticTokenRows, note: fallbackState.staticPriceNote }),
+        fallbackState.staticTokenRows === 12
+          && fallbackState.staticPriceNote
+          && fallbackState.marketEyebrow === 'Live market board'
+          && fallbackState.marketHeading === 'The twelve, ranked live.'
+          && fallbackState.h1Count === 1
+          && fallbackState.h1 === 'Zodiac Terminal'
+          && fallbackState.deck === 'Twelve signs. Twelve transferable tokens. One live public market.'
+          && fallbackState.cinematicNodes === 0
+          && !fallbackState.astrofolioIdentity,
+        JSON.stringify({
+          rows: fallbackState.staticTokenRows,
+          note: fallbackState.staticPriceNote,
+          eyebrow: fallbackState.marketEyebrow,
+          heading: fallbackState.marketHeading,
+        }),
+      );
+      check(
+        `Registry no-JavaScript fallback at ${width}px exposes one concise briefing and both legacy anchors`,
+        fallbackState.briefingCount === 1
+          && fallbackState.briefingHeading === 'Today’s market briefing'
+          && fallbackState.briefingAliases
+          && fallbackState.briefingCta === '/terminal/research/?sign=leo'
+          && !fallbackState.removedLandingResearch,
+        JSON.stringify(fallbackState),
+      );
+      check(
+        `Registry no-JavaScript fallback at ${width}px carries the complete market and venue notice without a link farm`,
+        fallbackState.marketNotice.count === 1
+          && fallbackState.marketNotice.links === 0
+          && fallbackState.marketNotice.directoryLinks === 6
+          && fallbackState.marketNotice.left >= -1
+          && fallbackState.marketNotice.right <= fallbackState.viewportWidth + 1
+          && fallbackState.marketNotice.text.includes('speculative, thinly traded digital assets')
+          && fallbackState.marketNotice.text.includes('does not operate a DEX, exchange, broker, or custodial service')
+          && fallbackState.marketNotice.text.includes('Jupiter, an independent third-party liquidity aggregator')
+          && fallbackState.marketNotice.text.includes('may not be available in all regions'),
+        JSON.stringify(fallbackState.marketNotice),
       );
       await fallbackPage.close();
     }
 
-    const homeMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
     const registryMaterialPage = await newPage({ viewport: { width: 390, height: 844 } });
-    await Promise.all([
-      homeMaterialPage.goto(`${baseURL}/`, { waitUntil: 'domcontentloaded' }),
-      registryMaterialPage.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' }),
-    ]);
+    await registryMaterialPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
+    await registryMaterialPage.locator('footer:not(.ftr--technical) [data-terminal-market-notice]').waitFor();
+    await registryMaterialPage.locator('footer:not(.ftr--technical) [data-terminal-market-notice]').scrollIntoViewIfNeeded();
+    const marketNoticeState = await registryMaterialPage.locator('footer:not(.ftr--technical) [data-terminal-market-notice]').evaluate((notice) => {
+      const box = notice.getBoundingClientRect();
+      const style = getComputedStyle(notice.querySelector('p'));
+      const directory = notice.previousElementSibling;
+      const origin = notice.nextElementSibling;
+      return {
+        count: document.querySelectorAll('footer:not(.ftr--technical) [data-terminal-market-notice]').length,
+        text: notice.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        links: notice.querySelectorAll('a').length,
+        directoryLinks: directory?.querySelectorAll('a').length ?? -1,
+        ordered: directory?.classList.contains('ftr__directory')
+          && origin?.classList.contains('ftr__row--origin'),
+        left: box.left,
+        right: box.right,
+        viewportWidth: innerWidth,
+        pageWidth: document.documentElement.scrollWidth,
+        fontSize: parseFloat(style.fontSize),
+        lineHeight: parseFloat(style.lineHeight),
+      };
+    });
+    check(
+      'the mobile Terminal presents readable, link-free market and DEX fine print below the six-link directory',
+      marketNoticeState.count === 1
+        && marketNoticeState.links === 0
+        && marketNoticeState.directoryLinks === 6
+        && marketNoticeState.ordered
+        && marketNoticeState.left >= -1
+        && marketNoticeState.right <= marketNoticeState.viewportWidth + 1
+        && marketNoticeState.pageWidth <= marketNoticeState.viewportWidth + 1
+        && marketNoticeState.fontSize >= 11
+        && marketNoticeState.lineHeight / marketNoticeState.fontSize >= 1.5
+        && marketNoticeState.text.includes('could lose all money used to acquire one')
+        && marketNoticeState.text.includes('receives no trading or referral compensation')
+        && marketNoticeState.text.includes('not an offer or solicitation'),
+      JSON.stringify(marketNoticeState),
+    );
     const material = async (page, selector, lens) => {
       // This assertion compares the settled material recipes, not animation
       // timing. CI runners can briefly suspend a page while another page is
@@ -477,30 +774,89 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         return {
           background: style.backgroundColor,
           backdrop: style.backdropFilter || style.webkitBackdropFilter,
+          filter: style.filter,
           border: style.borderColor,
           shadow: style.boxShadow,
         };
       }));
     };
+    let stageMaterialReference = null;
     for (const lens of [false, true]) {
-      const [homeActions, registryActions] = await Promise.all([
-        material(homeMaterialPage, '.hero__ctas .btn', lens),
-        material(registryMaterialPage, '.stage-placard__pill', lens),
-      ]);
+      const registryActions = await material(registryMaterialPage, '.stage-placard__pill', lens);
       check(
-        `homepage hero actions match the Registry glass material (${lens ? 'lens' : 'iOS fallback'})`,
-        homeActions.length === 2
-          && registryActions.length >= 1
-          && homeActions.every((action) => (
-            action.background === registryActions[0].background
-            && action.backdrop === registryActions[0].backdrop
-            && action.border === registryActions[0].border
-            && action.shadow === registryActions[0].shadow
-          )),
-        JSON.stringify({ homeActions, registryActions }),
+        `Registry stage pills stay painted and filter-free (${lens ? 'lens' : 'iOS fallback'})`,
+        registryActions.length >= 2
+          && registryActions.every((action) => (
+            action.background !== 'rgba(0, 0, 0, 0)'
+            && action.backdrop === 'none'
+            && action.filter === 'none'
+            && action.shadow.includes('inset')
+          ))
+          && (!stageMaterialReference
+            || JSON.stringify(registryActions) === JSON.stringify(stageMaterialReference)),
+        JSON.stringify({ registryActions, stageMaterialReference }),
       );
+      stageMaterialReference = registryActions;
     }
-    await Promise.all([homeMaterialPage.close(), registryMaterialPage.close()]);
+    const mediaClient = await registryMaterialPage.context().newCDPSession(registryMaterialPage);
+    const accessibilityPillStyles = async (name, value) => {
+      await mediaClient.send('Emulation.setEmulatedMedia', {
+        media: 'screen',
+        features: [{ name, value }],
+      });
+      await registryMaterialPage.locator('.market-board__sort button[aria-pressed="true"]').waitFor();
+      await registryMaterialPage.locator([
+        '.stage-placard .btn--primary.stage-placard__pill',
+        '.stage-placard .btn--ghost.stage-placard__pill',
+        '.market-board__sort button[aria-pressed="true"]',
+      ].join(', ')).evaluateAll((controls) => {
+        for (const control of controls) control.style.setProperty('transition', 'none', 'important');
+      });
+      await registryMaterialPage.evaluate(() => new Promise((resolve) => {
+        requestAnimationFrame(() => requestAnimationFrame(resolve));
+      }));
+      return registryMaterialPage.evaluate(() => [
+        ['Buy', document.querySelector('.stage-placard .btn--primary.stage-placard__pill')],
+        ['Ghost', document.querySelector('.stage-placard .btn--ghost.stage-placard__pill')],
+        ['Selected', document.querySelector('.market-board__sort button[aria-pressed="true"]')],
+      ].map(([name, control]) => {
+        const style = getComputedStyle(control);
+        return {
+          name,
+          background: style.backgroundColor,
+          backdrop: style.backdropFilter || style.webkitBackdropFilter,
+          filter: style.filter,
+          border: style.borderColor,
+          color: style.color,
+        };
+      }));
+    };
+    const reducedTransparencyPills = await accessibilityPillStyles('prefers-reduced-transparency', 'reduce');
+    check(
+      'reduced transparency gives Buy, ghost, and selected Registry pills one opaque floor',
+      reducedTransparencyPills.length === 3
+        && reducedTransparencyPills.every((control) => (
+          control.background === 'rgb(17, 20, 27)'
+            && control.backdrop === 'none'
+            && control.filter === 'none'
+        )),
+      JSON.stringify(reducedTransparencyPills),
+    );
+    const contrastPills = await accessibilityPillStyles('prefers-contrast', 'more');
+    check(
+      'increased contrast wins over Buy, ghost, and selected Registry pill states',
+      contrastPills.length === 3
+        && contrastPills.every((control) => (
+          control.border === 'rgba(238, 241, 247, 0.72)'
+            && control.color === contrastPills[0].color
+            && control.backdrop === 'none'
+            && control.filter === 'none'
+        )),
+      JSON.stringify(contrastPills),
+    );
+    await mediaClient.send('Emulation.setEmulatedMedia', { media: 'screen', features: [] });
+    await mediaClient.detach();
+    await registryMaterialPage.close();
 
     const reducedContext = await browser.newContext({
       viewport: { width: 390, height: 844 },
@@ -533,7 +889,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     compactRegistry.on('requestfailed', (request) => {
       if (request.url().startsWith(baseURL)) compactRegistryErrors.push(request.url());
     });
-    await compactRegistry.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    await compactRegistry.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
     const compactRegistryLive = await compactRegistry.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
@@ -606,7 +962,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     check('Registry at 623×1054 leaves technical sections off the consumer route',
       compactRegistryLayout.heavySections.length === 0,
       compactRegistryLayout.heavySections.join(','));
-    await compactRegistry.goto(`${baseURL}/registry/#identity`, { waitUntil: 'domcontentloaded' });
+    await compactRegistry.goto(`${baseURL}/terminal/#identity`, { waitUntil: 'domcontentloaded' });
     await compactRegistry.locator('#identity').waitFor({ state: 'attached' });
     await compactRegistry.waitForTimeout(1200);
     const compactHashTop = await compactRegistry.locator('#identity').evaluate((node) => (
@@ -622,7 +978,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     await compactRegistry.close();
 
     const tabletEdge = await newPage({ viewport: { width: 1020, height: 900 } });
-    await tabletEdge.goto(`${baseURL}/registry/`, { waitUntil: 'domcontentloaded' });
+    await tabletEdge.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
     const tabletStageLive = await tabletEdge.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
@@ -650,8 +1006,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
 
     for (const width of [390, 781]) {
       for (const record of [
-        { slug: 'cancer', next: 'leo', name: 'Leo' },
-        { slug: 'pisces', next: 'aries', name: 'Aries' },
+        { slug: 'cancer', current: 'Cancer', next: 'leo', name: 'Leo' },
+        { slug: 'pisces', current: 'Pisces', next: 'aries', name: 'Aries' },
       ]) {
         const recordPage = await newPage({ viewport: { width, height: 844 } });
         await recordPage.goto(`${baseURL}/registry/${record.slug}/`, { waitUntil: 'domcontentloaded' });
@@ -670,6 +1026,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
               : -1,
             pageWidth: document.documentElement.scrollWidth,
             viewportWidth: innerWidth,
+            eyebrow: eyebrow?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            intro: document.querySelector('.lot__intro')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+            sectionHeadings: [...document.querySelectorAll('.sec__title')]
+              .map((heading) => heading.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
+            constellation: document.querySelector('#constellation img')?.getAttribute('src') ?? '',
+            constellationCopy: document.querySelector('#constellation')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
           };
         });
         check(
@@ -681,6 +1043,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           `${record.slug} at ${width}px uses the pastel ${record.name} next-record icon`,
           actionState.icon === `/assets/zodiac-icons/48/${record.next}.webp`,
           actionState.icon,
+        );
+        check(
+          `${record.slug} at ${width}px explains a transferable token with chart and constellation context`,
+          /^Official Zodiac Token · Sign \d+ of 12$/.test(actionState.eyebrow)
+            && actionState.intro === `${record.current} is the transferable token for the ${record.current} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.`
+            && actionState.sectionHeadings.includes('Token facts')
+            && actionState.sectionHeadings.includes(`What ${record.current} represents`)
+            && actionState.sectionHeadings.includes(`The story behind ${record.current}`)
+            && actionState.sectionHeadings.includes('Official addresses')
+            && actionState.sectionHeadings.includes(`Get ${record.current}`)
+            && actionState.sectionHeadings.includes('Explore all 12')
+            && actionState.constellation === `/assets/constellations/${record.slug}.svg`
+            && /HYG Database v4\.0/.test(actionState.constellationCopy)
+            && /not official IAU boundaries/.test(actionState.constellationCopy),
+          JSON.stringify(actionState),
         );
         check(
           `${record.slug} at ${width}px keeps a 44px next-record target`,
@@ -709,22 +1086,455 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       }
     }
 
+    const sparseChart = await newPage({ viewport: { width: 781, height: 900 } });
+    const sparseDates = [
+      ['2026-08-01', 0.00001],
+      ['2026-08-02', 0.000012],
+      ['2026-08-03', null],
+      ['2026-08-04', 0.000011],
+      ['2026-08-06', 0.000014],
+      ['2026-08-07', 0.000013],
+    ];
+    await sparseChart.route('**/assets/data/registry-market-history.v1.json', (route) => route.fulfill({
+      json: {
+        schema: 'zodiacs.registry-market-history.v1',
+        version: 1,
+        snapshots: sparseDates.map(([date, priceUsd]) => ({
+          date,
+          source: { provider: 'DexScreener', readAt: `${date}T12:00:00.000Z` },
+          coverage: { canonicalAssetCount: 12, assetsWithIndexedPools: 1 },
+          assets: [{
+            sign: 'leo', displayName: 'Leo', symbol: 'LEO', priceUsd,
+            change24hPct: null, marketCapUsd: 120000, fdvUsd: 150000,
+            liquidityUsd: 32000, volume24hUsd: 1700, indexedPoolCount: 2,
+            deepestPool: { url: 'https://dexscreener.com/solana/fixture-leo' },
+          }],
+        })),
+      },
+    }));
+    await sparseChart.goto(`${baseURL}/registry/leo/`, { waitUntil: 'domcontentloaded' });
+    await sparseChart.locator('[data-market]').scrollIntoViewIfNeeded();
+    await sparseChart.locator('[data-market-chart]:not([hidden])').waitFor({ timeout: 15_000 });
+    const sparseChartState = await sparseChart.locator('[data-market]').evaluate((panel) => ({
+      note: panel.querySelector('[data-market-chart-note]')?.textContent?.trim() ?? '',
+      paths: panel.querySelectorAll('[data-market-chart-canvas] path').length,
+      points: panel.querySelectorAll('[data-market-chart-canvas] circle').length,
+      sevenDisabled: panel.querySelector('[data-market-range="7d"]')?.disabled ?? false,
+      thirtyDisabled: panel.querySelector('[data-market-range="30d"]')?.disabled ?? false,
+      allPressed: panel.querySelector('[data-market-range="all"]')?.getAttribute('aria-pressed') ?? '',
+      metrics: [...panel.querySelectorAll('.market__k')].map((node) => node.textContent?.trim() ?? ''),
+      live: panel.querySelector('[data-market-live-link]')?.getAttribute('href') ?? '',
+    }));
+    check(
+      'archived charts preserve nulls and calendar gaps while ranges wait for honest coverage',
+      /^5 dated observations/.test(sparseChartState.note)
+        && sparseChartState.paths === 2
+        && sparseChartState.points === 5
+        && sparseChartState.sevenDisabled
+        && sparseChartState.thirtyDisabled
+        && sparseChartState.allPressed === 'true'
+        && sparseChartState.metrics.includes('Market cap')
+        && sparseChartState.metrics.includes('FDV')
+        && sparseChartState.live === 'https://dexscreener.com/solana/fixture-leo',
+      JSON.stringify(sparseChartState),
+    );
+    await sparseChart.close();
+
+    // The landing placard asks GeckoTerminal for one selected sign only. The
+    // fixture marks one closed hour as zero-volume so this drive can prove the
+    // OHLC candle, idle-tick, volume, accessibility, and request boundaries.
+    for (const width of [320, 360, 390]) {
+      const selectedChartPage = await newPage({
+        viewport: { width, height: width === 320 ? 568 : width === 360 ? 640 : 844 },
+        hasTouch: true,
+      });
+      const geckoRequests = [];
+      await freezeRegistryClock(selectedChartPage);
+      await stubNoWebgl(selectedChartPage);
+      await mockDexscreener(selectedChartPage);
+      await mockRegistryBriefingSources(selectedChartPage);
+      await mockSelectedTokenArchive(selectedChartPage);
+      await mockGeckoHourly(selectedChartPage, { requests: geckoRequests });
+      await withExchangeFlag(selectedChartPage);
+      await selectedChartPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
+      const selectedChart = selectedChartPage.locator('[data-token-chart="leo"]');
+      await selectedChart.scrollIntoViewIfNeeded();
+      await selectedChart.locator('.token-spark--live').waitFor({ state: 'visible', timeout: 20_000 });
+      const state = await selectedChart.evaluate((chart) => {
+        const figure = chart.querySelector('.token-spark--live');
+        const svg = figure?.querySelector('svg');
+        const rect = chart.getBoundingClientRect();
+        const advanced = document.querySelector('.capital-advanced');
+        const advancedRect = advanced?.getBoundingClientRect();
+        return {
+          aria: svg?.getAttribute('aria-label') ?? '',
+          bodies: svg?.querySelectorAll('.token-spark__body').length ?? 0,
+          caption: figure?.querySelector('figcaption')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          idle: svg?.querySelectorAll('.token-spark__idle').length ?? 0,
+          chartCount: document.querySelectorAll('[data-token-chart]').length,
+          chartLeft: rect.left,
+          chartRight: rect.right,
+          documentWidth: document.documentElement.scrollWidth,
+          expectedPoints: figure?.querySelector('p')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          polylines: [...(svg?.querySelectorAll('polyline') ?? [])]
+            .map((line) => line.getAttribute('points') ?? ''),
+          volumes: svg?.querySelectorAll('.token-spark__volume').length ?? 0,
+          wicks: svg?.querySelectorAll('.token-spark__wick').length ?? 0,
+          advanced: advanced ? {
+            height: advancedRect?.height ?? 0,
+            href: advanced.getAttribute('href'),
+            target: advanced.getAttribute('target'),
+            visible: getComputedStyle(advanced).display !== 'none' && (advancedRect?.height ?? 0) > 0,
+          } : null,
+          viewportWidth: innerWidth,
+        };
+      });
+      const request = geckoRequests[0] ?? null;
+      check(
+        `selected Leo owns one honest 24H Gecko chart at ${width}px`,
+        geckoRequests.length === 1
+          && request?.token === REGISTRY_MINT_BY_SIGN.leo
+          && request?.pool === 'FIXTUREPAIR4'
+          && request?.aggregate === '1'
+          && request?.limit === 24
+          && request?.currency === 'usd'
+          && request?.includeEmptyIntervals === 'true'
+          && Number.isSafeInteger(request?.beforeTimestamp)
+          && request.beforeTimestamp % 3_600 === 0
+          && state.chartCount === 1
+          && state.caption.includes('LEO / USD · 24H')
+          && state.caption.includes('Reference pool · GeckoTerminal · UTC')
+          && state.expectedPoints.startsWith('23 active hours · 1 no-swap hour carries last close')
+          && state.bodies === 23
+          && state.wicks === 23
+          && state.volumes === 23
+          && state.idle === 1
+          && state.polylines.length === 0
+          && /Leo closed hourly history covers 24 hourly slots/.test(state.aria)
+          && /24-hour candlestick chart/.test(state.aria)
+          && /23 hours contained swaps; 1 no-swap hour carries the preceding close with zero volume/.test(state.aria),
+        JSON.stringify({ requests: geckoRequests, state }),
+      );
+      check(
+        `selected-token chart at ${width}px stays inside the phone without overflow`,
+        state.documentWidth <= state.viewportWidth + 1
+          && state.chartLeft >= -1
+          && state.chartRight <= state.viewportWidth + 1,
+        JSON.stringify(state),
+      );
+      check(
+        `exchange rail at ${width}px is a visible same-tab 44px route for Leo`,
+        state.advanced?.visible
+          && state.advanced.height >= 44
+          && state.advanced.target === null
+          && state.advanced.href === '/terminal/markets/#leo',
+        JSON.stringify(state.advanced),
+      );
+      await selectedChartPage.close();
+    }
+
+    // A thinly traded pool still reads as a financial chart. Eight real OHLCV
+    // hours get bodies, wicks, and volume; sixteen documented zero-volume
+    // carry hours get faint idle ticks rather than invented candle bodies.
+    const sparseLivePage = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await freezeRegistryClock(sparseLivePage);
+    await stubNoWebgl(sparseLivePage);
+    await mockDexscreener(sparseLivePage);
+    await mockRegistryBriefingSources(sparseLivePage);
+    await mockSelectedTokenArchive(sparseLivePage);
+    await mockGeckoHourly(sparseLivePage, {
+      includedIndexes: [0, 1, 4, 5, 9, 13, 17, 22],
+    });
+    await withExchangeFlag(sparseLivePage);
+    await sparseLivePage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
+    const sparseLiveChart = sparseLivePage.locator('[data-token-chart="leo"]');
+    await sparseLiveChart.scrollIntoViewIfNeeded();
+    await sparseLiveChart.locator('.token-spark--live').waitFor({ state: 'visible', timeout: 20_000 });
+    const sparseLiveState = await sparseLiveChart.evaluate((chart) => {
+      const figure = chart.querySelector('.token-spark--live');
+      const plot = figure?.querySelector('.token-spark__plot');
+      const svg = plot?.querySelector('svg');
+      const rect = plot?.getBoundingClientRect();
+      return {
+        areas: svg?.querySelectorAll('.token-spark__area').length ?? 0,
+        axes: svg?.querySelectorAll('.token-spark__axis').length ?? 0,
+        bodies: svg?.querySelectorAll('.token-spark__body').length ?? 0,
+        coverage: figure?.querySelector(':scope > p')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        idle: svg?.querySelectorAll('.token-spark__idle').length ?? 0,
+        latest: svg?.querySelectorAll('.token-spark__latest-ring').length ?? 0,
+        plotHeight: rect?.height ?? 0,
+        plotWidth: rect?.width ?? 0,
+        points: svg?.querySelectorAll('.token-spark__point').length ?? 0,
+        priceScale: figure?.querySelector('.token-spark__price-scale')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        segments: [...(svg?.querySelectorAll('.token-spark__line') ?? [])]
+          .map((line) => (line.getAttribute('points') ?? '').trim().split(/\s+/).length),
+        timeScale: [...(figure?.querySelectorAll('.token-spark__time-scale span') ?? [])]
+          .map((label) => label.textContent?.trim() ?? ''),
+        volumes: svg?.querySelectorAll('.token-spark__volume').length ?? 0,
+        wicks: svg?.querySelectorAll('.token-spark__wick').length ?? 0,
+      };
+    });
+    check(
+      'eight active hours render as a full-width OHLCV chart with honest idle slots',
+      sparseLiveState.plotWidth >= 300
+        && sparseLiveState.plotHeight >= 145
+        && sparseLiveState.axes === 2
+        && sparseLiveState.bodies === 8
+        && sparseLiveState.wicks === 8
+        && sparseLiveState.volumes === 8
+        && sparseLiveState.idle === 16
+        && sparseLiveState.points === 0
+        && sparseLiveState.latest === 1
+        && sparseLiveState.areas === 0
+        && sparseLiveState.segments.length === 0
+        && sparseLiveState.coverage.startsWith('8 active hours · 16 no-swap hours carry last close')
+        && /\$0\.0000/u.test(sparseLiveState.priceScale)
+        && sparseLiveState.timeScale.length === 3
+        && sparseLiveState.timeScale.every((value) => /^\d{2}:\d{2}$/u.test(value)),
+      JSON.stringify(sparseLiveState),
+    );
+    await sparseLivePage.close();
+
+    // Let the initial Leo request settle, then change four signs inside the
+    // 220ms selection debounce. No intermediate sign may touch GeckoTerminal;
+    // the one surviving request and attached chart must both belong to Pisces.
+    const rapidChartPage = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    const rapidGeckoRequests = [];
+    await freezeRegistryClock(rapidChartPage);
+    await stubNoWebgl(rapidChartPage);
+    await mockDexscreener(rapidChartPage);
+    await mockRegistryBriefingSources(rapidChartPage);
+    await mockSelectedTokenArchive(rapidChartPage);
+    await mockGeckoHourly(rapidChartPage, { requests: rapidGeckoRequests });
+    await withExchangeFlag(rapidChartPage);
+    await rapidChartPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
+    const initialSelectedChart = rapidChartPage.locator('[data-token-chart="leo"]');
+    await initialSelectedChart.scrollIntoViewIfNeeded();
+    await initialSelectedChart.locator('.token-spark--live').waitFor({ state: 'visible', timeout: 20_000 });
+    rapidGeckoRequests.length = 0;
+    const finalGeckoRequest = rapidChartPage.waitForRequest(
+      (request) => request.url().startsWith('https://api.geckoterminal.com/api/v2/'),
+      { timeout: 20_000 },
+    );
+    await rapidChartPage.evaluate(async (slugs) => {
+      for (const [index, slug] of slugs.entries()) {
+        document.querySelector(`[data-consumer-sign="${slug}"]`)?.click();
+        if (index < slugs.length - 1) {
+          await new Promise((resolve) => setTimeout(resolve, 50));
+        }
+      }
+    }, ['aries', 'taurus', 'gemini', 'pisces']);
+    await finalGeckoRequest;
+    await rapidChartPage.waitForFunction(() => {
+      const chart = document.querySelector('[data-token-chart="pisces"]');
+      return /^Pisces closed hourly history covers 24 hourly slots/u.test(
+        chart?.querySelector('svg')?.getAttribute('aria-label') ?? '',
+      );
+    });
+    await rapidChartPage.waitForTimeout(350);
+    const rapidState = await rapidChartPage.evaluate(() => ({
+      advancedHref: document.querySelector('.capital-advanced')?.getAttribute('href') ?? '',
+      charts: [...document.querySelectorAll('[data-token-chart]')]
+        .map((chart) => chart.getAttribute('data-token-chart')),
+      selected: document.querySelector('[data-consumer-sign][aria-pressed="true"]')
+        ?.getAttribute('data-consumer-sign') ?? '',
+    }));
+    check(
+      'rapid sign changes debounce to one Gecko request and one final selected chart',
+      rapidGeckoRequests.length === 1
+        && rapidGeckoRequests[0].token === REGISTRY_MINT_BY_SIGN.pisces
+        && rapidGeckoRequests[0].pool === 'FIXTUREPAIR11'
+        && JSON.stringify(rapidState.charts) === JSON.stringify(['pisces'])
+        && rapidState.selected === 'pisces',
+      JSON.stringify({ requests: rapidGeckoRequests, rapidState }),
+    );
+    check(
+      'the enabled exchange rail follows the final selected sign without opening a new context',
+      rapidState.advancedHref === '/terminal/markets/#pisces'
+        && await rapidChartPage.locator('.capital-advanced').getAttribute('target') === null,
+      JSON.stringify(rapidState),
+    );
+    await rapidChartPage.close();
+
+    // Data Saver and 2g skip the third-party request altogether while still
+    // presenting the owned daily archive. This is a network policy, not an
+    // empty-chart state, and the accessible summary must say why it fell back.
+    for (const constrained of [
+      {
+        label: 'Data Saver', saveData: true, effectiveType: '4g',
+        reason: 'Live hourly prices were skipped because data saving is enabled.',
+      },
+      {
+        label: '2g', saveData: false, effectiveType: '2g',
+        reason: 'Live hourly prices were skipped on this constrained connection.',
+      },
+    ]) {
+      const constrainedPage = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+      await freezeRegistryClock(constrainedPage);
+      await constrainedPage.addInitScript(({ saveData, effectiveType }) => {
+        const connection = { saveData, effectiveType };
+        for (const key of ['connection', 'mozConnection', 'webkitConnection']) {
+          try {
+            Object.defineProperty(navigator, key, {
+              configurable: true,
+              get: () => connection,
+            });
+          } catch {}
+        }
+      }, constrained);
+      const constrainedGeckoRequests = [];
+      await stubNoWebgl(constrainedPage);
+      await mockDexscreener(constrainedPage);
+      await mockRegistryBriefingSources(constrainedPage);
+      await mockSelectedTokenArchive(constrainedPage);
+      await mockGeckoHourly(constrainedPage, { requests: constrainedGeckoRequests });
+      await constrainedPage.goto(`${baseURL}/terminal/`, { waitUntil: 'domcontentloaded' });
+      const constrainedChart = constrainedPage.locator('[data-token-chart="leo"]');
+      await constrainedChart.scrollIntoViewIfNeeded();
+      await constrainedChart.locator('.token-spark--archive').waitFor({ state: 'visible', timeout: 20_000 });
+      const constrainedState = await constrainedChart.evaluate((chart) => ({
+        aria: chart.querySelector('svg')?.getAttribute('aria-label') ?? '',
+        caption: chart.querySelector('figcaption')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        count: document.querySelectorAll('[data-token-chart]').length,
+        exchangeRailCount: document.querySelectorAll('.capital-advanced').length,
+        note: chart.querySelector('.token-spark--archive > p')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      }));
+      check(
+        `${constrained.label} makes zero Gecko requests and uses the Registry archive fallback`,
+        constrainedGeckoRequests.length === 0
+          && constrainedState.count === 1
+          && constrainedState.caption.includes('Registry archive')
+          && constrainedState.note.startsWith('8 of 8 daily closes')
+          && constrainedState.aria.includes(constrained.reason),
+        JSON.stringify({ requests: constrainedGeckoRequests, constrainedState }),
+      );
+      if (constrained.label === 'Data Saver') {
+        check(
+          'the exchange rail is absent when its deployment flag is off',
+          constrainedState.exchangeRailCount === 0,
+          JSON.stringify(constrainedState),
+        );
+      }
+      await constrainedPage.close();
+    }
+
+    const relatedResearch = await newPage({ viewport: { width: 781, height: 900 } });
+    await relatedResearch.route('**/api/registry/news', (route) => route.fulfill({
+      json: registryBriefingNewsPayload(),
+    }));
+    await relatedResearch.goto(
+      `${baseURL}/terminal/research/?sign=leo&type=daily`,
+      { waitUntil: 'domcontentloaded' },
+    );
+    const relatedScope = relatedResearch.locator('#research-scope');
+    await relatedScope.waitFor({ state: 'visible' });
+    const relatedScopeState = await relatedResearch.evaluate(() => ({
+      label: document.querySelector('#research-scope span')?.textContent?.trim() ?? '',
+      sign: new URL(location.href).searchParams.get('sign'),
+      type: new URL(location.href).searchParams.get('type'),
+    }));
+    check(
+      'token-record research links restore a visible Leo daily-brief scope',
+      relatedScopeState.label === 'Related to Leo · Daily market briefs'
+        && relatedScopeState.sign === 'leo'
+        && relatedScopeState.type === 'daily',
+      JSON.stringify(relatedScopeState),
+    );
+    await relatedScope.getByRole('button', { name: 'Clear related filter' }).click();
+    await relatedResearch.waitForFunction(() => (
+      document.querySelector('#research-scope')?.hidden
+      && !new URL(location.href).searchParams.has('sign')
+      && !new URL(location.href).searchParams.has('type')
+    ));
+    const clearedScope = await relatedResearch.evaluate(() => ({
+      hidden: document.querySelector('#research-scope')?.hidden ?? false,
+      search: location.search,
+    }));
+    check(
+      'Clear related filter removes the query scope and returns to the full ledger',
+      clearedScope.hidden && clearedScope.search === '',
+      JSON.stringify(clearedScope),
+    );
+    const researchFilters = await relatedResearch.locator('.research-filters button')
+      .evaluateAll((buttons) => buttons.map((button) => button.textContent?.trim() ?? ''));
+    const sourceUpdates = relatedResearch.locator('#research-source-updates');
+    await sourceUpdates.waitFor({ state: 'visible', timeout: 15_000 });
+    check(
+      'the dedicated Research Desk retains its five filters and queued source-update control',
+      JSON.stringify(researchFilters) === JSON.stringify([
+        'All', 'Zodiacs Research', 'Astrology News', 'Astronomy', 'Calendar',
+      ])
+        && await sourceUpdates.innerText() === 'Show 3 source updates',
+      JSON.stringify(researchFilters),
+    );
+    await sourceUpdates.click();
+    await relatedResearch.getByRole('button', { name: 'Astrology News', exact: true }).click();
+    const dedicatedFilterState = await relatedResearch.evaluate(() => ({
+      active: document.querySelector('.research-filters button[aria-pressed="true"]')
+        ?.textContent?.trim() ?? '',
+      categories: [...document.querySelectorAll('#research-items [data-category]')]
+        .filter((item) => !item.hidden)
+        .map((item) => item.getAttribute('data-category')),
+      filter: new URL(location.href).searchParams.get('filter'),
+      updatesHidden: document.querySelector('#research-source-updates')?.hidden ?? false,
+    }));
+    check(
+      'Research Desk filtering keeps external astrology separate after explicit acceptance',
+      dedicatedFilterState.active === 'Astrology News'
+        && dedicatedFilterState.categories.length === 2
+        && dedicatedFilterState.categories.every((category) => category === 'astrology-news')
+        && dedicatedFilterState.filter === 'astrology-news'
+        && dedicatedFilterState.updatesHidden,
+      JSON.stringify(dedicatedFilterState),
+    );
+    await relatedResearch.close();
+
     // The grid explorer's own assertions run with WebGL denied — the path
     // narrow, non-WebGL, and stage-failure readers actually get. The stage
     // is asserted separately, on an unstubbed page.
     const desktop = await newPage({ viewport: { width: 1126, height: 1180 } });
+    // The primary briefing assertions exercise the complete current-edition
+    // path. Anchor this page to the receipt's disclosed reference time so a
+    // committed daily artifact does not become stale merely because the gate
+    // runs after midnight. Routed cases independently prove stale and partial
+    // editions are disclosed without bringing the old signal controls back.
+    await desktop.addInitScript((referenceAt) => {
+      const NativeDate = Date;
+      const fixedTime = new NativeDate(referenceAt).getTime();
+      class ReceiptDate extends NativeDate {
+        constructor(...args) {
+          super(...(args.length ? args : [fixedTime]));
+        }
+
+        static now() {
+          return fixedTime;
+        }
+      }
+      Object.setPrototypeOf(ReceiptDate, NativeDate);
+      window.Date = ReceiptDate;
+    }, COMMITTED_OUTLOOK_REFERENCE);
     await stubNoWebgl(desktop);
     await mockDexscreener(desktop);
+    const desktopGeckoRequests = [];
+    await mockGeckoHourly(desktop, { requests: desktopGeckoRequests });
+    await mockRegistryBriefingSources(desktop);
     await withCollectionFlag(desktop);
     const desktopErrors = [];
     const desktopGalleryRequests = [];
+    const desktopOutlookRequests = [];
+    const desktopLandingResearchRequests = [];
+    const desktopNewsRequests = [];
     desktop.on('pageerror', (error) => desktopErrors.push(String(error)));
     desktop.on('request', (request) => {
-      if (new URL(request.url()).pathname === '/assets/gallery.js') {
+      const pathname = new URL(request.url()).pathname;
+      if (pathname === '/assets/gallery.js') {
         desktopGalleryRequests.push(request.url());
       }
+      if (pathname === '/assets/registry-outlook.json') desktopOutlookRequests.push(request.url());
+      if (pathname === '/assets/registry-research-feed.json') desktopLandingResearchRequests.push(request.url());
+      if (pathname === '/api/registry/news') desktopNewsRequests.push(request.url());
     });
-    await desktop.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await desktop.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await desktop.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
 
     const expectedSigns = [
@@ -757,13 +1567,52 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && explorerState.every((item) => item.width >= 44 && item.height >= 44),
       JSON.stringify(explorerState),
     );
+    const desktopMasthead = await desktop.locator('.capital-masthead').evaluate((masthead) => {
+      const title = masthead.querySelector('.capital-masthead__title');
+      const heading = title?.querySelector('h1');
+      const caption = title?.querySelector('p');
+      const tape = masthead.querySelector(':scope > .market-tape');
+      const pulse = masthead.querySelector(':scope > .capital-pulse');
+      const opening = masthead.nextElementSibling;
+      const headingStyle = heading ? getComputedStyle(heading) : null;
+      return {
+        text: heading?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        label: title?.querySelector(':scope > span')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        caption: caption?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        captionVisible: Boolean(caption && getComputedStyle(caption).display !== 'none'
+          && getComputedStyle(caption).visibility !== 'hidden'
+          && caption.getBoundingClientRect().height > 0),
+        tapeDirect: tape?.parentElement === masthead,
+        pulseDirect: pulse?.parentElement === masthead,
+        pulseCount: pulse?.querySelectorAll(':scope > div').length ?? 0,
+        openingImmediate: opening?.classList.contains('consumer-capital-opening') ?? false,
+        openingChildren: opening ? [...opening.children].map((node) => node.id || node.className) : [],
+        cineCount: document.querySelectorAll('.cine').length,
+        legacyHeroCount: document.querySelectorAll('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').length,
+        h1Count: document.querySelectorAll('h1').length,
+        headingVisible: Boolean(heading
+          && headingStyle?.display !== 'none'
+          && headingStyle?.visibility !== 'hidden'
+          && heading.getBoundingClientRect().height > 0),
+      };
+    });
     check(
-      'the sculpture-led stage opens without the retired film or title card',
-      await desktop.locator('.cine').count() === 0
-        && await desktop.locator('.stage-hero__head, .stage-hero__title, .stage-hero__eyebrow, .stage-hero__line').count() === 0
-        && await desktop.locator('h1').count() === 1
-        && (await desktop.locator('h1').innerText()) === 'Zodiacs Official Registry'
-        && await desktop.locator('#official-twelve').getAttribute('aria-labelledby') === 'consumer-explorer-title',
+      'one Zodiac Terminal H1 leads tape, pulse, sculpture, and compact board',
+      desktopMasthead.cineCount === 0
+        && desktopMasthead.legacyHeroCount === 0
+        && desktopMasthead.h1Count === 1
+        && desktopMasthead.headingVisible
+        && desktopMasthead.text === 'Zodiac Terminal'
+        && desktopMasthead.label === 'Verified by the Zodiacs Registry'
+        && desktopMasthead.caption === 'Twelve signs. Twelve transferable tokens. One live public market.'
+        && desktopMasthead.captionVisible
+        && desktopMasthead.tapeDirect
+        && desktopMasthead.pulseDirect
+        && desktopMasthead.pulseCount === 3
+        && desktopMasthead.openingImmediate
+        && desktopMasthead.openingChildren[0] === 'official-twelve'
+        && desktopMasthead.openingChildren[1] === 'market',
+      JSON.stringify(desktopMasthead),
     );
     const openingMaterial = await desktop.locator('.gband--consumer').evaluate((band) => {
       const season = band.querySelector('.season-now');
@@ -868,6 +1717,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     const scrollBeforePick = await desktop.evaluate(() => scrollY);
     await piscesControl.click();
     await desktop.locator('[data-consumer-preview="pisces"]').waitFor({ state: 'visible' });
+    await desktop.locator('[data-token-chart="pisces"] .token-spark--live svg')
+      .waitFor({ state: 'visible', timeout: 20_000 });
     const piscesPlacard = await desktop.locator('[data-consumer-preview="pisces"]').evaluate((placard) => ({
       text: placard.textContent?.replace(/\s+/g, ' ').trim() ?? '',
       name: placard.querySelector('.stage-placard__name')?.textContent ?? '',
@@ -878,6 +1729,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       // and a detour into the astrology guide.
       base: placard.textContent?.includes('Also recorded on Base') ?? false,
       guide: Boolean(placard.querySelector('a[href="/pisces/"]')),
+      marketSign: placard.querySelector('.stage-market')?.getAttribute('data-stage-market') ?? '',
+      chartLabel: placard.querySelector('[data-token-chart="pisces"] svg')?.getAttribute('aria-label') ?? '',
       scrollY,
     }));
     check(
@@ -887,6 +1740,8 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && piscesPlacard.trade === '/registry/pisces/#acquire'
         && piscesPlacard.base === false
         && piscesPlacard.guide === false
+        && piscesPlacard.marketSign === 'pisces'
+        && /Pisces closed hourly history covers 24 hourly slots/i.test(piscesPlacard.chartLabel)
         && Math.abs(piscesPlacard.scrollY - scrollBeforePick) <= 2,
       JSON.stringify(piscesPlacard),
     );
@@ -894,6 +1749,81 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       'choosing a sign turns the carousel to its sculpture',
       await desktop.locator('.stage-carousel__slide.is-active .stage-carousel__art')
         .getAttribute('src') === '/assets/sculptures/512/pisces.webp',
+    );
+    await desktop.locator(
+      '.gband__constellation[data-stage-constellation="pisces"] img.is-entering[src="/assets/constellations/pisces.svg"]',
+    ).waitFor({ state: 'attached' });
+    const briefing = desktop.locator('#briefing');
+    await briefing.scrollIntoViewIfNeeded();
+    await desktop.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const synchronizedContext = await briefing.evaluate((section) => ({
+      constellation: document.querySelector('.gband__constellation')?.getAttribute('data-stage-constellation') ?? '',
+      constellationSrc: document.querySelector('.gband__constellation img.is-entering')?.getAttribute('src') ?? '',
+      heading: section.querySelector('h2')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      sign: section.getAttribute('data-briefing-sign'),
+      signName: section.querySelector('.consumer-briefing__sign strong')?.textContent?.trim() ?? '',
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      reading: section.querySelector('[data-briefing-reading] p')?.textContent?.trim() ?? '',
+      nextEvent: section.querySelector('[data-briefing-next-event]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+      marketLabels: [...section.querySelectorAll('[data-briefing-market] dt')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      marketValues: [...section.querySelectorAll('[data-briefing-market] dd')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      headlineCount: section.querySelectorAll('.consumer-briefing__headline').length,
+      headlineTitles: [...section.querySelectorAll('.consumer-briefing__headline h3')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      headlineLinks: [...section.querySelectorAll('.consumer-briefing__headline a')].map((link) => ({
+        rel: link.getAttribute('rel') ?? '',
+        href: link.getAttribute('href') ?? '',
+        dateTime: link.querySelector('time')?.getAttribute('datetime') ?? '',
+      })),
+      cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+      removedControls: section.querySelectorAll([
+        '.research-updates', '.consumer-research__filters', '.outlook-wheel',
+        '.outlook-score', '.outlook-lab__toolbar', '.outlook-reading__actions',
+      ].join(',')).length,
+      pageWidth: document.documentElement.scrollWidth,
+      viewportWidth: innerWidth,
+    }));
+    check(
+      'selected Pisces synchronizes sculpture, constellation, market briefing, sources, and Research CTA',
+      synchronizedContext.constellation === 'pisces'
+        && synchronizedContext.constellationSrc === '/assets/constellations/pisces.svg'
+        && synchronizedContext.heading === 'Today’s market briefing'
+        && synchronizedContext.sign === 'pisces'
+        && synchronizedContext.signName === 'Pisces'
+        && synchronizedContext.event === 'No concentrated event today'
+        && /Pisces/i.test(synchronizedContext.reading)
+        && /No additional exact event is scheduled for Pisces/i.test(synchronizedContext.nextEvent)
+        && JSON.stringify(synchronizedContext.marketLabels) === JSON.stringify([
+          'Price', '24H change', 'Liquidity', '24H volume',
+        ])
+        && synchronizedContext.marketValues[0] === '$0.00504'
+        && synchronizedContext.marketValues[1] === '0.00%'
+        && synchronizedContext.marketValues[2] === '$250K'
+        && synchronizedContext.marketValues[3] === '$64K'
+        && synchronizedContext.headlineCount === 2
+        && synchronizedContext.headlineTitles[0] === 'Independent astrology headline'
+        && synchronizedContext.headlineLinks.every((link) => (
+          link.href.startsWith('https://')
+            && link.rel.split(/\s+/).includes('external')
+            && Boolean(link.dateTime)
+        ))
+        && synchronizedContext.cta === '/terminal/research/?sign=pisces'
+        && synchronizedContext.removedControls === 0
+        && synchronizedContext.pageWidth <= synchronizedContext.viewportWidth + 1,
+      JSON.stringify(synchronizedContext),
+    );
+    check(
+      'landing briefing performs one Outlook read, one news read, and no Research Desk feed read',
+      desktopOutlookRequests.length === 1
+        && desktopNewsRequests.length === 1
+        && desktopLandingResearchRequests.length === 0,
+      JSON.stringify({
+        outlook: desktopOutlookRequests,
+        news: desktopNewsRequests,
+        research: desktopLandingResearchRequests,
+      }),
     );
     await desktop.locator('.stage-placard__price').waitFor({ timeout: 15_000 });
     const placardQuote = await desktop.locator('.stage-placard').evaluate((placard) => ({
@@ -910,6 +1840,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && placardQuote.directional,
       JSON.stringify(placardQuote),
     );
+    const compactWatchlist = await desktop.locator('.market-row').count();
+    const expandMarket = desktop.locator('.market-board__expand');
+    check(
+      'desktop first paint shows six leaders behind an explicit Show all 12 control',
+      compactWatchlist === 6
+        && await expandMarket.getAttribute('aria-expanded') === 'false'
+        && (await expandMarket.innerText()).includes('Show all 12'),
+      `${compactWatchlist}/${await expandMarket.innerText()}`,
+    );
+    await expandMarket.click();
+    await desktop.waitForFunction(() => document.querySelectorAll('#market .market-row').length === 12);
     const watchlist = await desktop.locator('.market-row').evaluateAll((rows) => rows.map((row) => {
       const record = row.querySelector('.market-row__record');
       return {
@@ -918,12 +1859,12 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         priced: /^\$/.test(row.querySelector('.market-row__metric--price strong')?.textContent ?? ''),
         recordLabel: record?.getAttribute('aria-label') ?? '',
         recordText: record?.querySelector('.market-row__record-label')?.textContent?.trim() ?? '',
-        recordGlass: record?.classList.contains('market-glass') ?? false,
+        recordPill: record?.classList.contains('registry-pill') ?? false,
         sculptureActions: row.querySelectorAll('.market-row__view').length,
       };
     }));
     check(
-      'the market board defaults to descending market cap and links every official record',
+      'Show all 12 expands the descending market-cap board and links every official record',
       watchlist.length === 12
         && JSON.stringify(watchlist.map((row) => row.slug)) === JSON.stringify([
           'pisces', 'aquarius', 'capricorn', 'sagittarius', 'scorpio', 'libra',
@@ -934,64 +1875,93 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && watchlist.every((row) => (
           row.recordLabel === `Open the official ${row.slug.charAt(0).toUpperCase() + row.slug.slice(1)} record`
             && row.recordText === 'Official record'
-            && row.recordGlass
+            && row.recordPill
             && row.sculptureActions === 0
         )),
       JSON.stringify(watchlist),
     );
     const marketMaterial = await desktop.locator('#market').evaluate((section) => {
       const inspect = (button) => {
+        if (!button) return null;
         const rect = button.getBoundingClientRect();
         const style = getComputedStyle(button);
         return {
           label: button.getAttribute('aria-label') || button.textContent.replace(/\s+/g, ' ').trim(),
-          glass: button.classList.contains('market-glass'),
+          text: button.textContent.replace(/\s+/g, ' ').trim(),
+          pill: button.classList.contains('registry-pill'),
           svg: Boolean(button.querySelector('svg')),
           width: rect.width,
           height: rect.height,
           backgroundImage: style.backgroundImage,
+          backgroundColor: style.backgroundColor,
           backdropFilter: style.backdropFilter || style.webkitBackdropFilter || '',
           borderWidth: style.borderTopWidth,
+          borderRadius: style.borderTopLeftRadius,
+          fontFamily: style.fontFamily,
           boxShadow: style.boxShadow,
         };
       };
       return {
+        eyebrow: section.querySelector('.consumer-section-head__eyebrow')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        heading: section.querySelector('#consumer-market-title')
+          ?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        buy: inspect(document.querySelector('.stage-placard .btn--primary.stage-placard__pill')),
         sortShell: inspect(section.querySelector('.market-board__sort')),
         sort: [...section.querySelectorAll('.market-board__sort button')].map(inspect),
         share: [...section.querySelectorAll('.market-board__share button')].map(inspect),
         rowActions: [...section.querySelectorAll('.market-row__record')].map(inspect),
         sculptureActions: section.querySelectorAll('.market-row__view').length,
+        legacyGlass: document.querySelectorAll('.market-glass').length,
       };
     });
     check(
-      'market filters and social controls use one accessible liquid-glass language',
-      marketMaterial.sortShell
-        && marketMaterial.sortShell.backgroundImage.includes('gradient')
+      'the live market board uses the approved capital-markets identity without repetition',
+      marketMaterial.eyebrow === 'Live market board'
+        && marketMaterial.heading === 'The twelve, ranked live.',
+      JSON.stringify({ eyebrow: marketMaterial.eyebrow, heading: marketMaterial.heading }),
+    );
+    check(
+      'market filters, sharing, and records use the stage Buy pill language without Market glass',
+      marketMaterial.buy
+        && marketMaterial.buy.height >= 43.5
+        && marketMaterial.legacyGlass === 0
+        && marketMaterial.sortShell
+        && marketMaterial.sortShell.backgroundImage === 'none'
         && marketMaterial.sortShell.backdropFilter === 'none'
-        && marketMaterial.sortShell.borderWidth === '1px'
-        && marketMaterial.sortShell.boxShadow.includes('inset')
+        && marketMaterial.sortShell.borderWidth === '0px'
         && marketMaterial.sort.length === 3
         && marketMaterial.share.length === 4
         && marketMaterial.sort.every((control) => (
-          control.glass
+          control.pill
             && control.height >= 43.5
             && control.backdropFilter === 'none'
+            && control.borderWidth === marketMaterial.buy.borderWidth
+            && control.borderRadius === marketMaterial.buy.borderRadius
+            && control.fontFamily === marketMaterial.buy.fontFamily
         ))
         && JSON.stringify(marketMaterial.share.map((control) => control.label))
           === JSON.stringify(['Share snapshot', 'Share on X', 'Share on Telegram', 'Share on WhatsApp'])
+        && marketMaterial.share[0]?.text === 'Share'
         && marketMaterial.share.every((control) => (
-          control.glass
+          control.pill
             && control.svg
             && control.width >= 43.5
             && control.height >= 43.5
             && control.backdropFilter === 'none'
-            && control.borderWidth === '1px'
+            && control.borderWidth === marketMaterial.buy.borderWidth
+            && control.borderRadius === marketMaterial.buy.borderRadius
+            && control.fontFamily === marketMaterial.buy.fontFamily
             && control.boxShadow.includes('inset')
         ))
         && marketMaterial.sculptureActions === 0
         && marketMaterial.rowActions.length === 12
         && marketMaterial.rowActions.every((control) => (
-          control.glass && control.height >= 43.5 && control.backdropFilter === 'none'
+          control.pill
+            && control.height >= 43.5
+            && control.backdropFilter === 'none'
+            && control.borderRadius === marketMaterial.buy.borderRadius
+            && control.fontFamily === marketMaterial.buy.fontFamily
         )),
       JSON.stringify(marketMaterial),
     );
@@ -1021,7 +1991,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         && telegramIntent.url.hostname === 't.me'
         && telegramIntent.url.pathname === '/share/url'
         && whatsappIntent.url.hostname === 'wa.me'
-        && xShared.pathname === '/registry/'
+        && xShared.pathname === '/terminal/'
         && xShared.searchParams.get('rank') === 'marketCap'
         && xShared.searchParams.get('sign') === 'pisces'
         && xShared.hash === '#market'
@@ -1052,54 +2022,65 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await desktop.locator('[data-consumer-preview="aries"]').count() === 1,
     );
 
-    const outlook = desktop.locator('#outlook');
-    await outlook.locator('.outlook-lab').scrollIntoViewIfNeeded();
-    await outlook.locator('.outlook-lab__grid[aria-busy="false"]').waitFor({ timeout: 15_000 });
-    await desktop.waitForFunction(() => (
-      document.querySelectorAll('#outlook .outlook-wheel button').length === 12
-      && !/Reading|Calculating/i.test(
-        document.querySelector('#outlook .outlook-reading h3')?.textContent ?? '',
-      )
-    ));
-    const outlookState = await outlook.evaluate((section) => {
-      const wheelButtons = [...section.querySelectorAll('.outlook-wheel button')];
-      const factorRows = [...section.querySelectorAll('.outlook-factors ol > li')];
-      return {
-        busy: section.querySelector('.outlook-lab__grid')?.getAttribute('aria-busy'),
-        edition: section.querySelector('.outlook-lab__toolbar > span')?.textContent?.trim() ?? '',
-        subject: section.querySelector('.outlook-reading__eyebrow')?.textContent?.trim() ?? '',
-        signal: section.querySelector('.outlook-reading h3')?.textContent?.trim() ?? '',
-        explanation: section.querySelector('.outlook-reading__copy > p')?.textContent?.trim() ?? '',
-        wheelCount: wheelButtons.length,
-        selectedSigns: wheelButtons
-          .filter((button) => button.getAttribute('aria-pressed') === 'true')
-          .map((button) => button.querySelector('img')?.getAttribute('src') ?? ''),
-        factorCount: factorRows.length,
-        completeFactors: factorRows.every((row) => (
-          Boolean(row.querySelector('strong')?.textContent?.trim())
-          && Boolean(row.querySelector('p')?.textContent?.trim())
-          && Boolean(row.querySelector('code')?.textContent?.trim())
-        )),
-        calibration: section.querySelector('.outlook-calibration strong')?.textContent?.trim() ?? '',
-        directionalAside: section.querySelectorAll('.outlook-challenge').length,
-        mentionsPriceArrow: section.textContent?.includes('Why no price arrow?') ?? false,
-      };
-    });
+    const expectedAriesDaily = committedOutlook.daily.signs.find((item) => item.sign === 'aries');
+    const expectedAriesNext = committedOutlook.weekly.signs
+      .find((item) => item.sign === 'aries')?.factors
+      .filter((factor) => (
+        factor.kind !== 'occupancy'
+          && Date.parse(factor.at) > Date.parse(COMMITTED_OUTLOOK_REFERENCE)
+      ))
+      .sort((left, right) => Date.parse(left.at) - Date.parse(right.at))[0];
+    const ariesBriefing = desktop.locator('#briefing');
+    await ariesBriefing.scrollIntoViewIfNeeded();
+    await desktop.locator('#briefing[data-briefing-sign="aries"][aria-busy="false"]')
+      .waitFor({ timeout: 15_000 });
+    const ariesBriefingState = await ariesBriefing.evaluate((section) => ({
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      eventAt: section.querySelector('[data-briefing-event] > time')?.getAttribute('datetime') ?? '',
+      reading: section.querySelector('[data-briefing-reading] p')?.textContent?.trim() ?? '',
+      marketLabels: [...section.querySelectorAll('[data-briefing-market] dt')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      marketValues: [...section.querySelectorAll('[data-briefing-market] dd')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      marketSeparation: section.querySelector('[data-briefing-market] > p')?.textContent?.trim() ?? '',
+      nextLabel: section.querySelector('[data-briefing-next-event] > strong')?.textContent?.trim() ?? '',
+      nextAt: section.querySelector('[data-briefing-next-event] time')?.getAttribute('datetime') ?? '',
+      countdown: section.querySelector('[data-briefing-next-event] em')?.textContent?.trim() ?? '',
+      disclaimer: section.querySelector('.consumer-briefing__foot p')?.textContent?.trim() ?? '',
+      headlineCount: section.querySelectorAll('.consumer-briefing__headline').length,
+      oldWheel: document.querySelectorAll('.outlook-wheel').length,
+      oldScores: document.querySelectorAll('.outlook-score, .outlook-dial').length,
+      oldFilters: document.querySelectorAll('.consumer-research__filters').length,
+      shareSignal: [...document.querySelectorAll('button')]
+        .some((button) => /share signal/i.test(button.textContent ?? '')),
+    }));
     check(
-      'the public outlook resolves its edition, twelve-sign wheel, and disclosed Aries factors',
-      outlookState.busy === 'false'
-        && /^Edition .+ · 12:00 UTC reference$/.test(outlookState.edition)
-        && outlookState.subject === 'Aries · daily outlook'
-        && Boolean(outlookState.signal)
-        && !/Reading|Calculating/i.test(`${outlookState.signal} ${outlookState.explanation}`)
-        && outlookState.wheelCount === 12
-        && JSON.stringify(outlookState.selectedSigns) === JSON.stringify(['/assets/zodiac-icons/48/aries.webp'])
-        && outlookState.factorCount > 0
-        && outlookState.completeFactors
-        && /^\d+ \/ \d+ daily observations$/.test(outlookState.calibration)
-        && outlookState.directionalAside === 0
-        && !outlookState.mentionsPriceArrow,
-      JSON.stringify(outlookState),
+      'the Aries briefing keeps one exact event, practical reading, four observed metrics, and next-event countdown',
+      ariesBriefingState.event === expectedAriesDaily?.primaryFactor?.label
+        && ariesBriefingState.eventAt === expectedAriesDaily?.primaryFactor?.at
+        && /Traditional astrology/i.test(ariesBriefingState.reading)
+        && /Aries/i.test(ariesBriefingState.reading)
+        && /does not imply a higher token price|market direction remains independent|does not predict price direction or volatility|check whether volume and liquidity actually show greater activity|without assuming direction|use it as context, not a market forecast/i
+          .test(ariesBriefingState.reading)
+        && JSON.stringify(ariesBriefingState.marketLabels) === JSON.stringify([
+          'Price', '24H change', 'Liquidity', '24H volume',
+        ])
+        && ariesBriefingState.marketValues[0] === '$0.00042'
+        && ariesBriefingState.marketValues[1] === '+4.20%'
+        && ariesBriefingState.marketValues[2] === '$250K'
+        && ariesBriefingState.marketValues[3] === '$64K'
+        && /Market data never changes the sky reading/i.test(ariesBriefingState.marketSeparation)
+        && ariesBriefingState.nextLabel === expectedAriesNext?.label
+        && ariesBriefingState.nextAt === expectedAriesNext?.at
+        && /^in (?:(?:\d+d )?\d+h(?: \d+m)?)$/i.test(ariesBriefingState.countdown)
+        && /not a price forecast/i.test(ariesBriefingState.disclaimer)
+        && /no established predictive relationship/i.test(ariesBriefingState.disclaimer)
+        && ariesBriefingState.headlineCount === 2
+        && ariesBriefingState.oldWheel === 0
+        && ariesBriefingState.oldScores === 0
+        && ariesBriefingState.oldFilters === 0
+        && !ariesBriefingState.shareSignal,
+      JSON.stringify({ expectedAriesDaily, expectedAriesNext, ariesBriefingState }),
     );
 
     const registry = await fetch(baseURL + '/registry/zodiacs.registry.json').then((response) => response.json());
@@ -1228,9 +2209,11 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       viewport: { width: 390, height: 844 },
       hasTouch: true,
     });
+    await freezeRegistryClock(emptyMarket);
     await stubNoWebgl(emptyMarket);
     await mockDexscreener(emptyMarket, { empty: true });
-    await emptyMarket.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await mockRegistryBriefingSources(emptyMarket);
+    await emptyMarket.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await emptyMarket.locator('#market').scrollIntoViewIfNeeded();
     await emptyMarket.locator('.market-board__state').waitFor({ timeout: 15_000 });
     const emptyMarketState = await emptyMarket.locator('#market').evaluate((section) => ({
@@ -1238,20 +2221,41 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       recordLinks: section.querySelectorAll('.market-row__actions a[href^="/registry/"]').length,
       shareDisabled: [...section.querySelectorAll('.market-board__share button')]
         .every((button) => button.disabled),
-      pulse: [...section.querySelectorAll('.market-pulse__cell strong')]
+      pulse: [...document.querySelectorAll('.capital-pulse strong')]
         .map((node) => node.textContent.trim()),
       meta: section.querySelector('.market-board__meta')?.textContent ?? '',
-      tapePaused: document.querySelector('.market-tape')?.hasAttribute('data-paused') ?? false,
+      expandText: section.querySelector('.market-board__expand')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
     }));
     check(
       'an empty upstream feed is unavailable, never a shareable zero-dollar market',
-      emptyMarketState.rows === 12
-        && emptyMarketState.recordLinks === 12
+      emptyMarketState.rows === 3
+        && emptyMarketState.recordLinks === 3
         && emptyMarketState.shareDisabled
         && emptyMarketState.pulse.every((value) => value === '—')
         && /unavailable/i.test(emptyMarketState.meta)
-        && emptyMarketState.tapePaused,
+        && /Show all 12/i.test(emptyMarketState.expandText),
       JSON.stringify(emptyMarketState),
+    );
+    await emptyMarket.locator('#briefing').scrollIntoViewIfNeeded();
+    await emptyMarket.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const marketFailureBriefing = await emptyMarket.locator('#briefing').evaluate((section) => ({
+      skyFailure: section.querySelectorAll('.consumer-briefing__state').length,
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      values: [...section.querySelectorAll('[data-briefing-market] dd')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      marketStatus: section.querySelector('[data-briefing-market] header small')?.textContent?.trim() ?? '',
+      headlines: section.querySelectorAll('.consumer-briefing__headline').length,
+      cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+    }));
+    check(
+      'market failure leaves sky context, two outside headlines, and deeper Research available',
+      marketFailureBriefing.skyFailure === 0
+        && Boolean(marketFailureBriefing.event)
+        && JSON.stringify(marketFailureBriefing.values) === JSON.stringify(['—', '—', '—', '—'])
+        && marketFailureBriefing.marketStatus === 'Live read unavailable'
+        && marketFailureBriefing.headlines === 2
+        && marketFailureBriefing.cta === '/terminal/research/?sign=leo',
+      JSON.stringify(marketFailureBriefing),
     );
     await emptyMarket.route('**/assets/registry-outlook.json', async (route) => {
       const response = await route.fetch();
@@ -1265,33 +2269,196 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       });
     });
     await emptyMarket.goto(
-      baseURL + '/registry/?rank=liquidity&sign=pisces&outlook=weekly#outlook',
+      baseURL + '/terminal/?rank=liquidity&sign=pisces#outlook',
       { waitUntil: 'domcontentloaded' },
     );
-    await emptyMarket.locator('#outlook .outlook-lab__grid[aria-busy="false"]')
+    await emptyMarket.locator('#briefing[aria-busy="false"]')
       .waitFor({ timeout: 15_000 });
     const sharedState = await emptyMarket.evaluate(() => ({
       sign: document.querySelector('.stage-placard__name')?.textContent?.trim() ?? '',
       rank: document.querySelector('.market-board__sort button[aria-pressed="true"]')
         ?.textContent?.trim() ?? '',
-      horizon: document.querySelector('#outlook .outlook-lab__toolbar button[aria-pressed="true"]')
-        ?.textContent?.trim() ?? '',
-      subject: document.querySelector('#outlook .outlook-reading__eyebrow')
-        ?.textContent?.trim() ?? '',
-      stale: document.querySelector('#outlook .outlook-lab__stale')?.textContent?.trim() ?? '',
-      shareDisabled: document.querySelector('#outlook .outlook-reading__actions button')?.disabled ?? false,
+      briefingSign: document.querySelector('#briefing')?.getAttribute('data-briefing-sign') ?? '',
+      stale: document.querySelector('#briefing .consumer-briefing__notice')?.textContent?.trim() ?? '',
+      cta: document.querySelector('#briefing .consumer-briefing__cta')?.getAttribute('href') ?? '',
+      hash: location.hash,
+      aliasInsideBriefing: document.querySelector('#briefing > #outlook')?.getAttribute('aria-hidden') ?? '',
+      briefingTop: document.querySelector('#briefing')?.getBoundingClientRect().top ?? innerHeight,
+      oldHorizonControls: document.querySelectorAll('.outlook-lab__toolbar, [name="outlook"]').length,
     }));
     check(
-      'shared state restores sign, rank, and horizon while a stale edition stays unshareable',
+      '#outlook deep-links to the consolidated briefing while restoring sign and market rank',
       sharedState.sign === 'Pisces'
         && sharedState.rank === 'Liquidity'
-        && sharedState.horizon === '7 days'
-        && sharedState.subject === 'Pisces · 7-day outlook'
-        && /Latest committed edition/i.test(sharedState.stale)
-        && sharedState.shareDisabled,
+        && sharedState.briefingSign === 'pisces'
+        && /Latest published sky edition/i.test(sharedState.stale)
+        && sharedState.cta === '/terminal/research/?sign=pisces'
+        && sharedState.hash === '#outlook'
+        && sharedState.aliasInsideBriefing === 'true'
+        && sharedState.briefingTop > 0
+        && sharedState.briefingTop < 220
+        && sharedState.oldHorizonControls === 0,
       JSON.stringify(sharedState),
     );
+    await emptyMarket.unroute('**/assets/registry-outlook.json');
+    await emptyMarket.route('**/assets/registry-outlook.json', async (route) => {
+      const response = await route.fetch();
+      const payload = await response.json();
+      const today = new Date().toISOString().slice(0, 10);
+      payload.daily.date = today;
+      payload.daily.coverage = {
+        ...payload.daily.coverage,
+        overall: 'partial',
+        events: 'partial',
+        missingTransitMonths: [today.slice(0, 7)],
+      };
+      await route.fulfill({
+        response,
+        body: JSON.stringify(payload),
+        headers: { ...response.headers(), 'content-length': undefined },
+      });
+    });
+    await emptyMarket.goto(baseURL + '/terminal/?sign=aries#outlook', { waitUntil: 'domcontentloaded' });
+    await emptyMarket.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const partialSignal = await emptyMarket.locator('#briefing').evaluate((section) => ({
+      notices: [...section.querySelectorAll('.consumer-briefing__notice')]
+        .map((notice) => notice.textContent?.replace(/\s+/g, ' ').trim() ?? ''),
+      sign: section.getAttribute('data-briefing-sign'),
+      cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+      oldSignalControls: section.querySelectorAll('.outlook-lab__toolbar, .outlook-reading__actions').length,
+    }));
+    check(
+      'partial sky coverage is announced without reviving signal horizons or sharing',
+      partialSignal.notices.length === 1
+        && /partial sky coverage/i.test(partialSignal.notices[0])
+        && /may omit an event/i.test(partialSignal.notices[0])
+        && partialSignal.sign === 'aries'
+        && partialSignal.cta === '/terminal/research/?sign=aries'
+        && partialSignal.oldSignalControls === 0,
+      JSON.stringify(partialSignal),
+    );
     await emptyMarket.close();
+
+    const skyFailure = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await freezeRegistryClock(skyFailure);
+    await stubNoWebgl(skyFailure);
+    await mockDexscreener(skyFailure);
+    await mockRegistryBriefingSources(skyFailure);
+    await skyFailure.route('**/assets/registry-outlook.json', (route) => route.abort());
+    await skyFailure.goto(baseURL + '/terminal/#outlook', { waitUntil: 'domcontentloaded' });
+    const failedSky = skyFailure.locator('#briefing .consumer-briefing__state');
+    await failedSky.waitFor({ timeout: 15_000 });
+    await skyFailure.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const failedSkyState = await skyFailure.locator('#briefing').evaluate((section) => {
+      const state = section.querySelector('.consumer-briefing__state');
+      const retry = state?.querySelector('button');
+      return {
+        text: state?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+        retryText: retry?.textContent?.trim() ?? '',
+        retryPill: retry?.classList.contains('registry-pill') ?? false,
+        retryHeight: retry?.getBoundingClientRect().height ?? 0,
+        edition: section.querySelector('.consumer-briefing__sign em')?.textContent?.trim() ?? '',
+        next: section.querySelector('[data-briefing-next-event] p')?.textContent?.trim() ?? '',
+        marketValues: [...section.querySelectorAll('[data-briefing-market] dd')]
+          .map((node) => node.textContent?.trim() ?? ''),
+        headlines: section.querySelectorAll('.consumer-briefing__headline').length,
+        cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+        hashAlias: Boolean(section.querySelector(':scope > #outlook')) && location.hash === '#outlook',
+      };
+    });
+    check(
+      'sky failure leaves market and news independent and offers an accessible retry',
+      /Sky context unavailable/i.test(failedSkyState.text)
+        && /Market and source feeds load independently/i.test(failedSkyState.text)
+        && failedSkyState.retryText === 'Retry sky data'
+        && failedSkyState.retryPill
+        && failedSkyState.retryHeight >= 43.5
+        && failedSkyState.edition === 'Sky edition unavailable'
+        && failedSkyState.next === 'Next-event schedule unavailable.'
+        && failedSkyState.marketValues.every((value) => !['…', '—'].includes(value))
+        && failedSkyState.headlines === 2
+        && failedSkyState.cta === '/terminal/research/?sign=leo'
+        && failedSkyState.hashAlias,
+      JSON.stringify(failedSkyState),
+    );
+    await skyFailure.close();
+
+    const newsFailure = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await freezeRegistryClock(newsFailure);
+    await stubNoWebgl(newsFailure);
+    await mockDexscreener(newsFailure);
+    await newsFailure.route('**/api/registry/news', (route) => route.abort());
+    await newsFailure.goto(baseURL + '/terminal/#briefing', { waitUntil: 'domcontentloaded' });
+    await newsFailure.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    const failedNewsState = await newsFailure.locator('#briefing').evaluate((section) => ({
+      text: section.querySelector('.consumer-briefing__news-state')?.textContent?.trim() ?? '',
+      sourceMeta: section.querySelector('.consumer-briefing__news > header small')?.textContent?.trim() ?? '',
+      skyFailure: section.querySelectorAll('.consumer-briefing__state').length,
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      marketValues: [...section.querySelectorAll('[data-briefing-market] dd')]
+        .map((node) => node.textContent?.trim() ?? ''),
+      cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+    }));
+    check(
+      'news failure leaves the sky, market observation, and Research CTA intact',
+      failedNewsState.text === 'Source headlines are temporarily unavailable.'
+        && failedNewsState.sourceMeta === 'Fresh source coverage is unavailable'
+        && failedNewsState.skyFailure === 0
+        && Boolean(failedNewsState.event)
+        && failedNewsState.marketValues.every((value) => !['…', '—'].includes(value))
+        && failedNewsState.cta === '/terminal/research/?sign=leo',
+      JSON.stringify(failedNewsState),
+    );
+    await newsFailure.close();
+
+    const loadingBriefing = await newPage({ viewport: { width: 390, height: 844 }, hasTouch: true });
+    await freezeRegistryClock(loadingBriefing);
+    await stubNoWebgl(loadingBriefing);
+    await mockDexscreener(loadingBriefing);
+    await mockRegistryBriefingSources(loadingBriefing);
+    let releaseSkyLoading;
+    let releaseNewsLoading;
+    const skyLoadingGate = new Promise((resolve) => { releaseSkyLoading = resolve; });
+    const newsLoadingGate = new Promise((resolve) => { releaseNewsLoading = resolve; });
+    await loadingBriefing.route('**/assets/registry-outlook.json', async (route) => {
+      await skyLoadingGate;
+      const response = await route.fetch();
+      await route.fulfill({ response });
+    });
+    await loadingBriefing.route('**/api/registry/news', async (route) => {
+      await newsLoadingGate;
+      await route.fulfill({ json: registryBriefingNewsPayload() });
+    });
+    await loadingBriefing.goto(baseURL + '/terminal/#briefing', { waitUntil: 'domcontentloaded' });
+    await loadingBriefing.locator('#briefing[aria-busy="true"]').waitFor({ timeout: 15_000 });
+    const loadingState = await loadingBriefing.locator('#briefing').evaluate((section) => ({
+      busy: section.getAttribute('aria-busy'),
+      event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+      edition: section.querySelector('.consumer-briefing__sign em')?.textContent?.trim() ?? '',
+      next: section.querySelector('[data-briefing-next-event] p')?.textContent?.trim() ?? '',
+      placeholders: section.querySelectorAll('.consumer-briefing__headline--placeholder').length,
+      liveHeadlines: section.querySelectorAll('[data-briefing-headline]').length,
+    }));
+    check(
+      'the briefing exposes an honest busy state while its published sky edition is pending',
+      loadingState.busy === 'true'
+        && loadingState.event === 'Reading the published sky…'
+        && loadingState.edition === 'Loading today’s edition'
+        && loadingState.next === 'Loading the published seven-day schedule…'
+        && loadingState.placeholders === 2
+        && loadingState.liveHeadlines === 0,
+      JSON.stringify(loadingState),
+    );
+    releaseSkyLoading();
+    releaseNewsLoading();
+    await loadingBriefing.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+    check(
+      'the pending briefing settles without a reload',
+      await loadingBriefing.locator('[data-briefing-event] h3').innerText() !== 'Reading the published sky…'
+        && await loadingBriefing.locator('.consumer-briefing__headline--placeholder').count() === 0
+        && await loadingBriefing.locator('[data-briefing-headline]').count() === 2,
+    );
+    await loadingBriefing.close();
 
     const reducedTape = await newPage({
       viewport: { width: 390, height: 844 },
@@ -1300,7 +2467,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     await stubNoWebgl(reducedTape);
     await mockDexscreener(reducedTape);
-    await reducedTape.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await reducedTape.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await reducedTape.locator('.market-tape__track').waitFor({ state: 'visible' });
     const reducedTapeState = await reducedTape.locator('.market-tape').evaluate((tape) => {
       const viewport = tape.querySelector('.market-tape__viewport');
@@ -1345,7 +2512,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         deviceScaleFactor: 2,
         hasTouch: true,
       });
+      await freezeRegistryClock(mobile);
       await mockDexscreener(mobile);
+      await mockRegistryBriefingSources(mobile);
       await withCollectionFlag(mobile);
       const mobileGalleryRequests = [];
       mobile.on('request', (request) => {
@@ -1353,8 +2522,54 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           mobileGalleryRequests.push(request.url());
         }
       });
-      await mobile.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await mobile.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
       const label = `${width}×${height}`;
+      const mobileMasthead = await mobile.locator('.capital-masthead').evaluate((masthead) => {
+        const title = masthead.querySelector('.capital-masthead__title');
+        const heading = title?.querySelector('h1');
+        const caption = title?.querySelector('p');
+        const tape = masthead.querySelector(':scope > .market-tape');
+        const pulse = masthead.querySelector(':scope > .capital-pulse');
+        const opening = masthead.nextElementSibling;
+        const nav = document.querySelector('.wnav-wrap');
+        const headingRect = heading?.getBoundingClientRect();
+        const navRect = nav?.getBoundingClientRect();
+        const captionStyle = caption ? getComputedStyle(caption) : null;
+        return {
+          text: heading?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          visible: heading ? getComputedStyle(heading).visibility === 'visible' && headingRect.height > 0 : false,
+          direct: heading?.parentElement === title,
+          label: title?.querySelector(':scope > span')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          caption: caption?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          captionDisplay: captionStyle?.display ?? '',
+          tapeDirect: tape?.parentElement === masthead,
+          pulseDirect: pulse?.parentElement === masthead,
+          openingImmediate: opening?.classList.contains('consumer-capital-opening') ?? false,
+          left: headingRect?.left ?? -1,
+          right: headingRect?.right ?? innerWidth + 1,
+          top: headingRect?.top ?? -1,
+          navBottom: navRect?.bottom ?? 0,
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+        };
+      });
+      check(
+        `Zodiac Terminal at ${label} is visible below navigation without overflow`,
+        mobileMasthead.text === 'Zodiac Terminal'
+          && mobileMasthead.visible
+          && mobileMasthead.direct
+          && mobileMasthead.label === 'Verified by the Zodiacs Registry'
+          && mobileMasthead.caption === 'Twelve signs. Twelve transferable tokens. One live public market.'
+          && mobileMasthead.captionDisplay !== 'none'
+          && mobileMasthead.tapeDirect
+          && mobileMasthead.pulseDirect
+          && mobileMasthead.openingImmediate
+          && mobileMasthead.top >= mobileMasthead.navBottom - 1
+          && mobileMasthead.left >= -1
+          && mobileMasthead.right <= width + 1
+          && mobileMasthead.pageWidth <= mobileMasthead.viewportWidth + 1,
+        JSON.stringify(mobileMasthead),
+      );
       const mobileStageLive = await mobile.evaluate(() => (
         document.documentElement.classList.contains('gallery-live')
       ));
@@ -1396,6 +2611,17 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const mobileMarket = mobile.locator('#market');
       await mobileMarket.scrollIntoViewIfNeeded();
       await mobileMarket.locator('.market-row').first().waitFor({ state: 'visible', timeout: 15_000 });
+      const compactRowCount = await mobileMarket.locator('.market-row').count();
+      const compactExpand = mobileMarket.locator('.market-board__expand');
+      check(
+        `mobile market at ${label} starts with three leaders and an explicit expansion`,
+        compactRowCount === 3
+          && await compactExpand.getAttribute('aria-expanded') === 'false'
+          && (await compactExpand.innerText()).includes('Show all 12'),
+        `${compactRowCount}/${await compactExpand.innerText()}`,
+      );
+      await compactExpand.click();
+      await mobile.waitForFunction(() => document.querySelectorAll('#market .market-row').length === 12);
       const compactMarketMaterial = await mobileMarket.evaluate((section) => {
         const measure = (node) => {
           const rect = node.getBoundingClientRect();
@@ -1427,7 +2653,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         };
       });
       check(
-        `market glass at ${label} keeps every social and row action touchable without overflow`,
+        `expanded Registry market pills at ${label} keep every social and row action touchable without overflow`,
         compactMarketMaterial.sort.length === 3
           && compactMarketMaterial.share.length === 4
           && compactMarketMaterial.social.length === 3
@@ -1452,6 +2678,94 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           ))
           && compactMarketMaterial.pageWidth <= compactMarketMaterial.viewportWidth + 1,
         JSON.stringify(compactMarketMaterial),
+      );
+      const mobileBriefing = mobile.locator('#briefing');
+      await mobileBriefing.scrollIntoViewIfNeeded();
+      await mobile.locator('#briefing[aria-busy="false"]').waitFor({ timeout: 15_000 });
+      const compactBriefing = await mobileBriefing.evaluate((section) => {
+        const box = (selector) => {
+          const node = section.querySelector(selector);
+          const rect = node?.getBoundingClientRect();
+          return rect ? { top: rect.top, bottom: rect.bottom, left: rect.left, right: rect.right } : null;
+        };
+        const targets = [...section.querySelectorAll('.consumer-briefing__headline > a, .consumer-briefing__cta')]
+          .map((target) => {
+            const rect = target.getBoundingClientRect();
+            return {
+              text: target.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+              width: rect.width,
+              height: rect.height,
+              left: rect.left,
+              right: rect.right,
+            };
+          });
+        const sign = section.getAttribute('data-briefing-sign') ?? '';
+        return {
+          count: document.querySelectorAll('.consumer-briefing').length,
+          heading: section.querySelector('h2')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          sign,
+          aliasesInside: ['research', 'outlook'].every((id) => section.querySelector(`:scope > #${id}`)),
+          labels: [...section.querySelectorAll('[data-briefing-market] dt')]
+            .map((node) => node.textContent?.trim() ?? ''),
+          values: [...section.querySelectorAll('[data-briefing-market] dd')]
+            .map((node) => node.textContent?.trim() ?? ''),
+          event: section.querySelector('[data-briefing-event] h3')?.textContent?.trim() ?? '',
+          reading: section.querySelector('[data-briefing-reading] p')?.textContent?.trim() ?? '',
+          next: section.querySelector('[data-briefing-next-event]')?.textContent?.replace(/\s+/g, ' ').trim() ?? '',
+          headlineCount: section.querySelectorAll('.consumer-briefing__headline').length,
+          liveHeadlineCount: section.querySelectorAll('[data-briefing-headline]').length,
+          cta: section.querySelector('.consumer-briefing__cta')?.getAttribute('href') ?? '',
+          targets,
+          boxes: [
+            box('.consumer-briefing__head'),
+            box('.consumer-briefing__lead'),
+            box('.consumer-briefing__market'),
+            box('.consumer-briefing__next'),
+            box('.consumer-briefing__news'),
+            box('.consumer-briefing__foot'),
+          ],
+          oldUi: document.querySelectorAll([
+            '.research-pulse', '.consumer-research', '.outlook-lab', '.outlook-wheel',
+            '.outlook-score', '.consumer-research__filters',
+          ].join(',')).length,
+          details: section.querySelectorAll('details').length,
+          tabs: section.querySelectorAll('[role="tab"], [role="tablist"]').length,
+          pageWidth: document.documentElement.scrollWidth,
+          viewportWidth: innerWidth,
+        };
+      });
+      const continuousBriefing = compactBriefing.boxes.every(Boolean)
+        && compactBriefing.boxes.every((box, index, boxes) => (
+          index === 0 || box.top >= boxes[index - 1].top
+        ));
+      check(
+        `Today's market briefing at ${label} is one continuous selected-sign stack without overflow`,
+        compactBriefing.count === 1
+          && compactBriefing.heading === 'Today’s market briefing'
+          && compactBriefing.aliasesInside
+          && JSON.stringify(compactBriefing.labels) === JSON.stringify([
+            'Price', '24H change', 'Liquidity', '24H volume',
+          ])
+          && compactBriefing.values.every((value) => !['…', '—'].includes(value))
+          && Boolean(compactBriefing.event)
+          && Boolean(compactBriefing.reading)
+          && Boolean(compactBriefing.next)
+          && compactBriefing.headlineCount === 2
+          && compactBriefing.liveHeadlineCount === 2
+          && compactBriefing.cta === `/terminal/research/?sign=${compactBriefing.sign}`
+          && continuousBriefing
+          && compactBriefing.oldUi === 0
+          && compactBriefing.details === 0
+          && compactBriefing.tabs === 0
+          && compactBriefing.targets.length === 3
+          && compactBriefing.targets.every((target) => (
+            target.width >= 43.5
+              && target.height >= 43.5
+              && target.left >= -1
+              && target.right <= compactBriefing.viewportWidth + 1
+          ))
+          && compactBriefing.pageWidth <= compactBriefing.viewportWidth + 1,
+        JSON.stringify(compactBriefing),
       );
       await mobile.locator('#official-twelve').scrollIntoViewIfNeeded();
 
@@ -1546,6 +2860,16 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           JSON.stringify(liveMobileState),
         );
 
+        await liveBand.evaluate((band) => {
+          band.__zodiacsSelectionPaints = [];
+          band.addEventListener('zodiacs:gallery-sign', (event) => {
+            band.__zodiacsSelectionPaints.push({
+              selected: event?.detail?.slug ?? '',
+              rendered: event?.detail?.renderedSlug ?? '',
+              renderedAttribute: band.dataset.galleryRenderedSign ?? '',
+            });
+          });
+        });
         const liveSelections = [];
         for (const [index, slug] of expectedSigns.entries()) {
           const tick = liveBand.locator('button.rail__tick').nth(index);
@@ -1560,14 +2884,89 @@ await withPreview({ port: 4404 }, async (baseURL) => {
             slug,
             pressed: await tick.getAttribute('aria-pressed'),
             preview: await liveBand.locator('[data-consumer-preview]').getAttribute('data-consumer-preview'),
+            rendered: await liveBand.getAttribute('data-gallery-rendered-sign'),
           });
         }
+        const selectionPaints = await liveBand.evaluate((band) => band.__zodiacsSelectionPaints ?? []);
         check(
-          `all twelve live rail choices at ${label} keep the sculpture placard synchronized`,
-          liveSelections.every((item) => item.pressed === 'true' && item.preview === item.slug),
-          JSON.stringify(liveSelections),
+          `all twelve live rail choices at ${label} paint before publishing the selected sign`,
+          liveSelections.every((item) => (
+            item.pressed === 'true'
+              && item.preview === item.slug
+              && item.rendered === item.slug
+          ))
+            && selectionPaints.length === expectedSigns.length
+            && selectionPaints.every((item) => item.selected === item.rendered),
+          JSON.stringify({ liveSelections, selectionPaints }),
         );
-        await mobile.waitForTimeout(400);
+        await mobile.waitForFunction(() => {
+          const band = document.querySelector('.gband--consumer');
+          return band?.dataset.galleryRenderedSign === 'pisces'
+            && band.dataset.galleryResidentTextures === '1'
+            && band.dataset.galleryTextureSigns === 'pisces';
+        }, null, { timeout: 10_000 });
+        await mobile.waitForTimeout(1000);
+        const settledSelection = await liveBand.evaluate((band) => ({
+          rendered: band.dataset.galleryRenderedSign ?? '',
+          textures: band.dataset.galleryTextureSigns ?? '',
+          resident: band.dataset.galleryResidentTextures ?? '',
+          preview: band.querySelector('[data-consumer-preview]')?.getAttribute('data-consumer-preview') ?? '',
+          pressed: [...band.querySelectorAll('.rail__tick')]
+            .find((tick) => tick.getAttribute('aria-pressed') === 'true')
+            ?.querySelector('img')?.getAttribute('src') ?? '',
+          season: band.querySelector('[data-season-sign]')?.getAttribute('data-season-sign') ?? '',
+        }));
+        check(
+          `rapid live choices at ${label} settle on one Pisces cast without a stale Leo rebound`,
+          settledSelection.rendered === 'pisces'
+            && settledSelection.textures === 'pisces'
+            && settledSelection.resident === '1'
+            && settledSelection.preview === 'pisces'
+            && settledSelection.pressed === '/assets/zodiac-icons/48/pisces.webp'
+            // The selected cast and the calendar season are separate facts.
+            && settledSelection.season === 'leo',
+          JSON.stringify(settledSelection),
+        );
+        if (width === 390) {
+          // A room drag is intentionally fluid, unlike a labelled rail
+          // choice. Its public selection must still wait for the cast that is
+          // actually painted instead of letting the placard lead the canvas.
+          const leoTick = liveBand.locator('button.rail__tick').nth(4);
+          await leoTick.click();
+          await mobile.waitForFunction(() => (
+            document.querySelector('.gband--consumer')?.dataset.galleryRenderedSign === 'leo'
+          ));
+          await liveBand.evaluate((band) => { band.__zodiacsSelectionPaints = []; });
+          const roomCanvas = liveBand.locator('.stage__canvas');
+          const roomBox = await roomCanvas.boundingBox();
+          const roomStart = {
+            x: roomBox.x + (roomBox.width * 0.14),
+            y: roomBox.y + (roomBox.height * 0.18),
+          };
+          await mobile.mouse.move(roomStart.x, roomStart.y);
+          await mobile.mouse.down();
+          await mobile.mouse.move(roomStart.x + (roomBox.width * 0.58), roomStart.y, { steps: 10 });
+          await mobile.mouse.up();
+          await mobile.waitForFunction(() => (
+            (document.querySelector('.gband--consumer')?.__zodiacsSelectionPaints?.length ?? 0) > 0
+          ));
+          await mobile.waitForTimeout(1000);
+          const roomBrowse = await liveBand.evaluate((band) => ({
+            rendered: band.dataset.galleryRenderedSign ?? '',
+            preview: band.querySelector('[data-consumer-preview]')?.getAttribute('data-consumer-preview') ?? '',
+            selected: [...band.querySelectorAll('.rail__tick')]
+              .findIndex((tick) => tick.getAttribute('aria-pressed') === 'true'),
+            paints: band.__zodiacsSelectionPaints ?? [],
+          }));
+          check(
+            'a fluid room browse publishes only sculptures that have reached the canvas',
+            roomBrowse.paints.length > 0
+              && roomBrowse.paints.every((item) => item.selected === item.rendered)
+              && roomBrowse.rendered === roomBrowse.preview
+              && roomBrowse.selected !== 4,
+            JSON.stringify(roomBrowse),
+          );
+        }
         check(
           `WebGL phone at ${label} requests the scene bundle exactly once`,
           mobileGalleryRequests.length === 1,
@@ -1744,7 +3143,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       if (new URL(request.url()).pathname === '/assets/gallery.js') responsiveStageRequests.push(request.url());
     });
     responsiveStage.on('pageerror', (error) => responsiveStageErrors.push(String(error)));
-    await responsiveStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await responsiveStage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     const responsiveStageLive = await responsiveStage.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
@@ -1889,7 +3288,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     await stubNoWebgl(reduced);
     await mockDexscreener(reduced);
-    await reduced.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await reduced.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await reduced.locator('[data-consumer-sign]').first().waitFor({ state: 'visible' });
     check(
       'reduced motion leaves no film attached to the rendered page',
@@ -1953,10 +3352,13 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     });
     await mockDexscreener(stagePage);
     const stageRequests = [];
+    const stageSculptureRequests = [];
     stagePage.on('request', (request) => {
-      if (new URL(request.url()).pathname === '/assets/gallery.js') stageRequests.push(request.url());
+      const pathname = new URL(request.url()).pathname;
+      if (pathname === '/assets/gallery.js') stageRequests.push(request.url());
+      if (pathname.startsWith('/assets/sculptures/')) stageSculptureRequests.push(pathname);
     });
-    await stagePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await stagePage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     await stagePage.locator('.consumer-explorer').waitFor({ state: 'visible' });
     const stageLive = await stagePage.evaluate(() => document.documentElement.classList.contains('gallery-live'));
     if (stageLive) {
@@ -1976,6 +3378,18 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         'the default-open stage requests its bundle exactly once',
         stageRequests.length === 1,
         JSON.stringify(stageRequests),
+      );
+      await stagePage.waitForFunction(() => (
+        performance.getEntriesByType('resource')
+          .some((entry) => new URL(entry.name).pathname === '/assets/sculptures/1024/leo.webp')
+      ), null, { timeout: 30_000 });
+      const initialSculptureSlugs = [...new Set(stageSculptureRequests.map((pathname) => (
+        pathname.split('/').pop()?.replace(/\.webp$/, '')
+      )))];
+      check(
+        'the opening WebGL stage requests only its selected sculpture plate',
+        initialSculptureSlugs.length === 1 && initialSculptureSlugs[0] === 'leo',
+        JSON.stringify(stageSculptureRequests),
       );
       check(
         'the rail exposes one pressed tick for the current sign',
@@ -2044,8 +3458,22 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       // just barely into view would slide it under the pill.
       const geminiTick = stagePage.locator('.rail__tick').nth(2);
       await geminiTick.evaluate((el) => el.scrollIntoView({ block: 'center' }));
+      await stagePage.locator('.gband--consumer').evaluate((band) => {
+        band.__zodiacsSelectionPaints = [];
+        band.addEventListener('zodiacs:gallery-sign', (event) => {
+          band.__zodiacsSelectionPaints.push({
+            selected: event?.detail?.slug ?? '',
+            rendered: event?.detail?.renderedSlug ?? '',
+            renderedAttribute: band.dataset.galleryRenderedSign ?? '',
+          });
+        });
+      });
       await geminiTick.click();
       await stagePage.locator('[data-consumer-preview="gemini"]').waitFor({ timeout: 10_000 });
+      await stagePage.waitForFunction(() => (
+        performance.getEntriesByType('resource')
+          .some((entry) => new URL(entry.name).pathname === '/assets/sculptures/1024/gemini.webp')
+      ), null, { timeout: 30_000 });
       const geminiPlacard = await stagePage.locator('[data-consumer-preview="gemini"]').evaluate((placard) => ({
         name: placard.querySelector('.stage-placard__name')?.textContent,
         trade: placard.querySelector('a.btn--primary, button.btn--primary') !== null,
@@ -2061,6 +3489,42 @@ await withPreview({ port: 4404 }, async (baseURL) => {
           && geminiPlacard.record === '/registry/gemini/',
         JSON.stringify(geminiPlacard),
       );
+      const geminiPresentation = await stagePage.locator('.gband--consumer').evaluate((band) => ({
+        rendered: band.dataset.galleryRenderedSign ?? '',
+        paints: band.__zodiacsSelectionPaints ?? [],
+      }));
+      check(
+        'the wide-screen scene paints Gemini before publishing the Gemini selection',
+        geminiPresentation.rendered === 'gemini'
+          && geminiPresentation.paints.some((item) => (
+            item.selected === 'gemini' && item.rendered === 'gemini'
+          )),
+        JSON.stringify(geminiPresentation),
+      );
+      const requestedGeminiPaths = stageSculptureRequests.filter((pathname) => pathname.endsWith('/gemini.webp'));
+      check(
+        'a new selection requests its high-resolution plate without the twelve-image row batch',
+        requestedGeminiPaths.includes('/assets/sculptures/1024/gemini.webp')
+          && !requestedGeminiPaths.includes('/assets/sculptures/512/gemini.webp')
+          && !stageSculptureRequests.some((pathname) => (
+            pathname.includes('/512/') && !pathname.endsWith('/leo.webp')
+          )),
+        JSON.stringify(stageSculptureRequests),
+      );
+      await stagePage.waitForFunction(() => {
+        const band = document.querySelector('.gband--consumer');
+        return band?.dataset.galleryResidentTextures === '1'
+          && band.dataset.galleryTextureSigns === 'gemini';
+      }, null, { timeout: 3_000 });
+      const settledGeminiTexture = await stagePage.locator('.gband--consumer').evaluate((band) => ({
+        resident: band.dataset.galleryResidentTextures ?? '',
+        signs: band.dataset.galleryTextureSigns ?? '',
+      }));
+      check(
+        'the spotlight releases the previous decoded plate after handoff',
+        settledGeminiTexture.resident === '1' && settledGeminiTexture.signs === 'gemini',
+        JSON.stringify(settledGeminiTexture),
+      );
 
       const liveStage = stagePage.locator('.gband--consumer');
       const liveCanvas = liveStage.locator('.stage__canvas');
@@ -2074,11 +3538,21 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       const turnHint = (await liveStage.locator('[data-gallery-turn-hint]').innerText())
         .replace(/\s+/g, ' ').trim();
       check(
-        'the Registry spotlight turns quietly on its Thesis turntable',
+        'the Registry spotlight begins one quiet inspection sweep',
         !ambientFrameA.equals(ambientFrameB)
           && turnHint.toLowerCase().includes('drag the figure to turn')
           && turnHint.toLowerCase().includes('drag the room to browse'),
         JSON.stringify({ framesEqual: ambientFrameA.equals(ambientFrameB), turnHint }),
+      );
+      await stagePage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'rest'
+      ), null, { timeout: 7_000 });
+      const restingFrameA = await liveCanvas.screenshot();
+      await stagePage.waitForTimeout(500);
+      const restingFrameB = await liveCanvas.screenshot();
+      check(
+        'the inspection sweep returns face-first and releases the render loop',
+        restingFrameA.equals(restingFrameB),
       );
 
       // Find the cast rather than assuming its silhouette fills the centre:
@@ -2149,7 +3623,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
         await stagePage.waitForTimeout(500);
         const resumedFrameB = await liveCanvas.screenshot();
         check(
-          'the quiet turntable resumes after the inspection pause',
+          'a fresh bounded inspection sweep resumes after the inspection pause',
           !resumedFrameA.equals(resumedFrameB),
         );
       }
@@ -2157,6 +3631,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       // Tapping a sculpture on the stage chooses it. There is nothing to
       // draw out to — the placard is already at its feet — so the card must
       // stay shut however the canvas is used.
+      await stagePage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'rest'
+      ), null, { timeout: 7_000 });
       const mountBox = await stagePage.locator('.gband--consumer [data-gallery-canvas]').boundingBox();
       await stagePage.mouse.move(mountBox.x + (mountBox.width / 2), mountBox.y + (mountBox.height / 2));
       await stagePage.mouse.down();
@@ -2172,8 +3649,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await stagePage.waitForTimeout(500);
       const tappedFrameB = await liveCanvas.screenshot();
       check(
-        'a tap never stalls the Registry turntable',
-        !tappedFrameA.equals(tappedFrameB),
+        'a tap leaves the completed inspection pose at rest',
+        tappedFrameA.equals(tappedFrameB)
+          && await liveStage.getAttribute('data-gallery-rotation') === 'rest',
       );
 
       const stageText = await stagePage.locator('.consumer-explorer').innerText();
@@ -2200,8 +3678,9 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       viewport: { width: 1280, height: 900 },
       reducedMotion: 'reduce',
     });
+    let bitmapReferenceFrame = null;
     await mockDexscreener(reducedStage);
-    await reducedStage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+    await reducedStage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
     const reducedStageLive = await reducedStage.evaluate(() => (
       document.documentElement.classList.contains('gallery-live')
     ));
@@ -2212,17 +3691,94 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await reducedStage.waitForFunction(() => (
         document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'manual'
       ));
-      await reducedStage.waitForTimeout(1400);
-      const quietFrameA = await canvas.screenshot();
-      await reducedStage.waitForTimeout(500);
-      const quietFrameB = await canvas.screenshot();
+      await reducedStage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryResidentTextures === '1'
+      ), null, { timeout: 30_000 });
+      const quiet = await waitForSettledCanvas(reducedStage, canvas);
       check(
         'reduced motion keeps the WebGL spotlight still until the reader moves it',
-        quietFrameA.equals(quietFrameB)
+        quiet.settled
           && await band.getAttribute('data-gallery-rotation') === 'manual',
+        JSON.stringify({ settled: quiet.settled, attempts: quiet.attempts }),
       );
+      bitmapReferenceFrame = quiet.frame;
     }
     await reducedStage.close();
+
+    // ImageBitmap bypasses THREE.Texture.flipY. Its decode options must
+    // produce the exact same upright plate as the HTMLImage fallback, or the
+    // fast path silently turns every sculpture upside down.
+    if (bitmapReferenceFrame) {
+      const imageFallbackStage = await newPage({
+        viewport: { width: 1280, height: 900 },
+        reducedMotion: 'reduce',
+      });
+      await imageFallbackStage.addInitScript(() => {
+        try { delete globalThis.createImageBitmap; } catch {}
+      });
+      await mockDexscreener(imageFallbackStage);
+      await imageFallbackStage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
+      const fallbackBand = imageFallbackStage.locator('.gband--consumer');
+      const fallbackCanvas = fallbackBand.locator('.stage__canvas');
+      await fallbackCanvas.waitFor({ state: 'visible', timeout: 30_000 });
+      await imageFallbackStage.waitForFunction(() => (
+        document.querySelector('.gband--consumer')?.dataset.galleryRotation === 'manual'
+          && document.querySelector('.gband--consumer')?.dataset.galleryResidentTextures === '1'
+      ));
+      const fallback = await waitForSettledCanvas(imageFallbackStage, fallbackCanvas);
+      check(
+        'ImageBitmap and HTMLImage decode the sculpture with identical upright orientation',
+        await imageFallbackStage.evaluate(() => typeof globalThis.createImageBitmap === 'undefined')
+          && fallback.settled
+          && bitmapReferenceFrame.equals(fallback.frame),
+        JSON.stringify({ settled: fallback.settled, attempts: fallback.attempts }),
+      );
+      await imageFallbackStage.close();
+    }
+
+    const saverStage = await newPage({
+      viewport: { width: 390, height: 844 },
+      hasTouch: true,
+    });
+    await saverStage.addInitScript(() => {
+      const constrained = { saveData: true, effectiveType: '4g' };
+      for (const key of ['connection', 'mozConnection', 'webkitConnection']) {
+        try {
+          Object.defineProperty(navigator, key, {
+            configurable: true,
+            get: () => constrained,
+          });
+        } catch {}
+      }
+    });
+    await mockDexscreener(saverStage);
+    await mockRegistryBriefingSources(saverStage);
+    const saverRequests = [];
+    saverStage.on('request', (request) => {
+      const pathname = new URL(request.url()).pathname;
+      if (pathname === '/assets/gallery.js' || pathname.startsWith('/assets/sculptures/')) {
+        saverRequests.push(pathname);
+      }
+    });
+    await saverStage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
+    await saverStage.locator('.consumer-explorer').waitFor({ state: 'visible' });
+    await saverStage.waitForTimeout(700);
+    const saverState = await saverStage.evaluate(() => ({
+      live: document.documentElement.classList.contains('gallery-live'),
+      canvas: document.querySelectorAll('.gband .stage__canvas').length,
+      carousel: document.querySelectorAll('[data-gallery-carousel]').length,
+    }));
+    const saverSculptureSlugs = [...new Set(saverRequests
+      .filter((pathname) => pathname.startsWith('/assets/sculptures/'))
+      .map((pathname) => pathname.split('/').pop()?.replace(/\.webp$/, '')))];
+    check(
+      'Data Saver keeps the poster path and never requests WebGL or neighboring sculptures',
+      !saverState.live && saverState.canvas === 0 && saverState.carousel === 1
+        && !saverRequests.includes('/assets/gallery.js')
+        && saverSculptureSlugs.length === 1 && saverSculptureSlugs[0] === 'leo',
+      JSON.stringify({ saverState, saverRequests }),
+    );
+    await saverStage.close();
 
     // ---- the trade panel, with its flag turned on ------------------------
     //
@@ -2231,7 +3787,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
     // stubbed: this drive proves the panel's wiring, not the venue's.
     const tradeOrders = [];
     const withTradeFlag = async (page) => {
-      await page.route('**/registry/', async (route) => {
+      await page.route('**/terminal/', async (route) => {
         if (route.request().resourceType() !== 'document') return route.continue();
         const response = await route.fetch();
         const body = (await response.text()).replace(
@@ -2306,7 +3862,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       await mockDexscreener(tradePage, { singleRequestGate });
       if (stub) await stubNoWebgl(tradePage);
       await withTradeFlag(tradePage);
-      await tradePage.goto(baseURL + '/registry/', { waitUntil: 'domcontentloaded' });
+      await tradePage.goto(baseURL + '/terminal/', { waitUntil: 'domcontentloaded' });
       await tradePage.locator('.stage-placard').waitFor({ state: 'visible', timeout: 20_000 });
       await tradePage.evaluate(() => new Promise((resolve) => setTimeout(resolve, 700)));
       check(
@@ -2600,7 +4156,7 @@ await withPreview({ port: 4404 }, async (baseURL) => {
       ['security', 'safety-evidence'],
     ]) {
       const legacy = await newPage({ viewport: { width: 900, height: 800 } });
-      await legacy.goto(baseURL + '/registry/#' + legacyHash, { waitUntil: 'domcontentloaded' });
+      await legacy.goto(baseURL + '/terminal/#' + legacyHash, { waitUntil: 'domcontentloaded' });
       await legacy.waitForURL('**/registry/technical/#' + destination);
       check(
         'legacy #' + legacyHash + ' opens its matching technical group',

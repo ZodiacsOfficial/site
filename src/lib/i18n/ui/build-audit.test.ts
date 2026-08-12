@@ -60,7 +60,7 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
     const html = readFileSync(join(distRoot, 'pt', 'birth-chart', 'index.html'), 'utf8');
 
     expect(html).toContain('globalThis.__ZDX_UI__');
-    expect(html).toContain('"navCollect":"Registro"');
+    expect(html).toContain('"navCollect":"Terminal"');
     expect(html).toContain('"birthChart":"Mapa astral"');
   });
 
@@ -68,7 +68,7 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
     const html = readFileSync(join(distRoot, 'fr', 'birth-chart', 'index.html'), 'utf8');
 
     expect(html).toContain('globalThis.__ZDX_UI__');
-    expect(html).toContain('"navCollect":"Registre"');
+    expect(html).toContain('"navCollect":"Terminal"');
     expect(html).toContain('"birthChart":"Thème astral"');
   });
 
@@ -76,7 +76,7 @@ describe.skipIf(!existsSync(distRoot))('built client UI payloads', () => {
     const html = readFileSync(join(distRoot, 'it', 'birth-chart', 'index.html'), 'utf8');
 
     expect(html).toContain('globalThis.__ZDX_UI__');
-    expect(html).toContain('"navCollect":"Registro"');
+    expect(html).toContain('"navCollect":"Terminal"');
     expect(html).toContain('"birthChart":"Tema natale"');
   });
 

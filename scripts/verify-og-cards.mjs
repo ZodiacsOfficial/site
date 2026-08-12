@@ -20,6 +20,9 @@ import {
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const out = resolve(root, 'public/assets/og/v2');
+const terminalOut = resolve(root, 'public/assets/og/v4');
+const terminalCard = 'zodiac-terminal.png';
+const legacyRegistryCardSha256 = 'f7b9e9e801e390f2ef3671755d1f3754a7e45bb9db026699f5381764aab5a08a';
 const homepageCard = 'share-pastel-wheel-20260809.png';
 const russianOut = resolve(out, 'ru');
 const eventsPublication = JSON.parse(
@@ -74,26 +77,30 @@ async function relativePngFiles(directory, prefix = '') {
   return files.sort();
 }
 
-async function validatePng(relativePath, { unique = true } = {}) {
-  const absolutePath = resolve(out, relativePath);
+async function validatePng(relativePath, {
+  unique = true,
+  base = out,
+  label = relativePath,
+} = {}) {
+  const absolutePath = resolve(base, relativePath);
   let bytes;
   try {
     bytes = await readFile(absolutePath);
   } catch {
-    failures.push(`${relativePath}: missing`);
+    failures.push(`${label}: missing`);
     return;
   }
   const metadata = await sharp(bytes).metadata();
   if (metadata.format !== 'png' || metadata.width !== 1200 || metadata.height !== 630) {
     failures.push(
-      `${relativePath}: expected 1200x630 PNG, received ${metadata.width ?? '?'}x${metadata.height ?? '?'} ${metadata.format ?? 'unknown'}`,
+      `${label}: expected 1200x630 PNG, received ${metadata.width ?? '?'}x${metadata.height ?? '?'} ${metadata.format ?? 'unknown'}`,
     );
   }
   if (!unique) return;
   const hash = createHash('sha256').update(bytes).digest('hex');
   const duplicate = hashes.get(hash);
-  if (duplicate) failures.push(`${relativePath}: byte-identical to ${duplicate}`);
-  else hashes.set(hash, relativePath);
+  if (duplicate) failures.push(`${label}: byte-identical to ${duplicate}`);
+  else hashes.set(hash, label);
 }
 
 // The homepage shares the void fallback card. A separate homepage asset was
@@ -122,6 +129,19 @@ for (const slug of signSlugs) {
 }
 
 for (const relativePath of expected) await validatePng(relativePath);
+if (OG_EN.registry.image !== `/assets/og/v4/${terminalCard}`) {
+  failures.push(`registry image: expected /assets/og/v4/${terminalCard}, received ${OG_EN.registry.image}`);
+}
+await validatePng(terminalCard, { base: terminalOut, label: `v4/${terminalCard}` });
+try {
+  const legacyRegistryBytes = await readFile(resolve(out, 'registry.png'));
+  const legacyRegistryHash = createHash('sha256').update(legacyRegistryBytes).digest('hex');
+  if (legacyRegistryHash !== legacyRegistryCardSha256) {
+    failures.push('registry.png: legacy v2 card bytes changed; publish consumer renames under a new versioned URL');
+  }
+} catch {
+  // validatePng reports the missing v2 card above.
+}
 await validatePng('share.png', { unique: false });
 await validatePng(homepageCard, { unique: false });
 await validateHomepageCard();
@@ -210,4 +230,4 @@ if (failures.length) {
   process.exit(1);
 }
 
-console.log(`verify-og-cards: OK — homepage on the cache-busted void card; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);
+console.log(`verify-og-cards: OK — homepage on the cache-busted void card; Zodiac Terminal on its versioned v4 card; ${expected.length} English + ${russianExpected.length} Russian unique page cards, all 1200x630 PNG; Russian family ${(russianBytes / 1024).toFixed(1)}KiB; v2 bundle ${bundleMb.toFixed(2)}MB`);

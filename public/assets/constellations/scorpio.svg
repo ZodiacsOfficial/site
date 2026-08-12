@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 460" role="img" aria-labelledby="title description">
+  <title id="title">Scorpio constellation map</title>
+  <desc id="description">Brighter stars in Scorpio plotted from HYG Database J2000 coordinates. Antares is highlighted. Guide lines are not official constellation boundaries.</desc>
+  <metadata>HYG Database v4.0, CC BY-SA 4.0, source blob 681f7d51024c9593182079da9fd1aec897a44e7e. Guide segments authored by Zodiacs.org.</metadata>
+  <defs>
+    <radialGradient id="field" cx="50%" cy="46%" r="66%"><stop offset="0" stop-color="#B9DCE8" stop-opacity=".08"/><stop offset="1" stop-color="#07080c" stop-opacity="0"/></radialGradient>
+    <filter id="glow" x="-100%" y="-100%" width="300%" height="300%"><feGaussianBlur stdDeviation="3" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+  </defs>
+  <rect width="720" height="460" rx="28" fill="#090b10"/>
+  <rect width="720" height="460" rx="28" fill="url(#field)"/>
+  <g fill="none" stroke="#B9DCE8" stroke-opacity=".34" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">  <path d="M 524.08 196.12 L 517.96 150.61"/>
+  <path d="M 517.96 150.61 L 513.36 99.34"/>
+  <path d="M 513.36 99.34 L 497.50 58.00"/>
+  <path d="M 513.36 99.34 L 448.55 142.96"/>
+  <path d="M 448.55 142.96 L 423.01 155.28"/>
+  <path d="M 423.01 155.28 L 402.89 181.46"/>
+  <path d="M 402.89 181.46 L 358.51 270.68"/>
+  <path d="M 358.51 270.68 L 353.21 325.79"/>
+  <path d="M 353.21 325.79 L 290.19 402.00"/>
+  <path d="M 290.19 402.00 L 211.99 398.46"/>
+  <path d="M 211.99 398.46 L 195.92 340.21"/>
+  <path d="M 195.92 340.21 L 223.52 311.93"/>
+  <path d="M 223.52 311.93 L 232.36 314.75"/></g>
+  <g fill="#eef1f7" fill-opacity=".86">  <circle class="star" cx="524.08" cy="196.12" r="2.33"/>
+  <circle class="star" cx="517.96" cy="150.61" r="3.31"/>
+  <circle class="star" cx="513.36" cy="99.34" r="3.91"/>
+  <circle class="star" cx="497.50" cy="58.00" r="3.64"/>
+  <circle class="star" cx="448.55" cy="142.96" r="3.30"/>
+  <circle class="star focus" cx="423.01" cy="155.28" r="5.14"/>
+  <circle class="star" cx="402.89" cy="181.46" r="3.38"/>
+  <circle class="star" cx="358.51" cy="270.68" r="3.91"/>
+  <circle class="star" cx="353.21" cy="325.79" r="3.20"/>
+  <circle class="star" cx="290.19" cy="402.00" r="2.88"/>
+  <circle class="star" cx="232.36" cy="314.75" r="3.50"/>
+  <circle class="star" cx="223.52" cy="311.93" r="4.58"/>
+  <circle class="star" cx="211.99" cy="398.46" r="4.34"/>
+  <circle class="star" cx="195.92" cy="340.21" r="3.81"/></g>
+  <circle cx="423.01" cy="155.28" r="14" fill="none" stroke="#B9DCE8" stroke-width="1.5" stroke-opacity=".9" filter="url(#glow)"/>
+  <text x="439.01" y="141.28" fill="#B9DCE8" font-family="ui-monospace, monospace" font-size="12" letter-spacing="1.5">ANTARES</text>
+  <text x="24" y="430" fill="#8e96ab" font-family="ui-monospace, monospace" font-size="9" letter-spacing="2">J2000 · EAST LEFT · SCO</text>
+</svg>

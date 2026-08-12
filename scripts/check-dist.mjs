@@ -285,9 +285,9 @@ async function hasId(filePath, id) {
   }
   const html = idCache.get(filePath);
   if (html.includes(`id="${id}"`) || html.includes(`id='${id}'`)) return true;
-  // The registry wing landing renders its sections client-side; ids live in
+  // Zodiac Terminal renders its sections client-side; ids live in
   // the compiled bundle (JSX id="x" compiles to id: "x").
-  if (filePath === resolve(root, 'registry/index.html')) {
+  if (filePath === resolve(root, 'terminal/index.html')) {
     const bundlePath = resolve(root, 'assets/app.js');
     if (!idCache.has(bundlePath)) {
       idCache.set(bundlePath, await readFile(bundlePath, 'utf8'));
@@ -632,6 +632,8 @@ for (const relativePath of [
   'es/index.html',
   'es/aries/index.html',
   'registry/index.html',
+  'terminal/index.html',
+  'terminal/markets/index.html',
   'thesis/index.html',
   'sdk/index.html',
   'archive/index.html',
@@ -989,17 +991,17 @@ for (const [pagePath, block] of sitemapBlocksByPath) {
   }
 }
 
-const registryLandingPath = resolve(root, 'registry/index.html');
-const registryLandingHtml = idCache.get(registryLandingPath)
-  ?? (await readFile(registryLandingPath, 'utf8'));
-const registryAuraMarker = registryLandingHtml.match(
+const terminalLandingPath = resolve(root, 'terminal/index.html');
+const terminalLandingHtml = idCache.get(terminalLandingPath)
+  ?? (await readFile(terminalLandingPath, 'utf8'));
+const registryAuraMarker = terminalLandingHtml.match(
   /<meta name="zodiacs-registry-collection-enabled" content="([01])" \/>/,
 )?.[1];
-if (!registryAuraMarker) fail('registry/index.html: missing Registry Collection build marker');
+if (!registryAuraMarker) fail('terminal/index.html: missing Registry Collection build marker');
 const registryAuraBuildEnabled = registryAuraMarker === '1';
-const registryAuraLandingLinked = /href=["']\/registry\/collection\/["']/.test(registryLandingHtml);
+const registryAuraLandingLinked = /href=["']\/registry\/collection\/["']/.test(terminalLandingHtml);
 if (registryAuraLandingLinked !== registryAuraBuildEnabled) {
-  fail('registry/index.html: Registry Collection landing link does not match its build marker');
+  fail('terminal/index.html: Registry Collection landing link does not match its build marker');
 }
 const thesisHtmlPath = resolve(root, 'thesis/index.html');
 const thesisHtml = idCache.get(thesisHtmlPath) ?? (await readFile(thesisHtmlPath, 'utf8'));
@@ -1034,10 +1036,21 @@ const indexablePeoplePaths = new Set(
     .filter((person) => person.indexEligibility.eligible)
     .map((person) => `/people/${person.slug}/`),
 );
+const registryResearchPublication = JSON.parse(await readFile(
+  resolve(repo, 'src/data/registry-research/publication.json'),
+  'utf8',
+));
+const indexedRegistryResearchPaths = new Set([
+  '/terminal/research/',
+  ...registryResearchPublication.items
+    .filter((item) => item.status === 'published' && item.visibleAt <= registryResearchPublication.generatedAt)
+    .map((item) => item.url),
+]);
 const sitemapPolicy = {
-  // 2425 = 2420 + /registry/technical/ + four localized Ask guide routes.
-  total: 2425 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
-    + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true),
+  // 2426 = 2422 + four localized Ask guide routes.
+  total: 2426 + Number(registryAuraIndexed) + publishedEventPaths.size + indexablePeoplePaths.size
+    + Number(JSON.parse(await readFile(resolve(repo, 'src/data/people.json'), 'utf8')).directoryIndexable === true)
+    + indexedRegistryResearchPaths.size,
   compatibilityPairs: 78,
   birthdays: 1830,
   chineseZodiac: 65,
@@ -1045,6 +1058,7 @@ const sitemapPolicy = {
   horoscopePages: 84,
   eventPages: publishedEventPaths.size,
   peoplePages: indexablePeoplePaths.size,
+  registryResearchPages: indexedRegistryResearchPaths.size,
   translatedBlocks: 2056,
 };
 const indexedFamilies = [
@@ -1073,6 +1087,7 @@ const indexedFamilies = [
   },
   { label: 'Registry Collection', pattern: /^\/registry\/collection\/$/, expected: Number(registryAuraIndexed), localized: false },
   { label: 'Registry technical record', pattern: /^\/registry\/technical\/$/, expected: 1, localized: false },
+  { label: 'Terminal Research', pattern: /^\/terminal\/research(?:\/[a-z0-9-]+)?\/$/, expected: sitemapPolicy.registryResearchPages, localized: false },
 ];
 
 requireExactSet(
@@ -1089,6 +1104,11 @@ requireExactSet(
   'sitemap.xml Phase 5 People profiles',
   new Set([...sitemapLocs].filter((path) => /^\/people\/[a-z0-9-]+\/$/u.test(path))),
   indexablePeoplePaths,
+);
+requireExactSet(
+  'sitemap.xml Terminal Research routes',
+  new Set([...sitemapLocs].filter((path) => /^\/terminal\/research(?:\/[a-z0-9-]+)?\/$/u.test(path))),
+  indexedRegistryResearchPaths,
 );
 
 if (sitemapLocs.size !== sitemapPolicy.total) {
@@ -1273,6 +1293,7 @@ for (const artifact of [
   'archive/rss.xml',
   '404.html',
   'registry/index.html',
+  'terminal/index.html',
   'thesis/index.html',
   'sdk/index.html',
 ]) {

@@ -26,7 +26,7 @@ describe('registry pastel polish', () => {
     const [source, bundle, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/assets/app.js'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     expect(source).toContain('src="/assets/zodiac-icons/48/${s.asset.sign}.webp"');
@@ -50,7 +50,7 @@ describe('registry pastel polish', () => {
     const [source, bundle, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/assets/app.js'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     // The disc rail walks with the arrow keys and keeps a roving tabstop,
@@ -77,7 +77,7 @@ describe('registry pastel polish', () => {
   it('keeps the display-only market tape moving until reduced motion requests native flow', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
     const tapeSource = source.slice(
       source.indexOf('function MarketTape('),
@@ -87,7 +87,7 @@ describe('registry pastel polish', () => {
       registry.indexOf('.market-tape {'),
       registry.indexOf('.consumer-market {'),
     );
-    const materialPass = registry.indexOf('Registry material pass');
+    const materialPass = registry.indexOf('Registry control pass');
     const reducedStart = registry.lastIndexOf('@media (prefers-reduced-motion: reduce)', materialPass);
     const reducedRules = registry.slice(reducedStart, materialPass);
 
@@ -106,16 +106,24 @@ describe('registry pastel polish', () => {
     expect(reducedRules).toContain(".market-tape__group[aria-hidden='true'] { display: none; }");
   });
 
-  it('opens on the plate and keeps the optional Cabinet in the purpose section', async () => {
+  it('opens on the capital market masthead and keeps the optional Cabinet in the purpose section', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
-    // The film and large editorial title card are retired: the gallery itself
-    // is the opening scene, led by the compact season instrument.
+    // The film is retired. A single market identity now precedes the selected
+    // sculpture and compact board without introducing a second brand.
     expect(source).not.toContain('function CineHero(');
     expect(source).not.toContain('className="cine__frame"');
+    const masthead = source.slice(
+      source.indexOf('function ConsumerCapitalHeader('),
+      source.indexOf('function ConsumerMarketSection('),
+    );
+    expect(masthead).toContain('Zodiac Terminal');
+    expect(masthead).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
+    expect(masthead).toContain('<MarketTape season={season} />');
+    expect(masthead).toContain('className="capital-pulse"');
     const stage = source.slice(
       source.indexOf('function GalleryBand('),
       source.indexOf('function ConsumerExplorer('),
@@ -125,8 +133,11 @@ describe('registry pastel polish', () => {
     expect(stage).not.toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
     expect(stage).not.toContain('Open the Cabinet');
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
-    // The no-JS shell keeps its own hero and its own browse anchor.
-    expect(registry).toContain('href="#official-twelve" data-registry-browse');
+    // The no-JS shell mirrors the same masthead instead of briefly showing a
+    // cinematic title that disappears after React mounts.
+    expect(registry).toContain('<h1 id="static-capital-title">Zodiac Terminal</h1>');
+    expect(registry).toContain('Twelve signs. Twelve transferable tokens. One live public market.');
+    expect(registry).not.toContain('data-cine-video');
     expect(source).toContain('id="thesis" className="consumer-purpose reveal"');
     expect(source).toContain('REGISTRY_AURA_ENABLED &&');
     expect(source).toContain('See occupied signs, material editions, and wheel coverage for any public wallet.');
@@ -136,38 +147,36 @@ describe('registry pastel polish', () => {
     expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');
   });
 
-  it('turns market controls into restrained glass with accessible solid fallbacks', async () => {
+  it('gives Registry controls the stage Buy pill language without Market glass', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
-    const materialPass = registry.slice(registry.indexOf('Registry material pass'));
-    const glassRule = materialPass.slice(
-      materialPass.indexOf('.market-glass,'),
-      materialPass.indexOf('.market-glass::before,'),
+    const materialPass = registry.slice(registry.indexOf('Registry control pass'));
+    const pillRule = materialPass.slice(
+      materialPass.indexOf('.consumer-registry .registry-pill {'),
+      materialPass.indexOf('.consumer-registry .registry-pill:active'),
     );
 
-    expect(source).toContain('className="market-glass"');
-    expect(source).toContain('className="market-glass market-board__share-primary"');
-    expect(source).toContain('className="market-glass market-board__social"');
-    expect(source).toContain('className="market-row__record market-glass"');
+    expect(source).not.toContain('market-glass');
+    expect(registry).not.toContain('.market-glass');
+    expect(source).toContain('className="registry-pill registry-pill--segment"');
+    expect(source).toContain('className="registry-pill registry-pill--share market-board__share-primary"');
+    expect(source).toContain('className="registry-pill registry-pill--icon market-board__social"');
+    expect(source).toContain('className="market-row__record registry-pill registry-pill--record"');
     expect(source).not.toContain('className="market-row__view');
-    expect(materialPass).toContain('.market-glass,');
-    expect(glassRule).toContain('linear-gradient');
-    expect(glassRule).toContain('box-shadow:');
-    expect(glassRule).toContain('inset');
-    expect(glassRule).toContain('backdrop-filter: none;');
-    expect(materialPass).toContain('.market-glass::before,');
-    expect(materialPass).toContain('.market-board__sort button,');
-    expect(materialPass).toContain('min-height: 44px;');
-    expect(materialPass).toContain('.market-board__socials { display: flex;');
-    expect(materialPass).toContain('.market-board__social {');
-    expect(materialPass).toContain('width: 44px;');
-    // Repeated record links are painted glass, not twelve independent
-    // backdrop blurs fighting the phone compositor.
-    expect(materialPass).toMatch(/\.market-row__record \{[\s\S]*?backdrop-filter: none;/u);
-    expect(materialPass).toMatch(/@media \(prefers-reduced-transparency: reduce\) \{[\s\S]*?background: #11141b;[\s\S]*?backdrop-filter: none;/u);
-    expect(materialPass).toMatch(/@media \(prefers-contrast: more\) \{[\s\S]*?border-color: rgba\(238,241,247,\.55\);/u);
+    expect(pillRule).toContain('min-height: 44px;');
+    expect(pillRule).toContain('border: 1px solid');
+    expect(pillRule).toContain('border-radius: 999px;');
+    expect(pillRule).toContain('font: 500 13px/1 var(--sans);');
+    expect(pillRule).toContain('inset 0 1px 0');
+    expect(pillRule).toContain('backdrop-filter: none;');
+    expect(materialPass).toContain('.consumer-registry .registry-pill:active { transform: scale(.97); }');
+    expect(materialPass).toContain(".consumer-registry .registry-pill[aria-pressed='true']");
+    expect(materialPass).toMatch(/\.consumer-registry \.registry-pill--record \{[\s\S]*?width: 100%;/u);
+    expect(materialPass).toMatch(/\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?min-height: 44px;[\s\S]*?border-radius: 999px;[\s\S]*?background: rgba\(10,12,17,\.56\);[\s\S]*?font: 500 13px\/1 var\(--sans\);[\s\S]*?backdrop-filter: none;/u);
+    expect(materialPass).toMatch(/@media \(prefers-reduced-transparency: reduce\) \{[\s\S]*?\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?background: #11141b !important;[\s\S]*?backdrop-filter: none !important;/u);
+    expect(materialPass).toMatch(/@media \(prefers-contrast: more\) \{[\s\S]*?\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?border-color: rgba\(238,241,247,\.72\) !important;[\s\S]*?color: var\(--ink\) !important;/u);
   });
 
   it('uses recognizable sign media and the Cabinet\'s canonical curator sample', async () => {
@@ -185,9 +194,10 @@ describe('registry pastel polish', () => {
       "['aries', 'leo', 'pisces']",
       '/assets/zodiac-icons/48/leo.webp',
       '8Cd7…b8Qm',
-      'Choose a sign',
-      'Match the address',
-      'Recognize it anywhere',
+      'One token for each sign',
+      'Verify the exact address',
+      'Hold, send, or collect',
+      'collection artwork—not a physical object',
     ]) expect(how).toContain(marker);
 
     for (const [slug, finish, numeral, count] of [
@@ -211,7 +221,7 @@ describe('registry pastel polish', () => {
   it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
     const [wingNav, registry, thesis, sdk, source, siteNav] = await Promise.all([
       read('scripts/wing-nav.mjs'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
       read('public/thesis/index.html'),
       read('public/sdk/index.html'),
       read('src/app.jsx'),
@@ -275,7 +285,7 @@ describe('registry pastel polish', () => {
   it('uses a full-row, plain-English Registry Collection feature band', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     expect(source).toContain("t: 'Verify a Zodiac'");
@@ -293,7 +303,7 @@ describe('registry pastel polish', () => {
   it('paints market direction after generic values and includes an explicit flat state', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
-      read('public/registry/index.html'),
+      read('public/terminal/index.html'),
     ]);
 
     expect(source.match(/market__change--flat/g)?.length).toBeGreaterThanOrEqual(2);
@@ -307,7 +317,7 @@ describe('registry pastel polish', () => {
     expect(registry.slice(directionRule)).toContain('.market__change--flat { color: var(--market-flat); }');
   });
 
-  it.each(signs)('renders the %s lot title with one decorative pastel disc', async (slug, name) => {
+  it.each(signs)('renders the %s token record in plain language with market and constellation context', async (slug, name) => {
     const html = await read(`public/registry/${slug}/index.html`);
     const title = `<h1 class="lot__title" id="lot-title">${name} <picture class="lot__title-icon" aria-hidden="true">`;
     const nextIndex = (signs.findIndex(([candidate]) => candidate === slug) + 1) % signs.length;
@@ -320,8 +330,25 @@ describe('registry pastel polish', () => {
     expect(html).not.toContain('class="lot__icon"');
     expect(html).not.toContain('<span class="glyph">');
     expect(html).toContain('padding: calc(94px + env(safe-area-inset-top)) 0 36px;');
-    expect(html).toContain(`<span class="lot__eyebrow">Catalogue <span class="g">/</span> Lot`);
-    expect(html).not.toContain(`of XII <span class="g">·</span> ${name.toUpperCase()}`);
+    expect(html).toContain(`<span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign`);
+    expect(html).toContain(`${name} is the transferable token for the ${name} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.`);
+    for (const heading of [
+      'Token facts',
+      `What ${name} represents`,
+      `The story behind ${name}`,
+      'Official addresses',
+      `Get ${name}`,
+      'Explore all 12',
+    ]) expect(html).toContain(heading);
+    for (const retired of ['Museum label', 'Catalogue note', '>Provenance<', '>Acquisition<']) {
+      expect(html).not.toContain(retired);
+    }
+    expect(html).toContain(`src="/assets/constellations/${slug}.svg"`);
+    expect(html).toContain('HYG Database v4.0');
+    expect(html).toContain('CC BY-SA 4.0');
+    expect(html).toContain('they are not official IAU boundaries');
+    expect(html).toContain('data-market-chart');
+    expect(html).toContain('Open live chart');
     expect(html).toContain('class="lot__meta"');
     expect(html).toContain('min-height: 44px;');
     expect(html).toContain(`class="lot__next" href="/registry/${nextSlug}/" aria-label="Next record, ${nextName}"`);

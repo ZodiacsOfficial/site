@@ -68,7 +68,7 @@ try {
       }
       const pass = state.navFits
         && state.chipVisible
-        && state.chipHref === '/registry/'
+        && state.chipHref === '/terminal/'
         && state.burgerVisible === (width === 819)
         && (width === 820 || state.mobileRegistryVisible === true);
       navBreakpointsPass &&= pass;

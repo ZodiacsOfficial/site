@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://zodiacs.org/schemas/registry-research-approvals.v1.schema.json",
+  "title": "Zodiacs.org Registry Research approval manifest",
+  "type": "object",
+  "required": ["schema", "pilot", "postPilot", "approvals"],
+  "properties": {
+    "schema": { "const": "zodiacs.registry-research-approvals.v1" },
+    "pilot": {
+      "type": "object",
+      "required": ["startsOn", "endsOn", "mode"],
+      "properties": {
+        "startsOn": { "type": "string", "format": "date" },
+        "endsOn": { "type": "string", "format": "date" },
+        "mode": { "const": "human-approval-required" },
+        "rule": { "type": "string" }
+      },
+      "additionalProperties": false
+    },
+    "postPilot": {
+      "type": "object",
+      "required": ["mode", "automaticTemplateIds", "freeformModelOutputAllowed"],
+      "properties": {
+        "mode": { "const": "deterministic-allowlist" },
+        "automaticTemplateIds": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+        "freeformModelOutputAllowed": { "const": false }
+      },
+      "additionalProperties": false
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["itemId", "artifactSha256", "reviewer", "reviewedAt"],
+        "properties": {
+          "itemId": { "type": "string", "pattern": "^zrx-[a-z0-9-]+$" },
+          "artifactSha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "reviewer": { "type": "string", "minLength": 2 },
+          "reviewedAt": { "type": "string", "format": "date-time" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
