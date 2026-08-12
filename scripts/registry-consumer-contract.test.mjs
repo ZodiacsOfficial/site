@@ -623,7 +623,11 @@ describe('Registry consumer and technical information architecture', () => {
     expect(source).toContain('key={sign.asset.sign}');
     expect(source).toContain('pool={chartPool}');
     expect(source).toContain('{endpointMoment(model.first)} · one observation');
-    expect(source).toContain('{model.coverage.observedPointCount} reads · {elapsedLabel}');
+    expect(source).toContain("'Hourly endpoints'");
+    expect(source).toContain("'First open'");
+    expect(source).toContain("'Latest close'");
+    expect(source).toContain('`${model.coverage.activePointCount} active · ${model.coverage.idlePointCount} no-swap`');
+    expect(source).toContain("' · '}{elapsedLabel}");
     expect(source).toContain('Open live chart');
     expect(html).not.toMatch(/<script[^>]+src=["']\/assets\/registry-token-chart\.js["']/iu);
     expect(chartBuild).toContain("format: 'esm'");

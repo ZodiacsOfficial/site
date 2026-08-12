@@ -52,6 +52,8 @@ interface Props {
   editionDate?: string;
   /** Suppress third-party runtime scripts on pages handling private account data. */
   privateSurface?: boolean;
+  /** Render the Terminal-only market and venue boundary in the shared footer. */
+  terminalMarketNotice?: boolean;
 }
 
 const props = Astro.props;
@@ -352,7 +354,7 @@ const rtlDocumentDirection = (direction: 'ltr' | 'rtl') => direction === 'rtl' ?
 
     {props.type === 'article' && <EditorialLine locale={locale} />}
     <SourcesLine sources={props.sources} locale={locale} />
-    <SiteFooter locale={locale} />
+    <SiteFooter locale={locale} terminalMarketNotice={props.terminalMarketNotice} />
 
     <script>
       // Scroll reveal — heavy fade-up on viewport entry, once.

@@ -26,6 +26,11 @@ function positiveNumber(value) {
   return Number.isFinite(number) && number > 0 ? number : null;
 }
 
+function nonNegativeNumber(value) {
+  const number = Number(value);
+  return Number.isFinite(number) && number >= 0 ? number : null;
+}
+
 function isoInstant(value, fallback = null) {
   const instant = new Date(value);
   return Number.isFinite(instant.getTime()) ? instant.toISOString() : fallback;
@@ -103,9 +108,12 @@ export function selectedTokenNetworkSkipReason(connection) {
 }
 
 /**
- * Keep only the 24 hourly slots immediately before the current open hour.
- * GeckoTerminal omits intervals with no swaps; no carry-forward values are
- * inserted here, so gaps remain observable in `points`.
+ * Keep the 24 closed hourly slots immediately before the current open hour.
+ * GeckoTerminal is requested with `include_empty_intervals=true`, so a
+ * provider-filled no-swap slot arrives as O=H=L=C at the preceding close and
+ * V=0. Preserve that distinction and append only trailing closed slots that
+ * follow the last returned candle, using the same documented zero-volume
+ * carry rule. Internal provider gaps are never filled locally.
  */
 export function normalizeClosedHourlyPrices(candles, {
   nowMs = Date.now(),
@@ -119,18 +127,59 @@ export function normalizeClosedHourlyPrices(candles, {
 
   for (const candle of Array.isArray(candles) ? candles : []) {
     const timestampSeconds = Number(candle?.ts);
-    const priceUsd = positiveNumber(candle?.c);
-    if (!Number.isSafeInteger(timestampSeconds) || priceUsd === null) continue;
+    const openUsd = positiveNumber(candle?.o);
+    const highUsd = positiveNumber(candle?.h);
+    const lowUsd = positiveNumber(candle?.l);
+    const closeUsd = positiveNumber(candle?.c);
+    const volumeUsd = nonNegativeNumber(candle?.v);
+    if (!Number.isSafeInteger(timestampSeconds)
+      || [openUsd, highUsd, lowUsd, closeUsd, volumeUsd].some(value => value === null)
+      || highUsd < Math.max(openUsd, closeUsd)
+      || lowUsd > Math.min(openUsd, closeUsd)
+      || highUsd < lowUsd) continue;
     const slotMs = timestampSeconds * 1000;
     if (slotMs % HOUR_MS !== 0) continue;
     if (slotMs < windowStartMs || slotMs >= windowEndMs) continue;
+    const hasTrades = volumeUsd > 0;
     bySlot.set(slotMs, {
-      timestampMs: slotMs,
+      timestampMs: slotMs + HOUR_MS,
       slotMs,
-      at: new Date(slotMs).toISOString(),
-      priceUsd,
+      slotAt: new Date(slotMs).toISOString(),
+      at: new Date(slotMs + HOUR_MS).toISOString(),
+      openUsd,
+      highUsd,
+      lowUsd,
+      closeUsd,
+      priceUsd: closeUsd,
+      volumeUsd,
+      hasTrades,
+      idleKind: hasTrades ? null : 'provider',
       pool,
     });
+  }
+
+  const returnedPoints = [...bySlot.values()].sort((left, right) => left.slotMs - right.slotMs);
+  const lastReturned = returnedPoints.at(-1) ?? null;
+  if (lastReturned) {
+    for (let slotMs = lastReturned.slotMs + HOUR_MS; slotMs < windowEndMs; slotMs += HOUR_MS) {
+      const closeUsd = bySlot.get(slotMs - HOUR_MS)?.closeUsd;
+      if (!(closeUsd > 0) || bySlot.has(slotMs)) continue;
+      bySlot.set(slotMs, {
+        timestampMs: slotMs + HOUR_MS,
+        slotMs,
+        slotAt: new Date(slotMs).toISOString(),
+        at: new Date(slotMs + HOUR_MS).toISOString(),
+        openUsd: closeUsd,
+        highUsd: closeUsd,
+        lowUsd: closeUsd,
+        closeUsd,
+        priceUsd: closeUsd,
+        volumeUsd: 0,
+        hasTrades: false,
+        idleKind: 'derived-trailing',
+        pool,
+      });
+    }
   }
 
   const points = [...bySlot.values()].sort((left, right) => left.slotMs - right.slotMs);
@@ -238,6 +287,10 @@ function seriesCoverage(series) {
     internalMissingIntervals,
     missingRuns,
     sourceChanges,
+    activePointCount: points.filter(point => point.hasTrades === true).length,
+    idlePointCount: points.filter(point => point.hasTrades === false).length,
+    providerIdlePointCount: points.filter(point => point.idleKind === 'provider').length,
+    derivedIdlePointCount: points.filter(point => point.idleKind === 'derived-trailing').length,
     segments,
   };
 }
@@ -258,7 +311,22 @@ function liveFallbackSentence(live) {
   return '';
 }
 
-function accessibleSummary({ label, mode, series, coverage, first, last, netChangePct, live }) {
+function accessibleSummary({
+  label,
+  mode,
+  series,
+  coverage,
+  first,
+  last,
+  startPriceUsd,
+  endPriceUsd,
+  startTimestampMs,
+  endTimestampMs,
+  sessionHighUsd,
+  sessionLowUsd,
+  netChangePct,
+  live,
+}) {
   const unit = series.timeframe === '1h' ? 'closed hourly' : 'Registry archive';
   const fallback = series.source === 'registry-daily-archive' ? liveFallbackSentence(live) : '';
   if (mode === 'empty') {
@@ -267,7 +335,7 @@ function accessibleSummary({ label, mode, series, coverage, first, last, netChan
   if (mode === 'single') {
     return `${label} ${unit} history has one observation: ${formatPriceUsd(first.priceUsd)} at ${formatUtc(first.timestampMs)}. A trend line requires ${SELECTED_TOKEN_MINIMUM_TREND_POINTS} observations.${fallback}`;
   }
-  const interval = `from ${formatPriceUsd(first.priceUsd)} at ${formatUtc(first.timestampMs)} to ${formatPriceUsd(last.priceUsd)} at ${formatUtc(last.timestampMs)}`;
+  const interval = `from ${formatPriceUsd(startPriceUsd)} at ${formatUtc(startTimestampMs)} to ${formatPriceUsd(endPriceUsd)} at ${formatUtc(endTimestampMs)}`;
   const gaps = coverage.missingPointCount > 0
     ? coverage.missingPointCount === 1
       ? ' 1 expected interval is missing and remains unconnected.'
@@ -279,7 +347,15 @@ function accessibleSummary({ label, mode, series, coverage, first, last, netChan
   const line = mode === 'comparison'
     ? ` A trend line is withheld until ${SELECTED_TOKEN_MINIMUM_TREND_POINTS} observations are available.`
     : '';
-  return `${label} ${unit} history has ${coverage.observedPointCount} observations ${interval}. ${describeChange(netChangePct)}${gaps}${sourceChange}${line}${fallback}`;
+  const candleDetail = series.timeframe === '1h'
+    ? `${mode === 'line'
+      ? ` This is a 24-hour candlestick chart with a session high of ${formatPriceUsd(sessionHighUsd)} and a session low of ${formatPriceUsd(sessionLowUsd)}.`
+      : ` The available hourly slots have a high of ${formatPriceUsd(sessionHighUsd)} and a low of ${formatPriceUsd(sessionLowUsd)}.`} ${coverage.activePointCount} hour${coverage.activePointCount === 1 ? '' : 's'} contained swaps; ${coverage.idlePointCount} no-swap hour${coverage.idlePointCount === 1 ? ' carries' : 's carry'} the preceding close with zero volume.`
+    : '';
+  const evidenceCount = series.timeframe === '1h'
+    ? `covers ${coverage.observedPointCount} hourly slot${coverage.observedPointCount === 1 ? '' : 's'}`
+    : `has ${coverage.observedPointCount} observations`;
+  return `${label} ${unit} history ${evidenceCount} ${interval}.${candleDetail} ${describeChange(netChangePct)}${gaps}${sourceChange}${line}${fallback}`;
 }
 
 /**
@@ -302,8 +378,23 @@ export function buildSelectedTokenChartModel({
   const points = series.points;
   const first = points[0] ?? null;
   const last = points.at(-1) ?? null;
+  const startPriceUsd = first
+    ? (series.timeframe === '1h' ? positiveNumber(first.openUsd) : null) ?? first.priceUsd
+    : null;
+  const endPriceUsd = last
+    ? (series.timeframe === '1h' ? positiveNumber(last.closeUsd) : null) ?? last.priceUsd
+    : null;
+  const startTimestampMs = first
+    ? series.timeframe === '1h' ? first.slotMs : first.timestampMs
+    : null;
+  const endTimestampMs = last?.timestampMs ?? null;
+  const candleHighs = points.map(point => positiveNumber(point.highUsd)).filter(value => value !== null);
+  const candleLows = points.map(point => positiveNumber(point.lowUsd)).filter(value => value !== null);
+  const sessionHighUsd = candleHighs.length ? Math.max(...candleHighs) : null;
+  const sessionLowUsd = candleLows.length ? Math.min(...candleLows) : null;
+  const lastActive = points.filter(point => point.hasTrades === true).at(-1) ?? null;
   const netChangePct = first && last && first !== last
-    ? percentChange(first.priceUsd, last.priceUsd)
+    ? percentChange(startPriceUsd, endPriceUsd)
     : null;
   const mode = points.length === 0
     ? 'empty'
@@ -313,10 +404,10 @@ export function buildSelectedTokenChartModel({
         ? 'comparison'
         : 'line';
   const sourceNotice = liveSeries
-    ? '24-hour reference-pool prices from GeckoTerminal.'
+    ? '24-hour reference-pool OHLCV from GeckoTerminal; no-swap hours carry the preceding close at zero volume.'
     : `Registry archive fallback.${liveFallbackSentence(live)}`.trim();
   const caption = series.timeframe === '1h'
-    ? `${coverage.observedPointCount} of ${coverage.expectedPointCount} closed hourly observations · GeckoTerminal`
+    ? `${coverage.activePointCount} active hour${coverage.activePointCount === 1 ? '' : 's'} · ${coverage.idlePointCount} no-swap hour${coverage.idlePointCount === 1 ? '' : 's'} · GeckoTerminal`
     : `${coverage.observedPointCount} Registry archive observation${coverage.observedPointCount === 1 ? '' : 's'}`;
 
   return {
@@ -337,6 +428,13 @@ export function buildSelectedTokenChartModel({
     segments: mode === 'line' ? coverage.segments : [],
     first,
     last,
+    lastActive,
+    startPriceUsd,
+    endPriceUsd,
+    startTimestampMs,
+    endTimestampMs,
+    sessionHighUsd,
+    sessionLowUsd,
     netChangePct,
     direction: netChangePct === null || Math.abs(netChangePct) < 0.005
       ? 'flat'
@@ -347,10 +445,27 @@ export function buildSelectedTokenChartModel({
       missingPointCount: coverage.missingPointCount,
       missingRuns: coverage.missingRuns,
       sourceChanges: coverage.sourceChanges,
+      activePointCount: coverage.activePointCount,
+      idlePointCount: coverage.idlePointCount,
+      providerIdlePointCount: coverage.providerIdlePointCount,
+      derivedIdlePointCount: coverage.derivedIdlePointCount,
     },
     caption,
     ariaLabel: accessibleSummary({
-      label, mode, series, coverage, first, last, netChangePct, live,
+      label,
+      mode,
+      series,
+      coverage,
+      first,
+      last,
+      startPriceUsd,
+      endPriceUsd,
+      startTimestampMs,
+      endTimestampMs,
+      sessionHighUsd,
+      sessionLowUsd,
+      netChangePct,
+      live,
     }),
     liveStatus: live?.status ?? 'not_requested',
     liveReason: live?.reason ?? null,

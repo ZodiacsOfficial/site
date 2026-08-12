@@ -2025,14 +2025,22 @@
       }, [inView, token, pool, sign.name, observations]);
 
       const model = state.status === 'ready' ? state.model : null;
-      const width = 280;
-      const height = 84;
-      const insetX = 7;
-      const insetY = 7;
+      const width = 320;
+      const height = 124;
+      const insetX = 8;
+      const priceTop = 8;
+      const priceBottom = 91;
+      const volumeTop = 101;
+      const volumeBottom = 119;
       const linePoints = model?.points || [];
-      const values = linePoints.map(point => point.priceUsd).filter(Number.isFinite);
-      const rawLow = values.length ? Math.min(...values) : 0;
-      const rawHigh = values.length ? Math.max(...values) : 0;
+      const lows = linePoints
+        .map(point => Number.isFinite(point.lowUsd) ? point.lowUsd : point.priceUsd)
+        .filter(Number.isFinite);
+      const highs = linePoints
+        .map(point => Number.isFinite(point.highUsd) ? point.highUsd : point.priceUsd)
+        .filter(Number.isFinite);
+      const rawLow = lows.length ? Math.min(...lows) : 0;
+      const rawHigh = highs.length ? Math.max(...highs) : 0;
       const rawSpread = rawHigh - rawLow || Math.max(Math.abs(rawHigh) * .04, 1e-12);
       const low = rawLow - rawSpread * .12;
       const high = rawHigh + rawSpread * .12;
@@ -2045,21 +2053,36 @@
         : linePoints.at(-1)?.slotMs;
       const spanMs = Math.max(1, (endMs || 0) - (startMs || 0));
       const xAt = point => insetX + ((width - insetX * 2) * ((point.slotMs - startMs) / spanMs));
-      const yAt = value => insetY + ((height - insetY * 2) * (1 - ((value - low) / spread)));
+      const candleXAt = point => insetX + ((width - insetX * 2) * (
+        (point.slotMs - startMs + ((model?.intervalMs || 0) / 2)) / spanMs
+      ));
+      const yAt = value => priceTop + ((priceBottom - priceTop) * (1 - ((value - low) / spread)));
       const segmentPoints = segment => segment
         .map(point => `${xAt(point).toFixed(2)},${yAt(point.priceUsd).toFixed(2)}`)
         .join(' ');
       const latest = linePoints.at(-1) || null;
-      const gradientId = `token-chart-${sign.asset.sign}`;
-      const observedShare = model?.coverage?.expectedPointCount > 0
-        ? model.coverage.observedPointCount / model.coverage.expectedPointCount
+      const lastActive = model?.lastActive || null;
+      const isLiveCandles = model?.source === 'geckoterminal-hourly';
+      const maxVolume = Math.max(0, ...linePoints.map(point => Number(point.volumeUsd) || 0));
+      const slotWidth = ((width - insetX * 2) * ((model?.intervalMs || 1) / spanMs));
+      const candleWidth = Math.max(2.8, Math.min(7, slotWidth * .54));
+      const volumeHeight = value => maxVolume > 0
+        ? Math.max(1.2, Math.sqrt(value / maxVolume) * (volumeBottom - volumeTop))
         : 0;
-      const showArea = model?.mode === 'line' && observedShare >= .9;
       const updated = latest
         ? new Date(latest.timestampMs).toLocaleTimeString(undefined, {
             hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC',
           })
         : '';
+      const formatChartHour = value => new Date(value).toLocaleTimeString(undefined, {
+        hour: '2-digit', minute: '2-digit', hourCycle: 'h23', timeZone: 'UTC',
+      });
+      const timeTicks = Number.isFinite(startMs) && Number.isFinite(endMs)
+        ? [startMs, startMs + spanMs / 2, endMs].map(formatChartHour)
+        : ['−24H', 'UTC', 'Now'];
+      const activeHour = lastActive
+        ? `${formatChartHour(lastActive.slotMs)}–${formatChartHour(lastActive.slotMs + (model?.intervalMs || 0))} UTC`
+        : 'No active hour';
       const endpointMoment = (point) => {
         if (!point) return '';
         if (model?.timeframe === '1d' && point.date) return point.date;
@@ -2067,8 +2090,8 @@
           month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit', timeZone: 'UTC',
         }) + ' UTC';
       };
-      const elapsedMs = model?.first && model?.last
-        ? Math.max(0, model.last.timestampMs - model.first.timestampMs)
+      const elapsedMs = Number.isFinite(model?.startTimestampMs) && Number.isFinite(model?.endTimestampMs)
+        ? Math.max(0, model.endTimestampMs - model.startTimestampMs)
         : 0;
       const elapsedLabel = elapsedMs < 60 * 60 * 1000
         ? `${Math.max(1, Math.round(elapsedMs / 60_000))}m elapsed`
@@ -2088,89 +2111,139 @@
           {model && model.mode === 'line' && (
             <figure className={'token-spark ' + (model.source === 'geckoterminal-hourly' ? 'token-spark--live' : 'token-spark--archive')}>
               <figcaption>
-                <span>{model.source === 'geckoterminal-hourly' ? '24H price · GeckoTerminal' : 'Registry archive'}</span>
-                <span className={marketChangeClass(model.netChangePct)}>{formatPercent(model.netChangePct)}</span>
+                <span className="token-spark__identity">
+                  <strong>{model.source === 'geckoterminal-hourly' ? `${sign.name.toUpperCase()} / USD · 24H` : 'Registry archive'}</strong>
+                  <small>{model.source === 'geckoterminal-hourly' ? 'Reference pool · GeckoTerminal · UTC' : 'Daily closes'}</small>
+                </span>
+                <span className="token-spark__close">
+                  <small>{model.source === 'geckoterminal-hourly' ? '24H close' : 'Change'}</small>
+                  <strong className={marketChangeClass(model.netChangePct)}>{formatPercent(model.netChangePct)}</strong>
+                </span>
               </figcaption>
               <div className="token-spark__plot">
                 <div className="token-spark__canvas">
                   <svg viewBox={`0 0 ${width} ${height}`} preserveAspectRatio="none" role="img" aria-label={model.ariaLabel}>
-                    <defs>
-                      <linearGradient id={gradientId} x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0" stopColor="var(--active-sign)" stopOpacity=".18" />
-                        <stop offset="1" stopColor="var(--active-sign)" stopOpacity="0" />
-                      </linearGradient>
-                    </defs>
                     {[.25, .5, .75].map(fraction => (
                       <line
                         key={fraction}
                         x1={insetX}
                         x2={width - insetX}
-                        y1={insetY + ((height - insetY * 2) * fraction)}
-                        y2={insetY + ((height - insetY * 2) * fraction)}
+                        y1={priceTop + ((priceBottom - priceTop) * fraction)}
+                        y2={priceTop + ((priceBottom - priceTop) * fraction)}
                         className="token-spark__grid"
                       />
                     ))}
-                    <line x1={width / 2} x2={width / 2} y1={insetY} y2={height - insetY} className="token-spark__grid token-spark__grid--vertical" />
-                    <line x1={insetX} x2={width - insetX} y1={height - insetY} y2={height - insetY} className="token-spark__axis" />
-                    <line x1={insetX} x2={insetX} y1={insetY} y2={height - insetY} className="token-spark__axis" />
+                    <line x1={width / 2} x2={width / 2} y1={priceTop} y2={volumeBottom} className="token-spark__grid token-spark__grid--vertical" />
+                    <line x1={insetX} x2={width - insetX} y1={priceBottom} y2={priceBottom} className="token-spark__axis" />
+                    <line x1={insetX} x2={insetX} y1={priceTop} y2={volumeBottom} className="token-spark__axis" />
+                    {isLiveCandles && <line x1={insetX} x2={width - insetX} y1={volumeTop - 4} y2={volumeTop - 4} className="token-spark__volume-rule" />}
                     {latest && (
                       <line
                         x1={insetX}
                         x2={width - insetX}
-                        y1={yAt(latest.priceUsd).toFixed(2)}
-                        y2={yAt(latest.priceUsd).toFixed(2)}
+                        y1={yAt(latest.closeUsd ?? latest.priceUsd).toFixed(2)}
+                        y2={yAt(latest.closeUsd ?? latest.priceUsd).toFixed(2)}
                         className="token-spark__latest-guide"
                       />
                     )}
-                    {model.segments.map((segment, index) => {
-                      const points = segmentPoints(segment);
-                      const firstX = xAt(segment[0]).toFixed(2);
-                      const lastX = xAt(segment.at(-1)).toFixed(2);
-                      return (
-                        <g key={`${segment[0].slotMs}-${index}`}>
-                          {showArea && segment.length >= 4 && (
-                            <polygon className="token-spark__area" points={`${firstX},${height - insetY} ${points} ${lastX},${height - insetY}`} fill={`url(#${gradientId})`} />
-                          )}
-                          {segment.length > 1 && <polyline points={points} className="token-spark__line" />}
+                    {isLiveCandles ? linePoints.map((point) => {
+                      const x = candleXAt(point);
+                      const openY = yAt(point.openUsd);
+                      const closeY = yAt(point.closeUsd);
+                      const bodyY = Math.min(openY, closeY);
+                      const bodyHeight = Math.max(2, Math.abs(closeY - openY));
+                      const direction = Math.abs(point.closeUsd - point.openUsd) < 1e-15
+                        ? 'flat'
+                        : point.closeUsd > point.openUsd ? 'up' : 'down';
+                      const barHeight = point.hasTrades ? volumeHeight(point.volumeUsd) : 0;
+                      return point.hasTrades ? (
+                        <g key={point.slotMs} className={`token-spark__candle token-spark__candle--${direction}`}>
+                          <line
+                            x1={x.toFixed(2)}
+                            x2={x.toFixed(2)}
+                            y1={yAt(point.highUsd).toFixed(2)}
+                            y2={yAt(point.lowUsd).toFixed(2)}
+                            className="token-spark__wick"
+                          />
+                          <rect
+                            x={(x - candleWidth / 2).toFixed(2)}
+                            y={bodyY.toFixed(2)}
+                            width={candleWidth.toFixed(2)}
+                            height={bodyHeight.toFixed(2)}
+                            rx=".7"
+                            className="token-spark__body"
+                          />
+                          <rect
+                            x={(x - Math.max(1.4, candleWidth * .32)).toFixed(2)}
+                            y={(volumeBottom - barHeight).toFixed(2)}
+                            width={Math.max(2.8, candleWidth * .64).toFixed(2)}
+                            height={barHeight.toFixed(2)}
+                            rx=".5"
+                            className="token-spark__volume"
+                          />
                         </g>
+                      ) : (
+                        <line
+                          key={point.slotMs}
+                          x1={(x - candleWidth * .42).toFixed(2)}
+                          x2={(x + candleWidth * .42).toFixed(2)}
+                          y1={yAt(point.closeUsd).toFixed(2)}
+                          y2={yAt(point.closeUsd).toFixed(2)}
+                          className={`token-spark__idle token-spark__idle--${point.idleKind || 'provider'}`}
+                        />
                       );
-                    })}
-                    {linePoints.map(point => (
-                      <circle
-                        key={point.slotMs}
-                        cx={xAt(point).toFixed(2)}
-                        cy={yAt(point.priceUsd).toFixed(2)}
-                        r="1.65"
-                        className="token-spark__point"
-                      />
-                    ))}
+                    }) : (
+                      <>
+                        {model.segments.map((segment, index) => segment.length > 1 ? (
+                          <polyline key={`${segment[0].slotMs}-${index}`} points={segmentPoints(segment)} className="token-spark__line" />
+                        ) : null)}
+                        {linePoints.map(point => (
+                          <circle
+                            key={point.slotMs}
+                            cx={xAt(point).toFixed(2)}
+                            cy={yAt(point.priceUsd).toFixed(2)}
+                            r="1.65"
+                            className="token-spark__point"
+                          />
+                        ))}
+                      </>
+                    )}
                     {latest && (
                       <>
-                        <circle cx={xAt(latest).toFixed(2)} cy={yAt(latest.priceUsd).toFixed(2)} r="4.4" className="token-spark__latest-ring" />
-                        <circle cx={xAt(latest).toFixed(2)} cy={yAt(latest.priceUsd).toFixed(2)} r="2.35" className="token-spark__latest" />
+                        <circle cx={(isLiveCandles ? candleXAt(latest) : xAt(latest)).toFixed(2)} cy={yAt(latest.closeUsd ?? latest.priceUsd).toFixed(2)} r="4.4" className="token-spark__latest-ring" />
+                        <circle cx={(isLiveCandles ? candleXAt(latest) : xAt(latest)).toFixed(2)} cy={yAt(latest.closeUsd ?? latest.priceUsd).toFixed(2)} r="2.35" className="token-spark__latest" />
                       </>
                     )}
                   </svg>
                 </div>
                 <span className="token-spark__price-scale" aria-hidden="true">
-                  <span><small>High</small>{formatPriceUsd(rawHigh)}</span>
-                  <span><small>Low</small>{formatPriceUsd(rawLow)}</span>
+                  <span>{formatPriceUsd(rawHigh)}</span>
+                  <span>{formatPriceUsd((rawHigh + rawLow) / 2)}</span>
+                  <span>{formatPriceUsd(rawLow)}</span>
                 </span>
                 <span className="token-spark__time-scale" aria-hidden="true">
-                  <span>−24H</span><span>UTC</span><span>Now</span>
+                  <span>{timeTicks[0]}</span><span>{timeTicks[1]}</span><span>{timeTicks[2]}</span>
                 </span>
               </div>
-              <p>
-                {model.coverage.observedPointCount} of {model.coverage.expectedPointCount} {model.source === 'geckoterminal-hourly' ? 'hourly closes' : 'daily closes'}
-                {model.coverage.missingPointCount > 0 && ` · ${model.coverage.missingPointCount} ${model.source === 'geckoterminal-hourly' ? 'hour' : 'day'}${model.coverage.missingPointCount === 1 ? '' : 's'} missing`}
-                {model.source === 'geckoterminal-hourly' && ` · updated ${updated || 'UTC'}${updated ? ' UTC' : ''}`}
-              </p>
+              {isLiveCandles ? (
+                <p>
+                  {model.coverage.activePointCount} active hour{model.coverage.activePointCount === 1 ? '' : 's'}
+                  {' · '}{model.coverage.idlePointCount} no-swap hour{model.coverage.idlePointCount === 1 ? ' carries' : 's carry'} last close
+                  {' · '}latest active {activeHour}
+                </p>
+              ) : (
+                <p>
+                  {model.coverage.observedPointCount} of {model.coverage.expectedPointCount} daily closes
+                  {model.coverage.missingPointCount > 0 && ` · ${model.coverage.missingPointCount} day${model.coverage.missingPointCount === 1 ? '' : 's'} missing`}
+                  {updated && ` · updated ${updated} UTC`}
+                </p>
+              )}
             </figure>
           )}
           {model && model.mode !== 'line' && (
             <figure className="token-spark token-spark--comparison">
               <figcaption>
-                <span>{model.timeframe === '1h' ? '24H endpoints' : 'Archive'}</span>
+                <span>{model.timeframe === '1h' ? 'Hourly endpoints' : 'Archive'}</span>
                 <span className={marketChangeClass(model.netChangePct)}>{formatPercent(model.netChangePct)}</span>
               </figcaption>
               {model.mode === 'empty' ? (
@@ -2182,15 +2255,20 @@
                 </div>
               ) : (
                 <div className="registry-history__comparison" role="img" aria-label={model.ariaLabel}>
-                  <span><small>First</small><strong>{formatPriceUsd(model.first.priceUsd)}</strong></span>
+                  <span><small>{model.timeframe === '1h' ? 'First open' : 'First'}</small><strong>{formatPriceUsd(model.startPriceUsd)}</strong></span>
                   <span className={'registry-history__delta' + marketChangeClass(model.netChangePct)}>
                     <strong>{formatPercent(model.netChangePct)}</strong>
-                    <small>{model.coverage.observedPointCount} reads · {elapsedLabel}</small>
+                    <small>
+                      {model.timeframe === '1h'
+                        ? `${model.coverage.activePointCount} active · ${model.coverage.idlePointCount} no-swap`
+                        : `${model.coverage.observedPointCount} reads`}
+                      {' · '}{elapsedLabel}
+                    </small>
                   </span>
-                  <span><small>Latest</small><strong>{formatPriceUsd(model.last.priceUsd)}</strong></span>
+                  <span><small>{model.timeframe === '1h' ? 'Latest close' : 'Latest'}</small><strong>{formatPriceUsd(model.endPriceUsd)}</strong></span>
                 </div>
               )}
-              <p>{model.source === 'geckoterminal-hourly' ? 'Hourly history building' : 'Registry archive fallback'} · line begins at 8 reads.</p>
+              <p>{model.source === 'geckoterminal-hourly' ? 'Hourly history building · chart begins at 8 hourly slots.' : 'Registry archive fallback · line begins at 8 reads.'}</p>
             </figure>
           )}
         </div>

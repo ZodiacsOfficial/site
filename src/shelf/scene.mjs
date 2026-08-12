@@ -235,6 +235,11 @@ export function createScene(canvas, records) {
   ];
   const activeFaceMaps = new Set();
   let sceneDisposed = false;
+  // Identity of the cast that owned the strongest visible presentation in
+  // the last layout. The host publishes this only after render, so browser
+  // and assistive tests can distinguish the sculpture actually painted from
+  // a selection that has merely been requested.
+  let renderedIndex = -1;
 
   function disposeFaceMap(map) {
     if (!map) return;
@@ -435,6 +440,8 @@ export function createScene(canvas, records) {
     // Hover eases in and out rather than popping; while any figure is still
     // rising or settling, the caller keeps the frame loop alive.
     let hoverSettling = false;
+    let dominantIndex = -1;
+    let dominantStrength = -1;
 
     for (let i = 0; i < figures.length; i += 1) {
       const figure = figures[i];
@@ -508,6 +515,14 @@ export function createScene(canvas, records) {
 
       const opacity = (i === openIndex ? 1 : dimmed) * spot.opacity * switchOpacity;
       for (const material of figure.materials) material.opacity = opacity;
+      // Use the presentation's own opacity and emphasis to report what a
+      // reader can actually see. During the intentional dark midpoint of a
+      // handoff there is no rendered sign; otherwise the strongest cast wins.
+      const strength = opacity * spot.scale;
+      if (opacity > 0.001 && strength > dominantStrength) {
+        dominantStrength = strength;
+        dominantIndex = i;
+      }
 
       // The plinth stays in the row; only the figure is lifted off it. It
       // recedes with its own piece, so a figure well down the row sits on a
@@ -536,6 +551,7 @@ export function createScene(canvas, records) {
     offer.intensity = 7 - (open * 2.6);
 
     placeCamera(open, opened, zoom, state.spotlight ? SPOTLIGHT_VITRINE : VITRINE);
+    renderedIndex = dominantIndex;
     return hoverSettling;
   }
 
@@ -656,6 +672,10 @@ export function createScene(canvas, records) {
   return {
     layout, render, resize, setBands, pick, screenX, dressRow, refine, releaseExcept,
     residentTextureCount: () => activeFaceMaps.size,
+    renderedIndex: () => renderedIndex,
+    residentTextureSlugs: () => figures
+      .filter((figure) => figure.tier > 0 && figure.face.map)
+      .map((figure) => figure.record.slug),
     dispose, renderer,
   };
 }
