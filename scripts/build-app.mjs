@@ -111,7 +111,13 @@ function synchronizeTerminalStyles(sourceHtml, targetHtml) {
     const match = targetMatches[index];
     output = output.slice(0, match.index) + sharedStyles[index] + output.slice(match.index + match[0].length);
   }
-  return output.replace('</head>', `\n${splitStyle}\n</head>`);
+  // Keep the generated Terminal styles ahead of the analytics bridge. The
+  // analytics configurator always owns the final block before </head>; using
+  // the same boundary here makes both generators byte-idempotent regardless
+  // of which one runs first in a release check.
+  const analyticsStart = '<!-- zodiacs-analytics:start -->';
+  const insertionPoint = output.includes(analyticsStart) ? analyticsStart : '</head>';
+  return output.replace(insertionPoint, `\n${splitStyle}\n${insertionPoint}`);
 }
 
 function renderTechnicalRecords(registry) {

@@ -1,9 +1,15 @@
 {
   "version": 1,
-  "id": "terminal-market-notice-coverage-2026-08-12",
-  "reason": "Owner-requested Terminal notice coverage (2026-08-12): render the existing market and venue boundary on every canonical Terminal surface. Keep Zodiac Markets' point-of-action risk block, the Research boundary, and research audit receipts in place; add no venue link, execution feature, acquisition entry, provider request, or new route.",
-  "baseCommit": "c7d1fa249215e502e115420217db3b422a3ed265",
+  "id": "terminal-consumer-pro-split-2026-08-12",
+  "reason": "Owner-authorized Terminal audience split (2026-08-12): make /terminal/ identity-first, add the indexed /terminal/pro/ market desk, and relocate the sole flag-gated Zodiac Markets discovery entry to Pro while preserving every existing custody, provider, compensation, CSP, service-worker rollback, and pilot-deadline control.",
+  "baseCommit": "cd6578575582cd3908e477068369fa62b76ecf04",
   "protectedPaths": [
-    "public/terminal/markets/index.html"
+    "public/assets/app.js",
+    "public/registry/index.html",
+    "scripts/build-app.mjs",
+    "scripts/registry-consumer-contract.test.mjs",
+    "scripts/registry-hub.test.mjs",
+    "scripts/registry-pastel-polish.test.mjs",
+    "src/app.jsx"
   ]
 }
