@@ -106,7 +106,7 @@ describe('registry pastel polish', () => {
     expect(reducedRules).toContain(".market-tape__group[aria-hidden='true'] { display: none; }");
   });
 
-  it('opens on the identity masthead and keeps the optional Cabinet in the purpose section', async () => {
+  it('opens with the selected sign, live price, and beginner buying path', async () => {
     const [source, registry] = await Promise.all([
       read('src/app.jsx'),
       read('public/terminal/index.html'),
@@ -121,27 +121,28 @@ describe('registry pastel polish', () => {
       source.indexOf('function ConsumerMarketSnapshot('),
     );
     expect(masthead).toContain('Zodiac Terminal');
-    expect(masthead).toContain('Every sign has one official token. Find yours, see the artwork, and verify the public record.');
+    expect(masthead).toContain('Choose your Zodiac.');
+    expect(masthead).toContain('today&rsquo;s price, and a simple guide to buying it');
     expect(masthead).toContain('<TerminalViewLink view="pro"');
     expect(masthead).not.toContain('<MarketTape');
     const stage = source.slice(
       source.indexOf('function GalleryBand('),
       source.indexOf('function ConsumerExplorer('),
     );
-    expect(stage).toContain('<SeasonNow season={season} />');
+    expect(stage).toContain('How to buy {sign.name}');
+    expect(stage).toContain('<PlacardQuote sign={sign} batch={marketBatch} />');
     expect(stage).not.toContain('className="stage-hero__head"');
     expect(stage).not.toContain('One official token for every sign. Browse the sculptures, watch the market, and verify the record.');
     expect(stage).not.toContain('Open the Cabinet');
     expect(source).toContain("return `/registry/${sign?.asset?.sign ?? 'aries'}/`;");
     // The no-JS shell mirrors the same masthead instead of briefly showing a
     // cinematic title that disappears after React mounts.
-    expect(registry).toContain('<h1 id="static-capital-title">Zodiac Terminal</h1>');
-    expect(registry).toContain('Every sign has one official token. Find yours, see the artwork, and verify the public record.');
+    expect(registry).toContain('<h1 id="static-capital-title">Choose your Zodiac.</h1>');
+    expect(registry).toContain('today’s price, and a simple guide to buying it');
     expect(registry).not.toContain('data-cine-video');
-    expect(source).toContain('id="thesis" className="consumer-purpose reveal"');
-    expect(source).toContain('REGISTRY_AURA_ENABLED &&');
-    expect(source).toContain('See occupied signs, material editions, and wheel coverage for any public wallet.');
-    expect(source).toContain('Read why Zodiacs matter');
+    expect(source).toContain('id="thesis" className="consumer-purpose consumer-purpose--simple reveal"');
+    expect(source).toContain('The story behind Zodiacs.');
+    expect(source).toContain('Read the story');
     expect(registry).toContain('registry-collection-hero:slot');
     expect(registry).not.toContain('cine__why');
     expect(registry).toContain('.cine__cta .btn--ghost::after { content: none; }');
@@ -179,7 +180,7 @@ describe('registry pastel polish', () => {
     expect(materialPass).toMatch(/@media \(prefers-contrast: more\) \{[\s\S]*?\.consumer-registry \.stage-placard \.stage-placard__pill,\s*\.consumer-registry \.registry-pill \{[\s\S]*?border-color: rgba\(238,241,247,\.72\) !important;[\s\S]*?color: var\(--ink\) !important;/u);
   });
 
-  it('uses recognizable sign media and the Cabinet\'s canonical curator sample', async () => {
+  it('uses recognizable sign artwork and abstracts technical detail', async () => {
     const source = await read('src/app.jsx');
     const how = source.slice(
       source.indexOf('function ConsumerHowItWorks()'),
@@ -191,31 +192,15 @@ describe('registry pastel polish', () => {
     );
 
     for (const marker of [
-      "['aries', 'leo', 'pisces']",
-      '/assets/zodiac-icons/48/leo.webp',
-      '8Cd7…b8Qm',
-      'One token for each sign',
-      'Verify the exact address',
-      'Hold, send, or collect',
-      'collection artwork—not a physical object',
+      'A Zodiac is a digital token for one star sign.',
+      'What does official mean?',
+      'Networks and token addresses',
+      'Artwork and collection details',
     ]) expect(how).toContain(marker);
-
-    for (const [slug, finish, numeral, count] of [
-      ['aries', 'crown', 'V', '×12'],
-      ['cancer', 'pastel', 'I', null],
-      ['leo', 'bronze', 'II', null],
-      ['scorpio', 'silver', 'III', null],
-      ['aquarius', 'gold', 'IV', '×3'],
-    ]) {
-      const countFragment = count ? `, count: '${count}'` : '';
-      expect(purpose).toContain(`${slug}: { finish: '${finish}', numeral: '${numeral}'${countFragment} }`);
-    }
-    expect(purpose).toContain("edition?.finish === 'gold' || edition?.finish === 'crown'");
-    expect(purpose).toContain('`/assets/cabinet-materials/gold/${item.asset.sign}`');
-    expect(purpose).toContain('`/assets/zodiac-icons/128/${item.asset.sign}`');
-    expect(purpose).toContain('data-cabinet-sample-finish={edition?.finish}');
-    expect(purpose).toContain('className="consumer-cabinet__edition"');
-    expect(purpose).toContain('className="consumer-cabinet__count"');
+    expect(how).not.toMatch(/not a physical object|one-of-one NFT|transferable digital token|Cabinet of Twelve/u);
+    expect(purpose).toContain('/assets/art/zodiac-clock-1280.jpg');
+    expect(purpose).toContain('The story behind Zodiacs.');
+    expect(purpose).not.toMatch(/occupied signs|material editions|wheel coverage|Symbol · record · identity/u);
   });
 
   it('keeps the wing nav on the shared compact and desktop geometry contract', async () => {
@@ -331,13 +316,16 @@ describe('registry pastel polish', () => {
     expect(html).not.toContain('<span class="glyph">');
     expect(html).toContain('padding: calc(94px + env(safe-area-inset-top)) 0 36px;');
     expect(html).toContain(`<span class="lot__eyebrow">Official Zodiac Token <span class="g">·</span> Sign`);
-    expect(html).toContain(`${name} is the transferable token for the ${name} sign. The gold sculpture is its collection artwork—not a physical sculpture or a one-of-one NFT.`);
+    expect(html).toContain(`${name} is the official digital token for the ${name} zodiac sign. See today’s price, verify the address, and learn how buying works.`);
+    expect(html).not.toContain('not a physical sculpture or a one-of-one NFT');
     for (const heading of [
-      'Token facts',
-      `What ${name} represents`,
-      `The story behind ${name}`,
+      `${name} price now`,
+      'Key facts',
+      `About ${name}`,
+      `Read the ${name} story`,
       'Official addresses',
-      `Get ${name}`,
+      `How to buy ${name}`,
+      'Daily price archive',
       'Explore all 12',
     ]) expect(html).toContain(heading);
     for (const retired of ['Museum label', 'Catalogue note', '>Provenance<', '>Acquisition<']) {
@@ -348,6 +336,9 @@ describe('registry pastel polish', () => {
     expect(html).toContain('CC BY-SA 4.0');
     expect(html).toContain('they are not official IAU boundaries');
     expect(html).toContain('data-market-chart');
+    expect(html).toContain('data-live-quote');
+    expect(html).toContain('https://api.dexscreener.com/tokens/v1/solana/');
+    expect(html).toContain(`href="#acquire"><span>How to buy ${name}</span>`);
     expect(html).toContain('Open live chart');
     expect(html).toContain('class="lot__meta"');
     expect(html).toContain('min-height: 44px;');

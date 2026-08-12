@@ -61,8 +61,8 @@ describe('Zodiacs Registry authority hub', () => {
 
   test('separates Registry authority from the market-facing Terminal', async () => {
     const html = await read('public/registry/index.html');
-    expect(html).toContain('href="/terminal/"');
-    expect(html).toContain('Open Zodiac Terminal');
+    expect(html).toContain('href="/terminal/pro/"');
+    expect(html).toContain('Open Terminal Pro');
     for (const path of [
       '/registry/zodiacs.registry.json',
       '/registry/technical/',

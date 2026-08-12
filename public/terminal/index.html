@@ -12,20 +12,7 @@
        renders nothing. Mark Chromium so the nav-pill lens applies only there. */
     try { if (window.chrome && window.CSS && CSS.supports('backdrop-filter', "url('#zdx-lens-nav')")) document.documentElement.classList.add('zdx-lens'); } catch (e) {}
   </script>
-  <script>
-    /* The gallery band mounts only where WebGL exists. Settled before first
-       paint so the page renders one selector or the other, never a flash of
-       both — same probe the gallery page itself uses. */
-    try {
-      var network = navigator.connection || navigator.mozConnection || navigator.webkitConnection;
-      var constrained = network && (network.saveData || /(^|-)2g$/.test(network.effectiveType || ''));
-      var glProbe = document.createElement('canvas');
-      if (!constrained && (glProbe.getContext('webgl2') || glProbe.getContext('webgl'))) {
-        document.documentElement.classList.add('gallery-live');
-      }
-    } catch (e) {}
-  </script>
-  <meta name="description" content="Find your official Zodiac token, explore its artwork and season, and verify the exact public Registry address for all twelve signs." />
+  <meta name="description" content="Choose your Zodiac, see its live price and gold artwork, and follow a simple guide to checking or buying the official token." />
 
   <link rel="canonical" href="https://zodiacs.org/terminal/" />
   <link rel="alternate" type="application/rss+xml" title="Zodiacs — The Archive" href="/archive/rss.xml" />
@@ -52,7 +39,7 @@
 
   <meta property="og:site_name" content="Zodiacs" />
   <meta property="og:title" content="Zodiac Terminal · Zodiacs" />
-  <meta property="og:description" content="Find your sign, see the artwork, and verify the one official token address in the public Registry." />
+  <meta property="og:description" content="Choose your sign, see today’s price and artwork, and learn how to buy the official token safely." />
   <meta property="og:type" content="website" />
   <meta property="og:url" content="https://zodiacs.org/terminal/" />
   <!-- og:image / twitter:image use the canonical zodiacs.org host so
@@ -65,7 +52,7 @@
 
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:title" content="Zodiac Terminal · Zodiacs" />
-  <meta name="twitter:description" content="Find your sign, see the artwork, and verify the one official token address in the public Registry." />
+  <meta name="twitter:description" content="Choose your sign, see today’s price and artwork, and learn how to buy the official token safely." />
   <meta name="twitter:image" content="https://zodiacs.org/assets/og/v4/zodiac-terminal.png" />
   <meta name="twitter:image:alt" content="Zodiac Terminal — artwork and official public records for the twelve Zodiac tokens." />
 
@@ -110,7 +97,7 @@
         "@id": "https://zodiacs.org/terminal/#page",
         "url": "https://zodiacs.org/terminal/",
         "name": "Zodiac Terminal — Find and Verify Your Official Zodiac Token · Zodiacs.org",
-        "description": "Artwork, sign identity, and verified public Registry addresses for the twelve official Zodiac tokens.",
+        "description": "Live prices, gold artwork, buying guidance, and verified public Registry addresses for the twelve official Zodiac tokens.",
         "inLanguage": "en",
         "isPartOf": { "@id": "https://zodiacs.org/#site" }
       },
@@ -120,28 +107,23 @@
         "mainEntity": [
           {
             "@type": "Question",
-            "name": "Is there an official token for my zodiac sign?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Each of the twelve signs has exactly one official token — native on Solana, with an official counterpart on Base. Both addresses are published here." }
+            "name": "Which Zodiac should I choose?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Start with your star sign, or simply choose the artwork and story you like. You can browse every sign without buying anything." }
           },
           {
             "@type": "Question",
-            "name": "What does “official” mean?",
-            "acceptedAnswer": { "@type": "Answer", "text": "The address appears in this Registry. It does not mean approval from a government, wallet, marketplace, or exchange." }
+            "name": "Do I need a crypto wallet?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Not to browse prices, artwork, or official records. You only need a compatible wallet if you decide to buy or hold a token." }
           },
           {
             "@type": "Question",
-            "name": "How do I check whether a zodiac token is official?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Paste the mint or contract address into the checker on this page. The check is read-only and needs no wallet; anything not in the list is only reported as not found." }
+            "name": "How do I know a token is official?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Use the address checker on this page. It compares the token address with the published Zodiacs Registry and never connects your wallet." }
           },
           {
             "@type": "Question",
-            "name": "How do I buy a zodiac token?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Each sign’s record page carries its acquisition route through independent third-party venues. Zodiacs.org itself sells nothing; digital assets can lose all market value." }
-          },
-          {
-            "@type": "Question",
-            "name": "How do people invest in astrology?",
-            "acceptedAnswer": { "@type": "Answer", "text": "Some collect the token of their sign the way they collect any cultural object. That is a speculative choice, not advice — prices can fall to zero. The reasoning lives in the thesis." }
+            "name": "Can its price fall?",
+            "acceptedAnswer": { "@type": "Answer", "text": "Yes. Zodiac tokens are speculative and thinly traded. Their price can fall to zero and liquidity can disappear." }
           }
         ]
       },
@@ -7699,6 +7681,176 @@
       .consumer-signs,
       .static-sign-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
     }
+
+    /* ── Consumer left-curve pass · 13 August 2026 ───────────────
+       One stable artwork, one live price, one safe next step. Deeper
+       Registry and market mechanics stay available through disclosure. */
+    .consumer-registry > .consumer-explorer {
+      width: min(calc(100% - 24px), 1120px);
+      margin: 18px auto 0;
+    }
+    .consumer-registry .gband--flat {
+      width: 100%;
+      height: auto;
+      min-height: 0;
+      border-radius: 24px;
+      contain: layout paint;
+    }
+    /* Practical Consumer content is present immediately. The technical wing
+       keeps its staged reveals, but onboarding must never turn into a blank
+       viewport when IntersectionObserver delivery is delayed by a browser. */
+    .consumer-registry .reveal {
+      opacity: 1;
+      transform: none;
+      filter: none;
+      transition: none;
+      will-change: auto;
+    }
+    .consumer-registry .gband--flat .gband__rail-top { grid-row: 1; padding-top: 14px; }
+    .consumer-registry .gband--flat .stage-carousel {
+      grid-row: 2;
+      height: clamp(300px, 34vw, 410px);
+      flex: none;
+    }
+    /* Let diagonal mouse-wheel and trackpad gestures chain to the document.
+       The shared carousel contains horizontal overscroll for standalone
+       embeds, which can otherwise hold a mostly-vertical gesture over the
+       artwork in Chromium and mobile desktop-mode browsers. */
+    .consumer-registry .stage-carousel__track {
+      overscroll-behavior-x: auto;
+    }
+    .consumer-registry .gband--flat .stage-placard {
+      grid-row: 3;
+      width: calc(100% - 32px);
+      max-width: 980px;
+      grid-template-columns: minmax(210px, .62fr) minmax(260px, 1fr) minmax(180px, .55fr);
+      gap: 18px;
+      margin: 0 auto 16px;
+      padding: 16px 18px;
+    }
+    .consumer-registry .stage-placard__dates { display: inline; }
+    .consumer-registry .stage-placard__meta {
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      white-space: normal;
+      text-transform: none;
+    }
+    .consumer-registry .stage-placard__quote {
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      white-space: normal;
+      text-transform: none;
+    }
+    .consumer-registry .stage-placard__change { letter-spacing: 0; }
+    .consumer-registry .stage-placard__identity {
+      padding-inline: 18px;
+      font-family: var(--sans);
+      letter-spacing: 0;
+      text-transform: none;
+    }
+    .consumer-registry .stage-placard__identity > span { font: 8px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; }
+    .consumer-registry .stage-placard__identity strong {
+      overflow: visible;
+      font: 400 13px/1.5 var(--sans);
+      text-overflow: clip;
+      white-space: normal;
+    }
+    .consumer-buy-guide {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, .86fr) minmax(320px, 1.14fr);
+      gap: clamp(32px, 7vw, 90px);
+      padding: clamp(62px, 8vw, 104px) clamp(20px, 6vw, 72px);
+      border-bottom: 1px solid var(--hair-2);
+    }
+    .consumer-buy-guide > .consumer-section-head { grid-column: 1; }
+    .consumer-buy-guide > .consumer-section-head > p { max-width: 54ch; margin: 18px 0 0; color: var(--ink-2); font-size: 15px; line-height: 1.6; }
+    .consumer-buy-guide__steps {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--hair-2);
+    }
+    .consumer-buy-guide__steps li {
+      min-height: 72px;
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
+      align-items: center;
+      gap: 16px;
+      border-bottom: 1px solid var(--hair);
+    }
+    .consumer-buy-guide__steps li > span { color: var(--active-sign, var(--ink-mute)); font: 9px/1 var(--mono); }
+    .consumer-buy-guide__steps strong { color: var(--ink); font: 500 14px/1.45 var(--sans); }
+    .consumer-buy-guide__action { grid-column: 1; display: grid; justify-items: start; gap: 9px; margin-top: 25px; }
+    .consumer-buy-guide__action .btn { min-height: 48px; display: inline-flex; align-items: center; padding: 0 19px; border: 1px solid var(--hair-3); border-radius: 999px; color: var(--ink); text-decoration: none; }
+    .consumer-buy-guide__action small { color: var(--ink-mute); font: 9px/1.4 var(--mono); }
+    .consumer-buy-guide__risk { grid-column: 1 / -1; max-width: 92ch; margin: 32px 0 0; color: var(--ink-dim); font: 10px/1.65 var(--mono); }
+    .consumer-buy-guide > .consumer-disclosure { grid-column: 1 / -1; margin-top: 0; }
+    .consumer-snapshot { padding-block: clamp(56px, 7vw, 88px); }
+    .consumer-snapshot__details { margin-top: 28px; border-top: 1px solid var(--hair-2); }
+    .consumer-snapshot__details > summary,
+    .consumer-snapshot__source > summary {
+      min-height: 58px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: var(--ink);
+      font: 500 13px/1 var(--sans);
+      cursor: pointer;
+      list-style: none;
+    }
+    .consumer-snapshot__details > summary::after,
+    .consumer-snapshot__source > summary::after { content: '+'; color: var(--active-sign, var(--ink-dim)); }
+    .consumer-snapshot__details[open] > summary::after,
+    .consumer-snapshot__source[open] > summary::after { content: '−'; }
+    .consumer-snapshot__rows { margin-top: 0; }
+    .consumer-snapshot__source { margin-top: 18px; border-block: 1px solid var(--hair); }
+    .consumer-snapshot__source p { max-width: 86ch; margin: 0; padding: 0 0 18px; color: var(--ink-mute); font: 10px/1.65 var(--mono); }
+    .consumer-how .consumer-disclosure + .consumer-disclosure { margin-top: -1px; }
+    .consumer-purpose--simple { grid-template-columns: minmax(0, 820px); justify-content: center; }
+    .consumer-faq__item { display: block; padding: 0; }
+    .consumer-faq__item summary {
+      min-height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: var(--ink);
+      font: 500 14px/1.35 var(--sans);
+      cursor: pointer;
+      list-style: none;
+    }
+    .consumer-faq__item summary::after { content: '+'; color: var(--active-sign, var(--ink-dim)); }
+    .consumer-faq__item[open] summary::after { content: '−'; }
+    .consumer-faq__item p { max-width: 66ch; margin: 0; padding: 0 0 20px; color: var(--ink-dim); font: 13px/1.6 var(--sans); }
+    .static-buy-guide,
+    .static-snapshot { border-block: 1px solid var(--hair); }
+    .consumer-static details > summary { min-height: 48px; display: flex; align-items: center; cursor: pointer; }
+    .static-collection-section:not(:has([data-registry-collection-entry])) { display: none; }
+
+    @media (max-width: 760px) {
+      .consumer-registry > .consumer-explorer { width: calc(100% - 12px); }
+      .consumer-registry .gband--flat { border-radius: 20px; }
+      .consumer-registry .gband--flat .stage-carousel { height: clamp(250px, 72vw, 320px); }
+      .consumer-registry .gband--flat .stage-placard {
+        width: calc(100% - 16px);
+        grid-template-columns: minmax(0, 1fr);
+        gap: 9px;
+        padding: 14px;
+      }
+      .consumer-registry .stage-placard__who { align-items: center; text-align: center; }
+      .consumer-registry .stage-placard__identity { padding: 11px 0; border-inline: 0; border-block: 1px solid var(--hair-2); text-align: center; }
+      .consumer-registry .stage-placard__actions { grid-template-columns: 1fr; }
+      .consumer-buy-guide { grid-template-columns: 1fr; gap: 26px; }
+      .consumer-buy-guide__steps,
+      .consumer-buy-guide__action,
+      .consumer-buy-guide__risk,
+      .consumer-buy-guide > .consumer-disclosure { grid-column: 1; grid-row: auto; }
+      .consumer-buy-guide__action .btn { width: 100%; justify-content: center; }
+      .consumer-snapshot { padding-inline: 20px; }
+    }
     @media (prefers-reduced-motion: reduce) {
       .consumer-registry *,
       .technical-registry * { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
@@ -7732,13 +7884,13 @@
 </head>
 <body>
   <div id="root">
-    <!-- Identity arrives before market context in both the static and
-         hydrated editions. The ordinary Pro link remains useful without JS. -->
+    <!-- The ordinary Pro link and all twelve buying handoffs remain useful
+         without JavaScript. Live prices are clearly labelled as enhanced. -->
     <header class="terminal-consumer-hero static-consumer-hero" aria-labelledby="static-capital-title">
       <div>
-        <span><a href="/registry/">Verified by the Zodiacs Registry</a></span>
-        <h1 id="static-capital-title">Zodiac Terminal</h1>
-        <p>Every sign has one official token. Find yours, see the artwork, and verify the public record.</p>
+        <span>Zodiac Terminal</span>
+        <h1 id="static-capital-title">Choose your Zodiac.</h1>
+        <p>Each star sign has one official digital token. Pick yours to see the artwork, today’s price, and a simple guide to buying it.</p>
       </div>
       <a class="terminal-view-link" href="/terminal/pro/?sign=leo" data-terminal-static-view="pro">Pro terminal <span aria-hidden="true">↗</span></a>
       <!-- registry-collection-hero:slot -->
@@ -7753,57 +7905,89 @@
       </nav>
 
       <section class="static-site__section static-explorer" id="official-twelve">
-        <p class="static-site__eyebrow">The official collection</p>
-        <h2>The 12 Official Zodiac Tokens</h2>
-        <p>Each sign has one transferable token with a verified public address, distinct artwork, dates, and its own season. The gold sculpture is collection artwork—not a physical sculpture or a one-of-one NFT.</p>
+        <p class="static-site__eyebrow">Start with your sign</p>
+        <h2>Choose from all 12.</h2>
+        <p>Pick a sign to open its artwork, official details, and buying options.</p>
         <nav class="static-sign-grid" aria-label="Choose a zodiac sign">
-          <a id="aries" href="/registry/aries/" aria-label="View the Aries token"><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt="">Aries</a>
-          <a id="taurus" href="/registry/taurus/" aria-label="View the Taurus token"><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt="">Taurus</a>
-          <a id="gemini" href="/registry/gemini/" aria-label="View the Gemini token"><img src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt="">Gemini</a>
-          <a id="cancer" href="/registry/cancer/" aria-label="View the Cancer token"><img src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt="">Cancer</a>
-          <a id="leo" href="/registry/leo/" aria-label="View the Leo token"><img src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt="">Leo</a>
-          <a id="virgo" href="/registry/virgo/" aria-label="View the Virgo token"><img src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt="">Virgo</a>
-          <a id="libra" href="/registry/libra/" aria-label="View the Libra token"><img src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt="">Libra</a>
-          <a id="scorpio" href="/registry/scorpio/" aria-label="View the Scorpio token"><img src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt="">Scorpio</a>
-          <a id="sagittarius" href="/registry/sagittarius/" aria-label="View the Sagittarius token"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt="">Sagittarius</a>
-          <a id="capricorn" href="/registry/capricorn/" aria-label="View the Capricorn token"><img src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt="">Capricorn</a>
-          <a id="aquarius" href="/registry/aquarius/" aria-label="View the Aquarius token"><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt="">Aquarius</a>
-          <a id="pisces" href="/registry/pisces/" aria-label="View the Pisces token"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt="">Pisces</a>
+          <a id="aries" href="/registry/aries/" aria-label="Choose Aries"><img src="/assets/zodiac-icons/48/aries.webp" width="48" height="48" alt="">Aries</a>
+          <a id="taurus" href="/registry/taurus/" aria-label="Choose Taurus"><img src="/assets/zodiac-icons/48/taurus.webp" width="48" height="48" alt="">Taurus</a>
+          <a id="gemini" href="/registry/gemini/" aria-label="Choose Gemini"><img src="/assets/zodiac-icons/48/gemini.webp" width="48" height="48" alt="">Gemini</a>
+          <a id="cancer" href="/registry/cancer/" aria-label="Choose Cancer"><img src="/assets/zodiac-icons/48/cancer.webp" width="48" height="48" alt="">Cancer</a>
+          <a id="leo" href="/registry/leo/" aria-label="Choose Leo"><img src="/assets/zodiac-icons/48/leo.webp" width="48" height="48" alt="">Leo</a>
+          <a id="virgo" href="/registry/virgo/" aria-label="Choose Virgo"><img src="/assets/zodiac-icons/48/virgo.webp" width="48" height="48" alt="">Virgo</a>
+          <a id="libra" href="/registry/libra/" aria-label="Choose Libra"><img src="/assets/zodiac-icons/48/libra.webp" width="48" height="48" alt="">Libra</a>
+          <a id="scorpio" href="/registry/scorpio/" aria-label="Choose Scorpio"><img src="/assets/zodiac-icons/48/scorpio.webp" width="48" height="48" alt="">Scorpio</a>
+          <a id="sagittarius" href="/registry/sagittarius/" aria-label="Choose Sagittarius"><img src="/assets/zodiac-icons/48/sagittarius.webp" width="48" height="48" alt="">Sagittarius</a>
+          <a id="capricorn" href="/registry/capricorn/" aria-label="Choose Capricorn"><img src="/assets/zodiac-icons/48/capricorn.webp" width="48" height="48" alt="">Capricorn</a>
+          <a id="aquarius" href="/registry/aquarius/" aria-label="Choose Aquarius"><img src="/assets/zodiac-icons/48/aquarius.webp" width="48" height="48" alt="">Aquarius</a>
+          <a id="pisces" href="/registry/pisces/" aria-label="Choose Pisces"><img src="/assets/zodiac-icons/48/pisces.webp" width="48" height="48" alt="">Pisces</a>
         </nav>
         <article class="static-sign-preview">
           <img src="/assets/nuggets/thumb/leo.png" width="96" height="96" alt="Leo gold sculpture">
           <div>
-            <p class="static-site__eyebrow">Season spotlight · Leo</p>
+            <p class="static-site__eyebrow">Selected sign</p>
             <h3>Leo</h3>
-            <p>July 23–August 22 · Official Leo token · LEO · Native network: Solana</p>
-            <p>A sign associated with radiance, courage, play, and the wish to be seen.</p>
-            <p><a href="?sign=leo#official-twelve" data-terminal-personal-sign="leo">This is my sign</a> · <a href="/registry/leo/">Official record →</a></p>
+            <p>July 23–August 22 · Official Leo token</p>
+            <p><strong>Live price requires JavaScript.</strong></p>
+            <p>The lion is associated with warmth, courage, creativity, and being seen.</p>
+            <p><a href="#buying-guide">How to buy Leo</a> · <a href="/registry/leo/#record">Official details</a></p>
           </div>
         </article>
       </section>
 
+      <section class="static-site__section static-buy-guide" id="buying-guide">
+        <p class="static-site__eyebrow">Three simple steps</p>
+        <h2>How to buy your Zodiac</h2>
+        <p>Buying happens through an independent service. Zodiacs.org helps you find the official token but never holds your money or crypto.</p>
+        <ol class="static-steps">
+          <li><strong>Choose your sign.</strong></li>
+          <li><strong>Open its buying options.</strong></li>
+          <li><strong>Check the address, network, amount, fees, and destination in your wallet before approving.</strong></li>
+        </ol>
+        <p><a href="/registry/leo/#acquire">View buying options for Leo</a></p>
+        <p><small>No wallet connects on this page.</small></p>
+        <p>Zodiac tokens are speculative, thinly traded digital assets. Prices can be volatile, liquidity may disappear, and you could lose all money used to acquire one. Astrology has no established predictive relationship with asset prices.</p>
+        <details><summary>What you’ll need</summary><p>A Solana-compatible wallet and enough SOL for your chosen amount plus the network fee. The sign record explains the independent route before you leave Zodiacs.org.</p></details>
+      </section>
+
+      <section class="static-site__section static-snapshot" id="market-snapshot">
+        <p class="static-site__eyebrow">Today’s prices</p>
+        <h2>Prices for all 12 signs</h2>
+        <p>Choose any sign above to see its artwork and buying guide. Live prices require JavaScript.</p>
+        <details>
+          <summary>See all 12 live prices</summary>
+          <ul class="static-snapshot__rows" aria-label="The twelve in zodiac order">
+            <li><a href="/registry/aries/">Aries</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/taurus/">Taurus</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/gemini/">Gemini</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/cancer/">Cancer</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/leo/">Leo</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/virgo/">Virgo</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/libra/">Libra</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/scorpio/">Scorpio</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/sagittarius/">Sagittarius</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/capricorn/">Capricorn</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/aquarius/">Aquarius</a><span>Price —</span><span>24h movement unavailable</span></li>
+            <li><a href="/registry/pisces/">Pisces</a><span>Price —</span><span>24h movement unavailable</span></li>
+          </ul>
+          <details><summary>Where prices come from</summary><p>Price uses the deepest indexed Solana pool. DexScreener is independent third-party context, may be incomplete, and is not a recommendation.</p></details>
+        </details>
+      </section>
+
       <section class="static-site__section" id="identity" aria-labelledby="registry-does-title">
         <span id="registry" aria-hidden="true"></span>
-        <p class="static-site__eyebrow">The asset, in plain language</p>
+        <p class="static-site__eyebrow">The simple version</p>
         <h2 id="registry-does-title">What is a Zodiac?</h2>
-        <p>A Zodiac is the transferable token for one of the twelve signs. The public Registry identifies its exact addresses; the gold sculpture is collection artwork, not a physical object or a one-of-one NFT.</p>
-        <ol class="static-steps">
-          <li><strong>One token for each sign</strong></li>
-          <li><strong>Verify the exact address</strong></li>
-          <li><strong>Hold, send, or collect</strong></li>
-        </ol>
-        <div class="static-proof" aria-label="Registry facts">
-          <span><strong>12</strong> signs</span>
-          <span><strong>2</strong> networks · Solana + Base</span>
-          <span><strong>Read only</strong> safe to browse</span>
-        </div>
-        <details><summary>How the records work</summary><p>Each sign has one native Solana record and one official representation on Base. “Official” means the address appears in the published Registry; it is a reference status, not government or marketplace approval.</p></details>
+        <p>A Zodiac is a digital token for one star sign. You can keep it in a compatible wallet, send it to someone, or collect more than one. Each sign has its own gold artwork and an official token address you can check.</p>
+        <details><summary>What does official mean?</summary><p>“Official” means the address appears in the published Registry. It is a reference status, not government or marketplace approval.</p></details>
+        <details><summary>Networks and token addresses</summary><p>Each Zodiac has a native Solana record and an official Base counterpart. The public Registry lists the exact addresses for both.</p></details>
+        <details><summary>Artwork and collection details</summary><p>Each sign has its own gold sculpture artwork. The artwork helps identify and tell the story of the collection.</p></details>
       </section>
 
       <section class="static-site__section" id="verify">
-        <p class="static-site__eyebrow">Read-only check</p>
-        <h2>Check a Zodiac token address</h2>
-        <p>Paste the mint or contract address shown by a wallet or marketplace. We’ll tell you whether it appears in the official list. Never paste a seed phrase.</p>
+        <p class="static-site__eyebrow">A quick safety check</p>
+        <h2>Check if a token is official</h2>
+        <p>Copy the token address from your wallet or the site where you found it, then paste it here. We’ll compare it with the official list. Never paste a seed phrase or recovery phrase.</p>
         <p>This checks a Zodiac asset address—not your public wallet address. The interactive checker appears when JavaScript is available.</p>
         <p><strong>Nothing connects, signs, or moves.</strong> You can also inspect the <a href="/registry/zodiacs.registry.json">public Registry JSON</a>.</p>
       </section>
@@ -7816,45 +8000,23 @@
       </section>
 
       <section class="static-site__section" id="thesis">
-        <p class="static-site__eyebrow">Why keep a registry?</p>
-        <h2>A familiar symbol needs a reliable record.</h2>
-        <p>The zodiac has moved through tablets, almanacs, newspapers, and phones. A public registry gives its newest digital form a place anyone can check.</p>
-        <p><a href="/thesis/">Read why Zodiacs matter →</a></p>
-      </section>
-
-      <section class="static-site__section static-snapshot" id="market-snapshot">
-        <p class="static-site__eyebrow">A calm market snapshot</p>
-        <h2>Price, without the leaderboard.</h2>
-        <p>The twelve stay in zodiac order. Live price and plain-language 24-hour movement load only when this section approaches the viewport.</p>
-        <ul class="static-snapshot__rows" aria-label="The twelve in zodiac order">
-          <li><a href="/registry/aries/">Aries</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/taurus/">Taurus</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/gemini/">Gemini</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/cancer/">Cancer</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/leo/">Leo</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/virgo/">Virgo</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/libra/">Libra</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/scorpio/">Scorpio</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/sagittarius/">Sagittarius</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/capricorn/">Capricorn</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/aquarius/">Aquarius</a><span>Price —</span><span>24h movement unavailable</span></li>
-          <li><a href="/registry/pisces/">Pisces</a><span>Price —</span><span>24h movement unavailable</span></li>
-        </ul>
-        <p>Price uses the deepest indexed Solana pool. DexScreener is independent third-party context, may be incomplete, and is not a recommendation.</p>
+        <p class="static-site__eyebrow">Why it exists</p>
+        <h2>The story behind Zodiacs</h2>
+        <p>The zodiac has been part of everyday life for generations. Zodiacs gives each sign a public digital record that anyone can check.</p>
+        <p><a href="/thesis/">Read the story →</a></p>
       </section>
 
       <section class="static-site__section" id="faq">
         <p class="static-site__eyebrow">Need to know</p>
-        <h2>Five quick answers</h2>
-        <dl class="static-faq">
-          <div><dt>Is there an official token for my zodiac sign?</dt><dd>Yes. Each of the twelve signs has exactly one official token — native on Solana, with an official counterpart on Base. Both addresses are published here.</dd></div>
-          <div><dt>What does “official” mean?</dt><dd>The address appears in this Registry. It does not mean approval from a government, wallet, marketplace, or exchange.</dd></div>
-          <div><dt>How do I check whether a zodiac token is official?</dt><dd>Paste the mint or contract address into the checker on this page. The check is read-only and needs no wallet; anything not in the list is only reported as not found.</dd></div>
-          <div><dt>How do I buy a zodiac token?</dt><dd>Each sign’s record page carries its acquisition route through independent third-party venues. Zodiacs.org itself sells nothing; digital assets can lose all market value.</dd></div>
-          <div><dt>How do people invest in astrology?</dt><dd>Some collect the token of their sign the way they collect any cultural object. That is a speculative choice, not advice — prices can fall to zero. The reasoning lives in the thesis.</dd></div>
-        </dl>
+        <h2>Before you start</h2>
+        <div class="static-faq">
+          <details><summary>Which Zodiac should I choose?</summary><p>Start with your star sign, or simply choose the artwork and story you like. You can browse every sign without buying anything.</p></details>
+          <details><summary>Do I need a crypto wallet?</summary><p>Not to browse prices, artwork, or official records. You only need a compatible wallet if you decide to buy or hold a token.</p></details>
+          <details><summary>How do I know a token is official?</summary><p>Use the address checker on this page. It compares the token address with the published Zodiacs Registry and never connects your wallet.</p></details>
+          <details><summary>Can its price fall?</summary><p>Yes. Zodiac tokens are speculative and thinly traded. Their price can fall to zero and liquidity can disappear.</p></details>
+        </div>
         <div class="static-closing">
-          <a href="/registry/">Open the Zodiacs Registry →</a>
+          <a href="/registry/">See all 12 official records →</a>
         </div>
       </section>
 
@@ -7968,6 +8130,6 @@
   <!-- ?v= evicts browsers still holding a prior immutable-cached /assets/app.js;
        the bundle now revalidates (see vercel.json). Bump if a future build must
        reach clients before the next revalidation. -->
-  <script defer src="/assets/app.js?v=z3"></script>
+  <script defer src="/assets/app.js?v=z4"></script>
 </body>
 </html>

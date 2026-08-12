@@ -741,7 +741,7 @@ Every route below is a live date guide. Each one-line description names the sign
 - /birthday/september-9/ — Virgo birthday guide.
 
 ZODIAC TERMINAL AND REGISTRY
-- /terminal/ — Zodiac Terminal: the simple, identity-first view for choosing a sign, exploring its official artwork and story, verifying its published addresses, and reading a small per-sign price snapshot.
+- /terminal/ — Zodiac Terminal: the beginner view for choosing a sign, seeing its live price and gold artwork, checking the official address, and following a simple buying guide.
 - /terminal/pro/ — Zodiac Terminal Pro: the dense market view of all twelve, ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart, market tape, briefing, season context, and research headlines.
 - /terminal/research/ — Research desk: reviewed sky facts, traditional readings, and separately timestamped public-activity observations.
 - /registry/ — Zodiacs Registry: the read-only verification hub for canonical identities, official addresses, records, datasets, and methodology.

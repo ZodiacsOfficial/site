@@ -8,8 +8,8 @@ const HERO_REGION = new RegExp(
 
 export const REGISTRY_CONSUMER_ENTRY_COPY = Object.freeze({
   title: 'See the signs in a public wallet',
-  description: 'Open the Cabinet of Twelve to view the sign pattern held by a public address. No wallet connection is required.',
-  link: 'Open the Cabinet of Twelve →',
+  description: 'Enter a public wallet address to see which official Zodiacs it holds. No wallet connection is required.',
+  link: 'Open collection view →',
 });
 
 function replaceLiteral(source, before, after) {

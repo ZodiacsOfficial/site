@@ -17,12 +17,12 @@ interface Props { locale?: Locale }
 const locale = normalizeCatalogLocale(Astro.props.locale);
 const path = Astro.url.pathname;
 const registryLabel: Record<Locale, string> = {
-  en: 'Live markets, gold sculptures, and research',
-  es: 'Mercados en vivo, esculturas doradas e investigación',
-  pt: 'Mercados ao vivo, esculturas douradas e pesquisa',
-  fr: 'Marchés en direct, sculptures dorées et recherche',
-  it: 'Mercati live, sculture dorate e ricerca',
-  ru: 'Рынки, золотые скульптуры и исследования — пока по-английски',
+  en: 'Choose a sign, see its price, artwork, and buying guide',
+  es: 'Elige un signo y consulta su precio, arte y guía de compra',
+  pt: 'Escolha um signo e veja preço, arte e guia de compra',
+  fr: 'Choisissez un signe et voyez son prix, son art et le guide d’achat',
+  it: 'Scegli un segno e scopri prezzo, arte e guida all’acquisto',
+  ru: 'Выберите знак, посмотрите цену, арт и руководство по покупке — пока по-английски',
 };
 const openMenuLabel: Record<Locale, string> = {
   en: 'Open menu',

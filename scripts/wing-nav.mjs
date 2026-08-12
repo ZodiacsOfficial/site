@@ -107,7 +107,7 @@ export function wingNavHtml({ includeSearch = true } = {}) {
         <a class="wnav-menu__link" style="--i:0" href="/learn/">Learn</a>
         <a class="wnav-menu__link" style="--i:1" href="/horoscopes/">Horoscopes</a>
         <a class="wnav-menu__link" style="--i:2" href="/profile/">Saved charts</a>
-        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/terminal/"><span>Terminal</span><small>Live markets, gold sculptures, and research</small></a>
+        <a class="wnav-menu__link wnav-menu__registry" style="--i:3" href="/terminal/"><span>Terminal</span><small>Choose a sign, see its price, artwork, and buying guide</small></a>
       </div>
       <div class="wnav-menu__group">
         <span class="wnav-menu__label">Tools</span>

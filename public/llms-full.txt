@@ -108,7 +108,7 @@ Astrofolio is a related consumer project exploring personal Zodiac shelves, prof
 
 ### Zodiac Terminal
 
-Zodiac Terminal at https://zodiacs.org/terminal/ is the simple, identity-first view. It leads with the sign picker, official artwork and story, a plain-language explanation, address verification, and purpose before a small per-sign price snapshot.
+Zodiac Terminal at https://zodiacs.org/terminal/ is the beginner view. It leads with the sign picker, gold artwork, live selected-sign price, and a simple buying guide. Official-address verification and deeper network, collection, story, and market methodology details remain available through progressive disclosure.
 
 Zodiac Terminal Pro at https://zodiacs.org/terminal/pro/ is the dense market view. It presents the twelve ranked live with price, 24-hour change, and indexed liquidity, plus a market tape, one selected-sign chart, briefing, season context, and research headlines. The reviewed research archive lives at https://zodiacs.org/terminal/research/. The Terminal views do not replace or rename the Zodiacs Registry, execute trades, take custody, or change verification status.
 

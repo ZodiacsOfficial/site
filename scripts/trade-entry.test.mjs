@@ -16,6 +16,10 @@ const SIGNS = [
 ];
 const ON = { [REGISTRY_TRADE_FLAG]: '1' };
 const page = (sign) => readFile(resolve(root, `public/registry/${sign}/index.html`), 'utf8');
+const decision = () => readFile(
+  resolve(root, 'docs/REGISTRY-TRADE-OWNER-RISK-DECISION.md'),
+  'utf8',
+);
 
 describe('the flag', () => {
   it('turns on for exactly one value', () => {
@@ -135,8 +139,22 @@ describe('the landing', () => {
   it('is identity-first and carries no trade flag or panel surface', async () => {
     const html = await hub();
     expect(html).not.toContain('zodiacs-registry-trade-enabled');
+    expect(html).not.toContain('zodiacs-registry-exchange-enabled');
     expect(html).not.toContain('data-trade-panel');
     expect(html).not.toContain('/assets/trade.js');
+  });
+
+  it('offers one narrow, same-origin handoff to a canonical sign record', async () => {
+    const html = await hub();
+    const handoffs = [...html.matchAll(/href="\/registry\/([a-z]+)\/#acquire"/g)];
+    expect(handoffs).toHaveLength(1);
+    expect(SIGNS).toContain(handoffs[0][1]);
+
+    // The beginner handoff ends at the record. It is not a second Markets
+    // gateway, a venue deep-link, or an embedded execution panel.
+    expect(html).not.toContain('href="/terminal/markets/');
+    expect(html).not.toMatch(/href="https:\/\/(?:[^"/]+\.)?jup\.ag\//);
+    expect(html).not.toContain('data-trade-panel');
   });
 
   // The Registry's own risk test forbids a swap deep-link in the shell. The
@@ -145,5 +163,28 @@ describe('the landing', () => {
     const html = await hub();
     expect(html).not.toContain('jup.ag/swap/');
     expect(html).not.toContain('lite-api.jup.ag');
+  });
+});
+
+describe('the 2026-08-13 Consumer handoff decision', () => {
+  it('authorizes only the selected-sign record handoff', async () => {
+    const text = await decision();
+    expect(text).toContain('Addendum — 2026-08-13: beginner Consumer record handoff');
+    expect(text).toContain('Authorized: 2026-08-13');
+    expect(text).toContain('exactly one selected-sign educational action');
+    expect(text).toContain('`/registry/<canonical-sign>/#acquire`');
+    expect(text).toContain('no link to `/terminal/markets/`');
+    expect(text).toMatch(/no embedded\s+trade interface/);
+    expect(text).toMatch(/no direct venue URL/);
+  });
+
+  it('pins the inertness, compensation, custody, and pilot boundaries', async () => {
+    const text = await decision();
+    expect(text).toContain('Mounting or focusing the action, or changing the selected sign');
+    expect(text).toContain('must not\nconnect a wallet or request anything from Jupiter');
+    expect(text).toContain('does not authorize an acquisition action on Pro');
+    expect(text).toContain('extend its pilot\ndeadline');
+    expect(text).toContain('It adds no authority for custody');
+    expect(text).toMatch(/referral fees,\s+platform fees, or other compensation/);
   });
 });

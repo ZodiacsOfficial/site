@@ -44,8 +44,8 @@ describe('Registry Collection build flag', () => {
   it('pins the approved optional collection language', () => {
     expect(REGISTRY_CONSUMER_ENTRY_COPY).toEqual({
       title: 'See the signs in a public wallet',
-      description: 'Open the Cabinet of Twelve to view the sign pattern held by a public address. No wallet connection is required.',
-      link: 'Open the Cabinet of Twelve →',
+      description: 'Enter a public wallet address to see which official Zodiacs it holds. No wallet connection is required.',
+      link: 'Open collection view →',
     });
   });
 
@@ -65,7 +65,7 @@ describe('Registry Collection build flag', () => {
     expect(on).toContain('Dated seal');
     expect(on).toContain('The record');
     expect(on).toContain(REGISTRY_CONSUMER_ENTRY_COPY.description);
-    expect(on).toContain('Open the Cabinet of Twelve');
+    expect(on).toContain('Open collection view');
     expect(on).not.toContain('data-registry-collection-hero');
     expect(configure(on, { PUBLIC_REGISTRY_AURA_ENABLED: '1' }).output).toBe(on);
 

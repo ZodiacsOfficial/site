@@ -122,23 +122,46 @@ try {
 
     await page.goto(`${baseURL}/terminal/?sign=pisces&rank=liquidity`, { waitUntil: 'load' });
     await waitForTerminal(page, '#consumer-explorer-title');
-    await page.waitForTimeout(500);
-    assert.equal(counts.dex, 0, 'consumer opening must not request market quotes');
+    await page.waitForFunction(() => !/Reading live price/u.test(document.querySelector('.stage-placard')?.textContent || ''));
+    assert.equal(counts.dex, 1, 'consumer opening must make one shared batched quote request');
     assert.equal(await page.locator('[data-consumer-sign]').count(), 12);
     assert.equal(await page.locator('[data-consumer-preview="pisces"]').count(), 1);
-    assert.equal(await page.locator('.stage-placard__quote, .stage-market, [data-landing-trade]').count(), 0);
-    assert.match(await page.locator('.stage-placard').innerText(), /This is my sign/u);
-    assert.doesNotMatch(await page.locator('.stage-placard').innerText(), /liquidity|market cap|volume|buy/iu);
-    await page.locator('.stage-placard__pill.btn--primary').click();
-    assert.equal(await page.evaluate(() => localStorage.getItem('zodiacs:today-sun-sign:v1')), 'pisces');
+    assert.equal(await page.locator('[data-gallery-carousel]').count(), 1);
+    assert.equal(await page.locator('[data-gallery-canvas] canvas').count(), 0);
+    assert.equal(await page.locator('script[src="/assets/gallery.js"]').count(), 0);
+    assert.match(await page.locator('.stage-placard').innerText(), /How to buy Pisces/u);
+    assert.match(await page.locator('.stage-placard').innerText(), /\$0\.000012/u);
+    assert.doesNotMatch(await page.locator('.stage-placard').innerText(), /liquidity|market cap|volume|This is my sign/iu);
+    assert.equal(await page.locator('.stage-placard__pill.btn--primary').getAttribute('href'), '#buying-guide');
+    assert.equal(await page.locator('.consumer-buy-guide__action a').getAttribute('href'), '/registry/pisces/#acquire');
+    assert.equal(await page.evaluate(() => localStorage.getItem('zodiacs:today-sun-sign:v1')), null);
+    if (process.env.OUT_DIR) {
+      await page.screenshot({ path: `${process.env.OUT_DIR}/terminal-consumer-opening-full.png`, fullPage: true });
+    }
 
-    const consumerQuoteRequest = page.waitForRequest((request) => (
-      request.url().includes('api.dexscreener.com/tokens/v1/solana/')
-    ));
-    await page.locator('.consumer-snapshot').scrollIntoViewIfNeeded();
-    await consumerQuoteRequest;
+    const artwork = page.locator('[data-carousel-art="pisces"] img');
+    const beforeScroll = await artwork.boundingBox();
+    assert.ok(beforeScroll);
+    await page.mouse.move(beforeScroll.x + beforeScroll.width / 2, beforeScroll.y + beforeScroll.height / 2);
+    await page.mouse.wheel(24, 620);
+    await page.waitForTimeout(120);
+    assert.ok(await page.evaluate(() => scrollY) > 100, 'wheel over the artwork must scroll the document');
+    const afterScroll = await artwork.boundingBox();
+    assert.ok(afterScroll);
+    assert.ok(Math.abs(afterScroll.width - beforeScroll.width) < 1, 'artwork width must not shrink while scrolling');
+    assert.ok(Math.abs(afterScroll.height - beforeScroll.height) < 1, 'artwork height must not shrink while scrolling');
+
+    await page.setViewportSize({ width: 390, height: 664 });
+    const shortViewport = await artwork.boundingBox();
+    await page.setViewportSize({ width: 390, height: 844 });
+    const tallViewport = await artwork.boundingBox();
+    assert.ok(shortViewport && tallViewport);
+    assert.ok(Math.abs(shortViewport.width - tallViewport.width) < 1, 'mobile browser chrome height must not resize the artwork');
+    assert.ok(Math.abs(shortViewport.height - tallViewport.height) < 1, 'mobile browser chrome height must not resize the artwork');
+
+    await page.locator('.consumer-snapshot__details > summary').click();
     await page.waitForFunction(() => document.querySelector('[data-consumer-market-snapshot]')?.getAttribute('aria-busy') === 'false');
-    assert.equal(counts.dex, 1, 'consumer snapshot must use one batched quote request');
+    assert.equal(counts.dex, 1, 'the all-sign price disclosure must reuse the opening quote batch');
     assert.equal(await page.locator('[data-snapshot-sign]').count(), 12);
     assert.equal(counts.gecko, 0);
     assert.equal(counts.wikimedia, 0);
@@ -216,7 +239,7 @@ try {
     const noJs = await browser.newContext({ javaScriptEnabled: false, viewport: { width: 390, height: 844 } });
     const noJsPage = await noJs.newPage();
     await noJsPage.goto(`${baseURL}/terminal/`, { waitUntil: 'load' });
-    assert.equal(await noJsPage.locator('#static-capital-title').innerText(), 'Zodiac Terminal');
+    assert.equal(await noJsPage.locator('#static-capital-title').innerText(), 'Choose your Zodiac.');
     assert.equal(await noJsPage.locator('#market-snapshot li').count(), 12);
     assert.equal(await noJsPage.locator('[data-terminal-market-notice]').count(), 1);
     assert.equal(await noJsPage.locator('[data-terminal-static-view="pro"]').first().getAttribute('href'), '/terminal/pro/?sign=leo');
