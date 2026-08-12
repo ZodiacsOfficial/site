@@ -1,9 +1,13 @@
 {
   "version": 1,
-  "id": "terminal-market-notice-coverage-2026-08-12",
-  "reason": "Owner-requested Terminal notice coverage (2026-08-12): render the existing market and venue boundary on every canonical Terminal surface. Keep Zodiac Markets' point-of-action risk block, the Research boundary, and research audit receipts in place; add no venue link, execution feature, acquisition entry, provider request, or new route.",
-  "baseCommit": "c7d1fa249215e502e115420217db3b422a3ed265",
+  "id": "account-v2-profile-privacy-boundaries-2026-08-12",
+  "reason": "Owner-approved optional account-v2 privacy boundary: prevent Registry Aura profile-derived state and delayed work from surviving an account access transition, and place the Spanish, French, Italian, and Portuguese profile routes behind the same fail-closed account-bound surface when the two-key preview is explicitly enabled. Preserve the existing device-local surfaces when flags are off.",
+  "baseCommit": "cd6578575582cd3908e477068369fa62b76ecf04",
   "protectedPaths": [
-    "public/terminal/markets/index.html"
+    "src/islands/RegistryAura.tsx",
+    "src/pages/es/profile/index.astro",
+    "src/pages/fr/profile/index.astro",
+    "src/pages/it/profile/index.astro",
+    "src/pages/pt/profile/index.astro"
   ]
 }
