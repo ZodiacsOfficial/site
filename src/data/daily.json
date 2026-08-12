@@ -1,92 +1,140 @@
 {
   "schema": "zodiacs.daily-facts.v1",
-  "date": "2026-08-11",
-  "snapshotAt": "2026-08-11T12:00:00.000Z",
+  "date": "2026-08-12",
+  "snapshotAt": "2026-08-12T12:00:00.000Z",
   "bodies": [
     {
       "body": "Moon",
-      "lon": 122.05973890853915,
+      "lon": 136.65242153066538,
       "sign": "leo",
-      "degree": 2.0597389085391455,
+      "degree": 16.65242153066538,
       "retrograde": false
     },
     {
       "body": "Sun",
-      "lon": 138.8479904954595,
+      "lon": 139.80802514467382,
       "sign": "leo",
-      "degree": 18.8479904954595,
+      "degree": 19.80802514467382,
       "retrograde": false
     },
     {
       "body": "Mercury",
-      "lon": 122.96909694714947,
+      "lon": 124.69719664436047,
       "sign": "leo",
-      "degree": 2.969096947149467,
+      "degree": 4.697196644360474,
       "retrograde": false
     },
     {
       "body": "Venus",
-      "lon": 184.68299213851193,
+      "lon": 185.66293571068715,
       "sign": "libra",
-      "degree": 4.682992138511963,
+      "degree": 5.662935710687179,
       "retrograde": false
     },
     {
       "body": "Mars",
-      "lon": 90.09618930536294,
+      "lon": 90.75824893567261,
       "sign": "cancer",
-      "degree": 0.09618930536294101,
+      "degree": 0.7582489356726114,
       "retrograde": false
     },
     {
       "body": "Jupiter",
-      "lon": 129.2792192157757,
+      "lon": 129.49888220114224,
       "sign": "leo",
-      "degree": 9.279219215775697,
+      "degree": 9.498882201142237,
       "retrograde": false
     },
     {
       "body": "Saturn",
-      "lon": 14.53917096007848,
+      "lon": 14.511969288245439,
       "sign": "aries",
-      "degree": 14.53917096007848,
+      "degree": 14.511969288245439,
       "retrograde": true
     },
     {
       "body": "Uranus",
-      "lon": 65.31212106537384,
+      "lon": 65.33668308074294,
       "sign": "gemini",
-      "degree": 5.312121065373844,
+      "degree": 5.336683080742944,
       "retrograde": false
     },
     {
       "body": "Neptune",
-      "lon": 4.103978322646697,
+      "lon": 4.086365858077272,
       "sign": "aries",
-      "degree": 4.103978322646697,
+      "degree": 4.086365858077272,
       "retrograde": true
     },
     {
       "body": "Pluto",
-      "lon": 303.93371436196094,
+      "lon": 303.9113104669027,
       "sign": "aquarius",
-      "degree": 3.933714361960938,
+      "degree": 3.9113104669027052,
       "retrograde": true
     }
   ],
   "moon": {
     "phase": "New Moon",
-    "illumination": 0.021
+    "illumination": 0.001
   },
   "eventsCoverage": "complete",
   "eventsSource": "src/data/transits-2026-08.json",
   "events": [
     {
-      "kind": "ingress",
-      "planet": "Mars",
-      "at": "2026-08-11T08:31:01.563Z",
-      "sign": "cancer",
-      "retrograde": false
+      "kind": "aspect",
+      "a": "Mercury",
+      "b": "Pluto",
+      "type": "opposition",
+      "orb": 0,
+      "at": "2026-08-12T01:19:36.991Z",
+      "aSign": "leo",
+      "aDegree": 3.9212605617491363,
+      "bSign": "aquarius",
+      "bDegree": 3.921258970960025
+    },
+    {
+      "kind": "aspect",
+      "a": "Mercury",
+      "b": "Neptune",
+      "type": "trine",
+      "orb": 0,
+      "at": "2026-08-12T03:41:46.694Z",
+      "aSign": "leo",
+      "aDegree": 4.092508861355668,
+      "bSign": "aries",
+      "bDegree": 4.092508225966128
+    },
+    {
+      "kind": "aspect",
+      "a": "Venus",
+      "b": "Uranus",
+      "type": "trine",
+      "orb": 0,
+      "at": "2026-08-12T03:47:20.074Z",
+      "aSign": "libra",
+      "aDegree": 5.3283682743367535,
+      "bSign": "gemini",
+      "bDegree": 5.328367748118183
+    },
+    {
+      "kind": "lunation",
+      "type": "new",
+      "at": "2026-08-12T17:36:35.369Z",
+      "sign": "leo",
+      "degree": 20.0324835212694
+    },
+    {
+      "kind": "aspect",
+      "a": "Mercury",
+      "b": "Uranus",
+      "type": "sextile",
+      "orb": 0,
+      "at": "2026-08-12T20:47:59.762Z",
+      "aSign": "leo",
+      "aDegree": 5.345493892020386,
+      "bSign": "gemini",
+      "bDegree": 5.345492644870092
     }
   ]
 }
