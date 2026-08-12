@@ -1040,6 +1040,9 @@ async function mount(root, records) {
   canvas.addEventListener('lostpointercapture', cancelPointer);
 
   canvas.addEventListener('wheel', (event) => {
+    // The consumer spotlight is part of the document, not a horizontal
+    // scroller. Never cancel a wheel or diagonal trackpad gesture there.
+    if (spotlight) return;
     if (state.targetOpen > 0) {
       event.preventDefault();
       state.targetZoom = Math.min(1, Math.max(0, state.targetZoom - (event.deltaY / 900)));

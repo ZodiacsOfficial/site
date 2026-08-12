@@ -118,23 +118,22 @@ const jsonLd = [
 
       <h2>Public Terminal and Registry data sources</h2>
       <p>
-        When a relevant Zodiac Terminal panel is displayed, your browser may request
-        public market data from Dex Screener, public chart and trade data from
-        GeckoTerminal, or public attention data from
-        Wikimedia. Those automatic requests do not include a wallet address,
+        When a relevant Zodiac Terminal or Registry market panel is displayed, your browser may request
+        public market data from Dex Screener, public chart data from GeckoTerminal,
+        or public attention data from Wikimedia. Those automatic requests do not include a wallet address,
         birth fields, chart data, or Aura results. The independent service still
         receives ordinary web-request metadata, such as your IP address,
         browser information, and request time, and its own privacy terms and
         retention practices apply.
       </p>
       <p>
-        A sign’s official Registry record and the Zodiac Terminal explorer can also
-        include an optional trade panel. The panel is our own interface, and it
+        A sign&rsquo;s official Registry record can also include an optional trade panel.
+        The beginner Zodiac Terminal links to that record but does not request a
+        Jupiter quote or connect a wallet itself. The record panel is our own interface, and it
         requests a price from the public API of Jupiter, an independent venue.
-        On the landing the panel only opens when you ask for it — from a
-        sign’s pill or by choosing the sculpture on show — at every screen
-        size, so that request is made when you open it and again whenever you
-        change the amount or the sign; what leaves your browser then is the
+        On the record the panel only opens when you ask for it, so that request
+        is made when you open it and again whenever you change the amount;
+        what leaves your browser then is the
         amount,
         the two token identifiers, and ordinary web-request metadata — not your
         address, which is not sent unless you choose to trade. If you do choose

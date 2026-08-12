@@ -63,7 +63,8 @@ describe('assistant site context', () => {
     expect(context).toContain('- /compatibility/aries-pisces/ — Aries and Pisces in love and the long run.');
     expect(context).toContain('- /learn/placements/sun-in-aries/ — What Sun in Aries means in a birth chart.');
     expect(context).toContain('- /rising-sign/pisces/ — What Pisces rising means.');
-    expect(context).toContain('- /terminal/ — Zodiac Terminal: the simple, identity-first view');
+    expect(context).toContain('- /terminal/ — Zodiac Terminal: the beginner view');
+    expect(context).toContain('seeing its live price and gold artwork, checking the official address, and following a simple buying guide');
     expect(context).toContain('- /terminal/pro/ — Zodiac Terminal Pro: the dense market view');
     expect(context).toContain('ranked with price, 24-hour change, and indexed liquidity, plus a selected-sign chart');
     expect(context).toContain('- /registry/ — Zodiacs Registry: the read-only verification hub');

@@ -158,7 +158,7 @@ describe('curated wing search entries', () => {
       expect.objectContaining({
         path: '/terminal/',
         title: 'Zodiac Terminal',
-        description: 'Choose your sign and meet its one official Zodiac token through artwork, story, address verification, and a calm price snapshot.',
+        description: 'Choose your sign, see its live price and gold artwork, and follow a simple guide to checking or buying the official token.',
       }),
       expect.objectContaining({
         path: '/terminal/pro/',

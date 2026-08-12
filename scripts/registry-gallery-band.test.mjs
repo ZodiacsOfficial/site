@@ -33,7 +33,7 @@ function functionBody(source, name) {
 }
 
 describe('the gallery band on Zodiac Terminal', () => {
-  it('renders the embedded stage skeleton and gates the strip on the probe', async () => {
+  it('uses the stable image carousel on the consumer surface', async () => {
     const source = await read('src/app.jsx');
     for (const marker of [
       'data-gallery-embed',
@@ -43,11 +43,11 @@ describe('the gallery band on Zodiac Terminal', () => {
       "'/assets/gallery.js'",
       "classList.contains('gallery-live')",
     ]) expect(source).toContain(marker);
-    // Capable phones keep the same live stage as desktop. Only a missing
-    // WebGL probe falls back to the flat carousel; loading remains lazy.
-    expect(source).toContain('return GALLERY_LIVE;');
-    expect(source).not.toContain("window.matchMedia('(min-width: 1021px)')");
+    const stageMode = functionBody(source, 'useStageMode');
+    expect(stageMode).toContain('return false;');
+    expect(stageMode).not.toContain('GALLERY_LIVE');
     expect(source).toContain('carousel={!stageMode}');
+    expect(source).toContain('<SculptureCarousel active={active} setActive={setActive} />');
     expect(source).toContain('RAIL_PLACEHOLDER_HTML');
     expect(source).toContain('const [posterSlug, setPosterSlug] = useState(slug);');
     expect(source).toContain('if (!galleryReady) setPosterSlug(slug);');
@@ -111,12 +111,10 @@ describe('the gallery band on Zodiac Terminal', () => {
     }
   });
 
-  it('probes WebGL before first paint and dresses the live page', async () => {
+  it('does not probe or mount WebGL on the consumer page', async () => {
     const html = await read('public/terminal/index.html');
-    expect(html).toContain("documentElement.classList.add('gallery-live')");
-    expect(html).toContain('network.saveData');
-    expect(html).toContain("/(^|-)2g$/.test(network.effectiveType || '')");
-    expect(html).toContain('if (!constrained && (glProbe.getContext');
+    expect(html).not.toContain("documentElement.classList.add('gallery-live')");
+    expect(html).not.toContain('glProbe.getContext');
     expect(html).toContain('.gband {');
     // The fallback card is absent rather than merely concealed.
     expect(html).not.toContain('html.gallery-live #featured-sign');
@@ -128,8 +126,9 @@ describe('the gallery band on Zodiac Terminal', () => {
     // section anchors; a slug is read on arrival only.
     expect(scene).not.toContain('replaceState');
     expect(scene).toContain('signFromHash(window.location.hash');
-    // Vertical wheel input remains page scrolling; horizontal trackpad input
-    // and direct drag/swipe walk the sculpture row.
+    // The consumer spotlight is defensive even if a future caller mounts it:
+    // every wheel/trackpad gesture belongs to the document.
+    expect(scene).toContain('if (spotlight) return;');
     expect(scene).toContain('if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;');
     // A sculpture opens its record in place — never a navigation.
     expect(scene).not.toContain('location.assign');
@@ -343,7 +342,7 @@ describe('the gallery band on Zodiac Terminal', () => {
     // The static explorer keeps all twelve token destinations useful without
     // JavaScript; every grid link opens the sign's official record.
     for (const slug of ['aries', 'virgo', 'pisces']) {
-      expect(html).toContain(`href="/registry/${slug}/" aria-label="View the `);
+      expect(html).toContain(`href="/registry/${slug}/" aria-label="Choose `);
     }
     expect(source).toContain('Drag to browse · Choose a sign to open.');
     expect(html).not.toContain('?gallery=gold');

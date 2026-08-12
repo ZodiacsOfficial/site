@@ -1863,23 +1863,21 @@
     /* The placard's price: one number and its day, small enough to sit on a
        museum label. Reads from the same single batched market call the rest
        of the page shares. */
-    function PlacardQuote({ sign }) {
-      const [ref, inView] = useInView();
-      const batch = useTwelveQuotes(inView);
+    function PlacardQuote({ sign, batch }) {
       const quote = batch.status === 'ok' ? batch.quotes[sign.asset.sign] : null;
       const changeClass = marketChangeClass(quote?.priceChange24h);
       return (
-        <span ref={ref} className="stage-placard__quote">
+        <span className="stage-placard__quote" aria-live="polite">
           {quote ? (
             <>
               <span className="stage-placard__price">{formatPriceUsd(quote.priceUsd)}</span>
-              {formatPercent(quote.priceChange24h) !== '—' && (
-                <span className={'stage-placard__change' + changeClass}>{formatPercent(quote.priceChange24h)}</span>
-              )}
+              <span className={'stage-placard__change' + changeClass}>
+                {plainMarketMovement(quote.priceChange24h)}
+              </span>
             </>
           ) : (
             <span className="stage-placard__price stage-placard__price--waiting">
-              {batch.status === 'ok' ? 'Not indexed' : 'Live price…'}
+              {batch.status === 'ok' ? 'Price not indexed' : batch.status === 'unavailable' ? 'Live price unavailable' : 'Reading live price…'}
             </span>
           )}
         </span>
@@ -2591,8 +2589,7 @@
       consumer = false,
       carousel = false,
       identityOnly = false,
-      personalSlug = '',
-      setPersonalSlug = () => {},
+      marketBatch = { status: 'idle' },
     }) {
       const stageRef = useRef(null);
       // The slug the scene last announced — the guard that keeps the
@@ -2815,14 +2812,14 @@
             data-gallery-spotlight={consumer && !carousel ? '' : undefined}
             data-gallery-paused={consumer && (carousel || sheetVisible) ? '' : undefined}
           >
-          {consumer && <StageConstellation slug={slug} />}
+          {consumer && !identityOnly && <StageConstellation slug={slug} />}
           {/* The stage picks with the rail at the top and shows one piece
               large below it, so the twelve read as the choice and the chosen
               sculpture as the answer. The rail deliberately does NOT wear
               .gband__chrome: the scene measures the band it may fill by that
               element's offsetTop, and chrome above the canvas would leave it
               nothing. */}
-          {consumer && (
+          {consumer && !identityOnly && (
             <SeasonNow season={season} />
           )}
           {consumer && (
@@ -2866,26 +2863,21 @@
                 <span id="stage-placard-name" className="stage-placard__name">{sign.name}</span>
                 <span className="stage-placard__meta">
                   <span className="stage-placard__dates">{signDateLabel(sign)}</span>
-                  {!identityOnly && <PlacardQuote sign={sign} />}
+                  <PlacardQuote sign={sign} batch={marketBatch} />
                 </span>
               </span>
               {identityOnly && (
                 <span className="stage-placard__identity">
-                  <span>{sign.element} · {sign.modality}</span>
-                  <strong>{sign.archetype}</strong>
+                  <span>Official {sign.name} token</span>
+                  <strong>Gold artwork and today&rsquo;s price. No wallet needed to browse.</strong>
                 </span>
               )}
               {!identityOnly && <PlacardMarketPanel sign={sign} />}
               <span className="stage-placard__actions">
                 {identityOnly ? (
-                  <button
-                    type="button"
-                    className="btn btn--primary stage-placard__pill"
-                    aria-pressed={personalSlug === slug}
-                    onClick={() => setPersonalSlug(slug)}
-                  >
-                    <span>{personalSlug === slug ? `${sign.name} is my sign` : 'This is my sign'}</span>
-                  </button>
+                  <a className="btn btn--primary stage-placard__pill" href="#buying-guide">
+                    <span>How to buy {sign.name}</span>
+                  </a>
                 ) : tradingEnabled ? (
                   <button
                     ref={tradePillRef}
@@ -2900,8 +2892,8 @@
                     <span>Buy {sign.name}</span>
                   </a>
                 )}
-                <a className="btn btn--ghost stage-placard__pill" href={registryProfilePath(sign)}>
-                  <span>Official record</span>
+                <a className="btn btn--ghost stage-placard__pill" href={`${registryProfilePath(sign)}#record`}>
+                  <span>Official details</span>
                 </a>
               </span>
             </div>
@@ -3034,12 +3026,12 @@
       return (
         <section ref={reveal} id="verify" className="sec consumer-verify reveal" aria-labelledby="verify-title">
           <div className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">Check the public list</span>
-            <h2 id="verify-title">Check a Zodiac token address.</h2>
+            <span className="consumer-section-head__eyebrow">A quick safety check</span>
+            <h2 id="verify-title">Check if a token is official.</h2>
           </div>
           <p className="consumer-verify__intro">
-            Paste the mint or contract address shown by a wallet or marketplace.
-            We&rsquo;ll tell you whether it appears in the official list. Never paste a seed phrase.
+            Copy the token address from your wallet or the site where you found it, then paste it here.
+            We&rsquo;ll compare it with the official list. Never paste a seed phrase or recovery phrase.
           </p>
           <p className="consumer-verify__distinction">
             This checks a Zodiac&rsquo;s token address, not your public wallet address.
@@ -3054,7 +3046,7 @@
               autoComplete="off"
               spellCheck={false}
               inputMode="text"
-              placeholder="Mint or contract address"
+              placeholder="Paste token address"
               value={input}
               onChange={e => {
                 setInput(e.target.value);
@@ -4574,9 +4566,9 @@
         <>
           <header className="terminal-consumer-hero" aria-labelledby="consumer-explorer-title">
             <div>
-              <span><a href="/registry/">Verified by the Zodiacs Registry</a></span>
-              <h1 id="consumer-explorer-title">Zodiac Terminal</h1>
-              <p>Every sign has one official token. Find yours, see the artwork, and verify the public record.</p>
+              <span>Zodiac Terminal</span>
+              <h1 id="consumer-explorer-title">Choose your Zodiac.</h1>
+              <p>Each star sign has one official digital token. Pick yours to see the artwork, today&rsquo;s price, and a simple guide to buying it.</p>
             </div>
             <TerminalViewLink view="pro" sign={sign} keepRank className="terminal-view-link" />
           </header>
@@ -4593,45 +4585,48 @@
       return 'unchanged over 24 hours';
     }
 
-    function ConsumerMarketSnapshot() {
+    function ConsumerMarketSnapshot({ batch, onRetry }) {
       const reveal = useReveal();
-      const [hostRef, inView] = useInView('420px 0px');
-      const [retryKey, setRetryKey] = useState(0);
-      const batch = useTwelveQuotes(inView, retryKey);
       return (
         <section ref={reveal} className="consumer-snapshot reveal" aria-labelledby="consumer-snapshot-title">
-          <header ref={hostRef} className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">A calm market snapshot</span>
-            <h2 id="consumer-snapshot-title">Price, without the leaderboard.</h2>
-            <p>The twelve stay in zodiac order. This is context, not a ranking or recommendation.</p>
+          <header className="consumer-section-head">
+            <span className="consumer-section-head__eyebrow">Today&rsquo;s prices</span>
+            <h2 id="consumer-snapshot-title">Prices for all 12 signs.</h2>
+            <p>Choose any sign above to see its artwork and buying guide.</p>
           </header>
           {batch.status === 'unavailable' && (
             <div className="consumer-snapshot__state" role="status">
               <p>Live price context is temporarily unavailable. Every official record remains available.</p>
-              <button type="button" onClick={() => setRetryKey(value => value + 1)}>Try again</button>
+              <button type="button" onClick={onRetry}>Try again</button>
             </div>
           )}
-          <ul className="consumer-snapshot__rows" aria-busy={batch.status === 'loading'} data-consumer-market-snapshot>
-            {SIGNS.map((item) => {
-              const quote = batch.status === 'ok' ? batch.quotes[item.asset.sign] : null;
-              return (
-                <li key={item.ticker} data-snapshot-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
-                  <span className="consumer-snapshot__identity">
-                    <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
-                    <strong>{item.name}</strong>
-                  </span>
-                  <span className="consumer-snapshot__price">{quote ? formatPriceUsd(quote.priceUsd) : batch.status === 'loading' ? 'Reading…' : '—'}</span>
-                  <span className={'consumer-snapshot__move' + marketChangeClass(quote?.priceChange24h)}>
-                    {quote ? plainMarketMovement(quote.priceChange24h) : '24h movement unavailable'}
-                  </span>
-                </li>
-              );
-            })}
-          </ul>
-          <p className="consumer-snapshot__foot">
-            Price and movement use the deepest indexed Solana pool. DexScreener is independent third-party context, may be incomplete, and is not a recommendation. See the{' '}
-            <a href="/registry/technical/#market-transparency">method and technical record</a>.
-          </p>
+          <details className="consumer-snapshot__details">
+            <summary>See all 12 live prices</summary>
+            <ul className="consumer-snapshot__rows" aria-busy={batch.status === 'loading'} data-consumer-market-snapshot>
+              {SIGNS.map((item) => {
+                const quote = batch.status === 'ok' ? batch.quotes[item.asset.sign] : null;
+                return (
+                  <li key={item.ticker} data-snapshot-sign={item.asset.sign} style={{ '--row-sign': item.hue }}>
+                    <span className="consumer-snapshot__identity">
+                      <img src={`/assets/zodiac-icons/48/${item.asset.sign}.webp`} width="32" height="32" alt="" loading="lazy" decoding="async" />
+                      <strong>{item.name}</strong>
+                    </span>
+                    <span className="consumer-snapshot__price">{quote ? formatPriceUsd(quote.priceUsd) : batch.status === 'loading' ? 'Reading…' : '—'}</span>
+                    <span className={'consumer-snapshot__move' + marketChangeClass(quote?.priceChange24h)}>
+                      {quote ? plainMarketMovement(quote.priceChange24h) : '24h movement unavailable'}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+            <details className="consumer-snapshot__source">
+              <summary>Where prices come from</summary>
+              <p>
+                Price and movement use the deepest indexed Solana pool. DexScreener is independent third-party context, may be incomplete, and is not a recommendation. See the{' '}
+                <a href="/registry/technical/#market-transparency">method and technical record</a>.
+              </p>
+            </details>
+          </details>
         </section>
       );
     }
@@ -5509,10 +5504,10 @@
     }
 
     function useStageMode() {
-      // The original Registry gallery worked at every width. Keep the real
-      // turntable on phones as well as desktops whenever WebGL exists; the
-      // bounded image carousel remains the no-WebGL fallback only.
-      return GALLERY_LIVE;
+      // Consumer browsing must never fight the page scroll or resize artwork
+      // as mobile browser chrome moves. Keep the richer WebGL room on the
+      // Registry surfaces and use the bounded image carousel here.
+      return false;
     }
 
     function ConsumerExplorer({
@@ -5520,8 +5515,7 @@
       setActive,
       sign,
       stageMode,
-      personalSlug,
-      setPersonalSlug,
+      marketBatch,
     }) {
       const reveal = useReveal();
 
@@ -5533,22 +5527,51 @@
           aria-label="Interactive gallery of the twelve official Zodiac tokens"
           style={{ '--active-sign': sign.hue }}
         >
-          {/* This section IS the page's opening at every width. WebGL keeps
-              the original interactive gallery on desktop and mobile; only
-              machines that cannot paint it receive the image carousel. */}
+          {/* A bounded image carousel keeps native vertical scrolling stable
+              and gives the chosen sign one predictable visual scale. */}
           <GalleryBand
             active={active}
             setActive={setActive}
             consumer
             identityOnly
             carousel={!stageMode}
-            personalSlug={personalSlug}
-            setPersonalSlug={setPersonalSlug}
+            marketBatch={marketBatch}
           />
 
           <p className="sr-only" role="status" aria-live="polite" data-consumer-live>
-            {sign.name} selected. {signDateLabel(sign)}. {sign.element}. {sign.archetype}.
+            {sign.name} selected. {signDateLabel(sign)}. Live price and buying guide updated.
           </p>
+        </section>
+      );
+    }
+
+    function ConsumerBuyGuide({ sign }) {
+      const reveal = useReveal();
+      return (
+        <section ref={reveal} id="buying-guide" className="consumer-buy-guide reveal" aria-labelledby="consumer-buy-title">
+          <header className="consumer-section-head">
+            <span className="consumer-section-head__eyebrow">Three simple steps</span>
+            <h2 id="consumer-buy-title">How to buy your Zodiac.</h2>
+            <p>Buying happens through an independent service. Zodiacs.org helps you find the official token but never holds your money or crypto.</p>
+          </header>
+          <ol className="consumer-buy-guide__steps">
+            <li><span>1</span><strong>Choose your sign.</strong></li>
+            <li><span>2</span><strong>Open its buying options.</strong></li>
+            <li><span>3</span><strong>Check the address, network, amount, fees, and destination in your wallet before approving.</strong></li>
+          </ol>
+          <div className="consumer-buy-guide__action">
+            <a className="btn btn--primary" href={`${registryProfilePath(sign)}#acquire`}>View buying options for {sign.name}</a>
+            <small>No wallet connects on this page.</small>
+          </div>
+          <p className="consumer-buy-guide__risk">
+            Zodiac tokens are speculative, thinly traded digital assets. Prices can be volatile, liquidity may disappear, and you could lose all money used to acquire one. Astrology has no established predictive relationship with asset prices.
+          </p>
+          <details className="consumer-disclosure">
+            <summary>What you&rsquo;ll need</summary>
+            <div className="consumer-disclosure__body">
+              <p>A Solana-compatible wallet and enough SOL for the amount you choose plus the network fee. The sign record explains the independent route before you leave Zodiacs.org.</p>
+            </div>
+          </details>
         </section>
       );
     }
@@ -5558,69 +5581,35 @@
       return (
         <section ref={reveal} id="registry" className="consumer-how reveal" aria-labelledby="consumer-how-title">
           <header className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">The asset, in plain language</span>
+            <span className="consumer-section-head__eyebrow">The simple version</span>
             <h2 id="consumer-how-title">What is a Zodiac?</h2>
           </header>
           <p className="consumer-how__intro">
-            A Zodiac is a transferable digital token for one of the twelve signs. Hold your
-            sign, send one to someone, collect the wheel, or display a public wallet in the
-            Cabinet of Twelve. The gold sculpture is collection artwork—not a physical object
-            or a one-of-one NFT.
+            A Zodiac is a digital token for one star sign. You can keep it in a compatible wallet,
+            send it to someone, or collect more than one. Each sign has its own gold artwork and
+            an official token address you can check.
           </p>
-
-          <ol id="identity" className="consumer-steps" aria-label="How to use the Registry">
-            <li>
-              <span className="consumer-step__visual consumer-step__constellation" aria-hidden="true">
-                {['aries', 'leo', 'pisces'].map((slug, index) => (
-                  <img key={slug} className={index === 1 ? 'is-primary' : ''} src={`/assets/zodiac-icons/48/${slug}.webp`} width="38" height="38" alt="" />
-                ))}
-              </span>
-              <span className="consumer-step__copy">
-                <strong>One token for each sign</strong>
-                <small>The same rules, with a distinct season, constellation, pastel identity, and gold artwork.</small>
-              </span>
-            </li>
-            <li>
-              <span className="consumer-step__visual consumer-step__record" aria-hidden="true">
-                <img src="/assets/zodiac-icons/48/leo.webp" width="30" height="30" alt="" />
-                <code>8Cd7…b8Qm</code>
-              </span>
-              <span className="consumer-step__copy">
-                <strong>Verify the exact address</strong>
-                <small>The public record—not a name, ticker, or social post—identifies the token listed here.</small>
-              </span>
-            </li>
-            <li>
-              <span className="consumer-step__visual consumer-step__recognition" aria-hidden="true">
-                <span><img src="/assets/zodiac-icons/48/leo.webp" width="28" height="28" alt="" /></span>
-                <i>→</i>
-                <span><img src="/assets/zodiac-icons/48/leo.webp" width="28" height="28" alt="" /></span>
-              </span>
-              <span className="consumer-step__copy">
-                <strong>Hold, send, or collect</strong>
-                <small>The token remains fungible; Cabinet artwork changes only how a public balance is displayed.</small>
-              </span>
-            </li>
-          </ol>
-
-          <div className="consumer-proof" aria-label="Registry facts">
-            <span><strong>12</strong> transferable tokens</span>
-            <span><strong>Solana + Base</strong> recorded representations</span>
-            <span><strong>Read-only</strong> no wallet required</span>
-          </div>
-
           <details className="consumer-disclosure">
-            <summary>How the records work</summary>
+            <summary>What does official mean?</summary>
             <div className="consumer-disclosure__body">
-              <p>
-                Each Zodiac begins with one native Solana record. Its official Base counterpart
-                points back to that origin through Wormhole. The public registry file lists both.
-              </p>
               <p>
                 &ldquo;Official&rdquo; means an address appears in this Registry. It is a statement
                 about this list, not approval from a government, wallet, marketplace, or exchange.
               </p>
+            </div>
+          </details>
+          <details className="consumer-disclosure">
+            <summary>Networks and token addresses</summary>
+            <div className="consumer-disclosure__body">
+              <p>Each Zodiac has a native Solana record and an official Base counterpart. The public Registry lists the exact addresses for both.</p>
               <a href="/registry/technical/#records-networks">See the records and network details</a>
+            </div>
+          </details>
+          <details className="consumer-disclosure">
+            <summary>Artwork and collection details</summary>
+            <div className="consumer-disclosure__body">
+              <p>Each sign has its own gold sculpture artwork. The artwork helps identify and tell the story of the collection.</p>
+              <a href="/registry/">See all 12 official records</a>
             </div>
           </details>
         </section>
@@ -5629,124 +5618,45 @@
 
     function ConsumerPurpose() {
       const reveal = useReveal();
-      // This is the same curator's sample shown inside the real Cabinet:
-      // Aries Crown Gold, Cancer pastel, Leo bronze, Scorpio silver, and
-      // Aquarius Gold. The landing preview must never invent another set.
-      const cabinetSample = Object.freeze({
-        aries: { finish: 'crown', numeral: 'V', count: '×12' },
-        cancer: { finish: 'pastel', numeral: 'I' },
-        leo: { finish: 'bronze', numeral: 'II' },
-        scorpio: { finish: 'silver', numeral: 'III' },
-        aquarius: { finish: 'gold', numeral: 'IV', count: '×3' },
-      });
       return (
-        <section ref={reveal} id="thesis" className="consumer-purpose reveal" aria-labelledby="consumer-purpose-title">
-          {REGISTRY_AURA_ENABLED && (
-            <article className="consumer-collection" data-registry-collection>
-              <a className="consumer-collection__link" href={REGISTRY_AURA_PATH}>
-                <div className="consumer-collection__copy">
-                  <small className="consumer-section-head__eyebrow">Optional collection view</small>
-                  <h3>The Cabinet of Twelve.</h3>
-                  <p>See occupied signs, material editions, and wheel coverage for any public wallet.</p>
-                </div>
-                <div className="consumer-collection__art" aria-hidden="true">
-                  <div className="consumer-cabinet">
-                    <div className="consumer-cabinet__seats">
-                      {SIGNS.map((item, index) => {
-                        const edition = cabinetSample[item.asset.sign];
-                        const occupied = Boolean(edition);
-                        const sculpture = edition?.finish === 'gold' || edition?.finish === 'crown';
-                        const imagePath = sculpture
-                          ? `/assets/cabinet-materials/gold/${item.asset.sign}`
-                          : `/assets/zodiac-icons/128/${item.asset.sign}`;
-                        return (
-                          <span
-                            key={item.ticker}
-                            className={'consumer-cabinet__seat' + (occupied ? ` is-filled is-${edition.finish}` : ' is-empty')}
-                            style={{ '--seat-i': index }}
-                            data-cabinet-sample-finish={edition?.finish}
-                          >
-                            <span className="consumer-cabinet__number">{String(index + 1).padStart(2, '0')}</span>
-                            {occupied ? (
-                              <>
-                                <picture>
-                                  <source srcSet={`${imagePath}.avif`} type="image/avif" />
-                                  <img src={`${imagePath}.webp`} width="128" height="128" alt="" loading="lazy" decoding="async" />
-                                </picture>
-                                <span className="consumer-cabinet__edition">{edition.numeral}</span>
-                                {edition.count && <span className="consumer-cabinet__count">{edition.count}</span>}
-                              </>
-                            ) : <span className="consumer-cabinet__glyph">{item.symbol}</span>}
-                          </span>
-                        );
-                      })}
-                    </div>
-                    <span className="consumer-cabinet__plaque">
-                      <strong>5 / 12</strong><span>Curator&rsquo;s sample</span>
-                    </span>
-                  </div>
-                </div>
-                <span className="consumer-purpose__cta">Open the Cabinet <span aria-hidden="true">→</span></span>
-              </a>
-            </article>
-          )}
-
+        <section ref={reveal} id="thesis" className="consumer-purpose consumer-purpose--simple reveal" aria-labelledby="consumer-purpose-title">
           <article className="consumer-thesis">
             <a className="consumer-thesis__link" href="/thesis/">
               <div className="consumer-thesis__visual">
                 <picture>
-                  <source
-                    srcSet="/assets/art/zodiac-clock-768.avif 768w, /assets/art/zodiac-clock-960.avif 960w, /assets/art/zodiac-clock-1280.avif 1280w"
-                    sizes="(max-width: 640px) calc(100vw - 40px), 52vw"
-                    type="image/avif"
-                  />
-                  <img
-                    src="/assets/art/zodiac-clock-1280.jpg"
-                    width="1280"
-                    height="720"
-                    alt="Astronomical clock encircled by the twelve zodiac signs"
-                    loading="lazy"
-                    decoding="async"
-                  />
+                  <source srcSet="/assets/art/zodiac-clock-768.avif 768w, /assets/art/zodiac-clock-960.avif 960w" sizes="(max-width: 640px) calc(100vw - 40px), 42vw" type="image/avif" />
+                  <img src="/assets/art/zodiac-clock-1280.jpg" width="1280" height="720" alt="Astronomical clock encircled by the twelve zodiac signs" loading="lazy" decoding="async" />
                 </picture>
-                <span className="consumer-thesis__line" aria-hidden="true">Symbol · record · identity</span>
               </div>
               <div className="consumer-purpose__essay">
-                <span className="consumer-section-head__eyebrow">Why keep a registry?</span>
-                <h2 id="consumer-purpose-title">Familiar names deserve a clear record.</h2>
-                <p>
-                  The signs have travelled through charts, jewellery, newspapers, and phones.
-                  A public list lets anyone check which token is really theirs.
-                </p>
-                <span className="consumer-purpose__cta">Read why Zodiacs matter <span aria-hidden="true">→</span></span>
+                <span className="consumer-section-head__eyebrow">Why it exists</span>
+                <h2 id="consumer-purpose-title">The story behind Zodiacs.</h2>
+                <p>The zodiac has been part of everyday life for generations. Zodiacs gives each sign a public digital record that anyone can check.</p>
+                <span className="consumer-purpose__cta">Read the story <span aria-hidden="true">→</span></span>
               </div>
             </a>
           </article>
+          {REGISTRY_AURA_ENABLED && (
+            <article className="consumer-collection consumer-collection--simple" data-registry-collection>
+              <a className="consumer-collection__link" href={REGISTRY_AURA_PATH}>
+                <div className="consumer-collection__copy">
+                  <small className="consumer-section-head__eyebrow">Optional wallet lookup</small>
+                  <h3>See the signs in a public wallet.</h3>
+                  <p>Enter a public wallet address to see which official Zodiacs it holds. No wallet connection is required.</p>
+                </div>
+                <span className="consumer-purpose__cta">Open collection view <span aria-hidden="true">→</span></span>
+              </a>
+            </article>
+          )}
         </section>
       );
     }
 
     const CONSUMER_FAQS = [
-      {
-        q: 'Is there an official token for my zodiac sign?',
-        a: 'Yes. Each of the twelve signs has exactly one official token — native on Solana, with an official counterpart on Base. Both addresses are published here.'
-      },
-      {
-        q: 'What does “official” mean?',
-        a: 'The address appears in this Registry. It does not mean approval from a government, wallet, marketplace, or exchange.'
-      },
-      {
-        q: 'How do I check whether a zodiac token is official?',
-        a: 'Paste the mint or contract address into the checker on this page. The check is read-only and needs no wallet; anything not in the list is only reported as not found.'
-      },
-      {
-        q: 'How do I buy a zodiac token?',
-        a: 'Each sign’s record page carries its acquisition route through independent third-party venues. Zodiacs.org itself sells nothing; digital assets can lose all market value.'
-      },
-      {
-        q: 'How do people invest in astrology?',
-        a: 'Some collect the token of their sign the way they collect any cultural object. That is a speculative choice, not advice — prices can fall to zero. The reasoning lives in the thesis.'
-      }
+      { q: 'Which Zodiac should I choose?', a: 'Start with your star sign, or simply choose the artwork and story you like. You can browse every sign without buying anything.' },
+      { q: 'Do I need a crypto wallet?', a: 'Not to browse prices, artwork, or official records. You only need a compatible wallet if you decide to buy or hold a token.' },
+      { q: 'How do I know a token is official?', a: 'Use the address checker on this page. It compares the token address with the published Zodiacs Registry and never connects your wallet.' },
+      { q: 'Can its price fall?', a: 'Yes. Zodiac tokens are speculative and thinly traded. Their price can fall to zero and liquidity can disappear.' }
     ];
 
     function ConsumerFaq() {
@@ -5754,17 +5664,17 @@
       return (
         <section ref={reveal} id="faq" className="consumer-faq reveal" aria-labelledby="consumer-faq-title">
           <header className="consumer-section-head">
-            <span className="consumer-section-head__eyebrow">Five quick answers</span>
-            <h2 id="consumer-faq-title">Need to know.</h2>
+            <span className="consumer-section-head__eyebrow">Quick answers</span>
+            <h2 id="consumer-faq-title">Before you start.</h2>
           </header>
-          <dl className="consumer-faq__list">
+          <div className="consumer-faq__list">
             {CONSUMER_FAQS.map(item => (
-              <div className="consumer-faq__item" key={item.q}>
-                <dt>{item.q}</dt>
-                <dd>{item.a}</dd>
-              </div>
+              <details className="consumer-faq__item" key={item.q}>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
+              </details>
             ))}
-          </dl>
+          </div>
         </section>
       );
     }
@@ -5774,11 +5684,11 @@
       return (
         <section ref={reveal} className="consumer-closing reveal" aria-labelledby="consumer-closing-title">
           <span className="consumer-closing__eyebrow">Official records</span>
-          <h2 id="consumer-closing-title">Find your sign in the Registry.</h2>
-          <p>One sign. One verified record across Solana and Base.</p>
+          <h2 id="consumer-closing-title">See all 12 official records.</h2>
+          <p>Artwork, addresses, buying guidance, and deeper details for every sign.</p>
           <div className="consumer-closing__actions">
             <a className="consumer-closing__registry" href="/registry/">
-              <span>Open the Zodiacs Registry</span>
+              <span>See all 12 official records</span>
               <span className="consumer-closing__arrow" aria-hidden="true">→</span>
             </a>
           </div>
@@ -6025,23 +5935,11 @@
         () => SIGNS.find(s => s.ticker === activeTicker) ?? SIGNS[0],
         [activeTicker]
       );
-      const [personalSlug, setPersonalSlugState] = useState(() => {
-        try {
-          const stored = window.localStorage.getItem('zodiacs:today-sun-sign:v1');
-          return SIGNS.some(item => item.asset.sign === stored) ? stored : '';
-        } catch {
-          return '';
-        }
-      });
-      const setPersonalSlug = useCallback((slug) => {
-        if (!SIGNS.some(item => item.asset.sign === slug)) return;
-        setPersonalSlugState(slug);
-        try { window.localStorage.setItem('zodiacs:today-sun-sign:v1', slug); } catch { /* private browsing */ }
-        trackAnalytics('registry_personal_sign_set', { sign: slug });
-      }, []);
       // Which hero the page wears: the film, or the gallery itself.
       const stageMode = useStageMode();
       const proMarket = useTwelveQuotes(pro);
+      const [consumerRetryKey, setConsumerRetryKey] = useState(0);
+      const consumerMarket = useTwelveQuotes(!technical && !pro, consumerRetryKey);
 
       useEffect(() => {
         if (technical) trackAnalytics('registry_technical_visit');
@@ -6313,13 +6211,13 @@
               setActive={setActiveTicker}
               sign={sign}
               stageMode={stageMode}
-              personalSlug={personalSlug}
-              setPersonalSlug={setPersonalSlug}
+              marketBatch={consumerMarket}
             />
+            <ConsumerBuyGuide sign={sign} />
+            <ConsumerMarketSnapshot batch={consumerMarket} onRetry={() => setConsumerRetryKey(value => value + 1)} />
             <ConsumerHowItWorks />
             <VerifierSection />
             <ConsumerPurpose />
-            <ConsumerMarketSnapshot />
             <ConsumerFaq />
             <ConsumerClosing />
             <span id="market" className="terminal-compat-target" aria-hidden="true" />

@@ -47,31 +47,33 @@ describe('Zodiac Terminal consumer and Pro split', () => {
     expect(pro).not.toMatch(/<meta\s+name="robots"[^>]*noindex/u);
   });
 
-  it('keeps the no-JS consumer journey identity-first and market context low', async () => {
+  it('keeps the no-JS consumer journey beginner-first with buying and prices up front', async () => {
     const html = await read('public/terminal/index.html');
     ordered(html, [
-      '<h1 id="static-capital-title">Zodiac Terminal</h1>',
+      '<h1 id="static-capital-title">Choose your Zodiac.</h1>',
       'id="official-twelve"',
+      'id="buying-guide"',
+      'id="market-snapshot"',
       'id="identity"',
       'id="verify"',
       'class="static-site__section static-collection-section"',
       'id="thesis"',
-      'id="market-snapshot"',
       'id="faq"',
       'data-terminal-market-notice',
     ]);
-    expect(html).toContain('Every sign has one official token. Find yours, see the artwork, and verify the public record.');
+    expect(html).toContain('Pick yours to see the artwork, today’s price, and a simple guide to buying it.');
     expect(html).toContain('data-terminal-static-view="pro"');
+    expect(html).not.toMatch(/This is my sign|not a physical object|without the leaderboard/iu);
   });
 
-  it('keeps the no-JS gallery identity-only', async () => {
+  it('keeps the no-JS gallery useful without crypto jargon', async () => {
     const html = await read('public/terminal/index.html');
     const gallery = section(html, 'official-twelve');
-    expect(gallery).toContain('The 12 Official Zodiac Tokens');
-    expect(gallery).toContain('This is my sign');
-    expect(gallery).toContain('Official record');
-    expect(gallery).toContain('Season spotlight');
-    expect(gallery).not.toMatch(/liquidity|market cap|volume|pool|buy|acquir|chart/iu);
+    expect(gallery).toContain('Choose from all 12.');
+    expect(gallery).toContain('Live price requires JavaScript.');
+    expect(gallery).toContain('How to buy Leo');
+    expect(gallery).toContain('Official details');
+    expect(gallery).not.toMatch(/liquidity|market cap|volume|pool|chart|season spotlight|This is my sign/iu);
     expect(gallery.match(/id="(?:aries|taurus|gemini|cancer|leo|virgo|libra|scorpio|sagittarius|capricorn|aquarius|pisces)"/gu)).toHaveLength(12);
   });
 
@@ -82,10 +84,11 @@ describe('Zodiac Terminal consumer and Pro split', () => {
     ordered(mounted, [
       '<ConsumerIdentityHeader sign={sign} />',
       '<ConsumerExplorer',
+      '<ConsumerBuyGuide sign={sign} />',
+      '<ConsumerMarketSnapshot batch={consumerMarket}',
       '<ConsumerHowItWorks />',
       '<VerifierSection />',
       '<ConsumerPurpose />',
-      '<ConsumerMarketSnapshot />',
       '<ConsumerFaq />',
       '<ConsumerClosing />',
       '<Footer />',
@@ -98,17 +101,19 @@ describe('Zodiac Terminal consumer and Pro split', () => {
     expect(mounted).not.toContain('<ProMarketsGateway');
   });
 
-  it('makes the hydrated gallery explicitly identity-only', async () => {
+  it('makes the hydrated gallery a stable selected-sign price and buying surface', async () => {
     const source = await read('src/app.jsx');
     const explorer = functionBlock(source, 'ConsumerExplorer');
     const gallery = functionBlock(source, 'GalleryBand');
     expect(explorer).toContain('<GalleryBand');
     expect(explorer).toContain('identityOnly');
-    expect(gallery).toContain('{!identityOnly && <PlacardQuote sign={sign} />}');
+    expect(explorer).toContain('carousel={!stageMode}');
+    expect(explorer).toContain('marketBatch={marketBatch}');
+    expect(gallery).toContain('<PlacardQuote sign={sign} batch={marketBatch} />');
     expect(gallery).toContain('{!identityOnly && <PlacardMarketPanel sign={sign} />}');
-    expect(gallery).toContain("personalSlug === slug ? `${sign.name} is my sign` : 'This is my sign'");
-    expect(gallery).toContain('setPersonalSlug(slug)');
-    expect(gallery).toContain('Official record');
+    expect(gallery).toContain('How to buy {sign.name}');
+    expect(gallery).toContain('Official details');
+    expect(gallery).not.toMatch(/personalSlug|setPersonalSlug|This is my sign/u);
   });
 
   it('uses query, saved sign, then current season without saving ordinary selection', async () => {
@@ -122,10 +127,10 @@ describe('Zodiac Terminal consumer and Pro split', () => {
     const explorer = functionBlock(source, 'ConsumerExplorer');
     expect(explorer).toContain('setActive={setActive}');
     expect(explorer).not.toContain("localStorage.setItem('zodiacs:today-sun-sign:v1'");
-    expect(rootBlock).toContain("window.localStorage.setItem('zodiacs:today-sun-sign:v1', slug)");
+    expect(rootBlock).not.toContain("window.localStorage.setItem('zodiacs:today-sun-sign:v1'");
   });
 
-  it('keeps the consumer snapshot calm, lazy, and in zodiac order', async () => {
+  it('shares one live quote batch between the selected sign and all twelve prices', async () => {
     const source = await read('src/app.jsx');
     const movement = functionBlock(source, 'plainMarketMovement');
     expect(movement).toContain("up ${formatPercent(movement).replace('+', '')} over 24 hours");
@@ -133,12 +138,13 @@ describe('Zodiac Terminal consumer and Pro split', () => {
     expect(movement).toContain('unchanged over 24 hours');
     expect(movement).toContain('24h movement unavailable');
     const snapshot = functionBlock(source, 'ConsumerMarketSnapshot');
-    expect(snapshot).toContain("useInView('420px 0px')");
-    expect(snapshot).toContain('useTwelveQuotes(inView, retryKey)');
-    expect(snapshot).toContain('Price, without the leaderboard.');
+    const rootBlock = functionBlock(source, 'Zodiacs');
+    expect(rootBlock).toContain('const consumerMarket = useTwelveQuotes(!technical && !pro, consumerRetryKey);');
+    expect(snapshot).toContain('Prices for all 12 signs.');
+    expect(snapshot).toContain('<summary>See all 12 live prices</summary>');
     expect(snapshot).toContain('{SIGNS.map((item) =>');
     expect(snapshot).toContain('plainMarketMovement');
-    expect(snapshot).not.toMatch(/sort\(|rankBy|SelectedTokenMiniChart|PlacardMarketPanel/gu);
+    expect(snapshot).not.toMatch(/useTwelveQuotes|sort\(|rankBy|SelectedTokenMiniChart|PlacardMarketPanel/gu);
 
     const html = await read('public/terminal/index.html');
     const staticSnapshot = section(html, 'market-snapshot');

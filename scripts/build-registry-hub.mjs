@@ -458,8 +458,8 @@ const html = `<!doctype html>
     </section>
 
     <aside class="terminal" aria-labelledby="terminal-title">
-      <div><p class="eyebrow">Market experience</p><h2 id="terminal-title">Looking for live markets?</h2><p>Prices, sculpture browsing, rankings, charts, and research live in Zodiac Terminal. The Registry stays focused on proof.</p></div>
-      <a class="terminal-link" href="/terminal/"><b>Open Zodiac Terminal</b><span aria-hidden="true">↗</span></a>
+      <div><p class="eyebrow">Market experience</p><h2 id="terminal-title">Looking for live markets?</h2><p>Rankings, charts, briefing, and research live in Zodiac Terminal Pro. The Registry stays focused on proof.</p></div>
+      <a class="terminal-link" href="/terminal/pro/"><b>Open Terminal Pro</b><span aria-hidden="true">↗</span></a>
     </aside>
 
     <footer class="footer">

@@ -71,11 +71,12 @@ export const CURATED_WING_ENTRIES = Object.freeze([
   freezeCuratedEntry({
     path: '/terminal/',
     title: 'Zodiac Terminal',
-    description: 'Choose your sign and meet its one official Zodiac token through artwork, story, address verification, and a calm price snapshot.',
+    description: 'Choose your sign, see its live price and gold artwork, and follow a simple guide to checking or buying the official token.',
     kind: 'terminal',
     keywords: [
       'terminal', 'zodiac terminal', 'simple terminal', 'simple view',
       'astrofolio', 'official zodiac', 'token', 'artwork', 'gallery', 'verifier',
+      'how to buy zodiac token', 'buy zodiac', 'live zodiac price',
     ],
   }),
   freezeCuratedEntry({

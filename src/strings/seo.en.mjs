@@ -55,11 +55,11 @@ export const OG_EN = Object.freeze({
   registry: {
     kicker: 'Verified by the Zodiacs Registry',
     title: 'Zodiac Terminal',
-    subtitle: 'Twelve signs. Twelve transferable tokens. One live public market.',
-    data: 'Live markets · official token records · reviewed research',
+    subtitle: 'Choose your sign. See its live price and gold artwork.',
+    data: 'Live prices · simple buying guide · official token addresses',
     path: '/terminal/',
     image: '/assets/og/v4/zodiac-terminal.png',
-    alt: 'Zodiac Terminal — live market context, official token records, and reviewed research for the twelve Zodiac signs.',
+    alt: 'Zodiac Terminal — live prices, gold artwork, buying guidance, and official token records for the twelve Zodiac signs.',
   },
   thesis: {
     kicker: 'The Thesis',
