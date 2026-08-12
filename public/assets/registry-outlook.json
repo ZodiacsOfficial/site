@@ -118,9 +118,9 @@
         "marketCapUsd": 72431.5
       },
       "freshness": {
-        "asOf": "2026-08-12T06:26:04.176Z",
+        "asOf": "2026-08-12T08:06:19.336Z",
         "status": "current-for-horizon",
-        "ageHoursAtHorizonEnd": 17.6
+        "ageHoursAtHorizonEnd": 15.9
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -701,10 +701,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00006757,
-          "change24hPct": 3.43,
+          "change24hPct": 2.45,
           "marketCapUsd": 67578,
           "liquidityUsd": 11876.92,
-          "volume24hUsd": 459.44,
+          "volume24hUsd": 456.96,
           "liquidityVsCollectionMedian": 0.94,
           "marketCapVsCollectionMedian": 0.93,
           "turnover24h": 0.04,
@@ -799,10 +799,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00008713,
-          "change24hPct": 1.67,
+          "change24hPct": -0.66,
           "marketCapUsd": 87136,
           "liquidityUsd": 17575.17,
-          "volume24hUsd": 187.3,
+          "volume24hUsd": 184.81,
           "liquidityVsCollectionMedian": 1.39,
           "marketCapVsCollectionMedian": 1.2,
           "turnover24h": 0.01,
@@ -1149,9 +1149,9 @@
         "marketCapUsd": 72431.5
       },
       "freshness": {
-        "asOf": "2026-08-12T06:26:04.176Z",
+        "asOf": "2026-08-12T08:06:19.336Z",
         "status": "stale-for-horizon",
-        "ageHoursAtHorizonEnd": 161.6
+        "ageHoursAtHorizonEnd": 159.9
       },
       "separationRule": "Market fields are descriptive and never alter the symbolic sky scores."
     },
@@ -1895,10 +1895,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00006757,
-          "change24hPct": 3.43,
+          "change24hPct": 2.45,
           "marketCapUsd": 67578,
           "liquidityUsd": 11876.92,
-          "volume24hUsd": 459.44,
+          "volume24hUsd": 456.96,
           "liquidityVsCollectionMedian": 0.94,
           "marketCapVsCollectionMedian": 0.93,
           "turnover24h": 0.04,
@@ -2019,10 +2019,10 @@
         "market": {
           "available": true,
           "priceUsd": 0.00008713,
-          "change24hPct": 1.67,
+          "change24hPct": -0.66,
           "marketCapUsd": 87136,
           "liquidityUsd": 17575.17,
-          "volume24hUsd": 187.3,
+          "volume24hUsd": 184.81,
           "liquidityVsCollectionMedian": 1.39,
           "marketCapVsCollectionMedian": 1.2,
           "turnover24h": 0.01,

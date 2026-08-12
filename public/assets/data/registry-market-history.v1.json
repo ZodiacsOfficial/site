@@ -850,7 +850,7 @@
       "source": {
         "provider": "DexScreener",
         "url": "https://api.dexscreener.com/tokens/v1/solana/GhFiFrExPY3proVF96oth1gESWA5QPQzdtb8cy8b1YZv,EjkkxYpfSwS6TAtKKuiJuNMMngYvumc1t1v9ZX1WJKMp,ARiZfq6dK19uNqxWyRudhbM2MswLyYhVUHdndGkffdGc,CmomKM8iPKRSMN7y1jqyW1QKj5bGoZmbvNZXWBJSUdnZ,8Cd7wXoPb5Yt9cUGtmHNqAEmpMDrhfcVqnGbLC48b8Qm,Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso,7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe,J4fQTRN13MKpXhVE74t99msKJLbrjegjEgLBnzEv2YH1,8x17zMmVjJxqswjX4hNpxVPc7Tr5UabVJF3kv8TKq8Y3,3C2SN1FjzE9MiLFFVRp7Jhkp8Gjwpk29S2TCSJ2jkHn2,C49Ut3om3QFTDrMZ5Cr8VcTKPpHDcQ2Fv8mmuJHHigDt,3JsSsmGzjWDNe9XCw2L9vznC5JU9wSqQeB6ns5pAkPeE",
-        "readAt": "2026-08-12T06:26:04.176Z"
+        "readAt": "2026-08-12T08:06:19.336Z"
       },
       "coverage": {
         "canonicalAssetCount": 12,
@@ -865,7 +865,7 @@
         "fdvAssetCount": 12,
         "liquidityUsd": 163172.95,
         "liquidityReportedPoolCount": 12,
-        "volume24hUsd": 7094.87,
+        "volume24hUsd": 7089.9,
         "volume24hReportedPoolCount": 12,
         "indexedPoolCount": 12
       },
@@ -981,12 +981,12 @@
           "symbol": "VIRGO",
           "mint": "Ez4bst5qu5uqX3AntYWUdafw9XvtFeJ3gugytKKbSJso",
           "priceUsd": 0.00006757,
-          "change24hPct": 3.43,
+          "change24hPct": 2.45,
           "marketCapUsd": 67578,
           "fdvUsd": 67578,
           "liquidityUsd": 11876.92,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 459.44,
+          "volume24hUsd": 456.96,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
@@ -1002,12 +1002,12 @@
           "symbol": "LIBRA",
           "mint": "7Zt2KUh5mkpEpPGcNcFy51aGkh9Ycb5ELcqRH1n2GmAe",
           "priceUsd": 0.00008713,
-          "change24hPct": 1.67,
+          "change24hPct": -0.66,
           "marketCapUsd": 87136,
           "fdvUsd": 87136,
           "liquidityUsd": 17575.17,
           "liquidityReportedPoolCount": 1,
-          "volume24hUsd": 187.3,
+          "volume24hUsd": 184.81,
           "volume24hReportedPoolCount": 1,
           "indexedPoolCount": 1,
           "deepestPool": {
